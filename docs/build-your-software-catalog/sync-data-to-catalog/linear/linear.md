@@ -6,12 +6,8 @@ import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_linear_one_time_docker_parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
-import JiraIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_blueprint.mdx"
-import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
-import JiraProjectBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_project_blueprint.mdx";
-import JiraWebhookConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_webhook_configuration.mdx";
-import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
-import JiraServerConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_server_configuration_python.mdx";
+import LinearIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/linear/\_example_linear_issue_blueprint.mdx"
+import LinearIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/linear/\_example_linear_issue_configuration.mdx"
 
 # Linear
 
@@ -181,7 +177,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 <br/>
 
 :::tip Ocean Sail Github Action
-The following example uses the **Ocean Sail** Github Action to run the Jira integration.
+The following example uses the **Ocean Sail** Github Action to run the Linear integration.
 For further information about the action, please visit the [Ocean Sail Github Action](https://github.com/marketplace/actions/ocean-sail)
 :::
 
@@ -322,7 +318,7 @@ steps:
 
 The Linear integration uses a YAML configuration to describe the process of loading data into the developer portal.
 
-Here is an example snippet from the config which demonstrates the process for getting `team` data from Jira:
+Here is an example snippet from the config which demonstrates the process for getting `team` data from Linear:
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -334,16 +330,16 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .node.key
-          title: .node.name
+          identifier: .key
+          title: .name
           blueprint: '"linearTeam"'
           properties:
-            description: .node.description
-            workspaceName: .node.organization.name
-            url: "\"https://linear.app/\" + .node.organization.urlKey + \"/team/\" + .node.key"
+            description: .description
+            workspaceName: .organization.name
+            url: "\"https://linear.app/\" + .organization.urlKey + \"/team/\" + .key"
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Jira's API events.
+The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Linear's API events.
 
 :::info Additional parameters
 In the example above, two additional parameters are used:  
@@ -407,17 +403,17 @@ The following resources can be used to map data from Linear, it is possible to r
         # highlight-start
         entity:
         mappings: # Mappings between one Linear object to a Port entity. Each value is a JQ query.
-          identifier: .node.key
-          title: .node.name
+          identifier: .key
+          title: .name
           blueprint: '"linearTeam"'
           properties:
-            description: .node.description
-            workspaceName: .node.organization.name
-            url: "\"https://linear.app/\" + .node.organization.urlKey + \"/team/\" + .node.key"
+            description: .description
+            workspaceName: .organization.name
+            url: "\"https://linear.app/\" + .organization.urlKey + \"/team/\" + .key"
         # highlight-end
     - kind: team # In this instance project is mapped again with a different filter
       selector:
-        query: '.node.name == "MyTeamName"'
+        query: '.name == "MyTeamName"'
       port:
         entity:
           mappings: ...
@@ -493,13 +489,13 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .node.key
-          title: .node.name
+          identifier: .key
+          title: .name
           blueprint: '"linearTeam"'
           properties:
-            description: .node.description
-            workspaceName: .node.organization.name
-            url: "\"https://linear.app/\" + .node.organization.urlKey + \"/team/\" + .node.key"
+            description: .description
+            workspaceName: .organization.name
+            url: "\"https://linear.app/\" + .organization.urlKey + \"/team/\" + .key"
 ```
 
 </details>
@@ -557,14 +553,14 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .node.id
-          title: .node.name
+          identifier: .id
+          title: .name
           blueprint: '"linearLabel"'
           properties:
-            isGroup: .node.isGroup
+            isGroup: .isGroup
           relations:
-            parentLabel: .node.parent.id
-            childLabels: "[.node.children.edges[].node.id]"
+            parentLabel: .parent.id
+            childLabels: "[.children.edges[].node.id]"
 ```
 
 </details>
@@ -663,78 +659,46 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .node.identifier
-          title: .node.title
+          identifier: .identifier
+          title: .title
           blueprint: '"linearIssue"'
           properties:
-            url: .node.url
-            status: .node.state.name
-            assignee: .node.assignee.email
-            creator: .node.creator.email
-            priority: .node.priorityLabel
-            created: .node.createdAt
-            updated: .node.updatedAt
+            url: .url
+            status: .state.name
+            assignee: .assignee.email
+            creator: .creator.email
+            priority: .priorityLabel
+            created: .createdAt
+            updated: .updatedAt
           relations:
-            team: .node.team.key
-            labels: .node.labelIds
-            parentIssue: .node.parent.identifier
+            team: .team.key
+            labels: .labelIds
+            parentIssue: .parent.identifier
 ```
 
 </details>
 
 ## Let's Test It
 
-This section includes a sample response data from Jira. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+This section includes a sample response data from Linear. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
 
 ### Payload
 
-Here is an example of the payload structure from Jira:
+Here is an example of the payload structure from Linear:
 
 <details>
-<summary> Project response data</summary>
+<summary> Team response data</summary>
 
 ```json showLineNumbers
 {
-  "expand": "description,lead,issueTypes,url,projectKeys,permissions,insight",
-  "self": "https://myaccount.atlassian.net/rest/api/3/project/10000",
-  "id": "10000",
-  "key": "PA",
-  "name": "Port-AI",
-  "avatarUrls": {
-    "48x48": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413",
-    "24x24": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=small",
-    "16x16": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=xsmall",
-    "32x32": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=medium"
-  },
-  "projectTypeKey": "software",
-  "simplified": true,
-  "style": "next-gen",
-  "isPrivate": false,
-  "properties": {},
-  "entityId": "7f4f8d6f-705b-4074-84be-46f0d012cd8e",
-  "uuid": "7f4f8d6f-705b-4074-84be-46f0d012cd8e"
-}
-```
-
-</details>
-
-<details>
-<summary>Board response data</summary>
-
-```json showLineNumbers
-{
-  "id": 1,
-  "self": "https://getport.atlassian.net/rest/agile/1.0/board/1",
-  "name": "PORT board",
-  "type": "scrum",
-  "location": {
-    "projectId": 10000,
-    "displayName": "Port (PORT)",
-    "projectName": "Port",
-    "projectKey": "PORT",
-    "projectTypeKey": "software",
-    "avatarURI": "https://getport.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10555?size=small",
-    "name": "Port (PORT)"
+  "id": "92d25fa4-fb1c-449f-b314-47f82e8f280d",
+  "name": "Port",
+  "key": "POR",
+  "description": null,
+  "organization": {
+      "id": "36968e1b-496c-4610-8c25-641364da172e",
+      "name": "Getport",
+      "urlKey": "getport"
   }
 }
 ```
@@ -742,19 +706,28 @@ Here is an example of the payload structure from Jira:
 </details>
 
 <details>
-<summary>Sprint response data</summary>
+<summary>Label response data</summary>
 
 ```json showLineNumbers
 {
-  "id": 37,
-  "self": "https://your-domain.atlassian.net/rest/agile/1.0/sprint/23",
-  "state": "closed",
-  "name": "sprint 1",
-  "startDate": "2015-04-11T15:22:00.000+10:00",
-  "endDate": "2015-04-20T01:22:00.000+10:00",
-  "completeDate": "2015-04-20T11:04:00.000+10:00",
-  "originBoardId": 5,
-  "goal": "sprint 1 goal"
+  "id": "36f84d2c-7b7d-4a71-96f2-6ea4140004d5",
+  "createdAt": "2024-05-17T15:17:40.858Z",
+  "updatedAt": "2024-05-17T15:17:40.858Z",
+  "archivedAt": null,
+  "name": "New-sample-label",
+  "description": null,
+  "color": "#bec2c8",
+  "isGroup": true,
+  "parent": null,
+  "children": {
+      "edges": [
+          {
+              "node": {
+                  "id": "2e483c90-2aca-4db6-924d-b0571d49f691"
+              }
+          }
+      ]
+  }
 }
 ```
 
@@ -766,181 +739,62 @@ Here is an example of the payload structure from Jira:
 
 ```json showLineNumbers
 {
-  "expand": "operations,versionedRepresentations,editmeta,changelog,customfield_10010.requestTypePractice,renderedFields",
-  "id": "10000",
-  "self": "https://myaccount.atlassian.net/rest/api/3/issue/10000",
-  "key": "PA-1",
-  "fields": {
-    "statuscategorychangedate": "2023-11-06T11:02:59.341+0000",
-    "issuetype": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/issuetype/10001",
-      "id": "10001",
-      "description": "Tasks track small, distinct pieces of work.",
-      "iconUrl": "https://myaccount.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
-      "name": "Task",
-      "subtask": false,
-      "avatarId": 10318,
-      "entityId": "a7309bf9-70c5-4237-bdaf-0261037b6ecc",
-      "hierarchyLevel": 0
-    },
-    "timespent": "None",
-    "customfield_10030": "None",
-    "project": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/project/10000",
-      "id": "10000",
-      "key": "PA",
-      "name": "Port-AI",
-      "projectTypeKey": "software",
-      "simplified": true,
-      "avatarUrls": {
-        "48x48": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413",
-        "24x24": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=small",
-        "16x16": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=xsmall",
-        "32x32": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=medium"
-      }
-    },
-    "customfield_10031": "None",
-    "customfield_10032": "None",
-    "fixVersions": [],
-    "aggregatetimespent": "None",
-    "resolution": "None",
-    "customfield_10027": "None",
-    "customfield_10028": "None",
-    "customfield_10029": "None",
-    "resolutiondate": "None",
-    "workratio": -1,
-    "watches": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/issue/PA-1/watchers",
-      "watchCount": 1,
-      "isWatching": true
-    },
-    "lastViewed": "None",
-    "created": "2023-11-06T11:02:59.000+0000",
-    "customfield_10020": "None",
-    "customfield_10021": "None",
-    "customfield_10022": "None",
-    "priority": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/priority/3",
-      "iconUrl": "https://myaccount.atlassian.net/images/icons/priorities/medium.svg",
-      "name": "Medium",
-      "id": "3"
-    },
-    "customfield_10023": "None",
-    "customfield_10024": "None",
-    "customfield_10025": "None",
-    "labels": ["infra"],
-    "customfield_10026": "None",
-    "customfield_10016": "None",
-    "customfield_10017": "None",
-    "customfield_10018": {
-      "hasEpicLinkFieldDependency": false,
-      "showField": false,
-      "nonEditableReason": {
-        "reason": "PLUGIN_LICENSE_ERROR",
-        "message": "The Parent Link is only available to Jira Premium users."
-      }
-    },
-    "customfield_10019": "0|hzzzzz:",
-    "timeestimate": "None",
-    "aggregatetimeoriginalestimate": "None",
-    "versions": [],
-    "issuelinks": [],
-    "assignee": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/user?accountId=712020%3A05acda87-42da-44d8-b21e-f71a508e5d11",
-      "accountId": "712020:05acda87-42da-44d8-b21e-f71a508e5d11",
-      "emailAddress": "username@example.com.io",
-      "avatarUrls": {
-        "48x48": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "24x24": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "16x16": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "32x32": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png"
-      },
-      "displayName": "User Name",
-      "active": true,
-      "timeZone": "UTC",
-      "accountType": "atlassian"
-    },
-    "updated": "2023-11-06T11:03:18.244+0000",
-    "status": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/status/10000",
-      "description": "",
-      "iconUrl": "https://myaccount.atlassian.net/",
-      "name": "To Do",
-      "id": "10000",
-      "statusCategory": {
-        "self": "https://myaccount.atlassian.net/rest/api/3/statuscategory/2",
-        "id": 2,
-        "key": "new",
-        "colorName": "blue-gray",
-        "name": "To Do"
-      }
-    },
-    "components": [],
-    "timeoriginalestimate": "None",
-    "description": "None",
-    "customfield_10010": "None",
-    "customfield_10014": "None",
-    "customfield_10015": "None",
-    "customfield_10005": "None",
-    "customfield_10006": "None",
-    "security": "None",
-    "customfield_10007": "None",
-    "customfield_10008": "None",
-    "aggregatetimeestimate": "None",
-    "customfield_10009": "None",
-    "summary": "Setup infra",
-    "creator": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/user?accountId=712020%3A05acda87-42da-44d8-b21e-f71a508e5d11",
-      "accountId": "712020:05acda87-42da-44d8-b21e-f71a508e5d11",
-      "emailAddress": "username@example.com.io",
-      "avatarUrls": {
-        "48x48": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "24x24": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "16x16": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "32x32": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png"
-      },
-      "displayName": "User Name",
-      "active": true,
-      "timeZone": "UTC",
-      "accountType": "atlassian"
-    },
-    "subtasks": [],
-    "reporter": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/user?accountId=712020%3A05acda87-42da-44d8-b21e-f71a508e5d11",
-      "accountId": "712020:05acda87-42da-44d8-b21e-f71a508e5d11",
-      "emailAddress": "username@example.com.io",
-      "avatarUrls": {
-        "48x48": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "24x24": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "16x16": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "32x32": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png"
-      },
-      "displayName": "User Name",
-      "active": true,
-      "timeZone": "UTC",
-      "accountType": "atlassian"
-    },
-    "aggregateprogress": {
-      "progress": 0,
-      "total": 0
-    },
-    "customfield_10001": "None",
-    "customfield_10002": "None",
-    "customfield_10003": "None",
-    "customfield_10004": "None",
-    "environment": "None",
-    "duedate": "None",
-    "progress": {
-      "progress": 0,
-      "total": 0
-    },
-    "votes": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/issue/PA-1/votes",
-      "votes": 0,
-      "hasVoted": false
-    }
+  "id": "9b4745c2-a8e6-4432-9e56-0fa97b79ccbf",
+  "createdAt": "2024-05-16T21:52:00.299Z",
+  "updatedAt": "2024-05-17T09:27:40.077Z",
+  "archivedAt": null,
+  "number": 2,
+  "title": "sub issue with new title",
+  "priority": 3,
+  "estimate": null,
+  "sortOrder": -991,
+  "startedAt": null,
+  "completedAt": null,
+  "startedTriageAt": null,
+  "triagedAt": null,
+  "canceledAt": null,
+  "autoClosedAt": null,
+  "autoArchivedAt": null,
+  "dueDate": null,
+  "slaStartedAt": null,
+  "slaBreachesAt": null,
+  "trashed": null,
+  "snoozedUntilAt": null,
+  "labelIds": [
+      "402b218c-938c-4ddf-85db-0019bc632316"
+  ],
+  "previousIdentifiers": [],
+  "subIssueSortOrder": -56.17340471045278,
+  "priorityLabel": "Medium",
+  "integrationSourceType": null,
+  "identifier": "POR-2",
+  "url": "https://linear.app/getport/issue/POR-2/sub-issue-with-new-title",
+  "branchName": "mor/por-2-sub-issue-with-new-title",
+  "customerTicketCount": 0,
+  "description": "",
+  "descriptionState": "AQG/pOWPAgAHAQtwcm9zZW1pcnJvcgMJcGFyYWdyYXBoAA==",
+  "team": {
+      "id": "92d25fa4-fb1c-449f-b314-47f82e8f280d",
+      "name": "Port",
+      "key": "POR"
+  },
+  "state": {
+      "name": "Todo"
+  },
+  "creator": {
+      "name": "Mor Paz",
+      "email": "mor@getport.io"
+  },
+  "assignee": {
+      "name": "Dudi Elhadad",
+      "email": "dudi@getport.io"
+  },
+  "parent": {
+      "id": "5ddd8e85-ad89-4c96-b901-0b901b29100d",
+      "identifier": "POR-1"
   }
 }
+              
 ```
 
 </details>
@@ -950,116 +804,85 @@ Here is an example of the payload structure from Jira:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Project entity in Port</summary>
+<summary> Team entity in Port</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "PA",
-  "title": "Port-AI",
+  "identifier": "POR",
+  "title": "Port",
   "icon": null,
-  "blueprint": "jiraProject",
+  "blueprint": "linearTeam",
   "team": [],
   "properties": {
-    "url": "https://myaccount.atlassian.net/projects/PA",
-    "totalIssues": 100
+      "url": "https://linear.app/getport/team/POR",
+      "workspaceName": "Getport"
   },
   "relations": {},
-  "createdAt": "2023-11-06T11:22:05.433Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2023-11-06T11:22:05.433Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+  "createdAt": "2024-05-19T16:19:15.232Z",
+  "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE",
+  "updatedAt": "2024-05-19T16:19:15.232Z",
+  "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
 }
 ```
 
 </details>
 
 <details>
-<summary>Board entity in Port</summary>
+<summary>Label entity in Port</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "84",
-  "title": "scrum board",
-  "icon": "Jira",
-  "blueprint": "jiraBoard",
-  "team": [],
-  "properties": {
-    "url": "https://your-domain.atlassian.net/rest/agile/1.0/board/84",
-    "type": "scrum"
-  },
-  "relations": {
-    "project": "10000"
-  },
-  "createdAt": "2023-11-06T11:22:05.433Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2023-11-06T11:22:05.433Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
-}
-```
-
-</details>
-
-<details>
-<summary>Sprint entity in Port</summary>
-
-```json showLineNumbers
-{
-  "identifier": "37",
-  "title": "sprint 1",
-  "icon": "Jira",
-  "blueprint": "jiraSprint",
-  "team": [],
-  "properties": {
-    "url": "https://your-domain.atlassian.net/rest/agile/1.0/sprint/23",
-    "state": "closed",
-    "startDate": "2015-04-11T15:22:00.000+10:00",
-    "endDate": "2015-04-20T01:22:00.000+10:00"
-  },
-  "relations": {
-    "board": "84"
-  },
-  "createdAt": "2023-11-06T11:22:05.433Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2023-11-06T11:22:05.433Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
-}
-```
-
-</details>
-
-<details>
-<summary> Issue entity in Port</summary>
-
-```json showLineNumbers
-{
-  "identifier": "PA-1",
-  "title": "Setup infra",
+  "identifier": "36f84d2c-7b7d-4a71-96f2-6ea4140004d5",
+  "title": "New-sample-label",
   "icon": null,
-  "blueprint": "jiraIssue",
+  "blueprint": "linearLabel",
   "team": [],
   "properties": {
-    "url": "https://myaccount.atlassian.net/browse/PA-1",
-    "status": "To Do",
-    "issueType": "Task",
-    "components": [],
-    "assignee": "User Name",
-    "reporter": "User Name",
-    "creator": "User Name",
-    "priority": "3",
-    "created": "2023-11-06T11:02:59.000+0000",
-    "updated": "2023-11-06T11:03:18.244+0000"
+      "isGroup": false
   },
   "relations": {
-    "board": "84",
-    "sprint": "37",
-    "parentIssue": null,
-    "project": "PA",
-    "subtasks": []
+      "childLabels": [],
+      "parentLabel": null
   },
-  "createdAt": "2023-11-06T11:22:07.550Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2023-11-06T11:22:07.550Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+  "createdAt": "2024-05-19T16:19:17.747Z",
+  "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE",
+  "updatedAt": "2024-05-19T16:19:17.747Z",
+  "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
+}
+```
+
+</details>
+
+<details>
+<summary>Issue entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "POR-2",
+  "title": "sub issue with new title",
+  "icon": null,
+  "blueprint": "linearIssue",
+  "team": [],
+  "properties": {
+      "status": "Todo",
+      "url": "https://linear.app/getport/issue/POR-2/sub-issue-with-new-title",
+      "created": "2024-05-16T21:52:00.299Z",
+      "priority": "Medium",
+      "assignee": "dudi@getport.io",
+      "updated": "2024-05-17T09:27:40.077Z",
+      "creator": "mor@getport.io"
+  },
+  "relations": {
+      "team": "POR",
+      "labels": [
+          "402b218c-938c-4ddf-85db-0019bc632316"
+      ],
+      "parentIssue": "POR-1"
+  },
+  "createdAt": "2024-05-19T16:19:21.143Z",
+  "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE",
+  "updatedAt": "2024-05-19T16:19:21.143Z",
+  "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
 }
 ```
 
@@ -1067,230 +890,123 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ## Alternative installation via webhook
 
-While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Jira. If so, use the following instructions:
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Linear. If so, use the following instructions:
 
 <details>
 
 <summary><b>Webhook installation (click to expand)</b></summary>
 
-In this example you are going to create a webhook integration between [Jira](https://www.atlassian.com/software/jira) and Port, which will ingest Jira issue entities.
+In this example you are going to create a webhook integration between [Linear](https://linear.app/) and Port, which will ingest Linear issue entities.
 
 <h2> Port configuration </h2>
 
 Create the following blueprint definition:
 
 <details>
-<summary>Jira issue blueprint</summary>
+<summary>Linear issue blueprint</summary>
 
-<JiraIssueBlueprint/>
+<LinearIssueBlueprint/>
 
 </details>
 
 Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
-<summary>Jira issue webhook configuration</summary>
+<summary>Linear issue webhook configuration</summary>
 
 1. **Basic details** tab - fill the following details:
-   1. Title : `Jira mapper`;
-   2. Identifier : `jira_mapper`;
-   3. Description : `A webhook configuration to map Jira issues to Port`;
-   4. Icon : `Jira`;
+   1. Title : `Linear mapper`;
+   2. Identifier : `linear_mapper`;
+   3. Description : `A webhook configuration to map Linear issues to Port`;
+   4. Icon : `Linear`;
 2. **Integration configuration** tab - fill the following JQ mapping:
 
-   <JiraIssueConfiguration/>
+   <LinearIssueConfiguration/>
 
 3. Click **Save** at the bottom of the page.
 
 </details>
 
-<h2> Create a webhook in Jira </h2>
+<h2> Create a webhook in Linear </h2>
 
-1. Log in to Jira as a user with the Administer Jira global permission;
-2. Click the gear icon at the top right corner;
-3. Choose **System**;
-4. At the bottom of the sidebar on the left, under **Advanced**, choose **WebHooks**;
-5. Click on **Create a WebHook**
+You can follow the instruction in [Linear's docs](https://developers.linear.app/docs/graphql/webhooks#configuring-with-the-settings-ui), they are also outlined here for reference:
+
+1. Log in to Linear as a user with admin permissions.
+2. Click the workspace label at the top left corner.
+3. Choose **Workspace Settings**.
+4. At the bottom of the sidebar on the left, under **My Account**, choose **API**.
+5. Click on **Create new webhook**.
 6. Input the following details:
-   1. `Name` - use a meaningful name such as Port Webhook;
-   2. `Status` - be sure to keep the webhook **Enabled**;
-   3. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration;
-   4. `Description` - enter a description for the webhook;
-   5. `Issue related events` - enter a JQL query in this section to filter the issues that get sent to the webhook (if you leave this field empty, all issues will trigger a webhook event);
-   6. Under `Issue` - mark created, updated and delete;
-7. Click **Create** at the bottom of the page.
+   1. `Label` - use a meaningful name such as Port Webhook.
+   2. `URL` - enter the value of the `url` key you received after creating the webhook configuration.
+   3. Under `Data change events` - mark issues.
+7. Click **Create webhook** at the bottom of the page.
 
-:::tip Jira events and payload
-In order to view the different payloads and events available in Jira webhooks, [look here](https://developer.atlassian.com/server/jira/platform/webhooks/)
+:::tip Linear events and payload
+In order to view the different payloads and events available in Linear webhooks, [look here](https://developers.linear.app/docs/graphql/webhooks#the-webhook-payload)
 :::
 
-Done! any change you make to an issue (open, close, edit, etc.) will trigger a webhook event that Jira will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+Done! any change you make to an issue (open, close, edit, etc.) will trigger a webhook event that Linear will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
 <h2> Let's Test It </h2>
 
-This section includes a sample webhook event sent from Jira when an issue is created or updated. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+This section includes a sample webhook event sent from Linear when an issue is created or updated. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
 
 <h3> Payload </h3>
 
-Here is an example of the payload structure sent to the webhook URL when a Jira issue is created:
+Here is an example of the payload structure sent to the webhook URL when a Linear issue is created:
 
 <details>
 <summary> Webhook event payload</summary>
 
 ```json showLineNumbers
 {
-  "timestamp": 1686916266116,
-  "webhookEvent": "jira:issue_created",
-  "issue_event_type_name": "issue_created",
-  "user": {
-    "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39959-769f-4dac-8a7a-46eb55b03723",
-    "accountId": "557058%3A69f39959-769f-4dac-8a7a-46eb55b03723",
-    "avatarUrls": {
-      "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
+  "action": "create",
+  "actor": {
+    "id": "11c5ce7d-229b-4487-b23b-f404e4a8c85d",
+    "name": "Mor Paz",
+    "type": "user"
+  },
+  "createdAt": "2024-05-19T17:55:29.277Z",
+  "data": {
+    "id": "d62a755d-5389-4dbd-98bb-3db03f239d9d",
+    "createdAt": "2024-05-19T17:55:29.277Z",
+    "updatedAt": "2024-05-19T17:55:29.277Z",
+    "number": 5,
+    "title": "New issue again",
+    "priority": 0,
+    "boardOrder": 0,
+    "sortOrder": -3975,
+    "labelIds": [],
+    "teamId": "92d25fa4-fb1c-449f-b314-47f82e8f280d",
+    "previousIdentifiers": [],
+    "creatorId": "11c5ce7d-229b-4487-b23b-f404e4a8c85d",
+    "stateId": "f12cad17-9b8f-470d-b20a-5e17da8e46b9",
+    "priorityLabel": "No priority",
+    "botActor": null,
+    "identifier": "POR-5",
+    "url": "https://linear.app/getport/issue/POR-5/new-issue-again",
+    "state": {
+      "id": "f12cad17-9b8f-470d-b20a-5e17da8e46b9",
+      "color": "#e2e2e2",
+      "name": "Todo",
+      "type": "unstarted"
     },
-    "displayName": "Your Name",
-    "active": true,
-    "timeZone": "Europe/London",
-    "accountType": "atlassian"
+    "team": {
+      "id": "92d25fa4-fb1c-449f-b314-47f82e8f280d",
+      "key": "POR",
+      "name": "Port"
+    },
+    "subscriberIds": [
+      "11c5ce7d-229b-4487-b23b-f404e4a8c85d"
+    ],
+    "labels": []
   },
-  "issue": {
-    "id": "10000",
-    "self": "https://account.atlassian.net/rest/api/2/10000",
-    "key": "PI-1",
-    "fields": {
-      "statuscategorychangedate": "2023-06-16T11:51:06.277+0000",
-      "issuetype": {
-        "self": "https://account.atlassian.net/rest/api/2/issuetype/10002",
-        "id": "10002",
-        "description": "Epics track collections of related bugs, stories, and tasks.",
-        "iconUrl": "https://account.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10307?size=medium",
-        "name": "Epic",
-        "subtask": false,
-        "avatarId": 10307,
-        "entityId": "66c6d416-6eb4-4b38-92fa-9a7d68c64165",
-        "hierarchyLevel": 1
-      },
-      "timespent": "None",
-      "project": {
-        "self": "https://account.atlassian.net/rest/api/2/project/10000",
-        "id": "10000",
-        "key": "PI",
-        "name": "Port Integration",
-        "projectTypeKey": "software",
-        "simplified": true,
-        "avatarUrls": {
-          "48x48": "https://account.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10413"
-        }
-      },
-      "fixVersions": [],
-      "aggregatetimespent": "None",
-      "resolution": "None",
-      "resolutiondate": "None",
-      "workratio": -1,
-      "watches": {
-        "self": "https://account.atlassian.net/rest/api/2/issue/PI-1/watchers",
-        "watchCount": 0,
-        "isWatching": false
-      },
-      "issuerestriction": {
-        "issuerestrictions": {},
-        "shouldDisplay": true
-      },
-      "lastViewed": "None",
-      "created": "2023-06-16T11:51:05.291+0000",
-      "priority": {
-        "self": "https://account.atlassian.net/rest/api/2/priority/3",
-        "iconUrl": "https://account.atlassian.net/images/icons/priorities/medium.svg",
-        "name": "Medium",
-        "id": "3"
-      },
-      "labels": ["cloud", "infra"],
-      "issuelinks": [],
-      "assignee": {
-        "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
-        "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
-        "avatarUrls": {
-          "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
-        },
-        "displayName": "Your Name",
-        "active": true,
-        "timeZone": "Europe/London",
-        "accountType": "atlassian"
-      },
-      "updated": "2023-06-16T11:51:05.291+0000",
-      "status": {
-        "self": "https://account.atlassian.net/rest/api/2/status/10000",
-        "description": "",
-        "iconUrl": "https://account.atlassian.net/",
-        "name": "To Do",
-        "id": "10000",
-        "statusCategory": {
-          "self": "https://account.atlassian.net/rest/api/2/statuscategory/2",
-          "id": 2,
-          "key": "new",
-          "colorName": "blue-gray",
-          "name": "New"
-        }
-      },
-      "components": [],
-      "timeoriginalestimate": "None",
-      "description": "We need to migrate our current infrastructure from in-house to the cloud",
-      "attachment": [],
-      "summary": "Migrate Infra to Cloud",
-      "creator": {
-        "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
-        "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
-        "avatarUrls": {
-          "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
-        },
-        "displayName": "Your Name",
-        "active": true,
-        "timeZone": "Europe/London",
-        "accountType": "atlassian"
-      },
-      "subtasks": [],
-      "reporter": {
-        "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
-        "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
-        "avatarUrls": {
-          "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
-        },
-        "displayName": "Your Name",
-        "active": true,
-        "timeZone": "Europe/London",
-        "accountType": "atlassian"
-      },
-      "aggregateprogress": {
-        "progress": 0,
-        "total": 0
-      },
-      "environment": "None",
-      "duedate": "2023-06-19",
-      "progress": {
-        "progress": 0,
-        "total": 0
-      },
-      "votes": {
-        "self": "https://account.atlassian.net/rest/api/2/issue/PI-1/votes",
-        "votes": 0,
-        "hasVoted": false
-      }
-    }
-  },
-  "changelog": {
-    "id": "10001",
-    "items": [
-      {
-        "field": "status",
-        "fieldtype": "jira",
-        "fieldId": "status",
-        "from": "10000",
-        "fromString": "To Do",
-        "to": "10001",
-        "toString": "In Progress"
-      }
-    ]
-  }
+  "url": "https://linear.app/getport/issue/POR-5/new-issue-again",
+  "type": "Issue",
+  "organizationId": "36968e1b-496c-4610-8c25-641364da172e",
+  "webhookTimestamp": 1716141329394,
+  "webhookId": "ee1fa20e-6b57-4448-86f7-39d9672ddedd"
 }
 ```
 
@@ -1302,59 +1018,21 @@ The combination of the sample payload and the webhook configuration generates th
 
 ```json showLineNumbers
 {
-  "identifier": "PI-1",
-  "title": "PI-1 - Migrate Infra to Cloud",
-  "blueprint": "jiraIssue",
+  "identifier": "POR-5",
+  "title": "New issue again",
+  "team": [],
   "properties": {
-    "summary": "Migrate Infra to Cloud",
-    "description": "We need to migrate our current infrastructure from in-house to the cloud",
-    "status": "To Do",
-    "lastChangeType": "issue_created",
-    "changingUser": "Your Name",
-    "issueUrl": "https://account.atlassian.net/browse/PI-1",
-    "issueType": "Epic"
+    "status": "Todo",
+    "url": "https://linear.app/getport/issue/POR-5/new-issue-again",
+    "created": "2024-05-19T17:55:29.277Z",
+    "priority": "No priority",
+    "updated": "2024-05-19T17:55:29.277Z"
   },
-  "relations": {}
+  "relations": {
+    "labels": []
+  },
+  "icon": "Linear"
 }
 ```
-
-<h2> Import Jira Historical Issues </h2>
-
-In this example you are going to use the provided Python script to fetch data from the Jira API and ingest it to Port.
-
-<h3> Prerequisites </h3>
-
-This example utilizes the same [blueprint and webhook](#prerequisites) definition from the previous section.
-
-In addition, it requires a Jira API token that is provided as a parameter to the Python script
-
-<h4> Create the Jira API token </h4>
-
-1. Log in to your [Jira account](https://id.atlassian.com/manage-profile/security/api-tokens).
-2. Click Create API token.
-3. From the dialog that appears, enter a memorable and concise Label for your token and click **Create**.
-4. Click **Copy** to copy the token to your clipboard, you will not have another opportunity to view the token value after you leave this page.
-
-Use the following Python script to ingest historical Jira issues into port:
-
-<details>
-<summary>Jira Python script for historical issues</summary>
-
-<JiraIssueConfigurationPython/>
-
-:::note Environment variables requirement
-
-The script requires the following environment variables:
-
-- `PORT_URL` - the webhook URL generated by Port after creating the webhook configuration;
-- `JIRA_SERVER` - your Jira domain, for example `https://{YOUR_DOMAIN}.atlassian.net`;
-- `USERNAMES` - your Jira username;
-- `API_TOKEN` - your Jira API token (created in the previous step).
-
-:::
-
-</details>
-
-Done! you can now import historical issues from Jira into Port. Port will parse the issues according to the mapping and update the catalog entities accordingly.
 
 </details>
