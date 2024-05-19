@@ -66,11 +66,11 @@ The following steps will guide you how to create a GitLab group access token.
 
 1. Sign in to GitLab and go to your desired group's settings page:
 
-   ![GitLab group settings](/img/integrations/gitlab/GitLabGroupSettings.png)
+    <img src='/img/integrations/gitlab/GitLabGroupSettings.png' width='40%' border='1px' />
 
 2. In the "Access Tokens" section, you need to provide the token details, including the name and an optional expiration date. Additionally, select the api scope, and then proceed to click on the "Create access token" button.
 
-   ![GitLab group access tokens](/img/integrations/gitlab/GitLabGroupAccessTokens.png)
+   <img src='/img/integrations/gitlab/GitLabGroupAccessTokens.png' width='85%' border='1px' />
 
 3. Click "Create group access token".
 4. Copy the generated token and use it when deploying the integration in the following steps.

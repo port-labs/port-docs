@@ -55,17 +55,20 @@ To define the Azure pipelines invocation method in Port, follow the steps below:
 ```json showLineNumbers
 {
   ...
-  "userInputs": {
+  "trigger": {
     ...
-  },
+  }
   // highlight-start
   "invocationMethod": {
     "type": "AZURE-DEVOPS",
     "org": "<AZURE-DEVOPS-ORG>",
     "webhook": "<AZURE-DEVOPS-WEBHOOK-NAME>"
-  },
   // highlight-end
-  "trigger": "CREATE"
+    "payload": {
+      ...
+    }
+    ...
+  },
   ...
 }
 ```

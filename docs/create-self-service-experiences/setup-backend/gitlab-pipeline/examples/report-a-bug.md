@@ -35,67 +35,103 @@ Install [Port's Jira Integration](https://docs.getport.io/build-your-software-ca
 
 ```json showLineNumbers
 {
-  "identifier": "report_a_bug",
+  "identifier": "jiraIssue_report_a_bug",
   "title": "Report a bug",
   "icon": "Jira",
-  "userInputs": {
-    "properties": {
-      "description": {
-        "icon": "DefaultProperty",
-        "title": "Description",
-        "type": "string"
-      },
-      "short_title": {
-        "icon": "DefaultProperty",
-        "title": "Short title",
-        "type": "string"
-      },
-      "issue_type": {
-        "icon": "DefaultProperty",
-        "title": "Issue Type",
-        "type": "string",
-        "default": "Task",
-        "enum": [
-          "Task",
-          "Bug",
-          "Story"
-        ],
-        "enumColors": {
-          "Task": "lightGray",
-          "Bug": "lightGray",
-          "Story": "lightGray"
+  "description": "Report a bug in Port to our product team.",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "description": {
+          "icon": "DefaultProperty",
+          "title": "Description",
+          "type": "string"
+        },
+        "short_title": {
+          "icon": "DefaultProperty",
+          "title": "Short title",
+          "type": "string"
+        },
+        "issue_type": {
+          "icon": "DefaultProperty",
+          "title": "Issue Type",
+          "type": "string",
+          "default": "Task",
+          "enum": [
+            "Task",
+            "Bug",
+            "Story"
+          ],
+          "enumColors": {
+            "Task": "lightGray",
+            "Bug": "lightGray",
+            "Story": "lightGray"
+          }
+        },
+        "project": {
+          "type": "string",
+          "title": "Project",
+          "blueprint": "jiraProject",
+          "format": "entity"
         }
       },
-      "project": {
-        "type": "string",
-        "title": "Project",
-        "blueprint": "jiraProject",
-        "format": "entity"
-      }
+      "required": [
+        "short_title",
+        "description",
+        "issue_type",
+        "project"
+      ],
+      "order": [
+        "project",
+        "short_title",
+        "description",
+        "issue_type"
+      ]
     },
-    "required": [
-      "short_title",
-      "description",
-      "issue_type",
-      "project"
-    ],
-    "order": [
-      "project",
-      "short_title",
-      "description",
-      "issue_type"
-    ]
+    "blueprintIdentifier": "jiraIssue"
   },
   "invocationMethod": {
     "type": "WEBHOOK",
     "url": "https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<PIPELINE_TRIGGER_TOKEN>",
     "agent": false,
     "synchronized": false,
-    "method": "POST"
+    "method": "POST",
+    "body": {
+      "action": "{{ .action.identifier[(\"jiraIssue_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<PIPELINE_TRIGGER_TOKEN>",
+            "agent": false,
+            "synchronized": false,
+            "method": "POST"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
+          "{{if (.inputs | has(\"short_title\")) then \"short_title\" else null end}}": "{{.inputs.\"short_title\"}}",
+          "{{if (.inputs | has(\"issue_type\")) then \"issue_type\" else null end}}": "{{.inputs.\"issue_type\"}}",
+          "{{if (.inputs | has(\"project\")) then \"project\" else null end}}": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
   },
-  "trigger": "CREATE",
-  "description": "Report a bug in Port to our product team.",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 

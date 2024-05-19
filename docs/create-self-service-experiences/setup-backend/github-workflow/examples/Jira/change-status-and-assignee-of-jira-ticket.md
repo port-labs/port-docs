@@ -322,59 +322,98 @@ jobs:
 
 ```json showLineNumbers
 {
-  "identifier": "change_jira_ticket_status",
+  "identifier": "jiraIssue_change_jira_ticket_status",
   "title": "Change Jira ticket status and assignee",
   "icon": "Jira",
-  "userInputs": {
-    "properties": {
-      "status": {
-        "icon": "DefaultProperty",
-        "title": "Status",
-        "type": "string",
-        "enum": [
-          "To Do",
-          "In Progress",
-          "Code Review",
-          "Product Review",
-          "Waiting For Prod",
-          "Done"
-        ],
-        "enumColors": {
-          "To Do": "lightGray",
-          "In Progress": "bronze",
-          "Code Review": "darkGray",
-          "Product Review": "purple",
-          "Waiting For Prod": "orange",
-          "Done": "green"
+  "description": "Transition a ticket to another status.",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "status": {
+          "icon": "DefaultProperty",
+          "title": "Status",
+          "type": "string",
+          "enum": [
+            "To Do",
+            "In Progress",
+            "Code Review",
+            "Product Review",
+            "Waiting For Prod",
+            "Done"
+          ],
+          "enumColors": {
+            "To Do": "lightGray",
+            "In Progress": "bronze",
+            "Code Review": "darkGray",
+            "Product Review": "purple",
+            "Waiting For Prod": "orange",
+            "Done": "green"
+          }
+        },
+        "assignee": {
+          "type": "string",
+          "title": "Assignee",
+          "icon": "User",
+          "format": "user"
         }
       },
-      "assignee": {
-        "type": "string",
-        "title": "Assignee",
-        "description": "Name of the user or email",
-        "icon": "Jira"
-      }
+      "required": [
+        "status",
+        "assignee"
+      ],
+      "order": [
+        "status"
+      ]
     },
-    "required": [
-      "status"
-    ],
-    "order": [
-      "status",
-      "assignee"
-    ]
+    "blueprintIdentifier": "jiraIssue"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "repo": "<GITHUB_REPO>",
-    "org": "<GITHUB_ORG>",
-    "workflow": "change-jira-ticket-status-and-assignee.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "org": "<Enter GitHub organization>",
+    "repo": "<Enter GitHub repository>",
+    "workflow": "change_jira_ticket_status_and_assignee.yml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"status\")) then \"status\" else null end}}": "{{.inputs.\"status\"}}",
+      "{{if (.inputs | has(\"assignee\")) then \"assignee\" else null end}}": "{{.inputs.\"assignee\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"jiraIssue_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<Enter GitHub organization>",
+              "repo": "<Enter GitHub repository>",
+              "workflow": "change_jira_ticket_status_and_assignee.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"status\")) then \"status\" else null end}}": "{{.inputs.\"status\"}}",
+            "{{if (.inputs | has(\"assignee\")) then \"assignee\" else null end}}": "{{.inputs.\"assignee\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Transition a ticket to another status.",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
