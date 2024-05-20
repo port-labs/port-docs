@@ -176,7 +176,7 @@ This option is way easier but if you do not want this, you can simply type in re
     "workflowInputs": {
       "repository": "{{ .inputs.\"repository\" }}",
       "tags": "{{ .inputs.\"tags\" }}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
@@ -212,10 +212,10 @@ on:
         type: string
         required: true
         description: 'Tags should be in key-value pairs like so: {"key": "value"}'
-      context:
+      port_context:
         required: true
         description:
-          Action and general context (blueprint, run id, etc...)
+          Action and general port_context (blueprint, run id, etc...)
         type: string
     secrets:
       AWS_REGION:
@@ -241,7 +241,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: Starting request to add tags to ECR repository
 
       - name: Configure AWS Credentials
@@ -278,7 +278,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: Finished adding tags to ECR repository
 ```
 </details>

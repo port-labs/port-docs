@@ -130,7 +130,7 @@ Replace the invocation method with your own repository details.
     "workflow": "add-tags-to-s3-bucket.yml",
     "workflowInputs": {
       "tags": "{{ .inputs.tags }}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
@@ -162,7 +162,7 @@ on:
       tags: # json object
         required: true
         type: string
-      context:
+      port_context:
         required: true
         type: string
 
@@ -176,9 +176,9 @@ jobs:
         clientId: ${{ secrets.PORT_CLIENT_ID }}
         clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
         operation: PATCH_RUN
-        runId: ${{ fromJson(inputs.context).runId }}
+        runId: ${{ fromJson(inputs.port_context).runId }}
         logMessage: |
-          Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.context).entity.identifier}} ... ⛴️
+          Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -190,7 +190,7 @@ jobs:
 
     - name: Add Tags to S3 Bucket
       env:
-        BUCKET_NAME: ${{ fromJson(inputs.context).entity.identifier }}
+        BUCKET_NAME: ${{ fromJson(inputs.port_context).entity.identifier }}
         TAGS_JSON: ${{ github.event.inputs.tags }}
       run: |
         # Extract key-value pairs from the JSON object
@@ -212,8 +212,8 @@ jobs:
         clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
         baseUrl: https://api.getport.io
         operation: PATCH_RUN
-        runId: ${{fromJson(inputs.context).runId}}
-        logMessage: Added tags to ${{fromJson(inputs.context).entity.identifier}}
+        runId: ${{fromJson(inputs.port_context).runId}}
+        logMessage: Added tags to ${{fromJson(inputs.port_context).entity.identifier}}
 ```
 
 </details>

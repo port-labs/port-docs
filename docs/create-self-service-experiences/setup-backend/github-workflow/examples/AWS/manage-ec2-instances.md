@@ -91,7 +91,7 @@ name: Terminate EC2 Instance
 on:
   workflow_dispatch: # Trigger this workflow manually
     inputs:
-      context:
+      port_context:
         required: true
         description: "Action and general context (blueprint, run id, etc...)"
         type: string
@@ -107,8 +107,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
-          logMessage: Configuring AWS credentials and terminating EC2 instance with ID ${{ fromJson(inputs.context).entity.identifier }}
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Configuring AWS credentials and terminating EC2 instance with ID ${{ fromJson(inputs.port_context).entity.identifier }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -118,7 +118,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Terminate EC2 instance
-        run: aws ec2 terminate-instances --instance-ids ${{ fromJson(inputs.context).entity.identifier }}
+        run: aws ec2 terminate-instances --instance-ids ${{ fromJson(inputs.port_context).entity.identifier }}
 
       - name: Create a log message
         uses: port-labs/port-github-action@v1
@@ -128,8 +128,8 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
-          runId: ${{fromJson(inputs.context).runId}}
-          logMessage: EC2 instance with ID ${{ fromJson(inputs.context).entity.identifier }} terminated successfully
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: EC2 instance with ID ${{ fromJson(inputs.port_context).entity.identifier }} terminated successfully
 
 ```
 </details>
@@ -196,7 +196,7 @@ name: Reboot EC2 Instance
 on:
   workflow_dispatch: # Trigger this workflow manually
     inputs:
-      context:
+      port_context:
         required: true
         description: "Action and general context (blueprint, run id, etc...)"
         type: string
@@ -212,8 +212,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
-          logMessage: Configuring AWS credentials and reboot EC2 instance with ID ${{ fromJson(inputs.context).entity.identifier }}
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Configuring AWS credentials and reboot EC2 instance with ID ${{ fromJson(inputs.port_context).entity.identifier }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -223,7 +223,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Reboot EC2 instance
-        run: aws ec2 reboot-instances --instance-ids ${{ fromJson(inputs.context).entity.identifier }}
+        run: aws ec2 reboot-instances --instance-ids ${{ fromJson(inputs.port_context).entity.identifier }}
 
       - name: Inform Port about status of rebooting EC2 instance
         uses: port-labs/port-github-action@v1
@@ -233,8 +233,8 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
-          runId: ${{fromJson(inputs.context).runId}}
-          logMessage: EC2 instance with ID ${{ fromJson(inputs.context).entity.identifier }} rebooted successfully
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: EC2 instance with ID ${{ fromJson(inputs.port_context).entity.identifier }} rebooted successfully
 ```
 </details>
 
@@ -351,7 +351,7 @@ on:
       maximum_capacity:
         description: 'Maximum size of the Auto Scaling Group'
         required: true
-      context:
+      port_context:
         required: true
         description: "Action and general context (blueprint, run id, etc...)"
         type: string
@@ -367,7 +367,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: Configuring AWS credentials
 
 
@@ -381,7 +381,7 @@ jobs:
       - name: Resize Auto Scaling Group
         run: |
             aws autoscaling update-auto-scaling-group \
-                --auto-scaling-group-name ${{ fromJson(inputs.context).entity.title }} \
+                --auto-scaling-group-name ${{ fromJson(inputs.port_context).entity.title }} \
                 --desired-capacity ${{ github.event.inputs.desired_capacity }} \
                 --min-size ${{ github.event.inputs.minimum_capacity }} \
                 --max-size ${{ github.event.inputs.maximum_capacity }} 
@@ -394,8 +394,8 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
-          runId: ${{fromJson(inputs.context).runId}}
-          logMessage: Resized EC2 Auto Scaling Group ${{ fromJson(inputs.context).entity.title }} to ${{ github.event.inputs.desired_capacity }} instances
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Resized EC2 Auto Scaling Group ${{ fromJson(inputs.port_context).entity.title }} to ${{ github.event.inputs.desired_capacity }} instances
 ```
 </details>
 

@@ -266,7 +266,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
       "image_id": "{{ .inputs.\"image_id\" }}",
       "key_pair_name": "{{ .inputs.\"key_pair_name\" }}",
       "security_group_ids": "{{ .inputs.\"security_group_ids\" }}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
@@ -342,7 +342,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
     "workflowInputs": {
       "bucket_name": "{{ .inputs.\"bucket_name\" }}",
       "bucket_acl": "{{ .inputs.\"bucket_acl\" }}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
@@ -459,7 +459,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
       "db_engine": "{{.inputs.\"db_engine\"}}",
       "allocated_storage": "{{.inputs.\"allocated_storage\"}}",
       "db_instance_class": "{{.inputs.\"db_instance_class\"}}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
@@ -711,10 +711,10 @@ on:
         required: true
         type: string
         description: security group ids
-      context:
+      port_context:
         required: true
         description:
-          Action and general context (blueprint, run id, etc...)
+          Action and general port_context (blueprint, run id, etc...)
         type: string
 
 jobs:
@@ -763,7 +763,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
 ```
 
   </details>
@@ -787,10 +787,10 @@ on:
         required: true
         type: string
         description: bucket acl
-      context:
+      port_context:
         required: true
         description:
-          Details of the action and general context (blueprint, run id, etc...)
+          Details of the action and general port_context (blueprint, run id, etc...)
         type: string
 
 jobs:
@@ -833,7 +833,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
 ```
 
   </details>
@@ -873,10 +873,10 @@ on:
         required: true
         type: number
         description: allocated_storage
-      context:
+      port_context:
         required: true
         description:
-          Details about the action and general context (blueprint, run id, etc...)
+          Details about the action and general port_context (blueprint, run id, etc...)
         type: string
 
 jobs:
@@ -942,7 +942,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
 ```
 
   </details>

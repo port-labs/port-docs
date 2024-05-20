@@ -62,7 +62,7 @@ on:
       dockerfile:
         description: 'Path to Dockerfile'
         required: true
-      context:
+      port_context:
         required: true
         description: "Action and general context (blueprint, run id, etc...)"
         type: string
@@ -72,9 +72,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPO_URL: ${{ fromJson(inputs.context).entity.properties.url }}
-      TRIGGERED_BY: ${{ fromJson(inputs.context).trigger.by.user.email || github.actor }}
-      RUN_ID: ${{ fromJson(inputs.context).runId }}
+      REPO_URL: ${{ fromJson(inputs.port_context).entity.properties.url }}
+      TRIGGERED_BY: ${{ fromJson(inputs.port_context).trigger.by.user.email || github.actor }}
+      RUN_ID: ${{ fromJson(inputs.port_context).runId }}
 
     steps:
       - name: Inform execution of request to build ECR image
@@ -175,7 +175,7 @@ jobs:
           operation: PATCH_RUN
           status: "SUCCESS"
           baseUrl: https://api.getport.io
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             Built and pushed image to ECR repo ${{ inputs.image_repo }}
 ```
