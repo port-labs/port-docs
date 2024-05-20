@@ -192,19 +192,13 @@ Fill out the form with your values:
 
   ```json showLineNumbers
   {
-    "port_payload": {
-      "context": {
-        "entity": "{{ .entity.identifier }}",
-        "runId": "{{ .run.id }}"
-      },
-      "payload": {
-        "properties": {
-          "domain": "{{ .inputs.domain }}",
-          "type": "{{ .inputs.type }}",
-          "lifecycle": "{{ .inputs.lifecycle }}",
-        }
-      }
-    }
+    "port_context": {
+      "entity": "{{ .entity.identifier }}",
+      "runId": "{{ .run.id }}",
+    },
+    "domain": "{{ .inputs.domain }}",
+    "type": "{{ .inputs.type }}",
+    "lifecycle": "{{ .inputs.lifecycle }}",
   }
   ```
 </TabItem>
@@ -234,20 +228,14 @@ In order to protect the webhook, see the [Validating webhook signatures page](..
   Copy the following JSON snippet and paste it in the payload code box:
 
   ```json showLineNumbers
-    {
-    "port_payload": {
-      "context": {
-        "entity": "{{ .entity.identifier }}",
-        "runId": "{{ .run.id }}"
-      },
-      "payload": {
-        "properties": {
-          "domain": "{{ .inputs.domain }}",
-          "type": "{{ .inputs.type }}",
-          "lifecycle": "{{ .inputs.lifecycle }}",
-        }
-      }
-    }
+  {
+    "port_context": {
+      "entity": "{{ .entity.identifier }}",
+      "runId": "{{ .run.id }}",
+    },
+    "domain": "{{ .inputs.domain }}",
+    "type": "{{ .inputs.type }}",
+    "lifecycle": "{{ .inputs.lifecycle }}",
   }
   ```
 
@@ -278,20 +266,14 @@ Then, fill out your workflow details:
 
   ```json showLineNumbers
   {
-    "port_payload": {
-      "context": {
-        "entity": "{{ .entity.identifier }}",
-        "runId": "{{ .run.id }}"
-      },
-      "payload": {
-        "entity": "{{ .entity }}",
-        "properties": {
-          "domain": "{{ .inputs.domain }}",
-          "type": "{{ .inputs.type }}",
-          "lifecycle": "{{ .inputs.lifecycle }}",
-        }
-      }
-    }
+    "port_context": {
+      "entity": "{{ .entity.identifier }}",
+      "repo_url": "{{ .entity.properties.url }}",
+      "runId": "{{ .run.id }}",
+    },
+    "domain": "{{ .inputs.domain }}",
+    "type": "{{ .inputs.type }}",
+    "lifecycle": "{{ .inputs.lifecycle }}",
   }
   ```
 
@@ -369,12 +351,12 @@ Our action will create a pull-request in the service's repository, containing a 
     
     | Name | Value |
     | --- | --- |
-    | LIFECYCLE | $.port_payload.payload.properties.lifecycle |
-    | TYPE | $.port_payload.payload.properties.type |
-    | DOMAIN | $.port_payload.payload.properties.domain |
-    | ENTITY_IDENTIFIER | $.port_payload.context.entity |
-    | REPO_URL | $.port_payload.payload.entity.properties.url |
-    | RUN_ID | $.port_payload.context.runId |
+    | LIFECYCLE | $.lifecycle |
+    | TYPE | $.type |
+    | DOMAIN | $.domain |
+    | ENTITY_IDENTIFIER | $.port_context.entity |
+    | REPO_URL | $.port_context.repo_url |
+    | RUN_ID | $.port_context.runId |
 
   - Set `enrichService` as the pipeline's token.
 
@@ -428,9 +410,20 @@ name: Enrich service
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      port_context:
         required: true
-        description: Port's payload, including details for who triggered the action and general context
+        description: Includes the entity identifier and the action's run id
+      domain:
+        required: true
+        description: The domain to assign the service to
+        type: string
+      type:
+        required: true
+        description: The type of the service
+        type: string
+      lifecycle:
+        required: true
+        description: The lifecycle state of the service
         type: string
 jobs:
   enrichService:
@@ -441,7 +434,7 @@ jobs:
       # Checkout the service's repository
       - uses: actions/checkout@v3
         with:
-          repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}"
+          repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}"
           path: ./targetRepo
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
       - name: Copy template yml file
@@ -449,22 +442,22 @@ jobs:
           cp templates/enrichService.yml ./targetRepo/port.yml
       - name: Update new file data
         run: |
-          sed -i 's/{{ service_identifier }}/${{fromJson(inputs.port_payload).context.entity}}/' ./targetRepo/port.yml
-          sed -i 's/{{ domain_identifier }}/${{fromJson(inputs.port_payload).payload.properties.domain}}/' ./targetRepo/port.yml
-          sed -i 's/{{ service_type }}/${{fromJson(inputs.port_payload).payload.properties.type}}/' ./targetRepo/port.yml
-          sed -i 's/{{ service_lifecycle }}/${{fromJson(inputs.port_payload).payload.properties.lifecycle}}/' ./targetRepo/port.yml
+          sed -i 's/{{ service_identifier }}/${{ fromJson(inputs.port_context).entity }}/' ./targetRepo/port.yml
+          sed -i 's/{{ domain_identifier }}/${{ inputs.domain }}/' ./targetRepo/port.yml
+          sed -i 's/{{ service_type }}/${{ inputs.type }}/' ./targetRepo/port.yml
+          sed -i 's/{{ service_lifecycle }}/${{ inputs.lifecycle }}/' ./targetRepo/port.yml
       - name: Open a pull request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
           path: ./targetRepo
-          commit-message: Enrich service - ${{fromJson(inputs.port_payload).context.entity}}
+          commit-message: Enrich service - ${{ fromJson(inputs.port_context).entity}}
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
           branch: add-port-yml
           delete-branch: true
-          title: Create port.yml - ${{fromJson(inputs.port_payload).context.entity}}
+          title: Create port.yml - ${{ fromJson(inputs.port_context).entity }}
           body: |
             Add port.yaml to enrich service in Port.
           draft: false
@@ -474,8 +467,8 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Pull request to add port.yml created successfully for service "${{fromJson(inputs.port_payload).context.entity}}" 🚀
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          logMessage: Pull request to add port.yml created successfully for service "${{ fromJson(inputs.port_context).entity }}" 🚀
 ```
 
 </details>
@@ -500,7 +493,7 @@ enrichService:
     - apt-get update && apt-get install -y jq && apt-get install -y yq
   script:
     - PAYLOAD=$(cat $TRIGGER_PAYLOAD)
-    - runID=$(echo $PAYLOAD | jq -r '.port_payload.context.runId')
+    - runID=$(echo $PAYLOAD | jq -r '.port_context.runId')
     - >
       access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' --header 'Content-Type: application/json' --data-raw "{\"clientId\": \"$PORT_CLIENT_ID\",\"clientSecret\": \"$PORT_CLIENT_SECRET\"}" | jq '.accessToken' | sed 's/"//g')
     - >
@@ -508,10 +501,10 @@ enrichService:
       }"
     - git config --global user.email "gitRunner@git.com"
     - git config --global user.name "Git Runner"
-    - SERVICE_IDENTIFIER=$(echo $PAYLOAD | jq -r '.port_payload.payload.entity.identifier')
-    - DOMAIN_IDENTIFIER=$(echo $PAYLOAD | jq -r '.port_payload.payload.properties.domain')
-    - SERVICE_TYPE=$(echo $PAYLOAD | jq -r '.port_payload.payload.properties.type')
-    - SERVICE_LIFECYCLE=$(echo $PAYLOAD | jq -r '.port_payload.payload.properties.lifecycle')
+    - SERVICE_IDENTIFIER=$(echo $PAYLOAD | jq -r '.port_context.entity')
+    - DOMAIN_IDENTIFIER=$(echo $PAYLOAD | jq -r '.domain')
+    - SERVICE_TYPE=$(echo $PAYLOAD | jq -r '.type')
+    - SERVICE_LIFECYCLE=$(echo $PAYLOAD | jq -r '.lifecycle')
     - git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git
     - git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${SERVICE_IDENTIFIER}.git ./targetRepo
     - cp templates/enrichService.yml ./targetRepo/port.yml
