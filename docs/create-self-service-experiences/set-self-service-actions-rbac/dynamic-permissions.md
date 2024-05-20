@@ -9,7 +9,7 @@ Port allows users to set dynamic permissions for both executing and approving ex
 - The ability to set conditions based on queries of the software catalog.
 
 This is a powerful feature that allows you to define your own logic based on any piece of data in your software catalog. Prior to defining dynamic permissions for a self-service action, we recommend:
-- clearly defining which users should be allowed to perform this action
+- Clearly defining which users should be allowed to perform this action.
 - clearly defining which users should be allowed to approve this action
 - ensuring that your software catalog contains the necessary blueprints and properties to support the dynamic permissions
 
