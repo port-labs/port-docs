@@ -68,7 +68,7 @@ In the following guide, we are going to create a self-service action in Port tha
     "workflow": "nudge-pr-reviewers.yml",
     "workflowInputs": {
       "context": {
-        "entity": "{{.entity.identifier}}",
+        "entity": "{{.entity}}",
         "blueprint": "{{.action.blueprint}}",
         "runId": "{{.run.id}}",
         "trigger": "{{.trigger}}"
