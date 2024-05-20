@@ -76,7 +76,7 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
       "queries": {
         "query_name": {
           "rules": [
-              // Your rule(s) logic here
+              // Your rule/s logic here
             ],
             "combinator": "and"
         }
