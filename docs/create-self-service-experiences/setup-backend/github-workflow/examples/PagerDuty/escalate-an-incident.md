@@ -223,15 +223,13 @@ Create a new self service action using the following JSON configuration.
     "repo": "<GITHUB_REPO>",
     "workflow": "ecalate-an-incident.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"escalation_policy_id\")) then \"escalation_policy_id\" else null end}}": "{{.inputs.\"escalation_policy_id\"}}",
-      "{{if (.inputs | has(\"urgency\")) then \"urgency\" else null end}}": "{{.inputs.\"urgency\"}}",
-      "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
+      "escalation_policy_id": "{{.inputs.\"escalation_policy_id\"}}",
+      "urgency": "{{.inputs.\"urgency\"}}",
+      "from": "{{.inputs.\"from\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity.identifier}}",
-        "run_id": "{{.run.id}}",
-        "relations": "{{.entity.relations}}"
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true

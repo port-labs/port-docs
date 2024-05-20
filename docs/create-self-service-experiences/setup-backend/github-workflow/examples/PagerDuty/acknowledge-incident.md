@@ -188,13 +188,11 @@ Create a new self service action using the following JSON configuration.
     "repo": "<GITHUB_REPO>",
     "workflow": "acknowledge-incidents.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
+      "from": "{{.inputs.\"from\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity.identifier}}",
-        "run_id": "{{.run.id}}",
-        "relations": "{{.entity.relations}}"
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true

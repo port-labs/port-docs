@@ -249,19 +249,17 @@ Create a new self service action using the following JSON configuration.
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB_ORG>",
-    "repo": "<GITHUB_REPO>",
+    "org": "mk-armah",
+    "repo": "jira-actions",
     "workflow": "change-on-call-user.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"start_time\")) then \"start_time\" else null end}}": "{{.inputs.\"start_time\"}}",
-      "{{if (.inputs | has(\"end_time\")) then \"end_time\" else null end}}": "{{.inputs.\"end_time\"}}",
-      "{{if (.inputs | has(\"new_on_call_user\")) then \"new_on_call_user\" else null end}}": "{{.inputs.\"new_on_call_user\"}}",
+      "start_time": "{{.inputs.\"start_time\"}}",
+      "end_time": "{{.inputs.\"end_time\"}}",
+      "new_on_call_user": "{{.inputs.\"new_on_call_user\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity.identifier}}",
-        "run_id": "{{.run.id}}",
-        "relations": "{{.entity.relations}}"
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true

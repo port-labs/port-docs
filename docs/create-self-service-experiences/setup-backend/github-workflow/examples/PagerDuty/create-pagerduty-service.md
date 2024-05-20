@@ -229,15 +229,13 @@ Create a new self service action using the following JSON configuration.
     "repo": "<GITHUB_REPO>",
     "workflow": "create-a-service.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"name\")) then \"name\" else null end}}": "{{.inputs.\"name\"}}",
-      "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
-      "{{if (.inputs | has(\"escalation_policy\")) then \"escalation_policy\" else null end}}": "{{.inputs.\"escalation_policy\"}}",
+      "name": "{{.inputs.\"name\"}}",
+      "description": "{{.inputs.\"description\"}}",
+      "escalation_policy": "{{.inputs.\"escalation_policy\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity.identifier}}",
-        "run_id": "{{.run.id}}",
-        "relations": "{{.entity.relations}}"
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true

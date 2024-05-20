@@ -250,12 +250,11 @@ Create a new self service action using the following JSON configuration.
     "repo": "<GITHUB_REPO>",
     "workflow": "trigger-pagerduty-incident.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"summary\")) then \"summary\" else null end}}": "{{.inputs.\"summary\"}}",
-      "{{if (.inputs | has(\"source\")) then \"source\" else null end}}": "{{.inputs.\"source\"}}",
-      "{{if (.inputs | has(\"severity\")) then \"severity\" else null end}}": "{{.inputs.\"severity\"}}",
-      "{{if (.inputs | has(\"event_action\")) then \"event_action\" else null end}}": "{{.inputs.\"event_action\"}}",
-      "{{if (.inputs | has(\"routing_key\")) then \"routing_key\" else null end}}": "{{.inputs.\"routing_key\"}}",
+      "summary": "{{.inputs.\"summary\"}}",
+      "source": "{{.inputs.\"source\"}}",
+      "severity": "{{.inputs.\"severity\"}}",
+      "event_action": "{{.inputs.\"event_action\"}}",
+      "routing_key": "{{.inputs.\"routing_key\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity.identifier}}",
