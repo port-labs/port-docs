@@ -148,46 +148,18 @@ The `architecture` property is a URL to a Lucidchart diagram. This is a handy wa
 
 As platform engineers, we want to enable our developers to perform certain actions on their own. Let's create an action that developers can use to add data to a service, and allocate it to a domain.
 
-#### Setup the action's frontend
-
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Enrich service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define backend type](#define-backend-type) step.  
+As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
 
-If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-5 below.
-
+If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
 :::
 
-<details>
-<summary><b>Create the action's frontend (steps 1-5)</b></summary>
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button in the top right corner, and choose "Edit":
+    <img src='/img/guides/gitopsEditAction.png' width='35%' border='1px' />
 
-1. Go to your [Self-service page](https://app.getport.io/self-serve), then click on the `+ New action` button in the top right corner.
+2. Click on the `Backend` tab.
 
-2. From the dropdown, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>.
-
-3. Fill out the basic details like this, then click `Next`:
-
-<img src='/img/guides/gitopsActionBasicDetails.png' width='50%' />
-
-<br/><br/>
-
-4. We want our developers to be able to choose the domain to which the service will be assigned. Click on `New input`, fill out the form like this, then click `Next`:
-
-<img src='/img/guides/gitopsActionInputDomain.png' width='50%' />
-
-<br/><br/>
-
-5. Let's add two more inputs for our new service properties - `type` and `lifecycle`. Create two new inputs, fill out their forms like this, then click `Next`:
-
-<img src='/img/guides/gitopsActionInputType.png' width='50%' />
-
-<br/>
-
-<img src='/img/guides/gitopsActionInputLifecycle.png' width='50%' />
-
-<br/><br/>
-
-</details>
 
 #### Define backend type
 
@@ -239,17 +211,21 @@ Fill out the form with your values:
 
 <TabItem value="gitlab">
 
-First, choose `Gitlab` as the invocation type.
-
-- Follow the instructions under `Install the Port agent and set GitLab Pipeline trigger token` (you can skip step 4, as it is only required when using a self-hosted Gitlab instance).
+First, choose `Trigger Webhook URL` as the invocation type. 
  
-Then, fill out your workflow details:
+- The endpoint URL should look like this:  
+`https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<TRIGGER_TOKEN>`.  
+We will create the `PROJECT_ID` and `TRIGGER_TOKEN` in the next section and come back to update the URL.
 
-- Replace the `Project Name` and `Group Name` values with your values (this is where the pipeline will reside and run).
+- Fill out the rest of the form like this, then click `Next`:
+  <img src='/img/guides/gitopsGitlabActionBackendForm.png' width='80%' border='1px' />
 
-- Note that leaving `Default Ref` blank will automatically use the `main` branch of your repository:  
-  <img src='/img/guides/scaffoldGitlabBackendDetails.png' width='55%' border='1px' />
-  <br/>
+:::info Webhook protection
+
+The webhook URL can be triggered by anyone with access to it.  
+In order to protect the webhook, see the [Validating webhook signatures page](../create-self-service-experiences/setup-backend/webhook/signature-verification.md).
+
+:::
 
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
@@ -361,14 +337,16 @@ Our action will create a pull-request in the service's repository, containing a 
 
 - Under your [root group](https://gitlab.com/dashboard/groups), access `Settings->Access Tokens`, and create a `Maintainer` role token with the `api`, `read_repository`, and `write_repository` scopes. Copy the token's value.
 
-- Go to your GitLab project, from the `Settings` menu in the sidebar on the left, select `CI/CD`.
+- Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL. Then, under Settings->CI/CD, create a new Pipeline trigger token and use it to replace `(TRIGGER_TOKEN)` in the webhook URL.
 
-- Expand the `Variables` section and save the following secrets:
+- In the same menu (CI/CD), add the following variables to the pipeline:
   - `PORT_CLIENT_ID` - Your Port client ID.
+  
   - `PORT_CLIENT_SECRET` - Your Port client secret.
+  
   - `GITLAB_ACCESS_TOKEN` - The GitLab group access token you created in the previous step.
-
-<img src='/img/guides/gitlabVariables.png' width='80%' />
+    
+    <img src='/img/guides/gitlabVariables.png' width='80%' />
 
 </TabItem>
 
