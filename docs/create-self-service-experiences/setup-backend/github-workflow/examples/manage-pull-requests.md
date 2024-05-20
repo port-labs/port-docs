@@ -112,7 +112,7 @@ on:
       action: 
         required: true
         type: string
-      context:
+      port_context:
         required: true
         description: "Details about the action and general context (blueprint, run id, etc...)"
         type: string
@@ -128,14 +128,14 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             Executing the ${{ github.event.inputs.action }} action on the GitHub pull request... ⛴️
 
       - name: Extract Repository and PR Number
         id: extract_info
         run: |
-          link="${{ fromJson(inputs.context).entity.properties.link }}"
+          link="${{ fromJson(inputs.port_context).entity.properties.link }}"
           repo_info=$(echo "$link" | sed 's|https://github.com/||' | awk -F'/' '{print $1 "/" $2}')
           pr_number=$(echo "$link" | awk -F'/' '{print $NF}')
 
@@ -206,7 +206,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           baseUrl: https://api.getport.io
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             GitHub Action result for ${{ env.GITHUB_ACTION_TYPE }} action on PR ${{ env.PR_NUMBER }}: ${{ env.GITHUB_ACTION_RESULT_MESSAGE }}
 ```

@@ -399,8 +399,8 @@ on:
         description: Add members manually to the channel.
         type: array
         required: false
-      context:
-        description: Details of the action and general context (blueprint, run ID, etc...).
+      port_context:
+        description: Details of the action and general port_context (blueprint, run ID, etc...).
         required: true
 
 jobs:
@@ -414,7 +414,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.context).runId }}
+          runId: ${{ fromJson(github.event.inputs.port_context).runId }}
           logMessage: "About to create a conversation channel in slack..."
 
       - name: Create Slack Channel
@@ -451,7 +451,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.context).runId }}
+          runId: ${{ fromJson(github.event.inputs.port_context).runId }}
           logMessage: "Failed to create slack channel: ${{env.CREATE_CHANNEL_ERROR}} ❌"
 
       - name: Log If Create Channel Request is Successful
@@ -461,7 +461,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.context).runId }}
+          runId: ${{ fromJson(github.event.inputs.port_context).runId }}
           logMessage: "Channel created successfully, channel Id: ${{env.CHANNEL_ID}} ✅"
 
       - name: Checkout code
@@ -475,7 +475,7 @@ jobs:
           CHANNEL_ID: ${{env.CHANNEL_ID}}
           CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
-          RUN_ID: ${{ fromJson(github.event.inputs.context).runId }}
+          RUN_ID: ${{ fromJson(github.event.inputs.port_context).runId }}
           MEMBER_EMAILS: ${{ toJSON(github.event.inputs.members) }}
         run: |
           cd slack
@@ -490,7 +490,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
-          runId: ${{ fromJson(github.event.inputs.context).runId }}
+          runId: ${{ fromJson(github.event.inputs.port_context).runId }}
           logMessage: "Successfully opened slack channel: ${{env.CHANNEL_ID}} ✅"
 ```
 
@@ -649,7 +649,7 @@ Create a new self service action using the following JSON configuration.
       "channel_name": "{{.inputs.\"channel_name\"}}",
       "is_private": "{{.inputs.\"is_private\"}}",
       "members": "{{.inputs.\"members\"}}",
-      "context": {
+      "port_context": {
         "entity": "{{.entity}}",
         "blueprint": "{{.action.blueprint}}",
         "runId": "{{.run.id}}",

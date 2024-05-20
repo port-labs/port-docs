@@ -106,7 +106,7 @@ name: Nudge Pull Request Reviewers
 on:
   workflow_dispatch:
     inputs:
-      context:
+      port_context:
         required: true
         description: "Details about the action and general context (blueprint, run id, etc...)"
         type: string
@@ -119,7 +119,7 @@ jobs:
       - name: Extract Repository and PR Number
         id: extract_info
         run: |
-          link="${{ fromJson(inputs.context).entity.properties.link }}"
+          link="${{ fromJson(inputs.port_context).entity.properties.link }}"
           repo_info=$(echo "$link" | sed 's|https://github.com/||' | awk -F'/' '{print $1 "/" $2}')
           pr_number=$(echo "$link" | awk -F'/' '{print $NF}')
 
@@ -136,12 +136,12 @@ jobs:
 
       - name: Send Slack Notification
         env:
-          PR_TITLE: ${{ fromJson(inputs.context).entity.title }}
+          PR_TITLE: ${{ fromJson(inputs.port_context).entity.title }}
         run: |
           reviews_json="${{ steps.get_reviewers.outputs.reviews_file_path }}"
           reviewers=$(jq -r '.[].user.login' $reviews_json | sort -u)
 
-          pr_title="${{ fromJson(inputs.context).entity.title }}"
+          pr_title="${{ fromJson(inputs.port_context).entity.title }}"
           
           echo "Reviewers: $reviewers"
           
@@ -199,7 +199,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           baseUrl: https://api.getport.io
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           status: "SUCCESS"
           logMessage: |
             GitHub Action completed! Sent slack message to PR reviewers for PR https://github.com/${{ env.REPO_INFO }}/pull/${{ env.PR_NUMBER }} ✅

@@ -393,7 +393,7 @@ on:
         description: "Message to send to service owners"
         required: true
         type: string
-      context:
+      port_context:
         required: true
         description: "Details about the action and general context (blueprint, run id, etc...)"
         type: string
@@ -407,7 +407,7 @@ jobs:
       - name: Run python script
         env:
           MESSAGE: ${{ github.event.inputs.message }}
-          SENDING_API: ${{ fromJson(github.event.inputs.context).entity.identifier }}
+          SENDING_API: ${{ fromJson(github.event.inputs.port_context).entity.identifier }}
           PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
           PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
         run: |
