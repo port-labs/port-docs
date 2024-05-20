@@ -141,9 +141,9 @@ on:
         description: "Action to perform (apply/destroy)"
         required: true
         default: "apply"
-      context:
+      port_context:
         required: true
-        description: "Port's payload (who triggered, context, etc...)"
+        description: "Port's payload (who triggered, port_context, etc...)"
         type: string
 
 jobs:
@@ -164,7 +164,7 @@ jobs:
       CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
       REGION: ${{ github.event.inputs.region }}
       ACTION: ${{ github.event.inputs.action }}
-      PORT_RUN_ID: ${{ fromJson(inputs.context).runId }}
+      PORT_RUN_ID: ${{ fromJson(inputs.port_context).runId }}
 
     steps:
       - name: Checkout code
@@ -296,7 +296,7 @@ jobs:
     "workflowInputs": {
       "cluster_name": "{{ .inputs.\"cluster_name\" }}",
       "region": "{{ .inputs.\"region\" }}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
@@ -646,7 +646,7 @@ terraform {
       "repo_name": "{{.inputs.\"repo_name\"}}",
       "template": "{{.inputs.\"template\"}}",
       "description": "{{.inputs.\"description\"}}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
@@ -693,9 +693,9 @@ on:
         description: "Description of the app"
         required: true
         default: "A simple app"
-      context:
+      port_context:
         required: true
-        description: "Port's payload (who triggered, context, etc...)"
+        description: "Port's payload (who triggered, port_context, etc...)"
         type: string
 
 jobs:
@@ -703,7 +703,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PORT_RUN_ID: ${{ fromJson(github.event.inputs.context).runId }}
+      PORT_RUN_ID: ${{ fromJson(github.event.inputs.port_context).runId }}
       
 
     steps:
@@ -905,7 +905,7 @@ This action will create the following:
     "workflow": "build-and-deploy.yml",
     "workflowInputs": {
       "cluster": "{{.inputs.\"cluster\"}}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
@@ -937,9 +937,9 @@ on:
       cluster:
         description: 'Deployment cluster'
         required: true
-      context:
+      port_context:
         required: true
-        description: "Action and general context (blueprint, run id, etc...)"
+        description: "Action and general port_context (blueprint, run id, etc...)"
         type: string
 
 jobs:
@@ -947,8 +947,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPO_URL: ${{ fromJson(inputs.context).entity.properties.url }}
-      TRIGGERED_BY: ${{ fromJson(inputs.context).trigger.by.user.email || github.actor }}
+      REPO_URL: ${{ fromJson(inputs.port_context).entity.properties.url }}
+      TRIGGERED_BY: ${{ fromJson(inputs.port_context).trigger.by.user.email || github.actor }}
 
     steps:
     - name: Extract repository owner and name
@@ -1023,7 +1023,7 @@ jobs:
         clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
         operation: PATCH_RUN
         baseUrl: https://api.getport.io
-        runId: ${{ fromJson(inputs.context).runId }}
+        runId: ${{ fromJson(inputs.port_context).runId }}
         logMessage: |
           Built and pushed image to ECR
 
@@ -1051,7 +1051,7 @@ jobs:
         operation: PATCH_RUN
         status: "SUCCESS"
         baseUrl: https://api.getport.io
-        runId: ${{ fromJson(inputs.context).runId }}
+        runId: ${{ fromJson(inputs.port_context).runId }}
         logMessage: |
             Deployed to EKS 
 ```
