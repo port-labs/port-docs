@@ -286,8 +286,8 @@ jobs:
 
           cp $CROSSPLANE_TEMPLATE_PATH $BUCKET_FILE_NAME
 
-          sed -i "s/{{ bucket_name }}/${{ inputs.bucket_name }}/g" $BUCKET_FILE_NAME
-          sed -i "s/{{ aws_region }}/${{ inputs.aws_region }}/g" $BUCKET_FILE_NAME
+          sed -i "s|{{ bucket_name }}|${{ inputs.bucket_name }}|g" $BUCKET_FILE_NAME
+          sed -i "s|{{ aws_region }}|${{ inputs.aws_region }}|g" $BUCKET_FILE_NAME
 
           git add $BUCKET_FILE_NAME
             

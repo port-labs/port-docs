@@ -36,11 +36,12 @@ After completing it, you will get a sense of how it can benefit different person
 
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
+As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve).  
 
 If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
 :::
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Send scorecard reminder` action, click the `...` button in the top right corner, and choose "Edit":
+
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button in the top right corner, and choose "Edit":
 
     <img src='/img/guides/scaffoldEditAction.png' width='45%' border='1px' />
 
@@ -78,16 +79,10 @@ Fill out the form with your values:
 
   ```json showLineNumbers
   {
-    "port_payload": {
-      "context": {
-        "runId": "{{ .run.id }}"
-      },
-      "payload": {
-        "properties": {
-          "service_name": "{{ .inputs.service_name }}",
-        }
-      }
-    }
+    "port_context": {
+        "runId": "{{ .run.id }}",
+    },
+    "service_name": "{{ .inputs.service_name }}",
   }
   ```
 
@@ -120,31 +115,21 @@ First, choose `Trigger Webhook URL` as the invocation type, then fill out the fo
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this example, we will send some details that our backend needs to know, including the service name, and the id of the action run.  
+  For this example, we will send some details that our backend needs to know, including the service name and the id of the action run.  
   Copy the following JSON snippet and paste it in the "Body" code box:
 
   ```json showLineNumbers
   {
-    "port_payload": {
-      "context": {
+    "port_context": {
         "runId": "{{ .run.id }}",
         "blueprint": "{{ .action.blueprint }}",
-      },
-      "payload": {
-        "properties": {
-          "service_name": "{{ .inputs.service_name }}",
+        "user": {
+          "firstName": "{{ .trigger.by.user.firstName }}",
+          "lastName": "{{ .trigger.by.user.lastName }}",
+          "email": "{{ .trigger.by.user.email }}",
         }
-      },
-      "trigger": {
-        "by": {
-          "user": {
-            "firstName": "{{ .trigger.by.user.firstName }}",
-            "lastName": "{{ .trigger.by.user.lastName }}",
-            "email": "{{ .trigger.by.user.email }}",
-          }
-        }
-      }
-    }
+    },
+    "service_name": "{{ .inputs.service_name }}",
   }
   ```
 
@@ -166,23 +151,17 @@ Then, fill out your workflow details:
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this example, we will send some details that our backend needs to know - the three user inputs, and the id of the action run.  
+  For this example, we will send some details that our backend needs to know - the user inputs, and the id of the action run.  
   Copy the following JSON snippet and paste it in the payload code box:
 
   ```json showLineNumbers
   {
-    "port_payload": {
-      "context": {
-        "runId": "{{ .run.id }}",
-      },
-      "payload": {
-        "properties": {
-          "service_name": "{{ .inputs.service_name }}",
-          "bitbucket_workspace_name": "{{ .inputs.bitbucket_workspace_name }}",
-          "bitbucket_project_key": "{{ .inputs.bitbucket_project_key }}",
-        }
-      },
-    }
+    "port_context": {
+      "runId": "{{ .run.id }}",
+    },
+    "service_name": "{{ .inputs.service_name }}",
+    "bitbucket_workspace_name": "{{ .inputs.bitbucket_workspace_name }}",
+    "bitbucket_project_key": "{{ .inputs.bitbucket_project_key }}",
   }
   ```
 
@@ -246,9 +225,12 @@ name: Scaffold a new service
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: Includes the action's run id
+      service_name:
+        required: true
+        description: The name of the new service
         type: string
     secrets:
       ORG_ADMIN_TOKEN:
@@ -270,9 +252,9 @@ jobs:
           portClientId: ${{ secrets.PORT_CLIENT_ID }}
           portClientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
-          portRunId: ${{ fromJson(inputs.port_payload).context.runId }}
-          repositoryName: ${{ fromJson(inputs.port_payload).payload.properties.service_name }}
-          portUserInputs: '{"cookiecutter_app_name": "${{ fromJson(inputs.port_payload).payload.properties.service_name }}" }'
+          portRunId: ${{ fromJson(inputs.port_context).runId }}
+          repositoryName: ${{ inputs.service_name }}
+          portUserInputs: '{"cookiecutter_app_name": "${{ inputs.service_name }}" }'
           cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
           blueprintIdentifier: "service"
           organizationName: ${{ env.ORG_NAME }}
@@ -309,11 +291,7 @@ Next, let's create the necessary token and secrets:
 - Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Scaffolder token` and save its value
   - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the [define backend type](#define-backend-type) section.
 
-<br/>
-
-  <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' border='1px' />
-
-<br/><br/>
+    <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' border='1px' />
 
 :::tip
 Now that you have both the new GitLab project and its respective trigger token, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
@@ -354,7 +332,7 @@ fetch-port-access-token: # Example - get the Port API access token and RunId
         -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
         -s 'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
       echo "ACCESS_TOKEN=$accessToken" >> data.env
-      runId=$(cat $TRIGGER_PAYLOAD | jq -r '.context.runId')
+      runId=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.runId')
       echo "RUN_ID=$runId" >> data.env
       curl -X POST \
         -H 'Content-Type: application/json' \
@@ -387,7 +365,7 @@ scaffold:
         -d '{"message":"⚙️ Creating new GitLab repository"}' \
         "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
 
-      service_name=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.service_name')
+      service_name=$(cat $TRIGGER_PAYLOAD | jq -r '.service_name')
       CREATE_REPO_RESPONSE=$(curl -X POST -s "$CI_API_V4_URL/projects" --header "Private-Token: $GITLAB_ACCESS_TOKEN" --form "name=$service_name" --form "namespace_id=$CI_PROJECT_NAMESPACE_ID")
       PROJECT_URL=$(echo $CREATE_REPO_RESPONSE | jq -r .http_url_to_repo)
 
@@ -403,10 +381,10 @@ scaffold:
         -d '{"message":"✅ Repository created"}' \
         "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
 
-      FIRST_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.trigger.by.user.firstName')
-      LAST_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.trigger.by.user.lastName')
-      EMAIL=$(cat $TRIGGER_PAYLOAD | jq -r '.trigger.by.user.email')
-      BLUEPRINT_ID=$(cat $TRIGGER_PAYLOAD | jq -r '.context.blueprint')
+      FIRST_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.user.firstName')
+      LAST_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.user.lastName')
+      EMAIL=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.user.email')
+      BLUEPRINT_ID=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.blueprint')
 
       echo "PROJECT_URL=$PROJECT_URL" >> data.env
       echo "BLUEPRINT_ID=$BLUEPRINT_ID" >> data.env
@@ -535,10 +513,10 @@ Create the following varaibles and their related JSONPath expression:
 
     | Variable Name            | JSONPath Expression                             |
     | ------------------------ | ----------------------------------------------- |
-    | SERVICE_NAME             | `$.port_payload.payload.properties.service_name`             |
-    | BITBUCKET_WORKSPACE_NAME | `$.port_payload.payload.properties.bitbucket_workspace_name` |
-    | BITBUCKET_PROJECT_KEY    | `$.port_payload.payload.properties.bitbucket_project_key`    |
-    | RUN_ID                   | `$.port_payload.context.runId`                               |
+    | SERVICE_NAME             | `$.service_name`                                |
+    | BITBUCKET_WORKSPACE_NAME | `$.bitbucket_workspace_name`                    |
+    | BITBUCKET_PROJECT_KEY    | `$.bitbucket_project_key`                       |
+    | RUN_ID                   | `$.port_context.runId`                          |
 
 <br/>
 
