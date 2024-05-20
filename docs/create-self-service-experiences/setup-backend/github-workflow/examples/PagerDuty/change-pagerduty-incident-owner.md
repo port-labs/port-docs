@@ -290,7 +290,6 @@ Create a new self service action using the following JSON configuration.
     "repo": "<GITHUB_REPO>",
     "workflow": "change-incident-owner.yaml",
     "workflowInputs": {
-      "inputs": "{{.inputs.\"ref\"}}",
       "new_owner": "{{.inputs.\"new_owner\"}}",
       "from": "{{.inputs.\"from\"}}",
       "port_context": {
