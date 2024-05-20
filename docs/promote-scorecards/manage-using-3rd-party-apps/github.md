@@ -13,6 +13,6 @@ For every scorecard level that is not completed, a GitHub Issue will be created,
 
 Head to the Port sender [Jira section](https://github.com/marketplace/actions/port-sender#manage-scorecards-with-github-issues) to learn more about the integration and how to use it.
 
-### Created issue example
+### Created GitHub issue example
 
 ![Create and update Issues for uncompleted scorecards levels](/img/scorecards/github/github-sync-issue.png)
