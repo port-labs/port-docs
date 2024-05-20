@@ -289,15 +289,14 @@ Create a new self service action using the following JSON configuration.
     "repo": "<GITHUB_REPO>",
     "workflow": "toggle-feature-flag.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"project_key\")) then \"project_key\" else null end}}": "{{.inputs.\"project_key\"}}",
-      "{{if (.inputs | has(\"environment_key\")) then \"environment_key\" else null end}}": "{{.inputs.\"environment_key\"}}",
-      "{{if (.inputs | has(\"flag_state\")) then \"flag_state\" else null end}}": "{{.inputs.\"flag_state\"}}",
+      "project_key": "{{.inputs.\"project_key\"}}",
+      "environment_key": "{{.inputs.\"environment_key\"}}",
+      "flag_state": "{{.inputs.\"flag_state\"}}",
       "port_context": {
-      "blueprint": "{{.action.blueprint}}",
-      "entity": "{{.entity.identifier}}",
-      "run_id": "{{.run.id}}",
-      "relations": "{{.entity.relations}}"
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}",
+        "relations": "{{.entity.relations}}"
       }
     },
     "reportWorkflowStatus": true
