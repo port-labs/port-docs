@@ -638,9 +638,8 @@ Create a new self service action using the following JSON configuration.
     "repo": "GITHUB_REPO",
     "workflow": "open-slack-channel.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"channel_name\")) then \"channel_name\" else null end}}": "{{.inputs.\"channel_name\"}}",
-      "{{if (.inputs | has(\"is_private\")) then \"is_private\" else null end}}": "{{.inputs.\"is_private\"}}",
+      "channel_name": "{{.inputs.\"channel_name\"}}",
+      "is_private": "{{.inputs.\"is_private\"}}",
       "members": "{{.inputs.\"members\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
