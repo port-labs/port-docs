@@ -4,7 +4,7 @@ import TabItem from "@theme/TabItem"
 # Dynamic permissions
 
 Port allows users to set dynamic permissions for both executing and approving execution of self-service actions. To support these dynamic permission, Port offers the following to users within the JSON configuration of any given self-service action:
-- the organization's full software catalog as defined in Port (to provide necessary context to the self-service action)
+- The organization's full software catalog as defined in Port (to provide necessary context to the self-service action).
 - the ability to query the software catalog
 - the ability to set conditions based on queries of the software catalog
 
