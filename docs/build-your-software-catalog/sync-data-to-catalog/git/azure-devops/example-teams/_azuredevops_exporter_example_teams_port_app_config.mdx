@@ -16,6 +16,9 @@ resources:
           properties:
             url: .url
             description: .description
+          relations:
+            project: .__repository.project.id | gsub(" "; "")
+            service: .__repository.project.name + "/" + .__repository.name | gsub(" "; "")
   - kind: member
     selector:
       query: 'true'
