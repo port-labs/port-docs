@@ -11,13 +11,13 @@ resources:
     port:
       entity:
         mappings:
-          identifier: '.id'
+          identifier: '.id | gsub(" "; "")'
           blueprint: '"project"'
           title: .name
           properties:
             state: '.state'
             revision: '.revision'
-            visibility": '.visibility'
+            visibility: '.visibility'
             defaultTeam: '.defaultTeam.name'
             link: '.url | gsub("_apis/projects/"; "")'
 
