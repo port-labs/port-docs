@@ -3,11 +3,11 @@ sidebar_position: 1
 sidebar_label: Open/close Github issues
 ---
 
-# Open/close JIRA issues
+# Open/close GitHub issues
 
 The [Port message sender](https://github.com/marketplace/actions/port-sender) allows you to automatically create GitHub issues for entities with violated scorecard rules, and close them once the violations are fixed.
 
-## Syncing Jira issues
+## Syncing GitHub issues
 
 For every scorecard level that is not completed, a GitHub Issue will be created, along with tasks for the level rules.
 
