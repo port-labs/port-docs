@@ -100,6 +100,10 @@ In order to successfully deploy the GCP integration, it's crucial to ensure that
 
 ## Installation walkthrough
 
+:::tip
+   If you prefer not to have the integration fetch all the organization's projects, you can specify a list of projects using the `projects` variable in the Terraform module. The integration will then pull resources exclusively from these projects, ignoring all others.
+:::
+
 1. Go to Port's [Data Sources](https://app.getport.io/settings/data-sources?section=EXPORTERS) and click on GCP.
 2. Edit and copy the installation command.
 3. Run the command in your terminal to deploy the GCP integration.
