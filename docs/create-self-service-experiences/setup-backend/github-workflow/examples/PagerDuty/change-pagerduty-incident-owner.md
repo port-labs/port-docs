@@ -248,77 +248,54 @@ Create a new self service action using the following JSON configuration.
 
 ```json showLineNumbers
 {
-  "identifier": "pagerdutyService_create_incident",
-  "title": "Create Incident",
+  "identifier": "pagerdutyIncident_change_incident_owner",
+  "title": "Change Incident Owner",
   "icon": "pagerduty",
-  "description": "Notify users and teams about incidents in the service",
+  "description": "Change Incident Owner in pagerduty",
   "trigger": {
     "type": "self-service",
     "operation": "DAY-2",
     "userInputs": {
       "properties": {
-        "title": {
-          "icon": "DefaultProperty",
-          "title": "Title",
-          "type": "string"
-        },
-        "extra_details": {
-          "title": "Extra Details",
-          "type": "string"
-        },
-        "urgency": {
-          "icon": "DefaultProperty",
-          "title": "Urgency",
-          "type": "string",
-          "default": "high",
-          "enum": [
-            "high",
-            "low"
-          ],
-          "enumColors": {
-            "high": "yellow",
-            "low": "green"
-          }
-        },
         "from": {
-          "title": "From",
           "icon": "User",
+          "title": "From",
+          "description": "The email address of a valid user associated with the account making the request.",
           "type": "string",
-          "format": "user",
-          "default": {
-            "jqQuery": ".user.email"
-          }
+          "format": "user"
+        },
+        "new_owner": {
+          "icon": "pagerduty",
+          "title": "New Owner",
+          "description": "Email User of the new incident owner",
+          "type": "string",
+          "format": "user"
         }
       },
       "required": [
-        "title",
-        "urgency",
+        "new_owner",
         "from"
       ],
       "order": [
-        "title",
-        "urgency",
-        "from",
-        "extra_details"
+        "new_owner",
+        "from"
       ]
     },
-    "blueprintIdentifier": "pagerdutyService"
+    "blueprintIdentifier": "pagerdutyIncident"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB_ORG>",
     "repo": "<GITHUB_REPO>",
-    "workflow": "create-pagerduty-incident.yaml",
+    "workflow": "change-incident-owner.yaml",
     "workflowInputs": {
-      "title": "{{.inputs.\"title\"}}",
-      "extra_details": "{{.inputs.\"extra_details\"}}",
-      "urgency": "{{.inputs.\"urgency\"}}",
-      "from": "{{.inputs.\"from\"}}",
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"new_owner_user_id\")) then \"new_owner_user_id\" else null end}}": "{{.inputs.\"new_owner_user_id\"}}",
+      "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity.identifier}}",
-        "run_id": "{{.run.id}}",
-        "relations": "{{.entity.relations}}"
+        "entity": "{{.entity}}",
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true
