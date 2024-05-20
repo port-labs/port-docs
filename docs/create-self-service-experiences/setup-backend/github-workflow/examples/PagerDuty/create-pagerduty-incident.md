@@ -148,7 +148,7 @@ Create a new self service action using the following JSON configuration.
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
-      "{{if (.inputs | has(\"extra_details\")) then \"extra_details\" else null end}}": "{{.inputs.\"extra_details\"}}",
+      "extra_details": "{{.inputs.\"extra_details\"}}",
       "{{if (.inputs | has(\"urgency\")) then \"urgency\" else null end}}": "{{.inputs.\"urgency\"}}",
       "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
       "port_context": {
