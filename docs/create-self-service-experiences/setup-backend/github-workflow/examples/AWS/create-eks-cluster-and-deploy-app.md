@@ -117,6 +117,8 @@ Clone the repository [here](https://github.com/port-labs/eks-deploy-guide) to fo
 
 </details>
 
+<br />
+
 2. Create the file `manage-eks-cluster.yml` in the `.github/workflows` folder of your repository.
 
 <details>
@@ -222,7 +224,14 @@ jobs:
 
 </details>
 
-3. Create a Port action against the EKS Cluster blueprint
+<br />
+
+3. Create a Port action against the `EKS Cluster` blueprint:
+    - Go to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button in the top right corner.
+    - Copy and paste the following JSON configuration into the editor.
+    - Click `Save`
 
 <details>
 
@@ -235,46 +244,87 @@ jobs:
 
 ```json
 {
-  "identifier": "create_eks_cluster",
+  "identifier": "eks_create_eks_cluster",
   "title": "Create an EKS cluster",
   "icon": "AmazonEKS",
-  "userInputs": {
-    "properties": {
-      "cluster_name": {
-        "title": "Cluster Name",
-        "description": "The name of the EKS Cluster",
-        "icon": "AmazonEKS",
-        "type": "string"
+  "description": "An action that creates an eks cluster",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "cluster_name": {
+          "title": "Cluster Name",
+          "description": "The name of the EKS Cluster",
+          "icon": "AmazonEKS",
+          "type": "string"
+        },
+        "region": {
+          "type": "string",
+          "blueprint": "region",
+          "title": "Region",
+          "format": "entity"
+        }
       },
-      "region": {
-        "type": "string",
-        "blueprint": "region",
-        "title": "Region",
-        "format": "entity"
-      }
+      "required": [
+        "cluster_name"
+      ],
+      "order": [
+        "cluster_name"
+      ]
     },
-    "required": [
-      "cluster_name"
-    ],
-    "order": [
-      "cluster_name"
-    ]
+    "blueprintIdentifier": "eks"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB_ORG>",
     "repo": "<GITHUB_REPO>",
     "workflow": "manage-eks-cluster.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"cluster_name\")) then \"cluster_name\" else null end}}": "{{.inputs.\"cluster_name\"}}",
+      "{{if (.inputs | has(\"region\")) then \"region\" else null end}}": "{{.inputs.\"region\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"eks_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "manage-eks-cluster.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"cluster_name\")) then \"cluster_name\" else null end}}": "{{.inputs.\"cluster_name\"}}",
+            "{{if (.inputs | has(\"region\")) then \"region\" else null end}}": "{{.inputs.\"region\" | if type == \"array\" then map(.identifier) else .identifier end}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "CREATE",
-  "description": "An action that creates an eks cluster",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
+
+<br />
 
 4. Create the following Terraform configuration in a `terraform` folder at the root of your GitHub repository:
 
@@ -539,7 +589,7 @@ terraform {
 ```
 </details>
 
-
+<br />
 
 5. Now, create a cluster using the action.
 
@@ -548,6 +598,109 @@ terraform {
 ## Scaffolding a Node.js app
 
 1. On the [self-service](https://app.getport.io/self-serve) page, create the Port action against the `Repository` blueprint. This will trigger the GitHub workflow.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button in the top right corner.
+    - Copy and paste the following JSON configuration into the editor.
+    - Click `Save`
+
+<details>
+
+:::tip Replace the placeholders
+- `<GITHUB-ORG>` - your GitHub organization or user name.
+- `<GITHUB-REPO-NAME>` - your GitHub repository name.
+:::
+
+<summary>Port Action: Scaffold Node App</summary>
+
+```json showLineNumbers
+{
+  "identifier": "repository_scaffold_node_app",
+  "title": "Scaffold Node App",
+  "description": "Scaffold a node.js app",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "project_name": {
+          "title": "Project Name",
+          "description": "The name of the project",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "repo_name": {
+          "icon": "DefaultProperty",
+          "title": "Repository Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_name",
+        "repo_name"
+      ],
+      "order": [
+        "project_name",
+        "repo_name",
+        "description"
+      ]
+    },
+    "blueprintIdentifier": "repository"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "phalbert",
+    "repo": "azure-resources-terraform",
+    "workflow": "scaffold-app.yml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"project_name\")) then \"project_name\" else null end}}": "{{.inputs.\"project_name\"}}",
+      "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
+      "{{if (.inputs | has(\"repo_name\")) then \"repo_name\" else null end}}": "{{.inputs.\"repo_name\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"repository_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "scaffold-app.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"project_name\")) then \"project_name\" else null end}}": "{{.inputs.\"project_name\"}}",
+            "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
+            "{{if (.inputs | has(\"repo_name\")) then \"repo_name\" else null end}}": "{{.inputs.\"repo_name\"}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+</details>
+
+<br />
 
 2. Create the file `scaffold-app.yml` in the `.github/workflows` folder of your repository.
 
@@ -723,16 +876,13 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
+          status: "SUCCESS"
           runId: ${{fromJson(inputs.port_payload).context.runId}}
           logMessage: "Finished scaffolding of app: ${{ github.event.inputs.project_name }}"
 ```
 
 </details>
 
-<img src='/img/self-service-actions/setup-backend/github-workflow/examples/awsECRActionNew.png' width='45%' border='1px' />
-
-<img src='/img/self-service-actions/setup-backend/github-workflow/examples/createAndDeployForm.png' width='45%' border='1px' />
-<br />
 <br />
 
 3. Scaffold an application using the `nodejs` template.
@@ -763,35 +913,74 @@ This action will create the following:
 
 ```json showLineNumbers
 {
-  "identifier": "deploy_to_eks",
+  "identifier": "eks_deploy_to_eks",
   "title": "Deploy to EKS",
-  "userInputs": {
-    "properties": {
-      "cluster": {
-        "type": "string",
-        "blueprint": "eks",
-        "title": "Cluster",
-        "format": "entity"
-      }
+  "description": "Build and deploy an image to EKS",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "cluster": {
+          "type": "string",
+          "blueprint": "eks",
+          "title": "Cluster",
+          "format": "entity"
+        }
+      },
+      "required": [],
+      "order": []
     },
-    "required": [],
-    "order": []
+    "blueprintIdentifier": "eks"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB_ORG>",
     "repo": "<GITHUB_REPO>",
     "workflow": "build-and-deploy.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"cluster\")) then \"cluster\" else null end}}": "{{.inputs.\"cluster\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"eks_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "build-and-deploy.yml",
+              "omitUserInputs": false,
+              "omitPayload": false,
+              "reportWorkflowStatus": true
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"cluster\")) then \"cluster\" else null end}}": "{{.inputs.\"cluster\" | if type == \"array\" then map(.identifier) else .identifier end}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Build and deploy an image to EKS",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
+
+<br />
 
 2. Create the file `build-and-deploy.yml` in the `.github/workflows` folder of your repository. (This is the same repository you've been using for the other workflows.)
 
@@ -920,6 +1109,7 @@ jobs:
         clientId: ${{ secrets.PORT_CLIENT_ID }}
         clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
         operation: PATCH_RUN
+        status: "SUCCESS"
         baseUrl: https://api.getport.io
         runId: ${{ fromJson(inputs.port_payload).context.runId }}
         logMessage: |
@@ -927,6 +1117,8 @@ jobs:
 ```
 
 </details>
+
+<br />
 
 <img src='/img/self-service-actions/setup-backend/github-workflow/examples/createAndDeployTest.png' width='90%' border='1px' />
 

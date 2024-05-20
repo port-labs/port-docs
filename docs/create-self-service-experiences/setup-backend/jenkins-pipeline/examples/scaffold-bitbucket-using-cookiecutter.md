@@ -57,12 +57,14 @@ Make sure to replace the placeholders for JENKINS_URL and JOB_TOKEN.
 :::
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "scaffold_bitbucket",
-    "title": "Scaffold Golang Microservice - BitBucket",
-    "description": "Creates a repo for new golang Microservice on Bitbucket",
-    "icon": "Go",
+{
+  "identifier": "microservice_scaffold_bitbucket",
+  "title": "Scaffold Golang Microservice - BitBucket",
+  "icon": "Go",
+  "description": "Creates a repo for new golang Microservice on Bitbucket",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "repo_name": {
@@ -88,16 +90,47 @@ Make sure to replace the placeholders for JENKINS_URL and JOB_TOKEN.
         "bitbucket_project_key"
       ]
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "agent": false,
-      "url": "https://<JENKINS_URL>/generic-webhook-trigger/invoke?token=<JOB_TOKEN>",
-      "synchronized": false,
-      "method": "POST"
-    },
-    "trigger": "CREATE"
-  }
-]
+    "blueprintIdentifier": "microservice"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://<JENKINS_URL>/generic-webhook-trigger/invoke?token=<JOB_TOKEN>",
+    "agent": false,
+    "synchronized": false,
+    "method": "POST",
+    "body": {
+      "action": "{{ .action.identifier[(\"microservice_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "agent": false,
+            "url": "https://<JENKINS_URL>/generic-webhook-trigger/invoke?token=<JOB_TOKEN>",
+            "synchronized": false,
+            "method": "POST"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"repo_name\")) then \"repo_name\" else null end}}": "{{.inputs.\"repo_name\"}}",
+          "{{if (.inputs | has(\"bitbucket_workspace_name\")) then \"bitbucket_workspace_name\" else null end}}": "{{.inputs.\"bitbucket_workspace_name\"}}",
+          "{{if (.inputs | has(\"bitbucket_project_key\")) then \"bitbucket_project_key\" else null end}}": "{{.inputs.\"bitbucket_project_key\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "publish": true
+}
 ```
 
 4. Create a Jenkins Pipeline with the following configuration:
