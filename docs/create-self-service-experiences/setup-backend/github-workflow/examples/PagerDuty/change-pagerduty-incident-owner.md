@@ -306,8 +306,8 @@ Create a new self service action using the following JSON configuration.
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "mk-armah",
-    "repo": "jira-actions",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "create-pagerduty-incident.yaml",
     "workflowInputs": {
       "title": "{{.inputs.\"title\"}}",
