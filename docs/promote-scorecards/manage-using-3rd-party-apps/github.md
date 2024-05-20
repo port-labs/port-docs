@@ -11,7 +11,7 @@ The [Port message sender](https://github.com/marketplace/actions/port-sender) al
 
 For every scorecard level that is not completed, a GitHub Issue will be created, along with tasks for the level rules.
 
-Head to the Port sender [Jira section](https://github.com/marketplace/actions/port-sender#manage-scorecards-with-github-issues) to learn more about the integration and how to use it.
+Head to the Port sender [GitHub section](https://github.com/marketplace/actions/port-sender#manage-scorecards-with-github-issues) to learn more about the integration and how to use it.
 
 ### Created GitHub issue example
 
