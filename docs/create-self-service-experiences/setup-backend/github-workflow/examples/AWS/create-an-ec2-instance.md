@@ -485,10 +485,9 @@ jobs:
     "repo": "<GITHUB_REPO>",
     "workflow": "create-ec2-instance.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"pem_key_name\")) then \"pem_key_name\" else null end}}": "{{.inputs.\"pem_key_name\"}}",
-      "{{if (.inputs | has(\"ec2_name\")) then \"ec2_name\" else null end}}": "{{.inputs.\"ec2_name\"}}",
-      "{{if (.inputs | has(\"ec2_instance_type\")) then \"ec2_instance_type\" else null end}}": "{{.inputs.\"ec2_instance_type\"}}",
+      "pem_key_name": "{{.inputs.\"pem_key_name\"}}",
+      "ec2_name": "{{.inputs.\"ec2_name\"}}",
+      "ec2_instance_type": "{{.inputs.\"ec2_instance_type\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity.identifier}}",
