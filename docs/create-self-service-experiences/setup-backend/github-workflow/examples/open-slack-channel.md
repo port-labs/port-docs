@@ -641,7 +641,7 @@ Create a new self service action using the following JSON configuration.
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "{{if (.inputs | has(\"channel_name\")) then \"channel_name\" else null end}}": "{{.inputs.\"channel_name\"}}",
       "{{if (.inputs | has(\"is_private\")) then \"is_private\" else null end}}": "{{.inputs.\"is_private\"}}",
-      "{{if (.inputs | has(\"members\")) then \"members\" else null end}}": "{{.inputs.\"members\"}}",
+      "members": "{{.inputs.\"members\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity.identifier}}",
