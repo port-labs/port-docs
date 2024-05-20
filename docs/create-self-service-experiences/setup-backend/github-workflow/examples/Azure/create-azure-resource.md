@@ -319,7 +319,7 @@ on:
       storage_location:
         required: true
         type: string
-      context:
+      port_context:
         required: true
         description: >-
           Action and general context (blueprint, run id, etc...)
@@ -371,7 +371,7 @@ jobs:
             ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
             TF_VAR_port_client_id: ${{ secrets.PORT_CLIENT_ID }}
             TF_VAR_port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
-            TF_VAR_port_run_id: ${{ fromJson(inputs.context).runId }}
+            TF_VAR_port_run_id: ${{ fromJson(inputs.port_context).runId }}
             TF_VAR_resource_group_name: ${{ secrets.AZURE_RESOURCE_GROUP }}
         run: |
           terraform plan \
@@ -396,7 +396,7 @@ jobs:
             ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
             TF_VAR_port_client_id: ${{ secrets.PORT_CLIENT_ID }}
             TF_VAR_port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
-            TF_VAR_port_run_id: ${{fromJson(inputs.context).runId}}
+            TF_VAR_port_run_id: ${{fromJson(inputs.port_context).runId}}
             TF_VAR_resource_group_name: arete-resources
         run: |
           terraform plan \
@@ -419,7 +419,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: Created ${{ inputs.storage_name }}
 ```
 

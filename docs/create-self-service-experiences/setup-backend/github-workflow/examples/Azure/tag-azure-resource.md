@@ -247,7 +247,7 @@ on:
       tags:
         required: true
         type: string
-      context:
+      port_context:
         required: true
         type: string
         description: >-
@@ -273,9 +273,9 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
-            Starting a GitHub workflow to tag the Azure resource: ${{ fromJson(inputs.context).entity.identifier }} ... ⛴️
+            Starting a GitHub workflow to tag the Azure resource: ${{ fromJson(inputs.port_context).entity.identifier }} ... ⛴️
 
       - name: Checkout the repository to the runner
         uses: actions/checkout@v2
@@ -323,8 +323,8 @@ jobs:
             ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
             TF_VAR_port_client_id: ${{ secrets.PORT_CLIENT_ID }}
             TF_VAR_port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
-            TF_VAR_port_run_id: ${{ fromJson(inputs.context).runId }}
-            TF_VAR_storage_account_name: ${{ fromJson(inputs.context).entity.identifier }}
+            TF_VAR_port_run_id: ${{ fromJson(inputs.port_context).runId }}
+            TF_VAR_storage_account_name: ${{ fromJson(inputs.port_context).entity.identifier }}
             TF_VAR_resource_tags: ${{ github.event.inputs.tags }}
         run: |
           terraform plan \
@@ -341,8 +341,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
-          logMessage: Failed to tag azure resource ${{ fromJson(inputs.context).entity.identifier }}
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Failed to tag azure resource ${{ fromJson(inputs.port_context).entity.identifier }}
 
 
       - name: Create a log message
@@ -352,8 +352,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
-          logMessage: Added tags to ${{ fromJson(inputs.context).entity.identifier }}
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Added tags to ${{ fromJson(inputs.port_context).entity.identifier }}
 ```
 
 </details>
@@ -410,7 +410,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
 
@@ -442,7 +442,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
 
 ```
