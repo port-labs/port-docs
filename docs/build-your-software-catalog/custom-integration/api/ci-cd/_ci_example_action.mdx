@@ -29,7 +29,7 @@
     "body": {
       "action": "{{ .action }}",
       "trigger": "{{ .trigger | {by, origin, at} }}",
-      "context": {
+      "port_context": {
         "entity": "{{.entity.identifier}}",
         "blueprint": "{{.action.blueprint}}",
         "runId": "{{.run.id}}",

@@ -299,7 +299,7 @@ on:
       bucket_name:
         type: string
         required: true
-      context:
+      port_context:
         required: true
         description: >-
           Port's payload, including details for who triggered the action and
@@ -316,7 +316,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: |
               About to create an s3 bucket with name: ${{ github.event.inputs.bucket_name }} ... ⛴️
 
@@ -344,8 +344,8 @@ jobs:
           terraform validate
           terraform plan \
             -input=false \
-            -out=tfplan-${{fromJson(inputs.context).runId}}
-          terraform show -json tfplan-${{fromJson(inputs.context).runId}} > tfplan.json
+            -out=tfplan-${{fromJson(inputs.port_context).runId}}
+          terraform show -json tfplan-${{fromJson(inputs.port_context).runId}} > tfplan.json
 
       - name: Save Terraform Plan JSON to Environment Variable
         id: save-plan-json
@@ -358,7 +358,7 @@ jobs:
         uses: actions/upload-artifact@v4
         id: artifact-upload-step
         with:
-          name: tfplan-${{fromJson(inputs.context).runId}}
+          name: tfplan-${{fromJson(inputs.port_context).runId}}
           path: terraform/
           retention-days: 7 ## change this to preferred number of days to keep the artifact before deletion
       
@@ -369,7 +369,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: |
               s3 bucket planned successfully and uploaded to GitHub artifact. Proceeding to request approval to apply the plan: ${{ steps.plan.outputs.stdout }} ✅
 
@@ -381,7 +381,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: |
               Error Occured while planning or saving terraform resource. Aborting request to approve the plan
 
@@ -398,7 +398,7 @@ jobs:
           action: apply_terraform_resource
           properties: |-
             {
-              "port_run_identifier": "${{ fromJson(inputs.context).runId }}",
+              "port_run_identifier": "${{ fromJson(inputs.port_context).runId }}",
               "artifact_identifier": "${{ steps.artifact-upload-step.outputs.artifact-id }}",
               "tf_plan_output": ${{ env.TF_PLAN_JSON }}
             }
@@ -410,7 +410,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: |
               The request to provision and apply the cloud resource has been sent to the approval team. The status of request will be shared in the action log
 
@@ -421,7 +421,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: |
               The request to provision and apply the cloud resource has not been sent to the approval team due to an error that occurred during the creation steps
 ```
@@ -447,7 +447,7 @@ on:
         required: true
       tf_plan_output:
         type: string
-      context:
+      port_context:
         required: true
         description: >-
           Port's payload, including details for who triggered the action and
@@ -464,7 +464,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: |
               About to provision a cloud resource previously planned in Port with run ID: ${{ github.event.inputs.port_run_identifier }} ... ⛴️
 
@@ -519,7 +519,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: |
               cloud resource successfully approved and provisioned ✅
 
@@ -552,7 +552,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: |
               cloud resource could not be provisioned
 ```

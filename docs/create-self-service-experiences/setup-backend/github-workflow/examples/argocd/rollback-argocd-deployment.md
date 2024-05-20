@@ -308,10 +308,10 @@ on:
         description: Whether the created PR should be merged automatically
         required: true
         type: boolean
-      context:
+      port_context:
         required: true
         description: >-
-          action context: blueprint, run id, etc
+          action port_context: blueprint, run id, etc
 jobs:
   rollback-deployment:
     runs-on: ubuntu-latest
@@ -323,7 +323,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: "About to rollback deployment image in argocd..."
 
       - uses: actions/checkout@v3
@@ -339,7 +339,7 @@ jobs:
           targetBranch: main
           masterBranchName: main
           createPR: true
-          branch: deployment/${{ fromJson(inputs.context).runId }}
+          branch: deployment/${{ fromJson(inputs.port_context).runId }}
           message: "Update deployment image to ${{ github.event.inputs.image }}"
 
       - name: Inform Port about pull request creation status - Success
@@ -350,7 +350,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             'The creation of PR was successful: ${{fromJson(steps.create-pr.outputs.pull_request).html_url}}'
           link: '["${{fromJson(steps.create-pr.outputs.pull_request).html_url}}"]'
@@ -363,7 +363,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             The creation of PR was not successful.
 
@@ -397,7 +397,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: "Pull request merge was ${{ env.merge_status }}"
 ```
 
