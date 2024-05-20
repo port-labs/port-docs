@@ -312,7 +312,7 @@ Create a new self service action using the following JSON configuration.
       "{{if (.inputs | has(\"priority\")) then \"priority\" else null end}}": "{{.inputs.\"priority\"}}",
       "{{if (.inputs | has(\"note\")) then \"note\" else null end}}": "{{.inputs.\"note\"}}",
       "{{if (.inputs | has(\"impactedServices\")) then \"impactedServices\" else null end}}": "{{.inputs.\"impactedServices\"}}",
-      "{{if (.inputs | has(\"notifyStakeholders\")) then \"notifyStakeholders\" else null end}}": "{{.inputs.\"notifyStakeholders\"}}",
+      "notifyStakeholders": "{{.inputs."notifyStakeholders"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity.identifier}}",
