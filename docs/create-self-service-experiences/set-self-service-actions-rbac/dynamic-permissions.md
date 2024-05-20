@@ -3,9 +3,15 @@ import TabItem from "@theme/TabItem"
 
 # Dynamic permissions
 
-Port allows setting dynamic permissions for executing and/or approving execution of self-service actions. This is done using a set of queries and/or conditions that can be defined in the action's JSON configuration.  
+Port allows users to set dynamic permissions for both executing and approving execution of self-service actions. To support these dynamic permission, Port offers the following to users within the JSON configuration of any given self-service action:
+- the organization's full software catalog as defined in Port (to provide necessary context to the self-service action)
+- the ability to query the software catalog
+- the ability to set conditions based on queries of the software catalog
 
-This is a powerful feature that allows you to define you own logic based on any piece of data in your software catalog.
+This is a powerful feature that allows you to define your own logic based on any piece of data in your software catalog. Prior to defining dynamic permissions for a self-service action, Port recommends:
+- clearly defining which users should be allowed to perform this action
+- clearly defining which users should be allowed to approve this action
+- ensuring that your software catalog contains the necessary blueprints and properties to support the dynamic permissions
 
 ## Potential use-cases
 
@@ -14,8 +20,28 @@ Examples of useful applications of dynamic permissions:
 - Ensure that action executions requested by a team member can only be approved by his/her direct manager.
 - Perform validations/manipulations on inputs that depend on data from related entities.
 - Ensure that only those who are on-call can perform rollbacks of a service with issues.
+- Allow service owners to modify their own infrastructure freely, but also enforce approval when they seek to make changes to infrastructure shared by multiple services.
 
 ## Configuring permissions
+
+### Guidelines
+
+- There is no limit to the number of queries you may define for execution and approve policies.
+- For `execution` policies, the condition **must** return a `boolean` value (determining whether or not the requester is allowed to execute the action).
+- For `approve` policies, the condition **must** return an array of strings, which **must** be the email addresses of users who can approve the execution of the action.
+- In both the `rules` and `conditions` values, you can access the following metadata:
+  - `blueprint` - the blueprint tied to the action (if any).
+  - `action` - the action object.
+  - `inputs` - the values provided to the action inputs by the user who executed the action.
+  - `user` - the user who executed/wants to approve the action.
+  - `entity` - for day-2 actions, this will hold the entity the action was executed on.
+  - `trigger` - information about the triggered action:
+    - `at` - the date of the action execution.
+    - `user` - the user who executed the action.
+- Any query that fails to evaluate will be ignored.
+- Each query can return up to 1000 entities, so be sure to make them as precise as possible.
+
+### Instructions
 
 To define dynamic permissions for an action:
 
@@ -36,8 +62,8 @@ This is the action's permission configuration in JSON format. Every action in Po
 
 Under each of these two keys, you can add a `policy` key, which allows you to use more complex logic using two keys:
 
-1. ["queries"](/search-and-query/) - a collection of [rules](/search-and-query/#rules) you can use to fetch and filter the data you need from your software catalog.
-2. "conditions" - an array of strings, where each string is a `jq` query with access to the `"queries"` data.
+1. [`"queries"`](/search-and-query/) - a collection of [rules](/search-and-query/#rules) you can use to fetch and filter the data you need from your software catalog.
+2. `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data.
 
 <details>
 <summary><b>Example snippet (click to expand)</b></summary>
@@ -50,13 +76,13 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
       "queries": {
         "query_name": {
           "rules": [
-              # Your rule/s logic here
+              // Your rule(s) logic here
             ],
             "combinator": "and"
         }
       },
       "conditions": [
-        # A jq query resulting in a boolean value (allowed/not-allowed to execute)
+        // A jq query resulting in a boolean value (allowed/not-allowed to execute)
       ]
     }
     #highlight-end
@@ -72,13 +98,13 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
       "queries": {
         "query_name": {
           "rules": [
-              # Your rule/s logic here
+              // Your rule/s logic here
             ],
             "combinator": "and"
         }
       },
       "conditions": [
-        # A jq query resulting in an array of strings (a list of users who can approve the action)
+        // A jq query resulting in an array of strings (a list of users who can approve the action)
       ]
     }
     #highlight-end
@@ -87,23 +113,6 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
 ```
 
 </details>
-
-### Guidelines
-
-- You can define any number of queries you wish for execution/approve policies.
-- For `execution` policies, the condition must return a `boolean` value (determining whether the requester is allowed to execute the action or not).
-- For `approve` policies, the condition must return an array of strings (the email addresses of users who can approve the execution of the action).
-- In both the `rules` and `conditions` values, you can access the following metadata:
-  - `blueprint` - the blueprint tied to the action (if any).
-  - `action` - the action object.
-  - `inputs` - the values provided to the action inputs by the user who executed the action.
-  - `user` - the user who executed/wants to approve the action.
-  - `entity` - for day-2 actions, this will hold the entity the action was executed on.
-  - `trigger` - information about the triggered action:
-    - `at` - the date of the action execution.
-    - `user` - the user who executed the action.
-- Any query that fails to evaluate will be ignored.
-- Each query can return up to 1000 entities, so be sure to make them as precise as possible.
 
 ## Complete example
 
@@ -119,56 +128,67 @@ The example contains two queries:
 1. `executingUser` - fetches the user who executed the action.
 2. `approvingUsers` - fetches the users who are allowed to approve the action.
 
-The `condition` checks if the approver is the executor's team leader, via the relation between `user` and `team`.
+The `condition` checks if the approver is the executer's team leader, via the relation between `user` and `team`.
 
 <details>
-<summary><b>Service permissions JSON (click to expand)</b></summary>
+<summary><b>Full permissions JSON (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
   "execute": {
+    // the next three keys allow users to specify roles, specific users, and specific teams that may execute this action
     "roles": ["Member", "Admin"],
     "users": [],
     "teams": [],
-    "ownedByTeam": false
+    "ownedByTeam": false // declares ownership of the action by a team, if desired
+    // a policy key may be added here, with queries and conditions within it
   },
   "approve": {
-    "roles": ["Admin"],
+    "roles": ["Admin"], // all admins may approve this action
     "users": [],
     "teams": [],
     "policy": {
       "queries": {
+        // executingUser is a custom query that returns an array of entities
         "executingUser": {
           "rules": [
+            // fetches all users from user blueprint
             {
               "value": "user",
               "operator": "=",
               "property": "$blueprint"
             },
+            // filters all users from immediately previous query
+            // to find only the user who executed the action
             {
               "value": "{{.trigger.user.email}}",
               "operator": "=",
               "property": "$identifier"
             }
           ],
-          "combinator": "and"
+          "combinator": "and" // both of the conditions above must be true
         },
+        // approvingUsers is a custom query that returns an array of entities
         "approvingUsers": {
           "rules": [
+            // fetches all users from user blueprint
             {
               "value": "user",
               "operator": "=",
               "property": "$blueprint"
             },
+            // filters all users from immediately previous query
+            // to find all users who are approvers
             {
               "value": "Approver",
               "operator": "=",
               "property": "role"
             }
           ],
-          "combinator": "and"
+          "combinator": "and" // both of the conditions above must be true
         }
       },
+      // see next section for description of what occurs in the jq query below
       "conditions": [
         "(.results.executingUser.entities | first | .relations.team) as $executerTeam | [.results.approvingUsers.entities[] | select(.relations.team == $executerTeam) | .identifier]"
       ]
@@ -178,3 +198,15 @@ The `condition` checks if the approver is the executor's team leader, via the re
 ```
 
 </details>
+
+### Breaking down the `conditions` query from the example permissions JSON
+
+The `conditions` query uses the two arrays produced as a result of the `executingUser` and `approvingUsers` queries and returns an array of users who may approve the self-service action. While the Port public documentation site does not provide exhaustive guidance on how to use the [JQ JSON processor](https://jqlang.github.io/jq/manual/), the following explanation is provided to ensure users can craft their own JQ queries when configuring dynamic permissions.
+
+The query below filters the array produced by the `executingUser` query down to only the first element in the array, then further filters this array to show only the contents of the `.relations.team` key. This newly filtered array is saved as a variable (`$`) called `executerTeam`.
+
+```json
+"(.results.executingUser.entities | first | .relations.team) as $executerTeam"
+```
+
+The next query (`.results.approvingUsers.entities[]`) takes the *entire* array from the `approvingUsers` query, then applies a filter to include *only* the approving users from that array who are on the same team as the executing user (`select(.relations.team == $executerTeam)`). Finally, the array is filtered to yield only an array of the `.identifier` property of all approvers, which Port then uses to *dynamically* evaluate who may approve this self-service action.
