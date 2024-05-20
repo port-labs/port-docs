@@ -41,11 +41,9 @@ on:
         description: The email address of a valid user associated with the account making the request.
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
-        description: >-
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+        description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
   resolve_incident:
@@ -59,7 +57,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "About to make a request to pagerduty..."
 
       - name: Request to Resolve Incident
@@ -73,7 +71,7 @@ jobs:
               {
                 "incidents": [
                   {
-                    "id": "${{ fromJson(inputs.port_payload).context.entity }}",
+                    "id": "${{ fromJson(inputs.port_payload).port_context.entity }}",
                     "type": "incident_reference",
                     "status": "resolved"
                   }
@@ -87,7 +85,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Getting incident object from response received ..."
 
       - name: Log Before Upserting Entity
@@ -97,7 +95,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Reporting the updated incident back to port ..."
 
       - name: UPSERT Entity
@@ -105,7 +103,7 @@ jobs:
         with:
           identifier: "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].id }}"
           title: "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].title }}"
-          blueprint: ${{ fromJson(inputs.port_payload).context.blueprint }}
+          blueprint: ${{fromJson(inputs.port_context).blueprint}}
           properties: |-
             {
               "status": "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].status }}",
@@ -120,7 +118,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
 
       - name: Log After Upserting Entity
         uses: port-labs/port-github-action@v1
@@ -129,7 +127,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Entity upserting was successful ✅"
 ```
 </details>
@@ -177,35 +175,10 @@ Create a new self service action using the following JSON configuration.
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"pagerdutyIncident_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "resolve-incident.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity}}",
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true
@@ -228,7 +201,7 @@ Now you should see the `Resolve Incident` action in the self-service page. 🎉
 6. Click on `Execute`
 7. Done! wait for the incident's status to be changed in PagerDuty
 
-Congrats 🎉 You've resolve a PagerDuty incident in Port 🔥
+Congrats 🎉 You've resolved a PagerDuty incident in Port 🔥
 
 ## More Self Service PagerDuty Actions Examples
 - [Acknowledge Incident](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)

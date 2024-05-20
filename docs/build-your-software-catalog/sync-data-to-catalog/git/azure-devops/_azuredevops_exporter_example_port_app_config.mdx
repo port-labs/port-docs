@@ -10,19 +10,21 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .project.name + "/" + .name
+          identifier: '.project.name + "/" + .name | gsub(" "; "")'
           title: .name
           blueprint: '"azureDevopsRepository"'
           properties:
             url: .url
             readme: file://README.md
+          relations:
+            project: .project.id | gsub(" "; "")
   - kind: repository-policy
     selector:
       query: .type.displayName=="Minimum number of reviewers"
     port:
       entity:
         mappings:
-          identifier: .__repository.project.name + "/" + .__repository.name
+          identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
           blueprint: '"azureDevopsRepository"'
           properties:
             minimumApproverCount: .settings.minimumApproverCount
@@ -32,7 +34,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .__repository.project.name + "/" + .__repository.name
+          identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
           blueprint: '"azureDevopsRepository"'
           properties:
             workItemLinking: .isEnabled and .isBlocking
@@ -44,7 +46,7 @@ resources:
         mappings:
           identifier: >-
             .repository.project.name + "/" + .repository.name + (.pullRequestId
-            | tostring)
+            | tostring) | gsub(" "; "")
           blueprint: '"azureDevopsPullRequest"'
           properties:
             creator: .createdBy.uniqueName
@@ -52,7 +54,7 @@ resources:
             reviewers: '[.reviewers[].uniqueName]'
             createdAt: .creationDate
           relations:
-            service: .repository.project.name + "/" + .repository.name
+            service: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
 ```
 
 </details>

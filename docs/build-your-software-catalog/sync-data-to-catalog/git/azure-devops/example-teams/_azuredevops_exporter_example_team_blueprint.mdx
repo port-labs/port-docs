@@ -25,7 +25,20 @@
   "mirrorProperties": {},
   "calculationProperties": {},
   "aggregationProperties": {},
-  "relations": {}
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "project",
+      "required": true,
+      "many": false
+    },
+    "service": {
+      "title": "repository",
+      "target": "azureDevopsRepository",
+      "required": false,
+      "many": false
+    },
+  }
 }
 ```
 
