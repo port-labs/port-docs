@@ -1,6 +1,6 @@
 import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
-import PagerDutyIncidentBlueprint from './blueprints/_pagerduty_incident_blueprint.mdx'
+import PagerDutyServiceBlueprint from './blueprints/_pagerduty_incident_blueprint.mdx'
 
 # Create PagerDuty Incident Action
 
@@ -19,9 +19,9 @@ This self service guide provides a comprehensive walkthrough on how to create an
 	This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your PagerDuty Incidents.
 	:::
 
-4. In Case you decided not to install the PagerDuty integration, you will need to create a blueprint for PagerDuty incidents in Port.
+4. In Case you decided not to install the PagerDuty integration, you will need to create a blueprint for PagerDuty service in Port.
 
-<PagerDutyIncidentBlueprint/>
+<PagerDutyServiceBlueprint/>
 
 ## GitHub Workflow
 
@@ -33,20 +33,27 @@ Create the file `.github/workflows/create-an-incident.yaml` in the `.github/work
 <summary>GitHub Workflow</summary>
 
 ```yaml showLineNumbers title="create-an-incident.yaml"
+name: Create PagerDuty Incident
+
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      title:
+        description: The title of the incident to create
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
         type: string
-    secrets: 
-      PAGER_TOKEN: 
+      extra_details:
+        description: Extra details about the incident to create
+        required: false
+      urgency:
+        description: The urgency of the incident
+        required: false
+      from:
+        description: The email address of a valid user associated with the account making the request.
         required: true
-      PORT_CLIENT_ID:
+      port_context:
         required: true
-      PORT_CLIENT_SECRET:
-        required: true
+        description: includes blueprint, run ID, and entity identifier from Port.
 jobs: 
   trigger:
     runs-on: ubuntu-latest
@@ -55,12 +62,13 @@ jobs:
         with:
           portClientId: ${{ secrets.PORT_CLIENT_ID }}
           portClientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          token: ${{ secrets.PAGER_TOKEN }}
-          portRunId: ${{ fromJson(inputs.port_payload).context.runId }}
-          incidentTitle: ${{ fromJson(inputs.port_payload).payload.properties.title }}
-          extraDetails: ${{ fromJson(inputs.port_payload).payload.properties.extra_details }}
-          urgency: ${{ fromJson(inputs.port_payload).payload.properties.urgency }}
-          service: ${{ fromJson(inputs.port_payload).context.entity }}
+          token: ${{ secrets.PAGERDUTY_API_KEY }}
+          portRunId: ${{fromJson(inputs.port_context).run_id}}
+          incidentTitle: "${{ inputs.title }}"
+          extraDetails: "${{ inputs.extra_details }}"
+          urgency: "${{ inputs.urgency }}"
+          actorEmail: "${{ inputs.from }}"
+          service: "${{fromJson(inputs.port_context).entity}}"
           blueprintIdentifier: 'pagerdutyIncident'
 ```
 </details>
@@ -76,13 +84,13 @@ Create a new self service action using the following JSON configuration.
 
 ```json showLineNumbers
 {
-  "identifier": "pagerdutyIncident_create_incident",
+  "identifier": "pagerdutyService_create_incident",
   "title": "Create Incident",
   "icon": "pagerduty",
   "description": "Notify users and teams about incidents in the service",
   "trigger": {
     "type": "self-service",
-    "operation": "CREATE",
+    "operation": "DAY-2",
     "userInputs": {
       "properties": {
         "title": {
@@ -130,47 +138,24 @@ Create a new self service action using the following JSON configuration.
         "extra_details"
       ]
     },
-    "blueprintIdentifier": "pagerdutyIncident"
+    "blueprintIdentifier": "pagerdutyService"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "port-pagerduty-example",
-    "repo": "test",
-    "workflow": "create-an-incident.yaml",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
+    "workflow": "create-pagerduty-incident.yaml",
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"pagerdutyIncident_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": true,
-              "reportWorkflowStatus": true,
-              "org": "port-pagerduty-example",
-              "repo": "test",
-              "workflow": "create-an-incident.yaml"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
-            "{{if (.inputs | has(\"extra_details\")) then \"extra_details\" else null end}}": "{{.inputs.\"extra_details\"}}",
-            "{{if (.inputs | has(\"urgency\")) then \"urgency\" else null end}}": "{{.inputs.\"urgency\"}}",
-            "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "{{if (.inputs | has(\"title\")) then \"title\" else null end}}": "{{.inputs.\"title\"}}",
+      "{{if (.inputs | has(\"extra_details\")) then \"extra_details\" else null end}}": "{{.inputs.\"extra_details\"}}",
+      "{{if (.inputs | has(\"urgency\")) then \"urgency\" else null end}}": "{{.inputs.\"urgency\"}}",
+      "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}",
+        "relations": "{{.entity.relations}}"
       }
     },
     "reportWorkflowStatus": true
