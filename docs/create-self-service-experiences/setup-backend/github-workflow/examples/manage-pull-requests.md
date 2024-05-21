@@ -80,7 +80,7 @@ Follow these steps to get started:
     "workflow": "manage-pr.yml",
     "workflowInputs": {
       "action": "{{.inputs.\"action\"}}",
-      "context": {
+      "port_context": {
         "entity": "{{.entity.identifier}}",
         "blueprint": "{{.action.blueprint}}",
         "runId": "{{.run.id}}",
