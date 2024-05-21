@@ -89,6 +89,78 @@ In order to view the different payloads and structure of the events in Datadog w
 
 Done! any problem detected on your Datadog instance will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
+## Let's Test It
+
+This section includes a sample response data from Datadog. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Datadog:
+
+<details>
+<summary><b>Webhook response data (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "id": "1234567890",
+  "message": "This is a test message",
+  "priority": "normal",
+  "last_updated": "2022-01-01T00:00:00+00:00",
+  "event_type": "triggered",
+  "event_url": "https://app.datadoghq.com/event/jump_to?event_id=1234567890",
+  "service": "my-service",
+  "creator": "rudy",
+  "title": "[Triggered] [Memory Alert]",
+  "date": "1406662672000",
+  "org_id": "123456",
+  "org_name": "my-org",
+  "alert_id": "1234567890",
+  "alert_metric": "system.load.1",
+  "alert_status": "system.load.1 over host:my-host was > 0 at least once during the last 1m",
+  "alert_title": "[Triggered on {host:ip-012345}] Host is Down",
+  "alert_type": "error",
+  "tags": "monitor, name:myService, role:computing-node"
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary><b>Alert entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "1234567890",
+  "title": "[Triggered] [Memory Alert]",
+  "blueprint": "datadogAlert",
+  "team": [],
+  "icon": "Datadog",
+  "properties": {
+    "url": "https://app.datadoghq.com/event/jump_to?event_id=1234567890",
+    "message": "This is a test message",
+    "eventType": "triggered",
+    "priority": "normal",
+    "creator": "rudy",
+    "alertMetric": "system.load.1",
+    "alertType": "error",
+    "tags": "monitor, name:myService, role:computing-node"
+  },
+  "relations": {
+    "microservice": "my-service"
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
 ## Ingest service level objectives (SLOs)
 
 This guide will walk you through the steps to ingest Datadog SLOs into Port. By following these steps, you will be able to create a blueprint for a `microservice` entity in Port, representing a service in your Datadog account. Furthermore, you will establish a relation between this service and the `datadogSLO` blueprint, allowing the ingestion of all defined SLOs from your Datadog account.
