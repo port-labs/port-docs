@@ -148,46 +148,18 @@ The `architecture` property is a URL to a Lucidchart diagram. This is a handy wa
 
 As platform engineers, we want to enable our developers to perform certain actions on their own. Let's create an action that developers can use to add data to a service, and allocate it to a domain.
 
-#### Setup the action's frontend
-
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Enrich service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define backend type](#define-backend-type) step.  
+As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
 
-If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-5 below.
-
+If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
 :::
 
-<details>
-<summary><b>Create the action's frontend (steps 1-5)</b></summary>
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button in the top right corner, and choose "Edit":
+    <img src='/img/guides/gitopsEditAction.png' width='35%' border='1px' />
 
-1. Go to your [Self-service page](https://app.getport.io/self-serve), then click on the `+ New action` button in the top right corner.
+2. Click on the `Backend` tab.
 
-2. From the dropdown, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>.
-
-3. Fill out the basic details like this, then click `Next`:
-
-<img src='/img/guides/gitopsActionBasicDetails.png' width='50%' />
-
-<br/><br/>
-
-4. We want our developers to be able to choose the domain to which the service will be assigned. Click on `New input`, fill out the form like this, then click `Next`:
-
-<img src='/img/guides/gitopsActionInputDomain.png' width='50%' />
-
-<br/><br/>
-
-5. Let's add two more inputs for our new service properties - `type` and `lifecycle`. Create two new inputs, fill out their forms like this, then click `Next`:
-
-<img src='/img/guides/gitopsActionInputType.png' width='50%' />
-
-<br/>
-
-<img src='/img/guides/gitopsActionInputLifecycle.png' width='50%' />
-
-<br/><br/>
-
-</details>
 
 #### Define backend type
 
@@ -201,26 +173,46 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 
 <TabItem value="github">
 
-  - You will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).
-  - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-  - Name the workflow `port-enrich-service.yml`.
-  - Fill out the rest of the form like this, then click `Next`:
+Note that you will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).  
 
-<img src='/img/guides/gitopsActionBackendForm.png' width='75%' />
+Fill out the form with your values:
 
+- Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
+
+- Name the workflow `port-enrich-service.yml`.
+
+- Fill out your workflow details:
+  <img src='/img/guides/gitopsActionBackendForm.png' width='50%' border='1px' />
+
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
+
+  For this example, we will send some details that our backend needs to know - the user inputs, the entity, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "port_context": {
+      "entity": "{{ .entity.identifier }}",
+      "runId": "{{ .run.id }}",
+    },
+    "domain": "{{ .inputs.domain }}",
+    "type": "{{ .inputs.type }}",
+    "lifecycle": "{{ .inputs.lifecycle }}",
+  }
+  ```
 </TabItem>
 
 <TabItem value="gitlab">
 
-   - Choose `Trigger Webhook URL` as the invocation type. 
-   
-   - The endpoint URL should look like this:  
-   `https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<TRIGGER_TOKEN>`.  
-   We will create the `PROJECT_ID` and `TRIGGER_TOKEN` in the next section and come back to update the URL.
-   
-   - Fill out the rest of the form like this, then click `Next`:
+First, choose `Trigger Webhook URL` as the invocation type. 
+ 
+- The endpoint URL should look like this:  
+`https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<TRIGGER_TOKEN>`.  
+We will create the `PROJECT_ID` and `TRIGGER_TOKEN` in the next section and come back to update the URL.
 
-<img src='/img/guides/gitLabWebhookSetup.png' width='70%' />
+- Fill out the rest of the form like this, then click `Next`:
+  <img src='/img/guides/gitopsGitlabActionBackendForm.png' width='80%' border='1px' />
 
 :::info Webhook protection
 
@@ -229,18 +221,61 @@ In order to protect the webhook, see the [Validating webhook signatures page](..
 
 :::
 
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
+
+  For this example, we will send some details that our backend needs to know, including the service name, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "port_context": {
+      "entity": "{{ .entity.identifier }}",
+      "runId": "{{ .run.id }}",
+    },
+    "domain": "{{ .inputs.domain }}",
+    "type": "{{ .inputs.type }}",
+    "lifecycle": "{{ .inputs.lifecycle }}",
+  }
+  ```
+
 </TabItem>
 
 <TabItem value="bitbucket">
 
-    - You will need to have [Port's Bitbucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) installed in your Bitbucket workspace (the one that contains the repository you'll work with).
-    - Choose `Run Jenkins pipeline` as the invocation type.
-    - The webhook URL should look like this:  
-    `http://<JENKINS_URL>/generic-webhook-trigger/invoke?token=enrichService`  
-      - Replace `JENKINS_URL` with your configured Jenkins URL.
-      - We will use `enrichService` as `JOB_TOKEN`, we will set this token in Jenkins in the next section.
+Note that you will need to have [Port's Bitbucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) installed in your Bitbucket workspace (the one that contains the repository you'll work with).
 
-<img src='/img/guides/jenkinsWebhookSetup.png' width='75%' />
+First, choose `Jenkins` as the invocation type.
+
+- Follow the instructions under `Define a webhook to trigger a Jenkins job` to obtain your webhook URL.
+
+- Use `enrichService` as the name of your new job token.
+ 
+Then, fill out your workflow details:  
+
+- Replace the `Webhook URL` with your value (this is where the pipeline will reside and run).
+
+- Leave the `Use self-hosted agent` option set to `No`.
+  <img src='/img/guides/scaffoldBitbucketBackendDetails.png' width='55%' border='1px' />
+
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
+
+  For this example, we will send some details that our backend needs to know - the three user inputs, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "port_context": {
+      "entity": "{{ .entity.identifier }}",
+      "repo_url": "{{ .entity.properties.url }}",
+      "runId": "{{ .run.id }}",
+    },
+    "domain": "{{ .inputs.domain }}",
+    "type": "{{ .inputs.type }}",
+    "lifecycle": "{{ .inputs.lifecycle }}",
+  }
+  ```
 
 </TabItem>
 
@@ -280,20 +315,20 @@ Our action will create a pull-request in the service's repository, containing a 
 
 <TabItem value="gitlab">
 
-1. Under your [root group](https://gitlab.com/dashboard/groups), access `Settings->Access Tokens`, and create a `Maintainer` role token with the `api`, `read_repository`, and `write_repository` scopes. Copy the token's value.
+- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
-2. Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL . Then, under Settings->CI/CD, create a new Pipeline trigger token and use it to replace `(TRIGGER_TOKEN)` in the webhook URL.
+- Under your [root group](https://gitlab.com/dashboard/groups), access `Settings->Access Tokens`, and create a `Maintainer` role token with the `api`, `read_repository`, and `write_repository` scopes. Copy the token's value.
 
-3. In the same menu (CI/CD), add the following variables to the pipeline:
+- Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL. Then, under Settings->CI/CD, create a new Pipeline trigger token and use it to replace `(TRIGGER_TOKEN)` in the webhook URL.
 
-- PORT_CLIENT_ID
-- PORT_CLIENT_SECRET  
-  :::tip
-  To find your Port credentials, go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`.
-  :::
-- GITLAB_ACCESS_TOKEN - the token created in step 1.
-
-<img src='/img/guides/gitlabVariables.png' width='80%' />
+- In the same menu (CI/CD), add the following variables to the pipeline:
+  - `PORT_CLIENT_ID` - Your Port client ID.
+  
+  - `PORT_CLIENT_SECRET` - Your Port client secret.
+  
+  - `GITLAB_ACCESS_TOKEN` - The GitLab group access token you created in the previous step.
+    
+    <img src='/img/guides/gitlabVariables.png' width='80%' />
 
 </TabItem>
 
@@ -316,12 +351,12 @@ Our action will create a pull-request in the service's repository, containing a 
     
     | Name | Value |
     | --- | --- |
-    | LIFECYCLE | $.payload.properties.lifecycle |
-    | TYPE | $.payload.properties.type |
-    | DOMAIN | $.payload.properties.domain |
-    | ENTITY_IDENTIFIER | $.payload.entity.identifier |
-    | REPO_URL | $.payload.entity.properties.url |
-    | RUN_ID | $.context.runId |
+    | LIFECYCLE | $.lifecycle |
+    | TYPE | $.type |
+    | DOMAIN | $.domain |
+    | ENTITY_IDENTIFIER | $.port_context.entity |
+    | REPO_URL | $.port_context.repo_url |
+    | RUN_ID | $.port_context.runId |
 
   - Set `enrichService` as the pipeline's token.
 
@@ -375,21 +410,20 @@ name: Enrich service
 on:
   workflow_dispatch:
     inputs:
+      port_context:
+        required: true
+        description: Includes the entity identifier and the action's run id
       domain:
         required: true
-        description: The domain to which the service will be assigned
+        description: The domain to assign the service to
         type: string
       type:
         required: true
-        description: The service's type
+        description: The type of the service
         type: string
       lifecycle:
         required: true
-        description: The service's lifecycle
-        type: string
-      port_payload:
-        required: true
-        description: Port's payload, including details for who triggered the action and general context
+        description: The lifecycle state of the service
         type: string
 jobs:
   enrichService:
@@ -400,7 +434,7 @@ jobs:
       # Checkout the service's repository
       - uses: actions/checkout@v3
         with:
-          repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}"
+          repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}"
           path: ./targetRepo
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
       - name: Copy template yml file
@@ -408,7 +442,7 @@ jobs:
           cp templates/enrichService.yml ./targetRepo/port.yml
       - name: Update new file data
         run: |
-          sed -i 's/{{ service_identifier }}/${{fromJson(inputs.port_payload).context.entity}}/' ./targetRepo/port.yml
+          sed -i 's/{{ service_identifier }}/${{ fromJson(inputs.port_context).entity }}/' ./targetRepo/port.yml
           sed -i 's/{{ domain_identifier }}/${{ inputs.domain }}/' ./targetRepo/port.yml
           sed -i 's/{{ service_type }}/${{ inputs.type }}/' ./targetRepo/port.yml
           sed -i 's/{{ service_lifecycle }}/${{ inputs.lifecycle }}/' ./targetRepo/port.yml
@@ -417,13 +451,13 @@ jobs:
         with:
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
           path: ./targetRepo
-          commit-message: Enrich service - ${{fromJson(inputs.port_payload).context.entity}}
+          commit-message: Enrich service - ${{ fromJson(inputs.port_context).entity}}
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
           branch: add-port-yml
           delete-branch: true
-          title: Create port.yml - ${{fromJson(inputs.port_payload).context.entity}}
+          title: Create port.yml - ${{ fromJson(inputs.port_context).entity }}
           body: |
             Add port.yaml to enrich service in Port.
           draft: false
@@ -433,8 +467,8 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Pull request to add port.yml created successfully for service "${{fromJson(inputs.port_payload).context.entity}}" 🚀
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          logMessage: Pull request to add port.yml created successfully for service "${{ fromJson(inputs.port_context).entity }}" 🚀
 ```
 
 </details>
@@ -459,7 +493,7 @@ enrichService:
     - apt-get update && apt-get install -y jq && apt-get install -y yq
   script:
     - PAYLOAD=$(cat $TRIGGER_PAYLOAD)
-    - runID=$(echo $PAYLOAD | jq -r '.context.runId')
+    - runID=$(echo $PAYLOAD | jq -r '.port_context.runId')
     - >
       access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/access_token' --header 'Content-Type: application/json' --data-raw "{\"clientId\": \"$PORT_CLIENT_ID\",\"clientSecret\": \"$PORT_CLIENT_SECRET\"}" | jq '.accessToken' | sed 's/"//g')
     - >
@@ -467,10 +501,10 @@ enrichService:
       }"
     - git config --global user.email "gitRunner@git.com"
     - git config --global user.name "Git Runner"
-    - SERVICE_IDENTIFIER=$(echo $PAYLOAD | jq -r '.payload.entity.identifier')
-    - DOMAIN_IDENTIFIER=$(echo $PAYLOAD | jq -r '.payload.properties.domain')
-    - SERVICE_TYPE=$(echo $PAYLOAD | jq -r '.payload.properties.type')
-    - SERVICE_LIFECYCLE=$(echo $PAYLOAD | jq -r '.payload.properties.lifecycle')
+    - SERVICE_IDENTIFIER=$(echo $PAYLOAD | jq -r '.port_context.entity')
+    - DOMAIN_IDENTIFIER=$(echo $PAYLOAD | jq -r '.domain')
+    - SERVICE_TYPE=$(echo $PAYLOAD | jq -r '.type')
+    - SERVICE_LIFECYCLE=$(echo $PAYLOAD | jq -r '.lifecycle')
     - git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git
     - git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${SERVICE_IDENTIFIER}.git ./targetRepo
     - cp templates/enrichService.yml ./targetRepo/port.yml

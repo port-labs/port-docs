@@ -114,6 +114,11 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 <br/>
 
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
+
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-wiz-integration port-labs/port-ocean \
@@ -129,6 +134,92 @@ helm upgrade --install my-wiz-integration port-labs/port-ocean \
         --set integration.secrets.wizApiUrl="WIZ_API_URL"  \
 	--set integration.config.wizTokenUrl="WIZ_TOKEN_URL"  
 ```
+</TabItem>
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-wiz-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for `WIZ_CLIENT_ID`, `WIZ_CLIENT_SECRET`, `WIZ_API_URL` and `WIZ_TOKEN_URL`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-wiz-integration
+  type: wiz
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-start
+    wizApiUrl: WIZ_API_URL
+    wizTokenUrl: WIZ_TOKEN_URL
+  // highlight-end
+  secrets:
+  // highlight-start
+    wizClientId: WIZ_CLIENT_ID
+    wizClientSecret: WIZ_CLIENT_SECRET
+  // highlight-end
+```
+<br/>
+
+2. Install the `my-ocean-wiz-integration` ArgoCD Application by creating the following `my-ocean-wiz-integration.yaml` manifest:
+
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-wiz-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-wiz-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-wiz-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-wiz-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -853,4 +944,286 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
 2. Follow this [guide](https://integrate.wiz.io/reference/webhook-tutorial#create-a-custom-webhook) in the documentation to create a webhook.
 
 Done! Any issue created in Wiz will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+</details>
+
+## Let's Test It
+
+This section includes a sample response data from Wiz. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Wiz:
+
+<details>
+<summary>Project response data</summary>
+
+```json showLineNumbers
+{
+  "id": "d6ac50bb-aec0-52fc-80ab-bacd7b02f178",
+  "name": "Project1",
+  "isFolder": false,
+  "archived": false,
+  "businessUnit": "Dev",
+  "description": "Test project"
+}
+```
+
+</details>
+
+<details>
+<summary>Control response data</summary>
+
+```json showLineNumbers
+{
+  "__typename": "Control",
+  "id": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19",
+  "name": "Publicly Exposed Assets with DataFindings ",
+  "controlDescription": "",
+  "resolutionRecommendation": "",
+  "securitySubCategories": [
+    {
+      "title": "Data Security",
+      "category": {
+        "name": "8 Data Security",
+        "framework": {
+          "name": "Wiz"
+        }
+      }
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Issue response data</summary>
+
+```json showLineNumbers
+{
+  "id": "fffedba9-587f-4251-8c96-d966c183f10c",
+  "sourceRule": {
+    "__typename": "Control",
+    "id": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19",
+    "name": "Publicly Exposed Assets with DataFindings ",
+    "controlDescription": "",
+    "resolutionRecommendation": "",
+    "securitySubCategories": [
+      {
+        "title": "Data Security",
+        "category": {
+          "name": "8 Data Security",
+          "framework": {
+            "name": "Wiz"
+          }
+        }
+      }
+    ]
+  },
+  "createdAt": "2023-08-23T07:56:09.903743Z",
+  "updatedAt": "2023-09-12T08:33:16.327851Z",
+  "dueAt": null,
+  "type": "TOXIC_COMBINATION",
+  "resolvedAt": "2023-08-30T08:17:54.613564Z",
+  "statusChangedAt": "2023-08-30T08:17:54.613564Z",
+  "projects": [
+    {
+      "id": "d6ac50bb-aec0-52fc-80ab-bacd7b02f178",
+      "name": "Project1",
+      "slug": "project1",
+      "businessUnit": "Dev",
+      "riskProfile": {
+        "businessImpact": "MBI"
+      }
+    }
+  ],
+  "status": "RESOLVED",
+  "severity": "HIGH",
+  "entitySnapshot": {
+    "id": "3d7dafdc-0087-55e0-81fd-a9e2b152fb47",
+    "type": "DATA_FINDING",
+    "nativeType": "",
+    "name": "GDPR 2415",
+    "status": null,
+    "cloudPlatform": null,
+    "cloudProviderURL": "",
+    "providerId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm",
+    "region": "",
+    "resourceGroupExternalId": "",
+    "subscriptionExternalId": "",
+    "subscriptionName": "",
+    "subscriptionTags": null,
+    "tags": {},
+    "externalId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm"
+  },
+  "serviceTickets": [],
+  "notes": [
+    {
+      "createdAt": "2023-09-12T08:33:16.29091Z",
+      "updatedAt": "2023-09-12T08:33:16.366971Z",
+      "text": "test",
+      "user": null,
+      "serviceAccount": {
+        "name": "bot-ise"
+      }
+    },
+    {
+      "createdAt": "2023-09-12T08:22:20.13926Z",
+      "updatedAt": "2023-09-12T08:33:16.369728Z",
+      "text": "test",
+      "user": null,
+      "serviceAccount": {
+        "name": "bot-ise"
+      }
+    },
+    {
+      "createdAt": "2023-09-12T08:21:49.663314Z",
+      "updatedAt": "2023-09-12T08:33:16.371541Z",
+      "text": "test",
+      "user": null,
+      "serviceAccount": {
+        "name": "bot-ise"
+      }
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Service Ticket response data</summary>
+
+```json showLineNumbers
+{
+  "externalId": "data##wizt-customID##ja63-kx0z-f27x-mpvl",
+  "name": "Security Vulnerability in AWS S3 Bucket",
+  "url": "https://api.wiz.com/wiz/service-tickets/data##wizt-customID##ja63-kx0z-f27x-mpvl"
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary><b>Project entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "d6ac50bb-aec0-52fc-80ab-bacd7b02f178",
+  "title": "Project1",
+  "blueprint": "wizProject",
+  "team": [],
+  "icon": "NewRelic",
+  "properties": {
+    "archived": false,
+    "businessUnit": "Dev",
+    "description": "Test project"
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary><b>Control entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19",
+  "title": "Publicly Exposed Assets with DataFindings",
+  "blueprint": "wizControl",
+  "icon": "Flag",
+  "properties": {
+    "controlDescription": "",
+    "resolutionRecommendation": ""
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary><b>Issue entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "fffedba9-587f-4251-8c96-d966c183f10c",
+"title": "GDPR 2415 | DATA_FINDING",
+"blueprint": "wizIssue",
+"icon": "Alert",
+"properties": {
+  "url": "https://app.wiz.io/issues#~(issue~'fffedba9-587f-4251-8c96-d966c183f10c)",
+  "status": "RESOLVED",
+  "severity": "HIGH",
+  "type": "TOXIC_COMBINATION",
+  "notes": [],
+  "vulnerability": {
+    "id": "3d7dafdc-0087-55e0-81fd-a9e2b152fb47",
+    "type": "DATA_FINDING",
+    "nativeType": "",
+    "name": "GDPR 2415",
+    "status": null,
+    "cloudPlatform": null,
+    "cloudProviderURL": "",
+    "providerId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm",
+    "region": "",
+    "resourceGroupExternalId": "",
+    "subscriptionExternalId": "",
+    "subscriptionName": "",
+    "subscriptionTags": null,
+    "tags": {},
+    "externalId": "data##wizt-recEIECHXqlRPMZRw##wfke-jpb8-twwk-l7mm"
+  },
+  "createdAt": "2023-08-23T07:56:09.903743Z",
+  "updatedAt": "2023-09-12T08:33:16.327851Z",
+  "resolvedAt": "2023-08-30T08:17:54.613564Z",
+  "statusChangedAt": "2023-08-30T08:17:54.613564Z",
+},
+"relations": {
+  "projects": ["d6ac50bb-aec0-52fc-80ab-bacd7b02f178"],
+  "serviceTickets": [],
+  "control": "9d7ef6e4-baed-47ba-99ec-a78a801f1e19"
+},
+"createdAt": "2023-08-23T07:56:09.903743Z",
+"createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+"updatedAt": "2023-09-12T08:33:16.327851Z",
+"updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+
+<details>
+<summary><b>Service Ticket entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "data##wizt-customID##ja63-kx0z-f27x-mpvl",
+  "title": "Security Vulnerability in AWS S3 Bucket",
+  "blueprint": "serviceTicket",
+  "icon": "Book",
+  "properties": {
+    "url": "https://api.wiz.com/wiz/service-tickets/data##wizt-customID##ja63-kx0z-f27x-mpvl"
+  },
+  "relations": {},
+  "createdAt": "2023-08-23T07:56:09.903743Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-09-12T08:33:16.327851Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
 </details>

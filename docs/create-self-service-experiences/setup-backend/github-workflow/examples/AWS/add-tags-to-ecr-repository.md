@@ -1,17 +1,26 @@
 # Add tags to ECR repository
 
-This GitHub action allows you to add tags to an ECR repository via Port Actions with ease.
+This guide demonstrates how to add meaningful tags to your AWS ECR repository using [Port's self-service action](/create-self-service-experiences/)
 
 ## Prerequisites
+1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed
+2. AWS Access Key and Secret Key pair. Follow [AWS guide on creating access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey) to create one for your account
+3. AWS `AmazonEC2ContainerRegistryFullAccess` policy should be enabled on the account to enable necessary permissions to carry out the action
+4. Account ID. Click on the account dropdown settings on the upper right corner in your AWS Console to retrieve it
+5. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
 
-- AWS Access Key and Secret Key pair. Follow [AWS guide on creating access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey) to create one for your account.
-- AWS `AmazonEC2ContainerRegistryFullAccess` policy should be enabled on the account to enable necessary permissions to carry out the action.
-- Account ID. Click on the account dropdown settings on the upper right corner in your AWS Console to retrieve it.
-- [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
+    - `AWS_REGION` - The region where ECR repositories are located. Available regions can be found on the [Regions, Availability Zones, and Local Zones page](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Regions) in AWS documentation.
+    - `AWS_ACCOUNT_ID` - AWS account ID from the [prerequisites step](#prerequisites)
+    - `AWS_ACCESS_KEY_ID` - AWS Access Key ID
+    - `AWS_SECRET_ACCESS_KEY` - AWS Secret Access Key
+    - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
-## Steps
+6. Optional - Ingest your `AWS ECR Repository` into Port using our [recommended python script](https://github.com/port-labs/example-ecr-images)
 
-1. Create the following GitHub action secrets:
+:::tip ECR Repository Python Script
+This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog with your repositories.
+:::
 
 - `AWS_REGION` - The region where ECR repositories are located. Available regions can be found on the [Regions, Availability Zones, and Local Zones page](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Regions) in AWS documentation.
 - `AWS_ACCOUNT_ID` - AWS account ID from the [prerequisites step](#prerequisites)
@@ -98,7 +107,7 @@ This GitHub action allows you to add tags to an ECR repository via Port Actions 
 
 </details>
 
-<!-- :::note Making use of an easy dropdown selection
+## GitHub Workflow
 
 While this step will ensure the `ecrRepository` blueprint is available, the self-service action supports selecting from the list of ingested repositories instead of having to input the repository name. To allow for this option, follow [Port's guide to ingest images and repositories into Port](https://github.com/port-labs/example-ecr-images).
 
@@ -215,7 +224,7 @@ This option is way easier but if you do not want this, you can simply type in re
 4. Create a workflow file under `.github/workflows/add-tags-to-ecr-repository.yml` with the content below:
 
 <details>
-<summary><b>Add Tags to ECR Repository Workflow (Click to expand)</b></summary>
+<summary><b>GitHub workflow (click to expand)</b></summary>
 
 ```yaml showLineNumbers
 name: Add tags to ECR repository
@@ -299,7 +308,6 @@ jobs:
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: Finished adding tags to ECR repository
 ```
-
 </details>
 
 <br />

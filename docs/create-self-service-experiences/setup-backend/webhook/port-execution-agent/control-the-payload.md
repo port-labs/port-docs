@@ -3,6 +3,12 @@ import TabItem from "@theme/TabItem"
 
 # Control the payload
 
+:::info How to define your payload
+Port offers two ways to control the payload sent to your backend:  
+- When using the `Port execution agent` (with a GitLab/Webhook backend), use the instructions on this page to define your payload.  
+- In any other case, you can define the payload [directly via Port](/create-self-service-experiences/setup-backend/#define-the-actions-payload).
+:::
+
 Some of the 3rd party applications that you may want to integrate with may not accept the raw payload incoming from
 Port's
 self-service actions. The Port agent allows you to control the payload that is sent to every 3rd party application.

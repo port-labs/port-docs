@@ -34,7 +34,24 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Setup the action's frontend
 
-Let's start by creating the action's frontend. This is the part that will be used by developers to trigger the action:
+:::tip Onboarding
+
+As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
+
+If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
+:::
+
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Send scorecard reminder` action, click the `...` button in the top right corner, and choose "Edit":
+
+    <img src='/img/guides/slackEditAction.png' width='45%' border='1px' />
+
+2. The action's basic details should look like the image below. This action has no user inputs, so when ready, click on the `Backend` tab to proceed.
+
+    <img src='/img/guides/slackActionDetails.png' width='60%' border='1px' />
+
+#### Define backend type
+
+Now we'll define the backend type of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -43,86 +60,55 @@ Let's start by creating the action's frontend. This is the part that will be use
 
 <TabItem value="github" label="Github">
 
-:::tip Onboarding
-
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
-
-If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-4 below.
-
-:::
-
-<details>
-<summary><b>Create the action's frontend (steps 1-4)</b></summary>
-
-1. To get started, head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `New action`:
-
-<img src='/img/guides/actionsCreateNew.png' width='50%' />
-
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are sending a reminder for a service, we will use the `Service` blueprint we created in the [quickstart guide](/quickstart) from the dropdown.
-
-3. Fill in the basic details of the action like this, then click `Next`:
-
-<img src='/img/guides/actionReminderBasicDetails.png' width='60%' />
-
-4. Click `Next` again, since we won't need inputs from the user in this action.
-
-</details>
-
-#### Define backend type
-
-Now we'll define the backend of the action:
+Fill out the form with your values:
   
-  - Choose `Github workflow` as the invocation type.
-  - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-  - Name the workflow `port-slack-reminder.yml`.
-  - Fill out the rest of the form like this, then click `Next`:
+- Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
 
-<img src='/img/guides/slackReminderBackend.png' width='70%' />
+- Name the workflow `port-slack-reminder.yml`.
 
-<br/><br/>
+- Fill out your workflow details:
+  <img src='/img/guides/slackReminderBackend.png' width='70%' />
+  <br/>
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
+
+  For this action, our backend only needs to know the id of the action run, so let's send it.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "runId": "{{ .run.id }}"
+  }
+  ```
+
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
 
 </TabItem>
 
 <TabItem value="gitlab" label="GitLab">
 
-:::tip Onboarding
-
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
-
-If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-4 below.
-
-:::
-
-<details>
-<summary><b>Create the action's frontend (steps 1-4)</b></summary>
-
-1. To get started, head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `New action`:
-
-<img src='/img/guides/actionsCreateNew.png' width='50%' />
-
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are sending a reminder for a service, we will use the `Service` blueprint we created in the [quickstart guide](/quickstart) from the dropdown.
-
-3. Fill in the basic details of the action like this, then click `Next`:
-
-<img src='/img/guides/actionReminderBasicDetails.png' width='60%' />
-
-4. Click `Next` again, since we won't need inputs from the user in this action.
-
-</details>
-
-Now we'll define the backend of the action:
+Fill out the form:
 
   - Choose `Trigger Webhook URL` as the `Invocation type`.
   - Leave `Endpoint URL` blank for now, we will create it in the next section and come back to update it.
   - Fill the rest of the form out like this, then click `Next`:
 
-<img src='/img/guides/slackReminderBackendGitLab.png' width='70%' />
+<img src='/img/guides/slackReminderBackendGitLab.png' width='70%' border='1px' />
 
-<br/><br/>
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.  
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+  For this action, our backend only needs to know the id of the action run, so let's send it.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "runId": "{{ .run.id }}"
+  }
+  ```
+
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
 
 </TabItem>
 
@@ -143,23 +129,23 @@ Now we want to write the logic that our action will trigger:
 
 <TabItem value="github" label="Github">
 
-1. First, let's create the necessary token and secrets:
+First, let's create the necessary token and secrets:
 
-   - Go to your desired Slack channel and [setup incoming webhooks](https://api.slack.com/messaging/webhooks). Make sure you copy the webhook URL, we will use it in the Github workflow.
+- Go to your desired Slack channel and [setup incoming webhooks](https://api.slack.com/messaging/webhooks). Make sure you copy the webhook URL, we will use it in the Github workflow.
 
-   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
-2. In the repository where your workflow will reside, create 3 new secrets under `Settings -> Secrets and variables -> Actions`:
+In the repository where your workflow will reside, create 3 new secrets under `Settings -> Secrets and variables -> Actions`:
 
 - `SLACK_WEBHOOK_URL` - the Slack Webhook URL of the destination channel.
 - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
 - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
 
-<img src='/img/guides/repositorySecretSlack.png' width='80%' />
+<img src='/img/guides/repositorySecretSlack.png' width='80%' border='1px' />
 
 <br/><br/>
 
-3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `port-slack-reminder.yml` and use the following snippet as its content:
+Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `port-slack-reminder.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -171,7 +157,8 @@ name: Generate Scorecards Reminders
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      run_id:
+        description: 'The id of the action run'
         required: true
         type: string
 jobs:
@@ -194,7 +181,7 @@ jobs:
                 clientId: ${{ secrets.PORT_CLIENT_ID }}
                 clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
                 operation: PATCH_RUN
-                runId: ${{ fromJson(inputs.port_payload).context.runId }}
+                runId: ${{ inputs.run_id }}
                 logMessage: |
                     Slack reminder sent successfully 🚀
 ```
@@ -209,13 +196,13 @@ This workflow uses Port's [Initiatives Sender GitHub Action](https://github.com/
 
 <TabItem value="gitlab" label="GitLab">
 
-1. First, let's create the required webhooks and variables:
+First, let's create the required webhooks and variables:
 
-  - Go to your desired Slack channel and [setup incoming webhooks](https://api.slack.com/messaging/webhooks). Make sure you copy the webhook URL, we will use it in the Github workflow.
-  
-  - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+- Go to your desired Slack channel and [setup incoming webhooks](https://api.slack.com/messaging/webhooks). Make sure you copy the webhook URL, we will use it in the Github workflow.
 
-2. In the GitLab project where your pipeline will reside, create 3 new variables under `Settings->CI/CD->Variables`:
+- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+
+In the GitLab project where your pipeline will reside, create 3 new variables under `Settings->CI/CD->Variables`:
 
 - `SLACK_WEBHOOK_URL` - the Slack Webhook URL of the destination channel.
 - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
@@ -223,12 +210,12 @@ This workflow uses Port's [Initiatives Sender GitHub Action](https://github.com/
 
 <img src='/img/guides/repositorySecretSlackGitLab.png' width='75%' />
 
-3. Create a webhook in GitLab for triggering your GitLab:
+Create a webhook in GitLab for triggering your GitLab:
   - Create a [pipeline trigger token](https://docs.gitlab.com/ee/ci/triggers);
   - Construct the [pipeline trigger webhook URL](https://docs.gitlab.com/ee/ci/triggers/#use-a-webhook) with your project details.
-  - Back in Port, edit your action and in its `backend` step paste the webhook URL in the `Endpoint URL` field.
+  - Back in Port, edit your action and in its `backend` step paste the **webhook URL** in the `Endpoint URL` field.
 
-4. Now let's create the pipeline file that contains our logic. In your GitLab project create a new file named `gitlab-ci.yaml` and use the following snippet as its content:
+Now let's create the pipeline file that contains our logic. In your GitLab project create a new file named `gitlab-ci.yaml` and use the following snippet as its content:
 
 <details>
 <summary><b>GitLab pipeline (click to expand)</b></summary>
@@ -321,17 +308,13 @@ variables:
 
 </Tabs>
 
-<br/>
-
 All done! The action is ready to be used 🚀
-
-<br/>
 
 ### Execute the action
 
 After creating an action, it will appear under the `Self-service` tab of your Port application:
 
-<img src='/img/guides/selfServiceAfterReminderCreation.png' width='75%' />
+<img src='/img/guides/selfServiceAfterReminderCreation.png' width='75%' border='1px' />
 
 1. Click on `Create` to begin executing the action.
 

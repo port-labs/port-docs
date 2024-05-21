@@ -19,4 +19,15 @@ Feel free to reach out with any questions or requests 🚀
 
 - [Newsroom](https://www.getport.io/newsroom)
 
+## Videos
+
+#### Production Readiness Setup - @[TeKanAid](https://www.youtube.com/@TeKanAid)
+
+A great walkthrough detailing how to sign up and set up Port, followed by integrating Port with PagerDuty.
+<center>
+
+<iframe width="50%" height="280" src="https://www.youtube.com/embed/tMYaKlMIvZk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
 ---

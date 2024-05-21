@@ -148,7 +148,7 @@ Import Azure resources into your Port account using the [Azure Exporter](/build-
         "storage_location"
       ]
     },
-    "blueprintIdentifier": "azureStorage",
+    "blueprintIdentifier": "azureStorage"
   },
   "invocationMethod": {
     "type": "GITHUB",

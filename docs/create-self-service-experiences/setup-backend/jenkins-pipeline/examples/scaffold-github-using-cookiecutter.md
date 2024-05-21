@@ -58,12 +58,14 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
    :::
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "scaffold",
-    "title": "Scaffold Golang Microservice",
-    "description": "Scaffold a new Microservice from a Cookiecutter teplate",
-    "icon": "Go",
+{
+  "identifier": "microservice_scaffold",
+  "title": "Scaffold Golang Microservice",
+  "icon": "Go",
+  "description": "Scaffold a new Microservice from a Cookiecutter teplate",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "repo_name": {
@@ -77,18 +79,51 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
           "type": "string"
         }
       },
-      "required": ["repo_name", "github_org_name"]
+      "required": [
+        "repo_name",
+        "github_org_name"
+      ]
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "agent": false,
-      "url": "https://<JENKINS_URL>/generic-webhook-trigger/invoke?token=<JOB_TOKEN>",
-      "synchronized": false,
-      "method": "POST"
-    },
-    "trigger": "CREATE"
-  }
-]
+    "blueprintIdentifier": "microservice"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://<JENKINS_URL>/generic-webhook-trigger/invoke?token=<JOB_TOKEN>",
+    "agent": false,
+    "synchronized": false,
+    "method": "POST",
+    "body": {
+      "action": "{{ .action.identifier[(\"microservice_\" | length):] }}",
+      "resourceType": "run",
+      "status": "TRIGGERED",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      },
+      "payload": {
+        "entity": "{{ (if .entity == {} then null else .entity end) }}",
+        "action": {
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "agent": false,
+            "url": "https://<JENKINS_URL>/generic-webhook-trigger/invoke?token=<JOB_TOKEN>",
+            "synchronized": false,
+            "method": "POST"
+          },
+          "trigger": "{{.trigger.operation}}"
+        },
+        "properties": {
+          "{{if (.inputs | has(\"repo_name\")) then \"repo_name\" else null end}}": "{{.inputs.\"repo_name\"}}",
+          "{{if (.inputs | has(\"github_org_name\")) then \"github_org_name\" else null end}}": "{{.inputs.\"github_org_name\"}}"
+        },
+        "censoredProperties": "{{.action.encryptedProperties}}"
+      }
+    }
+  },
+  "publish": true
+}
 ```
 
 4. Create a Jenkins Pipeline with the following configuration:
