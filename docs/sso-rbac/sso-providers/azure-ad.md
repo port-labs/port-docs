@@ -59,6 +59,26 @@ To make the **Port** app connection work, users who have access need to have a l
 
    4.4 Click `Register`.
 
+   4.5 On the new Port App page, click `Authentication`.
+
+   ![Azure navigation bar authentication](../../../static/img/sso/azure-ad/AzureAppNavAuthentication.png)
+
+   4.6 `Front-channel logout URL`: paste the following URL:
+
+   ```text showLineNumbers
+   https://auth.getport.io/logout
+   ```
+
+   :::tip single sign-out
+   Adding the front-channel logout URL will enable single sign-out, meaning when a user logs our from Port, it also logs him out from his identity provider.
+   :::
+
+   ![Azure app authentication form](../../../static/img/sso/azure-ad/AzureAppAuthenticationForm.png)
+
+   4.7 Click `Save`.
+
+
+
 ### Step #2: Customize your Port app with Login URL and Logo
 
 1.  On the new Port App page, click `Branding & Properties`.
