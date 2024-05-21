@@ -309,7 +309,7 @@ steps:
 
   </TabItem>
 
-     <TabItem value="gitlab" label="GitLab">
+<TabItem value="gitlab" label="GitLab">
 This workflow will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning Realtime updates in Port
