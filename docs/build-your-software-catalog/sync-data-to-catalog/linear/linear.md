@@ -353,7 +353,6 @@ ingest_data:
 
   rules: # Run only when changes are made to the main branch
     - if: '$CI_COMMIT_BRANCH == "main"'
-    - when: manual
 ```
 
 </TabItem>
