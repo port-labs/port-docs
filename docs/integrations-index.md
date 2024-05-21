@@ -203,6 +203,10 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
 - [Connect Jira issue to a service](/build-your-software-catalog/sync-data-to-catalog/jira/guides/connect-jira-issue-to-service)
 
+## Linear
+
+- [Linear integration](/build-your-software-catalog/sync-data-to-catalog/linear/linear.md)
+- [Linear webhook](/build-your-software-catalog/sync-data-to-catalog/linear/linear.md#alternative-installation-via-webhook)
 
 ## Sentry
 
