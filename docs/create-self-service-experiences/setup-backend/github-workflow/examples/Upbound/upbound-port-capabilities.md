@@ -7,19 +7,20 @@ At the end of this guide, you should be able to interact with Upbound using Port
 The demo starts off on a completely clean slate - an empty Upbound organization, an empty git repository, and a clean Port environment.
 :::
 
-## Prerequisites
-### Upbound
+:::tip Prerequisites
+<h3>Upbound</h3>
 Before following the guide, you will need to set up an Upbound organization, initialize it and keep track of some information:
 - Save the `Organization ID` for later;
 - Set up the default EKSaaS configuration in the Upbound organization;
 - Deploy a control plane (or many) and save their `identifiers` for later;
 - Create an API token and save it for later.
 
-### Port
-It would be best to start off with a clean Port environment. Make sure that the Port organization used in the demo doesn't have any entities or blueprints.
-Save the Port organization's `CLIENT_ID` and `CLIENT_SECRET` for later ([how to find your Port credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
+<h3>Port</h3>
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
+- It would be best to start off with a clean Port environment. Make sure that the Port organization used in the demo doesn't have any entities or blueprints.
+- Save the Port organization's `CLIENT_ID` and `CLIENT_SECRET` for later ([how to find your Port credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 
-## Git repository
+<h3>Git repository</h3>
 The actions backend, and the state of the different control planes will be handled in a github repository. For Port to interact with the new Github repo, you will need Port's Github app to be installed ([install Port's github app](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation)).
 
 Create a new git repository, and make sure that Port's Github app is installed on it either by:
@@ -29,6 +30,7 @@ Create a new git repository, and make sure that Port's Github app is installed o
 Also make sure that Github actions [allow creating and approving pull requests](https://docs.github.com/en/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests) in your repository.
 
 **Note:** _Save the name of your new repository for later._
+:::
 
 
 ## Guide
@@ -834,18 +836,6 @@ You will need to create these blueprints in your Port organization.
 Blueprint creation may fail if they are not created in the order that they appear above
 :::
 
-Follow these steps:
-1. Go to Port's [builder](https://app.getport.io/dev-portal/data-model) screen;
-
-2. Create a new custom blueprint from the Builder page;
-![newCustomBlueprint](https://github.com/port-demo/port-upbound-demo/blob/main/static/newCustomBlueprint.png?raw=true)
-
-3. Click the `Edit JSON` button;
-![createBlueprintJson](https://github.com/port-demo/port-upbound-demo/blob/main/static/createBlueprintJson.png?raw=true)
-
-4. Paste the blueprint `.json` contents in the editor and click `Save`.
-![saveNewBlueprint](https://github.com/port-demo/port-upbound-demo/blob/main/static/saveNewBlueprint.png?raw=true)
-
 #### Creating actions
 Below are two action blueprints which define the different actions we need, to trigger the different Github workflows.
 
@@ -854,19 +844,6 @@ You will need to create these action definitions on their appropriate blueprints
 ::note Customizing GitHub values
 Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAME` values in the action blueprint.  You need to replace these with your appropriate Github organization name and repository name.
 :::
-
-To create the actions, follow these steps:
-
-1. Go to Port's [builder](https://app.getport.io/dev-portal/data-model) screen;
-
-2. Expand the blueprint you wish to create an action for;
-![expandBlueprint](https://github.com/port-demo/port-upbound-demo/blob/main/static/expandBlueprint.png?raw=true)
-
-3. Edit click the `...` to open the blueprint's dropdown menu, and click `Edit Json`;
-![editBlueprintAsJson](https://github.com/port-demo/port-upbound-demo/blob/main/static/editBlueprintAsJson.png?raw=true)
-
-4. Switch to the `Actions` tab, and paste the contents of the `-Actions.json` in the editor and click `Save`.
-![saveBlueprintActions](https://github.com/port-demo/port-upbound-demo/blob/main/static/saveBlueprintActions.png?raw=true)
 
 <details>
 <summary><b>EKS Cluster Request (click to expand)</b></summary>
