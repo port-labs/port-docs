@@ -110,17 +110,9 @@ on:
       tags:
         type: string
         required: true
-      run_id:
+      port_context:
         required: true
         type: string
-      entity:
-        required: true
-        type: string
-    secrets:
-      SONARQUBE_HOST_URL:
-        required: true
-      SONARQUBE_API_TOKEN:
-        required: true
 
 jobs:
   create-entity-in-port-and-update-run:
@@ -133,13 +125,13 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id}}
+          runId: ${{ fromJson(inputs.port_context).run_id}}
           logMessage: Starting request to add tags to SonarQube project
       
       - name: Add tags to SonarQube project
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "${{ secrets.SONARQUBE_HOST_URL }}/api/project_tags/set?project=${{ inputs.entity }}&tags=${{ inputs.tags }}"
+          url: "${{ secrets.SONARQUBE_HOST_URL }}/api/project_tags/set?project=${{ fromJson(inputs.port_context).entity }}&tags=${{ inputs.tags }}"
           method: "POST"
           bearerToken: ${{ secrets.SONARQUBE_API_TOKEN }}
           customHeaders: '{"Content-Type": "application/json"}'
@@ -151,9 +143,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: Finished request to create SonarQube project
-
 ```
 </details>
 
@@ -202,8 +193,10 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
     "workflow": "add-tags-to-sonarqube-project.yml",
     "workflowInputs": {
       "tags": "{{.inputs.\"tags\"}}",
-      "entity": "{{.entity.identifier}}",
-      "run_id": "{{.run.id}}"
+      "port_context": {
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}"
+      }
     },
     "reportWorkflowStatus": true
   },

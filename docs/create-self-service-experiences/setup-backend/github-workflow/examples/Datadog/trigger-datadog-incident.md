@@ -131,26 +131,9 @@ on:
         type: string
       notificationHandleEmail:
         type: string
-      run_id:
+      port_context:
         required: true
         type: string
-      entity:
-        required: true
-        type: string
-      blueprint:
-        required: true
-        type: string
-    secrets:
-      DD_API_KEY:
-        required: true
-      DD_APPLICATION_KEY:
-        required: true
-      DD_API_URL:
-        required: true
-      PORT_CLIENT_ID:
-        required: true
-      PORT_CLIENT_SECRET:
-        required: true
 jobs:
   create-entity-in-port-and-update-run:
 
@@ -163,7 +146,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: Starting request to create Datadog incident
 
       - name: Create a Datadog incident
@@ -182,7 +165,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: Finished request to create Datadog incident
       
       - name: Inform ingestion of Datadog incident into Port
@@ -192,7 +175,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: Ingesting Datadog incident into Port
 
       - name: Convert dates to desired format
@@ -212,7 +195,7 @@ jobs:
         with:
           identifier: ${{ fromJson(steps.datadog_incident.outputs.response).data.id }}
           title: ${{ fromJson(steps.datadog_incident.outputs.response).data.attributes.title }}
-          blueprint: ${{ inputs.blueprint }}
+          blueprint: ${{ fromJson(inputs.port_context).blueprint }}
           properties: |-
             {
               "customerImpactScope": "${{ fromJson(steps.datadog_incident.outputs.response).data.attributes.customer_impact_scope }}",
@@ -233,7 +216,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
     
       - name: Inform completion of Datadog incident ingestion into Port
         uses: port-labs/port-github-action@v1
@@ -242,7 +225,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           link: ${{ secrets.DD_API_URL }}/incidents/${{ fromJson(steps.datadog_incident.outputs.response).data.id }}
           logMessage: Finished request to ingest Datadog incident into Port
 
@@ -253,9 +236,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: Workflow completed
-
 ```
 
 </details>
@@ -300,11 +282,13 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
           "type": "string"
         },
         "notificationHandleName": {
+          "icon": "DefaultProperty",
           "title": "Notification Handle Name",
           "type": "string",
           "description": "The name of the notified handle."
         },
         "notificationHandleEmail": {
+          "icon": "DefaultProperty",
           "title": "Notification Handle Email",
           "description": "The email address used for the notification.",
           "type": "string",
@@ -313,7 +297,10 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
       },
       "required": [
         "customerImpacted",
-        "title"
+        "title",
+        "customerImpactScope",
+        "notificationHandleName",
+        "notificationHandleEmail"
       ],
       "order": [
         "title",
@@ -327,8 +314,8 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<Enter GitHub organization>",
     "repo": "<Enter GitHub repository>",
+    "org": "<Enter GitHub organization>",
     "workflow": "trigger-datadog-incident.yml",
     "workflowInputs": {
       "customerImpactScope": "{{.inputs.\"customerImpactScope\"}}",
@@ -336,9 +323,10 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
       "title": "{{.inputs.\"title\"}}",
       "notificationHandleName": "{{.inputs.\"notificationHandleName\"}}",
       "notificationHandleEmail": "{{.inputs.\"notificationHandleEmail\"}}",
-      "entity": "{{.entity.identifier}}",
-      "blueprint": "{{.action.blueprint}}",
-      "run_id": "{{.run.id}}"
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "run_id": "{{.run.id}}"
+      }
     },
     "reportWorkflowStatus": true
   },

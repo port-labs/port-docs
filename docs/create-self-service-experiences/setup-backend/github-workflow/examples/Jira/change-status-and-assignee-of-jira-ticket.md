@@ -110,7 +110,6 @@ Create the file `.github/workflows/change-jira-ticket-status-and-assignee.yml` i
 <summary>GitHub Workflow</summary>
 
 ```yaml showLineNumbers title="change-jira-ticket-status-and-assignee.yml"
-
 name: Change Jira Ticket Status and Assignee
 on:
   workflow_dispatch:
@@ -121,23 +120,9 @@ on:
       assignee:
         type: string
         required: false
-      run_id:
+      port_context:
         required: true
         type: string
-      entity:
-        required: true
-        type: string
-    secrets:
-      JIRA_BASE_URL:
-        required: true
-      JIRA_USER_EMAIL:
-        required: true
-      JIRA_API_TOKEN:
-        required: true
-      PORT_CLIENT_ID:
-        required: true
-      PORT_CLIENT_SECRET:
-        required: true
 
 jobs:
   change-jira-ticket-status-and-assignee:
@@ -162,7 +147,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Changing status of Jira issue... ⛴️
 
@@ -174,7 +159,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Status field is blank, skipping status change... ⛴️
 
@@ -183,7 +168,7 @@ jobs:
         if: steps.inform_ticket_start.outcome == 'success'
         uses: atlassian/gajira-transition@v3
         with:
-          issue: ${{ inputs.entity }}
+          issue: ${{ fromJson(inputs.port_context).entity }}
           transition: ${{ inputs.status }}
 
       - name: Inform that status has been changed
@@ -193,8 +178,8 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          link: ${{ secrets.JIRA_BASE_URL }}/browse/${{ inputs.entity }}
-          runId: ${{ inputs.run_id }}
+          link: ${{ secrets.JIRA_BASE_URL }}/browse/${{ fromJson(inputs.port_context).entity }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Jira issue status changed to ${{ inputs.status }}! ✅
 
@@ -206,7 +191,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Assigning ticket to user... ⛴️
 
@@ -218,7 +203,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Assignee field is blank, skipping assigning of ticket... ⛴️
 
@@ -229,7 +214,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Searching for user in organization user list... ⛴️
 
@@ -264,9 +249,9 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
-            User found 🥹 Assigning ticket ${{ inputs.entity }} to ${{ steps.user_list_from_search.outputs.selected_user_name }}... ⛴️
+            User found 🥹 Assigning ticket ${{ fromJson(inputs.port_context).entity }} to ${{ steps.user_list_from_search.outputs.selected_user_name }}... ⛴️
 
       - name: Inform user inexistence
         if: steps.user_list_from_search.outputs.selected_user_id == 'empty'
@@ -275,7 +260,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             User not found 😭 Skipping assignment... ⛴️
 
@@ -284,7 +269,7 @@ jobs:
         if: steps.user_list_from_search.outputs.selected_user_id != 'empty'
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "${{ secrets.JIRA_BASE_URL }}/rest/api/3/issue/${{ inputs.entity }}/assignee"
+          url: "${{ secrets.JIRA_BASE_URL }}/rest/api/3/issue/${{ fromJson(inputs.port_context).entity }}/assignee"
           method: "PUT"
           username: ${{ secrets.JIRA_USER_EMAIL }}
           password: ${{ secrets.JIRA_API_TOKEN }}
@@ -298,11 +283,10 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          link: ${{ secrets.JIRA_BASE_URL }}/browse/${{ inputs.entity }}
-          runId: ${{ inputs.run_id }}
+          link: ${{ secrets.JIRA_BASE_URL }}/browse/${{ fromJson(inputs.port_context).entity }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Jira issue has been assigned to ${{ steps.user_list_from_search.outputs.selected_user_name }}! ✅
-
 
 ```
 
@@ -378,8 +362,10 @@ jobs:
     "workflowInputs": {
       "status": "{{.inputs.\"status\"}}",
       "assignee": "{{.inputs.\"assignee\"}}",
-      "entity": "{{.entity.identifier}}",
-      "run_id": "{{.run.id}}"
+      "port_context": {
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}"
+      }
     },
     "reportWorkflowStatus": true
   },

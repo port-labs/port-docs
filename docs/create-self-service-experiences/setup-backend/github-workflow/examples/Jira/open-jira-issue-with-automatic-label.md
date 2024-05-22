@@ -248,23 +248,9 @@ on:
       project:
         required: true
         type: string
-      run_id:
+      port_context:
         required: true
         type: string
-      entity:
-        required: true
-        type: string
-    secrets:
-      JIRA_BASE_URL:
-        required: true
-      JIRA_USER_EMAIL:
-        required: true
-      JIRA_API_TOKEN:
-        required: true
-      PORT_CLIENT_ID:
-        required: true
-      PORT_CLIENT_SECRET:
-        required: true
 
 jobs:
   create-entity-in-port-and-update-run:
@@ -283,7 +269,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Creating a new Jira issue with automatic label.. ⛴️
 
@@ -294,7 +280,11 @@ jobs:
           project: ${{ inputs.project }}
           issuetype: ${{ inputs.type }}
           summary: ${{ inputs.title }}
-          fields: '{"labels": ["port-${{ inputs.entity }}"]}'
+          fields: |
+            ${{ fromJson(inputs.port_context).entity != null
+              && format('{{ "labels": ["port-{0}"] }}', fromJson(inputs.port_context).entity)
+              || '{}'
+            }}
 
       - name: Inform creation of Jira issue
         uses: port-labs/port-github-action@v1
@@ -303,7 +293,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           link: ${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.create.outputs.issue }}
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Jira issue created! ✅
             The issue id is: ${{ steps.create.outputs.issue }}
@@ -388,8 +378,10 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
       "title": "{{.inputs.\"title\"}}",
       "type": "{{.inputs.\"type\"}}",
       "project": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-      "entity": "{{.entity.identifier}}",
-      "run_id": "{{.run.id}}"
+      "port_context": {
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}"
+      }
     },
     "reportWorkflowStatus": true
   },
