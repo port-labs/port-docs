@@ -15,6 +15,8 @@ Here you will find more Port-related content that can help you get the most out 
 
 This handy [chrome extension](https://chromewebstore.google.com/detail/highlight-search-in-port/ekbladoiehfohpcppcclfkcnnlchejnb?hl=en-US&utm_source=ext_sidebar) allows you to highlight text in any webpage and quickly search for it in your developer portal.
 
+---
+
 ## Videos
 
 #### Production Readiness Setup - @[TeKanAid](https://www.youtube.com/@TeKanAid)
@@ -37,6 +39,8 @@ A follow-up to the previous video, this one explains about self-service actions 
 <iframe width="50%" height="280" src="https://www.youtube.com/embed/2Cw4i_FuSC8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
+
+---
 
 ## Links 
 
