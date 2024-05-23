@@ -208,7 +208,7 @@ Follow these steps to get started:
     "workflowInputs": {
       "reason": "{{ .inputs.\"reason\" }}",
       "environment": "{{ .inputs.\"environment\" }}",
-      "context": {
+      "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity}}",
         "runId": "{{.run.id}}",
@@ -273,11 +273,11 @@ Follow these steps to get started:
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
-    "workflow": "lock-service.yml",
+    "workflow": "unlock-service.yml",
     "workflowInputs": {
       "reason": "{{ .inputs.\"reason\" }}",
       "environment": "{{ .inputs.\"environment\" }}",
-      "context": {
+      "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity}}",
         "runId": "{{.run.id}}",
