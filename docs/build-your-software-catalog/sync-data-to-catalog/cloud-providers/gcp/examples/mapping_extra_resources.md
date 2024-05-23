@@ -43,6 +43,10 @@ Create an integration configuration for the resource. The integration configurat
 As you may see, some of the properties are digested using `.versioned_resources | max_by(.version).resource | <property_value>`. This is done, because the Cloud Assets contains all of the available versions of the resource within each inventory item, so that's why we take the most recent version of the asset in the inventory, and from that version we take the property value.
 All of the other properties, which are not versioned, are properties we digest directly from the asset in the Asset inventory, which are all listed [here](https://cloud.google.com/asset-inventory/docs/reference/rest/v1/Asset). These don't have multiple versions, and so are directly digested.
 
+:::warning
+   The cloudresourcemanager.googleapis.com/Folder, cloudresourcemanager.googleapis.com/Organization, cloudresourcemanager.googleapis.com/Project, and pubsub.googleapis.com/Topic are fetched directly from Google Cloud's API, not using the Asset Inventory. Therefore, access their properties directly, without using the jq command specified above.
+:::
+
 <ComputeAppConfig/>
 
 #### The integration configuration structure
