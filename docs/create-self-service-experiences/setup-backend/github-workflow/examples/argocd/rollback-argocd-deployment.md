@@ -267,11 +267,12 @@ Follow these steps to get started:
     "workflow": "rollback.yaml",
     "workflowInputs": {
       "auto_merge": "{{.inputs.auto_merge}}",
-      "image": "{{.inputs.image}}",
-      "context": {
+      "image": "{{.inputs.image.title}}",
+      "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity}}",
-        "runId": "{{.run.id}}"
+        "runId": "{{.run.id}}",
+        "trigger": "{{.trigger}}"
       }
     },
     "reportWorkflowStatus": true
