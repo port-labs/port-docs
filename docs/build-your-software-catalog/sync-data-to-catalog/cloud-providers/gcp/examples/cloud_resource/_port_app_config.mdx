@@ -24,10 +24,10 @@ resources:
       entity:
         mappings:
           identifier: ".name"
-          title: ".display_name"
+          title: ".name | split("/") | last"
           blueprint: '"gcpCloudResource"'
           properties:
-            type: ".asset_type"
+            type: '.name | split("/") | .[-2]'
             location: ".location"
           relations:
             project: ".project"
