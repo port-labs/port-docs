@@ -196,17 +196,17 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Jira
 
-- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/jira/jira.md)
-- [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/jira/#alternative-installation-via-webhook)
+- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/jira.md)
+- [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook)
 - [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 - [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
-- [Connect Jira issue to a service](/build-your-software-catalog/sync-data-to-catalog/jira/guides/connect-jira-issue-to-service)
+- [Connect Jira issue to a service](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/guides/connect-jira-issue-to-service)
 
 ## Linear
 
-- [Linear integration](/build-your-software-catalog/sync-data-to-catalog/linear/linear.md)
-- [Linear webhook](/build-your-software-catalog/sync-data-to-catalog/linear/linear.md#alternative-installation-via-webhook)
+- [Linear integration](/build-your-software-catalog/sync-data-to-catalog/project-management/linear/linear.md)
+- [Linear webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/linear/linear.md#alternative-installation-via-webhook)
 
 ## Sentry
 
