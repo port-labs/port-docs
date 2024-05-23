@@ -62,6 +62,8 @@ In the following example you will ingest your Azure Devops pipelines to Port, yo
 
 <PipelineBlueprint/>
 
+<ProjectBlueprint/>
+
 <PortPipelineAppConfig/>
 
 :::tip To Learn more
@@ -82,6 +84,10 @@ In the following example you will ingest your Azure Devops teams and their membe
 <TeamsBlueprint/>
 
 <MembersBlueprint/>
+
+<ProjectBlueprint/>
+
+<RepositoryBlueprint/>
 
 <PortTeamsAppConfig/>
 
