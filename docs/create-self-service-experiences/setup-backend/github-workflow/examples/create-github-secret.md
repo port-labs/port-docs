@@ -109,7 +109,7 @@ Make sure to replace the placeholders for `<GITHUB_ORG_NAME>` and `<GITHUB_REPO_
     "workflowInputs": {
       "secret_key": "{{ .inputs.\"secret_key\" }}",
       "secret_value": "{{ .inputs.\"secret_value\" }}",
-      "context": {
+      "port_context": {
         "entity": "{{.entity}}",
         "blueprint": "{{.action.blueprint}}",
         "runId": "{{.run.id}}",
@@ -142,7 +142,7 @@ on:
       secret_value:
         type: string
         description: value of the secret
-      context:
+      port_context:
         required: false
         description:
           Who triggered the action and general context (blueprint, run id, etc...)
@@ -165,7 +165,7 @@ jobs:
           title: ${{ inputs.secret_key }}
           team: "[]"
           icon: DefaultBlueprint
-          blueprint: ${{ fromJson(inputs.context).blueprint }}
+          blueprint: ${{ fromJson(inputs.port_context).blueprint }}
           properties: |-
             {
               "secret_key": "${{ inputs.secret_key }}",
@@ -175,7 +175,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
 
       - name: Inform completion of request to create secret in Port
         uses: port-labs/port-github-action@v1
@@ -185,7 +185,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: "Created github secret ${{ github.event.inputs.secret_key }}"
 ```
 </details>
