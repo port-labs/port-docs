@@ -193,7 +193,7 @@ variable "environment" {
     "workflow": "plan-terraform-resource.yaml",
     "workflowInputs": {
       "bucket_name": "{{ .inputs.\"bucket_name\" }}",
-      "context": {
+      "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity}}",
         "runId": "{{.run.id}}",
@@ -266,7 +266,7 @@ variable "environment" {
       "artifact_identifier": "{{ .inputs.\"artifact_identifier\" }}",
       "port_run_identifier": "{{ .inputs.\"port_run_identifier\" }}",
       "tf_plan_output": "{{ .inputs.\"tf_plan_output\" }}",
-      "context": {
+      "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity}}",
         "runId": "{{.run.id}}",
