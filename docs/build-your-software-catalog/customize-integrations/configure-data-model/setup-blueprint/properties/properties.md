@@ -12,18 +12,14 @@ Properties are customizable data fields of [blueprints](/build-your-software-cat
 
 ## Configure properties in Port
 
-<Tabs groupId="definition" queryString defaultValue="ui" values={[{label: "UI", value: "ui"}]}>
-
-<TabItem value="ui">
-
-<h4>To edit an existing property:</h4>
+**To edit an existing property:**
 
 1. Go to your [Builder page](https://app.getport.io/settings).
 2. Expand the blueprint you want to edit by double-clicking on it.
 3. Under the `Properties` tab, click on the property you want to edit.
 4. Make your desired changes to the form, then click `Save`.
 
-<h4>To create a new property:</h4>
+**To create a new property:**
 
 1. Go to your [Builder page](https://app.getport.io/settings).
 2. Expand the blueprint you want to edit by double-clicking on it.
@@ -33,9 +29,6 @@ Properties are customizable data fields of [blueprints](/build-your-software-cat
 <br/><br/>
 
 4. Fill in the form with the desired property details, including the [property type](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties), then click `Create`.
-
-</TabItem>
-</Tabs>
 
 ## Structure
 
