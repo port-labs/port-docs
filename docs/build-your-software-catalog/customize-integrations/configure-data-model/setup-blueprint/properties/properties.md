@@ -12,6 +12,10 @@ Properties are customizable data fields of [blueprints](/build-your-software-cat
 
 ## Configure properties in Port
 
+You can create, delete, or edit properties via the builder page or directly from the software catalog.
+
+### From the builder page
+
 **To edit an existing property:**
 
 1. Go to your [Builder page](https://app.getport.io/settings).
@@ -29,6 +33,28 @@ Properties are customizable data fields of [blueprints](/build-your-software-cat
 <br/><br/>
 
 4. Fill in the form with the desired property details, including the [property type](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties), then click `Create`.
+
+### From the software catalog
+
+Each catalog page in your software catalog contains a table with all entities created from a certain blueprint. You can modify the properties of the blueprint directly from this table:
+
+1. Go to the desired page of your [software catalog](https://app.getport.io/organization/catalog).
+2. In the top-right corner of the table are its filters, click on the `Manage properties` button:
+    
+    <img src='/img/software-catalog/customize-integrations/managePropertiesFromCatalog.png' width='60%' border='1px' />
+    <br/>
+
+3. A dropdown will appear showing all of the properties.  
+   To modify or delete a property, hover over the it and click on the `...` icon: 
+    <img src='/img/software-catalog/customize-integrations/managePropertiesDropdown.png' width='30%' border='1px' />
+    <br/>
+    **Note** that [meta-properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties) are not editable, so you will not see a `...` icon next to them.
+
+4. To create a new property in the blueprint, click on the `+ Property` button in the bottom of the dropdown.
+
+:::tip Hiding properties
+You can also hide properties from the table by clicking on the toggle next the `...` icon.
+:::
 
 ## Structure
 
