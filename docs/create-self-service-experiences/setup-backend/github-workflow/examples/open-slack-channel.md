@@ -634,8 +634,8 @@ Create a new self service action using the following JSON configuration.
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "GITHUB_ORG",
-    "repo": "GITHUB_REPO",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "open-slack-channel.yaml",
     "workflowInputs": {
       "channel_name": "{{.inputs.\"channel_name\"}}",
