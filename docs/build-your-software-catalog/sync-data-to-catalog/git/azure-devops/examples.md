@@ -85,7 +85,7 @@ In the following example you will ingest your Azure Devops teams and their membe
 
 <MembersBlueprint/>
 
-<ProjectBlueprint>
+<ProjectBlueprint/>
 
 <RepositoryBlueprint/>
 
