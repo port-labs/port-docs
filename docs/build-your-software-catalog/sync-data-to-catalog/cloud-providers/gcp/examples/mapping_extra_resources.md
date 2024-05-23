@@ -44,7 +44,7 @@ As you may see, some of the properties are digested using `.versioned_resources 
 All of the other properties, which are not versioned, are properties we digest directly from the asset in the Asset inventory, which are all listed [here](https://cloud.google.com/asset-inventory/docs/reference/rest/v1/Asset). These don't have multiple versions, and so are directly digested.
 
 :::warning Resources not digested from Asset Inventory
-   The cloudresourcemanager.googleapis.com/Folder, cloudresourcemanager.googleapis.com/Organization, cloudresourcemanager.googleapis.com/Project, and pubsub.googleapis.com/Topic are fetched directly from Google Cloud's API, not using the Asset Inventory. Therefore, access their properties directly, without using the jq command specified above.
+   The `cloudresourcemanager.googleapis.com/Folder`, `cloudresourcemanager.googleapis.com/Organization`, `cloudresourcemanager.googleapis.com/Project`, and `pubsub.googleapis.com/Topic` are fetched directly from Google Cloud's API, not using the Asset Inventory. Therefore, access their properties directly, without using the jq command specified above.
 :::
 
 <ComputeAppConfig/>
