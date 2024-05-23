@@ -254,13 +254,12 @@ Create a new self service action using the following JSON configuration.
     "repo": "<GITHUB_REPO>",
     "workflow": "sync-argocd-app.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"application_name\")) then \"application_name\" else null end}}": "{{.inputs.\"application_name\"}}",
-      "context": {
-      "entity": "{{.entity.identifier}}",
-      "blueprint": "{{.action.blueprint}}",
-      "run_id": "{{.run.id}}"
-        }
+      "application_name": "{{.inputs.\"application_name\"}}",
+      "port_context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}"
+      }
     },
     "reportWorkflowStatus": true
   },
