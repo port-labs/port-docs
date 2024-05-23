@@ -13,7 +13,7 @@ This guide aims to cover how to connect a GitHub pull request with a Jira Issue 
 
 :::tip Prerequisites
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
-- Ensure you have [Jira installed and configured in your environment](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/)
+- Ensure you have [Jira installed and configured in your environment](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
 - Ensure you have a registered organization in Port and your Port user role is set to `Admin`.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
 - [Helm](https://helm.sh/docs/intro/install/) - required to install a relevant integration.
@@ -141,7 +141,7 @@ You should now be able to see your GitHub pull requests ingested successfully in
 
 ## Integrate Jira into Port
 
-The goal of this section is to bring our Jira issues into Port. [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects` and `issues` from your Jira account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
+The goal of this section is to bring our Jira issues into Port. [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects` and `issues` from your Jira account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
 
 :::info Note
 For this installation you will need Helm and a running K8s cluster (see [prerequisites](#connect-github-pull-request-with-jira-issue)).
@@ -260,5 +260,5 @@ By following these steps, you can seamlessly connect a GitHub pull request with 
 
 More relevant guides and examples:
 
-- [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/)
+- [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
 - [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)
