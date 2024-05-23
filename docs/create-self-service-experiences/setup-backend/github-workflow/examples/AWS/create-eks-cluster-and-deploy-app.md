@@ -8,6 +8,15 @@ In this guide, we are going to use [self-service actions](/create-self-service-e
 - Scaffolds a Node.js app that's automatically ingested as an entity by Port.
 - Deploys the app to the cluster.
 
+<br/>
+🎬 If you would like to follow along to a **video** that implements this guide, check out this one by @TeKanAid 🎬
+<center>
+
+<iframe width="40%" height="240" src="https://www.youtube.com/embed/2Cw4i_FuSC8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
+<br/><br/>
 
 ## Prerequisites
 
