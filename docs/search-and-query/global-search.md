@@ -26,3 +26,7 @@ The search bar will return two types of results:
 :::info Supported results
 Note that the search bar does not return results for blueprints and actions, only entities.
 :::
+
+## Port highlight search - chrome extension
+
+This handy [chrome extension](https://chromewebstore.google.com/detail/highlight-search-in-port/ekbladoiehfohpcppcclfkcnnlchejnb?hl=en-US&utm_source=ext_sidebar) allows you to highlight text in any webpage and quickly search for it in Port using the global search bar.
