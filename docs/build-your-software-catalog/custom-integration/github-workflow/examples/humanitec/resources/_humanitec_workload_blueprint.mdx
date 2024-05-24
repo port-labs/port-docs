@@ -1,2 +1,48 @@
 ```json showLineNumbers
+
+{
+  "identifier": "humanitecWorkload",
+  "title": "Workload",
+  "icon": "Cluster",
+  "schema": {
+    "properties": {
+      "description": {
+        "title": "Description",
+        "description": "A short description of the workload",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "version": {
+        "title": "Workload Version",
+        "type": "string",
+        "icon": "DefaultProperty",
+        "description": "The workload version"
+      },
+      "createdAt": {
+        "title": "Creation Date",
+        "type": "string",
+        "format": "date-time",
+        "description": "The date and time when the workload was created."
+      },
+      "specDefinition": {
+        "title": "Specification Definition",
+        "type": "object",
+        "description": "The workload spec definition",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "application": {
+      "title": "Application",
+      "target": "humanitecApplication",
+      "required": false,
+      "many": true
+    }
+  }
+}
 ```

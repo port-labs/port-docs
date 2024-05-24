@@ -1,2 +1,29 @@
 ```json showLineNumbers
+
+{
+  "identifier": "humanitecWorkloadVersion",
+  "title": "WorkLoad Version",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {},
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "environment": {
+      "title": "Environment",
+      "target": "humanitecEnvironment",
+      "required": false,
+      "many": false
+    },
+    "workload": {
+      "title": "Workload",
+      "target": "humanitecWorkload",
+      "required": false,
+      "many": false
+    }
+  }
+}
 ```
