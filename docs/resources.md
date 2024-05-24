@@ -19,7 +19,7 @@ This handy [chrome extension](https://chromewebstore.google.com/detail/highlight
 
 ## Videos
 
-#### Production Readiness Setup - @[TeKanAid](https://www.youtube.com/@TeKanAid)
+#### Port Intro - Production Readiness Setup - @[TeKanAid](https://www.youtube.com/@TeKanAid)
 
 A great walkthrough detailing how to set up Port and integrate it with Github and PagerDuty.
 
@@ -37,6 +37,16 @@ A follow-up to the previous video, this one explains about self-service actions 
 <center>
 
 <iframe width="50%" height="280" src="https://www.youtube.com/embed/2Cw4i_FuSC8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
+#### Port & ArgoCD: Building a Unified Developer Experience - @[TeKanAid](https://www.youtube.com/@TeKanAid)
+
+The 3rd and final video in this series. This video demonstrates how to integrate Port with ArgoCD, and introduces some additional capabilities of Port - dashboards, RBAC, and more.
+
+<center>
+
+<iframe width="50%" height="280" src="https://www.youtube.com/embed/XQ6GlcpNJ4c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 
