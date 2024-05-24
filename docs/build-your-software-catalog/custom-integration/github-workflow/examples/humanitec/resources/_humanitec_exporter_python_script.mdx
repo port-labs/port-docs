@@ -11,14 +11,14 @@ from datetime import datetime
 import re
 
 
-PORT_CLIENT_ID = "Ex3GeM9hXjiYowHNkoWUxsMnP0ZXsMNm"  # config("PORT_CLIENT_ID")
-PORT_CLIENT_SECRET = "CZhDeIwEEvQhqiDD7r4DZ0ze2MlQ4jFT6QwzTnCSVaubYbcbRe18HnFwRIdVxOlZ"  # config("PORT_CLIENT_SECRET")
+PORT_CLIENT_ID = config("PORT_CLIENT_ID")
+PORT_CLIENT_SECRET = config("PORT_CLIENT_SECRET")
 PORT_API_URL = "https://api.getport.io/v1"
 
 # Define your API token and base URL
-HUMANITEC_API_TOKEN = "WLnM3EJm1bGMScqvuu2HH4YBB5FaNRlYUqkuc2C-RrDM"
+HUMANITEC_API_TOKEN = config("HUMANITEC_API_TOKEN")
 BASE_URL = "https://api.humanitec.io"
-HUMANITEC_ORG_ID = "port-testing"
+HUMANITEC_ORG_ID = config("HUMANITEC_ORG_ID")
 
 RATE_LIMIT = 1000  # Maximum number of requests allowed per hour
 RATE_PERIOD = 3600  # Rate limit reset period in seconds (1 hour)
@@ -108,10 +108,12 @@ def convert_to_datetime(timestamp: int):
     converted_datetime = datetime.utcfromtimestamp(timestamp / 1000.0)
     return converted_datetime.strftime("%Y-%m-%dT%H:%M:%SZ")
 
+
 def remove_symbols_and_title_case(input_string: str) -> str:
     cleaned_string = re.sub(r'[^A-Za-z0-9\s]', '', input_string)
     title_case_string = cleaned_string.title()
     return title_case_string
+
 
 def process_app_entities(apps_data: list[dict[str, Any]]):
     blueprint_id = "humanitecApplication"
@@ -148,28 +150,8 @@ def process_environment_entities(environment_data: list[dict[str, Any]], app_id:
             },
         }
         add_entity_to_port(blueprint_id=blueprint_id, entity_object=entity)
-
-def process_deployment_entities(deployment_data: list[dict[str, Any]]):
-    blueprint_id = "humanitecDeployment"
-    for deployment in deployment_data:
-        entity = {
-            "identifier": deployment["id"],
-            "title": remove_symbols_and_title_case(deployment["id"]),
-            "properties": {
-                "createdAt": deployment["created_at"],
-                "status": deployment["status"],
-                "comment": deployment["comment"],
-                "createdBy": deployment["created_by"],
-                "statusChangedAt": deployment["status_changed_at"],
-                "deltaId": deployment["delta_id"],
-            },
-            "relations": {
-                "environment": deployment["env_id"],
-            },
-        }
-        add_entity_to_port(blueprint_id=blueprint_id, entity_object=entity)
-
         
+
 def process_workload_profile_entities(workload_profile_data: list[dict[str, Any]]):
     blueprint_id = "humanitecWorkload"
     for workload_profile in workload_profile_data:
