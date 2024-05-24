@@ -268,6 +268,11 @@ You can decide whether each field is viewable to users or not.
 We highly recommend hiding irrelevant data from users, to provide them with a clean work environment, relieving them from any distractions.
 :::
 
+### Manage properties
+
+You can add, edit, or delete a blueprint's properties directly from the table by using the `Manage properties` button.  
+See the [Configure properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#from-the-software-catalog) section for more details.
+
 ### Group By
 
 You can group by entities by using the following menu:

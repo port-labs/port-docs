@@ -1,11 +1,11 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
+import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_azure_premise.mdx"
+import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_linear_one_time_docker_parameters.mdx"
-import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import LinearIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/linear/\_example_linear_issue_blueprint.mdx"
 import LinearIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/linear/\_example_linear_issue_configuration.mdx"
 
