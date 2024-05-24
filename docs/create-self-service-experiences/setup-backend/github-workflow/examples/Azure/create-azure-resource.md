@@ -159,7 +159,7 @@ Import Azure resources into your Port account using the [Azure Exporter](/build-
     "workflowInputs": {
       "storage_name": "{{ .inputs.\"storage_name\" }}",
       "storage_location": "{{ .inputs.\"storage_location\" }}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",

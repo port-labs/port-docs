@@ -153,7 +153,7 @@ Import Azure resources into your Port account using the [Azure Exporter](/build-
     "workflow": "tag-azure-resource.yml",
     "workflowInputs": {
       "tags": "{{ .inputs.\"tags\" }}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
@@ -391,11 +391,10 @@ on:
       tags:
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
         description:
-            Port's payload, including details for who triggered the action and
-            general context (blueprint, run id, etc...)
+            Details for who triggered the action and general context (blueprint, run id, etc...)
         type: string
 
 
@@ -412,7 +411,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
-            Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
+            Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
 
   
       - uses: azure/login@v1
@@ -425,7 +424,7 @@ jobs:
         // highlight-start
           RESOURCE_GROUP: YourResourceGroup
         // highlight-end
-          STORAGE_NAME: ${{ fromJson(inputs.port_payload).context.entity }}
+          STORAGE_NAME: ${{ fromJson(inputs.port_context).entity.identifier }}
           TAGS: ${{ github.event.inputs.tags }}
         with:
           azcliversion: latest
@@ -443,7 +442,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_context).runId}}
-          logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
+          logMessage: Added tags to ${{fromJson(inputs.port_context).entity.identifier}}
 
 ```
 </details>
