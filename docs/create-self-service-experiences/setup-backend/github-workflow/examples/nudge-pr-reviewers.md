@@ -112,10 +112,20 @@ on:
         type: string
 
 jobs:
-  manage-pr:
+  send-slack-to-reviewers:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Inform starting of deletion
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          logMessage: |
+            Starting workflow to nudge PR reviewers for PR: ${{ fromJson(inputs.port_context).entity.title }} ... ⛴️
+            
       - name: Extract Repository and PR Number
         id: extract_info
         run: |
