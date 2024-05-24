@@ -65,7 +65,7 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "terminate-instance.yml",
     "workflowInputs": {
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
@@ -170,7 +170,7 @@ jobs:
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "reboot-instance.yml",
     "workflowInputs": {
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
@@ -307,7 +307,7 @@ jobs:
       "minimum_capacity": "{{.inputs.\"minimum_capacity\"}}",
       "maximum_capacity": "{{.inputs.\"maximum_capacity\"}}",
       "desired_capacity": "{{.inputs.\"desired_capacity\"}}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
