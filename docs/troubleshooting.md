@@ -135,6 +135,28 @@ Please make sure that:
 
 ## Catalog
 
+#### How can I export my catalog data?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+Port allows you to easily export any catalog data in one of the following formats:
+
+- JSON
+- Gitops (.yml)
+- HCL (.tf)
+
+To export your data:
+
+1. Click on the `...` button in the top right corner of your Port application, and choose `Export Data`:
+    <img src='/img/troubleshooting/exportDataButton.png' width='40%' border='1px' />
+
+2. Choose one or more blueprints, choose a format and click `Export`.
+
+This will download a file with all **entities** of the selected blueprints in the chosen format.
+
+</details>
+
 #### One of my catalog pages is not displaying all entities, or some data is missing, why is that?
 
 <details>

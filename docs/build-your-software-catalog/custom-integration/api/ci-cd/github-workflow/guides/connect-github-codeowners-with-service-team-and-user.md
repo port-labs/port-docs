@@ -226,7 +226,7 @@ If you already have the `githubUser`, `githubTeam` and `service` blueprints crea
 :::info CODEOWNERS parser?
 Prior to ingestion, a parser is run to extract teams, users, emails and file patterns from the `CODEOWNERS` file. This is then used to build up every instance of the `githubCodeowner` entity.
 
-The placement of the file is not necessary as it tried to comb the codebase fo the `CODEOWNERS` file in the exact order defined by the [GitHub CODEOWNERS documentation](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#codeowners-file-location)
+The location of the `CODEOWNERS` file is not of much importance as the script combs the codebase for the `CODEOWNERS` file in the exact order defined by the [GitHub CODEOWNERS documentation](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#codeowners-file-location)
 :::
 
 <details>
@@ -314,7 +314,7 @@ async def add_entity_to_port(client: httpx.AsyncClient, blueprint_id, entity_obj
         headers=headers,
     )
     if not response.is_success:
-        logger.info("Ingesting {blueprint_id} entity to port failed, skipping...")
+        logger.info(f"Ingesting {blueprint_id} entity to port failed, skipping...")
     logger.info(f"Added entity to Port: {entity_object}")
 
 
@@ -514,6 +514,9 @@ This workflow will run on every change made to the branches specified to ensure 
 
 :::
 
-5. Add content to your `CODEOWNERS` file and wait for data to be ingested into Port!
+5. Add content to your `CODEOWNERS` file and wait for data to be ingested into Port:
+
+<img src='static/img/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/gitHubCodeownersAfterIngestionIntoPort.png' border='1px' />
+<br />
 
 You have successfully mapped `CODEOWNERS` information using a GitHub workflow, into Port.

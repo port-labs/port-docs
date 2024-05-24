@@ -7,7 +7,7 @@ This guide aims to cover how to connect a Jira `issue` to an existing service in
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- Ensure you have [Jira installed and configured](/build-your-software-catalog/sync-data-to-catalog/jira/jira.md#installation) in your environment.
+- Ensure you have [Jira installed and configured](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/jira.md#installation) in your environment.
 
 :::
 
@@ -112,6 +112,6 @@ By following these steps, you can seamlessly connect a Jira issue with an existi
 
 More relevant guides and examples:
 
-- [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/)
+- [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
 - [Self-service action to change the status of a Jira issue](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/Jira/change-status-of-jira-ticket)
 - [Self-service action to report a bug in Jira from Port](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/Jira/report-a-bug)

@@ -114,10 +114,75 @@ Under each of these two keys, you can add a `policy` key, which allows you to us
 
 </details>
 
-## Complete example
+## Examples
 
-Here is an example of a permissions JSON belonging to a "Scaffold a new service" action.  
-In this example we create rules that state that execution of the action can be **approved** only by the team leader of the user that asked to execute the action.
+### Forbid execution if entity exists
+
+Let's take a look at the following scenario:  
+Say we have an action that scaffolds a new microservice, and as a result creates an entity in our software catalog representing that service.  
+Now say we want to ensure that execution of this action will be blocked if the provided service name already exists in our catalog.  
+
+Here is an example of a permissions JSON that achieves this:
+
+<details>
+<summary><b>Full permissions JSON (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "execute": {
+    // the next three keys allow users to specify roles, specific users, and specific teams that may execute this action
+    "roles": ["Member", "Admin"],
+    "users": [],
+    "teams": [],
+    "ownedByTeam": false, // declares ownership of the action by a team, if desired
+    "policy": {
+      "queries": {
+        "search_entity": {
+          "rules": [
+            // fetch all entities created from the "service" blueprint
+            {
+              "value": "service",
+              "operator": "=",
+              "property": "$blueprint"
+            },
+            // fetch all entities whose identifier is equal to the name provided as an input in the action execution
+            {
+              "value": "{{ .inputs.name }}",
+              "operator": "=",
+              "property": "$identifier"
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      // if our rule results produced no entities, that means that a service with our desired name does not exist, so we can execute the action
+      "conditions": [
+        ".results.search_entity.entities | length == 0"
+      ]
+    }
+  },
+  "approve": {
+    "roles": [
+      "Admin"
+    ],
+    "users": [],
+    "teams": []
+  }
+}
+```
+
+</details>
+
+#### Explanation
+
+The two rules that we defined fetch all `service` entities whose name is the same as the one provided to the action during execution. These rules will return an array of entities that comply with them. If no entities comply with the rules, the array will be empty.  
+The `conditions` query checks if the resulting array is empty or not, and returns `true` or `false`, respectively. If the array is empty, that means that an entity with the provided name does not exist in our software catalog, so we can return `true` and allow the action execution.
+
+---
+
+### Team leader approval
+
+In this example we create rules that state that execution of an action can be **approved** only by the team leader of the user that asked to execute the action.
 
 Note that this example assumes that you have:
 - A `user` blueprint in your catalog representing a user in the organization.
@@ -199,7 +264,7 @@ The `condition` checks if the approver is the executer's team leader, via the re
 
 </details>
 
-### Breaking down the `conditions` query from the example permissions JSON
+#### Explanation
 
 The `conditions` query uses the two arrays produced as a result of the `executingUser` and `approvingUsers` queries and returns an array of users who may approve the self-service action. While the Port public documentation site does not provide exhaustive guidance on how to use the [JQ JSON processor](https://jqlang.github.io/jq/manual/), the following explanation is provided to ensure users can craft their own JQ queries when configuring dynamic permissions.
 
@@ -210,3 +275,4 @@ The query below filters the array produced by the `executingUser` query down to 
 ```
 
 The next query (`.results.approvingUsers.entities[]`) takes the *entire* array from the `approvingUsers` query, then applies a filter to include *only* the approving users from that array who are on the same team as the executing user (`select(.relations.team == $executerTeam)`). Finally, the array is filtered to yield only an array of the `.identifier` property of all approvers, which Port then uses to *dynamically* evaluate who may approve this self-service action.
+
