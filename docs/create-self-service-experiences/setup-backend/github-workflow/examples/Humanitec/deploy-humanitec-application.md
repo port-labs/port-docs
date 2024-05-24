@@ -168,7 +168,7 @@ Now you should see the `Deploy Application` action in the self-service page. ðŸŽ
 2. Click on the `Deploy Application` action
 3. Choose the humanitec application you want to deploy (In case you didn't install the [Humanitec integration](/docs/build-your-software-catalog/custom-integration/github-workflow/examples/humanitec/humanitec.md), it means you don't have any Humanitec applications in Port yet, so you will need to create one manually in Port to test this action)
 4. Select the new application
-5. Enter the identifier for the deployment `delta`, select an `environment` you want to deploy to and brief `comment` about the deployment.
+5. Enter the identifier for the deployment `Delta ID`, select an `Environment` you want to deploy to and brief `Comment` about the deployment.
 6. Click on `Execute`
 7. Done! wait for the application to be deployed in Humanitec
 

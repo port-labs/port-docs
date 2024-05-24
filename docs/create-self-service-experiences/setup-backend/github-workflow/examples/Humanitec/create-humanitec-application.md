@@ -12,7 +12,7 @@ This self service guide provides a comprehensive walkthrough on how to create an
 1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
 2. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
    - `HUMANITEC_API_TOKEN` - [HUMANITEC API TOKEN](https://developer.humanitec.com/platform-orchestrator/reference/api-references/#authentication)
-   - HUMANITEC_ORG_ID - [HUMANITEC ORGANIZATION ID](https://developer.humanitec.com/concepts/organizations/)
+   - `HUMANITEC_ORG_ID` - [HUMANITEC ORGANIZATION ID](https://developer.humanitec.com/concepts/organizations/)
    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
@@ -33,7 +33,7 @@ Create the file `.github/workflows/create-humanitec-application.yaml` in the `.g
 <details>
 <summary>GitHub Workflow</summary>
 
-```yaml showLineNumbers title="acknowledge-application.yaml"
+```yaml showLineNumbers title="create-humanitec-application.yaml"
 name: Create Humanitec Application
 on:
   workflow_dispatch:
