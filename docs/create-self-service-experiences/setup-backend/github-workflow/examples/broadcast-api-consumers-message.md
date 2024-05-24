@@ -238,7 +238,7 @@ We will create a slack channel for each service, and therefore a webhook for eac
     "workflowInputs": {
       "message": "{{.inputs.\"message\"}}",
       "port_context": {
-        "entity": "{{.entity.identifier}}",
+        "entity": "{{.entity}}",
         "blueprint": "{{.action.blueprint}}",
         "runId": "{{.run.id}}",
         "trigger": "{{.trigger}}"
