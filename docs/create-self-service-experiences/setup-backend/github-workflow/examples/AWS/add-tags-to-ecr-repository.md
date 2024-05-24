@@ -113,10 +113,6 @@ While this step will ensure the `ecrRepository` blueprint is available, the self
 
 This option is way easier but if you do not want this, you can simply type in repository names to tag them.
 
-::: -->
-
-<br />
-
 3. Create the Port action on the `ecrRepository` blueprint:
     - Head to the [self-service](https://app.getport.io/self-serve) page.
     - Click on the `+ New Action` button.
@@ -217,19 +213,7 @@ on:
         description:
           Action and general port_context (blueprint, run id, etc...)
         type: string
-    secrets:
-      AWS_REGION:
-        required: true
-      AWS_ACCOUNT_ID:
-        required: true
-      AWS_ACCESS_KEY_ID:
-        required: true
-      AWS_SECRET_ACCESS_KEY:
-        required: true
-      PORT_CLIENT_ID:
-        required: true
-      PORT_CLIENT_SECRET:
-        required: true
+
 jobs:
   create-entity-in-port-and-update-run:
     runs-on: ubuntu-latest
