@@ -81,7 +81,7 @@ Follow these steps to get started:
     "workflowInputs": {
       "action": "{{.inputs.\"action\"}}",
       "port_context": {
-        "entity": "{{.entity.identifier}}",
+        "entity": "{{.entity}}",
         "blueprint": "{{.action.blueprint}}",
         "runId": "{{.run.id}}",
         "trigger": "{{.trigger}}"
