@@ -686,4 +686,3 @@ Done! 🎉 You can now promote images from staging to production.
 ## More relevant guides and examples
 
 - [ArgoCD Ocean integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
-- [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/argocd/examples/connect-argocd-deployment-to-image)

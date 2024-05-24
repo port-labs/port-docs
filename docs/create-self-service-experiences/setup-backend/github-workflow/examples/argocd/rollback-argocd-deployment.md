@@ -443,4 +443,3 @@ You should now be able to see a Github pull request created and merged for the a
 
 ## More relevant guides and examples
 - [ArgoCD Ocean integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
-- [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/argocd/examples/connect-argocd-deployment-to-image)
