@@ -288,7 +288,7 @@ on:
         description: EC2 pem key
         required: true
         type: string
-      context:
+      port_context:
         required: true
         type: string
 jobs:
@@ -306,7 +306,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
               About to create ec2 instance ${{ github.event.inputs.ec2_name }} .. ⛴️
 
@@ -362,7 +362,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
               EC2 Instance created successfully ✅
 
@@ -373,7 +373,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: "Upserting created EC2 Instance to Port ... "
           
       - name: UPSERT EC2 Instance Entity
@@ -401,7 +401,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.context).runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
 
 
       - name: Log After Upserting Entity
@@ -412,7 +412,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
-          runId: ${{fromJson(inputs.context).runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: "Entity upserting was successful ✅"
 ```
 </details>
@@ -490,7 +490,7 @@ jobs:
       "ec2_name": "{{ .inputs.\"ec2_name\" }}",
       "ec2_instance_type": "{{ .inputs.\"ec2_instance_type\" }}",
       "pem_key_name": "{{ .inputs.\"pem_key_name\" }}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
