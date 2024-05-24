@@ -33,11 +33,10 @@ Also make sure that Github actions [allow creating and approving pull requests](
 :::
 
 
-## Guide
 After completing the [prerequisites](#prerequisites) step, you can start following the guide.
 
-### Setting up the git repository
-#### Create all the necessary files and directory structure
+## Setting up the git repository
+### Create all the necessary files and directory structure
 - Create a GitHub repository
 - Create a folder at `.github/workflows/` - Create `.yaml` files using the collapsed file contents below:
 
@@ -93,7 +92,7 @@ jobs:
 <details>
 <summary><b>Approve cluster request (click to expand)</b></summary>
 
-```yaml showLineNumbers title="approve-cluster-request"
+```yaml showLineNumbers title="approve-cluster-request.yaml"
 name: Approve new cluster PR
 
 on:
@@ -299,7 +298,7 @@ jobs:
 <details>
 <summary><b>Delete cluster (click to expand)</b></summary>
 
-```yaml showLineNumbers title="delete-cluster"
+```yaml showLineNumbers title="delete-cluster.yaml"
 name: Delete Cluster
 
 on:
@@ -488,7 +487,7 @@ jobs:
 <details>
 <summary><b>New cluster request (click to expand)</b></summary>
 
-```yaml showLineNumbers title="new-cluster-request"
+```yaml showLineNumbers title="new-cluster-request.yaml"
 name: Create new cluster PR
 
 on:
@@ -639,7 +638,7 @@ jobs:
       control-plane: ${{ inputs.control-plane }}
 ```
 
-<details>
+</details>
 
 - `.up/clusters/` - Create this folder in the repository. It will hold subdirectories which will correspond to different Upbound control planes. Each subdirectory will hold all the XR manifests to be deployed in the specific control plane.
 
@@ -647,24 +646,40 @@ jobs:
 
 <details>
 
-<summary><b>Upbound cluster file (click to respond)</summary>
+<summary><b>Upbound cluster file (click to respond)</b></summary>
 
-```yaml showLineNumbers title="cluster.yml"
-
+```yaml showLineNumbers title="cluster.yaml"
+apiVersion: k8s.starter.org/v1alpha1
+kind: KubernetesCluster
+metadata:
+  name: my-cluster
+  namespace: default
+spec:
+  id: my-cluster
+  parameters:
+    nodes:
+      count: 3
+      size: small
+    services:
+      operators:
+        prometheus:
+          version: "34.5.1"
+  writeConnectionSecretToRef:
+    name: my-cluster-kubeconfig
 ```
 
 </details>
 
-#### Create repository secrets for the Github actions to use
+### Create repository secrets for the Github actions to use
 Follow Github's [guide](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) to add required secrets to the repository. These are the secrets that need to be created:
 * `UPBOUND_TOKEN` - The Upbound organization's API token;
 * `PORT_CLIENT_ID` - The Port organization's client id;
 * `PORT_CLIENT_SECRET` - The Port organization's client secret.
 
-### Setting up Port
+## Setting up Port
 Starting with a clean Port organization, you will have to create some Port components. These components are Port [blueprints](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint) and Port [actions](https://docs.getport.io/create-self-service-experiences/).
 
-#### Creating blueprints
+### Creating blueprints
 Create the following blueprints in the order that they appear below:
 
 <details>
@@ -836,175 +851,431 @@ You will need to create these blueprints in your Port organization.
 Blueprint creation may fail if they are not created in the order that they appear above
 :::
 
-#### Creating actions
-Below are two action blueprints which define the different actions we need, to trigger the different Github workflows.
+### Creating actions
+Below are action blueprints which define the different actions we need, to trigger the different Github workflows.
 
-You will need to create these action definitions on their appropriate blueprints.
+These actions are defined on their appropriate blueprints.
 
 ::note Customizing GitHub values
 Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAME` values in the action blueprint.  You need to replace these with your appropriate Github organization name and repository name.
 :::
 
 <details>
-<summary><b>EKS Cluster Request (click to expand)</b></summary>
+<summary><b>Approve Cluster Request (click to expand)</b></summary>
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "request_new_cluster",
-    "title": "Request new cluster",
-    "icon": "GithubActions",
+{
+  "identifier": "eks_cluster_request_approve_cluster_request",
+  "title": "Approve Cluster Request",
+  "icon": "GithubActions",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
     "userInputs": {
-      "properties": {
-        "cluster-name": {
-          "title": "Cluster Name",
-          "type": "string"
-        },
-        "node-size": {
-          "title": "Node Size",
-          "type": "string",
-          "default": "small",
-          "enum": [
-            "small",
-            "medium",
-            "large"
-          ],
-          "enumColors": {
-            "small": "lightGray",
-            "medium": "lightGray",
-            "large": "lightGray"
-          }
-        },
-        "node-count": {
-          "icon": "DefaultProperty",
-          "title": "Node Count",
-          "type": "string",
-          "default": "1"
-        },
-        "control-plane": {
-          "icon": "DefaultProperty",
-          "title": "Upbound control plane",
-          "type": "string",
-          "blueprint": "upbound_control_plane",
-          "format": "entity"
-        }
-      },
-      "required": [
-        "cluster-name",
-        "control-plane"
-      ],
-      "order": [
-        "control-plane",
-        "cluster-name",
-        "node-size",
-        "node-count"
-      ]
+      "properties": {},
+      "required": []
     },
-    "invocationMethod": {
-      "type": "GITHUB",
-      "omitPayload": false,
-      "omitUserInputs": false,
-      "reportWorkflowStatus": true,
-      // highlight-start
-      "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME", 
-      "repo": "CHANGE_TO_YOUR_REPO_NAME",
-      // highlight-end
-      "workflow": "new-cluster-request.yaml"
-    },
-    "trigger": "CREATE",
-    "requiredApproval": false
+    "blueprintIdentifier": "eks_cluster_request"
   },
-  {
-    "identifier": "create_new_cluster",
-    "title": "Create new cluster",
-    "icon": "GithubActions",
-    "userInputs": {
-      "properties": {
-        "cluster-name": {
-          "title": "Cluster Name",
-          "type": "string"
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+    "repo": "CHANGE_TO_YOUR_REPO_NAME",
+    "workflow": "approve-cluster-request.yaml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"eks_cluster_request_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
         },
-        "node-size": {
-          "title": "Node Size",
-          "type": "string",
-          "default": "small",
-          "enum": [
-            "small",
-            "medium",
-            "large"
-          ],
-          "enumColors": {
-            "small": "lightGray",
-            "medium": "lightGray",
-            "large": "lightGray"
-          }
-        },
-        "node-count": {
-          "icon": "DefaultProperty",
-          "title": "Node Count",
-          "type": "string",
-          "default": "1"
-        },
-        "control-plane": {
-          "title": "Upbound control plane",
-          "type": "string",
-          "blueprint": "upbound_control_plane",
-          "format": "entity"
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "omitPayload": false,
+              "omitUserInputs": true,
+              "reportWorkflowStatus": true,
+              "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+              "repo": "CHANGE_TO_YOUR_REPO_NAME",
+              "workflow": "approve-cluster-request.yaml"
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {},
+          "censoredProperties": "{{.action.encryptedProperties}}"
         }
-      },
-      "required": [
-        "cluster-name",
-        "control-plane"
-      ],
-      "order": [
-        "control-plane",
-        "cluster-name",
-        "node-size",
-        "node-count"
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+</details>
 
+<details>
+<summary><b>Deny Cluster Request (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "eks_cluster_request_deny_cluster_request",
+  "title": "Deny cluster request",
+  "icon": "Alert",
+  "description": "Deny this EKS cluster request",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {},
+      "required": []
+    },
+    "blueprintIdentifier": "eks_cluster_request"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+    "repo": "CHANGE_TO_YOUR_REPO_NAME",
+    "workflow": "deny-cluster-request.yaml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"eks_cluster_request_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "omitPayload": false,
+              "omitUserInputs": true,
+              "reportWorkflowStatus": true,
+              "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+              "repo": "CHANGE_TO_YOUR_REPO_NAME",
+              "workflow": "deny-cluster-request.yaml"
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {},
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+
+</details>
+
+<details>
+<summary><b>Request New Cluster (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "eks_cluster_request_new_cluster",
+  "title": "Request new cluster",
+  "icon": "GithubActions",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "cluster-name": {
+          "title": "Cluster Name",
+          "type": "string"
+        },
+        "node-size": {
+          "title": "Node Size",
+          "type": "string",
+          "default": "small",
+          "enum": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "enumColors": {
+            "small": "lightGray",
+            "medium": "lightGray",
+            "large": "lightGray"
+          }
+        },
+        "node-count": {
+          "icon": "DefaultProperty",
+          "title": "Node Count",
+          "type": "string",
+          "default": "1"
+        },
+        "control-plane": {
+          "icon": "DefaultProperty",
+          "title": "Upbound control plane",
+          "type": "string",
+          "blueprint": "upbound_control_plane",
+          "format": "entity"
+        }
+      },
+      "required": [
+        "cluster-name",
+        "control-plane"
+      ],
+      "order": [
+        "control-plane",
+        "cluster-name",
+        "node-size",
+        "node-count"
       ]
     },
-    "invocationMethod": {
-      "type": "GITHUB",
-      "omitPayload": false,
-      "omitUserInputs": false,
-      "reportWorkflowStatus": true,
-      "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
-      "repo": "CHANGE_TO_YOUR_REPO_NAME",
-      "workflow": "new-cluster-request.yaml"
-    },
-    "trigger": "CREATE",
-    "requiredApproval": false
+    "blueprintIdentifier": "eks_cluster"
   },
-  {
-    "identifier": "delete_eks_cluster",
-    "title": "Delete EKS Cluster",
-    "icon": "Alert",
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+    "repo": "CHANGE_TO_YOUR_REPO_NAME",
+    "workflow": "new-cluster-request.yaml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"cluster-name\")) then \"cluster-name\" else null end}}": "{{.inputs.\"cluster-name\"}}",
+      "{{if (.inputs | has(\"node-size\")) then \"node-size\" else null end}}": "{{.inputs.\"node-size\"}}",
+      "{{if (.inputs | has(\"node-count\")) then \"node-count\" else null end}}": "{{.inputs.\"node-count\"}}",
+      "{{if (.inputs | has(\"control-plane\")) then \"control-plane\" else null end}}": "{{.inputs.\"control-plane\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"eks_cluster_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "omitPayload": false,
+              "omitUserInputs": false,
+              "reportWorkflowStatus": true,
+              "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+              "repo": "CHANGE_TO_YOUR_REPO_NAME",
+              "workflow": "new-cluster-request.yaml"
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"cluster-name\")) then \"cluster-name\" else null end}}": "{{.inputs.\"cluster-name\"}}",
+            "{{if (.inputs | has(\"node-size\")) then \"node-size\" else null end}}": "{{.inputs.\"node-size\"}}",
+            "{{if (.inputs | has(\"node-count\")) then \"node-count\" else null end}}": "{{.inputs.\"node-count\"}}",
+            "{{if (.inputs | has(\"control-plane\")) then \"control-plane\" else null end}}": "{{.inputs.\"control-plane\" | if type == \"array\" then map(.identifier) else .identifier end}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+
+</details>
+
+<details>
+<summary><b>Create New Cluster (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "eks_cluster_create_new_cluster",
+  "title": "Create new cluster",
+  "icon": "GithubActions",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "cluster-name": {
+          "title": "Cluster Name",
+          "type": "string"
+        },
+        "node-size": {
+          "title": "Node Size",
+          "type": "string",
+          "default": "small",
+          "enum": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "enumColors": {
+            "small": "lightGray",
+            "medium": "lightGray",
+            "large": "lightGray"
+          }
+        },
+        "node-count": {
+          "icon": "DefaultProperty",
+          "title": "Node Count",
+          "type": "string",
+          "default": "1"
+        },
+        "control-plane": {
+          "title": "Upbound control plane",
+          "type": "string",
+          "blueprint": "upbound_control_plane",
+          "format": "entity"
+        }
+      },
+      "required": [
+        "cluster-name",
+        "control-plane"
+      ],
+      "order": [
+        "control-plane",
+        "cluster-name",
+        "node-size",
+        "node-count"
+      ]
+    },
+    "blueprintIdentifier": "eks_cluster"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+    "repo": "CHANGE_TO_YOUR_REPO_NAME",
+    "workflow": "new-cluster-request.yaml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "{{if (.inputs | has(\"cluster-name\")) then \"cluster-name\" else null end}}": "{{.inputs.\"cluster-name\"}}",
+      "{{if (.inputs | has(\"node-size\")) then \"node-size\" else null end}}": "{{.inputs.\"node-size\"}}",
+      "{{if (.inputs | has(\"node-count\")) then \"node-count\" else null end}}": "{{.inputs.\"node-count\"}}",
+      "{{if (.inputs | has(\"control-plane\")) then \"control-plane\" else null end}}": "{{.inputs.\"control-plane\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"eks_cluster_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "omitPayload": false,
+              "omitUserInputs": false,
+              "reportWorkflowStatus": true,
+              "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+              "repo": "CHANGE_TO_YOUR_REPO_NAME",
+              "workflow": "new-cluster-request.yaml"
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {
+            "{{if (.inputs | has(\"cluster-name\")) then \"cluster-name\" else null end}}": "{{.inputs.\"cluster-name\"}}",
+            "{{if (.inputs | has(\"node-size\")) then \"node-size\" else null end}}": "{{.inputs.\"node-size\"}}",
+            "{{if (.inputs | has(\"node-count\")) then \"node-count\" else null end}}": "{{.inputs.\"node-count\"}}",
+            "{{if (.inputs | has(\"control-plane\")) then \"control-plane\" else null end}}": "{{.inputs.\"control-plane\" | if type == \"array\" then map(.identifier) else .identifier end}}"
+          },
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+
+</details>
+
+<details>
+<summary><b>Delete EKS Cluster (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "eks_cluster_delete_eks_cluster",
+  "title": "Delete EKS Cluster",
+  "icon": "Alert",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DELETE",
     "userInputs": {
       "properties": {},
       "required": [],
       "order": []
     },
-    "invocationMethod": {
-      "type": "GITHUB",
-      "omitPayload": false,
-      "omitUserInputs": true,
-      "reportWorkflowStatus": true,
-      "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
-      "repo": "CHANGE_TO_YOUR_REPO_NAME",
-      "workflow": "delete-cluster.yaml"
+    "blueprintIdentifier": "eks_cluster"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+    "repo": "CHANGE_TO_YOUR_REPO_NAME",
+    "workflow": "delete-cluster.yaml",
+    "workflowInputs": {
+      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
+      "port_payload": {
+        "action": "{{ .action.identifier[(\"eks_cluster_\" | length):] }}",
+        "resourceType": "run",
+        "status": "TRIGGERED",
+        "trigger": "{{ .trigger | {by, origin, at} }}",
+        "context": {
+          "entity": "{{.entity.identifier}}",
+          "blueprint": "{{.action.blueprint}}",
+          "runId": "{{.run.id}}"
+        },
+        "payload": {
+          "entity": "{{ (if .entity == {} then null else .entity end) }}",
+          "action": {
+            "invocationMethod": {
+              "type": "GITHUB",
+              "omitPayload": false,
+              "omitUserInputs": true,
+              "reportWorkflowStatus": true,
+              "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+              "repo": "CHANGE_TO_YOUR_REPO_NAME",
+              "workflow": "delete-cluster.yaml"
+            },
+            "trigger": "{{.trigger.operation}}"
+          },
+          "properties": {},
+          "censoredProperties": "{{.action.encryptedProperties}}"
+        }
+      }
     },
-    "trigger": "DELETE",
-    "requiredApproval": true,
-    "approvalNotification": {
-      "type": "email"
-    }
-  }
-]
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": true,
+  "approvalNotification": {
+    "type": "email"
+  },
+  "publish": true
+}
 ```
 
+</details>
 
-#### Creating Upbound control plane Port entities
+### Creating Upbound control plane Port entities
 After setting up the Port blueprints and actions, we need to insert some entities manually.
 
 These entities will represent the different Upbound control planes which were created earlier.
@@ -1014,12 +1285,12 @@ To do this, follow these steps:
 1. Navigate to the [Upbound control planes](https://app.getport.io/upbound_control_planes) catalog page.
 
 2. Click the `Manually add Upbound Control Plane` button (or the `+ Upbound Control plane` at the top right of the page).
-![addUpboundControlPlaneManually](https://github.com/port-demo/port-upbound-demo/blob/main/static/addUpboundControlPlaneManually.png?raw=true)
+<img src='/img/create-self-service-experiences/setup-backend/github-workflow/examples/Upbound/addUpboundControlPlaneManually.png' border='1px' />
 
 3. In the `identifier` field, insert the Upbound control plane `identifier` which we saved earlier and click create (do this step multiple times if there are more than 1 control planes).
-![setUpboundControlPlaneIdentifier](https://github.com/port-demo/port-upbound-demo/blob/main/static/setUpboundControlPlaneIdentifier.png?raw=true)
+<img src='/img/create-self-service-experiences/setup-backend/github-workflow/examples/Upbound/setUpboundControlPlaneIdentifier.png' border='1px' />
 
 ## Using Port
 At this point, everything should be set up. Browse to your [Self-service](https://app.getport.io/self-serve) page to view the different actions you defined in Port, and try them out.
 
-![selfServicePage](https://github.com/port-demo/port-upbound-demo/blob/main/static/selfServicePage.png?raw=true)
+<img src='/img/create-self-service-experiences/setup-backend/github-workflow/examples/Upbound/selfServicePage.png' border='1px' />
