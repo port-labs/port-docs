@@ -8,7 +8,7 @@ Check out the following examples for using Port's webhook integration to ingest 
 <DocCardList items={[
   {
     type: 'link',
-    href: '/build-your-software-catalog/sync-data-to-catalog/jira/#alternative-installation-via-webhook',
+    href: '/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook',
     label: 'Jira',
     description: 'Ingest Jira issues',
   },

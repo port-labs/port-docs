@@ -17,7 +17,7 @@ This self-service action shows how to create a Jira issue with a label that link
     * PORT_CLIENT_ID - Your port [client id]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))
     * PORT_CLIENT_SECRET - Your port [client secret]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))
 
-4. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/#installation)
+4. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#installation)
 
 :::tip Jira integration
 This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog in real time with the new issue created.
