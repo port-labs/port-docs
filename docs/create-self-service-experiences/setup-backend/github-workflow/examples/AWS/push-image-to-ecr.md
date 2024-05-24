@@ -241,7 +241,7 @@ jobs:
     "workflowInputs": {
       "dockerfile": "{{ .inputs.\"dockerfile\" }}",
       "image_repo": "{{ .inputs.\"image_repo\" }}",
-      "context": {
+      "port_context": {
         "entity": "{{ .entity }}",
         "blueprint": "{{ .action.blueprint }}",
         "runId": "{{ .run.id }}",
