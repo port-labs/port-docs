@@ -18,7 +18,7 @@ In this example you are going to create a github worklow integration to facilita
 ## Prerequisites
 2. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
    - `HUMANITEC_API_TOKEN` - [HUMANITEC API TOKEN](https://developer.humanitec.com/platform-orchestrator/reference/api-references/#authentication)
-   - HUMANITEC_ORG_ID - [HUMANITEC ORGANIZATION ID](https://developer.humanitec.com/concepts/organizations/)
+   - `HUMANITEC_ORG_ID` - [HUMANITEC ORGANIZATION ID](https://developer.humanitec.com/concepts/organizations/)
    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
@@ -26,33 +26,13 @@ In this example you are going to create a github worklow integration to facilita
 
 Create the following blueprint definitions:
 
-<details>
-<summary>Humanitec application blueprint</summary>
-
 <HumanitecApplicationBlueprint/>
-
-</details>
-
-<details>
-<summary>Humanitec environment blueprint</summary>
 
 <HumanitecEnvironmentBlueprint/>
 
-</details>
-
-<details>
-<summary>Humanitec workload blueprint</summary>
-
 <HumanitecWorkloadBlueprint/>
 
-</details>
-
-<details>
-<summary>Humanitec workload version blueprint</summary>
-
 <HumanitecWorkloadVersionBlueprint/>
-
-</details>
 
 :::tip Blueprint Properties
 You may modify the properties in your blueprints depending on what you want to track in your Bitbucket account.

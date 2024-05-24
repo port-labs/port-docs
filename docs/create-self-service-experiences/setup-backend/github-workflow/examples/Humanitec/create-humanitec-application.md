@@ -2,7 +2,7 @@ import GithubActionModificationHint from '../../\_github_action_modification_req
 import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
 import HumanitecApplicationBlueprint from './blueprints/_humanitec_application_blueprint.mdx'
 
-# Creae Application In Humanitec
+# Create Application In Humanitec
 
 ## Overview
 This self service guide provides a comprehensive walkthrough on how to create an application in Humanitec from Port using Port's self service actions.
@@ -206,11 +206,9 @@ Now you should see the `Create Application` action in the self-service page. �
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 2. Click on the `Create Application` action
-3. Choose the humanitec application you want to create (In case you didn't install the [Humanitec integration](/docs/build-your-software-catalog/custom-integration/github-workflow/examples/humanitec/humanitec.md), it means you don't have any Humanitec applications in Port yet, so you will need to create one manually in Port to test this action)
-4. Select the new application
-5. Enter the required details for the `Application Name`, and optionally include `Environment`, `Environment Type`, and `Environment Name`.
-6. Click on `Execute`
-7. Done! wait for the application to be created in Humanitec
+3. Enter the required details for the `Application Name`, and optionally include `Environment`, `Environment Type`, and `Environment Name`.
+4. Click on `Execute`
+5. Done! wait for the application to be created in Humanitec
 
 Congrats 🎉 You've create a Humanitec application in Port 🔥
 
