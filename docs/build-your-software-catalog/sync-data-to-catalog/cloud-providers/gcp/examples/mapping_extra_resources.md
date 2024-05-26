@@ -41,7 +41,7 @@ Create an integration configuration for the resource. The integration configurat
 
 #### Digesting values
 
-All properties from your [supported resource]((https://cloud.google.com/asset-inventory/docs/supported-asset-types)) REST API representation are available. Additionally, we inject a `.__project` field that represents the latest representation of the `project` containing the resource.
+All properties from your [supported resource](https://cloud.google.com/asset-inventory/docs/supported-asset-types)REST API representation are available. Additionally, we inject a `.__project` field that represents the latest representation of the `project` containing the resource.
 
 <ComputeAppConfig/>
 
