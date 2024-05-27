@@ -39,7 +39,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                  | Your port client id                                                                                                       | ✅       |
 | `port.clientSecret`              | Your port client secret                                                                                                   | ✅       |
-| `port.baseUrl`                   | Your port base url, relevant only if not using the default port app                                                       | ❌       |
 | `integration.identifier`         | Change the identifier to describe your integration                                                                        | ✅       |
 | `integration.type`               | The integration type                                                                                                      | ✅       |
 | `integration.eventListener.type` | The event listener type                                                                                                   | ✅       |

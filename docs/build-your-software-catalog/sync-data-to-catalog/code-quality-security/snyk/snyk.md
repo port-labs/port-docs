@@ -37,7 +37,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | `port.clientId`                     | Your Port client id                                                                                                | ✅       |
 | `port.clientSecret`                 | Your Port client secret                                                                                            | ✅       |
-| `port.baseUrl`                      | Your Port base url, relevant only if not using the default Port app                                                | ❌       |
 | `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
 | `integration.type`                  | The integration type                                                                                               | ✅       |
 | `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
@@ -73,7 +72,6 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-snyk-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-snyk-integration"  \
@@ -243,7 +241,6 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                | ❌       |
 
 <br/>
 
@@ -296,7 +293,6 @@ of `Secret Text` type:
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
-| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
 
 <br/>
 
@@ -363,7 +359,6 @@ Make sure to configure the following variables using [Azure Devops variable grou
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
-| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
 
 <br/>
 
@@ -422,7 +417,6 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
-| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
 
 
 <br/>
