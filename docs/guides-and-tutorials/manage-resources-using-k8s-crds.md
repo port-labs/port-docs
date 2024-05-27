@@ -63,7 +63,7 @@ helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
     --set stateKey="k8s-exporter"  \
     # highlight-next-line
     --set createDefaultResources=false \
-    --set eventListenerType="POLLING"  \
+    --set eventListener.type="POLLING"  \
     --set "extraEnv[0].name"="CLUSTER_NAME" \
     --set "extraEnv[0].value"=YOUR_PORT_CLUSTER_NAME 
 ```

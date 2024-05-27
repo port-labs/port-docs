@@ -98,7 +98,7 @@ Replace the invocation method with your own repository details.
 
 ```json showLineNumbers
 {
-  "identifier": "s3_bucket_add_tags_to_s3_bucket",
+  "identifier": "add_tags_to_s3_bucket",
   "title": "Add Tags to S3 Bucket",
   "icon": "AWS",
   "description": "Add tags to an S3 bucket",
@@ -129,37 +129,12 @@ Replace the invocation method with your own repository details.
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "add-tags-to-s3-bucket.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"s3_bucket_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "add-tags-to-s3-bucket.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "tags": "{{ .inputs.tags }}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -187,7 +162,7 @@ on:
       tags: # json object
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
         type: string
 
@@ -201,9 +176,9 @@ jobs:
         clientId: ${{ secrets.PORT_CLIENT_ID }}
         clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
         operation: PATCH_RUN
-        runId: ${{ fromJson(inputs.port_payload).context.runId }}
+        runId: ${{ fromJson(inputs.port_context).runId }}
         logMessage: |
-          Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
+          Starting a GitHub worklfow to tag the AWS resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -215,7 +190,7 @@ jobs:
 
     - name: Add Tags to S3 Bucket
       env:
-        BUCKET_NAME: ${{ fromJson(inputs.port_payload).context.entity }}
+        BUCKET_NAME: ${{ fromJson(inputs.port_context).entity.identifier }}
         TAGS_JSON: ${{ github.event.inputs.tags }}
       run: |
         # Extract key-value pairs from the JSON object
@@ -237,8 +212,8 @@ jobs:
         clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
         baseUrl: https://api.getport.io
         operation: PATCH_RUN
-        runId: ${{fromJson(inputs.port_payload).context.runId}}
-        logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
+        runId: ${{fromJson(inputs.port_context).runId}}
+        logMessage: Added tags to ${{fromJson(inputs.port_context).entity.identifier}}
 ```
 
 </details>

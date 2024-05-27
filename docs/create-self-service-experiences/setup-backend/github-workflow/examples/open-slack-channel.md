@@ -402,8 +402,12 @@ on:
         type: array
         required: false
       port_context:
+<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
         description: Details of the action and general port_context (blueprint, run ID, etc...).
+=======
+>>>>>>> main
         required: true
+        description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
   open-slack-channel:
@@ -416,7 +420,11 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
+<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
           runId: ${{ fromJson(github.event.inputs.port_context).runId }}
+=======
+          runId: ${{fromJson(inputs.port_context).run_id}}
+>>>>>>> main
           logMessage: "About to create a conversation channel in slack..."
 
       - name: Create Slack Channel
@@ -453,7 +461,11 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
+<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
           runId: ${{ fromJson(github.event.inputs.port_context).runId }}
+=======
+          runId: ${{fromJson(inputs.port_context).run_id}}
+>>>>>>> main
           logMessage: "Failed to create slack channel: ${{env.CREATE_CHANNEL_ERROR}} ❌"
 
       - name: Log If Create Channel Request is Successful
@@ -463,11 +475,15 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
+<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
           runId: ${{ fromJson(github.event.inputs.port_context).runId }}
+=======
+          runId: ${{fromJson(inputs.port_context).run_id}}
+>>>>>>> main
           logMessage: "Channel created successfully, channel Id: ${{env.CHANNEL_ID}} ✅"
 
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Add Members to Slack Channel
         id: add_members
@@ -477,7 +493,11 @@ jobs:
           CHANNEL_ID: ${{env.CHANNEL_ID}}
           CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
           RUN_ID: ${{ fromJson(github.event.inputs.port_context).runId }}
+=======
+          RUN_ID: ${{fromJson(inputs.port_context).run_id}}
+>>>>>>> main
           MEMBER_EMAILS: ${{ toJSON(github.event.inputs.members) }}
         run: |
           cd slack
@@ -485,15 +505,21 @@ jobs:
           bash add-members-to-channel.sh "$SLACK_TOKEN" "$CHANNEL_ID" "$CLIENT_ID" "$CLIENT_SECRET" "$RUN_ID" "$MEMBER_EMAILS"
 
       - name: Log Successful Action
+        if: steps.add_members.outcome == 'failure'
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
+<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
           status: "SUCCESS"
           runId: ${{ fromJson(github.event.inputs.port_context).runId }}
           logMessage: "Successfully opened slack channel: ${{env.CHANNEL_ID}} ✅"
+=======
+          runId: ${{fromJson(inputs.port_context).run_id}}
+          logMessage: "Failed to add members to channel ❌"
+>>>>>>> main
 ```
 
 </details>
@@ -644,18 +670,24 @@ Create a new self service action using the following JSON configuration.
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB-ORG>",
-    "repo": "<GITHUB-REPO-NAME>",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "open-slack-channel.yaml",
     "workflowInputs": {
       "channel_name": "{{.inputs.\"channel_name\"}}",
       "is_private": "{{.inputs.\"is_private\"}}",
       "members": "{{.inputs.\"members\"}}",
       "port_context": {
+<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
         "entity": "{{.entity}}",
         "blueprint": "{{.action.blueprint}}",
         "runId": "{{.run.id}}",
         "trigger": "{{ .trigger }}"
+=======
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}"
+>>>>>>> main
       }
     },
     "reportWorkflowStatus": true

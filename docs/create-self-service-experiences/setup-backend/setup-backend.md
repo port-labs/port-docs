@@ -55,8 +55,25 @@ In this section, you can construct a JSON payload that will be sent to your back
 
 Accessing your data is done using `jq`, wrapping each expression with `{{ }}`.  
 For example, this payload contains a user input, and the action's run id (unique to each execution of the action):
-<img src='/img/self-service-actions/setup-backend/action-form-backend-payload.png' width='55%' border='1px' />
+<img src='/img/self-service-actions/setup-backend/action-form-backend-payload.png' width='85%' border='1px' />
 <br/><br/>
+
+You can access any key in your action's JSON structure and add it to the payload. Use the `Test JQ` button to test your expressions against your action and ensure you are sending the correct data.
+
+#### spreadValue() function
+
+You can use the `spreadValue()` function to add multiple keys to the root of the payload at once. This function will spread all of the keys under a given object.  
+A common use case for this function is to add all of the user inputs to the payload:
+
+```json showLineNumbers
+{
+  "{{ spreadValue() }}": "{{ .inputs }}"
+}
+```
+
+This will add all of the action's user inputs to the root of the payload, so that they can be accessed directly by your backend.
+
+#### Using `jq` expressions in keys
 
 The keys in the payload can also be `jq` expressions.  
 For example, the following expression will add the `ref` key to the payload only if a `ref` input was provided when executing the action:
@@ -70,11 +87,7 @@ For example, the following expression will add the `ref` key to the payload only
 Note that if a **key** in the payload evaluates to `null` for any reason, the entire expression (key + value) will be ommitted from the payload.
 :::
 
-You can access any key in your action's JSON structure and add it to the payload. Use the `Test JQ` button to test your expressions against your action and ensure you are sending the correct data.
 
-:::tip Pro tip
-Using the expression `{{ . }}` will provide the entire action object, allowing you to easily see the location of the data that is relevant for you.
-:::
 
 ## Supported backends
 
