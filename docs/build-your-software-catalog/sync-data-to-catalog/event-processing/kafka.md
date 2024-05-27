@@ -297,7 +297,7 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 <br/>
 
 
-Here is an example for `kafka-integration.yml` pipeline file:
+Here is an example for `.gitlab-ci.yml` pipeline file:
 
 ```yaml showLineNumbers
 default:
