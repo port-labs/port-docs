@@ -38,6 +38,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.type`                | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`  | The event listener type                                                                                       | ✅       |
 | `integration.config.kubecostHost` | The Kubecost server URL                                                                                       | ✅       |
+| `integration.config.kubecostApiVersion` | The API version of the Kubecost instance. Possible values are v1 and v2. The default value is v2                                                                                       | ❌        |
 | `scheduledResyncInterval`         | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`         | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
@@ -391,8 +392,8 @@ The integration configuration determines which resources will be queried from Ku
 :::tip Supported resources
 The following resources can be used to map data from Kubecost, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
-- [`kubesystem`](https://docs.kubecost.com/apis/apis-overview/api-allocation#allocation-schema)
-- [`cloud`](https://docs.kubecost.com/apis/apis-overview/cloud-cost-api#cloud-cost-aggregate-api)
+- [`kubesystem`](https://docs.kubecost.com/apis/monitoring-apis/api-allocation)
+- [`cloud`](https://docs.kubecost.com/apis/monitoring-apis/cloud-cost-api)
 
 :::
 
@@ -759,8 +760,8 @@ resources:
       entity:
         mappings:
           blueprint: '"kubecostCloudAllocation"'
-          identifier: .properties.service
-          title: .properties.service
+          identifier: .properties.provider + "/" + .properties.providerID + "/" + .properties.category + "/" + .properties.service | gsub("[^A-Za-z0-9@_.:\\\\/=-]"; "-")
+          title: .properties.provider + "/" + .properties.service
           properties:
             provider: .properties.provider
             accountID: .properties.accountID

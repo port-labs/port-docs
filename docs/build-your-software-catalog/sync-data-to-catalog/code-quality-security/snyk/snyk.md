@@ -1064,8 +1064,35 @@ Here is an example of the payload structure from Snyk:
 <details>
 <summary>Target response data</summary>
 
-<!-- ```json showLineNumbers
-``` -->
+```json showLineNumbers
+{
+  "attributes": {
+    "created_at": "2022-09-01T00:00:00Z",
+    "display_name": "snyk-fixtures/goof",
+    "is_private": false,
+    "url": "http://github.com/snyk/local-goof"
+  },
+  "id": "55a348e2-c3ad-4bbc-b40e-9b232d1f4121",
+  "relationships": {
+    "integration": {
+      "data": {
+        "attributes": {
+          "integration_type": "gitlab"
+        },
+        "id": "7667dae6-602c-45d9-baa9-79e1a640f199",
+        "type": "integration"
+      }
+    },
+    "organization": {
+      "data": {
+        "id": "e661d4ef-5ad5-4cef-ad16-5157cefa83f5",
+        "type": "organization"
+      }
+    }
+  },
+  "type": "target"
+}
+```
 
 </details>
 

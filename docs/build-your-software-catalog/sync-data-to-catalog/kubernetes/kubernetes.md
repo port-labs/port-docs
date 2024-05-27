@@ -193,7 +193,7 @@ Choose one of the following installation methods:
         --create-namespace --namespace port-k8s-exporter \
         --set secret.secrets.portClientId=YOUR_PORT_CLIENT_ID --set secret.secrets.portClientSecret=YOUR_PORT_CLIENT_SECRET \
         --set stateKey="k8s-exporter"  \
-        --set eventListenerType="POLLING"  \
+        --set eventListener.type="POLLING"  \
         --set "extraEnv[0].name"="CLUSTER_NAME" \
         --set "extraEnv[0].value"=YOUR_PORT_CLUSTER_NAME
     ```
