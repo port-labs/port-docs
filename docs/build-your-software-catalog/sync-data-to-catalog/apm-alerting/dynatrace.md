@@ -28,7 +28,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                       | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     | ✅       |
 | `port.clientSecret`                   | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) | ✅       |
-| `port.baseUrl`                        | Your port base url, relevant only if not using the default port app                                                                 | ❌       |
 | `integration.identifier`              | Change the identifier to describe your integration                                                                                  | ✅       |
 | `integration.type`                    | The integration type                                                                                                                | ✅       |
 | `integration.eventListener.type`      | The event listener type                                                                                                             | ✅       |
@@ -161,7 +160,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                          | Your port base url, relevant only if not using the default port app                                                | ❌       |
+
 
 <br/>
 
@@ -213,7 +212,7 @@ of `Secret Text` type:
 | `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                          | Your port base url, relevant only if not using the default port app                                                | ❌       |
+
 
 <br/>
 
@@ -270,7 +269,6 @@ pipeline {
 | `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                          | Your port base url, relevant only if not using the default port app                                                | ❌       |
 
 
 <br/>
@@ -330,14 +328,14 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 | `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                          | Your port base url, relevant only if not using the default port app                                                | ❌       |
+
 
 
 
 <br/>
 
 
-Here is an example for `dynatrace-integration.yml` pipeline file:
+Here is an example for `.gitlab-ci.yml` pipeline file:
 
 ```yaml showLineNumbers
 default:

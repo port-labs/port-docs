@@ -52,7 +52,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                          | Your Port client id                                                                                           | ✅       |
 | `port.clientSecret`                      | Your Port client secret                                                                                       | ✅       |
-| `port.baseUrl`                           | Your Port base url, relevant only if not using the default Port app                                           | ❌       |
 | `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                       | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
@@ -73,7 +72,6 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install terraform port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set integration.identifier="my-terraform-cloud-integration"  \
 	--set integration.type="terraform-cloud"  \
@@ -276,7 +274,7 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 <br/>
 
 
-Here is an example for `terraform-integration.yml` pipeline file:
+Here is an example for `.gitlab-ci.yml` pipeline file:
 
 ```yaml showLineNumbers
 default:

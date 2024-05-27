@@ -56,7 +56,6 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-linear-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-linear-integration"  \
@@ -320,7 +319,7 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 <br/>
 
 
-Here is an example for `linear-integration.yml` pipeline file:
+Here is an example for `.gitlab-ci.yml` pipeline file:
 
 ```yaml showLineNumbers
 default:

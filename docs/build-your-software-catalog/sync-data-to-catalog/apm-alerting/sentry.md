@@ -44,7 +44,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                         | Your port client id                                                                                           | ✅       |
 | `port.clientSecret`                     | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                          | Your port base url, relevant only if not using the default port app                                           | ❌       |
 | `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                      | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`        | The event listener type                                                                                       | ✅       |
@@ -66,7 +65,6 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sentry-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set integration.identifier="my-sentry-integration"  \
 	--set integration.type="sentry"  \
@@ -323,7 +321,7 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 <br/>
 
 
-Here is an example for `sentry-integration.yml` pipeline file:
+Here is an example for `.gitlab-ci.yml` pipeline file:
 
 ```yaml showLineNumbers
 default:
