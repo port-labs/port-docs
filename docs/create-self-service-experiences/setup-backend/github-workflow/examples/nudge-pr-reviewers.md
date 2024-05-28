@@ -49,7 +49,7 @@ In the following guide, we are going to create a self-service action in Port tha
 
 ```json showLineNumbers
 {
-  "identifier": "githubPullRequest_nudge_reviewers",
+  "identifier": "nudge_pr_reviewers",
   "title": "Nudge Reviewers",
   "description": "Remind reviewers about PR",
   "trigger": {
@@ -67,34 +67,11 @@ In the following guide, we are going to create a self-service action in Port tha
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "nudge-pr-reviewers.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"githubPullRequest_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "nudge-pr-reviewers.yml",
-              "omitUserInputs": true,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {},
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "port_context": {
+        "entity": "{{.entity}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{.trigger}}"
       }
     },
     "reportWorkflowStatus": true
@@ -129,20 +106,30 @@ name: Nudge Pull Request Reviewers
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Details about the action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
-  manage-pr:
+  send-slack-to-reviewers:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Inform starting of deletion
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          logMessage: |
+            Starting workflow to nudge PR reviewers for PR: ${{ fromJson(inputs.port_context).entity.title }} ... ⛴️
+            
       - name: Extract Repository and PR Number
         id: extract_info
         run: |
-          link="${{ fromJson(inputs.port_payload).payload.entity.properties.link }}"
+          link="${{ fromJson(inputs.port_context).entity.properties.link }}"
           repo_info=$(echo "$link" | sed 's|https://github.com/||' | awk -F'/' '{print $1 "/" $2}')
           pr_number=$(echo "$link" | awk -F'/' '{print $NF}')
 
@@ -159,12 +146,12 @@ jobs:
 
       - name: Send Slack Notification
         env:
-          PR_TITLE: ${{ fromJson(inputs.port_payload).payload.entity.title }}
+          PR_TITLE: ${{ fromJson(inputs.port_context).entity.title }}
         run: |
           reviews_json="${{ steps.get_reviewers.outputs.reviews_file_path }}"
           reviewers=$(jq -r '.[].user.login' $reviews_json | sort -u)
 
-          pr_title="${{ fromJson(inputs.port_payload).payload.entity.title }}"
+          pr_title="${{ fromJson(inputs.port_context).entity.title }}"
           
           echo "Reviewers: $reviewers"
           
@@ -222,7 +209,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           baseUrl: https://api.getport.io
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          status: "SUCCESS"
           logMessage: |
             GitHub Action completed! Sent slack message to PR reviewers for PR https://github.com/${{ env.REPO_INFO }}/pull/${{ env.PR_NUMBER }} ✅
 ```
