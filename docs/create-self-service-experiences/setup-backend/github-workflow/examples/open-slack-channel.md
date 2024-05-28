@@ -10,14 +10,22 @@ import GithubDedicatedRepoHint from '../\_github_dedicated_workflows_repository_
 
 ## Overview
 
-In this guide, we will to create a self-service action in Port that not only automates the creation of a new Slack channel for a service but also includes the option to add members during the channel's setup.
+Streamline incident response with this self-service action. It automatically creates dedicated Slack channels for your services, optionally adding key team members during setup.
+
+:::tip Key Benefits
+
+- **Faster Incident Response**: Instantly create communication channels when issues arise.
+- **Consistent Process**: Ensure standard channel naming and member inclusion.
+- **Developer Self-Service**: Empower teams to create incident channels without needing extra Slack permissions.
+- **Reduced Manual Steps**: Automate a routine task, freeing up time for your team.
+:::
 
 ## Prerequisites
 
 1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
-2. [Create a slack app](https://api.slack.com/start/quickstart#creating) and install it on a workspace.
-3. Generate a [Slack Bot User Oauth Token](https://api.slack.com/apps/A06PVJZQBHB/oauth?success=1) with permissions to create a new channel and invite users of the slack workspace to the slack channel.
-    * [Bot User Scopes](https://api.slack.com/start/quickstart#scopes):
+2. Setup Slack App:
+    1. [Create a slack app](https://api.slack.com/start/quickstart#creating) and install it on a workspace.
+    2. [Add the following permissions](https://api.slack.com/quickstart#scopes) to the slack app:
         * [Create channel](https://api.slack.com/methods/conversations.create) (**Required**) :
           `channels:manage`
           `groups:write`
@@ -29,18 +37,20 @@ In this guide, we will to create a self-service action in Port that not only aut
           `channels:write.invites`
           `groups:write.invites`
           `mpim:write.invites`
-          `channels:manage`
-          `groups:write`
-          `im:write`
-          `mpim:write`  
-    :::note
+    :::warning
     Without scopes for `Find a user with an email address` and `Invite users to channel`, the channel will be created but users will not be added to it.
     :::
-4. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
-- `BOT_USER_OAUTH_TOKEN` - [Slack Bot User Oauth Token](https://api.slack.com/authentication/token-types#bot) generated for the slack app.
-- `PORT_CLIENT_ID` - Your port [client id](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-- `PORT_CLIENT_SECRET` - Your port [client secret](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-5. Create a service <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
+    3. Then [install the app in your slack workspace](https://api.slack.com/quickstart#installing).
+    4. Navigate back to the **OAuth & Permissions page**. You'll see an access token under OAuth Tokens for Your Workspace that you will use in the `BOT_USER_OAUTH_TOKEN ` GitHub secret.
+    <br />
+    <img src='/img/self-service-actions/setup-backend/github-workflow/slack-app.png' width='85%' border="1px" />
+
+
+3. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+      - `BOT_USER_OAUTH_TOKEN` - [Slack Bot User Oauth Token](https://api.slack.com/authentication/token-types#bot) generated for the slack app.
+      - `PORT_CLIENT_ID` - Your port [client id](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+      - `PORT_CLIENT_SECRET` - Your port [client secret](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+4. Create a service <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
 
 <details>
    <summary><b>Service Blueprint (Click to expand)</b></summary>
@@ -392,6 +402,7 @@ on:
         type: array
         required: false
       port_context:
+        description: Details of the action and general port_context (blueprint, run ID, etc...).
         required: true
         description: includes blueprint, run ID, and entity identifier from Port.
 
@@ -406,7 +417,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_context).run_id}}
+          runId: ${{ fromJson(github.event.inputs.port_context).runId }}
           logMessage: "About to create a conversation channel in slack..."
 
       - name: Create Slack Channel
@@ -443,7 +454,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_context).run_id}}
+          runId: ${{ fromJson(github.event.inputs.port_context).runId }}
           logMessage: "Failed to create slack channel: ${{env.CREATE_CHANNEL_ERROR}} ❌"
 
       - name: Log If Create Channel Request is Successful
@@ -453,7 +464,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_context).run_id}}
+          runId: ${{ fromJson(github.event.inputs.port_context).runId }}
           logMessage: "Channel created successfully, channel Id: ${{env.CHANNEL_ID}} ✅"
 
       - name: Checkout code
@@ -467,7 +478,7 @@ jobs:
           CHANNEL_ID: ${{env.CHANNEL_ID}}
           CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
-          RUN_ID: ${{fromJson(inputs.port_context).run_id}}
+          RUN_ID: ${{ fromJson(github.event.inputs.port_context).runId }}
           MEMBER_EMAILS: ${{ toJSON(github.event.inputs.members) }}
         run: |
           cd slack
@@ -482,7 +493,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_context).run_id}}
+          status: "FAILURE"
+          runId: ${{ fromJson(github.event.inputs.port_context).runId }}
           logMessage: "Failed to add members to channel ❌"
 ```
 
@@ -583,13 +595,13 @@ Create a new self service action using the following JSON configuration.
 
 ```json showLineNumbers
 {
-  "identifier": "pagerdutyIncident_open_slack_channel",
+  "identifier": "open_slack_channel",
   "title": "Open Slack Channel",
   "icon": "Slack",
   "description": "Create and slack channel and optionally add members to it",
   "trigger": {
     "type": "self-service",
-    "operation": "CREATE",
+    "operation": "DAY-2",
     "userInputs": {
       "properties": {
         "channel_name": {
@@ -597,7 +609,7 @@ Create a new self service action using the following JSON configuration.
           "title": "Channel Name",
           "type": "string",
           "default": {
-            "jqQuery": "\"incident-\"+.entity.title"
+            "jqQuery": "\"incident-\"+.entity.identifier"
           }
         },
         "is_private": {
@@ -630,7 +642,7 @@ Create a new self service action using the following JSON configuration.
         "is_private"
       ]
     },
-    "blueprintIdentifier": "pagerdutyIncident"
+    "blueprintIdentifier": "service"
   },
   "invocationMethod": {
     "type": "GITHUB",
@@ -642,9 +654,10 @@ Create a new self service action using the following JSON configuration.
       "is_private": "{{.inputs.\"is_private\"}}",
       "members": "{{.inputs.\"members\"}}",
       "port_context": {
+        "entity": "{{.entity}}",
         "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity.identifier}}",
-        "run_id": "{{.run.id}}"
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
