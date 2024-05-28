@@ -402,10 +402,7 @@ on:
         type: array
         required: false
       port_context:
-<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
         description: Details of the action and general port_context (blueprint, run ID, etc...).
-=======
->>>>>>> main
         required: true
         description: includes blueprint, run ID, and entity identifier from Port.
 
@@ -420,11 +417,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
           runId: ${{ fromJson(github.event.inputs.port_context).runId }}
-=======
-          runId: ${{fromJson(inputs.port_context).run_id}}
->>>>>>> main
           logMessage: "About to create a conversation channel in slack..."
 
       - name: Create Slack Channel
@@ -461,11 +454,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
           runId: ${{ fromJson(github.event.inputs.port_context).runId }}
-=======
-          runId: ${{fromJson(inputs.port_context).run_id}}
->>>>>>> main
           logMessage: "Failed to create slack channel: ${{env.CREATE_CHANNEL_ERROR}} ❌"
 
       - name: Log If Create Channel Request is Successful
@@ -475,11 +464,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
           runId: ${{ fromJson(github.event.inputs.port_context).runId }}
-=======
-          runId: ${{fromJson(inputs.port_context).run_id}}
->>>>>>> main
           logMessage: "Channel created successfully, channel Id: ${{env.CHANNEL_ID}} ✅"
 
       - name: Checkout code
@@ -493,11 +478,7 @@ jobs:
           CHANNEL_ID: ${{env.CHANNEL_ID}}
           CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
-<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
           RUN_ID: ${{ fromJson(github.event.inputs.port_context).runId }}
-=======
-          RUN_ID: ${{fromJson(inputs.port_context).run_id}}
->>>>>>> main
           MEMBER_EMAILS: ${{ toJSON(github.event.inputs.members) }}
         run: |
           cd slack
@@ -512,14 +493,9 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
-          status: "SUCCESS"
+          status: "FAILURE"
           runId: ${{ fromJson(github.event.inputs.port_context).runId }}
-          logMessage: "Successfully opened slack channel: ${{env.CHANNEL_ID}} ✅"
-=======
-          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Failed to add members to channel ❌"
->>>>>>> main
 ```
 
 </details>
@@ -678,16 +654,10 @@ Create a new self service action using the following JSON configuration.
       "is_private": "{{.inputs.\"is_private\"}}",
       "members": "{{.inputs.\"members\"}}",
       "port_context": {
-<<<<<<< PORT-8076-update-github-actions-for-k-8-s-slack-and-more
         "entity": "{{.entity}}",
         "blueprint": "{{.action.blueprint}}",
         "runId": "{{.run.id}}",
         "trigger": "{{ .trigger }}"
-=======
-        "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity.identifier}}",
-        "run_id": "{{.run.id}}"
->>>>>>> main
       }
     },
     "reportWorkflowStatus": true
