@@ -1,11 +1,11 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
+import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_azure_premise.mdx"
+import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_jira_one_time_docker_parameters.mdx"
-import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import JiraIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_blueprint.mdx"
 import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
 import JiraProjectBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_project_blueprint.mdx";
@@ -66,7 +66,6 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-jira-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-jira-integration"  \
@@ -346,7 +345,7 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 <br/>
 
 
-Here is an example for `jira-integration.yml` pipeline file:
+Here is an example for `.gitlab-ci.yml` pipeline file:
 
 ```yaml showLineNumbers
 default:
