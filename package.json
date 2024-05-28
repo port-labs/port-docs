@@ -16,12 +16,6 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.3.2",
-    "@docusaurus/plugin-client-redirects": "^3.3.2",
-    "@docusaurus/plugin-ideal-image": "^3.3.2",
-    "@docusaurus/preset-classic": "^3.3.2",
-    "@docusaurus/plugin-content-docs": "^3.3.2",
-    "@docusaurus/theme-live-codeblock": "^3.3.2",
     "@docsly/react": "^1.9.1",
     "@docusaurus/core": "^3.3.2",
     "@docusaurus/plugin-client-redirects": "^3.3.2",
@@ -35,8 +29,8 @@
     "clsx": "^2.1.1",
     "docusaurus-plugin-hotjar": "^0.0.2",
     "docusaurus-plugin-image-zoom": "^2.0.0",
-    "docusaurus-plugin-openapi-docs": "^3.0.0-beta.5",
-    "docusaurus-theme-openapi-docs": "^3.0.0-beta.5",
+    "docusaurus-plugin-openapi-docs": "^3.0.0-beta.10",
+    "docusaurus-theme-openapi-docs": "^3.0.0-beta.10",
     "prettier": "^3.2.5",
     "prism-react-renderer": "^2.3.1",
     "react": "^18.3.1",

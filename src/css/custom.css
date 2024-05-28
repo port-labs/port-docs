@@ -409,6 +409,7 @@ html[data-theme="dark"] details details  {
   padding: 1rem;
   margin: 0 0 1rem 0 !important;
   border-radius: 8px;
+  border: thin solid var(--openapi-tree-line-color) !important;
 }
 
 html[data-theme="light"] .openapi-params__list-item {
@@ -428,6 +429,7 @@ html[data-theme="dark"] .openapi-params__list-item {
   padding: 1rem !important;
   margin: 0 0 1rem 0 !important;
   border-radius: 8px;
+  border: thin solid var(--openapi-tree-line-color) !important;
 }
 
 html[data-theme="light"] .openapi-schema__list-item {
@@ -551,4 +553,8 @@ html[data-theme="dark"] .openapi-schema__list-item {
   border-radius: 4px;
   background-color: rgba(0, 0, 0, .5);
   box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+.openapi-markdown__details .openapi-markdown__details {
+  background-color: transparent !important;
 }

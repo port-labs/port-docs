@@ -2753,7 +2753,7 @@ components:
 paths:
   '/v1/blueprints/{blueprint_identifier}/entities':
     post:
-      summary: Create entity
+      summary: Create an entity
       description: This route allows you to create an entity in your software catalog based on an existing blueprint in your data model. It can also be used to overwrite or update an existing entity.<br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
@@ -2784,20 +2784,10 @@ paths:
                   description: The Port team/s to which the new entity will belong.<br/>
                 properties:
                   type: object
-                  default: {}
-                  description: The properties of the new entity.<br/>
+                  description: An object containing the properties of the new entity, in `"key":"value"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>
                 relations:
                   type: object
-                  additionalProperties:
-                    anyOf:
-                      - type: string
-                        pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                      - type: array
-                        items:
-                          type: string
-                          pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                      - type: 'null'
-                  description: The identifier/s of the entity's related entity/ies.<br/>
+                  description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>
               additionalProperties: true
             example:
               identifier: new-microservice
@@ -2835,7 +2825,7 @@ paths:
           in: query
           name: create_missing_related_entities
           required: false
-          description: If `true`, this call will create missing related entities.<br/>
+          description: If `true`, this call will also create missing related entities.<br/>This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.<br/>
         - schema:
             type: string
           in: query
@@ -2971,6 +2961,7 @@ paths:
           in: query
           name: exclude_calculated_properties
           required: false
+          description: If `true`, [calculated properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entities.<br/>
         - schema:
             type: array
             items:
@@ -2978,370 +2969,382 @@ paths:
           in: query
           name: include
           required: false
+          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
             items:
               type: string
           in: query
           name: exclude
+          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
           required: false
         - schema:
             type: string
           in: path
           name: blueprint_identifier
           required: true
+          description: The identifier of the blueprint whose entities you want to fetch.<br/>
       security:
         - bearer:
             - 'read:entities'
       responses:
         '200':
           description: Default Response
-    put:
-      summary: Change a blueprint
-      description: This route allows you to modify a blueprint in your data model.<br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#blueprints).
-      tags:
-        - Blueprints
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                identifier:
-                  type: string
-                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                  maxLength: 30
-                title:
-                  type: string
-                  maxLength: 30
-                description:
-                  type: string
-                  maxLength: 200
-                icon:
-                  type: string
-                teamInheritance:
-                  type: object
-                  properties:
-                    path:
-                      type: string
-                  additionalProperties: false
-                  required:
-                    - path
-                schema:
-                  type: object
-                  properties:
-                    properties:
-                      type: object
-                      propertyNames:
-                        pattern: '^[A-Za-z0-9@_=\\-]+$'
-                      additionalProperties:
-                        type: object
-                        properties:
-                          title:
-                            type: string
-                          description:
-                            type: string
-                          icon:
-                            type: string
-                          type:
-                            enum:
-                              - string
-                              - number
-                              - boolean
-                              - object
-                              - array
-                          format:
-                            enum:
-                              - date-time
-                              - url
-                              - email
-                              - ipv4
-                              - ipv6
-                              - markdown
-                              - yaml
-                              - user
-                              - team
-                              - timer
-                              - proto
-                          spec:
-                            enum:
-                              - open-api
-                              - embedded-url
-                              - async-api
-                        required:
-                          - type
-                    required:
-                      type: array
-                      items:
-                        type: string
-                  additionalProperties: false
-                  required:
-                    - properties
-                calculationProperties:
-                  type: object
-                  default: {}
-                  propertyNames:
-                    pattern: '^[A-Za-z0-9@_=\\-]+$'
-                  additionalProperties:
-                    type: object
-                    properties:
-                      title:
-                        type: string
-                      description:
-                        type: string
-                      icon:
-                        type: string
-                      calculation:
-                        type: string
-                      type:
-                        enum:
-                          - string
-                          - number
-                          - boolean
-                          - object
-                          - array
-                      format:
-                        enum:
-                          - date-time
-                          - url
-                          - email
-                          - ipv4
-                          - ipv6
-                          - markdown
-                          - yaml
-                          - user
-                          - team
-                          - proto
-                      spec:
-                        enum:
-                          - open-api
-                          - embedded-url
-                          - async-api
-                      colorized:
-                        type: boolean
-                      colors:
-                        type: object
-                      items:
-                        type: object
-                        properties:
-                          type:
-                            enum:
-                              - string
-                              - number
-                              - boolean
-                              - object
-                              - array
-                          format:
-                            enum:
-                              - date-time
-                              - url
-                              - email
-                              - ipv4
-                              - ipv6
-                              - markdown
-                              - yaml
-                              - user
-                              - team
-                              - timer
-                              - proto
-                    required:
-                      - calculation
-                      - type
-                mirrorProperties:
-                  type: object
-                  propertyNames:
-                    pattern: '^[A-Za-z0-9@_=\\-]+$'
-                  additionalProperties:
-                    type: object
-                    properties:
-                      path:
-                        type: string
-                        pattern: '^(?:[A-Za-z0-9@_=\-]+\.)+?(\w|\$|@|-)*?[^\.]+$'
-                      title:
-                        type: string
-                    additionalProperties: false
-                    required:
-                      - path
-                aggregationProperties:
-                  type: object
-                  default: {}
-                  propertyNames:
-                    pattern: '^[A-Za-z0-9@_=\\-]+$'
-                  additionalProperties:
-                    type: object
-                    properties:
-                      title:
-                        type: string
-                      description:
-                        type: string
-                      icon:
-                        type: string
-                      type:
-                        enum:
-                          - number
-                        default: number
-                      target:
-                        type: string
-                      calculationSpec:
-                        type: object
-                        oneOf:
-                          - oneOf:
-                              - type: object
-                                properties:
-                                  func:
-                                    enum:
-                                      - average
-                                  measureTimeBy:
-                                    type: string
-                                  averageOf:
-                                    type: string
-                                    enum:
-                                      - hour
-                                      - day
-                                      - week
-                                      - month
-                                      - total
-                                  calculationBy:
-                                    type: string
-                                    enum:
-                                      - entities
-                                required:
-                                  - func
-                                  - calculationBy
-                                  - averageOf
-                              - type: object
-                                properties:
-                                  func:
-                                    enum:
-                                      - count
-                                  calculationBy:
-                                    type: string
-                                    enum:
-                                      - entities
-                                required:
-                                  - func
-                                  - calculationBy
-                          - oneOf:
-                              - type: object
-                                properties:
-                                  func:
-                                    type: string
-                                    enum:
-                                      - sum
-                                      - min
-                                      - max
-                                      - median
-                                  property:
-                                    type: string
-                                  calculationBy:
-                                    type: string
-                                    enum:
-                                      - property
-                                additionalProperties: false
-                                required:
-                                  - func
-                                  - property
-                                  - calculationBy
-                              - type: object
-                                properties:
-                                  func:
-                                    enum:
-                                      - average
-                                  measureTimeBy:
-                                    type: string
-                                  averageOf:
-                                    type: string
-                                    enum:
-                                      - hour
-                                      - day
-                                      - week
-                                      - month
-                                      - total
-                                  property:
-                                    type: string
-                                  calculationBy:
-                                    type: string
-                                    enum:
-                                      - property
-                                additionalProperties: false
-                                required:
-                                  - func
-                                  - property
-                                  - calculationBy
-                                  - averageOf
-                      query:
-                        $ref: '#/components/schemas/def-0'
-                    additionalProperties: false
-                    required:
-                      - title
-                      - target
-                      - calculationSpec
-                relations:
-                  type: object
-                  propertyNames:
-                    pattern: '^[A-Za-z0-9@_=\\-]+$'
-                  additionalProperties:
-                    type: object
-                    properties:
-                      title:
-                        type: string
-                      target:
-                        type: string
-                      required:
-                        type: boolean
-                        default: false
-                      many:
-                        type: boolean
-                        default: false
-                      description:
-                        type: string
-                    additionalProperties: false
-                    required:
-                      - target
-                      - required
-                      - many
-                changelogDestination:
-                  oneOf:
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - WEBHOOK
-                        agent:
-                          type: boolean
-                        url:
-                          type: string
-                          format: uri
-                      required:
-                        - url
-                        - type
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - KAFKA
-                      required:
-                        - type
-                      additionalProperties: false
-              additionalProperties: true
-              required:
-                - title
-                - schema
-        required: true
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: identifier
-          required: true
-      security:
-        - bearer: []
-      responses:
-        '200':
-          description: Default Response
+    # put:
+    #   summary: Change a blueprint
+    #   description: This route allows you to edit a blueprint in your data model and change its properties.<br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#blueprints).
+    #   tags:
+    #     - Blueprints
+    #   requestBody:
+    #     content:
+    #       application/json:
+    #         schema:
+    #           type: object
+    #           properties:
+    #             identifier:
+    #               type: string
+    #               pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+    #               maxLength: 30
+    #               description: The new identifier of the blueprint.<br/>
+    #             title:
+    #               type: string
+    #               maxLength: 30
+    #               description: The new title of the blueprint.<br/>
+    #             description:
+    #               type: string
+    #               maxLength: 200
+    #               description: The new description of the blueprint.<br/>
+    #             icon:
+    #               type: string
+    #               description: The new icon of the blueprint.<br/>
+    #             # teamInheritance:
+    #             #   type: object
+    #             #   properties:
+    #             #     path:
+    #             #       type: string
+    #             #   additionalProperties: false
+    #             #   required:
+    #                 # - path
+    #             schema:
+    #               type: object
+    #               properties:
+    #                 properties:
+    #                   type: object
+    #                   propertyNames:
+    #                     pattern: '^[A-Za-z0-9@_=\\-]+$'
+    #                   additionalProperties:
+    #                     type: object
+    #                     properties:
+    #                       title:
+    #                         type: string
+    #                       description:
+    #                         type: string
+    #                       icon:
+    #                         type: string
+    #                       type:
+    #                         enum:
+    #                           - string
+    #                           - number
+    #                           - boolean
+    #                           - object
+    #                           - array
+    #                       format:
+    #                         enum:
+    #                           - date-time
+    #                           - url
+    #                           - email
+    #                           - ipv4
+    #                           - ipv6
+    #                           - markdown
+    #                           - yaml
+    #                           - user
+    #                           - team
+    #                           - timer
+    #                           - proto
+    #                       spec:
+    #                         enum:
+    #                           - open-api
+    #                           - embedded-url
+    #                           - async-api
+    #                     required:
+    #                       - type
+    #                 required:
+    #                   type: array
+    #                   items:
+    #                     type: string
+    #               additionalProperties: false
+    #               required:
+    #                 - properties
+    #             calculationProperties:
+    #               type: object
+    #               default: {}
+    #               propertyNames:
+    #                 pattern: '^[A-Za-z0-9@_=\\-]+$'
+    #               additionalProperties:
+    #                 type: object
+    #                 properties:
+    #                   title:
+    #                     type: string
+    #                   description:
+    #                     type: string
+    #                   icon:
+    #                     type: string
+    #                   calculation:
+    #                     type: string
+    #                   type:
+    #                     enum:
+    #                       - string
+    #                       - number
+    #                       - boolean
+    #                       - object
+    #                       - array
+    #                   format:
+    #                     enum:
+    #                       - date-time
+    #                       - url
+    #                       - email
+    #                       - ipv4
+    #                       - ipv6
+    #                       - markdown
+    #                       - yaml
+    #                       - user
+    #                       - team
+    #                       - proto
+    #                   spec:
+    #                     enum:
+    #                       - open-api
+    #                       - embedded-url
+    #                       - async-api
+    #                   colorized:
+    #                     type: boolean
+    #                   colors:
+    #                     type: object
+    #                   items:
+    #                     type: object
+    #                     properties:
+    #                       type:
+    #                         enum:
+    #                           - string
+    #                           - number
+    #                           - boolean
+    #                           - object
+    #                           - array
+    #                       format:
+    #                         enum:
+    #                           - date-time
+    #                           - url
+    #                           - email
+    #                           - ipv4
+    #                           - ipv6
+    #                           - markdown
+    #                           - yaml
+    #                           - user
+    #                           - team
+    #                           - timer
+    #                           - proto
+    #                 required:
+    #                   - calculation
+    #                   - type
+    #               description: The new [calculation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) of the blueprint. <br/>
+    #             mirrorProperties:
+    #               type: object
+    #               propertyNames:
+    #                 pattern: '^[A-Za-z0-9@_=\\-]+$'
+    #               additionalProperties:
+    #                 type: object
+    #                 properties:
+    #                   path:
+    #                     type: string
+    #                     pattern: '^(?:[A-Za-z0-9@_=\-]+\.)+?(\w|\$|@|-)*?[^\.]+$'
+    #                   title:
+    #                     type: string
+    #                 additionalProperties: false
+    #                 required:
+    #                   - path
+    #               description: The new [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) of the blueprint. <br/>
+    #             aggregationProperties:
+    #               type: object
+    #               default: {}
+    #               propertyNames:
+    #                 pattern: '^[A-Za-z0-9@_=\\-]+$'
+    #               additionalProperties:
+    #                 type: object
+    #                 properties:
+    #                   title:
+    #                     type: string
+    #                   description:
+    #                     type: string
+    #                   icon:
+    #                     type: string
+    #                   type:
+    #                     enum:
+    #                       - number
+    #                     default: number
+    #                   target:
+    #                     type: string
+    #                   calculationSpec:
+    #                     type: object
+    #                     oneOf:
+    #                       - oneOf:
+    #                           - type: object
+    #                             properties:
+    #                               func:
+    #                                 enum:
+    #                                   - average
+    #                               measureTimeBy:
+    #                                 type: string
+    #                               averageOf:
+    #                                 type: string
+    #                                 enum:
+    #                                   - hour
+    #                                   - day
+    #                                   - week
+    #                                   - month
+    #                                   - total
+    #                               calculationBy:
+    #                                 type: string
+    #                                 enum:
+    #                                   - entities
+    #                             required:
+    #                               - func
+    #                               - calculationBy
+    #                               - averageOf
+    #                           - type: object
+    #                             properties:
+    #                               func:
+    #                                 enum:
+    #                                   - count
+    #                               calculationBy:
+    #                                 type: string
+    #                                 enum:
+    #                                   - entities
+    #                             required:
+    #                               - func
+    #                               - calculationBy
+    #                       - oneOf:
+    #                           - type: object
+    #                             properties:
+    #                               func:
+    #                                 type: string
+    #                                 enum:
+    #                                   - sum
+    #                                   - min
+    #                                   - max
+    #                                   - median
+    #                               property:
+    #                                 type: string
+    #                               calculationBy:
+    #                                 type: string
+    #                                 enum:
+    #                                   - property
+    #                             additionalProperties: false
+    #                             required:
+    #                               - func
+    #                               - property
+    #                               - calculationBy
+    #                           - type: object
+    #                             properties:
+    #                               func:
+    #                                 enum:
+    #                                   - average
+    #                               measureTimeBy:
+    #                                 type: string
+    #                               averageOf:
+    #                                 type: string
+    #                                 enum:
+    #                                   - hour
+    #                                   - day
+    #                                   - week
+    #                                   - month
+    #                                   - total
+    #                               property:
+    #                                 type: string
+    #                               calculationBy:
+    #                                 type: string
+    #                                 enum:
+    #                                   - property
+    #                             additionalProperties: false
+    #                             required:
+    #                               - func
+    #                               - property
+    #                               - calculationBy
+    #                               - averageOf
+    #                   query:
+    #                     $ref: '#/components/schemas/def-0'
+    #                 additionalProperties: false
+    #                 required:
+    #                   - title
+    #                   - target
+    #                   - calculationSpec
+    #               description: The new [aggregation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/) of the blueprint. <br/>
+    #             relations:
+    #               type: object
+    #               propertyNames:
+    #                 pattern: '^[A-Za-z0-9@_=\\-]+$'
+    #               additionalProperties:
+    #                 type: object
+    #                 properties:
+    #                   title:
+    #                     type: string
+    #                   target:
+    #                     type: string
+    #                   required:
+    #                     type: boolean
+    #                     default: false
+    #                   many:
+    #                     type: boolean
+    #                     default: false
+    #                   description:
+    #                     type: string
+    #                 additionalProperties: false
+    #                 required:
+    #                   - target
+    #                   - required
+    #                   - many
+    #               description: The new [relations](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) of the blueprint. <br/>
+    #             # changelogDestination:
+    #             #   oneOf:
+    #             #     - type: object
+    #             #       properties:
+    #             #         type:
+    #             #           type: string
+    #             #           enum:
+    #             #             - WEBHOOK
+    #             #         agent:
+    #             #           type: boolean
+    #             #         url:
+    #             #           type: string
+    #             #           format: uri
+    #             #       required:
+    #             #         - url
+    #             #         - type
+    #             #       additionalProperties: false
+    #             #     - type: object
+    #                   # properties:
+    #                   #   type:
+    #                   #     type: string
+    #                   #     enum:
+    #                   #       - KAFKA
+    #                   # required:
+    #                   #   - type
+    #                   # additionalProperties: false
+    #           additionalProperties: true
+    #           required:
+    #             - title
+    #             - schema
+    #     required: true
+    #   parameters:
+    #     - schema:
+    #         type: string
+    #       in: path
+    #       name: identifier
+    #       description: The identifier of the blueprint you want to change.<br/>
+    #       required: true
+    #   security:
+    #     - bearer: []
+    #   responses:
+    #     '200':
+    #       description: Default Response
   '/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}':
     patch:
       summary: Patch an entity
@@ -3357,37 +3360,24 @@ paths:
                   type:
                     - string
                   pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                  description: The new identifier of the entity.<br/>
                 title:
-                  type:
-                    - string
-                    - 'null'
+                  type: string
+                  description: The new title of the entity.<br/>
                 icon:
-                  type:
-                    - string
-                    - 'null'
+                  type: string
+                  description: The new icon of the entity.<br/>
                 team:
-                  oneOf:
-                    - type:
-                        - string
-                        - 'null'
-                    - type: array
-                      items:
-                        type: string
+                  type: string, string[]
+                  description: The Port team/s to which the entity will belong.<br/>
                 properties:
                   type: object
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  description: An object containing the properties of the entity, in `"key":"value"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>
                 relations:
                   type: object
-                  additionalProperties:
-                    anyOf:
-                      - type: string
-                        pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                      - type: array
-                        items:
-                          type: string
-                          pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                      - type: 'null'
+                  description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.
               additionalProperties: false
       parameters:
         - schema:
@@ -3396,28 +3386,33 @@ paths:
           in: query
           name: create_missing_related_entities
           required: false
+          description: If `true`, this call will also create missing related entities.<br/>This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.<br/>
         - schema:
             type: string
           in: query
           name: run_id
           required: false
+          description: You can provide a `run_id` to associate the created entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: string
           in: path
           name: entity_identifier
           required: true
+          description: The identifier of the entity you want to patch.<br/>
         - schema:
             type: string
           in: path
           name: blueprint_identifier
           required: true
+          description: The identifier of the blueprint the entity belongs to.<br/>
       security:
         - bearer: []
       responses:
         '200':
           description: Default Response
+      description: This route allows you to edit a specific entity in your software catalog and update its properties.<br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
     put:
-      summary: Change an entities
+      summary: Change an entity
       tags:
         - Entities
       requestBody:
@@ -3429,39 +3424,23 @@ paths:
                 identifier:
                   type: string
                   pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                  description: The new identifier of the entity.<br/>
                 title:
                   type: string
+                  description: The new title of the entity.<br/>
                 icon:
                   type: string
+                  description: The new icon of the entity.<br/>
                 team:
-                  oneOf:
-                    - type: string
-                    - type: array
-                      items:
-                        type: string
+                  type: string, string[]
+                  description: The Port team/s to which the entity will belong.<br/>
                 properties:
                   type: object
-                  default: {}
+                  description: An object containing the properties of the entity, in `"key":"value"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>
                 relations:
                   type: object
-                  additionalProperties:
-                    anyOf:
-                      - type: string
-                        pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                      - type: array
-                        items:
-                          type: string
-                          pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                      - type: 'null'
+                  description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.
               additionalProperties: true
-            example:
-              identifier: first_ticket
-              title: FirstTicket
-              icon: Jira
-              team: []
-              properties:
-                content: my content
-              relations: {}
       parameters:
         - schema:
             type: boolean
@@ -3469,21 +3448,25 @@ paths:
           in: query
           name: create_missing_related_entities
           required: false
+          description: If `true`, this call will also create missing related entities.<br/>This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.<br/>
         - schema:
             type: string
           in: query
           name: run_id
           required: false
+          description: You can provide a `run_id` to associate the modified entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: string
           in: path
           name: entity_identifier
           required: true
+          description: The identifier of the entity you want to change.<br/>
         - schema:
             type: string
           in: path
           name: blueprint_identifier
           required: true
+          description: The identifier of the blueprint the entity belongs to.<br/>
       security:
         - bearer: []
       responses:
@@ -3500,6 +3483,7 @@ paths:
           in: query
           name: exclude_calculated_properties
           required: false
+          description: If `true`, [calculated properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entity.<br/>
         - schema:
             type: array
             items:
@@ -3507,6 +3491,7 @@ paths:
           in: query
           name: include
           required: false
+          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
             items:
@@ -3514,27 +3499,30 @@ paths:
           in: query
           name: exclude
           required: false
-        - schema:
-            type: boolean
-          in: query
-          name: compact
-          required: false
-        - schema:
-            type: boolean
-            default: false
-          in: query
-          name: attach_title_to_relation
-          required: false
+          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
+        # - schema:
+        #     type: boolean
+        #   in: query
+        #   name: compact
+        #   required: false
+        # - schema:
+        #     type: boolean
+        #     default: false
+        #   in: query
+        #   name: attach_title_to_relation
+        #   required: false
         - schema:
             type: string
           in: path
           name: entity_identifier
           required: true
+          description: The identifier of the entity you want to fetch.<br/>
         - schema:
             type: string
           in: path
           name: blueprint_identifier
           required: true
+          description: The identifier of the blueprint the entity belongs to.<br/>
       security:
         - bearer:
             - 'read:entities'
@@ -3542,7 +3530,7 @@ paths:
         '200':
           description: Default Response
     delete:
-      summary: Delte a blueprint's entity
+      summary: Delete an entity
       tags:
         - Entities
       parameters:
@@ -3552,21 +3540,25 @@ paths:
           in: query
           name: delete_dependents
           required: true
+          description: If `true`, this call will also delete all entities with a relation to the deleted entity.<br/>
         - schema:
             type: string
           in: query
           name: run_id
           required: false
+          description: You can provide a `run_id` to associate the deleted entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: string
           in: path
           name: entity_identifier
           required: true
+          description: The identifier of the entity you want to delete.<br/>
         - schema:
             type: string
           in: path
           name: blueprint_identifier
           required: true
+          description: The identifier of the blueprint the entity belongs to.<br/>
       security:
         - bearer: []
       responses:
@@ -3586,7 +3578,7 @@ paths:
                   - ok
   '/v1/blueprints/{blueprint_identifier}/entities-count':
     get:
-      summary: Get blueprint's entity count
+      summary: Get a blueprint's entity count
       tags:
         - Entities
       parameters:
@@ -3595,6 +3587,7 @@ paths:
           in: path
           name: blueprint_identifier
           required: true
+          description: The identifier of the blueprint whose entities you want to count.<br/>
       security:
         - bearer: []
       responses:
@@ -3602,7 +3595,7 @@ paths:
           description: Default Response
   '/v1/blueprints/{blueprint_identifier}/all-entities':
     delete:
-      summary: Delete all entities of blueprint
+      summary: Delete all entities of a blueprint
       tags:
         - Entities
       parameters:
@@ -3611,38 +3604,30 @@ paths:
           in: query
           name: run_id
           required: false
+          description: You can provide a `run_id` to associate the deleted entities with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: boolean
           in: query
           name: delete_blueprint
           required: false
+          description: If `true`, this call will also delete the blueprint itself.<br/>
         - schema:
             type: string
           in: path
           name: blueprint_identifier
           required: true
+          description: The identifier of the blueprint whose entities you want to delete.<br/>
       security:
         - bearer: []
       responses:
         '200':
           description: Deleted successfully.
-          content:
-            application/json:
-              schema:
-                description: Deleted successfully.
-                type: object
-                properties:
-                  ok:
-                    enum:
-                      - true
-                additionalProperties: false
-                required:
-                  - ok
   /v1/entities/search:
     post:
       summary: Search entities
       tags:
         - Entities
+      description: This route allows you to search for entities in your software catalog based on a given set of rules.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.getport.io/search-and-query/).
       requestBody:
         content:
           application/json:
@@ -3653,6 +3638,7 @@ paths:
                   enum:
                     - and
                     - or
+                  description: The combinator to use for the rules.<br/>
                 rules:
                   type: array
                   items:
@@ -3675,6 +3661,7 @@ paths:
                           - operator
                           - value
                         additionalProperties: false
+                        title: Number Rule
                       - type: object
                         properties:
                           property:
@@ -3698,6 +3685,7 @@ paths:
                                 required:
                                   - from
                                   - to
+                                title: Date Range
                               - type: object
                                 properties:
                                   preset:
@@ -3714,11 +3702,13 @@ paths:
                                       - last12Months
                                 required:
                                   - preset
+                                title: Date Preset
                         required:
                           - property
                           - operator
                           - value
                         additionalProperties: false
+                        title: Date Rule
                       - type: object
                         properties:
                           property:
@@ -3738,16 +3728,21 @@ paths:
                               - notIn
                           value:
                             anyOf:
-                              - type: 'null'
                               - type: string
+                                title: string
                               - type: number
+                                title: number
                               - type: boolean
+                                title: boolean
                               - type: array
+                                title: array
                                 items:
                                   type: string
                               - type: string
+                                title: date-time
                                 format: date-time
                         additionalProperties: false
+                        title: String Rule
                         required:
                           - property
                           - operator
@@ -3764,6 +3759,7 @@ paths:
                           - operator
                           - property
                         additionalProperties: false
+                        title: Empty Rule
                       - type: object
                         properties:
                           operator:
@@ -3780,6 +3776,7 @@ paths:
                           required:
                             type: boolean
                         additionalProperties: false
+                        title: Relation Rule
                         required:
                           - operator
                           - value
@@ -3804,13 +3801,17 @@ paths:
                             anyOf:
                               - type: 'null'
                               - type: string
+                                title: string
                               - type: number
+                                title: number
                               - type: boolean
+                                title: boolean
                         required:
                           - operator
                           - propertySchema
                         additionalProperties: false
-                      - $ref: '#/components/schemas/def-0'
+                        title: Schema Rule
+                      # - $ref: '#/components/schemas/def-0'
               required:
                 - combinator
                 - rules
@@ -3823,6 +3824,7 @@ paths:
           in: query
           name: exclude_calculated_properties
           required: false
+          description: If `true`, [calculated properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entities.<br/>
         - schema:
             type: array
             items:
@@ -3830,6 +3832,7 @@ paths:
           in: query
           name: include
           required: false
+          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
             items:
@@ -3837,151 +3840,152 @@ paths:
           in: query
           name: exclude
           required: false
-        - schema:
-            type: boolean
-          in: query
-          name: compact
-          required: false
-        - schema:
-            type: boolean
-            default: false
-          in: query
-          name: attach_title_to_relation
-          required: false
+          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
+        # - schema:
+        #     type: boolean
+        #   in: query
+        #   name: compact
+        #   required: false
+        # - schema:
+        #     type: boolean
+        #     default: false
+        #   in: query
+        #   name: attach_title_to_relation
+        #   required: false
       security:
         - bearer:
             - 'read:entities'
       responses:
         '200':
           description: Default Response
-  /v1/entities/aggregate:
-    post:
-      summary: Aggregate entities
-      tags:
-        - Entities
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              oneOf:
-                - type: object
-                  properties:
-                    func:
-                      type: string
-                      enum:
-                        - average
-                        - count
-                    averageOf:
-                      type: string
-                      enum:
-                        - hour
-                        - day
-                        - week
-                        - month
-                        - total
-                    measureTimeBy:
-                      type: string
-                    calculationBy:
-                      type: string
-                    query:
-                      $ref: '#/components/schemas/def-0'
-                  additionalProperties: false
-                  required:
-                    - func
-                    - query
-                - type: object
-                  properties:
-                    property:
-                      type: string
-                    func:
-                      type: string
-                      enum:
-                        - sum
-                        - average
-                        - min
-                        - max
-                        - median
-                    averageOf:
-                      type: string
-                      enum:
-                        - hour
-                        - day
-                        - week
-                        - month
-                        - total
-                    measureTimeBy:
-                      type: string
-                    calculationBy:
-                      type: string
-                    query:
-                      $ref: '#/components/schemas/def-0'
-                  additionalProperties: false
-                  required:
-                    - func
-                    - property
-                    - query
-                - type: object
-                  oneOf:
-                    - properties:
-                        func:
-                          enum:
-                            - countValues
-                        query:
-                          $ref: '#/components/schemas/def-0'
-                        property:
-                          type: string
-                      required:
-                        - func
-                        - query
-                        - property
-                      additionalProperties: false
-                    - properties:
-                        func:
-                          enum:
-                            - countValues
-                        query:
-                          $ref: '#/components/schemas/def-0'
-                        relation:
-                          type: string
-                      required:
-                        - func
-                        - query
-                        - relation
-                      additionalProperties: false
-                    - properties:
-                        func:
-                          enum:
-                            - countValues
-                        query:
-                          $ref: '#/components/schemas/def-0'
-                        scorecard:
-                          type: string
-                      required:
-                        - func
-                        - query
-                        - scorecard
-                      additionalProperties: false
-                    - properties:
-                        func:
-                          enum:
-                            - countValues
-                        query:
-                          $ref: '#/components/schemas/def-0'
-                        rule:
-                          type: string
-                        scorecard:
-                          type: string
-                      required:
-                        - func
-                        - query
-                        - rule
-                        - scorecard
-                      additionalProperties: false
-      security:
-        - bearer:
-            - 'read:entities'
-      responses:
-        '200':
-          description: Default Response
+  # /v1/entities/aggregate:
+  #   post:
+  #     summary: Aggregate entities
+  #     tags:
+  #       - Entities
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             oneOf:
+  #               - type: object
+  #                 properties:
+  #                   func:
+  #                     type: string
+  #                     enum:
+  #                       - average
+  #                       - count
+  #                   averageOf:
+  #                     type: string
+  #                     enum:
+  #                       - hour
+  #                       - day
+  #                       - week
+  #                       - month
+  #                       - total
+  #                   measureTimeBy:
+  #                     type: string
+  #                   calculationBy:
+  #                     type: string
+  #                   query:
+  #                     $ref: '#/components/schemas/def-0'
+  #                 additionalProperties: false
+  #                 required:
+  #                   - func
+  #                   - query
+  #               - type: object
+  #                 properties:
+  #                   property:
+  #                     type: string
+  #                   func:
+  #                     type: string
+  #                     enum:
+  #                       - sum
+  #                       - average
+  #                       - min
+  #                       - max
+  #                       - median
+  #                   averageOf:
+  #                     type: string
+  #                     enum:
+  #                       - hour
+  #                       - day
+  #                       - week
+  #                       - month
+  #                       - total
+  #                   measureTimeBy:
+  #                     type: string
+  #                   calculationBy:
+  #                     type: string
+  #                   query:
+  #                     $ref: '#/components/schemas/def-0'
+  #                 additionalProperties: false
+  #                 required:
+  #                   - func
+  #                   - property
+  #                   - query
+  #               - type: object
+  #                 oneOf:
+  #                   - properties:
+  #                       func:
+  #                         enum:
+  #                           - countValues
+  #                       query:
+  #                         $ref: '#/components/schemas/def-0'
+  #                       property:
+  #                         type: string
+  #                     required:
+  #                       - func
+  #                       - query
+  #                       - property
+  #                     additionalProperties: false
+  #                   - properties:
+  #                       func:
+  #                         enum:
+  #                           - countValues
+  #                       query:
+  #                         $ref: '#/components/schemas/def-0'
+  #                       relation:
+  #                         type: string
+  #                     required:
+  #                       - func
+  #                       - query
+  #                       - relation
+  #                     additionalProperties: false
+  #                   - properties:
+  #                       func:
+  #                         enum:
+  #                           - countValues
+  #                       query:
+  #                         $ref: '#/components/schemas/def-0'
+  #                       scorecard:
+  #                         type: string
+  #                     required:
+  #                       - func
+  #                       - query
+  #                       - scorecard
+  #                     additionalProperties: false
+  #                   - properties:
+  #                       func:
+  #                         enum:
+  #                           - countValues
+  #                       query:
+  #                         $ref: '#/components/schemas/def-0'
+  #                       rule:
+  #                         type: string
+  #                       scorecard:
+  #                         type: string
+  #                     required:
+  #                       - func
+  #                       - query
+  #                       - rule
+  #                       - scorecard
+  #                     additionalProperties: false
+  #     security:
+  #       - bearer:
+  #           - 'read:entities'
+  #     responses:
+  #       '200':
+  #         description: Default Response
 
