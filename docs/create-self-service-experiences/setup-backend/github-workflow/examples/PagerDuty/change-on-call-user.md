@@ -173,6 +173,7 @@ jobs:
               "description": "${{ fromJson(steps.new_schedule.outputs.response).schedule.description}}",
               "users": ${{ env.user_summaries }}
             }
+          relations: "${{ toJson(fromJson(inputs.port_context).relations) }}"
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
@@ -250,15 +251,14 @@ Create a new self service action using the following JSON configuration.
     "type": "GITHUB",
     "org": "<GITHUB_ORG>",
     "repo": "<GITHUB_REPO>",
-    "workflow": "change-incident-owner.yaml",
+    "workflow": "change-on-call-user.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"start_time\")) then \"start_time\" else null end}}": "{{.inputs.\"start_time\"}}",
-      "{{if (.inputs | has(\"end_time\")) then \"end_time\" else null end}}": "{{.inputs.\"end_time\"}}",
-      "{{if (.inputs | has(\"new_on_call_user\")) then \"new_on_call_user\" else null end}}": "{{.inputs.\"new_on_call_user\"}}",
+      "start_time": "{{.inputs.\"start_time\"}}",
+      "end_time": "{{.inputs.\"end_time\"}}",
+      "new_on_call_user": "{{.inputs.\"new_on_call_user\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity}}",
+        "entity": "{{.entity.identifier}}",
         "run_id": "{{.run.id}}"
       }
     },
