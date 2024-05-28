@@ -135,9 +135,8 @@ Or [register an app](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
-
+  <TabItem value="real-time-always-on" label="Real Time & Always On" default>
+    
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
 This table summarizes the available parameters for the installation.
@@ -147,15 +146,13 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
 | `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)              |                                  | ✅       |
 | `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)          |                                  | ✅       |
-| `integration.secrets.subscriptionId`            | Your Azure Subscription ID            |   | ✅       |
-| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jira                         | https://my-ocean-integration.com | ❌       |
+| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks                         | https://my-ocean-integration.com | ❌       |
 
 <HelmParameters/>
 
 <br/>
 
 <Tabs groupId="deploy" queryString="deploy">
-
 <TabItem value="terraform" label="Terraform">
 1. Login to [Port](https://app.getport.io) and browse to the [builder page](https://app.getport.io/dev-portal)
 2. Open the ingest modal by expanding one of the blueprints and clicking the ingest button on the blueprints.
@@ -176,12 +173,10 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
    :::
 
-   ![Dev Portal Builder Azure Exporter Installation](/img/integrations/azure-exporter/DevPortalIngestAzureInstallation.png)
+   ![Dev Portal Builder Azure Exporter Installation](/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-terraform-install.png)
 
 5. Run the command in your terminal to deploy the Azure exporter.
-
 </TabItem>
-
 
 <TabItem value="helm" label="Helm" default>
 To install the integration using Helm, run the following command:
@@ -191,13 +186,11 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-azure-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120 \
+	--set scheduledResyncInterval=60 \
 	--set integration.identifier="my-azure-integration"  \
 	--set integration.type="azure"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.subscriptionId="<AZURE_SUBSCRIPTION_ID>"  \
         --set "extraEnv[0].name=AZURE_CLIENT_ID"  \
         --set "extraEnv[0].value=xxxx-your-client-id-xxxxx"  \
         --set "extraEnv[1].name=AZURE_CLIENT_SECRET"  \
@@ -207,9 +200,9 @@ helm upgrade --install my-azure-integration port-labs/port-ocean \
         --set "extraEnv[3].name=AZURE_SUBSCRIPTION_ID"  \
         --set "extraEnv[3].value=xxxx-your-subscription-id-xxxxx"
 ```
-
 </TabItem>
-<TabItem value="argocd" label="ArgoCD" default>
+
+<TabItem value="argocd" label="ArgoCD">
 To install the integration using ArgoCD, follow these steps:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-azure-integration` in your git repository with the content:
@@ -223,8 +216,6 @@ integration:
   type: azure
   eventListener:
     type: POLLING
-  secrets:
-    subscriptionId: xxxx-your-subscription-id-xxxxx
   extraEnvs:
     - name: AZURE_CLIENT_ID
       value: xxxx-your-client-id-xxxxx
@@ -294,15 +285,16 @@ spec:
 ```bash
 kubectl apply -f my-ocean-azure-integration.yaml
 ```
+</TabItem> 
 
-</TabItem>
 </Tabs>
-
 </TabItem>
 
 <TabItem value="one-time" label="Scheduled">
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
+
+<Tabs groupId="cicd-method" queryString="cicd-method">
+
+<TabItem value="github" label="GitHub">
 This workflow will run the Azure integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning
@@ -341,12 +333,10 @@ jobs:
           identifier: "my-azure-integration"
           port_client_id: ${{ secrets.OCEAN__PORT_CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT_CLIENT_SECRET }}
-          config: |
-            subscriptionId: ${{ secrets.OCEAN__SECRET__AZURE_SUBSCRIPTION_ID }} 
 ```
 
-  </TabItem>
-  <TabItem value="jenkins" label="Jenkins">
+</TabItem>
+<TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Azure integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::info
@@ -374,8 +364,6 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TOKEN'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__API_URL', variable: 'OCEAN__INTEGRATION__CONFIG__API_URL'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
                         string(credentialsId: 'OCEAN__SECRET__AZURE_CLIENT_ID', variable: 'OCEAN__SECRET__AZURE_CLIENT_ID'),
@@ -391,11 +379,8 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
-                                -e OCEAN__INTEGRATION__CONFIG__API_URL=$OCEAN__INTEGRATION__CONFIG__API_URL \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
-                                -e OCEAN__INTEGRATION__SECRET__AZURE_SUBSCRIPTION_ID=$OCEAN__SECRET__AZURE_SUBSCRIPTION_ID \
                                 -e AZURE_CLIENT_ID=$OCEAN__SECRET__AZURE_CLIENT_ID \
                                 -e AZURE_CLIENT_SECRET=$OCEAN__SECRET__AZURE_CLIENT_SECRET \
                                 -e AZURE_TENANT_ID=$OCEAN__SECRET__AZURE_TENANT_ID \
@@ -412,9 +397,8 @@ pipeline {
 }
 ```
 
-  </TabItem>
-
-   <TabItem value="azure" label="Azure Devops">
+</TabItem>
+<TabItem value="azure" label="Azure Devops">
 <AzurePremise name="Azure" />
 
 <DockerParameters />
@@ -444,11 +428,8 @@ steps:
       docker run -i --rm --platform=linux/amd64 \
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__TOKEN=$(OCEAN__INTEGRATION__CONFIG__TOKEN) \
-          -e OCEAN__INTEGRATION__CONFIG__API_URL=$(OCEAN__INTEGRATION__CONFIG__API_URL) \
           -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
           -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
-          -e OCEAN__INTEGRATION__SECRET__AZURE_SUBSCRIPTION_ID=$OCEAN__SECRET__AZURE_SUBSCRIPTION_ID \
           -e AZURE_CLIENT_ID=$(OCEAN__SECRET__AZURE_CLIENT_ID) \
           -e AZURE_CLIENT_SECRET=$(OCEAN__SECRET__AZURE_CLIENT_SECRET) \
           -e AZURE_TENANT_ID=$(OCEAN__SECRET__AZURE_TENANT_ID) \
@@ -458,299 +439,14 @@ steps:
       exit $?
     displayName: "Ingest Data into Port"
 ```
-
-  </TabItem>
-
-  </Tabs>
 </TabItem>
 
 </Tabs>
 
 </TabItem>
 
-
-<TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
-
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-azure-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-azure-integration"  \
-	--set integration.type="azure"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.subscriptionId="<AZURE_SUBSCRIPTION_ID>"  \
-        --set "extraEnv[0].name=AZURE_CLIENT_ID"  \
-        --set "extraEnv[0].value=xxxx-your-client-id-xxxxx"  \
-        --set "extraEnv[1].name=AZURE_CLIENT_SECRET"  \
-        --set "extraEnv[1].value=xxxxxxx-your-client-secret-xxxx"  \
-        --set "extraEnv[2].name=AZURE_TENANT_ID"  \
-        --set "extraEnv[2].value=xxxx-your-tenant-id-xxxxx"  \
-        --set "extraEnv[3].name=AZURE_SUBSCRIPTION_ID"  \
-        --set "extraEnv[3].value=xxxx-your-subscription-id-xxxxx"
-```
-
-</TabItem>
-<TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
-
-1. Create a `values.yaml` file in `argocd/my-ocean-azure-integration` in your git repository with the content:
-
-
-```yaml showLineNumbers
-initializePortResources: true
-scheduledResyncInterval: 120
-integration:
-  identifier: my-ocean-azure-integration
-  type: azure
-  eventListener:
-    type: POLLING
-  secrets:
-    subscriptionId: xxxx-your-subscription-id-xxxxx
-  extraEnvs:
-    - name: AZURE_CLIENT_ID
-      value: xxxx-your-client-id-xxxxx
-    - name: AZURE_CLIENT_SECRET
-      value: xxxxxxx-your-client-secret-xxxx
-    - name: AZURE_TENANT_ID
-      value: xxxx-your-tenant-id-xxxxx
-    - name: AZURE_SUBSCRIPTION_ID
-      value: xxxx-your-subscription-id-xxxxx
-```
-
-<br/>
-
-2. Install the `my-ocean-azure-integration` ArgoCD Application by creating the following `my-ocean-azure-integration.yaml` manifest:
-
-:::note Replace placeholders
-
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.  
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
-
-:::
-
-<details>
-  <summary>ArgoCD Application</summary>
-
-```yaml showLineNumbers
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: my-ocean-azure-integration
-  namespace: argocd
-spec:
-  destination:
-    namespace: mmy-ocean-azure-integration
-    server: https://kubernetes.default.svc
-  project: default
-  sources:
-  - repoURL: 'https://port-labs.github.io/helm-charts/'
-    chart: port-ocean
-    targetRevision: 0.1.14
-    helm:
-      valueFiles:
-      - $values/argocd/my-ocean-azure-integration/values.yaml
-      // highlight-start
-      parameters:
-        - name: port.clientId
-          value: YOUR_PORT_CLIENT_ID
-        - name: port.clientSecret
-          value: YOUR_PORT_CLIENT_SECRET
-  - repoURL: YOUR_GIT_REPO_URL
-  // highlight-end
-    targetRevision: main
-    ref: values
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-    - CreateNamespace=true
-```
-
-</details>
-<br/>
-
-3. Apply your application manifest with `kubectl`:
-
-```bash
-kubectl apply -f my-ocean-azure-integration.yaml
-```
-
-</TabItem>
 </Tabs>
 
-</TabItem>
-
-<TabItem value="one-time" label="Scheduled">
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
-This workflow will run the Azure integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
-
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
-
-<DockerParameters />
-
-<br/>
-
-Here is an example for `azure-integration.yml` workflow file:
-
-```yaml showLineNumbers
-name: Azure Exporter Workflow
-
-# This workflow responsible for running Azure exporter.
-
-on:
-  workflow_dispatch:
-
-jobs:
-  run-integration:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: port-labs/ocean-sail@v1
-        env:
-          AZURE_CLIENT_ID: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
-          AZURE_CLIENT_SECRET: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
-          AZURE_TENANT_ID: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.OCEAN__SECRET__AZURE_SUBSCRIPTION_ID }}
-        with:
-          type: "azure"
-          identifier: "my-azure-integration"
-          port_client_id: ${{ secrets.OCEAN__PORT_CLIENT_ID }}
-          port_client_secret: ${{ secrets.OCEAN__PORT_CLIENT_SECRET }}
-          config: |
-            subscriptionId: ${{ secrets.OCEAN__SECRET__AZURE_SUBSCRIPTION_ID }} 
-```
-
-  </TabItem>
-  <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Azure integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::info
-Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
-
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
-
-<DockerParameters />
-<br/>
-
-Here is an example for `Jenkinsfile` groovy pipeline file:
-
-```text showLineNumbers
-pipeline {
-    agent any
-
-    stages {
-        stage('Run Azure Integration') {
-            steps {
-                script {
-                    withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__TOKEN'),
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__API_URL', variable: 'OCEAN__INTEGRATION__CONFIG__API_URL'),
-                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
-                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
-                        string(credentialsId: 'OCEAN__SECRET__AZURE_CLIENT_ID', variable: 'OCEAN__SECRET__AZURE_CLIENT_ID'),
-                        string(credentialsId: 'OCEAN__SECRET__AZURE_CLIENT_SECRET', variable: 'OCEAN__SECRET__AZURE_CLIENT_SECRET'),
-                        string(credentialsId: 'OCEAN__SECRET__AZURE_TENANT_ID', variable: 'OCEAN__SECRET__AZURE_TENANT_ID'),
-                        string(credentialsId: 'OCEAN__SECRET__AZURE_SUBSCRIPTION_ID', variable: 'OCEAN__SECRET__AZURE_SUBSCRIPTION_ID'),
-                    ]) {
-                        sh('''
-                            #Set Docker image and run the container
-                            integration_type="azure"
-                            version="latest"
-                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
-                            docker run -i --rm --platform=linux/amd64 \
-                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
-                                -e OCEAN__INTEGRATION__CONFIG__API_URL=$OCEAN__INTEGRATION__CONFIG__API_URL \
-                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
-                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
-                                -e OCEAN__INTEGRATION__SECRET__AZURE_SUBSCRIPTION_ID=$OCEAN__SECRET__AZURE_SUBSCRIPTION_ID \
-                                -e AZURE_CLIENT_ID=$OCEAN__SECRET__AZURE_CLIENT_ID \
-                                -e AZURE_CLIENT_SECRET=$OCEAN__SECRET__AZURE_CLIENT_SECRET \
-                                -e AZURE_TENANT_ID=$OCEAN__SECRET__AZURE_TENANT_ID \
-                                -e AZURE_SUBSRIPTION_ID=$OCEAN__SECRET__AZURE_SUBSCRIPTION_ID
-                                $image_name
-
-                            exit $?
-                        ''')
-                    }
-                }
-            }
-        }
-    }
-}
-```
-
-  </TabItem>
-
-   <TabItem value="azure" label="Azure Devops">
-<AzurePremise name="Azure" />
-
-<DockerParameters />
-
-<br/>
-
-Here is an example for `azure-integration.yml` pipeline file:
-
-```yaml showLineNumbers
-trigger:
-  - main
-
-pool:
-  vmImage: "ubuntu-latest"
-
-variables:
-  - group: port-ocean-credentials
-
-steps:
-  - script: |
-      # Set Docker image and run the container
-      integration_type="azure"
-      version="latest"
-
-      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-      docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__INTEGRATION__CONFIG__TOKEN=$(OCEAN__INTEGRATION__CONFIG__TOKEN) \
-          -e OCEAN__INTEGRATION__CONFIG__API_URL=$(OCEAN__INTEGRATION__CONFIG__API_URL) \
-          -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
-          -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
-          -e OCEAN__INTEGRATION__SECRET__AZURE_SUBSCRIPTION_ID=$OCEAN__SECRET__AZURE_SUBSCRIPTION_ID \
-          -e AZURE_CLIENT_ID=$(OCEAN__SECRET__AZURE_CLIENT_ID) \
-          -e AZURE_CLIENT_SECRET=$(OCEAN__SECRET__AZURE_CLIENT_SECRET) \
-          -e AZURE_TENANT_ID=$(OCEAN__SECRET__AZURE_TENANT_ID) \
-          -e AZURE_SUBSRIPTION_ID=$(OCEAN__SECRET__AZURE_SUBSCRIPTION_ID)
-          $image_name
-
-      exit $?
-    displayName: "Ingest Data into Port"
-```
-
-  </TabItem>
-
-  </Tabs>
-</TabItem>
-
-</Tabs>
 
 ## Multiple subscriptions setup
 
