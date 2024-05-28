@@ -391,9 +391,9 @@ on:
         description: Add members manually to the channel.
         type: array
         required: false
-      port_payload:
-        description: Port's payload, including details for who triggered the action and general context (blueprint, run ID, etc...).
+      port_context:
         required: true
+        description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
   open-slack-channel:
@@ -406,7 +406,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "About to create a conversation channel in slack..."
 
       - name: Create Slack Channel
@@ -443,7 +443,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Failed to create slack channel: ${{env.CREATE_CHANNEL_ERROR}} ❌"
 
       - name: Log If Create Channel Request is Successful
@@ -453,11 +453,11 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Channel created successfully, channel Id: ${{env.CHANNEL_ID}} ✅"
 
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Add Members to Slack Channel
         id: add_members
@@ -467,7 +467,7 @@ jobs:
           CHANNEL_ID: ${{env.CHANNEL_ID}}
           CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
-          RUN_ID: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          RUN_ID: ${{fromJson(inputs.port_context).run_id}}
           MEMBER_EMAILS: ${{ toJSON(github.event.inputs.members) }}
         run: |
           cd slack
@@ -475,14 +475,15 @@ jobs:
           bash add-members-to-channel.sh "$SLACK_TOKEN" "$CHANNEL_ID" "$CLIENT_ID" "$CLIENT_SECRET" "$RUN_ID" "$MEMBER_EMAILS"
 
       - name: Log Successful Action
+        if: steps.add_members.outcome == 'failure'
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
-          logMessage: "Successfully opened slack channel: ${{env.CHANNEL_ID}} ✅"
+          runId: ${{fromJson(inputs.port_context).run_id}}
+          logMessage: "Failed to add members to channel ❌"
 ```
 
 </details>
@@ -633,45 +634,17 @@ Create a new self service action using the following JSON configuration.
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB-ORG>",
-    "repo": "<GITHUB-REPO-NAME>",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "open-slack-channel.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"channel_name\")) then \"channel_name\" else null end}}": "{{.inputs.\"channel_name\"}}",
-      "{{if (.inputs | has(\"is_private\")) then \"is_private\" else null end}}": "{{.inputs.\"is_private\"}}",
-      "{{if (.inputs | has(\"members\")) then \"members\" else null end}}": "{{.inputs.\"members\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"pagerdutyIncident_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "open-slack-channel.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"channel_name\")) then \"channel_name\" else null end}}": "{{.inputs.\"channel_name\"}}",
-            "{{if (.inputs | has(\"is_private\")) then \"is_private\" else null end}}": "{{.inputs.\"is_private\"}}",
-            "{{if (.inputs | has(\"members\")) then \"members\" else null end}}": "{{.inputs.\"members\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "channel_name": "{{.inputs.\"channel_name\"}}",
+      "is_private": "{{.inputs.\"is_private\"}}",
+      "members": "{{.inputs.\"members\"}}",
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true

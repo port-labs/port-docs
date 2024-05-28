@@ -152,37 +152,12 @@ Import Azure resources into your Port account using the [Azure Exporter](/build-
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "tag-azure-resource.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "tag-azure-resource.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"tags\")) then \"tags\" else null end}}": "{{.inputs.\"tags\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "tags": "{{ .inputs.\"tags\" }}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -272,12 +247,11 @@ on:
       tags:
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
-        description:
-            Port's payload, including details for who triggered the action and
-            general context (blueprint, run id, etc...)
         type: string
+        description: >-
+          Action and general context (blueprint, run id, etc...)
 
 env: 
   TF_LOG: INFO
@@ -299,9 +273,9 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
-            Starting a GitHub workflow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
+            Starting a GitHub workflow to tag the Azure resource: ${{ fromJson(inputs.port_context).entity.identifier }} ... ⛴️
 
       - name: Checkout the repository to the runner
         uses: actions/checkout@v2
@@ -349,8 +323,8 @@ jobs:
             ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
             TF_VAR_port_client_id: ${{ secrets.PORT_CLIENT_ID }}
             TF_VAR_port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
-            TF_VAR_port_run_id: ${{fromJson(inputs.port_payload).context.runId}}
-            TF_VAR_storage_account_name: ${{fromJson(inputs.port_payload).context.entity}}
+            TF_VAR_port_run_id: ${{ fromJson(inputs.port_context).runId }}
+            TF_VAR_storage_account_name: ${{ fromJson(inputs.port_context).entity.identifier }}
             TF_VAR_resource_tags: ${{ github.event.inputs.tags }}
         run: |
           terraform plan \
@@ -367,8 +341,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Failed to tag azure resource ${{fromJson(inputs.port_payload).context.entity}}
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Failed to tag azure resource ${{ fromJson(inputs.port_context).entity.identifier }}
 
 
       - name: Create a log message
@@ -378,8 +352,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Added tags to ${{ fromJson(inputs.port_context).entity.identifier }}
 ```
 
 </details>
@@ -417,11 +391,10 @@ on:
       tags:
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
         description:
-            Port's payload, including details for who triggered the action and
-            general context (blueprint, run id, etc...)
+            Details for who triggered the action and general context (blueprint, run id, etc...)
         type: string
 
 
@@ -436,9 +409,9 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
-            Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
+            Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
 
   
       - uses: azure/login@v1
@@ -451,7 +424,7 @@ jobs:
         // highlight-start
           RESOURCE_GROUP: YourResourceGroup
         // highlight-end
-          STORAGE_NAME: ${{ fromJson(inputs.port_payload).context.entity }}
+          STORAGE_NAME: ${{ fromJson(inputs.port_context).entity.identifier }}
           TAGS: ${{ github.event.inputs.tags }}
         with:
           azcliversion: latest
@@ -468,8 +441,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Added tags to ${{fromJson(inputs.port_context).entity.identifier}}
 
 ```
 </details>

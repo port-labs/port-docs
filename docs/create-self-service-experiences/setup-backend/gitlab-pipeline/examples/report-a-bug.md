@@ -10,12 +10,12 @@ An example of creating a Jira issue from Port using Port's self service actions.
 - [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
 
 :::tip Create Jira Blueprints
-Install [Port's Jira Integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira) for:
+Install [Port's Jira Integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira) for:
 
 - **Instant Blueprints**: Port creates blueprints for your Jira projects and issues, giving you a structured foundation.
 - **Data Import**: Existing Jira Software data is smoothly ingested into Port, eliminating manual imports.
 
-[Get Started](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/#installation) 
+[Get Started](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#installation) 
 :::
 
 ## Steps
