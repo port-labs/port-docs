@@ -51,7 +51,7 @@ helm upgrade --install my-cluster port-labs/port-k8s-exporter \
 	--set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
 	--set portBaseUrl="https://api.getport.io"  \
 	--set stateKey="my-cluster"  \
-	--set eventListenerType="POLLING"  \
+	--set eventListener.type="POLLING"  \
 	--set "extraEnv[0].name"="CLUSTER_NAME"  \
 	--set "extraEnv[0].value"="my-cluster"
 ```
