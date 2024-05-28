@@ -71,7 +71,7 @@ jobs:
               {
                 "incidents": [
                   {
-                    "id": "${{ fromJson(inputs.port_payload).port_context.entity }}",
+                    "id": "${{fromJson(inputs.port_context).entity}}",
                     "type": "incident_reference",
                     "status": "resolved"
                   }
@@ -114,6 +114,7 @@ jobs:
               "created_at": "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].created_at }}",
               "updated_at": "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].updated_at }}"
             }
+          relations: "${{ toJson(fromJson(inputs.port_context).relations) }}"
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
@@ -173,12 +174,12 @@ Create a new self service action using the following JSON configuration.
     "repo": "<GITHUB_REPO>",
     "workflow": "resolve-incident.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
+      "from": "{{.inputs.\"from\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity}}",
-        "run_id": "{{.run.id}}"
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}",
+        "relations": "{{.entity.relations}}"
       }
     },
     "reportWorkflowStatus": true

@@ -13,7 +13,7 @@ This page contains the base examples for mapping Azure resources to Port.
 
 This base example thrives to provide a simpler and more abstract way to map Azure resources to Port.
 
-The simplification is achieved by using the generic `cloudResource` kind and blueprint, which can be used to map any Azure resource to Port. 
+The simplification is achieved by using the generic `cloudResource` blueprint, which can be used to map any Azure resource to Port. 
 
 ![Azure Basic Blueprints](../../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/basic-examples-blueprints.png)
 
