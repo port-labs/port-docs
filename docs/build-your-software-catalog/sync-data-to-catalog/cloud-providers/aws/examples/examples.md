@@ -4888,7 +4888,7 @@ Follow this [guide](https://docs.getport.io/build-your-software-catalog/sync-dat
 ```
 </details>
 
-Your [data model](https://app.getport.io/dev-portal/data-model) should now contain the `Service` blueprint:
+Your [data model](https://app.getport.io/settings/data-model) should now contain the `Service` blueprint:
 
 <img src='/img/guides/connectCloudServiceBlueprints.png' width="45%" />
 
@@ -5006,7 +5006,7 @@ terraform apply -var 'resources=["s3_bucket"]'
 
 ### View the relation
 
-You can view the relation in your [data model](https://app.getport.io/dev-portal/data-model)
+You can view the relation in your [data model](https://app.getport.io/settings/data-model)
 
 <img src='/img/guides/connectCloudServiceRelation.png' width="75%" />
 

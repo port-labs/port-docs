@@ -243,10 +243,14 @@ name: Create permissions for AWS resource
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      properties:
         type: string
         required: true
-        description: The Port Payload for triggering this action                
+        description: The form inputs
+      port_context:
+        type: string
+        required: true
+        description: The Port context for triggering this action                  
 
 jobs:
   create-iam-permissions:
@@ -267,9 +271,9 @@ jobs:
       - name: Create JSON for permissions
         id: create-jsons
         run: |
-          permissions=$(echo '${{ inputs.port_payload }}' | jq -c '.payload.properties.permissions')
+          permissions=$(echo '${{ inputs.properties }}' | jq -c '.permissions')
           echo "PERMISSIONS_ARRAY=${permissions}" >> $GITHUB_OUTPUT
-          jq -r --argjson permissions "${permissions}" --arg resource "${{fromJson(inputs.port_payload).context.entity}}/*" '.Statement[0].Action=$permissions | .Statement[0].Resource=$resource' .github/templates/iamPolicyDocument.json > temp_policy_document.json
+          jq -r --argjson permissions "${permissions}" --arg resource "${{fromJson(inputs.port_context).entity.identifier}}/*" '.Statement[0].Action=$permissions | .Statement[0].Resource=$resource' .github/templates/iamPolicyDocument.json > temp_policy_document.json
           jq -r --arg aws_acc_id "${{ secrets.AWS_ACCOUNT_ID }}" '.Statement[0].Principal.AWS="arn:aws:iam::"+$aws_acc_id+":root"' .github/templates/iamTrustPolicy.json > temp_trust_policy.json
       - name: Apply policies and attachments
         id: apply-policies
@@ -298,14 +302,14 @@ jobs:
             properties: |
               {
                 "iam_policy": ${{ steps.create-variables.outputs.POLICY }},
-                "requester": "${{ fromJson(inputs.port_payload).trigger.by.user.email }}",
+                "requester": "${{ fromJson(inputs.port_context).trigger.by.user.email }}",
                 "sign_in_url": "${{ steps.create-variables.outputs.SIGN_IN_URL }}",
                 "role_arn": ${{ steps.apply-policies.outputs.ROLE_ARN }},
                 "policy_arn": ${{ steps.apply-policies.outputs.POLICY_ARN }}
               }
             relations: |
               {
-                "aws_resource": "${{ fromJson(inputs.port_payload).context.entity }}",
+                "aws_resource": "${{ fromJson(inputs.port_context).entity.identifier }}",
                 "permissions": ${{ steps.create-jsons.outputs.PERMISSIONS_ARRAY }}
               }
       - uses: port-labs/port-github-action@v1
@@ -313,10 +317,11 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId}}
+          status: "SUCCESS"
+          runId: ${{ fromJson(inputs.port_context).runId}}
           logMessage: |
-            Created permission for the AWS resource "${{ fromJson(inputs.port_payload).context.entity }}"🚀
-            Requester for this permission is: ${{ fromJson(inputs.port_payload).trigger.by.user.email }}
+            Created permission for the AWS resource "${{ fromJson(inputs.port_context).entity.identifier }}"🚀
+            Requester for this permission is: ${{ fromJson(inputs.port_context).trigger.by.user.email }}
             The sign-in URL: ${{ steps.create-variables.outputs.SIGN_IN_URL }}
 ```
 </details>
@@ -331,17 +336,21 @@ name: Delete IAM permissions for AWS resource
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      properties:
         type: string
         required: true
-        description: The Port Payload for triggering this action                
+        description: The Port Payload for triggering this action
+      port_context:
+        type: string
+        required: true
+        description: The Port context for triggering this action                
 
 jobs:
   delete-permissions:
     name: Delete IAM permissions
     runs-on: ubuntu-latest
     env:
-      POLICY_ARN: ${{ fromJson(inputs.port_payload).payload.entity.properties.policy_arn }}
+      POLICY_ARN: ${{ fromJson(inputs.port_context).entity.properties.policy_arn }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -356,17 +365,17 @@ jobs:
         id: delete-policies
         run: |
           # Detach the policy from the role
-          aws iam detach-role-policy --role-name ${{ fromJson(inputs.port_payload).context.entity }} --policy-arn ${{ env.POLICY_ARN }}
+          aws iam detach-role-policy --role-name ${{ fromJson(inputs.port_context).entity.identifier }} --policy-arn ${{ env.POLICY_ARN }}
           # Delete the policy
           aws iam delete-policy --policy-arn "${{ env.POLICY_ARN }}" --no-cli-pager
           # Delete the role
-          aws iam delete-role --role-name ${{ fromJson(inputs.port_payload).context.entity }} --no-cli-pager
+          aws iam delete-role --role-name ${{ fromJson(inputs.port_context).entity.identifier }} --no-cli-pager
       - name: "Delete permission from Port 🚢"
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          identifier: ${{ fromJson(inputs.port_payload).context.entity }}
+          identifier: ${{ fromJson(inputs.port_context).entity.identifier }}
           operation: DELETE
           blueprint: provisioned_permissions
       - uses: port-labs/port-github-action@v1
@@ -374,10 +383,10 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ fromJson(inputs.port_context).runId}}
           logMessage: |
-            Permission "${{ fromJson(inputs.port_payload).context.entity}}" has been deleted.
-            To get more information regarding this deletion, contact "${{ fromJson(inputs.port_payload).trigger.by.user.email }}".
+            Permission "${{ fromJson(inputs.port_context).entity.identifier }}" has been deleted.
+            To get more information regarding this deletion, contact "${{ fromJson(inputs.port_context).trigger.by.user.email }}".
 ```
 
 </details> 
@@ -387,7 +396,7 @@ jobs:
 
     This file will act as a template for the generated IAM policies.
 
-    ```json showLineNumbers title=".github/templates/iamPolicyDocument.yaml"
+    ```json showLineNumbers title=".github/templates/iamPolicyDocument.json"
    {
         "Version": "2012-10-17",
         "Statement": [
@@ -408,7 +417,7 @@ jobs:
     
     ***Replace the `<YOUR_AWS_ACCOUNT_ID>` with the AWS account ID you want to allocate permissions for.***
 
-    ```json showLineNumbers title=".github/templates/iamTrustPolicy.yaml"
+    ```json showLineNumbers title=".github/templates/iamTrustPolicy.json"
     {
         "Version": "2012-10-17",
         "Statement": [
@@ -424,16 +433,18 @@ jobs:
 
 </details> 
 
+
+
 ### Creating the Port actions
 After creating our backend in GitHub, we need to create the Port actions to trigger the workflows we created.
 We will create the Port actions using the Port UI.
 
 :::tip Creating actions with JSON
-Don't know how to create Port actions using JSONs in the Port UI?
-Click [here](/docs/create-self-service-experiences/setup-ui-for-action/?configure=ui#configuring-actions-in-port)!
+Don't know how to create actions via the Port UI?
+Click [here](/create-self-service-experiences/setup-ui-for-action)!
 :::
 
-Let's create the Port actions to tirgger the workflows we just created:
+Let's create the Port actions to trigger the workflows we just created:
 <details>
     <summary>`Request permissions` Port action</summary>
 
@@ -441,56 +452,65 @@ Let's create the Port actions to tirgger the workflows we just created:
 
     ***Replace the `<YOUR_GITHUB_ORG>` placeholder with your GitHub organization.***
 
-    ```json showLineNumbers
-    {
-        "identifier": "request_permissions",
-        "title": "Request permissions",
-        "icon": "Unlock",
-        "userInputs": {
-            "properties": {
-                "permissions": {
-                    "title": "Permissions",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "format": "entity",
-                        "blueprint": "iam_permissions",
-                        "dataset": {
-                            "combinator": "and",
-                            "rules": [
-                                {
-                                    "property": "resource_type",
-                                    "operator": "=",
-                                    "value": {
-                                    "jqQuery": ".entity.properties.resource_type"
-                                    }
-                                }
-                            ]
-                        }
-                    }
+```json showLineNumbers
+{
+  "identifier": "request_permissions",
+  "title": "Request permissions",
+  "icon": "DefaultProperty",
+  "description": "Request permissions for an AWS resource",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "permissions": {
+          "title": "Permissions",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "entity",
+            "blueprint": "iam_permissions",
+            "dataset": {
+              "combinator": "and",
+              "rules": [
+                {
+                  "property": "resource_type",
+                  "operator": "=",
+                  "value": {
+                    "jqQuery": ".entity.properties.resource_type"
+                  }
                 }
-            },
-            "required": [
-                "permissions"
-            ],
-            "order": [
-                "permissions"
-            ]
-        },
-        "invocationMethod": {
-            "type": "GITHUB",
-            "org": "<YOUR_GITHUB_ORG>",
-            "repo": "port-iam-permissions",
-            "workflow": "create-iam-permissions.yaml",
-            "omitUserInputs": true,
-            "omitPayload": false,
-            "reportWorkflowStatus": true
-        },
-        "trigger": "DAY-2",
-        "description": "Request permissions for an AWS resource",
-        "requiredApproval": false
-    }
-    ```
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "permissions"
+      ],
+      "order": []
+    },
+    "blueprintIdentifier": "aws_resource"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<YOUR_GITHUB_ORG>",
+    "repo": "port-iam-permissions",
+    "workflow": "create-iam-permissions.yaml",
+    "workflowInputs": {
+      "properties": "{{ .inputs }}",
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false
+}
+```
 </details>
 
 <details>
@@ -500,29 +520,42 @@ Let's create the Port actions to tirgger the workflows we just created:
 
     ***Replace the `<YOUR_GITHUB_ORG>` placeholder with your GitHub organization.***
 
-    ```json showLineNumbers
-    {
-        "identifier": "revoke_permissions",
-        "title": "Revoke permissions",
-        "icon": "Alert",
-        "userInputs": {
-            "properties": {},
-            "required": []
-        },
-        "invocationMethod": {
-            "type": "GITHUB",
-            "org": "<YOUR_GITHUB_ORG>",
-            "repo": "port-iam-permissions",
-            "workflow": "delete-iam-permissions.yaml",
-            "omitUserInputs": true,
-            "omitPayload": false,
-            "reportWorkflowStatus": true
-        },
-        "trigger": "DELETE",
-        "description": "Revokes IAM permissions",
-        "requiredApproval": false
-    }
-    ```
+```json showLineNumbers
+{
+  "identifier": "revoke_permissions",
+  "title": "Revoke permissions",
+  "icon": "Alert",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DELETE",
+    "userInputs": {
+      "properties": {},
+      "required": [],
+      "order": []
+    },
+    "blueprintIdentifier": "provisioned_permissions"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<YOUR_GITHUB_ORG>",
+    "repo": "port-iam-permissions",
+    "workflow": "delete-iam-permissions.yaml",
+    "workflowInputs": {
+      "port_payload": {
+        "properties": "{{ .inputs }}",
+        "port_context": {
+          "blueprint": "{{.action.blueprint}}",
+          "entity": "{{.entity }}",
+          "runId": "{{.run.id}}",
+          "trigger": "{{ .trigger }}"
+        }
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false
+}
+```
 </details>
 
 ## Manage permissions using Port

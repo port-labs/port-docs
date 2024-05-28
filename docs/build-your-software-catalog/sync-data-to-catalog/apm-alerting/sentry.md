@@ -44,13 +44,12 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                         | Your port client id                                                                                           | ✅       |
 | `port.clientSecret`                     | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                          | Your port base url, relevant only if not using the default port app                                           | ❌       |
 | `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                      | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`        | The event listener type                                                                                       | ✅       |
-| `integration.secrets.sentryToken`       | The Sentry API token                                                                                     | ✅       |
+| `integration.secrets.sentryToken`       | The Sentry API [token](https://docs.sentry.io/api/guides/create-auth-token/). The token requires `read` permissions for `Projects` and `Issue & Event`                                                                                     | ✅       |
 | `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                | ✅       |
-| `integration.config.sentryOrganization` | The Sentry organization slug                                                                                  | ✅       |
+| `integration.config.sentryOrganization` | The Sentry organization slug. For example `acme` from `https://acme.sentry.io`                                                                                 | ✅       |
 | `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
@@ -66,7 +65,6 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sentry-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set integration.identifier="my-sentry-integration"  \
 	--set integration.type="sentry"  \
@@ -309,6 +307,59 @@ steps:
 
   </TabItem>
 
+<TabItem value="gitlab" label="GitLab">
+This workflow will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Realtime updates in Port
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
+
+<DockerParameters/>
+
+<br/>
+
+
+Here is an example for `.gitlab-ci.yml` pipeline file:
+
+```yaml showLineNumbers
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+    
+variables:
+  INTEGRATION_TYPE: sentry
+  VERSION: latest
+
+stages:
+  - ingest
+
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+      docker run -i --rm --platform=linux/amd64 \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN=$OCEAN__INTEGRATION__CONFIG__SENTRY_TOKEN \
+        -e OCEAN__INTEGRATION__CONFIG__SENTRY_HOST=$OCEAN__INTEGRATION__CONFIG__SENTRY_HOST \
+        -e OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION=$OCEAN__INTEGRATION__CONFIG__SENTRY_ORGANIZATION \
+        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        $IMAGE_NAME
+
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
+```
+
+</TabItem>
+
   </Tabs>
 </TabItem>
 
@@ -474,6 +525,8 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: project
     selector:
@@ -552,21 +605,24 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: issue
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: ".id"
-          title: ".title"
-          blueprint: '"sentryIssue"'
-          properties:
-            link: ".permalink"
-            status: ".status"
-            isUnhandled: ".isUnhandled"
-          relations:
-            project: ".project.slug"
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: issue
+      selector:
+        query: "true"
+      port:
+        entity:
+          mappings:
+            identifier: ".id"
+            title: ".title"
+            blueprint: '"sentryIssue"'
+            properties:
+              link: ".permalink"
+              status: ".status"
+              isUnhandled: ".isUnhandled"
+            relations:
+              project: ".project.slug"
 ```
 
 </details>
@@ -626,21 +682,24 @@ The`selector.tag` key in the `project-tag` kind defines which Sentry tag data is
 :::
 
 ```yaml showLineNumbers
-- kind: project-tag
-  selector:
-    query: "true"
-    tag: "environment"
-  port:
-    entity:
-      mappings:
-        identifier: .slug + "-" + .__tags.name
-        title: .name + "-" + .__tags.name
-        blueprint: '"sentryProject"'
-        properties:
-          dateCreated: .dateCreated
-          platform: .platform
-          status: .status
-          link: .organization.links.organizationUrl + "/projects/" + .name
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: project-tag
+    selector:
+      query: "true"
+      tag: "environment"
+    port:
+      entity:
+        mappings:
+          identifier: .slug + "-" + .__tags.name
+          title: .name + "-" + .__tags.name
+          blueprint: '"sentryProject"'
+          properties:
+            dateCreated: .dateCreated
+            platform: .platform
+            status: .status
+            link: .organization.links.organizationUrl + "/projects/" + .name
 
   - kind: issue-tag
     selector:

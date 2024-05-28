@@ -17,7 +17,7 @@ This self-service action shows how to create a Jira issue with a label that link
     * PORT_CLIENT_ID - Your port [client id]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))
     * PORT_CLIENT_SECRET - Your port [client secret]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))
 
-4. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/#installation)
+4. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#installation)
 
 :::tip Jira integration
 This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog in real time with the new issue created.
@@ -248,12 +248,10 @@ on:
       project:
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
-        description:
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
         type: string
+
 jobs:
   create-entity-in-port-and-update-run:
     runs-on: ubuntu-latest
@@ -271,7 +269,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Creating a new Jira issue with automatic label.. ⛴️
 
@@ -279,10 +277,14 @@ jobs:
         id: create
         uses: atlassian/gajira-create@v3
         with:
-          project: ${{ github.event.inputs.project }}
-          issuetype: ${{ github.event.inputs.type }}
-          summary: ${{ github.event.inputs.title }}
-          fields: '{"labels": ["port-${{ fromJson(inputs.port_payload).context.entity }}"]}'
+          project: ${{ inputs.project }}
+          issuetype: ${{ inputs.type }}
+          summary: ${{ inputs.title }}
+          fields: |
+            ${{ fromJson(inputs.port_context).entity != null
+              && format('{{ "labels": ["port-{0}"] }}', fromJson(inputs.port_context).entity)
+              || '{}'
+            }}
 
       - name: Inform creation of Jira issue
         uses: port-labs/port-github-action@v1
@@ -291,10 +293,11 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           link: ${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.create.outputs.issue }}
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Jira issue created! ✅
             The issue id is: ${{ steps.create.outputs.issue }}
+
 ```
 </details>
 
@@ -311,58 +314,79 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 ```json showLineNumbers
 {
-  "identifier": "open_jira_issue_with_automatic_label",
-  "title": "Open Jira issue with automatic label",
+  "identifier": "service_open_jira_issue_with_automatic_label",
+  "title": "Open Jira Issue with automatic label",
   "icon": "Jira",
-  "userInputs": {
-    "properties": {
-      "title": {
-        "title": "Title",
-        "description": "Title of the Jira issue",
-        "icon": "Jira",
-        "type": "string"
-      },
-      "type": {
-        "title": "Type",
-        "description": "Issue type",
-        "icon": "Jira",
-        "type": "string",
-        "default": "Task",
-        "enum": [
-          "Task",
-          "Story",
-          "Bug",
-          "Epic"
-        ],
-        "enumColors": {
-          "Task": "blue",
-          "Story": "green",
-          "Bug": "red",
-          "Epic": "pink"
+  "description": "Creates a Jira issue with a label to the concerned service.",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "title": {
+          "title": "Title",
+          "description": "Title of the Jira issue",
+          "icon": "Jira",
+          "type": "string"
+        },
+        "type": {
+          "title": "Type",
+          "description": "Issue type",
+          "icon": "Jira",
+          "type": "string",
+          "default": "Task",
+          "enum": [
+            "Task",
+            "Story",
+            "Bug",
+            "Epic"
+          ],
+          "enumColors": {
+            "Task": "blue",
+            "Story": "green",
+            "Bug": "red",
+            "Epic": "pink"
+          }
+        },
+        "project": {
+          "title": "Project",
+          "description": "The issue will be created on this project",
+          "icon": "Jira",
+          "type": "string",
+          "blueprint": "jiraProject",
+          "format": "entity"
         }
-      }
+      },
+      "required": [
+        "title",
+        "type",
+        "project"
+      ],
+      "order": [
+        "title",
+        "type"
+      ]
     },
-    "required": [
-      "title",
-      "type"
-    ],
-    "order": [
-      "title",
-      "type"
-    ]
+    "blueprintIdentifier": "service"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB_ORG>",
-    "repo": "<GITHUB_REPO>",
+    "org": "<Enter GitHub organization>",
+    "repo": "<Enter GitHub repository>",
     "workflow": "open-jira-issue-with-automatic-label.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "title": "{{.inputs.\"title\"}}",
+      "type": "{{.inputs.\"type\"}}",
+      "project": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "port_context": {
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}"
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Creates a Jira issue with a label to the concerned service.",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>

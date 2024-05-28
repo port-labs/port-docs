@@ -38,7 +38,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                         | Your port client id                                                                                           | ✅       |
 | `port.clientSecret`                     | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                          | Your port base url, relevant only if not using the default port app                                           | ❌       |
 | `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                      | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`        | The event listener type                                                                                       | ✅       |
@@ -69,7 +68,6 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-newrelic-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-newrelic-integration"  \
@@ -335,6 +333,58 @@ steps:
 
   </TabItem>
 
+     <TabItem value="gitlab" label="GitLab">
+This workflow will run the New Relic integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Realtime updates in Port
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
+
+<DockerParameters/>
+
+<br/>
+
+
+Here is an example for `.gitlab-ci.yml` pipeline file:
+
+```yaml showLineNumbers
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+    
+variables:
+  INTEGRATION_TYPE: newrelic
+  VERSION: latest
+
+stages:
+  - ingest
+
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+      docker run -i --rm --platform=linux/amd64 \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY=$OCEAN__INTEGRATION__CONFIG__NEW_RELIC_API_KEY \
+        -e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID=$OCEAN__INTEGRATION__CONFIG__NEW_RELIC_ACCOUNT_ID \
+        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        $IMAGE_NAME
+
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
+```
+
+</TabItem>
+
   </Tabs>
 </TabItem>
 
@@ -594,52 +644,55 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: newRelicService
-  selector:
-    query: "true"
-    newRelicTypes: ["SERVICE", "APPLICATION"]
-    calculateOpenIssueCount: true
-    entityQueryFilter: "type in ('SERVICE','APPLICATION')"
-    entityExtraPropertiesQuery: |
-      ... on ApmApplicationEntityOutline {
-        guid
-        name
-        alertSeverity
-        applicationId
-        apmBrowserSummary {
-          ajaxRequestThroughput
-          ajaxResponseTimeAverage
-          jsErrorRate
-          pageLoadThroughput
-          pageLoadTimeAverage
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: newRelicService
+    selector:
+      query: "true"
+      newRelicTypes: ["SERVICE", "APPLICATION"]
+      calculateOpenIssueCount: true
+      entityQueryFilter: "type in ('SERVICE','APPLICATION')"
+      entityExtraPropertiesQuery: |
+        ... on ApmApplicationEntity {
+          guid
+          name
+          alertSeverity
+          applicationId
+          apmBrowserSummary {
+            ajaxRequestThroughput
+            ajaxResponseTimeAverage
+            jsErrorRate
+            pageLoadThroughput
+            pageLoadTimeAverage
+          }
+          apmSummary {
+            apdexScore
+            errorRate
+            hostCount
+            instanceCount
+            nonWebResponseTimeAverage
+            nonWebThroughput
+            responseTimeAverage
+            throughput
+            webResponseTimeAverage
+            webThroughput
+          }
         }
-        apmSummary {
-          apdexScore
-          errorRate
-          hostCount
-          instanceCount
-          nonWebResponseTimeAverage
-          nonWebThroughput
-          responseTimeAverage
-          throughput
-          webResponseTimeAverage
-          webThroughput
-        }
-      }
-  port:
-    entity:
-      mappings:
-        blueprint: '"newRelicService"'
-        identifier: .guid
-        title: .name
-        properties:
-          has_apm: 'if .domain | contains("APM") then "true" else "false" end'
-          link: .permalink
-          open_issues_count: .__open_issues_count
-          reporting: .reporting
-          tags: .tags
-          domain: .domain
-          type: .type
+    port:
+      entity:
+        mappings:
+          blueprint: '"newRelicService"'
+          identifier: .guid
+          title: .name
+          properties:
+            has_apm: 'if .domain | contains("APM") then "true" else "false" end'
+            link: .permalink
+            open_issues_count: .__open_issues_count
+            reporting: .reporting
+            tags: .tags
+            domain: .domain
+            type: .type
 ```
 
 </details>
@@ -720,25 +773,319 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
-- kind: newRelicAlert
-  selector:
-    query: "true"
-    newRelicTypes: ["ISSUE"]
-  port:
-    entity:
-      mappings:
-        blueprint: '"newRelicAlert"'
-        identifier: .issueId
-        title: .title[0]
-        properties:
-          priority: .priority
-          state: .state
-          sources: .sources
-          conditionName: .conditionName
-          alertPolicyNames: .policyName
-          activatedAt: .activatedAt
-        relations:
-          newRelicService: .__APPLICATION.entity_guids + .__SERVICE.entity_guids
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: newRelicAlert
+    selector:
+      query: "true"
+      newRelicTypes: ["ISSUE"]
+    port:
+      entity:
+        mappings:
+          blueprint: '"newRelicAlert"'
+          identifier: .issueId
+          title: .title[0]
+          properties:
+            priority: .priority
+            state: .state
+            sources: .sources
+            conditionName: .conditionName
+            alertPolicyNames: .policyName
+            activatedAt: .activatedAt
+          relations:
+            newRelicService: .__APPLICATION.entity_guids + .__SERVICE.entity_guids
+```
+
+</details>
+
+## Let's Test It
+
+This section includes a sample response data from New Relic. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from New Relic:
+
+<details>
+<summary>Service (Entity) response data</summary>
+
+```json showLineNumbers
+{
+  "accountId": 4444532,
+  "alertSeverity": "NOT_CONFIGURED",
+  "domain": "INFRA",
+  "entityType": "INFRASTRUCTURE_HOST_ENTITY",
+  "guid": "MTIzNDU2Nzg5fElORlJBfE5BfDY1MjQwNDc0NjE4MzUyMDkwOTU=",
+  "lastReportingChangeAt": 1715351571254,
+  "name": "UserMacbook",
+  "permalink": "https://one.eu.newrelic.com/redirect/entity/MTIzNDU2Nzg5fElORlJBfE5BfDY1MjQwNDc0NjE4MzUyMDkwOTU=",
+  "reporting": true,
+  "tags": [
+    {
+      "key": "account",
+      "values": [
+        "Account 4444831"
+      ]
+    },
+    {
+      "key": "accountId",
+      "values": [
+        "4444831"
+      ]
+    },
+    {
+      "key": "agentName",
+      "values": [
+        "Infrastructure"
+      ]
+    },
+    {
+      "key": "agentVersion",
+      "values": [
+        "1.50.0"
+      ]
+    },
+    {
+      "key": "coreCount",
+      "values": [
+        "8"
+      ]
+    },
+    {
+      "key": "fullHostname",
+      "values": [
+        "usermacbook"
+      ]
+    },
+    {
+      "key": "hostStatus",
+      "values": [
+        "running"
+      ]
+    },
+    {
+      "key": "hostname",
+      "values": [
+        "Usermacbook"
+      ]
+    },
+    {
+      "key": "instanceType",
+      "values": [
+        "MacBook Air MacBookAir10,1"
+      ]
+    },
+    {
+      "key": "kernelVersion",
+      "values": [
+        "23.2.0"
+      ]
+    },
+    {
+      "key": "linuxDistribution",
+      "values": [
+        "macOS 14.2.1"
+      ]
+    },
+    {
+      "key": "operatingSystem",
+      "values": [
+        "macOS"
+      ]
+    },
+    {
+      "key": "processorCount",
+      "values": [
+        "8"
+      ]
+    },
+    {
+      "key": "systemMemoryBytes",
+      "values": [
+        "17179869184"
+      ]
+    },
+    {
+      "key": "trustedAccountId",
+      "values": [
+        "4444532"
+      ]
+    }
+  ],
+  "type": "HOST"
+}
+```
+
+</details>
+
+<details>
+<summary>Issue response data</summary>
+
+```json showLineNumbers
+{
+  "issueId": "MjQwNzIwN3xBUE18QVBQTElDQVRJT058MjIwMzEwNzV8MTA0NzYwNzA5",
+  "title": "My Issue",
+  "priority": "CRITICAL",
+  "state": "ACTIVATED",
+  "sources": ["My Source"],
+  "conditionName": ["My Condition"],
+  "policyName": ["My Policy"],
+  "activatedAt": "2022-01-01T00:00:00Z"
+}
+```
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary><b>Service (Entity) entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "MTIzNDU2Nzg5fElORlJBfE5BfDY1MjQwNDc0NjE4MzUyMDkwOTU=",
+  "title": "UserMacbook",
+  "blueprint": "newRelicAlert",
+  "team": [],
+  "icon": "NewRelic",
+  "properties": {
+    "has_apm": false,
+    "link": "https://one.eu.newrelic.com/redirect/entity/MTIzNDU2Nzg5fElORlJBfE5BfDY1MjQwNDc0NjE4MzUyMDkwOTU=",
+    "open_issues_count": null,
+    "reporting": true,
+    "tags": [
+      {
+        "key": "account",
+        "values": [
+          "Account 4444831"
+        ]
+      },
+      {
+        "key": "accountId",
+        "values": [
+          "4444831"
+        ]
+      },
+      {
+        "key": "agentName",
+        "values": [
+          "Infrastructure"
+        ]
+      },
+      {
+        "key": "agentVersion",
+        "values": [
+          "1.50.0"
+        ]
+      },
+      {
+        "key": "coreCount",
+        "values": [
+          "8"
+        ]
+      },
+      {
+        "key": "fullHostname",
+        "values": [
+          "usermacbook"
+        ]
+      },
+      {
+        "key": "hostStatus",
+        "values": [
+          "running"
+        ]
+      },
+      {
+        "key": "hostname",
+        "values": [
+          "Usermacbook"
+        ]
+      },
+      {
+        "key": "instanceType",
+        "values": [
+          "MacBook Air MacBookAir10,1"
+        ]
+      },
+      {
+        "key": "kernelVersion",
+        "values": [
+          "23.2.0"
+        ]
+      },
+      {
+        "key": "linuxDistribution",
+        "values": [
+          "macOS 14.2.1"
+        ]
+      },
+      {
+        "key": "operatingSystem",
+        "values": [
+          "macOS"
+        ]
+      },
+      {
+        "key": "processorCount",
+        "values": [
+          "8"
+        ]
+      },
+      {
+        "key": "systemMemoryBytes",
+        "values": [
+          "17179869184"
+        ]
+      },
+      {
+        "key": "trustedAccountId",
+        "values": [
+          "4444532"
+        ]
+      }
+    ],
+    "domain": "INFRA",
+    "type": "HOST"
+  },
+  "relations": {},
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary><b>Issue entity in Port(Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "My Issue",
+  "title": "My Issue",
+  "blueprint": "newRelicAlert",
+  "team": [],
+  "icon": "NewRelic",
+  "properties": {
+    "priority": "CRITICAL",
+    "state": "ACTIVATED",
+    "sources": ["My Source"],
+    "conditionName": ["My Condition"],
+    "alertPolicyNames": ["My Policy"],
+    "activatedAt": "2022-01-01T00:00:00Z"
+  },
+  "relations": {
+    "newRelicService": "My Service"
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
 ```
 
 </details>

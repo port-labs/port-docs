@@ -107,8 +107,8 @@ Reach out to us via [Slack](https://www.getport.io/community) or Intercom, and w
 If you are facing issues after installing an Ocean integration, follow these steps:
 
 1. Make sure all of the parameters you provided in the installation command are correct.
-2. Go to the [audit log](https://app.getport.io/organization/AuditLog) in your Port application and check for any errors in the creation of your `blueprints` and/or `entities`.
-3. In your [builder](https://app.getport.io/dev-portal/data-model) page, make sure that the new `blueprints` were created with the correct properties/relations.
+2. Go to the [audit log](https://app.getport.io/settings/AuditLog) in your Port application and check for any errors in the creation of your `blueprints` and/or `entities`.
+3. In your [builder](https://app.getport.io/settings/data-model) page, make sure that the new `blueprints` were created with the correct properties/relations.
 4. If you tried to install a `self-hosted` integration, check the integration's documentation to ensure you included the necessary parameters.
 
 If you are still facing issues, reach out to us via [Slack](https://www.getport.io/community) or using the Intercom bubble in the bottom right corner, and we will help you resolve the issue.
@@ -134,6 +134,28 @@ Please make sure that:
 ---
 
 ## Catalog
+
+#### How can I export my catalog data?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+Port allows you to easily export any catalog data in one of the following formats:
+
+- JSON
+- Gitops (.yml)
+- HCL (.tf)
+
+To export your data:
+
+1. Click on the `...` button in the top right corner of your Port application, and choose `Export Data`:
+    <img src='/img/troubleshooting/exportDataButton.png' width='40%' border='1px' />
+
+2. Choose one or more blueprints, choose a format and click `Export`.
+
+This will download a file with all **entities** of the selected blueprints in the chosen format.
+
+</details>
 
 #### One of my catalog pages is not displaying all entities, or some data is missing, why is that?
 

@@ -2,21 +2,43 @@
 <summary> Deploy image action </summary>
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "deploy_image",
-    "title": "Deploy image",
+{
+  "identifier": "deploy_image",
+  "title": "Deploy image",
+  "icon": "DefaultProperty",
+  "description": "Deploy image version",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
     "userInputs": {
-      "properties": {}
+      "properties": {},
+      "required": [],
+      "order": []
     },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "https://example.com"
+    "blueprintIdentifier": "image"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://example.com",
+    "agent": false,
+    "synchronized": false,
+    "method": "POST",
+    "headers": {
+      "RUN_ID": "{{ .run.id }}"
     },
-    "trigger": "DAY-2",
-    "description": "Deploy image version"
-  }
-]
+    "body": {
+      "action": "{{ .action }}",
+      "trigger": "{{ .trigger | {by, origin, at} }}",
+      "port_context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "operation": "{{.trigger.operation}}"
+      }
+    }
+  },
+  "requiredApproval": false
+}
 ```
 
 </details>

@@ -1,0 +1,51 @@
+<details>
+
+<summary>Mapping configuration for cloud resources</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: container.googleapis.com/Cluster
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".name"
+          title: '.name | split("/") | last'
+          blueprint: '"gcpCloudResource"'
+          properties:
+            type: '.name | split("/") | .[-2]'
+            location: ".location"
+          relations:
+            project: ".__project.name"
+  - kind: cloudfunctions.googleapis.com/CloudFunction
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".name"
+          title: '.name | split("/") | last'
+          blueprint: '"gcpCloudResource"'
+          properties:
+            type: '.name | split("/") | .[-2]'
+            location: ".location"
+          relations:
+            project: ".__project.name"
+  - kind: pubsub.googleapis.com/Topic
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".name"
+          title: '.name | split("/") | last'
+          blueprint: '"gcpCloudResource"'
+          properties:
+            type: '.name | split("/") | .[-2]'
+            location: ".location"
+          relations:
+            project: ".__project.name"
+```
+
+</details>

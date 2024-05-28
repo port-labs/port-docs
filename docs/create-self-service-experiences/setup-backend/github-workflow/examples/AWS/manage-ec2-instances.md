@@ -33,8 +33,11 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
 
 ## Terminating an Instance
 
-1. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition on the `EC2 Instance` blueprint:
-
+1. Create the Port action on the `ec2Instance` blueprint:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor:
 <details>
   <summary>Port Action: Terminate EC2 Instance</summary>
    :::tip
@@ -44,24 +47,35 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
 
 ```json showLineNumbers
 {
-  "identifier": "terminate_instance",
+  "identifier": "terminate_ec2_instance",
   "title": "Terminate Instance",
-  "userInputs": {
-    "properties": {},
-    "required": []
+  "description": "Terminate an EC2 Instance",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DELETE",
+    "userInputs": {
+      "properties": {},
+      "required": []
+    },
+    "blueprintIdentifier": "ec2Instance"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "terminate-instance.yml",
-    "omitUserInputs": true,
-    "omitPayload": false,
+    "workflowInputs": {
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DELETE",
-  "description": "Terminate an EC2 Instance",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
@@ -77,44 +91,46 @@ name: Terminate EC2 Instance
 on:
   workflow_dispatch: # Trigger this workflow manually
     inputs:
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
   terminate-instance:
     runs-on: ubuntu-latest
     steps:
-      - name: Inform Port about terminating EC2 instance
+      - name: Create a log message
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Configuring AWS credentials and terminating EC2 instance with ID ${{ github.event.inputs.instance_id }}
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Configuring AWS credentials and terminating EC2 instance with ID ${{ fromJson(inputs.port_context).entity.identifier }}
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Terminate EC2 instance
-        run: aws ec2 terminate-instances --instance-ids ${{ github.event.inputs.instance_id }}
+        run: aws ec2 terminate-instances --instance-ids ${{ fromJson(inputs.port_context).entity.identifier }}
 
-      - name: Inform Port about status of terminating EC2 instance
+      - name: Create a log message
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: EC2 instance with ID ${{ github.event.inputs.instance_id }} terminated successfully
+          status: "SUCCESS"
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: EC2 instance with ID ${{ fromJson(inputs.port_context).entity.identifier }} terminated successfully
+
 ```
 </details>
 
@@ -122,8 +138,11 @@ jobs:
 
 ## Rebooting an Instance
 
-1. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition on the `EC2 Instance` blueprint:
-
+1. Create the Port action on the `ec2Instance` blueprint:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor:
 <details>
   <summary>Port Action: Reboot EC2 Instance</summary>
    :::tip
@@ -133,24 +152,35 @@ jobs:
 
 ```json showLineNumbers
 {
-  "identifier": "reboot_instance",
+  "identifier": "reboot_ec2_instance",
   "title": "Reboot Instance",
-  "userInputs": {
-    "properties": {},
-    "required": []
+  "description": "Reboot an EC2 Instance",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {},
+      "required": []
+    },
+    "blueprintIdentifier": "ec2Instance"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "reboot-instance.yml",
-    "omitUserInputs": true,
-    "omitPayload": false,
+    "workflowInputs": {
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Reboot an EC2 Instance",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
@@ -166,9 +196,9 @@ name: Reboot EC2 Instance
 on:
   workflow_dispatch: # Trigger this workflow manually
     inputs:
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
@@ -182,8 +212,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Configuring AWS credentials and reboot EC2 instance with ID ${{ fromJson(inputs.port_payload).payload.entity.identifier }}
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Configuring AWS credentials and reboot EC2 instance with ID ${{ fromJson(inputs.port_context).entity.identifier }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -193,7 +223,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Reboot EC2 instance
-        run: aws ec2 reboot-instances --instance-ids ${{ fromJson(inputs.port_payload).payload.entity.identifier }}
+        run: aws ec2 reboot-instances --instance-ids ${{ fromJson(inputs.port_context).entity.identifier }}
 
       - name: Inform Port about status of rebooting EC2 instance
         uses: port-labs/port-github-action@v1
@@ -202,8 +232,9 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: EC2 instance with ID ${{ fromJson(inputs.port_payload).payload.entity.identifier }} rebooted successfully
+          status: "SUCCESS"
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: EC2 instance with ID ${{ fromJson(inputs.port_context).entity.identifier }} rebooted successfully
 ```
 </details>
 
@@ -211,7 +242,11 @@ jobs:
 
 ## Resize Autoscaling Group
 
-1. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition on the `Autoscaling Group` blueprint:
+1. Create the Port action on the `Autoscaling Group` blueprint:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor:
 
 <details>
   <summary>Port Action: Resize Autoscaling Group</summary>
@@ -222,53 +257,67 @@ jobs:
 
 ```json showLineNumbers
 {
-  "identifier": "resize_autoscaling_group",
+  "identifier": "awsAutoScalingGroup_resize_autoscaling_group",
   "title": "Resize Autoscaling Group",
-  "userInputs": {
-    "properties": {
-      "minimum_capacity": {
-        "icon": "DefaultProperty",
-        "title": "Minimum Capacity",
-        "description": "Minimum number of instances",
-        "type": "number",
-        "default": 1,
-        "minimum": 0
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "minimum_capacity": {
+          "icon": "DefaultProperty",
+          "title": "Minimum Capacity",
+          "description": "Minimum number of instances",
+          "type": "number",
+          "default": 1,
+          "minimum": 0
+        },
+        "maximum_capacity": {
+          "icon": "DefaultProperty",
+          "title": "Maximum Capacity",
+          "type": "number",
+          "default": 1,
+          "minimum": 1
+        },
+        "desired_capacity": {
+          "title": "Desired Capacity",
+          "type": "number",
+          "default": 1
+        }
       },
-      "maximum_capacity": {
-        "icon": "DefaultProperty",
-        "title": "Maximum Capacity",
-        "type": "number",
-        "default": 1,
-        "minimum": 1
-      },
-      "desired_capacity": {
-        "title": "Desired Capacity",
-        "type": "number",
-        "default": 1
-      }
+      "required": [
+        "desired_capacity",
+        "maximum_capacity",
+        "minimum_capacity"
+      ],
+      "order": [
+        "minimum_capacity",
+        "maximum_capacity",
+        "desired_capacity"
+      ]
     },
-    "required": [
-      "desired_capacity",
-      "maximum_capacity",
-      "minimum_capacity"
-    ],
-    "order": [
-      "minimum_capacity",
-      "maximum_capacity",
-      "desired_capacity"
-    ]
+    "blueprintIdentifier": "awsAutoScalingGroup"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "resize-asg.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "minimum_capacity": "{{.inputs.\"minimum_capacity\"}}",
+      "maximum_capacity": "{{.inputs.\"maximum_capacity\"}}",
+      "desired_capacity": "{{.inputs.\"desired_capacity\"}}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>
@@ -302,9 +351,9 @@ on:
       maximum_capacity:
         description: 'Maximum size of the Auto Scaling Group'
         required: true
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
@@ -318,7 +367,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: Configuring AWS credentials
 
 
@@ -332,7 +381,7 @@ jobs:
       - name: Resize Auto Scaling Group
         run: |
             aws autoscaling update-auto-scaling-group \
-                --auto-scaling-group-name ${{ fromJson(inputs.port_payload).payload.entity.title }} \
+                --auto-scaling-group-name ${{ fromJson(inputs.port_context).entity.title }} \
                 --desired-capacity ${{ github.event.inputs.desired_capacity }} \
                 --min-size ${{ github.event.inputs.minimum_capacity }} \
                 --max-size ${{ github.event.inputs.maximum_capacity }} 
@@ -344,8 +393,9 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Resized EC2 Auto Scaling Group ${{ fromJson(inputs.port_payload).payload.entity.title }} to ${{ github.event.inputs.desired_capacity }} instances
+          status: "SUCCESS"
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Resized EC2 Auto Scaling Group ${{ fromJson(inputs.port_context).entity.title }} to ${{ github.event.inputs.desired_capacity }} instances
 ```
 </details>
 

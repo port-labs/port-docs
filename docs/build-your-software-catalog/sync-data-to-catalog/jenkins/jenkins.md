@@ -61,6 +61,11 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 <br/>
 
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+To install the integration using Helm, run the following command:
+
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-jenkins-integration port-labs/port-ocean \
@@ -75,6 +80,91 @@ helm upgrade --install my-jenkins-integration port-labs/port-ocean \
 	--set integration.secrets.jenkinsToken="JENKINS_TOKEN" \
 	--set integration.config.jenkinsHost="JENKINS_HOST"  
 ```
+
+</TabItem>
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD, follow these steps:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-jenkins-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for `JENKINS_USER`, `JENKINS_TOKEN` and `JENKINS_HOST`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-jenkins-integration
+  type: jenkins
+  eventListener:
+    type: POLLING
+  config:
+  // highlight-next-line
+    jenkinsHost: JENKINS_HOST
+  secrets:
+  // highlight-start
+    jenkinsUser: JENKINS_USER
+    jenkinsToken: JENKINS_TOKEN
+  // highlight-end
+```
+<br/>
+
+2. Install the `my-ocean-jenkins-integration` ArgoCD Application by creating the following `my-ocean-jenkins-integration.yaml` manifest:
+
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-jenkins-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-jenkins-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-jenkins-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+</details>
+<br/>
+
+3. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-jenkins-integration.yaml
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -222,6 +312,59 @@ steps:
 ```
 
   </TabItem>
+
+  <TabItem value="gitlab" label="GitLab">
+This workflow will run the Jenkins integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Realtime updates in Port
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
+
+<DockerParameters/>
+
+<br/>
+
+
+Here is an example for `.gitlab-ci.yml` pipeline file:
+
+```yaml showLineNumbers
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+    
+variables:
+  INTEGRATION_TYPE: jenkins
+  VERSION: latest
+
+stages:
+  - ingest
+
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+      docker run -i --rm --platform=linux/amd64 \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__JENKINS_USER=$OCEAN__INTEGRATION__CONFIG__JENKINS_USER \
+        -e OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN=$OCEAN__INTEGRATION__CONFIG__JENKINS_TOKEN \
+        -e OCEAN__INTEGRATION__CONFIG__JENKINS_HOST=$OCEAN__INTEGRATION__CONFIG__JENKINS_HOST \
+        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        $IMAGE_NAME
+
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
+```
+
+</TabItem>
 
   </Tabs>
 </TabItem>
@@ -404,6 +547,8 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: job
     selector:
@@ -500,6 +645,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: build
     selector:
@@ -562,6 +709,8 @@ resources:
 <summary>Integration configuration</summary>
 
 ```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
 resources:
   - kind: user
   selector:
@@ -576,6 +725,167 @@ resources:
           url: .user.absoluteUrl
           lastUpdateTime: if .lastChange then (.lastChange/1000) else now end | strftime("%Y-%m-%dT%H:%M:%SZ")
 
+```
+
+</details>
+
+## Let's Test It
+
+This section includes a sample response data from Jenkins. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Jenkins:
+
+<details>
+<summary>Job response data</summary>
+
+```json showLineNumbers
+{
+  "_class" : "hudson.model.FreeStyleProject",
+  "displayName" : "Hello Job",
+  "fullName" : "Hello Job",
+  "name" : "Hello Job",
+  "url" : "http://localhost:8080/job/Hello%20Job/",
+  "buildable" : true,
+  "builds" : [
+    {
+      "_class" : "hudson.model.FreeStyleBuild",
+      "displayName" : "#2",
+      "duration" : 221,
+      "fullDisplayName" : "Hello Job #2",
+      "id" : "2",
+      "number" : 2,
+      "result" : "SUCCESS",
+      "timestamp" : 1700569094576,
+      "url" : "http://localhost:8080/job/Hello%20Job/2/"
+    },
+    {
+      "_class" : "hudson.model.FreeStyleBuild",
+      "displayName" : "#1",
+      "duration" : 2214,
+      "fullDisplayName" : "Hello Job #1",
+      "id" : "1",
+      "number" : 1,
+      "result" : "SUCCESS",
+      "timestamp" : 1700567994163,
+      "url" : "http://localhost:8080/job/Hello%20Job/1/"
+    }
+  ],
+  "color" : "blue"
+}
+```
+
+</details>
+
+<details>
+<summary>Build response data</summary>
+
+```json showLineNumbers
+{
+  "_class" : "hudson.model.FreeStyleBuild",
+  "displayName" : "#2",
+  "duration" : 221,
+  "fullDisplayName" : "Hello Job #2",
+  "id" : "2",
+  "number" : 2,
+  "result" : "SUCCESS",
+  "timestamp" : 1700569094576,
+  "url" : "http://localhost:8080/job/Hello%20Job/2/"
+}
+```
+
+</details>
+
+<details>
+<summary>User response data</summary>
+
+```json showLineNumbers
+{
+  "user" : {
+    "absoluteUrl" : "http://localhost:8080/user/admin",
+    "fullName" : "admin",
+    "description" : "System Administrator",
+    "id" : "admin"
+  },
+  "lastChange" : 1700569094576
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary>Job entity</summary>
+
+```json showLineNumbers
+{
+  "identifier": "hello-job",
+  "title": "Hello Job",
+  "blueprint": "jenkinsJob",
+  "properties": {
+    "jobName": "Hello Job",
+    "url": "http://localhost:8080/job/Hello%20Job/",
+    "jobStatus": "passing",
+    "timestamp": "2023-09-08T14:58:14Z"
+  },
+  "relations": {},
+  "createdAt": "2023-12-18T08:37:21.637Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-18T08:37:21.637Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>Build entity</summary>
+
+```json showLineNumbers
+{
+  "identifier": "hello-job-2",
+  "title": "Hello Job #2",
+  "blueprint": "jenkinsBuild",
+  "properties": {
+    "buildStatus": "SUCCESS",
+    "buildUrl": "http://localhost:8080/job/Hello%20Job/2/",
+    "buildDuration": 221,
+    "timestamp": "2023-09-08T14:58:14Z"
+  },
+  "relations": {
+    "parentJob": "hello-job"
+  },
+  "createdAt": "2023-12-18T08:37:21.637Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-18T08:37:21.637Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>User entity</summary>
+
+```json showLineNumbers
+{
+  "identifier": "admin",
+  "title": "admin",
+  "blueprint": "jenkinsUser",
+  "properties": {
+    "url": "http://localhost:8080/user/admin",
+    "lastUpdateTime": "2023-09-08T14:58:14Z"
+  },
+  "relations": {},
+  "createdAt": "2023-12-18T08:37:21.637Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-18T08:37:21.637Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
 ```
 
 </details>

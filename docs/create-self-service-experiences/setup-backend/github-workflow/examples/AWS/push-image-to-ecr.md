@@ -1,9 +1,17 @@
+---
+tags:
+  - AWS
+  - ECR
+  - Guide
+  - GitHub Actions
+---
+
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
 
 
-# Push ECR image with tags
+# Build ECR image
 
 ## Overview
 
@@ -49,14 +57,14 @@ on:
   workflow_dispatch:
     inputs:
       image_repo:
-        description: 'ECR Repository URL'
+        description: 'Repository URL'
         required: true
       dockerfile:
         description: 'Path to Dockerfile'
         required: true
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
@@ -64,69 +72,112 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPO_URL: ${{ fromJson(inputs.port_payload).payload.entity.properties.url }}
-      TRIGGERED_BY: ${{ fromJson(inputs.port_payload).trigger.by.user.email || github.actor }}
+      REPO_URL: ${{ fromJson(inputs.port_context).entity.properties.url }}
+      TRIGGERED_BY: ${{ fromJson(inputs.port_context).trigger.by.user.email || github.actor }}
+      RUN_ID: ${{ fromJson(inputs.port_context).runId }}
 
     steps:
-    - name: Extract repository owner and name
-      run: |
-        repo_owner=$(echo "${REPO_URL}" | awk -F/ '{print $4}')
-        repo_name=$(echo "${REPO_URL}" | awk -F/ '{print $5}')
+      - name: Inform execution of request to build ECR image
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{ env.RUN_ID }}
+          logMessage: "Starting build of ECR image..."
 
-        echo "REPO_OWNER=$repo_owner" >> $GITHUB_ENV
-        echo "REPO_NAME=$repo_name" >> $GITHUB_ENV
-      shell: bash
-  
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        repository: ${{ env.REPO_OWNER }}/${{ env.REPO_NAME }}
+      - name: Extract repository owner and name
+        run: |
+          repo_owner=$(echo "${REPO_URL}" | awk -F/ '{print $4}')
+          repo_name=$(echo "${REPO_URL}" | awk -F/ '{print $5}')
 
-    - name: Get short commit ID
-      id: get-commit-id
-      run: |
-        echo "COMMIT_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-        echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
-      shell: bash
+          echo "REPO_OWNER=$repo_owner" >> $GITHUB_ENV
+          echo "REPO_NAME=$repo_name" >> $GITHUB_ENV
+        shell: bash
     
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-region: ${{ secrets.AWS_REGION }}
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ env.REPO_OWNER }}/${{ env.REPO_NAME }}
 
-    - name: Login to AWS ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+      - name: Get short commit ID
+        id: get-commit-id
+        run: |
+          echo "COMMIT_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+        shell: bash
 
-    - name: Build and push Docker image
-      env:
-        ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-        ECR_REPOSITORY: ${{ inputs.image_repo }}
-      run: |
-        # Build and push image with short commit ID and triggered by as tags
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT
+      - name: Inform execution of request to build ECR image
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{ env.RUN_ID }}
+          logMessage: "Configuring AWS credentials..."
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-        # Tag image with commit ID and push
-        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHA
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHA
+      - name: Login to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
-        # Tag image with triggered by and push
-        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT $ECR_REGISTRY/$ECR_REPOSITORY:actor-${TRIGGERED_BY//[^a-zA-Z0-9]/-}
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:actor-${TRIGGERED_BY//[^a-zA-Z0-9]/-}
+      - name: Inform execution of request to build ECR image
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{ env.RUN_ID }}
+          logMessage: "Building docker image..."
 
-        # Tag image with PR ID and push
-        if [ "${{ github.event_name }}" == "pull_request" ]; then
-          PR_ID=$(echo "${{ github.event.pull_request.number }}" | tr -d '/')
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT $ECR_REGISTRY/$ECR_REPOSITORY:pr-$PR_ID
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:pr-$PR_ID
-        fi
+      - name: Build and push Docker image
+        env:
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: ${{ inputs.image_repo }}
+        run: |
+          # Build and push image with short commit ID and triggered by as tags
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT
 
-        # Tag image with workflow ID and push
-        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT $ECR_REGISTRY/$ECR_REPOSITORY:build-${{ github.run_id }}
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:build-${{ github.run_id }}
+          # Tag image with commit ID and push
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHA
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHA
+
+          # Tag image with triggered by and push
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT $ECR_REGISTRY/$ECR_REPOSITORY:actor-${TRIGGERED_BY//[^a-zA-Z0-9]/-}
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:actor-${TRIGGERED_BY//[^a-zA-Z0-9]/-}
+
+          # Tag image with PR ID and push
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            PR_ID=$(echo "${{ github.event.pull_request.number }}" | tr -d '/')
+            docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT $ECR_REGISTRY/$ECR_REPOSITORY:pr-$PR_ID
+            docker push $ECR_REGISTRY/$ECR_REPOSITORY:pr-$PR_ID
+          fi
+
+          # Tag image with workflow ID and push
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_SHORT $ECR_REGISTRY/$ECR_REPOSITORY:build-${{ github.run_id }}
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:build-${{ github.run_id }}
+
+      - name: Notify Port of successful build
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          status: "SUCCESS"
+          baseUrl: https://api.getport.io
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          logMessage: |
+            Built and pushed image to ECR repo ${{ inputs.image_repo }}
 ```
 </details>
 
@@ -141,56 +192,70 @@ jobs:
 4. Click on the `{...} Edit JSON` button.
 5. Copy and paste the following JSON configuration into the editor.
 
-   <details>
-   
-   <summary>Port Action</summary>
-   
-   <GithubActionModificationHint/>
-   
-   ```json showLineNumbers
-   {
-     "identifier": "build_ecr_image",
-     "title": "Build ECR Image",
-     "icon": "AWS",
-     "userInputs": {
-       "properties": {
-         "dockerfile": {
-           "icon": "Docker",
-           "title": "Dockerfile",
-           "description": "The path to the dockerfile e.g Dockerfile or ./deploy/prod.Dockerfile",
-           "type": "string",
-           "default": "Dockerfile"
-         },
-         "image_repo": {
-           "title": "Image Repository",
-           "description": "The Elastic Container Repository Name",
-           "icon": "AWS",
-           "type": "string"
-         }
-       },
-       "required": [
-         "dockerfile",
-         "image_repo"
-       ],
-       "order": [
-         "dockerfile"
-       ]
-     },
-     "invocationMethod": {
-       "type": "GITHUB",
-       "org": "<GITHUB_ORG>",
-       "repo": "<GITHUB_REPO>",
-       "workflow": "create-and-push-image.yml",
-       "omitUserInputs": false,
-       "omitPayload": false,
-       "reportWorkflowStatus": true
-     },
-     "trigger": "DAY-2",
-     "description": "Build Image and Push to ECR",
-     "requiredApproval": false
-   }
-   ```
-   </details>
+<details>
+
+<summary>Port Action</summary>
+
+<GithubActionModificationHint/>
+
+```json showLineNumbers
+{
+  "identifier": "build_ecr_image",
+  "title": "Build ECR Image",
+  "icon": "AWS",
+  "description": "Build Image and Push to ECR",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "dockerfile": {
+          "icon": "Docker",
+          "title": "Dockerfile",
+          "description": "The path to the dockerfile e.g Dockerfile or ./deploy/prod.Dockerfile",
+          "type": "string",
+          "default": "Dockerfile"
+        },
+        "image_repo": {
+          "title": "Image Repository",
+          "description": "The Elastic Container Repository Name",
+          "icon": "AWS",
+          "type": "string"
+        }
+      },
+      "required": [
+        "dockerfile",
+        "image_repo"
+      ],
+      "order": [
+        "dockerfile"
+      ]
+    },
+    "blueprintIdentifier": "repository"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
+    "workflow": "create-and-push-image.yml",
+    "workflowInputs": {
+      "dockerfile": "{{ .inputs.\"dockerfile\" }}",
+      "image_repo": "{{ .inputs.\"image_repo\" }}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+</details>
+
 6. Click `Save`.
 
 Now you should see the `Build ECR Image` action in the self-service page. 🎉

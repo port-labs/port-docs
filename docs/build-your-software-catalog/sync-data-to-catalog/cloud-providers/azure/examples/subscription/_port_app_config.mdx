@@ -1,0 +1,20 @@
+<details>
+
+<summary>Mapping configuration for Azure Subscriptions</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: subscription
+    selector:
+      query: 'true'
+      apiVersion: '2022-09-01'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .display_name
+          blueprint: '"azureSubscription"'
+          properties: {}
+```
+
+</details>

@@ -25,7 +25,7 @@ Follow these steps to get started:
 
 3. Create a Port blueprint with the following properties:
 
-:::note
+:::tip
 Keep in mind this can be any blueprint you would like and this is just an example.
 :::
 
@@ -37,14 +37,14 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
   "schema": {
     "properties": {
       "secret_key": {
-        "icon": "DefaultProperty",
+        "icon": "Github",
         "title": "Secret Key",
         "type": "string",
         "description": "All Uppercase",
         "pattern": "^[^a-z]*$"
       },
       "secret_value": {
-        "icon": "DefaultProperty",
+        "icon": "Github",
         "title": "Secret Value",
         "type": "string"
       }
@@ -59,16 +59,22 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 
 4. Create a Port action using the following JSON definition:
 
-:::note
-Make sure to replace the placeholders for GITHUB_ORG_NAME and GITHUB_REPO_NAME in your Port Action to match your GitHub environment.
+<details>
+:::tip Modification Required
+Make sure to replace the placeholders for `<GITHUB_ORG_NAME>` and `<GITHUB_REPO_NAME>` in your Port Action to match your GitHub environment.
 :::
 
+<summary>Port Action (click to expand)</summary>
+
 ```json showLineNumbers
-[
-  {
-    "identifier": "create_github_secret",
-    "title": "Create GitHub Secret",
-    "icon": "Github",
+{
+  "identifier": "create_git_hub_secret",
+  "title": "Create GitHub Secret",
+  "icon": "Github",
+  "description": "Creates a GitHub secret in my repository",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "secret_key": {
@@ -84,26 +90,45 @@ Make sure to replace the placeholders for GITHUB_ORG_NAME and GITHUB_REPO_NAME i
           "encryption": "aes256-gcm"
         }
       },
-      "required": ["secret_key", "secret_value"],
-      "order": ["secret_key", "secret_value"]
+      "required": [
+        "secret_key",
+        "secret_value"
+      ],
+      "order": [
+        "secret_key",
+        "secret_value"
+      ]
     },
-    "invocationMethod": {
-      "type": "GITHUB",
-      "omitPayload": false,
-      "omitUserInputs": false,
-      "reportWorkflowStatus": true,
-      "org": "<GITHUB_ORG_NAME>",
-      "repo": "<GITHUB_REPO_NAME>",
-      "workflow": "create-repo-secret.yml"
+    "blueprintIdentifier": "githubsecret"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<GITHUB_ORG_NAME>",
+    "repo": "<GITHUB_REPO_NAME>",
+    "workflow": "create-repo-secret.yml",
+    "workflowInputs": {
+      "secret_key": "{{ .inputs.\"secret_key\" }}",
+      "secret_value": "{{ .inputs.\"secret_value\" }}",
+      "port_context": {
+        "entity": "{{.entity}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
+      }
     },
-    "trigger": "CREATE",
-    "description": "Creates a GitHub secret in my repository",
-    "requiredApproval": false
-  }
-]
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false
+}
 ```
 
+</details>
+
 5. Create a workflow file under `.github/workflows/create-repo-secret.yml` with the following content:
+
+<details>
+
+<summary>GitHub Workflow (click to expand)</summary>
 
 ```yml showLineNumbers
 name: Create Repository Secret
@@ -117,11 +142,10 @@ on:
       secret_value:
         type: string
         description: value of the secret
-      port_payload:
+      port_context:
         required: false
         description:
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+          Who triggered the action and general context (blueprint, run id, etc...)
         type: string
 
 jobs:
@@ -141,7 +165,7 @@ jobs:
           title: ${{ inputs.secret_key }}
           team: "[]"
           icon: DefaultBlueprint
-          blueprint: ${{ fromJson(inputs.port_payload).context.blueprint }}
+          blueprint: ${{ fromJson(inputs.port_context).blueprint }}
           properties: |-
             {
               "secret_key": "${{ inputs.secret_key }}",
@@ -151,7 +175,19 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
+
+      - name: Inform completion of request to create secret in Port
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          status: "SUCCESS"
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: "Created github secret ${{ github.event.inputs.secret_key }}"
 ```
+</details>
 
 6. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.

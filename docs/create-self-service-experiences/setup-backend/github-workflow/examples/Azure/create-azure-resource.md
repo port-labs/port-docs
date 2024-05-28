@@ -8,27 +8,54 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to deploy a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) in Azure using Terraform templates.
 
+:::tip Use Cases
 
-## Example - creating a storage account
+- **Standardized Deployments**: Ensure consistency and minimize errors by defining your storage account infrastructure as code using Terraform templates.
+- **Streamlined Provisioning**: Rapidly create new storage accounts on-demand, empowering users without requiring deep Azure cloud expertise.
+:::
 
-Follow these steps to get started:
+## Prerequisites
 
-1. Create the following GitHub Action secrets:
-    1. Create the following Port credentials:
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
-    2. Create the following Azure Cloud credentials:
-        :::tip
-        Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get the Azure credentials.
-        :::
-        1. `ARM_CLIENT_ID` - Azure Client ID (APP ID) of the application.
-        2. `ARM_CLIENT_SECRET` - Azure Client Secret (Password) of the application.
-        3. `ARM_SUBSCRIPTION_ID` - Azure Subscription ID.
-        4. `ARM_TENANT_ID` - The Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id).
-<br />
-2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-<br />
-3. Create a Port <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
+1. **Azure Subscription**: An active Azure subscription is required to deploy the storage account.
+2. **Port Actions Knowledge**: Understanding how to create and use Port actions is necessary. Learn the basics [here](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/).
+3. **GitHub Repository**: A repository to store your GitHub workflow file for this action.
+
+
+### GitHub Secrets
+
+To successfully execute this workflow, we will add the following secrets to the GitHub repository containing the workflow:
+
+**1. GitHub Action Secrets**
+
+- Navigate to your GitHub repository's "Settings" tab.
+- Select "Secrets" and then "Actions" from the side menu.
+- Create the following secrets:
+    - `PORT_CLIENT_ID`: Your Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
+    - `PORT_CLIENT_SECRET`: Your Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
+
+**2. Azure Cloud Credentials**
+
+:::tip **Important**: 
+For secure Azure interactions, we'll use a Service Principal. If you need help creating one, follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal)
+:::
+- Once you have your Service Principal, create these GitHub Action secrets:
+    - `ARM_CLIENT_ID`: Service Principal Application (Client) ID
+    - `ARM_CLIENT_SECRET`: Service Principal Password
+    - `ARM_SUBSCRIPTION_ID`: Your Azure Subscription ID
+    - `ARM_TENANT_ID`: Your Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id)
+    - `AZURE_RESOURCE_GROUP`; Your Azure resource group
+
+## Port Configuration
+
+:::tip Import Azure Resources
+Import Azure resources into your Port account using the [Azure Exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/)
+:::
+
+1. Create the `azureStorage` <PortTooltip id="blueprint">blueprint</PortTooltip>.
+    - Head to the [Builder](https://app.getport.io/settings/data-model) page.
+    - Click on the `+ Blueprint` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor.
 
 <details>
    <summary>Port Blueprint: Azure Storage Account</summary>
@@ -73,9 +100,14 @@ Follow these steps to get started:
 }
 ```
 
-  </details>
+</details>
+
 <br />
-3. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
+2. To create the Port action:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor.
 
 <details>
 
@@ -87,11 +119,14 @@ Follow these steps to get started:
 
 
 ```json showLineNumbers
-[
-  {
-    "identifier": "create_azure_storage",
-    "title": "Create Azure Storage",
-    "icon": "Github",
+{
+  "identifier": "service_create_azure_storage",
+  "title": "Create Azure Storage",
+  "icon": "Github",
+  "description": "Execute a workflow that terraforms an azure resource",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
     "userInputs": {
       "properties": {
         "storage_name": {
@@ -114,25 +149,35 @@ Follow these steps to get started:
         "storage_location"
       ]
     },
-    "invocationMethod": {
-      "type": "GITHUB",
-      "org": "<GITHUB-ORG>",
-      "repo": "<GITHUB-REPO-NAME>",
-      "workflow": "terraform-azure.yml",
-      "omitUserInputs": false,
-      "omitPayload": false,
-      "reportWorkflowStatus": true
+    "blueprintIdentifier": "azureStorage"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<GITHUB-ORG>",
+    "repo": "<GITHUB-REPO-NAME>",
+    "workflow": "terraform-azure.yml",
+    "workflowInputs": {
+      "storage_name": "{{ .inputs.\"storage_name\" }}",
+      "storage_location": "{{ .inputs.\"storage_location\" }}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
+      }
     },
-    "trigger": "CREATE",
-    "description": "Execute a workflow that terraforms an azure resource",
-    "requiredApproval": false
-  }
-]
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
 ```
 
 </details>
-<br />
-4. Create the following Terraform templates in a `terraform` folder at the root of your GitHub repository:
+
+## GitHub Workflow
+
+1. Create the following Terraform templates in a `terraform` folder at the root of your GitHub repository:
     :::tip
     Fork our [example repository](https://github.com/port-labs/pipelines-terraform-azure) to get started.
     :::
@@ -255,14 +300,15 @@ output "endpoint_url" {
 
 </details>
 <br />
-5. Create a workflow file under `.github/workflows/terraform-azure.yml` with the following content:
+
+2. Create a workflow file under `.github/workflows/terraform-azure.yml` with the following content:
 
 <details>
 
 <summary>GitHub workflow script</summary>
 
 ```yaml showLineNumbers title="terraform-azure.yml"
-name: "Terraform Infrastructure Change"
+name: "Deploy Azure Resource"
 
 on: 
   workflow_dispatch:
@@ -273,26 +319,25 @@ on:
       storage_location:
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
-        description:
-            Port's payload, including details for who triggered the action and
-            general context (blueprint, run id, etc...)
-        type: string
+        description: >-
+          Action and general context (blueprint, run id, etc...)
 
 env: 
   TF_LOG: INFO
   TF_INPUT: false
-  # BUCKET_TF_STATE: # Uncomment this if you using a storage backend
 
 jobs:
   terraform:
-    name: "Deploy Azure Resource"
+    name: "Terraform Infrastructure Change Management"
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
+        # We keep Terraform files in the terraform directory.
         working-directory: ./terraform
+        # working-directory: ./
 
 
     steps:
@@ -326,7 +371,8 @@ jobs:
             ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
             TF_VAR_port_client_id: ${{ secrets.PORT_CLIENT_ID }}
             TF_VAR_port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
-            TF_VAR_port_run_id: ${{fromJson(inputs.port_payload).context.runId}}
+            TF_VAR_port_run_id: ${{ fromJson(inputs.port_context).runId }}
+            TF_VAR_resource_group_name: ${{ secrets.AZURE_RESOURCE_GROUP }}
         run: |
           terraform plan \
             -input=false \
@@ -350,7 +396,8 @@ jobs:
             ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
             TF_VAR_port_client_id: ${{ secrets.PORT_CLIENT_ID }}
             TF_VAR_port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
-            TF_VAR_port_run_id: ${{fromJson(inputs.port_payload).context.runId}}
+            TF_VAR_port_run_id: ${{fromJson(inputs.port_context).runId}}
+            TF_VAR_resource_group_name: arete-resources
         run: |
           terraform plan \
             -input=false \
@@ -371,10 +418,19 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          status: "SUCCESS"
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: Created ${{ inputs.storage_name }}
 ```
 
 </details>
-<br />
-6. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+
+## Let's Test It!
+
+- On the [self-service](https://app.getport.io/self-serve) page, select the action and fill in the properties.
+- Click the execute button to trigger the GitHub workflow.
+
+
+## More Relevant Guides
+
+1. [Provision AWS resources with Terraform](http://localhost:4000/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/terraform-plan-and-apply-aws-resource)

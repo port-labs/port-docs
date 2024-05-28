@@ -41,38 +41,56 @@ Follow these steps to get started:
 
 ```json showLineNumbers
 {
-  "identifier": "manage_a_pr",
+  "identifier": "service_manage_a_pr",
   "title": "Manage a GitHub PR",
   "icon": "Github",
-  "userInputs": {
-    "properties": {
-      "action": {
-        "title": "Action",
-        "description": "What action to take",
-        "icon": "Git",
-        "type": "string",
-        "enum": ["close", "merge", "approve"],
-        "enumColors": {
-          "close": "lightGray",
-          "merge": "lightGray"
+  "description": "Manage a GitHub pull request",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "action": {
+          "title": "Action",
+          "description": "What action to take",
+          "icon": "Git",
+          "type": "string",
+          "enum": [
+            "close",
+            "merge",
+            "approve"
+          ],
+          "enumColors": {
+            "close": "lightGray",
+            "merge": "lightGray"
+          }
         }
-      }
+      },
+      "required": [
+        "action"
+      ],
+      "order": []
     },
-    "required": ["action"],
-    "order": []
+    "blueprintIdentifier": "githubPullRequest"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "manage-pr.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "action": "{{.inputs.\"action\"}}",
+      "port_context": {
+        "entity": "{{.entity}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{.trigger}}"
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Manage a GitHub pull request",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
@@ -94,9 +112,9 @@ on:
       action: 
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Details about the action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
@@ -110,14 +128,14 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             Executing the ${{ github.event.inputs.action }} action on the GitHub pull request... ⛴️
 
       - name: Extract Repository and PR Number
         id: extract_info
         run: |
-          link="${{ fromJson(inputs.port_payload).payload.entity.properties.link }}"
+          link="${{ fromJson(inputs.port_context).entity.properties.link }}"
           repo_info=$(echo "$link" | sed 's|https://github.com/||' | awk -F'/' '{print $1 "/" $2}')
           pr_number=$(echo "$link" | awk -F'/' '{print $NF}')
 
@@ -188,7 +206,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           baseUrl: https://api.getport.io
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             GitHub Action result for ${{ env.GITHUB_ACTION_TYPE }} action on PR ${{ env.PR_NUMBER }}: ${{ env.GITHUB_ACTION_RESULT_MESSAGE }}
 ```

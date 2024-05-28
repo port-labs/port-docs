@@ -234,40 +234,50 @@ Follow these steps to get started:
 {
   "identifier": "rollback_deployment",
   "title": "Rollback Deployment",
-  "icon": "GithubActions",
-  "userInputs": {
-    "properties": {
-      "image": {
-        "icon": "DefaultProperty",
-        "title": "Image",
-        "type": "string",
-        "blueprint": "image",
-        "format": "entity"
+  "icon": "DefaultProperty",
+  "description": "Rollback the deployment to the previous version",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "auto_merge": {
+          "type": "boolean",
+          "title": "Auto Merge",
+          "default": false,
+          "description": "Automatically merge the PR after the action is completed"
+        },
+        "image": {
+          "type": "string",
+          "title": "Image",
+          "format": "entity",
+          "blueprint": "image"
+        }
       },
-      "auto_merge": {
-        "title": "Auto Merge",
-        "type": "boolean",
-        "default": false,
-        "description": "Whether the created PR should be merged or not"
-      }
+      "required": [
+        "image"
+      ]
     },
-    "required": [],
-    "order": [
-      "image",
-      "auto_merge"
-    ]
+    "blueprintIdentifier": "service"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "rollback.yaml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "auto_merge": "{{.inputs.auto_merge}}",
+      "image": "{{.inputs.image.title}}",
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{.trigger}}"
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "requiredApproval": false
+  "publish": true
 }
 ```
 
@@ -299,11 +309,10 @@ on:
         description: Whether the created PR should be merged automatically
         required: true
         type: boolean
-      port_payload:
+      port_context:
         required: true
         description: >-
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+          action port_context: blueprint, run id, etc
 jobs:
   rollback-deployment:
     runs-on: ubuntu-latest
@@ -315,7 +324,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: "About to rollback deployment image in argocd..."
 
       - uses: actions/checkout@v3
@@ -323,17 +332,17 @@ jobs:
         id: create-pr
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: '<DEPLOYMENT-MANIFEST-PATH>'  ## replace value
-          propertyPath: '<IMAGE-PROPERTY-PATH>' ## replace value
-          value: '${{ github.event.inputs.image }}'
+          valueFile: "<DEPLOYMENT-MANIFEST-PATH>" ## replace value
+          propertyPath: "<IMAGE-PROPERTY-PATH>" ## replace value
+          value: "${{ github.event.inputs.image }}"
           commitChange: true
           token: ${{ secrets.MY_GITHUB_TOKEN }}
           targetBranch: main
           masterBranchName: main
           createPR: true
-          branch: deployment/${{ fromJson(github.event.inputs.port_payload).context.runId }}
-          message: 'Update deployment image to ${{ github.event.inputs.image }}'
-          
+          branch: deployment/${{ fromJson(inputs.port_context).runId }}
+          message: "Update deployment image to ${{ github.event.inputs.image }}"
+
       - name: Inform Port about pull request creation status - Success
         if: steps.create-pr.outcome == 'success'
         uses: port-labs/port-github-action@v1
@@ -342,11 +351,11 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             'The creation of PR was successful: ${{fromJson(steps.create-pr.outputs.pull_request).html_url}}'
           link: '["${{fromJson(steps.create-pr.outputs.pull_request).html_url}}"]'
-      
+
       - name: Inform Port about pull request creation status - Failure
         if: steps.create-pr.outcome != 'success'
         uses: port-labs/port-github-action@v1
@@ -355,10 +364,10 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             The creation of PR was not successful.
-  
+
       - name: Merge Pull Request
         if: ${{ github.event.inputs.auto_merge == 'true' && steps.create-pr.outcome == 'success' }}
         env:
@@ -389,9 +398,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: 'Pull request merge was ${{ env.merge_status }}'
-
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: "Pull request merge was ${{ env.merge_status }}"
 ```
 
 </details>

@@ -32,6 +32,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Nudge PR reviewers](/create-self-service-experiences/setup-backend/github-workflow/examples/nudge-pr-reviewers)
 - [Promote to production](/create-self-service-experiences/setup-backend/github-workflow/examples/promote-to-production)
 - [Self-service action to lock and unlock a service](http://localhost:4000/create-self-service-experiences/setup-backend/github-workflow/examples/lock-and_unlock-service-in-port)
+- [Connect GitHub Codeowners with Service, Team and User](/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/connect-github-codeowners-with-service-team-and-user.md)
 
 
 ### GitLab
@@ -112,7 +113,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
 - [Map ECS, EC2, RDS, API GW, Cloudfront and more](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
-- [AWS Cost](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/aws-cost.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
 - [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/custom-integration/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](/build-your-software-catalog/custom-integration/iac/terraform/examples/create-dev-env.md)
@@ -128,15 +128,14 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Azure exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md)
 - [Azure Active Directory (AD) SSO](/sso-rbac/sso-providers/azure-ad.md)
-- [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/examples.md)
+- [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/examples/examples.md)
 - [Add tags to Azure resources](/create-self-service-experiences/setup-backend/github-workflow/examples/Azure/tag-azure-resource)
 
 
 ### GCP
 
-- [GCP asset inventory](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/generic-assets.md)
-- [Sync organizations, folders, projects, buckets, service accounts, compute instances and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/extended-specific-assets.md)
-- [Script to ingest GCR Images and Repositories](https://github.com/port-labs/example-gcr-images)
+- [GCP integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/gcp.md)
+- [Sync Projects, buckets, service accounts, compute instances and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/mapping_extra_resources.md)
 
 #### Google cloud build
 
@@ -197,13 +196,17 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Jira
 
-- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/jira/jira.md)
-- [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/jira/#alternative-installation-via-webhook)
+- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/jira.md)
+- [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook)
 - [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 - [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
-- [Connect Jira issue to a service](/build-your-software-catalog/sync-data-to-catalog/jira/guides/connect-jira-issue-to-service)
+- [Connect Jira issue to a service](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/guides/connect-jira-issue-to-service)
 
+## Linear
+
+- [Linear integration](/build-your-software-catalog/sync-data-to-catalog/project-management/linear/linear.md)
+- [Linear webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/linear/linear.md#alternative-installation-via-webhook)
 
 ## Sentry
 

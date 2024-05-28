@@ -110,16 +110,9 @@ on:
       tags:
         type: string
         required: true
-      port_payload:
+      port_context:
         required: true
-        description: Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
         type: string
-    secrets:
-      SONARQUBE_HOST_URL:
-        required: true
-      SONARQUBE_API_TOKEN:
-        required: true
 
 jobs:
   create-entity-in-port-and-update-run:
@@ -132,13 +125,13 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ fromJson(inputs.port_context).run_id}}
           logMessage: Starting request to add tags to SonarQube project
       
       - name: Add tags to SonarQube project
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "${{ secrets.SONARQUBE_HOST_URL }}/api/project_tags/set?project=${{ fromJson(inputs.port_payload).context.entity }}&tags=${{ inputs.tags }}"
+          url: "${{ secrets.SONARQUBE_HOST_URL }}/api/project_tags/set?project=${{ fromJson(inputs.port_context).entity }}&tags=${{ inputs.tags }}"
           method: "POST"
           bearerToken: ${{ secrets.SONARQUBE_API_TOKEN }}
           customHeaders: '{"Content-Type": "application/json"}'
@@ -150,7 +143,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: Finished request to create SonarQube project
 ```
 </details>
@@ -168,37 +161,47 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 ```json showLineNumbers
 {
-  "identifier": "add_tags_to_sonar_qube_project",
+  "identifier": "sonarQubeProject_add_tags_to_sonar_qube_project",
   "title": "Add Tags to SonarQube project",
   "icon": "sonarqube",
-  "userInputs": {
-    "properties": {
-      "tags": {
-        "title": "Tags",
-        "description": "Comma separated list of tags",
-        "icon": "DefaultProperty",
-        "type": "string"
-      }
+  "description": "Adds additional tags to a project in SonarQube",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "tags": {
+          "title": "Tags",
+          "description": "Comma separated list of tags",
+          "icon": "DefaultProperty",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tags"
+      ],
+      "order": [
+        "tags"
+      ]
     },
-    "required": [
-      "tags"
-    ],
-    "order": [
-      "tags"
-    ]
+    "blueprintIdentifier": "sonarQubeProject"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB_ORG>",
-    "repo": "<GITHUB_REPO>",
+    "org": "<Enter GitHub organization>",
+    "repo": "<Enter GitHub repository>",
     "workflow": "add-tags-to-sonarqube-project.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflowInputs": {
+      "tags": "{{.inputs.\"tags\"}}",
+      "port_context": {
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}"
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "DAY-2",
-  "description": "Adds additional tags to a project in SonarQube",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 </details>

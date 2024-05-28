@@ -17,7 +17,7 @@ Each blueprint is made up of [properties](/build-your-software-catalog/customize
 
 ## How to configure your data model
 
-After installing an integration, you can configure its data model in the [builder page](https://app.getport.io/dev-portal/data-model) of your portal. 
+After installing an integration, you can configure its data model in the [builder page](https://app.getport.io/settings/data-model) of your portal. 
 
 To understand how an integration's data model works, let's take a look at an example.  
 After you complete the [onboarding](/quickstart) and connect your Git provider to Port, you will see a `service` blueprint that represents a microservice in your organization (which correlates to a Git repository):
@@ -32,7 +32,7 @@ Port's [plug & play integrations](/build-your-software-catalog/sync-data-to-cata
 
 ### Configure properties
 
-You can [create, delete, or edit](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/) any property in any blueprint in your builder.
+You can [create, delete, or edit](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#configure-properties-in-port) any property in any blueprint. This can be done from the [builder page](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#from-the-builder-page) or directly from the [software catalog](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#from-the-software-catalog).
 
 After changing one or more properties, you may need to adjust the [mapping](/build-your-software-catalog/customize-integrations/configure-mapping) of your integration to match the changes made to the data model.
 

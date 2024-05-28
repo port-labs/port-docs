@@ -1,16 +1,16 @@
 ---
 sidebar_position: 1
-title: Launchdarkly
-description: Launchdarkly integration in Port
+title: LaunchDarkly
+description: LaunchDarkly integration in Port
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import DockerParameters from "./\_launchdarkly_one_time_docker_parameters.mdx"
 
-# Launchdarkly
+# LaunchDarkly
 
-Our Launchdarkly integration allows you to import `projects`, `flags`, and `environments` from your Launchdarkly account into Port, according to your mapping and definition.
+Our LaunchDarkly integration allows you to import `projects`, `flags`, and `environments` from your LaunchDarkly account into Port, according to your mapping and definition.
 
 A `Project` in LaunchDarkly is a collection of feature flags, targeting rules, and environments that correspond to a specific application or service.
 
@@ -23,7 +23,7 @@ An `Environment` within a LaunchDarkly project is a logical separation of featur
 
 - Entity Tracking - See all projects and their associated environments and feature flags.
 
-- Real time Synchronization of Infrastructure - Automatically synchronize projects, feature flags, and environments data from Launchdarkly into Port for centralized tracking and management.
+- Real time Synchronization of Infrastructure - Automatically synchronize projects, feature flags, and environments data from LaunchDarkly into Port for centralized tracking and management.
 
 
 ## Prerequisites
@@ -49,12 +49,11 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                          | Your Port client id                                                                                           | ✅       |
 | `port.clientSecret`                      | Your Port client secret                                                                                       | ✅       |
-| `port.baseUrl`                           | Your Port base url, relevant only if not using the default Port app                                           | ❌       |
 | `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                       | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
-| `integration.config.launchdarklyHost` | Your Launchdarkly host. For example https://launchdarkly.com                                                                        | ✅       |
-| `integration.config.launchdarklyToken` | The Launchdarkly API token                                                                           | ✅       |
+| `integration.config.launchdarklyHost` | Your LaunchDarkly host. For example https://launchdarkly.com                                                                        | ✅       |
+| `integration.config.launchdarklyToken` | The LaunchDarkly API token                                                                           | ✅       |
 | `integration.config.appHost`             | Your application's host url                                                                                   | ❌       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
@@ -70,12 +69,11 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install launchdarkly port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set integration.identifier="my-launchdarkly-integration"  \
 	--set integration.type="launchdarkly"  \
 	--set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.launchdarklyHost="string" \
+        --set integration.secrets.launchdarklyHost="string" \
 	--set integration.secrets.launchdarklyToken="string" \
 ```
 </TabItem>
@@ -165,7 +163,7 @@ kubectl apply -f my-ocean-launchdarkly-integration.yaml
 
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Launchdarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
+This workflow will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning
 If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
@@ -180,7 +178,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 Here is an example for `launchdarkly-integration.yml` workflow file:
 
 ```yaml showLineNumbers
-name: Launchdarkly Exporter Workflow
+name: LaunchDarkly Exporter Workflow
 
 on:
   workflow_dispatch:
@@ -202,7 +200,7 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Launchdarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
+This pipeline will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
@@ -211,7 +209,7 @@ Your Jenkins agent should be able to run docker commands.
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
-Make sure to configure the following [Launchdarkly Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+Make sure to configure the following [LaunchDarkly Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
 
 <DockerParameters/>
 
@@ -224,7 +222,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Run Launchdarkly Integration') {
+        stage('Run LaunchDarkly Integration') {
             steps {
                 script {
                     withCredentials([
@@ -258,6 +256,59 @@ pipeline {
 ```
 
   </TabItem>
+    <TabItem value="gitlab" label="GitLab">
+This workflow will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Realtime updates in Port
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
+
+<DockerParameters/>
+
+<br/>
+
+
+Here is an example for `.gitlab-ci.yml` pipeline file:
+
+```yaml showLineNumbers
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+    
+variables:
+  INTEGRATION_TYPE: launchdarkly
+  VERSION: latest
+
+stages:
+  - ingest
+
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+      docker run -i --rm --platform=linux/amd64 \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__LAUNCHDARKLY_HOST=$OCEAN__INTEGRATION__CONFIG__LAUNCHDARKLY_HOST \
+        -e OCEAN__INTEGRATION__CONFIG__LAUNCHDARKLY_TOKEN=$OCEAN__INTEGRATION__CONFIG__LAUNCHDARKLY_TOKEN \
+        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        $IMAGE_NAME
+
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - when: manual
+```
+
+</TabItem>
+
   </Tabs>
 </TabItem>
 
@@ -267,11 +318,11 @@ pipeline {
 
 The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
-## Ingesting Launchdarkly objects
+## Ingesting LaunchDarkly objects
 
-The Launchdarkly integration uses a YAML configuration to describe the process of loading data into the developer portal.
+The LaunchDarkly integration uses a YAML configuration to describe the process of loading data into the developer portal.
 
-Here is an example snippet from the config which demonstrates the process for getting `Projects` from Launchdarkly:
+Here is an example snippet from the config which demonstrates the process for getting `Projects` from LaunchDarkly:
 
 ```yaml showLineNumbers
 resources:
@@ -288,14 +339,14 @@ resources:
             tags: .tags
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Launchdarkly's API events.
+The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from LaunchDarkly's API events.
 
 ### Configuration structure
 
-The integration configuration determines which resources will be queried from Launchdarkly, and which entities and properties will be created in Port.
+The integration configuration determines which resources will be queried from LaunchDarkly, and which entities and properties will be created in Port.
 
 :::tip Supported resources
-The following resources can be used to map data from Launchdarkly, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+The following resources can be used to map data from LaunchDarkly, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Project`](https://apidocs.launchdarkly.com/tag/Projects)
 - [`Flag`](https://apidocs.launchdarkly.com/tag/Feature-flags)
@@ -313,7 +364,7 @@ The following resources can be used to map data from Launchdarkly, it is possibl
       ...
   ```
 
-- The `kind` key is a specifier for a Launchdarkly object:
+- The `kind` key is a specifier for a LaunchDarkly object:
 
   ```yaml showLineNumbers
     resources:
@@ -323,7 +374,7 @@ The following resources can be used to map data from Launchdarkly, it is possibl
         ...
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Launchdarkly object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+- The `port`, `entity` and the `mappings` keys are used to map the LaunchDarkly object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
 ```yaml showLineNumbers
 resources:
@@ -346,12 +397,12 @@ Note the value of the `blueprint` key - if you want to use a hardcoded string, y
 
 ### Ingest data into Port
 
-To ingest Launchdarkly objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+To ingest LaunchDarkly objects using the [integration configuration](#configuration-structure), you can follow the steps below:
 
 1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Launchdarkly.
+2. Select a blueprint you want to ingest using LaunchDarkly.
 3. Choose the **Ingest Data** option from the menu.
-4. Select Launchdarkly under the Feature Management category.
+4. Select LaunchDarkly under the Feature Management category.
 5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
 6. Click `Resync`.
 
@@ -511,7 +562,6 @@ resources:
           kind: .kind
           description: .description
           creationDate: .creationDate / 1000 | strftime("%Y-%m-%dT%H:%M:%SZ")
-          includeInSnippet: .includeInSnippet
           clientSideAvailability: .clientSideAvailability
           temporary: .temporary
           tags: .tags
@@ -521,7 +571,7 @@ resources:
           customProperties: .customProperties
           archived: .archived
         relations:
-          environments: .environments
+          environments: .environments | keys
 ```
 </details>
 
@@ -531,7 +581,7 @@ resources:
 <summary>Environment blueprint</summary>
 
 ```json showLineNumbers
-{
+ {
     "identifier": "launchDarklyEnvironment",
     "description": "This blueprint represents an environment in LaunchDarkly",
     "title": "LaunchDarkly Environment",
@@ -619,14 +669,13 @@ resources:
 
 </details>
 
-
 ## Let's Test It
 
-This section includes a sample response data from Launchdarkly. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+This section includes a sample response data from LaunchDarkly. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
 
 ### Payload
 
-Here is an example of the payload structure from Launchdarkly:
+Here is an example of the payload structure from LaunchDarkly:
 
 <details>
 <summary> Project response data</summary>
@@ -919,7 +968,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     },
     "temporary": true,
     "tags": [],
-    "maintainer": "Michael Armah",
+    "maintainer": "mikeyarmah@gmail.com",
     "customProperties": {},
     "archived": false,
     "variations": [
@@ -933,7 +982,6 @@ The combination of the sample payload and the Ocean configuration generates the 
         "value": false
       }
     ],
-    "maintainerEmail": "mikeyarmah@gmail.com",
     "deprecated": false
   },
   "relations": {

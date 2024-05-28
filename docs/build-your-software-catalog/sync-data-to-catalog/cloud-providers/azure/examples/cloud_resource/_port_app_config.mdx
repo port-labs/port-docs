@@ -1,0 +1,116 @@
+<details>
+
+<summary>Mapping configuration for cloud resources</summary>
+:::tip Cloud resource kind
+The `cloudResource` kind is a generic kind that can be used to map most cloud resources.
+
+The mapping requires passing the resource kind and version as a parameter inside the `resourceKinds` object.
+
+
+It is possible that some of the kinds that you want to export are not in this example, head to the bottom of the page to see how to add them.
+:::
+```yaml showLineNumbers
+resources:
+  - kind: Microsoft.App/containerApps
+    selector:
+      query: 'true'
+      apiVersion: '2022-03-01'
+    port:
+      entity:
+        mappings:
+          identifier: >-
+            .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase |
+            join("/")
+          title: .name
+          blueprint: '"azureCloudResource"'
+          properties:
+            location: .location
+            type: .type
+            tags: .tags
+          relations:
+            resource_group: >-
+              .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+              | .[:5] |join("/")
+  - kind: Microsoft.Storage/storageAccounts
+    selector:
+      query: 'true'
+      apiVersion: '2023-01-01'
+    port:
+      entity:
+        mappings:
+          identifier: >-
+            .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase |
+            join("/")
+          title: .name
+          blueprint: '"azureCloudResource"'
+          properties:
+            location: .location
+            type: .type
+            tags: .tags
+          relations:
+            resource_group: >-
+              .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+              | .[:5] |join("/")
+  - kind: Microsoft.Compute/virtualMachines
+    selector:
+      query: 'true'
+      apiVersion: '2023-03-01'
+    port:
+      entity:
+        mappings:
+          identifier: >-
+            .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase |
+            join("/")
+          title: .name
+          blueprint: '"azureCloudResource"'
+          properties:
+            location: .location
+            type: .type
+            tags: .tags
+          relations:
+            resource_group: >-
+              .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+              | .[:5] |join("/")
+  - kind: Microsoft.ContainerService/managedClusters
+    selector:
+      query: 'true'
+      apiVersion: '2023-05-01'
+    port:
+      entity:
+        mappings:
+          identifier: >-
+            .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase |
+            join("/")
+          title: .name
+          blueprint: '"azureCloudResource"'
+          properties:
+            location: .location
+            type: .type
+            tags: .tags
+          relations:
+            resource_group: >-
+              .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+              | .[:5] |join("/")
+  - kind: Microsoft.Network/loadBalancers
+    selector:
+      query: 'true'
+      apiVersion: '2023-02-01'
+    port:
+      entity:
+        mappings:
+          identifier: >-
+            .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase |
+            join("/")
+          title: .name
+          blueprint: '"azureCloudResource"'
+          properties:
+            location: .location
+            type: .type
+            tags: .tags
+          relations:
+            resource_group: >-
+              .id | split("/") | .[3] |= ascii_downcase |.[4] |= ascii_downcase
+              | .[:5] |join("/")
+```
+
+</details>

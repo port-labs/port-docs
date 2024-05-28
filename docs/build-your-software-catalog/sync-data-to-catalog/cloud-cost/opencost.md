@@ -34,7 +34,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                   | Your port client id                                                                                           | ✅       |
 | `port.clientSecret`               | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                    | Your port base url, relevant only if not using the default port app                                           | ❌       |
 | `integration.identifier`          | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`  | The event listener type                                                                                       | ✅       |
@@ -281,7 +280,56 @@ steps:
 
 ```
 </TabItem>
+<TabItem value="gitlab" label="GitLab">
+This pipeline will run the Opencost integration once and then exit, this is useful for **scheduled** ingestion of data.
 
+:::warning Realtime updates in Port
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
+
+<DockerParameters />
+
+<br/>
+
+
+Here is an example for `.gitlab-ci.yml` pipeline file:
+
+```yaml showLineNumbers
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+    
+variables:
+  INTEGRATION_TYPE: opencost
+  VERSION: latest
+
+stages:
+  - ingest
+
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+      docker run -i --rm --platform=linux/amd64 \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST=$OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST \
+        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        $IMAGE_NAME
+
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
+```
+
+</TabItem>
   </Tabs>
 
 </TabItem>
@@ -391,7 +439,7 @@ The following resources can be used to map data from OpenCost, it is possible to
 
 - The `port`, `entity` and the `mappings` keys are used to map the OpenCost object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
-  ```yaml showLineNumbers
+```yaml showLineNumbers
   resources:
     - kind: cost
       selector:

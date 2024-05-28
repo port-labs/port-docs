@@ -3,6 +3,7 @@ sidebar_position: 3
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
+import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
 
 # Create and manage Kubernetes clusters
 
@@ -403,87 +404,125 @@ jobs:
 </details>
 
 <br /> 
-- On the [self-service](https://app.getport.io/self-serve) page, create Port actions to trigger GitHub actions for creating and deleting clusters.
+- Create the Port actions for creating and deleting clusters:
+    - Head to the [self-service](https://app.getport.io/self-serve) page.
+    - Click on the `+ New Action` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste each of the following JSON configuration into the editor:
+
 
 <details>
+<GithubActionModificationHint />
 
 <summary>Create Cluster Action</summary>
 
 ```json showLineNumbers title="cluster-create-action.json"
 {
-  "identifier": "create-cluster",
+  "identifier": "cluster_create-cluster",
   "title": "Create a cluster",
-  "userInputs": {
-    "properties": {
-      "name": {
-        "type": "string",
-        "title": "Name",
-        "description": "The name of the cluster"
+  "description": "Create a new cluster.",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "description": "The name of the cluster"
+        },
+        "provider": {
+          "type": "string",
+          "title": "Provider",
+          "default": "aws",
+          "description": "The provider where the cluster is hosted",
+          "enum": [
+            "aws",
+            "azure"
+          ]
+        },
+        "node-size": {
+          "type": "string",
+          "title": "Node Size",
+          "default": "small",
+          "description": "The size of the nodes",
+          "enum": [
+            "small",
+            "medium",
+            "large"
+          ]
+        },
+        "min-node-count": {
+          "type": "string",
+          "title": "Minimum number of nodes",
+          "default": "1",
+          "description": "The minimun number of nodes (autoscaler might increase this number)"
+        }
       },
-      "provider": {
-        "type": "string",
-        "title": "Provider",
-        "default": "aws",
-        "description": "The provider where the cluster is hosted",
-        "enum": ["aws", "azure"]
-      },
-      "node-size": {
-        "type": "string",
-        "title": "Node Size",
-        "default": "small",
-        "description": "The size of the nodes",
-        "enum": ["small", "medium", "large"]
-      },
-      "min-node-count": {
-        "type": "string",
-        "title": "Minimum number of nodes",
-        "default": "1",
-        "description": "The minimun number of nodes (autoscaler might increase this number)"
-      }
+      "required": [
+        "name",
+        "provider",
+        "node-size",
+        "min-node-count"
+      ]
     },
-    "required": ["name", "provider", "node-size", "min-node-count"]
+    "blueprintIdentifier": "cluster"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB_ORG_ID>",
     "repo": "<GITHUB_REPO_ID>",
     "workflow": "create-cluster.yaml",
-    "omitPayload": true
+    "workflowInputs": {
+      "name": "{{.inputs.\"name\"}}",
+      "provider": "{{.inputs.\"provider\"}}",
+      "node-size": "{{.inputs.\"node-size\"}}",
+      "min-node-count": "{{.inputs.\"min-node-count\"}}"
+    }
   },
-  "trigger": "CREATE",
-  "description": "Create a new cluster."
+  "publish": true
 }
 ```
 
 </details>
 
 <details>
+<GithubActionModificationHint />
 
 <summary>Delete Cluster Action</summary>
 
 ```json showLineNumbers title="cluster-delete-action.json"
 {
-  "identifier": "delete-cluster",
+  "identifier": "cluster_delete-cluster",
   "title": "Delete the cluster",
-  "userInputs": {
-    "properties": {
-      "name": {
-        "type": "string",
-        "title": "Name",
-        "description": "Confirm by typing the name of the cluster"
-      }
+  "description": "Delete the cluster.",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DELETE",
+    "userInputs": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "description": "Confirm by typing the name of the cluster"
+        }
+      },
+      "required": [
+        "name"
+      ]
     },
-    "required": ["name"]
+    "blueprintIdentifier": "cluster"
   },
   "invocationMethod": {
     "type": "GITHUB",
     "org": "<GITHUB_ORG_ID>",
     "repo": "<GITHUB_REPO_ID>",
     "workflow": "delete-cluster.yaml",
-    "omitPayload": true
+    "workflowInputs": {
+      "name": "{{.inputs.\"name\"}}"
+    }
   },
-  "trigger": "DELETE",
-  "description": "Delete the cluster."
+  "publish": true
 }
 ```
 
@@ -541,3 +580,7 @@ spec:
 - Crossplane will create the cluster resources in the specified provider.
 
 Done! 🎉 You can now create and delete clusters from Port.
+
+## More relevant guides!
+
+- [Create an EKS cluster and deploy a Node.js app](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/create-eks-cluster-and-deploy-app)

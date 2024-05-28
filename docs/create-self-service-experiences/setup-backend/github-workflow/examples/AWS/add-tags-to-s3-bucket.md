@@ -88,7 +88,7 @@ Use our [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-p
 4. After creating the blueprint, create the following action with the following JSON file on the `s3_bucket` blueprint:
 
 <details>
-<summary><b>Add Tags to S3 Bucket Blueprint (Click to expand)</b></summary>
+<summary><b>Port Action: Add Tags to S3 Bucket</b></summary>
 
 :::note Customisation
 Replace the invocation method with your own repository details.
@@ -98,49 +98,49 @@ Replace the invocation method with your own repository details.
 
 ```json showLineNumbers
 {
-  "identifier": "add_tags_to_ecr_repository",
+  "identifier": "add_tags_to_s3_bucket",
   "title": "Add Tags to S3 Bucket",
   "icon": "AWS",
-  "userInputs": {
-    "properties": {
-      "repository": {
-        "icon": "DefaultProperty",
-        "title": "Repository",
-        "type": "string",
-        "blueprint": "ecrRepository",
-        "description": "Use if respository has been ingested into Port. If both Repository and Repository Name are specified, Repository takes precedence.",
-        "format": "entity"
+  "description": "Add tags to an S3 bucket",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {
+        "tags": {
+          "icon": "DefaultProperty",
+          "title": "Tags",
+          "type": "object",
+          "description": "Tags should be in key-value pairs like so: {\"key\": \"value\"}"
+        }
       },
-      "tags": {
-        "icon": "DefaultProperty",
-        "title": "Tags",
-        "type": "object",
-        "description": "Tags should be in key-value pairs like so: {\"key\": \"value\"}"
-      }
+      "required": [
+        "tags"
+      ],
+      "order": [
+        "tags"
+      ]
     },
-    "required": [
-      "tags",
-      "repository"
-    ],
-    "order": [
-      "tags",
-      "repository"
-    ]
+    "blueprintIdentifier": "s3_bucket"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    // highlight-start
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
-    // highlight-end
-    "workflow": "add-tags-to-ecr-repository.yml",
-    "omitUserInputs": false,
-    "omitPayload": false,
+    "workflow": "add-tags-to-s3-bucket.yml",
+    "workflowInputs": {
+      "tags": "{{ .inputs.tags }}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
+      }
+    },
     "reportWorkflowStatus": true
   },
-  "trigger": "CREATE",
-  "description": "Add tags to a repository on AWS ECR",
-  "requiredApproval": false
+  "requiredApproval": false,
+  "publish": true
 }
 ```
 
@@ -162,7 +162,7 @@ on:
       tags: # json object
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
         type: string
 
@@ -176,9 +176,9 @@ jobs:
         clientId: ${{ secrets.PORT_CLIENT_ID }}
         clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
         operation: PATCH_RUN
-        runId: ${{ fromJson(inputs.port_payload).context.runId }}
+        runId: ${{ fromJson(inputs.port_context).runId }}
         logMessage: |
-          Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_payload).context.entity}} ... ⛴️
+          Starting a GitHub worklfow to tag the AWS resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -190,7 +190,7 @@ jobs:
 
     - name: Add Tags to S3 Bucket
       env:
-        BUCKET_NAME: ${{ fromJson(inputs.port_payload).context.entity }}
+        BUCKET_NAME: ${{ fromJson(inputs.port_context).entity.identifier }}
         TAGS_JSON: ${{ github.event.inputs.tags }}
       run: |
         # Extract key-value pairs from the JSON object
@@ -212,8 +212,8 @@ jobs:
         clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
         baseUrl: https://api.getport.io
         operation: PATCH_RUN
-        runId: ${{fromJson(inputs.port_payload).context.runId}}
-        logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
+        runId: ${{fromJson(inputs.port_context).runId}}
+        logMessage: Added tags to ${{fromJson(inputs.port_context).entity.identifier}}
 ```
 
 </details>
