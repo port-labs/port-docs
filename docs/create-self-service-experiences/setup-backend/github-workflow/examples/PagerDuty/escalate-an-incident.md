@@ -72,7 +72,7 @@ jobs:
         id: escalate_incident
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.pagerduty.com/incidents/${{inputs.entity_identifier}}'
+          url: 'https://api.pagerduty.com/incidents/${{fromJson(inputs.port_context).entity}}'
           method: 'PUT'
           customHeaders: '{"Content-Type": "application/json", "Accept": "application/vnd.pagerduty+json;version=2", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}", "From": "${{ github.event.inputs.from }}"}'
           data: >-
@@ -109,6 +109,7 @@ jobs:
           logMessage: "Reporting the escalated incident back to Port ..."
 
       - name: Upsert pagerduty entity to Port 
+        id: upsert_entity
         uses: port-labs/port-github-action@v1
         with:
           identifier: ${{inputs.entity_identifier}}
@@ -124,6 +125,7 @@ jobs:
               "created_at": "${{ fromJson(steps.escalate_incident.outputs.response).incident.created_at }}",
               "updated_at": "${{ fromJson(steps.escalate_incident.outputs.response).incident.updated_at }}"
             }
+          relations: "${{ toJson(fromJson(inputs.port_context).relations) }}"
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
@@ -131,7 +133,7 @@ jobs:
           runId: ${{fromJson(inputs.port_context).run_id}}
 
       - name: Inform Entity upsert failure
-        if: failure()
+        if: steps.upsert_entity.outcome == 'failure'
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -141,7 +143,7 @@ jobs:
           runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Failed to report the escalated incident back to Port ..."
 
-      - name: Inform completion of PagerDuty escalation process into Port
+      - name: Inform completion of PagerDuty incident escalation
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -221,13 +223,12 @@ Create a new self service action using the following JSON configuration.
     "repo": "<GITHUB_REPO>",
     "workflow": "ecalate-an-incident.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"escalation_policy_id\")) then \"escalation_policy_id\" else null end}}": "{{.inputs.\"escalation_policy_id\"}}",
-      "{{if (.inputs | has(\"urgency\")) then \"urgency\" else null end}}": "{{.inputs.\"urgency\"}}",
-      "{{if (.inputs | has(\"from\")) then \"from\" else null end}}": "{{.inputs.\"from\"}}",
+      "escalation_policy_id": "{{.inputs.\"escalation_policy_id\"}}",
+      "urgency": "{{.inputs.\"urgency\"}}",
+      "from": "{{.inputs.\"from\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity}}",
+        "entity": "{{.entity.identifier}}",
         "run_id": "{{.run.id}}"
       }
     },

@@ -474,11 +474,10 @@ jobs:
     "repo": "<GITHUB_REPO_ID>",
     "workflow": "create-cluster.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"name\")) then \"name\" else null end}}": "{{.inputs.\"name\"}}",
-      "{{if (.inputs | has(\"provider\")) then \"provider\" else null end}}": "{{.inputs.\"provider\"}}",
-      "{{if (.inputs | has(\"node-size\")) then \"node-size\" else null end}}": "{{.inputs.\"node-size\"}}",
-      "{{if (.inputs | has(\"min-node-count\")) then \"min-node-count\" else null end}}": "{{.inputs.\"min-node-count\"}}"
+      "name": "{{.inputs.\"name\"}}",
+      "provider": "{{.inputs.\"provider\"}}",
+      "node-size": "{{.inputs.\"node-size\"}}",
+      "min-node-count": "{{.inputs.\"min-node-count\"}}"
     }
   },
   "publish": true
@@ -520,8 +519,7 @@ jobs:
     "repo": "<GITHUB_REPO_ID>",
     "workflow": "delete-cluster.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"name\")) then \"name\" else null end}}": "{{.inputs.\"name\"}}"
+      "name": "{{.inputs.\"name\"}}"
     }
   },
   "publish": true
@@ -582,3 +580,7 @@ spec:
 - Crossplane will create the cluster resources in the specified provider.
 
 Done! 🎉 You can now create and delete clusters from Port.
+
+## More relevant guides!
+
+- [Create an EKS cluster and deploy a Node.js app](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/create-eks-cluster-and-deploy-app)

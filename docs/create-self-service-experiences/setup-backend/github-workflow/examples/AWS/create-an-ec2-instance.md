@@ -290,7 +290,7 @@ on:
         type: string
       port_context:
         required: true
-        type: string
+        description: includes blueprint, run ID, and entity identifier from Port.
 jobs:
   provision-ec2:
     runs-on: ubuntu-latest
@@ -306,7 +306,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_context).runId }}
+          runId: ${{ fromJson(inputs.port_context).rund_id }}
           logMessage: |
               About to create ec2 instance ${{ github.event.inputs.ec2_name }} .. ⛴️
 
@@ -362,7 +362,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_context).runId }}
+          runId: ${{ fromJson(inputs.port_context).rund_id }}
           logMessage: |
               EC2 Instance created successfully ✅
 
@@ -373,7 +373,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_context).runId}}
+          runId: ${{ fromJson(inputs.port_context).rund_id }}
           logMessage: "Upserting created EC2 Instance to Port ... "
           
       - name: UPSERT EC2 Instance Entity
@@ -381,7 +381,7 @@ jobs:
         with:
           identifier: "${{ steps.display_outputs.outputs.instance_id }}"
           title: "${{ inputs.ec2_name }}"
-          blueprint: ec2Instance
+          blueprint: ${{ fromJson(inputs.port_context).blueprint }}
           properties: |-
             {
               "instance_state": "${{ env.instance_state }}",
@@ -401,8 +401,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_context).runId }}
-
+          runId: ${{ fromJson(inputs.port_context).rund_id }}
 
       - name: Log After Upserting Entity
         uses: port-labs/port-github-action@v1
@@ -411,8 +410,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          status: "SUCCESS"
-          runId: ${{fromJson(inputs.port_context).runId}}
+          runId: ${{ fromJson(inputs.port_context).rund_id }}
           logMessage: "Entity upserting was successful ✅"
 ```
 </details>
@@ -487,14 +485,14 @@ jobs:
     "repo": "<GITHUB_REPO>",
     "workflow": "create-ec2-instance.yaml",
     "workflowInputs": {
-      "ec2_name": "{{ .inputs.\"ec2_name\" }}",
-      "ec2_instance_type": "{{ .inputs.\"ec2_instance_type\" }}",
-      "pem_key_name": "{{ .inputs.\"pem_key_name\" }}",
+      "pem_key_name": "{{.inputs.\"pem_key_name\"}}",
+      "ec2_name": "{{.inputs.\"ec2_name\"}}",
+      "ec2_instance_type": "{{.inputs.\"ec2_instance_type\"}}",
       "port_context": {
-        "entity": "{{ .entity }}",
-        "blueprint": "{{ .action.blueprint }}",
-        "runId": "{{ .run.id }}",
-        "trigger": "{{ .trigger }}"
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}",
+        "relations": "{{.entity.relations}}"
       }
     },
     "reportWorkflowStatus": true
