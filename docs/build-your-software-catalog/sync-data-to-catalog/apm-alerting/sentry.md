@@ -47,9 +47,9 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                      | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`        | The event listener type                                                                                       | ✅       |
-| `integration.secrets.sentryToken`       | The Sentry API token                                                                                     | ✅       |
+| `integration.secrets.sentryToken`       | The Sentry API [token](https://docs.sentry.io/api/guides/create-auth-token/). The token requires `read` permissions for `Projects` and `Issue & Event`                                                                                     | ✅       |
 | `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                | ✅       |
-| `integration.config.sentryOrganization` | The Sentry organization slug                                                                                  | ✅       |
+| `integration.config.sentryOrganization` | The Sentry organization slug. For example `acme` from `https://acme.sentry.io`                                                                                 | ✅       |
 | `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
