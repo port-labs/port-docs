@@ -12,7 +12,7 @@ In addition, as cookiecutter is an open-source project you can make your own pro
 
 Follow these steps to get started with the Python template:
 
-1. Create an Azure DevOps Repository called `python_scaffolder` in your Azure Devops Organization/Project and configure a [Service Connection](/create-self-service-experiences/setup-backend/azure-pipeline#define-incoming-webhook-in-azure).
+1. Create an Azure DevOps Repository called `python_scaffolder` in your Azure Devops Organization/Project and [configure a service connection](/create-self-service-experiences/setup-backend/azure-pipeline#define-incoming-webhook-in-azure).
 
 :::note
 Use `port_trigger` for both `WebHook Name` and `Service connection name` when configuring your [Service Connection](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
@@ -59,7 +59,7 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 3. Create Port action using the following JSON definition:
 
 :::note
-Make sure to replace the placeholder for AZURE_DEVOPS_ORANZATION_NAME to where your `python_scaffolder` resides in.
+Make sure to replace the placeholder for AZURE_DEVOPS_ORGANIZATION_NAME to where your `python_scaffolder` resides in.
 Also validate that `invocationMethod.webhook` equals `port_trigger`.
 :::
 
@@ -116,34 +116,19 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
   "invocationMethod": {
     "type": "AZURE_DEVOPS",
     "webhook": "port_trigger",
-    "org": "<AZURE_DEVOPS_ORANZATION_NAME>",
+    "org": "<AZURE_DEVOPS_ORGANIZATION_NAME>",
     "payload": {
-      "action": "{{ .action.identifier[(\"microservice_\" | length):] }}",
-      "resourceType": "run",
-      "status": "TRIGGERED",
-      "trigger": "{{ .trigger | {by, origin, at} }}",
-      "context": {
-        "entity": "{{.entity.identifier}}",
-        "blueprint": "{{.action.blueprint}}",
-        "runId": "{{.run.id}}"
+      "properties": {
+        "service_name": "{{.inputs.\"service_name\"}}",
+        "azure_organization": "{{.inputs.\"azure_organization\"}}",
+        "azure_project": "{{.inputs.\"azure_project\"}}",
+        "description": "{{.inputs.\"description\"}}"
       },
-      "payload": {
-        "entity": "{{ (if .entity == {} then null else .entity end) }}",
-        "action": {
-          "invocationMethod": {
-            "type": "AZURE-DEVOPS",
-            "webhook": "port_trigger",
-            "org": "<AZURE_DEVOPS_ORANZATION_NAME>"
-          },
-          "trigger": "{{.trigger.operation}}"
-        },
-        "properties": {
-          "{{if (.inputs | has(\"service_name\")) then \"service_name\" else null end}}": "{{.inputs.\"service_name\"}}",
-          "{{if (.inputs | has(\"azure_organization\")) then \"azure_organization\" else null end}}": "{{.inputs.\"azure_organization\"}}",
-          "{{if (.inputs | has(\"azure_project\")) then \"azure_project\" else null end}}": "{{.inputs.\"azure_project\"}}",
-          "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}"
-        },
-        "censoredProperties": "{{.action.encryptedProperties}}"
+      "port_context": {
+        "entity": "{{.entity}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
       }
     }
   },
@@ -167,12 +152,12 @@ pool:
   vmImage: "ubuntu-latest"
 
 variables:
-  RUN_ID: "${{ parameters.port_trigger.context.runId }}"
-  BLUEPRINT_ID: "${{ parameters.port_trigger.context.blueprint }}"
-  SERVICE_NAME: "${{ parameters.port_trigger.payload.properties.service_name }}"
-  DESCRIPTION: "${{ parameters.port_trigger.payload.properties.description }}"
-  AZURE_ORGANIZATION: "${{ parameters.port_trigger.payload.properties.azure_organization }}"
-  AZURE_PROJECT: "${{ parameters.port_trigger.payload.properties.azure_project }}"
+  RUN_ID: "${{ parameters.port_trigger.port_context.runId }}"
+  BLUEPRINT_ID: "${{ parameters.port_trigger.port_context.blueprint }}"
+  SERVICE_NAME: "${{ parameters.port_trigger.properties.service_name }}"
+  DESCRIPTION: "${{ parameters.port_trigger.properties.description }}"
+  AZURE_ORGANIZATION: "${{ parameters.port_trigger.properties.azure_organization }}"
+  AZURE_PROJECT: "${{ parameters.port_trigger.properties.azure_project }}"
   # PERSONAL_ACCESS_TOKEN: $(PERSONAL_ACCESS_TOKEN) // set up PERSONAL_ACCESS_TOKEN as a sercet variable
 
 resources:
