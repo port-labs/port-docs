@@ -2751,10 +2751,220 @@ components:
         - displayMode
       title: /schemas/grouperWidget
 paths:
+  '/v1/blueprints/{blueprint_identifier}/permissions':
+    get:
+      description: This route allows you to retrieve the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.getport.io/build-your-software-catalog/set-catalog-rbac/examples).
+      summary: Get a blueprint's permissions
+      tags:
+        - Blueprints
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: blueprint_identifier
+          required: true
+          description: The identifier of the blueprint whose permissions you want to retrieve.
+      security:
+        - bearer:
+            - 'read:blueprints'
+      responses:
+        '200':
+          description: Default Response
+    patch:
+      summary: Patch a blueprint's permissions
+      description: This route allows you to patch the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.getport.io/build-your-software-catalog/set-catalog-rbac/examples).
+      tags:
+        - Blueprints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entities:
+                  type: object
+                  properties:
+                    register:
+                      type: object
+                      description: Define who has permissions to create entities of this blueprint.
+                      properties:
+                        users:
+                          type: array
+                          description: List of users (email addresses) that are allowed to create entities of this blueprint.
+                          items:
+                            type: string
+                        teams:
+                          type: array
+                          description: List of teams that are allowed to create entities of this blueprint.
+                          items:
+                            type: string
+                        roles:
+                          type: array
+                          description: List of roles that are allowed to create entities of this blueprint.
+                          items:
+                            type: string
+                        ownedByTeam:
+                          description: If `true`, permissions will be determined by team ownership, rather than by roles or direct assignment to users. Every user will be able to create entities belonging to their team/s.
+                          type: boolean
+                      additionalProperties: false
+                    update:
+                      type: object
+                      description: Define who has permissions to modify entities of this blueprint.
+                      properties:
+                        users:
+                          type: array
+                          description: List of users (email addresses) that are allowed to modify entities of this blueprint.
+                          items:
+                            type: string
+                        teams:
+                          type: array
+                          description: List of teams that are allowed to modify entities of this blueprint.
+                          items:
+                            type: string
+                        roles:
+                          type: array
+                          description: List of roles that are allowed to modify entities of this blueprint.
+                          items:
+                            type: string
+                        ownedByTeam:
+                          description: If `true`, permissions will be determined by team ownership, rather than by roles or direct assignment to users. Every user will be able to modify entities belonging to their team/s.
+                          type: boolean
+                      additionalProperties: false
+                    unregister:
+                      type: object
+                      description: Define who has permissions to delete entities of this blueprint.
+                      properties:
+                        users:
+                          type: array
+                          description: List of users (email addresses) that are allowed to delete entities of this blueprint.
+                          items:
+                            type: string
+                        teams:
+                          type: array
+                          description: List of teams that are allowed to delete entities of this blueprint.
+                          items:
+                            type: string
+                        roles:
+                          type: array
+                          description: List of roles that are allowed to delete entities of this blueprint.
+                          items:
+                            type: string
+                        ownedByTeam:
+                          description: If `true`, permissions will be determined by team ownership, rather than by roles or direct assignment to users. Every user will be able to delete entities belonging to their team/s.
+                          type: boolean
+                      additionalProperties: false
+                    updateProperties:
+                      type: object
+                      description: Define who has permissions to modify specific properties in entities of this blueprint.
+                      additionalProperties:
+                        type: object
+                        properties:
+                          users:
+                            type: array
+                            description: List of users (email addresses) that are allowed to modify properties in entities of this blueprint.
+                            items:
+                              type: string
+                          teams:
+                            type: array
+                            description: List of teams that are allowed to modify properties in entities of this blueprint.
+                            items:
+                              type: string
+                          roles:
+                            type: array
+                            description: List of roles that are allowed to modify properties in entities of this blueprint.
+                            items:
+                              type: string
+                          ownedByTeam:
+                            description: If `true`, permissions will be determined by team ownership, rather than by roles or direct assignment to users. Every user will be able to modify properties in entities belonging to their team/s.
+                            type: boolean
+                    updateRelations:
+                      type: object
+                      description: Define who has permissions to modify specific relations in entities of this blueprint.
+                      additionalProperties:
+                        type: object
+                        properties:
+                          users:
+                            type: array
+                            description: List of users (email addresses) that are allowed to modify relations in entities of this blueprint.
+                            items:
+                              type: string
+                          teams:
+                            type: array
+                            description: List of teams that are allowed to modify relations in entities of this blueprint.
+                            items:
+                              type: string
+                          roles:
+                            type: array
+                            description: List of roles that are allowed to modify relations in entities of this blueprint.
+                            items:
+                              type: string
+                          ownedByTeam:
+                            description: If `true`, permissions will be determined by team ownership, rather than by roles or direct assignment to users. Every user will be able to modify relations in entities belonging to their team/s.
+                            type: boolean
+                  additionalProperties: false
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: blueprint_identifier
+          required: true
+          description: The identifier of the blueprint whose permissions you want to patch.<br/>
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+  /v1/auth/access_token:
+    post:
+      summary: Create an access token
+      description: This route allows you to create an access token for your Port account. You can use this token to authenticate your requests to the Port API.<br/><br/>To obtain your client ID and client secret, go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, then click `Credentials`.
+      tags:
+        - Authentication / Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientId:
+                  type: string
+                  description: Your Port client ID
+                clientSecret:
+                  type: string
+                  description: Your Port client secret
+              additionalProperties: false
+              required:
+                - clientId
+                - clientSecret
+        required: true
+      responses:
+        '200':
+          description: Authorized successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  accessToken:
+                    type: string
+                  expiresIn:
+                    type: number
+                  tokenType:
+                    type: string
+                additionalProperties: false
+                required:
+                  - accessToken
+                  - expiresIn
+                  - tokenType
+                description: Authorized successfully
   '/v1/blueprints/{blueprint_identifier}/entities':
     post:
       summary: Create an entity
-      description: This route allows you to create an entity in your software catalog based on an existing blueprint in your data model. It can also be used to overwrite or update an existing entity.<br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      description: This route allows you to create an entity in your software catalog based on an existing blueprint in your data model. It can also be used to overwrite or update an existing entity.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       requestBody:
@@ -2950,8 +3160,8 @@ paths:
             </tr>
             </table>
     get:
-      summary: Get all blueprint's entities
-      description: This route allows you to fetch all entities in your software catalog based on a given blueprint.<br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      summary: Get all entities of a blueprint
+      description: This route allows you to fetch all entities in your software catalog based on a given blueprint.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       parameters:
@@ -3410,9 +3620,10 @@ paths:
       responses:
         '200':
           description: Default Response
-      description: This route allows you to edit a specific entity in your software catalog and update its properties.<br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      description: This route allows you to edit a specific entity in your software catalog and update its properties.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
     put:
       summary: Change an entity
+      description: This route allows you to edit a specific entity in your software catalog and update its properties.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       requestBody:
@@ -3474,6 +3685,7 @@ paths:
           description: Default Response
     get:
       summary: Get an entity
+      description: This route allows you to fetch a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       parameters:
@@ -3531,6 +3743,7 @@ paths:
           description: Default Response
     delete:
       summary: Delete an entity
+      description: This route allows you to delete a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       parameters:
@@ -3564,21 +3777,22 @@ paths:
       responses:
         '200':
           description: Deleted successfully.
-          content:
-            application/json:
-              schema:
-                description: Deleted successfully.
-                type: object
-                properties:
-                  ok:
-                    enum:
-                      - true
-                additionalProperties: false
-                required:
-                  - ok
+          # content:
+          #   application/json:
+          #     schema:
+          #       description: Deleted successfully.
+          #       type: object
+          #       properties:
+          #         ok:
+          #           enum:
+          #             - true
+          #       additionalProperties: false
+          #       required:
+          #         - ok
   '/v1/blueprints/{blueprint_identifier}/entities-count':
     get:
       summary: Get a blueprint's entity count
+      description: This route allows you to count the number of entities in a specific blueprint in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       parameters:
@@ -3596,6 +3810,7 @@ paths:
   '/v1/blueprints/{blueprint_identifier}/all-entities':
     delete:
       summary: Delete all entities of a blueprint
+      description: This route allows you to delete all entities of a specific blueprint in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       parameters:
