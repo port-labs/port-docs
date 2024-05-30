@@ -56,7 +56,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.10.0"
+      version = "~> 2.0.3"
     }
     aws = {
       source = "hashicorp/aws"
