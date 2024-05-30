@@ -4203,4 +4203,1847 @@ paths:
   #     responses:
   #       '200':
   #         description: Default Response
-
+  /v1/blueprints:
+    get:
+      summary: Get all blueprints
+      description: This route allows you to fetch all blueprints in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      tags:
+        - Blueprints
+      security:
+        - bearer:
+            - 'read:blueprints'
+      responses:
+        '200':
+          description: Default Response
+    post:
+      summary: Create a blueprint
+      description: This route allows you to create a new blueprint in your data model.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      tags:
+        - Blueprints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  description: The identifier of the new blueprint.<br/>
+                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                  maxLength: 30
+                title:
+                  type: string
+                  description: The title of the new blueprint.<br/>
+                  maxLength: 30
+                description:
+                  type: string
+                  description: The description of the new blueprint.<br/>
+                  maxLength: 200
+                icon:
+                  type: string
+                  description: The icon of the new blueprint.<br/>
+                teamInheritance:
+                  type: object
+                  description: "A relation to another blueprint from which to inherit the team. Can be any blueprint connected to this one via any number of relations. `path` is the path to the desired blueprint via relations, for example: `\"relationIdentifier.relationIdentifierInRelatedBlueprint\"`<br/>"
+                  properties:
+                    path:
+                      type: string
+                  additionalProperties: false
+                  required:
+                    - path
+                schema:
+                  type: object
+                  description: The schema of the new blueprint, see `properties` and `required` below for more information.<br/>
+                  properties:
+                    properties:
+                      type: object
+                      description: The properties of the new blueprint.<br/>
+                      propertyNames:
+                        pattern: '^[A-Za-z0-9@_=\\-]+$'
+                      additionalProperties:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                            description: The title of the property.<br/>
+                          description:
+                            type: string
+                            description: The description of the property.<br/>
+                          icon:
+                            type: string
+                            description: The icon of the property.<br/>
+                          type:
+                            description: The [type](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties) of the property.<br/>
+                            enum:
+                              - string
+                              - number
+                              - boolean
+                              - object
+                              - array
+                          format:
+                            description: The type's [format](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).<br/>
+                            enum:
+                              - date-time
+                              - url
+                              - email
+                              - ipv4
+                              - ipv6
+                              - markdown
+                              - yaml
+                              - user
+                              - team
+                              - timer
+                              - proto
+                          spec:
+                            description: The [spec](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties) of the property.<br/>
+                            enum:
+                              - open-api
+                              - embedded-url
+                              - async-api
+                        required:
+                          - type
+                    required:
+                      type: array
+                      description: The required properties of the blueprint, these must be provided when creating an entity based on this blueprint. This is an array of the required properties' identifiers.<br/>
+                      items:
+                        type: string
+                  additionalProperties: false
+                  required:
+                    - properties
+                calculationProperties:
+                  type: object
+                  description: The [calculation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) of the new blueprint.<br/>
+                  default: {}
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      icon:
+                        type: string
+                      calculation:
+                        type: string
+                      type:
+                        enum:
+                          - string
+                          - number
+                          - boolean
+                          - object
+                          - array
+                      format:
+                        enum:
+                          - date-time
+                          - url
+                          - email
+                          - ipv4
+                          - ipv6
+                          - markdown
+                          - yaml
+                          - user
+                          - team
+                          - proto
+                      spec:
+                        enum:
+                          - open-api
+                          - embedded-url
+                          - async-api
+                      colorized:
+                        type: boolean
+                      colors:
+                        type: object
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            enum:
+                              - string
+                              - number
+                              - boolean
+                              - object
+                              - array
+                          format:
+                            enum:
+                              - date-time
+                              - url
+                              - email
+                              - ipv4
+                              - ipv6
+                              - markdown
+                              - yaml
+                              - user
+                              - team
+                              - timer
+                              - proto
+                    required:
+                      - calculation
+                      - type
+                mirrorProperties:
+                  type: object
+                  description: The [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) of the new blueprint.<br/>
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      path:
+                        type: string
+                        pattern: '^(?:[A-Za-z0-9@_=\-]+\.)+?(\w|\$|@|-)*?[^\.]+$'
+                      title:
+                        type: string
+                    additionalProperties: false
+                    required:
+                      - path
+                aggregationProperties:
+                  type: object
+                  description: The [aggregation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/) of the new blueprint.<br/>
+                  default: {}
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      icon:
+                        type: string
+                      type:
+                        enum:
+                          - number
+                        default: number
+                      target:
+                        type: string
+                      calculationSpec:
+                        type: object
+                        oneOf:
+                          - oneOf:
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - average
+                                  measureTimeBy:
+                                    type: string
+                                  averageOf:
+                                    type: string
+                                    enum:
+                                      - hour
+                                      - day
+                                      - week
+                                      - month
+                                      - total
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - entities
+                                required:
+                                  - func
+                                  - calculationBy
+                                  - averageOf
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - count
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - entities
+                                required:
+                                  - func
+                                  - calculationBy
+                          - oneOf:
+                              - type: object
+                                properties:
+                                  func:
+                                    type: string
+                                    enum:
+                                      - sum
+                                      - min
+                                      - max
+                                      - median
+                                  property:
+                                    type: string
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - property
+                                additionalProperties: false
+                                required:
+                                  - func
+                                  - property
+                                  - calculationBy
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - average
+                                  measureTimeBy:
+                                    type: string
+                                  averageOf:
+                                    type: string
+                                    enum:
+                                      - hour
+                                      - day
+                                      - week
+                                      - month
+                                      - total
+                                  property:
+                                    type: string
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - property
+                                additionalProperties: false
+                                required:
+                                  - func
+                                  - property
+                                  - calculationBy
+                                  - averageOf
+                      query:
+                        $ref: '#/components/schemas/def-0'
+                    additionalProperties: false
+                    required:
+                      - title
+                      - target
+                      - calculationSpec
+                relations:
+                  type: object
+                  description: The [relations](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) of the new blueprint.<br/>
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      target:
+                        type: string
+                      required:
+                        type: boolean
+                        default: false
+                      many:
+                        type: boolean
+                        default: false
+                      description:
+                        type: string
+                    additionalProperties: false
+                    required:
+                      - target
+                      - required
+                      - many
+                # changelogDestination:
+                #   oneOf:
+                #     - type: object
+                #       properties:
+                #         type:
+                #           type: string
+                #           enum:
+                #             - WEBHOOK
+                #         agent:
+                #           type: boolean
+                #         url:
+                #           type: string
+                #           format: uri
+                #       required:
+                #         - url
+                #         - type
+                #       additionalProperties: false
+                #     - type: object
+                #       properties:
+                #         type:
+                #           type: string
+                #           enum:
+                #             - KAFKA
+                #       required:
+                #         - type
+                #       additionalProperties: false
+              additionalProperties: true
+              required:
+                - identifier
+                - title
+                - schema
+        required: true
+      security:
+        - bearer:
+            - 'create:blueprints'
+      responses:
+        '200':
+          description: Default Response
+  '/v1/blueprints/{identifier}':
+    get:
+      summary: Get a blueprint
+      description: This route allows you to fetch a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      tags:
+        - Blueprints
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The identifier of the blueprint you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'read:blueprints'
+      responses:
+        '200':
+          description: Default Response
+    put:
+      summary: Change a blueprint
+      description: This route allows you to change a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      tags:
+        - Blueprints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  description: The new identifier of the blueprint.<br/>
+                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                  maxLength: 30
+                title:
+                  type: string
+                  description: The new title of the blueprint.<br/>
+                  maxLength: 30
+                description:
+                  type: string
+                  description: The new description of the blueprint.<br/>
+                  maxLength: 200
+                icon:
+                  type: string
+                  description: The new icon of the blueprint.<br/>
+                teamInheritance:
+                  type: object
+                  description: "A new relation to another blueprint from which to inherit the team. Can be any blueprint connected to this one via any number of relations. `path` is the path to the desired blueprint via relations, for example: `\"relationIdentifier.relationIdentifierInRelatedBlueprint\"`<br/>"
+                  properties:
+                    path:
+                      type: string
+                  additionalProperties: false
+                  required:
+                    - path
+                schema:
+                  type: object
+                  description: The new schema of the blueprint, see `properties` and `required` below for more information.<br/>
+                  properties:
+                    properties:
+                      type: object
+                      description: The new properties of the blueprint.<br/>
+                      propertyNames:
+                        pattern: '^[A-Za-z0-9@_=\\-]+$'
+                      additionalProperties:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                          description:
+                            type: string
+                          icon:
+                            type: string
+                          type:
+                            enum:
+                              - string
+                              - number
+                              - boolean
+                              - object
+                              - array
+                          format:
+                            enum:
+                              - date-time
+                              - url
+                              - email
+                              - ipv4
+                              - ipv6
+                              - markdown
+                              - yaml
+                              - user
+                              - team
+                              - timer
+                              - proto
+                          spec:
+                            enum:
+                              - open-api
+                              - embedded-url
+                              - async-api
+                        required:
+                          - type
+                    required:
+                      type: array
+                      description: The new required properties of the blueprint, these must be provided when creating an entity based on this blueprint. This is an array of the required properties' identifiers.<br/>
+                      items:
+                        type: string
+                  additionalProperties: false
+                  required:
+                    - properties
+                calculationProperties:
+                  type: object
+                  description: The new [calculation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) of the blueprint.<br/>
+                  default: {}
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      icon:
+                        type: string
+                      calculation:
+                        type: string
+                      type:
+                        enum:
+                          - string
+                          - number
+                          - boolean
+                          - object
+                          - array
+                      format:
+                        enum:
+                          - date-time
+                          - url
+                          - email
+                          - ipv4
+                          - ipv6
+                          - markdown
+                          - yaml
+                          - user
+                          - team
+                          - proto
+                      spec:
+                        enum:
+                          - open-api
+                          - embedded-url
+                          - async-api
+                      colorized:
+                        type: boolean
+                      colors:
+                        type: object
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            enum:
+                              - string
+                              - number
+                              - boolean
+                              - object
+                              - array
+                          format:
+                            enum:
+                              - date-time
+                              - url
+                              - email
+                              - ipv4
+                              - ipv6
+                              - markdown
+                              - yaml
+                              - user
+                              - team
+                              - timer
+                              - proto
+                    required:
+                      - calculation
+                      - type
+                mirrorProperties:
+                  type: object
+                  description: The new [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) of the blueprint.<br/>
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      path:
+                        type: string
+                        pattern: '^(?:[A-Za-z0-9@_=\-]+\.)+?(\w|\$|@|-)*?[^\.]+$'
+                      title:
+                        type: string
+                    additionalProperties: false
+                    required:
+                      - path
+                aggregationProperties:
+                  type: object
+                  description: The new [aggregation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/) of the blueprint.<br/>
+                  default: {}
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      icon:
+                        type: string
+                      type:
+                        enum:
+                          - number
+                        default: number
+                      target:
+                        type: string
+                      calculationSpec:
+                        type: object
+                        oneOf:
+                          - oneOf:
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - average
+                                  measureTimeBy:
+                                    type: string
+                                  averageOf:
+                                    type: string
+                                    enum:
+                                      - hour
+                                      - day
+                                      - week
+                                      - month
+                                      - total
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - entities
+                                required:
+                                  - func
+                                  - calculationBy
+                                  - averageOf
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - count
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - entities
+                                required:
+                                  - func
+                                  - calculationBy
+                          - oneOf:
+                              - type: object
+                                properties:
+                                  func:
+                                    type: string
+                                    enum:
+                                      - sum
+                                      - min
+                                      - max
+                                      - median
+                                  property:
+                                    type: string
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - property
+                                additionalProperties: false
+                                required:
+                                  - func
+                                  - property
+                                  - calculationBy
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - average
+                                  measureTimeBy:
+                                    type: string
+                                  averageOf:
+                                    type: string
+                                    enum:
+                                      - hour
+                                      - day
+                                      - week
+                                      - month
+                                      - total
+                                  property:
+                                    type: string
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - property
+                                additionalProperties: false
+                                required:
+                                  - func
+                                  - property
+                                  - calculationBy
+                                  - averageOf
+                      query:
+                        $ref: '#/components/schemas/def-0'
+                    additionalProperties: false
+                    required:
+                      - title
+                      - target
+                      - calculationSpec
+                relations:
+                  type: object
+                  description: The new [relations](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) of the blueprint.<br/>
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      target:
+                        type: string
+                      required:
+                        type: boolean
+                        default: false
+                      many:
+                        type: boolean
+                        default: false
+                      description:
+                        type: string
+                    additionalProperties: false
+                    required:
+                      - target
+                      - required
+                      - many
+                # changelogDestination:
+                #   oneOf:
+                #     - type: object
+                #       properties:
+                #         type:
+                #           type: string
+                #           enum:
+                #             - WEBHOOK
+                #         agent:
+                #           type: boolean
+                #         url:
+                #           type: string
+                #           format: uri
+                #       required:
+                #         - url
+                #         - type
+                #       additionalProperties: false
+                #     - type: object
+                #       properties:
+                #         type:
+                #           type: string
+                #           enum:
+                #             - KAFKA
+                #       required:
+                #         - type
+                #       additionalProperties: false
+              additionalProperties: true
+              required:
+                - title
+                - schema
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The identifier of the blueprint you want to change.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+    patch:
+      summary: Patch a blueprint
+      description: This route allows you to patch a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      tags:
+        - Blueprints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  description: The new identifier of the blueprint.<br/>
+                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                  maxLength: 30
+                title:
+                  type: string
+                  description: The new title of the blueprint.<br/>
+                  maxLength: 30
+                description:
+                  type: string
+                  description: The new description of the blueprint.<br/>
+                  maxLength: 200
+                icon:
+                  type: string
+                  description: The new icon of the blueprint.<br/>
+                teamInheritance:
+                  type: object
+                  description: "A new relation to another blueprint from which to inherit the team. Can be any blueprint connected to this one via any number of relations. `path` is the path to the desired blueprint via relations, for example: `\"relationIdentifier.relationIdentifierInRelatedBlueprint\"`<br/>"
+                  properties:
+                    path:
+                      type: string
+                      description: The path to the desired blueprint via relations.<br/>
+                  additionalProperties: false
+                  required:
+                    - path
+                schema:
+                  type: object
+                  description: The new schema of the blueprint, see `properties` and `required` below for more information.<br/>
+                  properties:
+                    properties:
+                      type: object
+                      description: The new properties of the blueprint.<br/>
+                      propertyNames:
+                        pattern: '^[A-Za-z0-9@_=\\-]+$'
+                      additionalProperties:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                          description:
+                            type: string
+                          icon:
+                            type: string
+                          type:
+                            enum:
+                              - string
+                              - number
+                              - boolean
+                              - object
+                              - array
+                          format:
+                            enum:
+                              - date-time
+                              - url
+                              - email
+                              - ipv4
+                              - ipv6
+                              - markdown
+                              - yaml
+                              - user
+                              - team
+                              - timer
+                              - proto
+                          spec:
+                            enum:
+                              - open-api
+                              - embedded-url
+                              - async-api
+                    required:
+                      type: array
+                      description: The new required properties of the blueprint, these must be provided when creating an entity based on this blueprint. This is an array of the required properties' identifiers.<br/>
+                      items:
+                        type: string
+                  additionalProperties: false
+                  required:
+                    - properties
+                calculationProperties:
+                  type: object
+                  description: The new [calculation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) of the blueprint.<br/>
+                  default: {}
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      icon:
+                        type: string
+                      calculation:
+                        type: string
+                      type:
+                        enum:
+                          - string
+                          - number
+                          - boolean
+                          - object
+                          - array
+                      format:
+                        enum:
+                          - date-time
+                          - url
+                          - email
+                          - ipv4
+                          - ipv6
+                          - markdown
+                          - yaml
+                          - user
+                          - team
+                          - proto
+                      spec:
+                        enum:
+                          - open-api
+                          - embedded-url
+                          - async-api
+                      colorized:
+                        type: boolean
+                      colors:
+                        type: object
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            enum:
+                              - string
+                              - number
+                              - boolean
+                              - object
+                              - array
+                          format:
+                            enum:
+                              - date-time
+                              - url
+                              - email
+                              - ipv4
+                              - ipv6
+                              - markdown
+                              - yaml
+                              - user
+                              - team
+                              - timer
+                              - proto
+                    required:
+                      - calculation
+                      - type
+                mirrorProperties:
+                  type: object
+                  description: The new [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) of the blueprint.<br/>
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      path:
+                        type: string
+                        pattern: '^(?:[A-Za-z0-9@_=\-]+\.)+?(\w|\$|@|-)*?[^\.]+$'
+                      title:
+                        type: string
+                    additionalProperties: false
+                    required:
+                      - path
+                aggregationProperties:
+                  type: object
+                  description: The new [aggregation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/) of the blueprint.<br/>
+                  default: {}
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      icon:
+                        type: string
+                      type:
+                        enum:
+                          - number
+                        default: number
+                      target:
+                        type: string
+                      calculationSpec:
+                        type: object
+                        oneOf:
+                          - oneOf:
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - average
+                                  measureTimeBy:
+                                    type: string
+                                  averageOf:
+                                    type: string
+                                    enum:
+                                      - hour
+                                      - day
+                                      - week
+                                      - month
+                                      - total
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - entities
+                                required:
+                                  - func
+                                  - calculationBy
+                                  - averageOf
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - count
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - entities
+                                required:
+                                  - func
+                                  - calculationBy
+                          - oneOf:
+                              - type: object
+                                properties:
+                                  func:
+                                    type: string
+                                    enum:
+                                      - sum
+                                      - min
+                                      - max
+                                      - median
+                                  property:
+                                    type: string
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - property
+                                additionalProperties: false
+                                required:
+                                  - func
+                                  - property
+                                  - calculationBy
+                              - type: object
+                                properties:
+                                  func:
+                                    enum:
+                                      - average
+                                  measureTimeBy:
+                                    type: string
+                                  averageOf:
+                                    type: string
+                                    enum:
+                                      - hour
+                                      - day
+                                      - week
+                                      - month
+                                      - total
+                                  property:
+                                    type: string
+                                  calculationBy:
+                                    type: string
+                                    enum:
+                                      - property
+                                additionalProperties: false
+                                required:
+                                  - func
+                                  - property
+                                  - calculationBy
+                                  - averageOf
+                      query:
+                        $ref: '#/components/schemas/def-0'
+                    additionalProperties: false
+                    required:
+                      - title
+                      - target
+                      - calculationSpec
+                relations:
+                  type: object
+                  description: The new [relations](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) of the blueprint.<br/>
+                  propertyNames:
+                    pattern: '^[A-Za-z0-9@_=\\-]+$'
+                  additionalProperties:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      target:
+                        type: string
+                      required:
+                        type: boolean
+                        default: false
+                      many:
+                        type: boolean
+                        default: false
+                      description:
+                        type: string
+                    additionalProperties: false
+                    required:
+                      - target
+                      - required
+                      - many
+                # changelogDestination:
+                #   oneOf:
+                #     - type: object
+                #       properties:
+                #         type:
+                #           type: string
+                #           enum:
+                #             - WEBHOOK
+                #         agent:
+                #           type: boolean
+                #         url:
+                #           type: string
+                #           format: uri
+                #       required:
+                #         - url
+                #         - type
+                #       additionalProperties: false
+                #     - type: object
+                #       properties:
+                #         type:
+                #           type: string
+                #           enum:
+                #             - KAFKA
+                #       required:
+                #         - type
+                #       additionalProperties: false
+              additionalProperties: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The identifier of the blueprint you want to patch.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+    delete:
+      summary: Delete a blueprint
+      description: This route allows you to delete a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      tags:
+        - Blueprints
+      parameters:
+        - schema:
+            type: boolean
+          in: query
+          name: delete_actions
+          description: If `true`, all self-service actions associated with this blueprint will be deleted as well.<br/>
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The identifier of the blueprint you want to delete.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Deleted successfully.
+          # content:
+          #   application/json:
+          #     schema:
+          #       description: Deleted successfully.
+          #       type: object
+          #       properties:
+          #         ok:
+          #           enum:
+          #             - true
+          #       additionalProperties: false
+          #       required:
+          #         - ok
+  '/v1/blueprints/{identifier}/properties/{property_name}/rename':
+    patch:
+      summary: Rename a property in a blueprint
+      description: This route allows you to change the identifier of a property in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      tags:
+        - Blueprints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newPropertyName:
+                  type: string
+                  description: The new identifier of the property.<br/>
+                  pattern: '^[A-Za-z0-9@_=\\-]+$'
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The identifier of the blueprint you want to change.<br/>
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: property_name
+          description: The identifier of the property you want to rename.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+  '/v1/blueprints/{identifier}/mirror/{mirror_name}/rename':
+    patch:
+      summary: Rename a blueprint's mirror property
+      description: This route allows you to change the identifier of a mirror property in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      tags:
+        - Blueprints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newMirrorName:
+                  type: string
+                  description: The new identifier of the mirror property.<br/>
+                  pattern: '^[A-Za-z0-9@_=\\-]+$'
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The identifier of the blueprint you want to change.<br/>
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: mirror_name
+          description: The identifier of the mirror property you want to rename.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+  '/v1/blueprints/{identifier}/relations/{relation_identifier}/rename':
+    patch:
+      summary: Rename a blueprint's relation
+      description: This route allows you to change the identifier of a relation in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      tags:
+        - Blueprints
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newRelationIdentifier:
+                  type: string
+                  description: The new identifier of the relation.<br/>
+                  pattern: '^[A-Za-z0-9@_=\\-]+$'
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The identifier of the blueprint you want to change.<br/>
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: relation_identifier
+          description: The identifier of the relation you want to rename.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+  /v1/actions:
+    post:
+      summary: Create an action
+      description: This route allows you to create a new self-service action in your Port account.<br/><br/>To learn more about actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/).
+      tags:
+        - Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  description: The identifier of the new action.<br/>
+                  pattern: ^[A-Za-z0-9@_.:\\/=-]+$
+                title:
+                  type: string
+                  description: The title of the new action.<br/>
+                icon:
+                  type: string
+                  description: The icon of the new action.<br/>
+                description:
+                  type: string
+                  description: The description of the new action.<br/>
+                trigger:
+                  oneOf:
+                    - type: object
+                      description: The trigger definition of the new action.<br/>
+                      title: Self-service
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - self-service
+                        blueprintIdentifier:
+                          type: string
+                          description: The identifier of the blueprint that the action is associated with. Note that this is optional, as actions do not have to be tied directly to a blueprint.<br/>
+                        operation:
+                          type: string
+                          description: The [operation type](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
+                          enum:
+                            - CREATE
+                            - DELETE
+                            - DAY-2
+                        userInputs:
+                          type: object
+                          description: The [user inputs](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
+                          properties:
+                            properties:
+                              type: object
+                              propertyNames:
+                                pattern: ^[A-Za-z0-9@_=\\-]+$
+                              additionalProperties:
+                                type: object
+                                properties:
+                                  type:
+                                    enum:
+                                      - string
+                                      - number
+                                      - boolean
+                                      - object
+                                      - array
+                                  format:
+                                    enum:
+                                      - date-time
+                                      - url
+                                      - email
+                                      - ipv4
+                                      - ipv6
+                                      - yaml
+                                      - entity
+                                      - user
+                                      - team
+                                      - proto
+                                      - markdown
+                                  blueprint:
+                                    type: string
+                                    description: When using the `entity` format, this is the identifier of the blueprint whose entities will be selectable via this input.<br/>
+                                  dependsOn:
+                                    type: array
+                                    description: The identifiers of the inputs that this input depends on. This input will be disabled until they have been given a value.<br/>
+                                    items:
+                                      type: string
+                                  visible:
+                                    description: The visibility of the input. Resolves to a boolean value (`true` = visible).<br/>
+                                    oneOf:
+                                      - type: object
+                                        title: jqQuery
+                                        properties:
+                                          jqQuery:
+                                            type: string
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves to `true` or `false`, determining the visibility of the input.<br/>
+                                        required:
+                                          - jqQuery
+                                        additionalProperties: false
+                                      - type: boolean
+                                        title: boolean
+                                        description: A boolean value determining the visibility of the input.<br/>
+                                  icon:
+                                    type: string
+                                    description: The icon of the input.<br/>
+                                  dataset:
+                                    type: object
+                                    properties:
+                                      combinator:
+                                        type: string
+                                        description: The combinator to use when calculating the rules.<br/>
+                                        enum:
+                                          - and
+                                          - or
+                                      rules:
+                                        type: array
+                                        minItems: 1
+                                        items:
+                                          anyOf:
+                                            - type: object
+                                              title: Empty Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - isEmpty
+                                                    - isNotEmpty
+                                                property:
+                                                  type: string
+                                              required:
+                                                - operator
+                                                - property
+                                              additionalProperties: false
+                                            - type: object
+                                              title: Date Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - between
+                                                    - notBetween
+                                                    - =
+                                                value:
+                                                  type: object
+                                                  oneOf:
+                                                    - type: object
+                                                      properties:
+                                                        from:
+                                                          type: string
+                                                          format: date-time
+                                                        to:
+                                                          type: string
+                                                          format: date-time
+                                                      required:
+                                                        - from
+                                                        - to
+                                                    - type: object
+                                                      properties:
+                                                        preset:
+                                                          type: string
+                                                          enum:
+                                                            - today
+                                                            - tomorrow
+                                                            - yesterday
+                                                            - lastWeek
+                                                            - last2Weeks
+                                                            - lastMonth
+                                                            - last3Months
+                                                            - last6Months
+                                                            - last12Months
+                                                      required:
+                                                        - preset
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                              additionalProperties: false
+                                            - type: object
+                                              title: Number Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - ">"
+                                                    - ">="
+                                                    - <
+                                                    - <=
+                                                value:
+                                                  oneOf:
+                                                    - type:
+                                                        - number
+                                                    - type: object
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                              additionalProperties: false
+                                            - type: object
+                                              title: String Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - =
+                                                    - "!="
+                                                    - containsAny
+                                                    - contains
+                                                    - doesNotContains
+                                                    - beginsWith
+                                                    - doesNotBeginsWith
+                                                    - endsWith
+                                                    - doesNotEndsWith
+                                                    - in
+                                                    - notIn
+                                                value:
+                                                  anyOf:
+                                                    - type: "null"
+                                                    - type: string
+                                                    - type: number
+                                                    - type: boolean
+                                                    - type: array
+                                                      items:
+                                                        type: string
+                                                    - type: string
+                                                      format: date-time
+                                                    - type: object
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              additionalProperties: false
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                            - type: object
+                                              title: Relation Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - relatedTo
+                                                blueprint:
+                                                  type: string
+                                                value:
+                                                  anyOf:
+                                                    - type: string
+                                                    - type: object
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                                direction:
+                                                  enum:
+                                                    - upstream
+                                                    - downstream
+                                                required:
+                                                  type: boolean
+                                              additionalProperties: false
+                                              required:
+                                                - operator
+                                                - value
+                                                - blueprint
+                                            - type: object
+                                              title: Schema Rule
+                                              properties:
+                                                propertySchema:
+                                                  type: object
+                                                  properties:
+                                                    type:
+                                                      type: string
+                                                    format:
+                                                      type: string
+                                                  required:
+                                                    - type
+                                                  additionalProperties: false
+                                                operator:
+                                                  enum:
+                                                    - =
+                                                    - "!="
+                                                value:
+                                                  anyOf:
+                                                    - type: "null"
+                                                    - type: string
+                                                    - type: number
+                                                    - type: boolean
+                                                    - type: object
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              required:
+                                                - operator
+                                                - propertySchema
+                                              additionalProperties: false
+                                    required:
+                                      - combinator
+                                      - rules
+                                required:
+                                  - type
+                            required:
+                              description: The required inputs' identifier/s. The inputs specified in this array must be given a value when executing the action.<br/>
+                              oneOf:
+                                - type: object
+                                  title: jqQuery
+                                  description: A jq query that resolves to an array of the required inputs' identifiers.<br/>
+                                  properties:
+                                    jqQuery:
+                                      type: string
+                                  required:
+                                    - jqQuery
+                                  additionalProperties: false
+                                - type: array
+                                  title: array
+                                  description: An array of the required inputs' identifiers.<br/>
+                                  items:
+                                    type: string
+                            order:
+                              type: array
+                              description: The order of the inputs. The order of the identifiers in this array will determine the order of the inputs in the UI.<br/>
+                              items:
+                                type: string
+                          additionalProperties: false
+                          required:
+                            - properties
+                      required:
+                        - type
+                        - operation
+                        - userInputs
+                      additionalProperties: false
+                invocationMethod:
+                  description: Details the action's backend type and details.<br/>
+                  oneOf:
+                    - type: object
+                      title: Kafka
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - KAFKA
+                        payload:
+                          description: An object containing the [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload).<br/>
+                          type: object
+                          # oneOf:
+                          #   - type: array
+                          #   - type: object
+                      required:
+                        - type
+                      additionalProperties: false
+                    - type: object
+                      title: Webhook
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - WEBHOOK
+                        url:
+                          type: string
+                          description: The URL of the webhook.<br/>
+                        agent:
+                          type: boolean
+                          description: If `true`, Port's [execution agent](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/) will be used to handle invocations of this action.<br/>
+                          # oneOf:
+                          #   - type: boolean
+                          #   - type: string
+                        synchronized:
+                          type: boolean
+                          description: If `true`, the action will be executed [synchronously](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/#sync-vs-async-execution).<br/>
+                          # oneOf:
+                          #   - type: boolean
+                          #   - type: string
+                        method:
+                          type: string
+                          description: The HTTP method of the webhook (`POST`, `PUT`, `PATCH`, or `DELETE`).<br/>
+                        headers:
+                          type: object
+                          description: "A JSON object containing the headers to be sent to the webhook in each execution, in `"key"`:`"value"` pairs.<br/>"
+                          # additionalProperties:
+                          #   type: string
+                        body:
+                          type: object
+                          description: The body sent to the webhook in each execution. This is where the [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) is specified.<br/>
+                          # oneOf:
+                          #   - type: array
+                          #   - type: object
+                      required:
+                        - type
+                        - url
+                      additionalProperties: false
+                    - type: object
+                      title: GitHub
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - GITHUB
+                        org:
+                          type: string
+                          description: The Github organization in which the workflow is located.<br/>
+                        repo:
+                          type: string
+                          description: The Github repository in which the workflow is located.<br/>
+                        workflow:
+                          type: string
+                          description: The name of the workflow (YAML file) to trigger. The file should be placed under `.github/workflows/`.<br/>
+                        workflowInputs:
+                          type: object
+                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Github upon execution.<br/>
+                        reportWorkflowStatus:
+                          type: boolean
+                          description: If `true`, the action run will update its status automatically based on the workflow's result (pass/fail).<br/>
+                          # oneOf:
+                          #   - type: boolean
+                          #   - type: string
+                      required:
+                        - type
+                        - org
+                        - repo
+                        - workflow
+                      additionalProperties: false
+                    - type: object
+                      title: GitLab
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - GITLAB
+                        projectName:
+                          type: string
+                          description: The GitLab project in which the pipeline is located.<br/>
+                        groupName:
+                          type: string
+                          description: The GitLab group in which the project is located.<br/>
+                        defaultRef:
+                          type: string
+                          description: The default ref (branch/tag name) we want the action to use. Default ref can be overridden dynamically by adding "ref" as a user input. If not set, the agent triggers the `main` branch.
+                        pipelineVariables:
+                          type: object
+                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to GitLab upon execution.<br/>
+                      required:
+                        - type
+                        - projectName
+                        - groupName
+                      additionalProperties: false
+                    - type: object
+                      title: Azure DevOps
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - AZURE_DEVOPS
+                        webhook:
+                          type: string
+                          description: The name of the webhook resource in the Azure YAML pipeline file.<br/>
+                        org:
+                          type: string
+                          description: The Azure DevOps organization in which the pipeline is located.<br/>
+                        payload:
+                          type: object
+                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Azure DevOps upon execution.<br/>
+                          # oneOf:
+                          #   - type: array
+                          #   - type: object
+                      required:
+                        - type
+                        - webhook
+                        - org
+                      additionalProperties: false
+                requiredApproval:
+                  type: boolean
+                  description: If `true`, the action will require approval for each execution.<br/>
+                approvalNotification:
+                  type: object
+                  description: The notification configuration for the approval process. Relevant only if `requiredApproval` is set to `true`.<br/>
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                        - webhook
+                        - email
+                      default: email
+                  oneOf:
+                    - type: object
+                      title: Webhook
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - webhook
+                        format:
+                          type: string
+                          enum:
+                            - json
+                            - slack
+                        url:
+                          type: string
+                          description: The URL of the webhook.<br/>
+                          format: uri
+                      required:
+                        - type
+                        - url
+                      additionalProperties: false
+                    - type: object
+                      title: Email
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - email
+                      required:
+                        - type
+                      additionalProperties: false
+                  required:
+                    - type
+                publish:
+                  type: boolean
+                  description: If `true`, the action will be visible to all users and available for use.<br/>
+              additionalProperties: false
+              required:
+                - identifier
+                - trigger
+                - invocationMethod
+        required: true
+      security:
+        - bearer:
+            - create:actions
+      responses:
+        "200":
+          description: Default Response
+    get:
+      summary: Get actions
+      description: This route allows you to fetch one or more self-service actions in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions that match the criteria.<br/><br/>To learn more about actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/).
+      tags:
+        - Actions
+      parameters:
+        - schema:
+            type: array
+            items:
+              type: string
+          in: query
+          name: action_identifier
+          description: The identifier/s of the action/s you want to fetch.<br/>
+          required: false
+        - schema:
+            type: array
+            items:
+              type: string
+          in: query
+          name: blueprint_identifier
+          description: The identifier/s of the blueprint/s whose actions you wish to fetch.<br/>
+          required: false
+        - schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - CREATE
+                - DELETE
+                - DAY-2
+          in: query
+          name: operation
+          description: The [operation type/s](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch.<br/>
+          required: false
+        - schema:
+            type: boolean
+          in: query
+          name: published
+          description: If `true`, only published actions will be fetched.<br/>
+          required: false
+        - schema:
+            type: string
+            enum:
+              - self-service
+          in: query
+          name: trigger_type
+          required: false
+        - schema:
+            type: string
+            enum:
+              - v1
+              - v2
+          in: query
+          name: version
+          required: false
+      security:
+        - bearer:
+            - read:actions
+      responses:
+        "200":
+          description: Default Response
