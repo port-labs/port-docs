@@ -696,7 +696,7 @@ resources:
   - kind: issue
     selector:
       query: "true"
-      jql: "status != Done"
+      jql: "statusCategory != Done"
     port:
       entity:
         mappings:
@@ -708,9 +708,9 @@ resources:
             status: .fields.status.name
             issueType: .fields.issuetype.name
             components: .fields.components
-            assignee: .fields.assignee.displayName
-            reporter: .fields.reporter.displayName
-            creator: .fields.creator.displayName
+            assignee: .fields.assignee.emailAddress
+            reporter: .fields.reporter.emailAddress
+            creator: .fields.creator.emailAddress
             priority: .fields.priority.id
             created: .fields.created
             updated: .fields.updated
@@ -985,9 +985,9 @@ The combination of the sample payload and the Ocean configuration generates the 
     "status": "To Do",
     "issueType": "Task",
     "components": [],
-    "assignee": "User Name",
-    "reporter": "User Name",
-    "creator": "User Name",
+    "assignee": "username@example.com.io",
+    "reporter": "username@example.com.io",
+    "creator": "username@example.com.io",
     "priority": "3",
     "created": "2023-11-06T11:02:59.000+0000",
     "updated": "2023-11-06T11:03:18.244+0000"
@@ -1005,6 +1005,44 @@ The combination of the sample payload and the Ocean configuration generates the 
 ```
 
 </details>
+
+## Getting user emails from Jira
+
+By default, Jira does not attach user emails to its API responses. For example, when making an API request to Jira to get an issue, fields such as `assignee`, `creator`, `reporter` and other user fields, will only include information such as the internal user ID and user display name, but not the user email.
+
+In order to display the user email in API responses (and also use that data in the mapping from Jira to Port), please follow these steps:
+
+### Verify your domain in Jira
+
+To verify your domain in Jira:
+
+- Go to the [Jira admin panel](https://admin.atlassian.com/).
+- Go to the **Settings** tab.
+- Select **Domains** in the sidebar on the left.
+- If your domain (for example - `acme.com`) does not appear in the list, click on **Add domain**.
+- Enter your domain name and click on **Next**.
+- Verify your domain ownership in whichever way is convenient for you.
+
+When you are done, you will see in the domain menu that your domain is listed, and its status is `VERIFIED` under the **Domain status** column.
+
+### Claim your Jira users
+
+To claim your user accounts in Jira:
+
+- Go to the [Jira admin panel](https://admin.atlassian.com/).
+- Go to the **Settings** tab.
+- Select **Domains** in the sidebar on the left.
+- Find your verified domain in the list whose accounts need to be claimed.
+- Click the 3 horizontal dots (`...`) under the **Actions** column.
+- Select **Claim accounts**.
+- You will receive an email from Jira when the claim process is complete.
+
+That's it! Now Jira API responses will include the `emailAddress` field when returning a user that exists in Jira.
+
+:::tip Jira docs
+All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
+:::
+
 
 ## Alternative installation via webhook
 
