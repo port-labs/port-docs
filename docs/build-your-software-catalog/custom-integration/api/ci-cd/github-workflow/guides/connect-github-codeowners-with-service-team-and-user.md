@@ -516,7 +516,9 @@ This workflow will run on every change made to the branches specified to ensure 
 
 5. Add content to your `CODEOWNERS` file and wait for data to be ingested into Port:
 
-<img src='static/img/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/gitHubCodeownersAfterIngestionIntoPort.png' border='1px' />
+<img src='/img/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/gitHubCodeownersAfterIngestionIntoPort.png' border='1px' />
+<br />
+<img src='/img/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/gitHubCodeownersPatternAfterIngestionIntoPort.png' border='1px' />
 <br />
 
 You have successfully mapped `CODEOWNERS` information using a GitHub workflow, into Port.
