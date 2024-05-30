@@ -564,5 +564,5 @@ html[data-theme="dark"] .openapi-schema__list-item {
 }
 
 .badge {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem !important;
 }

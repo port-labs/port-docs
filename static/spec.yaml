@@ -4906,1688 +4906,1688 @@ paths:
   #     responses:
   #       '200':
   #         description: Default Response
-  '/v1/blueprints/{identifier}/relations/{relation_identifier}/rename':
-    patch:
-      summary: Rename a blueprint's relation
-      tags:
-        - Blueprints
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                newRelationIdentifier:
-                  type: string
-                  pattern: '^[A-Za-z0-9@_=\\-]+$'
-              additionalProperties: false
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: identifier
-          required: true
-        - schema:
-            type: string
-          in: path
-          name: relation_identifier
-          required: true
-      security:
-        - bearer: []
-      responses:
-        '200':
-          description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/actions':
-    post:
-      summary: Create a blueprint action
-      tags:
-        - Actions
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                identifier:
-                  type: string
-                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                title:
-                  type: string
-                icon:
-                  type: string
-                description:
-                  type: string
-                trigger:
-                  type: string
-                  enum:
-                    - CREATE
-                    - DELETE
-                    - DAY-2
-                requiredApproval:
-                  type: boolean
-                invocationMethod:
-                  oneOf:
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - GITHUB
-                        org:
-                          type: string
-                        repo:
-                          type: string
-                        workflow:
-                          type: string
-                        omitPayload:
-                          type: boolean
-                        omitUserInputs:
-                          type: boolean
-                        reportWorkflowStatus:
-                          type: boolean
-                      required:
-                        - type
-                        - org
-                        - repo
-                        - workflow
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - GITLAB
-                        projectName:
-                          type: string
-                        groupName:
-                          type: string
-                        omitPayload:
-                          type: boolean
-                        omitUserInputs:
-                          type: boolean
-                        defaultRef:
-                          type: string
-                        agent:
-                          enum:
-                            - true
-                      required:
-                        - type
-                        - projectName
-                        - groupName
-                        - agent
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - AZURE-DEVOPS
-                        webhook:
-                          type: string
-                        org:
-                          type: string
-                      required:
-                        - type
-                        - org
-                        - webhook
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - WEBHOOK
-                        agent:
-                          type: boolean
-                        url:
-                          type: string
-                          format: uri
-                        synchronized:
-                          type: boolean
-                        method:
-                          type: string
-                          enum:
-                            - POST
-                            - DELETE
-                            - PATCH
-                            - PUT
-                      required:
-                        - url
-                        - type
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - KAFKA
-                      required:
-                        - type
-                      additionalProperties: false
-                userInputs:
-                  type: object
-                  properties:
-                    properties:
-                      type: object
-                      propertyNames:
-                        pattern: '^[A-Za-z0-9@_=\\-]+$'
-                      additionalProperties:
-                        type: object
-                        properties:
-                          type:
-                            enum:
-                              - string
-                              - number
-                              - boolean
-                              - object
-                              - array
-                          format:
-                            enum:
-                              - date-time
-                              - url
-                              - email
-                              - ipv4
-                              - ipv6
-                              - yaml
-                              - entity
-                              - user
-                              - team
-                              - proto
-                          blueprint:
-                            type: string
-                          dependsOn:
-                            type: array
-                            items:
-                              type: string
-                          visible:
-                            oneOf:
-                              - type: object
-                                properties:
-                                  jqQuery:
-                                    type: string
-                                required:
-                                  - jqQuery
-                                additionalProperties: false
-                              - type: boolean
-                          icon:
-                            type: string
-                          dataset:
-                            type: object
-                            properties:
-                              combinator:
-                                type: string
-                                enum:
-                                  - and
-                                  - or
-                              rules:
-                                type: array
-                                minItems: 1
-                                items:
-                                  anyOf:
-                                    - type: object
-                                      properties:
-                                        operator:
-                                          enum:
-                                            - isEmpty
-                                            - isNotEmpty
-                                        property:
-                                          type: string
-                                      required:
-                                        - operator
-                                        - property
-                                      additionalProperties: false
-                                    - type: object
-                                      properties:
-                                        property:
-                                          type: string
-                                        operator:
-                                          enum:
-                                            - between
-                                            - notBetween
-                                            - =
-                                        value:
-                                          type: object
-                                          oneOf:
-                                            - type: object
-                                              properties:
-                                                from:
-                                                  type: string
-                                                  format: date-time
-                                                to:
-                                                  type: string
-                                                  format: date-time
-                                              required:
-                                                - from
-                                                - to
-                                            - type: object
-                                              properties:
-                                                preset:
-                                                  type: string
-                                                  enum:
-                                                    - today
-                                                    - tomorrow
-                                                    - yesterday
-                                                    - lastWeek
-                                                    - last2Weeks
-                                                    - lastMonth
-                                                    - last3Months
-                                                    - last6Months
-                                                    - last12Months
-                                              required:
-                                                - preset
-                                      required:
-                                        - property
-                                        - operator
-                                        - value
-                                      additionalProperties: false
-                                    - type: object
-                                      properties:
-                                        property:
-                                          type: string
-                                        operator:
-                                          enum:
-                                            - '>'
-                                            - '>='
-                                            - <
-                                            - <=
-                                        value:
-                                          oneOf:
-                                            - type:
-                                                - number
-                                            - type: object
-                                              properties:
-                                                jqQuery:
-                                                  type: string
-                                              required:
-                                                - jqQuery
-                                              additionalProperties: false
-                                      required:
-                                        - property
-                                        - operator
-                                        - value
-                                      additionalProperties: false
-                                    - type: object
-                                      properties:
-                                        property:
-                                          type: string
-                                        operator:
-                                          enum:
-                                            - =
-                                            - '!='
-                                            - containsAny
-                                            - contains
-                                            - doesNotContain
-                                            - beginsWith
-                                            - doesNotBeginWith
-                                            - endsWith
-                                            - doesNotEndWith
-                                            - in
-                                            - notIn
-                                        value:
-                                          anyOf:
-                                            - type: 'null'
-                                            - type: string
-                                            - type: number
-                                            - type: boolean
-                                            - type: array
-                                              items:
-                                                type: string
-                                            - type: string
-                                              format: date-time
-                                            - type: object
-                                              properties:
-                                                jqQuery:
-                                                  type: string
-                                              required:
-                                                - jqQuery
-                                              additionalProperties: false
-                                      additionalProperties: false
-                                      required:
-                                        - property
-                                        - operator
-                                        - value
-                                    - type: object
-                                      properties:
-                                        operator:
-                                          enum:
-                                            - relatedTo
-                                        blueprint:
-                                          type: string
-                                        value:
-                                          anyOf:
-                                            - type: string
-                                            - type: object
-                                              properties:
-                                                jqQuery:
-                                                  type: string
-                                              required:
-                                                - jqQuery
-                                              additionalProperties: false
-                                        direction:
-                                          enum:
-                                            - upstream
-                                            - downstream
-                                        required:
-                                          type: boolean
-                                      additionalProperties: false
-                                      required:
-                                        - operator
-                                        - value
-                                        - blueprint
-                                    - type: object
-                                      properties:
-                                        propertySchema:
-                                          type: object
-                                          properties:
-                                            type:
-                                              type: string
-                                            format:
-                                              type: string
-                                          required:
-                                            - type
-                                          additionalProperties: false
-                                        operator:
-                                          enum:
-                                            - =
-                                            - '!='
-                                        value:
-                                          anyOf:
-                                            - type: 'null'
-                                            - type: string
-                                            - type: number
-                                            - type: boolean
-                                            - type: object
-                                              properties:
-                                                jqQuery:
-                                                  type: string
-                                              required:
-                                                - jqQuery
-                                              additionalProperties: false
-                                      required:
-                                        - operator
-                                        - propertySchema
-                                      additionalProperties: false
-                            required:
-                              - combinator
-                              - rules
-                        required:
-                          - type
-                    required:
-                      oneOf:
-                        - type: object
-                          properties:
-                            jqQuery:
-                              type: string
-                          required:
-                            - jqQuery
-                          additionalProperties: false
-                        - type: array
-                          items:
-                            type: string
-                    order:
-                      type: array
-                      items:
-                        type: string
-                  additionalProperties: false
-                  required:
-                    - properties
-                approvalNotification:
-                  type: object
-                  properties:
-                    type:
-                      type: string
-                      enum:
-                        - webhook
-                        - email
-                      default: email
-                  oneOf:
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - webhook
-                        format:
-                          type: string
-                          enum:
-                            - json
-                            - slack
-                        url:
-                          type: string
-                          format: uri
-                      required:
-                        - type
-                        - url
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - email
-                      required:
-                        - type
-                      additionalProperties: false
-                  required:
-                    - type
-              additionalProperties: false
-              required:
-                - identifier
-                - userInputs
-                - trigger
-                - invocationMethod
-        required: true
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: blueprint_identifier
-          required: true
-          description: sdfghjsdlfkgj hsdflkgjdhfgklj
-      security:
-        - bearer:
-            - 'create:actions'
-      responses:
-        '200':
-          description: Default Response
-    put:
-      summary: Change blueprint's actions
-      tags:
-        - Actions
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  identifier:
-                    type: string
-                    pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                  title:
-                    type: string
-                  icon:
-                    type: string
-                  description:
-                    type: string
-                  trigger:
-                    type: string
-                    enum:
-                      - CREATE
-                      - DELETE
-                      - DAY-2
-                  requiredApproval:
-                    type: boolean
-                  invocationMethod:
-                    oneOf:
-                      - type: object
-                        properties:
-                          type:
-                            type: string
-                            enum:
-                              - GITHUB
-                          org:
-                            type: string
-                          repo:
-                            type: string
-                          workflow:
-                            type: string
-                          omitPayload:
-                            type: boolean
-                          omitUserInputs:
-                            type: boolean
-                          reportWorkflowStatus:
-                            type: boolean
-                        required:
-                          - type
-                          - org
-                          - repo
-                          - workflow
-                        additionalProperties: false
-                      - type: object
-                        properties:
-                          type:
-                            type: string
-                            enum:
-                              - GITLAB
-                          projectName:
-                            type: string
-                          groupName:
-                            type: string
-                          omitPayload:
-                            type: boolean
-                          omitUserInputs:
-                            type: boolean
-                          defaultRef:
-                            type: string
-                          agent:
-                            enum:
-                              - true
-                        required:
-                          - type
-                          - projectName
-                          - groupName
-                          - agent
-                        additionalProperties: false
-                      - type: object
-                        properties:
-                          type:
-                            type: string
-                            enum:
-                              - AZURE-DEVOPS
-                          webhook:
-                            type: string
-                          org:
-                            type: string
-                        required:
-                          - type
-                          - org
-                          - webhook
-                        additionalProperties: false
-                      - type: object
-                        properties:
-                          type:
-                            type: string
-                            enum:
-                              - WEBHOOK
-                          agent:
-                            type: boolean
-                          url:
-                            type: string
-                            format: uri
-                          synchronized:
-                            type: boolean
-                          method:
-                            type: string
-                            enum:
-                              - POST
-                              - DELETE
-                              - PATCH
-                              - PUT
-                        required:
-                          - url
-                          - type
-                        additionalProperties: false
-                      - type: object
-                        properties:
-                          type:
-                            type: string
-                            enum:
-                              - KAFKA
-                        required:
-                          - type
-                        additionalProperties: false
-                  userInputs:
-                    type: object
-                    properties:
-                      properties:
-                        type: object
-                        propertyNames:
-                          pattern: '^[A-Za-z0-9@_=\\-]+$'
-                        additionalProperties:
-                          type: object
-                          properties:
-                            type:
-                              enum:
-                                - string
-                                - number
-                                - boolean
-                                - object
-                                - array
-                            format:
-                              enum:
-                                - date-time
-                                - url
-                                - email
-                                - ipv4
-                                - ipv6
-                                - yaml
-                                - entity
-                                - user
-                                - team
-                                - proto
-                            blueprint:
-                              type: string
-                            dependsOn:
-                              type: array
-                              items:
-                                type: string
-                            visible:
-                              oneOf:
-                                - type: object
-                                  properties:
-                                    jqQuery:
-                                      type: string
-                                  required:
-                                    - jqQuery
-                                  additionalProperties: false
-                                - type: boolean
-                            icon:
-                              type: string
-                            dataset:
-                              type: object
-                              properties:
-                                combinator:
-                                  type: string
-                                  enum:
-                                    - and
-                                    - or
-                                rules:
-                                  type: array
-                                  minItems: 1
-                                  items:
-                                    anyOf:
-                                      - type: object
-                                        properties:
-                                          operator:
-                                            enum:
-                                              - isEmpty
-                                              - isNotEmpty
-                                          property:
-                                            type: string
-                                        required:
-                                          - operator
-                                          - property
-                                        additionalProperties: false
-                                      - type: object
-                                        properties:
-                                          property:
-                                            type: string
-                                          operator:
-                                            enum:
-                                              - between
-                                              - notBetween
-                                              - =
-                                          value:
-                                            type: object
-                                            oneOf:
-                                              - type: object
-                                                properties:
-                                                  from:
-                                                    type: string
-                                                    format: date-time
-                                                  to:
-                                                    type: string
-                                                    format: date-time
-                                                required:
-                                                  - from
-                                                  - to
-                                              - type: object
-                                                properties:
-                                                  preset:
-                                                    type: string
-                                                    enum:
-                                                      - today
-                                                      - tomorrow
-                                                      - yesterday
-                                                      - lastWeek
-                                                      - last2Weeks
-                                                      - lastMonth
-                                                      - last3Months
-                                                      - last6Months
-                                                      - last12Months
-                                                required:
-                                                  - preset
-                                        required:
-                                          - property
-                                          - operator
-                                          - value
-                                        additionalProperties: false
-                                      - type: object
-                                        properties:
-                                          property:
-                                            type: string
-                                          operator:
-                                            enum:
-                                              - '>'
-                                              - '>='
-                                              - <
-                                              - <=
-                                          value:
-                                            oneOf:
-                                              - type:
-                                                  - number
-                                              - type: object
-                                                properties:
-                                                  jqQuery:
-                                                    type: string
-                                                required:
-                                                  - jqQuery
-                                                additionalProperties: false
-                                        required:
-                                          - property
-                                          - operator
-                                          - value
-                                        additionalProperties: false
-                                      - type: object
-                                        properties:
-                                          property:
-                                            type: string
-                                          operator:
-                                            enum:
-                                              - =
-                                              - '!='
-                                              - containsAny
-                                              - contains
-                                              - doesNotContain
-                                              - beginsWith
-                                              - doesNotBeginWith
-                                              - endsWith
-                                              - doesNotEndWith
-                                              - in
-                                              - notIn
-                                          value:
-                                            anyOf:
-                                              - type: 'null'
-                                              - type: string
-                                              - type: number
-                                              - type: boolean
-                                              - type: array
-                                                items:
-                                                  type: string
-                                              - type: string
-                                                format: date-time
-                                              - type: object
-                                                properties:
-                                                  jqQuery:
-                                                    type: string
-                                                required:
-                                                  - jqQuery
-                                                additionalProperties: false
-                                        additionalProperties: false
-                                        required:
-                                          - property
-                                          - operator
-                                          - value
-                                      - type: object
-                                        properties:
-                                          operator:
-                                            enum:
-                                              - relatedTo
-                                          blueprint:
-                                            type: string
-                                          value:
-                                            anyOf:
-                                              - type: string
-                                              - type: object
-                                                properties:
-                                                  jqQuery:
-                                                    type: string
-                                                required:
-                                                  - jqQuery
-                                                additionalProperties: false
-                                          direction:
-                                            enum:
-                                              - upstream
-                                              - downstream
-                                          required:
-                                            type: boolean
-                                        additionalProperties: false
-                                        required:
-                                          - operator
-                                          - value
-                                          - blueprint
-                                      - type: object
-                                        properties:
-                                          propertySchema:
-                                            type: object
-                                            properties:
-                                              type:
-                                                type: string
-                                              format:
-                                                type: string
-                                            required:
-                                              - type
-                                            additionalProperties: false
-                                          operator:
-                                            enum:
-                                              - =
-                                              - '!='
-                                          value:
-                                            anyOf:
-                                              - type: 'null'
-                                              - type: string
-                                              - type: number
-                                              - type: boolean
-                                              - type: object
-                                                properties:
-                                                  jqQuery:
-                                                    type: string
-                                                required:
-                                                  - jqQuery
-                                                additionalProperties: false
-                                        required:
-                                          - operator
-                                          - propertySchema
-                                        additionalProperties: false
-                              required:
-                                - combinator
-                                - rules
-                          required:
-                            - type
-                      required:
-                        oneOf:
-                          - type: object
-                            properties:
-                              jqQuery:
-                                type: string
-                            required:
-                              - jqQuery
-                            additionalProperties: false
-                          - type: array
-                            items:
-                              type: string
-                      order:
-                        type: array
-                        items:
-                          type: string
-                    additionalProperties: false
-                    required:
-                      - properties
-                  approvalNotification:
-                    type: object
-                    properties:
-                      type:
-                        type: string
-                        enum:
-                          - webhook
-                          - email
-                        default: email
-                    oneOf:
-                      - type: object
-                        properties:
-                          type:
-                            type: string
-                            enum:
-                              - webhook
-                          format:
-                            type: string
-                            enum:
-                              - json
-                              - slack
-                          url:
-                            type: string
-                            format: uri
-                        required:
-                          - type
-                          - url
-                        additionalProperties: false
-                      - type: object
-                        properties:
-                          type:
-                            type: string
-                            enum:
-                              - email
-                        required:
-                          - type
-                        additionalProperties: false
-                    required:
-                      - type
-                  id:
-                    type: string
-                additionalProperties: false
-                required:
-                  - identifier
-                  - userInputs
-                  - trigger
-                  - invocationMethod
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: blueprint_identifier
-          required: true
-      security:
-        - bearer:
-            - 'update:actions'
-      responses:
-        '200':
-          description: Default Response
-    get:
-      summary: Get all blueprint's actions
-      tags:
-        - Actions
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: blueprint_identifier
-          required: true
-      security:
-        - bearer:
-            - 'read:actions'
-      responses:
-        '200':
-          description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}':
-    put:
-      summary: Update a blueprint's action
-      tags:
-        - Actions
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                identifier:
-                  type: string
-                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                title:
-                  type: string
-                icon:
-                  type: string
-                description:
-                  type: string
-                trigger:
-                  type: string
-                  enum:
-                    - CREATE
-                    - DELETE
-                    - DAY-2
-                requiredApproval:
-                  type: boolean
-                invocationMethod:
-                  oneOf:
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - GITHUB
-                        org:
-                          type: string
-                        repo:
-                          type: string
-                        workflow:
-                          type: string
-                        omitPayload:
-                          type: boolean
-                        omitUserInputs:
-                          type: boolean
-                        reportWorkflowStatus:
-                          type: boolean
-                      required:
-                        - type
-                        - org
-                        - repo
-                        - workflow
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - GITLAB
-                        projectName:
-                          type: string
-                        groupName:
-                          type: string
-                        omitPayload:
-                          type: boolean
-                        omitUserInputs:
-                          type: boolean
-                        defaultRef:
-                          type: string
-                        agent:
-                          enum:
-                            - true
-                      required:
-                        - type
-                        - projectName
-                        - groupName
-                        - agent
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - AZURE-DEVOPS
-                        webhook:
-                          type: string
-                        org:
-                          type: string
-                      required:
-                        - type
-                        - org
-                        - webhook
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - WEBHOOK
-                        agent:
-                          type: boolean
-                        url:
-                          type: string
-                          format: uri
-                        synchronized:
-                          type: boolean
-                        method:
-                          type: string
-                          enum:
-                            - POST
-                            - DELETE
-                            - PATCH
-                            - PUT
-                      required:
-                        - url
-                        - type
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - KAFKA
-                      required:
-                        - type
-                      additionalProperties: false
-                userInputs:
-                  type: object
-                  properties:
-                    properties:
-                      type: object
-                      propertyNames:
-                        pattern: '^[A-Za-z0-9@_=\\-]+$'
-                      additionalProperties:
-                        type: object
-                        properties:
-                          type:
-                            enum:
-                              - string
-                              - number
-                              - boolean
-                              - object
-                              - array
-                          format:
-                            enum:
-                              - date-time
-                              - url
-                              - email
-                              - ipv4
-                              - ipv6
-                              - yaml
-                              - entity
-                              - user
-                              - team
-                              - proto
-                          blueprint:
-                            type: string
-                          dependsOn:
-                            type: array
-                            items:
-                              type: string
-                          visible:
-                            oneOf:
-                              - type: object
-                                properties:
-                                  jqQuery:
-                                    type: string
-                                required:
-                                  - jqQuery
-                                additionalProperties: false
-                              - type: boolean
-                          icon:
-                            type: string
-                          dataset:
-                            type: object
-                            properties:
-                              combinator:
-                                type: string
-                                enum:
-                                  - and
-                                  - or
-                              rules:
-                                type: array
-                                minItems: 1
-                                items:
-                                  anyOf:
-                                    - type: object
-                                      properties:
-                                        operator:
-                                          enum:
-                                            - isEmpty
-                                            - isNotEmpty
-                                        property:
-                                          type: string
-                                      required:
-                                        - operator
-                                        - property
-                                      additionalProperties: false
-                                    - type: object
-                                      properties:
-                                        property:
-                                          type: string
-                                        operator:
-                                          enum:
-                                            - between
-                                            - notBetween
-                                            - =
-                                        value:
-                                          type: object
-                                          oneOf:
-                                            - type: object
-                                              properties:
-                                                from:
-                                                  type: string
-                                                  format: date-time
-                                                to:
-                                                  type: string
-                                                  format: date-time
-                                              required:
-                                                - from
-                                                - to
-                                            - type: object
-                                              properties:
-                                                preset:
-                                                  type: string
-                                                  enum:
-                                                    - today
-                                                    - tomorrow
-                                                    - yesterday
-                                                    - lastWeek
-                                                    - last2Weeks
-                                                    - lastMonth
-                                                    - last3Months
-                                                    - last6Months
-                                                    - last12Months
-                                              required:
-                                                - preset
-                                      required:
-                                        - property
-                                        - operator
-                                        - value
-                                      additionalProperties: false
-                                    - type: object
-                                      properties:
-                                        property:
-                                          type: string
-                                        operator:
-                                          enum:
-                                            - '>'
-                                            - '>='
-                                            - <
-                                            - <=
-                                        value:
-                                          oneOf:
-                                            - type:
-                                                - number
-                                            - type: object
-                                              properties:
-                                                jqQuery:
-                                                  type: string
-                                              required:
-                                                - jqQuery
-                                              additionalProperties: false
-                                      required:
-                                        - property
-                                        - operator
-                                        - value
-                                      additionalProperties: false
-                                    - type: object
-                                      properties:
-                                        property:
-                                          type: string
-                                        operator:
-                                          enum:
-                                            - =
-                                            - '!='
-                                            - containsAny
-                                            - contains
-                                            - doesNotContain
-                                            - beginsWith
-                                            - doesNotBeginWith
-                                            - endsWith
-                                            - doesNotEndWith
-                                            - in
-                                            - notIn
-                                        value:
-                                          anyOf:
-                                            - type: 'null'
-                                            - type: string
-                                            - type: number
-                                            - type: boolean
-                                            - type: array
-                                              items:
-                                                type: string
-                                            - type: string
-                                              format: date-time
-                                            - type: object
-                                              properties:
-                                                jqQuery:
-                                                  type: string
-                                              required:
-                                                - jqQuery
-                                              additionalProperties: false
-                                      additionalProperties: false
-                                      required:
-                                        - property
-                                        - operator
-                                        - value
-                                    - type: object
-                                      properties:
-                                        operator:
-                                          enum:
-                                            - relatedTo
-                                        blueprint:
-                                          type: string
-                                        value:
-                                          anyOf:
-                                            - type: string
-                                            - type: object
-                                              properties:
-                                                jqQuery:
-                                                  type: string
-                                              required:
-                                                - jqQuery
-                                              additionalProperties: false
-                                        direction:
-                                          enum:
-                                            - upstream
-                                            - downstream
-                                        required:
-                                          type: boolean
-                                      additionalProperties: false
-                                      required:
-                                        - operator
-                                        - value
-                                        - blueprint
-                                    - type: object
-                                      properties:
-                                        propertySchema:
-                                          type: object
-                                          properties:
-                                            type:
-                                              type: string
-                                            format:
-                                              type: string
-                                          required:
-                                            - type
-                                          additionalProperties: false
-                                        operator:
-                                          enum:
-                                            - =
-                                            - '!='
-                                        value:
-                                          anyOf:
-                                            - type: 'null'
-                                            - type: string
-                                            - type: number
-                                            - type: boolean
-                                            - type: object
-                                              properties:
-                                                jqQuery:
-                                                  type: string
-                                              required:
-                                                - jqQuery
-                                              additionalProperties: false
-                                      required:
-                                        - operator
-                                        - propertySchema
-                                      additionalProperties: false
-                            required:
-                              - combinator
-                              - rules
-                        required:
-                          - type
-                    required:
-                      oneOf:
-                        - type: object
-                          properties:
-                            jqQuery:
-                              type: string
-                          required:
-                            - jqQuery
-                          additionalProperties: false
-                        - type: array
-                          items:
-                            type: string
-                    order:
-                      type: array
-                      items:
-                        type: string
-                  additionalProperties: false
-                  required:
-                    - properties
-                approvalNotification:
-                  type: object
-                  properties:
-                    type:
-                      type: string
-                      enum:
-                        - webhook
-                        - email
-                      default: email
-                  oneOf:
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - webhook
-                        format:
-                          type: string
-                          enum:
-                            - json
-                            - slack
-                        url:
-                          type: string
-                          format: uri
-                      required:
-                        - type
-                        - url
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - email
-                      required:
-                        - type
-                      additionalProperties: false
-                  required:
-                    - type
-              additionalProperties: false
-              required:
-                - identifier
-                - userInputs
-                - trigger
-                - invocationMethod
-        required: true
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: action_identifier
-          required: true
-        - schema:
-            type: string
-          in: path
-          name: blueprint_identifier
-          required: true
-      security:
-        - bearer:
-            - 'update:actions'
-      responses:
-        '200':
-          description: Default Response
-    get:
-      summary: Get a blueprint action
-      tags:
-        - Actions
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: action_identifier
-          required: true
-        - schema:
-            type: string
-          in: path
-          name: blueprint_identifier
-          required: true
-      security:
-        - bearer:
-            - 'read:actions'
-      responses:
-        '200':
-          description: Default Response
-    delete:
-      summary: Delete blueprint's action
-      tags:
-        - Actions
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: action_identifier
-          required: true
-        - schema:
-            type: string
-          in: path
-          name: blueprint_identifier
-          required: true
-      security:
-        - bearer:
-            - 'delete:actions'
-      responses:
-        '200':
-          description: Default Response
-  /v1/actions:
-    get:
-      summary: Get all actions
-      tags:
-        - Actions
-      parameters:
-        - schema:
-            type: array
-            items:
-              type: string
-          in: query
-          name: action_identifier
-          required: false
-        - schema:
-            type: array
-            items:
-              type: string
-          in: query
-          name: blueprint_identifier
-          required: false
-        - schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - CREATE
-                - DELETE
-                - DAY-2
-          in: query
-          name: operation
-          required: false
-        - schema:
-            type: boolean
-          in: query
-          name: published
-          required: false
-        - schema:
-            type: string
-            enum:
-              - self-service
-              - automation
-          in: query
-          name: trigger_type
-          required: false
-        - schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - ENTITY_CREATED
-                - ENTITY_UPDATED
-                - ENTITY_DELETED
-                - TIMER_PROPERTY_EXPIRED
-                - ANY_ENTITY_CHANGE
-          in: query
-          name: trigger_event
-          required: false
-        - schema:
-            type: string
-            enum:
-              - v1
-              - v2
-          in: query
-          name: version
-          required: false
-      security:
-        - bearer:
-            - 'read:actions'
-      responses:
-        '200':
-          description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}/actions/{action_identifier}/runs':
-    post:
-      summary: Run a blueprint's entity action
-      tags:
-        - Action Runs
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                properties:
-                  type: object
-              additionalProperties: false
-              required:
-                - properties
-        required: true
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: run_id
-          required: false
-        - schema:
-            type: string
-          in: path
-          name: action_identifier
-          required: true
-        - schema:
-            type: string
-          in: path
-          name: blueprint_identifier
-          required: true
-        - schema:
-            type: string
-          in: path
-          name: entity_identifier
-          required: true
-      security:
-        - bearer: []
-      responses:
-        '200':
-          description: Default Response
-  '/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}/runs':
-    post:
-      summary: Run a blueprint's action
-      tags:
-        - Action Runs
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                properties:
-                  type: object
-              additionalProperties: false
-              required:
-                - properties
-        required: true
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: run_id
-          required: false
-        - schema:
-            type: string
-          in: path
-          name: action_identifier
-          required: true
-        - schema:
-            type: string
-          in: path
-          name: blueprint_identifier
-          required: true
-      security:
-        - bearer: []
-      responses:
-        '200':
-          description: Default Response
-  '/v1/actions/runs/{run_id}':
-    patch:
-      summary: Patch an action run
-      tags:
-        - Action Runs
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: string
-                  enum:
-                    - SUCCESS
-                    - FAILURE
-                statusLabel:
-                  type: string
-                link:
-                  oneOf:
-                    - type: string
-                      format: url
-                    - type: array
-                      items:
-                        type: string
-                        format: url
-                message:
-                  type: object
-                  deprecated: true
-                summary:
-                  type: string
-                externalRunId:
-                  type: string
-              additionalProperties: false
-      parameters:
-        - schema:
-            type: string
-            enum:
-              - v1
-              - v2
-          in: query
-          name: version
-          required: false
-        - schema:
-            type: string
-          in: path
-          name: run_id
-          required: true
-      security:
-        - bearer: []
-      responses:
-        '200':
-          description: Default Response
-    get:
-      summary: Get an action run's details
-      tags:
-        - Action Runs
-      parameters:
-        - schema:
-            type: string
-            enum:
-              - v1
-              - v2
-          in: query
-          name: version
-          required: false
-        - schema:
-            type: string
-          in: path
-          name: run_id
-          required: true
-      security:
-        - bearer:
-            - 'read:runs'
-      responses:
-        '200':
-          description: Default Response
+  # '/v1/blueprints/{identifier}/relations/{relation_identifier}/rename':
+  #   patch:
+  #     summary: Rename a blueprint's relation
+  #     tags:
+  #       - Blueprints
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               newRelationIdentifier:
+  #                 type: string
+  #                 pattern: '^[A-Za-z0-9@_=\\-]+$'
+  #             additionalProperties: false
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: identifier
+  #         required: true
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: relation_identifier
+  #         required: true
+  #     security:
+  #       - bearer: []
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  # '/v1/blueprints/{blueprint_identifier}/actions':
+  #   post:
+  #     summary: Create a blueprint action
+  #     tags:
+  #       - Actions
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               identifier:
+  #                 type: string
+  #                 pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+  #               title:
+  #                 type: string
+  #               icon:
+  #                 type: string
+  #               description:
+  #                 type: string
+  #               trigger:
+  #                 type: string
+  #                 enum:
+  #                   - CREATE
+  #                   - DELETE
+  #                   - DAY-2
+  #               requiredApproval:
+  #                 type: boolean
+  #               invocationMethod:
+  #                 oneOf:
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - GITHUB
+  #                       org:
+  #                         type: string
+  #                       repo:
+  #                         type: string
+  #                       workflow:
+  #                         type: string
+  #                       omitPayload:
+  #                         type: boolean
+  #                       omitUserInputs:
+  #                         type: boolean
+  #                       reportWorkflowStatus:
+  #                         type: boolean
+  #                     required:
+  #                       - type
+  #                       - org
+  #                       - repo
+  #                       - workflow
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - GITLAB
+  #                       projectName:
+  #                         type: string
+  #                       groupName:
+  #                         type: string
+  #                       omitPayload:
+  #                         type: boolean
+  #                       omitUserInputs:
+  #                         type: boolean
+  #                       defaultRef:
+  #                         type: string
+  #                       agent:
+  #                         enum:
+  #                           - true
+  #                     required:
+  #                       - type
+  #                       - projectName
+  #                       - groupName
+  #                       - agent
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - AZURE-DEVOPS
+  #                       webhook:
+  #                         type: string
+  #                       org:
+  #                         type: string
+  #                     required:
+  #                       - type
+  #                       - org
+  #                       - webhook
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - WEBHOOK
+  #                       agent:
+  #                         type: boolean
+  #                       url:
+  #                         type: string
+  #                         format: uri
+  #                       synchronized:
+  #                         type: boolean
+  #                       method:
+  #                         type: string
+  #                         enum:
+  #                           - POST
+  #                           - DELETE
+  #                           - PATCH
+  #                           - PUT
+  #                     required:
+  #                       - url
+  #                       - type
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - KAFKA
+  #                     required:
+  #                       - type
+  #                     additionalProperties: false
+  #               userInputs:
+  #                 type: object
+  #                 properties:
+  #                   properties:
+  #                     type: object
+  #                     propertyNames:
+  #                       pattern: '^[A-Za-z0-9@_=\\-]+$'
+  #                     additionalProperties:
+  #                       type: object
+  #                       properties:
+  #                         type:
+  #                           enum:
+  #                             - string
+  #                             - number
+  #                             - boolean
+  #                             - object
+  #                             - array
+  #                         format:
+  #                           enum:
+  #                             - date-time
+  #                             - url
+  #                             - email
+  #                             - ipv4
+  #                             - ipv6
+  #                             - yaml
+  #                             - entity
+  #                             - user
+  #                             - team
+  #                             - proto
+  #                         blueprint:
+  #                           type: string
+  #                         dependsOn:
+  #                           type: array
+  #                           items:
+  #                             type: string
+  #                         visible:
+  #                           oneOf:
+  #                             - type: object
+  #                               properties:
+  #                                 jqQuery:
+  #                                   type: string
+  #                               required:
+  #                                 - jqQuery
+  #                               additionalProperties: false
+  #                             - type: boolean
+  #                         icon:
+  #                           type: string
+  #                         dataset:
+  #                           type: object
+  #                           properties:
+  #                             combinator:
+  #                               type: string
+  #                               enum:
+  #                                 - and
+  #                                 - or
+  #                             rules:
+  #                               type: array
+  #                               minItems: 1
+  #                               items:
+  #                                 anyOf:
+  #                                   - type: object
+  #                                     properties:
+  #                                       operator:
+  #                                         enum:
+  #                                           - isEmpty
+  #                                           - isNotEmpty
+  #                                       property:
+  #                                         type: string
+  #                                     required:
+  #                                       - operator
+  #                                       - property
+  #                                     additionalProperties: false
+  #                                   - type: object
+  #                                     properties:
+  #                                       property:
+  #                                         type: string
+  #                                       operator:
+  #                                         enum:
+  #                                           - between
+  #                                           - notBetween
+  #                                           - =
+  #                                       value:
+  #                                         type: object
+  #                                         oneOf:
+  #                                           - type: object
+  #                                             properties:
+  #                                               from:
+  #                                                 type: string
+  #                                                 format: date-time
+  #                                               to:
+  #                                                 type: string
+  #                                                 format: date-time
+  #                                             required:
+  #                                               - from
+  #                                               - to
+  #                                           - type: object
+  #                                             properties:
+  #                                               preset:
+  #                                                 type: string
+  #                                                 enum:
+  #                                                   - today
+  #                                                   - tomorrow
+  #                                                   - yesterday
+  #                                                   - lastWeek
+  #                                                   - last2Weeks
+  #                                                   - lastMonth
+  #                                                   - last3Months
+  #                                                   - last6Months
+  #                                                   - last12Months
+  #                                             required:
+  #                                               - preset
+  #                                     required:
+  #                                       - property
+  #                                       - operator
+  #                                       - value
+  #                                     additionalProperties: false
+  #                                   - type: object
+  #                                     properties:
+  #                                       property:
+  #                                         type: string
+  #                                       operator:
+  #                                         enum:
+  #                                           - '>'
+  #                                           - '>='
+  #                                           - <
+  #                                           - <=
+  #                                       value:
+  #                                         oneOf:
+  #                                           - type:
+  #                                               - number
+  #                                           - type: object
+  #                                             properties:
+  #                                               jqQuery:
+  #                                                 type: string
+  #                                             required:
+  #                                               - jqQuery
+  #                                             additionalProperties: false
+  #                                     required:
+  #                                       - property
+  #                                       - operator
+  #                                       - value
+  #                                     additionalProperties: false
+  #                                   - type: object
+  #                                     properties:
+  #                                       property:
+  #                                         type: string
+  #                                       operator:
+  #                                         enum:
+  #                                           - =
+  #                                           - '!='
+  #                                           - containsAny
+  #                                           - contains
+  #                                           - doesNotContain
+  #                                           - beginsWith
+  #                                           - doesNotBeginWith
+  #                                           - endsWith
+  #                                           - doesNotEndWith
+  #                                           - in
+  #                                           - notIn
+  #                                       value:
+  #                                         anyOf:
+  #                                           - type: 'null'
+  #                                           - type: string
+  #                                           - type: number
+  #                                           - type: boolean
+  #                                           - type: array
+  #                                             items:
+  #                                               type: string
+  #                                           - type: string
+  #                                             format: date-time
+  #                                           - type: object
+  #                                             properties:
+  #                                               jqQuery:
+  #                                                 type: string
+  #                                             required:
+  #                                               - jqQuery
+  #                                             additionalProperties: false
+  #                                     additionalProperties: false
+  #                                     required:
+  #                                       - property
+  #                                       - operator
+  #                                       - value
+  #                                   - type: object
+  #                                     properties:
+  #                                       operator:
+  #                                         enum:
+  #                                           - relatedTo
+  #                                       blueprint:
+  #                                         type: string
+  #                                       value:
+  #                                         anyOf:
+  #                                           - type: string
+  #                                           - type: object
+  #                                             properties:
+  #                                               jqQuery:
+  #                                                 type: string
+  #                                             required:
+  #                                               - jqQuery
+  #                                             additionalProperties: false
+  #                                       direction:
+  #                                         enum:
+  #                                           - upstream
+  #                                           - downstream
+  #                                       required:
+  #                                         type: boolean
+  #                                     additionalProperties: false
+  #                                     required:
+  #                                       - operator
+  #                                       - value
+  #                                       - blueprint
+  #                                   - type: object
+  #                                     properties:
+  #                                       propertySchema:
+  #                                         type: object
+  #                                         properties:
+  #                                           type:
+  #                                             type: string
+  #                                           format:
+  #                                             type: string
+  #                                         required:
+  #                                           - type
+  #                                         additionalProperties: false
+  #                                       operator:
+  #                                         enum:
+  #                                           - =
+  #                                           - '!='
+  #                                       value:
+  #                                         anyOf:
+  #                                           - type: 'null'
+  #                                           - type: string
+  #                                           - type: number
+  #                                           - type: boolean
+  #                                           - type: object
+  #                                             properties:
+  #                                               jqQuery:
+  #                                                 type: string
+  #                                             required:
+  #                                               - jqQuery
+  #                                             additionalProperties: false
+  #                                     required:
+  #                                       - operator
+  #                                       - propertySchema
+  #                                     additionalProperties: false
+  #                           required:
+  #                             - combinator
+  #                             - rules
+  #                       required:
+  #                         - type
+  #                   required:
+  #                     oneOf:
+  #                       - type: object
+  #                         properties:
+  #                           jqQuery:
+  #                             type: string
+  #                         required:
+  #                           - jqQuery
+  #                         additionalProperties: false
+  #                       - type: array
+  #                         items:
+  #                           type: string
+  #                   order:
+  #                     type: array
+  #                     items:
+  #                       type: string
+  #                 additionalProperties: false
+  #                 required:
+  #                   - properties
+  #               approvalNotification:
+  #                 type: object
+  #                 properties:
+  #                   type:
+  #                     type: string
+  #                     enum:
+  #                       - webhook
+  #                       - email
+  #                     default: email
+  #                 oneOf:
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - webhook
+  #                       format:
+  #                         type: string
+  #                         enum:
+  #                           - json
+  #                           - slack
+  #                       url:
+  #                         type: string
+  #                         format: uri
+  #                     required:
+  #                       - type
+  #                       - url
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - email
+  #                     required:
+  #                       - type
+  #                     additionalProperties: false
+  #                 required:
+  #                   - type
+  #             additionalProperties: false
+  #             required:
+  #               - identifier
+  #               - userInputs
+  #               - trigger
+  #               - invocationMethod
+  #       required: true
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: blueprint_identifier
+  #         required: true
+  #         description: sdfghjsdlfkgj hsdflkgjdhfgklj
+  #     security:
+  #       - bearer:
+  #           - 'create:actions'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   put:
+  #     summary: Change blueprint's actions
+  #     tags:
+  #       - Actions
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: array
+  #             items:
+  #               type: object
+  #               properties:
+  #                 identifier:
+  #                   type: string
+  #                   pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+  #                 title:
+  #                   type: string
+  #                 icon:
+  #                   type: string
+  #                 description:
+  #                   type: string
+  #                 trigger:
+  #                   type: string
+  #                   enum:
+  #                     - CREATE
+  #                     - DELETE
+  #                     - DAY-2
+  #                 requiredApproval:
+  #                   type: boolean
+  #                 invocationMethod:
+  #                   oneOf:
+  #                     - type: object
+  #                       properties:
+  #                         type:
+  #                           type: string
+  #                           enum:
+  #                             - GITHUB
+  #                         org:
+  #                           type: string
+  #                         repo:
+  #                           type: string
+  #                         workflow:
+  #                           type: string
+  #                         omitPayload:
+  #                           type: boolean
+  #                         omitUserInputs:
+  #                           type: boolean
+  #                         reportWorkflowStatus:
+  #                           type: boolean
+  #                       required:
+  #                         - type
+  #                         - org
+  #                         - repo
+  #                         - workflow
+  #                       additionalProperties: false
+  #                     - type: object
+  #                       properties:
+  #                         type:
+  #                           type: string
+  #                           enum:
+  #                             - GITLAB
+  #                         projectName:
+  #                           type: string
+  #                         groupName:
+  #                           type: string
+  #                         omitPayload:
+  #                           type: boolean
+  #                         omitUserInputs:
+  #                           type: boolean
+  #                         defaultRef:
+  #                           type: string
+  #                         agent:
+  #                           enum:
+  #                             - true
+  #                       required:
+  #                         - type
+  #                         - projectName
+  #                         - groupName
+  #                         - agent
+  #                       additionalProperties: false
+  #                     - type: object
+  #                       properties:
+  #                         type:
+  #                           type: string
+  #                           enum:
+  #                             - AZURE-DEVOPS
+  #                         webhook:
+  #                           type: string
+  #                         org:
+  #                           type: string
+  #                       required:
+  #                         - type
+  #                         - org
+  #                         - webhook
+  #                       additionalProperties: false
+  #                     - type: object
+  #                       properties:
+  #                         type:
+  #                           type: string
+  #                           enum:
+  #                             - WEBHOOK
+  #                         agent:
+  #                           type: boolean
+  #                         url:
+  #                           type: string
+  #                           format: uri
+  #                         synchronized:
+  #                           type: boolean
+  #                         method:
+  #                           type: string
+  #                           enum:
+  #                             - POST
+  #                             - DELETE
+  #                             - PATCH
+  #                             - PUT
+  #                       required:
+  #                         - url
+  #                         - type
+  #                       additionalProperties: false
+  #                     - type: object
+  #                       properties:
+  #                         type:
+  #                           type: string
+  #                           enum:
+  #                             - KAFKA
+  #                       required:
+  #                         - type
+  #                       additionalProperties: false
+  #                 userInputs:
+  #                   type: object
+  #                   properties:
+  #                     properties:
+  #                       type: object
+  #                       propertyNames:
+  #                         pattern: '^[A-Za-z0-9@_=\\-]+$'
+  #                       additionalProperties:
+  #                         type: object
+  #                         properties:
+  #                           type:
+  #                             enum:
+  #                               - string
+  #                               - number
+  #                               - boolean
+  #                               - object
+  #                               - array
+  #                           format:
+  #                             enum:
+  #                               - date-time
+  #                               - url
+  #                               - email
+  #                               - ipv4
+  #                               - ipv6
+  #                               - yaml
+  #                               - entity
+  #                               - user
+  #                               - team
+  #                               - proto
+  #                           blueprint:
+  #                             type: string
+  #                           dependsOn:
+  #                             type: array
+  #                             items:
+  #                               type: string
+  #                           visible:
+  #                             oneOf:
+  #                               - type: object
+  #                                 properties:
+  #                                   jqQuery:
+  #                                     type: string
+  #                                 required:
+  #                                   - jqQuery
+  #                                 additionalProperties: false
+  #                               - type: boolean
+  #                           icon:
+  #                             type: string
+  #                           dataset:
+  #                             type: object
+  #                             properties:
+  #                               combinator:
+  #                                 type: string
+  #                                 enum:
+  #                                   - and
+  #                                   - or
+  #                               rules:
+  #                                 type: array
+  #                                 minItems: 1
+  #                                 items:
+  #                                   anyOf:
+  #                                     - type: object
+  #                                       properties:
+  #                                         operator:
+  #                                           enum:
+  #                                             - isEmpty
+  #                                             - isNotEmpty
+  #                                         property:
+  #                                           type: string
+  #                                       required:
+  #                                         - operator
+  #                                         - property
+  #                                       additionalProperties: false
+  #                                     - type: object
+  #                                       properties:
+  #                                         property:
+  #                                           type: string
+  #                                         operator:
+  #                                           enum:
+  #                                             - between
+  #                                             - notBetween
+  #                                             - =
+  #                                         value:
+  #                                           type: object
+  #                                           oneOf:
+  #                                             - type: object
+  #                                               properties:
+  #                                                 from:
+  #                                                   type: string
+  #                                                   format: date-time
+  #                                                 to:
+  #                                                   type: string
+  #                                                   format: date-time
+  #                                               required:
+  #                                                 - from
+  #                                                 - to
+  #                                             - type: object
+  #                                               properties:
+  #                                                 preset:
+  #                                                   type: string
+  #                                                   enum:
+  #                                                     - today
+  #                                                     - tomorrow
+  #                                                     - yesterday
+  #                                                     - lastWeek
+  #                                                     - last2Weeks
+  #                                                     - lastMonth
+  #                                                     - last3Months
+  #                                                     - last6Months
+  #                                                     - last12Months
+  #                                               required:
+  #                                                 - preset
+  #                                       required:
+  #                                         - property
+  #                                         - operator
+  #                                         - value
+  #                                       additionalProperties: false
+  #                                     - type: object
+  #                                       properties:
+  #                                         property:
+  #                                           type: string
+  #                                         operator:
+  #                                           enum:
+  #                                             - '>'
+  #                                             - '>='
+  #                                             - <
+  #                                             - <=
+  #                                         value:
+  #                                           oneOf:
+  #                                             - type:
+  #                                                 - number
+  #                                             - type: object
+  #                                               properties:
+  #                                                 jqQuery:
+  #                                                   type: string
+  #                                               required:
+  #                                                 - jqQuery
+  #                                               additionalProperties: false
+  #                                       required:
+  #                                         - property
+  #                                         - operator
+  #                                         - value
+  #                                       additionalProperties: false
+  #                                     - type: object
+  #                                       properties:
+  #                                         property:
+  #                                           type: string
+  #                                         operator:
+  #                                           enum:
+  #                                             - =
+  #                                             - '!='
+  #                                             - containsAny
+  #                                             - contains
+  #                                             - doesNotContain
+  #                                             - beginsWith
+  #                                             - doesNotBeginWith
+  #                                             - endsWith
+  #                                             - doesNotEndWith
+  #                                             - in
+  #                                             - notIn
+  #                                         value:
+  #                                           anyOf:
+  #                                             - type: 'null'
+  #                                             - type: string
+  #                                             - type: number
+  #                                             - type: boolean
+  #                                             - type: array
+  #                                               items:
+  #                                                 type: string
+  #                                             - type: string
+  #                                               format: date-time
+  #                                             - type: object
+  #                                               properties:
+  #                                                 jqQuery:
+  #                                                   type: string
+  #                                               required:
+  #                                                 - jqQuery
+  #                                               additionalProperties: false
+  #                                       additionalProperties: false
+  #                                       required:
+  #                                         - property
+  #                                         - operator
+  #                                         - value
+  #                                     - type: object
+  #                                       properties:
+  #                                         operator:
+  #                                           enum:
+  #                                             - relatedTo
+  #                                         blueprint:
+  #                                           type: string
+  #                                         value:
+  #                                           anyOf:
+  #                                             - type: string
+  #                                             - type: object
+  #                                               properties:
+  #                                                 jqQuery:
+  #                                                   type: string
+  #                                               required:
+  #                                                 - jqQuery
+  #                                               additionalProperties: false
+  #                                         direction:
+  #                                           enum:
+  #                                             - upstream
+  #                                             - downstream
+  #                                         required:
+  #                                           type: boolean
+  #                                       additionalProperties: false
+  #                                       required:
+  #                                         - operator
+  #                                         - value
+  #                                         - blueprint
+  #                                     - type: object
+  #                                       properties:
+  #                                         propertySchema:
+  #                                           type: object
+  #                                           properties:
+  #                                             type:
+  #                                               type: string
+  #                                             format:
+  #                                               type: string
+  #                                           required:
+  #                                             - type
+  #                                           additionalProperties: false
+  #                                         operator:
+  #                                           enum:
+  #                                             - =
+  #                                             - '!='
+  #                                         value:
+  #                                           anyOf:
+  #                                             - type: 'null'
+  #                                             - type: string
+  #                                             - type: number
+  #                                             - type: boolean
+  #                                             - type: object
+  #                                               properties:
+  #                                                 jqQuery:
+  #                                                   type: string
+  #                                               required:
+  #                                                 - jqQuery
+  #                                               additionalProperties: false
+  #                                       required:
+  #                                         - operator
+  #                                         - propertySchema
+  #                                       additionalProperties: false
+  #                             required:
+  #                               - combinator
+  #                               - rules
+  #                         required:
+  #                           - type
+  #                     required:
+  #                       oneOf:
+  #                         - type: object
+  #                           properties:
+  #                             jqQuery:
+  #                               type: string
+  #                           required:
+  #                             - jqQuery
+  #                           additionalProperties: false
+  #                         - type: array
+  #                           items:
+  #                             type: string
+  #                     order:
+  #                       type: array
+  #                       items:
+  #                         type: string
+  #                   additionalProperties: false
+  #                   required:
+  #                     - properties
+  #                 approvalNotification:
+  #                   type: object
+  #                   properties:
+  #                     type:
+  #                       type: string
+  #                       enum:
+  #                         - webhook
+  #                         - email
+  #                       default: email
+  #                   oneOf:
+  #                     - type: object
+  #                       properties:
+  #                         type:
+  #                           type: string
+  #                           enum:
+  #                             - webhook
+  #                         format:
+  #                           type: string
+  #                           enum:
+  #                             - json
+  #                             - slack
+  #                         url:
+  #                           type: string
+  #                           format: uri
+  #                       required:
+  #                         - type
+  #                         - url
+  #                       additionalProperties: false
+  #                     - type: object
+  #                       properties:
+  #                         type:
+  #                           type: string
+  #                           enum:
+  #                             - email
+  #                       required:
+  #                         - type
+  #                       additionalProperties: false
+  #                   required:
+  #                     - type
+  #                 id:
+  #                   type: string
+  #               additionalProperties: false
+  #               required:
+  #                 - identifier
+  #                 - userInputs
+  #                 - trigger
+  #                 - invocationMethod
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: blueprint_identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'update:actions'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   get:
+  #     summary: Get all blueprint's actions
+  #     tags:
+  #       - Actions
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: blueprint_identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'read:actions'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  # '/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}':
+  #   put:
+  #     summary: Update a blueprint's action
+  #     tags:
+  #       - Actions
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               identifier:
+  #                 type: string
+  #                 pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+  #               title:
+  #                 type: string
+  #               icon:
+  #                 type: string
+  #               description:
+  #                 type: string
+  #               trigger:
+  #                 type: string
+  #                 enum:
+  #                   - CREATE
+  #                   - DELETE
+  #                   - DAY-2
+  #               requiredApproval:
+  #                 type: boolean
+  #               invocationMethod:
+  #                 oneOf:
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - GITHUB
+  #                       org:
+  #                         type: string
+  #                       repo:
+  #                         type: string
+  #                       workflow:
+  #                         type: string
+  #                       omitPayload:
+  #                         type: boolean
+  #                       omitUserInputs:
+  #                         type: boolean
+  #                       reportWorkflowStatus:
+  #                         type: boolean
+  #                     required:
+  #                       - type
+  #                       - org
+  #                       - repo
+  #                       - workflow
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - GITLAB
+  #                       projectName:
+  #                         type: string
+  #                       groupName:
+  #                         type: string
+  #                       omitPayload:
+  #                         type: boolean
+  #                       omitUserInputs:
+  #                         type: boolean
+  #                       defaultRef:
+  #                         type: string
+  #                       agent:
+  #                         enum:
+  #                           - true
+  #                     required:
+  #                       - type
+  #                       - projectName
+  #                       - groupName
+  #                       - agent
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - AZURE-DEVOPS
+  #                       webhook:
+  #                         type: string
+  #                       org:
+  #                         type: string
+  #                     required:
+  #                       - type
+  #                       - org
+  #                       - webhook
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - WEBHOOK
+  #                       agent:
+  #                         type: boolean
+  #                       url:
+  #                         type: string
+  #                         format: uri
+  #                       synchronized:
+  #                         type: boolean
+  #                       method:
+  #                         type: string
+  #                         enum:
+  #                           - POST
+  #                           - DELETE
+  #                           - PATCH
+  #                           - PUT
+  #                     required:
+  #                       - url
+  #                       - type
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - KAFKA
+  #                     required:
+  #                       - type
+  #                     additionalProperties: false
+  #               userInputs:
+  #                 type: object
+  #                 properties:
+  #                   properties:
+  #                     type: object
+  #                     propertyNames:
+  #                       pattern: '^[A-Za-z0-9@_=\\-]+$'
+  #                     additionalProperties:
+  #                       type: object
+  #                       properties:
+  #                         type:
+  #                           enum:
+  #                             - string
+  #                             - number
+  #                             - boolean
+  #                             - object
+  #                             - array
+  #                         format:
+  #                           enum:
+  #                             - date-time
+  #                             - url
+  #                             - email
+  #                             - ipv4
+  #                             - ipv6
+  #                             - yaml
+  #                             - entity
+  #                             - user
+  #                             - team
+  #                             - proto
+  #                         blueprint:
+  #                           type: string
+  #                         dependsOn:
+  #                           type: array
+  #                           items:
+  #                             type: string
+  #                         visible:
+  #                           oneOf:
+  #                             - type: object
+  #                               properties:
+  #                                 jqQuery:
+  #                                   type: string
+  #                               required:
+  #                                 - jqQuery
+  #                               additionalProperties: false
+  #                             - type: boolean
+  #                         icon:
+  #                           type: string
+  #                         dataset:
+  #                           type: object
+  #                           properties:
+  #                             combinator:
+  #                               type: string
+  #                               enum:
+  #                                 - and
+  #                                 - or
+  #                             rules:
+  #                               type: array
+  #                               minItems: 1
+  #                               items:
+  #                                 anyOf:
+  #                                   - type: object
+  #                                     properties:
+  #                                       operator:
+  #                                         enum:
+  #                                           - isEmpty
+  #                                           - isNotEmpty
+  #                                       property:
+  #                                         type: string
+  #                                     required:
+  #                                       - operator
+  #                                       - property
+  #                                     additionalProperties: false
+  #                                   - type: object
+  #                                     properties:
+  #                                       property:
+  #                                         type: string
+  #                                       operator:
+  #                                         enum:
+  #                                           - between
+  #                                           - notBetween
+  #                                           - =
+  #                                       value:
+  #                                         type: object
+  #                                         oneOf:
+  #                                           - type: object
+  #                                             properties:
+  #                                               from:
+  #                                                 type: string
+  #                                                 format: date-time
+  #                                               to:
+  #                                                 type: string
+  #                                                 format: date-time
+  #                                             required:
+  #                                               - from
+  #                                               - to
+  #                                           - type: object
+  #                                             properties:
+  #                                               preset:
+  #                                                 type: string
+  #                                                 enum:
+  #                                                   - today
+  #                                                   - tomorrow
+  #                                                   - yesterday
+  #                                                   - lastWeek
+  #                                                   - last2Weeks
+  #                                                   - lastMonth
+  #                                                   - last3Months
+  #                                                   - last6Months
+  #                                                   - last12Months
+  #                                             required:
+  #                                               - preset
+  #                                     required:
+  #                                       - property
+  #                                       - operator
+  #                                       - value
+  #                                     additionalProperties: false
+  #                                   - type: object
+  #                                     properties:
+  #                                       property:
+  #                                         type: string
+  #                                       operator:
+  #                                         enum:
+  #                                           - '>'
+  #                                           - '>='
+  #                                           - <
+  #                                           - <=
+  #                                       value:
+  #                                         oneOf:
+  #                                           - type:
+  #                                               - number
+  #                                           - type: object
+  #                                             properties:
+  #                                               jqQuery:
+  #                                                 type: string
+  #                                             required:
+  #                                               - jqQuery
+  #                                             additionalProperties: false
+  #                                     required:
+  #                                       - property
+  #                                       - operator
+  #                                       - value
+  #                                     additionalProperties: false
+  #                                   - type: object
+  #                                     properties:
+  #                                       property:
+  #                                         type: string
+  #                                       operator:
+  #                                         enum:
+  #                                           - =
+  #                                           - '!='
+  #                                           - containsAny
+  #                                           - contains
+  #                                           - doesNotContain
+  #                                           - beginsWith
+  #                                           - doesNotBeginWith
+  #                                           - endsWith
+  #                                           - doesNotEndWith
+  #                                           - in
+  #                                           - notIn
+  #                                       value:
+  #                                         anyOf:
+  #                                           - type: 'null'
+  #                                           - type: string
+  #                                           - type: number
+  #                                           - type: boolean
+  #                                           - type: array
+  #                                             items:
+  #                                               type: string
+  #                                           - type: string
+  #                                             format: date-time
+  #                                           - type: object
+  #                                             properties:
+  #                                               jqQuery:
+  #                                                 type: string
+  #                                             required:
+  #                                               - jqQuery
+  #                                             additionalProperties: false
+  #                                     additionalProperties: false
+  #                                     required:
+  #                                       - property
+  #                                       - operator
+  #                                       - value
+  #                                   - type: object
+  #                                     properties:
+  #                                       operator:
+  #                                         enum:
+  #                                           - relatedTo
+  #                                       blueprint:
+  #                                         type: string
+  #                                       value:
+  #                                         anyOf:
+  #                                           - type: string
+  #                                           - type: object
+  #                                             properties:
+  #                                               jqQuery:
+  #                                                 type: string
+  #                                             required:
+  #                                               - jqQuery
+  #                                             additionalProperties: false
+  #                                       direction:
+  #                                         enum:
+  #                                           - upstream
+  #                                           - downstream
+  #                                       required:
+  #                                         type: boolean
+  #                                     additionalProperties: false
+  #                                     required:
+  #                                       - operator
+  #                                       - value
+  #                                       - blueprint
+  #                                   - type: object
+  #                                     properties:
+  #                                       propertySchema:
+  #                                         type: object
+  #                                         properties:
+  #                                           type:
+  #                                             type: string
+  #                                           format:
+  #                                             type: string
+  #                                         required:
+  #                                           - type
+  #                                         additionalProperties: false
+  #                                       operator:
+  #                                         enum:
+  #                                           - =
+  #                                           - '!='
+  #                                       value:
+  #                                         anyOf:
+  #                                           - type: 'null'
+  #                                           - type: string
+  #                                           - type: number
+  #                                           - type: boolean
+  #                                           - type: object
+  #                                             properties:
+  #                                               jqQuery:
+  #                                                 type: string
+  #                                             required:
+  #                                               - jqQuery
+  #                                             additionalProperties: false
+  #                                     required:
+  #                                       - operator
+  #                                       - propertySchema
+  #                                     additionalProperties: false
+  #                           required:
+  #                             - combinator
+  #                             - rules
+  #                       required:
+  #                         - type
+  #                   required:
+  #                     oneOf:
+  #                       - type: object
+  #                         properties:
+  #                           jqQuery:
+  #                             type: string
+  #                         required:
+  #                           - jqQuery
+  #                         additionalProperties: false
+  #                       - type: array
+  #                         items:
+  #                           type: string
+  #                   order:
+  #                     type: array
+  #                     items:
+  #                       type: string
+  #                 additionalProperties: false
+  #                 required:
+  #                   - properties
+  #               approvalNotification:
+  #                 type: object
+  #                 properties:
+  #                   type:
+  #                     type: string
+  #                     enum:
+  #                       - webhook
+  #                       - email
+  #                     default: email
+  #                 oneOf:
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - webhook
+  #                       format:
+  #                         type: string
+  #                         enum:
+  #                           - json
+  #                           - slack
+  #                       url:
+  #                         type: string
+  #                         format: uri
+  #                     required:
+  #                       - type
+  #                       - url
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - email
+  #                     required:
+  #                       - type
+  #                     additionalProperties: false
+  #                 required:
+  #                   - type
+  #             additionalProperties: false
+  #             required:
+  #               - identifier
+  #               - userInputs
+  #               - trigger
+  #               - invocationMethod
+  #       required: true
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: action_identifier
+  #         required: true
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: blueprint_identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'update:actions'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   get:
+  #     summary: Get a blueprint action
+  #     tags:
+  #       - Actions
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: action_identifier
+  #         required: true
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: blueprint_identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'read:actions'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   delete:
+  #     summary: Delete blueprint's action
+  #     tags:
+  #       - Actions
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: action_identifier
+  #         required: true
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: blueprint_identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'delete:actions'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  # /v1/actions:
+  #   get:
+  #     summary: Get all actions
+  #     tags:
+  #       - Actions
+  #     parameters:
+  #       - schema:
+  #           type: array
+  #           items:
+  #             type: string
+  #         in: query
+  #         name: action_identifier
+  #         required: false
+  #       - schema:
+  #           type: array
+  #           items:
+  #             type: string
+  #         in: query
+  #         name: blueprint_identifier
+  #         required: false
+  #       - schema:
+  #           type: array
+  #           items:
+  #             type: string
+  #             enum:
+  #               - CREATE
+  #               - DELETE
+  #               - DAY-2
+  #         in: query
+  #         name: operation
+  #         required: false
+  #       - schema:
+  #           type: boolean
+  #         in: query
+  #         name: published
+  #         required: false
+  #       - schema:
+  #           type: string
+  #           enum:
+  #             - self-service
+  #             - automation
+  #         in: query
+  #         name: trigger_type
+  #         required: false
+  #       - schema:
+  #           type: array
+  #           items:
+  #             type: string
+  #             enum:
+  #               - ENTITY_CREATED
+  #               - ENTITY_UPDATED
+  #               - ENTITY_DELETED
+  #               - TIMER_PROPERTY_EXPIRED
+  #               - ANY_ENTITY_CHANGE
+  #         in: query
+  #         name: trigger_event
+  #         required: false
+  #       - schema:
+  #           type: string
+  #           enum:
+  #             - v1
+  #             - v2
+  #         in: query
+  #         name: version
+  #         required: false
+  #     security:
+  #       - bearer:
+  #           - 'read:actions'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  # '/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}/actions/{action_identifier}/runs':
+  #   post:
+  #     summary: Run a blueprint's entity action
+  #     tags:
+  #       - Action Runs
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               properties:
+  #                 type: object
+  #             additionalProperties: false
+  #             required:
+  #               - properties
+  #       required: true
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: query
+  #         name: run_id
+  #         required: false
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: action_identifier
+  #         required: true
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: blueprint_identifier
+  #         required: true
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: entity_identifier
+  #         required: true
+  #     security:
+  #       - bearer: []
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  # '/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}/runs':
+  #   post:
+  #     summary: Run a blueprint's action
+  #     tags:
+  #       - Action Runs
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               properties:
+  #                 type: object
+  #             additionalProperties: false
+  #             required:
+  #               - properties
+  #       required: true
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: query
+  #         name: run_id
+  #         required: false
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: action_identifier
+  #         required: true
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: blueprint_identifier
+  #         required: true
+  #     security:
+  #       - bearer: []
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  # '/v1/actions/runs/{run_id}':
+  #   patch:
+  #     summary: Patch an action run
+  #     tags:
+  #       - Action Runs
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               status:
+  #                 type: string
+  #                 enum:
+  #                   - SUCCESS
+  #                   - FAILURE
+  #               statusLabel:
+  #                 type: string
+  #               link:
+  #                 oneOf:
+  #                   - type: string
+  #                     format: url
+  #                   - type: array
+  #                     items:
+  #                       type: string
+  #                       format: url
+  #               message:
+  #                 type: object
+  #                 deprecated: true
+  #               summary:
+  #                 type: string
+  #               externalRunId:
+  #                 type: string
+  #             additionalProperties: false
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #           enum:
+  #             - v1
+  #             - v2
+  #         in: query
+  #         name: version
+  #         required: false
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: run_id
+  #         required: true
+  #     security:
+  #       - bearer: []
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   get:
+  #     summary: Get an action run's details
+  #     tags:
+  #       - Action Runs
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #           enum:
+  #             - v1
+  #             - v2
+  #         in: query
+  #         name: version
+  #         required: false
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: run_id
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'read:runs'
+  #     responses:
+  #       '200':
+  #         description: Default Response
   '/v1/actions/runs/{run_id}/approval':
     patch:
       summary: Approve an action's run

@@ -5833,7 +5833,7 @@ paths:
                           description: The HTTP method of the webhook (`POST`, `PUT`, `PATCH`, or `DELETE`).<br/>
                         headers:
                           type: object
-                          description: "A JSON object containing the headers to be sent to the webhook in each execution, in `"key"`:`"value"` pairs.<br/>"
+                          description: A JSON object containing the headers to be sent to the webhook in each execution, in `"key"`:`"value"` pairs.<br/>
                           # additionalProperties:
                           #   type: string
                         body:
@@ -6046,4 +6046,90 @@ paths:
             - read:actions
       responses:
         "200":
+          description: Default Response
+  '/v1/actions/runs/{run_id}':
+    patch:
+      summary: Patch an action run
+      description: This route allows you to patch an action run's details. This can be used to update the run's status & label, and add links to it (e.g. external logs of the job runner).<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+      tags:
+        - Action Runs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum:
+                    - SUCCESS
+                    - FAILURE
+                statusLabel:
+                  type: string
+                  description: A label to describe the status of the action run.<br/>
+                link:
+                  description: One or more links to be displayed in the run's page in Port. For example, a link to the external logs of the job runner.<br/>
+                  oneOf:
+                    - type: string
+                      title: string
+                      format: url
+                    - type: array
+                      title: array
+                      items:
+                        type: string
+                        format: url
+                # message:
+                #   type: object
+                #   deprecated: true
+                summary:
+                  type: string
+                  description: A summary of the action run, which will be displayed in the run's page in Port.<br/>
+                externalRunId:
+                  type: string
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - v1
+              - v2
+          in: query
+          name: version
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: run_id
+          description: The identifier of the action run you want to patch.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+    get:
+      summary: Get an action run's details
+      description: This route allows you to fetch the details of an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+      tags:
+        - Action Runs
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - v1
+              - v2
+          in: query
+          name: version
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: run_id
+          description: The identifier of the action run you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'read:runs'
+      responses:
+        '200':
           description: Default Response
