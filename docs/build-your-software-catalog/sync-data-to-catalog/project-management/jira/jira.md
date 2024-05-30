@@ -1037,7 +1037,7 @@ To claim your user accounts in Jira:
 - Select **Claim accounts**.
 - You will receive an email from Jira when the claim process is complete.
 
-That's it! Now Jira API responses will include the `emailAddress` field when returning a user that exists in Jira.
+That's it! Now Jira API responses will include the `emailAddress` field when returning a user from Jira.
 
 :::tip Jira docs
 All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
