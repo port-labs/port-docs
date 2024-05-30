@@ -31,6 +31,13 @@ To generate a token for authenticating the Jenkins API calls:
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' />
 
+:::info Install the People View Plugin
+Recent Jenkins versions ([2.452 and above](https://issues.jenkins.io/browse/JENKINS-18884)) no longer include the "People" view by default.  This view is essential for  providing the user information API that will be queried by the integration.
+
+**To install the plugin:**
+- In Jenkins, navigate to **Manage Jenkins** -> **Plugins**.
+- Search for and install the [**"People View"** plugin](https://plugins.jenkins.io/people-view/).
+:::
 
 ## Installation
 
