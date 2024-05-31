@@ -387,7 +387,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 0.8.3"
+      version = "~> 2.0.3"
     }
   }
 }

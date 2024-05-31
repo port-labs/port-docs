@@ -4,6 +4,56 @@
 
 ```yaml showLineNumbers
 resources:
+  - kind: project
+    selector:
+      query: 'true'
+      defaultTeam: "false"
+    port:
+      entity:
+        mappings:
+          identifier: '.id | gsub(" "; "")'
+          blueprint: '"project"'
+          title: .name
+          properties:
+            state: '.state'
+            revision: '.revision'
+            visibility: '.visibility'
+            defaultTeam: '.defaultTeam.name'
+            link: '.url | gsub("_apis/projects/"; "")'
+  - kind: repository
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: '.project.name + "/" + .name | gsub(" "; "")'
+          title: .name
+          blueprint: '"azureDevopsRepository"'
+          properties:
+            url: .url
+            readme: file://README.md
+          relations:
+            project: .project.id | gsub(" "; "")
+  - kind: repository-policy
+    selector:
+      query: .type.displayName=="Minimum number of reviewers"
+    port:
+      entity:
+        mappings:
+          identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
+          blueprint: '"azureDevopsRepository"'
+          properties:
+            minimumApproverCount: .settings.minimumApproverCount
+  - kind: repository-policy
+    selector:
+      query: .type.displayName=="Work item linking"
+    port:
+      entity:
+        mappings:
+          identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
+          blueprint: '"azureDevopsRepository"'
+          properties:
+            workItemLinking: .isEnabled and .isBlocking
   - kind: team
     selector:
       query: 'true'
@@ -18,7 +68,7 @@ resources:
             description: .description
           relations:
             project: .__repository.project.id | gsub(" "; "")
-            service: .__repository.project.name + "/" + .__repository.name | gsub(" "; "")
+            repository: .__repository.project.name + "/" + .__repository.name | gsub(" "; "")
   - kind: member
     selector:
       query: 'true'
