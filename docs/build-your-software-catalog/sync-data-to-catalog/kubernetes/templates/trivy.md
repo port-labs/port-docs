@@ -139,11 +139,11 @@ Below are the Trivy blueprint schemas used in the exporter:
    "calculationProperties": {},
    "aggregationProperties": {},
    "relations": {
-      "namespace": {
-      "title": "Namespace",
-      "target": "namespace",
-      "required": false,
-      "many": false
+      "kubernetes_resource": {
+         "title": "Kubernetes Resource",
+         "target": "workload",
+         "required": false,
+         "many": false
       }
    }
 }
@@ -242,11 +242,11 @@ Below are the Trivy blueprint schemas used in the exporter:
    "calculationProperties": {},
    "aggregationProperties": {},
    "relations": {
-      "namespace": {
-      "title": "Namespace",
-      "target": "namespace",
-      "required": false,
-      "many": false
+      "kubernetes_resource": {
+         "title": "Kubernetes Resource",
+         "target": "workload",
+         "required": false,
+         "many": false
       }
    }
 }
@@ -290,7 +290,15 @@ Below are the mappings for the Trivy resources:
               createdAt: .metadata.creationTimestamp
               updatedAt: .report.updateTimestamp
             relations:
-              namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+              kubernetes_resource: (
+                if (.metadata.ownerReferences | length > 0) then 
+                     (.metadata.ownerReferences[] | select(.controller == true) |
+                     .name + "-" + .kind + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+                     )
+                  else
+                     empty
+                  end
+                )
 ```
 </details>
 
@@ -324,7 +332,15 @@ Below are the mappings for the Trivy resources:
               scannerVersion: .report.scanner.version
               createdAt: .metadata.creationTimestamp
             relations:
-              namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+              kubernetes_resource: (
+               if (.metadata.ownerReferences | length > 0) then 
+                     (.metadata.ownerReferences[] | select(.controller == true) |
+                     .name + "-" + .kind + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+                     )
+                  else
+                     empty
+                  end
+               )
 ```
 </details>
 
