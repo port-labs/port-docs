@@ -103,43 +103,15 @@ Make sure to replace the placeholders for `<GITHUB_ORG_NAME>` and `<GITHUB_REPO_
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB_ORG_NAME>",
-    "repo": "<GITHUB_REPO_NAME>",
+    "org": "<Enter GitHub organization>",
+    "repo": "<Enter GitHub repository>",
     "workflow": "create-repo-secret.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"secret_key\")) then \"secret_key\" else null end}}": "{{.inputs.\"secret_key\"}}",
-      "{{if (.inputs | has(\"secret_value\")) then \"secret_value\" else null end}}": "{{.inputs.\"secret_value\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": false,
-              "reportWorkflowStatus": true,
-              "org": "<GITHUB_ORG_NAME>",
-              "repo": "<GITHUB_REPO_NAME>",
-              "workflow": "create-repo-secret.yml"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"secret_key\")) then \"secret_key\" else null end}}": "{{.inputs.\"secret_key\"}}",
-            "{{if (.inputs | has(\"secret_value\")) then \"secret_value\" else null end}}": "{{.inputs.\"secret_value\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "secret_key": "{{.inputs.\"secret_key\"}}",
+      "secret_value": "{{.inputs.\"secret_value\"}}",
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true
@@ -169,12 +141,10 @@ on:
       secret_value:
         type: string
         description: value of the secret
-      run_id:
-        type: string
+      port_context:
         required: true
-      blueprint:
         type: string
-        required: true
+
 jobs:
   create_secret:
     runs-on: ubuntu-latest
@@ -185,7 +155,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Setting secret, "${{ inputs.secret_key }}" in repository
 
@@ -203,7 +173,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Setting secret, "${{ inputs.secret_key }}" has been set in repository 💪🏿
 
@@ -214,7 +184,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Updating Port blueprint catalogue with newly added secret...
 
@@ -226,7 +196,7 @@ jobs:
           title: ${{ inputs.secret_key }}
           team: "[]"
           icon: DefaultBlueprint
-          blueprint: ${{ inputs.blueprint }}
+          blueprint: ${{ fromJson(inputs.port_context).blueprint }}
           properties: |-
             {
               "secret_key": "${{ inputs.secret_key }}",
@@ -236,7 +206,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
       
       - name: Inform completion of upserting entity
         if: steps.upsert_entity.outcome == 'success'
@@ -245,7 +215,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Operation completed, success 🔥
 ```

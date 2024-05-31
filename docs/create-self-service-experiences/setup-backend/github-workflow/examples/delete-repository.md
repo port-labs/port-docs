@@ -80,21 +80,21 @@ Follow these steps to get started:
         "delete_dependents"
       ]
     },
-    // highlight-start
-    "blueprintIdentifier": "service"
-    // highlight-end
+    "blueprintIdentifier": "githubRepository"
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "<GITHUB-ORG>",
-    "repo": "<GITHUB-REPO-NAME>",
+    "org": "<Enter GitHub organization>",
+    "repo": "<Enter GitHub repository>",
     "workflow": "delete-repo.yml",
     "workflowInputs": {
       "org_name": "{{.inputs.\"org_name\"}}",
       "delete_dependents": "{{.inputs.\"delete_dependents\"}}",
-      "entity": "{{.entity.identifier}}",
-      "blueprint": "{{.action.blueprint}}",
-      "run_id": "{{.run.id}}"
+      "port_context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "run_id": "{{.run.id}}"
+      }
     },
     "reportWorkflowStatus": true
   },
@@ -125,13 +125,7 @@ on:
         required: true
         type: boolean
         default: true
-      entity:
-        required: true
-        type: string
-      run_id:
-        required: true
-        type: string
-      blueprint:
+      port_context:
         required: true
         type: string
 
@@ -146,14 +140,14 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Deleting a github repository... ⛴️
 
       - name: Delete Repository
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          REPO_NAME: ${{ inputs.entity }}
+          REPO_NAME: ${{ fromJson(inputs.port_context).entity }}
         run: |
           echo $GH_TOKEN
           HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
@@ -181,8 +175,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: DELETE
           delete_dependents: ${{ inputs.delete_dependents }}
-          identifier: ${{ inputs.entity }}
-          blueprint: ${{ inputs.blueprint }}
+          identifier: ${{ fromJson(inputs.port_context).entity }}
+          blueprint: ${{ fromJson(inputs.port_context).blueprint }}
       
       - name: Inform completion of deletion
         uses: port-labs/port-github-action@v1
@@ -190,10 +184,9 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             GitHub repository deleted! ✅
-
 ```
 
 </details>
