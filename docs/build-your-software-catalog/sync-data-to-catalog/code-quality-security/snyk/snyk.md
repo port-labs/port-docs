@@ -566,7 +566,6 @@ The following resources can be used to map data from Snyk, it is possible to ref
             blueprint: '"snykProject"'
             properties:
               url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-              owner: .__owner.email
               businessCriticality: .attributes.business_criticality
               environment: .attributes.environment
               lifeCycle: .attributes.lifecycle
@@ -574,8 +573,10 @@ The following resources can be used to map data from Snyk, it is possible to ref
               mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
               lowOpenVulnerabilities: .meta.latest_issue_counts.low
               criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-              importedBy: .__importer.email
               tags: .attributes.tags
+              targetOrigin: .origin
+            relations:
+              snyk_target: '.relationships.target.data.id'
         # highlight-end
     - kind: project # In this instance project is mapped again with a different filter
       selector:
@@ -723,7 +724,10 @@ resources:
           "nexus-cr",
           "pivotal",
           "quay-cr",
-          "terraform-cloud"
+          "terraform-cloud",
+          "bitbucket-connect-app",
+          "acr",
+          "api"
         ]
       }
     },
@@ -731,7 +735,14 @@ resources:
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "synk_organization": {
+      "title": "Snyk Organization",
+      "target": "snykOrganization",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 
@@ -746,19 +757,21 @@ deleteDependentEntities: true
 resources:
   - kind: target
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
-          identifier: .attributes.displayName
-          title: .attributes.displayName
+          identifier: .id
+          title: .attributes.display_name
           blueprint: '"snykTarget"'
           properties:
-            origin: .attributes.origin
-            highOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.high] | add"
-            mediumOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.medium] | add"
-            lowOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.low] | add"
-            criticalOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.critical] | add"
+            origin: .relationships.integration.data.attributes.integration_type
+            highOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.high] | add'
+            mediumOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.medium] | add'
+            lowOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.low] | add'
+            criticalOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.critical] | add'
+          relations:
+            synk_organization: '.relationships.organization.data.id'
 ```
 
 </details>
@@ -780,12 +793,6 @@ resources:
         "title": "URL",
         "format": "url",
         "icon": "Snyk"
-      },
-      "owner": {
-        "type": "string",
-        "title": "Owner",
-        "format": "user",
-        "icon": "TwoUsers"
       },
       "businessCriticality": {
         "title": "Business Criticality",
@@ -848,33 +855,26 @@ resources:
         "type": "number",
         "title": "Open Low Vulnerabilities"
       },
-      "importedBy": {
-        "icon": "TwoUsers",
-        "type": "string",
-        "title": "Imported By",
-        "format": "user"
-      },
       "tags": {
         "type": "array",
         "title": "Tags",
         "icon": "DefaultProperty"
+      },
+      "targetOrigin": {
+        "type": "string",
+        "title": "Target Origin"
       }
     },
     "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
-    "snykVulnerabilities": {
-      "title": "Snyk Vulnerabilities",
-      "target": "snykVulnerability",
+    "snyk_target": {
+      "title": "Snyk Target",
+      "target": "snykTarget",
       "required": false,
-      "many": true
-    },
-    "snykOrganization": {
-      "title": "Snyk Organization",
-      "target": "snykOrganization",
-      "required": true,
       "many": false
     }
   }
@@ -901,7 +901,6 @@ resources:
           blueprint: '"snykProject"'
           properties:
             url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-            owner: .__owner.email
             businessCriticality: .attributes.business_criticality
             environment: .attributes.environment
             lifeCycle: .attributes.lifecycle
@@ -909,11 +908,10 @@ resources:
             mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
             lowOpenVulnerabilities: .meta.latest_issue_counts.low
             criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-            importedBy: .__importer.email
             tags: .attributes.tags
+            targetOrigin: .origin
           relations:
-            snykVulnerabilities: '[.__issues[] | select(.issueType == "vuln").issueData.id]'
-            snykOrganization: .relationships.organization.data.id
+            snyk_target: '.relationships.target.data.id'
 ```
 
 </details>
@@ -959,12 +957,7 @@ resources:
         "icon": "Alert",
         "title": "Issue Severity",
         "type": "string",
-        "enum": [
-          "low",
-          "medium",
-          "high",
-          "critical"
-        ],
+        "enum": ["low", "medium", "high", "critical"],
         "enumColors": {
           "low": "green",
           "medium": "yellow",
@@ -999,7 +992,14 @@ resources:
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "snykProject",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 
@@ -1031,6 +1031,8 @@ resources:
             language: .issueData.language // .issueType
             publicationTime: .issueData.publicationTime
             isPatched: .isPatched
+          relations:
+            project: '.links.paths | split("/") | .[8]'
 ```
 
 </details>
