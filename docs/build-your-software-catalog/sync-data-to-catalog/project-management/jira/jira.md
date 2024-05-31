@@ -6,7 +6,6 @@ import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog
 import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_jira_one_time_docker_parameters.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
-import JiraIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_blueprint.mdx"
 import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
 import JiraProjectBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_project_blueprint.mdx";
 import JiraWebhookConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_webhook_configuration.mdx";
@@ -711,7 +710,7 @@ resources:
             assignee: .fields.assignee.emailAddress
             reporter: .fields.reporter.emailAddress
             creator: .fields.creator.emailAddress
-            priority: .fields.priority.id
+            priority: .fields.priority.name
             created: .fields.created
             updated: .fields.updated
           relations:
@@ -988,7 +987,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "assignee": "username@example.com.io",
     "reporter": "username@example.com.io",
     "creator": "username@example.com.io",
-    "priority": "3",
+    "priority": "Medium",
     "created": "2023-11-06T11:02:59.000+0000",
     "updated": "2023-11-06T11:03:18.244+0000"
   },
@@ -1056,14 +1055,7 @@ In this example you are going to create a webhook integration between [Jira](htt
 
 <h2> Port configuration </h2>
 
-Create the following blueprint definition:
-
-<details>
-<summary>Jira issue blueprint</summary>
-
-<JiraIssueBlueprint/>
-
-</details>
+Create a blueprint using the [Jira Issue blueprint definition](#issue)
 
 Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
 
@@ -1124,6 +1116,7 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
   "user": {
     "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39959-769f-4dac-8a7a-46eb55b03723",
     "accountId": "557058%3A69f39959-769f-4dac-8a7a-46eb55b03723",
+    "emailAddress":"shadow@atlassian.com",
     "avatarUrls": {
       "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
     },
@@ -1188,6 +1181,7 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
       "assignee": {
         "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
         "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
+        "emailAddress":"shadow@atlassian.com",
         "avatarUrls": {
           "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
         },
@@ -1219,6 +1213,7 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
       "creator": {
         "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
         "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
+        "emailAddress":"shadow@atlassian.com",
         "avatarUrls": {
           "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
         },
@@ -1231,6 +1226,7 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
       "reporter": {
         "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
         "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
+        "emailAddress":"shadow@atlassian.com",
         "avatarUrls": {
           "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
         },
@@ -1283,17 +1279,30 @@ The combination of the sample payload and the webhook configuration generates th
 {
   "identifier": "PI-1",
   "title": "PI-1 - Migrate Infra to Cloud",
+  "icon": null,
   "blueprint": "jiraIssue",
+  "team": [],
   "properties": {
-    "summary": "Migrate Infra to Cloud",
-    "description": "We need to migrate our current infrastructure from in-house to the cloud",
+    "url": "https://myaccount.atlassian.net/browse/PA-1",
     "status": "To Do",
-    "lastChangeType": "issue_created",
-    "changingUser": "Your Name",
-    "issueUrl": "https://account.atlassian.net/browse/PI-1",
-    "issueType": "Epic"
+    "issueType": "Epic",
+    "components": [],
+    "assignee": "shadow@atlassian.com",
+    "reporter": "shadow@atlassian.com",
+    "creator": "shadow@atlassian.com",
+    "priority": "Medium",
+    "created": "2023-11-06T11:02:59.000+0000",
+    "updated": "2023-11-06T11:03:18.244+0000"
   },
-  "relations": {}
+  "relations": {
+    "parentIssue": null,
+    "project": "PI",
+    "subtasks": []
+  },
+  "createdAt": "2023-11-06T11:22:07.550Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-06T11:22:07.550Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
 }
 ```
 
