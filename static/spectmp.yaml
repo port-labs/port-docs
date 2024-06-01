@@ -6086,6 +6086,7 @@ paths:
                   description: A summary of the action run, which will be displayed in the run's page in Port.<br/>
                 externalRunId:
                   type: string
+                  description: The run id of your backend, for example the id that GitHub gives the workflow. This can be used to identify the action run instead of the `run_id`.<br/>
               additionalProperties: false
       parameters:
         - schema:
@@ -6130,6 +6131,2121 @@ paths:
       security:
         - bearer:
             - 'read:runs'
+      responses:
+        '200':
+          description: Default Response
+  '/v1/actions/runs/{run_id}/approval':
+    patch:
+      summary: Approve an action's run
+      description: This route allows you to approve or decline a request to execute an action that requires approval.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
+      tags:
+        - Action Runs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum:
+                    - APPROVE
+                    - DECLINE
+                description:
+                  type: string
+                  description: A description and/or reason for the given status.<br/>
+              additionalProperties: false
+              required:
+                - status
+        required: true
+      parameters:
+        # - schema:
+        #     type: string
+        #     enum:
+        #       - v1
+        #       - v2
+        #   in: query
+        #   name: version
+        #   required: false
+        - schema:
+            type: string
+          in: path
+          name: run_id
+          description: The identifier of the action run you want to approve/decline.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+  /v1/actions/runs:
+    get:
+      summary: Get all action runs
+      description: This route allows you to fetch all action runs in your Port account. The route will perform a logical `AND` between all query parameters below, and return all action runs that match the criteria.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+      tags:
+        - Action Runs
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: entity
+          description: The identifier of the entity associated with the action run.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: blueprint
+          description: The identifier of the blueprint associated with the action run.<br/>
+          required: false
+        - schema:
+            type: boolean
+          in: query
+          name: active
+          description: If `true`, only running action runs will be fetched.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: user_email
+          description: The email of the user who initiated the action run.<br/>
+          required: false
+        - schema:
+            type: number
+            minimum: 1
+            maximum: 50
+          in: query
+          name: limit
+          description: The maximum number of action runs to fetch.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: external_run_id
+          description: The run id of your backend, for example the id that GitHub gives the workflow. This can be used to identify the action run instead of the `run_id`.<br/>
+          required: false
+        # - schema:
+        #     type: string
+        #     enum:
+        #       - v1
+        #       - v2
+        #   in: query
+        #   name: version
+        #   required: false
+      security:
+        - bearer:
+            - 'read:runs'
+      responses:
+        '200':
+          description: Default Response
+  '/v1/actions/runs/{run_id}/logs':
+    post:
+      summary: Add a log to an action run
+      description: This route allows you to send a log message back to Port, which will be displayed in the action run's page. You can also use this route to update the run's termination status (SUCCESS/FAILURE) and label describing the status.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).  
+      tags:
+        - Action Runs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                terminationStatus:
+                  type: string
+                  description: The termination status of the action run. Can be left blank if you only want to send a log message.<br/>
+                  enum:
+                    - SUCCESS
+                    - FAILURE
+                statusLabel:
+                  type: string
+                  description: A label to describe the status of the action run. Can be left blank if you only want to send a log message.<br/>
+                message:
+                  type: string
+                  description: The log message to send back to Port.<br/>
+              additionalProperties: false
+              required:
+                - message
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: run_id
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+    get:
+      summary: Get an action's run logs
+      description: This route allows you to fetch the logs from an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+      tags:
+        - Action Runs
+      parameters:
+        - schema:
+            type: number
+            minimum: 1
+            maximum: 50
+          in: query
+          name: limit
+          description: The maximum number of logs to fetch.<br/>
+          required: false
+        - schema:
+            type: number
+          in: query
+          name: offset
+          description: The number of logs to skip.<br/>
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: run_id
+          description: The identifier of the action run you want to fetch logs for.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+  /v1/teams:
+    get:
+      summary: Get all teams in your organization
+      description: This route allows you to fetch all of the teams in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      tags:
+        - Teams
+      parameters:
+        - schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - id
+                - name
+                - createdAt
+                - updatedAt
+                - provider
+                - description
+                - users.firstName
+                - users.lastName
+                - users.email
+                - users.picture
+                - users.status
+          in: query
+          name: fields
+          description: The fields you want to fetch for each team. If used, only the specified fields will be included in the response.<br/>
+          required: false
+      security:
+        - bearer:
+            - 'read:teams'
+      responses:
+        '200':
+          description: Default Response
+    post:
+      summary: Create a team
+      description: This route allows you to create a new team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      tags:
+        - Teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the new team.<br/>
+                  pattern: '^[^;#/\?\s][^;#/\?]*[^;#/\?\s]$'
+                users:
+                  type: array
+                  description: One or more e-mail addresses of users to add to the new team.<br/>
+                  items:
+                    type: string
+                description:
+                  type: string
+                  description: The description of the new team.<br/>
+              required:
+                - name
+        required: true
+      security:
+        - bearer:
+            - 'create:teams'
+      responses:
+        '200':
+          description: Default Response
+  '/v1/teams/{name}':
+    get:
+      summary: Get a team
+      description: This route allows you to fetch a specific team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      tags:
+        - Teams
+      parameters:
+        - schema:
+            type: array
+            items:
+              enum:
+                - id
+                - name
+                - createdAt
+                - updatedAt
+                - provider
+                - description
+                - users.firstName
+                - users.lastName
+                - users.email
+                - users.picture
+                - users.status
+          in: query
+          name: fields
+          description: The fields you want to fetch for the team. If used, only the specified fields will be included in the response.<br/>
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: name
+          description: The name of the team you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'read:teams'
+      responses:
+        '200':
+          description: Default Response
+    patch:
+      summary: Patch a team
+      description: This route allows you to patch a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      tags:
+        - Teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The new name of the team.<br/>
+                users:
+                  type: array
+                  description: One or more e-mail addresses of users to add to the new team. This will override the existing user list.<br/>
+                  items:
+                    type: string
+                description:
+                  type:
+                    - string
+                    # - 'null'
+                  description: The new description of the team.<br/>
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: name
+          description: The name of the team you want to patch.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'update:teams'
+      responses:
+        '200':
+          description: Default Response
+    put:
+      summary: Change a team
+      description: This route allows you to change a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      tags:
+        - Teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The new name of the team.<br/>
+                users:
+                  type: array
+                  description: One or more e-mail addresses of users to add to the new team. This will override the existing user list.<br/>
+                  items:
+                    type: string
+                description:
+                  type: string
+                  description: The new description of the team.<br/>
+              required:
+                - name
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: name
+          description: The name of the team you want to change.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'update:teams'
+      responses:
+        '200':
+          description: Default Response
+    delete:
+      summary: Delete a team
+      description: This route allows you to delete a team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      tags:
+        - Teams
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: name
+          description: The name of the team you want to delete.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'delete:teams'
+      responses:
+        '200':
+          description: Default Response
+  /v1/users:
+    get:
+      summary: Get all users in your organization
+      description: This route allows you to fetch all of the users in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      tags:
+        - Users
+      parameters:
+        - schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - id
+                - email
+                - firstName
+                - lastName
+                - phoneNumber
+                - picture
+                - status
+                - providers
+                - createdAt
+                - updatedAt
+                - teams.name
+                - teams.provider
+                - teams.createdAt
+                - teams.updatedAt
+                - roles.name
+                - roles.description
+                - roles.isAdmin
+                - roles.protected
+                - roles.createdAt
+                - roles.updatedAt
+          in: query
+          name: fields
+          description: The fields you want to fetch for each user. If used, only the specified fields will be included in the response.<br/>
+          required: false
+      security:
+        - bearer:
+            - 'read:users'
+      responses:
+        '200':
+          description: Default Response
+  /v1/users/invite:
+    post:
+      summary: Invite a user to your organization
+      description: This route allows you to invite a user to your Port organization.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                invitee:
+                  type: object
+                  description: The details of the user you want to invite.<br/>
+                  properties:
+                    email:
+                      type: string
+                      description: The user's email address.<br/>
+                      pattern: '^[^;#/\?\s][^;#/\?]*[^;#/\?\s]$'
+                    roles:
+                      type: array
+                      description: The roles you want to assign to the user.<br/>
+                      items:
+                        type: string
+                    teams:
+                      type: array
+                      description: The names of the teams you want to assign the user to.<br/>
+                      items:
+                        type: string
+                  required:
+                    - email
+              additionalProperties: false
+              required:
+                - invitee
+        required: true
+      parameters:
+        - schema:
+            type: boolean
+            default: true
+          in: query
+          name: notify
+          description: If `true`, the invitee will receive an email notification.<br/>
+          required: false
+      security:
+        - bearer:
+            - 'create:users'
+      responses:
+        '200':
+          description: Default Response
+  '/v1/users/{user_email}':
+    get:
+      summary: Get a user
+      description: This route allows you to fetch a specific user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      tags:
+        - Users
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: user_email
+          description: The email address of the user you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'read:users'
+      responses:
+        '200':
+          description: Default Response
+    patch:
+      summary: Patch a user
+      description: This route allows you to patch a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roles:
+                  type: array
+                  description: The roles you want to assign to the user.<br/>
+                  minItems: 1
+                  items:
+                    type: string
+                teams:
+                  type: array
+                  description: The names of the teams you want to assign the user to.<br/>
+                  items:
+                    type: string
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: user_email
+          description: The email address of the user you want to patch.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'update:users'
+      responses:
+        '200':
+          description: Default Response
+    delete:
+      summary: Delete a user
+      description: This route allows you to delete a user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      tags:
+        - Users
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: user_email
+          description: The email address of the user you want to delete.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'delete:users'
+      responses:
+        '200':
+          description: Default Response
+  /v1/audit-log:
+    get:
+      summary: Get audit logs
+      description: This route allows you to fetch audit logs from your Port account. Your audit logs can also be viewed via [Port's UI](https://app.getport.io/settings/AuditLog).<br/><br/>This route will perform a logical `AND` between all query parameters below, and return all logs that match the criteria.
+      tags:
+        - Audit
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: identifier
+          description: An identifier of the log event you want to fetch.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: entity
+          description: Fetch all audit logs related to the specified entity.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: blueprint
+          description: Fetch all audit logs related to the specified blueprint.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: run_id
+          description: Fetch all audit logs related to the specified action run.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: webhookId
+          description: Fetch all audit logs related to the specified webhook.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: webhookEventId
+          description: Fetch all audit logs related to the specified webhook event.<br/>
+          required: false
+        - schema:
+            type: array
+            items:
+              type: string
+          in: query
+          name: origin
+          description: Fetch all audit logs coming from the specified origin/s. This refers to the integration/s that triggered the log. For operations performed via Port's UI, the origin will be `UI`.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: InstallationId
+          description: Fetch all audit logs related to the specified integration.<br/>
+          required: false
+        - schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - blueprint
+                - entity
+                - run
+                - webhook
+                - scorecard
+                - action
+            # anyOf:
+            #   - type: array
+            #     items:
+            #       enum:
+            #         - blueprint
+            #         - entity
+            #         - run
+            #         - webhook
+            #         - scorecard
+            #         - action
+            #   - type: string
+            #     enum:
+            #       - blueprint
+            #       - entity
+            #       - run
+            #       - webhook
+            #       - scorecard
+            #       - action
+          in: query
+          name: resources
+          description: Fetch all audit logs related to the specified resource type/s.<br/>
+          required: false
+        - schema:
+            type: array
+            items:
+              enum:
+                - action
+                - context
+                - diff
+                - identifier
+                - resourceType
+                - status
+                - trigger
+                - additionalData
+                - message
+          in: query
+          name: includes
+          description: The fields you want to include in the response. If used, only the specified fields will be included in the response.<br/>
+          required: false
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          name: from
+          description: The starting timestamp of the audit logs you want to fetch, in the ISO format `2022-04-23T18:25:43.511Z`.<br/>
+          required: false
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          name: to
+          description: The ending timestamp of the audit logs you want to fetch, in the ISO format `2022-04-23T18:25:43.511Z`.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: action
+          description: Fetch all audit logs with the specified action type - `CREATE`, `UPDATE`, or `DELETE`.<br/>
+          required: false
+        - schema:
+            type: string
+            enum:
+              - SUCCESS
+              - FAILURE
+          in: query
+          name: status
+          description: Fetch all audit logs with the specified status.<br/>
+          required: false
+        - schema:
+            type: number
+          in: query
+          name: limit
+          description: The maximum number of logs to fetch.<br/>
+          required: false
+      security:
+        - bearer:
+            - 'read:audit-log'
+      responses:
+        '200':
+          description: Default Response
+  '/v1/blueprints/{blueprint_identifier}/scorecards':
+    post:
+      summary: Create a scorecard for a blueprint
+      description: This route allows you to create a scorecard for a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      tags:
+        - Scorecards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                  description: A unique identifier for the scorecard.<br/>
+                title:
+                  type: string
+                  description: The title of the scorecard.<br/>
+                filter:
+                  type: object
+                  description: An optional set of [conditions](https://docs.getport.io/promote-scorecards/#conditions) to filter entities that will be evaluated by the scorecard.<br/>
+                  properties:
+                    combinator:
+                      type: string
+                      description: The combinator to use when evaluating the conditions.<br/>
+                      enum:
+                        - and
+                        - or
+                    conditions:
+                      type: array
+                      description: The conditions to evaluate.<br/>
+                      minItems: 1
+                      items:
+                        anyOf:
+                          - type: object
+                            title: Property comparison
+                            properties:
+                              property:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - =
+                                  - '!='
+                                  - '>'
+                                  - <
+                                  - '>='
+                                  - <=
+                                  - contains
+                                  - doesNotContains
+                                  - beginsWith
+                                  - doesNotBeginsWith
+                                  - endsWith
+                                  - doesNotEndsWith
+                              value:
+                                oneOf:
+                                  - type: string
+                                    title: string
+                                  - type: number
+                                    title: number
+                                  - type: boolean
+                                    title: boolean
+                            required:
+                              - property
+                              - operator
+                              - value
+                          - type: object
+                            title: Relation comparison
+                            properties:
+                              relation:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - =
+                                  - '!='
+                                  - contains
+                                  - doesNotContains
+                                  - beginsWith
+                                  - doesNotBeginsWith
+                                  - endsWith
+                                  - doesNotEndsWith
+                              value:
+                                oneOf:
+                                  - type: string
+                                    title: string
+                                  - type: number
+                                    title: number
+                                  - type: boolean
+                                    title: boolean
+                            required:
+                              - relation
+                              - operator
+                              - value
+                          - type: object
+                            title: Property empty condition
+                            properties:
+                              not:
+                                type: boolean
+                              property:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - isEmpty
+                                  - isNotEmpty
+                            required:
+                              - property
+                              - operator
+                          - type: object
+                            title: Relation empty condition
+                            properties:
+                              not:
+                                type: boolean
+                              relation:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - isEmpty
+                                  - isNotEmpty
+                            required:
+                              - relation
+                              - operator
+                  required:
+                    - combinator
+                    - conditions
+                rules:
+                  description: The [rules](https://docs.getport.io/promote-scorecards/#rule-elements) that define the scorecard.<br/>
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      identifier:
+                        type: string
+                        pattern: '^[A-Za-z0-9@_=\\-]+$'
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      level:
+                        type: string
+                        enum:
+                          - Gold
+                          - Silver
+                          - Bronze
+                      query:
+                        type: object
+                        properties:
+                          combinator:
+                            type: string
+                            enum:
+                              - and
+                              - or
+                          conditions:
+                            type: array
+                            minItems: 1
+                            items:
+                              anyOf:
+                                - type: object
+                                  title: Property comparison
+                                  properties:
+                                    property:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - =
+                                        - '!='
+                                        - '>'
+                                        - <
+                                        - '>='
+                                        - <=
+                                        - contains
+                                        - doesNotContains
+                                        - beginsWith
+                                        - doesNotBeginsWith
+                                        - endsWith
+                                        - doesNotEndsWith
+                                    value:
+                                      oneOf:
+                                        - type: string
+                                        - type: number
+                                        - type: boolean
+                                  required:
+                                    - property
+                                    - operator
+                                    - value
+                                - type: object
+                                  title: Relation comparison
+                                  properties:
+                                    relation:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - =
+                                        - '!='
+                                        - contains
+                                        - doesNotContains
+                                        - beginsWith
+                                        - doesNotBeginsWith
+                                        - endsWith
+                                        - doesNotEndsWith
+                                    value:
+                                      oneOf:
+                                        - type: string
+                                        - type: number
+                                        - type: boolean
+                                  required:
+                                    - relation
+                                    - operator
+                                    - value
+                                - type: object
+                                  title: Property empty condition
+                                  properties:
+                                    not:
+                                      type: boolean
+                                    property:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - isEmpty
+                                        - isNotEmpty
+                                  required:
+                                    - property
+                                    - operator
+                                - type: object
+                                  title: Relation empty condition
+                                  properties:
+                                    not:
+                                      type: boolean
+                                    relation:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - isEmpty
+                                        - isNotEmpty
+                                  required:
+                                    - relation
+                                    - operator
+                        required:
+                          - combinator
+                          - conditions
+                    required:
+                      - identifier
+                      - title
+                      - level
+                      - query
+              additionalProperties: false
+              required:
+                - identifier
+                - title
+                - rules
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: blueprint_identifier
+          description: The identifier of the blueprint you want to run scorecards for.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+          text/plain; x-api-version=2.0:
+            schema:
+              type: string
+        '400':
+          description: Default Response
+    put:
+      summary: Change a blueprints' scorecards
+      description: This route allows you to modify one or more scorecards of a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      tags:
+        - Scorecards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              description: An array of the scorecards to update.<br/>
+              items:
+                type: object
+                properties:
+                  identifier:
+                    type: string
+                    description: The identifier of the scorecard.<br/>
+                    pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                  title:
+                    type: string
+                    description: The title of the scorecard.<br/>
+                  filter:
+                    type: object
+                    description: An optional set of [conditions](https://docs.getport.io/promote-scorecards/#conditions) to filter entities that will be evaluated by the scorecard.<br/>
+                    properties:
+                      combinator:
+                        type: string
+                        enum:
+                          - and
+                          - or
+                      conditions:
+                        type: array
+                        minItems: 1
+                        items:
+                          anyOf:
+                            - type: object
+                              title: Property comparison
+                              properties:
+                                property:
+                                  type: string
+                                operator:
+                                  type: string
+                                  enum:
+                                    - =
+                                    - '!='
+                                    - '>'
+                                    - <
+                                    - '>='
+                                    - <=
+                                    - contains
+                                    - doesNotContains
+                                    - beginsWith
+                                    - doesNotBeginsWith
+                                    - endsWith
+                                    - doesNotEndsWith
+                                value:
+                                  oneOf:
+                                    - type: string
+                                    - type: number
+                                    - type: boolean
+                              required:
+                                - property
+                                - operator
+                                - value
+                            - type: object
+                              title: Relation comparison
+                              properties:
+                                relation:
+                                  type: string
+                                operator:
+                                  type: string
+                                  enum:
+                                    - =
+                                    - '!='
+                                    - contains
+                                    - doesNotContains
+                                    - beginsWith
+                                    - doesNotBeginsWith
+                                    - endsWith
+                                    - doesNotEndsWith
+                                value:
+                                  oneOf:
+                                    - type: string
+                                    - type: number
+                                    - type: boolean
+                              required:
+                                - relation
+                                - operator
+                                - value
+                            - type: object
+                              title: Property empty condition
+                              properties:
+                                not:
+                                  type: boolean
+                                property:
+                                  type: string
+                                operator:
+                                  type: string
+                                  enum:
+                                    - isEmpty
+                                    - isNotEmpty
+                              required:
+                                - property
+                                - operator
+                            - type: object
+                              title: Relation empty condition
+                              properties:
+                                not:
+                                  type: boolean
+                                relation:
+                                  type: string
+                                operator:
+                                  type: string
+                                  enum:
+                                    - isEmpty
+                                    - isNotEmpty
+                              required:
+                                - relation
+                                - operator
+                    required:
+                      - combinator
+                      - conditions
+                  rules:
+                    type: array
+                    description: The [rules](https://docs.getport.io/promote-scorecards/#rule-elements) that define the scorecard.<br/>
+                    items:
+                      type: object
+                      properties:
+                        identifier:
+                          type: string
+                          pattern: '^[A-Za-z0-9@_=\\-]+$'
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        level:
+                          type: string
+                          enum:
+                            - Gold
+                            - Silver
+                            - Bronze
+                        query:
+                          type: object
+                          properties:
+                            combinator:
+                              type: string
+                              enum:
+                                - and
+                                - or
+                            conditions:
+                              type: array
+                              minItems: 1
+                              items:
+                                anyOf:
+                                  - type: object
+                                    title: Property comparison
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - =
+                                          - '!='
+                                          - '>'
+                                          - <
+                                          - '>='
+                                          - <=
+                                          - contains
+                                          - doesNotContains
+                                          - beginsWith
+                                          - doesNotBeginsWith
+                                          - endsWith
+                                          - doesNotEndsWith
+                                      value:
+                                        oneOf:
+                                          - type: string
+                                          - type: number
+                                          - type: boolean
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    title: Relation comparison
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - =
+                                          - '!='
+                                          - contains
+                                          - doesNotContains
+                                          - beginsWith
+                                          - doesNotBeginsWith
+                                          - endsWith
+                                          - doesNotEndsWith
+                                      value:
+                                        oneOf:
+                                          - type: string
+                                          - type: number
+                                          - type: boolean
+                                    required:
+                                      - relation
+                                      - operator
+                                      - value
+                                  - type: object
+                                    title: Property empty condition
+                                    properties:
+                                      not:
+                                        type: boolean
+                                      property:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - isEmpty
+                                          - isNotEmpty
+                                    required:
+                                      - property
+                                      - operator
+                                  - type: object
+                                    title: Relation empty condition
+                                    properties:
+                                      not:
+                                        type: boolean
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - isEmpty
+                                          - isNotEmpty
+                                    required:
+                                      - relation
+                                      - operator
+                          required:
+                            - combinator
+                            - conditions
+                      required:
+                        - identifier
+                        - title
+                        - level
+                        - query
+                  id:
+                    type: string
+                additionalProperties: false
+                required:
+                  - identifier
+                  - title
+                  - rules
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: blueprint_identifier
+          description: The identifier of the blueprint whose scorecard you want to change.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+    get:
+      summary: Get a blueprints' scorecards
+      description: This route allows you to fetch all scorecards for a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      tags:
+        - Scorecards
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: blueprint_identifier
+          description: The identifier of the blueprint whose scorecards you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'read:scorecards'
+      responses:
+        '200':
+          description: Default Response
+  '/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}':
+    put:
+      summary: Change a blueprint's scorecard
+      description: This route allows you to modify a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      tags:
+        - Scorecards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  description: The new identifier of the scorecard.<br/>
+                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                title:
+                  type: string
+                  description: The new title of the scorecard.<br/>
+                filter:
+                  type: object
+                  description: An optional set of [conditions](https://docs.getport.io/promote-scorecards/#conditions) to filter entities that will be evaluated by the scorecard.<br/>
+                  properties:
+                    combinator:
+                      type: string
+                      enum:
+                        - and
+                        - or
+                    conditions:
+                      type: array
+                      minItems: 1
+                      items:
+                        anyOf:
+                          - type: object
+                            properties:
+                              property:
+                                type: string
+                                title: Property comparison
+                              operator:
+                                type: string
+                                enum:
+                                  - =
+                                  - '!='
+                                  - '>'
+                                  - <
+                                  - '>='
+                                  - <=
+                                  - contains
+                                  - doesNotContains
+                                  - beginsWith
+                                  - doesNotBeginsWith
+                                  - endsWith
+                                  - doesNotEndsWith
+                              value:
+                                oneOf:
+                                  - type: string
+                                    title: string
+                                  - type: number
+                                    title: number
+                                  - type: boolean
+                                    title: boolean
+                            required:
+                              - property
+                              - operator
+                              - value
+                          - type: object
+                            title: Relation comparison
+                            properties:
+                              relation:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - =
+                                  - '!='
+                                  - contains
+                                  - doesNotContains
+                                  - beginsWith
+                                  - doesNotBeginsWith
+                                  - endsWith
+                                  - doesNotEndsWith
+                              value:
+                                oneOf:
+                                  - type: string
+                                    title: string
+                                  - type: number
+                                    title: number
+                                  - type: boolean
+                                    title: boolean
+                            required:
+                              - relation
+                              - operator
+                              - value
+                          - type: object
+                            title: Property empty condition
+                            properties:
+                              not:
+                                type: boolean
+                              property:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - isEmpty
+                                  - isNotEmpty
+                            required:
+                              - property
+                              - operator
+                          - type: object
+                            title: Relation empty condition
+                            properties:
+                              not:
+                                type: boolean
+                              relation:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - isEmpty
+                                  - isNotEmpty
+                            required:
+                              - relation
+                              - operator
+                  required:
+                    - combinator
+                    - conditions
+                rules:
+                  description: The [rules](https://docs.getport.io/promote-scorecards/#rule-elements) that define the scorecard.<br/>
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      identifier:
+                        type: string
+                        description: The identifier of the rule.<br/>
+                        pattern: '^[A-Za-z0-9@_=\\-]+$'
+                      title:
+                        type: string
+                        description: The title of the rule.<br/>
+                      description:
+                        type: string
+                        description: A description for the rule.<br/>
+                      level:
+                        type: string
+                        description: The [level](https://docs.getport.io/promote-scorecards/#scorecard-total-level-calculation) of the rule.<br/>
+                        enum:
+                          - Gold
+                          - Silver
+                          - Bronze
+                      query:
+                        type: object
+                        properties:
+                          combinator:
+                            type: string
+                            enum:
+                              - and
+                              - or
+                          conditions:
+                            type: array
+                            minItems: 1
+                            items:
+                              anyOf:
+                                - type: object
+                                  title: Property comparison
+                                  properties:
+                                    property:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - =
+                                        - '!='
+                                        - '>'
+                                        - <
+                                        - '>='
+                                        - <=
+                                        - contains
+                                        - doesNotContains
+                                        - beginsWith
+                                        - doesNotBeginsWith
+                                        - endsWith
+                                        - doesNotEndsWith
+                                    value:
+                                      oneOf:
+                                        - type: string
+                                          title: string
+                                        - type: number
+                                          title: number
+                                        - type: boolean
+                                          title: boolean
+                                  required:
+                                    - property
+                                    - operator
+                                    - value
+                                - type: object
+                                  title: Relation comparison
+                                  properties:
+                                    relation:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - =
+                                        - '!='
+                                        - contains
+                                        - doesNotContains
+                                        - beginsWith
+                                        - doesNotBeginsWith
+                                        - endsWith
+                                        - doesNotEndsWith
+                                    value:
+                                      oneOf:
+                                        - type: string
+                                          title: string
+                                        - type: number
+                                          title: number
+                                        - type: boolean
+                                          title: boolean
+                                  required:
+                                    - relation
+                                    - operator
+                                    - value
+                                - type: object
+                                  title: Property empty condition
+                                  properties:
+                                    not:
+                                      type: boolean
+                                    property:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - isEmpty
+                                        - isNotEmpty
+                                  required:
+                                    - property
+                                    - operator
+                                - type: object
+                                  title: Relation empty condition
+                                  properties:
+                                    not:
+                                      type: boolean
+                                    relation:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - isEmpty
+                                        - isNotEmpty
+                                  required:
+                                    - relation
+                                    - operator
+                        required:
+                          - combinator
+                          - conditions
+                    required:
+                      - identifier
+                      - title
+                      - level
+                      - query
+              additionalProperties: false
+              required:
+                - identifier
+                - title
+                - rules
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: scorecard_identifier
+          description: The identifier of the scorecard you want to change.<br/>
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: blueprint_identifier
+          description: The identifier of the blueprint whose scorecard you want to change.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+    get:
+      summary: Get a blueprint's scorecard
+      description: This route allows you to fetch a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      tags:
+        - Scorecards
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: scorecard_identifier
+          description: The identifier of the scorecard you want to fetch.<br/>
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: blueprint_identifier
+          description: The identifier of the blueprint whose scorecard you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'read:scorecards'
+      responses:
+        '200':
+          description: Default Response
+    delete:
+      summary: Delete a blueprint's scorecard
+      description: This route allows you to delete a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      tags:
+        - Scorecards
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: scorecard_identifier
+          description: The identifier of the scorecard you want to delete.<br/>
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: blueprint_identifier
+          description: The identifier of the blueprint whose scorecard you want to delete.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+  /v1/scorecards:
+    get:
+      summary: Get all scoreboards
+      description: This route allows you to fetch all scorecards in your Port organization.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      tags:
+        - Scorecards
+      security:
+        - bearer:
+            - 'read:scorecards'
+      responses:
+        '200':
+          description: Default Response
+  /v1/integration:
+    get:
+      summary: Get all integrations
+      description: This route allows you to fetch all integrations in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      tags:
+        - Integrations
+      security:
+        - bearer:
+            - 'read:integrations'
+      responses:
+        '200':
+          description: Default Response
+    # post:
+    #   summary: Create an integration
+    #   description: This route allows you to create an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+    #   tags:
+    #     - Integrations
+    #   requestBody:
+    #     content:
+    #       application/json:
+    #         schema:
+    #           type: object
+    #           properties:
+    #             installationId:
+    #               type: string
+    #               minLength: 1
+    #               description: A unique identifier which will be used to identify the integration when using the Port API.<br/>
+    #             title:
+    #               type: string
+    #               description: The title of the integration. This will be displayed in the [data-sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
+    #             version:
+    #               type: string
+    #               description: The version of the integration.<br/>
+    #             installationAppType:
+    #               type: string
+    #               description: The name of the integrated tool/platform (e.g. `kubernetes`,`pagerduty`).<br/>
+    #             config:
+    #               type:
+    #                 - object
+    #                 - 'null'
+    #               description: Various configuration options for the integration.<br/>
+    #               additionalProperties: true
+    #               properties:
+    #                 deleteDependentEntities:
+    #                   type: boolean
+    #                   description: If `true`, dependent entities will be deleted when the parent entity is deleted.<br/>
+    #                 createMissingRelatedEntities:
+    #                   type: boolean
+    #                 resources:
+    #                   type: array
+    #                   items:
+    #                     type: object
+    #                     required:
+    #                       - kind
+    #                       - selector
+    #                       - port
+    #                     properties:
+    #                       kind:
+    #                         type: string
+    #                       selector:
+    #                         type: object
+    #                         properties:
+    #                           query:
+    #                             type: string
+    #                       port:
+    #                         type: object
+    #                         required:
+    #                           - entity
+    #                         properties:
+    #                           entity:
+    #                             type: object
+    #                             required:
+    #                               - mappings
+    #                             properties:
+    #                               mappings:
+    #                                 oneOf:
+    #                                   - type: array
+    #                                     items:
+    #                                       type: object
+    #                                       required:
+    #                                         - identifier
+    #                                         - blueprint
+    #                                       properties:
+    #                                         identifier:
+    #                                           type: string
+    #                                         title:
+    #                                           type: string
+    #                                         blueprint:
+    #                                           type: string
+    #                                         properties:
+    #                                           type: object
+    #                                           additionalProperties: true
+    #                                         relations:
+    #                                           type: object
+    #                                           additionalProperties: true
+    #                                   - type: object
+    #                                     required:
+    #                                       - identifier
+    #                                       - blueprint
+    #                                     properties:
+    #                                       identifier:
+    #                                         type: string
+    #                                       title:
+    #                                         type: string
+    #                                       blueprint:
+    #                                         type: string
+    #                                       properties:
+    #                                         type: object
+    #                                         additionalProperties: true
+    #                                       relations:
+    #                                         type: object
+    #                                         additionalProperties: true
+    #             changelogDestination:
+    #               type: object
+    #               properties:
+    #                 type:
+    #                   type: string
+    #                   enum:
+    #                     - WEBHOOK
+    #                     - KAFKA
+    #               oneOf:
+    #                 - type: object
+    #                   properties: {}
+    #                   additionalProperties: false
+    #                 - type: object
+    #                   properties:
+    #                     type:
+    #                       type: string
+    #                       enum:
+    #                         - KAFKA
+    #                   required:
+    #                     - type
+    #                   additionalProperties: false
+    #                 - type: object
+    #                   properties:
+    #                     type:
+    #                       type: string
+    #                       enum:
+    #                         - WEBHOOK
+    #                     agent:
+    #                       type: boolean
+    #                     url:
+    #                       type: string
+    #                       format: uri
+    #                   required:
+    #                     - url
+    #                     - type
+    #                   additionalProperties: false
+    #           additionalProperties: false
+    #           required:
+    #             - installationId
+    #     required: true
+    #   parameters:
+    #     - schema:
+    #         type: boolean
+    #         default: false
+    #       in: query
+    #       name: upsert
+    #       required: false
+    #   security:
+    #     - bearer:
+    #         - 'create:integrations'
+    #   responses:
+    #     '200':
+    #       description: Default Response
+  '/v1/integration/{identifier}':
+    get:
+      summary: Get an integration
+      description: This route allows you to fetch a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      tags:
+        - Integrations
+      parameters:
+        - schema:
+            type: string
+            default: installationId
+            enum:
+              - installationId
+              - logIngestId
+          in: query
+          name: byField
+          description: The field used to identify the integration. When set to `logIngestId`, the `identifier` parameter should be changed accordingly.<br/>
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The installation id of the integration you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'read:integrations'
+      responses:
+        '200':
+          description: Default Response
+    # patch:
+    #   summary: Patch an integration
+    #   description: This route allows you to modify an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+    #   tags:
+    #     - Integrations
+    #   requestBody:
+    #     content:
+    #       application/json:
+    #         schema:
+    #           type: object
+    #           properties:
+    #             title:
+    #               type: string
+    #               description: The new title of the integration. This will be displayed in the [data-sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
+    #             version:
+    #               type: string
+    #               description: The new version of the integration.<br/>
+    #             installationAppType:
+    #               type: string
+    #               description: The new name of the integrated tool/platform (e.g. `kubernetes`,`pagerduty`).<br/>
+    #             config:
+    #               type:
+    #                 - object
+    #                 - 'null'
+    #               description: Various configuration options for the integration.<br/>
+    #               additionalProperties: true
+    #               properties:
+    #                 deleteDependentEntities:
+    #                   type: boolean
+    #                 createMissingRelatedEntities:
+    #                   type: boolean
+    #                 resources:
+    #                   type: array
+    #                   items:
+    #                     type: object
+    #                     required:
+    #                       - kind
+    #                       - selector
+    #                       - port
+    #                     properties:
+    #                       kind:
+    #                         type: string
+    #                       selector:
+    #                         type: object
+    #                         properties:
+    #                           query:
+    #                             type: string
+    #                       port:
+    #                         type: object
+    #                         required:
+    #                           - entity
+    #                         properties:
+    #                           entity:
+    #                             type: object
+    #                             required:
+    #                               - mappings
+    #                             properties:
+    #                               mappings:
+    #                                 oneOf:
+    #                                   - type: array
+    #                                     items:
+    #                                       type: object
+    #                                       required:
+    #                                         - identifier
+    #                                         - blueprint
+    #                                       properties:
+    #                                         identifier:
+    #                                           type: string
+    #                                         title:
+    #                                           type: string
+    #                                         blueprint:
+    #                                           type: string
+    #                                         properties:
+    #                                           type: object
+    #                                           additionalProperties: true
+    #                                         relations:
+    #                                           type: object
+    #                                           additionalProperties: true
+    #                                   - type: object
+    #                                     required:
+    #                                       - identifier
+    #                                       - blueprint
+    #                                     properties:
+    #                                       identifier:
+    #                                         type: string
+    #                                       title:
+    #                                         type: string
+    #                                       blueprint:
+    #                                         type: string
+    #                                       properties:
+    #                                         type: object
+    #                                         additionalProperties: true
+    #                                       relations:
+    #                                         type: object
+    #                                         additionalProperties: true
+    #             changelogDestination:
+    #               type: object
+    #               properties:
+    #                 type:
+    #                   type: string
+    #                   enum:
+    #                     - WEBHOOK
+    #                     - KAFKA
+    #               oneOf:
+    #                 - type: object
+    #                   properties: {}
+    #                   additionalProperties: false
+    #                 - type: object
+    #                   properties:
+    #                     type:
+    #                       type: string
+    #                       enum:
+    #                         - KAFKA
+    #                   required:
+    #                     - type
+    #                   additionalProperties: false
+    #                 - type: object
+    #                   properties:
+    #                     type:
+    #                       type: string
+    #                       enum:
+    #                         - WEBHOOK
+    #                     agent:
+    #                       type: boolean
+    #                     url:
+    #                       type: string
+    #                       format: uri
+    #                   required:
+    #                     - url
+    #                     - type
+    #                   additionalProperties: false
+    #           additionalProperties: true
+    #   parameters:
+    #     - schema:
+    #         type: string
+    #       in: path
+    #       name: identifier
+    #       required: true
+    #   security:
+    #     - bearer:
+    #         - 'update:integrations'
+    #   responses:
+    #     '200':
+    #       description: Default Response
+    delete:
+      summary: Delete an integration
+      description: This route allows you to delete an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      tags:
+        - Integrations
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The installation id of the integration you want to delete.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'delete:integrations'
+      responses:
+        '200':
+          description: Default Response
+  '/v1/integration/{identifier}/logs':
+    get:
+      summary: Get an integration's audit logs
+      description: This route allows you to fetch the audit logs of a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      tags:
+        - Integrations
+      parameters:
+        - schema:
+            type: number
+            default: 1
+            minimum: 1
+            nullable: false
+          in: query
+          name: page
+          description: The number of pages to fetch.<br/>
+          required: false
+        - schema:
+            type: number
+            default: 100
+            minimum: 0
+            maximum: 300
+            nullable: false
+          in: query
+          name: per_page
+          description: The number of logs to fetch per page.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: start_date
+          description: The start date of the logs, in `ISO format IE 2022-04-23T18:25:43.511Z`.<br/>
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: end_date
+          description: The end date of the logs, in `ISO format IE 2022-04-23T18:25:43.511Z`.<br/>
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The installation id of the integration.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'read:integrations'
+      responses:
+        '200':
+          description: Default Response
+  '/v1/integration/{identifier}/config':
+    patch:
+      summary: Patch an integration's config
+      description: This route allows you to modify an integration's configuration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      tags:
+        - Integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                config:
+                  description: Various configuration options for the integration.<br/>
+                  type: object
+                  # type:
+                  #   - object
+                  #   - 'null'
+                  additionalProperties: true
+                  properties:
+                    deleteDependentEntities:
+                      type: boolean
+                      default: false
+                      description: If `true`, deleting an entity will also delete its dependent entities.<br/>
+                    createMissingRelatedEntities:
+                      type: boolean
+                      default: false
+                      description: If `true`, creating an entity with a relation to a non-existing entity will also create the related entity.<br/>
+                    resources:
+                      type: array
+                      description: The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping).<br/>
+                      items:
+                        type: object
+                        required:
+                          - kind
+                          - selector
+                          - port
+                        properties:
+                          kind:
+                            type: string
+                            description: The kind of resource to map, as defined in API of the integrated tool/platorm.<br/>
+                          selector:
+                            type: object
+                            properties:
+                              query:
+                                type: string
+                                description: A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `"true"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work).<br/>
+                          port:
+                            type: object
+                            description: An object containing the mapping definitions of the `kind` resource into Port.<br/>
+                            required:
+                              - entity
+                            properties:
+                              entity:
+                                type: object
+                                required:
+                                  - mappings
+                                properties:
+                                  mappings:
+                                    description: The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                    oneOf:
+                                      - type: array
+                                        title: array
+                                        items:
+                                          type: object
+                                          required:
+                                            - identifier
+                                            - blueprint
+                                          properties:
+                                            identifier:
+                                              type: string
+                                              description: The identifier of the entity.<br/>
+                                            title:
+                                              type: string
+                                              description: The title of the entity.<br/>
+                                            blueprint:
+                                              type: string
+                                              description: The identifier of the desired blueprint.<br/>
+                                            properties:
+                                              type: object
+                                              description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              additionalProperties: true
+                                            relations:
+                                              type: object
+                                              description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              additionalProperties: true
+                                      - type: object
+                                        title: object
+                                        required:
+                                          - identifier
+                                          - blueprint
+                                        properties:
+                                          identifier:
+                                            type: string
+                                            description: The identifier of the entity.<br/>
+                                          title:
+                                            type: string
+                                            description: The title of the entity.<br/>
+                                          blueprint:
+                                            type: string
+                                            description: The identifier of the desired blueprint.<br/>
+                                          properties:
+                                            type: object
+                                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            additionalProperties: true
+                                          relations:
+                                            type: object
+                                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            additionalProperties: true
+              additionalProperties: false
+              required:
+                - config
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The installation id of the integration.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'update:integrations'
       responses:
         '200':
           description: Default Response

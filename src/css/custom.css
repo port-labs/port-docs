@@ -560,9 +560,9 @@ html[data-theme="dark"] .openapi-schema__list-item {
 }
 
 .openapi-tabs__schema-item {
-  font-size: 0.8rem !important;
+  font-size: 0.75rem !important;
 }
 
-.badge {
+.badge:not(.openapi__method-endpoint *) {
   margin-bottom: 0.6rem !important;
 }
