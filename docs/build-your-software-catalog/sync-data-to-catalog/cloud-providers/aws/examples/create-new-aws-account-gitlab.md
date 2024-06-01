@@ -144,3 +144,5 @@ Relevant guides and examples:
 
 Port's Documentation on Blueprint Creation
 Example GitLab CI/CD Pipelines
+
+</summary>
