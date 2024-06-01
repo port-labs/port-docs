@@ -18584,344 +18584,344 @@ paths:
       responses:
         '200':
           description: Default Response
-  /v1/integration:
-    get:
-      summary: Get all integrations
-      tags:
-        - Integrations
-      security:
-        - bearer:
-            - 'read:integrations'
-      responses:
-        '200':
-          description: Default Response
-    post:
-      summary: Create an integration
-      tags:
-        - Integrations
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                installationId:
-                  type: string
-                  minLength: 1
-                title:
-                  type: string
-                version:
-                  type: string
-                installationAppType:
-                  type: string
-                config:
-                  type:
-                    - object
-                    - 'null'
-                  additionalProperties: true
-                  properties:
-                    deleteDependentEntities:
-                      type: boolean
-                    createMissingRelatedEntities:
-                      type: boolean
-                    resources:
-                      type: array
-                      items:
-                        type: object
-                        required:
-                          - kind
-                          - selector
-                          - port
-                        properties:
-                          kind:
-                            type: string
-                          selector:
-                            type: object
-                            properties:
-                              query:
-                                type: string
-                          port:
-                            type: object
-                            required:
-                              - entity
-                            properties:
-                              entity:
-                                type: object
-                                required:
-                                  - mappings
-                                properties:
-                                  mappings:
-                                    oneOf:
-                                      - type: array
-                                        items:
-                                          type: object
-                                          required:
-                                            - identifier
-                                            - blueprint
-                                          properties:
-                                            identifier:
-                                              type: string
-                                            title:
-                                              type: string
-                                            blueprint:
-                                              type: string
-                                            properties:
-                                              type: object
-                                              additionalProperties: true
-                                            relations:
-                                              type: object
-                                              additionalProperties: true
-                                      - type: object
-                                        required:
-                                          - identifier
-                                          - blueprint
-                                        properties:
-                                          identifier:
-                                            type: string
-                                          title:
-                                            type: string
-                                          blueprint:
-                                            type: string
-                                          properties:
-                                            type: object
-                                            additionalProperties: true
-                                          relations:
-                                            type: object
-                                            additionalProperties: true
-                changelogDestination:
-                  type: object
-                  properties:
-                    type:
-                      type: string
-                      enum:
-                        - WEBHOOK
-                        - KAFKA
-                  oneOf:
-                    - type: object
-                      properties: {}
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - KAFKA
-                      required:
-                        - type
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - WEBHOOK
-                        agent:
-                          type: boolean
-                        url:
-                          type: string
-                          format: uri
-                      required:
-                        - url
-                        - type
-                      additionalProperties: false
-              additionalProperties: false
-              required:
-                - installationId
-        required: true
-      parameters:
-        - schema:
-            type: boolean
-            default: false
-          in: query
-          name: upsert
-          required: false
-      security:
-        - bearer:
-            - 'create:integrations'
-      responses:
-        '200':
-          description: Default Response
-  '/v1/integration/{identifier}':
-    get:
-      summary: Get an integration
-      tags:
-        - Integrations
-      parameters:
-        - schema:
-            type: string
-            default: installationId
-            enum:
-              - installationId
-              - logIngestId
-          in: query
-          name: byField
-          required: false
-        - schema:
-            type: string
-          in: path
-          name: identifier
-          required: true
-      security:
-        - bearer:
-            - 'read:integrations'
-      responses:
-        '200':
-          description: Default Response
-    patch:
-      summary: Patch an integration
-      tags:
-        - Integrations
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                version:
-                  type: string
-                installationAppType:
-                  type: string
-                config:
-                  type:
-                    - object
-                    - 'null'
-                  additionalProperties: true
-                  properties:
-                    deleteDependentEntities:
-                      type: boolean
-                    createMissingRelatedEntities:
-                      type: boolean
-                    resources:
-                      type: array
-                      items:
-                        type: object
-                        required:
-                          - kind
-                          - selector
-                          - port
-                        properties:
-                          kind:
-                            type: string
-                          selector:
-                            type: object
-                            properties:
-                              query:
-                                type: string
-                          port:
-                            type: object
-                            required:
-                              - entity
-                            properties:
-                              entity:
-                                type: object
-                                required:
-                                  - mappings
-                                properties:
-                                  mappings:
-                                    oneOf:
-                                      - type: array
-                                        items:
-                                          type: object
-                                          required:
-                                            - identifier
-                                            - blueprint
-                                          properties:
-                                            identifier:
-                                              type: string
-                                            title:
-                                              type: string
-                                            blueprint:
-                                              type: string
-                                            properties:
-                                              type: object
-                                              additionalProperties: true
-                                            relations:
-                                              type: object
-                                              additionalProperties: true
-                                      - type: object
-                                        required:
-                                          - identifier
-                                          - blueprint
-                                        properties:
-                                          identifier:
-                                            type: string
-                                          title:
-                                            type: string
-                                          blueprint:
-                                            type: string
-                                          properties:
-                                            type: object
-                                            additionalProperties: true
-                                          relations:
-                                            type: object
-                                            additionalProperties: true
-                changelogDestination:
-                  type: object
-                  properties:
-                    type:
-                      type: string
-                      enum:
-                        - WEBHOOK
-                        - KAFKA
-                  oneOf:
-                    - type: object
-                      properties: {}
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - KAFKA
-                      required:
-                        - type
-                      additionalProperties: false
-                    - type: object
-                      properties:
-                        type:
-                          type: string
-                          enum:
-                            - WEBHOOK
-                        agent:
-                          type: boolean
-                        url:
-                          type: string
-                          format: uri
-                      required:
-                        - url
-                        - type
-                      additionalProperties: false
-              additionalProperties: true
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: identifier
-          required: true
-      security:
-        - bearer:
-            - 'update:integrations'
-      responses:
-        '200':
-          description: Default Response
-    delete:
-      summary: Delete an integration
-      tags:
-        - Integrations
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: identifier
-          required: true
-      security:
-        - bearer:
-            - 'delete:integrations'
-      responses:
-        '200':
-          description: Default Response
+  # /v1/integration:
+  #   get:
+  #     summary: Get all integrations
+  #     tags:
+  #       - Integrations
+  #     security:
+  #       - bearer:
+  #           - 'read:integrations'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   post:
+  #     summary: Create an integration
+  #     tags:
+  #       - Integrations
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               installationId:
+  #                 type: string
+  #                 minLength: 1
+  #               title:
+  #                 type: string
+  #               version:
+  #                 type: string
+  #               installationAppType:
+  #                 type: string
+  #               config:
+  #                 type:
+  #                   - object
+  #                   - 'null'
+  #                 additionalProperties: true
+  #                 properties:
+  #                   deleteDependentEntities:
+  #                     type: boolean
+  #                   createMissingRelatedEntities:
+  #                     type: boolean
+  #                   resources:
+  #                     type: array
+  #                     items:
+  #                       type: object
+  #                       required:
+  #                         - kind
+  #                         - selector
+  #                         - port
+  #                       properties:
+  #                         kind:
+  #                           type: string
+  #                         selector:
+  #                           type: object
+  #                           properties:
+  #                             query:
+  #                               type: string
+  #                         port:
+  #                           type: object
+  #                           required:
+  #                             - entity
+  #                           properties:
+  #                             entity:
+  #                               type: object
+  #                               required:
+  #                                 - mappings
+  #                               properties:
+  #                                 mappings:
+  #                                   oneOf:
+  #                                     - type: array
+  #                                       items:
+  #                                         type: object
+  #                                         required:
+  #                                           - identifier
+  #                                           - blueprint
+  #                                         properties:
+  #                                           identifier:
+  #                                             type: string
+  #                                           title:
+  #                                             type: string
+  #                                           blueprint:
+  #                                             type: string
+  #                                           properties:
+  #                                             type: object
+  #                                             additionalProperties: true
+  #                                           relations:
+  #                                             type: object
+  #                                             additionalProperties: true
+  #                                     - type: object
+  #                                       required:
+  #                                         - identifier
+  #                                         - blueprint
+  #                                       properties:
+  #                                         identifier:
+  #                                           type: string
+  #                                         title:
+  #                                           type: string
+  #                                         blueprint:
+  #                                           type: string
+  #                                         properties:
+  #                                           type: object
+  #                                           additionalProperties: true
+  #                                         relations:
+  #                                           type: object
+  #                                           additionalProperties: true
+  #               changelogDestination:
+  #                 type: object
+  #                 properties:
+  #                   type:
+  #                     type: string
+  #                     enum:
+  #                       - WEBHOOK
+  #                       - KAFKA
+  #                 oneOf:
+  #                   - type: object
+  #                     properties: {}
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - KAFKA
+  #                     required:
+  #                       - type
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - WEBHOOK
+  #                       agent:
+  #                         type: boolean
+  #                       url:
+  #                         type: string
+  #                         format: uri
+  #                     required:
+  #                       - url
+  #                       - type
+  #                     additionalProperties: false
+  #             additionalProperties: false
+  #             required:
+  #               - installationId
+  #       required: true
+  #     parameters:
+  #       - schema:
+  #           type: boolean
+  #           default: false
+  #         in: query
+  #         name: upsert
+  #         required: false
+  #     security:
+  #       - bearer:
+  #           - 'create:integrations'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  # '/v1/integration/{identifier}':
+  #   get:
+  #     summary: Get an integration
+  #     tags:
+  #       - Integrations
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #           default: installationId
+  #           enum:
+  #             - installationId
+  #             - logIngestId
+  #         in: query
+  #         name: byField
+  #         required: false
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'read:integrations'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   patch:
+  #     summary: Patch an integration
+  #     tags:
+  #       - Integrations
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               title:
+  #                 type: string
+  #               version:
+  #                 type: string
+  #               installationAppType:
+  #                 type: string
+  #               config:
+  #                 type:
+  #                   - object
+  #                   - 'null'
+  #                 additionalProperties: true
+  #                 properties:
+  #                   deleteDependentEntities:
+  #                     type: boolean
+  #                   createMissingRelatedEntities:
+  #                     type: boolean
+  #                   resources:
+  #                     type: array
+  #                     items:
+  #                       type: object
+  #                       required:
+  #                         - kind
+  #                         - selector
+  #                         - port
+  #                       properties:
+  #                         kind:
+  #                           type: string
+  #                         selector:
+  #                           type: object
+  #                           properties:
+  #                             query:
+  #                               type: string
+  #                         port:
+  #                           type: object
+  #                           required:
+  #                             - entity
+  #                           properties:
+  #                             entity:
+  #                               type: object
+  #                               required:
+  #                                 - mappings
+  #                               properties:
+  #                                 mappings:
+  #                                   oneOf:
+  #                                     - type: array
+  #                                       items:
+  #                                         type: object
+  #                                         required:
+  #                                           - identifier
+  #                                           - blueprint
+  #                                         properties:
+  #                                           identifier:
+  #                                             type: string
+  #                                           title:
+  #                                             type: string
+  #                                           blueprint:
+  #                                             type: string
+  #                                           properties:
+  #                                             type: object
+  #                                             additionalProperties: true
+  #                                           relations:
+  #                                             type: object
+  #                                             additionalProperties: true
+  #                                     - type: object
+  #                                       required:
+  #                                         - identifier
+  #                                         - blueprint
+  #                                       properties:
+  #                                         identifier:
+  #                                           type: string
+  #                                         title:
+  #                                           type: string
+  #                                         blueprint:
+  #                                           type: string
+  #                                         properties:
+  #                                           type: object
+  #                                           additionalProperties: true
+  #                                         relations:
+  #                                           type: object
+  #                                           additionalProperties: true
+  #               changelogDestination:
+  #                 type: object
+  #                 properties:
+  #                   type:
+  #                     type: string
+  #                     enum:
+  #                       - WEBHOOK
+  #                       - KAFKA
+  #                 oneOf:
+  #                   - type: object
+  #                     properties: {}
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - KAFKA
+  #                     required:
+  #                       - type
+  #                     additionalProperties: false
+  #                   - type: object
+  #                     properties:
+  #                       type:
+  #                         type: string
+  #                         enum:
+  #                           - WEBHOOK
+  #                       agent:
+  #                         type: boolean
+  #                       url:
+  #                         type: string
+  #                         format: uri
+  #                     required:
+  #                       - url
+  #                       - type
+  #                     additionalProperties: false
+  #             additionalProperties: true
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'update:integrations'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   delete:
+  #     summary: Delete an integration
+  #     tags:
+  #       - Integrations
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'delete:integrations'
+  #     responses:
+  #       '200':
+  #         description: Default Response
   # '/v1/integration/{identifier}/logs':
   #   get:
   #     summary: Get audit logs

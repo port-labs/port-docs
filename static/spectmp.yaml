@@ -3200,361 +3200,6 @@ paths:
       responses:
         '200':
           description: Default Response
-    # put:
-    #   summary: Change a blueprint
-    #   description: This route allows you to edit a blueprint in your data model and change its properties.<br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#blueprints).
-    #   tags:
-    #     - Blueprints
-    #   requestBody:
-    #     content:
-    #       application/json:
-    #         schema:
-    #           type: object
-    #           properties:
-    #             identifier:
-    #               type: string
-    #               pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-    #               maxLength: 30
-    #               description: The new identifier of the blueprint.<br/>
-    #             title:
-    #               type: string
-    #               maxLength: 30
-    #               description: The new title of the blueprint.<br/>
-    #             description:
-    #               type: string
-    #               maxLength: 200
-    #               description: The new description of the blueprint.<br/>
-    #             icon:
-    #               type: string
-    #               description: The new icon of the blueprint.<br/>
-    #             # teamInheritance:
-    #             #   type: object
-    #             #   properties:
-    #             #     path:
-    #             #       type: string
-    #             #   additionalProperties: false
-    #             #   required:
-    #                 # - path
-    #             schema:
-    #               type: object
-    #               properties:
-    #                 properties:
-    #                   type: object
-    #                   propertyNames:
-    #                     pattern: '^[A-Za-z0-9@_=\\-]+$'
-    #                   additionalProperties:
-    #                     type: object
-    #                     properties:
-    #                       title:
-    #                         type: string
-    #                       description:
-    #                         type: string
-    #                       icon:
-    #                         type: string
-    #                       type:
-    #                         enum:
-    #                           - string
-    #                           - number
-    #                           - boolean
-    #                           - object
-    #                           - array
-    #                       format:
-    #                         enum:
-    #                           - date-time
-    #                           - url
-    #                           - email
-    #                           - ipv4
-    #                           - ipv6
-    #                           - markdown
-    #                           - yaml
-    #                           - user
-    #                           - team
-    #                           - timer
-    #                           - proto
-    #                       spec:
-    #                         enum:
-    #                           - open-api
-    #                           - embedded-url
-    #                           - async-api
-    #                     required:
-    #                       - type
-    #                 required:
-    #                   type: array
-    #                   items:
-    #                     type: string
-    #               additionalProperties: false
-    #               required:
-    #                 - properties
-    #             calculationProperties:
-    #               type: object
-    #               default: {}
-    #               propertyNames:
-    #                 pattern: '^[A-Za-z0-9@_=\\-]+$'
-    #               additionalProperties:
-    #                 type: object
-    #                 properties:
-    #                   title:
-    #                     type: string
-    #                   description:
-    #                     type: string
-    #                   icon:
-    #                     type: string
-    #                   calculation:
-    #                     type: string
-    #                   type:
-    #                     enum:
-    #                       - string
-    #                       - number
-    #                       - boolean
-    #                       - object
-    #                       - array
-    #                   format:
-    #                     enum:
-    #                       - date-time
-    #                       - url
-    #                       - email
-    #                       - ipv4
-    #                       - ipv6
-    #                       - markdown
-    #                       - yaml
-    #                       - user
-    #                       - team
-    #                       - proto
-    #                   spec:
-    #                     enum:
-    #                       - open-api
-    #                       - embedded-url
-    #                       - async-api
-    #                   colorized:
-    #                     type: boolean
-    #                   colors:
-    #                     type: object
-    #                   items:
-    #                     type: object
-    #                     properties:
-    #                       type:
-    #                         enum:
-    #                           - string
-    #                           - number
-    #                           - boolean
-    #                           - object
-    #                           - array
-    #                       format:
-    #                         enum:
-    #                           - date-time
-    #                           - url
-    #                           - email
-    #                           - ipv4
-    #                           - ipv6
-    #                           - markdown
-    #                           - yaml
-    #                           - user
-    #                           - team
-    #                           - timer
-    #                           - proto
-    #                 required:
-    #                   - calculation
-    #                   - type
-    #               description: The new [calculation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) of the blueprint. <br/>
-    #             mirrorProperties:
-    #               type: object
-    #               propertyNames:
-    #                 pattern: '^[A-Za-z0-9@_=\\-]+$'
-    #               additionalProperties:
-    #                 type: object
-    #                 properties:
-    #                   path:
-    #                     type: string
-    #                     pattern: '^(?:[A-Za-z0-9@_=\-]+\.)+?(\w|\$|@|-)*?[^\.]+$'
-    #                   title:
-    #                     type: string
-    #                 additionalProperties: false
-    #                 required:
-    #                   - path
-    #               description: The new [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) of the blueprint. <br/>
-    #             aggregationProperties:
-    #               type: object
-    #               default: {}
-    #               propertyNames:
-    #                 pattern: '^[A-Za-z0-9@_=\\-]+$'
-    #               additionalProperties:
-    #                 type: object
-    #                 properties:
-    #                   title:
-    #                     type: string
-    #                   description:
-    #                     type: string
-    #                   icon:
-    #                     type: string
-    #                   type:
-    #                     enum:
-    #                       - number
-    #                     default: number
-    #                   target:
-    #                     type: string
-    #                   calculationSpec:
-    #                     type: object
-    #                     oneOf:
-    #                       - oneOf:
-    #                           - type: object
-    #                             properties:
-    #                               func:
-    #                                 enum:
-    #                                   - average
-    #                               measureTimeBy:
-    #                                 type: string
-    #                               averageOf:
-    #                                 type: string
-    #                                 enum:
-    #                                   - hour
-    #                                   - day
-    #                                   - week
-    #                                   - month
-    #                                   - total
-    #                               calculationBy:
-    #                                 type: string
-    #                                 enum:
-    #                                   - entities
-    #                             required:
-    #                               - func
-    #                               - calculationBy
-    #                               - averageOf
-    #                           - type: object
-    #                             properties:
-    #                               func:
-    #                                 enum:
-    #                                   - count
-    #                               calculationBy:
-    #                                 type: string
-    #                                 enum:
-    #                                   - entities
-    #                             required:
-    #                               - func
-    #                               - calculationBy
-    #                       - oneOf:
-    #                           - type: object
-    #                             properties:
-    #                               func:
-    #                                 type: string
-    #                                 enum:
-    #                                   - sum
-    #                                   - min
-    #                                   - max
-    #                                   - median
-    #                               property:
-    #                                 type: string
-    #                               calculationBy:
-    #                                 type: string
-    #                                 enum:
-    #                                   - property
-    #                             additionalProperties: false
-    #                             required:
-    #                               - func
-    #                               - property
-    #                               - calculationBy
-    #                           - type: object
-    #                             properties:
-    #                               func:
-    #                                 enum:
-    #                                   - average
-    #                               measureTimeBy:
-    #                                 type: string
-    #                               averageOf:
-    #                                 type: string
-    #                                 enum:
-    #                                   - hour
-    #                                   - day
-    #                                   - week
-    #                                   - month
-    #                                   - total
-    #                               property:
-    #                                 type: string
-    #                               calculationBy:
-    #                                 type: string
-    #                                 enum:
-    #                                   - property
-    #                             additionalProperties: false
-    #                             required:
-    #                               - func
-    #                               - property
-    #                               - calculationBy
-    #                               - averageOf
-    #                   query:
-    #                     $ref: '#/components/schemas/def-0'
-    #                 additionalProperties: false
-    #                 required:
-    #                   - title
-    #                   - target
-    #                   - calculationSpec
-    #               description: The new [aggregation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/) of the blueprint. <br/>
-    #             relations:
-    #               type: object
-    #               propertyNames:
-    #                 pattern: '^[A-Za-z0-9@_=\\-]+$'
-    #               additionalProperties:
-    #                 type: object
-    #                 properties:
-    #                   title:
-    #                     type: string
-    #                   target:
-    #                     type: string
-    #                   required:
-    #                     type: boolean
-    #                     default: false
-    #                   many:
-    #                     type: boolean
-    #                     default: false
-    #                   description:
-    #                     type: string
-    #                 additionalProperties: false
-    #                 required:
-    #                   - target
-    #                   - required
-    #                   - many
-    #               description: The new [relations](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) of the blueprint. <br/>
-    #             # changelogDestination:
-    #             #   oneOf:
-    #             #     - type: object
-    #             #       properties:
-    #             #         type:
-    #             #           type: string
-    #             #           enum:
-    #             #             - WEBHOOK
-    #             #         agent:
-    #             #           type: boolean
-    #             #         url:
-    #             #           type: string
-    #             #           format: uri
-    #             #       required:
-    #             #         - url
-    #             #         - type
-    #             #       additionalProperties: false
-    #             #     - type: object
-    #                   # properties:
-    #                   #   type:
-    #                   #     type: string
-    #                   #     enum:
-    #                   #       - KAFKA
-    #                   # required:
-    #                   #   - type
-    #                   # additionalProperties: false
-    #           additionalProperties: true
-    #           required:
-    #             - title
-    #             - schema
-    #     required: true
-    #   parameters:
-    #     - schema:
-    #         type: string
-    #       in: path
-    #       name: identifier
-    #       description: The identifier of the blueprint you want to change.<br/>
-    #       required: true
-    #   security:
-    #     - bearer: []
-    #   responses:
-    #     '200':
-    #       description: Default Response
   '/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}':
     patch:
       summary: Patch an entity
@@ -4537,32 +4182,39 @@ paths:
                       - target
                       - required
                       - many
-                # changelogDestination:
-                #   oneOf:
-                #     - type: object
-                #       properties:
-                #         type:
-                #           type: string
-                #           enum:
-                #             - WEBHOOK
-                #         agent:
-                #           type: boolean
-                #         url:
-                #           type: string
-                #           format: uri
-                #       required:
-                #         - url
-                #         - type
-                #       additionalProperties: false
-                #     - type: object
-                #       properties:
-                #         type:
-                #           type: string
-                #           enum:
-                #             - KAFKA
-                #       required:
-                #         - type
-                #       additionalProperties: false
+                changelogDestination:
+                  description: The destination of the blueprint's changelog.<br/>
+                  oneOf:
+                    - type: object
+                      title: Webhook
+                      description: The changelog will be sent to the specified webhook.<br/>
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - WEBHOOK
+                        agent:
+                          type: boolean
+                          description: If `true`, Port's execution agent will be used to send the changelog.<br/>
+                        url:
+                          type: string
+                          description: The URL of the webhook.<br/>
+                          format: uri
+                      required:
+                        - url
+                        - type
+                      additionalProperties: false
+                    - type: object
+                      title: Kafka
+                      description: The changelog will be sent to the Kafka topic connected to your Port account.<br/>
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - KAFKA
+                      required:
+                        - type
+                      additionalProperties: false
               additionalProperties: true
               required:
                 - identifier
@@ -4910,32 +4562,39 @@ paths:
                       - target
                       - required
                       - many
-                # changelogDestination:
-                #   oneOf:
-                #     - type: object
-                #       properties:
-                #         type:
-                #           type: string
-                #           enum:
-                #             - WEBHOOK
-                #         agent:
-                #           type: boolean
-                #         url:
-                #           type: string
-                #           format: uri
-                #       required:
-                #         - url
-                #         - type
-                #       additionalProperties: false
-                #     - type: object
-                #       properties:
-                #         type:
-                #           type: string
-                #           enum:
-                #             - KAFKA
-                #       required:
-                #         - type
-                #       additionalProperties: false
+                changelogDestination:
+                  description: The destination of the blueprint's changelog.<br/>
+                  oneOf:
+                    - type: object
+                      title: Webhook
+                      description: The changelog will be sent to the specified webhook.<br/>
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - WEBHOOK
+                        agent:
+                          type: boolean
+                          description: If `true`, Port's execution agent will be used to send the changelog.<br/>
+                        url:
+                          type: string
+                          description: The URL of the webhook.<br/>
+                          format: uri
+                      required:
+                        - url
+                        - type
+                      additionalProperties: false
+                    - type: object
+                      title: Kafka
+                      description: The changelog will be sent to the Kafka topic connected to your Port account.<br/>
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - KAFKA
+                      required:
+                        - type
+                      additionalProperties: false
               additionalProperties: true
               required:
                 - title
@@ -5268,32 +4927,39 @@ paths:
                       - target
                       - required
                       - many
-                # changelogDestination:
-                #   oneOf:
-                #     - type: object
-                #       properties:
-                #         type:
-                #           type: string
-                #           enum:
-                #             - WEBHOOK
-                #         agent:
-                #           type: boolean
-                #         url:
-                #           type: string
-                #           format: uri
-                #       required:
-                #         - url
-                #         - type
-                #       additionalProperties: false
-                #     - type: object
-                #       properties:
-                #         type:
-                #           type: string
-                #           enum:
-                #             - KAFKA
-                #       required:
-                #         - type
-                #       additionalProperties: false
+                changelogDestination:
+                  description: The destination of the blueprint's changelog.<br/>
+                  oneOf:
+                    - type: object
+                      title: Webhook
+                      description: The changelog will be sent to the specified webhook.<br/>
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - WEBHOOK
+                        agent:
+                          type: boolean
+                          description: If `true`, Port's execution agent will be used to send the changelog.<br/>
+                        url:
+                          type: string
+                          description: The URL of the webhook.<br/>
+                          format: uri
+                      required:
+                        - url
+                        - type
+                      additionalProperties: false
+                    - type: object
+                      title: Kafka
+                      description: The changelog will be sent to the Kafka topic connected to your Port account.<br/>
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - KAFKA
+                      required:
+                        - type
+                      additionalProperties: false
               additionalProperties: true
       parameters:
         - schema:
@@ -7717,362 +7383,6 @@ paths:
       responses:
         '200':
           description: Default Response
-  /v1/integration:
-    get:
-      summary: Get all integrations
-      description: This route allows you to fetch all integrations in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
-      tags:
-        - Integrations
-      security:
-        - bearer:
-            - 'read:integrations'
-      responses:
-        '200':
-          description: Default Response
-    # post:
-    #   summary: Create an integration
-    #   description: This route allows you to create an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
-    #   tags:
-    #     - Integrations
-    #   requestBody:
-    #     content:
-    #       application/json:
-    #         schema:
-    #           type: object
-    #           properties:
-    #             installationId:
-    #               type: string
-    #               minLength: 1
-    #               description: A unique identifier which will be used to identify the integration when using the Port API.<br/>
-    #             title:
-    #               type: string
-    #               description: The title of the integration. This will be displayed in the [data-sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
-    #             version:
-    #               type: string
-    #               description: The version of the integration.<br/>
-    #             installationAppType:
-    #               type: string
-    #               description: The name of the integrated tool/platform (e.g. `kubernetes`,`pagerduty`).<br/>
-    #             config:
-    #               type:
-    #                 - object
-    #                 - 'null'
-    #               description: Various configuration options for the integration.<br/>
-    #               additionalProperties: true
-    #               properties:
-    #                 deleteDependentEntities:
-    #                   type: boolean
-    #                   description: If `true`, dependent entities will be deleted when the parent entity is deleted.<br/>
-    #                 createMissingRelatedEntities:
-    #                   type: boolean
-    #                 resources:
-    #                   type: array
-    #                   items:
-    #                     type: object
-    #                     required:
-    #                       - kind
-    #                       - selector
-    #                       - port
-    #                     properties:
-    #                       kind:
-    #                         type: string
-    #                       selector:
-    #                         type: object
-    #                         properties:
-    #                           query:
-    #                             type: string
-    #                       port:
-    #                         type: object
-    #                         required:
-    #                           - entity
-    #                         properties:
-    #                           entity:
-    #                             type: object
-    #                             required:
-    #                               - mappings
-    #                             properties:
-    #                               mappings:
-    #                                 oneOf:
-    #                                   - type: array
-    #                                     items:
-    #                                       type: object
-    #                                       required:
-    #                                         - identifier
-    #                                         - blueprint
-    #                                       properties:
-    #                                         identifier:
-    #                                           type: string
-    #                                         title:
-    #                                           type: string
-    #                                         blueprint:
-    #                                           type: string
-    #                                         properties:
-    #                                           type: object
-    #                                           additionalProperties: true
-    #                                         relations:
-    #                                           type: object
-    #                                           additionalProperties: true
-    #                                   - type: object
-    #                                     required:
-    #                                       - identifier
-    #                                       - blueprint
-    #                                     properties:
-    #                                       identifier:
-    #                                         type: string
-    #                                       title:
-    #                                         type: string
-    #                                       blueprint:
-    #                                         type: string
-    #                                       properties:
-    #                                         type: object
-    #                                         additionalProperties: true
-    #                                       relations:
-    #                                         type: object
-    #                                         additionalProperties: true
-    #             changelogDestination:
-    #               type: object
-    #               properties:
-    #                 type:
-    #                   type: string
-    #                   enum:
-    #                     - WEBHOOK
-    #                     - KAFKA
-    #               oneOf:
-    #                 - type: object
-    #                   properties: {}
-    #                   additionalProperties: false
-    #                 - type: object
-    #                   properties:
-    #                     type:
-    #                       type: string
-    #                       enum:
-    #                         - KAFKA
-    #                   required:
-    #                     - type
-    #                   additionalProperties: false
-    #                 - type: object
-    #                   properties:
-    #                     type:
-    #                       type: string
-    #                       enum:
-    #                         - WEBHOOK
-    #                     agent:
-    #                       type: boolean
-    #                     url:
-    #                       type: string
-    #                       format: uri
-    #                   required:
-    #                     - url
-    #                     - type
-    #                   additionalProperties: false
-    #           additionalProperties: false
-    #           required:
-    #             - installationId
-    #     required: true
-    #   parameters:
-    #     - schema:
-    #         type: boolean
-    #         default: false
-    #       in: query
-    #       name: upsert
-    #       required: false
-    #   security:
-    #     - bearer:
-    #         - 'create:integrations'
-    #   responses:
-    #     '200':
-    #       description: Default Response
-  '/v1/integration/{identifier}':
-    get:
-      summary: Get an integration
-      description: This route allows you to fetch a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
-      tags:
-        - Integrations
-      parameters:
-        - schema:
-            type: string
-            default: installationId
-            enum:
-              - installationId
-              - logIngestId
-          in: query
-          name: byField
-          description: The field used to identify the integration. When set to `logIngestId`, the `identifier` parameter should be changed accordingly.<br/>
-          required: false
-        - schema:
-            type: string
-          in: path
-          name: identifier
-          description: The installation id of the integration you want to fetch.<br/>
-          required: true
-      security:
-        - bearer:
-            - 'read:integrations'
-      responses:
-        '200':
-          description: Default Response
-    # patch:
-    #   summary: Patch an integration
-    #   description: This route allows you to modify an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
-    #   tags:
-    #     - Integrations
-    #   requestBody:
-    #     content:
-    #       application/json:
-    #         schema:
-    #           type: object
-    #           properties:
-    #             title:
-    #               type: string
-    #               description: The new title of the integration. This will be displayed in the [data-sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
-    #             version:
-    #               type: string
-    #               description: The new version of the integration.<br/>
-    #             installationAppType:
-    #               type: string
-    #               description: The new name of the integrated tool/platform (e.g. `kubernetes`,`pagerduty`).<br/>
-    #             config:
-    #               type:
-    #                 - object
-    #                 - 'null'
-    #               description: Various configuration options for the integration.<br/>
-    #               additionalProperties: true
-    #               properties:
-    #                 deleteDependentEntities:
-    #                   type: boolean
-    #                 createMissingRelatedEntities:
-    #                   type: boolean
-    #                 resources:
-    #                   type: array
-    #                   items:
-    #                     type: object
-    #                     required:
-    #                       - kind
-    #                       - selector
-    #                       - port
-    #                     properties:
-    #                       kind:
-    #                         type: string
-    #                       selector:
-    #                         type: object
-    #                         properties:
-    #                           query:
-    #                             type: string
-    #                       port:
-    #                         type: object
-    #                         required:
-    #                           - entity
-    #                         properties:
-    #                           entity:
-    #                             type: object
-    #                             required:
-    #                               - mappings
-    #                             properties:
-    #                               mappings:
-    #                                 oneOf:
-    #                                   - type: array
-    #                                     items:
-    #                                       type: object
-    #                                       required:
-    #                                         - identifier
-    #                                         - blueprint
-    #                                       properties:
-    #                                         identifier:
-    #                                           type: string
-    #                                         title:
-    #                                           type: string
-    #                                         blueprint:
-    #                                           type: string
-    #                                         properties:
-    #                                           type: object
-    #                                           additionalProperties: true
-    #                                         relations:
-    #                                           type: object
-    #                                           additionalProperties: true
-    #                                   - type: object
-    #                                     required:
-    #                                       - identifier
-    #                                       - blueprint
-    #                                     properties:
-    #                                       identifier:
-    #                                         type: string
-    #                                       title:
-    #                                         type: string
-    #                                       blueprint:
-    #                                         type: string
-    #                                       properties:
-    #                                         type: object
-    #                                         additionalProperties: true
-    #                                       relations:
-    #                                         type: object
-    #                                         additionalProperties: true
-    #             changelogDestination:
-    #               type: object
-    #               properties:
-    #                 type:
-    #                   type: string
-    #                   enum:
-    #                     - WEBHOOK
-    #                     - KAFKA
-    #               oneOf:
-    #                 - type: object
-    #                   properties: {}
-    #                   additionalProperties: false
-    #                 - type: object
-    #                   properties:
-    #                     type:
-    #                       type: string
-    #                       enum:
-    #                         - KAFKA
-    #                   required:
-    #                     - type
-    #                   additionalProperties: false
-    #                 - type: object
-    #                   properties:
-    #                     type:
-    #                       type: string
-    #                       enum:
-    #                         - WEBHOOK
-    #                     agent:
-    #                       type: boolean
-    #                     url:
-    #                       type: string
-    #                       format: uri
-    #                   required:
-    #                     - url
-    #                     - type
-    #                   additionalProperties: false
-    #           additionalProperties: true
-    #   parameters:
-    #     - schema:
-    #         type: string
-    #       in: path
-    #       name: identifier
-    #       required: true
-    #   security:
-    #     - bearer:
-    #         - 'update:integrations'
-    #   responses:
-    #     '200':
-    #       description: Default Response
-    delete:
-      summary: Delete an integration
-      description: This route allows you to delete an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
-      tags:
-        - Integrations
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: identifier
-          description: The installation id of the integration you want to delete.<br/>
-          required: true
-      security:
-        - bearer:
-            - 'delete:integrations'
-      responses:
-        '200':
-          description: Default Response
   '/v1/integration/{identifier}/logs':
     get:
       summary: Get an integration's audit logs
@@ -8194,13 +7504,13 @@ paths:
                                           properties:
                                             identifier:
                                               type: string
-                                              description: The identifier of the entity.<br/>
+                                              description: A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity.<br/>
                                             title:
                                               type: string
-                                              description: The title of the entity.<br/>
+                                              description: A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity.<br/>
                                             blueprint:
                                               type: string
-                                              description: The identifier of the desired blueprint.<br/>
+                                              description: The identifier of the blueprint to map the data into.<br/>
                                             properties:
                                               type: object
                                               description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
@@ -8217,13 +7527,13 @@ paths:
                                         properties:
                                           identifier:
                                             type: string
-                                            description: The identifier of the entity.<br/>
+                                            description: A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity.<br/>
                                           title:
                                             type: string
-                                            description: The title of the entity.<br/>
+                                            description: A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity.<br/>
                                           blueprint:
                                             type: string
-                                            description: The identifier of the desired blueprint.<br/>
+                                            description: The identifier of the blueprint to map the data into.<br/>
                                           properties:
                                             type: object
                                             description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
@@ -8246,6 +7556,417 @@ paths:
       security:
         - bearer:
             - 'update:integrations'
+      responses:
+        '200':
+          description: Default Response
+  /v1/integration:
+    get:
+      summary: Get all integrations
+      description: This route allows you to fetch all integrations in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      tags:
+        - Integrations
+      security:
+        - bearer:
+            - 'read:integrations'
+      responses:
+        '200':
+          description: Default Response
+    post:
+      summary: Create an integration
+      description: This route allows you to create an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      tags:
+        - Integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                installationId:
+                  type: string
+                  minLength: 1
+                  description: A unique identifier which will be used to identify the integration when using the Port API.<br/>
+                title:
+                  type: string
+                  description: The title of the integration. This will be displayed in the [data-sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
+                version:
+                  type: string
+                  description: The version of the integration.<br/>
+                installationAppType:
+                  type: string
+                  description: The name of the integrated tool/platform (e.g. `kubernetes`,`pagerduty`).<br/>
+                config:
+                  type: object
+                  # type:
+                  #   - object
+                  #   - 'null'
+                  description: Various configuration options for the integration.<br/>
+                  additionalProperties: true
+                  properties:
+                    deleteDependentEntities:
+                      type: boolean
+                      description: If `true`, deleting an entity will also delete its dependent entities.<br/>
+                    createMissingRelatedEntities:
+                      type: boolean
+                      description: If `true`, creating an entity with a relation to a non-existing entity will also create the related entity.<br/>
+                    resources:
+                      type: array
+                      description: The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping).<br/>
+                      items:
+                        type: object
+                        required:
+                          - kind
+                          - selector
+                          - port
+                        properties:
+                          kind:
+                            type: string
+                            description: The kind of resource to map, as defined in API of the integrated tool/platorm.<br/>
+                          selector:
+                            type: object
+                            properties:
+                              query:
+                                description: A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `"true"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work).<br/>
+                                type: string
+                          port:
+                            type: object
+                            description: An object containing the mapping definitions of the `kind` resource into Port.<br/>
+                            required:
+                              - entity
+                            properties:
+                              entity:
+                                type: object
+                                required:
+                                  - mappings
+                                properties:
+                                  mappings:
+                                    description: The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                    oneOf:
+                                      - type: array
+                                        title: array
+                                        items:
+                                          type: object
+                                          required:
+                                            - identifier
+                                            - blueprint
+                                          properties:
+                                            identifier:
+                                              type: string
+                                              description: A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity.<br/>
+                                            title:
+                                              type: string
+                                              description: A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity.<br/>
+                                            blueprint:
+                                              type: string
+                                              description: The identifier of the blueprint to map the data into.<br/>
+                                            properties:
+                                              type: object
+                                              description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              additionalProperties: true
+                                            relations:
+                                              type: object
+                                              description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              additionalProperties: true
+                                      - type: object
+                                        title: object
+                                        required:
+                                          - identifier
+                                          - blueprint
+                                        properties:
+                                          identifier:
+                                            type: string
+                                            description: A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity.<br/>
+                                          title:
+                                            type: string
+                                            description: A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity.<br/>
+                                          blueprint:
+                                            type: string
+                                            description: The identifier of the blueprint to map the data into.<br/>
+                                          properties:
+                                            type: object
+                                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            additionalProperties: true
+                                          relations:
+                                            type: object
+                                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            additionalProperties: true
+                changelogDestination:
+                  type: object
+                  description: The destination of the integration's changelog.<br/>
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                        - WEBHOOK
+                        - KAFKA
+                  oneOf:
+                    # - type: object
+                    #   properties: {}
+                    #   additionalProperties: false
+                    - type: object
+                      title: Kafka
+                      description: The changelog will be sent to the Kafka topic connected to your Port account.<br/>
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - KAFKA
+                      required:
+                        - type
+                      additionalProperties: false
+                    - type: object
+                      title: Webhook
+                      description: The changelog will be sent to the specified webhook.<br/>
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - WEBHOOK
+                        agent:
+                          type: boolean
+                          description: If `true`, Port's execution agent will be used to send the changelog.<br/>
+                        url:
+                          type: string
+                          description: The URL of the webhook.<br/>
+                          format: uri
+                      required:
+                        - url
+                        - type
+                      additionalProperties: false
+              additionalProperties: false
+              required:
+                - installationId
+        required: true
+      parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: upsert
+          description: If `true`, the integration will be updated if it already exists.<br/>
+          required: false
+      security:
+        - bearer:
+            - 'create:integrations'
+      responses:
+        '200':
+          description: Default Response
+  '/v1/integration/{identifier}':
+    get:
+      summary: Get an integration
+      description: This route allows you to fetch a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      tags:
+        - Integrations
+      parameters:
+        - schema:
+            type: string
+            default: installationId
+            enum:
+              - installationId
+              - logIngestId
+          in: query
+          name: byField
+          description: The field used to identify the integration. When set to `logIngestId`, the `identifier` parameter should be changed accordingly.<br/>
+          required: false
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The installation id of the integration you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'read:integrations'
+      responses:
+        '200':
+          description: Default Response
+    patch:
+      summary: Patch an integration
+      description: This route allows you to modify an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      tags:
+        - Integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: The new title of the integration. This will be displayed in the [data-sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
+                version:
+                  type: string
+                  description: The new version of the integration.<br/>
+                installationAppType:
+                  type: string
+                  description: The new name of the integrated tool/platform (e.g. `kubernetes`,`pagerduty`).<br/>
+                config:
+                  type: object
+                  # type:
+                  #   - object
+                  #   - 'null'
+                  description: Various configuration options for the integration.<br/>
+                  additionalProperties: true
+                  properties:
+                    deleteDependentEntities:
+                      type: boolean
+                      description: If `true`, deleting an entity will also delete its dependent entities.<br/>
+                    createMissingRelatedEntities:
+                      type: boolean
+                      description: If `true`, creating an entity with a relation to a non-existing entity will also create the related entity.<br/>
+                    resources:
+                      type: array
+                      description: The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping).<br/>
+                      items:
+                        type: object
+                        required:
+                          - kind
+                          - selector
+                          - port
+                        properties:
+                          kind:
+                            type: string
+                            description: The kind of resource to map, as defined in API of the integrated tool/platorm.<br/>
+                          selector:
+                            type: object
+                            properties:
+                              query:
+                                type: string
+                                description: A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `"true"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work).<br/>
+                          port:
+                            type: object
+                            description: An object containing the mapping definitions of the `kind` resource into Port.<br/>
+                            required:
+                              - entity
+                            properties:
+                              entity:
+                                type: object
+                                required:
+                                  - mappings
+                                properties:
+                                  mappings:
+                                    description: The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                    oneOf:
+                                      - type: array
+                                        title: array
+                                        items:
+                                          type: object
+                                          required:
+                                            - identifier
+                                            - blueprint
+                                          properties:
+                                            identifier:
+                                              type: string
+                                              description: A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity.<br/>
+                                            title:
+                                              type: string
+                                              description: A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity.<br/>
+                                            blueprint:
+                                              type: string
+                                              description: The identifier of the blueprint to map the data into.<br/>
+                                            properties:
+                                              type: object
+                                              description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              additionalProperties: true
+                                            relations:
+                                              type: object
+                                              description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              additionalProperties: true
+                                      - type: object
+                                        title: object
+                                        required:
+                                          - identifier
+                                          - blueprint
+                                        properties:
+                                          identifier:
+                                            type: string
+                                            description: A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity.<br/>
+                                          title:
+                                            type: string
+                                            description: A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity.<br/>
+                                          blueprint:
+                                            type: string
+                                            description: The identifier of the blueprint to map the data into.<br/>
+                                          properties:
+                                            type: object
+                                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            additionalProperties: true
+                                          relations:
+                                            type: object
+                                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            additionalProperties: true
+                changelogDestination:
+                  type: object
+                  description: The destination of the integration's changelog.<br/>
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                        - WEBHOOK
+                        - KAFKA
+                  oneOf:
+                    # - type: object
+                    #   properties: {}
+                    #   additionalProperties: false
+                    - type: object
+                      title: Kafka
+                      description: The changelog will be sent to the Kafka topic connected to your Port account.<br/>
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - KAFKA
+                      required:
+                        - type
+                      additionalProperties: false
+                    - type: object
+                      title: Webhook
+                      description: The changelog will be sent to the specified webhook.<br/>
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - WEBHOOK
+                        agent:
+                          type: boolean
+                          description: If `true`, Port's execution agent will be used to send the changelog.<br/>
+                        url:
+                          type: string
+                          description: The URL of the webhook.<br/>
+                          format: uri
+                      required:
+                        - url
+                        - type
+                      additionalProperties: false
+              additionalProperties: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The installation id of the integration you want to modify.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'update:integrations'
+      responses:
+        '200':
+          description: Default Response
+    delete:
+      summary: Delete an integration
+      description: This route allows you to delete an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      tags:
+        - Integrations
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The installation id of the integration you want to delete.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'delete:integrations'
       responses:
         '200':
           description: Default Response
