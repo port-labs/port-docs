@@ -7,9 +7,8 @@ This guide provides a step-by-step process to automate the creation of a new AWS
 
 :::tip Prerequisites
 This guide assumes you have:
+- A Port account and that you have completed the [onboarding process](/quickstart).
 - A GitLab account with a repository set up for CI/CD.
-- Required secrets configured in GitLab as listed in the requirements file.
-- A Port account with necessary blueprints and self-service actions.
 :::
 
 <br/>
@@ -18,22 +17,210 @@ This guide assumes you have:
 
 First, copy the following files into your GitLab repository:
 
-- `.gitlab-ci.yml`
-- `main.tf`
-- `variables.tf`
-- `outputs.tf`
+`.gitlab-ci.yml`
+<details>
+<summary><b>Click to expand</b></summary>
+
+```yaml
+stages:
+  - prerequisites
+  - terraform
+  - port-update
+
+image:
+  name: hashicorp/terraform:light
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+variables:
+  AWS_ACCESS_KEY_ID: ${TF_USER_AWS_KEY}
+  AWS_SECRET_ACCESS_KEY : ${TF_USER_AWS_SECRET}
+  AWS_DEFAULT_REGION: ${TF_USER_AWS_REGION}
+  PORT_CLIENT_ID: ${PORT_CLIENT_ID}
+  PORT_CLIENT_SECRET: ${PORT_CLIENT_SECRET}
+
+before_script:
+  - rm -rf .terraform
+  - export AWS_ACCESS_KEY=${AWS_ACCESS_KEY_ID}
+  - export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+  - export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+  - apk update
+  - apk add --upgrade curl jq -q
+
+fetch-port-access-token:
+  stage: prerequisites
+  except:
+    - pushes
+  script:
+    - |
+      echo "Getting access token from Port API"
+      accessToken=$(curl -X POST \
+        -H 'Content-Type: application/json' \
+        -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
+        -s 'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
+  
+      echo "ACCESS_TOKEN=$accessToken" >> data.env
+      cat $TRIGGER_PAYLOAD 
+      runId=$(cat $TRIGGER_PAYLOAD | jq -r '.RUN_ID')
+      ACCOUNT_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.account_name')
+      EMAIL=$(cat $TRIGGER_PAYLOAD | jq -r '.email')
+      IAM_ROLE_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.role_name')
+      echo "RUN_ID=$runId" >> data.env
+      echo "ACCOUNT_NAME=$ACCOUNT_NAME" >> data.env
+      echo "EMAIL=$EMAIL" >> data.env
+      echo "IAM_ROLE_NAME=$IAM_ROLE_NAME" >> data.env
+      curl -X POST \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $accessToken" \
+        -d '{"message":"🏃‍♂️ Starting action to create an AWS account"}' \
+        "https://api.getport.io/v1/actions/runs/$runId/logs"
+      curl -X PATCH \
+        -H 'Content-Type: application/json' \
+        -H "Authorization: Bearer $accessToken" \
+        -d '{"link":"'"$CI_PIPELINE_URL"'"}' \
+        "https://api.getport.io/v1/actions/runs/$runId"
+  artifacts:
+    reports:
+      dotenv: data.env
+
+create-aws-account:
+  stage: terraform
+  needs:
+    - job: fetch-port-access-token
+      artifacts: true
+  script:
+    - echo "Creating AWS account and IAM role..."
+    - terraform init
+    - terraform apply -auto-approve -var "account_name=${ACCOUNT_NAME}" -var "email=${EMAIL}" -var "iam_role_name=${IAM_ROLE_NAME}"
+
+send-data-to-port:
+  stage: port-update
+  dependencies:
+    - fetch-port-access-token
+  script:
+    - |
+      curl -X POST \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d "{\"identifier\": \"${EMAIL}\", \
+             \"title\": \"${ACCOUNT_NAME}\", \
+             \"properties\": { \
+               \"account_name\": \"${ACCOUNT_NAME}\", \
+               \"email\": \"${EMAIL}\", \
+               \"iam_role_name\": \"${IAM_ROLE_NAME}\", \
+               \"additional_data\": \"Your additional data here\" \
+             }, \
+             \"relations\": {}}" \
+        "https://api.getport.io/v1/blueprints/awsAccountBlueprint/entities?run_id=$RUN_ID"
+      
+      curl -X PATCH \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"status": "SUCCESS", "message": {"run_status": "Run completed successfully!"}}' \
+        "https://api.getport.io/v1/actions/runs/$RUN_ID"
+```
+
+</details>
+`main.tf`
+<details>
+<summary><b>Click to expand</b></summary>
+
+```hcl
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+provider "aws" {
+  region = var.region
+}
+resource "aws_organizations_account" "account" {
+  name  = var.name
+  email = var.email
+  role_name = var.role_name
+  close_on_deletion = true
+  lifecycle {
+    ignore_changes = [role_name]
+  }
+}
+```
+
+</details>
+`variables.tf`
+<details>
+<summary><b>Click to expand</b></summary>
+
+```hcl
+variable "region" {
+  description = "AWS region where resources will be created"
+  type        = string
+  default     = "us-east-1"
+}
+variable "name" {
+  description = "Name of the AWS account to be created"
+  type        = string
+  default     = "newAccount"
+}
+variable "email" {
+  description = "Email to attach to the AWS account"
+  type        = string
+  default     = "example@example.com"
+}
+variable "role_name" {
+  description = "Name of the IAM role to attach"
+  type        = string
+  default     = "IAMRole"
+}
+```
+
+</details>
+`outputs.tf`
+<details>
+<summary><b>Click to expand</b></summary>
+
+```hcl
+output "account_name" {
+  value = aws_organizations_account.account.name
+}
+output "email" {
+  value = aws_organizations_account.account.email
+}
+output "role_name" {
+  value = aws_organizations_account.account.role_name
+}
+```
+
+</details>
 
 These files contain the necessary Terraform and GitLab CI configurations to automate AWS account creation.
 
 ## Step 2: Configure GitLab Secrets
 
-In GitLab, navigate to your project's **Settings** > **CI / CD** > **Variables** and add the required secrets as listed in the requirements file. These secrets are necessary for the Terraform scripts to execute correctly.
+In GitLab, navigate to your project's **Settings** > **CI / CD** > **Variables** and add the required secrets.
 
-## Step 3: Add AWS Account Blueprint in Port
+- PORT_CLIENT_ID
+- PORT_CLIENT_SECRET
+- TF_USER_AWS_KEY
+- TF_USER_AWS_REGION
+- TF_USER_AWS_SECRET 
 
-Next, create a new blueprint in Port using the `new_account_blueprint_example.json` file. This blueprint represents an AWS account in your software catalog.
+These secrets are necessary for the Terraform scripts to execute correctly.
 
-### Example Blueprint: `new_account_blueprint_example.json`
+## Step 3: Configure GitLab Webhook
+
+In GitLab, navigate to your project's **Settings** > **CI / CD** > **Pipeline trigger tokens** and add new token. Then in **View trigger token usage examples** you can find the Webhook URL address ander **Use webhook** 
+
+This URL is necessary for triggering the Pipeline from the Self Service Action.
+
+## Step 4: Add AWS Account Blueprint in Port
+
+Next, create a new blueprint in Port using the `aws_account.json` file. This blueprint represents an AWS account in your software catalog.
+
+### Example Blueprint: `aws_account.json`
 
 <details>
 <summary><b>Click to expand</b></summary>
@@ -73,7 +260,7 @@ Next, create a new blueprint in Port using the `new_account_blueprint_example.js
 
 </details>
 
-## Step 4: Create Self-Service Action in Port
+## Step 5: Create Self-Service Action in Port
 
 Create a new self-service action using the `self-service-action.json` file. This action will trigger the AWS account creation process.
 
@@ -81,6 +268,9 @@ Create a new self-service action using the `self-service-action.json` file. This
 
 <details>
 <summary><b>Click to expand</b></summary>
+:::tip Prerequisites
+Make sure to change 'WEBHOOK-URL-FROM-GITLAB' into your webhook URL from gitlab.
+:::
 
 ```json
 {
@@ -152,8 +342,3 @@ Ensure that you include the RUN_ID in the body of the webhook, as illustrated in
 ## Conclusion
 
 By following these steps, you can automate the creation of new AWS accounts using GitLab CI/CD and Port self-service actions.
-
-Relevant guides and examples:
-
-- Port's Documentation on Blueprint Creation
-- Example GitLab CI/CD Pipelines
