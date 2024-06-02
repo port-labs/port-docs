@@ -31,18 +31,28 @@ An example flow would be:
 
 To define an incoming webhook in Azure, follow the steps below:
 
-1. Create a **Service connection** of type **Incoming WebHook**;
-2. Put your Port `clientSecret` value in the **Secret** key field;
-3. Put the header `X-Port-Signature` in the `Headers` field;
-4. Enter the service connection name in the `Service connection name` field;
-5. Add the service connection resources in the Azure pipeline yaml:
-   ```yaml
-   resources:
-     webhooks:
-       - webhook: { webhookName }
-         connection: { Service connection name }
-   ```
-   The complete documentation showing how to configure Azure incoming webhooks can be found [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/resources?view=azure-devops&tabs=schema#define-a-webhooks-resource).
+1. **Create the Service Connection**
+    - In your Azure DevOps project, go to **Project Settings**.
+    - Under Pipelines, click on **Service connections**.
+    - Click the Create service connection button.
+    - Choose **Incoming WebHook** as the type.
+    - Fill in the following fields:
+        - **Webhook Name**: The webhook name e.g. "port_trigger"
+        - **Service connection name**: The sname of the service connection (e.g., "port_trigger").
+        - **Secret key**: Enter your Port `clientSecret` value.
+        - **Headers**: Type in `X-Port-Signature`.
+    - Check `Grant access to all pipelines`
+    - Click `Save`.
+
+2. **Use the Webhook in Your Pipeline**
+    - Add the service connection resources in the Azure pipeline yaml:
+      ```yaml
+      resources:
+        webhooks:
+          - webhook: { webhookName }
+            connection: { Service connection name }
+      ```
+      The complete documentation showing how to configure Azure incoming webhooks can be found [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/resources?view=azure-devops&tabs=schema#define-a-webhooks-resource).
 
 ## Define Azure pipeline actions in Port
 
