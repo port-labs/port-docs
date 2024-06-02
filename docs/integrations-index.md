@@ -240,6 +240,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Datadog
 
+- [Datadog integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog)
 - [Embed dashboards from Datadog](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
 - [Datadog webhook](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md)
 - [Datadog service catalog](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md#ingest-service-catalog)

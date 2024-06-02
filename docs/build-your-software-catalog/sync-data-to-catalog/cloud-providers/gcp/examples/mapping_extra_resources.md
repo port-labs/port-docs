@@ -39,14 +39,6 @@ A few examples:
 
 Create an integration configuration for the resource. The integration configuration is a YAML file that describes the ETL process to load data into the developer portal.
 
-#### Digesting values
-As you may see, some of the properties are digested using `.versioned_resources | max_by(.version).resource | <property_value>`. This is done, because the Cloud Assets contains all of the available versions of the resource within each inventory item, so that's why we take the most recent version of the asset in the inventory, and from that version we take the property value.
-All of the other properties, which are not versioned, are properties we digest directly from the asset in the Asset inventory, which are all listed [here](https://cloud.google.com/asset-inventory/docs/reference/rest/v1/Asset). These don't have multiple versions, and so are directly digested.
-
-:::warning Resources not digested from Asset Inventory
-   The `cloudresourcemanager.googleapis.com/Folder`, `cloudresourcemanager.googleapis.com/Organization`, `cloudresourcemanager.googleapis.com/Project`, and `pubsub.googleapis.com/Topic` are fetched directly from Google Cloud's API, not using the Asset Inventory. Therefore, access their properties directly, without using the jq command specified above.
-:::
-
 <ComputeAppConfig/>
 
 #### The integration configuration structure
@@ -90,17 +82,17 @@ All of the other properties, which are not versioned, are properties we digest d
   		port:
       entity:
         mappings: # Mappings between one GCP object to a Port entity. Each value is a JQ query.
-          identifier: ".name"
-          title:  ".versioned_resources | max_by(.version).resource | .name"
+          identifier: ".id"
+          title:  ".name"
           blueprint: '"gcpComputeInstance"'
           properties:
             location: .location
-            machineType: ".versioned_resources | max_by(.version).resource | .machineType"
-            subnetworks: ".versioned_resources | max_by(.version).resource | .networkInterfaces[].subnetwork"
-            cpuPlatform: ".versioned_resources | max_by(.version).resource | .cpuPlatform"
-            selfLink: ".versioned_resources | max_by(.version).resource | .selfLink"
+            machineType: ".machineType"
+            subnetworks: ".networkInterfaces[].subnetwork"
+            cpuPlatform: ".cpuPlatform"
+            selfLink: ".selfLink"
           relations:
-            project: ".project"
+            project: ".__project.name"
   		# highlight-end
   ```
 
@@ -112,14 +104,14 @@ All of the other properties, which are not versioned, are properties we digest d
         ```yaml showLineNumbers
         mappings:
         	# highlight-start
-          identifier: ".name"
+          identifier: ".id"
         	# highlight-end
         ```
       - The `title` field describes the GCP resource title. This field is required for all resources.
         ```yaml showLineNumbers
         mappings:
         	# highlight-start
-          title:  ".versioned_resources | max_by(.version).resource | .name"
+          title:  ".name"
         	# highlight-end
         ```
       - The `blueprint` field describes the Port blueprint to be used to create the Port entity. This field is required for all resources.
@@ -134,12 +126,12 @@ All of the other properties, which are not versioned, are properties we digest d
       - The `properties` field describes the GCP resource properties to be mapped to the Port
         ```yaml showLineNumbers
         	mappings:
-          identifier: ".name"
-            title:  ".versioned_resources | max_by(.version).resource | .name"
+          identifier: ".id"
+            title:  ".name"
             blueprint: '"gcpComputeInstance"'
         		# highlight-start
         		properties:
         			location: .location
-              machineType: ".versioned_resources | max_by(.version).resource | .machineType"
+              machineType: ".machineType"
         		# highlight-end
         ```

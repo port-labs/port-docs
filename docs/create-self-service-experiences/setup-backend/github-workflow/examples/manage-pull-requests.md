@@ -79,37 +79,12 @@ Follow these steps to get started:
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "manage-pr.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"action\")) then \"action\" else null end}}": "{{.inputs.\"action\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "manage-pr.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"action\")) then \"action\" else null end}}": "{{.inputs.\"action\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "action": "{{.inputs.\"action\"}}",
+      "port_context": {
+        "entity": "{{.entity}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{.trigger}}"
       }
     },
     "reportWorkflowStatus": true
@@ -137,9 +112,9 @@ on:
       action: 
         required: true
         type: string
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Details about the action and general context (blueprint, run id, etc...)"
         type: string
 
 jobs:
@@ -153,14 +128,14 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             Executing the ${{ github.event.inputs.action }} action on the GitHub pull request... ⛴️
 
       - name: Extract Repository and PR Number
         id: extract_info
         run: |
-          link="${{ fromJson(inputs.port_payload).payload.entity.properties.link }}"
+          link="${{ fromJson(inputs.port_context).entity.properties.link }}"
           repo_info=$(echo "$link" | sed 's|https://github.com/||' | awk -F'/' '{print $1 "/" $2}')
           pr_number=$(echo "$link" | awk -F'/' '{print $NF}')
 
@@ -231,7 +206,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           baseUrl: https://api.getport.io
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
             GitHub Action result for ${{ env.GITHUB_ACTION_TYPE }} action on PR ${{ env.PR_NUMBER }}: ${{ env.GITHUB_ACTION_RESULT_MESSAGE }}
 ```
