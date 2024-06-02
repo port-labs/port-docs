@@ -198,7 +198,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
 
 ```json showLineNumbers
 {
-  "identifier": "ec2Instance_deploy_ec2_instance",
+  "identifier": "deploy_ec2_instance",
   "title": "Deploy EC2 Instance",
   "icon": "EC2",
   "trigger": {
@@ -261,45 +261,16 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
     "repo": "<GITHUB_REPO>",
     "workflow": "<GITHUB_WORKFLOW_FILE>",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"instance_name\")) then \"instance_name\" else null end}}": "{{.inputs.\"instance_name\"}}",
-      "{{if (.inputs | has(\"instance_type\")) then \"instance_type\" else null end}}": "{{.inputs.\"instance_type\"}}",
-      "{{if (.inputs | has(\"image_id\")) then \"image_id\" else null end}}": "{{.inputs.\"image_id\"}}",
-      "{{if (.inputs | has(\"key_pair_name\")) then \"key_pair_name\" else null end}}": "{{.inputs.\"key_pair_name\"}}",
-      "{{if (.inputs | has(\"security_group_ids\")) then \"security_group_ids\" else null end}}": "{{.inputs.\"security_group_ids\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"ec2Instance_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": false,
-              "reportWorkflowStatus": true,
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "<GITHUB_WORKFLOW_FILE>"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"instance_name\")) then \"instance_name\" else null end}}": "{{.inputs.\"instance_name\"}}",
-            "{{if (.inputs | has(\"instance_type\")) then \"instance_type\" else null end}}": "{{.inputs.\"instance_type\"}}",
-            "{{if (.inputs | has(\"image_id\")) then \"image_id\" else null end}}": "{{.inputs.\"image_id\"}}",
-            "{{if (.inputs | has(\"key_pair_name\")) then \"key_pair_name\" else null end}}": "{{.inputs.\"key_pair_name\"}}",
-            "{{if (.inputs | has(\"security_group_ids\")) then \"security_group_ids\" else null end}}": "{{.inputs.\"security_group_ids\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "instance_name": "{{ .inputs.\"instance_name\" }}",
+      "instance_type": "{{ .inputs.\"instance_type\" }}",
+      "image_id": "{{ .inputs.\"image_id\" }}",
+      "key_pair_name": "{{ .inputs.\"key_pair_name\" }}",
+      "security_group_ids": "{{ .inputs.\"security_group_ids\" }}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -318,7 +289,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
 
 ```json showLineNumbers
 {
-  "identifier": "s3_bucket_create_s3_bucket",
+  "identifier": "create_s3_bucket",
   "title": "Create S3 Bucket",
   "icon": "S3",
   "trigger": {
@@ -369,39 +340,13 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
     "repo": "<GITHUB_REPO>",
     "workflow": "<GITHUB_WORKFLOW_FILE>",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"bucket_name\")) then \"bucket_name\" else null end}}": "{{.inputs.\"bucket_name\"}}",
-      "{{if (.inputs | has(\"bucket_acl\")) then \"bucket_acl\" else null end}}": "{{.inputs.\"bucket_acl\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"s3_bucket_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": false,
-              "reportWorkflowStatus": true,
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "<GITHUB_WORKFLOW_FILE>"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"bucket_name\")) then \"bucket_name\" else null end}}": "{{.inputs.\"bucket_name\"}}",
-            "{{if (.inputs | has(\"bucket_acl\")) then \"bucket_acl\" else null end}}": "{{.inputs.\"bucket_acl\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "bucket_name": "{{ .inputs.\"bucket_name\" }}",
+      "bucket_acl": "{{ .inputs.\"bucket_acl\" }}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -420,7 +365,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
 
 ```json showLineNumbers
 {
-  "identifier": "rds_instance_deploy_rds_instance",
+  "identifier": "deploy_rds_instance",
   "title": "Deploy RDS",
   "icon": "AmazonRDS",
   "trigger": {
@@ -508,47 +453,17 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
     "repo": "<GITHUB_REPO>",
     "workflow": "<GITHUB_WORKFLOW_FILE>",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"db_instance_identifier\")) then \"db_instance_identifier\" else null end}}": "{{.inputs.\"db_instance_identifier\"}}",
-      "{{if (.inputs | has(\"db_master_password\")) then \"db_master_password\" else null end}}": "{{.inputs.\"db_master_password\"}}",
-      "{{if (.inputs | has(\"db_master_username\")) then \"db_master_username\" else null end}}": "{{.inputs.\"db_master_username\"}}",
-      "{{if (.inputs | has(\"db_engine\")) then \"db_engine\" else null end}}": "{{.inputs.\"db_engine\"}}",
-      "{{if (.inputs | has(\"allocated_storage\")) then \"allocated_storage\" else null end}}": "{{.inputs.\"allocated_storage\"}}",
-      "{{if (.inputs | has(\"db_instance_class\")) then \"db_instance_class\" else null end}}": "{{.inputs.\"db_instance_class\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"rds_instance_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": false,
-              "reportWorkflowStatus": true,
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "<GITHUB_WORKFLOW_FILE>"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"db_instance_identifier\")) then \"db_instance_identifier\" else null end}}": "{{.inputs.\"db_instance_identifier\"}}",
-            "{{if (.inputs | has(\"db_master_password\")) then \"db_master_password\" else null end}}": "{{.inputs.\"db_master_password\"}}",
-            "{{if (.inputs | has(\"db_master_username\")) then \"db_master_username\" else null end}}": "{{.inputs.\"db_master_username\"}}",
-            "{{if (.inputs | has(\"db_engine\")) then \"db_engine\" else null end}}": "{{.inputs.\"db_engine\"}}",
-            "{{if (.inputs | has(\"allocated_storage\")) then \"allocated_storage\" else null end}}": "{{.inputs.\"allocated_storage\"}}",
-            "{{if (.inputs | has(\"db_instance_class\")) then \"db_instance_class\" else null end}}": "{{.inputs.\"db_instance_class\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "db_instance_identifier": "{{.inputs.\"db_instance_identifier\"}}",
+      "db_master_password": "{{.inputs.\"db_master_password\"}}",
+      "db_master_username": "{{.inputs.\"db_master_username\"}}",
+      "db_engine": "{{.inputs.\"db_engine\"}}",
+      "allocated_storage": "{{.inputs.\"allocated_storage\"}}",
+      "db_instance_class": "{{.inputs.\"db_instance_class\"}}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -796,11 +711,10 @@ on:
         required: true
         type: string
         description: security group ids
-      port_payload:
+      port_context:
         required: true
         description:
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+          Action and general port_context (blueprint, run id, etc...)
         type: string
 
 jobs:
@@ -849,7 +763,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
 ```
 
   </details>
@@ -873,11 +787,10 @@ on:
         required: true
         type: string
         description: bucket acl
-      port_payload:
+      port_context:
         required: true
         description:
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+          Details of the action and general port_context (blueprint, run id, etc...)
         type: string
 
 jobs:
@@ -920,7 +833,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
 ```
 
   </details>
@@ -960,11 +873,10 @@ on:
         required: true
         type: number
         description: allocated_storage
-      port_payload:
+      port_context:
         required: true
         description:
-          Port's payload, including details for who triggered the action and
-          general context (blueprint, run id, etc...)
+          Details about the action and general port_context (blueprint, run id, etc...)
         type: string
 
 jobs:
@@ -1030,7 +942,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).runId}}
 ```
 
   </details>

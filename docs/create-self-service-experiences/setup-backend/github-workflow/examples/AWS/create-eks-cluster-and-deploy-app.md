@@ -150,9 +150,9 @@ on:
         description: "Action to perform (apply/destroy)"
         required: true
         default: "apply"
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload (who triggered, context, etc...)"
+        description: "Port's payload (who triggered, port_context, etc...)"
         type: string
 
 jobs:
@@ -170,6 +170,10 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
       PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+      CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
+      REGION: ${{ github.event.inputs.region }}
+      ACTION: ${{ github.event.inputs.action }}
+      PORT_RUN_ID: ${{ fromJson(inputs.port_context).runId }}
 
     steps:
       - name: Checkout code
@@ -183,8 +187,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: "Initiating creation of EKS cluster: ${{ inputs.cluster_name }}."
+          runId: ${{ env.PORT_RUN_ID }}
+          logMessage: "Initiating creation of EKS cluster: ${{ env.CLUSTER_NAME }}."
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -203,32 +207,41 @@ jobs:
         if: ${{ github.event.inputs.action == 'apply' }}
         run: terraform apply -auto-approve
         env:
-          TF_VAR_cluster_name: ${{ github.event.inputs.cluster_name }}
-          TF_VAR_region: ${{ github.event.inputs.region }}
-          TF_VAR_port_run_id: ${{ fromJson(inputs.port_payload).context.runId }}
+          TF_VAR_cluster_name: ${{ env.CLUSTER_NAME }}
+          TF_VAR_region: ${{ env.REGION }}
+          TF_VAR_port_run_id: ${{ env.PORT_RUN_ID }}
 
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'destroy' }}
         run: terraform destroy -auto-approve
         env:
-          TF_VAR_cluster_name: ${{ github.event.inputs.cluster_name }}
-          TF_VAR_region: ${{ github.event.inputs.region }}
-          TF_VAR_port_run_id: ${{ fromJson(inputs.port_payload).context.runId }}
+          TF_VAR_cluster_name: ${{ env.CLUSTER_NAME }}
+          TF_VAR_region: ${{ env.REGION }}
+          TF_VAR_port_run_id: ${{ env.PORT_RUN_ID }}
 
-      - name: Create a log message (post-action)
+      - name: Inform Port about the status of the EKS cluster creation
+        if: ${{ github.event.inputs.action == 'apply' }}
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: "${
-            if eq(github.event.inputs.action, 'apply')
-            'EKS cluster creation has been completed: ${{ github.event.inputs.cluster_name }}.'
-            else
-            'EKS cluster destruction has been completed: ${{ github.event.inputs.cluster_name }}.'
-            }"
+          status: "SUCCESS"
+          runId: ${{ env.PORT_RUN_ID }}
+          logMessage: "EKS cluster creation has been completed: ${{ env.CLUSTER_NAME }}"
+
+      - name: Inform Port about the status of the EKS cluster destruction
+        if: ${{ github.event.inputs.action == 'destroy' }}
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          status: "SUCCESS"
+          runId: ${{ env.PORT_RUN_ID }}
+          logMessage: "EKS cluster destruction has been completed: ${{ env.CLUSTER_NAME }}"
 ```
 
 </details>
@@ -290,39 +303,13 @@ jobs:
     "repo": "<GITHUB_REPO>",
     "workflow": "manage-eks-cluster.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"cluster_name\")) then \"cluster_name\" else null end}}": "{{.inputs.\"cluster_name\"}}",
-      "{{if (.inputs | has(\"region\")) then \"region\" else null end}}": "{{.inputs.\"region\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"eks_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "manage-eks-cluster.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"cluster_name\")) then \"cluster_name\" else null end}}": "{{.inputs.\"cluster_name\"}}",
-            "{{if (.inputs | has(\"region\")) then \"region\" else null end}}": "{{.inputs.\"region\" | if type == \"array\" then map(.identifier) else .identifier end}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "cluster_name": "{{ .inputs.\"cluster_name\" }}",
+      "region": "{{ .inputs.\"region\" }}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -589,7 +576,7 @@ terraform {
 
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.10.0"
+      version = "2.0.3"
     }
   }
 
@@ -664,41 +651,15 @@ terraform {
     "repo": "azure-resources-terraform",
     "workflow": "scaffold-app.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"project_name\")) then \"project_name\" else null end}}": "{{.inputs.\"project_name\"}}",
-      "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
-      "{{if (.inputs | has(\"repo_name\")) then \"repo_name\" else null end}}": "{{.inputs.\"repo_name\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"repository_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "scaffold-app.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"project_name\")) then \"project_name\" else null end}}": "{{.inputs.\"project_name\"}}",
-            "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
-            "{{if (.inputs | has(\"repo_name\")) then \"repo_name\" else null end}}": "{{.inputs.\"repo_name\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "project_name": "{{.inputs.\"project_name\"}}",
+      "repo_name": "{{.inputs.\"repo_name\"}}",
+      "template": "{{.inputs.\"template\"}}",
+      "description": "{{.inputs.\"description\"}}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -733,13 +694,17 @@ on:
       repo_name:
         description: "Slug of the app"
         required: true
+      template:
+          description: "Template to use for the app"
+          required: false
+          default: "nodejs"
       description:
         description: "Description of the app"
         required: true
         default: "A simple app"
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload (who triggered, context, etc...)"
+        description: "Port's payload (who triggered, port_context, etc...)"
         type: string
 
 jobs:
@@ -747,8 +712,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
-      PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+      PORT_RUN_ID: ${{ fromJson(github.event.inputs.port_context).runId }}
+      
 
     steps:
       - name: Create a log message (post-action)
@@ -758,18 +723,18 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ env.PORT_RUN_ID }}
           logMessage: "Starting scaffolding of app: ${{ github.event.inputs.project_name }}"
 
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Check if Repository Exists
         id: check_repo
         run: |
           REPO_EXISTS=$(curl -s -o /dev/null -w "%{http_code}" \
             -X GET \
-            -H "Authorization: Bearer ${{ secrets.CREATOR_TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
             "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.inputs.repo_name }}")
            
           echo "HTTP Status: $REPO_EXISTS"
@@ -789,7 +754,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ env.PORT_RUN_ID }}
           logMessage: "Creating ECR repository: ${{ github.event.inputs.repo_name }}"
 
       - name: Configure AWS credentials
@@ -814,7 +779,7 @@ jobs:
         uses: andrewthetechie/gha-cookiecutter@main
         with:
           # path to what you checked out
-          template: ./app-templates/nodejs
+          template: ./app-templates/${{ github.event.inputs.template }}
           outputDir: ./tmp
           cookiecutterValues: '{
             "project_name": "${{ github.event.inputs.project_name }}",
@@ -832,7 +797,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ env.PORT_RUN_ID }}
           logMessage: "Creating repository for app: ${{ github.event.inputs.project_name }}"
 
       - name: Create GitHub Repository
@@ -842,7 +807,7 @@ jobs:
           HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
             -X POST \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.CREATOR_TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
             -d '{"name": "${{ github.event.inputs.repo_name }}", "private": true, "description": "${{ github.event.inputs.description }}"}' \
             "https://api.github.com/user/repos")
 
@@ -862,7 +827,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ env.PORT_RUN_ID }}
           logMessage: "Commiting new app files: ${{ github.event.inputs.project_name }}"
 
       - name: Commit files
@@ -875,7 +840,7 @@ jobs:
           git add .
           git commit -m "Initial commit"
           git branch -M main
-          git remote add origin https://${{ github.repository_owner }}:${{ secrets.CREATOR_TOKEN }}@github.com/${{ github.repository_owner }}/${{ github.event.inputs.repo_name }}.git
+          git remote add origin https://${{ github.repository_owner }}:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository_owner }}/${{ github.event.inputs.repo_name }}.git
           git push -u origin main
 
       - name: Create a log message (post-action)
@@ -886,7 +851,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ env.PORT_RUN_ID }}
           logMessage: "Finished scaffolding of app: ${{ github.event.inputs.project_name }}"
 ```
 
@@ -922,7 +887,7 @@ This action will create the following:
 
 ```json showLineNumbers
 {
-  "identifier": "eks_deploy_to_eks",
+  "identifier": "deploy_to_eks",
   "title": "Deploy to EKS",
   "description": "Build and deploy an image to EKS",
   "trigger": {
@@ -948,37 +913,12 @@ This action will create the following:
     "repo": "<GITHUB_REPO>",
     "workflow": "build-and-deploy.yml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"cluster\")) then \"cluster\" else null end}}": "{{.inputs.\"cluster\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"eks_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "build-and-deploy.yml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"cluster\")) then \"cluster\" else null end}}": "{{.inputs.\"cluster\" | if type == \"array\" then map(.identifier) else .identifier end}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "cluster": "{{.inputs.\"cluster\"}}",
+      "port_context": {
+        "entity": "{{ .entity }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -1006,9 +946,9 @@ on:
       cluster:
         description: 'Deployment cluster'
         required: true
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload, including details for who triggered the action and general context (blueprint, run id, etc...)"
+        description: "Action and general port_context (blueprint, run id, etc...)"
         type: string
 
 jobs:
@@ -1016,8 +956,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPO_URL: ${{ fromJson(inputs.port_payload).payload.entity.properties.url }}
-      TRIGGERED_BY: ${{ fromJson(inputs.port_payload).trigger.by.user.email || github.actor }}
+      REPO_URL: ${{ fromJson(inputs.port_context).entity.properties.url }}
+      TRIGGERED_BY: ${{ fromJson(inputs.port_context).trigger.by.user.email || github.actor }}
 
     steps:
     - name: Extract repository owner and name
@@ -1092,7 +1032,7 @@ jobs:
         clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
         operation: PATCH_RUN
         baseUrl: https://api.getport.io
-        runId: ${{ fromJson(inputs.port_payload).context.runId }}
+        runId: ${{ fromJson(inputs.port_context).runId }}
         logMessage: |
           Built and pushed image to ECR
 
@@ -1120,7 +1060,7 @@ jobs:
         operation: PATCH_RUN
         status: "SUCCESS"
         baseUrl: https://api.getport.io
-        runId: ${{ fromJson(inputs.port_payload).context.runId }}
+        runId: ${{ fromJson(inputs.port_context).runId }}
         logMessage: |
             Deployed to EKS 
 ```

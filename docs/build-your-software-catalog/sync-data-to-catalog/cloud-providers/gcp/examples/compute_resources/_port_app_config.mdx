@@ -23,7 +23,7 @@ resources:
             recommendedSize: ".recommendedSize"
             target: ".target"
           relations:
-            project: ".project"
+            project: ".__project.name"
   - kind: compute.googleapis.com/Firewall
     selector:
       query: "true"
@@ -42,7 +42,7 @@ resources:
             allowed: ".allowed"
             denied: ".denied"
           relations:
-            project: ".project"
+            project: ".__project.name"
   - kind: compute.googleapis.com/Subnetwork
     selector:
       query: "true"
@@ -60,7 +60,7 @@ resources:
             ipCidrRange: ".ipCidrRange"
             description: ".description"
           relations:
-            project: ".project"
+            project: ".__project.name"
   - kind: compute.googleapis.com/Instance
     selector:
       query: "true"
@@ -77,7 +77,7 @@ resources:
             cpuPlatform: ".cpuPlatform"
             selfLink: ".selfLink"
           relations:
-            project: ".project"
+            project: ".__project.name"
 ```
 
 </details>

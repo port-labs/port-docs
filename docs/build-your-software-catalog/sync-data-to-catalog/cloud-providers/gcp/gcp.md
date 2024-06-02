@@ -63,7 +63,7 @@ resources:
             pushConfig: ".pushConfig"
             retainAckedMessages: ".retainAckedMessages"
          relations:
-            project: ".project"
+            project: ".__project.name"
           # highlight-end
 ```
 
@@ -125,7 +125,7 @@ The integration configuration is a YAML file that describes the ETL process to l
             pushConfig: ".pushConfig"
             retainAckedMessages: ".retainAckedMessages"
          relations:
-            project: ".project"
+            project: ".__project.name"
         # highlight-end
   ```
   - The `entity` field describes the Port entity to be created from the GCP resource.
@@ -148,7 +148,7 @@ The integration configuration is a YAML file that describes the ETL process to l
             pushConfig: ".pushConfig"
             retainAckedMessages: ".retainAckedMessages"
          relations:
-            project: ".project"
+            project: ".__project.name"
           # highlight-end
     ```
 

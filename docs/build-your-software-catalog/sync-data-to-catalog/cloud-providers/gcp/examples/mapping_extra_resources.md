@@ -92,7 +92,7 @@ Create an integration configuration for the resource. The integration configurat
             cpuPlatform: ".cpuPlatform"
             selfLink: ".selfLink"
           relations:
-            project: ".project"
+            project: ".__project.name"
   		# highlight-end
   ```
 

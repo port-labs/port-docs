@@ -139,10 +139,9 @@ on:
         description: 'Desired state of the feature flag (true for enabled, false for disabled)'
         required: true
         type: boolean
-      port_payload:
-        description: "Port's payload, including details for who triggered the action and general context"
+      port_context:
         required: true
-        type: string
+        description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
   toggle-feature-flag:
@@ -155,14 +154,14 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Attempting to toggle feature flag '${{ fromJson(inputs.port_payload).context.entity }}' in '${{ github.event.inputs.environment_key }}' environment to ${{ github.event.inputs.flag_state }}."
+          runId: ${{fromJson(inputs.port_context).run_id}}
+          logMessage: "Attempting to toggle feature flag '${{fromJson(inputs.port_context).entity}}' in '${{ github.event.inputs.environment_key }}' environment to ${{ github.event.inputs.flag_state }}."
 
       - name: Toggle Feature Flag in LaunchDarkly
         id: "toggle_feature_flag"
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://app.launchdarkly.com/api/v2/flags/${{ github.event.inputs.project_key }}/${{ fromJson(inputs.port_payload).context.entity }}'
+          url: 'https://app.launchdarkly.com/api/v2/flags/${{ github.event.inputs.project_key }}/${{fromJson(inputs.port_context).entity}}'
           method: 'PATCH'
           customHeaders: '{"Authorization": "${{ secrets.LAUNCHDARKLY_ACCESS_TOKEN }}", "Content-Type": "application/json"}'
           data: >-
@@ -188,7 +187,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: "Moving on to upsert updates to Port"
           
       - name: UPSERT Entity
@@ -196,7 +195,7 @@ jobs:
         with:
           identifier: "${{ fromJson(steps.toggle_feature_flag.outputs.response).key }}"
           title: "${{ fromJson(steps.toggle_feature_flag.outputs.response).description }}"
-          blueprint: "${{ fromJson(inputs.port_payload).context.blueprint }}"
+          blueprint: ${{fromJson(inputs.port_context).blueprint}}
           properties: |-
             {
               "kind": "${{ fromJson(steps.toggle_feature_flag.outputs.response).kind }}",
@@ -213,12 +212,12 @@ jobs:
               "archived": ${{ fromJson(steps.toggle_feature_flag.outputs.response).archived }},
               "projectKey": "${{ github.event.inputs.project_key }}"
             }
+          relations: "${{ toJson(fromJson(inputs.port_context).relations) }}"
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
-
+          runId: ${{fromJson(inputs.port_context).run_id}}
           
       - name: Log After Toggling
         uses: port-labs/port-github-action@v1
@@ -227,8 +226,8 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
-          logMessage: "Feature flag '${{ fromJson(inputs.port_payload).context.entity }}' in '${{ github.event.inputs.environment_key }}' environment set to ${{ github.event.inputs.flag_state }}."
+          runId: ${{fromJson(inputs.port_context).run_id}}
+          logMessage: "Feature flag '${{fromJson(inputs.port_context).entity}}' in '${{ github.event.inputs.environment_key }}' environment set to ${{ github.event.inputs.flag_state }}."
 ```
 </details>
 
@@ -290,41 +289,14 @@ Create a new self service action using the following JSON configuration.
     "repo": "<GITHUB_REPO>",
     "workflow": "toggle-feature-flag.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"project_key\")) then \"project_key\" else null end}}": "{{.inputs.\"project_key\"}}",
-      "{{if (.inputs | has(\"environment_key\")) then \"environment_key\" else null end}}": "{{.inputs.\"environment_key\"}}",
-      "{{if (.inputs | has(\"flag_state\")) then \"flag_state\" else null end}}": "{{.inputs.\"flag_state\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"launchDarklyFeatureFlag_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB_ORG>",
-              "repo": "<GITHUB_REPO>",
-              "workflow": "toggle-feature-flag.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"project_key\")) then \"project_key\" else null end}}": "{{.inputs.\"project_key\"}}",
-            "{{if (.inputs | has(\"environment_key\")) then \"environment_key\" else null end}}": "{{.inputs.\"environment_key\"}}",
-            "{{if (.inputs | has(\"flag_state\")) then \"flag_state\" else null end}}": "{{.inputs.\"flag_state\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "project_key": "{{.inputs.\"project_key\"}}",
+      "environment_key": "{{.inputs.\"environment_key\"}}",
+      "flag_state": "{{.inputs.\"flag_state\"}}",
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}",
+        "relations": "{{.entity.relations}}"
       }
     },
     "reportWorkflowStatus": true
