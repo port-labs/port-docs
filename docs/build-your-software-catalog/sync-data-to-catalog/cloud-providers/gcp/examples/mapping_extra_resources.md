@@ -39,10 +39,6 @@ A few examples:
 
 Create an integration configuration for the resource. The integration configuration is a YAML file that describes the ETL process to load data into the developer portal.
 
-#### Digesting values
-
-All properties from your [supported resource](https://cloud.google.com/asset-inventory/docs/supported-asset-types)REST API representation are available. Additionally, we inject a `.__project` field that represents the latest representation of the `project` containing the resource.
-
 <ComputeAppConfig/>
 
 #### The integration configuration structure
@@ -86,8 +82,8 @@ All properties from your [supported resource](https://cloud.google.com/asset-inv
   		port:
       entity:
         mappings: # Mappings between one GCP object to a Port entity. Each value is a JQ query.
-          identifier: ".name"
-          title: ".name | split("/") | last"
+          identifier: ".id"
+          title:  ".name"
           blueprint: '"gcpComputeInstance"'
           properties:
             location: .location
@@ -108,14 +104,14 @@ All properties from your [supported resource](https://cloud.google.com/asset-inv
         ```yaml showLineNumbers
         mappings:
         	# highlight-start
-          identifier: ".name"
+          identifier: ".id"
         	# highlight-end
         ```
       - The `title` field describes the GCP resource title. This field is required for all resources.
         ```yaml showLineNumbers
         mappings:
         	# highlight-start
-          title: ".name | split("/") | last"
+          title:  ".name"
         	# highlight-end
         ```
       - The `blueprint` field describes the Port blueprint to be used to create the Port entity. This field is required for all resources.
@@ -130,8 +126,8 @@ All properties from your [supported resource](https://cloud.google.com/asset-inv
       - The `properties` field describes the GCP resource properties to be mapped to the Port
         ```yaml showLineNumbers
         	mappings:
-          identifier: ".name"
-            title: ".name | split("/") | last"
+          identifier: ".id"
+            title:  ".name"
             blueprint: '"gcpComputeInstance"'
         		# highlight-start
         		properties:

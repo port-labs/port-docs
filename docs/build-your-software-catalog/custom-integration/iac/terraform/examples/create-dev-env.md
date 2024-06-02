@@ -75,7 +75,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.0.0"
+      version = "~> 2.0.3"
     }
   }
 }
@@ -132,7 +132,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.0.0"
+      version = "~> 2.0.3"
     }
   }
 }
@@ -263,7 +263,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.0.0"
+      version = "~> 2.0.3"
     }
   }
 }
