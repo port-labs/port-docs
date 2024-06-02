@@ -49,7 +49,7 @@ resources:
             reviewers: '[.reviewers[].uniqueName]'
             createdAt: .creationDate
           relations:
-            service: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
+            repository: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
         # highlight-end
 ```
 
