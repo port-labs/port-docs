@@ -1,3 +1,4 @@
+
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Automate AWS Account Creation with GitLab
@@ -37,7 +38,7 @@ Next, create a new blueprint in Port using the `new_account_blueprint_example.js
 <details>
 <summary><b>Click to expand</b></summary>
 
-```json showLineNumbers
+```json
 {
   "identifier": "awsAccountBlueprint",
   "description": "This blueprint represents an AWS account in our software catalog.",
@@ -68,13 +69,20 @@ Next, create a new blueprint in Port using the `new_account_blueprint_example.js
   },
   "relations": {}
 }
-</details>
-Step 4: Create Self-Service Action in Port
-Create a new self-service action using the self-service-action.json file. This action will trigger the AWS account creation process.
+```
 
-Example Self-Service Action: self-service-action.json
+</details>
+
+## Step 4: Create Self-Service Action in Port
+
+Create a new self-service action using the `self-service-action.json` file. This action will trigger the AWS account creation process.
+
+### Example Self-Service Action: `self-service-action.json`
+
 <details>
 <summary><b>Click to expand</b></summary>
+
+```json
 {
   "identifier": "gitlabAwsAccountBlueprint_create_an_aws_account",
   "title": "Create An AWS Account with GitLab",
@@ -96,7 +104,7 @@ Example Self-Service Action: self-service-action.json
           "title": "Email",
           "description": "The email address associated with the new AWS account",
           "type": "string",
-          "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+          "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         },
         "iam_role_name": {
           "title": "IAM Role Name",
@@ -125,24 +133,27 @@ Example Self-Service Action: self-service-action.json
     },
     "body": {
       "RUN_ID": "{{ .run.id }}",
-      "account_name": "{{ .inputs.\"account_name\" }}",
-      "email": "{{ .inputs.\"email\" }}",
-      "iam_role_name": "{{ .inputs.\"iam_role_name\" }}"
+      "account_name": "{{ .inputs."account_name" }}",
+      "email": "{{ .inputs."email" }}",
+      "iam_role_name": "{{ .inputs."iam_role_name" }}"
     }
   },
   "requiredApproval": false,
   "publish": true
 }
+```
+
 </details>
-Include the Run ID
+
+## Include the Run ID
+
 Ensure that you include the RUN_ID in the body of the webhook, as illustrated in the example above. This ID is crucial for tracking the execution of the self-service action.
 
-Conclusion
+## Conclusion
+
 By following these steps, you can automate the creation of new AWS accounts using GitLab CI/CD and Port self-service actions.
 
 Relevant guides and examples:
 
-Port's Documentation on Blueprint Creation
-Example GitLab CI/CD Pipelines
-
-</summary>
+- Port's Documentation on Blueprint Creation
+- Example GitLab CI/CD Pipelines
