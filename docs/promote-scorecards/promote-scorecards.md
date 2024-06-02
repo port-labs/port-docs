@@ -62,15 +62,16 @@ By default, the levels are: `Basic`, `Bronze`, `Silver`, `Gold`.
 
 The levels can be customized according to your organization's standards and with the colors that you prefer.
 
-Here is an example of a few levels types that can be defined:
-
 <img src='/img/scorecards/custom-scorecards-example.png' width='50%' border='1px' />
 <br/><br/>
+
+Here is an example of a few level types that can be defined:
 
 :::note
 The levels are defined in the order of importance, where the first level is the most basic level and the last level is the most advanced.  
 The basic level is the default level for all entities, and thus can't have a rule associated with it.
 :::
+
 
 <Tabs queryString="Levels" defaultValue="Default">
 
@@ -126,6 +127,7 @@ The basic level is the default level for all entities, and thus can't have a rul
 {
   "identifier": "monitoringMaturity",
   "title": "Monitoring Maturity",
+  # highlight-start
   "levels": [
     {
       "color": "paleBlue",
@@ -140,6 +142,7 @@ The basic level is the default level for all entities, and thus can't have a rul
       "title": "high"
     }
   ],
+	# highlight-end
   "rules": []
 }
 ```
@@ -151,6 +154,7 @@ The basic level is the default level for all entities, and thus can't have a rul
 {
   "identifier": "ProductionReadiness",
   "title": "Production Readiness",
+	# highlight-start
   "levels": [
     {
       "color": "red",
@@ -169,6 +173,7 @@ The basic level is the default level for all entities, and thus can't have a rul
       "title": "Green"
     }
   ],
+	# highlight-end
   "rules": []
 }
 ```
@@ -176,8 +181,6 @@ The basic level is the default level for all entities, and thus can't have a rul
 </TabItem>
 
 </Tabs>
-
-You can define your own levels according to your organization's standards, for example:
 
 ## Rule elements
 
@@ -191,7 +194,7 @@ to how important it is for the check to pass (the more basic the check, the lowe
 | `title`       | `String` | `Rule` name that will be shown in the UI                                                                                                                      |
 | `description` | `String` | Description that will be shown in the UI when the rule is expanded. Value that contains markdown is also supported and will be displayed in a markdown format |
 | `identifier`  | `String` | The unique identifier of the `Rule`                                                                                                                           |
-| `level`       | `String` | one of the levels defined in the scorecard levels key                                                                                                         |
+| `level`       | `String` | One of the levels defined in the scorecard [levels key](#levels)                                                                                              |
 | `query`       | `Object` | The query is built from an array of [`conditions`](#conditions) and a [`combinator`](#combinator) (or / and) that will define the                             |
 
 ### Combinator
@@ -287,24 +290,24 @@ Each scorecard has a set of levels, for example
 
 ```json
 {
-	"levels": [
-		{
-			"color": "paleBlue",
-			"title": "Basic"
-		},
-		{
-			"color": "bronze",
-			"title": "Bronze"
-		},
-		{
-			"color": "silver",
-			"title": "Silver"
-		},
-		{
-			"color": "gold",
-			"title": "Gold"
-		}
-	]
+  "levels": [
+    {
+      "color": "paleBlue",
+      "title": "Basic"
+    },
+    {
+      "color": "bronze",
+      "title": "Bronze"
+    },
+    {
+      "color": "silver",
+      "title": "Silver"
+    },
+    {
+      "color": "gold",
+      "title": "Gold"
+    }
+  ]
 }
 ```
 
