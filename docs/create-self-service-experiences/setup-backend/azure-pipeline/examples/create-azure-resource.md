@@ -129,30 +129,12 @@ Follow these steps to get started:
     "webhook": "<AZURE-DEVOPS-WEBHOOK-NAME>",
     "org": "<AZURE-DEVOPS-ORG>",
     "payload": {
-      "action": "{{ .action.identifier[(\"azureStorage_\" | length):] }}",
-      "resourceType": "run",
-      "status": "TRIGGERED",
-      "trigger": "{{ .trigger | {by, origin, at} }}",
-      "context": {
-        "entity": "{{.entity.identifier}}",
+      "{{ spreadValue() }}": "{{ .inputs }}",
+      "port_context": {
+        "entity": "{{.entity}}",
         "blueprint": "{{.action.blueprint}}",
-        "runId": "{{.run.id}}"
-      },
-      "payload": {
-        "entity": "{{ (if .entity == {} then null else .entity end) }}",
-        "action": {
-          "invocationMethod": {
-            "type": "AZURE-DEVOPS",
-            "webhook": "<AZURE-DEVOPS-WEBHOOK-NAME>",
-            "org": "<AZURE-DEVOPS-ORG>"
-          },
-          "trigger": "{{.trigger.operation}}"
-        },
-        "properties": {
-          "{{if (.inputs | has(\"storage_name\")) then \"storage_name\" else null end}}": "{{.inputs.\"storage_name\"}}",
-          "{{if (.inputs | has(\"storage_location\")) then \"storage_location\" else null end}}": "{{.inputs.\"storage_location\"}}"
-        },
-        "censoredProperties": "{{.action.encryptedProperties}}"
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
       }
     }
   },
@@ -184,11 +166,11 @@ terraform {
         }
         port = {
             source  = "port-labs/port-labs"
-            version = "~> 1.0.0"
+            version = "~> 2.0.3"
         }
     }
 
-    required_version = ">= 1.1.0"
+    required_version = ">= 2.0.3"
 }
 
 provider "azurerm" {
@@ -307,11 +289,11 @@ variables:
   - group: port-credentials
   - group: azure-service-principal
   - name: STORAGE_NAME
-    value: ${{ parameters.PortWebhook.payload.properties.storage_name }}
+    value: ${{ parameters.PortWebhook.storage_name }}
   - name: STORAGE_LOCATION
-    value: ${{ parameters.PortWebhook.payload.properties.storage_location }}
+    value: ${{ parameters.PortWebhook.storage_location }}
   - name: PORT_RUN_ID
-    value: ${{ parameters.PortWebhook.context.runId }}
+    value: ${{ parameters.PortWebhook.port_context.runId }}
 
 jobs:
 - job: DeployJob

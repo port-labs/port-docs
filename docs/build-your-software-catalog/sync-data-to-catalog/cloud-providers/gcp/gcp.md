@@ -55,7 +55,7 @@ resources:
           # Transform & Load
           # highlight-start
           identifier: '.name'
-          title: ".name | split("/") | last"
+          title: '.name'
           blueprint: '"gcpPubSubSubscription"'
           properties:
             location: .location
@@ -117,7 +117,7 @@ The integration configuration is a YAML file that describes the ETL process to l
       entity:
         mappings:
           identifier: '.name'
-          title: ".name | split("/") | last"
+          title: '.name'
           blueprint: '"gcpPubSubSubscription"'
           properties:
             location: .location
@@ -140,7 +140,7 @@ The integration configuration is a YAML file that describes the ETL process to l
          mappings:
           # Transform & Load
           identifier: '.name'
-          title: ".name | split("/") | last"
+          title: '.name'
           blueprint: '"gcpPubSubSubscription"'
           properties:
             location: .location
