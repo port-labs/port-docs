@@ -42,11 +42,12 @@ Actions can (but do not have to) be tied to a specific `blueprint`. Selecting a 
 
 The `condition` field allows you to define rules using Port's [search & query syntax](/search-and-query/#rules) to determine which entities the action will be available for.  
 
-:::info Existing entity
-Since conditions require an existing entity to evaluate, they are only available for actions with `DAY-2` or `DELETE` operations.
+:::info Requisites
+- Since conditions require an existing entity to evaluate, they are only available for actions with `DAY-2` or `DELETE` operations.
+- For the same reason, the action must be tied to a blueprint (see above).
 :::
 
-The following example shows a condition that will make the action available only for entities with a property named `namespace` that has the value `default`:
+The following example shows a condition that will make the action available only for entities with a property named `environment` that has the value `production`:
 
 ```yaml
 {
@@ -54,8 +55,8 @@ The following example shows a condition that will make the action available only
   "rules": [
     {
       "operator": "=",
-      "property": "namespace",
-      "value": "default"
+      "property": "environment",
+      "value": "production"
     }
   ],
   "combinator": "and"
