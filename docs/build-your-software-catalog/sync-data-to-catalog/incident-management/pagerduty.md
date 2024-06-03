@@ -483,7 +483,11 @@ Examples of blueprints and the relevant integration configurations:
       },
       "users": {
         "title": "Users",
-        "type": "array"
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "user"
+        }
       }
     },
     "required": []
@@ -506,7 +510,7 @@ deleteDependentEntities: true
 resources:
   - kind: schedules
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
@@ -517,7 +521,7 @@ resources:
             url: .html_url
             timezone: .time_zone
             description: .description
-            users: "[.users[].summary]"
+            users: '[.users[] | select(has("__email")) | .__email]'
 ```
 
 </details>
@@ -642,6 +646,22 @@ resources:
         "title": "On Call",
         "type": "string",
         "format": "user"
+      },
+      "escalationLevels": {
+        "title": "Escalation Levels",
+        "type": "number"
+      },
+      "meanSecondsToResolve": {
+        "title": "Mean Seconds to Resolve",
+        "type": "number"
+      },
+      "meanSecondsToFirstAck": {
+        "title": "Mean Seconds to First Acknowledge",
+        "type": "number"
+      },
+      "meanSecondsToEngage": {
+        "title": "Mean Seconds to Engage",
+        "type": "number"
       }
     },
     "required": []
@@ -663,7 +683,7 @@ deleteDependentEntities: true
 resources:
   - kind: services
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
@@ -674,6 +694,10 @@ resources:
             status: .status
             url: .html_url
             oncall: .__oncall_user[] | select(.escalation_level == 1) | .user.email
+            escalationLevels: .__oncall_user | map(.escalation_level) | unique | length
+            meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
+            meanSecondsToFirstAck: .__analytics.mean_seconds_to_first_ack
+            meanSecondsToEngage: .__analytics.mean_seconds_to_engage
 ```
 
 </details>
@@ -702,7 +726,16 @@ resources:
           "escalated",
           "reopened",
           "resolved"
-        ]
+        ],
+        "enumColors": {
+          "triggered": "red",
+          "annotated": "blue",
+          "acknowledged": "yellow",
+          "reassigned": "blue",
+          "escalated": "yellow",
+          "reopened": "red",
+          "resolved": "green"
+        }
       },
       "url": {
         "type": "string",
@@ -710,13 +743,46 @@ resources:
         "title": "Incident URL"
       },
       "urgency": {
-        "type": "string",
         "title": "Incident Urgency",
-        "enum": ["high", "low"]
-      },
-      "responder": {
         "type": "string",
-        "title": "Assignee"
+        "enum": [
+          "high",
+          "low"
+        ],
+        "enumColors": {
+          "high": "red",
+          "low": "green"
+        }
+      },
+      "priority": {
+        "type": "string",
+        "title": "Priority",
+        "enum": [
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ],
+        "enumColors": {
+          "P1": "red",
+          "P2": "yellow",
+          "P3": "blue",
+          "P4": "lightGray",
+          "P5": "darkGray"
+        }
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "assignees": {
+        "title": "Assignees",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "user"
+        }
       },
       "escalation_policy": {
         "type": "string",
@@ -757,25 +823,28 @@ resources:
 createMissingRelatedEntities: true
 deleteDependentEntities: true
 resources:
-  - kind: incidents
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .id | tostring
-          title: .title
-          blueprint: '"pagerdutyIncident"'
-          properties:
-            status: .status
-            url: .self
-            urgency: .urgency
-            responder: .assignments[0].assignee.summary
-            escalation_policy: .escalation_policy.summary
-            created_at: .created_at
-            updated_at: .updated_at
-          relations:
-            pagerdutyService: .service.id
+    - kind: incidents
+      selector:
+        query: 'true'
+        include: ['assignees']
+      port:
+        entity:
+          mappings:
+            identifier: .id | tostring
+            title: .title
+            blueprint: '"pagerdutyIncident"'
+            properties:
+              status: .status
+              url: .self
+              urgency: .urgency
+              assignees: .assignments | map(.assignee.email)
+              escalation_policy: .escalation_policy.summary
+              created_at: .created_at
+              updated_at: .updated_at
+              priority: if .priority != null then .priority.summary else null end
+              description: .description
+            relations:
+              pagerdutyService: .service.id
 ```
 
 </details>
@@ -959,7 +1028,16 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
               "escalated",
               "reopened",
               "resolved"
-            ]
+            ],
+            "enumColors": {
+              "triggered": "red",
+              "annotated": "blue",
+              "acknowledged": "yellow",
+              "reassigned": "blue",
+              "escalated": "yellow",
+              "reopened": "red",
+              "resolved": "green"
+            }
           },
           "url": {
             "type": "string",
@@ -967,13 +1045,46 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
             "title": "Incident URL"
           },
           "urgency": {
-            "type": "string",
             "title": "Incident Urgency",
-            "enum": ["high", "low"]
-          },
-          "responder": {
             "type": "string",
-            "title": "Assignee"
+            "enum": [
+              "high",
+              "low"
+            ],
+            "enumColors": {
+              "high": "red",
+              "low": "green"
+            }
+          },
+          "priority": {
+            "type": "string",
+            "title": "Priority",
+            "enum": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5"
+            ],
+            "enumColors": {
+              "P1": "red",
+              "P2": "yellow",
+              "P3": "blue",
+              "P4": "lightGray",
+              "P5": "darkGray"
+            }
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "assignees": {
+            "title": "Assignees",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "user"
+            }
           },
           "escalation_policy": {
             "type": "string",
@@ -1037,40 +1148,10 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
 
     ```yaml showLineNumbers
     resources:
-      - kind: incidents
-        selector:
-          query: "true"
-          incidentAnalytics: "true"
-        port:
-          entity:
-            mappings:
-              identifier: .id | tostring
-              title: .title
-              blueprint: '"pagerdutyIncident"'
-              properties:
-                status: .status
-                url: .self
-                urgency: .urgency
-                responder: .assignments[0].assignee.summary
-                escalation_policy: .escalation_policy.summary
-                created_at: .created_at
-                updated_at: .updated_at
-                # highlight-next-line
-                analytics: .__analytics
-              relations:
-                pagerdutyService: .service.id
-    ```
-4. Below is the complete integration configuration for enriching the incident blueprint with analytics data.
-
-    <details>
-    <summary>Incident analytics integration configuration</summary>
-
-    ```yaml showLineNumbers
-    resources:
     - kind: incidents
       selector:
-        query: "true"
-        incidentAnalytics: "true"
+        query: 'true'
+        include: ['assignees']
       port:
         entity:
           mappings:
@@ -1081,10 +1162,45 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
               status: .status
               url: .self
               urgency: .urgency
-              responder: .assignments[0].assignee.summary
+              assignees: .assignments | map(.assignee.email)
               escalation_policy: .escalation_policy.summary
               created_at: .created_at
               updated_at: .updated_at
+              priority: if .priority != null then .priority.summary else null end
+              description: .description
+              # highlight-next-line
+              analytics: .__analytics
+            relations:
+              pagerdutyService: .service.id
+    ```
+4. Below is the complete integration configuration for enriching the incident blueprint with analytics data.
+
+    <details>
+    <summary>Incident analytics integration configuration</summary>
+
+    ```yaml showLineNumbers
+    resources:
+    - kind: incidents
+      selector:
+        query: 'true'
+        include: ['assignees']
+      port:
+        entity:
+          mappings:
+            identifier: .id | tostring
+            title: .title
+            blueprint: '"pagerdutyIncident"'
+            properties:
+              status: .status
+              url: .self
+              urgency: .urgency
+              assignees: .assignments | map(.assignee.email)
+              escalation_policy: .escalation_policy.summary
+              created_at: .created_at
+              updated_at: .updated_at
+              priority: if .priority != null then .priority.summary else null end
+              description: .description
+              # highlight-next-line
               analytics: .__analytics
             relations:
               pagerdutyService: .service.id
@@ -1450,7 +1566,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
     "timezone": "Asia/Jerusalem",
     "description": "Asia/Jerusalem",
-    "users": ["Adam", "Alice", "Doe", "Demo", "Pages"]
+    "users": ["adam@getport-io.com", "alice@getport-io.com", "doe@getport-io.com", "demo@getport-io.com", "pages@getport-io.com"]
   },
   "relations": {},
   "createdAt": "2023-12-01T13:18:02.215Z",
@@ -1474,7 +1590,6 @@ The combination of the sample payload and the Ocean configuration generates the 
   "properties": {
     "url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
     "timezone": null,
-    "description": "Port Test Service - Weekly Rotation",
     "user": "johndoe@domain.io",
     "startDate": "2024-06-03T13:00:00Z",
     "endDate": "2024-06-17T13:00:00Z"
@@ -1504,7 +1619,11 @@ The combination of the sample payload and the Ocean configuration generates the 
   "properties": {
     "status": "active",
     "url": "https://getport-io.pagerduty.com/service-directory/PGAAJBE",
-    "oncall": "devops-port@pager-demo.com"
+    "oncall": "devops-port@pager-demo.com",
+    "escalationLevels": 1,
+    "meanSecondsToResolve": 0,
+    "meanSecondsToFirstAck": 0,
+    "meanSecondsToEngage": 0,
   },
   "relations": {},
   "createdAt": "2023-11-01T13:18:02.215Z",
@@ -1533,7 +1652,9 @@ The combination of the sample payload and the Ocean configuration generates the 
     "responder": "Username",
     "escalation_policy": "Test Escalation Policy",
     "created_at": "2023-07-30T11:29:21.000Z",
-    "updated_at": "2023-07-30T11:29:21.000Z"
+    "updated_at": "2023-07-30T11:29:21.000Z",
+    "priority": null,
+    "description": "Example Incident",
   },
   "relations": {
     "pagerdutyService": "PWJAGSD"
