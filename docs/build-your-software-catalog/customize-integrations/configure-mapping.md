@@ -128,7 +128,7 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
 
 ### Test your mapping - JQ playground
 
-The mapping configuration window contains a JQ playground that allows you to test your JQ queries against an example response from the API of the integrated tool. This is useful for validating your queries and ensuring they return the expected results.
+The mapping configuration window contains a JQ playground that allows you to test your JQ queries against example responses from the API of the integrated tool. This is useful for validating your queries and ensuring they return the expected results.
 
 For integration based on the [Ocean framework](https://ocean.getport.io/integrations-library/), an example will be automatically generated for each resource `kind` in your mapping, based on real data ingested from the tool.
 
