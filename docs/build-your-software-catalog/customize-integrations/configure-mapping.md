@@ -136,7 +136,8 @@ To test your mapping against the example data, click on the `Test mapping` butto
 
 #### Manually add test examples
 
-For each resource `kind` in your mapping (in the bottom-left panel), you can add an example in the `Test examples` section.   Click on the `Add kind` button to add an example:
+For each resource `kind` in your mapping (in the bottom-left panel), you can add an example in the `Test examples` section.  
+Click on the `Add kind` button to add an example:
 
 <img src='/img/software-catalog/customize-integrations/addTestExample.png' width='100%' border='1px' />
 
