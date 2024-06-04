@@ -38,7 +38,7 @@ We will also choose the action's `operation` type:
 
 Actions can (but do not have to) be tied to a specific `blueprint`. Selecting a blueprint will allow you to easily execute the action on entities created from that blueprint. 
 
-### Conditions
+#### Conditions
 
 The `condition` field allows you to define rules using Port's [search & query syntax](/search-and-query/#rules) to determine which entities the action will be available for.  
 

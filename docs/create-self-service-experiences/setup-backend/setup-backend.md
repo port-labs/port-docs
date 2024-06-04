@@ -138,7 +138,7 @@ Depending on the backend type you choose, the available fields will be different
 | --------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
 | `agent`   | `boolean` | Defines whether to use [Port Agent](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/port-execution-agent.md) for execution or not. | `true` or `false`   |
 | `url`     | `string`  | Defines the webhook URL to which Port will send the action via an HTTP POST request.                                                                           | https://example.com |
-| `headers` | `string`  | Defines the **payload headers** that will be sent to the backend upon execution of the action.                                        |
+| `headers` | `string`  | An object containing the payload headers to be sent to the webhook in each execution, in `"key":"value"` pairs.                                        |
 | `body`    | `string`  | Defines the **payload** that will be sent to the backend upon execution of the action.                                                  |
 
 </TabItem>
