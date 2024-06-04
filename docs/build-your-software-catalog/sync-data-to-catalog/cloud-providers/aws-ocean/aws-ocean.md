@@ -78,15 +78,15 @@ The integration configuration is a YAML file that describes the ETL process to l
   ```yaml showLineNumbers
   # highlight-next-line
   resources:
-    - kind: pubsub.googleapis.com/Subscription
+    - kind: AWS::S3::Bucket
       selector:
       ...
   ```
-- The `kind` field value should be set to the AWS resource type as it appears in the [Supported Asset Docs](https://cloud.google.com/asset-inventory/docs/supported-asset-types).
+- The `kind` field value should be set to the AWS resource type as it appears in the [Cloud Control API](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html).
   ```yaml showLineNumbers
   resources:
     # highlight-start
-    - kind: pubsub.googleapis.com/Subscription
+    - kind: AWS::S3::Bucket
       # highlight-end
       selector:
       ...
@@ -95,7 +95,7 @@ The integration configuration is a YAML file that describes the ETL process to l
 
   ```yaml showLineNumbers
   resources:
-    - kind: pubsub.googleapis.com/Subscription
+    - kind: AWS::S3::Bucket
       # highlight-start
       selector:
         query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
@@ -110,29 +110,30 @@ The integration configuration is a YAML file that describes the ETL process to l
 - The `port` field describes the Port entity to be created from the AWS resource.
   ```yaml showLineNumbers
   resources:
-    - kind: pubsub.googleapis.com/Subscription
+    - kind: AWS::S3::Bucket
       selector:
-        query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+        query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
       # highlight-start
       port:
-      entity:
-        mappings:
-          identifier: '.name'
-          title: '.name'
-          blueprint: '"AWSPubSubSubscription"'
-          properties:
-            location: .location
-            topicMesssageRetentionDuration: ".topicMessageRetentionDuration"
-            pushConfig: ".pushConfig"
-            retainAckedMessages: ".retainAckedMessages"
-         relations:
-            project: ".__project.name"
+        entity:
+          mappings:
+            identifier: .Identifier
+            title: .Identifier
+            blueprint: '"cloudResource"'
+            properties:
+              kind: .__Kind
+              region: .__Region
+              tags: .Properties.Tags
+              arn: .Properties.Arn
+              link: '.Properties | select(.Arn != null) | "https://console.aws.amazon.com/go/view?arn=" + .Arn'
+            relations:
+              account: .__AccountId
         # highlight-end
   ```
   - The `entity` field describes the Port entity to be created from the AWS resource.
     ```yaml showLineNumbers
     resources:
-      - kind: Microsoft.App/containerApps
+      - kind: AWS::S3::Bucket
         selector:
           query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
         port:
@@ -140,16 +141,17 @@ The integration configuration is a YAML file that describes the ETL process to l
         entity:
           mappings:
             # Transform & Load
-            identifier: '.name'
-            title: '.name'
-            blueprint: '"AWSPubSubSubscription"'
+            identifier: .Identifier
+            title: .Identifier
+            blueprint: '"cloudResource"'
             properties:
-              location: .location
-              topicMesssageRetentionDuration: '.topicMessageRetentionDuration'
-              pushConfig: '.pushConfig'
-              retainAckedMessages: '.retainAckedMessages'
-          relations:
-            project: '.__project.name'
+              kind: .__Kind
+              region: .__Region
+              tags: .Properties.Tags
+              arn: .Properties.Arn
+              link: '.Properties | select(.Arn != null) | "https://console.aws.amazon.com/go/view?arn=" + .Arn'
+            relations:
+              account: .__AccountId
             # highlight-end
     ```
 
@@ -171,6 +173,10 @@ This API call enables the integration to retrieve information about all availabl
 #### AWS API: `sts:AssumeRole`
 
 This permission is necessary for multi-account scenarios where the integration needs to access resources in other AWS accounts. By assuming roles in other accounts, the integration can read data and perform actions across multiple AWS accounts seamlessly.
+
+:::tip
+In case your running on an on-premises environment, you need to ensure that the integration has the necessary permissions to access your AWS resources. This can be achieved by creating an [IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with the required permissions and pass the credentials to the integration by using the `OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID` and `OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY` environment variables.
+:::
 
 These permissions are essential for the proper functioning of the integration within your AWS environment. It's important to ensure that these permissions are granted to the integration's identity or service account to avoid any operational issues.
 
