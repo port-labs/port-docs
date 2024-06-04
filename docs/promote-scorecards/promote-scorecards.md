@@ -67,9 +67,11 @@ The levels can be customized according to your organization's standards and with
 
 Here is an example of a few level types that can be defined:
 
-:::note
+:::tip Level Hierarchy 
 The levels are defined in the order of importance, where the first level is the most basic level and the last level is the most advanced.  
-The basic level is the default level for all entities, and thus can't have a rule associated with it.
+The basic level is the default level for all entities.  
+
+If the entity didn't pass any rule, it will be at the `Basic` level, and thus can't have a rule associated with it.
 :::
 
 
