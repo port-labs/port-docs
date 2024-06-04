@@ -1,0 +1,56 @@
+<details>
+<summary> Firewall Blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "gcpFirewall",
+  "description": "This blueprint represents a GCP Firewall in our software catalog",
+  "title": "Firewall",
+  "icon": "GoogelCloud",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string"
+      },
+      "network": {
+        "title": "Network",
+        "type": "string"
+      },
+      "destinationRanges": {
+        "title": "Destination Ranges",
+        "type": "array"
+      },
+      "sourceRanges": {
+        "title": "Source Ranges",
+        "type": "array"
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "integer"
+      },
+      "allowed": {
+        "title": "Allowed",
+        "type": "array"
+      },
+      "denied": {
+        "title": "Denied",
+        "type": "array"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "project": {
+      "target": "gcpProject",
+      "title": "Project",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

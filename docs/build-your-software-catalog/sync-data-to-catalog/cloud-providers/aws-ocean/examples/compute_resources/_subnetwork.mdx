@@ -1,0 +1,52 @@
+<details>
+<summary> Subnetwork Blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "gcpSubnetwork",
+  "description": "This blueprint represents a GCP subnetwork in our software catalog",
+  "title": "Subnetwork",
+  "icon": "GoogleCloud",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string"
+      },
+      "privateIpGoogleAccess": {
+        "title": "Private IP Google Access",
+        "type": "boolean"
+      },
+      "internalIpv6Prefix": {
+        "title": "Internal Ipv6 Prefix",
+        "type": "string"
+      },
+      "externalIpv6Prefix": {
+        "title": "External Ipv6 Prefix",
+        "type": "string"
+      },
+      "ipCidrRange": {
+        "title": "IP CIDR Range",
+        "type": "string"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "project": {
+      "target": "gcpProject",
+      "title": "Project",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

@@ -1,0 +1,83 @@
+<details>
+
+<summary>
+  Mapping Configuration for Autoscaler, Firewall, Subnetwork, Compute Instance
+</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: compute.googleapis.com/Autoscaler
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".id"
+          title:  ".name"
+          blueprint: '"gcpAutoScaler"'
+          properties:
+            location: .location
+            description: ".description"
+            minNumReplicas: ".autoscalingPolicy.minNumReplicas"
+            maxNumReplicas: ".autoscalingPolicy.maxNumReplicas"
+            recommendedSize: ".recommendedSize"
+            target: ".target"
+          relations:
+            project: ".__project.name"
+  - kind: compute.googleapis.com/Firewall
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".id"
+          title:  ".name"
+          blueprint: '"gcpFirewall"'
+          properties:
+            location: .location
+            network: ".network"
+            destinationRanges: ".destinationRanges"
+            sourceRanges: ".sourceRanges"
+            priority: ".priority"
+            allowed: ".allowed"
+            denied: ".denied"
+          relations:
+            project: ".__project.name"
+  - kind: compute.googleapis.com/Subnetwork
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".id"
+          title:  ".name"
+          blueprint: '"gcpSubnetwork"'
+          properties:
+            location: .location
+            privateIpGoogleAccess: ".privateIpGoogleAccess"
+            internalIpv6Prefix: ".internalIpv6Prefix"
+            externalIpv6Prefix: ".externalIpv6Prefix"
+            ipCidrRange: ".ipCidrRange"
+            description: ".description"
+          relations:
+            project: ".__project.name"
+  - kind: compute.googleapis.com/Instance
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: ".id"
+          title:  ".name"
+          blueprint: '"gcpComputeInstance"'
+          properties:
+            location: .location
+            machineType: ".machineType"
+            subnetworks: ".networkInterfaces[].subnetwork"
+            cpuPlatform: ".cpuPlatform"
+            selfLink: ".selfLink"
+          relations:
+            project: ".__project.name"
+```
+
+</details>
