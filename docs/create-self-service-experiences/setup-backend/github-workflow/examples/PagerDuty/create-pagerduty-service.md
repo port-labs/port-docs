@@ -69,11 +69,26 @@ jobs:
               "service": {
                 "name": "${{ github.event.inputs.name }}",
                 "description": "${{ github.event.inputs.description }}",
-                "escalation_policy": ${{ github.event.inputs.escalation_policy }}
+                "status": "active",
+                "escalation_policy": {
+                  "id": "${{ github.event.inputs.escalation_policy }}",
+                  "type": "escalation_policy_reference"
+                  }
+                }
               }
-            } 
-
-      - name: Create a log message
+          
+      - name: Log Create Service Request Failure 
+        if: failure()
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_context).run_id}}
+          logMessage: "Request to create service failed ..."
+          
+      - name: Log Request Success
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -83,17 +98,37 @@ jobs:
           runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
              PagerDuty service created! ✅
-             Requesting for oncalls
+             Requesting for on-calls
     
-      - name: Request for oncalls for escalation_policy
+      - name: Request for oncalls for Escalation Policy
         id: fetch_oncalls
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.pagerduty.com/oncalls?include[]=users&escalation_policy_ids[]=${{ fromJson(github.event.inputs.escalation_policy).id }}'
+          url: 'https://api.pagerduty.com/oncalls?include[]=users&escalation_policy_ids[]=${{ inputs.escalation_policy }}'
           method: 'GET'
           customHeaders: '{"Content-Type": "application/json", "Accept": "application/json", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}"}'
 
-      - name: Create a log message
+      - name: Extract User Emails
+        if: steps.fetch_oncalls.outcome == 'success'
+        id: extract_user_emails
+        run: |
+          echo "Extracting user emails..."
+          EMAILS=$(echo '${{ steps.fetch_oncalls.outputs.response }}' | jq -c '[.oncalls[].user.email]')
+          echo "Extracted emails: $EMAILS"
+          echo "user_emails=${EMAILS}" >> $GITHUB_ENV
+
+      - name: Log Fetch Oncalls Request Failure
+        if: steps.fetch_oncalls.outcome == 'failure'
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_context).run_id}}
+          logMessage: Failed to fetch on-calls ❌
+          
+      - name: Log Before Upserting Entity
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -108,24 +143,23 @@ jobs:
         uses: port-labs/port-github-action@v1
         with:
           identifier: "${{ fromJson(steps.create_service_request.outputs.response).service.id }}" 
-          title: "${{ fromJson(steps.create_service_request.outputs.response).service.summary }}" 
-          team: "[]"
+          title: "${{ fromJson(steps.create_service_request.outputs.response).service.summary }}"
           icon: pagerduty
-          blueprint: ${{fromJson(inputs.port_context).blueprint}}
+          blueprint: "${{fromJson(inputs.port_context).blueprint}}"
           properties: |-
             {
               "status": "${{ fromJson(steps.create_service_request.outputs.response).service.status }}",
               "url": "${{ fromJson(steps.create_service_request.outputs.response).service.html_url }}",
-              "oncall": "${{ fromJson(steps.fetch_oncalls).oncalls }}"
+              "oncall": ${{ env.user_emails }}
             }
-          relations: "{}"
+          relations: "${{ toJson(fromJson(inputs.port_context).relations) }}"
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{fromJson(inputs.port_context).run_id}}
 
-      - name: Create a log message
+      - name: Log After Upserting Entity
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -134,7 +168,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_context).run_id}}
           logMessage: |
-              Upsert was successful ✅
+              Upserting was successful ✅
 ```
 </details>
 
@@ -175,7 +209,7 @@ Create a new self service action using the following JSON configuration.
           "description": "PagerDuty Escalation Policy ID to apply",
           "icon": "pagerduty",
           "type": "string"
-        },
+        }
       },
       "required": [
         "name",
@@ -195,13 +229,12 @@ Create a new self service action using the following JSON configuration.
     "repo": "<GITHUB_REPO>",
     "workflow": "create-a-service.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"name\")) then \"name\" else null end}}": "{{.inputs.\"name\"}}",
-      "{{if (.inputs | has(\"description\")) then \"description\" else null end}}": "{{.inputs.\"description\"}}",
-      "{{if (.inputs | has(\"escalation_policy\")) then \"escalation_policy\" else null end}}": "{{.inputs.\"escalation_policy\"}}",
+      "name": "{{.inputs.\"name\"}}",
+      "description": "{{.inputs.\"description\"}}",
+      "escalation_policy": "{{.inputs.\"escalation_policy\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity}}",
+        "entity": "{{.entity.identifier}}",
         "run_id": "{{.run.id}}"
       }
     },
