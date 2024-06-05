@@ -1,83 +1,104 @@
 <details>
 
-<summary>
-  Mapping Configuration for Autoscaler, Firewall, Subnetwork, Compute Instance
-</summary>
+<summary>Mapping Configuration for ECS Service, AppRunner, Lambda, SQS</summary>
 
 ```yaml showLineNumbers
 resources:
-  - kind: compute.googleapis.com/Autoscaler
-    selector:
-      query: "true"
+  - kind: 'AWS::ECS::Service'
     port:
       entity:
         mappings:
-          identifier: ".id"
-          title:  ".name"
-          blueprint: '"gcpAutoScaler"'
+          identifier: '.Identifier'
+          title: '.Identifier'
+          blueprint: 'ecsService'
           properties:
-            location: .location
-            description: ".description"
-            minNumReplicas: ".autoscalingPolicy.minNumReplicas"
-            maxNumReplicas: ".autoscalingPolicy.maxNumReplicas"
-            recommendedSize: ".recommendedSize"
-            target: ".target"
+            kind: '.__Kind'
+            region: '.__Region'
+            link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
+            desiredCount: '.Properties.DesiredCount'
+            launchType: '.Properties.LaunchType'
+            cluster: ".Properties.Cluster | split('/')[-1]"
+            schedulingStrategy: '.Properties.SchedulingStrategy'
+            loadBalancers: '.Properties.LoadBalancers'
+            securityGroups: '.Properties.NetworkConfiguration.AwsvpcConfiguration.SecurityGroups'
+            subnets: '.Properties.NetworkConfiguration.AwsvpcConfiguration.Subnets'
+            taskDefinition: ".Properties.TaskDefinition | split('/')[-1]"
+            iamRole: ".Role | if . == null then null else 'https://console.aws.amazon.com/go/view?arn=' + . end"
+            arn: '.Properties.Arn'
           relations:
-            project: ".__project.name"
-  - kind: compute.googleapis.com/Firewall
-    selector:
-      query: "true"
+            account: '.__AccountId'
+  - kind: 'AWS::AppRunner::Service'
     port:
       entity:
         mappings:
-          identifier: ".id"
-          title:  ".name"
-          blueprint: '"gcpFirewall"'
+          identifier: '.Identifier'
+          title: '.Identifier'
+          blueprint: 'apprunner'
           properties:
-            location: .location
-            network: ".network"
-            destinationRanges: ".destinationRanges"
-            sourceRanges: ".sourceRanges"
-            priority: ".priority"
-            allowed: ".allowed"
-            denied: ".denied"
+            kind: '.__Kind'
+            region: '.__Region'
+            link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
+            status: '.Properties.Status'
+            memory: '.Properties.InstanceConfiguration.Memory'
+            cpu: '.Properties.InstanceConfiguration.Cpu'
+            egressType: '.Properties.NetworkConfiguration.EgressConfiguration.EgressType'
+            isPubliclyAccessible: '.Properties.NetworkConfiguration.IngressConfiguration.IsPubliclyAccessible'
+            observabilityEnabled: '.Properties.ObservabilityConfiguration.ObservabilityEnabled'
+            autoDeploymentsEnabled: '.Properties.SourceConfiguration.AutoDeploymentsEnabled'
+            healthCheckConfiguration: '.Properties.HealthCheckConfiguration'
+            imageConfiguration: '.Properties.SourceConfiguration.ImageRepository.ImageConfiguration'
+            imageIdentifier: '.Properties.SourceConfiguration.ImageRepository.ImageIdentifier'
+            serviceUrl: "'https://' + .Properties.ServiceUrl"
+            iamRole: ".Properties.InstanceConfiguration.InstanceRoleArn | if . == null then null else 'https://console.aws.amazon.com/go/view?arn=' + . end"
+            arn: '.Properties.Arn'
           relations:
-            project: ".__project.name"
-  - kind: compute.googleapis.com/Subnetwork
-    selector:
-      query: "true"
+            account: '.__AccountId'
+  - kind: 'AWS::Lambda::Function'
     port:
       entity:
         mappings:
-          identifier: ".id"
-          title:  ".name"
-          blueprint: '"gcpSubnetwork"'
+          identifier: '.Identifier'
+          title: '.Properties.FunctionName'
+          blueprint: 'lambda'
           properties:
-            location: .location
-            privateIpGoogleAccess: ".privateIpGoogleAccess"
-            internalIpv6Prefix: ".internalIpv6Prefix"
-            externalIpv6Prefix: ".externalIpv6Prefix"
-            ipCidrRange: ".ipCidrRange"
-            description: ".description"
+            kind: '.__Kind'
+            region: '.__Region'
+            link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
+            description: '.Properties.Description'
+            memorySize: '.Properties.MemorySize'
+            ephemeralStorageSize: '.Properties.EphemeralStorage.Size'
+            timeout: '.Properties.Timeout'
+            runtime: '.Properties.Runtime'
+            packageType: '.Properties.PackageType'
+            environment: '.Properties.Environment'
+            architectures: '.Properties.Architectures'
+            layers: '.Properties.Layers'
+            tags: '.Properties.Tags'
+            iamRole: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Role"
+            arn: '.Properties.Arn'
           relations:
-            project: ".__project.name"
-  - kind: compute.googleapis.com/Instance
-    selector:
-      query: "true"
+            account: '.__AccountId'
+  - kind: 'AWS::SQS::Queue'
     port:
       entity:
         mappings:
-          identifier: ".id"
-          title:  ".name"
-          blueprint: '"gcpComputeInstance"'
+          identifier: '.Identifier'
+          title: '.Properties.QueueName'
+          blueprint: 'sqs'
           properties:
-            location: .location
-            machineType: ".machineType"
-            subnetworks: ".networkInterfaces[].subnetwork"
-            cpuPlatform: ".cpuPlatform"
-            selfLink: ".selfLink"
+            kind: '.__Kind'
+            region: '.__Region'
+            link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
+            fifoQueue: '.Properties.FifoQueue // false'
+            visibilityTimeout: '.Properties.VisibilityTimeout'
+            messageRetentionPeriod: '.Properties.MessageRetentionPeriod'
+            maximumMessageSize: '.Properties.MaximumMessageSize'
+            receiveMessageWaitTimeSeconds: '.Properties.ReceiveMessageWaitTimeSeconds'
+            delaySeconds: '.Properties.DelaySeconds'
+            tags: '.Properties.Tags'
+            arn: '.Properties.Arn'
           relations:
-            project: ".__project.name"
+            account: '.__AccountId'
 ```
 
 </details>
