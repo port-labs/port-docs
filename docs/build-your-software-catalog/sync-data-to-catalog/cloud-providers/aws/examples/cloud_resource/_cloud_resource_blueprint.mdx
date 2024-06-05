@@ -4,36 +4,51 @@
 
 ```json showLineNumbers
 {
-    "identifier": "gcpCloudResource",
-    "title": "Cloud Resource",
-    "icon": "GoogleCloud",
-    "schema": {
-      "properties": {
-        "type": {
-          "icon": "Service",
-          "title": "Type",
-          "type": "string"
-        },
-        "location": {
-          "icon": "Home",
-          "title": "Location",
-          "type": "string"
-        }
+  "identifier": "cloudResource",
+  "title": "AWS Cloud Resource",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "kind": {
+        "title": "Kind",
+        "type": "string"
       },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {
-      "project": {
-        "target": "gcpProject",
-        "title": "Project",
-        "required": false,
-        "many": false
+      "tags": {
+        "items": {
+          "type": "object"
+        },
+        "type": "array",
+        "title": "Tags"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "link": {
+        "type": "string",
+        "title": "Link",
+        "icon": "AWS",
+        "format": "url"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
       }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
     }
   }
+}
 ```
 
 </details>

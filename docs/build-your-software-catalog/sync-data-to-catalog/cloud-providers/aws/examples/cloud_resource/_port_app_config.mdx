@@ -4,48 +4,63 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: container.googleapis.com/Cluster
+  - kind: AWS::S3::Bucket
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
-          identifier: ".name"
-          title: '.name | split("/") | last'
-          blueprint: '"gcpCloudResource"'
+          identifier: .Identifier
+          title: .Identifier
+          blueprint: '"cloudResource"'
           properties:
-            type: '.name | split("/") | .[-2]'
-            location: ".location"
+            kind: .__Kind
+            region: .__Region
+            tags: .Properties.Tags
+            arn: .Properties.Arn
+            link: >-
+              .Properties | select(.Arn != null) |
+              "https://console.aws.amazon.com/go/view?arn=" + .Arn
           relations:
-            project: ".__project.name"
-  - kind: cloudfunctions.googleapis.com/CloudFunction
+            account: .__AccountId
+  - kind: AWS::EC2::Instance
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
-          identifier: ".name"
-          title: '.name | split("/") | last'
-          blueprint: '"gcpCloudResource"'
+          identifier: .Identifier
+          title: .Identifier
+          blueprint: '"cloudResource"'
           properties:
-            type: '.name | split("/") | .[-2]'
-            location: ".location"
+            kind: .__Kind
+            region: .__Region
+            tags: .Properties.Tags
+            arn: .Properties.Arn
+            link: >-
+              .Properties | select(.Arn != null) |
+              "https://console.aws.amazon.com/go/view?arn=" + .Arn
           relations:
-            project: ".__project.name"
-  - kind: pubsub.googleapis.com/Topic
+            account: .__AccountId
+  - kind: AWS::ECS::Cluster
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
-          identifier: ".name"
-          title: ".name | split("/") | last"
-          blueprint: '"gcpCloudResource"'
+          identifier: .Identifier
+          title: .Identifier
+          blueprint: '"cloudResource"'
           properties:
-            type: '.name | split("/") | .[-2]'
-            location: ".location"
+            kind: .__Kind
+            region: .__Region
+            tags: .Properties.Tags
+            arn: .Properties.Arn
+            link: >-
+              .Properties | select(.Arn != null) |
+              "https://console.aws.amazon.com/go/view?arn=" + .Arn
           relations:
-            project: ".__project.name"
+            account: .__AccountId
 ```
 
 </details>
