@@ -1,11 +1,11 @@
 ---
 id: patch-a-team
 title: "Patch a team"
-description: "Patch a team"
+description: "This route allows you to patch a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
 sidebar_label: "Patch a team"
 hide_title: true
 hide_table_of_contents: true
-api: eJx1VE1v00AQ/SvRnEAKccLRQkilIIG4RKWcQg8Texpva3uX3XFosPzfmdl14tCmiWSvvfPx3pu37oFxFyDfwC1hE+BuDp5+dxT4ky0PkPdQ2JapZV2ic7UpkI1ts4dgW30Xiooa1BUfHEEOdvtABcMcnLeOPBsKuttiQ2dRgb1pdzDMoQvkw9kOeo8HSTdMTbiQISklhcIbpzimgM0xYg5tV9dwN8Sf4EAvvTl22VwAPEExUk7CudIaEW+6JU2MpxJy9h0NolKgovOGD7HmltCTVwydK5Ep5yTmEOUMzrYhqfB+udTbfwTgM91jV/PsZox8yRHWyEU1w5nWFThCp7JlAlso2gg6h2y/ymLrrFfgAyhOvz9S73wtQRWzC3mWoTOLwLt3y9ViR+ys54WxcM7th0qVgB8ZTmNy5jsdJqGuOoHkzd/oDhi1rAhLyVI+6pebyVlfnrBxNU3OmKY3GuI0z7s4mXsbmxvWJFgL2tnV+puEK7sk0mqx1Ck6G7jB9qz0M/Uu2geYnjhzNQpwdaVK1Y+6bmC/krw01DnksazoVEkn3e37LQb66eth0NdC0qsvZLlHb3CrkEX+0gRdy9zusQ70AsjppMGbm9Fvb2fa9xLA4xhancEe606fZPkoQxltO6hy4wi0f9q6Tl3e3WqBKfXF2VYjnHy2vrq9/irR2/Gj0NhSkzz+0cMh1xx+yV8ebKQTPRPf91Bju+twp/GpsNoBOxX23E2P0U3jQuFeZPjcZomTXof5KykfxCcz8erHU3jaeTVhlOwYrXrrx+QfwQ+8jg==
+api: eJzlVcFu2zAM/RVBl7WAE7c7GsWArhuwYYcFXXbKcqBtJlZrW54kJ80C//tIyU68NBmw81rAliWKenx8T9nLHG1mVOOUrmUi54WywujWoYCy1FsrdroVTosGXFYIEA6hemNFjg5UaafCb8igFimK1mLOsW2TAyVwBQ7hNVQY8bqxkYA6F6NTp3epid/5x1yLEsHUotKGAKSEw2egTVmB2bPwE5R2keusrbB2wBmWV4VzjU3imKbtdI2u0cZNlY6t1ROTQhbzY6I3aDYKt/H1VEbSwdrKZCHnfIBcRtLgzxate6/znUz2MtO1oxN4CE1TqsyfFT9ZJmovLSGqgEdu1yBRp9MnzBwlboxu0DiFlle59FGUdUbVa4o65R1FjVtPlNCrA3eBHNlF0pM3SgTGwO5Vnq81bTeBP5xU1CMBeW7QWrSc12fhHtEsv1x/rj8rNHOrylIwVUbloYn4oqwj1H63KOmjhxVJ5bCyr8vruhNgQ8BiiFheYmA0e44I/0ccgyGmnKdkcaYZAw5CyMlJvQWhDb0Ir7Pnn7Dvxb+F2h0ccCicxaIM5jJxpsWOyrGYtUa5nQeUkozRcL3BDIkLKuu8zmyjaxvk8fbmhl9/YvmAK2hLJx77SM8nlVvoPBSTcTW+qETGm9vYZ4/3jL+TDMVsBmpaU1LQYBBo1Mgfcoz7G3MYQA3oj2Jr1BfcHRm8bwmLUb+8JWRPcoGQ0y7GyiZ5PNrp4wtUTYlHOxxt0Mv6si7GnVxpj0k5ziVnVIS4n32mLFxtCL+d3nBso62roB6dOBtdYKfNH5n9v7oBQ3Mdvri4KYGayPcM62Xfi2shN7cc6MUbycRzSS0qiF5e3e9TsPjdlF3H09Rww/qn4QaMgpT7RBrMleUxiXcFpcW/sH/12PvqWvyjIc8WM8i3Zu1uoGz5i4bPJOb+HuiWFNdLl7GGpYeAaDLnBMetr34I2EAHY87u5w+fKDrtf0EqnfMmA1u+MOiZyB/0Tx/al+695uf3soR63cKa40NithG03ISxC5+9C/sBwz1b4ak9Q0387KILW+7ISII8/u4QHlYubugpG6KZ7yWB/g2zidjm
 sidebar_class_name: "patch api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Patch a team"}
 >
-  Patch a team
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"patch"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Patch a team
+This route allows you to patch a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
   style={{"marginBottom":"1rem"}}
@@ -61,7 +69,7 @@ Patch a team
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"name","required":true}}
+        param={{"schema":{"type":"string"},"in":"path","name":"name","description":"The name of the team you want to patch.<br/>","required":true}}
       >
         
       </ParamsItem>
@@ -102,7 +110,7 @@ Patch a team
           required={false}
           schemaName={"string"}
           qualifierMessage={undefined}
-          schema={{"type":"string"}}
+          schema={{"type":"string","description":"The new name of the team.<br/>"}}
         >
           
         </SchemaItem><SchemaItem
@@ -111,16 +119,16 @@ Patch a team
           required={false}
           schemaName={"string[]"}
           qualifierMessage={undefined}
-          schema={{"type":"array","items":{"type":"string"}}}
+          schema={{"type":"array","description":"One or more e-mail addresses of users to add to the new team. This will override the existing user list.<br/>","items":{"type":"string"}}}
         >
           
         </SchemaItem><SchemaItem
           collapsible={false}
           name={"description"}
           required={false}
-          schemaName={["string","null"]}
+          schemaName={["string"]}
           qualifierMessage={undefined}
-          schema={{"type":["string","null"]}}
+          schema={{"type":["string"],"description":"The new description of the team.<br/>"}}
         >
           
         </SchemaItem>

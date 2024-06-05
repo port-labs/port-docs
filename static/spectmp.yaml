@@ -2953,6 +2953,7 @@ paths:
                     type: string
                   expiresIn:
                     type: number
+                    description: The number of seconds until the access token expires
                   tokenType:
                     type: string
                 additionalProperties: false
@@ -3199,7 +3200,49 @@ paths:
             - 'read:entities'
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>A blueprint with the provided `identifier` was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The provided data does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   '/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}':
     patch:
       summary: Patch an entity
@@ -3385,7 +3428,53 @@ paths:
             - 'read:entities'
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>An entity with the provided `identifier` was not found</td>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>A blueprint with the provided `identifier` was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The provided data does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
     delete:
       summary: Delete an entity
       description: This route allows you to delete a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
@@ -7967,6 +8056,507 @@ paths:
       security:
         - bearer:
             - 'delete:integrations'
+      responses:
+        '200':
+          description: Default Response
+  /v1/webhooks:
+    post:
+      summary: Create a webhook
+      description: This route allows you to create a webhook in your Port organization. Webhooks provide a way to ingest data from an external tool/platform into Port. You can also create a webhook via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      tags:
+        - Webhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  description: A unique identifier for the webhook.<br/>
+                  maxLength: 30
+                title:
+                  type: string
+                  description: The title of the webhook, which will be displayed in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
+                  maxLength: 30
+                description:
+                  type: string
+                  description: A description for the webhook.<br/>
+                  maxLength: 200
+                icon:
+                  type: string
+                  description: The icon of the webhook.<br/>
+                mappings:
+                  description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      blueprint:
+                        type: string
+                        description: The identifier of the blueprint to map the data into.<br/>
+                      filter:
+                        type: string
+                        description: A `jq` query used to filter exactly which payloads sent to the webhook are processed. If set to `"true"`, all payloads will be processed.<br/>
+                      itemsToParse:
+                        type: string
+                        description: A `jq` query that evaluates to an array of items, used to create multiple entities from a single webhook event.<br/>
+                      entity:
+                        description: An object defining how to map the data from the webhook payload into Port entities.<br/>
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            description: A `jq` expression used to get data from the webhook payload, to be used as an identifier for the entity.<br/>
+                          title:
+                            type: string
+                            description: A `jq` expression used to get data from the webhook payload, to be used as the title of the entity.<br/>
+                          icon:
+                            type: string
+                            description: The icon of the entity.<br/>
+                          team:
+                            type: string
+                            description: The team the entity belongs to.<br/>
+                          properties:
+                            type: object
+                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            propertyNames:
+                              type: string
+                          relations:
+                            type: object
+                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            propertyNames:
+                              type: string
+                        additionalProperties: false
+                        required:
+                          - identifier
+                    additionalProperties: false
+                    required:
+                      - blueprint
+                      - entity
+                enabled:
+                  type: boolean
+                  description: Determines whether the webhook is active or not. If `false`, any incoming events will be dropped.<br/>
+                  default: true
+                security:
+                  type: object
+                  description: The security configuration of the webhook, used to tell Port how to verify the hashed signature sent with incoming requests.<br/>For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).<br/>
+                  properties:
+                    secret:
+                      type: string
+                    signatureHeaderName:
+                      type: string
+                    signatureAlgorithm:
+                      type: string
+                      enum:
+                        - sha1
+                        - sha256
+                        - plain
+                    signaturePrefix:
+                      type: string
+                    requestIdentifierPath:
+                      type: string
+                  additionalProperties: false
+                integrationType:
+                  type: string
+                  enum:
+                    - custom
+                    # - template
+              additionalProperties: false
+              required:
+                - title
+                - enabled
+        required: true
+      security:
+        - bearer:
+            - 'create:integrations'
+      responses:
+        '200':
+          description: Default Response
+    get:
+      summary: Get all webhooks
+      description: This route allows you to fetch all webhooks configured in your Port organization. You can also see them in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      tags:
+        - Webhook
+      security:
+        - bearer:
+            - 'read:integrations'
+      responses:
+        '200':
+          description: Default Response
+  '/v1/webhooks/{identifier}':
+    patch:
+      summary: Patch a webhook
+      description: This route allows you to modify a webhook in your Port organization. You can also modify it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      tags:
+        - Webhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  description: The new identifier of the webhook.<br/>
+                  maxLength: 30
+                title:
+                  type: string
+                  description: The new title of the webhook, which will be displayed in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
+                  maxLength: 30
+                description:
+                  type: string
+                  description: A new description for the webhook.<br/>
+                  maxLength: 200
+                icon:
+                  type: string
+                  description: The new icon of the webhook.<br/>
+                mappings:
+                  type: array
+                  description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                  items:
+                    type: object
+                    properties:
+                      blueprint:
+                        type: string
+                        description: The identifier of the blueprint to map the data into.<br/>
+                      filter:
+                        type: string
+                        description: A `jq` query used to filter exactly which payloads sent to the webhook are processed. If set to `"true"`, all payloads will be processed.<br/>
+                      itemsToParse:
+                        type: string
+                        description: A `jq` query that evaluates to an array of items, used to create multiple entities from a single webhook event.<br/>
+                      entity:
+                        type: object
+                        description: An object defining how to map the data from the webhook payload into Port entities.<br/>
+                        properties:
+                          identifier:
+                            type: string
+                            description: A `jq` expression used to get data from the webhook payload, to be used as an identifier for the entity.<br/>
+                          title:
+                            type: string
+                            description: A `jq` expression used to get data from the webhook payload, to be used as the title of the entity.<br/>
+                          icon:
+                            type: string
+                            description: The icon of the entity.<br/>
+                          team:
+                            type: string
+                            description: The team the entity belongs to.<br/>
+                          properties:
+                            type: object
+                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            propertyNames:
+                              type: string
+                          relations:
+                            type: object
+                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            propertyNames:
+                              type: string
+                        additionalProperties: false
+                        required:
+                          - identifier
+                    additionalProperties: false
+                    required:
+                      - blueprint
+                      - entity
+                enabled:
+                  type: boolean
+                  description: Determines whether the webhook is active or not. If `false`, any incoming events will be dropped.<br/>
+                  default: true
+                security:
+                  type: object
+                  description: The security configuration of the webhook, used to tell Port how to verify the hashed signature sent with incoming requests.<br/>For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).<br/>
+                  properties:
+                    secret:
+                      type: string
+                    signatureHeaderName:
+                      type: string
+                    signatureAlgorithm:
+                      type: string
+                      enum:
+                        - sha1
+                        - sha256
+                        - plain
+                    signaturePrefix:
+                      type: string
+                    requestIdentifierPath:
+                      type: string
+                  additionalProperties: false
+                integrationType:
+                  type: string
+                  enum:
+                    - custom
+                    # - template
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The identifier of the webhook you want to modify.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'update:integrations'
+      responses:
+        '200':
+          description: Default Response
+    put:
+      summary: Change a webhook
+      description: This route allows you to modify a webhook in your Port organization. You can also modify it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      tags:
+        - Webhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  description: The new identifier of the webhook.<br/>
+                  maxLength: 30
+                title:
+                  type: string
+                  description: The new title of the webhook, which will be displayed in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>
+                  maxLength: 30
+                description:
+                  type: string
+                  description: A new description for the webhook.<br/>
+                  maxLength: 200
+                icon:
+                  type: string
+                  description: The new icon of the webhook.<br/>
+                mappings:
+                  type: array
+                  description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                  items:
+                    type: object
+                    properties:
+                      blueprint:
+                        type: string
+                        description: The identifier of the blueprint to map the data into.<br/>
+                      filter:
+                        type: string
+                        description: A `jq` query used to filter exactly which payloads sent to the webhook are processed. If set to `"true"`, all payloads will be processed.<br/>
+                      itemsToParse:
+                        type: string
+                        description: A `jq` query that evaluates to an array of items, used to create multiple entities from a single webhook event.<br/>
+                      entity:
+                        type: object
+                        description: An object defining how to map the data from the webhook payload into Port entities.<br/>
+                        properties:
+                          identifier:
+                            type: string
+                            description: A `jq` expression used to get data from the webhook payload, to be used as an identifier for the entity.<br/>
+                          title:
+                            type: string
+                            description: A `jq` expression used to get data from the webhook payload, to be used as the title of the entity.<br/>
+                          icon:
+                            type: string
+                            description: The icon of the entity.<br/>
+                          team:
+                            type: string
+                            description: The team the entity belongs to.<br/>
+                          properties:
+                            type: object
+                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            propertyNames:
+                              type: string
+                          relations:
+                            type: object
+                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            propertyNames:
+                              type: string
+                        additionalProperties: false
+                        required:
+                          - identifier
+                    additionalProperties: false
+                    required:
+                      - blueprint
+                      - entity
+                enabled:
+                  type: boolean
+                  description: Determines whether the webhook is active or not. If `false`, any incoming events will be dropped.<br/>
+                  default: true
+                security:
+                  type: object
+                  description: The security configuration of the webhook, used to tell Port how to verify the hashed signature sent with incoming requests.<br/>For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).<br/>
+                  properties:
+                    secret:
+                      type: string
+                    signatureHeaderName:
+                      type: string
+                    signatureAlgorithm:
+                      type: string
+                      enum:
+                        - sha1
+                        - sha256
+                        - plain
+                    signaturePrefix:
+                      type: string
+                    requestIdentifierPath:
+                      type: string
+                  additionalProperties: false
+                integrationType:
+                  type: string
+                  enum:
+                    - custom
+                    # - template
+              additionalProperties: false
+              required:
+                - title
+                - enabled
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The identifier of the webhook you want to modify.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'update:integrations'
+      responses:
+        '200':
+          description: Default Response
+    get:
+      summary: Get a webhook
+      description: This route allows you to fetch a specific webhook in your Port organization. You can also see it in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      tags:
+        - Webhook
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The identifier of the webhook you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'read:integrations'
+      responses:
+        '200':
+          description: Default Response
+    delete:
+      summary: Delete a webhook
+      description: This route allows you to delete a webhook in your Port organization. You can also delete it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      tags:
+        - Webhook
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: identifier
+          description: The identifier of the webhook you want to delete.<br/>
+          required: true
+      security:
+        - bearer:
+            - 'delete:integrations'
+      responses:
+        '200':
+          description: Default Response
+  /v1/migrations:
+    get:
+      summary: Get all migrations
+      description: This route allows you to fetch all migrations (both past and present) in your Port organization.<br/><br/>The call will perform a logical `AND` operation on the query parameters below, and return all migrations that match the criteria.
+      tags:
+        - Migrations
+      parameters:
+        - schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - COMPLETED
+                - RUNNING
+                - PENDING
+                - INITIALIZING
+                - FAILURE
+                - CANCELLED
+                - PENDING_CANCELLATION
+          in: query
+          name: status
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: actor
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: blueprint
+          description: The identifier of the blueprint associated with the migration.<br/>
+          required: false
+      security:
+        - bearer:
+            - 'read:blueprints'
+      responses:
+        '200':
+          description: Default Response
+    post:
+      summary: Create a migration
+      description: This route allows you to create a migration in your Port organization.<br/><br/>You can use this to migrate data from one blueprint to another, or to convert the data type of a property in a blueprint.
+      tags:
+        - Migrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sourceBlueprint:
+                  type: string
+                  description: The identifier of the blueprint from which the migration will be performed.<br/>
+                mapping:
+                  type: object
+                  description: The definition used to map the data from the source blueprint into the target blueprint.
+                  properties:
+                    blueprint:
+                      type: string
+                      description: The identifier of the target blueprint.<br/>
+                    filter:
+                      type: string
+                      description: An optional set of [conditions](https://docs.getport.io/promote-scorecards/#conditions) to filter the entities that will be migrated.<br/>
+                    itemsToParse:
+                      type: string
+                      description: A `jq` query that evaluates to an array of items, used to create multiple entities at once. See more information [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#create-multiple-entities-from-an-array-api-object).<br/>
+                    entity:
+                      type: object
+                      properties:
+                        identifier:
+                          type: string
+                          description: A `jq` expression used to get data from the source blueprint, to be used as an identifier for the entity.<br/>
+                        title:
+                          type: string
+                          description: A `jq` expression used to get data from the source blueprint, to be used as the title of the entity.<br/>
+                        icon:
+                          type: string
+                          description: The icon of the entity.<br/>
+                        team:
+                          type: string
+                          description: The team the entity belongs to.<br/>
+                        properties:
+                          type: object
+                          description: An object containing the properties of the entity and their values, in `"key":"value"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>
+                          additionalProperties:
+                            type: string
+                        relations:
+                          type: object
+                          description: An object containing the relations of the entity and their values, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>
+                          additionalProperties:
+                            type: string
+                  required:
+                    - entity
+              required:
+                - sourceBlueprint
+                - mapping
+              additionalProperties: false
+        required: true
+      security:
+        - bearer: []
       responses:
         '200':
           description: Default Response

@@ -1,11 +1,11 @@
 ---
 id: delete-a-blueprint
 title: "Delete a blueprint"
-description: "Delete a blueprint"
+description: "This route allows you to delete a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/)."
 sidebar_label: "Delete a blueprint"
 hide_title: true
 hide_table_of_contents: true
-api: eJyNVE2Pm0AM/StoTq2UhqRHVFXKanNYtYeoH6coqgw4YTYTZnbGRE0R/702EEK2VNoLyTB+9vPzM7UiOASVbNWDqdB5XVJQu5ly4OGEhF7uahWyAk+gklrRxaFKVGqtQShVM1O65PNLhf6iZqpkFB9zNAz+BRlpWwZ+7/Gl0h5zlezBBGxmEzkDcfnDkNIBFbeMOseS9F6jv8tGvsKG+QbMKq/p0rJNETzHJdudXHkMjklgkFIfFwv5yTFkXjthx7kfW7Z5FKoswxD2lTGXOZfJbElcVQDgnNEZCCB+DoIaN/C2dH2bNn3GjPjsvHXoSXfM7FGeWFYnJi5t7RpWAvJcS1owm1F0q+FYhq3AGdAIZopNBFF6HTCX5tEWNh8GJWRE7UTF52U8BIa4vsneKFHZn6+WqLzh+ILIhSSOwel5oMOHxXJ+QHLW01xbNZ7Md1Gra/U6n2HyjP6CI/usKqbn9Z9Wb9X7oUDIGdW0/tjbFq7JSPyG60WrzROHCr+u8eV8IV5yNtAJ2oH12ScVuRNtIEb4m2JnQLdOb1uue6m26rxk3E0sPiQjl3LrBZeWwLpOIeBPb5pGXne7IhrmOkBqhq2YqSOrMLE9Z+AqfNEKegavBTWd4VUfg4XVu2+9W95HNy/e93edRnkZ17yyGvXW7Di6n4ew6AJWbHdHI+g/SyP0B+s9rr+uf6w5HCrRc2yGY2uG/o8UmGT22iUdC3nK52US8olNErHVPg/h3c1/AX2TgwbSAy/ZXxE9xkg=
+api: eJztVE1v2zAM/SuCTi1gx+2ORlGgRXsotkOxZacgWGWZjoUqlitKyVLD/32U7dhulw0YBuy0iz8kfrzHR7LhOaC0qnbKVDzly1Ihs8Y7YEJrs0d2MJ45w3LQEA4Z1iBVoSTLtIfaqsoxVQUryx6NdUxIaXzlFleZTa67x9IwDcJWbGssRcgo+uSMEZMlyGcWTl0JbJUb6bdQOREgrc9K52pMk4SOcbEBV1OShTJJ5pXO45A3RlO4vbAQS+GENptEenRmq14hpgywsV0oTKSpCrXxZJiTYbw1RCpBcL6ORzzJ+YJH3IkN8nTFb0eYfB3xWlixpSrYcNdwJOBbwdOGu0MNVLzMGCJa8TbiKhTzxYM9ULSKvOi3L+E3ITs0dP629A8Fe3LWw1MUSs8QdBEj2J2SVLTehwlEI5VwkLO9ciUVjOSahNgrcsxgECsnc7YHrXstKKGFF68s5DwthEZooxMk0FGozcihFq6cKKichCH1wf4Ef0naTdfMFJ2aE7bQR3tBH2MznYAV+LdUaQTprXKHrs4ZNQ8lTFfrcGUBayoFYMD84eIivN4iuRvYo5cSEAuv9WHBW2JE4pUmH6XgUU8v5cnuMplaMmkmIi0PaOzuKLq3muyPTSlqNetJPof+JRS2R3kkMNaY3D7CrDNuPOGy6rXrUz5UvgSRk1fbKVGYzl05Hey7Qbt5fCDTAKynfbm4CKrVBt2WmpDMh+h3x9EdGb4Xr+E0Go4o/98A4wbolXLw3SW1Fqqb6k78ZmiaFd9dkuHEg37S2YBQL5SkRTBsmkwgfLW6bcNxvxdCN+UKRabHgfyNLP9gO5yk/Ex9emJ17QSFpYuu5XfCqkDjDymdfR7m/pz9xfI4ifo4Z9VhjvXIZiZSu56vhbv7T/fLe7ITPig8n9fnbl6Hj8DzZIr3g9znC8+wa0+6XNEcM9oG16N5f/NLh2EvjGSqQKJtfwCHTrpW
 sidebar_class_name: "delete api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Delete a blueprint"}
 >
-  Delete a blueprint
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"delete"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Delete a blueprint
+This route allows you to delete a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
   style={{"marginBottom":"1rem"}}
@@ -61,7 +69,7 @@ Delete a blueprint
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"identifier","required":true}}
+        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the blueprint you want to delete.<br/>","required":true}}
       >
         
       </ParamsItem>
@@ -85,7 +93,7 @@ Delete a blueprint
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"boolean"},"in":"query","name":"delete_actions","required":false}}
+        param={{"schema":{"type":"boolean"},"in":"query","name":"delete_actions","description":"If `true`, all self-service actions associated with this blueprint will be deleted as well.<br/>","required":false}}
       >
         
       </ParamsItem>
@@ -108,67 +116,7 @@ Delete a blueprint
           
           
         </div><div>
-          <MimeTabs
-            className={"openapi-tabs__mime"}
-            schemaType={"response"}
-          >
-            <TabItem
-              label={"application/json"}
-              value={"application/json"}
-            >
-              <SchemaTabs
-                className={"openapi-tabs__schema"}
-              >
-                <TabItem
-                  label={"Schema"}
-                  value={"Schema"}
-                >
-                  <details
-                    style={{}}
-                    className={"openapi-markdown__details response"}
-                    data-collapsed={false}
-                    open={true}
-                  >
-                    <summary
-                      style={{}}
-                      className={"openapi-markdown__details-summary-response"}
-                    >
-                      <strong>
-                        Schema
-                      </strong>
-                    </summary><div
-                      style={{"textAlign":"left","marginLeft":"1rem"}}
-                    >
-                      
-                    </div><ul
-                      style={{"marginLeft":"1rem"}}
-                    >
-                      <SchemaItem
-                        collapsible={false}
-                        name={"ok"}
-                        required={true}
-                        schemaName={""}
-                        qualifierMessage={"**Possible values:** [`true`]"}
-                        schema={{"enum":[true]}}
-                      >
-                        
-                      </SchemaItem>
-                    </ul>
-                  </details>
-                </TabItem><TabItem
-                  label={"Example (from schema)"}
-                  value={"Example (from schema)"}
-                >
-                  <ResponseSamples
-                    responseExample={"{}"}
-                    language={"json"}
-                  >
-                    
-                  </ResponseSamples>
-                </TabItem>
-              </SchemaTabs>
-            </TabItem>
-          </MimeTabs>
+          
         </div>
       </TabItem>
     </ApiTabs>

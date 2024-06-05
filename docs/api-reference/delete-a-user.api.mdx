@@ -1,11 +1,11 @@
 ---
 id: delete-a-user
 title: "Delete a user"
-description: "Delete a user"
+description: "This route allows you to delete a user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
 sidebar_label: "Delete a user"
 hide_title: true
 hide_table_of_contents: true
-api: eJx1Uk1v2kAQ/SvWnFrJxdCjVVWKFA5Vc4iS5oRQNeABr7LYm91Zq9Ta/94Z2xBCkwveNW/mfbkHxn2AcgVPgXyAdQ4OPR6I9Vauegjbmg4IZQ98dAQlBPam2UPKwTRydcg15NDIjNyibPkteGPlnaeXaDxVULKPlGR3oG30ho/D5g2hJ6/cFVkhLOMoQYGegmubQEGJv87n+qgobL1xbFrlvaUdRsvZw4SEJIquIbo2w0wXix5xVbeiZuKDfBRfQtEtioG86F8NJFC9vjsFEb0VaM3sQlkU6Mws8P7LfDHbE7vW88y0cOnxUYMbDZycnjOU6Z90fI3tJooyb/7ioHxKtiasZCoNSe/aYdywVfy98GU39z8EqvpGu4vZXFtxbeADNgqftl/n8CalsyamP1w4i8ItWwa3/RTQCrqFzI395FBetCyGayFUTN9vMNCTtynp65dIXouWY4fe4EaVS46VCXqWHnZoA/0nZ9s2TI1shE8P0wf0ORPWd2We8mw0zA5t1JscnyXdN19jWqeLD+B2ebf8tRQcRvV32cvz0Mt0UL3vUlwXNvLpb8o/GPkmfWXS+vczfPznw4Gp/xNaDa9TSv8A9zU86Q==
+api: eJzVUz1v2zAQ/SsEpwRQLLujEAQIYA9FOwSpMxlGQUtni7BMKkdSrivov/eOkmPFSDp060JRp3cf791TKwtwOeraa2tkJpeldgJt8CBUVdmjEycbhLeigAo4KIIDFNpwHMWTRS8s7pTRvxWXmNxvMH2Ix9KKChQacbBIiRsqGpNdIvIS8r3ggC9BrAqbhwMYHyusb0rva5elKYXdZAe+piYTbVPn7B1uVJ7ycWcbwEbDMb2dyER6tXMyW8kXbiDXiawVqgNNjBxupaOWByWzVvpTDUTUedRmJ7tEauZdK19SGUM59MZj/iS8rih2LRCI+EWookBwTthtZBF1YbGOyviLYr0gVAbhNWiEQmYeA3Q0ooM8oPanOOCGpAJkCn1eFnomDKQ2tTUOHM//ZTrlx/up5rBVofLieUDKjogR/dJSv6GiTHqWmUybWRrLp+2FaSd5ImzOigWsCHrehar1aBVyPP4Plraf7UziTWVK+wani7CPgUbCwSty0L4EVVBWF3extTFd+4rx0V+PT18JyoP1ZGeTKe+tts4flGH4UH0+9uj15lqZW+PJZf+zy3tVPfzyaV0pUo90iItqh92uZDMjYG+eRGYjJ9PKSpKMMW27UQ5esOo6Dr8GQHYhXRuFWm1Ye7JAoR3fyUJbVTn4i6A3z4O7b8U//yAfkjv7yLCJGlUFfqPrnlz17j/t1mPHzxffF8sF4VRgVcZ+3Ec/Dhdm+WGLa6P2/fjskk9S7smngtz+8Abvv3yaMPj+jGbC667r/gDmMem5
 sidebar_class_name: "delete api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Delete a user"}
 >
-  Delete a user
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"delete"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Delete a user
+This route allows you to delete a user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
   style={{"marginBottom":"1rem"}}
@@ -61,7 +69,7 @@ Delete a user
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"user_email","required":true}}
+        param={{"schema":{"type":"string"},"in":"path","name":"user_email","description":"The email address of the user you want to delete.<br/>","required":true}}
       >
         
       </ParamsItem>

@@ -1,11 +1,11 @@
 ---
 id: create-a-team
 title: "Create a team"
-description: "Create a team"
+description: "This route allows you to create a new team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
 sidebar_label: "Create a team"
 hide_title: true
 hide_table_of_contents: true
-api: eJx1U91vmzAQ/1cib09TGpI9smlT9/Ew7WFRmz0RKl3IFdwC9uwja4b433eHoaFpKyQw57vz7+PcKoLcqzhRG4TKq3SuHP5p0NMXsz+quFWZqQlrkiVYW+oMSJs6uvOmlpjPCqxAVnS0qGJldneYkZor64xFRxq97NZQ4STLk9N1LllAhI5bqZvk5sObaLv9vN36dFyn76bRt6qbq8aj85NW4BwcuZMmrPzzIzou2aPPnLYC/OUE4awd7kWIHmnaPQ2Ta5ADHrPGaWJhklbtEBw6KckcAmFMQcKuF9FbU/vA/f1yKZ8nKNQ3vIWmpNnVkPkcqPrat53BTBozwwqpMAxGWeMpaFfwX3RYReFoAegOvTyMr3El7xZE1sdRBFYvPOUXy9UiR7LG0UIbJVhHUtdiZUA8UjuJbPVPFJWDj+qyYShO/+uHQcQXvAXCnquEiIzH1WmQvj9AZUs8DcJpAAY7kzGSnqsw2iSH3JoekybppdZMYna5/sFdhHRIXy2WkisSVVBPTjxX8+WhIHygyJbAhGTWRMJ2EDpRhxXX0XhRCnGBo227A4+/Xdl1EmbSTgaElwdwGnaCNUm526CPeHPPYjKkcLcuNnK2pJdNEPvsnolLj+avf11vOHk33M/K7KXGwV8OyjtWW374x/Tcej/7eKtKqPMGcskPfcUqaITc1On73ulhIWjHrfo4QXk+AoGSvLv5KyUf2awZz9Gnx/Sw82rBoNiYLabIzfwP8riVNw==
+api: eJzVVE1v2zAM/SuCtsM2JHG7Y1Z06D4Oww4tuuzkuIBss7Fa2/IoOWlm+L+PlOzGTVdg1yGAIlMU+fTekzqZg81QN06bWi7lqtBWoGkdCFWWZmfF3rTCGZEhKA6KGnbCgaqErnkNxZVBJwxuVK1/Ky6zOEsxOvfDyogSFNaiMkibUyrsN9uZyArI7oUPFCDi3GRtBbXzFZI3hXONXUYRhe1iA66hJgttImvNHFOVRTzMzRZwq2EXvV3ImXRqY+UylituIJOZRPjVgnWfTL6Xy05mpnbUgaeqaUqd+V7RneWTd9ISokrxzO0bIC5MegeZo8INmgbQabC8WqsKJlnWoa43lHVMJAjOFObWH3CkLZDDRZVzgJx6E998eBWt1x/Xa5uM8+TdNPpa9jPZWkA76awQ1f5Z48uaemIgHOaV0qVQeY5gLVgG46uwohTlv7+C0w4q+/yQfX/U7V9YmEReIIPLslYaIWcBPcNJ/zTssAUKWMha1I4EjTuZkrcAeUuw59IF6Xsvvm1MbYNm709O+O8puC9wq9rSiesh0+OowBWG2snGWBdkKugr2p5GoThDwK1XghC0WNLq6FbV6IlZJcMY8f5gdwUwI+qDkI3+DqxksJa8aAkDDreJ1WC0BaicdjFGduz1wdtfH1TVlHDw5kGNwTLxGEmOBRqF5Sa3xmPSjmtJf60vrr5RFT5tSD9dnHAuc1OpetLx8/g8MEnHNphcvf/7gQlyOXhwUVMqkoVvJTugG3wSy+0pJ44vUMEmomjXpcrCTyz7nsMkHbKDabpVqFXKjMcJVRtUZmvdkyWI2MDcfMW9Ob1sg2WOHjD22qN3ry5/rCg5HR6+yuS8B9WOgjwu5Zp+9GG8Qt6VPt7JUtWbVm04P9Rlw6mWDzf167336zBhtONSvZ+gPDZyOBKP/eyFLWdkOUG34fwxPay8uGFgbMxmUfjp+ANRMle2
 sidebar_class_name: "post api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Create a team"}
 >
-  Create a team
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"post"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Create a team
+This route allows you to create a new team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <MimeTabs
   className={"openapi-tabs__mime"}
@@ -82,7 +90,7 @@ Create a team
           required={true}
           schemaName={"string"}
           qualifierMessage={"**Possible values:** Value must match regular expression `^[^;#/\\?\\s][^;#/\\?]*[^;#/\\?\\s]$`"}
-          schema={{"type":"string","pattern":"^[^;#/\\?\\s][^;#/\\?]*[^;#/\\?\\s]$"}}
+          schema={{"type":"string","description":"The name of the new team.<br/>","pattern":"^[^;#/\\?\\s][^;#/\\?]*[^;#/\\?\\s]$"}}
         >
           
         </SchemaItem><SchemaItem
@@ -91,7 +99,7 @@ Create a team
           required={false}
           schemaName={"string[]"}
           qualifierMessage={undefined}
-          schema={{"type":"array","items":{"type":"string"}}}
+          schema={{"type":"array","description":"One or more e-mail addresses of users to add to the new team.<br/>","items":{"type":"string"}}}
         >
           
         </SchemaItem><SchemaItem
@@ -100,7 +108,7 @@ Create a team
           required={false}
           schemaName={"string"}
           qualifierMessage={undefined}
-          schema={{"type":"string"}}
+          schema={{"type":"string","description":"The description of the new team.<br/>"}}
         >
           
         </SchemaItem>

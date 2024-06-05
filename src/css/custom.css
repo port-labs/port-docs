@@ -539,10 +539,6 @@ html[data-theme="dark"] .openapi-schema__list-item {
   max-width: fit-content !important;
 }
 
-.api-sidebar-divider > hr {
-  margin: 1rem;
-}
-
 .openapi-tabs__code-list-container::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 1rem !important;

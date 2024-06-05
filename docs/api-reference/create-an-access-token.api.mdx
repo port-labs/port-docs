@@ -1,11 +1,11 @@
 ---
 id: create-an-access-token
 title: "Create an access token"
-description: "Create an access token"
+description: "This route allows you to create an access token for your Port account. You can use this token to authenticate your requests to the Port API.<br/><br/>To obtain your client ID and client secret, go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, then click `Credentials`."
 sidebar_label: "Create an access token"
 hide_title: true
 hide_table_of_contents: true
-api: eJytVE2P2jAQ/SuRzyyBHnOjVQ9oD0WFniiqhmRIvCSxa08oNMp/74wTloC2VaUWpMQev/l4b8ZpFUHuVbJVi4YKrEmnQNrUURyJwTj9M+zVbqIcfm/Q03uTXVTSqtTUxA6yBGvLwTF+8Yxmm08LrEBWdLGoEmX2L5iSmijrjEVHGn0IU2qOssxGSE9O17nqJsPhGlOH9AaAEZBlWvJCuRqFPUDpsa9YO8yE32ueh6i7TsLckOQaDAZvTe37Gt/NZvLK0KdO26BHoq76YBb5Jk3R+0NTlheJ/3+UMUd5Yt1UXL+UtRO+IdPGHLF+UzE8W+bhl+NTjrBHJ6ckfptg/Scxx1WMc44z8MT8nWBdF1pwD/7gEAgjqKM+V0RDsgo5ChehrPFBM6CCd/FpHgMniHv4tyvcozuhkwlvVeNKRhZE1idxDFZPPeVPs/k0R7LG0VQb1e3EJ22cpstaGtX3Yo/gWMKbauz9jNLsGiocketvy0RpIVEgZCI8s5Pmf75doI9nqGyJ9xfg2orHuR+1V9cHE6rQJN5qxWVHi9WSfYRmr918OhOsCFRBGIShyN+Keqf9K0fCM8W2BObC4YJ67aD3Vp3m7CeKq+tQDpqzgIW0hjFtuwePX1zZdWJm9o4/HVtensBp2AuFrUz1IJQ06ciqcqX9FXoKkyTwsulVf7hO3eTqseAaLP0RuxtNz+rTesPg/fAxq0wmPg5+sFGeifrKf96YoEoYgmBvVQl13kAu+D6u/H4BSUjXAQ==
+api: eJztVVFv0zAQ/iuWn0AKycZjhZDG4KHigYqVh6lU1EmujdfUDvalW6ny37mz0zXtAAm0RzYpS87f3X333Z23lyX4wukGtTVyJKeV9sLZFkGourb3XuxsK9CKwoFioxGqKMB7sq3BiKV1jHBiYh3ykW0NpuKWnArCth4EcsiIpjiqxQoM6oKjBU8H31vwyBjCQox0NRmnb3KXvQ2PqRU2R6VN9ChqTSHE+D3RKQ9fHogiJmJlOVDAzSKppqk5HRU4f1EhNn6UZWRMV4ANAVJtXyYcpVgLawKFRZqmC5G3iGTQ0Ya2EU6vKhSFdQZcwlbT+y2uHZRclqr9IpWJRLXycjSTV8dyKb/IBBus0z/Ct5wnsi//nS13crSXhTVIDvw6IJ7deW7PXvqigo3iN9w1QA2z+R0USBkbZxtwqMGHMEGUcTlAenTarAh52vHbx+49yiq7pA9wE0T9hyCxG7KjSKosNcNUPRlQXJJSEKvXpB1r9cj5LPu84zBHJLoWgsE31vhY7+uLC/5zyuqgNZTCt2Fql21d7zj+86hs1/wE026IP9Oac70h05QH/qlwdA4PDdXhx8NTipCD49OwKNNgfeL7N2IOWQxzDjPMz9v4O8G6LrRgA3RM0WVjfRBDYUVf2fYy47XOYs5v2Cf14LbgeA32snU1IY/bpwfbJ7s5g4vWadzdsPRR3RyUI1GOOpDbR+D2GbWBAd24S4nUXEMFqmQpiS+38/NxvT48qE1Tw+l6HCf6dOIHDdNmaQMLjewtDxcU+XB9UbrL9IKxrMxGhdb2JK9/eXGeb9Bg8f/fwc91B8epQXjArKmJOTcoDOK+H92Z3F4SkPWQh8Xtx5dGsuIpJ8x+nysPX1zddWwmpRxd1TN63SqnVc5DMePN70eP531Nc0q9jz19FbaN4XUb5/jsyumSg8cVcWjwj9j5YBEnn26mBM77fx4bW7KPU/dk5OdIfqVf+rBhzsJaBfte1sqsWrVifIzLPz8BslvTwA==
 sidebar_class_name: "post api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Create an access token"}
 >
-  Create an access token
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"post"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Create an access token
+This route allows you to create an access token for your Port account. You can use this token to authenticate your requests to the Port API.<br/><br/>To obtain your client ID and client secret, go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, then click `Credentials`.
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <MimeTabs
   className={"openapi-tabs__mime"}
@@ -82,7 +90,7 @@ Create an access token
           required={true}
           schemaName={"string"}
           qualifierMessage={undefined}
-          schema={{"type":"string"}}
+          schema={{"type":"string","description":"Your Port client ID"}}
         >
           
         </SchemaItem><SchemaItem
@@ -91,7 +99,7 @@ Create an access token
           required={true}
           schemaName={"string"}
           qualifierMessage={undefined}
-          schema={{"type":"string"}}
+          schema={{"type":"string","description":"Your Port client secret"}}
         >
           
         </SchemaItem>

@@ -1,11 +1,11 @@
 ---
 id: approve-an-actions-run
 title: "Approve an action's run"
-description: "Approve an action's run"
+description: "This route allows you to approve or decline a request to execute an action that requires approval.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions)."
 sidebar_label: "Approve an action's run"
 hide_title: true
 hide_table_of_contents: true
-api: eJx1VO9v0zAQ/VcifwGkrmn3MUJIZavEBIKqDL5Aha6J23pLY+MfYSXK/74720mztVWkxLHfnd+9e3bDLGwNy36xWW6FrJKlqwxbjZjmfx039qMsDixrWC4ryytLQ1CqFDkQOn0wsqI5k+/4HmhkD4qzjMn1A88tGzGlpeLaCm48zoJ1ZoAzVotqizheub2nsVgsv/2c48zt/ObL3dc5W7UjVnCTa6Foz9PgFgFQFIJWoVwMNtxAaXioRWheUP7IYNVS1HHBasdxQoGGPbdckyRnyjqhW0/xp772JAVyY6iaPuBchXnwt8ZURHq4l2fVji6n73IpsLtjKu2qP6JgJ6yxWYbnTgt78KTXHDTXOFy1vo9GycoE+a8nE/q8UJPd8g240ibLiPR6voTMFLax5glUCXibvDEJ0kEuKNZOFoFrTmQ954yl9TQNUJMi0qRNoN+m4HNByYi2rjupnS4xbGetMlmKIDE2dns1mY633Cqp7VhINiz1O2kXquoK7mXE6M980ISZQ5Ja/PeeZVHcHYcCo6hYcvHy6Pf5E+xVyYd+HdjypTLDjm2k5yAsxbIFkk5mizvyRzRBxqbjCWGVNHYP3sodxYsKn7e+5U82VSVgKZjPi9dE7aMpo/rkF+c/WW+gvgWo5w6pUEzTrMHwH7psW5oONqbGFMLAuux9O2KPKO3Q2JjIESXfnhq0IPj50Fe19JcKe7uMnn6XYMazNXa9rQ7DPTs6sbaWzmHsLDEIizdhn6t7SnEMPrnIqIDe0IvZ/c0nRK/jDbiXhT+F8I8kxXfGfuODP1IFpRHk5xtWQrV1sCV8SOyvKEfdGZr00Zs0Doju2RpfuzfURG+6Q86GvEffJXgEPvTwsHIxIErWoUlxuiGfAXUiEDc=
+api: eJztVdtu2zAM/RVBe1gLJHG7x6AokLUFVmzYgizbSxcMis3Eah3J0yVtFvjfR0qy6/TytD0OARRdSOkc8pDe8wJsbmTtpFZ8zOeltMxo74CJqtL3lu20Z04zUddGb4FpwwrIK6nQgBn45cE6OocHyIOXYiKny5grhQsW0oBN/qIanS1Ndh6GuWYVCKPYRht0XOKrbCOUF1VnzVb4XrzPDlheQn7HyMyVwG4KnfsNKCfoeHFUOlfbcZbhth2twdXauJHUWW5AOBhaqFY4mK3MYQgPNRgJKgebWXCHh+m9oVmKPHuTa7WSa29gGLENW2xDxNbaHo/4gDuxtnx8wyeR/8wryxcDnoL0Xhc7Pt5zvM8haJriTZXMA/zs1lL899wiyY2gmdvVgBnRy1vIHV6PryJoJ8EGO6Ttbc/OOiPVGu1A+U2AMZ3Ovny/wp3Lq4tP15+v+KIZHKb7ufOhGiast8bUFhmmA8OJWENmKA1ruQXFIpyYXN7gO6IoJHmJatrDvRKVhRgSVEVBMBORRUNejwfOeMCNWhixAQeGIvtCdBJwtJQEuBauRBYKfXBlvPopi2es5ohaFpgDuZJgmF4FHkm16BMkfy+U6+k+S6JPDJ8hxTxbLAAj3S4AXaKwweB00QQJ2BpVEjP37uSE/g4xXcJK+MqxWbIMMUTipS4irZx4BXpjnm1PsyS8DPHabB+ZNlmrTU5wzLYNmzcVurUFImrZqw/ex/6V4hthtgy6UKPbR9g9RnfiEZ2Rv4N+eUpACaJAL0JPip49av/qQWzqCvra7Un0MBr9rK50wCAd+fIpgmaT6TW6ELtofjo6IdtaW4c1SuYtxNS0uqb01lKCn77XK8r/DfBvGmAUioMHl9WVQEFgVoL29km6N3x7iobJicrIh79xV6qdglGVJSaUfPb7pbDwzVRNQ9sYckNVhtOtMFIsSRmo8kJamhddm3k1yUezVL3H7J80gxeJt2WjqGaQkacVTu+wiLre1FBPTkVDHOLhRUQ6nNMVj87PvhdUul2TmE7mFx/Qepk+NBtdhCYo7inOOI75D/zhQtcx/GgU9ve8EmrtxZrs48WhhXtKWb/+70L9pwnBfZHj08YQOdHYDF5xOcOSZthdzjvzePKqQwpZa00Rpy/IH+dOEwM=
 sidebar_class_name: "patch api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Approve an action's run"}
 >
-  Approve an action's run
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"patch"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Approve an action's run
+This route allows you to approve or decline a request to execute an action that requires approval.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
   style={{"marginBottom":"1rem"}}
@@ -61,31 +69,7 @@ Approve an action's run
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"run_id","required":true}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
->
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Query Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","description":"The identifier of the action run you want to approve/decline.<br/>","required":true}}
       >
         
       </ParamsItem>
@@ -139,7 +123,7 @@ Approve an action's run
           required={false}
           schemaName={"string"}
           qualifierMessage={undefined}
-          schema={{"type":"string"}}
+          schema={{"type":"string","description":"A description and/or reason for the given status.<br/>"}}
         >
           
         </SchemaItem>

@@ -1,11 +1,11 @@
 ---
 id: patch-a-user
 title: "Patch a user"
-description: "Patch a user"
+description: "This route allows you to patch a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
 sidebar_label: "Patch a user"
 hide_title: true
 hide_table_of_contents: true
-api: eJx1VF1v2zAM/CsBnzYgi5M9GsOArhuwYi9B1z5lxcDYbKzWtjSJzpoZ/u8jJeejbYoADi0fyePx7B4YNwHyFdwG8gHupuDpT0eBv9hyB3kPhW2ZWtYQnatNgWxsmz0E2+pZKCpqUCPeOYIc7PqBCoYpOG8deTYU9Km3dQpGGHqPO0E1pr1iauTRYgomRQdQYG/aDQzDFJiwOZf/ZorkYFkaJYv18oTLPdaBhghw6LEh1sHz1ZlZ9sWkjQwrcK6kZSs5cteJYL8Fb2pIohlPJeTsOxpExkBF5w3vYuU1oSevMneuRKa8S2oPUe/gbBuSOh/nc/0rKRTeOCUvnb7SPXY1T65HZBTkOWSJXFQTnGhdVZW4smWiXCjnSD2HbLvIYuusP9IfQNn67V6GztcCrZhdyLMMnZkF3nyYL2YbYmc9z4yF0wl/qmyJ/n7O45qc+UG7o2gXnRDz5l80EYy6VoSlZOlUaqvrowG/PWHjajox0Gq/lLuDJ45HcVH3NvY3rHmwFMKTi+WV9NIBk1qL2VyX6mzgBqONR3ovZHym8WEmpifOXI3CXYpEtfpR4BVsF5KXtjuF/MQjwreSforp+zUGuvX1MOixTOvVJhJu0RtcK3HZQ2mCxuVo2Vd0Dm8mvLse7fd+Il3P0tzvo9VlbLHu9E7CR9nOMy8PquK4EWWRAJep14cbLXMs8OqLoL44mG95cXP5XdDr8VPS2FKTPP7VN0auOfySn9zYOFT6UOh5DzW2mw43ik+F4wvdqcin5nqM5hoDpXt2zpeuSzPpdZi+kfJJPDMR634+wNOTNxNGyfZoVf1OSP8HasDSAQ==
+api: eJzlVU1v2zAM/SuCLmuBNG52NIoCXTdgxS5B156yYqBtJlZrW5okJ80C//eRkp24XToMuw4BHFnix+Pjo7yTBbrcKuOVbmQq70rlhNWtRwFVpTdObHUrvBYGfF4KEK1D+86JAj2oyk1FcMihERnyWcG2rSmAAvgSB3OrK0ycgIbOEerETS8ym1yGx50WFYJtRK0tZc0oeXBzk+BGf4MbLfMS8yfBJhx9Uei8rbHxwPAfTkrvjUuThLbddIXeaOunSifO6TObQZ7w40yv0a4VbpLTqZxIDysn04W855TyYSIt/mjR+Q+62Mp0J3PdeMrASzCmUnnIlTw65msnHSGqgVd+a5AY1Nkj5p4CG6sNWq/Q8WkoZWQG1sKWrF7Tj7HoQPsGGs98gnNq1fBqoDTSR+61am481hR5NpEqrvY5nLeqWcmuoyqZvr9K30BN6fUy5ApuR7H0QGhrj+XN9JQfikJxEqjmI1qWUDnsgoEBS4k99yBdHKF1CEZpGCnJsaSUDJbeGMl3slfV0ZLCiSAIFt2+tIB+XFlQ+L4YVoGyWMjU2xY70oXDvLXKbwO+jBSLlnUTxZ62UT5dEJAzunGx3e/Pz/nvJaiPuIS28uK2twwtoupLXcTaci4u1JjKZD1LQvRkd6izkwzIrge+WluR6aB/MGokfzlG/5WJjdCGGg6iMOoLbg+0XrWEyKqfQfGyZ75EKMiLEfMM3B6m5dMz1KbCkdoXQ9se9go8bIVWLnXIrzz7yTkBFlfzG8rFlUWyZtNzbrvRztcQZq6HNx9dSa/7Pprb//FOi/30+OwTUwH1jQgMEtn1qlrI9YwMo2onMh1NEPWqJK7ZZrfLwOG9rbqOt6nTluVPyzVYBRk3jcRXKMfroh/oP7Ti5LYfq1Pxr4N5tLZBwA2rdw1Vy2+0fCI5v7geOpZdL2GGHg2uI8CzOw5zCPDbfc+DtB/T+dXd9WeyzvoPRa0LdrKw4euDnqn8Rj960YGJ+Bng/Z2soFm1sGL7GDjckS13ZjyNT2Ea+wXDPVrn6zGNNfGzm7zhckFDJmjWL/fm8eRNh56ywZpZfyDQvwBjptUU
 sidebar_class_name: "patch api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Patch a user"}
 >
-  Patch a user
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"patch"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Patch a user
+This route allows you to patch a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
   style={{"marginBottom":"1rem"}}
@@ -61,7 +69,7 @@ Patch a user
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"user_email","required":true}}
+        param={{"schema":{"type":"string"},"in":"path","name":"user_email","description":"The email address of the user you want to patch.<br/>","required":true}}
       >
         
       </ParamsItem>
@@ -102,7 +110,7 @@ Patch a user
           required={false}
           schemaName={"string[]"}
           qualifierMessage={"**Possible values:** `>= 1`"}
-          schema={{"type":"array","minItems":1,"items":{"type":"string"}}}
+          schema={{"type":"array","description":"The roles you want to assign to the user.<br/>","minItems":1,"items":{"type":"string"}}}
         >
           
         </SchemaItem><SchemaItem
@@ -111,7 +119,7 @@ Patch a user
           required={false}
           schemaName={"string[]"}
           qualifierMessage={undefined}
-          schema={{"type":"array","items":{"type":"string"}}}
+          schema={{"type":"array","description":"The names of the teams you want to assign the user to.<br/>","items":{"type":"string"}}}
         >
           
         </SchemaItem>

@@ -1,13 +1,13 @@
 ---
 id: get-all-migrations
 title: "Get all migrations"
-description: "Get all migrations"
+description: "This route allows you to fetch all migrations (both past and present) in your Port organization.<br/><br/>The call will perform a logical `AND` operation on the query parameters below, and return all migrations that match the criteria."
 sidebar_label: "Get all migrations"
 hide_title: true
 hide_table_of_contents: true
-api: eJytVE2P2kAM/StozpSPHqOqUsSmKCqbRRQuXaGVAUNGm49ZzwSVRvnvtZMAoQKph15gxvNsP79nKJWDg1Xeq3rWBwKn88yqdV8ZIEjRIclbqew2xhSUVyp3Mqg8BURwUn2lHaa2E7eOdHbgB8yKVMpOXp7ns2AZPHFssYqiMJryaR5ET80pjMJl6M/Cn831mx/OVouATxM/mgSzWZ3Ywt/amL8MXyK1rirun3HTjwJJyGRMueYArrB8J/woNOFOeXtILFb9O4O0hB+Ugq3L6b9U2iQFGga4O9VYb4vbgrQ71WpvEAhJ1COEnXdJZWcES2gN24S17p9HI/naod2SNuIfN3vCPRSJ6y1apBKpbiFTdD1Ikl56tb2v2PE4Z1rqgMLTgIv5MjyOhzcwi3Q8b0ZBCUNi54z1hkMwemDd4dNoPOASJic30LnqDvhDZGuon8e8LpXR37GjmV8wHdK/68aq1TVmSTirMX+f1+naJYKfc7+ePw8ZKvyaQceDkXhicutSyATeVr+rwI1IF2IOf7mhSYAJcKl65LJV51Udx6Lcza8n5mbyVJYbsLiipKok3KyEqLbTFjbJZQP66p3n7mzuEdhzDijZtAfg827+C7a7fVf8Wi6kJYFZravOAkyDJUOhkBG7/rzX/rQHmeT8lJ06pf82riEhn8LxbsoX9q3H7n+9wJuXhwntHpzRYg3/I1R/AAGilpE=
+api: eJzlVE1v2kAQ/SurPbUSgqRHFEVCgUZWiYNScilCzdgMeBXb6+yOSSniv3fGNuAgklNulZDZjzezb+fN261eoI+dKcjYXPf1NDFeOVsSKkhT++rVxpaKrFoixYmsqcysHAjcqy+RpUQV4ElBvlCFQ485fVUmlzCnJtaRsm4FuflbhXSvIte7rj7TBFUs+V4Nfwp0S+syBSq1K8Pr6mkQDp+U5Y0qUvGPOOSlRLfhIx1kSOi8ipBpdqrzHVLp8lOSlACpDIS+JODLcpyBru5ogpXX/Zm+O6D1vKOPyXlvq32cYAa6v9W0KZBrBM7BhqM5T+Zb656cyVe8gXmZSdqb+7vJeDQdDXnt4TEMg/CWR5NROKxHQRhMg8E4+FVPvw+C8ePDiEc3g/BmNB5XgQ38d7M2mAb3oZ7vdny+CFbVg2E5U644AJWe5w5fSuNwoftLSD3uOmcu0hB+JxXEZN2nZIrSEgsGEC+dthsqs+CeMUuDTtllJdEBr8B7GxsgXHCbUC3gQdq6mc4wZA09xiULvakUjBAcOlHEISz6h/SstmC5awuWHistv11cyN9bmkNcQpmSemiQWsrPLZJYPlOvUC5WACU86a0ve8fm08LErfetVLqUIQlR4fu9HhSmy7EFm6RrrG7T/ikFrgntyR/brzA/sFXdQck8XGMw3SiQ8EU5qm6Tpa3CDaWCr0w5mAQMFWL1DS+7F6JeYT1lkAu8yX6LdGKoUxG3OrY5sYb/3/NRC0L4h3pFClx4LmGl8bZph5leXzIwe/O+JFxk2dpuI/D46NLdTpZr00ibLIyHKD30c0c/s94tb6+BO5gXtHjxHfDevR9jPxDyM4x5tkA1v/abcOQ4lwlXN5JOnc3bLrsdTRkKpZS17YXnygvNQKq338o3rdSnJqlJyFfqcjbkij2i2GnXB3i9825A47k9Wm7L7/TuHw0MhJo=
 sidebar_class_name: "get api-method"
-info_path: api-reference/port-api
+info_path: api-reference-temp/port-api
 custom_edit_url: null
 ---
 
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Get all migrations"}
 >
-  Get all migrations
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"get"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Get all migrations
+This route allows you to fetch all migrations (both past and present) in your Port organization.<br/><br/>The call will perform a logical `AND` operation on the query parameters below, and return all migrations that match the criteria.
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
   style={{"marginBottom":"1rem"}}
@@ -71,7 +79,7 @@ Get all migrations
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"query","name":"blueprint","required":false}}
+        param={{"schema":{"type":"string"},"in":"query","name":"blueprint","description":"The identifier of the blueprint associated with the migration.<br/>","required":false}}
       >
         
       </ParamsItem>

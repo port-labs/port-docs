@@ -1,11 +1,11 @@
 ---
 id: get-a-blueprint
 title: "Get a blueprint"
-description: "Get a blueprint"
+description: "This route allows you to fetch a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/)."
 sidebar_label: "Get a blueprint"
 hide_title: true
 hide_table_of_contents: true
-api: eJx1Uktvm0AQ/itoTq1Ejd0jqiqlShRVvURJe4pyGJuxWQXDZnZAcdH+985gjHGTXGAf38x8j+1BcBcgf4QfVUueXS0BnlLwyLgnIba7HsKmpD1C3oMcPEEOQRS6g5iCq3XrUUpIodYa3bmCanFbR6xnTC+tYyogF24pau9Am5adHIbOa0JWnBJgwiJfz1gYlin4pg4UbPbX5dJ+BYUNOy+usdHXtMW2kuR+REJUUpeQW5IEk6m1klJpZaOUYEe2HejnkHWr7Ewg6886Ihht7k5+tFwpvhTxIc8y9G4RZPdluVpoP9+wLFwDc6kP5t9RxEnwZKVW/6LD2b2rVrmx+4sD+9HgUs3RqjgYvm2GcieV4e90XnJ191Ohxu8oebVYWji+CbLH2uBj97deXHg1sRJ6lcxXqNO1z6C3H316hG6ldbOoUshnmavuUucasO/XGOgPVzHa8UtLbLHrskN2uDYBamfhgq01kC1Wgd5w2jS1aHul9el+fE6fE536LteTrbV52qGy1J0un9Xki7cZn+LsJdze/FYQtqZwns3zkM24MLLv9v8/tOMw+8b0g5JvmlmiyX+f4MebDwvGNzApqU1BjP8Ah3pEHg==
+api: eJztVEtvnDAQ/iuWT4nELkmPKIqUqFVU9RKl21OUgzHDYgWwY493u0H8984Au5Ao6aHnXlhj5vU9ZjtZQNDeODS2lZncVCYIbyOCUHVt90EcbBRoRQmoK6FEcKBNabTI6wjOmxaFaTnIi3vrUSitbWxxfZX79Hp4bKyoQflWNNZT1ZyKz8khEboC/Sz4FisQj4XVsYEWFU/0dFYhupClKV2H9RbQUZO1sWkeTV2suO8q2BL3ysNKK1S13aY6BrSNeYUVdYCtH0qFVNu2NNtIgQUFrhpbQJ0GwOhWp3nS87VMJKptkNmjvD2NKZ8S6ZRXDSB4/tbJQIM3SmadxIMD4i4ghW5ln0jDVDqFFdVqKYfeTEGYiDjwdPeecxDzZ2HLgYiZX1Zgr+hwlGEkl+p4eInGQyEz9BF6mjGAjt7gYZgwJ9qpHwHxoIosX6DhWA/BES8QGMOXiwv+eTvZVyhVrFE8TJGyJ3BEQWWppSQ1ZDLCzGS6u0znBmk3A+olj+V3R96iryn+qKtyZiGrXGL4yQSP0x2RnLimtB9wmOm9iTSUN6+D1HJSoCLUlNUPipR2SDdYc/zg1Zv77xTKg41wL9cXrJ6zARvVcvhU/Q7I2LMi7xXsJFkLCe//BTou0KgSwm9MXa1IDeJ1EL6bDPMod5cUuPBkIrPFkpAPKtKBA7suVwF++brv+folgmd/03GnvFE5C0q+KkzgMzmzVHWAv2h09jDtzbn49937EOLRnS1bc6eoDL3R8Zm8+uY/oH9abtLdtw0FqcjELC3+PFh8OjDGD+u/9/7YjJ998knKFVlf0AJdn8LHL58mTKt0QtIygr7/A1IPL0o=
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Get a blueprint"}
 >
-  Get a blueprint
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"get"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Get a blueprint
+This route allows you to fetch a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
   style={{"marginBottom":"1rem"}}
@@ -61,7 +69,7 @@ Get a blueprint
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"identifier","required":true}}
+        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the blueprint you want to fetch.<br/>","required":true}}
       >
         
       </ParamsItem>

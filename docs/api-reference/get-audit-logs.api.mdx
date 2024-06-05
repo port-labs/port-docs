@@ -1,11 +1,11 @@
 ---
 id: get-audit-logs
 title: "Get audit logs"
-description: "Get audit logs"
+description: "This route allows you to fetch audit logs from your Port account. Your audit logs can also be viewed via [Port's UI](https://app.getport.io/settings/AuditLog).<br/><br/>This route will perform a logical `AND` between all query parameters below, and return all logs that match the criteria."
 sidebar_label: "Get audit logs"
 hide_title: true
 hide_table_of_contents: true
-api: eJytU8Fq20AQ/RUxpxZUS25vohQCLSH0EtL2FExYW2N5ibRSdmdNXLH/3hlJlmXHBpf2Yu9q38y8efOmBVKFg+wR7gxhYRXp2jhYxNAoqyoktPLaglttsFKQtUC7BiED46slWoghx7XyJUE2j6HSRle+6s7Gl6Valoxdq9JhiEEbjnvxaHccZjg7XxtVIN8svnhtMR/B11VM00lNOavX/vxJXq5kgPbpL1g4stoUcCGZI2XpKVf0f9Khyf8hWaNoc8ilczSk17qT8JCNrMfA83a48lbTrpv2EpVlHNvCosozfeQNQVt0DV/QSfWPaSp/ObqV1Y2guNzXfkjRw4CEEOITyC1SpHyuKSprNiGPD2lTMycokCDu+WeQbOfJhEHSHjoJyRDp0G73VvW25KgNUeOyJFGNnjkqPqTzGWdtakszXcO04x8iY9/Jvu9RUY7+jpOB3HhmaPXvjgkMOm9YI44Kne7rugvXJL6De64X3dzfMVT49X3PZ6nMqKkdVcoIfMj+RpAjvUZShK+UNKXi4pyma7cdxHqE7byjNcrFt+xo9F1qbn/D5SWgbZfK4S9bhiCfeweKjrl2sj17x8XwzEqMG7tVpRcyIE68BD2s1jXwo+W5JmCyHgf4Qi5W94t/ro0TUVc1i2VYCnj3MGzF+4gznhV7bwuzm9bc85noHBZh4ufbbz8ZpLyMaOqt585bw0HIns1/arq+mPyKNmdDPrPnInbulxHev1wMGDw8dmKkgxD+AH+fDXI=
+api: eJztV21v2zYQ/isEv2wDFDt2W2AwigJG4hTGgi1InA9bYMy0RFlEJFElqbip4f++O1KSFb+oie15G7AvtkSRx+e5Ox7vWdCAa1+JzAiZ0h4dRUITJXPDCYtjOdfkWebESBJy40eE5YEwJJYzTUIlE/yoyI1UhjDfl3lqWuR3HKrN81kKprQkU06eBJ/zAP4YecBVP2hyPxz/GBmT6V67zbKsNeMmgy8tIduaGyPSmW730dq1nP3U+jhV7U/2pwZ0LuKYZFyFUiWE4a7CZzGZ9H+9nMCuZs45QojJl5yrZ5IxxRJuuNLwESh6hKUBUdzkyk2zsE3EDEkYkjYRJ+AiWCFYi3rUsJmmvQdqYdGxR1cWYXhBtR/xhNHegprnjINTtVHAgy49KtDHFgbYSWERvIqAp0aEgisYexmNfkpWX4kMLRSAR/gTjNrQzBk8lPFx/gEzin/JheIB7YXge7703owKdzXPG4iuXBqAl2ohVjxmBuIKMBCgzriPiAPijBwR1TTOeQYTzIHAKjtHxKby9E8RHAiM+biMgK0jIpvzaSTl4/BQcIWd4yMbYDofC547HG8CyZRiiArOeKK3gN+BXioxg/FXofZlAqZc1XwJ21lp6xZxNY2HWJoKdpCifKYYWm4XRQkwzWZcoQdcNWiRKwnVASqgnafLWlhU2qrQenaB284VTSjJk/vh5IgBHabaAHML5OCA1sgfM5weFLc8wQpeLydVwYOzB79FMsGT9qXiPlPIxh1POt6VEYpruP58rg9kXtohiBxS4yD2JdsCvEd9CY79amuoCEOcWr+Cyr1HaA7oG2Zy5FPkHXohAAZgisWXzDAYSLjWbMZ3+0WkfpwHW9wyAtqwbxzoF7dZMR/+rWMAUgaJzVtkGJJc88AjMo2f15xW2Ckzu7ARbBjZI9s9igeKGRgJIGJnRgCtHVzxiG/lCZ5U2NAQXA0vSVZe6bWU2LjTvRL/8O434lCQSfe82z07f3/WfTfq/Nzrfui9f9f60On8sddRfgs5I7dS42nwLyS2g0N1Dl5xQufCRNuvaNyKnJHJxe2gPxpMPKikN5fuCarx5HJwPYCX/eJRnti7+4uLwd0djFz1h9f3twM4Yds5Vad0P05u+ZvAAsQpVIMdeGKRiM0mDVMlYV9FkifErcdEcf3291pY6LM193OFRRq77ClnCvYHLynOgp7ldwamwEVjW8TsYbcFsHt+jn8vsVzykOWxIbfFTHvLQxcfSdiSggyh2NibCF7aT532yj7iUE9ls5+rGGasFIyoKRhaB32HDnR4Suirkp2JX3jNe/0cYCjxjRWJaj0cAU10uPV4KO1yYWKcbxVY/2YIUxGYI9hpnWN0MqlNwlKcXlj/zE0tHdaDtHDXQ2r+V4OvU4MuhHihtrOYQajA6TYrFkX+PNCnDt6aqwz1aARRwS+LxZRpfq/i5RKH3SnCvAqEZtO4Sv+GIO0tErcif4Q8XNOkTwzaJBikWAdej+sgqdiArWrUToJrUyk2QKv3kydBt0UuNsCrFOpJsK2rxQZgdYF6SmxrUvH7CFdC9Zgw/xPasME5lQ4+Sey2qcIGcBuK9CQgdwm4ptNZ0457Yvwn1VTTbbJSfwcQO6l8amBT6LsDmJxQLTXwsFLumIfhaFqpAXSl3f5m4GuCqAFRpbwOSIjXaqIGGKXgWqEY4ws0qVOUCA/jurr5PBjZhhS707oIebQipHjALrT8lNb7rXV14gDgLzLfuuQjiBMCEudTNd192bmgEDurCgJ8lsvlX6+eIfI=
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,53 +21,37 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Get audit logs"}
 >
-  Get audit logs
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"get"}
-  path={"/v1/integration/{identifier}/logs"}
+  path={"/v1/audit-log"}
 >
   
 </MethodEndpoint>
 
 
 
-Get audit logs
+This route allows you to fetch audit logs from your Port account. Your audit logs can also be viewed via [Port's UI](https://app.getport.io/settings/AuditLog).<br/><br/>This route will perform a logical `AND` between all query parameters below, and return all logs that match the criteria.
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
->
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Path Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"identifier","required":true}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><details
   style={{"marginBottom":"1rem"}}
   className={"openapi-markdown__details"}
   data-collapsed={false}
@@ -85,22 +69,77 @@ Get audit logs
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"number","default":1,"minimum":1,"nullable":false},"in":"query","name":"page","required":false}}
+        param={{"schema":{"type":"string"},"in":"query","name":"identifier","description":"An identifier of the log event you want to fetch.<br/>","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"number","default":100,"minimum":0,"maximum":300,"nullable":false},"in":"query","name":"per_page","required":false}}
+        param={{"schema":{"type":"string"},"in":"query","name":"entity","description":"Fetch all audit logs related to the specified entity.<br/>","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"query","name":"start_date","required":false}}
+        param={{"schema":{"type":"string"},"in":"query","name":"blueprint","description":"Fetch all audit logs related to the specified blueprint.<br/>","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"query","name":"end_date","required":false}}
+        param={{"schema":{"type":"string"},"in":"query","name":"run_id","description":"Fetch all audit logs related to the specified action run.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"webhookId","description":"Fetch all audit logs related to the specified webhook.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"webhookEventId","description":"Fetch all audit logs related to the specified webhook event.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"origin","description":"Fetch all audit logs coming from the specified origin/s. This refers to the integration/s that triggered the log. For operations performed via Port's UI, the origin will be `UI`.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"InstallationId","description":"Fetch all audit logs related to the specified integration.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string","enum":["blueprint","entity","run","webhook","scorecard","action"]}},"in":"query","name":"resources","description":"Fetch all audit logs related to the specified resource type/s.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"enum":["action","context","diff","identifier","resourceType","status","trigger","additionalData","message"]}},"in":"query","name":"includes","description":"The fields you want to include in the response. If used, only the specified fields will be included in the response.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","format":"date-time"},"in":"query","name":"from","description":"The starting timestamp of the audit logs you want to fetch, in the ISO format `2022-04-23T18:25:43.511Z`.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","format":"date-time"},"in":"query","name":"to","description":"The ending timestamp of the audit logs you want to fetch, in the ISO format `2022-04-23T18:25:43.511Z`.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"action","description":"Fetch all audit logs with the specified action type - `CREATE`, `UPDATE`, or `DELETE`.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["SUCCESS","FAILURE"]},"in":"query","name":"status","description":"Fetch all audit logs with the specified status.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"number"},"in":"query","name":"limit","description":"The maximum number of logs to fetch.<br/>","required":false}}
       >
         
       </ParamsItem>

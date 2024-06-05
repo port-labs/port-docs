@@ -1,11 +1,11 @@
 ---
 id: get-a-team
 title: "Get a team"
-description: "Get a team"
+description: "This route allows you to fetch a specific team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
 sidebar_label: "Get a team"
 hide_title: true
 hide_table_of_contents: true
-api: eJx1U02L20AM/StBpxbSOOnRlMLClqUUyrLdnpY9KLYSD+vYsxqNaWr83yv5I3FCerHHmifpvSe5BcF9gPQFngkPAV6X4JHxQEJs4RZCVtABIW1Bjp4gBWTGIyzBCWmCxqmKB6vgco1WmquvjAmF8jvRc/T56ey5blxOrMecQsbOi6srAwVtuNo5DvJzKDFESrwKKBlXnr68yyTy+TYISlQZXacEK2X7HomPE68Udo7KPOg303t0TDmkOywDdcsbSoOwq/YwlfIoxbnSKPRcRzhSp/4FyiI7OfbubQlZ1ao7akieymCywZiCr6tAvYWf12t7zS1J4Z52GEtZPI1IMFGXkAeSBS6sqlLRoRW1EoE99VYb3RSSZpP0bZPWKHdgDLmZxhu5VFAh4kOaJOidWrj/tN6stIivWVauhrmqX2bSQHrSdt4M737QzOy7qITY/cVxxr2LhfqgWcOAdnWf7qQ0/KP2W9w9fleo8RskblZrm4CvgxywMvhY/UL7hS0nQkJ/JPElamMt0UttR19eoNlo3jCQJaR9UdVZaB+7bdstBvrNZddZeFgjMyx3AbflaXGW8KaSZ4vVYBmtd+9ag+wMfTvzinRWV0KVdocPT+NWfVwYx1tiJsur47znxKZX0712s6V4+Pas1xhN/Hxib/3ExoPRvFn5epRDG3van3Mz5YtOcqH78PUEH27+mzBuxoQ2nfofd/8AQ22LmA==
+api: eJzdVd9r2zAQ/leEnlZI43aPphQKG6UMRum6p9IHxT7HooqlniRnmfH/vjvZTrw0G/RpsBdbOd2P7+67z+lkCb5A7YK2jczlY629QBsDCGWM3Xqxs1EEKyoIRS2U8A4KXelCBFAboRu+R3FvMQiLa9Xon4pTLa9WmF2nx6MVBhQ2YmORsq4oeQr2C1HUULyIZKhBPJW2iBtoQsrw/KEOwfk8y8jsl2sIjoostc28t+e4UkXGj3PbArYattnZUi5kUGsv8yf5yAXk80I6hWoDAZDNnfRUcqNk3smwc0ANK0S1o0AdgALIDk3ccAZdkrWhWHoVCCpAeRPoHF25Pzu0rS4B6TgfIzl5KrisNPrwdUgxWIw6MhAYbfa/nC5CxMOtp1FEaqPvCSDT8xoBdxOuXFYaTOmPqjOJIIarxN5WNeFAYWUxTZspWIq7SlCpciFsY3bJPhIM5ZRiq40RKyCuCxNLshPp7IjgnW08DFQTCITXqBFKmVfKeOgXJ8btA+pmLad+nAr1oZ1x2m+b4Qthqz3ut22dABEwQk8b4KGIqMMu8b+iTSS+iF+itMzDsCbsNrWTluDjxQW/fkfyCSoVTRAPo6dkWmi3akvVJC0obwQ3lMusvcxS7qxj7L1kGNhOWxjRkNO038rp2XrLOeZvPL8B0oT8sLlOf4HZMtxEQoKj/uQ44Jq6pKhhgSqbwnUw7J80e3N/R64MbOjxcnnB5Djrw0Y17D5mv4VA6ueejhnqZGGbQLL9Hz4fw2gD/AiZM4pGSMNIbHUjtU+yvWTHtDgLmafxEGM1TYxvu26lPHxH0/dsHgTLnJfaq5XZq+OvQ/wn8j3Z+wtt2Ow70yoT2SktaatQc0vvbO/DwyjRM/FObZ9EOKmh2c3xTcgTPf3zXKi3nx/pWkVmcy6mlySm8cAtncx8rLKhDD/5e3cy5IpEJkiq13v34eaPAaNoJ2/uk/4C+l+qxaAV
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Get a team"}
 >
-  Get a team
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"get"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Get a team
+This route allows you to fetch a specific team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
   style={{"marginBottom":"1rem"}}
@@ -61,7 +69,7 @@ Get a team
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"name","required":true}}
+        param={{"schema":{"type":"string"},"in":"path","name":"name","description":"The name of the team you want to fetch.<br/>","required":true}}
       >
         
       </ParamsItem>
@@ -85,7 +93,7 @@ Get a team
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"array","items":{"enum":["id","name","createdAt","updatedAt","provider","description","users.firstName","users.lastName","users.email","users.picture","users.status"]}},"in":"query","name":"fields","required":false}}
+        param={{"schema":{"type":"array","items":{"enum":["id","name","createdAt","updatedAt","provider","description","users.firstName","users.lastName","users.email","users.picture","users.status"]}},"in":"query","name":"fields","description":"The fields you want to fetch for the team. If used, only the specified fields will be included in the response.<br/>","required":false}}
       >
         
       </ParamsItem>

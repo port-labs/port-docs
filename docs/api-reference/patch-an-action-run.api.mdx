@@ -1,11 +1,11 @@
 ---
 id: patch-an-action-run
 title: "Patch an action run"
-description: "Patch an action run"
+description: "This route allows you to patch an action run's details. This can be used to update the run's status & label, and add links to it (e.g. external logs of the job runner).<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
 sidebar_label: "Patch an action run"
 hide_title: true
 hide_table_of_contents: true
-api: eJx1VO9v2jAQ/VeQP20SJdCP0TSJsU6rVmkI1k8bmo7kALeJ7dkOK0P533dnh5AUKqTgH8/nd+/e+Sg8bJ1If4pp5qVWg0WlnFgNhcU/FTr/SecHkR5FppVH5XkIxhQyA0YnT04rXnPZDkvgkT8YFKnQ6yfMvBgKY7VB6yW6gPPgK9fBOW+l2hIOVVUyjeXjbHa3XNLKl+n9w+PiTqzqYXPuAdZYXB6m/UKqZ97QCr9vKMxl/I22JRB/UdmCTrQAsBYOouZLSnQOtngtixyNRcoZc5F6WyFTqsoS7OEqHXzxaBUUJOZ9fgVBEMhzyRJCMe8otIHCYV0zwICFEimOC/lcKHyh3H5Ck/1t0EtSVQQVkPgNhaI4NN1TKLpQxNpKy7nE+4Zvhz/FMuB351C2Ur9l3osUVCHfOMwqK/0hkF4jWLQ0XNXBUs5o5aITbsdj/svRZVYaVoLifsYNVIUfLBpkUKoPmYPPdgNQA4h+JSqCS+d3Oo88MyYa+KYi2U+SCHQJIV1yjNRrwUzt/qQumyIVO++NS5MEjBw5v70ZT0Zb9EZbP5JadLNbslwxkVOOZ0cZ+Q07uk8r4mblv9AxotFzh5DTKc6Pe2hx7ra7FyhNgd1u6TRFrxHOHoj+P89bc3Zs0vdkr8AbHfhLz/eKOSU8mM7v2U6NZ1IxGY0Za7TzJYSeb9K7XpBe0VppPJFITAEkAcUKoh+bUjX+bYrF1qrCX9p4jcTf0d0MPB7X4PDRFnXNy9HmXMVcOlgXra+H4hkPPePvoaiYR6jlHqxk+PWjrxJo3z/xbtF4/v2AIl5N7GQEdejeeaLTJBSenMYGzCBuzuI9Nz84xPnwxZvLCbSmn09/zL4Set081qXOQ5fCX9aRvqn4RT+aaBPlJVBYP4oC1LYKr56IgcPjVHFJuo5+Do5uBp33tZ/ja6vHnPjbfXF7Rz6Q0QbULx9beNx580Aj2QnNiq+I9H+i+0mR
+api: eJztVlFv2zYQ/isEH7YEcKykj0ZRwMvSNViBGk7y1AUrJZ0sxhSpkZQdz/B/3x1J2XKcoAW2x8GALFF3x+/uu/uoLS/BFVa2XhrNJ/y+lo5Z03lgQimzdmxjOuYNa4UvaiY0EwWZMtvpnx0rwQup3JgFvwJf58A6ByW5dG0pMI6vIVk7L3zn2E9MiRzUCKOVTJQlU1IvHXlIz85gvBgzePZgtVBMmYVjpgpBnkxOgTTY8/H73GYfwuXeMAXCatYYi6BzxD7A6EasqKFYMlqmIF9LU3QNaISCJo9ntfetm2QZLrvxAnxrrB9LkxUWEPyFA1Xhxa5kARfw3IKVoAtwmYVKQeEv4lYXrTULC85l52M+4l4sHJ985dOIY444+OOIW/irA+d/MeWGT7a8MNojELoVbatkESBlT46Y2HKHwBtBd37TAnJj8ifcEcPjZgjES3DBLlR1YOe8lXqBdqC7hmDcPVxf39zd4crH6e3nh/kNf9yNkt9nouI15+O+mEbOiKT4Io/EJkoTQ4e6R4I4bkPkUvzjeF80MGMjZ3v6MWYpXavEBhtI6kHntGIBtDIjdthH9IRn0bQKsImCP7mT+XcaJ8EacaPhS4W1Oc3bS6+OFipjG4Es8c4qTGjvIawVm4FDfN6F0nZNI+zmR8qaTE8rOGLrWuLIraVSP1qZfdH7MmDn3Zbfh3EfwzFZEg6ceMtyUSxBlyNWHYodtkUbXwvPfpP+U5ezhVyBCy/Wxi4rlIzXxUCW2Oqy2rzIEqE7D6Ls8/+Ga3/K8lufCuaCCiHJXKjZoO8roRzsdmTQCisawIRdIPRkbk7mYXWFD6t3YQok5Y9jaYlKjXHwcYWhqDBxYqWFst9v9Hb4PhYKZX0IFdN5teCpIhLsKflBdddC+7307jv3AMnbDnYoKw6Kzkq/CdnnqIVg8fZxFxTHtUa7KBTvLi9PB/FXqESnPJsny1ByrGZtyphMQdmEpCY8W11lESQKIIpato357TihsKueApqUCe+lVbRyoKx8CPmOihnR9cAP89XK32HAyrRDUFb+HVSSp2rX2DvoRaBJN+cHhb2JPTtUyIEQHonfoUOiWB2e94M8aKLj0TqivzIBfxIEGkk2nd1Ss6WOmvCr8SXZtsb5RgSdT+nNTg/Yl20zODL+P6j/m4M6tprHNDJUV2wp5CZ07zb1fFKL1PU0f134m6TJxmaukUsy3G5z4eDBqt2OlqOo0DigdItc7VVkxJewOZKZlVAd4QizsRJWkvnrrm82xNk8CcM5+xfq8mpB+oHUmyHWPo1UiHDwpXEk5PHldcR3cU8hDs4n3zuU+F51ZtP7609onacPpcaUQUvFmuqP1wn/A390jLeRFjQK61uuhF50eCaiTQwcjpCOqBwqyzIoS7oZfAYc5/hScmJOdB1+Bxy5vMeBZ6hbH/bm8c2bDqlkvTVV/BFB/wM2avzL
 sidebar_class_name: "patch api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Patch an action run"}
 >
-  Patch an action run
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"patch"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Patch an action run
+This route allows you to patch an action run's details. This can be used to update the run's status & label, and add links to it (e.g. external logs of the job runner).<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
   style={{"marginBottom":"1rem"}}
@@ -61,7 +69,7 @@ Patch an action run
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"run_id","required":true}}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","description":"The identifier of the action run you want to patch.<br/>","required":true}}
       >
         
       </ParamsItem>
@@ -135,7 +143,7 @@ Patch an action run
           required={false}
           schemaName={"string"}
           qualifierMessage={undefined}
-          schema={{"type":"string"}}
+          schema={{"type":"string","description":"A label to describe the status of the action run.<br/>"}}
         >
           
         </SchemaItem><SchemaItem
@@ -159,7 +167,15 @@ Patch an action run
             </summary><div
               style={{"marginLeft":"1rem"}}
             >
-              
+              <div
+                style={{"marginTop":".5rem","marginBottom":".5rem"}}
+              >
+                
+                
+                One or more links to be displayed in the run's page in Port. For example, a link to the external logs of the job runner.<br/>
+                
+                
+              </div>
             </div><div>
               <span
                 className={"badge badge--info"}
@@ -167,11 +183,11 @@ Patch an action run
                 oneOf
               </span><SchemaTabs>
                 <TabItem
-                  label={"MOD1"}
+                  label={"string"}
                   value={"0-item-properties"}
                 >
                   <div
-                    style={{"marginTop":".5rem","marginBottom":".5rem","marginLeft":"1rem"}}
+                    style={{"marginTop":".5rem","marginBottom":".5rem"}}
                   >
                     
                     
@@ -180,7 +196,7 @@ Patch an action run
                     
                   </div>
                 </TabItem><TabItem
-                  label={"MOD2"}
+                  label={"array"}
                   value={"1-item-properties"}
                 >
                   <li>
@@ -190,7 +206,7 @@ Patch an action run
                       Array [
                     </div>
                   </li><div
-                    style={{"marginTop":".5rem","marginBottom":".5rem","marginLeft":"1rem"}}
+                    style={{"marginTop":".5rem","marginBottom":".5rem"}}
                   >
                     
                     
@@ -210,20 +226,11 @@ Patch an action run
           </details>
         </SchemaItem><SchemaItem
           collapsible={false}
-          name={"message"}
-          required={false}
-          schemaName={"object"}
-          qualifierMessage={undefined}
-          schema={{"type":"object","deprecated":true}}
-        >
-          
-        </SchemaItem><SchemaItem
-          collapsible={false}
           name={"summary"}
           required={false}
           schemaName={"string"}
           qualifierMessage={undefined}
-          schema={{"type":"string"}}
+          schema={{"type":"string","description":"A summary of the action run, which will be displayed in the run's page in Port.<br/>"}}
         >
           
         </SchemaItem><SchemaItem
@@ -232,7 +239,7 @@ Patch an action run
           required={false}
           schemaName={"string"}
           qualifierMessage={undefined}
-          schema={{"type":"string"}}
+          schema={{"type":"string","description":"The run id of your backend, for example the id that GitHub gives the workflow. This can be used to identify the action run instead of the `run_id`.<br/>"}}
         >
           
         </SchemaItem>

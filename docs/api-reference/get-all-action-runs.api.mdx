@@ -1,11 +1,11 @@
 ---
 id: get-all-action-runs
 title: "Get all action runs"
-description: "Get all action runs"
+description: "This route allows you to fetch all action runs in your Port account. The route will perform a logical `AND` between all query parameters below, and return all action runs that match the criteria.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
 sidebar_label: "Get all action runs"
 hide_title: true
 hide_table_of_contents: true
-api: eJytVNtq20AQ/RUxz6plB/oiSsHQEkpfQto+BWNW1thaslpt9iKSCv17Z3SLnNpUgb7YO9oztzNntgEvTg7SB9gevKx0dB+0g10MRlhRokfLlw24Q4GlgLQB/2IQUnDeSn2CNgapyXwKaF8gBk1OZKL20rNt8SlIizmkR6EctvG7Q2UqoCGAXxgtqyqFQl8LJ6jNGv9LZcGh3ZODVAvD6VBmaAlcSi3LUEK6obN47s8f11fyKFnKpd3/YyzPNFAt1N4GvZf5+2LGNFWu8wHqDRn1DeyupKlJNaSlC+FJWA4PwbI4WFYZCkuMUEyLIk9tJz5GWXSm0g4d13GzXvNfju5gpWGZUpIveBRB+eh+QEJL1ZxDbtFHQqlI9NLuohPh6IuKKoITMqtG+IKMpN4kPc4lA5DGW4/6D1YRqPDeuDRJhJEr508f1psVBTGV9StZwby7H0xiX/3Y48QneX/HGV3bQAVZ+Vv4nrSO0oL4IK+2o/hYde7SK8bfUb5oe/eNhzAwncJmteapm8r5ktRP8CH6ZRLOiJoq8ySQxCghu/Xpem4GgoapDxTxaIeHoqCMfN00mXD4y6q25c+9JJi6XDqRqUkDMTxS87Mnoha04fQBWHxXwPNHYAl+2vIl4LM9XuIwLuQS7N8rt8TrdYNe0Ts2rGQ48cq7Nyn59utPnk3gQc1l9tjJbDjwLMYrPSf+rf76EviXK7zo8onkF5GIP0/w/uaqwyDnEc0C27Vt+wdbjivP
+api: eJztVV1r20gU/SvDPO2CYyeFfTGlEOiSlkIp3exTMPFIurIGj2bU+bDjNf7ve64kO47jmE0dln3YF9nSvXfm3K9z1rKgkHvdRO2sHMvbSgfhXYoklDFuGcTKJRGdKCnmFX8TKmdf4ZMNQlu2e/HN+QhD7pKNQ3FbUX/GUiOgIV86XwsljJvpXBkxvf76cSoyiksi2x76I5FfiUZ5VVMkH2DE7QOhbCE8xeTts7tjpaKoFcOKuBBJIFCr4fvMjz60j1snDCmE1s4jnwyQ9k8YiLyifC74M59wV7g81WSjYpfJL1WMTRiPRvgchjOKDZIcajfKPalIF4FMiYdf6Jwu6AFZarI5hZGn0lAeL7qrLhrvZp5CGP06lAMZ1SzI8Z287nB8Bw45GcjHzGFcywBktZLjtYyrhtCXEL22M7kZSM1tasuF0yyC8ArMOvL7YTNJ6IKNpSYvXNmm2TkLFYLLNRIp0KXY1fCxOF0VcaKnH0l7KuS4VCbQZvBqcJlJ1MAh/kN8O/+3hJg5h1GwL2HkUxf0DODnUkyjTzQdCGfNim+1yPTJGLYjnlG3IFS8YeEShuseAdocrVxr2RaNfcWycthIHbuSnVEtm+qMPJxrHFenWo6v8F89dP9/u3wBsNG1Pt7lPlZ0BzPoJ5vc08sb1o4esEtWmXtccK+Lo6BgwvgxmJbDMpXPyRYDAbIS9KDqxlBbRF10XHOj46eUiRkmJbSGpfPzEjTFjAfazJXlQUArCk6pn+zVQSPQoRBJFdvOTTuE0xeTBzsEypPnDWduyEBpaA44BDxUjH3LIOwFkmmcDRS4Su8uL/nnadYfqVTJRPG995QblA+0UzncJkFxkpkoVngZLa5GHWgQGl/BKPxiS1DJGzhtGVI1eo8g5T7kP7hvHaQt8F0LEfaF9pp2nYDE679a/pV9YyskiahN2+jSteE6GvZvVef622e4MrAux6vhJQ9F40KssfBw70+/oXioIYdjsZa5sxFt+18J/wUl7IYgYlVHjVG6Jed2rtb9EN7JxRUc+zHk1ejVskJz2bxeZyrQn95sNvy54wAez0IHlZndDp1s8/kaeTSTOSZ7T5kXCrKGD5LJ7Fx4r5bIEwj35fknQZ4jkyeQ7UT5jNr9pEieQPVElc9A9kpJPIFoK7tngPmPSuGpxXom8I/pT/gFBJixStxN9jXu5vdbZpTE9LKvQ/NWh/o/zCBbk91f3kOB6qDwk0t+NOQ99ElA5T7s3DvLiwG93m29OefJZrP5G6MqvxY=
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Get all action runs"}
 >
-  Get all action runs
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"get"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Get all action runs
+This route allows you to fetch all action runs in your Port account. The route will perform a logical `AND` between all query parameters below, and return all action runs that match the criteria.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
   style={{"marginBottom":"1rem"}}
@@ -61,37 +69,32 @@ Get all action runs
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"query","name":"entity","required":false}}
+        param={{"schema":{"type":"string"},"in":"query","name":"entity","description":"The identifier of the entity associated with the action run.<br/>","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"query","name":"blueprint","required":false}}
+        param={{"schema":{"type":"string"},"in":"query","name":"blueprint","description":"The identifier of the blueprint associated with the action run.<br/>","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"boolean"},"in":"query","name":"active","required":false}}
+        param={{"schema":{"type":"boolean"},"in":"query","name":"active","description":"If `true`, only running action runs will be fetched.<br/>","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"query","name":"user_email","required":false}}
+        param={{"schema":{"type":"string"},"in":"query","name":"user_email","description":"The email of the user who initiated the action run.<br/>","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"number","minimum":1,"maximum":50},"in":"query","name":"limit","required":false}}
+        param={{"schema":{"type":"number","minimum":1,"maximum":50},"in":"query","name":"limit","description":"The maximum number of action runs to fetch.<br/>","required":false}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"query","name":"external_run_id","required":false}}
-      >
-        
-      </ParamsItem><ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}}
+        param={{"schema":{"type":"string"},"in":"query","name":"external_run_id","description":"The run id of your backend, for example the id that GitHub gives the workflow. This can be used to identify the action run instead of the `run_id`.<br/>","required":false}}
       >
         
       </ParamsItem>

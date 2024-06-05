@@ -12,8 +12,7 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "html",
-      value: "<hr/>",
-      className: "api-sidebar-divider",
+      value: '<hr style="margin: 0.8rem">',
     },
     {
       type: "category",
@@ -21,14 +20,14 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/get-blueprints-permissions",
-          label: "Get blueprint's permissions",
+          id: "api-reference/get-a-blueprints-permissions",
+          label: "Get a blueprint's permissions",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api-reference/patch-blueprints-permissions",
-          label: "Patch blueprint's permissions",
+          id: "api-reference/patch-a-blueprints-permissions",
+          label: "Patch a blueprint's permissions",
           className: "api-method patch",
         },
         {
@@ -75,8 +74,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/rename-a-blueprints-mirror",
-          label: "Rename a blueprint's mirror",
+          id: "api-reference/rename-a-blueprints-mirror-property",
+          label: "Rename a blueprint's mirror property",
           className: "api-method patch",
         },
         {
@@ -84,72 +83,6 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/rename-a-blueprints-relation",
           label: "Rename a blueprint's relation",
           className: "api-method patch",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Pages",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/get-pages-permissions",
-          label: "Get page's permissions",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/patch-pages-permissions",
-          label: "Patch pages permissions",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-all-pages",
-          label: "Get all pages",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/create-pages",
-          label: "Create pages",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-a-page",
-          label: "Get a page",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/patch-a-page",
-          label: "Patch a page",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/delete-a-page",
-          label: "Delete a page",
-          className: "api-method delete",
-        },
-        {
-          type: "doc",
-          id: "api-reference/create-a-widget-in-a-page",
-          label: "Create a widget in a page",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/change-a-pages-widget",
-          label: "Change a page's widget",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/delete-a-pages-widget",
-          label: "Delete a page's widget",
-          className: "api-method delete",
         },
       ],
     },
@@ -171,14 +104,14 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/create-entity",
-          label: "Create entities",
+          id: "api-reference/create-an-entity",
+          label: "Create an entity",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api-reference/get-all-blueprints-entities",
-          label: "Get all blueprint's entities",
+          id: "api-reference/get-all-entities-of-a-blueprint",
+          label: "Get all entities of a blueprint",
           className: "api-method get",
         },
         {
@@ -189,8 +122,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/change-an-entities",
-          label: "Change an entities",
+          id: "api-reference/change-an-entity",
+          label: "Change an entity",
           className: "api-method put",
         },
         {
@@ -201,32 +134,26 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/delte-a-blueprints-entity",
-          label: "Delte a blueprint's entity",
+          id: "api-reference/delete-an-entity",
+          label: "Delete an entity",
           className: "api-method delete",
         },
         {
           type: "doc",
-          id: "api-reference/get-blueprints-entity-count",
-          label: "Get blueprint's entity count",
+          id: "api-reference/get-a-blueprints-entity-count",
+          label: "Get a blueprint's entity count",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api-reference/delete-all-entities-of-blueprint",
-          label: "Delete all entities of blueprint",
+          id: "api-reference/delete-all-entities-of-a-blueprint",
+          label: "Delete all entities of a blueprint",
           className: "api-method delete",
         },
         {
           type: "doc",
           id: "api-reference/search-entities",
           label: "Search entities",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/aggregate-entities",
-          label: "Aggregate entities",
           className: "api-method post",
         },
       ],
@@ -237,57 +164,15 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/create-a-blueprint-action",
-          label: "Create a blueprint action",
+          id: "api-reference/create-an-action",
+          label: "Create an action",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api-reference/change-blueprints-actions",
-          label: "Change blueprint's actions",
-          className: "api-method put",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-all-blueprints-actions",
-          label: "Get all blueprint's actions",
+          id: "api-reference/get-actions",
+          label: "Get actions",
           className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/update-a-blueprints-action",
-          label: "Update a blueprint's action",
-          className: "api-method put",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-a-blueprint-action",
-          label: "Get a blueprint action",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/delete-blueprints-action",
-          label: "Delete blueprint's action",
-          className: "api-method delete",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-all-actions",
-          label: "Get all actions",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-an-action",
-          label: "Get an Action",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/patch-blueprints-action-permissions",
-          label: "Patch blueprint's action permissions",
-          className: "api-method patch",
         },
       ],
     },
@@ -295,18 +180,6 @@ const sidebar: SidebarsConfig = {
       type: "category",
       label: "Action Runs",
       items: [
-        {
-          type: "doc",
-          id: "api-reference/run-a-blueprints-entity-action",
-          label: "Run a blueprint's entity action",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/run-a-blueprints-action",
-          label: "Run a blueprint's action",
-          className: "api-method post",
-        },
         {
           type: "doc",
           id: "api-reference/patch-an-action-run",
@@ -347,162 +220,12 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Organization",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/get-organization",
-          label: "Get organization",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/change-an-integration",
-          label: "Change an integration",
-          className: "api-method put",
-        },
-        {
-          type: "doc",
-          id: "api-reference/patch-an-organization",
-          label: "Patch an organization",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/create-an-organization",
-          label: "Create an organization",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/create-a-documentation-to-the-organization",
-          label: "Create a documentation to the organization",
-          className: "api-method post",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Integrations",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/get-all-integrations",
-          label: "Get all integrations",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/create-an-integration",
-          label: "Create an integration",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-an-integration",
-          label: "Get an integration",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/patch-an-integration",
-          label: "Patch an integration",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/delete-an-integration",
-          label: "Delete an integration",
-          className: "api-method delete",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-audit-logs",
-          label: "Get audit logs",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/patch-an-integrations-config",
-          label: "Patch an integration's config",
-          className: "api-method patch",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Data Sources",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/get-all-data-sources",
-          label: "Get all data sources",
-          className: "api-method get",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Webhook",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/create-a-webhook",
-          label: "Create a webhook",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-all-webhooks",
-          label: "Get all webhooks",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/patch-a-webhook",
-          label: "Patch a webhook",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/change-a-webhook",
-          label: "Change a webhook",
-          className: "api-method put",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-a-webhook",
-          label: "Get a webhook",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/delete-a-webhook",
-          label: "delete a webhook",
-          className: "api-method delete",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Audit",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/get-audit-logs",
-          label: "Get audit logs",
-          className: "api-method get",
-        },
-      ],
-    },
-    {
-      type: "category",
       label: "Teams",
       items: [
         {
           type: "doc",
-          id: "api-reference/get-all-teams-in-organization",
-          label: "Get all teams in organization",
+          id: "api-reference/get-all-teams-in-your-organization",
+          label: "Get all teams in your organization",
           className: "api-method get",
         },
         {
@@ -543,14 +266,14 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/get-all-users-of-organization",
-          label: "Get all users of organization",
+          id: "api-reference/get-all-users-in-your-organization",
+          label: "Get all users in your organization",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api-reference/invite-a-user-to-the-organization",
-          label: "Invite a user to the organization",
+          id: "api-reference/invite-a-user-to-your-organization",
+          label: "Invite a user to your organization",
           className: "api-method post",
         },
         {
@@ -571,40 +294,16 @@ const sidebar: SidebarsConfig = {
           label: "Delete a user",
           className: "api-method delete",
         },
-        {
-          type: "doc",
-          id: "api-reference/patch-a-users-profile",
-          label: "Patch a user's profile",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-user-profile",
-          label: "Get user profile",
-          className: "api-method get",
-        },
       ],
     },
     {
       type: "category",
-      label: "Apps",
+      label: "Audit",
       items: [
         {
           type: "doc",
-          id: "api-reference/get-an-application",
-          label: "Get an application",
-          className: "api-method get",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Roles",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/get-all-roles-of-organization",
-          label: "Get all roles of organization",
+          id: "api-reference/get-audit-logs",
+          label: "Get audit logs",
           className: "api-method get",
         },
       ],
@@ -615,38 +314,38 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/post-scorecards",
-          label: "Run a blueprints' scoreboards",
+          id: "api-reference/create-a-scorecard-for-a-blueprint",
+          label: "Create a scorecard for a blueprint",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api-reference/change-a-blueprints-scoreboards",
-          label: "Change a blueprints' scoreboards",
+          id: "api-reference/change-a-blueprints-scorecards",
+          label: "Change a blueprints' scorecards",
           className: "api-method put",
         },
         {
           type: "doc",
-          id: "api-reference/get-a-blueprints-scoreboards",
-          label: "Get a blueprints' scoreboards",
+          id: "api-reference/get-a-blueprints-scorecards",
+          label: "Get a blueprints' scorecards",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api-reference/change-a-blueprints-scoreboard",
-          label: "Change a blueprint's scoreboard",
+          id: "api-reference/change-a-blueprints-scorecard",
+          label: "Change a blueprint's scorecard",
           className: "api-method put",
         },
         {
           type: "doc",
-          id: "api-reference/get-a-blueprints-scoreboard",
-          label: "Get a blueprint's scoreboard",
+          id: "api-reference/get-a-blueprints-scorecard",
+          label: "Get a blueprint's scorecard",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api-reference/delete-a-blueprints-scoreboard",
-          label: "Delete a blueprint's scoreboard",
+          id: "api-reference/delete-a-blueprints-scorecard",
+          label: "Delete a blueprint's scorecard",
           className: "api-method delete",
         },
         {
@@ -654,6 +353,96 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/get-all-scoreboards",
           label: "Get all scoreboards",
           className: "api-method get",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Integrations",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-an-integrations-audit-logs",
+          label: "Get an integration's audit logs",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/patch-an-integrations-config",
+          label: "Patch an integration's config",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-all-integrations",
+          label: "Get all integrations",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-an-integration",
+          label: "Create an integration",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-integration",
+          label: "Get an integration",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/patch-an-integration",
+          label: "Patch an integration",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-an-integration",
+          label: "Delete an integration",
+          className: "api-method delete",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Webhook",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/create-a-webhook",
+          label: "Create a webhook",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-all-webhooks",
+          label: "Get all webhooks",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/patch-a-webhook",
+          label: "Patch a webhook",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/change-a-webhook",
+          label: "Change a webhook",
+          className: "api-method put",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-a-webhook",
+          label: "Get a webhook",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-a-webhook",
+          label: "Delete a webhook",
+          className: "api-method delete",
         },
       ],
     },
@@ -672,60 +461,6 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/create-a-migration",
           label: "Create a migration",
           className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-a-migration",
-          label: "Get a migration",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/cancel-a-migration",
-          label: "Cancel a migration",
-          className: "api-method post",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Search",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/search-entities",
-          label: "Search entities",
-          className: "api-method get",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Sidebars",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/get-a-sidebar",
-          label: "Get a sidebar",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "api-reference/create-a-folder",
-          label: "Create a folder",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/update-a-folder",
-          label: "Update a folder",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/delete-a-folder",
-          label: "Delete a folder",
-          className: "api-method delete",
         },
       ],
     },

@@ -19077,343 +19077,343 @@ paths:
   #     responses:
   #       '200':
   #         description: Default Response
-  /v1/webhooks:
-    post:
-      summary: Create a webhook
-      tags:
-        - Webhook
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                identifier:
-                  type: string
-                  maxLength: 30
-                title:
-                  type: string
-                  maxLength: 30
-                description:
-                  type: string
-                  maxLength: 200
-                icon:
-                  type: string
-                mappings:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      blueprint:
-                        type: string
-                      filter:
-                        type: string
-                      itemsToParse:
-                        type: string
-                      entity:
-                        type: object
-                        properties:
-                          identifier:
-                            type: string
-                          title:
-                            type: string
-                          icon:
-                            type: string
-                          team:
-                            type: string
-                          properties:
-                            type: object
-                            propertyNames:
-                              type: string
-                          relations:
-                            type: object
-                            propertyNames:
-                              type: string
-                        additionalProperties: false
-                        required:
-                          - identifier
-                    additionalProperties: false
-                    required:
-                      - blueprint
-                      - entity
-                enabled:
-                  type: boolean
-                  default: true
-                security:
-                  type: object
-                  properties:
-                    secret:
-                      type: string
-                    signatureHeaderName:
-                      type: string
-                    signatureAlgorithm:
-                      type: string
-                      enum:
-                        - sha1
-                        - sha256
-                        - plain
-                    signaturePrefix:
-                      type: string
-                    requestIdentifierPath:
-                      type: string
-                  additionalProperties: false
-                integrationType:
-                  type: string
-                  enum:
-                    - custom
-                    - template
-              additionalProperties: false
-              required:
-                - title
-                - enabled
-        required: true
-      security:
-        - bearer:
-            - 'create:integrations'
-      responses:
-        '200':
-          description: Default Response
-    get:
-      summary: Get all webhooks
-      tags:
-        - Webhook
-      security:
-        - bearer:
-            - 'read:integrations'
-      responses:
-        '200':
-          description: Default Response
-  '/v1/webhooks/{identifier}':
-    patch:
-      summary: Patch a webhook
-      tags:
-        - Webhook
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                identifier:
-                  type: string
-                  maxLength: 30
-                title:
-                  type: string
-                  maxLength: 30
-                description:
-                  type: string
-                  maxLength: 200
-                icon:
-                  type: string
-                mappings:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      blueprint:
-                        type: string
-                      filter:
-                        type: string
-                      itemsToParse:
-                        type: string
-                      entity:
-                        type: object
-                        properties:
-                          identifier:
-                            type: string
-                          title:
-                            type: string
-                          icon:
-                            type: string
-                          team:
-                            type: string
-                          properties:
-                            type: object
-                            propertyNames:
-                              type: string
-                          relations:
-                            type: object
-                            propertyNames:
-                              type: string
-                        additionalProperties: false
-                        required:
-                          - identifier
-                    additionalProperties: false
-                    required:
-                      - blueprint
-                      - entity
-                enabled:
-                  type: boolean
-                  default: true
-                security:
-                  type: object
-                  properties:
-                    secret:
-                      type: string
-                    signatureHeaderName:
-                      type: string
-                    signatureAlgorithm:
-                      type: string
-                      enum:
-                        - sha1
-                        - sha256
-                        - plain
-                    signaturePrefix:
-                      type: string
-                    requestIdentifierPath:
-                      type: string
-                  additionalProperties: false
-                integrationType:
-                  type: string
-                  enum:
-                    - custom
-                    - template
-              additionalProperties: false
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: identifier
-          required: true
-      security:
-        - bearer:
-            - 'update:integrations'
-      responses:
-        '200':
-          description: Default Response
-    put:
-      summary: Change a webhook
-      tags:
-        - Webhook
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                identifier:
-                  type: string
-                  maxLength: 30
-                title:
-                  type: string
-                  maxLength: 30
-                description:
-                  type: string
-                  maxLength: 200
-                icon:
-                  type: string
-                mappings:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      blueprint:
-                        type: string
-                      filter:
-                        type: string
-                      itemsToParse:
-                        type: string
-                      entity:
-                        type: object
-                        properties:
-                          identifier:
-                            type: string
-                          title:
-                            type: string
-                          icon:
-                            type: string
-                          team:
-                            type: string
-                          properties:
-                            type: object
-                            propertyNames:
-                              type: string
-                          relations:
-                            type: object
-                            propertyNames:
-                              type: string
-                        additionalProperties: false
-                        required:
-                          - identifier
-                    additionalProperties: false
-                    required:
-                      - blueprint
-                      - entity
-                enabled:
-                  type: boolean
-                  default: true
-                security:
-                  type: object
-                  properties:
-                    secret:
-                      type: string
-                    signatureHeaderName:
-                      type: string
-                    signatureAlgorithm:
-                      type: string
-                      enum:
-                        - sha1
-                        - sha256
-                        - plain
-                    signaturePrefix:
-                      type: string
-                    requestIdentifierPath:
-                      type: string
-                  additionalProperties: false
-                integrationType:
-                  type: string
-                  enum:
-                    - custom
-                    - template
-              additionalProperties: false
-              required:
-                - title
-                - enabled
-        required: true
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: identifier
-          required: true
-      security:
-        - bearer:
-            - 'update:integrations'
-      responses:
-        '200':
-          description: Default Response
-    get:
-      summary: Get a webhook
-      tags:
-        - Webhook
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: identifier
-          required: true
-      security:
-        - bearer:
-            - 'read:integrations'
-      responses:
-        '200':
-          description: Default Response
-    delete:
-      summary: delete a webhook
-      tags:
-        - Webhook
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: identifier
-          required: true
-      security:
-        - bearer:
-            - 'delete:integrations'
-      responses:
-        '200':
-          description: Default Response
+  # /v1/webhooks:
+  #   post:
+  #     summary: Create a webhook
+  #     tags:
+  #       - Webhook
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               identifier:
+  #                 type: string
+  #                 maxLength: 30
+  #               title:
+  #                 type: string
+  #                 maxLength: 30
+  #               description:
+  #                 type: string
+  #                 maxLength: 200
+  #               icon:
+  #                 type: string
+  #               mappings:
+  #                 type: array
+  #                 items:
+  #                   type: object
+  #                   properties:
+  #                     blueprint:
+  #                       type: string
+  #                     filter:
+  #                       type: string
+  #                     itemsToParse:
+  #                       type: string
+  #                     entity:
+  #                       type: object
+  #                       properties:
+  #                         identifier:
+  #                           type: string
+  #                         title:
+  #                           type: string
+  #                         icon:
+  #                           type: string
+  #                         team:
+  #                           type: string
+  #                         properties:
+  #                           type: object
+  #                           propertyNames:
+  #                             type: string
+  #                         relations:
+  #                           type: object
+  #                           propertyNames:
+  #                             type: string
+  #                       additionalProperties: false
+  #                       required:
+  #                         - identifier
+  #                   additionalProperties: false
+  #                   required:
+  #                     - blueprint
+  #                     - entity
+  #               enabled:
+  #                 type: boolean
+  #                 default: true
+  #               security:
+  #                 type: object
+  #                 properties:
+  #                   secret:
+  #                     type: string
+  #                   signatureHeaderName:
+  #                     type: string
+  #                   signatureAlgorithm:
+  #                     type: string
+  #                     enum:
+  #                       - sha1
+  #                       - sha256
+  #                       - plain
+  #                   signaturePrefix:
+  #                     type: string
+  #                   requestIdentifierPath:
+  #                     type: string
+  #                 additionalProperties: false
+  #               integrationType:
+  #                 type: string
+  #                 enum:
+  #                   - custom
+  #                   - template
+  #             additionalProperties: false
+  #             required:
+  #               - title
+  #               - enabled
+  #       required: true
+  #     security:
+  #       - bearer:
+  #           - 'create:integrations'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   get:
+  #     summary: Get all webhooks
+  #     tags:
+  #       - Webhook
+  #     security:
+  #       - bearer:
+  #           - 'read:integrations'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  # '/v1/webhooks/{identifier}':
+  #   patch:
+  #     summary: Patch a webhook
+  #     tags:
+  #       - Webhook
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               identifier:
+  #                 type: string
+  #                 maxLength: 30
+  #               title:
+  #                 type: string
+  #                 maxLength: 30
+  #               description:
+  #                 type: string
+  #                 maxLength: 200
+  #               icon:
+  #                 type: string
+  #               mappings:
+  #                 type: array
+  #                 items:
+  #                   type: object
+  #                   properties:
+  #                     blueprint:
+  #                       type: string
+  #                     filter:
+  #                       type: string
+  #                     itemsToParse:
+  #                       type: string
+  #                     entity:
+  #                       type: object
+  #                       properties:
+  #                         identifier:
+  #                           type: string
+  #                         title:
+  #                           type: string
+  #                         icon:
+  #                           type: string
+  #                         team:
+  #                           type: string
+  #                         properties:
+  #                           type: object
+  #                           propertyNames:
+  #                             type: string
+  #                         relations:
+  #                           type: object
+  #                           propertyNames:
+  #                             type: string
+  #                       additionalProperties: false
+  #                       required:
+  #                         - identifier
+  #                   additionalProperties: false
+  #                   required:
+  #                     - blueprint
+  #                     - entity
+  #               enabled:
+  #                 type: boolean
+  #                 default: true
+  #               security:
+  #                 type: object
+  #                 properties:
+  #                   secret:
+  #                     type: string
+  #                   signatureHeaderName:
+  #                     type: string
+  #                   signatureAlgorithm:
+  #                     type: string
+  #                     enum:
+  #                       - sha1
+  #                       - sha256
+  #                       - plain
+  #                   signaturePrefix:
+  #                     type: string
+  #                   requestIdentifierPath:
+  #                     type: string
+  #                 additionalProperties: false
+  #               integrationType:
+  #                 type: string
+  #                 enum:
+  #                   - custom
+  #                   - template
+  #             additionalProperties: false
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'update:integrations'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   put:
+  #     summary: Change a webhook
+  #     tags:
+  #       - Webhook
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               identifier:
+  #                 type: string
+  #                 maxLength: 30
+  #               title:
+  #                 type: string
+  #                 maxLength: 30
+  #               description:
+  #                 type: string
+  #                 maxLength: 200
+  #               icon:
+  #                 type: string
+  #               mappings:
+  #                 type: array
+  #                 items:
+  #                   type: object
+  #                   properties:
+  #                     blueprint:
+  #                       type: string
+  #                     filter:
+  #                       type: string
+  #                     itemsToParse:
+  #                       type: string
+  #                     entity:
+  #                       type: object
+  #                       properties:
+  #                         identifier:
+  #                           type: string
+  #                         title:
+  #                           type: string
+  #                         icon:
+  #                           type: string
+  #                         team:
+  #                           type: string
+  #                         properties:
+  #                           type: object
+  #                           propertyNames:
+  #                             type: string
+  #                         relations:
+  #                           type: object
+  #                           propertyNames:
+  #                             type: string
+  #                       additionalProperties: false
+  #                       required:
+  #                         - identifier
+  #                   additionalProperties: false
+  #                   required:
+  #                     - blueprint
+  #                     - entity
+  #               enabled:
+  #                 type: boolean
+  #                 default: true
+  #               security:
+  #                 type: object
+  #                 properties:
+  #                   secret:
+  #                     type: string
+  #                   signatureHeaderName:
+  #                     type: string
+  #                   signatureAlgorithm:
+  #                     type: string
+  #                     enum:
+  #                       - sha1
+  #                       - sha256
+  #                       - plain
+  #                   signaturePrefix:
+  #                     type: string
+  #                   requestIdentifierPath:
+  #                     type: string
+  #                 additionalProperties: false
+  #               integrationType:
+  #                 type: string
+  #                 enum:
+  #                   - custom
+  #                   - template
+  #             additionalProperties: false
+  #             required:
+  #               - title
+  #               - enabled
+  #       required: true
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'update:integrations'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   get:
+  #     summary: Get a webhook
+  #     tags:
+  #       - Webhook
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'read:integrations'
+  #     responses:
+  #       '200':
+  #         description: Default Response
+  #   delete:
+  #     summary: delete a webhook
+  #     tags:
+  #       - Webhook
+  #     parameters:
+  #       - schema:
+  #           type: string
+  #         in: path
+  #         name: identifier
+  #         required: true
+  #     security:
+  #       - bearer:
+  #           - 'delete:integrations'
+  #     responses:
+  #       '200':
+  #         description: Default Response
   # /v1/audit-log:
   #   get:
   #     summary: Get audit logs

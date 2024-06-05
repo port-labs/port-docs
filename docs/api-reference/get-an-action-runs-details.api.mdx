@@ -1,11 +1,11 @@
 ---
 id: get-an-action-runs-details
 title: "Get an action run's details"
-description: "Get an action run's details"
+description: "This route allows you to fetch the details of an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
 sidebar_label: "Get an action run's details"
 hide_title: true
 hide_table_of_contents: true
-api: eJx9U12P00AM/CuRXwApNO09RgipEuiEeDkVeEIV2mvcZnXpJuf1RpRo/zt2sintqcdLPjbj8czYGYDNwUP5E9Y7tq3LNsF52ObQGTJHZCT9OIDf1Xg0UA7Apw6hBM9k3QFyQBeOWt+v5KW/g23MwTpBPAekk5w54ZHXXqikgRwQPgdLWEG5N43HmL9OP3N1hut/VBTcL1tdMTEFjCLb4y6Q5dMo+hENIak4QlOVNFpTFKHvWufRa8e75VJvFfod2U5DkBafcG9Cw9kmISGKlGvIPXJmXGam3IT8jc8qZGMbL9Iku7oVYXBAhnwyUELRr4qpwBcqpxgmLxFUOvVz3IEaQdfMnS+LwnR24fnwfrlaCFvXEi9sC5d2v2l+k53Z9DlKqf6KF4NYB1FG9o/haRxjwLUEJFVxDHzfjuWWG8U/SL9s/fBFx5tmWMJqsdThdK3no3EKT+z/T+UqwbNCxt9cdI0RJcI5eh9SYmmvUmY68jDeyrQDkkEtGhQ4DI/G4w9qYtTjaf00zMp689ic9y2HJ4njciF70wTVMUbaG7IKv136wsCudYxO2sPbTdrFd5kw3jQ2z8OdLnvOcpKhqP/PeXnuP39X90GjuBzo0zjQ9KBCb3K/nPTUSK/6z90s+SCDzmRdPp7h05dXC9LizGh1uo0x/gVtVnLU
+api: eJzdVE1P3DAQ/SuWLwUpuwGOEUJCaoWqXhClJ7SqvMlkY+GNw3gc2Eb5753JBwS0nHrrxYmdmfGb9+al0wWEHG1D1tc60/eVDQp9JFDGOf8c1MFHRV6VQHmlqAJVABnrgvKlMrUyuWQqjPX6covp1bDce+XAYK32HrnQlustAkOi8gryRyXHUvGh8HncQ01GQjYnFVETsjTl47DeATUeaW19miMYglUAV/KCrc1hBS8NoIU6h5AilA5yWo1XrRr0O4QQ0tO1TjSZXdDZg74ecdwxDr1JdGPQ7IEA5WOnAyPbG511mg4NMCGB0NY7zoc67iW/PedNe6E3faKtUPYUAQ98VnMd3rZcSrhMNMJTtAiFzkrjAvTJ5+XnWo2h6q0Uc/XbFrz/qBEoWzBdtrSAooOQ+MbvINmzqelVt1Gad5AII/Tcf4A8oqXD0P2WRQOULpnpIsOBI4liGhtfBwgC/eLsTB7vQX2F0kRH6m6K1D33xMRWni/TLKJOxu4ynbbn6YiWJeMr0m5stNcCB9tZi4iOo+dhMI1dzIJeYv8prI7Y5g5eCea0H7CQ5zoyJLR/hlHTE+0Vd8tZ/SBD6Yd0S07ib/k+dX37XUSflM30+fpMJGt8oL2pJXyqfgP03hRfwuyXjzJ2Ovc1sYr/t+tGFQheKG2cYbaZt0HYbhqHyVHTQMiMxuGRTdPPOlfMswR23dYE+IWu7+V4NJ5MSmGD2bpXpyX6kSVfWrE1LgqOYWxag1bCj6d+KtLJ3WSeU/UPDjxKyDyr9WGJdW5jIqLfLB118+1eWItC4XLYH4dhn16kwaO1P7pgvEhW+UsdTblkEyi20tVr+Pjl04TJVHO0dLrp+/4vTgM2UA==
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -21,14 +21,16 @@ import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
 import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
-<h1
+<Heading
+  as={"h1"}
   className={"openapi__heading"}
+  children={"Get an action run's details"}
 >
-  Get an action run's details
-</h1>
+</Heading>
 
 <MethodEndpoint
   method={"get"}
@@ -39,9 +41,15 @@ import TabItem from "@theme/TabItem";
 
 
 
-Get an action run's details
+This route allows you to fetch the details of an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
 
-## Request
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
 
 <details
   style={{"marginBottom":"1rem"}}
@@ -61,7 +69,7 @@ Get an action run's details
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"run_id","required":true}}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","description":"The identifier of the action run you want to fetch.<br/>","required":true}}
       >
         
       </ParamsItem>
