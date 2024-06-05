@@ -6,7 +6,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import Image from "@theme/IdealImage";
 
-# AWS
+# AWS Exporter
 
 Our integration with AWS provides the ability to export your AWS resources to Port, according to your configuration.
 You can define the integration to run both on schedule and on events.
