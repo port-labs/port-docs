@@ -21,8 +21,10 @@ The AWS integration uses the following AWS infrastructure:
 - [AWS EventBridge Rules](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html).
 
 <details>
-<summary>Live events diagram</summary>
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/live-events-diagram.svg' width='60%' border='1px' />
+   <summary>Live events diagram</summary>
+   <center style={{'backgroundColor': 'white'}} >
+      <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/live-events-diagram.svg' width='60%' border='1px' />
+   </center>
 </details>
 
 ## Prerequisites
