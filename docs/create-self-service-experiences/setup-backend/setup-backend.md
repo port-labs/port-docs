@@ -126,13 +126,15 @@ The action's backend is defined under the `invocationMethod` object:
 
 ### Invocation method structure fields
 
-The **`type`** field defines the action's backend type, and can have one of the following values: `WEBHOOK`, `GITHUB`, `GITLAB`, `KAFKA`.
+The **`type`** field defines the action's backend type, and can have one of the following values: `WEBHOOK`, `GITHUB`, `GITLAB`, `KAFKA`, `UPSERT_ENTITY`.
 
 Depending on the backend type you choose, the available fields will be different:
 
 <Tabs groupId="backendType" queryString defaultValue="webhook">
 
 <TabItem value="webhook" label="Webhook">
+
+`invocationMethod.type` should be set to `WEBHOOK`.
 
 | Field     | Type      | Description                                                                                                                                                    | Example values      |
 | --------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
@@ -144,6 +146,8 @@ Depending on the backend type you choose, the available fields will be different
 </TabItem>
 
 <TabItem value="github" label="Github">
+
+`invocationMethod.type` should be set to `GITHUB`.
 
 | Field                  | Type      | Description                                                                                                                                                                                                              | Example values                           |
 | ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
@@ -157,6 +161,8 @@ Depending on the backend type you choose, the available fields will be different
 
 <TabItem value="gitlab" label="Gitlab">
 
+`invocationMethod.type` should be set to `GITLAB`.
+
 | Field                  | Type      | Description                                                                                                                                                                                                              | Example values                           |
 | ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
 | `defaultRef`           | `string`  | The default ref (branch/tag name) we want the action to use. <br></br> `defaultRef` can be overriden dynamically, by adding `ref` as user input. <br></br> Can only be used if `type` is set to `GITLAB`.                |
@@ -169,9 +175,23 @@ Depending on the backend type you choose, the available fields will be different
 
 <TabItem value="kafka" label="Kafka">
 
+`invocationMethod.type` should be set to `KAFKA`.
+
 | Field                  | Type      | Description                                                                                                                                                                                                              | Example values                           |
 | ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
 | `payload`              | `object`  | Defines the **payload** that will be sent to the backend upon execution of the action.                                                              |
+
+</TabItem>
+
+<TabItem value="upsertEntity" label="Create/update entity">
+
+`invocationMethod.type` should be set to `UPSERT_ENTITY`.
+
+| Field | Type | Description | Example values |
+| --- | --- | --- | --- |
+| `blueprintIdentifier` | `string` | The identifier of the blueprint from which the entity will be created/updated. | `service` |
+| `mapping` | `object` | Defines the properties of the entity that will be created/updated. | `{"name":"newEntityName"}`
+
 
 </TabItem>
 
