@@ -22,9 +22,13 @@ To use this backend type, you will need to define the following fields:
       "relations": {}
     }
     ```
+    <br/>
+
+    The table below describes the fields in the JSON structure (fields in **bold** are required):
+
     | Field | Description |
     | --- | --- |
-    | `identifier` | Used to identify the entity in your software catalog. It if already exists, the entity will be **updated**, otherwise it will be **created**. |
+    | **`identifier`** | Used to identify the entity in your software catalog. If it already exists, the entity will be **updated**, otherwise it will be **created**. |
     | `title` | The title of the entity. |
     | `team` | The team/s this entity will belong to. |
     | `icon` | The icon of the entity. |
