@@ -61,8 +61,8 @@ In order to successfully deploy the AWS integration, it's crucial to ensure that
 3. Pass the following ENV variables:
    - `OCEAN__PORT__CLIENT_ID` - [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).
    - `OCEAN__PORT__CLIENT_SECRET` - [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).
-   - _`OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID` - The AWS Access Key ID of the IAM user._
-   - _`OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY` - The AWS Secret Access Key of the IAM user._
+   - _`OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID` - [The AWS Access Key ID of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)._
+   - _`OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY` - [The AWS Secret Access Key of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)._
    - `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY` - (Optional) AWS API Key for custom events, used to validate the event source for real-time event updates.
    - `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN` - [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html).
    - `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` - [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html).
