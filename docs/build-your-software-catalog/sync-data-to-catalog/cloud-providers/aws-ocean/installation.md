@@ -4,110 +4,72 @@ sidebar_position: 1
 
 # Installation
 
-The GCP integration is deployed using Terraform on Google Cloud Cloud Run.  
+The AWS integration is deployed using Terraform on AWS ECS cluster service.  
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
 ## Infrastructure
 
-The Google Cloud integration uses the following GCP infrastructure:
+The AWS integration uses the following AWS infrastructure:
 
-- GCP Cloud Run.
-- GCP PubSub Topic & Subscription.
-- GCP Roles & Service accounts.
-- GCP Cloud Assets
-  - GCP Cloud Asset Inventory
-  - GCP Cloud Asset Feed  (Used for real-time data sync to Port)
+- [AWS ECS Cluster Service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html).
+- [AWS ECS Cluster (creates a new one by default)](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/clusters.html).
+- [AWS ECS Task Role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html).
+- [AWS ECS Task Execution Role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html).
+- [AWS EC2 Load Balancer](https://aws.amazon.com/elasticloadbalancing).
+- [AWS SSM Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html).
+- [AWS API Gateway](https://aws.amazon.com/api-gateway).
+- [AWS EventBridge Rules](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html).
 
 ## Prerequisites
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
-- [A logged in gCloud CLI](https://cloud.google.com/sdk/gcloud)
-- [Artifact Registry Image](https://cloud.google.com/artifact-registry/docs/docker/manage-images)
-- [Permissions](#permissions)
-
-## Artifact Registry Image
-
-In order to run the Cloud Run Service, it's mandatory to have a working Image. Currently our GHCR based images aren't supported by Google Cloud's Cloud run platform, so a manual installation to Dockerhub\Artifact registry is required. In the guide we specify an Artifact registry approach, but a similar DockerHub approach should yield the same results:  
-
-1. Create an Artifact Registry in GCP.
-2. Pull our AMD based image from our GHCR registry
-    
-    ```docker pull ghcr.io/port-labs/port-ocean-gcp --platform amd64```
-3. Tag this image
-   
-   ```docker tag ghcr.io/port-labs/port-ocean-gcp:latest <your_artifact_registry_/_dockerhub>/port-ocean-gcp:<your_version>```
-4. Push the image to your artifact registry:
-   
-   ```docker push <your_artifact_registry_/_dockerhub>/port-ocean-gcp:<your_version>```
+- [A logged in aws CLI 2](https://aws.amazon.com/cli/)
+- [Certificate domain name (Optional)](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html)
+- [Permissions (When running on-premise)](#permissions)
 
 ## Permissions
 
-In order to successfully deploy the GCP integration, it's crucial to ensure that the user who deploys the integration in the GCP Organization has the appropriate access permissions.
+In order to successfully deploy the AWS integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the above resources.
 
-:::tip
-   The installation process also includes an Integration-Specific service account. Pay attention that the permissions required here are not the same as the permissions that the integration's service account has. 
-:::
+## Installation walkthrough using terraform
 
-- The user can have the `Owner` GCP role assigned to him for the Organization that the integration will be deployed on. This role provides comprehensive control and access rights;
-- For a more limited approach, the user should possess the minimum necessary permissions required to carry out the integration deployment. These permissions will grant the user access to specific resources and actions essential for the task without granting full `Owner` privileges. The following steps will guide you through the process of creating a custom role and assigning it to the user along with other required roles:
-
-  - Create a [service account](https://cloud.google.com/iam/docs/service-accounts-create) in a project
-  - Create a [custom organization role](https://cloud.google.com/resource-manager/docs/access-control-org) with these permissions:
-    <details>
-    <summary> Custom Role Permissions </summary>
-    ```
-    cloudasset.assets.exportResource
-    cloudasset.feeds.create
-    cloudasset.feeds.delete
-    cloudasset.feeds.get
-    cloudasset.feeds.list
-    cloudasset.feeds.update
-    iam.roles.create
-    iam.roles.delete
-    iam.roles.get
-    iam.roles.undelete
-    iam.roles.update
-    iam.serviceAccountKeys.get
-    iam.serviceAccounts.actAs
-    iam.serviceAccounts.create
-    iam.serviceAccounts.delete
-    iam.serviceAccounts.get
-    pubsub.subscriptions.consume
-    pubsub.subscriptions.create
-    pubsub.subscriptions.delete
-    pubsub.subscriptions.get
-    pubsub.subscriptions.list
-    pubsub.subscriptions.update
-    pubsub.topics.attachSubscription
-    pubsub.topics.create
-    pubsub.topics.delete
-    pubsub.topics.get
-    pubsub.topics.list
-    pubsub.topics.update
-    resourcemanager.organizations.getIamPolicy
-    resourcemanager.organizations.setIamPolicy
-    run.operations.get
-    run.services.create
-    run.services.delete
-    run.services.get
-    serviceusage.services.use
-    ```
-    </details>
-  - Go to the `Manage Resources` window at your organization's GCP
-    - Click on the Organization
-    - At the right side, Clock on `Add Principal`
-    - Here, Enter your new service account principal, and grant it your newly created Role.
-
-## Installation walkthrough
-
-:::tip
-   If you prefer not to have the integration fetch all the organization's projects, you can specify a list of projects using the `projects` variable in the Terraform module. The integration will then pull resources exclusively from these projects, ignoring all others.
-:::
-
-1. Go to Port's [Data Sources](https://app.getport.io/settings/data-sources?section=EXPORTERS) and click on GCP.
+1. Go to Port's [Data Sources](https://app.getport.io/settings/data-sources?section=EXPORTERS) and click on AWS.
 2. Edit and copy the installation command.
-3. Run the command in your terminal to deploy the GCP integration.
+3. Run the command in your terminal to deploy the AWS integration.
+
+## Manual installation (AWS)
+
+1. Create the infrastructure using the [AWS Console](https://aws.amazon.com/console/).
+2. For the ECS Service image use the following image: `ghcr.io/port-labs/port-ocean-aws:latest`.
+3. Add the following environment variables to the ECS Task Definition:
+   - `OCEAN__PORT__CLIENT_ID` - [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).
+   - `OCEAN__PORT__CLIENT_SECRET` - [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).
+   - `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY` - (Optional) AWS API Key for custom events, used to validate the event source for real-time event updates.
+   - `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN` - [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html).
+   - `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` - [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html).
+   - `OCEAN__EVENT_LISTENER` - [The event listener object](https://ocean.getport.io/framework/features/event-listener/).
+   - `OCEAN__INTEGRATION__IDENTIFIER` - The identifier of the integration.
+   - `OCEAN__INTEGRATION__TYPE` - should be set to `aws`.
+
+## Manual installation (on-premise)
+
+1. Create an IAM user with the following permissions:
+   - `arn:aws:iam::aws:policy/ReadOnlyAccess`
+   - `account:ListRegions`
+   - `sts:AssumeRole`
+2. Run the following Docker image: `ghcr.io/port-labs/port-ocean-aws:latest`.
+3. Pass the following ENV variables:
+   - `OCEAN__PORT__CLIENT_ID` - [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).
+   - `OCEAN__PORT__CLIENT_SECRET` - [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).
+   - _`OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID` - The AWS Access Key ID of the IAM user._
+   - _`OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY` - The AWS Secret Access Key of the IAM user._
+   - `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY` - (Optional) AWS API Key for custom events, used to validate the event source for real-time event updates.
+   - `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN` - [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html).
+   - `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` - [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html).
+   - `OCEAN__EVENT_LISTENER` - [The event listener object](https://ocean.getport.io/framework/features/event-listener/).
+   - `OCEAN__INTEGRATION__IDENTIFIER` - The identifier of the integration.
+   - `OCEAN__INTEGRATION__TYPE` - should be set to `aws`.
 
 ## Further Examples
 
-Refer to the [examples](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/) page for practical configurations and their corresponding blueprint definitions.
+Refer to the [examples](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/) page for practical configurations and their corresponding blueprint definitions.
