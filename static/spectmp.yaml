@@ -3246,6 +3246,7 @@ paths:
   '/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}':
     patch:
       summary: Patch an entity
+      description: This route allows you to edit a specific entity in your software catalog and update its properties.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       requestBody:
@@ -3307,8 +3308,116 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Default Response
-      description: This route allows you to edit a specific entity in your software catalog and update its properties.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+          description: Successfully patched an entity
+        '400':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`run_exhausted`</td>
+              <td>Action run has already finished execution</td>
+            </tr>
+
+            </table>
+        '403':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`required_relation`</td>
+              <td>Relation cannot be deleted because it is a `required relation`</td>
+            </tr>
+            <tr>
+              <td>`missing_permissions`</td>
+              <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>
+            </tr>
+            </table>
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>A blueprint with the provided `identifier` was not found</td>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>An entity with the provided `identifier` was not found</td>
+            </tr>
+            </table>
+        '409':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`identifier_taken`</td>
+              <td>The provided `identifier` already exists, identifiers must be unique</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The provided data does not match the route schema</td>
+            </tr>
+            <tr>
+              <td>`team_inheritance_enabled`</td>
+              <td>The blueprint's entities inherite their team from other entities through an existing relation</td>
+            </tr>
+            <tr>
+              <td>`blueprint_schema_mismatch`</td>
+              <td>The provided entity does not match the blueprint's schema</td>
+            </tr>
+            <tr>
+              <td>`required_relation`</td>
+              <td>A relation is required</td>
+            </tr>
+            <tr>
+              <td>`relation_many_violation`</td>
+              <td>A provided relation cannot contain more than one entity</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
     put:
       summary: Change an entity
       description: This route allows you to edit a specific entity in your software catalog and update its properties.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
@@ -8483,6 +8592,7 @@ paths:
             type: string
           in: query
           name: actor
+          description: The identifier of the user who initiated the migration. You can use the [Get user](/api-reference/get-a-user) route to get a user's identifier.<br/>
           required: false
         - schema:
             type: string
