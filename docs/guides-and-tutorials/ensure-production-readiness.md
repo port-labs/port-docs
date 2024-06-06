@@ -14,8 +14,15 @@ This guide takes 10 minutes to complete, and aims to cover:
 - Some advanced types of properties that can be added to <PortTooltip id="blueprint">blueprints</PortTooltip>, and what can be achieved by using them.
 - The value and flexibility of scorecards in Port.
 
-🎬 If you would like to follow along to a **video** that implements this guide, you can find it [here](/resources#production-readiness-setup---tekanaid) 🎬
 <br/>
+🎬 If you would like to follow along to a **video** that implements this guide, check out this one by @TeKanAid 🎬
+<center>
+
+<iframe width="40%" height="240" src="https://www.youtube.com/embed/tMYaKlMIvZk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
+<br/><br/>
 
 :::tip Prerequisites
 

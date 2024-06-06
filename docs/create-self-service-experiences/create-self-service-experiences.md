@@ -147,7 +147,9 @@ The basic structure of a self-service action looks like this (see key descriptio
 | `icon`             | The action's icon.                                                                                                                                                                                                 |
 | `description` | A description that can be used to explain the action to users.
 | `trigger` | An object containing data about the action (see next rows of this table). |
+| `trigger.type` | The action's trigger type. Should be set to `self-service`. |
 | `trigger.operation`          | The [operation type](/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action: `CREATE`, `DAY-2` or `DELETE`.                                                                                                                                                       |
 | `trigger.userInputs`       | An object containing the action's inputs and their metadata. See [User inputs](/create-self-service-experiences/setup-ui-for-action/user-inputs/) for more information. |
+| `trigger.condition` | An object containing [conditions](/create-self-service-experiences/setup-ui-for-action/#conditions) that determine which entities the action will be available for. |
 | `invocationMethod` | Defines the type of backend the action will use. See [invocation method](/create-self-service-experiences/setup-backend/#invocation-method-structure-fields) for more information.                                                             |
 | `requiredApproval` | A boolean value that determines whether the action requires approval or not. |

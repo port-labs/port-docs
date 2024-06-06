@@ -12,72 +12,72 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name"
-          title:  ".versioned_resources | max_by(.version).resource | .name"
+          identifier: ".id"
+          title:  ".name"
           blueprint: '"gcpAutoScaler"'
           properties:
             location: .location
-            description: ".versioned_resources | max_by(.version).resource | .description"
-            minNumReplicas: ".versioned_resources | max_by(.version).resource | .autoscalingPolicy.minNumReplicas"
-            maxNumReplicas: ".versioned_resources | max_by(.version).resource | .autoscalingPolicy.maxNumReplicas"
-            recommendedSize: ".versioned_resources | max_by(.version).resource | .recommendedSize"
-            target: ".versioned_resources | max_by(.version).resource | .target"
+            description: ".description"
+            minNumReplicas: ".autoscalingPolicy.minNumReplicas"
+            maxNumReplicas: ".autoscalingPolicy.maxNumReplicas"
+            recommendedSize: ".recommendedSize"
+            target: ".target"
           relations:
-            project: ".project"
+            project: ".__project.name"
   - kind: compute.googleapis.com/Firewall
     selector:
       query: "true"
     port:
       entity:
         mappings:
-          identifier: ".name"
-          title:  ".versioned_resources | max_by(.version).resource | .name"
+          identifier: ".id"
+          title:  ".name"
           blueprint: '"gcpFirewall"'
           properties:
             location: .location
-            network: ".versioned_resources | max_by(.version).resource | .network"
-            destinationRanges: ".versioned_resources | max_by(.version).resource | .destinationRanges"
-            sourceRanges: ".versioned_resources | max_by(.version).resource | .sourceRanges"
-            priority: ".versioned_resources | max_by(.version).resource | .priority"
-            allowed: ".versioned_resources | max_by(.version).resource | .allowed"
-            denied: ".versioned_resources | max_by(.version).resource | .denied"
+            network: ".network"
+            destinationRanges: ".destinationRanges"
+            sourceRanges: ".sourceRanges"
+            priority: ".priority"
+            allowed: ".allowed"
+            denied: ".denied"
           relations:
-            project: ".project"
+            project: ".__project.name"
   - kind: compute.googleapis.com/Subnetwork
     selector:
       query: "true"
     port:
       entity:
         mappings:
-          identifier: ".name"
-          title:  ".versioned_resources | max_by(.version).resource | .name"
+          identifier: ".id"
+          title:  ".name"
           blueprint: '"gcpSubnetwork"'
           properties:
             location: .location
-            privateIpGoogleAccess: ".versioned_resources | max_by(.version).resource | .privateIpGoogleAccess"
-            internalIpv6Prefix: ".versioned_resources | max_by(.version).resource | .internalIpv6Prefix"
-            externalIpv6Prefix: ".versioned_resources | max_by(.version).resource | .externalIpv6Prefix"
-            ipCidrRange: ".versioned_resources | max_by(.version).resource | .ipCidrRange"
-            description: ".versioned_resources | max_by(.version).resource | .description"
+            privateIpGoogleAccess: ".privateIpGoogleAccess"
+            internalIpv6Prefix: ".internalIpv6Prefix"
+            externalIpv6Prefix: ".externalIpv6Prefix"
+            ipCidrRange: ".ipCidrRange"
+            description: ".description"
           relations:
-            project: ".project"
+            project: ".__project.name"
   - kind: compute.googleapis.com/Instance
     selector:
       query: "true"
     port:
       entity:
         mappings:
-          identifier: ".name"
-          title:  ".versioned_resources | max_by(.version).resource | .name"
+          identifier: ".id"
+          title:  ".name"
           blueprint: '"gcpComputeInstance"'
           properties:
             location: .location
-            machineType: ".versioned_resources | max_by(.version).resource | .machineType"
-            subnetworks: ".versioned_resources | max_by(.version).resource | .networkInterfaces[].subnetwork"
-            cpuPlatform: ".versioned_resources | max_by(.version).resource | .cpuPlatform"
-            selfLink: ".versioned_resources | max_by(.version).resource | .selfLink"
+            machineType: ".machineType"
+            subnetworks: ".networkInterfaces[].subnetwork"
+            cpuPlatform: ".cpuPlatform"
+            selfLink: ".selfLink"
           relations:
-            project: ".project"
+            project: ".__project.name"
 ```
 
 </details>

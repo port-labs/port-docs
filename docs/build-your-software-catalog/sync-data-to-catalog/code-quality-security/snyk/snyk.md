@@ -37,7 +37,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | `port.clientId`                     | Your Port client id                                                                                                | ✅       |
 | `port.clientSecret`                 | Your Port client secret                                                                                            | ✅       |
-| `port.baseUrl`                      | Your Port base url, relevant only if not using the default Port app                                                | ❌       |
 | `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
 | `integration.type`                  | The integration type                                                                                               | ✅       |
 | `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
@@ -73,7 +72,6 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-snyk-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-snyk-integration"  \
@@ -243,7 +241,6 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                | ❌       |
 
 <br/>
 
@@ -296,7 +293,6 @@ of `Secret Text` type:
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
-| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
 
 <br/>
 
@@ -363,7 +359,6 @@ Make sure to configure the following variables using [Azure Devops variable grou
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
-| `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
 
 <br/>
 
@@ -403,6 +398,66 @@ steps:
 ```
 
   </TabItem>
+<TabItem value="gitlab" label="GitLab">
+This pipeline will run the Synk integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Realtime updates in Port
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
+Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
+
+| Parameter                                     | Description                                                                                                                                                      | Required |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__TOKEN`           | The Snyk API token                                                                                                                                               | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID` | The Snyk organization ID. Provide this parameter to limit access to a specific organization | ❌  |
+| `OCEAN__INTEGRATION__CONFIG__GROUPS` | A comma-separated list of Snyk group ids to filter data for. Provide this parameter to limit access to all organizations within specific group(s)                                       | ❌      |
+| `OCEAN__INTEGRATION__CONFIG__API_URL`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                                                                      | ❌       |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`            | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                               | ❌       |
+| `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
+| `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
+| `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
+
+
+<br/>
+
+
+Here is an example for `.gitlab-ci.yml` pipeline file:
+
+```yaml showLineNumbers
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+    
+variables:
+  INTEGRATION_TYPE: synk
+  VERSION: latest
+
+stages:
+  - ingest
+
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+      docker run -i --rm --platform=linux/amd64 \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
+        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        $IMAGE_NAME
+
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
+```
+
+</TabItem>
   </Tabs>
 </TabItem>
 
@@ -976,6 +1031,209 @@ resources:
             language: .issueData.language // .issueType
             publicationTime: .issueData.publicationTime
             isPatched: .isPatched
+```
+
+</details>
+
+## Let's Test It
+
+This section includes a sample response data from Snyk. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Snyk:
+
+<details>
+<summary>Organization response data</summary>
+
+```json showLineNumbers
+{
+  "name": "My Other Org",
+  "id": "a04d9cbd-ae6e-44af-b573-0556b0ad4bd2",
+  "slug": "my-other-org",
+  "url": "https://api.snyk.io/org/my-other-org",
+  "group": {
+    "name": "ACME Inc.",
+    "id": "a060a49f-636e-480f-9e14-38e773b2a97f"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Target response data</summary>
+
+```json showLineNumbers
+{
+  "attributes": {
+    "created_at": "2022-09-01T00:00:00Z",
+    "display_name": "snyk-fixtures/goof",
+    "is_private": false,
+    "url": "http://github.com/snyk/local-goof"
+  },
+  "id": "55a348e2-c3ad-4bbc-b40e-9b232d1f4121",
+  "relationships": {
+    "integration": {
+      "data": {
+        "attributes": {
+          "integration_type": "gitlab"
+        },
+        "id": "7667dae6-602c-45d9-baa9-79e1a640f199",
+        "type": "integration"
+      }
+    },
+    "organization": {
+      "data": {
+        "id": "e661d4ef-5ad5-4cef-ad16-5157cefa83f5",
+        "type": "organization"
+      }
+    }
+  },
+  "type": "target"
+}
+```
+
+</details>
+
+<details>
+<summary>Project response data</summary>
+
+```json showLineNumbers
+{
+  "name": "snyk/goof",
+  "id": "af137b96-6966-46c1-826b-2e79ac49bbd9",
+  "created": "2018-10-29T09:50:54.014Z",
+  "origin": "github",
+  "type": "maven",
+  "readOnly": false,
+  "testFrequency": "daily",
+  "totalDependencies": 42,
+  "issueCountsBySeverity": {
+    "low": 13,
+    "medium": 8,
+    "high": 1,
+    "critical": 3
+  },
+  "imageId": "sha256:caf27325b298a6730837023a8a342699c8b7b388b8d878966b064a1320043019",
+  "imageTag": "latest",
+  "imageBaseImage": "alpine:3",
+  "imagePlatform": "linux/arm64",
+  "imageCluster": "Production",
+  "hostname": null,
+  "remoteRepoUrl": "https://github.com/snyk/goof.git",
+  "lastTestedDate": "2019-02-05T08:54:07.704Z",
+  "browseUrl": "https://app.snyk.io/org/4a18d42f-0706-4ad0-b127-24078731fbed/project/af137b96-6966-46c1-826b-2e79ac49bbd9",
+  "importingUser": {
+    "id": "e713cf94-bb02-4ea0-89d9-613cce0caed2",
+    "name": "example-user@snyk.io",
+    "username": "exampleUser",
+    "email": "example-user@snyk.io"
+  },
+  "isMonitored": false,
+  "branch": null,
+  "targetReference": null,
+  "tags": [
+    {
+      "key": "example-tag-key",
+      "value": "example-tag-value"
+    }
+  ],
+  "attributes": {
+    "criticality": ["high"],
+    "environment": ["backend"],
+    "lifecycle": ["development"]
+  },
+  "remediation": {
+    "upgrade": {},
+    "patch": {},
+    "pin": {}
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Vulnerability response data</summary>
+
+```json showLineNumbers
+{
+  "id": "npm:ms:20170412",
+  "issueType": "vuln",
+  "pkgName": "ms",
+  "pkgVersions": ["1.0.0"],
+  "issueData": {
+    "id": "npm:ms:20170412",
+    "title": "Regular Expression Denial of Service (ReDoS)",
+    "severity": "low",
+    "originalSeverity": "high",
+    "url": "https://snyk.io/vuln/npm:ms:20170412",
+    "description": "`## Overview\\r\\n[`ms`](https://www.npmjs.com/package/ms) is a tiny millisecond conversion utility.\\r\\n\\r\\nAffected versions of this package are vulnerable to Regular Expression Denial of Service (ReDoS) due to an incomplete fix for previously reported vulnerability [npm:ms:20151024](https://snyk.io/vuln/npm:ms:20151024). The fix limited the length of accepted input string to 10,000 characters, and turned to be insufficient making it possible to block the event loop for 0.3 seconds (on a typical laptop) with a specially crafted string passed to `ms",
+    "identifiers": {
+      "CVE": [],
+      "CWE": ["CWE-400"],
+      "OSVDB": []
+    },
+    "credit": ["Snyk Security Research Team"],
+    "exploitMaturity": "no-known-exploit",
+    "semver": {
+      "vulnerable": [">=0.7.1 <2.0.0"],
+      "unaffected": ""
+    },
+    "publicationTime": "2017-05-15T06:02:45Z",
+    "disclosureTime": "2017-04-11T21:00:00Z",
+    "CVSSv3": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+    "cvssScore": 3.7,
+    "language": "js",
+    "patches": [
+      {
+        "id": "patch:npm:ms:20170412:0",
+        "urls": [
+          "https://snyk-patches.s3.amazonaws.com/npm/ms/20170412/ms_100.patch"
+        ],
+        "version": "=1.0.0",
+        "comments": [],
+        "modificationTime": "2019-12-03T11:40:45.863964Z"
+      }
+    ],
+    "nearestFixedInVersion": "2.0.0",
+    "path": "[DocId: 1].input.spec.template.spec.containers[snyk2].securityContext.privileged",
+    "violatedPolicyPublicId": "SNYK-CC-K8S-1",
+    "isMaliciousPackage": true
+  },
+  "introducedThrough": [
+    {
+      "kind": "imageLayer",
+      "data": {}
+    }
+  ],
+  "isPatched": false,
+  "isIgnored": false,
+  "ignoreReasons": [
+    {
+      "reason": "",
+      "expires": "",
+      "source": "cli"
+    }
+  ],
+  "fixInfo": {
+    "isUpgradable": false,
+    "isPinnable": false,
+    "isPatchable": false,
+    "isFixable": false,
+    "isPartiallyFixable": false,
+    "nearestFixedInVersion": "2.0.0",
+    "fixedIn": ["2.0.0"]
+  },
+  "priority": {
+    "score": 399,
+    "factors": [{}, "name: `isFixable`", "description: `Has a fix available`"]
+  },
+  "links": {
+    "paths": ""
+  }
+}
 ```
 
 </details>

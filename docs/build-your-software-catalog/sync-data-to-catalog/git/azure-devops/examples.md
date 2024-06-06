@@ -19,9 +19,26 @@ import ProjectBlueprint from './example-project/\_azuredevops_exporter_example_p
 
 # Examples
 
+## Mapping projects
+
+In the following example you will ingest your Azure Devops projects and their default team (Optional) to Port, you may use the following Port blueprint definitions and integration configuration:
+
+<ProjectBlueprint/>
+
+<PortProjectAppConfig/>
+
+:::tip To Learn more
+
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/list?view=azure-devops-rest-7.2&tabs=HTTP#teamprojectreference) for the Azure Devops project object structure.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/get?view=azure-devops-rest-7.2#teamproject) for the Azure Devops project object structure when `defaultTeam` is set to true.
+
+:::
+
 ## Mapping repositories, file contents, repository policies and pull requests
 
 In the following example you will ingest your Azure Devops repositories, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and integration configuration:
+
+<ProjectBlueprint/>
 
 <RepositoryBlueprint/>
 
@@ -41,24 +58,11 @@ In the following example you will ingest your Azure Devops repositories, their R
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your repositories alongside their `README.md` file contents and pull requests.
 
-## Mapping projects
-
-In the following example you will ingest your Azure Devops projects and their default team (Optional) to Port, you may use the following Port blueprint definitions and integration configuration:
-
-<ProjectBlueprint/>
-
-<PortProjectAppConfig/>
-
-:::tip To Learn more
-
-- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/list?view=azure-devops-rest-7.2&tabs=HTTP#teamprojectreference) for the Azure Devops project object structure.
-- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/get?view=azure-devops-rest-7.2#teamproject) for the Azure Devops project object structure when `defaultTeam` is set to true.
-
-:::
-
 ## Mapping pipelines
 
 In the following example you will ingest your Azure Devops pipelines to Port, you may use the following Port blueprint definitions and integration configuration:
+
+<ProjectBlueprint/>
 
 <PipelineBlueprint/>
 
@@ -78,6 +82,10 @@ After creating the blueprints and saving the integration configuration, you will
 ## Mapping teams and members
 
 In the following example you will ingest your Azure Devops teams and their members to Port, you may use the following Port blueprint definitions and integration configuration:
+
+<ProjectBlueprint/>
+
+<RepositoryBlueprint/>
 
 <TeamsBlueprint/>
 

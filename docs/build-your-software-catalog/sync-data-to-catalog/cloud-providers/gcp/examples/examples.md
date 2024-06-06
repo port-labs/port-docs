@@ -12,7 +12,7 @@ This page contains the base examples for mapping GCP resources to Port.
 
 This base example thrives to provide a simpler and more abstract way to map GCP resources to Port.
 
-The simplification is achieved by using the generic `cloudResource` kind and blueprint, which can be used to map any GCP resource to Port.
+The simplification is achieved by using the generic `cloudResource` blueprint, which can be used to map any GCP resource to Port.
 
 ## Mapping GCP Projects
 
@@ -37,10 +37,6 @@ The Resources below have a relation to the Project, so the creation of the [Proj
 <CloudResourceBlueprint/>
 
 <CloudResourceAppConfig/>
-
-Here are the API references we used to create those blueprints and app config:
-
-- [Cloud Asset](https://cloud.google.com/asset-inventory/docs/reference/rest/v1/Asset)
 
 ## Mapping Extra Resources
 
