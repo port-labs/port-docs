@@ -19,7 +19,7 @@ In the following guide, you are going to create self-service actions in Port tha
 
 :::tip
 Using the Port AWS exporter
-The Port AWS exporter supports ingesting different AWS resource types. For the sake of this guide, you may run the following command in the [installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/Installation#terraform-installation-recommended) step to only ingest relevant resources:
+The Port AWS exporter supports ingesting different AWS resource types. For the sake of this guide, you may run the following command in the [installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/installation#terraform-installation-recommended) step to only ingest relevant resources:
 
 ```bash
 terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
@@ -27,14 +27,14 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
 
 :::
 
-3. Create the following GitHub Action secrets:
-_ Port credentials:
-_ `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) \* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+3.  Create the following GitHub Action secrets:
+    _ Port credentials:
+    _ `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) \* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
-    * AWS Cloud credentials:
-        - `AWS_ACCESS_KEY_ID`: Your AWS access key.
-        - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
-        - `AWS_REGION` - the aws region which constains your ec2 instances.
+        * AWS Cloud credentials:
+            - `AWS_ACCESS_KEY_ID`: Your AWS access key.
+            - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
+            - `AWS_REGION` - the aws region which constains your ec2 instances.
 
 ## Terminating an Instance
 

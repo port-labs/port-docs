@@ -4816,7 +4816,7 @@ Done! soon, you will be able to see any `Auto scaling groups`
 This guide demonstrates how to connect a Cloud Resource to a service or list of services by relying on the tags property and using JQ mapping. We will be using an S3 bucket as the Cloud Resource.
 
 :::tip Prerequisite
-This guide assumes that you have ingested S3 buckets into Port using the `terraform` option of the [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/Installation#terraform-installation-recommended).
+This guide assumes that you have ingested S3 buckets into Port using the `terraform` option of the [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/installation#terraform-installation-recommended).
 :::
 
 ### Ingest Services from GitHub.
@@ -4903,7 +4903,7 @@ Refer to this [AWS guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/
 <br />
 <br />
 
-2. In the [Port AWS exporter repository](https://github.com/port-labs/template-assets) you cloned during the [ingestion step](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/Installation/#terraform-installation-recommended), go to the `template-assets/aws/s3_bucket` folder. We are going to add a relation from our S3 bucket configuration to the `Service` blueprint by editing two files:
+2. In the [Port AWS exporter repository](https://github.com/port-labs/template-assets) you cloned during the [ingestion step](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/installation/#terraform-installation-recommended), go to the `template-assets/aws/s3_bucket` folder. We are going to add a relation from our S3 bucket configuration to the `Service` blueprint by editing two files:
    - `blueprint.tf`: We will define the relation to `service` in the S3 bucket blueprint.
    - `config.json`: We then write the mapping logic to define how a service is linked to a bucket based on tags.
 

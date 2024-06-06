@@ -21,7 +21,7 @@ This GitHub action allows you to add tags to an S3 Bucket via Port Actions with 
 3. Create an AWS S3 Bucket blueprint in Port using the blueprint below:
 
 :::tip Ingest AWS Resources
-Use our [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/Installation#terraform-installation-recommended) to ingest different kinds of resources from your AWS account. For instance, leverage it to [automatically generate the S3 blueprint and import all existing buckets](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples#s3-buckets) within your AWS account.
+Use our [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/installation#terraform-installation-recommended) to ingest different kinds of resources from your AWS account. For instance, leverage it to [automatically generate the S3 blueprint and import all existing buckets](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples#s3-buckets) within your AWS account.
 :::
 
 <details>
