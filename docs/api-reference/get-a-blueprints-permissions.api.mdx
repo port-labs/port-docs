@@ -1,0 +1,101 @@
+---
+id: get-a-blueprints-permissions
+title: "Get a blueprint's permissions"
+description: "This route allows you to retrieve the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.getport.io/build-your-software-catalog/set-catalog-rbac/examples)."
+sidebar_label: "Get a blueprint's permissions"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVM1u2zAMfhVBl7WAEyc7GkWBDhuKYZei605FMMg2Ewu1LZeikmaG332kY6dO29x22sWWJZLi90O3OgefoW3Iulon+qGwXqELBMqUpdt5tXdBkVMIhBa2oKgA1QBW1ntO8cqtlVFpGaBBW9P8KsX4un88OFWCwVpVDrlaykWniZHKCsielGxLzcfcZaGCmoy0srooiBqfxDFv+/kGqHFIc+viNNgyn3FXOPNuTTuDMMsMmdJtYg80rmeYmiyGF1M1JfjLuY40mY3XyaP+Mjbr9SrSjUFTAQHKWas9d1UZnbSa9g0wI55x1xvdRdoKQY2hgmvVnMNfR9y/bc6t27UF5FOE52ARcp0QBojecQzqNVwIFPzHUmpXOH/KsWiwM3w0EWKuO+7eQxbQ0r7vPWW6+X6GiGDyJJ3glFgE33A18ILu82Ihr9POvsLahJLU/RCpO4bN5BSOoWgWQUcHAhIdb5fx6wVx+xETXTwBoaVZ3I48Byy5yiiyaexE4xNkP0WQQ88jvqM2nPYD9q9y3ARuFe2f3kJ6UKxgLjir6xVcuz7dUinxd3yfurn7zqHS2IGE5XwhajfOU2VqCR+q3wJNrf7Jq1N4J1y2OnM1MRP/+1AdlCB4obgpDTPO3PXitoNVHvV2yYETN0Y6OTM4U0LZAzwIJAXaNjUefmHZdbL9HADF8bzcGrQmFTHZU7n1smavrk3p387dVJGL+2FCL9W/msYzVIxOrcWmW8Nl+YuXT+zbM/+PbjWduttvDxxuglA5Nf5Tb/xhIeg/vOntRByulWcXnUm54oFQPFbXx/DDydmEYcDGaMG96rruL5IXPWM=
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a blueprint's permissions"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/blueprints/{blueprint_identifier}/permissions"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to retrieve the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.getport.io/build-your-software-catalog/set-catalog-rbac/examples).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint whose permissions you want to retrieve."}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

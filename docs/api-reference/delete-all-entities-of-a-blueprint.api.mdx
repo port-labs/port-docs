@@ -1,0 +1,130 @@
+---
+id: delete-all-entities-of-a-blueprint
+title: "Delete all entities of a blueprint"
+description: "This route allows you to delete all entities of a specific blueprint in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities)."
+sidebar_label: "Delete all entities of a blueprint"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVctu2zAQ/BWCuSSAZSU9GkGAAPEhaA9B6x4Kw4gpamURoUWFpOy4hv69u3pZNqy0RXtqL0r42p2dmV3veQxOWpV7ZTI+4bNUOWZN4YEJrc3WsZ0pmDcsBg31JoPMK6/AMZMwwVwOUiVKskgXkFuVeaYyemWZM4nfCgtMCi+0WY1vIxveVZ+ZYRqEzdja4LmIMGMXd8RkCvKF0Z5Pgc1jI4s1ngoCubhMvc/dJAxx241X4HNj/ViZMCqUjgPKHLSZgyZz6HaZDGJcBN50mxdtxqsxH3EvVo5P5nzabPLFiOfCijXWbelkzx0CWws+2XO/ywHpch4LXvFyxBWx91qA3WGoDB/h0hbZs4pxbeG1UBZiPkmEdjA6If0bUixFxnJrNipGOtiyfrok5oVzRiqB5BMZtQ7xQYSt8mlfhrmQFJZhhGGqpAUMGDjQCX7sRkkI4C0HqyCT4EILiQbpgzpWgMBWFpwLL/wO6w3a5ESmyNpbmPGqlhgJOUNWZAxqng2xVVf23Nno57w9JmzpbQHLEVKDvpXkzq3CD97uLEus9bzpqej3YJ5omgufHkB2gVAdYiFRYI+AEp5TnDNEcLhObXOMaZsaBwdFqeO2Ave7tmvhoiMdyMIqv6v8GGELYf7JfEFHqFBuMofOxWI+XF/Tn2MgD415XCFRZZcUWu/GvMRS0eSpiTsV+Kiue8LDzU3YIXXh/hwBZYjEd6bgBNJu2p4prMYwrRFFrno+PKroCwlRg2/r6jTBZx+h55X7AuFa9b2aCLxRKgUR46uyUi4x1XPlNd1/wnzs/ukRrxKwmo2b8TWpnBvn12hLvN5EfxiadX1vHjG759JkHi//5yO0VsvDmw9zLVTV65UB9o2f5nxzgxcPjsLFZKCpjkyFRsEu8RRhv4+Eg69WlyVt12OErBYrJyI9NC76Gv17E3eA/Bfsmt4P0UYg1bhRTb5fp+uPB+276M4M/gPOBS2sIqC/qfHl52YoX7G/NYAHymiHVLbrQ2/LO+vuctEfug/TT9PZlCxfUJP0x95LNfaaf4iAs8lO52Gdmb4k9NkntzgOGQ7Vu+56fTL4oBmv7W0qfVGW5Q9S6522
+sidebar_class_name: "delete api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Delete all entities of a blueprint"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/blueprints/{blueprint_identifier}/all-entities"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to delete all entities of a specific blueprint in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint whose entities you want to delete.<br/>"}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"run_id","required":false,"description":"You can provide a `run_id` to associate the deleted entities with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>"}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean"},"in":"query","name":"delete_blueprint","required":false,"description":"If `true`, this call will also delete the blueprint itself.<br/>"}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Deleted successfully.
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

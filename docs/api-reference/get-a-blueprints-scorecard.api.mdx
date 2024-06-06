@@ -1,0 +1,106 @@
+---
+id: get-a-blueprints-scorecard
+title: "Get a blueprint's scorecard"
+description: "This route allows you to fetch a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/)."
+sidebar_label: "Get a blueprint's scorecard"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVE1r20AQ/SvDXpqAazk9ihAItITSS0jSUzBlLY2iJbJW3p116gr9985IsqQGpRDTWy/2anc+33sztUrRJ85UZGypYvWQGw/OBkLQRWFfPBxsALKQISU5aPAVJiYzCfjEOky0S5dwPX4Au7MREtgMXCjQA+WaIMXMlMhnhF3QhaGDGGjYFAErZ0paXm5cdNX+PFgoULsSthwU9IarGRP4BSQ5Js8gtxLuMbVJ2GJJWlpYn+VElY+jiK/98gmpso6WxkaVs1tL+HGMFJ0v1UKRfvIqflT3w71aL1Slnd4ioZO3WnnOudUqrhUdKmScPHHRT6pZKCOwVZpyjlWyjzweQ/0wKRfGcKHj19dII4zPgoZ0MwIpuL/okgbwO4Q4jsNdMA5TFZML2CzeW96A+fvLG1zhJbf+pHIZXI9JcCyBFtoNU835mQGHOo39hAaxdegrW3r00t2n1Ur+/qz0M2Y6FAR3vaVquG3mLrecUrEC1KIDIFbR/iIaWvBRPYdEE00UUs9R2Shpwe2P4giu4NhH3enKTGSnpv3eC01dJ8euB8bY7RseRpKuAzfgzK9W1arnMWeE2Ktpec1s626oEPtbzgfXt1/ZVArroLlYrkQDlfW01aWY99FveEAnw/fBj0y+VkKtElsS9/5/boeOHcKfFFWFZhYYz5bwuhfVo9pfsOEoK/6I3xixibjZaHZNsFx4skji1vVGe/zuiqaR611AJyPDx712Rm+Ed5ZfarycWeyZLjz+hb6zu34Uz+H07TOLyFHEpSh4r7l7/uLjM0v6jX0oe+sfln7KZjqhlVlim/V049x8eWBzHUQc0/F+bse7Pwhxs5lez32XVn4FsFmXSx574OVxNZh3L2869GvkaC19r5um+Q3rvc+K
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a blueprint's scorecard"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"scorecard_identifier","description":"The identifier of the scorecard you want to fetch.<br/>","required":true}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","description":"The identifier of the blueprint whose scorecard you want to fetch.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

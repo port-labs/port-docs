@@ -1,0 +1,140 @@
+---
+id: get-an-integrations-audit-logs
+title: "Get an integration's audit logs"
+description: "This route allows you to fetch the audit logs of a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/)."
+sidebar_label: "Get an integration's audit logs"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVVtP2zAU/iuWXwZS27SFSVOEkJCGULWHIWAvQxW4idNYJHbwpdBF+e87x0nTFJWuDKQ97CXx5Vy+c/tc0pibSIvCCiVpSG9SYYhWznLCskw9GbJUjlhFEm6jlNgUzl0sLMnU3BCVEEZMwSORiIgIaflcM7QEa1TU5FJpS5SeMyl++ZvByUwHp/5zo0jGmZYkVxrMzsBr14bpkSjl0QPBc3R8G6vI5Vxafz09SK0tTBgEcGwGc24L8DUQKpg5kcV9dN83KrFPTPN+xCwDyIFZyqgfw6ZvVXt4OKA9atnc0PCWTjoI6LRHC6ZZzi3XeFtSA5hyRsOS2mXBIWPS5TOuwUDME+YyS8NRj+ZCitzlfi1dlrFZBrIJywyvelRgph8d10tQk2AdtgWbc29ksxqc1PYx1Shi2lrUiQQVzR+d0Dxu7e8HcjjswMQ1e67XR3izJ2iu7/YA7nul7SFQ8qG8KQBjtZBz+goOY5m2d1DW7Uj8NcFrRIOthIh62KT3k+vvJFE6Z5ZMzsl4OB73h8f98dHN6Es4/hweHw0+j0Y/7z8QLJfx61Dh8t8BLZhN1zhFDKMGg930zUukQkJaoUnqcY9XgDsDvAWK1Y5XMFSGR04Lu/QjNQMSACcwe5qzOBQbA4jSmpsCNtwg9PFwiL9NQF/rtiZXjSStICaY2lSBUwrcQHt1dCENFqOg4yIo13FWAaabIjy9WA280xlorbiGFaJDNbQbyzVmt8a4iqhNNKh9450eOHMATTeUSJv0pxA9aFW+HIny6sLiDFJPo2eXExBFYHXQo8EQS1coY3MmUbyxfsEtYbJbik+mQ9svy1nSSIGotP83/9eVsvzZBkXGoCKQW1/8smmdW7oY+Vq1EGEXboyJTy/0RAo1QYWynDHDf+isqvC4ZgLsqlgYpNfVdO6syB5vwFbwD9Bx7cOyYJlDEYpE8Lfe/0Dku1CsX4p3IPlIIt8BduM5eQfcjyPzHWA7z8ka6hQ3WtQv+Jva7eCqIetD8kaW34pxxX9y2cW3wt6ZnWraZeyL8xsQYg7HrkuiD55EmwUGttX+S3atneEXa7hV5QTIlQBFn7bi9c2rCg1Zt5FIjKCqfgN9rNHd
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an integration's audit logs"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/integration/{identifier}/logs"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch the audit logs of a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The installation id of the integration.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"number","default":1,"minimum":1,"nullable":false},"in":"query","name":"page","description":"The number of pages to fetch.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"number","default":100,"minimum":0,"maximum":300,"nullable":false},"in":"query","name":"per_page","description":"The number of logs to fetch per page.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"start_date","description":"The start date of the logs, in `ISO format IE 2022-04-23T18:25:43.511Z`.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"end_date","description":"The end date of the logs, in `ISO format IE 2022-04-23T18:25:43.511Z`.<br/>","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

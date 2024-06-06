@@ -1,0 +1,211 @@
+---
+id: invite-a-user-to-your-organization
+title: "Invite a user to your organization"
+description: "This route allows you to invite a user to your Port organization.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Invite a user to your organization"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVV2P0zgU/SuWWYll1Wlm9rEgEAs8jPZhRzA8tUXcJLetGccOtpNSqvx37rWTNtMpHxJvq0qu49zP43Nu9rJEXzhVB2WNnMnbjfLC2SagAK3t1oudbUSwQplW8aFoPDo+oHMnbqwLwro1GPUVOMT0We6y53G5tUIjOCMq68gxp6DR2U8ogUb6A1OKgFDRtthgcSfYJGxQzEtbNBWaEGMu/9yEUPtZltGxn64x1JR2qmzmvb1wORQZLxe2Rdcq3GZPpnIiA6y9nM3le04plxPp8HODPvxjy52c7WVhTaAMvIW61qqIubJPnnHYS08VVcC7sKuRkLH5JywCBa6drdEFhZ7fJlzwnOEpsihKDKC0F3YV24xQMr5bMOEIcsLwQSYqR+lRHh+cMuuzeTjwYy+ih4CydOj9MSqEgI5NP8w/PH2ULRYvFgu/HPbLv8anf8iOkOPrGmUG52B3NnG0vNcSeK/WhndDx4dCqNXKP2yoo4yRFb+U0UCFB0Cj29n0A9rB/jx9l7iiHJZMoIT7ko8JSsW5Qd+MrmYF2uN9n4EVy5NowTXY8RU4KjswMWfzM1zLLeEIJja8gkaHg6fivonHjtHg3unR2KBWD9G5XomP7PVxEtvvSxJbpbVwWKBqSZWmJ0mM0WvggNCx7thiRyLyWDROhV2sOyd5o+N+C4cQcNYkrXVRbb62xife/H15yX/363udWhNve8t48YTKxlJCWVsfElk39JS1V1kMnqU2JFfi2gHAxpEw5DAloFajISHHZb9jpFNNQ/FHjtXqXxzB+rKhUlw/12QP/QahJC8ulSfF2+NMefMFqlrjyUzoRXsUa6+l+XCyPJD9eNTFi17ZWJwKHFTGSfvy5ppCcNsJwqvpJeuTsaogjq2+9uuz03o8qE/pMhqI/6ePQLragF9CVmugKyS4Ilv2PbXmsr0iw8TcSX91fCsbJiC93u9z8Pje6a7j46Q9Jl2pPOT6oI4f4Pn7Sjzbxx2xdaT+FnTDRpHwLTjF1VGlSzLtactlJ69XqbiLWw589H3wJeRYB03e/Pfulozz/gta2ZJ9HGyZ17TO5IJ+9GAjCFFm8XwvNZh1A2u2T3HjOG34BsYCvIsC7Ddc7fDKjDs8VWZqiddu8h2XZyQdQfJ+fjBPb77r0CM2WDPiPMy/AbHgKwE=
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Invite a user to your organization"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/users/invite"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to invite a user to your Port organization.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":true},"in":"query","name":"notify","description":"If `true`, the invitee will receive an email notification.<br/>","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <span
+                className={"openapi-schema__container"}
+              >
+                <strong
+                  className={"openapi-schema__property"}
+                >
+                  invitee
+                </strong><span
+                  className={"openapi-schema__name"}
+                >
+                   object
+                </span><span
+                  className={"openapi-schema__divider"}
+                >
+                  
+                </span><span
+                  className={"openapi-schema__required"}
+                >
+                  required
+                </span>
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <div
+                style={{"marginTop":".5rem","marginBottom":".5rem"}}
+              >
+                
+                
+                The details of the user you want to invite.<br/>
+                
+                
+              </div><SchemaItem
+                collapsible={false}
+                name={"email"}
+                required={true}
+                schemaName={"string"}
+                qualifierMessage={"**Possible values:** Value must match regular expression `^[^;#/\\?\\s][^;#/\\?]*[^;#/\\?\\s]$`"}
+                schema={{"type":"string","description":"The user's email address.<br/>","pattern":"^[^;#/\\?\\s][^;#/\\?]*[^;#/\\?\\s]$"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={false}
+                name={"roles"}
+                required={false}
+                schemaName={"string[]"}
+                qualifierMessage={undefined}
+                schema={{"type":"array","description":"The roles you want to assign to the user.<br/>","items":{"type":"string"}}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={false}
+                name={"teams"}
+                required={false}
+                schemaName={"string[]"}
+                qualifierMessage={undefined}
+                schema={{"type":"array","description":"The names of the teams you want to assign the user to.<br/>","items":{"type":"string"}}}
+              >
+                
+              </SchemaItem>
+            </div>
+          </details>
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

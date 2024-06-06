@@ -1,0 +1,425 @@
+---
+id: create-an-entity
+title: "Create an entity"
+description: "This route allows you to create an entity in your software catalog based on an existing blueprint in your data model. It can also be used to overwrite or update an existing entity.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities)."
+sidebar_label: "Create an entity"
+hide_title: true
+hide_table_of_contents: true
+api: eJztWVtv2zYU/iuEOmArZkVp1z3MyIJlWwcUQ9ei7R62xLNpibLYyKJGUnG8IP993yF1s2I7a+MBxbC0sCVeDs/9fDy+CRJhYi1LK1URjIN3mTRMq8oKxvNcrQxbq4pZxWItOA0WTBRW2jWTBU1pZlRqV1wLFnPLc7Vgc25EwlTh1l5LY2WBwbwSpZaFbfclWM6WKhH5EXthsRsbcqPYXLCKCOBMdSX0SkscqzSryqRhoCHqOTk6mevo1H28UywXXBegC4b4HHL4RVKYEYszEV8yGrOZYOeJiqslZjmJPvkis7Y04yjCsDlaCFsqbY+kiuaVzJOQWA4bUcNa1MisizgkQUKr2sFHzYmPj4JRYPnCBOPz4Hk9GExGgRZ/VsLY71WyDsY3QawKiz30yMsyl7HjKHpvyCI3gQHfS05Pdl0K2EjN34vYgnapVSm0o4pZmdDBqRS6t9ZYKH1Ba7m1QpOJ/zg/C3/n4V/H4TffTY/GF/iLvg0nX36GVUNnEKyjylTqFFeI1Ybmg1tIKW0uth17l6Bbuo+WjL3c95OilXu5Enx5h9KI+e/zyVaar2F2RhsjQy64ymScDQ5gK5nn8NNcFYvusE1jDE21edAZ2HYzjGzPZUHeTId0RO7KNaLQmV0El2J9EYwvgiuOmLoIZqzkUhtwKuDztGWGFTOGOO5RXH9ueqYcIYwSv9ZRcaulNcy9dTJpkTtffIhILY1DSdQQvF+idjXSiT9xY08jJwTlSSKJJs9f98xodSUwKa75svTu3Y+xAIKESxlrZYS+krEI2jgIXq5/EauXm3Per4PBqPfR88nQgdqkECzXrHkZmOSW/ii0NV8KRDclmi35Yq4UsmLhTJbyKgfRFKmWRJPEEZKRXmO2ABW8ViW4IwNTmpJaJPXyocVfpGxGGpqNoGhoO0bB8KFBeVtDVc4ApDAt2qqRws+Q6FFNkrXP5Kb1t4fzvhR6IT6Adec1M7fLeYyrQDukqgtQI9O/LwwcWSbO2FNV5OsHWQT7WU1vQwSSXwtboWbSaHckgwmVPqQ4HkFMl9IY5IZpHZjTplo+RDxnthqh1PQ3Ax/0vSQO3+A/IEZa5ZRiHBxhKw5osg3mkIIoMw7JUepShXBMjAifwBn2ElpliPpBOmKJAqVCWe88bC3sPoXXpXCHfnVVTGVyvxp/A5eEtpBvrihIOZv5rTPimxujYtl4iZci6QqfzbDelCJGEozZOY+dr2D/bgDlaYRG5GlY571QXCPVSVHEwkRapDnqRuhphWBroYUx0SO7hrRho3CCWLxoVuHExx+gKqCfrNNUC0anvXze1xt52T8DQx2u3Wv8VKtlwy5SvRFxBVy7dvl6DsRK9eR8cuuwoSmR3X0ReHp8TF+bjLytYqjNwH0R0z4pJd1RJPLT4yf3bGvsurHt2bbTXhUtWEsV3Qgc8Ha5gakYYkBhY3ZRXBQnls9zcUoPGp+Mndjs9DmtPInw1Iz82JGvx/GlN7Ylp7M5T6Y1TJ5hPmlnyAyEjBv3TboYWnJbYzV3gUGt925R7992DDm+uM54ZaCNuwd17u1dvwZU/lza/AJBk3HT1oAUuMdkFDDXMHEtY//wqFGSV/hXH6nwg+u78f1pgy82lfGmHqXEQarGJQ0XN0EuNBcx1CeoElIBZS0pNiS17dymGiAduEe4/ubJlK0S5eyb8Suov1tIkYbXVOllDfWcv9DlE8Pu6CP2E1JzWmnM48opAExz3ASB5nBJ9Ug1tv4+ypOlvMdazz4Va0Eb01RVxcBlz6ACA1lisc1du+Q1Q6LyIeOI7Bf6m09F6I7/qeWXorgbrttl3cRno14SN2yJwHcdh0LCd/Yq4unTT0URdGWYygIeLS1HCQWEIupb8ldbnZALe8DF7XQFXmp313X1iSkXJO06myGNLrKNjksT0nsiuiuuPvsS4HOZeY+9hmioy+R9Ce7P5vuT2FnLPmWqZvFeen75dMmL9fRKqu1UWzH0IEvWN2HfjbIZ94jRC7vP177+6EJ8+KArqGvE86k7aSA59FhPe0ZaPthu6SAe7qqZSgiVKWN9ayrDW3T1JGrNbaKbbSjtNupdFwhMNpfeSucg0UBQXsoeAt2AXG/JiTy6aoBXCxqx7WfRQ9RnFRjV8i9n1KCGkhmSCXaRIIRD3nS9vOc7+gRtB6vpDrQDdUuga9L1WwB3LvvEQKocvzUh16w6e/0CW0kT3lGeHB27fhSUC7+l5bU4PwxQ6bCH0286/N8HPnQf2LuYFdc2KnNkBbKR89qbOgDOg6snWNiFAF7GO64qbRTAszOKIuy+uSGN/6rz21sa9rdDio1EGlcftt8H+1Y/dEtnh9iXCLJen8k17DDgbnIfwey/1sTZy37Tanoo9wfv1ezl+m5P6eD8//eaMXs1en9b6yM1/F/r0+zVYtu86pQ1oRctSVsfmMa+eFNju8fsUF2bHcw3wKHYiKRGqK3J+3aCfTWIILH80h888+E7ItiRuvN7IGmlxU+vX719RxWj/h2Riiipkq+omYXPcXCBf3hRZfsrjhu/CXJeLCq+oPWervsVpKI61IdDlw4O1Q/E7VaBhzjJi0Sf5PFbt5wAtTCArdOgl5kws3NDrbFmNal/Aqb/Br/W2xk=
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create an entity"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/blueprints/{blueprint_identifier}/entities"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to create an entity in your software catalog based on an existing blueprint in your data model. It can also be used to overwrite or update an existing entity.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint you want to create an entity from.<br/>"}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"upsert","required":false,"description":"If `true`, this call will override the entire entity if it already exists.<br/>"}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"merge","required":false,"description":"If `true` and `merge` is also `true`, this call will update the entity if it already exists.<br/>"}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"validation_only","required":false,"description":"If `true`, this call will only validate the entity and return the validation errors.<br/>"}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"create_missing_related_entities","required":false,"description":"If `true`, this call will also create missing related entities.<br/>This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.<br/>"}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"run_id","required":false,"description":"You can provide a `run_id` to associate the created entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>"}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"identifier"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** Value must match regular expression `^[A-Za-z0-9@_.:\\\\/=-]+$`"}
+          schema={{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$","description":"The identifier of the new entity.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"title"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The title of the new entity.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"icon"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The icon of the new entity.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"team"}
+          required={false}
+          schemaName={"string, string[]"}
+          qualifierMessage={undefined}
+          schema={{"type":"string, string[]","description":"The Port team/s to which the new entity will belong.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"properties"}
+          required={false}
+          schemaName={"object"}
+          qualifierMessage={undefined}
+          schema={{"type":"object","description":"An object containing the properties of the new entity, in `\"key\":\"value\"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"relations"}
+          required={false}
+          schemaName={"object"}
+          qualifierMessage={undefined}
+          schema={{"type":"object","description":"An object containing the relations of the new entity, in `\"key\":\"value\"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          name={"property name*"}
+          required={false}
+          schemaName={"any"}
+          qualifierMessage={undefined}
+          schema={{"type":"object","properties":{"identifier":{"type":"string","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$","description":"The identifier of the new entity.<br/>"},"title":{"type":"string","description":"The title of the new entity.<br/>"},"icon":{"type":"string","description":"The icon of the new entity.<br/>"},"team":{"type":"string, string[]","description":"The Port team/s to which the new entity will belong.<br/>"},"properties":{"type":"object","description":"An object containing the properties of the new entity, in `\"key\":\"value\"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>"},"relations":{"type":"object","description":"An object containing the relations of the new entity, in `\"key\":\"value\"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>"}},"additionalProperties":true}}
+          collapsible={false}
+          discriminator={false}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Successfully updated an entity
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"201"}
+        value={"201"}
+      >
+        <div>
+          
+          
+          Successfully created an entity
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"400"}
+        value={"400"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred: 
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`bad_request`</td>
+            <td>The json provided does not match the route's schema</td>
+          </tr>
+          <tr>
+            <td>`run_exhausted`</td>
+            <td>The action run with the provided `runId` has already finished execution</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"403"}
+        value={"403"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`required_relation`</td>
+            <td>Relation cannot be deleted because it is a `required relation`</td>
+          </tr>
+          <tr>
+            <td>`missing_permissions`</td>
+            <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"404"}
+        value={"404"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`not_found`</td>
+            <td>A resource with the provided `identifier` was not found</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"409"}
+        value={"409"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`identifier_taken`</td>
+            <td>The provided `identifier` already exists, identifiers must be unique</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"422"}
+        value={"422"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`team_inheritance_enabled`</td>
+            <td>The blueprint's entities inherite their team from other entities through an existing relation</td>
+          </tr>
+          <tr>
+            <td>`blueprint_schema_mismatch`</td>
+            <td>The provided entity does not match the blueprint's schema</td>
+          </tr>
+          <tr>
+            <td>`required_relation`</td>
+            <td>A relation is required</td>
+          </tr>
+          <tr>
+            <td>`relation_many_violation`</td>
+            <td>A provided relation cannot contain more than one entity</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`internal_error`</td>
+            <td>An internal error occurred </td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

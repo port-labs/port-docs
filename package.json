@@ -31,7 +31,7 @@
     "docusaurus-plugin-image-zoom": "^2.0.0",
     "docusaurus-plugin-openapi-docs": "^3.0.0-beta.10",
     "docusaurus-theme-openapi-docs": "^3.0.0-beta.10",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.0",
     "prism-react-renderer": "^2.3.1",
     "react": "^18.3.1",
     "react-dom": "^18.2.0",
