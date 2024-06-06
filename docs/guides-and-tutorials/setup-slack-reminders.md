@@ -157,7 +157,7 @@ name: Generate Scorecards Reminders
 on:
   workflow_dispatch:
     inputs:
-      run_id:
+      runId:
         description: 'The id of the action run'
         required: true
         type: string
@@ -181,7 +181,7 @@ jobs:
                 clientId: ${{ secrets.PORT_CLIENT_ID }}
                 clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
                 operation: PATCH_RUN
-                runId: ${{ inputs.run_id }}
+                runId: ${{ inputs.runId }}
                 logMessage: |
                     Slack reminder sent successfully 🚀
 ```
