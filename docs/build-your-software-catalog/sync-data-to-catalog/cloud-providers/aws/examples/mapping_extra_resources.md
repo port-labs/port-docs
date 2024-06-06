@@ -32,7 +32,6 @@ Create a Port blueprint definition for the resource. The blueprint definition is
 A few examples:
 
 <EcsServiceBlueprint/>
-<AppRunnerBlueprint/>
 <SQSBlueprint/>
 <LambdaBlueprint/>
 
