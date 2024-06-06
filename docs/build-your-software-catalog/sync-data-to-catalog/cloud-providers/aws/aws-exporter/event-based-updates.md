@@ -14,7 +14,7 @@ Furthermore, the [AWS CloudTrail](https://aws.amazon.com/cloudtrail/) service au
 
 A user can create an [AWS EventBridge rule](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) to consume and transform particular events, and send them to a target, such as an [AWS SQS Queue](https://aws.amazon.com/sqs/).
 
-[The AWS exporter application](./aws.md#exporter-aws-serverless-application) creates an SQS Queue as part of its installation process, and configures it as an event source for the exporter's lambda.
+[The AWS exporter application](./aws-exporter.md#exporter-aws-serverless-application) creates an SQS Queue as part of its installation process, and configures it as an event source for the exporter's lambda.
 
 This allows you to set up an event rule, that consumes any events from the bus and sends them to the AWS exporter's queue.
 
@@ -27,7 +27,7 @@ The events in the queue are consumed automatically by the exporter's lambda, tha
 
 The AWS exporter's lambda accepts JSON events with the following structure:
 
-- `resource_type` - a hardcoded string representing the AWS resource type that is configured in the [`config.json`](./aws.md#exporter-configjson-file) of the AWS Exporter;
+- `resource_type` - a hardcoded string representing the AWS resource type that is configured in the [`config.json`](./aws-exporter.md#exporter-configjson-file) of the AWS Exporter;
 - `region` - A JQ query to get the region from the event, usually the value will be `"\"<awsRegion>\""`;
 - `action` (Optional, defaults to `upsert`) - A JQ query to define the desired action: `upsert` or `delete` the Port entity of the matching resource. Will usually be based on the event name, like in the example below;
 - `identifier` - A JQ query to calculate the resource identifier. In case the action is `upsert`, it should be the AWS Cloud Control API resource identifier. Otherwise, for `delete` actions, it should be the Port entity identifier. It is recommended to use a Port entity identifier that is identical to the Cloud Control API resource identifier (when applicable), this will make it possible to use the same event rule both for upsert and delete events (while also saving the need for complex JQ filtering patterns).
@@ -83,7 +83,7 @@ The event rule is how you specify the exact events you want to consume, and defi
 Before diving deep into the [event rule properties](#properties), here is a complete example of a `CloudFormation YAML template` to manage an event rule, for the AWS Exporter:
 
 ```yaml showLineNumbers
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Description: The template used to create event rules for the Port AWS exporter.
 
 Parameters:
@@ -92,7 +92,7 @@ Parameters:
     Type: String
     MinLength: 1
     MaxLength: 255
-    AllowedPattern: "^[a-zA-Z][-a-zA-Z0-9]*$"
+    AllowedPattern: '^[a-zA-Z][-a-zA-Z0-9]*$'
     Default: serverlessrepo-port-aws-exporter
 
 Resources:
@@ -115,11 +115,11 @@ Resources:
       Name: port-aws-exporter-sync-lambda-trails
       State: ENABLED
       Targets:
-        - Id: "PortAWSExporterEventsQueue"
+        - Id: 'PortAWSExporterEventsQueue'
           Arn:
             {
-              "Fn::ImportValue":
-                { "Fn::Sub": "${PortAWSExporterStackName}-EventsQueueARN" },
+              'Fn::ImportValue':
+                { 'Fn::Sub': '${PortAWSExporterStackName}-EventsQueueARN' },
             }
           InputTransformer:
             InputPathsMap:
@@ -301,5 +301,5 @@ To read more about input transformer in EventBridge, click [here](https://docs.a
 
 ### Examples
 
-- Refer to the [examples](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
+- Refer to the [examples](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
 - Refer to the Event Bridge rule [Terraform example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/terraform_deploy_eventbridge_rule)
