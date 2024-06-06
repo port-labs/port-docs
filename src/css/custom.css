@@ -562,3 +562,7 @@ html[data-theme="dark"] .openapi-schema__list-item {
 .badge:not(.openapi__method-endpoint *) {
   margin-bottom: 0.6rem !important;
 }
+
+.theme-code-block-highlighted-line {
+  display: table-row !important;
+}
