@@ -42,7 +42,7 @@ The AWS integration allows you to perform extract, transform, load (ETL) on data
 
 The integration is deployed using AWS's [ECS service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html) that is deployed to your AWS Account.
 
-The AWS integration uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a middle-ground between an overly opinionated AWS visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal. ## WHATTTTTT?
+The AWS integration uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a middle-ground between an overly opinionated AWS visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
 Here is an example snippet from the config which demonstrates the ETL process for getting `Cloudformation Stack` data from AWS and into the software catalog:
 

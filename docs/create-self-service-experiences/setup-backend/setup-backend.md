@@ -58,7 +58,63 @@ For example, this payload contains a user input, and the action's run id (unique
 <img src='/img/self-service-actions/setup-backend/action-form-backend-payload.png' width='85%' border='1px' />
 <br/><br/>
 
-You can access any key in your action's JSON structure and add it to the payload. Use the `Test JQ` button to test your expressions against your action and ensure you are sending the correct data.
+When executing an action, Port creates an object that contains data about the action's execution.  
+This entire object is accessible to you when constructing the payload, and it looks like this:
+
+```json
+{
+  // `inputs` contains the action's user inputs, and thus relevant only for self-service actions
+  "inputs": {
+    "microservice_name": "string",
+    "microservice_description": "string",
+    "language": "string",
+    "version": "string",
+    "core": "string",
+    "features": "string"
+  },
+  "trigger": {
+    "by": {
+      "orgId": "<Your organization's id>",
+      "userId": "<Executing user's id>",
+      "user": {
+        "email": "<Executing user's email>",
+        "firstName": "<Executing user's firstName>",
+        "lastName": "<Executing user's lastName>",
+        "phoneNumber": "<Executing user's phoneNumber>",
+        "picture": "",
+        "providers": [],
+        "status": "ACTIVE",
+        "id": "<Executing user's id>",
+        "createdAt": "2024-06-06T05:21:00.565Z",
+        "updatedAt": "2024-06-06T05:21:00.565Z"
+      }
+    },
+    "origin": "UI",
+    "at": "2024-06-06T05:21:00.565Z",
+    "operation": "CREATE"
+  },
+  "event": null,
+  "entity": {},
+  "action": {
+    "identifier": "Microservice_scaffold_a_microservice",
+    "blueprint": "Microservice",
+    "encryptedProperties": []
+  },
+  "run": {
+    "id": "<The current run's id>"
+  }
+}
+```
+
+You can access any value in this structure and add it to the payload. For example, to add the executing user's name to the payload, you can use the following expression:
+
+```json
+{
+  "executing_user_email": "{{.trigger.by.user.email}}"
+}
+```
+
+Use the `Test JQ` button in the bottom-left corner to test your expressions against your action and ensure you are sending the correct data.
 
 #### spreadValue() function
 
