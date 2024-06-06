@@ -109,7 +109,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### AWS
 
-- [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
+- [AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
 - [Map AWS Resources to your integration](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
 - [Deploy AWS resources using AWS CloudFormation](/create-self-service-experiences/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
 - [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/custom-integration/iac/terraform/examples/s3-bucket.md)
