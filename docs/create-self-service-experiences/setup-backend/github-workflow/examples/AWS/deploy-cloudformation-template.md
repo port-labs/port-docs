@@ -11,7 +11,7 @@ This example demonstrates how to deploy an AWS resource using an [AWS CloudForma
 
 We will use an AWS managed GitHub Action called [aws-actions/aws-cloudformation-github-deploy](https://github.com/aws-actions/aws-cloudformation-github-deploy).
 
-## Steps 
+## Steps
 
 1. Create the following GitHub action secrets:
 
@@ -185,7 +185,6 @@ We will use an AWS managed GitHub Action called [aws-actions/aws-cloudformation-
 
 4. Create Port Action using the following JSON definition:
 
-
 :::note
 Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE placeholders to match your environment.
 :::
@@ -194,7 +193,6 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
 
   <details>
   <summary>Port Action</summary>
-
 
 ```json showLineNumbers
 {
@@ -214,10 +212,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
           "title": "Instance Type",
           "type": "string",
           "default": "t2.micro",
-          "enum": [
-            "t2.micro",
-            "t2.small"
-          ],
+          "enum": ["t2.micro", "t2.small"],
           "enumColors": {
             "t2.micro": "lightGray",
             "t2.small": "lightGray"
@@ -323,14 +318,8 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
           }
         }
       },
-      "required": [
-        "bucket_name",
-        "bucket_acl"
-      ],
-      "order": [
-        "bucket_name",
-        "bucket_acl"
-      ]
+      "required": ["bucket_name", "bucket_acl"],
+      "order": ["bucket_name", "bucket_acl"]
     },
     "blueprintIdentifier": "s3_bucket"
   },
@@ -392,12 +381,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
           "title": "DB Engine",
           "type": "string",
           "default": "mysql",
-          "enum": [
-            "mysql",
-            "postgres",
-            "sqlserver",
-            "oracle"
-          ],
+          "enum": ["mysql", "postgres", "sqlserver", "oracle"],
           "enumColors": {
             "mysql": "lightGray",
             "postgres": "lightGray",
@@ -416,11 +400,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
           "title": "DB Instance Class",
           "type": "string",
           "default": "db.t2.micro",
-          "enum": [
-            "db.t2.micro",
-            "db.t2.small",
-            "db.m4.large"
-          ],
+          "enum": ["db.t2.micro", "db.t2.small", "db.m4.large"],
           "enumColors": {
             "db.t2.micro": "lightGray",
             "db.t2.small": "lightGray",
@@ -485,7 +465,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
   <summary>AWS CloudFormation Template</summary>
 
 ```yml showLineNumbers
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Description: CloudFormation Template to Deploy an EC2 Instance
 
 Parameters:
@@ -551,7 +531,7 @@ Outputs:
   <summary>AWS CloudFormation Template</summary>
 
 ```yml showLineNumbers
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Description: CloudFormation Template for an S3 Bucket
 
 Parameters:
@@ -575,7 +555,7 @@ Parameters:
 
 Resources:
   S3Bucket:
-    Type: "AWS::S3::Bucket"
+    Type: 'AWS::S3::Bucket'
     Properties:
       BucketName: !Ref BucketName
       AccessControl: !Ref BucketAcl
@@ -594,7 +574,7 @@ Outputs:
   <summary>AWS CloudFormation Template</summary>
 
 ```yml showLineNumbers
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Description: CloudFormation Template for an Amazon RDS Instance
 
 Parameters:
@@ -655,7 +635,7 @@ Parameters:
 
 Resources:
   RDSInstance:
-    Type: "AWS::RDS::DBInstance"
+    Type: 'AWS::RDS::DBInstance'
     Properties:
       DBInstanceIdentifier: !Ref DBInstanceIdentifier
       AllocatedStorage: !Ref AllocatedStorage
@@ -713,8 +693,7 @@ on:
         description: security group ids
       port_context:
         required: true
-        description:
-          Action and general port_context (blueprint, run id, etc...)
+        description: Action and general port_context (blueprint, run id, etc...)
         type: string
 
 jobs:
@@ -748,7 +727,7 @@ jobs:
         with:
           identifier: ${{ inputs.instance_name }}
           title: ${{ inputs.instance_name }}
-          team: "[]"
+          team: '[]'
           icon: EC2
           blueprint: ec2Instance
           properties: |-
@@ -759,7 +738,7 @@ jobs:
               "key_pair_name": "${{ inputs.key_pair_name }}",
               "security_group_ids": "${{ inputs.security_group_ids }}"
             }
-          relations: "{}"
+          relations: '{}'
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
@@ -789,8 +768,7 @@ on:
         description: bucket acl
       port_context:
         required: true
-        description:
-          Details of the action and general port_context (blueprint, run id, etc...)
+        description: Details of the action and general port_context (blueprint, run id, etc...)
         type: string
 
 jobs:
@@ -821,7 +799,7 @@ jobs:
         with:
           identifier: ${{ inputs.bucket_name }}
           title: ${{ inputs.bucket_name }}
-          team: "[]"
+          team: '[]'
           icon: S3
           blueprint: s3_bucket
           properties: |-
@@ -829,7 +807,7 @@ jobs:
               "bucket_name": "${{ inputs.bucket_name }}",
               "bucket_acl": "${{ inputs.bucket_acl }}"
             }
-          relations: "{}"
+          relations: '{}'
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
@@ -875,8 +853,7 @@ on:
         description: allocated_storage
       port_context:
         required: true
-        description:
-          Details about the action and general port_context (blueprint, run id, etc...)
+        description: Details about the action and general port_context (blueprint, run id, etc...)
         type: string
 
 jobs:
@@ -926,7 +903,7 @@ jobs:
         with:
           identifier: ${{ inputs.db_instance_identifier }}
           title: ${{ inputs.db_instance_identifier }}
-          team: "[]"
+          team: '[]'
           icon: RDS
           blueprint: rds_instance
           properties: |-
@@ -938,7 +915,7 @@ jobs:
               "db_instance_class": "${{ inputs.db_instance_class }}",
               "allocated_storage": ${{ inputs.allocated_storage }}
             }
-          relations: "{}"
+          relations: '{}'
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
@@ -983,5 +960,5 @@ print(f"::set-output name=decrypted_value::{decrypted_property_value}")
 
 - [Connect Port's AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws)
   to make sure all of the properties and entities are automatically ingested from AWS.
-  - You can learn how to setup Port's AWS exporter [here](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation).
-  - You can see example configurations and use cases [here](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples).
+  - You can learn how to setup Port's AWS exporter [here](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/Installation).
+  - You can see example configurations and use cases [here](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples).

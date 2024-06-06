@@ -21,7 +21,7 @@ This GitHub action allows you to add tags to an S3 Bucket via Port Actions with 
 3. Create an AWS S3 Bucket blueprint in Port using the blueprint below:
 
 :::tip Ingest AWS Resources
-Use our [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation#terraform-installation-recommended) to ingest different kinds of resources from your AWS account. For instance, leverage it to [automatically generate the S3 blueprint and import all existing buckets](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples#s3-buckets) within your AWS account.
+Use our [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/Installation#terraform-installation-recommended) to ingest different kinds of resources from your AWS account. For instance, leverage it to [automatically generate the S3 blueprint and import all existing buckets](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples#s3-buckets) within your AWS account.
 :::
 
 <details>
@@ -67,10 +67,7 @@ Use our [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-p
       "versioningStatus": {
         "type": "string",
         "title": "Versioning Status",
-        "enum": [
-          "Enabled",
-          "Suspended"
-        ]
+        "enum": ["Enabled", "Suspended"]
       }
     },
     "required": []
@@ -84,7 +81,6 @@ Use our [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-p
 
 </details>
 
-
 4. After creating the blueprint, create the following action with the following JSON file on the `s3_bucket` blueprint:
 
 <details>
@@ -92,9 +88,10 @@ Use our [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-p
 
 :::note Customisation
 Replace the invocation method with your own repository details.
+
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
+  :::
 
 ```json showLineNumbers
 {
@@ -114,12 +111,8 @@ Replace the invocation method with your own repository details.
           "description": "Tags should be in key-value pairs like so: {\"key\": \"value\"}"
         }
       },
-      "required": [
-        "tags"
-      ],
-      "order": [
-        "tags"
-      ]
+      "required": ["tags"],
+      "order": ["tags"]
     },
     "blueprintIdentifier": "s3_bucket"
   },
@@ -146,8 +139,6 @@ Replace the invocation method with your own repository details.
 
 </details>
 
-
-
 5. Create a workflow file under `.github/workflows/add-tags-to-s3-bucket.yml` with the content below:
 
 <details>
@@ -170,50 +161,50 @@ jobs:
   tag-s3-bucket:
     runs-on: ubuntu-latest
     steps:
-    - name: Inform starting of action
-      uses: port-labs/port-github-action@v1
-      with:
-        clientId: ${{ secrets.PORT_CLIENT_ID }}
-        clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-        operation: PATCH_RUN
-        runId: ${{ fromJson(inputs.port_context).runId }}
-        logMessage: |
-          Starting a GitHub worklfow to tag the AWS resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
+      - name: Inform starting of action
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          logMessage: |
+            Starting a GitHub worklfow to tag the AWS resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      if: always()
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        if: always()
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-    - name: Add Tags to S3 Bucket
-      env:
-        BUCKET_NAME: ${{ fromJson(inputs.port_context).entity.identifier }}
-        TAGS_JSON: ${{ github.event.inputs.tags }}
-      run: |
-        # Extract key-value pairs from the JSON object
-        # {
-        #   "env": "test",
-        #   "team": "beta"
-        # }
+      - name: Add Tags to S3 Bucket
+        env:
+          BUCKET_NAME: ${{ fromJson(inputs.port_context).entity.identifier }}
+          TAGS_JSON: ${{ github.event.inputs.tags }}
+        run: |
+          # Extract key-value pairs from the JSON object
+          # {
+          #   "env": "test",
+          #   "team": "beta"
+          # }
 
-        TAGS=$(echo "${TAGS_JSON}" | jq -r 'to_entries | map("\(.key)=\(.value)") | join(" ")')
+          TAGS=$(echo "${TAGS_JSON}" | jq -r 'to_entries | map("\(.key)=\(.value)") | join(" ")')
 
-        aws s3api put-bucket-tagging \
-          --bucket ${BUCKET_NAME} \
-          --tagging "TagSet=${TAGS}"
+          aws s3api put-bucket-tagging \
+            --bucket ${BUCKET_NAME} \
+            --tagging "TagSet=${TAGS}"
 
-    - name: Create a log message
-      uses: port-labs/port-github-action@v1
-      with:
-        clientId: ${{ secrets.PORT_CLIENT_ID }}
-        clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-        baseUrl: https://api.getport.io
-        operation: PATCH_RUN
-        runId: ${{fromJson(inputs.port_context).runId}}
-        logMessage: Added tags to ${{fromJson(inputs.port_context).entity.identifier}}
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_context).runId}}
+          logMessage: Added tags to ${{fromJson(inputs.port_context).entity.identifier}}
 ```
 
 </details>

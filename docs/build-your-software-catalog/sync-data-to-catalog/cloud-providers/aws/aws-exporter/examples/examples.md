@@ -728,7 +728,7 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
    <summary> Event Rule CloudFormation Template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -1253,7 +1253,7 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
     <summary> Event Rule CloudFormation Template </summary>
 
     ```yaml showLineNumbers
-    AWSTemplateFormatVersion: "2010-09-09"
+    AWSTemplateFormatVersion: '2010-09-09'
     Description: The template used to create event rules for the Port AWS exporter.
     Parameters:
       PortAWSExporterStackName:
@@ -1473,7 +1473,7 @@ In this step-by-step example, you will export your `API Gateway APIs` to Port.
     <summary> Event Rule CloudFormation Template </summary>
 
     ```yaml showLineNumbers
-    AWSTemplateFormatVersion: "2010-09-09"
+    AWSTemplateFormatVersion: '2010-09-09'
     Description: The template used to create event rules for the Port AWS exporter.
     Parameters:
       PortAWSExporterStackName:
@@ -1735,7 +1735,7 @@ For more information, read [here](https://docs.aws.amazon.com/awscloudtrail/late
     <summary> Event Rule CloudFormation Template </summary>
 
     ```yaml showLineNumbers
-    AWSTemplateFormatVersion: "2010-09-09"
+    AWSTemplateFormatVersion: '2010-09-09'
     Description: The template used to create event rules for the Port AWS exporter.
     Parameters:
       PortAWSExporterStackName:
@@ -1949,7 +1949,7 @@ In this step-by-step example, you will export your `DynamoDB tables` to Port.
    <summary> Event Rule CloudFormation Template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -2245,7 +2245,7 @@ In this step-by-step example, you will export your `RDS instances` to Port.
    <summary> Event Rule CloudFormation Template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -2444,7 +2444,7 @@ In this step-by-step example, you will export your `Step Functions state machine
    <summary> Event Rule CloudFormation Template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -2701,7 +2701,7 @@ In this step-by-step example, you will export your `Elastic Beanstalk applicatio
    <summary> Event Rule CloudFormation Template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -3216,7 +3216,7 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
    <summary> Event rule CloudFormation template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -3473,7 +3473,7 @@ In this step-by-step example, you will export your `Load balancers` to Port.
    <summary> Event rule CloudFormation template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -3781,7 +3781,7 @@ In this step-by-step example, you will export your `EKS clusters` to Port.
     <summary> Event rule CloudFormation template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -3980,7 +3980,7 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
     <summary> Event rule CloudFormation template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -4068,6 +4068,7 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
 Done! soon, you will be able to see any `ECR repositories`
 
 ### Using Python script
+
 Alternatively you can use a Python script to export your ECR repositories and images to Port. The script is available in the [example-ecr-images](https://github.com/port-labs/example-ecr-images) repository.
 
 ## Elasticache serverless cache
@@ -4236,7 +4237,7 @@ In this step-by-step example, you will export your `Serverless cache` to Port.
     <summary> Event rule CloudFormation template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -4499,7 +4500,7 @@ In this step-by-step example, you will export your `Cache clusters` to Port.
     <summary> Event rule CloudFormation template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -4599,59 +4600,59 @@ In this step-by-step example, you will export your EC2 `Auto scaling groups` to 
      <summary>Auto scaling group blueprint </summary>
 
    ```json showLineNumbers
-    {
-      "identifier": "awsAutoScalingGroup",
-      "title": "Auto Scaling Group",
-      "icon": "AWS",
-      "schema": {
-        "properties": {
-          "availabilityZones": {
-            "type": "array",
-            "title": "Availability Zones"
-          },
-          "desiredCapacity": {
-            "type": "number",
-            "title": "Desired Capacity"
-          },
-          "healthCheckType": {
-            "type": "string",
-            "title": "Health Check Type"
-          },
-          "loadBalancerNames": {
-            "type": "array",
-            "title": "Load Balancer Names"
-          },
-          "maximumCapacity": {
-            "type": "number",
-            "title": "Maximum Capacity"
-          },
-          "minimumCapacity": {
-            "type": "number",
-            "title": "Minimum Capacity"
-          },
-          "serviceRoleArn": {
-            "type": "string",
-            "title": "Service Role ARN"
-          },
-          "tags": {
-            "type": "array",
-            "title": "Tags"
-          }
-        },
-        "required": []
-      },
-      "mirrorProperties": {},
-      "calculationProperties": {},
-      "aggregationProperties": {},
-      "relations": {
-        "region": {
-          "title": "Region",
-          "target": "region",
-          "required": false,
-          "many": false
-        }
-      }
-    }
+   {
+     "identifier": "awsAutoScalingGroup",
+     "title": "Auto Scaling Group",
+     "icon": "AWS",
+     "schema": {
+       "properties": {
+         "availabilityZones": {
+           "type": "array",
+           "title": "Availability Zones"
+         },
+         "desiredCapacity": {
+           "type": "number",
+           "title": "Desired Capacity"
+         },
+         "healthCheckType": {
+           "type": "string",
+           "title": "Health Check Type"
+         },
+         "loadBalancerNames": {
+           "type": "array",
+           "title": "Load Balancer Names"
+         },
+         "maximumCapacity": {
+           "type": "number",
+           "title": "Maximum Capacity"
+         },
+         "minimumCapacity": {
+           "type": "number",
+           "title": "Minimum Capacity"
+         },
+         "serviceRoleArn": {
+           "type": "string",
+           "title": "Service Role ARN"
+         },
+         "tags": {
+           "type": "array",
+           "title": "Tags"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {},
+     "calculationProperties": {},
+     "aggregationProperties": {},
+     "relations": {
+       "region": {
+         "title": "Region",
+         "target": "region",
+         "required": false,
+         "many": false
+       }
+     }
+   }
    ```
 
      </details>
@@ -4664,31 +4665,31 @@ In this step-by-step example, you will export your EC2 `Auto scaling groups` to 
    ```json showLineNumbers
    {
      "resources": [
-      {
-        "kind": "AWS::AutoScaling::AutoScalingGroup",
-        "port": {
-          "entity": {
-            "mappings": [
-              {
-                "identifier": ".AutoScalingGroupName",
-                "title": ".AutoScalingGroupName",
-                "blueprint": "awsAutoScalingGroup",
-                "properties": {
-                  "tags": ".Tags",
-                  "desiredCapacity": ".DesiredCapacity",
-                  "minimumCapacity": ".MinSize",
-                  "maximumCapacity": ".MaxSize",
-                  "availabilityZones": ".AvailabilityZones",
-                  "loadBalancerNames": ".LoadBalancerNames",
-                  "serviceRoleArn": ".ServiceLinkedRoleARN",
-                  "healthCheckType": ".HealthCheckType"
-                },
-                "relations": {}
-              }
-            ]
-          }
-        }
-      }
+       {
+         "kind": "AWS::AutoScaling::AutoScalingGroup",
+         "port": {
+           "entity": {
+             "mappings": [
+               {
+                 "identifier": ".AutoScalingGroupName",
+                 "title": ".AutoScalingGroupName",
+                 "blueprint": "awsAutoScalingGroup",
+                 "properties": {
+                   "tags": ".Tags",
+                   "desiredCapacity": ".DesiredCapacity",
+                   "minimumCapacity": ".MinSize",
+                   "maximumCapacity": ".MaxSize",
+                   "availabilityZones": ".AvailabilityZones",
+                   "loadBalancerNames": ".LoadBalancerNames",
+                   "serviceRoleArn": ".ServiceLinkedRoleARN",
+                   "healthCheckType": ".HealthCheckType"
+                 },
+                 "relations": {}
+               }
+             ]
+           }
+         }
+       }
      ]
    }
    ```
@@ -4707,9 +4708,7 @@ In this step-by-step example, you will export your EC2 `Auto scaling groups` to 
        {
          "Sid": "VisualEditor0",
          "Effect": "Allow",
-         "Action": [
-           "autoscaling:Describe*"
-         ],
+         "Action": ["autoscaling:Describe*"],
          "Resource": "*"
        }
      ]
@@ -4726,7 +4725,7 @@ In this step-by-step example, you will export your EC2 `Auto scaling groups` to 
     <summary> Event rule CloudFormation template </summary>
 
    ```yaml showLineNumbers
-   AWSTemplateFormatVersion: "2010-09-09"
+   AWSTemplateFormatVersion: '2010-09-09'
    Description: The template used to create event rules for the Port AWS exporter.
    Parameters:
      PortAWSExporterStackName:
@@ -4737,94 +4736,92 @@ In this step-by-step example, you will export your EC2 `Auto scaling groups` to 
        AllowedPattern: ^[a-zA-Z][-a-zA-Z0-9]*$
        Default: serverlessrepo-port-aws-exporter
    Resources:
-    AutoScalingGroupEventRule:
-      Type: AWS::Events::Rule
-      Properties:
-        EventBusName: default
-        EventPattern:
-          detail-type:
-            - AWS API Call via CloudTrail
-          source:
-            - aws.autoscaling
-          detail:
-            eventSource:
-              - autoscaling.amazonaws.com
-            eventName:
-              - prefix: CreateAutoScalingGroup
-              - prefix: DeleteAutoScalingGroup
-              - prefix: UpdateAutoScalingGroup
-        Name: port-aws-exporter-sync-auto-scaling-group-trails
-        State: ENABLED
-        Targets:
-          - Id: PortAWSExporterEventsQueue
-            Arn:
-              Fn::ImportValue:
-                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-            InputTransformer:
-              InputPathsMap:
-                awsRegion: $.detail.awsRegion
-                eventName: $.detail.eventName
-                autoScalingGroupName: $.detail.requestParameters.autoScalingGroupName
-              InputTemplate: >-
-                {
-                  "resource_type": "AWS::AutoScaling::AutoScalingGroup",
-                  "region": "\"<awsRegion>\"",
-                  "identifier": "\"<autoScalingGroupName>\"",
-                  "action": "if \"<eventName>\" | startswith(\"DeleteAutoScalingGroup\") then \"delete\" else \"upsert\" end"
-                }
-    AutoScalingGroupTagRule:
-      Type: AWS::Events::Rule
-      Properties:
-        EventBusName: default
-        EventPattern:
-          source:
-            - aws.autoscaling
-          detail-type:
-            - AWS API Call via CloudTrail
-          detail:
-            eventSource:
-              - autoscaling.amazonaws.com
-            eventName:
-              - prefix: CreateOrUpdateTags
-              - prefix: DeleteTags
-        Name: port-aws-exporter-sync-auto-scaling-group-tags-trails
-        State: ENABLED
-        Targets:
-          - Id: PortAWSExporterEventsQueue
-            Arn:
-              Fn::ImportValue:
-                Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
-            InputTransformer:
-              InputPathsMap:
-                awsRegion: $.detail.awsRegion
-                eventName: $.detail.eventName
-                resourceId: $.detail.requestParameters.tags[0].resourceId
-              InputTemplate: |-
-                {
-                  "resource_type": "AWS::AutoScaling::AutoScalingGroup",
-                  "region": "\"<awsRegion>\"",
-                  "identifier": "\"<resourceId>\"",
-                  "action": "\"upsert\""
-                }
+     AutoScalingGroupEventRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           detail-type:
+             - AWS API Call via CloudTrail
+           source:
+             - aws.autoscaling
+           detail:
+             eventSource:
+               - autoscaling.amazonaws.com
+             eventName:
+               - prefix: CreateAutoScalingGroup
+               - prefix: DeleteAutoScalingGroup
+               - prefix: UpdateAutoScalingGroup
+         Name: port-aws-exporter-sync-auto-scaling-group-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 autoScalingGroupName: $.detail.requestParameters.autoScalingGroupName
+               InputTemplate: >-
+                 {
+                   "resource_type": "AWS::AutoScaling::AutoScalingGroup",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<autoScalingGroupName>\"",
+                   "action": "if \"<eventName>\" | startswith(\"DeleteAutoScalingGroup\") then \"delete\" else \"upsert\" end"
+                 }
+     AutoScalingGroupTagRule:
+       Type: AWS::Events::Rule
+       Properties:
+         EventBusName: default
+         EventPattern:
+           source:
+             - aws.autoscaling
+           detail-type:
+             - AWS API Call via CloudTrail
+           detail:
+             eventSource:
+               - autoscaling.amazonaws.com
+             eventName:
+               - prefix: CreateOrUpdateTags
+               - prefix: DeleteTags
+         Name: port-aws-exporter-sync-auto-scaling-group-tags-trails
+         State: ENABLED
+         Targets:
+           - Id: PortAWSExporterEventsQueue
+             Arn:
+               Fn::ImportValue:
+                 Fn::Sub: ${PortAWSExporterStackName}-EventsQueueARN
+             InputTransformer:
+               InputPathsMap:
+                 awsRegion: $.detail.awsRegion
+                 eventName: $.detail.eventName
+                 resourceId: $.detail.requestParameters.tags[0].resourceId
+               InputTemplate: |-
+                 {
+                   "resource_type": "AWS::AutoScaling::AutoScalingGroup",
+                   "region": "\"<awsRegion>\"",
+                   "identifier": "\"<resourceId>\"",
+                   "action": "\"upsert\""
+                 }
    ```
+
     </details>
 
 Done! soon, you will be able to see any `Auto scaling groups`
 
-
 ## Connect Cloud Resources to Services.
-
 
 This guide demonstrates how to connect a Cloud Resource to a service or list of services by relying on the tags property and using JQ mapping. We will be using an S3 bucket as the Cloud Resource.
 
 :::tip Prerequisite
-This guide assumes that you have ingested S3 buckets into Port using the `terraform` option of the [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation#terraform-installation-recommended).
+This guide assumes that you have ingested S3 buckets into Port using the `terraform` option of the [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/Installation#terraform-installation-recommended).
 :::
 
 ### Ingest Services from GitHub.
 
 Follow this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation) to ingest your GitHub repositories into Port. Port will create a `service` blueprint that you will be using subsequently.
-
 
 <details>
 <summary>Service Blueprint</summary>
@@ -4886,28 +4883,27 @@ Follow this [guide](https://docs.getport.io/build-your-software-catalog/sync-dat
   "relations": {}
 }
 ```
+
 </details>
 
 Your [data model](https://app.getport.io/settings/data-model) should now contain the `Service` blueprint:
 
 <img src='/img/guides/connectCloudServiceBlueprints.png' width="45%" />
 
-
 ### Create the relation
 
 Now that Port is synced with your `s3_bucket` and `service` blueprints, let's map the two together.
 
-1. Add a tag to the bucket with the key `service` and a value representing the identifier of the service. For instance, if your service has an indentifier of `webapp`, create a tag on the bucket with `{ "service": "webapp" }`. 
+1. Add a tag to the bucket with the key `service` and a value representing the identifier of the service. For instance, if your service has an indentifier of `webapp`, create a tag on the bucket with `{ "service": "webapp" }`.
 
 Refer to this [AWS guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging-managing.html) for more details on tagging resources in S3.
-
 
 <img src='/img/guides/connectCloudServiceTagging.png' width="75%" />
 
 <br />
 <br />
 
-2. In the [Port AWS exporter repository](https://github.com/port-labs/template-assets) you cloned during the [ingestion step](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation/#terraform-installation-recommended), go to the `template-assets/aws/s3_bucket` folder. We are going to add a relation from our S3 bucket configuration to the `Service` blueprint by editing two files:
+2. In the [Port AWS exporter repository](https://github.com/port-labs/template-assets) you cloned during the [ingestion step](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/Installation/#terraform-installation-recommended), go to the `template-assets/aws/s3_bucket` folder. We are going to add a relation from our S3 bucket configuration to the `Service` blueprint by editing two files:
    - `blueprint.tf`: We will define the relation to `service` in the S3 bucket blueprint.
    - `config.json`: We then write the mapping logic to define how a service is linked to a bucket based on tags.
 
@@ -4996,13 +4992,11 @@ resource "port-labs_blueprint" "s3_bucket" {
 
 3. Run terraform again to apply the changes
 
-
 ```hcl
 # Run the aws exporter again.
 
-terraform apply -var 'resources=["s3_bucket"]' 
+terraform apply -var 'resources=["s3_bucket"]'
 ```
-
 
 ### View the relation
 
