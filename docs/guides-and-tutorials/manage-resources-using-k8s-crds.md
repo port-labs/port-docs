@@ -63,7 +63,7 @@ helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
     --set stateKey="k8s-exporter"  \
     # highlight-next-line
     --set createDefaultResources=false \
-    --set eventListenerType="POLLING"  \
+    --set eventListener.type="POLLING"  \
     --set "extraEnv[0].name"="CLUSTER_NAME" \
     --set "extraEnv[0].value"=YOUR_PORT_CLUSTER_NAME 
 ```
@@ -119,6 +119,11 @@ If you would like to use this method, at the same repo you cloned there is anoth
 
 * Now that everything is set up, go to the [Self-Service Tab](https://app.getport.io/self-serve) and execute the Create action.
 <img src='/img/guides/createNosqlComposition.png' width='100%' border='1px' />
+
+:::tip invisible fields
+You might have noticed that some fields are not visible in the UI but are present in the CRD.
+By default, Port will not show all the fields of the CRD in the UI, it will only show the required ones. You can change this by editing the action JSON, and removing the `visible`: `false` from the fields that you want to show in the UI.
+:::
 
 * After the action is executed, click on the action run and logs will show up, if everything is succeeded we should see the following logs.
 <img src='/img/guides/createNosqlCompositionLogs.png' width='100%' border='1px' />

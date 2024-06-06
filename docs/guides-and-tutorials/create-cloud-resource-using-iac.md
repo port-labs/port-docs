@@ -69,23 +69,17 @@ Fill out the form with your values:
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this example, we will send two details that our backend needs to know - the entity and the id of the action run.  
+  For this example, we will send some details that our backend needs to know - the inputs, along with the entity and the id of the action run.  
   Copy the following JSON snippet and paste it in the payload code box:
 
   ```json showLineNumbers
   {
-    "port_payload": {
-      "context": {
-        "entity": "{{ .entity.identifier }}",
-        "runId": "{{ .run.id }}",
-      },
-      "payload": {
-        "properties": {
-          "name": "{{ .inputs.name }}",
-          "visibility": "{{ .inputs.visibility }}",
-        }
-      }
-    }
+    "port_context": {
+      "entity": "{{ .entity.identifier }}",
+      "runId": "{{ .run.id }}",
+    },
+    "name": "{{ .inputs.name }}",
+    "visibility": "{{ .inputs.visibility }}",
   }
   ```
 
@@ -93,38 +87,42 @@ Fill out the form with your values:
 
 <TabItem value="gitlab">
 
-First, choose `Gitlab` as the invocation type.
+:::tip
+You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
+:::
 
-- Follow the instructions under `Install the Port agent and set GitLab Pipeline trigger token` (you can skip step 4, as it is only required when using a self-hosted Gitlab instance).
- 
-Then, fill out your workflow details:
+First, choose `Trigger Webhook URL` as the invocation type, then fill out the form:
 
-- Replace the `Project Name` and `Group Name` values with your values (this is where the pipeline will reside and run).
+- For the `Endpoint URL` you need to add a URL in the following format:
+  ```text showLineNumbers
+  https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
+  ```
+    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-ci.yml` pipeline file.
+      - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
+    - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
 
-- Note that leaving `Default Ref` blank will automatically use the `main` branch of your repository:  
-  <img src='/img/guides/scaffoldGitlabBackendDetails.png' width='55%' border='1px' />
-  <br/>
+- Set `HTTP method` to `POST`.
+
+- Set `Request type` to `Async`.
+
+- Set `Use self-hosted agent` to `No`.
+
+  <img src='/img/guides/iacGitlabBackendForm.png' width='80%' border='1px' />
 
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this example, we will send some details that our backend needs to know, including the service name, and the id of the action run.  
-  Copy the following JSON snippet and paste it in the payload code box:
+  For this example, we will send some details that our backend needs to know - the inputs, along with the entity and the id of the action run.   
+  Copy the following JSON snippet and paste it in the "Body" code box:
 
   ```json showLineNumbers
   {
-    "port_payload": {
-      "context": {
-        "entity": "{{ .entity.identifier }}",
-        "runId": "{{ .run.id }}",
-      },
-      "payload": {
-        "properties": {
-          "name": "{{ .inputs.name }}",
-          "visibility": "{{ .inputs.visibility }}",
-        }
-      }
-    }
+    "port_context": {
+      "entity": "{{ .entity.identifier }}",
+      "runId": "{{ .run.id }}",
+    },
+    "name": "{{ .inputs.name }}",
+    "visibility": "{{ .inputs.visibility }}",
   }
   ```
 
@@ -151,19 +149,13 @@ Then, fill out your workflow details:
 
   ```json showLineNumbers
   {
-    "port_payload": {
-      "context": {
-        "entity": "{{ .entity.identifier }}",
-        "runId": "{{ .run.id }}",
-      },
-      "payload": {
-        "properties": {
-          "name": "{{ .inputs.name }}",
-          "visibility": "{{ .inputs.visibility }}",
-          "bitbucket_workspace_name": "{{ .inputs.bitbucket_workspace_name }}",
-        }
-      },
-    }
+    "port_context": {
+      "entity": "{{ .entity.identifier }}",
+      "runId": "{{ .run.id }}",
+    },
+    "name": "{{ .inputs.name }}",
+    "visibility": "{{ .inputs.visibility }}",
+    "bitbucket_workspace_name": "{{ .inputs.bitbucket_workspace_name }}",
   }
   ```
 
@@ -222,9 +214,16 @@ name: Create cloud resource
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      port_context:
         required: true
-        description: Port's payload, including details for who triggered the action and general context
+        description: Includes the entity identifier, and the action's run id
+      name:
+        required: true
+        description: The name of the new resource
+        type: string
+      visibility:
+        required: true
+        description: The visibility of the new resource
         type: string
 jobs:
   createResource:
@@ -235,31 +234,31 @@ jobs:
       # Checkout the service's repository
       - uses: actions/checkout@v4
         with:
-          repository: "${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}"
+          repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}"
           path: ./targetRepo
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
       - name: Copy template file
         run: |
           mkdir -p ./targetRepo/resources
-          cp templates/cloudResource.tf ./targetRepo/resources/${{ fromJson(inputs.port_payload).payload.properties.name }}.tf
+          cp templates/cloudResource.tf ./targetRepo/resources/${{ inputs.name }}.tf
       - name: Update new file data
         run: |
-          sed -i 's/{{ bucket_name }}/${{ fromJson(inputs.port_payload).payload.properties.name }}/' ./targetRepo/resources/${{ fromJson(inputs.port_payload).payload.properties.name }}.tf
-          sed -i 's/{{ bucket_acl }}/${{ fromJson(inputs.port_payload).payload.properties.visibility }}/' ./targetRepo/resources/${{ fromJson(inputs.port_payload).payload.properties.name }}.tf
+          sed -i 's/{{ bucket_name }}/${{ inputs.name }}/' ./targetRepo/resources/${{ inputs.name }}.tf
+          sed -i 's/{{ bucket_acl }}/${{ inputs.visibility }}/' ./targetRepo/resources/${{ inputs.name }}.tf
       - name: Open a pull request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
           path: ./targetRepo
-          commit-message: Create new resource - ${{ fromJson(inputs.port_payload).payload.properties.name }}
+          commit-message: Create new resource - ${{ inputs.name }}
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: new-resource-${{ fromJson(inputs.port_payload).payload.properties.name }}
+          branch: new-resource-${{ inputs.name }}
           delete-branch: true
-          title: Create new resource - ${{ fromJson(inputs.port_payload).payload.properties.name }}
+          title: Create new resource - ${{ inputs.name }}
           body: |
-            Create new ${{ fromJson(inputs.port_payload).payload.properties.visibility }} resource - ${{ fromJson(inputs.port_payload).payload.properties.name }}
+            Create new ${{ inputs.visibility }} resource - ${{ inputs.name }}
           draft: false
   create-entity-in-port-and-update-run:
     runs-on: ubuntu-latest
@@ -268,24 +267,24 @@ jobs:
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: ${{fromJson(inputs.port_payload).context.entity}}
+          identifier: ${{ fromJson(inputs.port_context).entity }}
           blueprint: service
           properties: |-
             {
-              "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{fromJson(inputs.port_payload).context.entity}}/blob/main/resources/"
+              "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}/blob/main/resources/"
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: UPSERT
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ fromJson(inputs.port_context).runId }}
       - name: Create a log message
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{fromJson(inputs.port_payload).context.runId}}
-          logMessage: Pull request created successfully for "${{ fromJson(inputs.port_payload).payload.properties.name }}" 🚀
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          logMessage: Pull request created successfully for "${{ inputs.name }}" 🚀
 ```
 
 </details>
@@ -294,8 +293,10 @@ jobs:
 
 <TabItem value="gitlab">
 
-First, let's create the necessary token and secrets in your GitLab project:
+First, let's create a GitLab project that will store our new bucket creation pipeline - Go to your GitLab account and create a new project.
 
+Next, let's create the necessary token and secrets:
+   
 - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 - Go to your [project](https://gitlab.com/), and follow the steps [here](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html#create-a-project-access-token) to create a new project access token with the following permission scopes: `write_repository`, then save its value as it will be required in the next step.
@@ -310,6 +311,10 @@ First, let's create the necessary token and secrets in your GitLab project:
   <br/>
   <img src='/img/guides/gitlabPipelineVariables.png' width='80%' border='1px' />
 
+- Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Bucket creator token` and save its value
+  - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the defining the backend of the Action.
+  
+    <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' border='1px' />
 
 Now let's create the pipeline file that contains our logic. In the root of your GitLab project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
 
@@ -340,7 +345,7 @@ fetch-port-access-token: # Example - get the Port API access token and RunId
         -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
         -s 'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
       echo "ACCESS_TOKEN=$accessToken" >> data.env
-      runId=$(cat $TRIGGER_PAYLOAD | jq -r '.context.runId')
+      runId=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.runId')
       echo "RUN_ID=$runId" >> data.env
       curl -X POST \
         -H 'Content-Type: application/json' \
@@ -372,8 +377,8 @@ create-tf-resource-pr:
       cat $TRIGGER_PAYLOAD
       git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_NAMESPACE}/$(cat $TRIGGER_PAYLOAD | jq -r '.context.entity').git targetRepo
     - |
-      bucket_name=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.name')
-      visibility=$(cat $TRIGGER_PAYLOAD | jq -r '.payload.properties.visibility')
+      bucket_name=$(cat $TRIGGER_PAYLOAD | jq -r '.name')
+      visibility=$(cat $TRIGGER_PAYLOAD | jq -r '.visibility')
       echo "BUCKET_NAME=${bucket_name}" >> data.env
       echo "Creating a new S3 bucket Terraform resource file"
       mkdir -p targetRepo/resources/
@@ -386,8 +391,8 @@ create-tf-resource-pr:
       git commit -m "Added ${bucket_name} resource file"
       git checkout -b new-bucket-branch-${bucket_name}
       git push origin new-bucket-branch-${bucket_name}
-      PROJECT_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.context.entity | @uri')
-      PROJECTS=$(curl --header "PRIVATE-TOKEN: $GITLAB_ACCESS_TOKEN" "https://gitlab.com/api/v4/groups/$CI_PROJECT_NAMESPACE_ID/projects?search=$(cat $TRIGGER_PAYLOAD | jq -r '.context.entity')")
+      PROJECT_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.entity | @uri')
+      PROJECTS=$(curl --header "PRIVATE-TOKEN: $GITLAB_ACCESS_TOKEN" "https://gitlab.com/api/v4/groups/$CI_PROJECT_NAMESPACE_ID/projects?search=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.entity')")
       PROJECT_ID=$(echo ${PROJECTS} | jq '.[] | select(.name=="'$PROJECT_NAME'") | .id' | head -n1)
 
       PR_RESPONSE=$(curl --request POST --header "PRIVATE-TOKEN: ${GITLAB_ACCESS_TOKEN}" "https://gitlab.com/api/v4/projects/${PROJECT_ID}/merge_requests?source_branch=new-bucket-branch-${bucket_name}&target_branch=main&title=New-Bucket-Request")
@@ -412,7 +417,7 @@ create-entity:
   script:
     - |
       echo "Creating Port entity to match new S3 bucket"
-      SERVICE_ID=$(cat $TRIGGER_PAYLOAD | jq -r '.context.entity')
+      SERVICE_ID=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.entity')
       PROJECT_URL="https://gitlab.com/${CI_PROJECT_NAMESPACE_ID}/${SERVICE_ID}/-/blob/main/resources/"
       echo "SERVICE_ID=${SERVICE_ID}" >> data.env
       echo "PROJECT_URL=${PROJECT_URL}" >> data.env
@@ -478,11 +483,11 @@ Create the following varaibles and their related JSONPath expression:
 
 | Variable Name            | JSONPath Expression                             |
 | ------------------------ | ----------------------------------------------- |
-| SERVICE_NAME             | `$.port_payload.context.entity`                              |
-| BITBUCKET_WORKSPACE_NAME | `$.port_payload.payload.properties.bitbucket_workspace_name` |
-| RUN_ID                   | `$.port_payload.context.runId`                               |
-| BUCKET_NAME              | `$.port_payload.payload.properties.name`              |
-| VISIBILITY               | `$.port_payload.payload.properties.visibility`               |
+| SERVICE_NAME             | `$.port_context.entity`                         |
+| BITBUCKET_WORKSPACE_NAME | `$.bitbucket_workspace_name`                    |
+| RUN_ID                   | `$.port_context.runId`                          |
+| BUCKET_NAME              | `$.name`                                        |
+| VISIBILITY               | `$.visibility`                                  |
     
 
 Add the following content to the new Jenkins pipeline:

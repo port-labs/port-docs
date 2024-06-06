@@ -55,8 +55,25 @@ In this section, you can construct a JSON payload that will be sent to your back
 
 Accessing your data is done using `jq`, wrapping each expression with `{{ }}`.  
 For example, this payload contains a user input, and the action's run id (unique to each execution of the action):
-<img src='/img/self-service-actions/setup-backend/action-form-backend-payload.png' width='55%' border='1px' />
+<img src='/img/self-service-actions/setup-backend/action-form-backend-payload.png' width='85%' border='1px' />
 <br/><br/>
+
+You can access any key in your action's JSON structure and add it to the payload. Use the `Test JQ` button to test your expressions against your action and ensure you are sending the correct data.
+
+#### spreadValue() function
+
+You can use the `spreadValue()` function to add multiple keys to the root of the payload at once. This function will spread all of the keys under a given object.  
+A common use case for this function is to add all of the user inputs to the payload:
+
+```json showLineNumbers
+{
+  "{{ spreadValue() }}": "{{ .inputs }}"
+}
+```
+
+This will add all of the action's user inputs to the root of the payload, so that they can be accessed directly by your backend.
+
+#### Using `jq` expressions in keys
 
 The keys in the payload can also be `jq` expressions.  
 For example, the following expression will add the `ref` key to the payload only if a `ref` input was provided when executing the action:
@@ -70,11 +87,7 @@ For example, the following expression will add the `ref` key to the payload only
 Note that if a **key** in the payload evaluates to `null` for any reason, the entire expression (key + value) will be ommitted from the payload.
 :::
 
-You can access any key in your action's JSON structure and add it to the payload. Use the `Test JQ` button to test your expressions against your action and ensure you are sending the correct data.
 
-:::tip Pro tip
-Using the expression `{{ . }}` will provide the entire action object, allowing you to easily see the location of the data that is relevant for you.
-:::
 
 ## Supported backends
 
@@ -113,13 +126,15 @@ The action's backend is defined under the `invocationMethod` object:
 
 ### Invocation method structure fields
 
-The **`type`** field defines the action's backend type, and can have one of the following values: `WEBHOOK`, `GITHUB`, `GITLAB`, `KAFKA`.
+The **`type`** field defines the action's backend type, and can have one of the following values: `WEBHOOK`, `GITHUB`, `GITLAB`, `KAFKA`, `UPSERT_ENTITY`.
 
 Depending on the backend type you choose, the available fields will be different:
 
 <Tabs groupId="backendType" queryString defaultValue="webhook">
 
 <TabItem value="webhook" label="Webhook">
+
+`invocationMethod.type` should be set to `WEBHOOK`.
 
 | Field     | Type      | Description                                                                                                                                                    | Example values      |
 | --------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
@@ -131,6 +146,8 @@ Depending on the backend type you choose, the available fields will be different
 </TabItem>
 
 <TabItem value="github" label="Github">
+
+`invocationMethod.type` should be set to `GITHUB`.
 
 | Field                  | Type      | Description                                                                                                                                                                                                              | Example values                           |
 | ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
@@ -144,6 +161,8 @@ Depending on the backend type you choose, the available fields will be different
 
 <TabItem value="gitlab" label="Gitlab">
 
+`invocationMethod.type` should be set to `GITLAB`.
+
 | Field                  | Type      | Description                                                                                                                                                                                                              | Example values                           |
 | ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
 | `defaultRef`           | `string`  | The default ref (branch/tag name) we want the action to use. <br></br> `defaultRef` can be overriden dynamically, by adding `ref` as user input. <br></br> Can only be used if `type` is set to `GITLAB`.                |
@@ -156,9 +175,23 @@ Depending on the backend type you choose, the available fields will be different
 
 <TabItem value="kafka" label="Kafka">
 
+`invocationMethod.type` should be set to `KAFKA`.
+
 | Field                  | Type      | Description                                                                                                                                                                                                              | Example values                           |
 | ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
 | `payload`              | `object`  | Defines the **payload** that will be sent to the backend upon execution of the action.                                                              |
+
+</TabItem>
+
+<TabItem value="upsertEntity" label="Create/update entity">
+
+`invocationMethod.type` should be set to `UPSERT_ENTITY`.
+
+| Field | Type | Description | Example values |
+| --- | --- | --- | --- |
+| `blueprintIdentifier` | `string` | The identifier of the blueprint from which the entity will be created/updated. | `service` |
+| `mapping` | `object` | Defines the properties of the entity that will be created/updated. | `{"name":"newEntityName"}`
+
 
 </TabItem>
 

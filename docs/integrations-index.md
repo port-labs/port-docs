@@ -81,7 +81,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
 - [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/argocd/argocd.md#argocd-events)
-- [Connect ArgoCD deployment to image](/build-your-software-catalog/sync-data-to-catalog/argocd/examples/connect-argocd-deployment-to-image)
 - [Rollback ArgoCD deployment](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment)
 - [Self-service action to synchronize ArgoCD application](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/sync-argocd-app)
 
@@ -196,13 +195,17 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Jira
 
-- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/jira/jira.md)
-- [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/jira/#alternative-installation-via-webhook)
+- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/jira.md)
+- [Jira webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/#alternative-installation-via-webhook)
 - [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 - [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
-- [Connect Jira issue to a service](/build-your-software-catalog/sync-data-to-catalog/jira/guides/connect-jira-issue-to-service)
+- [Connect Jira issue to a service](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/guides/connect-jira-issue-to-service)
 
+## Linear
+
+- [Linear integration](/build-your-software-catalog/sync-data-to-catalog/project-management/linear/linear.md)
+- [Linear webhook](/build-your-software-catalog/sync-data-to-catalog/project-management/linear/linear.md#alternative-installation-via-webhook)
 
 ## Sentry
 
@@ -237,6 +240,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Datadog
 
+- [Datadog integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog)
 - [Embed dashboards from Datadog](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
 - [Datadog webhook](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md)
 - [Datadog service catalog](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md#ingest-service-catalog)

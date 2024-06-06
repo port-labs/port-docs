@@ -19,7 +19,7 @@ An example of creating a Jira bug from Port using Port's self service actions.
 - PORT_CLIENT_ID - Your port [client id]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 - PORT_CLIENT_SECRET - Your port [client secret]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 
-2. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/)
+2. Optional - Install Port's Jira integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
 
 :::note Blueprint
 
@@ -72,14 +72,16 @@ You can add this action to the `Service` or `Jira Issue` blueprints
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "repo": "<Enter GitHub repository>",
     "org": "<Enter GitHub organization>",
+    "repo": "<Enter GitHub repository>",
     "workflow": "report-a-bug.yml",
     "workflowInputs": {
       "description": "{{.inputs.\"description\"}}",
       "short_title": "{{.inputs.\"short_title\"}}",
-      "run_id": "{{ .run.id }}",
-      "triggered_by": "{{ .trigger.by.user.email }}"
+      "port_context": {
+        "run_id": "{{ .run.id }}",
+        "triggered_by": "{{ .trigger.by.user.email }}"
+      }
     },
     "reportWorkflowStatus": true
   },
@@ -110,10 +112,7 @@ on:
       short_title:
         required: true
         type: string
-      run_id:
-        required: true
-        type: string
-      triggered_by:
+      port_context:
         required: true
         type: string
 
@@ -127,14 +126,14 @@ jobs:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-      
+
       - name: Inform searching of user in user list
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Searching for user in organization user list... ⛴️
 
@@ -142,12 +141,12 @@ jobs:
         id: search_for_reporter
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "${{ secrets.JIRA_BASE_URL }}/rest/api/3/user/search?query=${{ inputs.triggered_by }}"
+          url: "${{ secrets.JIRA_BASE_URL }}/rest/api/3/user/search?query=${{ fromJson(inputs.port_context).triggered_by }}"
           method: "GET"
           username: ${{ secrets.JIRA_USER_EMAIL }}
           password: ${{ secrets.JIRA_API_TOKEN }}
           customHeaders: '{"Content-Type": "application/json"}'
-      
+
       - name: Install jq
         run: sudo apt-get install jq
         if: steps.search_for_reporter.outcome == 'success'
@@ -168,7 +167,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             User found 🥹 Bug reporter will be ${{ steps.user_list_from_search.outputs.selected_user_name }}... ⛴️
 
@@ -179,7 +178,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             User not found 😭 Bug will be created with default reporter ⛴️
 
@@ -189,7 +188,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Creating a new Jira issue.. ⛴️
 
@@ -197,12 +196,11 @@ jobs:
         id: create
         uses: atlassian/gajira-create@v3
         with:
-        # highlight-next-line
-          project: <ENTER_JIRA_PROJECT_NAME>
+          project: PORT
           issuetype: Bug
-          summary: ${{github.event.inputs.short_title}}
+          summary: ${{inputs.short_title}}
           description: |
-            ${{github.event.inputs.description}}
+            ${{inputs.description}}
           fields: |-
             ${{ steps.user_list_from_search.outputs.selected_user_id != 'empty'
               && format('{{"reporter": {{"id": "{0}" }}}}', steps.user_list_from_search.outputs.selected_user_id)
@@ -216,7 +214,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           link: https://getport.atlassian.net/browse/${{ steps.create.outputs.issue }}
-          runId: ${{ inputs.run_id }}
+          runId: ${{ fromJson(inputs.port_context).run_id }}
           logMessage: |
             Jira issue with ID ${{ steps.create.outputs.issue }} created! ✅
 
