@@ -2,11 +2,11 @@
 <summary> ECS Service Blueprint </summary>
 
 ```json showLineNumbers
-  {
+{
   "identifier": "ecsService",
   "description": "This blueprint represents an AWS ECS Service in our software catalog",
   "title": "ECS Service",
-  "icon": "Service",
+  "icon": "AWS",
   "schema": {
     "properties": {
       "link": {
@@ -59,9 +59,15 @@
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
-},
-
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
 ```
 
 </details>

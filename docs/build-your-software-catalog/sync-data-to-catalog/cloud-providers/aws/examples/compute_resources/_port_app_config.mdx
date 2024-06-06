@@ -4,62 +4,40 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: 'AWS::ECS::Service'
+  - kind: AWS::ECS::Service
+    selector:
+      query: 'true'
     port:
       entity:
         mappings:
           identifier: '.Identifier'
           title: '.Identifier'
-          blueprint: 'ecsService'
+          blueprint: '"ecsService"'
           properties:
             kind: '.__Kind'
             region: '.__Region'
             link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
             desiredCount: '.Properties.DesiredCount'
             launchType: '.Properties.LaunchType'
-            cluster: ".Properties.Cluster | split('/')[-1]"
+            cluster: '.Properties.Cluster'
             schedulingStrategy: '.Properties.SchedulingStrategy'
             loadBalancers: '.Properties.LoadBalancers'
             securityGroups: '.Properties.NetworkConfiguration.AwsvpcConfiguration.SecurityGroups'
             subnets: '.Properties.NetworkConfiguration.AwsvpcConfiguration.Subnets'
-            taskDefinition: ".Properties.TaskDefinition | split('/')[-1]"
+            taskDefinition: '.Properties.TaskDefinition'
             iamRole: ".Role | if . == null then null else 'https://console.aws.amazon.com/go/view?arn=' + . end"
             arn: '.Properties.Arn'
           relations:
             account: '.__AccountId'
-  - kind: 'AWS::AppRunner::Service'
-    port:
-      entity:
-        mappings:
-          identifier: '.Identifier'
-          title: '.Identifier'
-          blueprint: 'apprunner'
-          properties:
-            kind: '.__Kind'
-            region: '.__Region'
-            link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
-            status: '.Properties.Status'
-            memory: '.Properties.InstanceConfiguration.Memory'
-            cpu: '.Properties.InstanceConfiguration.Cpu'
-            egressType: '.Properties.NetworkConfiguration.EgressConfiguration.EgressType'
-            isPubliclyAccessible: '.Properties.NetworkConfiguration.IngressConfiguration.IsPubliclyAccessible'
-            observabilityEnabled: '.Properties.ObservabilityConfiguration.ObservabilityEnabled'
-            autoDeploymentsEnabled: '.Properties.SourceConfiguration.AutoDeploymentsEnabled'
-            healthCheckConfiguration: '.Properties.HealthCheckConfiguration'
-            imageConfiguration: '.Properties.SourceConfiguration.ImageRepository.ImageConfiguration'
-            imageIdentifier: '.Properties.SourceConfiguration.ImageRepository.ImageIdentifier'
-            serviceUrl: "'https://' + .Properties.ServiceUrl"
-            iamRole: ".Properties.InstanceConfiguration.InstanceRoleArn | if . == null then null else 'https://console.aws.amazon.com/go/view?arn=' + . end"
-            arn: '.Properties.Arn'
-          relations:
-            account: '.__AccountId'
-  - kind: 'AWS::Lambda::Function'
+  - kind: AWS::Lambda::Function
+    selector:
+      query: 'true'
     port:
       entity:
         mappings:
           identifier: '.Identifier'
           title: '.Properties.FunctionName'
-          blueprint: 'lambda'
+          blueprint: '"lambda"'
           properties:
             kind: '.__Kind'
             region: '.__Region'
@@ -78,13 +56,15 @@ resources:
             arn: '.Properties.Arn'
           relations:
             account: '.__AccountId'
-  - kind: 'AWS::SQS::Queue'
+  - kind: AWS::SQS::Queue
+    selector:
+      query: 'true'
     port:
       entity:
         mappings:
           identifier: '.Identifier'
           title: '.Properties.QueueName'
-          blueprint: 'sqs'
+          blueprint: '"sqs"'
           properties:
             kind: '.__Kind'
             region: '.__Region'

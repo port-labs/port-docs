@@ -6,7 +6,7 @@
   "identifier": "apprunner",
   "description": "This blueprint represents an AWS App Runner service in our software catalog",
   "title": "AppRunner",
-  "icon": "Service",
+  "icon": "AWS",
   "schema": {
     "properties": {
       "link": {
@@ -90,7 +90,15 @@
     "required": []
   },
   "mirrorProperties": {},
-  "calculationProperties": {}
+  "calculationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
 }
 ```
 
