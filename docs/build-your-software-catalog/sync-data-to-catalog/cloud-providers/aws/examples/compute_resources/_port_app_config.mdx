@@ -4,81 +4,78 @@
 
 ```yaml showLineNumbers
 resources:
-  - kind: AWS::ECS::Service
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: '.Identifier'
-          title: '.Identifier'
-          blueprint: '"ecsService"'
-          properties:
-            kind: '.__Kind'
-            region: '.__Region'
-            link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
-            desiredCount: '.Properties.DesiredCount'
-            launchType: '.Properties.LaunchType'
-            cluster: '.Properties.Cluster'
-            schedulingStrategy: '.Properties.SchedulingStrategy'
-            loadBalancers: '.Properties.LoadBalancers'
-            securityGroups: '.Properties.NetworkConfiguration.AwsvpcConfiguration.SecurityGroups'
-            subnets: '.Properties.NetworkConfiguration.AwsvpcConfiguration.Subnets'
-            taskDefinition: '.Properties.TaskDefinition'
-            iamRole: ".Role | if . == null then null else 'https://console.aws.amazon.com/go/view?arn=' + . end"
-            arn: '.Properties.Arn'
-          relations:
-            account: '.__AccountId'
   - kind: AWS::Lambda::Function
     selector:
       query: 'true'
     port:
       entity:
         mappings:
-          identifier: '.Identifier'
-          title: '.Properties.FunctionName'
+          identifier: .Identifier
+          title: .Properties.FunctionName
           blueprint: '"lambda"'
           properties:
-            kind: '.__Kind'
-            region: '.__Region'
+            kind: .__Kind
+            region: .__Region
             link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
-            description: '.Properties.Description'
-            memorySize: '.Properties.MemorySize'
-            ephemeralStorageSize: '.Properties.EphemeralStorage.Size'
-            timeout: '.Properties.Timeout'
-            runtime: '.Properties.Runtime'
-            packageType: '.Properties.PackageType'
-            environment: '.Properties.Environment'
-            architectures: '.Properties.Architectures'
-            layers: '.Properties.Layers'
-            tags: '.Properties.Tags'
+            description: .Properties.Description
+            memorySize: .Properties.MemorySize
+            ephemeralStorageSize: .Properties.EphemeralStorage.Size
+            timeout: .Properties.Timeout
+            runtime: .Properties.Runtime
+            packageType: .Properties.PackageType
+            environment: .Properties.Environment
+            architectures: .Properties.Architectures
+            layers: .Properties.Layers
+            tags: .Properties.Tags
             iamRole: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Role"
-            arn: '.Properties.Arn'
+            arn: .Properties.Arn
           relations:
-            account: '.__AccountId'
+            account: .__AccountId
+  - kind: AWS::ECS::Service
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier | split(":")[5] | split("/")[2] | split("|")[0]
+          title: .Identifier
+          blueprint: '"ecsService"'
+          properties:
+            kind: .__Kind
+            region: .__Region
+            link: >-
+              'https://console.aws.amazon.com/go/view?arn=' +
+              .Properties.ServiceArn
+            desiredCount: .Properties.DesiredCount
+            launchType: .Properties.LaunchType
+            cluster: .Properties.Cluster
+            schedulingStrategy: .Properties.SchedulingStrategy
+            loadBalancers: .Properties.LoadBalancers
+            securityGroups: >-
+              .Properties.NetworkConfiguration.AwsvpcConfiguration.SecurityGroups
+            subnets: .Properties.NetworkConfiguration.AwsvpcConfiguration.Subnets
+            taskDefinition: .Properties.TaskDefinition
+            iamRole: >-
+              .Role | if . == null then null else
+              'https://console.aws.amazon.com/go/view?arn=' + . end
+            arn: .Properties.ServiceArn
+          relations:
+            account: .__AccountId
   - kind: AWS::SQS::Queue
     selector:
       query: 'true'
     port:
       entity:
         mappings:
-          identifier: '.Identifier'
-          title: '.Properties.QueueName'
+          identifier: .Identifier | split("/")[4]
+          title: .Properties.QueueUrl | split("/")[4]
           blueprint: '"sqs"'
           properties:
-            kind: '.__Kind'
-            region: '.__Region'
-            link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
-            fifoQueue: '.Properties.FifoQueue // false'
-            visibilityTimeout: '.Properties.VisibilityTimeout'
-            messageRetentionPeriod: '.Properties.MessageRetentionPeriod'
-            maximumMessageSize: '.Properties.MaximumMessageSize'
-            receiveMessageWaitTimeSeconds: '.Properties.ReceiveMessageWaitTimeSeconds'
-            delaySeconds: '.Properties.DelaySeconds'
-            tags: '.Properties.Tags'
-            arn: '.Properties.Arn'
+            kind: .__Kind
+            region: .__Region
+            link: .Properties.QueueUrl
           relations:
-            account: '.__AccountId'
+            account: .__AccountId
 ```
 
 </details>
