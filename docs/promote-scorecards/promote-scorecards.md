@@ -67,9 +67,11 @@ The levels can be customized according to your organization's standards and with
 
 Here is an example of a few level types that can be defined:
 
-:::note
+:::tip Level Hierarchy 
 The levels are defined in the order of importance, where the first level is the most basic level and the last level is the most advanced.  
-The basic level is the default level for all entities, and thus can't have a rule associated with it.
+The basic level is the default level for all entities.  
+
+If the entity didn't pass any rule, it will be at the `Basic` level, and thus can't have a rule associated with it.
 :::
 
 
@@ -265,22 +267,23 @@ specified [`combinator`](#combinator):
 
 #### Available operators
 
-| Operator           | Supported Types                                  | Description                                                           |
-|--------------------|--------------------------------------------------|-----------------------------------------------------------------------|
-| `=`                | `String`, `Number`, `Boolean`                    | checks if the rule value is equal to the entity value                 |
-| `!=`               | `String`, `Number`, `Boolean`                    | checks if the rule value is not equal to the entity value             |
-| `<=`               | `String`, `Number`                               | checks if the rule value is less than or equal to the entity value    |
-| `>=`               | `String`, `Number`                               | checks if the rule value is greater than or equal to the entity value |
-| `<`                | `String`, `Number`                               | checks if the rule value is less than the entity value                |
-| `>`                | `String`, `Number`                               | checks if the rule value is greater than the entity value             |
-| `contains`         | `String`, `Number`                               | checks if the rule value is contained within the entity value         |
-| `doesNotContains`  | `String`, `Number`                               | checks if the rule value is not contained within the entity value     |
-| `endsWith`         | `String`, `Number`                               | checks if the rule value ends with the entity value                   |
-| `doesNotEndsWith`  | `String`, `Number`                               | checks if the rule value does not end with the entity value           |
-| `beginsWith`       | `String`, `Number`                               | checks if the rule value begins with the entity value                 |
-| `doesNotBeginWith` | `String`, `Number`                               | checks if the rule value does not begin with the entity value         |
-| `isEmpty`          | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is an empty string, array, or object         |
-| `isNotEmpty`       | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is not an empty string, array, or object     |
+| Operator            | Supported Types                                  | Description                                                           |
+|---------------------|--------------------------------------------------|-----------------------------------------------------------------------|
+| `=`                 | `String`, `Number`, `Boolean`                    | checks if the rule value is equal to the entity value                 |
+| `!=`                | `String`, `Number`, `Boolean`                    | checks if the rule value is not equal to the entity value             |
+| `<=`                | `String`, `Number`                               | checks if the rule value is less than or equal to the entity value    |
+| `>=`                | `String`, `Number`                               | checks if the rule value is greater than or equal to the entity value |
+| `<`                 | `String`, `Number`                               | checks if the rule value is less than the entity value                |
+| `>`                 | `String`, `Number`                               | checks if the rule value is greater than the entity value             |
+| `contains`          | `String`, `Number`                               | checks if the rule value is contained within the entity value         |
+| `containsAny`       | `String`, `Number`                               | checks if any of the specified strings exist in the target array      |
+| `doesNotContains`   | `String`, `Number`                               | checks if the rule value is not contained within the entity value     |
+| `endsWith`          | `String`, `Number`                               | checks if the rule value ends with the entity value                   |
+| `doesNotEndsWith`   | `String`, `Number`                               | checks if the rule value does not end with the entity value           |
+| `beginsWith`        | `String`, `Number`                               | checks if the rule value begins with the entity value                 |
+| `doesNotBeginsWith` | `String`, `Number`                               | checks if the rule value does not begin with the entity value         |
+| `isEmpty`           | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is an empty string, array, or object         |
+| `isNotEmpty`        | `String`, `Number`, `Boolean`, `Array`, `Object` | checks if the rule value is not an empty string, array, or object     |
 
 ## Scorecard total level calculation
 
