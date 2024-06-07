@@ -642,6 +642,11 @@ resources:
         "title": "On Call",
         "type": "string",
         "format": "user"
+      },
+      "secondaryOncall": {
+        "title": "Secondary On Call",
+        "type": "string",
+        "format": "user"
       }
     },
     "required": []
@@ -673,7 +678,12 @@ resources:
           properties:
             status: .status
             url: .html_url
-            oncall: .__oncall_user[] | select(.escalation_level == 1) | .user.email
+            oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+            secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
+            escalationLevels: .__oncall_user | map(.escalation_level) | unique | length
+            meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
+            meanSecondsToFirstAck: .__analytics.mean_seconds_to_first_ack
+            meanSecondsToEngage: .__analytics.mean_seconds_to_engage
 ```
 
 </details>
@@ -875,7 +885,8 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
               properties:
                 status: .status
                 url: .html_url
-                oncall: "[.__oncall_user[].user.email]"
+                oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+                secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
     ```
 
 3. Establish a mapping between the analytics properties and the service analytics data response. Following a convention, the aggregated result of the PagerDuty service analytics API is saved to the `__analytics` key and merged with the response of the service API. Consequently, users can access specific metrics such as the mean seconds to resolve by referencing `__analytics.mean_seconds_to_resolve`.
@@ -896,7 +907,8 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
               properties:
                 status: .status
                 url: .html_url
-                oncall: "[.__oncall_user[].user.email]"
+                oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+                secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
                 # highlight-next-line
                 meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
     ```
@@ -921,7 +933,8 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
               properties:
                 status: .status
                 url: .html_url
-                oncall: "[.__oncall_user[].user.email]"
+                oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+                secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
                 meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
                 meanSecondsToFirstAck: .__analytics.mean_seconds_to_first_ack
                 meanSecondsToEngage: .__analytics.mean_seconds_to_engage
@@ -1504,7 +1517,8 @@ The combination of the sample payload and the Ocean configuration generates the 
   "properties": {
     "status": "active",
     "url": "https://getport-io.pagerduty.com/service-directory/PGAAJBE",
-    "oncall": "devops-port@pager-demo.com"
+    "oncall": "devops-port@pager-demo.com",
+    "secondaryOncall": null
   },
   "relations": {},
   "createdAt": "2023-11-01T13:18:02.215Z",
