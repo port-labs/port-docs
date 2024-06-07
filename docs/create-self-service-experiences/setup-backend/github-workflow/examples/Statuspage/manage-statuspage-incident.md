@@ -10,7 +10,14 @@ import StatuspageIncidentBlueprint from './blueprints/_statuspage_incident_bluep
 This self-service guide will show you how to seamlessly create and update incidents on your [Atlassian Statuspage](https://www.atlassian.com/software/statuspage) directly through Port. You'll also learn how to automatically notify your team about incident changes using Port's notification system.
 
 ## Prerequisites
-1. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+1. Get your [Status page API Key](https://support.atlassian.com/statuspage/docs/create-and-manage-api-keys/) and Page ID:
+
+<img src='/img/self-service-actions/setup-backend/github-workflow/examples/statuspageKeys.png' width='80%' border='1px' />
+
+<br />
+
+2. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+   - `STATUSPAGE_PAGE_ID` - Your Statuspage Id
    - `STATUSPAGE_API_KEY` - Statuspage API key. [Create the API Key](https://support.atlassian.com/statuspage/docs/create-and-manage-api-keys/)
    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
@@ -26,7 +33,7 @@ This step is not required for this example, but it will create all the blueprint
 - **Manually Create Blueprints:** Create the 'Statuspage' and 'Statuspage Component' blueprints in Port and populate them with your relevant data."
 ::: -->
 
-2. [Create the blueprints](https://app.getport.io/settings/data-model) in Port.
+3. [Create the blueprints](https://app.getport.io/settings/data-model) in Port.
 
 <StatuspageBlueprint />
 <StatuspageComponentBlueprint />
