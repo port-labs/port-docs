@@ -6,8 +6,9 @@ This guide aims to show how to connect an ECR `repository` to an existing servic
 
 :::tip Prerequisites
 This guide assumes you have:
--  A Port account and that you have completed the [onboarding process](/quickstart). We will use the `Service` blueprint created during the onboarding process.
-- [AWS exporter installed and configured](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md) in your environment.
+
+- A Port account and that you have completed the [onboarding process](/quickstart). We will use the `Service` blueprint created during the onboarding process.
+- [AWS exporter installed and configured](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/aws-exporter.md) in your environment.
 
 :::
 
@@ -30,6 +31,7 @@ To tag an ECR repository, you can use either the AWS CLI or the ECR console. Her
 4. **Choose "Add tags"** and **specify the key-value pairs** for each tag.
 
 ### Using the AWS CLI
+
 Run the command:
 
 ```bash
@@ -40,7 +42,7 @@ aws ecr tag-resource \
 
 This will add a tag with the specified key-value pair to the repository. You can add multiple tags by specifying additional `--tags` parameters.
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/create-new-ecr-tag.png' width='60%' border='1px' />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/create-new-ecr-tag.png' width='60%' border='1px' />
 
 :::note Control the tag key-value pair
 Since our ECR `repository` may already have several tags, we will need a mechanism to control how these tags will be related to our `Service` blueprint. A way to achieve this relation is to prefix the tag key with the keyword `port-` and the value would be anything. We will then use JQ to select the keys that starts with this keyword. For this guide, our tag key will be named `port-auth-service`, which will correspond to a `Service` entity identified by `auth-service` in Port. Since tag values can be optional, we can leave it blank; only the keys matter to us.
@@ -54,23 +56,22 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `ECR Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/ecr-repo-create-new-relation.png' width='60%' border='1px' />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/ecr-repo-create-new-relation.png' width='60%' border='1px' />
 
 <br/><br/>
 
 2. Fill out the form like this, then click `Create`:
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/ecr-repo-fill-relation-details.png' width='60%' border='1px' />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/ecr-repo-fill-relation-details.png' width='60%' border='1px' />
 
 <br/><br/>
 
-With the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant ECR Repository to each of our services. This is done by adding some mapping logic. Update the [`config.json`](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md#exporter-configjson-file) file from the AWS exporter to:
+With the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant ECR Repository to each of our services. This is done by adding some mapping logic. Update the [`config.json`](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/aws-exporter.md#exporter-configjson-file) file from the AWS exporter to:
 
 <details>
 <summary><b>`config.json` (Click to expand)</b></summary>
 
 ```json showLineNumbers
-
 {
   "resources": [
     {
@@ -103,7 +104,6 @@ With the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we ne
     }
   ]
 }
-
 ```
 
 </details>
@@ -121,7 +121,7 @@ service: .Tags | keys[] | select(startswith("port-")) | .[6:]
 What we just did was map the `ECR Repository` to the relation between it and our `Services`.  
 Now, if our `Service` identifier is equal to the ECR Repository tag key, the `service` will automatically be linked to it &nbsp;🎉
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/ecr-service-mapping.png' width='60%' border='1px' />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/ecr-service-mapping.png' width='60%' border='1px' />
 
 ## Conclusion
 
@@ -129,5 +129,5 @@ By following these steps, you can seamlessly connect an ECR repository with an e
 
 Relevant guides and examples:
 
-- [Port's AWS integration for ECR Repositories](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples#ecr-repositories)
+- [Port's AWS integration for ECR Repositories](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples#ecr-repositories)
 - [Python script to ingest ECR Repositories and Images into Port](https://github.com/port-labs/example-ecr-images)
