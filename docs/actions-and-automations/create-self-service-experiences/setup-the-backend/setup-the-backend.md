@@ -24,7 +24,7 @@ Here is the basic backend model:
 
 ## Define the backend
 
-Port's uses the same backend types and configurations for both self-service actions and [automations](/actions-and-automations/define-automations/).
+Port uses the same backend types and configurations for both self-service actions and [automations](/actions-and-automations/define-automations/).
 
 All available backends and their configurations can be found [here](/actions-and-automations/setup-backend/).
 
