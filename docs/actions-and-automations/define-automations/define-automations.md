@@ -42,7 +42,7 @@ Automations are defined in JSON format. The JSON structure looks like this:
     "type": "automation",
     "event": {
       "type": "event_type",
-      "blueprintIdentifier": "blueprint_id",
+      "blueprintIdentifier": "blueprint_id"
     },
     "condition": {
       "type": "JQ",

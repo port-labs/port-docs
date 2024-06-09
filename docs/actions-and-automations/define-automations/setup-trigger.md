@@ -35,7 +35,7 @@ An automation's trigger is defined under the `trigger` key:
     "type": "automation",
     "event": {
       "type": "event_type",
-      "blueprintIdentifier": "blueprint_id",
+      "blueprintIdentifier": "blueprint_id"
     },
     "condition": {
       "type": "JQ",
