@@ -3,9 +3,9 @@ sidebar_position: 2
 title: Setup backend
 ---
 
-# Setup action
+# Setup backend
 
-An action is the logic that you want to execute when a trigger event occurs. Actions will run on all entities tied to the blueprint specified in the automation's definition, whenever the trigger event occurs.
+The automation's backend is the logic that you want to execute when a trigger event occurs. Actions will run on all entities tied to the blueprint specified in the automation's definition, whenever the trigger event occurs.
 
 Port uses the same actions for automations and for [self-service actions](/actions-and-automations/create-self-service-experiences/).
 
