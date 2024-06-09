@@ -13,7 +13,7 @@ Port uses the same actions for automations and for [self-service actions](/actio
 
 ## Common automations
 
-- Create a new incident in PageDuty when CPU usage is greater than X%.
+- Create a new incident in PagerDuty when CPU usage is greater than X%.
 - Destroy an ephemeral environment when its TTL expires.
 - Send a Slack message for each new alert.
 
