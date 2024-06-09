@@ -262,6 +262,10 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/main-menu/create-self-service-actions.svg');
 }
 
+.sidebar-menu-define-automations > div .menu__link::before {
+  content: url('/static/img/sidebar-icons/main-menu/define-automations.svg');
+}
+
 .sidebar-menu-promote-scorecards > div .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/promote-scorecards.svg');
 }

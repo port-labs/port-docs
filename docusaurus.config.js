@@ -144,7 +144,7 @@ const config = {
               },
               {
                 label: "Create self-service actions",
-                to: "/create-self-service-experiences",
+                to: "/actions-and-automations/create-self-service-experiences",
               },
               {
                 label: "Promote scorecards",
