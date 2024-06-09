@@ -15,7 +15,7 @@ import TabItem from "@theme/TabItem"
 </center>
 <br/>
 
-Port's self-service actions support a variety of backends that can be triggered when a user invokes an action.
+Port's self-service actions and automations support a variety of backends that can be used when triggered.
 
 Here is the basic backend model:
 
@@ -26,7 +26,7 @@ When creating an action, you can define the payload that will be sent every time
 
 Executing a self-service action involves the following steps:
 
-1. **The action is triggered in Port** - the trigger can either be a user executing an action via the UI, or an automation triggering an action via Port's API.
+1. **The action is triggered in Port** - the trigger can either be a user executing a self-service action via the UI, or an automation triggering an action.
 2. **The payload is sent to your backend** - the payload, as defined by the action's creator, is sent to your backend. The backend can be a URL, a dedicated Kafka topic or one of your CI/CD workflows/pipelines.
 3. **Your backend receives the payload and handles the request** - depending on the action, your backend might open a PR, create a cloud resource, provision a new environment, or perform any other logic you would like.
 4. **Your backend updates Port on the status of the execution** - You can [enrich the action run object](/actions-and-automations/reflect-action-progress/) in Port by adding logs, attaching links to other workflows or pipelines that help fullfil the request and add a final success/fail status once the action is complete.

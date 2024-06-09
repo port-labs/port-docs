@@ -21,8 +21,8 @@ Port uses the same actions for automations and for [self-service actions](/actio
 
 Automations are comprised of two parts:
 
-1. **Trigger** - An event in your software catalog that you want to act upon. This can be any one of the events defined [here](/actions-and-automations/automations/setup-trigger).
-2. **Action** - The logic that you want to execute when the trigger event occurs. This can be any one of the actions defined [here](/actions-and-automations/automations/setup-action). 
+1. **Trigger** - An event in your software catalog that you want to act upon. This can be any one of the events defined [here](/actions-and-automations/define-automations/setup-trigger).
+2. **Action** - The logic that you want to execute when the trigger event occurs. This can be any one of the actions defined [here](/actions-and-automations/define-automations/setup-action). 
 
 When an event occurs in your software catalog, Port will automatically trigger the associated action, given that the automation is enabled.  
 
@@ -65,8 +65,8 @@ The table below describes the fields in the JSON structure (fields in **bold** a
 | `title` | The automation's title. |
 | `icon` | The automation's icon. |
 | `description` | A description that can be used to explain the automation. |
-| **`trigger`** | An object containing data about the automation's trigger. See [Setup trigger](/actions-and-automations/automations/setup-trigger) for more information. |
-| **`invocationMethod`** | An object containing data about the automation's invocation method. See [Setup action](/actions-and-automations/automations/setup-action) for more information. |
+| **`trigger`** | An object containing data about the automation's trigger. See [Setup trigger](/actions-and-automations/define-automations/setup-trigger) for more information. |
+| **`invocationMethod`** | An object containing data about the automation's invocation method. See [Setup action](/actions-and-automations/define-automations/setup-action) for more information. |
 | `publish` | A boolean value indicating whether the automation is enabled or disabled (`false` by default). |
 
 ## Define an automation
@@ -76,7 +76,7 @@ Automations are defined in the [Automations page](https://app.getport.io/setting
 1. Click on the `+ New automation` button in the top-right corner. This will open a JSON form where you can define the automation's configuration.
 
 2. Change the JSON configuration to match your desired automation:
-   * Setup the [trigger](/actions-and-automations/automations/setup-trigger).
-   * Define the [action](/actions-and-automations/automations/setup-action) that will be executed when the trigger event occurs.
+   * Setup the [trigger](/actions-and-automations/define-automations/setup-trigger).
+   * Define the [action](/actions-and-automations/define-automations/setup-action) that will be executed when the trigger event occurs.
 
 3. Make sure to set the `publish` field to `true` if you want to enable the automation. When finished, click `Save`.

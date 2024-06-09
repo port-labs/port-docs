@@ -59,7 +59,7 @@ The table below describes the fields in the JSON structure under the `trigger` k
 | --- | --- |
 | **`type`** | The automation's trigger type. Should be set to `automation`. |
 | **`event`** | An object containing data about the event that triggers the automation. |
-| **`event.type`** | The [trigger event type](/actions-and-automations/automations/setup-trigger#available-triggers). |
+| **`event.type`** | The [trigger event type](/actions-and-automations/define-automations/setup-trigger#available-triggers). |
 | **`event.blueprintIdentifier`** | The identifier of the blueprint whose entities will trigger the automation. |
 | `condition` | An optional object containing `jq` expressions used to determine which entities the automation will be triggered for. See [Conditions](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/#conditions) for more information. |
 | `condition.type` | The type of condition. Should be set to `JQ`. |
