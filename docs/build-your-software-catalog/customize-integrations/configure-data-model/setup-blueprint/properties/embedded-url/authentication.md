@@ -83,7 +83,7 @@ allow_embedding = true
 [auth.jwt] ;Required for the embedding
 ...
 jwk_set_url = https://{your-okta-org}.okta.com/oauth2/default/v1/keys
-expected_claims = {"iss": "https://{your-okta-org}.okta.com", "aud": "https://{your-okta-org}.okta.com"}
+expect_claims = {"iss": "https://{your-okta-org}.okta.com", "aud": "https://{your-okta-org}.okta.com"}
 url_login = true
 ...
 
@@ -143,7 +143,7 @@ allow_embedding = true
 [auth.jwt] ;Required for the embedding
 ...
 jwk_set_url = https://{your-onelogin-org}.onelogin.com/oidc/2/certs
-expected_claims = {"iss": "https://{your-onelogin-org}/oidc/2"}
+expect_claims = {"iss": "https://{your-onelogin-org}/oidc/2"}
 url_login = true
 ...
 

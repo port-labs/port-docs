@@ -1949,7 +1949,7 @@ Done! you can now import historical data from PagerDuty into Port. Port will par
 ## More relevant guides and examples
 
 - [Ensure production readniness](https://docs.getport.io/guides-and-tutorials/ensure-production-readiness)
-- [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
-- [Self-service action to trigger a PagerDuty incident](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
-- [Self-service action to change a PagerDuty incident owner](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
-- [Self-service action to create a PagerDuty service from Port](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)
+- [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
+- [Self-service action to trigger a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
+- [Self-service action to change a PagerDuty incident owner](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
+- [Self-service action to create a PagerDuty service from Port](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)
