@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: Setup action
+title: Setup backend
 ---
 
 # Setup action

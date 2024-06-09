@@ -42,19 +42,33 @@ See the list of supported backends below for more information.
 
 ### Define the action's payload
 
-In this section, you can construct a JSON payload that will be sent to your backend upon every execution of the action. You can use this to send the action's user inputs and/or any data you want your backend to have. 
+When creating a self-service action or automation, you can construct a JSON payload that will be sent to your backend upon every execution. You can use this to send data about the action that you want your backend to have. 
 
-Accessing your data is done using `jq`, wrapping each expression with `{{ }}`.  
+The payload is defined using JSON, and accessing your data is done using `jq`, wrapping each expression with `{{ }}`.  
 For example, this payload contains a user input, and the action's run id (unique to each execution of the action):
-<img src='/img/self-service-actions/setup-backend/action-form-backend-payload.png' width='85%' border='1px' />
-<br/><br/>
-
-When executing an action, Port creates an object that contains data about the action's execution.  
-This entire object is accessible to you when constructing the payload, and it looks like this:
 
 ```json
 {
-  // `inputs` contains the action's user inputs, and thus relevant only for self-service actions
+  "example_string_input": "{{ .inputs.example_string_input }}",
+  "port_context": {
+    "run_id": "{{ .run.id }}"
+  }
+}
+```
+
+#### Trigger data
+
+When a self-service action or automation is executed, Port creates an `actionRun` object that contains data about the execution.  
+
+This entire object is accessible to you when constructing the payload, and due to the difference in triggers, it is structured a bit differently for self-service actions and automations:
+
+<Tabs groupId="triggerData" defaultValue="self-service">
+<TabItem value="self-service" label="Self-service actions">
+
+Here is an example of trigger data for a **self-service action**:
+
+```json showLineNumbers
+{
   "inputs": {
     "microservice_name": "string",
     "microservice_description": "string",
@@ -105,7 +119,125 @@ You can access any value in this structure and add it to the payload. For exampl
 }
 ```
 
+</TabItem>
+
+<TabItem value="automation" label="Automations">
+
+Here is an example of trigger data for an **automation**:
+
+```json showLineNumbers
+{
+  "inputs": null,
+  "trigger": {
+    "by": {
+      "orgId": "org_BneDtWovPqXaA2VZ",
+      "userId": "auth0|62ceaea697ca00f09d7c4f45",
+      "user": {
+        "email": "example-user@test.com",
+        "firstName": "SomeFirstName",
+        "lastName": "SomeLastName",
+        "phoneNumber": "",
+        "picture": "",
+        "providers": [],
+        "status": "ACTIVE",
+        "id": "auth0|62ceaea697ca00f09d7c4f45",
+        "createdAt": "2024-06-09T09:57:50.444Z",
+        "updatedAt": "2024-06-09T09:57:50.444Z"
+      }
+    },
+    "origin": "AUTOMATION",
+    "at": "2024-06-09T12:28:18.663Z"
+  },
+  "event": {
+    "action": "UPDATE",
+    "resourceType": "entity",
+    "trigger": {
+      "by": {
+        "orgId": "org_BneDtWovPqXaA2VZ",
+        "userId": "auth0|62ceaea697ca00f09d7c4f45"
+      },
+      "origin": "UI",
+      "at": "2024-06-09T12:28:18.477Z"
+    },
+    "context": {
+      "blueprintIdentifier": "Service",
+      "entityIdentifier": "example-service-identifier",
+      "propertyIdentifier": null
+    },
+    "diff": {
+      "before": {
+        "identifier": "example-service-identifier",
+        "title": "Example service",
+        "icon": null,
+        "blueprint": "Service",
+        "team": [
+          "Rocket"
+        ],
+        "properties": {
+          "latestVersion": "12.8.2",
+          "language": "TypeScript",
+          "one_hop_service_language": "Ruby",
+          "two_hops_service_language": "Ruby",
+          "repo": "https://github.com/some-org/example-service"
+        },
+        "relations": {
+          "using": "rogue-service"
+        },
+        "createdAt": "2024-06-09T09:57:52.931Z",
+        "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+        "updatedAt": "2024-06-09T09:57:52.931Z",
+        "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ"
+      },
+      "after": {
+        "identifier": "example-service-identifier",
+        "title": "Example service renamed",
+        "icon": "Microservice",
+        "blueprint": "Service",
+        "team": [
+          "Rocket"
+        ],
+        "properties": {
+          "latestVersion": "12.8.22",
+          "language": "Python",
+          "one_hop_service_language": "Ruby",
+          "two_hops_service_language": "Ruby",
+          "repo": "https://github.com/some-org/example-service"
+        },
+        "relations": {
+          "using": "rogue-service"
+        },
+        "createdAt": "2024-06-09T09:57:52.931Z",
+        "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+        "updatedAt": "2024-06-09T12:28:18.628Z",
+        "updatedBy": "auth0|62ceaea697ca00f09d7c4f45"
+      }
+    }
+  },
+  "entity": null,
+  "action": {
+    "identifier": "automation"
+  },
+  "run": {
+    "id": "r_k86OUzq80jRlxFV0"
+  }
+}
+```
+
+You can access any value in this structure and add it to the payload. For example, to add the executing user's name to the payload, you can use the following expression:
+
+```json
+{
+  "executing_user_email": "{{.trigger.by.user.email}}"
+}
+```
+</TabItem>
+</Tabs>
+
 Use the `Test JQ` button in the bottom-left corner to test your expressions against your action and ensure you are sending the correct data.
+
+:::tip Pro tip
+You can use the `jq` expression `{{ . }}` when testing to see the entire available object, and then drill down to the specific data you need.
+:::
 
 #### spreadValue() function
 
