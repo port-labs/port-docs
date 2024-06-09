@@ -38,7 +38,7 @@
     "react-tooltip": "^5.26.4"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.3.2",
+    "@docusaurus/module-type-aliases": "^3.4.0",
     "@docusaurus/tsconfig": "^3.3.2",
     "@docusaurus/types": "^3.3.2",
     "husky": "^9.0.11",
