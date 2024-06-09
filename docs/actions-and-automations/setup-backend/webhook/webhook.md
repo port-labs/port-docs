@@ -1,8 +1,8 @@
-# Webhook Self-Service Actions
+# Webhook actions
 
 ## Overview
 
-Port can trigger webhooks based on a customer provided `URL` Both for `Action` and `Changelog` events.
+Port can trigger custom webhooks based on a customer provided URL, for both self-service actions and automations.
 
 ![Port Kafka Architecture](/img/self-service-actions/portWebhookArchitecture.jpg)
 
@@ -60,7 +60,7 @@ Alternatively, you can set the execution type to **synchronous**, which will cau
 
 ## Next steps
 
-To get started with webhook Self-Service Actions, please check the sources below:
+To get started with webhook actions, check out the sources below:
 
 ### Examples
 

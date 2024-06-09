@@ -3,13 +3,15 @@ import DefineVars from "/static/img/self-service-actions/setup-backend/jenkins-p
 
 # Triggering Jenkins using webhooks
 
-In this guide, you will learn how to trigger your [Jenkins](https://www.jenkins.io/) Pipelines from Port, using [Webhook Actions](../webhook/).
+Port supports triggering Jenkins pipelines for both self-service actions and automations, using webhooks.  
+
+This page will guide you in triggering your [Jenkins](https://www.jenkins.io/) Pipelines from Port, using [Webhook Actions](../webhook/).
 
 ![Illustration](/img/self-service-actions/setup-backend/jenkins-pipeline/jenkins-illustration.png)
 
 The steps shown in the image above are as follows:
 
-1. An action is invoked in Port;
+1. A self-service action or automation is invoked in Port.
 2. Port signs the action payload using SHA-1 with the [`clientSecret`](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
 
    :::info
@@ -24,10 +26,10 @@ The steps shown in the image above are as follows:
 
    An example flow would be:
 
-   1. A developer asks to run a Jenkins pipeline;
-   2. Port sends a `POST` request with the action payload to the Jenkins webhook `URL`;
-   3. The Jenkins webhook receives the new action request;
-   4. The Jenkins webhook triggers the pipeline;
+   1. A developer asks to run a Jenkins pipeline.
+   2. Port sends a `POST` request with the action payload to the Jenkins webhook `URL`.
+   3. The Jenkins webhook receives the new action request.
+   4. The Jenkins webhook triggers the pipeline.
 
 ## Prerequisites
 

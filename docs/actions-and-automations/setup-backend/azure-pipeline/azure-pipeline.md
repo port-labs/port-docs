@@ -1,12 +1,12 @@
-# Azure Pipelines Self-Service Actions
+# Azure pipeline actions
 
-Port can trigger [Azure pipelines](https://azure.microsoft.com/en-us/products/devops/pipelines) using [incoming webhooks triggers](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/resources?view=azure-devops&tabs=schema#define-a-webhooks-resource).
+Port can trigger [Azure pipelines](https://azure.microsoft.com/en-us/products/devops/pipelines) for both self-service actions and automations, using [incoming webhook triggers](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/resources?view=azure-devops&tabs=schema#define-a-webhooks-resource).
 
 ![AzurePipelinesArchitecture](/img/self-service-actions/portAzurePipelineArchitecture.png)
 
 The steps shown in the image above are as follows:
 
-1. An action is invoked in Port;
+1. A self-service action or automation is invoked in Port.
 2. Port signs the action payload using SHA-1 with the [`clientSecret`](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
 
    :::info
