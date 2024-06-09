@@ -1,0 +1,74 @@
+<details>
+<summary> ECS Service Blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "ecsService",
+  "description": "This blueprint represents an AWS ECS Service in our software catalog",
+  "title": "ECS Service",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "desiredCount": {
+        "type": "number",
+        "title": "Desired Count"
+      },
+      "taskDefinition": {
+        "type": "string",
+        "title": "Task Definition"
+      },
+      "launchType": {
+        "type": "string",
+        "enum": ["EC2", "FARGATE", "EXTERNAL"],
+        "title": "Launch Type"
+      },
+      "schedulingStrategy": {
+        "type": "string",
+        "enum": ["REPLICA", "DAEMON"],
+        "title": "Scheduling Strategy"
+      },
+      "loadBalancers": {
+        "type": "array",
+        "title": "Load Balancers"
+      },
+      "securityGroups": {
+        "type": "array",
+        "title": "Security Groups"
+      },
+      "subnets": {
+        "type": "array",
+        "title": "Subnets"
+      },
+      "iamRole": {
+        "type": "string",
+        "format": "url",
+        "title": "IAM Role",
+        "icon": "Unlock"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
