@@ -1,0 +1,125 @@
+---
+id: get-a-team
+title: "Get a team"
+description: "This route allows you to fetch a specific team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Get a team"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVd9r2zAQ/leEnlZI43aPphQKG6UMRum6p9IHxT7HooqlniRnmfH/vjvZTrw0G/RpsBdbOd2P7+67z+lkCb5A7YK2jczlY629QBsDCGWM3Xqxs1EEKyoIRS2U8A4KXelCBFAboRu+R3FvMQiLa9Xon4pTLa9WmF2nx6MVBhQ2YmORsq4oeQr2C1HUULyIZKhBPJW2iBtoQsrw/KEOwfk8y8jsl2sIjoostc28t+e4UkXGj3PbArYattnZUi5kUGsv8yf5yAXk80I6hWoDAZDNnfRUcqNk3smwc0ANK0S1o0AdgALIDk3ccAZdkrWhWHoVCCpAeRPoHF25Pzu0rS4B6TgfIzl5KrisNPrwdUgxWIw6MhAYbfa/nC5CxMOtp1FEaqPvCSDT8xoBdxOuXFYaTOmPqjOJIIarxN5WNeFAYWUxTZspWIq7SlCpciFsY3bJPhIM5ZRiq40RKyCuCxNLshPp7IjgnW08DFQTCITXqBFKmVfKeOgXJ8btA+pmLad+nAr1oZ1x2m+b4Qthqz3ut22dABEwQk8b4KGIqMMu8b+iTSS+iF+itMzDsCbsNrWTluDjxQW/fkfyCSoVTRAPo6dkWmi3akvVJC0obwQ3lMusvcxS7qxj7L1kGNhOWxjRkNO038rp2XrLOeZvPL8B0oT8sLlOf4HZMtxEQoKj/uQ44Jq6pKhhgSqbwnUw7J80e3N/R64MbOjxcnnB5Djrw0Y17D5mv4VA6ueejhnqZGGbQLL9Hz4fw2gD/AiZM4pGSMNIbHUjtU+yvWTHtDgLmafxEGM1TYxvu26lPHxH0/dsHgTLnJfaq5XZq+OvQ/wn8j3Z+wtt2Ow70yoT2SktaatQc0vvbO/DwyjRM/FObZ9EOKmh2c3xTcgTPf3zXKi3nx/pWkVmcy6mlySm8cAtncx8rLKhDD/5e3cy5IpEJkiq13v34eaPAaNoJ2/uk/4C+l+qxaAV
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a team"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/teams/{name}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch a specific team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"name","description":"The name of the team you want to fetch.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"enum":["id","name","createdAt","updatedAt","provider","description","users.firstName","users.lastName","users.email","users.picture","users.status"]}},"in":"query","name":"fields","description":"The fields you want to fetch for the team. If used, only the specified fields will be included in the response.<br/>","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

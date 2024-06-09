@@ -1,0 +1,125 @@
+---
+id: get-an-action-runs-details
+title: "Get an action run's details"
+description: "This route allows you to fetch the details of an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
+sidebar_label: "Get an action run's details"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVE1P3DAQ/SuWLwUpuwGOEUJCaoWqXhClJ7SqvMlkY+GNw3gc2Eb5753JBwS0nHrrxYmdmfGb9+al0wWEHG1D1tc60/eVDQp9JFDGOf8c1MFHRV6VQHmlqAJVABnrgvKlMrUyuWQqjPX6covp1bDce+XAYK32HrnQlustAkOi8gryRyXHUvGh8HncQ01GQjYnFVETsjTl47DeATUeaW19miMYglUAV/KCrc1hBS8NoIU6h5AilA5yWo1XrRr0O4QQ0tO1TjSZXdDZg74ecdwxDr1JdGPQ7IEA5WOnAyPbG511mg4NMCGB0NY7zoc67iW/PedNe6E3faKtUPYUAQ98VnMd3rZcSrhMNMJTtAiFzkrjAvTJ5+XnWo2h6q0Uc/XbFrz/qBEoWzBdtrSAooOQ+MbvINmzqelVt1Gad5AII/Tcf4A8oqXD0P2WRQOULpnpIsOBI4liGhtfBwgC/eLsTB7vQX2F0kRH6m6K1D33xMRWni/TLKJOxu4ynbbn6YiWJeMr0m5stNcCB9tZi4iOo+dhMI1dzIJeYv8prI7Y5g5eCea0H7CQ5zoyJLR/hlHTE+0Vd8tZ/SBD6Yd0S07ib/k+dX37XUSflM30+fpMJGt8oL2pJXyqfgP03hRfwuyXjzJ2Ovc1sYr/t+tGFQheKG2cYbaZt0HYbhqHyVHTQMiMxuGRTdPPOlfMswR23dYE+IWu7+V4NJ5MSmGD2bpXpyX6kSVfWrE1LgqOYWxag1bCj6d+KtLJ3WSeU/UPDjxKyDyr9WGJdW5jIqLfLB118+1eWItC4XLYH4dhn16kwaO1P7pgvEhW+UsdTblkEyi20tVr+Pjl04TJVHO0dLrp+/4vTgM2UA==
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an action run's details"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions/runs/{run_id}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch the details of an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","description":"The identifier of the action run you want to fetch.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

@@ -1,0 +1,101 @@
+---
+id: get-a-user
+title: "Get a user"
+description: "This route allows you to fetch a specific user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Get a user"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdU01P20AQ/SurOYFkYujRQkiVWqGqF0ThFEXVxp7EKxyvmZ01TS3/986sHQgIeuixl/V+vPl4b54HqDCU5Dp2voUC7moXDPnIaGzT+Kdg9j4a9maDXNbGmtBh6TauNDEgGdfqO5kbT2w8bW3rfltNtbhcU36VljtvGrTUmp0nybqW5Ck4ZKassXwwesE1mmXly7jDllOG1UnN3IUiz+U6LLbInRRZOJ+H4M9obctclzPfI/UOn/LTBWTAdhugWMK9FoBVBp0lu0PWU7EcIEjJnYViAN53KIQDk2u3MGbglH9nuZY0rcTISdv8KXjXyN1bodCkF2OrijAE4zeJRdJFRXuyLT8rN+khWQgfoyOsoGCKOEqHActIjvepv7UohaQMCG1VxImGwqRG59uAQZv/dH6un9ctfcGNjQ2b2xkJo7AS7rWXaiACQjbxKyDvL/KUOx9eOI6gzVB/0CpSI9DDFGznjoYAx53/UFGnxg79P+srYd9x/yLp5yj90OwSmFWvhatEjWkKG5/CHTeKT876fPNNoNrYxPRica4T63zgnW0VPme/RhaPKqW3Axug9C2Luf4Hk0/SMv7ivGusSChipGkN84CX0F8IcLJPBsWRkWVuteimmGFY24D31IyjXj9GJHWhbHtLzq51AOKDygXdi4k2tgn4F2FPbmd3n5p//T/e5XbwUqtG6m0T9STbB3HWq790XB1b/vrrnYBsVEWODfmQDDlvlOG7+d86dSqm65h9EHIpRjVi96tn+PTyYcBs/ANa2a7GcfwDltrq0Q==
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a user"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/users/{user_email}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch a specific user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"user_email","description":"The email address of the user you want to fetch.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

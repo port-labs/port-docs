@@ -1,0 +1,101 @@
+---
+id: get-a-webhook
+title: "Get a webhook"
+description: "This route allows you to fetch a specific webhook in your Port organization. You can also see it in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/)."
+sidebar_label: "Get a webhook"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVEtr20AQ/ivLnhKwraRHEQKBllB6CWlKKcGH1WokLZZ3ld1Zu67Qf++MHrZikh4KvfUi72Nm9nvMuJU5BO1Ng8ZZmcqnygThXUQQqq7dPoiDiwKdKAB1JZQIDWhTGC32kFXObYSxHOLFg/MonC+VNb8UV1uJH5SqlaVKwYkAIAxyOFYgnnOFVIwSNQTRqBLWFxViE9IkUU2zKgEbKrgyLgmAaGwZEk5ZjimXwhWzd5XWLlpc3WQ+ue0/T07UoLwVW+eJS0aUJshhIXQFeiP4bADjdNyCxR73CQgdhzmSLJo6X/KrBKPAvfKw1ASqdmWiY0C3XRqLUPq+TjI+l1yu5EKiKoNMn+X34VCuF7JRXm0BwfNFKwOB2iqZthIPDZAXAT3xlt1CGramUVhRIUs5tDM54SUjwNPZuYek9PGahWKSk1/s515ZPJo6iEZVPLxE4yGXKfoIHSEMoKM3eOjxZSQnvUYcPKg8nTENcs3RHkJDGwjM4cPVFf+8RvYRChVrFI9jpOyIHElQOXpUktJyMdBMZbK7ngQMSXui00mG5XeTatHXFH1qHTMzTM45fGV5B2wTk6PSlPYFDidx7yJB8mMfy1H/ilhTVtf7Ubg+3WDN8X0P3j18plAGNpC9Xl2xd40LuFWWw8fq90ANO/lx7l4rtSNlLf4fxn84jIPtCD8xaWpF9pJRfSe1Y/89y901BU4gaZnOJo7aqiJbOaxtMxXgm6+7jo9fIngeF1rulDcq4/6gNs1N4DW1eUEGwB9Mv3gcx/BS/O0gv0lvanXLfb5TdeQdLTfU+K/+Trr1fCjvPz1RkIosynxeNv28jAtm+Gb980EaHuNvt3gn5YbmSNA03h7Dh5t3E8a5PDKxzKDrfgOgDmQ+
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a webhook"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/webhooks/{identifier}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch a specific webhook in your Port organization. You can also see it in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the webhook you want to fetch.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

@@ -1,0 +1,594 @@
+---
+id: patch-a-blueprints-permissions
+title: "Patch a blueprint's permissions"
+description: "This route allows you to patch the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.getport.io/build-your-software-catalog/set-catalog-rbac/examples)."
+sidebar_label: "Patch a blueprint's permissions"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdWG1v2zYQ/isEvywFbCvZR6MokHQFWmwfjMz75BkrJZ0tNrTIkZRdzfB/3x0l2ZLjvCFK0BQGBIo8Hp97eY7ybXkKLrHSeKlzPubTTDpmdeGBCaX0xrFSF8xrZoRPMuYzYAbsSjqH8o7pBRMsVgUYK3M/eh/b6EN4TDVTIGzOVtqiqhg1tjcOWJJBcsNomnTOUp0UK8i9IBzzs8x748ZRhNNutARvtPUjqaO4kCodIiQ7dHrhN8LCMBFeKL2MHPhmPLSxSCL4LlZGgXs34gPuxdLx8YxfNWAdnw+4hX8LcP5KpyUfb3mic48gaCiMUTIJcKJvjnyz5Q5BrwSNfGkAvaXjb5B41G6sRuu8BEerqEI24/slLSyl82BPSXYD8xssZA5sk2mWCdcJAkYnsSAwZM3BFBdPkTyE5tbRhQPbRiisFeWtY/9AeKQtSLMzNF8qJtLUgnPoWTxFeCZsnS2QPhqM9LBqH+88riz5boehArF6PLIg/SI4rFbweBxB+kVw6E0O6VU5RUNJoHv8lwX76m0BXwednNhIpVgMLAVPs6iAxWXwFSN11mXSDJgVSD5LoHNarkzQlqXSYg4ygcqWOdGSzAgpMGKf1mDL8LI/RMQKThkag9L5Es2gRTxJ2oAgcoGQlZ2xxkNFHgzFvJJkllCTVqouhHKAq4VJUftzmbLSqVyUPwhTHgXmFZjyXBx9MeW5ON4MU44N7ZkpeV/3SgoKfph75VFgXoEtz8XRF1uei+PNsOXY0Je4VyadJO7hhnEGErmQCTvQg8n8gWidRvrQV+SLX1BPMeH1rqueUPV8efWE6s2Q836zn0bV3Z6O16DCf6/e2WgbxW+WjE+w4PW42A+onqnYD6i3xsTTVj+ViA9cmw8tk4ARVqzIAdR4OdE9aXyM3idXGvQGYslxD2FpovOPTMmIhcSv2aphg95J+Zi8fpwZ0wzYQbyKNBwCTTXCdRtY1N3aiMrDocVV9bD4bj7gDpLCSl8G9DFgjuH39Gy+C30jZ3B7lay/np/fTgysSqJQnl3XkiGV0BuZTitbEzI22Dzm0foi2qN00faU8buohZsTOrtuXFtYhVqappkwstUz65jyJ8WgQt0YdCCbkb9DeYjAZYFgrfwvJBOvg5SBSHEXGUNdsetD/+xT1W077n+1/4nUpXHWRH6+L0PtqboItKc6FKTAd9oB/arNXxhx5y45ed8F8sh8oUNwpCen8glGk11OvmAgKOxVkl2Mzok+Rju/EqFFWcduErq1rdbsL52L8biktjqfP3EHuEpzD999ZJTAdCbvE3O2NQ9nfH2Bggcm4sv4jkLU9ibGGwuLJwXbbSwc/GXVbkfTyA5L9QOHa2ElVepA2FQ6Gqd1vbwnHGfXdcV7x/qrbnc4oykEOVWBtUDF+IbDGywLd1Tk3Rz31UWBDKtEP1bwh1NSeFB1q6dOpWlfEyeX04+fyf11Mx6vM9pkxYbqPj7H/G/84Ys2+0/DML/lSuTLQixJvlIcLqiCgtqubzehvtUDgnvS4uPCV9lEz93gji3vkZkMq+eHvXi1cueG2mWNNPl/jqD/B44QGl0=
+sidebar_class_name: "patch api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Patch a blueprint's permissions"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/blueprints/{blueprint_identifier}/permissions"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to patch the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.getport.io/build-your-software-catalog/set-catalog-rbac/examples).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint whose permissions you want to patch.<br/>"}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <span
+                className={"openapi-schema__container"}
+              >
+                <strong
+                  className={"openapi-schema__property"}
+                >
+                  entities
+                </strong><span
+                  className={"openapi-schema__name"}
+                >
+                   object
+                </span>
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <SchemaItem
+                collapsible={true}
+                className={"schemaItem"}
+              >
+                <details
+                  style={{}}
+                  className={"openapi-markdown__details"}
+                >
+                  <summary
+                    style={{}}
+                  >
+                    <span
+                      className={"openapi-schema__container"}
+                    >
+                      <strong
+                        className={"openapi-schema__property"}
+                      >
+                        register
+                      </strong><span
+                        className={"openapi-schema__name"}
+                      >
+                         object
+                      </span>
+                    </span>
+                  </summary><div
+                    style={{"marginLeft":"1rem"}}
+                  >
+                    <div
+                      style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                    >
+                      
+                      
+                      Define who has permissions to create entities of this blueprint.
+                      
+                      
+                    </div><SchemaItem
+                      collapsible={false}
+                      name={"users"}
+                      required={false}
+                      schemaName={"string[]"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"array","description":"List of users (email addresses) that are allowed to create entities of this blueprint.","items":{"type":"string"}}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"teams"}
+                      required={false}
+                      schemaName={"string[]"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"array","description":"List of teams that are allowed to create entities of this blueprint.","items":{"type":"string"}}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"roles"}
+                      required={false}
+                      schemaName={"string[]"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"array","description":"List of roles that are allowed to create entities of this blueprint.","items":{"type":"string"}}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"ownedByTeam"}
+                      required={false}
+                      schemaName={"boolean"}
+                      qualifierMessage={undefined}
+                      schema={{"description":"If `true`, permissions will be determined by team ownership, rather than by roles or direct assignment to users. Every user will be able to create entities belonging to their team/s.","type":"boolean"}}
+                    >
+                      
+                    </SchemaItem>
+                  </div>
+                </details>
+              </SchemaItem><SchemaItem
+                collapsible={true}
+                className={"schemaItem"}
+              >
+                <details
+                  style={{}}
+                  className={"openapi-markdown__details"}
+                >
+                  <summary
+                    style={{}}
+                  >
+                    <span
+                      className={"openapi-schema__container"}
+                    >
+                      <strong
+                        className={"openapi-schema__property"}
+                      >
+                        update
+                      </strong><span
+                        className={"openapi-schema__name"}
+                      >
+                         object
+                      </span>
+                    </span>
+                  </summary><div
+                    style={{"marginLeft":"1rem"}}
+                  >
+                    <div
+                      style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                    >
+                      
+                      
+                      Define who has permissions to modify entities of this blueprint.
+                      
+                      
+                    </div><SchemaItem
+                      collapsible={false}
+                      name={"users"}
+                      required={false}
+                      schemaName={"string[]"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"array","description":"List of users (email addresses) that are allowed to modify entities of this blueprint.","items":{"type":"string"}}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"teams"}
+                      required={false}
+                      schemaName={"string[]"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"array","description":"List of teams that are allowed to modify entities of this blueprint.","items":{"type":"string"}}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"roles"}
+                      required={false}
+                      schemaName={"string[]"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"array","description":"List of roles that are allowed to modify entities of this blueprint.","items":{"type":"string"}}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"ownedByTeam"}
+                      required={false}
+                      schemaName={"boolean"}
+                      qualifierMessage={undefined}
+                      schema={{"description":"If `true`, permissions will be determined by team ownership, rather than by roles or direct assignment to users. Every user will be able to modify entities belonging to their team/s.","type":"boolean"}}
+                    >
+                      
+                    </SchemaItem>
+                  </div>
+                </details>
+              </SchemaItem><SchemaItem
+                collapsible={true}
+                className={"schemaItem"}
+              >
+                <details
+                  style={{}}
+                  className={"openapi-markdown__details"}
+                >
+                  <summary
+                    style={{}}
+                  >
+                    <span
+                      className={"openapi-schema__container"}
+                    >
+                      <strong
+                        className={"openapi-schema__property"}
+                      >
+                        unregister
+                      </strong><span
+                        className={"openapi-schema__name"}
+                      >
+                         object
+                      </span>
+                    </span>
+                  </summary><div
+                    style={{"marginLeft":"1rem"}}
+                  >
+                    <div
+                      style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                    >
+                      
+                      
+                      Define who has permissions to delete entities of this blueprint.
+                      
+                      
+                    </div><SchemaItem
+                      collapsible={false}
+                      name={"users"}
+                      required={false}
+                      schemaName={"string[]"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"array","description":"List of users (email addresses) that are allowed to delete entities of this blueprint.","items":{"type":"string"}}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"teams"}
+                      required={false}
+                      schemaName={"string[]"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"array","description":"List of teams that are allowed to delete entities of this blueprint.","items":{"type":"string"}}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"roles"}
+                      required={false}
+                      schemaName={"string[]"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"array","description":"List of roles that are allowed to delete entities of this blueprint.","items":{"type":"string"}}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"ownedByTeam"}
+                      required={false}
+                      schemaName={"boolean"}
+                      qualifierMessage={undefined}
+                      schema={{"description":"If `true`, permissions will be determined by team ownership, rather than by roles or direct assignment to users. Every user will be able to delete entities belonging to their team/s.","type":"boolean"}}
+                    >
+                      
+                    </SchemaItem>
+                  </div>
+                </details>
+              </SchemaItem><SchemaItem
+                collapsible={true}
+                className={"schemaItem"}
+              >
+                <details
+                  style={{}}
+                  className={"openapi-markdown__details"}
+                >
+                  <summary
+                    style={{}}
+                  >
+                    <span
+                      className={"openapi-schema__container"}
+                    >
+                      <strong
+                        className={"openapi-schema__property"}
+                      >
+                        updateProperties
+                      </strong><span
+                        className={"openapi-schema__name"}
+                      >
+                         object
+                      </span>
+                    </span>
+                  </summary><div
+                    style={{"marginLeft":"1rem"}}
+                  >
+                    <div
+                      style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                    >
+                      
+                      
+                      Define who has permissions to modify specific properties in entities of this blueprint.
+                      
+                      
+                    </div><SchemaItem
+                      collapsible={true}
+                      className={"schemaItem"}
+                    >
+                      <details
+                        style={{}}
+                        className={"openapi-markdown__details"}
+                      >
+                        <summary
+                          style={{}}
+                        >
+                          <span
+                            className={"openapi-schema__container"}
+                          >
+                            <strong
+                              className={"openapi-schema__property"}
+                            >
+                              property name*
+                            </strong><span
+                              className={"openapi-schema__name"}
+                            >
+                               object
+                            </span>
+                          </span>
+                        </summary><div
+                          style={{"marginLeft":"1rem"}}
+                        >
+                          <SchemaItem
+                            collapsible={false}
+                            name={"users"}
+                            required={false}
+                            schemaName={"string[]"}
+                            qualifierMessage={undefined}
+                            schema={{"type":"array","description":"List of users (email addresses) that are allowed to modify properties in entities of this blueprint.","items":{"type":"string"}}}
+                          >
+                            
+                          </SchemaItem><SchemaItem
+                            collapsible={false}
+                            name={"teams"}
+                            required={false}
+                            schemaName={"string[]"}
+                            qualifierMessage={undefined}
+                            schema={{"type":"array","description":"List of teams that are allowed to modify properties in entities of this blueprint.","items":{"type":"string"}}}
+                          >
+                            
+                          </SchemaItem><SchemaItem
+                            collapsible={false}
+                            name={"roles"}
+                            required={false}
+                            schemaName={"string[]"}
+                            qualifierMessage={undefined}
+                            schema={{"type":"array","description":"List of roles that are allowed to modify properties in entities of this blueprint.","items":{"type":"string"}}}
+                          >
+                            
+                          </SchemaItem><SchemaItem
+                            collapsible={false}
+                            name={"ownedByTeam"}
+                            required={false}
+                            schemaName={"boolean"}
+                            qualifierMessage={undefined}
+                            schema={{"description":"If `true`, permissions will be determined by team ownership, rather than by roles or direct assignment to users. Every user will be able to modify properties in entities belonging to their team/s.","type":"boolean"}}
+                          >
+                            
+                          </SchemaItem>
+                        </div>
+                      </details>
+                    </SchemaItem>
+                  </div>
+                </details>
+              </SchemaItem><SchemaItem
+                collapsible={true}
+                className={"schemaItem"}
+              >
+                <details
+                  style={{}}
+                  className={"openapi-markdown__details"}
+                >
+                  <summary
+                    style={{}}
+                  >
+                    <span
+                      className={"openapi-schema__container"}
+                    >
+                      <strong
+                        className={"openapi-schema__property"}
+                      >
+                        updateRelations
+                      </strong><span
+                        className={"openapi-schema__name"}
+                      >
+                         object
+                      </span>
+                    </span>
+                  </summary><div
+                    style={{"marginLeft":"1rem"}}
+                  >
+                    <div
+                      style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                    >
+                      
+                      
+                      Define who has permissions to modify specific relations in entities of this blueprint.
+                      
+                      
+                    </div><SchemaItem
+                      collapsible={true}
+                      className={"schemaItem"}
+                    >
+                      <details
+                        style={{}}
+                        className={"openapi-markdown__details"}
+                      >
+                        <summary
+                          style={{}}
+                        >
+                          <span
+                            className={"openapi-schema__container"}
+                          >
+                            <strong
+                              className={"openapi-schema__property"}
+                            >
+                              property name*
+                            </strong><span
+                              className={"openapi-schema__name"}
+                            >
+                               object
+                            </span>
+                          </span>
+                        </summary><div
+                          style={{"marginLeft":"1rem"}}
+                        >
+                          <SchemaItem
+                            collapsible={false}
+                            name={"users"}
+                            required={false}
+                            schemaName={"string[]"}
+                            qualifierMessage={undefined}
+                            schema={{"type":"array","description":"List of users (email addresses) that are allowed to modify relations in entities of this blueprint.","items":{"type":"string"}}}
+                          >
+                            
+                          </SchemaItem><SchemaItem
+                            collapsible={false}
+                            name={"teams"}
+                            required={false}
+                            schemaName={"string[]"}
+                            qualifierMessage={undefined}
+                            schema={{"type":"array","description":"List of teams that are allowed to modify relations in entities of this blueprint.","items":{"type":"string"}}}
+                          >
+                            
+                          </SchemaItem><SchemaItem
+                            collapsible={false}
+                            name={"roles"}
+                            required={false}
+                            schemaName={"string[]"}
+                            qualifierMessage={undefined}
+                            schema={{"type":"array","description":"List of roles that are allowed to modify relations in entities of this blueprint.","items":{"type":"string"}}}
+                          >
+                            
+                          </SchemaItem><SchemaItem
+                            collapsible={false}
+                            name={"ownedByTeam"}
+                            required={false}
+                            schemaName={"boolean"}
+                            qualifierMessage={undefined}
+                            schema={{"description":"If `true`, permissions will be determined by team ownership, rather than by roles or direct assignment to users. Every user will be able to modify relations in entities belonging to their team/s.","type":"boolean"}}
+                          >
+                            
+                          </SchemaItem>
+                        </div>
+                      </details>
+                    </SchemaItem>
+                  </div>
+                </details>
+              </SchemaItem>
+            </div>
+          </details>
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
