@@ -34,7 +34,6 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Self-service action to lock and unlock a service](http://localhost:4000/actions-and-automations/setup-backend/github-workflow/examples/lock-and_unlock-service-in-port)
 - [Connect GitHub Codeowners with Service, Team and User](/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/connect-github-codeowners-with-service-team-and-user.md)
 
-
 ### GitLab
 
 - [GitLab app](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/gitlab.md)
@@ -110,18 +109,17 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### AWS
 
-- [AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
-- [Map ECS, EC2, RDS, API GW, Cloudfront and more](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
+- [AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
+- [Map AWS Resources to your integration](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
 - [Deploy AWS resources using AWS CloudFormation](/actions-and-automations/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
 - [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/custom-integration/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](/build-your-software-catalog/custom-integration/iac/terraform/examples/create-dev-env.md)
-- [Connect ECR repository to Service](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/connect-ecr-repo-to-service-using-tags.md)
+- [Connect ECR repository to Service](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples/connect-ecr-repo-to-service-using-tags.md)
 - [Script to ingest ECR Images and Repositories](https://github.com/port-labs/example-ecr-images)
 - [Self-service action to create EC2 instance](/actions-and-automations/setup-backend/github-workflow/examples/AWS/create-an-ec2-instance)
 - [Provision AWS cloud resource using Terraform Plan and Apply](/actions-and-automations/setup-backend/github-workflow/examples/AWS/terraform-plan-and-apply-aws-resource)
 - [Add tags to ECR repository](/actions-and-automations/setup-backend/github-workflow/examples/AWS/add-tags-to-ecr-repository)
 - [Generate ECR image with tags](/actions-and-automations/setup-backend/github-workflow/examples/AWS/push-image-to-ecr)
-
 
 ### Azure
 
@@ -129,7 +127,6 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Azure Active Directory (AD) SSO](/sso-rbac/sso-providers/azure-ad.md)
 - [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/examples/examples.md)
 - [Add tags to Azure resources](/actions-and-automations/setup-backend/github-workflow/examples/Azure/tag-azure-resource)
-
 
 ### GCP
 
@@ -178,7 +175,6 @@ This page contains a list of Port's available integrations, organized by the pla
 - [ServiceNow integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
 - [Self-service action to trigger ServiceNow incident](/actions-and-automations/setup-backend/github-workflow/examples/ServiceNow/trigger-servicenow-incident)
 
-
 ## PagerDuty
 
 - [PagerDuty integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
@@ -191,7 +187,6 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Self-service action to acknowledge a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
 - [Self-service action to change a PagerDuty oncall](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)
 - [Self-service action to resolve a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident)
-
 
 ## Jira
 
@@ -292,11 +287,13 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Import catalog from Backstage](/guides-and-tutorials/import-backstage-resources.md)
 
 ## JFrog
+
 - [Sync JFrog Artifacts, Docker tags, and build entities](/build-your-software-catalog/custom-integration/webhook/examples/jfrog)
 - [Script to ingest JFrog X-ray alerts, repositories and artifacts](https://github.com/port-labs/example-jfrog-xray-alerts)
 - [Script to ingest JFrog container image builds and repositories](https://github.com/port-labs/example-jfrog-container-images)
 
 ## Codecov
+
 - [Codecov coverage script and webhook](/build-your-software-catalog/custom-integration/webhook/examples/codecov.md)
 
 ## Webhook

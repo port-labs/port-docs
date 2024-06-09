@@ -14,36 +14,37 @@ In the following guide, you are going to create self-service actions in Port tha
 ## Prerequisites
 
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-2. Use the Port AWS exporter to ingest [AWS EC2 instances](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/#ec2-instances) and [autoscaling groups](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/#auto-scaling-group) into Port to create the blueprints and entities.
-:::tip Using the Port AWS exporter
-The Port AWS exporter supports ingesting different AWS resource types. For the sake of this guide, you may run the following command in the [installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation#terraform-installation-recommended) step to only ingest relevant resources:
+2. Use the Port AWS exporter to ingest [AWS EC2 instances](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples/#ec2-instances) and [autoscaling groups](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples/#auto-scaling-group) into Port to create the blueprints and entities.
+
+:::tip
+Using the Port AWS exporter
+The Port AWS exporter supports ingesting different AWS resource types. For the sake of this guide, you may run the following command in the [installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/installation#terraform-installation-recommended) step to only ingest relevant resources:
+
 ```bash
 terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
 ```
-:::
-3. Create the following GitHub Action secrets:
-    * Port credentials:
-        * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-        * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
-    * AWS Cloud credentials:   
-        - `AWS_ACCESS_KEY_ID`: Your AWS access key.
-        - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
-        - `AWS_REGION` - the aws region which constains your ec2 instances.
+:::
+
+3.  Create the following GitHub Action secrets:
+    _ Port credentials:
+    _ `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) \* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+
+        * AWS Cloud credentials:
+            - `AWS_ACCESS_KEY_ID`: Your AWS access key.
+            - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
+            - `AWS_REGION` - the aws region which constains your ec2 instances.
 
 ## Terminating an Instance
 
-1. Create the Port action on the `ec2Instance` blueprint:
-    - Head to the [self-service](https://app.getport.io/self-serve) page.
-    - Click on the `+ New Action` button.
-    - Click on the `{...} Edit JSON` button.
-    - Copy and paste the following JSON configuration into the editor:
+1. Create the Port action on the `ec2Instance` blueprint: - Head to the [self-service](https://app.getport.io/self-serve) page. - Click on the `+ New Action` button. - Click on the `{...} Edit JSON` button. - Copy and paste the following JSON configuration into the editor:
 <details>
   <summary>Port Action: Terminate EC2 Instance</summary>
    :::tip
+
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
+  :::
 
 ```json showLineNumbers
 {
@@ -78,6 +79,7 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
   "publish": true
 }
 ```
+
 </details>
 
 2. Create a workflow file under `.github/workflows/terminate-instance.yaml` with the following content:
@@ -93,7 +95,7 @@ on:
     inputs:
       port_context:
         required: true
-        description: "Action and general context (blueprint, run id, etc...)"
+        description: 'Action and general context (blueprint, run id, etc...)'
         type: string
 
 jobs:
@@ -127,28 +129,25 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          status: "SUCCESS"
+          status: 'SUCCESS'
           runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: EC2 instance with ID ${{ fromJson(inputs.port_context).entity.identifier }} terminated successfully
-
 ```
+
 </details>
 
 3. Trigger the action from Port's [self-service](https://app.getport.io/self-serve) page or from the context menu of an EC2 entity.
 
 ## Rebooting an Instance
 
-1. Create the Port action on the `ec2Instance` blueprint:
-    - Head to the [self-service](https://app.getport.io/self-serve) page.
-    - Click on the `+ New Action` button.
-    - Click on the `{...} Edit JSON` button.
-    - Copy and paste the following JSON configuration into the editor:
+1. Create the Port action on the `ec2Instance` blueprint: - Head to the [self-service](https://app.getport.io/self-serve) page. - Click on the `+ New Action` button. - Click on the `{...} Edit JSON` button. - Copy and paste the following JSON configuration into the editor:
 <details>
   <summary>Port Action: Reboot EC2 Instance</summary>
    :::tip
+
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
+  :::
 
 ```json showLineNumbers
 {
@@ -183,6 +182,7 @@ jobs:
   "publish": true
 }
 ```
+
 </details>
 
 2. Create a workflow file under `.github/workflows/reboot-instance.yaml` with the following content:
@@ -198,7 +198,7 @@ on:
     inputs:
       port_context:
         required: true
-        description: "Action and general context (blueprint, run id, etc...)"
+        description: 'Action and general context (blueprint, run id, etc...)'
         type: string
 
 jobs:
@@ -232,10 +232,11 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          status: "SUCCESS"
+          status: 'SUCCESS'
           runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: EC2 instance with ID ${{ fromJson(inputs.port_context).entity.identifier }} rebooted successfully
 ```
+
 </details>
 
 3. Trigger the action from Port's [self-service](https://app.getport.io/self-serve) page or from the context menu of an EC2 entity.
@@ -243,10 +244,10 @@ jobs:
 ## Resize Autoscaling Group
 
 1. Create the Port action on the `Autoscaling Group` blueprint:
-    - Head to the [self-service](https://app.getport.io/self-serve) page.
-    - Click on the `+ New Action` button.
-    - Click on the `{...} Edit JSON` button.
-    - Copy and paste the following JSON configuration into the editor:
+   - Head to the [self-service](https://app.getport.io/self-serve) page.
+   - Click on the `+ New Action` button.
+   - Click on the `{...} Edit JSON` button.
+   - Copy and paste the following JSON configuration into the editor:
 
 <details>
   <summary>Port Action: Resize Autoscaling Group</summary>
@@ -285,16 +286,8 @@ jobs:
           "default": 1
         }
       },
-      "required": [
-        "desired_capacity",
-        "maximum_capacity",
-        "minimum_capacity"
-      ],
-      "order": [
-        "minimum_capacity",
-        "maximum_capacity",
-        "desired_capacity"
-      ]
+      "required": ["desired_capacity", "maximum_capacity", "minimum_capacity"],
+      "order": ["minimum_capacity", "maximum_capacity", "desired_capacity"]
     },
     "blueprintIdentifier": "awsAutoScalingGroup"
   },
@@ -320,6 +313,7 @@ jobs:
   "publish": true
 }
 ```
+
 </details>
 
 <center>
@@ -330,7 +324,6 @@ jobs:
 <br />
 <br />
 
-
 2. Create a workflow file under `.github/workflows/resize-asg.yaml` with the following content:
 
 <details>
@@ -339,7 +332,7 @@ jobs:
 ```yml showLineNumbers title="resize-asg.yaml"
 name: Resize Autoscaling Group
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       desired_capacity:
@@ -353,12 +346,12 @@ on:
         required: true
       port_context:
         required: true
-        description: "Action and general context (blueprint, run id, etc...)"
+        description: 'Action and general context (blueprint, run id, etc...)'
         type: string
 
 jobs:
   resize-asg:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     steps:
       - name: Inform Port about workflow start
         uses: port-labs/port-github-action@v1
@@ -370,7 +363,6 @@ jobs:
           runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: Configuring AWS credentials
 
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -380,12 +372,12 @@ jobs:
 
       - name: Resize Auto Scaling Group
         run: |
-            aws autoscaling update-auto-scaling-group \
-                --auto-scaling-group-name ${{ fromJson(inputs.port_context).entity.title }} \
-                --desired-capacity ${{ github.event.inputs.desired_capacity }} \
-                --min-size ${{ github.event.inputs.minimum_capacity }} \
-                --max-size ${{ github.event.inputs.maximum_capacity }} 
-    
+          aws autoscaling update-auto-scaling-group \
+              --auto-scaling-group-name ${{ fromJson(inputs.port_context).entity.title }} \
+              --desired-capacity ${{ github.event.inputs.desired_capacity }} \
+              --min-size ${{ github.event.inputs.minimum_capacity }} \
+              --max-size ${{ github.event.inputs.maximum_capacity }}
+
       - name: Inform Port about status of autoscaling group
         uses: port-labs/port-github-action@v1
         with:
@@ -393,15 +385,13 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          status: "SUCCESS"
+          status: 'SUCCESS'
           runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: Resized EC2 Auto Scaling Group ${{ fromJson(inputs.port_context).entity.title }} to ${{ github.event.inputs.desired_capacity }} instances
 ```
+
 </details>
 
 3. Trigger the action from Port's [self-service](https://app.getport.io/self-serve) page or from the context menu of an Auto Scaling Group entity.
 
 <img src='/img/self-service-actions/setup-backend/github-workflow/examples/manageAutoGroupTest.png' width='100%' border='1px' />
-
-
-

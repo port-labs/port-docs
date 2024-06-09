@@ -158,7 +158,12 @@ Port has 2 types of search rule operators:
 {label: "Between", value: "between"},
 {label: "notBetween", value: "notBetween"},
 {label: "Contains", value: "contains"},
+{label: "DoesNotContains", value: "doesNotContains"},
 {label: "ContainsAny", value: "containsAny"},
+{label: "beginsWith", value: "beginsWith"},
+{label: "DoesNotBeginsWith", value: "doesNotBeginsWith"},
+{label: "endsWith", value: "endsWith"},
+{label: "DoesNotEndsWith", value: "doesNotEndsWith"},
 {label: "In", value: "in"}
 ]}>
 
@@ -421,6 +426,21 @@ The `contains` operator checks if the specified substring exists in the specifie
 
 </TabItem>
 
+
+<TabItem value="doesNotContains">
+
+The `contains` operator checks if the specified value **does not** exists in the specified property:
+
+```json showLineNumbers
+{
+  "operator": "doesNotContains",
+  "property": "myStringProperty",
+  "value": "otherValue"
+}
+```
+
+</TabItem>
+
 <TabItem value="containsAny">
 
 The `containsAny` operator checks if **any** of the specified strings exist in the target array:
@@ -434,6 +454,68 @@ The `containsAny` operator checks if **any** of the specified strings exist in t
 ```
 
 </TabItem>
+
+<TabItem value="beginsWith">
+
+The `beginsWith` operator checks if the specified property starts with the specified value**
+
+```json showLineNumbers
+{
+  "operator": "beginsWith",
+  "property": "myStringProperty",
+  "value": "myString"
+}
+```
+
+</TabItem>
+
+
+
+<TabItem value="doesNotBeginsWith">
+
+The `doesNotBeginsWith` operator checks if the specified property **does not** start with the specified value
+
+```json showLineNumbers
+{
+  "operator": "doesNotBeginsWith",
+  "property": "myStringProperty",
+  "value": "otherValue"
+}
+```
+
+</TabItem>
+
+
+<TabItem value="endsWith">
+
+The `endsWith` operator checks if the specified property ends with the specified value
+
+```json showLineNumbers
+{
+  "operator": "endsWith",
+  "property": "myStringProperty",
+  "value": "myString"
+}
+```
+
+</TabItem>
+
+
+
+<TabItem value="doesNotEndsWith">
+
+The `doesNotEndsWith` operator checks if the specified property **does not** end with the specified value
+
+```json showLineNumbers
+{
+  "operator": "doesNotEndsWith",
+  "property": "myStringProperty",
+  "value": "otherValue"
+}
+```
+
+</TabItem>
+
 
 <TabItem value="in">
 
