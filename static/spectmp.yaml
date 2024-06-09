@@ -23,6 +23,7 @@ components:
           items:
             anyOf:
               - type: object
+                title: Number rule
                 properties:
                   property:
                     type: string
@@ -41,6 +42,7 @@ components:
                   - value
                 additionalProperties: false
               - type: object
+                title: Date rule
                 properties:
                   property:
                     type: string
@@ -53,6 +55,7 @@ components:
                     type: object
                     oneOf:
                       - type: object
+                        title: Date range
                         properties:
                           from:
                             type: string
@@ -64,6 +67,7 @@ components:
                           - from
                           - to
                       - type: object
+                        title: Date preset
                         properties:
                           preset:
                             type: string
@@ -85,6 +89,7 @@ components:
                   - value
                 additionalProperties: false
               - type: object
+                title: String rule
                 properties:
                   property:
                     type: string
@@ -103,14 +108,19 @@ components:
                       - notIn
                   value:
                     anyOf:
-                      - type: 'null'
+                      # - type: 'null'
                       - type: string
+                        title: string
                       - type: number
+                        title: number
                       - type: boolean
+                        title: boolean
                       - type: array
+                        title: array
                         items:
                           type: string
                       - type: string
+                        title: date-time
                         format: date-time
                 additionalProperties: false
                 required:
@@ -118,6 +128,7 @@ components:
                   - operator
                   - value
               - type: object
+                title: Empty rule
                 properties:
                   operator:
                     enum:
@@ -130,6 +141,7 @@ components:
                   - property
                 additionalProperties: false
               - type: object
+                title: Relation rule
                 properties:
                   operator:
                     enum:
@@ -150,6 +162,7 @@ components:
                   - value
                   - blueprint
               - type: object
+                title: Property rule
                 properties:
                   propertySchema:
                     type: object
@@ -167,10 +180,13 @@ components:
                       - '!='
                   value:
                     anyOf:
-                      - type: 'null'
+                      # - type: 'null'
                       - type: string
+                        title: string
                       - type: number
+                        title: number
                       - type: boolean
+                        title: boolean
                 required:
                   - operator
                   - propertySchema
@@ -3308,7 +3324,7 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Successfully patched an entity
+          description: Successfully patched the entity
         '400':
           description: |
             One of the following errors occurred:
@@ -3479,7 +3495,116 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Default Response
+          description: Successfully changed the entity
+        '400':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`run_exhausted`</td>
+              <td>Action run has already finished execution</td>
+            </tr>
+
+            </table>
+        '403':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`required_relation`</td>
+              <td>Relation cannot be deleted because it is a `required relation`</td>
+            </tr>
+            <tr>
+              <td>`missing_permissions`</td>
+              <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>
+            </tr>
+            </table>
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>A blueprint with the provided `identifier` was not found</td>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>An entity with the provided `identifier` was not found</td>
+            </tr>
+            </table>
+        '409':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`identifier_taken`</td>
+              <td>The provided `identifier` already exists, identifiers must be unique</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The provided data does not match the route schema</td>
+            </tr>
+            <tr>
+              <td>`team_inheritance_enabled`</td>
+              <td>The blueprint's entities inherite their team from other entities through an existing relation</td>
+            </tr>
+            <tr>
+              <td>`blueprint_schema_mismatch`</td>
+              <td>The provided entity does not match the blueprint's schema</td>
+            </tr>
+            <tr>
+              <td>`required_relation`</td>
+              <td>A relation is required</td>
+            </tr>
+            <tr>
+              <td>`relation_many_violation`</td>
+              <td>A provided relation cannot contain more than one entity</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
     get:
       summary: Get an entity
       description: This route allows you to fetch a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
@@ -4643,6 +4768,7 @@ paths:
                         type: string
                       calculationSpec:
                         type: object
+                        description: The calculation specification of the aggregation property. For more information and examples, see the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/).<br/>
                         oneOf:
                           - oneOf:
                               - type: object
@@ -6956,7 +7082,7 @@ paths:
         '400':
           description: Default Response
     put:
-      summary: Change a blueprints' scorecards
+      summary: Change a blueprint's scorecards
       description: This route allows you to modify one or more scorecards of a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
       tags:
         - Scorecards
@@ -7132,8 +7258,11 @@ paths:
                                       value:
                                         oneOf:
                                           - type: string
+                                            title: string
                                           - type: number
+                                            title: number
                                           - type: boolean
+                                            title: boolean
                                     required:
                                       - property
                                       - operator
@@ -7157,8 +7286,11 @@ paths:
                                       value:
                                         oneOf:
                                           - type: string
+                                            title: string
                                           - type: number
+                                            title: number
                                           - type: boolean
+                                            title: boolean
                                     required:
                                       - relation
                                       - operator

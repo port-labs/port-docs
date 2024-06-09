@@ -295,7 +295,7 @@ const config = {
       },
     }),
   themes: [
-    "docusaurus-theme-openapi-docs",
+    "@port-labs/docusaurus-theme-openapi-docs",
   ],
 
   plugins: [
@@ -316,7 +316,7 @@ const config = {
       },
     ],
     [
-      "docusaurus-plugin-openapi-docs",
+      "@port-labs/docusaurus-plugin-openapi-docs",
       {
         id: "api", // plugin id
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
