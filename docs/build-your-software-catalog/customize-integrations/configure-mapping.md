@@ -21,10 +21,10 @@ To understand how mapping works, let's take a look at an example. After you comp
 
 <br/><br/>
 
-Clicking on this entry will open the mapping configuration.  
+Clicking on this entry will open the mapping configuration. In the bottom left panel, you will see the YAML configuration of the mapping.  
 Note that Port provides default mapping, providing values to the properties defined in the relevant blueprint:
 
-<img src='/img/software-catalog/customize-integrations/mappingExampleGithub.png' width='80%' />
+<img src='/img/software-catalog/customize-integrations/mappingExampleGithub.png' width='80%' border='1px' />
 
 <br/><br/>
 
@@ -125,6 +125,23 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
         entity:
           mappings: ...
   ```
+
+### Test your mapping - JQ playground
+
+The mapping configuration window contains a JQ playground that allows you to test your JQ queries against example responses from the API of the integrated tool. This is useful for validating your queries and ensuring they return the expected results.
+
+For integrations based on the [Ocean framework](https://ocean.getport.io/integrations-library/), examples will be automatically generated for each resource `kind` in your mapping, based on real data ingested from the tool. You can disable this behavior by setting the `sendRawDataExamples` flag to `false` in the integration's configuration.
+
+To test your mapping against the example data, click on the `Test mapping` button in the bottom-right panel.
+
+#### Manually add test examples
+
+For each resource `kind` in your mapping (in the bottom-left panel), you can add an example in the `Test examples` section.  
+Click on the `Add kind` button to add an example:
+
+<img src='/img/software-catalog/customize-integrations/addTestExample.png' width='100%' border='1px' />
+
+After adding your example, click on the `Test mapping` button in the bottom-right panel to test your mapping against the example data.
 
 ## Mapping relations
 

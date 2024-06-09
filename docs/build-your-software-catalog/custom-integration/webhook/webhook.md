@@ -15,15 +15,14 @@ By using Port's generic webhook integration you can ingest data into the softwar
 
 </center>
 
-## 💡 Webhook common use cases
+## Common use cases
 
 Our generic webhook makes it easy to fill the software catalog with live data directly from your 3rd-party services, for example:
 
-- Map all of your **Snyk vulnerabilities**, **Jira issues**, **SonarQube reports** and other data sources;
-- Make single property updates - update the current on-call of a service based on an event from **Pager Duty** or **OpsGenie**;
-- Make event-based real-time updates to the software catalog;
-- Create a single view for all of the data provided by the 3rd-party services you use;
-- etc.
+- Map all of your **Snyk vulnerabilities**, **Jira issues**, **SonarQube reports** and other data sources.
+- Make single property updates - update the current on-call of a service based on an event from **Pager Duty** or **OpsGenie**.
+- Make event-based real-time updates to the software catalog.
+- Create a single view for all of the data provided by the 3rd-party services you use.
 
 ## How it works
 
@@ -33,9 +32,10 @@ Each webhook endpoint can receive a [custom mapping](#mapping-configuration), ma
 
 The custom mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the webhook payload.
 
-:::tip
-By using the webhook mapping you can create/update a complete entity, or choose to update just a single property on an entity.
-:::
+By using the webhook mapping you can:
+- **Create/update** a complete entity.
+- **Update** a single property on an entity.
+- **Delete** an entity from your catalog.
 
 ## Webhook configuration
 
@@ -143,6 +143,7 @@ Here is an example mapping configuration:
   "mappings": [
     {
       "blueprint": "pullRequest",
+      "operation": "create",
       "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"",
       "entity": {
         "identifier": ".body.pull_request.id | tostring",
@@ -175,6 +176,7 @@ Here is an example mapping configuration:
     mappings = [
       {
         blueprint = "pullRequest"
+        operation = "create"
         filter = ".headers.\"X-GitHub-Event\" == \"pull_request\""
         entity = {
           identifier = ".body.pull_request.id | tostring"
@@ -236,7 +238,7 @@ The mappings key stores an **array** of mappings, making it possible to create/u
 
 Now let's explore the structure of a single mapping object:
 
-- The `blueprint` key is used to specify the identifier of the blueprint to create/update an entity of based on the webhook payload:
+- The `blueprint` key is used to specify the identifier of the blueprint to create/update/delete an entity of based on the webhook payload:
 
 ```json showLineNumbers
 {
@@ -252,7 +254,34 @@ Now let's explore the structure of a single mapping object:
   ...
 }
 ```
+<br/>
+- The `operation` key is used to specify the action to perform on an entity. Its available values are:
+  - `create` - creates a new entity, or updates it if it already exists.
+  - `delete` - deletes an existing entity. When using this operation, the only required key under `entity` is `identifier`.
+  
+  
+  :::info Delete dependent entities
+  When deleting an entity using the `delete` operation, all dependent entities will also be deleted. To prevent this, you can set the value of `operation` to be an object, and set `deleteDependents` to `false`, like this:
+  ```json
+  "operation": {"type":"delete", "deleteDependents": false},
+  ```
+  :::
 
+```json showLineNumbers
+{
+  ...
+  "mappings": [
+    {
+      "blueprint": "pullRequest",
+      // highlight-next-line
+      "operation": "create",
+      ...
+    }
+  ]
+  ...
+}
+```
+<br/>
 - The `filter` key lets you filter exactly which payloads sent to the webhook are processed:
 
 ```json showLineNumbers
@@ -269,7 +298,7 @@ Now let's explore the structure of a single mapping object:
   ...
 }
 ```
-
+<br/>
 - The `itemsToParse` key makes it possible to create multiple entities from a single webhook event:
 
 ```json showLineNumbers
@@ -304,7 +333,7 @@ Now let's explore the structure of a single mapping object:
 - `item` will be added to the JQ context as a key containing a reference to items in the array specified in `itemsToParse`. Keys from the object in the array can be accessed using the `.item.KEY_NAME` syntax, see the example JSON for more information.
 
 :::
-
+<br/>
 - The `entity` key is used to map information from the webhook payload to Port entity properties using JQ:
 
 ```json showLineNumbers

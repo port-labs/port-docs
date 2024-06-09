@@ -127,7 +127,7 @@ If you are still facing issues, reach out to us via [Slack](https://www.getport.
 Please make sure that:
 
 1. The action backend is set up correctly. This includes the Organization/Group name, repository and workflow file name.
-2. For Gitlab, make sure the [Port execution agent](https://docs.getport.io/create-self-service-experiences/setup-backend/gitlab-pipeline/Installation#installing-the-agent) is installed properly. When triggering the action, you can view the logs of the agent to see what URL was triggered. 
+2. For Gitlab, make sure the [Port execution agent](https://docs.getport.io/actions-and-automations/setup-backend/gitlab-pipeline/Installation#installing-the-agent) is installed properly. When triggering the action, you can view the logs of the agent to see what URL was triggered. 
 
 </details>
 
