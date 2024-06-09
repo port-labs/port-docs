@@ -101,7 +101,7 @@ The existing actions in your portal only have their frontends defined. To finish
 
 **Learn more:**
 
-- [Self-service experiences](https://docs.getport.io/create-self-service-experiences/)
+- [Self-service experiences](https://docs.getport.io/actions-and-automations/create-self-service-experiences/)
 
 ---
 

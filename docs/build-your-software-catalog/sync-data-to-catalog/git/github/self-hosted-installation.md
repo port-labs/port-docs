@@ -77,7 +77,7 @@ You will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
 
 :::
 
-In order to make use of [Self-Service Actions using GitHub Workflow](../../../../create-self-service-experiences/setup-backend/github-workflow/github-workflow.md), please contact us at support@getport.io.
+In order to make use of [Self-Service Actions using GitHub Workflow](../../../../actions-and-automations/setup-backend/github-workflow/github-workflow.md), please contact us at support@getport.io.
 
 ## Docker
 
@@ -152,4 +152,4 @@ As this is a self-hosted version, there are some limitations due to security con
 
 - You must include configuration as part of the repository, and you can't configure it via Port's UI/API;
 
-- To use self-service actions, you will need [Kafka Credentials](/create-self-service-experiences/setup-backend/webhook/kafka/kafka.md) configured for your organization;
+- To use self-service actions, you will need [Kafka Credentials](/actions-and-automations/setup-backend/webhook/kafka/kafka.md) configured for your organization;

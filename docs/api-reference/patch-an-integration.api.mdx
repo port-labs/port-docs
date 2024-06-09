@@ -1,0 +1,766 @@
+---
+id: patch-an-integration
+title: "Patch an integration"
+description: "This route allows you to modify an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/)."
+sidebar_label: "Patch an integration"
+hide_title: true
+hide_table_of_contents: true
+api: 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
+sidebar_class_name: "patch api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Patch an integration"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/integration/{identifier}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to modify an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The installation id of the integration you want to modify.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"title"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The new title of the integration. This will be displayed in the [data-sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"version"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The new version of the integration.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"installationAppType"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The new name of the integrated tool/platform (e.g. `kubernetes`,`pagerduty`).<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <span
+                className={"openapi-schema__container"}
+              >
+                <strong
+                  className={"openapi-schema__property"}
+                >
+                  config
+                </strong><span
+                  className={"openapi-schema__name"}
+                >
+                   object
+                </span>
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <div
+                style={{"marginTop":".5rem","marginBottom":".5rem"}}
+              >
+                
+                
+                Various configuration options for the integration.<br/>
+                
+                
+              </div><SchemaItem
+                collapsible={false}
+                name={"deleteDependentEntities"}
+                required={false}
+                schemaName={"boolean"}
+                qualifierMessage={undefined}
+                schema={{"type":"boolean","description":"If `true`, deleting an entity will also delete its dependent entities.<br/>"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={false}
+                name={"createMissingRelatedEntities"}
+                required={false}
+                schemaName={"boolean"}
+                qualifierMessage={undefined}
+                schema={{"type":"boolean","description":"If `true`, creating an entity with a relation to a non-existing entity will also create the related entity.<br/>"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={true}
+                className={"schemaItem"}
+              >
+                <details
+                  style={{}}
+                  className={"openapi-markdown__details"}
+                >
+                  <summary
+                    style={{}}
+                  >
+                    <span
+                      className={"openapi-schema__container"}
+                    >
+                      <strong
+                        className={"openapi-schema__property"}
+                      >
+                        resources
+                      </strong><span
+                        className={"openapi-schema__name"}
+                      >
+                         object[]
+                      </span>
+                    </span>
+                  </summary><div
+                    style={{"marginLeft":"1rem"}}
+                  >
+                    <div
+                      style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                    >
+                      
+                      
+                      The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping).<br/>
+                      
+                      
+                    </div><li>
+                      <div
+                        style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                      >
+                        Array [
+                      </div>
+                    </li><SchemaItem
+                      collapsible={false}
+                      name={"kind"}
+                      required={true}
+                      schemaName={"string"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"string","description":"The kind of resource to map, as defined in API of the integrated tool/platorm.<br/>"}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={true}
+                      className={"schemaItem"}
+                    >
+                      <details
+                        style={{}}
+                        className={"openapi-markdown__details"}
+                      >
+                        <summary
+                          style={{}}
+                        >
+                          <span
+                            className={"openapi-schema__container"}
+                          >
+                            <strong
+                              className={"openapi-schema__property"}
+                            >
+                              selector
+                            </strong><span
+                              className={"openapi-schema__name"}
+                            >
+                               object
+                            </span><span
+                              className={"openapi-schema__divider"}
+                            >
+                              
+                            </span><span
+                              className={"openapi-schema__required"}
+                            >
+                              required
+                            </span>
+                          </span>
+                        </summary><div
+                          style={{"marginLeft":"1rem"}}
+                        >
+                          <SchemaItem
+                            collapsible={false}
+                            name={"query"}
+                            required={false}
+                            schemaName={"string"}
+                            qualifierMessage={undefined}
+                            schema={{"type":"string","description":"A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `\"true\"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work).<br/>"}}
+                          >
+                            
+                          </SchemaItem>
+                        </div>
+                      </details>
+                    </SchemaItem><SchemaItem
+                      collapsible={true}
+                      className={"schemaItem"}
+                    >
+                      <details
+                        style={{}}
+                        className={"openapi-markdown__details"}
+                      >
+                        <summary
+                          style={{}}
+                        >
+                          <span
+                            className={"openapi-schema__container"}
+                          >
+                            <strong
+                              className={"openapi-schema__property"}
+                            >
+                              port
+                            </strong><span
+                              className={"openapi-schema__name"}
+                            >
+                               object
+                            </span><span
+                              className={"openapi-schema__divider"}
+                            >
+                              
+                            </span><span
+                              className={"openapi-schema__required"}
+                            >
+                              required
+                            </span>
+                          </span>
+                        </summary><div
+                          style={{"marginLeft":"1rem"}}
+                        >
+                          <div
+                            style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                          >
+                            
+                            
+                            An object containing the mapping definitions of the `kind` resource into Port.<br/>
+                            
+                            
+                          </div><SchemaItem
+                            collapsible={true}
+                            className={"schemaItem"}
+                          >
+                            <details
+                              style={{}}
+                              className={"openapi-markdown__details"}
+                            >
+                              <summary
+                                style={{}}
+                              >
+                                <span
+                                  className={"openapi-schema__container"}
+                                >
+                                  <strong
+                                    className={"openapi-schema__property"}
+                                  >
+                                    entity
+                                  </strong><span
+                                    className={"openapi-schema__name"}
+                                  >
+                                     object
+                                  </span><span
+                                    className={"openapi-schema__divider"}
+                                  >
+                                    
+                                  </span><span
+                                    className={"openapi-schema__required"}
+                                  >
+                                    required
+                                  </span>
+                                </span>
+                              </summary><div
+                                style={{"marginLeft":"1rem"}}
+                              >
+                                <SchemaItem
+                                  collapsible={true}
+                                  className={"schemaItem"}
+                                >
+                                  <details
+                                    style={{}}
+                                    className={"openapi-markdown__details"}
+                                  >
+                                    <summary
+                                      style={{}}
+                                    >
+                                      <strong>
+                                        mappings
+                                      </strong><span
+                                        style={{"opacity":"0.6"}}
+                                      >
+                                         object
+                                      </span><strong
+                                        style={{"fontSize":"var(--ifm-code-font-size)","color":"var(--openapi-required)"}}
+                                      >
+                                         required
+                                      </strong>
+                                    </summary><div
+                                      style={{"marginLeft":"1rem"}}
+                                    >
+                                      <div
+                                        style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                                      >
+                                        
+                                        
+                                        The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                        
+                                        
+                                      </div>
+                                    </div><div>
+                                      <span
+                                        className={"badge badge--info"}
+                                      >
+                                        oneOf
+                                      </span><SchemaTabs>
+                                        <TabItem
+                                          label={"array"}
+                                          value={"0-item-properties"}
+                                        >
+                                          <li>
+                                            <div
+                                              style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                                            >
+                                              Array [
+                                            </div>
+                                          </li><SchemaItem
+                                            collapsible={false}
+                                            name={"identifier"}
+                                            required={true}
+                                            schemaName={"string"}
+                                            qualifierMessage={undefined}
+                                            schema={{"type":"string","description":"A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity.<br/>"}}
+                                          >
+                                            
+                                          </SchemaItem><SchemaItem
+                                            collapsible={false}
+                                            name={"title"}
+                                            required={false}
+                                            schemaName={"string"}
+                                            qualifierMessage={undefined}
+                                            schema={{"type":"string","description":"A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity.<br/>"}}
+                                          >
+                                            
+                                          </SchemaItem><SchemaItem
+                                            collapsible={false}
+                                            name={"blueprint"}
+                                            required={true}
+                                            schemaName={"string"}
+                                            qualifierMessage={undefined}
+                                            schema={{"type":"string","description":"The identifier of the blueprint to map the data into.<br/>"}}
+                                          >
+                                            
+                                          </SchemaItem><SchemaItem
+                                            collapsible={true}
+                                            className={"schemaItem"}
+                                          >
+                                            <details
+                                              style={{}}
+                                              className={"openapi-markdown__details"}
+                                            >
+                                              <summary
+                                                style={{}}
+                                              >
+                                                <span
+                                                  className={"openapi-schema__container"}
+                                                >
+                                                  <strong
+                                                    className={"openapi-schema__property"}
+                                                  >
+                                                    properties
+                                                  </strong><span
+                                                    className={"openapi-schema__name"}
+                                                  >
+                                                     object
+                                                  </span>
+                                                </span>
+                                              </summary><div
+                                                style={{"marginLeft":"1rem"}}
+                                              >
+                                                <div
+                                                  style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                                                >
+                                                  
+                                                  
+                                                  An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                                  
+                                                  
+                                                </div>
+                                                
+                                              </div>
+                                            </details>
+                                          </SchemaItem><SchemaItem
+                                            collapsible={true}
+                                            className={"schemaItem"}
+                                          >
+                                            <details
+                                              style={{}}
+                                              className={"openapi-markdown__details"}
+                                            >
+                                              <summary
+                                                style={{}}
+                                              >
+                                                <span
+                                                  className={"openapi-schema__container"}
+                                                >
+                                                  <strong
+                                                    className={"openapi-schema__property"}
+                                                  >
+                                                    relations
+                                                  </strong><span
+                                                    className={"openapi-schema__name"}
+                                                  >
+                                                     object
+                                                  </span>
+                                                </span>
+                                              </summary><div
+                                                style={{"marginLeft":"1rem"}}
+                                              >
+                                                <div
+                                                  style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                                                >
+                                                  
+                                                  
+                                                  An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                                  
+                                                  
+                                                </div>
+                                              </div>
+                                            </details>
+                                          </SchemaItem><li>
+                                            <div
+                                              style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                                            >
+                                              ]
+                                            </div>
+                                          </li>
+                                        </TabItem><TabItem
+                                          label={"object"}
+                                          value={"1-item-properties"}
+                                        >
+                                          <SchemaItem
+                                            collapsible={false}
+                                            name={"identifier"}
+                                            required={true}
+                                            schemaName={"string"}
+                                            qualifierMessage={undefined}
+                                            schema={{"type":"string","description":"A `jq` expression used to get data from the integrated tool's API, to be used as an identifier for the entity.<br/>"}}
+                                          >
+                                            
+                                          </SchemaItem><SchemaItem
+                                            collapsible={false}
+                                            name={"title"}
+                                            required={false}
+                                            schemaName={"string"}
+                                            qualifierMessage={undefined}
+                                            schema={{"type":"string","description":"A `jq` expression used to get data from the integrated tool's API, to be used as the title of the entity.<br/>"}}
+                                          >
+                                            
+                                          </SchemaItem><SchemaItem
+                                            collapsible={false}
+                                            name={"blueprint"}
+                                            required={true}
+                                            schemaName={"string"}
+                                            qualifierMessage={undefined}
+                                            schema={{"type":"string","description":"The identifier of the blueprint to map the data into.<br/>"}}
+                                          >
+                                            
+                                          </SchemaItem><SchemaItem
+                                            collapsible={true}
+                                            className={"schemaItem"}
+                                          >
+                                            <details
+                                              style={{}}
+                                              className={"openapi-markdown__details"}
+                                            >
+                                              <summary
+                                                style={{}}
+                                              >
+                                                <span
+                                                  className={"openapi-schema__container"}
+                                                >
+                                                  <strong
+                                                    className={"openapi-schema__property"}
+                                                  >
+                                                    properties
+                                                  </strong><span
+                                                    className={"openapi-schema__name"}
+                                                  >
+                                                     object
+                                                  </span>
+                                                </span>
+                                              </summary><div
+                                                style={{"marginLeft":"1rem"}}
+                                              >
+                                                <div
+                                                  style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                                                >
+                                                  
+                                                  
+                                                  An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                                  
+                                                  
+                                                </div>
+                                              </div>
+                                            </details>
+                                          </SchemaItem><SchemaItem
+                                            collapsible={true}
+                                            className={"schemaItem"}
+                                          >
+                                            <details
+                                              style={{}}
+                                              className={"openapi-markdown__details"}
+                                            >
+                                              <summary
+                                                style={{}}
+                                              >
+                                                <span
+                                                  className={"openapi-schema__container"}
+                                                >
+                                                  <strong
+                                                    className={"openapi-schema__property"}
+                                                  >
+                                                    relations
+                                                  </strong><span
+                                                    className={"openapi-schema__name"}
+                                                  >
+                                                     object
+                                                  </span>
+                                                </span>
+                                              </summary><div
+                                                style={{"marginLeft":"1rem"}}
+                                              >
+                                                <div
+                                                  style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                                                >
+                                                  
+                                                  
+                                                  An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                                  
+                                                  
+                                                </div>
+                                              </div>
+                                            </details>
+                                          </SchemaItem>
+                                        </TabItem>
+                                      </SchemaTabs>
+                                    </div>
+                                  </details>
+                                </SchemaItem>
+                              </div>
+                            </details>
+                          </SchemaItem>
+                        </div>
+                      </details>
+                    </SchemaItem><li>
+                      <div
+                        style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                      >
+                        ]
+                      </div>
+                    </li>
+                  </div>
+                </details>
+              </SchemaItem>
+            </div>
+          </details>
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <strong>
+                changelogDestination
+              </strong><span
+                style={{"opacity":"0.6"}}
+              >
+                 object
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <div
+                style={{"marginTop":".5rem","marginBottom":".5rem"}}
+              >
+                
+                
+                The destination of the integration's changelog.<br/>
+                
+                
+              </div>
+            </div><div>
+              <span
+                className={"badge badge--info"}
+              >
+                oneOf
+              </span><SchemaTabs>
+                <TabItem
+                  label={"Kafka"}
+                  value={"0-item-properties"}
+                >
+                  <SchemaItem
+                    collapsible={false}
+                    name={"type"}
+                    required={true}
+                    schemaName={"string"}
+                    qualifierMessage={"**Possible values:** [`KAFKA`]"}
+                    schema={{"type":"string","enum":["KAFKA"]}}
+                  >
+                    
+                  </SchemaItem>
+                </TabItem><TabItem
+                  label={"Webhook"}
+                  value={"1-item-properties"}
+                >
+                  <SchemaItem
+                    collapsible={false}
+                    name={"type"}
+                    required={true}
+                    schemaName={"string"}
+                    qualifierMessage={"**Possible values:** [`WEBHOOK`]"}
+                    schema={{"type":"string","enum":["WEBHOOK"]}}
+                  >
+                    
+                  </SchemaItem><SchemaItem
+                    collapsible={false}
+                    name={"agent"}
+                    required={false}
+                    schemaName={"boolean"}
+                    qualifierMessage={undefined}
+                    schema={{"type":"boolean","description":"If `true`, Port's execution agent will be used to send the changelog.<br/>"}}
+                  >
+                    
+                  </SchemaItem><SchemaItem
+                    collapsible={false}
+                    name={"url"}
+                    required={true}
+                    schemaName={"uri"}
+                    qualifierMessage={undefined}
+                    schema={{"type":"string","description":"The URL of the webhook.<br/>","format":"uri"}}
+                  >
+                    
+                  </SchemaItem>
+                </TabItem>
+              </SchemaTabs>
+            </div>
+          </details>
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
