@@ -8,23 +8,9 @@ import TabItem from "@theme/TabItem"
 
 # Setup backend
 
-<center>
-
-<iframe width="60%" height="400" src="https://www.youtube.com/embed/cU7W3xYbsEw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
-
-</center>
-<br/>
-
 Port's self-service actions and automations support a variety of backends that can be used when triggered.
 
-Here is the basic backend model:
-
-<img src='/img/self-service-actions/setup-backend/backend-flow-diagram.png' width='90%' border='1px' />
-<br/><br/>
-
-When creating an action, you can define the payload that will be sent every time it is executed. The payload can include any data about the action that you want your backend to have access to.
-
-Executing a self-service action involves the following steps:
+The process contains the following steps:
 
 1. **The action is triggered in Port** - the trigger can either be a user executing a self-service action via the UI, or an automation triggering an action.
 2. **The payload is sent to your backend** - the payload, as defined by the action's creator, is sent to your backend. The backend can be a URL, a dedicated Kafka topic or one of your CI/CD workflows/pipelines.
@@ -33,6 +19,11 @@ Executing a self-service action involves the following steps:
 
 
 ## Define the backend
+
+:::tip UI support
+Currently, only self-service actions can be created via a wizard in the UI.  
+Automations can be created using a JSON definition, which can be found [here](/actions-and-automations/setup-backend/#json-structure).
+:::
 
 The action's backend is defined under the `Backend` tab of the action creation form in Port's UI.  
 Let's break the definition down to two parts:
@@ -253,9 +244,3 @@ Depending on the backend type you choose, the available fields will be different
 
 </Tabs>
 
-___
-
-## Next step
-
-Once the backend is set up, the action is ready to be used.  
-Optionally, you can [configure permissions and/or manual approval](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) for your actions to control who is allowed to execute them.

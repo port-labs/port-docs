@@ -3,7 +3,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-Once you execute a self-service action, an `actionRun` object will be created in Port.
+Once a self-service action or automation has been executed, an `actionRun` object will be created in Port.
 
 This page will teach you how to use Port's API to obtain existing action runs and update them with additional metadata and information about the run. You can use this interaction to mark actions as completed or failed, and keep a consistent history of executed actions and their status.
 

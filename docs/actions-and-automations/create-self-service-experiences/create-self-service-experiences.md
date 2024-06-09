@@ -75,7 +75,7 @@ The backend logic is yours, so it can do whatever you need it to do. Port suppor
 
 As part of your backend and its logic implementation, you can keep your software catalog up to date by sending API requests or ingesting new data that is tied to the performed action (for example, adding a new service entity in Port once the scaffold process has finished).
 
-See [Setup backend](/actions-and-automations/setup-backend/) for instructions and examples.
+See [Setup backend](/actions-and-automations/create-self-service-experiences/setup-the-backend/) for instructions and examples.
 
 <center>
 
