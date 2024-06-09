@@ -5,6 +5,6 @@ sidebar_label: Statuspage
 
 import DocCardList from '@theme/DocCardList';
 
-# Github Statuspage workflow examples
+# GitHub Statuspage workflow examples
 
 <DocCardList />

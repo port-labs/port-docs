@@ -1,27 +1,34 @@
 <details>
 <summary>Statuspage Blueprint</summary>
 
+:::tip blueprint dependencies
+This blueprint also has an aggregation property configured for the `statuspageComponent` blueprint.
+Since the `statuspageComponent` blueprint depends on the `statuspage` blueprint, 
+you will need to initially create the `statuspage` blueprint without the aggregation property, 
+and then add it once the `statuspageComponent` blueprint exists.
+:::
+
 ```json showLineNumbers
 {
   "identifier": "statuspage",
   "title": "Status Page",
-  "description": "A Statuspage for communicating service status and incidents.",
+  "description": "A Statuspage for communicating service status, maintenance and incidents",
   "schema": {
     "properties": {
       "page_description": {
         "type": "string",
         "title": "Page Description",
-        "description": "Description of the page (optional)."
+        "description": "Description of the page (optional)"
       },
       "headline": {
         "type": "string",
         "title": "Headline",
-        "description": "A short headline for the Statuspage (optional)."
+        "description": "A short headline for the Statuspage (optional)"
       },
       "branding": {
         "type": "string",
         "title": "Branding",
-        "description": "Branding level of the Statuspage (e.g., 'basic')."
+        "description": "Branding level of the Statuspage (e.g., 'basic')"
       },
       "status_indicator": {
         "type": "string",
@@ -33,75 +40,75 @@
           "major": "orange",
           "critical": "red"
         },
-        "description": "The current status of the page."
+        "description": "The current status of the page"
       },
       "status_description": {
         "type": "string",
         "title": "Status Description",
-        "description": "Description of the current status (optional)."
+        "description": "Description of the current status (optional)"
       },
       "subdomain": {
         "type": "string",
         "title": "Subdomain",
-        "description": "The subdomain used for the Statuspage URL (e.g., 'appcellon')."
+        "description": "The subdomain used for the Statuspage URL (e.g., 'acme')"
       },
       "domain": {
         "type": "string",
         "title": "Custom Domain",
-        "description": "Custom domain name for the Statuspage (optional)."
+        "description": "Custom domain name for the Statuspage (optional)"
       },
       "url": {
         "type": "string",
         "format": "url",
         "title": "Statuspage URL",
-        "description": "Full URL of the Statuspage (optional)."
+        "description": "Full URL of the Statuspage (optional)"
       },
       "allow_page_subscribers": {
         "type": "boolean",
         "title": "Allow Page Subscribers",
-        "description": "Whether to allow users to subscribe to page updates."
+        "description": "Whether to allow users to subscribe to page updates"
       },
       "allow_incident_subscribers": {
         "type": "boolean",
         "title": "Allow Incident Subscribers",
-        "description": "Whether to allow users to subscribe to specific incidents."
+        "description": "Whether to allow users to subscribe to specific incidents"
       },
       "allow_email_subscribers": {
         "type": "boolean",
         "title": "Allow Email Subscribers",
-        "description": "Whether to allow email subscriptions."
+        "description": "Whether to allow email subscriptions"
       },
       "allow_sms_subscribers": {
         "type": "boolean",
         "title": "Allow SMS Subscribers",
-        "description": "Whether to allow SMS subscriptions."
+        "description": "Whether to allow SMS subscriptions"
       },
       "allow_rss_atom_feeds": {
         "type": "boolean",
         "title": "Allow RSS/Atom Feeds",
-        "description": "Whether to allow RSS or Atom feeds."
+        "description": "Whether to allow RSS or Atom feeds"
       },
       "allow_webhook_subscribers": {
         "type": "boolean",
         "title": "Allow Webhook Subscribers",
-        "description": "Whether to allow webhook subscriptions."
+        "description": "Whether to allow webhook subscriptions"
       },
       "time_zone": {
         "type": "string",
         "title": "Time Zone",
-        "description": "The time zone used for the Statuspage."
+        "description": "The time zone used for the Statuspage"
       },
       "createdAt": {
         "type": "string",
         "format": "date-time",
         "title": "Created At",
-        "description": "When the Statuspage was created."
+        "description": "When the Statuspage was created"
       },
       "updatedAt": {
         "type": "string",
         "format": "date-time",
         "title": "Last Updated At",
-        "description": "When the Statuspage was last updated."
+        "description": "When the Statuspage was last updated"
       }
     }
   },

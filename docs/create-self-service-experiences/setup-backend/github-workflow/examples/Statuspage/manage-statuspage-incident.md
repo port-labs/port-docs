@@ -22,17 +22,6 @@ This self-service guide will show you how to seamlessly create and update incide
    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
-<!-- 2. _**Optional**_ - Install Port's Statuspage integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
-
-:::tip Statuspage Integration
-This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your Statuspage Incidents.
-
-**Important Note:** To populate and use the 'Status Page' and 'Affected Components' fields in the self-service action, you'll need to do one of the following:
-
-- **Install Port's Statuspage Integration:** This will automatically sync your Statuspage data, making it available for selection.
-- **Manually Create Blueprints:** Create the 'Statuspage' and 'Statuspage Component' blueprints in Port and populate them with your relevant data."
-::: -->
-
 3. [Create the blueprints](https://app.getport.io/settings/data-model) in Port.
 
 <StatuspageBlueprint />
@@ -90,8 +79,6 @@ on:
         description: "Port context (JSON format)"
         required: true
 
-# If Ocean is enabled, the STATUSPAGE_PAGE_ID will be set in the context 
-# since the self service action is created against the Statuspage entity
 env:
   STATUSPAGE_PAGE_ID: ${{ inputs.status_page || secrets.STATUSPAGE_PAGE_ID }}
 
@@ -258,7 +245,7 @@ Create two self service actions using the following JSON configuration.
   "identifier": "create_statuspage_incident",
   "title": "Create Statuspage Incident",
   "icon": "Alert",
-  "description": "Create a Statuspage incident.",
+  "description": "Create a Statuspage incident",
   "trigger": {
     "type": "self-service",
     "operation": "CREATE",
@@ -378,7 +365,7 @@ Create two self service actions using the following JSON configuration.
   "identifier": "update_statuspage_incident",
   "title": "Update Statuspage Incident",
   "icon": "Alert",
-  "description": "Update the status of an existing Statuspage incident.",
+  "description": "Update the status of an existing Statuspage incident",
   "trigger": {
     "type": "self-service",
     "operation": "DAY-2",
@@ -397,7 +384,7 @@ Create two self service actions using the following JSON configuration.
         "update_message": {
           "type": "string",
           "title": "Update Message (Optional)",
-          "description": "Additional information about the status update."
+          "description": "Additional information about the status update"
         },
         "affected_components": {
           "type": "array",
@@ -460,13 +447,22 @@ Now you should see the `Create Statuspage Incident` and `Update Statuspage Incid
 
 ## Let's test it!
 
+:::tip prerequisites
+To test the new actions, you need to make sure that your Port catalog contains your Statuspage entities, or that you added your Statuspage ID as a secret to your GitHub repository (under the `STATUSPAGE_PAGE_ID` secret in GitHub)
+
+To find your Statuspage ID:
+
+1. Browse to [Statuspage](https://manage.statuspage.io/)
+2. select the page you want to create an incident for from the sidebar on the left side
+3. The Statuspage ID will appear in the URL. for example, given the URL: `https://manage.statuspage.io/pages/aaaaaaaaaaaa/incidents`, the Statuspage ID is `aaaaaaaaaaaa`
+:::
+
 ### Creating an Incident
 
 1. Go to the [self-service hub](https://app.getport.io/self-serve) in Port.
 2. Click the **Create Statuspage Incident** action.
 3. Fill in the title, description, severity, and status.
-4. Optionally, select the affected components and status page if you haven't installed the Statuspage integration.
-5. Click Execute.
+4. Click Execute.
 
 ### Updating an Incident
 
