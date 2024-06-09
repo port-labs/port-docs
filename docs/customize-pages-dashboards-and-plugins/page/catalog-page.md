@@ -316,7 +316,7 @@ Clicking on it will save the new view for all users.
 ![Page operations marked](/img/software-catalog/pages/PageOperationsMarked.png)
 
 :::note
-The ability to save a view for all users is available only for the [Admin role](../../sso-rbac/rbac/rbac.md#roles)
+The ability to save a view for all users is available only for the [Admin role](/sso-rbac/rbac/rbac.md#roles)
 :::
 
 ### Save a new page
