@@ -17,22 +17,14 @@
           "identified",
           "monitoring",
           "resolved",
-          "postmortem",
-          "scheduled",
-          "in_progress",
-          "verifying",
-          "completed"
+          "postmortem"
         ],
         "enumColors": {
           "investigating": "blue",
           "identified": "orange",
           "monitoring": "yellow",
           "resolved": "green",
-          "postmortem": "purple",
-          "scheduled": "lightGray",
-          "in_progress": "blue",
-          "verifying": "yellow",
-          "completed": "green"
+          "postmortem": "purple"
         },
         "description": "Current status of the incident"
       },
@@ -84,48 +76,10 @@
         "title": "Postmortem Published At",
         "description": "When the postmortem analysis was published (null if not yet published)"
       },
-      "scheduled_for": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Scheduled For",
-        "description": "Start time for a scheduled incident (null if not scheduled)"
-      },
-      "scheduled_until": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Scheduled Until",
-        "description": "End time for a scheduled incident (null if not scheduled)"
-      },
-      "scheduled_remind_prior": {
-        "type": "boolean",
-        "title": "Scheduled Remind Prior",
-        "description": "Whether to send a reminder before a scheduled incident"
-      },
-      "scheduled_reminded_at": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Scheduled Reminded At",
-        "description": "When the reminder for a scheduled incident was sent (null if not applicable)"
-      },
-      "scheduled_auto_in_progress": {
-        "type": "boolean",
-        "title": "Scheduled Auto In Progress",
-        "description": "Whether to automatically transition the incident to 'in progress'"
-      },
-      "scheduled_auto_completed": {
-        "type": "boolean",
-        "title": "Scheduled Auto Completed",
-        "description": "Whether to automatically mark the incident as completed"
-      },
       "metadata": {
         "type": "object",
         "title": "Metadata",
         "description": "Custom metadata associated with the incident"
-      },
-      "reminder_intervals": {
-        "type": "string",
-        "title": "Reminder Intervals",
-        "description": "Intervals for sending reminders for a scheduled incident (null if not applicable)"
       },
       "postmortem_body": {
         "type": "string",
