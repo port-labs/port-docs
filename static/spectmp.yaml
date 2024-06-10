@@ -3744,7 +3744,7 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Deleted successfully.
+          description: Entity deleted successfully
           # content:
           #   application/json:
           #     schema:
@@ -3757,6 +3757,70 @@ paths:
           #       additionalProperties: false
           #       required:
           #         - ok
+        '403':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`missing_permissions`</td>
+              <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>
+            </tr>
+            <tr>
+              <td>`has_dependents`</td>
+              <td>The entity has dependent entities that must be deleted along with it. To do that, use "delete_dependents=true"</td>
+            </tr>
+            </table>
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>An entity with the provided `identifier` was not found</td>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>A blueprint with the provided `identifier` was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The provided data does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   '/v1/blueprints/{blueprint_identifier}/entities-count':
     get:
       summary: Get a blueprint's entity count
@@ -3774,7 +3838,49 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>A blueprint with the provided `identifier` was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The provided data does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   '/v1/blueprints/{blueprint_identifier}/all-entities':
     delete:
       summary: Delete all entities of a blueprint
@@ -3804,7 +3910,67 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Deleted successfully.
+          description: Entities deleted successfully
+        '403':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`missing_permissions`</td>
+              <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>
+            </tr>
+            <tr>
+              <td>`has_dependents`</td>
+              <td>The entity has dependent entities that must be deleted along with it. To do that, use "delete_dependents=true"</td>
+            </tr>
+            </table>
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>A blueprint with the provided `identifier` was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The provided data does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   /v1/entities/search:
     post:
       summary: Search entities
@@ -4040,7 +4206,35 @@ paths:
             - 'read:entities'
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The provided data does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   # /v1/entities/aggregate:
   #   post:
   #     summary: Aggregate entities
@@ -6808,7 +7002,7 @@ paths:
           description: Default Response
   '/v1/blueprints/{blueprint_identifier}/scorecards':
     post:
-      summary: Create a scorecard for a blueprint
+      summary: Create a scorecard
       description: This route allows you to create a scorecard for a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
       tags:
         - Scorecards
@@ -7082,7 +7276,7 @@ paths:
         '400':
           description: Default Response
     put:
-      summary: Change a blueprint's scorecards
+      summary: Change scorecards
       description: This route allows you to modify one or more scorecards of a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
       tags:
         - Scorecards
@@ -7353,7 +7547,7 @@ paths:
         '200':
           description: Default Response
     get:
-      summary: Get a blueprints' scorecards
+      summary: Get a blueprint's scorecards
       description: This route allows you to fetch all scorecards for a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
       tags:
         - Scorecards
@@ -7372,7 +7566,7 @@ paths:
           description: Default Response
   '/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}':
     put:
-      summary: Change a blueprint's scorecard
+      summary: Change a scorecard
       description: This route allows you to modify a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
       tags:
         - Scorecards
@@ -7655,7 +7849,7 @@ paths:
         '200':
           description: Default Response
     get:
-      summary: Get a blueprint's scorecard
+      summary: Get a scorecard
       description: This route allows you to fetch a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
       tags:
         - Scorecards
@@ -7679,7 +7873,7 @@ paths:
         '200':
           description: Default Response
     delete:
-      summary: Delete a blueprint's scorecard
+      summary: Delete a scorecard
       description: This route allows you to delete a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
       tags:
         - Scorecards
@@ -7703,7 +7897,7 @@ paths:
           description: Default Response
   /v1/scorecards:
     get:
-      summary: Get all scoreboards
+      summary: Get all scorecards
       description: This route allows you to fetch all scorecards in your Port organization.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
       tags:
         - Scorecards
