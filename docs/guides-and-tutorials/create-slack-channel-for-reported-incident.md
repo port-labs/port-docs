@@ -53,7 +53,7 @@ For this guide, we will be making a few modifications to our pre-existing bluepr
     }
     ```
 
-    Add the following relation:
+    Add the following relations:
 
     ```json showLineNumbers
     "service": {
@@ -62,6 +62,12 @@ For this guide, we will be making a few modifications to our pre-existing bluepr
         "target": "service",
         "required": false,
         "many": false
+    },
+    "issue": {
+        "target": "githubIssue",
+        "many": false,
+        "required": false,
+        "description": "The issue created for documenting this incident"
     }
     ```
 </details>
