@@ -1,0 +1,24 @@
+<details>
+
+<summary>Mapping configuration for AWS Accounts</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::Organizations::Account
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Id
+          title: .Name
+          blueprint: '"awsAccount"'
+          properties:
+            arn: .Arn
+            email: .Email
+            status: .Status
+            joined_method: .JoinedMethod
+            joined_timestamp: .JoinedTimestamp
+```
+
+</details>

@@ -1,0 +1,34 @@
+<details>
+<summary> SQS Blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "sqs",
+  "description": "This blueprint represents an AWS SQS service in our software catalog",
+  "title": "SQS",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

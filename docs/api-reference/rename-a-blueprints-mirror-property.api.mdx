@@ -1,0 +1,148 @@
+---
+id: rename-a-blueprints-mirror-property
+title: "Rename a blueprint's mirror property"
+description: "This route allows you to change the identifier of a mirror property in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/)."
+sidebar_label: "Rename a blueprint's mirror property"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVW1v0zAQ/iuWhcQmmmbjGxUgxosEQqBpjC+UMrnJtfGWxMYvLV2U/86dkyVp1yEGfKSVUts93z13z3OXiqdgEyO1k6rkE36eScuM8g6YyHO1tmyjPHOKJZkol8BcBkymUDq5kGCYWjDBCmmMMkwbpcG4DZMlHloNCdokbJ570EaWjs7RmWGnyjgmkkT50o2fzk38PDzOFctBmJIVymD0OYLoL9sRIoDkitEpgZimKvEFAhGEfHaQOaftJI7x2I6X4DQGGUsVz73M04jiRlYt3FoYiBLhRK6WceKtU4W8hggjwNIEVzZOVLmQS4+GKRpGhUohjy04r6MOT3w45iPuxNLyyZS/7GDy2Ygb+O7Bupcq3fBJxdGdQ5y0FFrnMglh4ktLBa+4xbwKQSu30YAUqPklJA69twWVYOnfEtYfQqE/igIG5tZh4CWa7xIJDK/skEWV26GrYYDCCefA0N1v05Poi4iuj6InLy6efcVPNHv0gNf1iIs0lRRB5KcDdAuRW6hrMtDCID50RIXZk10LFy0lhcKgGcYuQ068B7s3n9u59OIima4FLjqtdokRH9JAyifOeKhH90XVFOwi7H4P1m5HDMEZIEd3gUP5WEi8kW4T6jfHjsBqTKazOijLalRoI4jHR0f0s43nNSyEzx07ay0DachHptImryRrqM5wG6+O477D4qpPpI6bFOJqkHwdN9g5YTSrG4q9ydHXTf8JLQftx4cJfaKqN9hv0uoIwGvvYdPX/MQjZCOvQ6/wlpYMRIq3KCXqnrO+z978EIXOYU+fbFG7UCGkdGTKwxw6OX2H7imZpoDH4yOy1cq6QoQGbRGdhdxxsnUVe2h3id6Vx6D5/0/W+03WRhYOfrhY5wLpR1KC0qpWvVO+OkbDPg/cTLYGSFM9Ot7u4FbFqMwMWSZPVTUXFj6bvK7pGGVlqP1wuRJGijnJBZWeSkvrtB14vyD74Kxt60P2F4NrbxFuGqYkta0E+sEdLq+wfbYmKA26f4j4HjPtD3APGapnaN72OpW9sXjVQI3OyU/v4dYrlSZON/BOT85fvSWVtO9iUhweG7EmHeBzwr/iFzcq1CQMp3Be8Ry58GJJ9o3j8P7zpL3h2LoKY6tdENy9ie7OsyYnehJNe688xdHEcCg+78ybf+680JaskwLVAkH/BD/Hdsw=
+sidebar_class_name: "patch api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Rename a blueprint's mirror property"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/blueprints/{identifier}/mirror/{mirror_name}/rename"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to change the identifier of a mirror property in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the blueprint you want to change.<br/>","required":true}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"mirror_name","description":"The identifier of the mirror property you want to rename.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"newMirrorName"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** Value must match regular expression `^[A-Za-z0-9@_=\\\\-]+$`"}
+          schema={{"type":"string","description":"The new identifier of the mirror property.<br/>","pattern":"^[A-Za-z0-9@_=\\\\-]+$"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
