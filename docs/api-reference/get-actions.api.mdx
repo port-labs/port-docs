@@ -1,0 +1,126 @@
+---
+id: get-actions
+title: "Get actions"
+description: "This route allows you to fetch one or more self-service actions in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions that match the criteria.<br/><br/>To learn more about actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/)."
+sidebar_label: "Get actions"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVstu00AU/ZXRsKFSErddRggpolFVgRCCskBVRMf2dTyq7XHnkRCi/DtnxnFiQhJBaCUWbBx77mPOfZ2bJU/JJFrWVqqKD/ltLg3TyllioijU3LCFcswqlpFNcqYqYkqzUmlihoqsb0jPZALlxDswTFbeQLMPSlscJspVdvAq1tHr8LjNiSVwzOYSj5p0pnTJBCvUVOKc3Y/eX92zmOycqPII2KMjvWC10KIkS9pACFg9JqqUabJON2rt/TYXlpXCY7X+Li1hJEUXgmIFCZiFIESMWFvrHktySh6YP/LWd6lKXEmVFV48eZlbW5thFOHYDKZkawQ5kCpKNAlL/W5C+vQN0UmqEjLR2YD3uBVTw4d3fNTcxSc9vo0KgiU3uL0UfLjkdlETiiG0FguYIobSdM6N1bKa8tUKIl+0kCPoVfDmzcINX2UK5DKTpCHarTKxrTgyTGUh4MYyaoo+F5XdVL5JIBxpenRSU8qHmSgMrXpPhzsuHNXQsKdA3xjjaJ4rs23JEIs0+bPE0uNUudLX9c3H8eh2jIOr8btx8zL60r/kk0PhKjRIaKy9Md5txMzfGJnT289gTOq+k30MW39d4hexMDLpp2SFLMzZEzdArBRmrOIHIq9dXKAg8LEb+U3G7q12dN8D1RSY+1ZzU81AHDE1oCj9I1i/1KybMhRqP1oYTaekvwYnJ140u8DH7PLgHTNwQNMJu+5BE4YSBx5bBJKIwV0YC/hE1dOhaNnEK2oyNT4o9Onl+bn/+Tm/V5QJV1j2ca0ZZhEUlCtcyNFT3LOSzfERzS6i1rvHoGctTzldQN52o6hlpxl5F/Ann5cGTQt7O1e1fEudDIwcQGj5vZ2IkKUcIcKqmaBMBXNpC68fFszow43P6zp5Q34xOPc9VytjS7Qf1Nfer2lD8rs9t+SJqiwI5f/2e87t11Td0jcb1YWQgRtCIy3XDbceErFdj2Bx68+XS5AVfdbFauWPm9HxjZhKI+JiMytHC3vywtuL/AGtu3/RzgQWEWTcE8PfAzxlrR1BfGDF/gXof3ZPHclCd/OeGPrpi+oIru5ePI6r0d/ZTL9jsl00W+2J/wBNxJ5Y7ybdjXA9vvUz6fyAdqn7IVD3+sWPYiuqFh3Xu5zeQPBPj3CvyStQOsNieL1RbyQHDdYrotX26cQ/rtUP+gRy+g==
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get actions"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch one or more self-service actions in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions that match the criteria.<br/><br/>To learn more about actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"action_identifier","description":"The identifier/s of the action/s you want to fetch.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"blueprint_identifier","description":"The identifier/s of the blueprint/s whose actions you wish to fetch.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string","enum":["CREATE","DELETE","DAY-2"]}},"in":"query","name":"operation","description":"The [operation type/s](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean"},"in":"query","name":"published","description":"If `true`, only published actions will be fetched.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["self-service"]},"in":"query","name":"trigger_type","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

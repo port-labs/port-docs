@@ -82,7 +82,7 @@ Fill out the form with your values:
   }
   ```
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
 
 </TabItem>
 
@@ -108,7 +108,7 @@ Fill out the form:
   }
   ```
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
 
 </TabItem>
 
@@ -329,7 +329,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 <img src='/img/guides/runStatusReminder.png' width='90%' />
 
 :::tip Logging action progress
-💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/) to learn more.
+💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.getport.io/actions-and-automations/reflect-action-progress/) to learn more.
 :::
 
 <br/>

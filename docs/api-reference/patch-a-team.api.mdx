@@ -1,0 +1,161 @@
+---
+id: patch-a-team
+title: "Patch a team"
+description: "This route allows you to patch a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Patch a team"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVcFu2zAM/RVBl7WAE7c7GsWArhuwYYcFXXbKcqBtJlZrW54kJ80C//tIyU68NBmw81rAliWKenx8T9nLHG1mVOOUrmUi54WywujWoYCy1FsrdroVTosGXFYIEA6hemNFjg5UaafCb8igFimK1mLOsW2TAyVwBQ7hNVQY8bqxkYA6F6NTp3epid/5x1yLEsHUotKGAKSEw2egTVmB2bPwE5R2keusrbB2wBmWV4VzjU3imKbtdI2u0cZNlY6t1ROTQhbzY6I3aDYKt/H1VEbSwdrKZCHnfIBcRtLgzxate6/znUz2MtO1oxN4CE1TqsyfFT9ZJmovLSGqgEdu1yBRp9MnzBwlboxu0DiFlle59FGUdUbVa4o65R1FjVtPlNCrA3eBHNlF0pM3SgTGwO5Vnq81bTeBP5xU1CMBeW7QWrSc12fhHtEsv1x/rj8rNHOrylIwVUbloYn4oqwj1H63KOmjhxVJ5bCyr8vruhNgQ8BiiFheYmA0e44I/0ccgyGmnKdkcaYZAw5CyMlJvQWhDb0Ir7Pnn7Dvxb+F2h0ccCicxaIM5jJxpsWOyrGYtUa5nQeUkozRcL3BDIkLKuu8zmyjaxvk8fbmhl9/YvmAK2hLJx77SM8nlVvoPBSTcTW+qETGm9vYZ4/3jL+TDMVsBmpaU1LQYBBo1Mgfcoz7G3MYQA3oj2Jr1BfcHRm8bwmLUb+8JWRPcoGQ0y7GyiZ5PNrp4wtUTYlHOxxt0Mv6si7GnVxpj0k5ziVnVIS4n32mLFxtCL+d3nBso62roB6dOBtdYKfNH5n9v7oBQ3Mdvri4KYGayPcM62Xfi2shN7cc6MUbycRzSS0qiF5e3e9TsPjdlF3H09Rww/qn4QaMgpT7RBrMleUxiXcFpcW/sH/12PvqWvyjIc8WM8i3Zu1uoGz5i4bPJOb+HuiWFNdLl7GGpYeAaDLnBMetr34I2EAHY87u5w+fKDrtf0EqnfMmA1u+MOiZyB/0Tx/al+695uf3soR63cKa40NithG03ISxC5+9C/sBwz1b4ak9Q0387KILW+7ISII8/u4QHlYubugpG6KZ7yWB/g2zidjm
+sidebar_class_name: "patch api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Patch a team"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/teams/{name}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to patch a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"name","description":"The name of the team you want to patch.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"name"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The new name of the team.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"users"}
+          required={false}
+          schemaName={"string[]"}
+          qualifierMessage={undefined}
+          schema={{"type":"array","description":"One or more e-mail addresses of users to add to the new team. This will override the existing user list.<br/>","items":{"type":"string"}}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"description"}
+          required={false}
+          schemaName={["string"]}
+          qualifierMessage={undefined}
+          schema={{"type":["string"],"description":"The new description of the team.<br/>"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

@@ -115,7 +115,7 @@ When creating/editing self-service actions, you can set permissions for who can 
 <img src='/img/software-catalog/role-based-access-control/overview/ssapermissions.png' width='80%' border='1px' /> 
 <br/><br/>
 
-For more details about action permissions, see the [relevant documentation](/create-self-service-experiences/set-self-service-actions-rbac/#configure-permissions-for-actions).
+For more details about action permissions, see the [relevant documentation](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-permissions-for-actions).
 
 ### Dynamic permissions for Self Service actions
 
@@ -129,7 +129,7 @@ Potential use-cases:
 
 Dynamic permissions for RBAC can run any query on the Port data model.  
 
-For more details about dynamic permissions, see the [relevant documentation](/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/).
+For more details about dynamic permissions, see the [relevant documentation](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/).
 
 ## RBAC for operating the Port platform
 

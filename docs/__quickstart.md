@@ -1274,11 +1274,11 @@ If you want to learn more about Port's capabilities in a specific area, you can 
 - [Setup blueprints](./build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md)
 - [Relate blueprints](./build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md)
 - [Ingest data to catalog](./build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md)
-- [Create self-service experiences](./create-self-service-experiences/create-self-service-experiences.md)
+- [Create self-service experiences](./actions-and-automations/create-self-service-experiences/actions-and-automations/create-self-service-experiences.md)
 
 ### Using the API
 
 If you want to continue utilizing Port's REST API, take a look at these resources:
 
 - [API guide](./build-your-software-catalog/custom-integration/api/api.md)
-- [API Reference](./api-reference/api-reference.mdx)
+- [API Reference](./api-reference/port-api)

@@ -7,7 +7,13 @@
       "identifier": ".body.event.data.id",
       "title": ".body.event.data.summary",
       "properties": {
-        "status": ".body.event.data.event_type"
+        "status": ".body.event.data.status",
+        "url": ".body.event.data.html_url",
+        "oncall": ".body.event.data.__oncall_user[] | select(.escalation_level == 1) | .user.email",
+        "escalationLevels": ".body.event.data.__oncall_user | map(.escalation_level) | unique | length",
+        "meanSecondsToResolve": ".body.event.data.__analytics.mean_seconds_to_resolve",
+        "meanSecondsToFirstAck": ".body.event.data.__analytics.mean_seconds_to_first_ack",
+        "meanSecondsToEngage": ".body.event.data.__analytics.mean_seconds_to_engage",
       }
     }
   },
@@ -20,11 +26,13 @@
       "properties": {
         "status": ".body.event.data.status",
         "url": ".body.event.data.html_url",
-        "details": ".body.event.data.title",
-        "priority": ".body.event.data.priority",
         "urgency": ".body.event.data.urgency",
-        "responder": ".body.event.data.assignees[0].summary",
-        "escalation_policy": ".body.event.data.escalation_policy.summary"
+        "assignees": ".body.event.data.assignments | map(.assignee.email)",
+        "escalation_policy": ".body.event.data.escalation_policy.summary",
+        "created_at": ".body.event.data.created_at",
+        "updated_at": ".body.event.data.updated_at",
+        "priority": ".body.event.dataif .priority != null then .priority.summary else null end",
+        "description": ".body.event.data.description"
       },
       "relations": {
         "microservice": ".body.event.data.service.id"

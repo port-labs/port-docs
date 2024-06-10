@@ -144,7 +144,7 @@ Just like catalog pages, tables support the following customization options:
 
 ### Action card
 
-This widget allows you to execute [self-service actions](/create-self-service-experiences) directly from any dashboard (including your homepage).
+This widget allows you to execute [self-service actions](/actions-and-automations/create-self-service-experiences) directly from any dashboard (including your homepage).
 
 A single action card can contain one or multiple actions:
 
@@ -163,7 +163,7 @@ To execute an action, click on the ⚡ button next to it:
 
 ### Action runs
 
-This widget allows you to create a table displaying all past runs of a [self-service action](/create-self-service-experiences) in your portal.  
+This widget allows you to create a table displaying all past runs of a [self-service action](/actions-and-automations/create-self-service-experiences) in your portal.  
 The table will automatically display data about each run, including status, input parameters, the executing user, and more. 
 
 <img src='/img/software-catalog/widgets/actionRunsTableExample.png' width='100%' />

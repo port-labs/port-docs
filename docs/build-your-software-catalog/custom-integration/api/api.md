@@ -16,7 +16,7 @@ import TabItem from "@theme/TabItem";
 </center>
 <br/>
 
-Port's [API](../../../api-reference/api-reference.mdx) is a generic interface to model your software catalog, ingest data, invoke actions, query scorecards and more.
+Port's [API](/api-reference/port-api) is a generic interface to model your software catalog, ingest data, invoke actions, query scorecards and more.
 
 ## 💡 Common Port API usage
 
@@ -1067,7 +1067,7 @@ It is also possible to delete all entities using Port's web UI:
 2. Click on the "Delete All `BLUEPRINT_NAME`" button on the desired blueprint.
 3. Follow the instructions.
 
-**Note:** only users with the [admin](../../../sso-rbac/rbac/rbac.md#roles) role can use Port's UI to perform the delete all operation.
+**Note:** only users with the [admin](/sso-rbac/rbac/rbac.md#roles) role can use Port's UI to perform the delete all operation.
 
 :::
 

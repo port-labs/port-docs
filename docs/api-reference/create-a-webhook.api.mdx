@@ -1,0 +1,428 @@
+---
+id: create-a-webhook
+title: "Create a webhook"
+description: "This route allows you to create a webhook in your Port organization. Webhooks provide a way to ingest data from an external tool/platform into Port. You can also create a webhook via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/)."
+sidebar_label: "Create a webhook"
+hide_title: true
+hide_table_of_contents: true
+api: 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
+sidebar_class_name: "post api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create a webhook"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/webhooks"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to create a webhook in your Port organization. Webhooks provide a way to ingest data from an external tool/platform into Port. You can also create a webhook via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"identifier"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** `<= 30 characters`"}
+          schema={{"type":"string","description":"A unique identifier for the webhook.<br/>","maxLength":30}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"title"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** `<= 30 characters`"}
+          schema={{"type":"string","description":"The title of the webhook, which will be displayed in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/>","maxLength":30}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"description"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** `<= 200 characters`"}
+          schema={{"type":"string","description":"A description for the webhook.<br/>","maxLength":200}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"icon"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The icon of the webhook.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <span
+                className={"openapi-schema__container"}
+              >
+                <strong
+                  className={"openapi-schema__property"}
+                >
+                  mappings
+                </strong><span
+                  className={"openapi-schema__name"}
+                >
+                   object[]
+                </span>
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <div
+                style={{"marginTop":".5rem","marginBottom":".5rem"}}
+              >
+                
+                
+                The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                
+                
+              </div><li>
+                <div
+                  style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                >
+                  Array [
+                </div>
+              </li><SchemaItem
+                collapsible={false}
+                name={"blueprint"}
+                required={true}
+                schemaName={"string"}
+                qualifierMessage={undefined}
+                schema={{"type":"string","description":"The identifier of the blueprint to map the data into.<br/>"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={false}
+                name={"filter"}
+                required={false}
+                schemaName={"string"}
+                qualifierMessage={undefined}
+                schema={{"type":"string","description":"A `jq` query used to filter exactly which payloads sent to the webhook are processed. If set to `\"true\"`, all payloads will be processed.<br/>"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={false}
+                name={"itemsToParse"}
+                required={false}
+                schemaName={"string"}
+                qualifierMessage={undefined}
+                schema={{"type":"string","description":"A `jq` query that evaluates to an array of items, used to create multiple entities from a single webhook event.<br/>"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={true}
+                className={"schemaItem"}
+              >
+                <details
+                  style={{}}
+                  className={"openapi-markdown__details"}
+                >
+                  <summary
+                    style={{}}
+                  >
+                    <span
+                      className={"openapi-schema__container"}
+                    >
+                      <strong
+                        className={"openapi-schema__property"}
+                      >
+                        entity
+                      </strong><span
+                        className={"openapi-schema__name"}
+                      >
+                         object
+                      </span><span
+                        className={"openapi-schema__divider"}
+                      >
+                        
+                      </span><span
+                        className={"openapi-schema__required"}
+                      >
+                        required
+                      </span>
+                    </span>
+                  </summary><div
+                    style={{"marginLeft":"1rem"}}
+                  >
+                    <div
+                      style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                    >
+                      
+                      
+                      An object defining how to map the data from the webhook payload into Port entities.<br/>
+                      
+                      
+                    </div><SchemaItem
+                      collapsible={false}
+                      name={"identifier"}
+                      required={true}
+                      schemaName={"string"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"string","description":"A `jq` expression used to get data from the webhook payload, to be used as an identifier for the entity.<br/>"}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"title"}
+                      required={false}
+                      schemaName={"string"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"string","description":"A `jq` expression used to get data from the webhook payload, to be used as the title of the entity.<br/>"}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"icon"}
+                      required={false}
+                      schemaName={"string"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"string","description":"The icon of the entity.<br/>"}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"team"}
+                      required={false}
+                      schemaName={"string"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"string","description":"The team the entity belongs to.<br/>"}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"properties"}
+                      required={false}
+                      schemaName={"object"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"object","description":"An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>","propertyNames":{"type":"string"}}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"relations"}
+                      required={false}
+                      schemaName={"object"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"object","description":"An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>","propertyNames":{"type":"string"}}}
+                    >
+                      
+                    </SchemaItem>
+                  </div>
+                </details>
+              </SchemaItem><li>
+                <div
+                  style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                >
+                  ]
+                </div>
+              </li>
+            </div>
+          </details>
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"enabled"}
+          required={true}
+          schemaName={"boolean"}
+          qualifierMessage={undefined}
+          schema={{"type":"boolean","description":"Determines whether the webhook is active or not. If `false`, any incoming events will be dropped.<br/>","default":true}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <span
+                className={"openapi-schema__container"}
+              >
+                <strong
+                  className={"openapi-schema__property"}
+                >
+                  security
+                </strong><span
+                  className={"openapi-schema__name"}
+                >
+                   object
+                </span>
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <div
+                style={{"marginTop":".5rem","marginBottom":".5rem"}}
+              >
+                
+                
+                The security configuration of the webhook, used to tell Port how to verify the hashed signature sent with incoming requests.<br/>For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).<br/>
+                
+                
+              </div><SchemaItem
+                collapsible={false}
+                name={"secret"}
+                required={false}
+                schemaName={"string"}
+                qualifierMessage={undefined}
+                schema={{"type":"string"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={false}
+                name={"signatureHeaderName"}
+                required={false}
+                schemaName={"string"}
+                qualifierMessage={undefined}
+                schema={{"type":"string"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={false}
+                name={"signatureAlgorithm"}
+                required={false}
+                schemaName={"string"}
+                qualifierMessage={"**Possible values:** [`sha1`, `sha256`, `plain`]"}
+                schema={{"type":"string","enum":["sha1","sha256","plain"]}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={false}
+                name={"signaturePrefix"}
+                required={false}
+                schemaName={"string"}
+                qualifierMessage={undefined}
+                schema={{"type":"string"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={false}
+                name={"requestIdentifierPath"}
+                required={false}
+                schemaName={"string"}
+                qualifierMessage={undefined}
+                schema={{"type":"string"}}
+              >
+                
+              </SchemaItem>
+            </div>
+          </details>
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"integrationType"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** [`custom`]"}
+          schema={{"type":"string","enum":["custom"]}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
