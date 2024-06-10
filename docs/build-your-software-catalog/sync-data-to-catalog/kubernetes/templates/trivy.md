@@ -46,7 +46,7 @@ This `blueprints.json` file defines the following blueprints:
 - Namespace
 - Workload
 - Trivy Config Audit Report
-- Trivy Vulnerability Report
+- Trivy Vulnerability
 
 :::note
 
@@ -61,7 +61,7 @@ This `blueprints.json` file defines the following blueprints:
 
 - `Trivy Config Audit Report` represents checks performed by Trivy against a Kubernetes object's configuration
 
-- `Trivy Vulnerability Report` represents the latest vulnerabilities found in a container image of a given Kubernetes workload
+- `Trivy Vulnerability` represents the latest vulnerabilities found in a container image of a given Kubernetes workload
 :::
 
 Below are the Trivy blueprint schemas used in the exporter:
@@ -151,12 +151,12 @@ Below are the Trivy blueprint schemas used in the exporter:
 </details>
 
 <details>
-<summary> <b>Trivy vulnerability report blueprint (click to expand)</b> </summary>
+<summary> <b>Trivy vulnerability blueprint (click to expand)</b> </summary>
 
 ```json showLineNumbers
 {
    "identifier": "trivyVulnerabilityReport",
-   "title": "Trivy Vulnerability Report",
+   "title": "Trivy Vulnerability",
    "icon": "Trivy",
    "schema": {
       "properties": {
@@ -303,7 +303,7 @@ Below are the mappings for the Trivy resources:
 </details>
 
 <details>
-<summary> <b>Trivy vulnerability report mapping (click to expand)</b> </summary>
+<summary> <b>Trivy vulnerability mapping (click to expand)</b> </summary>
 
 ```yaml showLineNumbers
   - kind: aquasecurity.github.io/v1alpha1/vulnerabilityreports
