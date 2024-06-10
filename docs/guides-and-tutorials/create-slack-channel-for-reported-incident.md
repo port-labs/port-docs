@@ -19,9 +19,8 @@ Solving incidents efficiently is a crucial part of any production-ready environm
 - **Documentation** - When there is an ongoing incident, it is important that different personas across the organization will be aware of it. Hence, it is important to document the incident in relevant places, for example as a Port entity, a Github issue or even a Jira issue
 - **Visibility** - While troubleshooting, it is important to provide information both to all relevant personas in the organization. An ideal place to manage an incident would be a group chat with the relevant people.
 
-<!-- TODO: Add link to automations docs -->
 
-In this guide, we will be using Port's [Automations]  capabilities to automate incident management. To do so we will create an automation which will be triggered when a Pagerduty incident entity is created in Port. This automation will:
+In this guide, we will be using Port's [Automations](../actions-and-automations/define-automations/define-automations.md)  capabilities to automate incident management. To do so we will create an automation which will be triggered when a Pagerduty incident entity is created in Port. This automation will:
 - Create a Slack channel for managing the incident and providing a place to troubleshoot.
 - Send a breif message regarding the incident in the Slack channel for visibility.
 - Create a Github issue for documenting the incident.
@@ -71,6 +70,10 @@ For this guide, we will be making a few modifications to our pre-existing bluepr
     }
     ```
 </details>
+
+:::note
+In this guide, 
+:::
 
 <!-- Add an image of the final data model -->
 <p align="center">
