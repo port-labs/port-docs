@@ -314,13 +314,13 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "api-reference/create-a-scorecard-for-a-blueprint",
+          id: "api-reference/create-a-scorecard",
           label: "Create a scorecard for a blueprint",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api-reference/change-a-blueprints-scorecards",
+          id: "api-reference/change-scorecards",
           label: "Change a blueprints' scorecards",
           className: "api-method put",
         },
@@ -332,25 +332,25 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/change-a-blueprints-scorecard",
+          id: "api-reference/change-a-scorecard",
           label: "Change a blueprint's scorecard",
           className: "api-method put",
         },
         {
           type: "doc",
-          id: "api-reference/get-a-blueprints-scorecard",
+          id: "api-reference/get-a-scorecard",
           label: "Get a blueprint's scorecard",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api-reference/delete-a-blueprints-scorecard",
+          id: "api-reference/delete-a-scorecard",
           label: "Delete a blueprint's scorecard",
           className: "api-method delete",
         },
         {
           type: "doc",
-          id: "api-reference/get-all-scoreboards",
+          id: "api-reference/get-all-scorecards",
           label: "Get all scoreboards",
           className: "api-method get",
         },
