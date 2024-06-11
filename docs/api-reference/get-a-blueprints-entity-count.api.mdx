@@ -1,0 +1,176 @@
+---
+id: get-a-blueprints-entity-count
+title: "Get a blueprint's entity count"
+description: "This route allows you to count the number of entities in a specific blueprint in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities)."
+sidebar_label: "Get a blueprint's entity count"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVU1v2zAM/SuEdlgLJHFbdBcjCFBgRTHssGLtTm2QKjZTC3UkT6LTZYH/+0h/JWmbnQZsh11sSaRIPpKP2qgUQ+JNQcZZFavbzATwriQEnefuOcDalUAOEldaAsoQbLmcowe3ALRkyGAAY0FDKDAxC5PAPC+x8IbV+ZyvewhuQc/aIySadO4eR+O5jyb159ZBjtpbWDqW6zm77u0OIMkweQI5E893qUvKJUu1RDs9yoiKEEcRH4fRI1LhPI2Mi+alydOheB52noet5yisbTJMeTMk1x++6zwej9RAkX4MKr5Tl+2hmg5Uob1eIqEXyUYFDmypVbxRtC6Q8xaIAT+qaqCMpLHQlLEly3d41ydkZlLxtDDoWerxe2k8piomX+LgVSUQtuqSbknBNrfPmQu4LYGU6VlLidpaNTlWFQcfMCm9oXUd+pyzze7ju6mIPIbC2cAgGcvZyYn89uO4KZMEQxBo5yfnr+VfLHbBLZy0DOcB0HvnA7iEHTPC+N7e2zHpeY4TWXj+Aowpm1yK4jjiVXfycWu9Peef37uWTh6so9mCYaYPLE3784vdBBnK6rAK71acyRQetvl84GQFYCtQW2mNdJ6iLtQa9dnZv4La2JXOTTqTzsFA+9hvd6FKh0PqsMG41JQ0uWio3bTv70B/eKsV/hZopp3V+az29KLeFjpxE0gfx2FwjI6ZnDnmneKhoQYNW2MVrU6jvn1CtHmLtlXUMW5Ys0wJu/yqmwulz9lQN5d0YXbG0h4Vb6QCDes6QvazhK99xvV2fFyUHK03P+upp9oJk6FO+VZVT5yFq68bykX/mv3BxfUnVpXAmtqdjk6kroULtNRW1FvrV0g8vHus70MzU9bQ4dvrgY1KHCecBf/fivqtaEpG+IOiItemJk/dBZu2re7U6pQVt43Fm/jAi/Cit7hfeMiT2Nhs5jrgN59XlRwz/b2Mc16utDfS23X/pSbImlt7ofPw8k3ZLd7R1/b1OYY/9NIcSEbX1FY6msdXKTtePnGLH3gaq+kuR68ub1ldl5LMXY481RxpFwL+TU8vydO4lW81OHBlzNwBZuCkV28kBy+0XOy0Bfe0qqpfLHdJKA==
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a blueprint's entity count"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/blueprints/{blueprint_identifier}/entities-count"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to count the number of entities in a specific blueprint in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint whose entities you want to count.<br/>"}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Success
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"404"}
+        value={"404"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`not_found`</td>
+            <td>A blueprint with the provided `identifier` was not found</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"422"}
+        value={"422"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`invalid_request`</td>
+            <td>The provided data does not match the route schema</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`internal_error`</td>
+            <td>An internal error occurred</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

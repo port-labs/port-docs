@@ -1,0 +1,130 @@
+---
+id: get-an-actions-run-logs
+title: "Get an action's run logs"
+description: "This route allows you to fetch the logs from an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
+sidebar_label: "Get an action's run logs"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVE1v2zAM/SuCLmuBNE4G7GIMBQpsKIZdiq47BcGgOHQsRJZcSkqbGf7vIy3no13arcBOu/iTFB/fe2Qrl+AL1E3Qzspc3lXaC3QxgFDGuAcvti6K4EQJoahEqEAYt/KiRFcLZYUqOFFgtOOPC8wu+8udEwYUWlE7pHMWdNxRoB+JooJiLfgzHzhbuiLWYIPikPlZFULj8yyjz368gtA4DGPtsgJBBbjwYEq64EYXcAGPDaAGW4DPEEoDRbhIpS4adCsE77PzsRzJoFZe5jN5lXDcEg45H8lGoaohAPLPVnpCViuZtzJsGyA+bKwXgJRfa6vrWMt8Ss/qMT1/mHQjqZm3+wi4pTBLp9Gr0bUO9PqcXBBDrkgHC1cmPncMJxYpE+E+aoSlzEtlPHSjl8G9gMGVpYfTIH4v7te6eVNtH1Db1b52o0J1KE0q/9DLk6X1koTWpU7lWf6DM3qvPSgbDoZLZnN4AlvACB1J6KGIqMO2F3BBviNK8tmcf5H8jbMePAN/P5nw7SmkT1CqaIK4HSJlRx2RISpHFeSq56/vLZfZZpolrGQ1sk/Wpja7jEFKBoKbnZEiGkrZOVk1+sjI8hj1NyY2Adxh33NMaV/hSNGrSLhQ/+znRA7MV6CWbIJeidL16ToYjr+heuLq5guFMrDU8XQ8YdUa50OtLIcPp19DOEz0O98LMnT2hLNWFs4GUvG/XhdJgQCPIWuMIqaJs17UdvDDTG6mFDg4gp0Z+1u+N39PHkldEdUc37YL5eE7mq7jz2lc2SxL7dXC7OftVb7/foOcbGFNfjqsp40ykWMkj/jbUPxhhbxSfL+XDtXn/IKay7+RkLPbYR+ci3+xXU7C3k2j3R6D3rUzyN3NjxfH9ec79kZkoxyP87of5+GBOz159vM5T4X4yjqdTPlIYy5oWVzuw9OfFxOGtbGL5k7nXdf9ArpFw9U=
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an action's run logs"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions/runs/{run_id}/logs"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch the logs from an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","description":"The identifier of the action run you want to fetch logs for.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"number","minimum":1,"maximum":50},"in":"query","name":"limit","description":"The maximum number of logs to fetch.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"number"},"in":"query","name":"offset","description":"The number of logs to skip.<br/>","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

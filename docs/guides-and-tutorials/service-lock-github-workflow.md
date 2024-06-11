@@ -231,4 +231,4 @@ If you set the value of the `locked_in_prod` field to `false`, the workflow will
 
 ## More relevant guides and examples
 
-- [Port's self-service action to lock and unlock a service](/create-self-service-experiences/setup-backend/github-workflow/examples/lock-and-unlock-service-in-port)
+- [Port's self-service action to lock and unlock a service](/actions-and-automations/setup-backend/github-workflow/examples/lock-and-unlock-service-in-port)

@@ -1,0 +1,148 @@
+---
+id: rename-a-blueprints-relation
+title: "Rename a blueprint's relation"
+description: "This route allows you to change the identifier of a relation in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/)."
+sidebar_label: "Rename a blueprint's relation"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVd9v0zAQ/lcsC4lNNM3GG9WY2AYSEy9TKS90BbnJtfHmxsY/Wroq/zt3Tpp0o6ANeGSTUtvx3X1333eXDc/BZVYaL3XJB3xUSMesDh6YUEqvHFvrwLxmWSHKOTBfAJM5lF7OJFimZ0wwC0qQOZMl7pyBDF9mbKoCGCtLT+foxbIrbT0TWaZD6fsnU5uexsdIMwXClmyhLYadYvTO2PUwNGS3jE4p+jjXWVggghhzclB4b9wgTfHY9efgDQbpS51Og1R5QnETp2d+JSwkmfBC6XmaBef1Qt5BghFgbqMrl2a6nMl5wIs5XkwWOgeVOvDBJC2e9LDPe9yLueODMT9vYfJJj1v4FsD5c52v+WDD0Z1HnLQUxiiZxTDpjaNKb7jDvBaCVn5tAGuvpzeQefRurDZgvQRHb0tYDZsKX7aV3zFzHgHM0ewhk8DQ9AFbVMEtXzUFFE94D5aMvozPks8iuTtKXr35+voa/5LJi2e8qnpc5LkkK6GuduDNhHJQVXTBCCsWgI6oMnvSa3DiTUmhMGiBsUu0wV2Hcm8iPyfRqYsEuhK4aFXaJkaESAs5H3gboOo9FdW2Ul+fDK/tiV10Fsjvr9ChgBxkwUq/jgWcYk8Q0eNJFbXlDGq0lsTLoyP6uQ/kLcxEUJ4Nm5uRNSSk0HmdWFbUXBe4TZfHaddj6abLoEq32PF4TwHofSwPwbXLLd3BKnS7bUZh5E4v8t3cPhIDdRrbDFsy0OwDrLv6nwVEb+VdxMAbigoQOVpRdtRKw67p3n0XC6PgN01zj+6ZjqGlJxMeh9PZ1SWGoaTqmh73j+iu0c4vROzaBtkw1gDHXVvE564l/aFGdkbB/wH7yAFbC8LDd58aJZB4pCFqbNNIeMyXx3ixywM3g3t92uqY3uxv5UbKKM8CKSanm81UOPhkVVXRMWrLUjvicimsFFPSCso9l47WeTMBf0P4wbBp80P2F5Nsbz22XVNSyywF+sEdLm+xh+6NVJp8/xDxY4bbHwDeR1E1QbOm46nu9c2LGmsyIn+dp5++sjR32gl4dTa6eE+KaT7PpD6KKlYkBHwO+DX+40abWjZ4KZ5vuEIygpjT/dpx/CIG0uHu8LqNw6tZENy9CT+canVO9CSe9pqc4GBiOBpP2+v1m18aNCVrtUC1QNA/ABoTe4o=
+sidebar_class_name: "patch api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Rename a blueprint's relation"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/blueprints/{identifier}/relations/{relation_identifier}/rename"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to change the identifier of a relation in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the blueprint you want to change.<br/>","required":true}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"relation_identifier","description":"The identifier of the relation you want to rename.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"newRelationIdentifier"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** Value must match regular expression `^[A-Za-z0-9@_=\\\\-]+$`"}
+          schema={{"type":"string","description":"The new identifier of the relation.<br/>","pattern":"^[A-Za-z0-9@_=\\\\-]+$"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
