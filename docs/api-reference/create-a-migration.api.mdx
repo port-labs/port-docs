@@ -1,0 +1,346 @@
+---
+id: create-a-migration
+title: "Create a migration"
+description: "This route allows you to create a migration in your Port organization.<br/><br/>You can use this to migrate data from one blueprint to another, or to convert the data type of a property in a blueprint."
+sidebar_label: "Create a migration"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdV0tv4zYQ/isEe2gXkKykR2OxQLbtoSiKBpv0UNgBPJZGNrOUqJBUEq3h/94ZUrJkJ9mkr0sRxDHJ4Tcz3zw42ckCXW5V45Wp5Vxeb5UT1rQeBWhtHpzoTCu8EblF4E1RqY0Flhaq5kMrLo31wtgN1OpLOJm9X9vsQ/j4g27nUIvWofCMTVARAUUBHkRpTSVMjWKtW2ysqj2LQG38Fm1CsEG5qe+RlNBevOW7BoUpyZzGmoaOOrYGRpCZTKSHjZPzhfx1sNjJm0RavGvR+Y+m6OR8JwnaY+35KzSNVnmQzG4d07GTLt9iBfyNVRJBZn2LuSf0XrFCF+SIiBw/DuonF5ynjQ1dOCUahSpIsyoVWvaFnRtJCLw8bFW+DQcj6w9Ka7FGQcpLYyssIttyn8iKPGBdz1j7VHmBpapVgKTgFCEw0IwUBwN4FV2bmEa/Jpx4sBv0x6Qf07L+p4Q8UXFwtlTao30d96IWJnwHLRxBEfCCgl4E193Nd1vvGzfPssLkbka6GsrmmTIZOVIZj6nLjcUcbOGyb8Z775ivaEKwk+1mp2kB/hCjPtMnIVIeK3dtLsE6fIPtYnV7txKUsLaLyHgPuiVIF6tEgLXQsU8BODmEsi/XqtVeNXpiH2GYOseZuEI6JtconJxHMbkWVHT4MifrVuki5aJPnSn9A1hMqWBAm02Wt86bSn3BlMKEQ8VlRFmpNi0J9tlJLAbb0sG2dLAt5ZRLoU6DUyk0Ko35+27kL8h2r9fjmElvZhkfG4vOTQuCU+/rxZCwGEU63ADHIZkkcWkm2dGNXtBKvz38/4phoZhY7VBZpzapPHa8N1QpSb6E4hGqt6Gw5ASCbNWm3nBej2jHMf16T+M6Dyf8Wnig3lZvAv4Icmw0xargpbKCiwqpeugNWS3lZ+yWcr6UYXcpV6IBZR01Y6qNcH9FEiuh3BS++9ZNIp8M4GIVUIK08i5q6h1MJBSxnYC+fM7Tnr39nl8t3T9hf5+IA8Z/wsOA/joPB2nKzGjC0Z2/zM4+EnTXKosFP/h9k7g53T99pMcX8+YlbSVohycKvG2RNhzmrQ3NaEEPHVIvpF6zuNmHGcM1xHM09/uzM/5zHKQfsQTqf+JTLxmCXKHfGlIgG+NCSwO/pVV2f55V4wzDmi2NQy4obq0mkaFhU8+c9GvJtgxmXvEk07/KvbEHKunaL9gRcg0Vry9aMsT20xxtKzZ5i1DQLTaUp6NP4xz10yNUTWxoT+agsQVMppP1c+fDgz7uHD+W4/74CEzb/Hjet9cJUOhtE4HQpcb1UZ85qbaYXvxIBsJ66DDzXlz+TJc5FDGo57Oz0LUoehWEZtrz+cOT4fm0aieD6P9rBo8J5vHRZ42mZsQEhZzd9em9kPfnnB1HQ/qWC4COdrs1OPzd6v2et8MgxEVGrINVsOZYUMklQ3JyRVBTYsojnek1G5DEHhYy/WTG5xI51N3lb1fXJLzu/zeoTMF3LDzQJn/O5ZJ+aBEnylBMYX8nNdSbFjYsH3E5a6BlD6dl9jmUWf+FrR2O6m5i5Wn9RZf4c5+8cOU9JaOgIv5wEI8nL17oGRukOTLUMPd/AhWM9R0=
+sidebar_class_name: "post api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create a migration"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/migrations"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to create a migration in your Port organization.<br/><br/>You can use this to migrate data from one blueprint to another, or to convert the data type of a property in a blueprint.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"sourceBlueprint"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The identifier of the blueprint from which the migration will be performed.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <span
+                className={"openapi-schema__container"}
+              >
+                <strong
+                  className={"openapi-schema__property"}
+                >
+                  mapping
+                </strong><span
+                  className={"openapi-schema__name"}
+                >
+                   object
+                </span><span
+                  className={"openapi-schema__divider"}
+                >
+                  
+                </span><span
+                  className={"openapi-schema__required"}
+                >
+                  required
+                </span>
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <div
+                style={{"marginTop":".5rem","marginBottom":".5rem"}}
+              >
+                
+                
+                The definition used to map the data from the source blueprint into the target blueprint.
+                
+                
+              </div><SchemaItem
+                collapsible={false}
+                name={"blueprint"}
+                required={false}
+                schemaName={"string"}
+                qualifierMessage={undefined}
+                schema={{"type":"string","description":"The identifier of the target blueprint.<br/>"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={false}
+                name={"filter"}
+                required={false}
+                schemaName={"string"}
+                qualifierMessage={undefined}
+                schema={{"type":"string","description":"An optional set of [conditions](https://docs.getport.io/promote-scorecards/#conditions) to filter the entities that will be migrated.<br/>"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={false}
+                name={"itemsToParse"}
+                required={false}
+                schemaName={"string"}
+                qualifierMessage={undefined}
+                schema={{"type":"string","description":"A `jq` query that evaluates to an array of items, used to create multiple entities at once. See more information [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#create-multiple-entities-from-an-array-api-object).<br/>"}}
+              >
+                
+              </SchemaItem><SchemaItem
+                collapsible={true}
+                className={"schemaItem"}
+              >
+                <details
+                  style={{}}
+                  className={"openapi-markdown__details"}
+                >
+                  <summary
+                    style={{}}
+                  >
+                    <span
+                      className={"openapi-schema__container"}
+                    >
+                      <strong
+                        className={"openapi-schema__property"}
+                      >
+                        entity
+                      </strong><span
+                        className={"openapi-schema__name"}
+                      >
+                         object
+                      </span><span
+                        className={"openapi-schema__divider"}
+                      >
+                        
+                      </span><span
+                        className={"openapi-schema__required"}
+                      >
+                        required
+                      </span>
+                    </span>
+                  </summary><div
+                    style={{"marginLeft":"1rem"}}
+                  >
+                    <SchemaItem
+                      collapsible={false}
+                      name={"identifier"}
+                      required={false}
+                      schemaName={"string"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"string","description":"A `jq` expression used to get data from the source blueprint, to be used as an identifier for the entity.<br/>"}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"title"}
+                      required={false}
+                      schemaName={"string"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"string","description":"A `jq` expression used to get data from the source blueprint, to be used as the title of the entity.<br/>"}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"icon"}
+                      required={false}
+                      schemaName={"string"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"string","description":"The icon of the entity.<br/>"}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={false}
+                      name={"team"}
+                      required={false}
+                      schemaName={"string"}
+                      qualifierMessage={undefined}
+                      schema={{"type":"string","description":"The team the entity belongs to.<br/>"}}
+                    >
+                      
+                    </SchemaItem><SchemaItem
+                      collapsible={true}
+                      className={"schemaItem"}
+                    >
+                      <details
+                        style={{}}
+                        className={"openapi-markdown__details"}
+                      >
+                        <summary
+                          style={{}}
+                        >
+                          <span
+                            className={"openapi-schema__container"}
+                          >
+                            <strong
+                              className={"openapi-schema__property"}
+                            >
+                              properties
+                            </strong><span
+                              className={"openapi-schema__name"}
+                            >
+                               object
+                            </span>
+                          </span>
+                        </summary><div
+                          style={{"marginLeft":"1rem"}}
+                        >
+                          <div
+                            style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                          >
+                            
+                            
+                            An object containing the properties of the entity and their values, in `"key":"value"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>
+                            
+                            
+                          </div>
+                        </div>
+                      </details>
+                    </SchemaItem><SchemaItem
+                      collapsible={true}
+                      className={"schemaItem"}
+                    >
+                      <details
+                        style={{}}
+                        className={"openapi-markdown__details"}
+                      >
+                        <summary
+                          style={{}}
+                        >
+                          <span
+                            className={"openapi-schema__container"}
+                          >
+                            <strong
+                              className={"openapi-schema__property"}
+                            >
+                              relations
+                            </strong><span
+                              className={"openapi-schema__name"}
+                            >
+                               object
+                            </span>
+                          </span>
+                        </summary><div
+                          style={{"marginLeft":"1rem"}}
+                        >
+                          <div
+                            style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                          >
+                            
+                            
+                            An object containing the relations of the entity and their values, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>
+                            
+                            
+                          </div>
+                        </div>
+                      </details>
+                    </SchemaItem>
+                  </div>
+                </details>
+              </SchemaItem>
+            </div>
+          </details>
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
