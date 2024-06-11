@@ -872,5 +872,3 @@ When the action is finished, it will mark the action run as successful. That way
 ## Next steps
 
 This was a very basic example on how to react to the execution `CREATE` action. We left placeholder code for you to insert your own custom logic that fits your infrastructure.
-
-Now that you have an execution runner, maybe try exploring our [Change Log runner](./changelog-basic-change-listener-using-aws-lambda), so that you can react to changes in your Software Catalog.
