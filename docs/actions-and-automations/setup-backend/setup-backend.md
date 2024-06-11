@@ -45,11 +45,11 @@ See the list of supported backends below for more information.
 When creating a self-service action or automation, you can construct a JSON payload that will be sent to your backend upon every execution. You can use this to send data about the action that you want your backend to have. 
 
 The payload is defined using JSON, and accessing your data is done using `jq`, wrapping each expression with `{{ }}`.  
-For example, this payload contains a user input, and the action's run id (unique to each execution of the action):
+For example, this payload contains a timestamp of the execution, and the execution's run id (unique to each execution):
 
 ```json
 {
-  "example_string_input": "{{ .inputs.example_string_input }}",
+  "execution_time": "{{ .trigger.at }}",
   "port_context": {
     "run_id": "{{ .run.id }}"
   }
