@@ -851,7 +851,7 @@ Examples of blueprints and the relevant integration configurations:
 
 ## Let's Test It
 
-This section includes a sample response data from Terrform Cloud. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+This section includes a sample response data from Terraform Cloud. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
 
 ### Payload
 
