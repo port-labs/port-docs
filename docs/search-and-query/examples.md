@@ -9,6 +9,11 @@ import TabItem from "@theme/TabItem"
 
 The following examples provide a foundation to begin using the search route. Remember that you can always change the content of the `rules` array to the search query that fits your search.
 
+:::info United States region
+The examples below use the EU region API.  
+If you wish to use the US region API, replace `https://api.getport.io` with `https://api.us.getport.io`.
+:::
+
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
 {label: "Javascript", value: "javascript"},
