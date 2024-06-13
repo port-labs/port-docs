@@ -19,24 +19,28 @@ Solving incidents efficiently is a crucial part of any production-ready environm
 - **Documentation** - When there is an ongoing incident, it is important that different personas across the organization will be aware of it. Hence, it is important to document the incident in relevant places, for example as a Port entity, a Github issue or even a Jira issue
 - **Visibility** - While troubleshooting, it is important to provide information both to all relevant personas in the organization. An ideal place to manage an incident would be a group chat with the relevant people.
 
-
-In this guide, we will be using Port's [Automations](../actions-and-automations/define-automations/define-automations.md)  capabilities to automate incident management. To do so we will create an automation which will be triggered when a Pagerduty incident entity is created in Port. This automation will:
-- Create a Slack channel for managing the incident and providing a place to troubleshoot.
-- Send a breif message regarding the incident in the Slack channel for visibility.
-- Create a Github issue for documenting the incident.
-
+In this guide, we will be using Port's [Automations](../actions-and-automations/define-automations/define-automations.md) capabilities to automate incident management. 
 
 ## Prerequisites
 - Install Port's [Github app](https://github.com/apps/getport-io) in your Github organization.
 - Install Port's [Pagerduty integration](../build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md) for real-tiome incident ingestion to Port. This integration will in turn trigger our automation when a new incident is created in Pagerduty.
 - [Ingest Github issues](../build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-issues) using Port's Github app.
 - Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
-- In your GitHub organization, create a new repository called `port-actions`. You will use this repository to maintain your GitHub workflows, and other dependency files.
+- Prepare a Github repository for maintaining your GitHub workflows, and other dependency files. In this guide we will be using `port-actions` as the repository name. 
+- Configure a Slack app:
+    1. [Create a slack app](https://api.slack.com/start/quickstart#creating) and install it on a workspace. Save the `Bot User OAuth Token` for later use.
+    2. [Add the following permissions](https://api.slack.com/quickstart#scopes) to the Slack app in **OAuth & Permissions**:
+        * [Create channel](https://api.slack.com/methods/conversations.create):
+          `channels:manage`
+          `groups:write`
+          `im:write`
+          `mpim:write`
+        * [Send a message to a channel](https://api.slack.com/methods/chat.postMessage):
+          `chat:write`
+  
 
-
-## Data Model
+## Data model setup
 For this guide, we will be making a few modifications to our pre-existing blueprints in order to support our use-case:
-
 
 <details>
     <summary>`Pagerduty Incidents` blueprint</summary>
@@ -72,148 +76,225 @@ For this guide, we will be making a few modifications to our pre-existing bluepr
 </details>
 
 :::note
-In this guide, 
+For simplicity, in this guide wil will assume that the `Service` identifier is the `PagerDuty Service` identifier, lowercased and split by `-`.
+
+For example, a Pagerduty incident which is part of the `My Service` Pagerduty service will be related to the `my-service` service. 
 :::
+ 
 
-<!-- Add an image of the final data model -->
-<p align="center">
-<img src='/path/to/data-model/png' width='75%' border='1px' />
-</p>
+## Automation setup
+After we set up our data model, let's set up the Port automation. The automation will:
+- Create a Slack channel for managing the incident and providing a place to troubleshoot.
+- Send a breif message regarding the incident in the Slack channel for visibility.
+- Create a Github issue for documenting the incident.
 
-## Installations - optional
-If you guide includes any installation, either integrations or any 3rd pary application, inser this section.
-Add a short explanation that we will be using X,Y,Z in this guide.
-
-EXAMPLE:
-In this guide we will be installing Port's Jira integration, and also set up Port's Github app.
-<details>
-    <summary>Installing Port's Jira integration</summary>
-
-We will be using Port's Jira issue to connect our Jira data to our Github data.
-To install Port's Jira integration, run the fo
-
-```bash showLineNumbers title="Installation command"
-
-```
-</details>
-
-## Actions - Optional
-If your guide includes setting up Port actions and action backends, insert this section.
-Provide a short explanation on why we need the Port actions. 
-
-
-EXAMPLE:
-We want to be able to do X from Port. To do so, we will need to create some <PortTooltip id="action">actions</PortTooltip> in our Port organization, and set up some action backends.
-
-### Actions backend - 
-Provide a small summary of the backend you are planning to use.
-For each action backend you create (for example, different workflows, pipelines, URL trigger link etc...), provide a short explanation, with a codeblock of the action logic.
-
-If there are any dependencies for the actions, for example template files, also define them here with a short example, and the file in a codeblock.
-
-EXAMPLE:
-Create the following files your `XXXXXXXXX` repository, in the correct path as it appears in the filename:
+### Automation backend
+As a backend for this automation, we will create a Github Workflow and a template file.
 
 <details>
-    <summary>`Do X,Y,Z` GitHub workflow</summary>
+    <summary>`Manage new incident` GitHub workflow</summary>
 
-This workflow is responsible for Doing X,Y,Z
+This workflow is responsible for managing a new incident. It will be triggered via Port automation.
 
-```yaml showLineNumbers title=".github/workflows/do-x-y-z.yaml"
-name: Do X, Y, Z
+```yaml showLineNumbers title=".github/workflows/handle-incident.yaml"
+name: Handle Incident
+
 on:
   workflow_dispatch:
     inputs:
       port_payload:
-        type: string
+        description: "Port's payload, including details for who triggered the action and general context (blueprint, run ID, etc...)."
         required: true
-        description: The Port Payload for triggering this action                
+
+# These permissions are required for the Github issue creation
+permissions:
+  contents: read
+  issues: write 
 
 jobs:
-  do-x:
-    name: Do X
+  handle-new-incident:
     runs-on: ubuntu-latest
+    env:
+      PD_INCIDENT_ID: ${{ fromJson(inputs.port_payload).event.diff.after.identifier }}
+      PD_INCIDENT_URL: ${{ fromJson(inputs.port_payload).event.diff.after.properties.url }}
+      PD_INCIDENT_TITLE: ${{ fromJson(inputs.port_payload).event.diff.after.title }}
+      PORT_INCIDENT_URL: https://app.getport.io/pagerdutyIncidentEntity?identifier=${{ fromJson(inputs.port_payload).event.diff.after.identifier }}
+
     steps:
-      - run: |
-          echo "Doing X"
-  do-x:
-    name: Do Y
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "Doing X"
-  do-x:
-    name: Do Z
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "Doing X"
+      - uses: actions/checkout@v4
+
+      - name: Log Github Issue Creation
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{ fromJson(github.event.inputs.port_payload).run.id }}
+          logMessage: "Creating a new Github issue for Pagerduty incident '${{ env.PD_INCIDENT_ID }}'..."
+
+      - name: Get incident's related service
+        id: get-incidient-service
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: GET
+          blueprint: pagerdutyService
+          identifier: ${{ fromJson(inputs.port_payload).event.diff.after.relations.pagerdutyService }}
+      
+      - name: Extract realted service
+        id: get-service-info
+        run: |
+          service_title=$(echo '${{ steps.get-incidient-service.outputs.entity }}' | jq -r '.title')
+          echo "SERVICE_TITLE=$service_title" >> $GITHUB_OUTPUT
+          echo "SERVICE_IDENTIFIER=$(echo $service_title | tr '[:upper:] ' '[:lower:]-')
+
+      - name: Create Github issue
+        uses: dacbd/create-issue-action@main
+        id: create-github-issue
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repo: ${{ steps.get-service.info.outputs.SERVICE_IDENTIFIER }}
+          title: PagerDuty incident - ID {{ env.PD_INCIDENT_ID }}
+          labels: bug, incident, pagerduty
+          body: |
+            Pagerduty incidient issue reported.
+            Port Incident Entity URL: {{ env.PORT_INCIDENT_URL }}.
+            Pagerduty incident URL: {{ env.PD_INCIDENT_URL }}.
+
+      - name: Log Executing Request to Open Channel
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{ fromJson(github.event.inputs.port_payload).run.id }}
+          logMessage: | 
+            Github issue created successfully - ${{ steps.create-github-issue.outputs.html_url }}
+            Creating a new Slack channel for this incident...
+
+      - name: Create Slack Channel
+        id: create-slack-channel
+        env:
+          CHANNEL_NAME: incident-${{ env.PD_INCIDENT_ID }}
+          SLACK_TOKEN: ${{ secrets.BOT_USER_OAUTH_TOKEN }}
+        run: |
+          channel_name=$(echo "${{env.CHANNEL_NAME}}" | tr '[:upper:]' '[:lower:]')
+          response=$(curl -s -X POST "https://slack.com/api/conversations.create" \
+            -H "Authorization: Bearer ${SLACK_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d "{\"name\":\"$channel_name\"}")
+        
+          # Check if the channel was created successfully
+          ok=$(echo $response | jq -r '.ok')
+          
+          if [ "$ok" == "true" ]; then
+            echo "Channel '$channel_name' created successfully."
+            channel_id=$(echo $response | jq -r '.channel.id')
+            echo "SLACK_CHANNEL_ID=$channel_id" >> $GITHUB_OUTPUT
+          else
+            error=$(echo $response | jq -r '.error')
+            echo "Error creating channel: $error"
+            echo "SLACK_ERROR=$error" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+      - name: Log failed Slack channel creation
+        if: failure()
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{ fromJson(github.event.inputs.port_payload).run.id }}
+          logMessage: "Failed to create slack channel: ${{ steps.create-slack-channel.outputs.SLACK_ERROR }} ❌"
+
+      - name: Log successful Slack channel creation
+        if: success()
+        uses: port-labs/port-github-action@v1
+        env:
+          SLACK_CHANNEL_URL: https://slack.com/app_redirect?channel=${{ steps.create-slack-channel.outputs.SLACK_CHANNEL_ID }}
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{ fromJson(github.event.inputs.port_payload).run.id }}
+          logMessage: |
+            Channel created successfully - ${{ env.SLACK_CHANNEL_URL }} ✅
+
+      - name: Send Slack Message
+        uses: archive/github-actions-slack@v2.9.0
+        env:
+          SVC_ENTITY_URL: https://app.getport.io/serviceEntity?identifier=${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}
+          SVC_ENTITY_TITLE: ${{ steps.get-service-info.outputs.SERVICE_TITLE }}
+        id: send-message
+        with:
+          slack-function: send-message
+          slack-bot-user-oauth-access-token: ${{ secrets.BOT_USER_OAUTH_TOKEN }}
+          slack-channel: ${{ steps.create-slack-channel.outputs.SLACK_CHANNEL_ID }}
+          slack-text: | 
+            :rotating_light: New Incident reported - ${{ env.PD_INCIDENT_TITLE }} :rotating_light:
+              Urgency: `${{ fromJson(inputs.port_payload).event.diff.after.properties.urgency }}`
+              Service: <${{ env.SVC_ENTITY_URL }}|${{ env.SVC_ENTITY_TITLE }}>
+              Manage incident :point_right::skin-tone-4: <${{ env.PORT_INCIDENT_URL }}|here>!
+
+              Please use this Slack channel to report any updates, ideas, or root-cause ideas related to this incident :thread:
+
+      - name: Add Slack channel to Pagerduty incident
+        uses: port-labs/port-github-action@v1
+        env:
+          SLACK_CHANNEL_URL: https://slack.com/app_redirect?channel=${{ steps.create-slack-channel.outputs.SLACK_CHANNEL_ID }}
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          identifier: ${{ env.PD_INCIDENT_ID }}
+          blueprint: pagerdutyIncident
+          properties: |
+            {
+              "slack_channel": "${{ env.SLACK_CHANNEL_URL }}"
+            }
+          relations: | 
+            {
+              "issue": "${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}-${{ steps.create-github-issue.outputs.number }},
+              "service": "${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}"
+            }
+
+      - name: Log Successful Action
+        if: success()
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{ fromJson(github.event.inputs.port_payload).run.id }}
+          logMessage: |
+            Added relevant users to the Slack channel ✅
+            Done handling the new incident 💪🏻
 ```
 </details>
 
 <details>
-    <summary>`...` template file</summary>
+    <summary>`Github Issue` template file</summary>
 
-    This file will act as a template for ....
-    
+    This file will act as a template for the Github issue the workflow will create.
 
-    ```json showLineNumbers title=".github/templates/X_template.yaml"
-    {
-        "key": "value"
-    }
-
+    ```markdown showLineNumbers title=".github/ISSUE_TEMPLATE.md"
+---
+title: PagerDuty incident - ID {{ env.PD_INCIDENT_ID }}
+labels: bug, incident, pagerduty
+---
+Pagerduty incidient issue reported.
+Port Incident Entity URL: {{ env.PORT_INCIDENT_URL }}
+Pagerduty incident URL: {{ env.PD_INCIDENT_URL }}.
     ```
 
 </details> 
-
-### Creating the Port actions
-This section should be an explanation of how to create the Port actions using the UI.
-It should provide short explanations for each Port action, and the JSON definition for it.
-
-EXAMPLE:
-After creating our backend in ..., we need to create the Port actions to trigger the workflows we created.
-We will create the Port actions using the Port UI.
-
-:::tip Creating actions with JSON
-Don't know how to create Port actions using JSONs in the Port UI?
-Click [here](/docs/create-self-service-experiences/setup-ui-for-action/?configure=ui#configuring-actions-in-port)!
-:::
-
-Let's create the Port actions to tirgger the workflows we just created:
-<details>
-    <summary>`...` Port action</summary>
-
-    This is a `DAY-2` action on the `...` blueprint, for doing ....
-
-    ```json showLineNumbers
-    {
-        "identifier": "cool_action",
-        "title": "Cool Action",
-        "icon": "Unlock",
-        "userInputs": {
-            "properties": {
-                "inputA": {
-                    "title": "InputA",
-                    "type": "string"
-            },
-            "required": [],
-            "order": []
-        },
-        "invocationMethod": {
-            "type": "GITHUB",
-            "org": "<YOUR_GITHUB_ORG>",
-            "repo": "<YOUR_REPO>",
-            "workflow": "....yaml",
-            "omitUserInputs": true,
-            "omitPayload": false,
-            "reportWorkflowStatus": true
-        },
-        "trigger": "DAY-2",
-        "description": "....",
-        "requiredApproval": false
-    }
-    ```
-</details>
 
 ## Final touches
 In this section, everything is set up and ready to use. We just need to create a few entities or copy-pase some configuration for an integration.
@@ -280,4 +361,11 @@ Some examples:
 - Provide more ways to ingest data to the catalog
 - Add interesting properties
 - Create dashboards to view 1,2,3
+
+        * [Find a user with an email address](https://api.slack.com/methods/users.lookupByEmail):
+          `users:read.email`
+        * [Invite users to channel](https://api.slack.com/methods/conversations.invite):
+          `channels:write.invites`
+          `groups:write.invites`
+          `mpim:write.invites`
 
