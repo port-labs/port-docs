@@ -279,23 +279,6 @@ jobs:
 ```
 </details>
 
-<details>
-    <summary>`Github Issue` template file</summary>
-
-    This file will act as a template for the Github issue the workflow will create.
-
-    ```markdown showLineNumbers title=".github/ISSUE_TEMPLATE.md"
----
-title: PagerDuty incident - ID {{ env.PD_INCIDENT_ID }}
-labels: bug, incident, pagerduty
----
-Pagerduty incidient issue reported.
-Port Incident Entity URL: {{ env.PORT_INCIDENT_URL }}
-Pagerduty incident URL: {{ env.PD_INCIDENT_URL }}.
-    ```
-
-</details> 
-
 ## Final touches
 In this section, everything is set up and ready to use. We just need to create a few entities or copy-pase some configuration for an integration.
 
