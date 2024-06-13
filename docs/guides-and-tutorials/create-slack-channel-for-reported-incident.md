@@ -76,12 +76,11 @@ For this guide, we will be making a few modifications to our pre-existing bluepr
 </details>
 
 :::note
-For simplicity, in this guide wil will assume that the `Service` identifier is the `PagerDuty Service` identifier, lowercased and split by `-`.
+For simplicity, in this guide we will assume that the Github `Service` entity identifier is the `PagerDuty Service` identifier, lowercased and split by `-`.
 
-For example, a Pagerduty incident which is part of the `My Service` Pagerduty service will be related to the `my-service` service. 
+For example, a Pagerduty incident which is part of the `My Service` Pagerduty service will be related to the `my-service`  Github service.
 :::
  
-
 ## Automation setup
 After we set up our data model, let's set up the Port automation. The automation will:
 - Create a Slack channel for managing the incident and providing a place to troubleshoot.
@@ -89,10 +88,10 @@ After we set up our data model, let's set up the Port automation. The automation
 - Create a Github issue for documenting the incident.
 
 ### Automation backend
-As a backend for this automation, we will create a Github Workflow and a template file.
+As a backend for this automation, we will create a Github Workflow.
 
 <details>
-    <summary>`Manage new incident` GitHub workflow</summary>
+    <summary>`Handle incident` GitHub workflow</summary>
 
 This workflow is responsible for managing a new incident. It will be triggered via Port automation.
 
@@ -144,6 +143,7 @@ jobs:
           blueprint: pagerdutyService
           identifier: ${{ fromJson(inputs.port_payload).event.diff.after.relations.pagerdutyService }}
       
+      # The Github Service entity identifier is defined as Pagerduty title lowercased and split by '-'
       - name: Extract realted service
         id: get-service-info
         run: |
@@ -164,6 +164,15 @@ jobs:
             Port Incident Entity URL: {{ env.PORT_INCIDENT_URL }}.
             Pagerduty incident URL: {{ env.PD_INCIDENT_URL }}.
 
+      - name: Report Github issue to Port
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          identifier: ${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}-${{ steps.create-github-issue.outputs.number }}
+          blueprint: githubIssue
+          properties: {}
+
       - name: Log Executing Request to Open Channel
         uses: port-labs/port-github-action@v1
         with:
@@ -182,9 +191,9 @@ jobs:
           CHANNEL_NAME: incident-${{ env.PD_INCIDENT_ID }}
           SLACK_TOKEN: ${{ secrets.BOT_USER_OAUTH_TOKEN }}
         run: |
-          channel_name=$(echo "${{env.CHANNEL_NAME}}" | tr '[:upper:]' '[:lower:]')
+          channel_name=$(echo "${{ env.CHANNEL_NAME }}" | tr '[:upper:]' '[:lower:]')
           response=$(curl -s -X POST "https://slack.com/api/conversations.create" \
-            -H "Authorization: Bearer ${SLACK_TOKEN}" \
+            -H "Authorization: Bearer ${{ env.SLACK_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d "{\"name\":\"$channel_name\"}")
         
@@ -245,7 +254,7 @@ jobs:
 
               Please use this Slack channel to report any updates, ideas, or root-cause ideas related to this incident :thread:
 
-      - name: Add Slack channel to Pagerduty incident
+      - name: Update incident entity with new information
         uses: port-labs/port-github-action@v1
         env:
           SLACK_CHANNEL_URL: https://slack.com/app_redirect?channel=${{ steps.create-slack-channel.outputs.SLACK_CHANNEL_ID }}
@@ -279,25 +288,10 @@ jobs:
 ```
 </details>
 
-## Final touches
-In this section, everything is set up and ready to use. We just need to create a few entities or copy-pase some configuration for an integration.
+### Automation trigger
+After setting up the automation backend, we need to set up the Port automation.
 
-
-EXAMPLE:
-Now after evething is set up, we just need to create a few entities.
-
-### Defining entities for the usecase
-We will be using entities from blueprint `X` to handle our ..... Navigate to the [X](https://app.getport.io/X) catalog page to create some entities.
-
-<!-- Picture of entity creation form -->
-<p align="center">
-<img src='/path/to/png.png' width='50%' border='1px' />
-</p>
-
-We are all set!
-
-### Using the use-case
-After the use-case setup is complete, we want to instruct the reader how to use the use-case. This include running the actions, updating entities, aquiring data regarding his entities etc...
+### Testing the automation flow
 
 EXAMPLE:
 Now that we finished setting up our Port environment, and our action backends, we are ready to do X,Y,Z.
