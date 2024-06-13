@@ -6,7 +6,7 @@ sidebar_label: Visualize services' k8s runtime using ArgoCD
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import PortApiRegionTip from "../generalTemplates/_port_region_parameter_explanation_template.md"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Visualize your services' Kubernetes runtime using ArgoCD
 

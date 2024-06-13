@@ -4,6 +4,7 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # GitHub Workflow
 
@@ -69,6 +70,7 @@ Port's GitHub action supports the following methods:
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    baseUrl: https://api.getport.io
     # highlight-next-line
     operation: UPSERT
     identifier: myEntity
@@ -94,6 +96,7 @@ Port's GitHub action supports the following methods:
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    baseUrl: https://api.getport.io
     # highlight-next-line
     operation: BULK_UPSERT
     runId: myRunId
@@ -138,6 +141,7 @@ get-entity:
       with:
         clientId: ${{ secrets.CLIENT_ID }}
         clientSecret: ${{ secrets.CLIENT_SECRET }}
+        baseUrl: https://api.getport.io
         # highlight-next-line
         operation: GET
         identifier: myEntity
@@ -164,6 +168,7 @@ search-entities:
       with:
         clientId: ${{ secrets.CLIENT_ID }}
         clientSecret: ${{ secrets.CLIENT_SECRET }}
+        baseUrl: https://api.getport.io
         # highlight-next-line
         operation: SEARCH
         query: |-
@@ -193,6 +198,7 @@ use-entities:
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    baseUrl: https://api.getport.io
     # highlight-next-line
     operation: DELETE
     identifier: myEntity
@@ -208,6 +214,7 @@ use-entities:
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    baseUrl: https://api.getport.io
     operation: PATCH_RUN
     runId: myRunId
     status: "SUCCESS"
@@ -225,6 +232,7 @@ use-entities:
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    baseUrl: https://api.getport.io
     # highlight-next-line
     operation: CREATE_RUN
     icon: GithubActions
@@ -241,6 +249,8 @@ use-entities:
 
 </TabItem>
 </Tabs>
+
+<PortApiRegionTip/>
 
 ## Examples
 

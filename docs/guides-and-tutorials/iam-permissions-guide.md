@@ -8,7 +8,7 @@ tags:
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import PortApiRegionTip from "../generalTemplates/_port_region_parameter_explanation_template.md"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # IAM Permission Management
 

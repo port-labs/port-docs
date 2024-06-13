@@ -4,6 +4,7 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Azure Pipelines
 
@@ -155,6 +156,8 @@ print(json.dumps(get_response.json(), indent=4))
 
 </TabItem>
 </Tabs>
+
+<PortApiRegionTip/>
 
 ## Examples
 

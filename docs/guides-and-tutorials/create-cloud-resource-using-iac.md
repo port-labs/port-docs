@@ -5,7 +5,7 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import PortApiRegionTip from "../generalTemplates/_port_region_parameter_explanation_template.md"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Create cloud resources using IaC
 
@@ -276,6 +276,7 @@ jobs:
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{ fromJson(inputs.port_context).runId }}
       - name: Create a log message

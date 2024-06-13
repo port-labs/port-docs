@@ -6,7 +6,7 @@ title: Send Slack reminders for scorecards
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import PortApiRegionTip from "../generalTemplates/_port_region_parameter_explanation_template.md"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Slack reminders for scorecards
 

@@ -741,6 +741,7 @@ jobs:
           relations: '{}'
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{fromJson(inputs.port_context).runId}}
 ```
@@ -810,6 +811,7 @@ jobs:
           relations: '{}'
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{fromJson(inputs.port_context).runId}}
 ```
@@ -918,6 +920,7 @@ jobs:
           relations: '{}'
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{fromJson(inputs.port_context).runId}}
 ```
