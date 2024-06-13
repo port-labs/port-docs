@@ -8,7 +8,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 
-# Terraform Cloud
+# Terraform Cloud and Terraform Enterprise
 
 The Terraform Cloud Integration for Port enables seamless import and synchronization of `organizations`, `projects`, `workspaces`, `runs`, and `state versions` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
 
@@ -28,6 +28,12 @@ A `State Version` represents a versioned state file in Terraform. Each state ver
 - Synchronization of Infrastructure Management: Automatically synchronize workspace, run and state version data from Terraform Cloud into Port for centralized tracking and management.
 - Monitoring Run Statuses: Keep track of run outcomes (success, failure, etc.) and durations, providing insights into the health and performance of your infrastructure management processes.
 - Identify drifts between your Terraform configuration and what's effectively deployed in your Cloud.
+
+## Terraform Enterprise (Self Hosted)
+
+Port supports both Terraform Cloud and Terraform Enterprise versions (self hosted). The following data model and use cases are common for both integrations. 
+If installing Port exporter for Terraform Enterprise, you will be required to specify your Terraform 's host URL by passing the following parameter to the installer: `integration.config.appHost` 
+
 
 ## Prerequisites
 
@@ -57,7 +63,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
 | `integration.config.terraformCloudHost` | Your Terraform host. For example https://app.terraform.io  token                                                                           | ✅       |
 | `integration.config.terraformCloudToken` | The Terraform cloud API token                                                                           | ✅       |
-| `integration.config.appHost`             | Your application's host url                                                                                   | ❌       |
+| `integration.config.appHost`             | Your application's host url. Required when installing Terraform Enterprise (self hosted)                                                                                   | ❌       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
