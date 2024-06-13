@@ -63,7 +63,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
 | `integration.config.terraformCloudHost` | Your Terraform host. For example https://app.terraform.io  token                                                                           | ✅       |
 | `integration.config.terraformCloudToken` | The Terraform cloud API token                                                                           | ✅       |
-| `integration.config.appHost`             | Your application's host. Required when installing Terraform Enterprise (self hosted) url                                                                                   | ❌       |
+| `integration.config.appHost`             | Your application's host url. Required when installing Terraform Enterprise (self hosted)                                                                                   | ❌       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
