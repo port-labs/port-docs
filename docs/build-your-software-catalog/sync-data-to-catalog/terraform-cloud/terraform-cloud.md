@@ -32,7 +32,7 @@ A `State Version` represents a versioned state file in Terraform. Each state ver
 ## Terraform Enterprise (Self Hosted)
 
 Port supports both Terraform Cloud and Terraform Enterprise versions (self hosted). The following data model and use cases are common for both integrations. 
-If installing Port exporter for Terraform Enterprise, you will be required to specific your Terraform 's host URL by passing the following parameter to the installer: `integration.config.appHost` 
+If installing Port exporter for Terraform Enterprise, you will be required to specify your Terraform 's host URL by passing the following parameter to the installer: `integration.config.appHost` 
 
 
 ## Prerequisites
