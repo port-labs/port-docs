@@ -4,6 +4,7 @@ info:
   version: '1.0'
 servers:
   - url: https://api.getport.io
+  - url: https://api.us.getport.io
 components:
   securitySchemes:
     bearer:

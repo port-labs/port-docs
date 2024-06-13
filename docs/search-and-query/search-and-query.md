@@ -27,6 +27,11 @@ High quality search is essential to effectively track assets in your software ca
 
 The base search route is `https://api.getport.io/v1/entities/search`, it receives HTTP POST requests.
 
+:::info United States region
+The route above uses the EU region API.  
+If you wish to use the US region API, the route is: `https://api.us.getport.io/v1/entities/search`.
+:::
+
 A search request defines the logical relation between different search rules, and contains filters and rules to find matching <PortTooltip id="entity">entities</PortTooltip>.
 Each search request is represented by a JSON object, as shown in the following example:
 

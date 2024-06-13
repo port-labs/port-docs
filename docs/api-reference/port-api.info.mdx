@@ -29,30 +29,41 @@ import Export from "@theme/ApiExplorer/Export";
 <br/><br/>
 
 ## Introduction
-    This API is documented in the **OpenAPI format** and provides programmatic access to Port and its components.  
+
+This API is documented in the **OpenAPI format** and provides programmatic access to Port and its components.  
+
+The API describes the various routes available for use, and can be used directly from the browser by using the `Send API Request` button on the right side of each route's page.
+
+Port is API-first, meaning that this API allows you to achieve any and all of its functionalities.  
+You can *read from* and *write to* your software catalog, execute & interact with your self-service actions, fetch & update your scorecards, and much more.
+
+## Authentication
+
+To use the API, you need to obtain a Bearer API key from your Port application:
+
+1. Go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`.
+2. Click on the `Generate API token` button, and copy the generated token.
     
-    The API describes the various routes available for use, and can be used directly from the browser by using the `Send API Request` button on the right side of each route's page.
+    <img src="/img/openapi/getBearerToken.png" width="70%" border="1px" />
 
-    Port is API-first, meaning that this API allows you to achieve any and all of its functionalities.  
-    You can *read from* and *write to* your software catalog, execute & interact with your self-service actions, fetch & update your scorecards, and much more.
+## Using the API from the browser
 
-    ## Authentication
-    
-    To use the API, you need to obtain a Bearer API key from your Port application:
+Each route in the API documentation has a `Request` panel on the right side. 
 
-    1. Go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`.
-    2. Click on the `Generate API token` button, and copy the generated token.
-        
-        <img src="/img/openapi/getBearerToken.png" width="70%" border="1px" />
+1. In the `bearer` field, paste the API token you obtained from your Port application.
+2. Under `Parameters`, fill in your desired values.
+3. Under `Body`, you can edit the request body freely and change the parameter values as you wish.
 
-    ## Using the API from the browser
+Once you're ready, click the `Send API Request` button to execute the request, the response will be displayed below.  
 
-    Each route in the API documentation has a `Request` panel on the right side. 
+Alternatively, you can use the panel in the top right to copy a snippet in your desired language to use in your application. Note that these snippets will be updated with the values you filled in the `Request` panel.
 
-    1. In the `bearer` field, paste the API token you obtained from your Port application.
-    2. Under `Parameters`, fill in your desired values.
-    3. Under `Body`, you can edit the request body freely and change the parameter values as you wish.
+### Regions
 
-    Once you're ready, click the `Send API Request` button to execute the request, the response will be displayed below.  
-    
-    Alternatively, you can use the panel in the top right to copy a snippet in your desired language to use in your application. Note that these snippets will be updated with the values you filled in the `Request` panel.
+Port's API is available in two regions:
+- Europe: `https://api.getport.io`
+- United States: `https://api.us.getport.io`
+
+When using the API from the browser, you can switch between regions using the dropdown in the `Try it out` panel, by hovering over the `Base URL` field and clicking on `Edit`:
+
+<img src="/img/openapi/switchRegion.png" width="60%" border="1px" />
