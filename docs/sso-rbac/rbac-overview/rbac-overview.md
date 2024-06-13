@@ -6,7 +6,7 @@ This page provides a comprehensive summary of all of Port's RBAC capabilities, a
 
 [2 - RBAC for Self Service Actions](#rbac-for-self-service-actions)
 
-[3 - RBAC for operating the Port platform](#rbac-for-operating-port-platform)
+[3 - RBAC for operating the Port platform](#rbac-for-operating-the-port-platform)
 
 
 ## Catalog RBAC & Ownership
