@@ -3,6 +3,7 @@ sidebar_position: 3
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Create Azure Resource with Terraform
 
@@ -181,6 +182,7 @@ provider "azurerm" {
 provider "port" {
     client_id = var.port_client_id
     secret    = var.port_client_secret
+    base_url  = var.base_url
 }
 
 resource "azurerm_storage_account" "storage_account" {
@@ -253,7 +255,14 @@ variable "port_client_secret" {
     type        = string
     description = "The Port client secret"
 }
+
+variable "base_url" {
+    type        = string
+    description = "The Port API URL"
+}
 ```
+
+<PortApiRegionTip/>
 
 </details>
 
@@ -268,7 +277,7 @@ output "endpoint_url" {
 
 </details>
 
-5. Create an Azure pipeline:
+1. Create an Azure pipeline:
 
 <details>
 

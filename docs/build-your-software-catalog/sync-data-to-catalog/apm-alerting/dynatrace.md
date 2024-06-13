@@ -1,6 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Dynatrace
 
@@ -28,6 +29,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                       | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     | ✅       |
 | `port.clientSecret`                   | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) | ✅       |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                   | ✅       |
 | `integration.identifier`              | Change the identifier to describe your integration                                                                                  | ✅       |
 | `integration.type`                    | The integration type                                                                                                                | ✅       |
 | `integration.eventListener.type`      | The event listener type                                                                                                             | ✅       |
@@ -48,6 +50,7 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-dynatrace-integration port-labs/port-ocean \
   --set port.clientId="CLIENT_ID"  \
   --set port.clientSecret="CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
   --set initializePortResources=true  \
   --set scheduledResyncInterval=60  \
   --set integration.identifier="my-dynatrace-integration"  \
@@ -56,6 +59,8 @@ helm upgrade --install my-dynatrace-integration port-labs/port-ocean \
   --set integration.secrets.dynatraceApiKey="<your-api-key>"  \
   --set integration.config.dynatraceHostUrl="<your-isntance-url>"
 ```
+
+<PortApiRegionTip/>
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
@@ -117,6 +122,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -129,10 +136,12 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
+
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+1. Apply your application manifest with `kubectl`:
 ```bash
 kubectl apply -f my-ocean-dynatrace-integration.yaml
 ```
@@ -160,6 +169,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
 
 
 <br/>
@@ -184,6 +194,7 @@ jobs:
           type: 'dynatrace'
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
           config: |
             dynatrace_api_key: ${{ secrets.OCEAN__INTEGRATION__CONFIG__DYNATRACE_API_KEY }}
             dynatrace_host_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL }}
@@ -212,6 +223,7 @@ of `Secret Text` type:
 | `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
 
 
 <br/>
@@ -244,6 +256,7 @@ pipeline {
                                 -e OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL=$OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
                                 $image_name
 
                             exit $?
@@ -269,6 +282,7 @@ pipeline {
 | `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
 
 
 <br/>
@@ -301,6 +315,7 @@ steps:
         -e OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL=$(OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $image_name
 
     exit $?
@@ -328,8 +343,7 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 | `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
-
-
+| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
 
 
 <br/>
@@ -365,6 +379,7 @@ ingest_data:
         -e OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL=$OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $IMAGE_NAME
 
   rules: # Run only when changes are made to the main branch
@@ -374,6 +389,8 @@ ingest_data:
 </TabItem>
 
   </Tabs>
+
+<PortApiRegionTip/>
 </TabItem>
 
 </Tabs>

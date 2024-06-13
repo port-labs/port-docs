@@ -6,6 +6,7 @@ title: Ensure production readiness
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Ensure production readiness
 
@@ -102,6 +103,7 @@ helm repo add port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
     --set port.clientId="CLIENT_ID" \   # REPLACE VALUE
     --set port.clientSecret="CLIENT_SECRET"  \   # REPLACE VALUE
+    --set port.baseUrl="https://api.getport.io"  \
     --set initializePortResources=true  \
     --set integration.identifier="my-pagerduty-integration"  \
     --set integration.type="pagerduty"  \
@@ -109,6 +111,8 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
     --set integration.secrets.token="token"  \   # REPLACE VALUE
     --set integration.config.apiUrl="https://api.pagerduty.com"
 ```
+
+<PortApiRegionTip/>
 
 </details>
 

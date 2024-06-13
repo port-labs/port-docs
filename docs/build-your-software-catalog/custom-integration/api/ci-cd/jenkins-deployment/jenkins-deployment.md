@@ -4,6 +4,7 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Jenkins Deployment
 
@@ -176,6 +177,8 @@ import groovy.json.JsonSlurperClassic
 
 </TabItem>
 </Tabs>
+
+<PortApiRegionTip/>
 
 ## Examples
 
