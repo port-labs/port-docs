@@ -39,5 +39,5 @@ At the top of the SAML configuration page, you can find a `upload metadata file`
 In order to expose your Azure groups to Port via the application, do the following:
 1. Head to the `Single sign on` section in the application configuration, and edit the `Attributes & Claims`.
 2. Press the `Add a group claim` button
-3. Select `Groups assigned to the application` and in the source attribute selectr `Cloud-only group display names`.
-4. Assign the relevant groups you want to expose to the application.
+3. Select `Groups assigned to the application` and in the source attribute select `Cloud-only group display names`.
+4. Assign the relevant groups you want to expose to the application, these will be ingested into Port as teams you can use to manage user permissions and RBAC in your Port account.
