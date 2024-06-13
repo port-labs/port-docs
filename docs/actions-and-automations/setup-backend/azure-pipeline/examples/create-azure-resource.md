@@ -313,6 +313,7 @@ jobs:
       sudo apt-get install -y jq
     displayName: Install jq
 
+    # The API call below uses the EU region. To use the US region, replace `api.getport.io` with `api.us.getport.io`
   - script: |
       accessToken=$(curl -X POST \
             -H 'Content-Type: application/json' \

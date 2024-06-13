@@ -150,7 +150,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Manual approval for self-service actions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#slack)
 - [Scorecard notifications](/promote-scorecards/manage-using-3rd-party-apps/slack)
-- [Setup a changelog listener notification](/actions-and-automations/setup-backend/webhook/examples/changelog-listener.md)
 - [Broadcast message to API consumers](/actions-and-automations/setup-backend/github-workflow/examples/broadcast-api-consumers-message)
 
 ## SonarQube / SonarCloud

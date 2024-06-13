@@ -80,9 +80,9 @@ Fill out the form with your values:
   ```json showLineNumbers
   {
     "port_context": {
-        "runId": "{{ .run.id }}",
+        "runId": "{{ .run.id }}"
     },
-    "service_name": "{{ .inputs.service_name }}",
+    "service_name": "{{ .inputs.service_name }}"
   }
   ```
 

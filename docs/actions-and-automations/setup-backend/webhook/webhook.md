@@ -65,7 +65,6 @@ To get started with webhook actions, check out the sources below:
 ### Examples
 
 - [Create an S3 bucket using Self-Service Actions](./examples/s3-using-webhook.md)
-- [Webhook changelog listener](./examples/changelog-listener.md)
 - [Provisioning software templates using Cookiecutter](./examples/software-templates.md)
 
 ### Local setup, debugging and security validation
