@@ -308,7 +308,7 @@ jobs:
   plan-and-request-approval-for-bucket:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Log starting of s3 bucket creation 
         uses: port-labs/port-github-action@v1
@@ -456,7 +456,7 @@ jobs:
   apply-and-provision-resource:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Log starting of cloud resource creation 
         uses: port-labs/port-github-action@v1

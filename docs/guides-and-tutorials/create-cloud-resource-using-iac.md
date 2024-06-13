@@ -5,6 +5,7 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "../generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Create cloud resources using IaC
 
@@ -282,6 +283,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: Pull request created successfully for "${{ inputs.name }}" 🚀
@@ -695,6 +697,8 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+<PortApiRegionTip/>
 
 1. We will now create a simple `.tf` file that will serve as a template for our new resource:
 

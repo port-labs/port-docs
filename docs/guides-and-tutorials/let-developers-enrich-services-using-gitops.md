@@ -7,6 +7,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
+import PortApiRegionTip from "../generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Let developers enrich services using Gitops
 
@@ -430,9 +431,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checkout the workflow's repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # Checkout the service's repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}"
           path: ./targetRepo
@@ -466,6 +467,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: Pull request to add port.yml created successfully for service "${{ fromJson(inputs.port_context).entity }}" 🚀
@@ -714,6 +716,8 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+<PortApiRegionTip/>
 
 ---
 

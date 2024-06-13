@@ -8,6 +8,7 @@ tags:
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "../generalTemplates/_port_region_parameter_explanation_template.md"
 
 # IAM Permission Management
 
@@ -259,7 +260,7 @@ jobs:
     env:
       POLICY_NAME: Permission-${{github.run_id}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           persist-credentials: true
       - name: Configure AWS Credentials
@@ -296,6 +297,7 @@ jobs:
         with:
             clientId: ${{ secrets.PORT_CLIENT_ID }}
             clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+            baseUrl: https://api.getport.io
             identifier: ${{ env.POLICY_NAME }}
             title: ${{ env.POLICY_NAME }}
             blueprint: provisioned_permissions
@@ -316,6 +318,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
           runId: ${{ fromJson(inputs.port_context).runId}}
@@ -352,7 +355,7 @@ jobs:
     env:
       POLICY_ARN: ${{ fromJson(inputs.port_context).entity.properties.policy_arn }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           persist-credentials: true
       - name: Configure AWS Credentials
@@ -375,6 +378,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           identifier: ${{ fromJson(inputs.port_context).entity.identifier }}
           operation: DELETE
           blueprint: provisioned_permissions
@@ -382,6 +386,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId}}
           logMessage: |
@@ -390,6 +395,8 @@ jobs:
 ```
 
 </details> 
+
+<PortApiRegionTip/>
 
 <details>
     <summary>`IAM policy JSON` template file</summary>

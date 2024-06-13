@@ -342,7 +342,7 @@ jobs:
 
     steps:
       - name: Checkout the repository to the runner
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v2

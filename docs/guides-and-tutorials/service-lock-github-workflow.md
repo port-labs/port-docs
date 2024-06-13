@@ -6,6 +6,7 @@ sidebar_label: Lock service deployment
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "../generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Lock service deployment
 
@@ -189,6 +190,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           identifier: notification-service
           blueprint: service
           operation: GET
@@ -210,6 +212,8 @@ jobs:
       - name: Run deployment
         run: echo "Service in production is not locked, continuing deployment"
 ```
+
+<PortApiRegionTip/>
 </details>
 
 :::tip Secure your credentials

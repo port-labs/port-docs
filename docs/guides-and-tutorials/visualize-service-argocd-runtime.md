@@ -6,6 +6,7 @@ sidebar_label: Visualize services' k8s runtime using ArgoCD
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "../generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Visualize your services' Kubernetes runtime using ArgoCD
 
@@ -67,6 +68,9 @@ helm upgrade --install argocd port-labs/port-ocean \
 	--set integration.secrets.token="YOUR_ARGOCD_TOKEN"  \
 	--set integration.config.serverUrl="YOUR_ARGOCD_SERVER_URL" 
 ```
+
+<PortApiRegionTip/>
+
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD">
@@ -129,6 +133,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -141,6 +147,7 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
 </details>
 <br/>
 

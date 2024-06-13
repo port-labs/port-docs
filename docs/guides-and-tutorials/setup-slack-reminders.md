@@ -6,6 +6,7 @@ title: Send Slack reminders for scorecards
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "../generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Slack reminders for scorecards
 
@@ -171,6 +172,7 @@ jobs:
                 operation_kind: scorecard_reminder
                 port_client_id: ${{ secrets.PORT_CLIENT_ID }}
                 port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
+                port_region: eu
                 slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
                 blueprint: service
                 scorecard: ProductionReadiness
@@ -180,6 +182,7 @@ jobs:
               with:
                 clientId: ${{ secrets.PORT_CLIENT_ID }}
                 clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+                baseUrl: https://api.getport.io
                 operation: PATCH_RUN
                 runId: ${{ inputs.run_id }}
                 logMessage: |
@@ -307,6 +310,8 @@ variables:
 </TabItem>
 
 </Tabs>
+
+<PortApiRegionTip/>
 
 All done! The action is ready to be used 🚀
 

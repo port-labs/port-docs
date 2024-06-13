@@ -4,6 +4,7 @@ title: Manage resources using Kubernetes CRDs
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "../generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Manage resources using Kubernetes CRDs
 
@@ -58,6 +59,7 @@ Here is a script that will help you install the Kubernetes Exporter without init
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
     --create-namespace --namespace port-k8s-exporter \
+    --set portBaseUrl=https://api.getport.io \
     --set secret.secrets.portClientId=YOUR_PORT_CLIENT_ID \
     --set secret.secrets.portClientSecret=YOUR_PORT_CLIENT_SECRET \
     --set stateKey="k8s-exporter"  \
@@ -68,6 +70,7 @@ helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
     --set "extraEnv[0].value"=YOUR_PORT_CLUSTER_NAME 
 ```
 
+<PortApiRegionTip/>
 
 After installing the k8s exporter [update the `crdsToDiscover` configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration) with the following value:
 
