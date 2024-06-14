@@ -55,6 +55,7 @@ helm upgrade --install kafka port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set initializePortResources=true  \
+  --set sendRawDataExamples=true\
 	--set scheduledResyncInterval=60  \
 	--set integration.identifier="my-kafka-integration"  \
 	--set integration.type="kafka"  \
@@ -222,6 +223,7 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING=$OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
@@ -271,6 +273,7 @@ steps:
     docker run -i --rm \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING=$(OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
@@ -322,6 +325,7 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING=$OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \

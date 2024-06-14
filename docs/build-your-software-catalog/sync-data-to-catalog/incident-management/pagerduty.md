@@ -52,6 +52,8 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in PagerDuty | ❌       |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                               | ❌       |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping           | ❌       |
+| `sendRawDataExamples`             | Default true, Enable sending raw data examples from the third party API to port for testing and managing the integration mapping                                       | ❌       |
+
 
 <br/>
 
@@ -66,6 +68,7 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
   --set port.clientId="PORT_CLIENT_ID"  \
   --set port.clientSecret="PORT_CLIENT_SECRET"  \
   --set initializePortResources=true  \
+  --set sendRawDataExamples=true \
   --set scheduledResyncInterval=120  \
   --set integration.identifier="my-pagerduty-integration"  \
   --set integration.type="pagerduty"  \
@@ -240,6 +243,7 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__API_URL=$OCEAN__INTEGRATION__CONFIG__API_URL \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
@@ -289,6 +293,7 @@ steps:
     docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__TOKEN=$(OCEAN__INTEGRATION__CONFIG__TOKEN) \
         -e OCEAN__INTEGRATION__CONFIG__API_URL=$(OCEAN__INTEGRATION__CONFIG__API_URL) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
@@ -341,6 +346,7 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
         -e OCEAN__INTEGRATION__CONFIG__API_URL=$OCEAN__INTEGRATION__CONFIG__API_URL \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \

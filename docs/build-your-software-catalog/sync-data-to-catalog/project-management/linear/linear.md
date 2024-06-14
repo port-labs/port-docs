@@ -57,6 +57,7 @@ helm upgrade --install my-linear-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set initializePortResources=true  \
+  --set sendRawDataExamples=true \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-linear-integration"  \
 	--set integration.type="linear"  \
@@ -170,6 +171,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `port_client_secret`             | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |                               | ✅        |
 | `config -> linear_api_key` | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                                                                                                                                                                 |               | ✅        |
 | `initialize_port_resources`      | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |                               | ❌        |
+| `sendRawDataExamples`             | Default true, Enable sending raw data examples from the third party API to port for testing and managing the integration mapping                                       |     | ❌       |
 | `identifier`                     | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |                               | ❌        |
 | `version`                        | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest                        | ❌        |`
 
@@ -247,6 +249,7 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__LINEAR_API_KEY=$OCEAN__INTEGRATION__CONFIG__LINEAR_API_KEY \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
@@ -294,6 +297,7 @@ steps:
       docker run -i --rm \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__LINEAR_API_KEY=$(OCEAN__INTEGRATION__CONFIG__LINEAR_API_KEY) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
@@ -345,6 +349,7 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__LINEAR_API_KEY=$OCEAN__INTEGRATION__CONFIG__LINEAR_API_KEY \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
