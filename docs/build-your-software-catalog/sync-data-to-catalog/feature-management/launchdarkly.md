@@ -54,7 +54,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                       | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
-| `integration.config.launchdarklyHost` | Your LaunchDarkly host. For example https://launchdarkly.com                                                                        | ✅       |
+| `integration.config.launchdarklyHost` | Your LaunchDarkly host. For example https://app.launchdarkly.com for the default endpoint                                                                        | ✅       |
 | `integration.config.launchdarklyToken` | The LaunchDarkly API token                                                                           | ✅       |
 | `integration.config.appHost`             | Your application's host url                                                                                   | ❌       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
