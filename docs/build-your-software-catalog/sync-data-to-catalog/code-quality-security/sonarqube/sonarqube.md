@@ -63,7 +63,6 @@ helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
   --set port.clientId="PORT_CLIENT_ID"  \
   --set port.clientSecret="PORT_CLIENT_SECRET"  \
   --set initializePortResources=true  \
-  --set sendRawDataExamples=true \
   --set scheduledResyncInterval=120  \
   --set integration.identifier="my-sonarqube-integration"  \
   --set integration.type="sonarqube"  \
@@ -247,7 +246,6 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=$OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=$OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID \
                                 -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=$OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE \
@@ -309,7 +307,6 @@ steps:
     docker run -i --rm \
     -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
     -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-    -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=$(OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN) \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=$(OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID) \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=$(OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE) \
@@ -364,7 +361,6 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=$OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN \
         -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=$OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID \
         -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=$OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE \

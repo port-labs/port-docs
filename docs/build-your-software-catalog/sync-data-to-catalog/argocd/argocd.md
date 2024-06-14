@@ -56,7 +56,6 @@ helm upgrade --install my-argocd-integration port-labs/port-ocean \
   --set port.clientSecret="CLIENT_SECRET"  \
   --set initializePortResources=true  \
   --set scheduledResyncInterval=60  \
-  --set sendRawDataExamples=true \
   --set integration.identifier="my-argocd-integration"  \
   --set integration.type="argocd"  \
   --set integration.eventListener.type="POLLING"  \
@@ -164,7 +163,6 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`      | The ArgoCD API token                                                                                               | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__SERVER_URL` | The ArgoCD server URL                                                                                              | ✅       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`       | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`         | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                 | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`             | Your port client secret                                                                                            | ✅       |
@@ -216,7 +214,6 @@ of `Secret Text` type:
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`      | The ArgoCD API token                                                                                               | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__SERVER_URL` | The ArgoCD server URL                                                                                              | ✅       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`       | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Default true, Enable sending raw data examples from the third party API to port for testing and managing the integration mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`         | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                 | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`             | Your port client secret                                                                                            | ✅       |
@@ -247,7 +244,6 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__SEND_RAW_DATA_EXAMPLES = true \
                                 -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__SERVER_URL=$OCEAN__INTEGRATION__CONFIG__SERVER_URL \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
@@ -280,7 +276,6 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`      | The ArgoCD API token                                                                                               | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__SERVER_URL` | The ArgoCD server URL                                                                                              | ✅       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`       | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`         | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                 | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`             | Your port client secret                                                                                            | ✅       |
@@ -314,7 +309,6 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
         -e OCEAN__INTEGRATION__CONFIG__SERVER_URL=$OCEAN__INTEGRATION__CONFIG__SERVER_URL \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \

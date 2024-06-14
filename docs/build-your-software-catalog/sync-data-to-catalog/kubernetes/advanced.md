@@ -124,7 +124,6 @@ helm upgrade --install k8s-exporter port-labs/port-k8s-exporter \
     --create-namespace --namespace port-k8s-exporter \
 	--set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
 	--set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
-  --set sendRawDataExamples=true \
 	--set stateKey="k8s-exporter"  \
     # highlight-next-line
 	--set eventListenerType="KAFKA"  \

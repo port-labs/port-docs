@@ -147,8 +147,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)              |                                  | ✅       |
 | `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)          |                                  | ✅       |
 | `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks                         | https://my-ocean-integration.com | ❌       |
-| `sendRawDataExamples`             | Default true, Enable sending raw data examples from the third party API to port for testing and managing the integration mapping                                       | ❌       |
-
 
 <HelmParameters/>
 
@@ -189,7 +187,6 @@ helm upgrade --install my-azure-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set initializePortResources=true  \
-  --set sendRawDataExamples=true \
 	--set scheduledResyncInterval=60 \
 	--set integration.identifier="my-azure-integration"  \
 	--set integration.type="azure"  \
@@ -382,7 +379,6 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 -e AZURE_CLIENT_ID=$OCEAN__SECRET__AZURE_CLIENT_ID \
@@ -432,7 +428,6 @@ steps:
       docker run -i --rm --platform=linux/amd64 \
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
           -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
           -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
           -e AZURE_CLIENT_ID=$(OCEAN__SECRET__AZURE_CLIENT_ID) \

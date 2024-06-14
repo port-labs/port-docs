@@ -194,7 +194,6 @@ Choose one of the following installation methods:
         --set secret.secrets.portClientId=YOUR_PORT_CLIENT_ID --set secret.secrets.portClientSecret=YOUR_PORT_CLIENT_SECRET \
         --set stateKey="k8s-exporter"  \
         --set eventListener.type="POLLING"  \
-        --set sendRawDataExamples=true \
         --set "extraEnv[0].name"="CLUSTER_NAME" \
         --set "extraEnv[0].value"=YOUR_PORT_CLUSTER_NAME
     ```

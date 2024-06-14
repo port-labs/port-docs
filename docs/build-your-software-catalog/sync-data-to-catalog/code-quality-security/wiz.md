@@ -111,7 +111,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.secret.wizWebhookVerificationToken`  | This is a password you create, that is used to verify webhook events to Port                                       | ❌       |
 | `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
-| `sendRawDataExamples`             | Default true, Enable sending raw data examples from the third party API to port for testing and managing the integration mapping                                       | ❌       |
 
 <br/>
 
@@ -126,7 +125,6 @@ helm upgrade --install my-wiz-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set initializePortResources=true  \
-  --set sendRawDataExamples=true \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-wiz-integration"  \
 	--set integration.type="wiz"  \
@@ -313,7 +311,6 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID=$OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID \
                                 -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=$OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET \
                                 -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=$OCEAN__INTEGRATION__CONFIG__WIZ_API_URL \
@@ -366,7 +363,6 @@ steps:
     docker run -i --rm \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID=$(OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID) \
         -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=$(OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET) \
         -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=$(OCEAN__INTEGRATION__CONFIG__WIZ_API_URL) \
@@ -420,7 +416,6 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID=$OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_ID \
         -e OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET=$OCEAN__INTEGRATION__CONFIG__WIZ_CLIENT_SECRET \
         -e OCEAN__INTEGRATION__CONFIG__WIZ_API_URL=$OCEAN__INTEGRATION__CONFIG__WIZ_API_URL \
