@@ -464,6 +464,30 @@ const sidebar: SidebarsConfig = {
         },
       ],
     },
+    {
+      type: "category",
+      label: "Organizations",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-organization-details",
+          label: "Get an organization",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/patch-organization-details",
+          label: "Patch an organization",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-organization-details",
+          label: "Change an organization",
+          className: "api-method put",
+        }
+      ],
+    }
   ],
 };
 
