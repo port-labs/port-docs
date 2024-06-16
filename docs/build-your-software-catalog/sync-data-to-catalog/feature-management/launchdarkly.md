@@ -467,7 +467,7 @@ Examples of blueprints and the relevant integration configurations:
 resources:
   - kind: project
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -572,7 +572,7 @@ resources:
 ```yaml showLineNumbers
 - kind: flag
   selector:
-    query: 'true'
+    query: "true"
   port:
     entity:
       mappings:
@@ -668,7 +668,7 @@ resources:
 ```yaml showLineNumbers
 - kind: environment
   selector:
-    query: 'true'
+    query: "true"
   port:
     entity:
       mappings:
@@ -749,7 +749,7 @@ resources:
 ```yaml showLineNumbers
 - kind: flag-status
   selector:
-    query: 'true'
+    query: "true"
   port:
     entity:
       mappings:
