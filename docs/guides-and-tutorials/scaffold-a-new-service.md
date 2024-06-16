@@ -217,6 +217,10 @@ If your organization uses SAML SSO, you will need to authorize your token. Follo
 
 3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `port-create-repo.yml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` on line 19 to your GitHub organization name):
 
+:::tip
+The GitHub workflow example below assumes that you will use the cookiecutter template specified in line 34. If you would instead prefer to use a template from a private repository, replace line 34 in the template below with the following, ensuring to specify the GitHub org and repo name where instructed: `cookiecutterTemplate: https://oauth2:$ORG_ADMIN_TOKEN@github.com/$<SPECIFY GITHUB ORG NAME HERE>/$<SPECIFY TEMPLATE REPO HERE>.git`. If the template GitHub repo is not within the same organization where this repo will be placed, please ensure you replace the `ORG_ADMIN_TOKEN` parameter with a token containing the same parameters used when you created the token in the previous step.
+:::
+
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
 
@@ -327,18 +331,22 @@ fetch-port-access-token: # Example - get the Port API access token and RunId
   script:
     - |
       echo "Getting access token from Port API"
+      # this step uses the Port API to generate a token to update the executor of the action in the action run
       accessToken=$(curl -X POST \
         -H 'Content-Type: application/json' \
         -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
         -s 'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
+      # this step saves the token that was just created to data.env as a variable called ACCESS_TOKEN
       echo "ACCESS_TOKEN=$accessToken" >> data.env
       runId=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.runId')
       echo "RUN_ID=$runId" >> data.env
+      # given the Port payload information above, this step provides updates to the executor of the action...
       curl -X POST \
         -H 'Content-Type: application/json' \
         -H "Authorization: Bearer $accessToken" \
         -d '{"message":"🏃‍♂️ Starting new GitLab project scaffold"}' \
         "https://api.getport.io/v1/actions/runs/$runId/logs"
+      # ...and provides a CI pipeline URL to the user for more information
       curl -X PATCH \
         -H 'Content-Type: application/json' \
         -H "Authorization: Bearer $accessToken" \
@@ -358,6 +366,7 @@ scaffold:
     - pushes
   script:
     - |
+      # this step informs the user that a new GitLab repo is about to be created
       echo "Creating new GitLab repository"
       curl -X POST \
         -H 'Content-Type: application/json' \
@@ -365,22 +374,26 @@ scaffold:
         -d '{"message":"⚙️ Creating new GitLab repository"}' \
         "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
 
+      # this step creates an empty repo with the service_name provided by the executor of the action...
       service_name=$(cat $TRIGGER_PAYLOAD | jq -r '.service_name')
       CREATE_REPO_RESPONSE=$(curl -X POST -s "$CI_API_V4_URL/projects" --header "Private-Token: $GITLAB_ACCESS_TOKEN" --form "name=$service_name" --form "namespace_id=$CI_PROJECT_NAMESPACE_ID")
       PROJECT_URL=$(echo $CREATE_REPO_RESPONSE | jq -r .http_url_to_repo)
 
+      # ...and ensures that this step was successful
       echo "Checking if the repository creation was successful"
       if [[ -z "$PROJECT_URL" ]]; then
           echo "Failed to create GitLab repository."
           exit 1
       fi
       echo "Repository created"
+      # this step updates the user that a new, empty GitLab repo was created
       curl -X POST \
         -H 'Content-Type: application/json' \
         -H "Authorization: Bearer $ACCESS_TOKEN" \
         -d '{"message":"✅ Repository created"}' \
         "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
 
+      # this step creates necessary variables that will be used to add to the new repo
       FIRST_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.user.firstName')
       LAST_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.user.lastName')
       EMAIL=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.user.email')
@@ -390,6 +403,7 @@ scaffold:
       echo "BLUEPRINT_ID=$BLUEPRINT_ID" >> data.env
       echo "SERVICE_NAME=$service_name" >> data.env
 
+      # this step updates the executor of the action that a new cookiecutter project is being created
       curl -X POST \
         -H 'Content-Type: application/json' \
         -H "Authorization: Bearer $ACCESS_TOKEN" \
@@ -407,17 +421,21 @@ scaffold:
       EOF
       cookiecutter $COOKIECUTTER_TEMPLATE_URL --no-input --config-file cookiecutter.yaml --output-dir scaffold_out
 
+      # this step sets git configs to modify the new repo
       echo "Initializing new repository..."
       git config --global user.email "scaffolder@email.com"
       git config --global user.name "Mighty Scaffolder"
       git config --global init.defaultBranch "main"
 
+      # this step updates the executor of the action that the repo template is being uploaded
       curl -X POST \
         -H 'Content-Type: application/json' \
         -H "Authorization: Bearer $ACCESS_TOKEN" \
         -d '{"message":"📡 Uploading repository template"}' \
         "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
 
+      # this step copies the cookiecutter template
+      # and adds it to the empty repo with the parameters provided by the user
       modified_service_name=$(echo "$service_name" | sed 's/[[:space:]-]/_/g')
       cd scaffold_out/$modified_service_name
       git init
@@ -427,6 +445,7 @@ scaffold:
       git remote add origin https://:$GITLAB_ACCESS_TOKEN@$GITLAB_HOSTNAME/${CI_PROJECT_NAMESPACE}/${service_name}.git
       git push -u origin main
 
+      # this step informs the executor of the action that the repo has been updated
       curl -X POST \
         -H 'Content-Type: application/json' \
         -H "Authorization: Bearer $ACCESS_TOKEN" \
@@ -445,6 +464,7 @@ create-entity:
     - apk add jq curl -q
   script:
     - |
+      # this step adds a new Port entity for the new repository
       echo "Creating Port entity to match new repository"
       curl -X POST \
           -H 'Content-Type: application/json' \
@@ -463,6 +483,7 @@ update-run-status:
   image: curlimages/curl:latest
   script:
     - |
+      # these steps provide the executor of the action the URL of the project
       echo "Updating Port action run status and final logs"
       curl -X POST \
         -H 'Content-Type: application/json' \
