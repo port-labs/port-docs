@@ -289,6 +289,11 @@ jobs:
 ```
 </details>
 
+We also need to create the following secrets in our Github repository:
+- `PORT_CLIENT_ID` - Your Port client ID.
+- `PORT_CLIENT_SECRET` - Your Port client secret.
+- `BOT_USER_OAUTH_TOKEN` - The Slack app bot token.
+
 ### Automation trigger
 After setting up the automation backend, we will create the Port automation which will trigger the backend.
 Navigate to your [Automations](https://app.getport.io/settings/automations) page.
