@@ -16,7 +16,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 Solving incidents efficiently is a crucial part of any production-ready environment. When managing an incident, there are a base concepts which are important to keep:
 - **Real time notifications** - When an incident has been created, either by an alert or manually, it is important that a push notification will be sent the the relvant authoritizes as soon as possible. This can be in the form of a Slack message, email or any other form of communication.
-- **Documentation** - When there is an ongoing incident, it is important that different personas across the organization will be aware of it. Hence, it is important to document the incident in relevant places, for example as a Port entity, a Github issue or even a Jira issue
+- **Documentation** - When there is an ongoing incident, it is important that different personas across the organization will be aware of it. Hence, it is important to document the incident in relevant places, for example as a Port entity, a Github issue or a Jira issue.
 - **Visibility** - While troubleshooting, it is important to provide information both to all relevant personas in the organization. An ideal place to manage an incident would be a group chat with the relevant people.
 
 In this guide, we will be using Port's [Automations](../actions-and-automations/define-automations/define-automations.md) capabilities to automate incident management. 
@@ -28,8 +28,8 @@ In this guide, we will be using Port's [Automations](../actions-and-automations/
 - Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 - Prepare a Github repository for maintaining your GitHub workflows, and other dependency files. In this guide we will be using `port-actions` as the repository name. 
 - Configure a Slack app:
-    1. [Create a slack app](https://api.slack.com/start/quickstart#creating) and install it on a workspace. Save the `Bot User OAuth Token` for later use.
-    2. [Add the following permissions](https://api.slack.com/quickstart#scopes) to the Slack app in **OAuth & Permissions**:
+    1. [Create a slack app](https://api.slack.com/start/quickstart#creating) and install it in a workspace. Save the `Bot User OAuth Token` for later use.
+    2. [Add the following permissions](https://api.slack.com/quickstart#scopes) to the Slack app in **OAuth & Permissions**. Create the permissions under the `Bot Token Scopes`:
         * [Create channel](https://api.slack.com/methods/conversations.create):
           `channels:manage`
           `groups:write`
@@ -93,7 +93,7 @@ After we set up our data model, let's set up the Port automation. The automation
 As a backend for this automation, we will create a Github Workflow.
 
 <details>
-    <summary>`Handle incident` GitHub workflow</summary>
+    <summary>`Handle incident` GitHub workflow YAML</summary>
 
 This workflow is responsible for managing a new incident. It will be triggered via Port automation.
 
@@ -300,9 +300,9 @@ Create the following automation:
 <details>
   <summary>`Incident management` automation JSON</summary>
 
-  This automation will be triggered when a new Pagerduty `incident` entity will be created.
+  This automation will be triggered when a new `pagerdutyIncident` entity will be created.
   
-  Replace the `org` value with your Github organization name, and the `repo` value with your Github repository.
+  **Replace the `org` value with your Github organization name, and the `repo` value with your Github repository.**
 
 ```json showLineNumbers
 {
@@ -344,18 +344,17 @@ Now that we have both the automation backend, and the Port automation set up, le
 
 <!-- Incident entities page - show new incident entity -->
 <p align="center">
-<img src='/path/to/goal.png' width='75%' border='1px' />
+<img src='/img/guides/slackIncidentGuide/newIncidentEntity.png' width='75%' border='1px' />
 </p>
 
 4. Navigate to your [runs audit page](https://app.getport.io/settings/AuditLog?activeTab=5). You should see a new `Automation` run was triggered.
 
 <!-- Runs page - showing the new automation run -->
 <p align="center">
-<img src='/path/to/goal.png' width='75%' border='1px' />
+<img src='/img/guides/slackIncidentGuide/newAutomationRun.png' width='50%' border='1px' />
 </p>
 
-
-5. Click on the run, and what the logs. Wait for the run to be in `Success` state.
+5. Click on the run and view the logs. Wait for the run to be in `Success` state.
 
 <!-- Run page - successful run -->
 <p align="center">
@@ -364,33 +363,23 @@ Now that we have both the automation backend, and the Port automation set up, le
 
 6. Navigate back to your [Pagerduty Incidents](https://app.getport.io/pagerdutyIncidents) page. Click on the incident entity you ingested.
 7. You should notice that the `Slack Channel URL` property, and the `Github Issue` relation are populated.
-8. Click the `Slack Channel URL`. This will allow you to join the dedicated slack channel created for this incident.
+
+<!-- Incident entity page - Updated properties -->
+<p align="center">
+<img src='/img/guides/slackIncidentGuide/updatedIncidentEntity.png' width='75%' border='1px' />
+</p>
+
+8. Click the `Slack Channel URL`. This will allow you to join the dedicated Slack channel created for this incident.
 9. Navigate to the `Github Issue` through the relation. Then navigate to the `Link` to view the Github issue created as part of the automation.
 
-
 ## Summary 
-Provide a short summary of what was achieved in the guide.
-
-EXAMPLE:
-That's it! You are all set up to do X,Y,Z using Port!🚀
-
-Feel free to further experiment with the use-case by doing X,Y,Z.
-
-See the [Next Steps](#next-steps) section to understand how to take this guide one step further with your Port environment.
+Using Port as the automation orchestrator, we created an incident management flow which helps us keep a high standard when facing new incidents.
+This automation will allow a faster notification time regarding new incidents, and a dedicated place to keep track of the troubleshooting process and any interesting updates.
 
 ## Next Steps
-This guide can be enhanced to meet your organization's needs. Here are some ideas 
-
-Some examples:
-- How can this guide be connected to a standart Port account
-- Provide more ways to ingest data to the catalog
-- Add interesting properties
-- Create dashboards to view 1,2,3
-
-        * [Find a user with an email address](https://api.slack.com/methods/users.lookupByEmail):
-          `users:read.email`
-        * [Invite users to channel](https://api.slack.com/methods/conversations.invite):
-          `channels:write.invites`
-          `groups:write.invites`
-          `mpim:write.invites`
+This guide can be enhanced to further meet your organization's needs. Here are some nice ideas you can implement:
+- Add a mirror property in the `Pagerduty incident` blueprint, to show the Github issue `Link` in the Pagerduty entity page.
+- Add a DAY-2 `Resolve incident` Port action to the `Pagerduty incident` which resolves the Github issue and sends an update in the Slack channel.
+- Filter the automation tirgger to only run for `High` urgency incidents.
+- Add the Port service owner to the Slack channel as part of the automation.
 
