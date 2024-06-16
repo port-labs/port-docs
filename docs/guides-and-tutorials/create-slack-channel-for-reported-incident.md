@@ -50,7 +50,8 @@ For this guide, we will be making a few modifications to our pre-existing bluepr
     ```json showLineNumbers
     "slack_channel": {
         "type": "string",
-        "title": "The Slack Channel opened for troubleshooting this incident",
+        "description": "The Slack Channel opened for troubleshooting this incident",
+        "title": "Slack Channel URL",
         "icon": "Slack",
         "format": "url"
     }
@@ -68,6 +69,7 @@ For this guide, we will be making a few modifications to our pre-existing bluepr
     },
     "issue": {
         "target": "githubIssue",
+        "title": "Github Issue",
         "many": false,
         "required": false,
         "description": "The issue created for documenting this incident"
@@ -283,41 +285,87 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(github.event.inputs.port_payload).run.id }}
           logMessage: |
-            Added relevant users to the Slack channel ✅
             Done handling the new incident 💪🏻
 ```
 </details>
 
 ### Automation trigger
-After setting up the automation backend, we need to set up the Port automation.
+After setting up the automation backend, we will create the Port automation which will trigger the backend.
+Navigate to your [Automations](https://app.getport.io/settings/automations) page.
+
+Click on the `+ New automation` button.
+
+Create the following automation:
+
+<details>
+  <summary>`Incident management` automation JSON</summary>
+
+  This automation will be triggered when a new Pagerduty `incident` entity will be created.
+  
+  Replace the `org` value with your Github organization name, and the `repo` value with your Github repository.
+
+```json showLineNumbers
+{
+  "identifier": "handle_new_incident",
+  "title": "Handle new Pagerduty incident",
+  "icon": "Pagerduty",
+  "description": "Create Slack channel for incident troubleshooting, and Github issue for documentation",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_CREATED",
+      "blueprintIdentifier": "pagerdutyIncident"
+    }
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "port-labs",
+    "repo": "port-actions",
+    "workflow": "handle-incident.yaml",
+    "workflowInputs": {
+      "port_payload": "{{ . }}"
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+
+</details>
+
+Press `Save`.
 
 ### Testing the automation flow
+Now that we have both the automation backend, and the Port automation set up, let's test our automation flow:
+1. Head over to your Pagerduty account.
+2. Create a new Pagerduty incident.
+3. Navigate to your [Pagerduty Incidents](https://app.getport.io/pagerdutyIncidents) entities page. Make sure your new incident was ingested in to Port.
 
-EXAMPLE:
-Now that we finished setting up our Port environment, and our action backends, we are ready to do X,Y,Z.
-
-#### Doing X
-Let's start by ruuning action ...
-
-Click on the `...` at the top right of the entity screen -> click `RUN ACTION` -> choose an `INPUT`  -> click `Execute`.
-
-This will trigger a new action run which will appear in the right action runs bar. Click on the action run to navigate to the run page.
-
-When the Port action run will end, you will get action logs which will show you info regarding:
-- A
-- B
-- C
-
-The actoin will also create a new `X` entity which you can see in the [X](https://app.getport.io/X) catalog page.
-
-Click the link the the action logs to do reach X.
-
-You have now achieved your goal!
-
-<!-- Picutre of achived goal -->
+<!-- Incident entities page - show new incident entity -->
 <p align="center">
 <img src='/path/to/goal.png' width='75%' border='1px' />
 </p>
+
+4. Navigate to your [runs audit page](https://app.getport.io/settings/AuditLog?activeTab=5). You should see a new `Automation` run was triggered.
+
+<!-- Runs page - showing the new automation run -->
+<p align="center">
+<img src='/path/to/goal.png' width='75%' border='1px' />
+</p>
+
+
+5. Click on the run, and what the logs. Wait for the run to be in `Success` state.
+
+<!-- Run page - successful run -->
+<p align="center">
+<img src='/img/guides/slackIncidentGuide/successfulAutomationRun.png' width='75%' border='1px' />
+</p>
+
+6. Navigate back to your [Pagerduty Incidents](https://app.getport.io/pagerdutyIncidents) page. Click on the incident entity you ingested.
+7. You should notice that the `Slack Channel URL` property, and the `Github Issue` relation are populated.
+8. Click the `Slack Channel URL`. This will allow you to join the dedicated slack channel created for this incident.
+9. Navigate to the `Github Issue` through the relation. Then navigate to the `Link` to view the Github issue created as part of the automation.
 
 
 ## Summary 
@@ -331,7 +379,7 @@ Feel free to further experiment with the use-case by doing X,Y,Z.
 See the [Next Steps](#next-steps) section to understand how to take this guide one step further with your Port environment.
 
 ## Next Steps
-Provide ideas for extra steps for this use-case. It doesn't have to be technical, but just pointers for interesting extentions of this guide.
+This guide can be enhanced to meet your organization's needs. Here are some ideas 
 
 Some examples:
 - How can this guide be connected to a standart Port account
