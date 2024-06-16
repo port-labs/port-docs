@@ -173,7 +173,6 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           identifier: ${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}-${{ steps.create-github-issue.outputs.number }}
           blueprint: githubIssue
-          properties: {}
 
       - name: Log Executing Request to Open Channel
         uses: port-labs/port-github-action@v1
