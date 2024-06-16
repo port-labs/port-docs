@@ -15,7 +15,7 @@ This guide aims to cover how to connect a Launchdarkly `flag` to an existing ser
 
 ### Add Tags to feature flags in Launchdarkly
 
-[Tagging flags in LaunchDarkly](/https://docs.launchdarkly.com/home/account/tags#flags) allows you to categorize and filter them. You can use tags to group flags that are related to a specific service or feature. In this guide, we will add a tag to indicate what service the flag is related to:
+[Tagging flags in LaunchDarkly](https://docs.launchdarkly.com/home/account/tags#flags) allows you to categorize and filter them. You can use tags to group flags that are related to a specific service or feature. In this guide, we will add a tag to indicate what service the flag is related to:
 
 1. **Log in to LaunchDarkly** as a user with the necessary permissions to manage flags.
 2. **Navigate to the flags list.**
@@ -111,4 +111,4 @@ By following these steps, you can seamlessly connect a Launchdarkly flag with an
 More relevant guides and examples:
 
 - [Port's Launchdarkly integration](/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly/)
-- [Toggle Launchdarkly Feature Flag](/create-self-service-experiences/setup-backend/github-workflow/examples/Launchdarkly/toggle-launchdarkly-feature-flag)
+- [Toggle Launchdarkly Feature Flag](/actions-and-automations/setup-backend/github-workflow/examples/Launchdarkly/toggle-launchdarkly-feature-flag)
