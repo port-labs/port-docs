@@ -267,7 +267,7 @@ jobs:
           runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
           logMessage: "About to change replica count in deployment manifest..."
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Create PR
         id: create-pr
         uses: fjogeleit/yaml-update-action@main
