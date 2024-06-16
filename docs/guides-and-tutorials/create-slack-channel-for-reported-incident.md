@@ -90,7 +90,7 @@ After we set up our data model, let's set up the Port automation. The automation
 - Create a Github issue for documenting the incident.
 
 ### Automation backend
-As a backend for this automation, we will create a Github Workflow.
+As a backend for this automation, we will create a Github Workflow in our repository.
 
 <details>
     <summary>`Handle incident` GitHub workflow YAML</summary>
