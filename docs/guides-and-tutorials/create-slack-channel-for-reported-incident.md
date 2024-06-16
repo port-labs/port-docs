@@ -324,8 +324,8 @@ Create the following automation:
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "port-labs",
-    "repo": "port-actions",
+    "org": "<GITHUB ORG>",
+    "repo": "<GITHUB REPOSITORY>",
     "workflow": "handle-incident.yaml",
     "workflowInputs": {
       "port_payload": "{{ . }}"
