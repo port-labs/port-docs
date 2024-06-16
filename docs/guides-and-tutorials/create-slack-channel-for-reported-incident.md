@@ -151,13 +151,13 @@ jobs:
         run: |
           service_title=$(echo '${{ steps.get-incidient-service.outputs.entity }}' | jq -r '.title')
           echo "SERVICE_TITLE=$service_title" >> $GITHUB_OUTPUT
-          echo "SERVICE_IDENTIFIER=$(echo $service_title | tr '[:upper:] ' '[:lower:]-')
+          echo "SERVICE_IDENTIFIER=$(echo $service_title | tr '[:upper:] ' '[:lower:]-')" >> $GITHUB_OUTPUT
 
       - name: Create Github issue
         uses: dacbd/create-issue-action@main
         id: create-github-issue
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ISSUES_TOKEN }}
           repo: ${{ steps.get-service.info.outputs.SERVICE_IDENTIFIER }}
           title: PagerDuty incident - ID {{ env.PD_INCIDENT_ID }}
           labels: bug, incident, pagerduty
@@ -173,6 +173,10 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           identifier: ${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}-${{ steps.create-github-issue.outputs.number }}
           blueprint: githubIssue
+          relations: |
+            {
+              "service": "${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}"
+            }
 
       - name: Log Executing Request to Open Channel
         uses: port-labs/port-github-action@v1
@@ -270,7 +274,7 @@ jobs:
             }
           relations: | 
             {
-              "issue": "${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}-${{ steps.create-github-issue.outputs.number }},
+              "githubIssue": "${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}-${{ steps.create-github-issue.outputs.number }}",
               "service": "${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}"
             }
 
