@@ -700,7 +700,7 @@ jobs:
   deploy-cloudformation-template:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Configure AWS Credentials 🔒
         id: aws-credentials
@@ -741,6 +741,7 @@ jobs:
           relations: '{}'
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{fromJson(inputs.port_context).runId}}
 ```
@@ -775,7 +776,7 @@ jobs:
   deploy-cloudformation-template:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Configure AWS Credentials 🔒
         id: aws-credentials
@@ -810,6 +811,7 @@ jobs:
           relations: '{}'
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{fromJson(inputs.port_context).runId}}
 ```
@@ -860,7 +862,7 @@ jobs:
   deploy-cloudformation-template:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set Up Python
         uses: actions/setup-python@v2
@@ -918,6 +920,7 @@ jobs:
           relations: '{}'
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{fromJson(inputs.port_context).runId}}
 ```

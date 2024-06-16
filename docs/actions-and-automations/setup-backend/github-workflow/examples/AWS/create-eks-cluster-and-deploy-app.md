@@ -177,7 +177,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Create a log message (apply)
         if: ${{ github.event.inputs.action == 'apply' }}
