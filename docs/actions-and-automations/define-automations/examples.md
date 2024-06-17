@@ -3,6 +3,8 @@ sidebar_position: 3
 title: Examples
 ---
 
+import SetupWebhookTip from "/docs/actions-and-automations/templates/_setup_webhooks_slack_teams.md"
+
 # Examples
 
 This section provides examples of automation definitions in Port.
@@ -55,17 +57,7 @@ For example, the following definition will cause a message to be sent whenever a
 
 The `slack-teams-notify-unhealthy-service.yaml` workflow will contain the logic to send a Slack/Teams message.
 
-:::info Prerequisite - set up webhooks
-The workflow requires a Slack webhook URL and/or a Microsoft Teams webhook URL to send the message.  
-
-**Slack**:
-1. To set up a Slack webhook, follow the instructions [here](https://api.slack.com/messaging/webhooks).
-2. Once you have the webhook URL, add it as a secret in your GitHub repository named `SLACK_WEBHOOK_URL`.
-
-**Microsoft Teams**:
-1. To set up a Microsoft Teams webhook, follow the instructions [here](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook).
-2. Once you have the webhook URL, add it as a secret in your GitHub repository named `TEAMS_WEBHOOK_URL`.
-:::
+<SetupWebhookTip />
 
 ```yaml showLineNumbers title="slack-teams-notify-unhealthy-service.yaml"
 name: Notify when service becomes unhealthy
