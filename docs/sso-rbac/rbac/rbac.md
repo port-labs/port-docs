@@ -164,7 +164,8 @@ Okta and AzureAD integrations are only available after configuring SSO from the 
 ### Users and teams as blueprints
 
 Port offers the option to manage users and teams as <PortTooltip id="blueprint">blueprints</PortTooltip>.  
-This option is disabled by default, and can be enabled by using a simple API call.
+This option is disabled by default, and can be enabled by sending a `POST` request to:
+https://api.getport.io/v1/blueprints/system/user-and-team
 
 After enabling this option, two new blueprints will be created in your [data model](https://app.getport.io/settings/data-model) - `User` and `Team`.  
 These blueprints represent Port users and teams, and their data will be synced accordingly:
@@ -177,7 +178,7 @@ The syncing mechanism is bidirectional, meaning that every create/edit/delete ac
 
 With this powerful feature you can accomplish the following:
 
-1. Enrich your users and teams data by adding properties and relations to these blueprints - Slack url, titles, profiles, and much more.
+1. Enrich your users and teams data by adding properties and relations to these blueprints - Slack URLs, titles, profiles, or any other data.
 2. As with all other blueprints, you can ingest data into your entities using an integration. For example, you can map your GitHub users into Port users via your GitHub integration configuration.
 
 :::info Important
