@@ -1,3 +1,5 @@
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+
 # Port Roles & User managaement
 
 Port's RBAC mechanism makes it possible to assign permissions to specific users and teams, as well as configure custom roles tailored to the needs of the different personas in Port.
@@ -71,21 +73,19 @@ Users and teams can be managed via:
 
 In the users tab, you can:
 
-- View all users;
-- Invite new users;
-- Edit users;
-- Delete users;
-- Etc.
+- View all users.
+- Invite new users.
+- Edit users.
+- Delete users.
 
 #### Teams tab
 
 In the teams tab, you can:
 
-- View all teams;
-- Create new teams;
-- Edit teams;
-- Delete teams;
-- Etc.
+- View all teams.
+- Create new teams.
+- Edit teams.
+- Delete teams.
 
 :::tip Using SSO for users and teams
 
@@ -159,4 +159,28 @@ Team dropdown selector in the entity create/edit page:
 
 :::info
 Okta and AzureAD integrations are only available after configuring SSO from the relevant identity provider, refer to the [Single Sign-On (SSO)](../sso-providers/) section for more details
+:::
+
+### Users and teams as blueprints
+
+Port offers the option to manage users and teams as <PortTooltip id="blueprint">blueprints</PortTooltip>.  
+This option is disabled by default, and can be enabled by using a simple API call.
+
+After enabling this option, two new blueprints will be created in your [data model](https://app.getport.io/settings/data-model) - `User` and `Team`.  
+These blueprints represent Port users and teams, and their data will be synced accordingly:
+- When you create a user/team <PortTooltip id="entity">entity</PortTooltip>, a matching Port user/team will be created as well.
+- When you delete a user/team <PortTooltip id="entity">entity</PortTooltip>, the matching Port user/team will be deleted as well.  
+
+The syncing mechanism is bidirectional, meaning that every create/edit/delete action performed on a user/team will be reflected in the entities as well.
+
+#### Why manage users and teams as blueprints?
+
+With this powerful feature you can accomplish the following:
+
+1. Enrich your users and teams data by adding properties and relations to these blueprints - Slack url, titles, profiles, and much more.
+2. As with all other blueprints, you can ingest data into your entities using an integration. For example, you can map your GitHub users into Port users via your GitHub integration configuration.
+
+:::info Important
+The `User` and `Team` blueprints cannot be deleted or edited, and their default properties cannot be changed.  
+You can, however, create new properties and relations in them and edit/delete them as you wish.
 :::
