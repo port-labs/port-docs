@@ -92,8 +92,8 @@ The following configuration will create a GitHub issue whenever a scorecard rule
 
 ```json showLineNumbers
 {
-  "identifier": "ruleResultUpdated",
-  "title": "Rule result updated",
+  "identifier": "ruleResultDegraded",
+  "title": "Rule result degraded",
   "trigger": {
     "type": "automation",
     "event": {
