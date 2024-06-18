@@ -128,6 +128,11 @@ Say you have a Kubernetes `cluster` blueprint, with a related `node` blueprint r
 We can create an aggregation property on the `cluster` blueprint, which sums the `cost` properties of all related `node` entities.  
 Then, we can create a line chart displaying the `cost` property of the `cluster` entity over time, showing the total cost of the cluster.
 
+:::info Available historical data
+The line chart will display data starting from the time the property was created.  
+Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
+:::
+
 ### Markdown
 
 This widget allows you to display any markdown content you wish in formatted form:
