@@ -273,4 +273,4 @@ Let's test our action flow:
 While in the previous guide we used Port as the automation orchestrator to manage the incident flow, this action will make it easier to resolve PagerDuty incidents including cleaning up all the additional resources we created for the incident in the automated process.
 
 ## Next Steps
-- Add an Automation to resolve incidents that were not resolved by our newly created Port action, in order to avoid stale Slack channels and Github issues.
+- Add an Automation that will enhance the action in this guide, and will automatically trigger the incident resolution workflow, to perform automatic cleanup of incidents.
