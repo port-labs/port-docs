@@ -163,9 +163,8 @@ Okta and AzureAD integrations are only available after configuring SSO from the 
 
 ### Users and teams as blueprints
 
-Port offers the option to manage users and teams as <PortTooltip id="blueprint">blueprints</PortTooltip>.  
-This option is disabled by default, and can be enabled by sending a `POST` request to:
-https://api.getport.io/v1/blueprints/system/user-and-team
+Port allows you to manage users and teams as <PortTooltip id="blueprint">blueprints</PortTooltip>.  
+This option is disabled by default, and can be [enabled via Port's API](/sso-rbac/rbac/#enable-the-feature). 
 
 After enabling this option, two new blueprints will be created in your [data model](https://app.getport.io/settings/data-model) - `User` and `Team`.  
 These blueprints represent Port users and teams, and their data will be synced accordingly:
@@ -178,10 +177,27 @@ The syncing mechanism is bidirectional, meaning that every create/edit/delete ac
 
 With this powerful feature you can accomplish the following:
 
-1. Enrich your users and teams data by adding properties and relations to these blueprints - Slack URLs, titles, profiles, or any other data.
-2. As with all other blueprints, you can ingest data into your entities using an integration. For example, you can map your GitHub users into Port users via your GitHub integration configuration.
+1. Enrich your users and teams data by adding *properties* to these blueprints - Slack URLs, titles, profiles, or any other data.
+2. Enrich your users and teams data by adding *relations* to these blueprints - for example, you can relate a user to a domain, or a team to a project.
+3. As with all other blueprints, you can ingest data into your entities using an integration. For example, you can map your GitHub users into Port users via your GitHub integration configuration.
 
 :::info Important
 The `User` and `Team` blueprints cannot be deleted or edited, and their default properties cannot be changed.  
 You can, however, create new properties and relations in them and edit/delete them as you wish.
+:::
+
+#### Enable the feature
+
+To enable this feature, send a `POST` request to a designated endpoint:
+
+```bash
+curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <YOUR_BEARER_TOKEN>'
+```
+
+:::tip To obtain your bearer token:
+
+1. Go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`. 
+2. Click on the `Generate API token` button, and copy the generated token.
 :::
