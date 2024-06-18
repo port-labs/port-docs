@@ -321,7 +321,7 @@ Create the following automation:
 {
   "identifier": "handle_new_incident",
   "title": "Handle new PagerDuty incident",
-  "icon": "Pagerduty",
+  "icon": "pagerduty",
   "description": "Create Slack channel for incident troubleshooting, and GitHub issue for documentation",
   "trigger": {
     "type": "automation",
@@ -391,8 +391,8 @@ This automation will enable faster notification and response time when handling 
 
 ## Next Steps
 This guide can be enhanced to further meet your organization's needs. Here are some ideas you can implement:
+- Add a DAY-2 `Resolve incident` Port action to the `PagerDuty incident` which resolves the GitHub issue and sends an update in the Slack channel. You can use the following [guide](https://docs.getport.io/guides-and-tutorials/resolve-pagerduty-incident).
 - Add a mirror property in the `PagerDuty incident` blueprint, to show the GitHub issue `Link` in the PagerDuty entity page.
-- Add a DAY-2 `Resolve incident` Port action to the `PagerDuty incident` which resolves the GitHub issue and sends an update in the Slack channel.
 - Filter the automation tirgger to only run for `High` urgency incidents.
 - Add the Port service owner to the Slack channel as part of the automation.
 
