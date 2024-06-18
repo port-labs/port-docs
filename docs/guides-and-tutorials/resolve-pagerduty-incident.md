@@ -212,7 +212,7 @@ Let's create the Port Self-service action:
 <details>
 
   <summary><b>Port Action: Resolve Incident (click to expand)</b></summary>
-   :::tip
+   :::tip action placeholders
    Replace the following placeholders to match your environment: 
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
