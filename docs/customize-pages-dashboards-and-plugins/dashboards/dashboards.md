@@ -98,6 +98,9 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 Line charts display trends of `number` properties over time.  
 
 When creating a line chart, you need to choose a blueprint, then choose one of its entities, and finally choose one or more of the entity's `number` properties.  
+:::tip Specific entity page
+When creating a line chart in an [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets), the chosen entity will be the entity whose page you are on.
+:::
 
 The chart will display the property values over the span of (up to) **one year** in daily intervals, with the x-axis representing the time and the y-axis representing the property values.
 
@@ -114,6 +117,16 @@ For example, here is a line chart displaying a service's resource usage over a s
 | `Blueprint`   | `String` | The chosen blueprint                          | `null`  | `true`   |
 | `Entity`      | `String` | The chosen entity                             | `null`  | `true`   |
 | `Properties`  | `Array`  | The chosen `number` property/ies to visualize | `null`  | `true`   |
+
+#### Potential use cases
+
+Line charts can display data for any `number` property, including [aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) and [calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) properties.  
+
+Consider the following use case:  
+Say you have a Kubernetes `cluster` blueprint, with a related `node` blueprint representing the cluster's nodes. Each `node` has a `cost` property indicating its monthly cost.  
+
+We can create an aggregation property on the `cluster` blueprint, which sums the `cost` properties of all related `node` entities.  
+Then, we can create a line chart displaying the `cost` property of the `cluster` entity over time, showing the total cost of the cluster.
 
 ### Markdown
 
