@@ -107,6 +107,11 @@ The chart will display the property values over the span of (up to) **one year**
 For example, here is a line chart displaying a service's resource usage over a span of 8 days:
 <img src='/img/software-catalog/widgets/lineChartExample.png' width='100%' border='1px' />
 
+:::info Available historical data
+The line chart will display data back up to the time the property was created.  
+Note that for aggregation properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
+:::
+
 #### Line chart properties
 
 | Field         | Type     | Description                                   | Default | Required |
