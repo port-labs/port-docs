@@ -11,7 +11,7 @@ tags:
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Automating incident managment
+# Automating incident management
 
 ## Overview
 
