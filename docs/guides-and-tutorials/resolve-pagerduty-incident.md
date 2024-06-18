@@ -16,11 +16,11 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 ## Overview
 
 Solving incidents efficiently is a crucial part of any production-ready environment. When managing an incident, there are a few base concepts which are important to keep:
-- **Real time notifications** - When an incident has been created, either by an alert or manually, it is important that a push notification will be sent the the relevant owners and stakeholders as soon as possible. This can be in the form of a Slack message, email or any other form of communication.
+- **Real time notifications** - When an incident has been created, either by an alert or manually, it is important that a push notification will be sent to the relevant owners and stakeholders as soon as possible. This can be in the form of a Slack message, email or any other form of communication.
 - **Documentation** - When there is an ongoing incident, it is important that different personas across the organization will be aware of it. Hence, it is important to document the incident in relevant places, for example as a Port entity, a GitHub issue or a Jira issue.
 - **Visibility** - While troubleshooting, it is important to provide information to all relevant personas and stakeholders in the organization. An ideal place to manage an incident would be a group chat with the relevant people.
 
-In this guide, we will be using Port's [Self-Service Actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/) capabilities to efficiently resolve and cleanup the resources related to the PagerDuty incident.
+While it is important to efficiently manage an incident as it is being addressed, it is also just as important to efficiently summarize the incident and perform cleanup. In this guide, we will be using Port's [Self-Service Actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/) capabilities to efficiently resolve and cleanup the resources related to the PagerDuty incident.
 
 ## Prerequisites
 - Complete the [Automating incident management](https://docs.getport.io/guides-and-tutorials/create-slack-channel-for-reported-incident) guide.
@@ -197,7 +197,8 @@ jobs:
 
 </details>
 
-We also need to create the following secrets in our GitHub repository:
+
+Make sure you created the following secrets in your GitHub repository (Should have done it in the [automation guide](https://docs.getport.io/guides-and-tutorials/create-slack-channel-for-reported-incident)):
 - `PORT_CLIENT_ID` - Your Port client ID.
 - `PORT_CLIENT_SECRET` - Your Port client secret.
 - `BOT_USER_OAUTH_TOKEN` - The Slack app bot token.
@@ -263,9 +264,9 @@ Let's create the Port Self-service action:
 Let's test our action flow:
 1. Head over to your Port organization.
 2. Navigate to the `Self-service` tab.
-3. Find the new action `ACTION_NAME` and press `Execute`.
+3. Find the new `Resolve Incident` action and press `Execute`.
 4. Fill the PagerDuty Incident you would like to resolve and press `Execute`.
-5. Go to your Slack workspace and make sure the incident channel was archived.
+5. Go to your Slack workspace and make sure the incident channel received a new message with the resolution details.
 6. Head over to your Github repository and make sure the issue was closed.
 7. Navigate to your [PagerDuty Incidents](https://app.getport.io/pagerdutyIncidents) entities page. Make sure the incident's status changed to `resolved`.
 

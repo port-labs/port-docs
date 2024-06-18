@@ -16,7 +16,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 ## Overview
 
 Solving incidents efficiently is a crucial part of any production-ready environment. When managing an incident, there are a few base concepts which are important to keep:
-- **Real time notifications** - When an incident has been created, either by an alert or manually, it is important that a push notification will be sent the the relevant owners and stakeholders as soon as possible. This can be in the form of a Slack message, email or any other form of communication.
+- **Real time notifications** - When an incident has been created, either by an alert or manually, it is important that a push notification will be sent to the relevant owners and stakeholders as soon as possible. This can be in the form of a Slack message, email or any other form of communication.
 - **Documentation** - When there is an ongoing incident, it is important that different personas across the organization will be aware of it. Hence, it is important to document the incident in relevant places, for example as a Port entity, a GitHub issue or a Jira issue.
 - **Visibility** - While troubleshooting, it is important to provide information to all relevant personas and stakeholders in the organization. An ideal place to manage an incident would be a group chat with the relevant people.
 
