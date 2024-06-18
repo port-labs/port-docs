@@ -8,6 +8,7 @@ import TabItem from "@theme/TabItem"
 import KubernetesIllustration from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-exporter-illustration.png";
 import KubernetesEtl from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-etl.png";
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Kubernetes
 
@@ -191,12 +192,16 @@ Choose one of the following installation methods:
    ```bash showLineNumbers
     helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
         --create-namespace --namespace port-k8s-exporter \
-        --set secret.secrets.portClientId=YOUR_PORT_CLIENT_ID --set secret.secrets.portClientSecret=YOUR_PORT_CLIENT_SECRET \
+        --set secret.secrets.portClientId=YOUR_PORT_CLIENT_ID \
+        --set secret.secrets.portClientSecret=YOUR_PORT_CLIENT_SECRET \
+        --set portBaseUrl='https://api.getport.io' \
         --set stateKey="k8s-exporter"  \
         --set eventListener.type="POLLING"  \
         --set "extraEnv[0].name"="CLUSTER_NAME" \
         --set "extraEnv[0].value"=YOUR_PORT_CLUSTER_NAME
     ```
+<PortApiRegionTip/>
+
 </TabItem>
 
 <TabItem value="argo" label="ArgoCD">
@@ -239,6 +244,8 @@ Choose one of the following installation methods:
             - name: secret.secrets.portClientSecret
               // highlight-next-line
               value: YOUR_PORT_CLIENT_SECRET
+            - name: portBaseUrl
+              value: https://api.getport.io
             - name: stateKey
               // highlight-next-line
               value: YOUR_CLUSTER_NAME
@@ -259,6 +266,8 @@ Choose one of the following installation methods:
         - CreateNamespace=true
     ```
     
+    <PortApiRegionTip/>
+
     </details>
     <br/>
 

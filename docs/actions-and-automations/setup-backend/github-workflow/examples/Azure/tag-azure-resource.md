@@ -278,7 +278,7 @@ jobs:
             Starting a GitHub workflow to tag the Azure resource: ${{ fromJson(inputs.port_context).entity.identifier }} ... ⛴️
 
       - name: Checkout the repository to the runner
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v2

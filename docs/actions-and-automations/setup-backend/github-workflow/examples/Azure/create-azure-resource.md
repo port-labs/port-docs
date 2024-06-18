@@ -3,6 +3,7 @@ sidebar_position: 1
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Deploy Azure Resource using Terraform
 
@@ -213,6 +214,7 @@ provider "azurerm" {
 provider "port" {
     client_id = var.port_client_id
     secret    = var.port_client_secret
+    base_url  = var.base_url
 }
 
 resource "azurerm_storage_account" "storage_account" {
@@ -285,7 +287,15 @@ variable "port_client_secret" {
     type        = string
     description = "The Port client secret"
 }
+
+variable "base_url" {
+    type        = string
+    description = "The Port API URL"
+}
+
 ```
+
+<PortApiRegionTip/>
 
 </details>
 
@@ -342,7 +352,7 @@ jobs:
 
     steps:
       - name: Checkout the repository to the runner
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v2
