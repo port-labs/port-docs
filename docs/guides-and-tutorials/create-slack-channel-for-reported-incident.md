@@ -160,12 +160,12 @@ jobs:
         with:
           token: ${{ secrets.ISSUES_TOKEN }}
           repo: ${{ steps.get-service.info.outputs.SERVICE_IDENTIFIER }}
-          title: PagerDuty incident - ID {{ env.PD_INCIDENT_ID }}
+          title: PagerDuty incident - ID ${{ env.PD_INCIDENT_ID }}
           labels: bug, incident, pagerduty
           body: |
             PagerDuty incidient issue reported.
-            Port Incident Entity URL: {{ env.PORT_INCIDENT_URL }}.
-            PagerDuty incident URL: {{ env.PD_INCIDENT_URL }}.
+            Port Incident Entity URL: ${{ env.PORT_INCIDENT_URL }}.
+            PagerDuty incident URL: ${{ env.PD_INCIDENT_URL }}.
 
       - name: Report GitHub issue to Port
         uses: port-labs/port-github-action@v1
