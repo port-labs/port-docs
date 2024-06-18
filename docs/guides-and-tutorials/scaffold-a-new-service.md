@@ -171,7 +171,7 @@ Then, fill out your workflow details:
 
 <br/>
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
 
 The action's frontend is now ready 🥳
 
@@ -215,7 +215,7 @@ If your organization uses SAML SSO, you will need to authorize your token. Follo
 
 <br/><br/>
 
-3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `port-create-repo.yml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` on line 19 to your GitHub organization name):
+3. Now let's create the workflow file that contains our logic. First, ensure that you have a `.github/workflows` directory, then create a new file named `port-create-repo.yml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` on line 22 to your GitHub organization name):
 
 :::tip
 The GitHub workflow example below assumes that you will use the cookiecutter template specified in line 34. If you would instead prefer to use a template from a private repository, replace line 34 in the template below with the following, ensuring to specify the GitHub org and repo name where instructed: `cookiecutterTemplate: https://oauth2:$ORG_ADMIN_TOKEN@github.com/$<SPECIFY GITHUB ORG NAME HERE>/$<SPECIFY TEMPLATE REPO HERE>.git`. If the template GitHub repo is not within the same organization where this repo will be placed, please ensure you replace the `ORG_ADMIN_TOKEN` parameter with a token containing the same parameters used when you created the token in the previous step.
