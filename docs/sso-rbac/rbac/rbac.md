@@ -186,9 +186,9 @@ The `User` and `Team` blueprints cannot be deleted or edited, and their default 
 You can, however, create new properties and relations in them and edit/delete them as you wish.
 :::
 
-#### Enable the feature
+#### Enable option
 
-To enable this feature, send a `POST` request to a designated endpoint:
+To enable management of users and teams as blueprints, send a `POST` request to a designated endpoint:
 
 ```bash
 curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
