@@ -1,4 +1,4 @@
-# Port Roles & User managaement
+# Port Roles & User management
 
 Port's RBAC mechanism makes it possible to assign permissions to specific users and teams, as well as configure custom roles tailored to the needs of the different personas in Port.
 

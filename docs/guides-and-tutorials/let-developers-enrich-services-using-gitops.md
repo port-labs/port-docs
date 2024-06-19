@@ -504,7 +504,7 @@ enrichService:
     - git config --global user.email "gitRunner@git.com"
     - git config --global user.name "Git Runner"
     - SERVICE_IDENTIFIER=$(echo $PAYLOAD | jq -r '.port_context.entity')
-    - DOMAIN_IDENTIFIER=$(echo $PAYLOAD | jq -r '.domain')
+    - DOMAIN_IDENTIFIER=$(echo $PAYLOAD | jq -r '.domain.identifier')
     - SERVICE_TYPE=$(echo $PAYLOAD | jq -r '.type')
     - SERVICE_LIFECYCLE=$(echo $PAYLOAD | jq -r '.lifecycle')
     - git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git
