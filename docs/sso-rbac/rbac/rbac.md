@@ -192,7 +192,6 @@ To enable management of users and teams as blueprints, send a `POST` request to 
 
 ```bash
 curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
--H 'Content-Type: application/json' \
 -H 'Authorization: <YOUR_BEARER_TOKEN>'
 ```
 
