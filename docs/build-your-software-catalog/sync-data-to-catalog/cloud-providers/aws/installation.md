@@ -38,11 +38,34 @@ The AWS integration uses the following AWS infrastructure:
 
 In order to successfully deploy the AWS integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the above resources.
 
-## Installation walkthrough using terraform
+## install using terraform
 
 1. Go to Port's [Data Sources](https://app.getport.io/settings/data-sources?section=EXPORTERS) and click on AWS.
 2. Edit and copy the installation command.
 3. Run the command in your terminal to deploy the AWS integration.
+
+## install using Helm (Kubernetes)
+
+<details>
+<summary>Installation</summary>
+
+```bash
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+helm upgrade --install aws port-labs/port-ocean \
+	--set port.clientId="$PORT_CLIENT_ID"  \
+	--set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
+	--set port.baseUrl="https://api.getport.io"  \
+	--set initializePortResources=true  \
+	--set sendRawDataExamples=true  \
+	--set integration.identifier="my-aws"  \
+	--set integration.type="aws"  \
+	--set integration.eventListener.type="POLLING"  \
+	--set integration.config.liveEventsApiKey="<choose your api key>" \
+	--set integration.config.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
+	--set integration.config.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY" \
+```
+
+</details>
 
 ## Manual installation (AWS)
 
@@ -52,17 +75,18 @@ In order to successfully deploy the AWS integration, it's crucial to ensure that
 <details>
 <summary>Environment Variables</summary>
 
-| Variable | Description |
-| --- | --- |
-| `OCEAN__PORT__CLIENT_ID` | [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API). |
-| `OCEAN__PORT__CLIENT_SECRET` | [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API). |
-| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US | 
-| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY` | (Optional) AWS API Key for custom events, used to validate the event source for real-time event updates. |
-| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN` | [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html). |
-| `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` | [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html). |
-| `OCEAN__EVENT_LISTENER` | [The event listener object](https://ocean.getport.io/framework/features/event-listener/). |
-| `OCEAN__INTEGRATION__IDENTIFIER` | The identifier of the integration. |
-| `OCEAN__INTEGRATION__TYPE` | should be set to `aws`. |
+| Variable                                             | Description                                                                                                                                                                                                                                                          |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `OCEAN__PORT__CLIENT_ID`                             | [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                    |
+| `OCEAN__PORT__CLIENT_SECRET`                         | [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                |
+| `OCEAN__PORT__BASE_URL`                              | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                              |
+| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY`    | (Optional) AWS API Key for custom events, used to validate the event source for real-time event updates.                                                                                                                                                             |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN`  | [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html). |
+| `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` | [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html).                                        |
+| `OCEAN__EVENT_LISTENER`                              | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                                                                                                                                                            |
+| `OCEAN__INTEGRATION__IDENTIFIER`                     | The identifier of the integration.                                                                                                                                                                                                                                   |
+| `OCEAN__INTEGRATION__TYPE`                           | should be set to `aws`.                                                                                                                                                                                                                                              |
+
 </details>
 
 ## Manual installation (on-premise)
@@ -78,19 +102,20 @@ In order to successfully deploy the AWS integration, it's crucial to ensure that
 <details>
 <summary>Environment Variables</summary>
 
-| Variable | Description |
-| --- | --- |
-| `OCEAN__PORT__CLIENT_ID` | [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API). |
-| `OCEAN__PORT__CLIENT_SECRET` | [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API). |
-| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |
-| `OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID` | [The AWS Access Key ID of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html). |
-| `OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY` | [The AWS Secret Access Key of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html). |
-| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY` | (Optional) AWS API Key for custom events, used to validate the event source for real-time event updates. |
-| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN` | [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html). |
-| `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` | [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html). |
-| `OCEAN__EVENT_LISTENER` | [The event listener object](https://ocean.getport.io/framework/features/event-listener/). |
-| `OCEAN__INTEGRATION__IDENTIFIER` | The identifier of the integration. |
-| `OCEAN__INTEGRATION__TYPE` | should be set to `aws`. |
+| Variable                                             | Description                                                                                                                                                                                                                                                          |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `OCEAN__PORT__CLIENT_ID`                             | [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                    |
+| `OCEAN__PORT__CLIENT_SECRET`                         | [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                |
+| `OCEAN__PORT__BASE_URL`                              | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                              |
+| `OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID`      | [The AWS Access Key ID of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                      |
+| `OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY`  | [The AWS Secret Access Key of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                  |
+| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY`    | (Optional) AWS API Key for custom events, used to validate the event source for real-time event updates.                                                                                                                                                             |
+| `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN`  | [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html). |
+| `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` | [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html).                                        |
+| `OCEAN__EVENT_LISTENER`                              | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                                                                                                                                                            |
+| `OCEAN__INTEGRATION__IDENTIFIER`                     | The identifier of the integration.                                                                                                                                                                                                                                   |
+| `OCEAN__INTEGRATION__TYPE`                           | should be set to `aws`.                                                                                                                                                                                                                                              |
+
 </details>
 
 ## Further Examples
