@@ -188,6 +188,52 @@ After ingesting all of our services and PagerDuty services, we want to connect e
      Now, if a `service's` **identifier** is equal to a `PagerDuty service's` **name**, that service will automatically have its on-call property filled with the relevant PagerDuty service.  
       This is just the convention we chose for this example, but you can use a different one if you'd like.
 
+### Mapping relations using search queries
+
+Normally, we map relations using a direct reference to the related entity's `identifier`, as shown in the example above.  
+
+Alternatively, you can use a [search query rule](/search-and-query/#rules) to map relations based on a **property** of the related entity.  
+This is useful in cases where you don't have the identifier of the related entity, but you do have one of its properties.
+
+For example, consider the following scenario:  
+Say we have a `service` blueprint that has a relation (named `service_owner`) to a `user` blueprint. The `user` blueprint has a property named `github_username`.  
+
+Now, we want to map the `service_owner` relation based on the `github_username` property of the `user` entity.  
+To achieve this, we can use the following mapping configuration:
+
+```yaml showLineNumbers
+- kind: repository
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name
+        blueprint: '"service"'
+        relations:
+          #highlight-start
+          service_owner:
+            combinator: '"and"'
+            rules:
+              - property: '"github_username"'
+                operator: '"="'
+                value: .owner.login
+          #highlight-end
+```
+Instead of directly referencing the `user` entity's `identifier`, we use a search query rule to find the `user` entity whose `github_username` property matches the `.owner.login` value returned from GitHub's API.
+
+When using a search query rule to map a relation, Port will query all entities of the related blueprint (in this case - `user`) and return the one/s that match the rule.
+
+#### Limitations
+
+- One or more entities can be returned by the search query rule. Note the relation's type when using this method:
+  - A ["single type" relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#bust_in_silhouette-single) expects a single entity to be returned.
+  - A ["many type" relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#-many) expects an array of entities to be returned.
+- The maximum number of entities returned by the search query rule is 100.
+- Mirror and calculation properties are currently not supported.
+- Only the `=` operator is supported for the search query rule.
+
 ## Create multiple entities from an array API object
 
 In some cases, an application's API returns an array of objects that you want to map to multiple entities in Port.  
