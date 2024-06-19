@@ -186,6 +186,9 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Self-service action to acknowledge a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
 - [Self-service action to change a PagerDuty oncall](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)
 - [Self-service action to resolve a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident)
+- PagerDuty Incident Management
+    - [Automation to handle PagerDuty incidents](https://docs.getport.io/guides-and-tutorials/create-slack-channel-for-reported-incident)
+    - [Self-service action to resolve Pagerduty incidents](https://docs.getport.io/guides-and-tutorials/resolve-pagerduty-incidents) - including Slack channel notification and closing GitHub issue.
 
 ## Jira
 

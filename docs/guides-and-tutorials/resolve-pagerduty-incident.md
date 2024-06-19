@@ -24,6 +24,7 @@ While it is important to efficiently manage an incident as it is being addressed
 
 ## Prerequisites
 - Complete the [Automating incident management](https://docs.getport.io/guides-and-tutorials/create-slack-channel-for-reported-incident) guide.
+- User email of a member in your PagerDuty account.
 
 
 ## Data model setup
@@ -38,7 +39,10 @@ Create a workflow file with the following content:
 <details>
     <summary>`Resolve incident` GitHub workflow YAML</summary>
 
-This workflow is responsible for resolving an incident.
+This workflow is responsible for resolving an incident, notifying the Slack channel and closing the GitHub issue.
+:::tip
+   Replace the `<PAEGRDUTY_USER_EMAIL>` placeholder to the user email from the [Prerequisites](#prerequisites) section. 
+:::
 
 ```yaml showLineNumbers title=".github/workflows/resolve-incident.yaml"
 name: Resolve Incident In PagerDuty
@@ -79,7 +83,8 @@ jobs:
         with:
           url: 'https://api.pagerduty.com/incidents'
           method: 'PUT'
-          customHeaders: '{"Content-Type": "application/json", "Accept": "application/vnd.pagerduty+json;version=2", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}", "From": "aknmhlxqagykzpwxxs@cazlq.com"}'
+          // highlight-next-line
+          customHeaders: '{"Content-Type": "application/json", "Accept": "application/vnd.pagerduty+json;version=2", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}", "From": "<PAEGRDUTY_USER_EMAIL>"}'
           data: >-
               {
                 "incidents": [
@@ -237,8 +242,10 @@ Let's create the Port Self-service action:
   },
   "invocationMethod": {
     "type": "GITHUB",
+    // highlight-start
     "org": "<GITHUB-ORG>",
     "repo": "<GITHUB-REPO-NAME>",
+    // highlight-end
     "workflow": "resolve-incident.yaml",
     "workflowInputs": {
       "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
