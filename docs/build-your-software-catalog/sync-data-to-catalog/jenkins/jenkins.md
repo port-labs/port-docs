@@ -8,6 +8,7 @@ import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_jenkins-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Jenkins
 
@@ -31,6 +32,13 @@ To generate a token for authenticating the Jenkins API calls:
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' />
 
+:::info Install the People View Plugin
+Recent Jenkins versions ([2.452 and above](https://issues.jenkins.io/browse/JENKINS-18884)) no longer include the "People" view by default.  This view is essential for providing the user information API that will be queried by the integration.
+
+**To install the plugin:**
+- In Jenkins, navigate to **Manage Jenkins** -> **Plugins**.
+- Search for and install the [**"People View"** plugin](https://plugins.jenkins.io/people-view/).
+:::
 
 ## Installation
 
@@ -49,6 +57,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                               | ✅       |
 | `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                           | ✅       |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |  ✅       |
 | `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
 | `integration.type`                  | The integration type                                                                                               | ✅       |
 | `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
@@ -71,6 +80,7 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-jenkins-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
+	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-jenkins-integration"  \
@@ -80,6 +90,7 @@ helm upgrade --install my-jenkins-integration port-labs/port-ocean \
 	--set integration.secrets.jenkinsToken="JENKINS_TOKEN" \
 	--set integration.config.jenkinsHost="JENKINS_HOST"  
 ```
+<PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
@@ -144,6 +155,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -156,10 +169,12 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
+
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+1. Apply your application manifest with `kubectl`:
 ```bash
 kubectl apply -f my-ocean-jenkins-integration.yaml
 ```
@@ -202,6 +217,7 @@ jobs:
           type: 'jenkins'
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
           config: |
             jenkins_host: ${{ secrets.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST }}
             jenkins_user: ${{ secrets.OCEAN__INTEGRATION__CONFIG__JENKINS_USER }}
@@ -256,6 +272,7 @@ pipeline {
                                 -e OCEAN__INTEGRATION__CONFIG__JENKINS_HOST=$OCEAN__INTEGRATION__CONFIG__JENKINS_HOST \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
                                 $image_name
 
                             exit $?
@@ -304,6 +321,7 @@ steps:
         -e OCEAN__INTEGRATION__CONFIG__JENKINS_HOST=$(OCEAN__INTEGRATION__CONFIG__JENKINS_HOST) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $image_name
 
     exit $?
@@ -358,6 +376,7 @@ ingest_data:
         -e OCEAN__INTEGRATION__CONFIG__JENKINS_HOST=$OCEAN__INTEGRATION__CONFIG__JENKINS_HOST \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $IMAGE_NAME
 
   rules: # Run only when changes are made to the main branch
@@ -367,6 +386,9 @@ ingest_data:
 </TabItem>
 
   </Tabs>
+
+<PortApiRegionTip/>
+
 </TabItem>
 
 </Tabs>

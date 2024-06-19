@@ -1,0 +1,125 @@
+---
+id: get-an-action-runs-details
+title: "Get an action run's details"
+description: "This route allows you to fetch the details of an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
+sidebar_label: "Get an action run's details"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdU8tu2zAQ/BWClyaAbCU5CkEAAy2CopcgTU+BUdDSyiJCk8qSVOIK+vfu6uHIiXPqrRfJomeXszM7rSzA56jroJ2VmXyotBfoYgChjHEvXuxdFMGJEkJeiVCBKCAobbxwpVBWqJwrBUa7vN5getM/HpwwoNCKnUNqtKF+M6BPRF5B/iT4mDs+Fi6PO7BBMWR9VoVQ+yxN6dgvtxBqh2GpXZojqAALD6akBzY6hwW81oAabA4+RSgN5GExXLWo0W0RvE/PlzKRQW29zB7lauBxTzzkOpG1QrWDAMh/ttITs52SWSvDvgYSxAfUdkv1YOOO65tL+miu5LpLpGbJniPgns4s9aHPhlqxlolEeI4aoZBZqYyHLvm8/dSrVqF6a0Va/dYFfb/3CIQuSC5dakD2gUV807e37EXZcPBtsOaIUsAIHc3vIY+ow76ffkOmAfKUpHSRYa8Ro0jG2lkPnqlfXVzw65jUVyhVNEHcj0jZ0UwkbOXoMkkmymSYLpNpc5kObMkyuiJth0E7yXSwmbyIaAg9LYOq9WwXJKv5ERD9EWY2309WfuA/TXkwgSp/wMzCVSTaqP/06yhHaypShKq63qrS9eU6GMbf0X1idfedF2N0P5OXywu2tXY+7JRl+Nj9FsJxcL74KVPvrW5l7mwgp//vZA4uBHgNaW0UqU269d6248qMqRuXhvc49q9sTAj5XJHODGzbjfLwC03X8fEQTt6mQnu1MYc0JvKJLJ/HtVEmMo9+bRqFmuGnSz816ex+DNi5+IeUnhRk2lW7n3OdxhiF6Nbz1N1+e2DVIks4X/anftnHHzzgyd7vUzBcxE/O3smSawqBoCjdHODDP58WjKGa0Dzpuuu6vxVFQt0=
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an action run's details"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions/runs/{run_id}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch the details of an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","description":"The identifier of the action run you want to fetch.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

@@ -52,7 +52,7 @@ The `Hide tabs` button on the right allows you to control which tabs are visible
 
 ## Runs
 
-If the entity's blueprint has any [actions](/create-self-service-experiences/) configured, the `Runs` tab will display their history log, results, log streams, and more.
+If the entity's blueprint has any [actions](/actions-and-automations/create-self-service-experiences/) configured, the `Runs` tab will display their history log, results, log streams, and more.
 
 ## Audit log
 

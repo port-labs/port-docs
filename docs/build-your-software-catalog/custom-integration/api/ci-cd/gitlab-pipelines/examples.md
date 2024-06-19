@@ -1,5 +1,6 @@
 import ExampleImageBlueprint from "../\_ci_example_image_blueprint.mdx";
 import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Examples
 
@@ -53,6 +54,8 @@ entity_json = {
 
 create_response = requests.post(f'{API_URL}/blueprints/{blueprint_id}/entities?upsert=true&create_missing_related_entities=true', json=entity_json, headers=headers)
 ```
+
+<PortApiRegionTip/>
 
 :::note
 Please notice that you have also created the `image` relation, and added a related image entity called `example-image`. This is the artifact of the ciJob, and you will update it later.

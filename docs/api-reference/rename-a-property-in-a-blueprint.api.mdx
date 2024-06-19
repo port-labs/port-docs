@@ -1,0 +1,148 @@
+---
+id: rename-a-property-in-a-blueprint
+title: "Rename a property in a blueprint"
+description: "This route allows you to change the identifier of a property in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/)."
+sidebar_label: "Rename a property in a blueprint"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVW1P2zAQ/iuWtQ+gNQ3s2yqGBmzSpklTxdiXlQ65ybUxpLHnl5YS5b/vzkmTtpSJvXwcSKntnO+ee+65S8lTsImR2klV8AG/yqRlRnkHTOS5Wlq2Up45xZJMFDNgLgMmUyicnEowTE2ZYNooDcatmCxwZzUk+DJhk9yDNrJwdI5eDBsq45hIEuUL1z+ZmPg0PK4Uy0GYgs2VwbATjN5dtj0MDckdo1OKPkpV4ueIQBDk8UHmnLaDOMZj25+B0xikL1U88TJPI4obWTV1S2EgSoQTuZrFibdOzeUDRBgBZia4snGiiqmceTRM0TCaqxTy2ILzOmrxxId93uNOzCwfjPh5C5OPe9zADw/Wnat0xQclR3cOcdJSaJ3LJISJby0xXXKLec0FrdxKA3KvJreQOPTeECrB0tsClsOG4c9iDhsXrMPQM7ywW0NgeGmnTsTdulI1+RRJOAeGLn0fnUXfRPRwFL1+e/PmGv+i8csXvKp6XKSpJNciH24Am4rcQlWRgRYGgaEj4mRPYg1OtJQUCoNmGLsIyfAO5d5EHifR6YqkuRS4aPXZJkalkAZSPnDGQ9X7XVRrpm7C/nnA2j7YxGWAPDyFC0VjIfFGulWgboJ9gEQMRuMq6Mlq1GUtg1dHR/SzDeQdTIXPHbtsLEO9sBSZSuuUkqyucobbeHEcd30Vl10GVdxJLi63cq/iOgNOSM1iXWNvcvS47j2h5UbrcaL7sYG3WzYbqX+h0tRZrgloq4Q3P8GqK8yZx+SMfAi9xJvaZSBSvEXJU3dddn34/l7MdQ57+2hLAVMVgkpHxjxMqrPhRwxAKddkH/ePyFYr6+YitHCD6TIw9GgStlzv6mdjNPwfuM8cuLUaHNy7WOcCq46VCBorG3mP+OIYDbs8cDPYGi4bYxVf7XZ4I3OUZYYFJn9lOREWvpq8qugYNWWoS3G5EEaKCSkFWyGVltZpMxJ/UeuDy6b7D9lfjLa9VKy7paBWWQj0gztc3mHvbM1Y6s1/iPg5M+8PAG8XpxrjhabHifHa5qJGGV2Rp87Ho08tTZp2JA7Pri4+kEyabzRJDo+NWJIE8Dng1/iPGxXoCEMpnJc8xzJ4MSP72nH4OHoS3+a4ugvjqlkQ3L2p7s6xOid6UoX2XjnBgcRwGJ625vWbJy80lLUqIC4Q9E9DP3y1
+sidebar_class_name: "patch api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Rename a property in a blueprint"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/blueprints/{identifier}/properties/{property_name}/rename"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to change the identifier of a property in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the blueprint you want to change.<br/>","required":true}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"property_name","description":"The identifier of the property you want to rename.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"newPropertyName"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** Value must match regular expression `^[A-Za-z0-9@_=\\\\-]+$`"}
+          schema={{"type":"string","description":"The new identifier of the property.<br/>","pattern":"^[A-Za-z0-9@_=\\\\-]+$"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

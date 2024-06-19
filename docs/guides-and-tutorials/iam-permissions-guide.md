@@ -8,6 +8,7 @@ tags:
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # IAM Permission Management
 
@@ -259,7 +260,7 @@ jobs:
     env:
       POLICY_NAME: Permission-${{github.run_id}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           persist-credentials: true
       - name: Configure AWS Credentials
@@ -296,6 +297,7 @@ jobs:
         with:
             clientId: ${{ secrets.PORT_CLIENT_ID }}
             clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+            baseUrl: https://api.getport.io
             identifier: ${{ env.POLICY_NAME }}
             title: ${{ env.POLICY_NAME }}
             blueprint: provisioned_permissions
@@ -316,6 +318,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
           runId: ${{ fromJson(inputs.port_context).runId}}
@@ -352,7 +355,7 @@ jobs:
     env:
       POLICY_ARN: ${{ fromJson(inputs.port_context).entity.properties.policy_arn }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           persist-credentials: true
       - name: Configure AWS Credentials
@@ -375,6 +378,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           identifier: ${{ fromJson(inputs.port_context).entity.identifier }}
           operation: DELETE
           blueprint: provisioned_permissions
@@ -382,6 +386,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId}}
           logMessage: |
@@ -390,6 +395,8 @@ jobs:
 ```
 
 </details> 
+
+<PortApiRegionTip/>
 
 <details>
     <summary>`IAM policy JSON` template file</summary>
@@ -441,7 +448,7 @@ We will create the Port actions using the Port UI.
 
 :::tip Creating actions with JSON
 Don't know how to create actions via the Port UI?
-Click [here](/create-self-service-experiences/setup-ui-for-action)!
+Click [here](/actions-and-automations/create-self-service-experiences/setup-ui-for-action)!
 :::
 
 Let's create the Port actions to trigger the workflows we just created:
@@ -687,6 +694,6 @@ See the [Next Steps](#next-steps) section to understand how to take this guide o
 
 ## Next Steps
 - **Install Port's [AWS exporter](/docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)** - You can use Port's AWS exporter to automatically populates your software catalog from your AWS environement. You can use the AWS exporter to populate your `AWS Resources` blueprints with different AWS resources.
-- **Enforce [manual approval](/docs/create-self-service-experiences/set-self-service-actions-rbac/set-self-service-actions-rbac.md#configure-manual-approval-for-actions) for your Port actions** - To have control over who is provisioning and revoking permissions, you can set up manual approval for your actions. This will enable you to provide a request-approve flow for provisioning and revoking permissions using Port.
+- **Enforce [manual approval](/docs/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/set-self-service-actions-rbac.md#configure-manual-approval-for-actions) for your Port actions** - To have control over who is provisioning and revoking permissions, you can set up manual approval for your actions. This will enable you to provide a request-approve flow for provisioning and revoking permissions using Port.
 <!-- TODO: Remove the `coming soon` when automiations comes out -->
 - ***Coming soon* ⏱️: Temporary permissions using [Automations](https://roadmap.getport.io/ideas/p/automation) and the `Timer` property** - With the automations feature, you will be able to automatically trigger actions using events from the catalog. You can use the `Timer Expired` event to trigger the `Revoke permissions` action and create a temporary permissions experience.
