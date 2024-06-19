@@ -7,6 +7,12 @@ sidebar_position: 1
 The AWS integration is deployed using Terraform on AWS ECS cluster service.  
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
+:::warning
+This installation guide is for the AWS integration only.
+It does not take into consideration the **live-events** infrastructure **which is optional**.
+The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) are optional and can be removed if not needed.
+:::
+
 ## Infrastructure
 
 The AWS integration uses the following AWS infrastructure:
@@ -80,7 +86,7 @@ helm upgrade --install aws port-labs/port-ocean \
 | `OCEAN__PORT__CLIENT_ID`                             | [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                    |
 | `OCEAN__PORT__CLIENT_SECRET`                         | [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                |
 | `OCEAN__PORT__BASE_URL`                              | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                              |
-| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY`    | (Optional) AWS API Key for custom events, used to validate the event source for real-time event updates.                                                                                                                                                             |
+| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY`    | (Optional) AWS API Key for live events, used to validate the event source for real-time event, it's value is completely up to you                                                                                                                                    |
 | `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN`  | [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html). |
 | `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` | [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html).                                        |
 | `OCEAN__EVENT_LISTENER`                              | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                                                                                                                                                            |
@@ -109,7 +115,7 @@ helm upgrade --install aws port-labs/port-ocean \
 | `OCEAN__PORT__BASE_URL`                              | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                              |
 | `OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID`      | [The AWS Access Key ID of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                      |
 | `OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY`  | [The AWS Secret Access Key of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                  |
-| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY`    | (Optional) AWS API Key for custom events, used to validate the event source for real-time event updates.                                                                                                                                                             |
+| `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY`    | (Optional) AWS API Key for live events, used to validate the event source for real-time event, it's value is completely up to you                                                                                                                                    |
 | `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN`  | [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html). |
 | `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` | [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html).                                        |
 | `OCEAN__EVENT_LISTENER`                              | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                                                                                                                                                            |
