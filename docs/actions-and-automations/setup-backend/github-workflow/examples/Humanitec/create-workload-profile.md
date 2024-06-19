@@ -229,6 +229,6 @@ Now you should see the `Create Workload Profile` action in the self-service page
 Congrats 🎉 You've created a workload profile in Humanitec from Port 🔥
 
 ## More Self Service Humanitec Actions Examples
-- [Create Humanitec application](/docs/create-self-service-experiences/setup-backend/github-workflow\examples/Humanitec/create-humanitec-application.md)
-- [Deploy Humanitec application](/docs/create-self-service-experiences/setup-backend/github-workflow/examples/Humanitec/deploy-humanitec-application.md)
-- [Delete Humanitec application](/docs/create-self-service-experiences/setup-backend/github-workflow/examples/Humanitec/delete-humanitec-application.md)
+- [Create Humanitec application](/docs/actions-and-automations/setup-backend/github-workflow/examples/Humanitec/create-humanitec-application.md)
+- [Deploy Humanitec application](/docs/actions-and-automations/setup-backend/github-workflow/examples/Humanitec/deploy-humanitec-application.md)
+- [Delete Humanitec application](/docs/actions-and-automations/setup-backend/github-workflow/examples/Humanitec/delete-humanitec-application.md)

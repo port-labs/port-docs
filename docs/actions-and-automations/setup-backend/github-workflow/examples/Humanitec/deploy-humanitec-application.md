@@ -175,4 +175,4 @@ Now you should see the `Deploy Application` action in the self-service page. �
 Congrats 🎉 You've deployed a Humanitec application in Port 🔥
 
 ## More Self Service Humanitec Actions Examples
-- [Create Humanitec application](/docs/create-self-service-experiences/setup-backend/github-workflow\examples/Humanitec/create-humanitec-application.md)
+- [Create Humanitec application](/docs/actions-and-automations/setup-backend/github-workflow/examples/Humanitec/create-humanitec-application.md)
