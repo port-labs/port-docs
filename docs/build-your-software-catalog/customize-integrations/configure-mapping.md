@@ -190,9 +190,9 @@ After ingesting all of our services and PagerDuty services, we want to connect e
 
 ### Mapping relations using search queries
 
-Normally, we map relations using a direct reference to the related entity's `identifier`, as shown in the example above.  
+In the example above we map a relation using a direct reference to the related entity's `identifier`.  
 
-Alternatively, you can use a [search query rule](/search-and-query/#rules) to map relations based on a **property** of the related entity.  
+Port also allows you to use a [search query rule](/search-and-query/#rules) to map relations based on a **property** of the related entity.  
 This is useful in cases where you don't have the identifier of the related entity, but you do have one of its properties.
 
 For example, consider the following scenario:  
