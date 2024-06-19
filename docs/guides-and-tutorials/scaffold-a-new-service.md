@@ -45,7 +45,7 @@ If you **skipped** the onboarding, follow the instructions listed [here](/quicks
 
     <img src='/img/guides/scaffoldEditAction.png' width='45%' border='1px' />
 
-2. The action's basic details should look like the image below. This action has no user inputs, so when ready, click on the `Backend` tab to proceed.
+2. The action's basic details should look like the image below. You can click on the `User Form` tab to see the user inputs created for the action. When ready, click on the `Backend` tab to proceed.
 
     <img src='/img/guides/scaffoldActionDetails.png' width='60%' border='1px' />
 
