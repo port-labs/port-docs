@@ -204,7 +204,7 @@ resources:
 
 **Note: Using the `useGetResourceAPI` option will make each resync run slower.**
 
-:::tip
+:::tip Get an example of the AWS resource properties
 To get an example of the AWS resource properties, you can use the [AWS Cloud Control API](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html) to get the resource properties.
 
 For example for the `AWS::Lambda::Function` resource, you can use the following command to get the resource properties:

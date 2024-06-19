@@ -7,7 +7,7 @@ sidebar_position: 1
 The AWS integration is deployed using Terraform on AWS ECS cluster service.  
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
-:::warning
+:::warning Live-Events
 This installation guide is for the AWS integration only.
 It does not take into consideration the **live-events** infrastructure **which is optional**.
 The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) are optional and can be removed if not needed.
@@ -44,13 +44,13 @@ The AWS integration uses the following AWS infrastructure:
 
 In order to successfully deploy the AWS integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the above resources.
 
-## install using terraform
+## Install using terraform
 
 1. Go to Port's [Data Sources](https://app.getport.io/settings/data-sources?section=EXPORTERS) and click on AWS.
 2. Edit and copy the installation command.
 3. Run the command in your terminal to deploy the AWS integration.
 
-## install using Helm (Kubernetes)
+## Install using Helm (Kubernetes)
 
 <details>
 <summary>Installation</summary>
