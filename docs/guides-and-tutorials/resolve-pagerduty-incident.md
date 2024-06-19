@@ -40,8 +40,8 @@ Create a workflow file with the following content:
     <summary>`Resolve incident` GitHub workflow YAML</summary>
 
 This workflow is responsible for resolving an incident, notifying the Slack channel and closing the GitHub issue.
-:::tip
-   Replace the `<PAEGRDUTY_USER_EMAIL>` placeholder to the user email from the [Prerequisites](#prerequisites) section. 
+:::tip Update placeholders
+   Replace the `<PAEGRDUTY_USER_EMAIL>` placeholder with the user email from the [prerequisites](#prerequisites) section. 
 :::
 
 ```yaml showLineNumbers title=".github/workflows/resolve-incident.yaml"
@@ -203,7 +203,7 @@ jobs:
 </details>
 
 
-Make sure you created the following secrets in your GitHub repository (Should have done it in the [automation guide](https://docs.getport.io/guides-and-tutorials/create-slack-channel-for-reported-incident)):
+Make sure you created the following secrets in your GitHub repository (If you followed the [incident automation guide](https://docs.getport.io/guides-and-tutorials/create-slack-channel-for-reported-incident) then they should all already be in place):
 - `PORT_CLIENT_ID` - Your Port client ID.
 - `PORT_CLIENT_SECRET` - Your Port client secret.
 - `BOT_USER_OAUTH_TOKEN` - The Slack app bot token.
