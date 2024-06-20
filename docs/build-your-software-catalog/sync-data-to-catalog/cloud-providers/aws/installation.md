@@ -9,7 +9,8 @@ import TabItem from "@theme/TabItem"
 
 ## Permissions
 
-In order to successfully deploy the AWS integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the above resources.
+- To get Port API credentials, you check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/).
+- In order to successfully deploy the AWS integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the above resources.
 
 Choose one of the following installation methods:
 <Tabs groupId="installation-platforms" queryString="installation-platforms">
@@ -19,8 +20,13 @@ You can check out the Helm chart [here](https://github.com/port-labs/helm-charts
 
 ## Prerequisites
 
+- [create IAM user with the following permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html):
+  - `arn:aws:iam::aws:policy/ReadOnlyAccess`
+  - `account:ListRegions`
+  - `sts:AssumeRole`
 - [Helm 3](https://helm.sh/docs/intro/install/)
 - [A logged in aws CLI 2](https://aws.amazon.com/cli/)
+- [AWS Access Key ID and Secret Access Key](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users.html#id_users_creds)
 
 ```bash
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
@@ -33,17 +39,34 @@ helm upgrade --install aws port-labs/port-ocean \
 --set integration.identifier="my-aws"  \
 --set integration.type="aws"  \
 --set integration.eventListener.type="POLLING"  \
---set integration.config.liveEventsApiKey="$YOUR_CUSTOM_API_KEY" \
 --set integration.config.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
---set integration.config.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY" \
+--set integration.config.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY"
 ```
 
 ### IRSA
 
-If you are using [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html), you can set the following values, after [assigning the appropriate IAM role to the service account](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html):
+If you are using [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html).
+You'll need to:
+
+- [create an IAM role with the following permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-service.html):
+  - `arn:aws:iam::aws:policy/ReadOnlyAccess`
+  - `account:ListRegions`
+  - `sts:AssumeRole`
+- create a service account in your K8s cluster.
+  Then you can set the following values, after [assigning the appropriate IAM role to the service account](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html):
 
 ```bash
---set podServiceAccount.name="$SERVICE_ACCOUNT" \
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+helm upgrade --install aws port-labs/port-ocean \
+--set port.clientId="$PORT_CLIENT_ID"  \
+--set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
+--set port.baseUrl="https://api.getport.io"  \
+--set initializePortResources=true  \
+--set sendRawDataExamples=true  \
+--set integration.identifier="my-aws"  \
+--set integration.type="aws"  \
+--set integration.eventListener.type="POLLING"  \
+--set podServiceAccount.name="$SERVICE_ACCOUNT"
 ```
 
   </TabItem>
@@ -136,13 +159,16 @@ The AWS integration uses the following AWS infrastructure:
 </details>
 </TabItem>
 <TabItem value="on-prem" label="On Premise">
-1. Create an IAM user with the following permissions:
-- `arn:aws:iam::aws:policy/ReadOnlyAccess`
-- `account:ListRegions`
-- `sts:AssumeRole`
-2. Run the following Docker image: `ghcr.io/port-labs/port-ocean-aws:latest`.
-3. (For live updates): expose the port `8000` to the internet.
-4. Add the following environment variables to the Docker container:
+
+## Prerequisites
+
+- Create an IAM user with the following permissions:
+  - `arn:aws:iam::aws:policy/ReadOnlyAccess`
+  - `account:ListRegions`
+  - `sts:AssumeRole`
+- Run the following Docker image: `ghcr.io/port-labs/port-ocean-aws:latest`.
+- (For live updates): expose the port `8000` to the internet.
+- Add the following environment variables to the Docker container:
 
 <details>
 <summary>Environment Variables</summary>
@@ -162,6 +188,22 @@ The AWS integration uses the following AWS infrastructure:
 | `OCEAN__INTEGRATION__TYPE`                           | should be set to `aws`.                                                                                                                                                                                                                                              |
 
 </details>
+
+For example:
+
+```bash
+docker run -i --rm --platform=linux/amd64 \
+  -e OCEAN__PORT__CLIENT_ID="$PORT_CLIENT_ID" \
+  -e OCEAN__PORT__CLIENT_SECRET="$PORT_CLIENT_SECRET" \
+  -e OCEAN__PORT__BASE_URL="https://api.getport.io" \
+  -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+  -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
+  -e OCEAN__EVENT_LISTENER='{"type": "ONCE"}' \
+  -e OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+  -e OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+ghcr.io/port-labs/port-ocean-aws:latest
+```
+
 </TabItem>
 </Tabs>
 
