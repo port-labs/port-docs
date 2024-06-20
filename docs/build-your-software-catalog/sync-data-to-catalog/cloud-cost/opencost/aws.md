@@ -14,7 +14,7 @@ tags:
 
 By default, OpenCost pulls on-demand asset prices from the public AWS pricing API. The AWS Pricing API is limited in it's resolution capabilities, not allowing per-resource costs analysis and deep granularity. 
 
-To allow for a more granular resolution of your AWS cost data, Opencost supports ingesting pricing data from [CUR reports](https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html).
+To allow for a more granular resolution of your AWS cost data, OpenCost supports ingesting pricing data from [CUR reports](https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html).
 
 In this guide, we will use the OpenCost price capabilities using AWS CUR, and Port's [Ocean OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/opencost.md), to ingest per-resource cost entities in to our Port organization.
 
@@ -43,7 +43,7 @@ If the blueprint **does not** exist:
     "identifier": "openCostCloudcost",
     "description": "This blueprint represents cloud cost allocations from your OpenCost instance",
     "title": "OpenCost CloudCost",
-    "icon": "Opencost",
+    "icon": "OpenCost",
     "schema": {
         "properties": {
         "startDate": {
@@ -93,7 +93,7 @@ After setting up our data model, we need to update the OpenCost integration's ma
 
 OpenCost cloudcost data supports a variety of time windows, aggregations and filters. In this guide, the data that will be ingested is the cost of all `AmazonEC2` resources in the past week.
 
-Navigate to your [datasources page](https://app.getport.io/settings/data-sources), and click on the `Opencost` datasource. 
+Navigate to your [datasources page](https://app.getport.io/settings/data-sources), and click on the `OpenCost` datasource. 
 
 Add the following configuration to your datasource mapping:
 
