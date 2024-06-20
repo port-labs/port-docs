@@ -12,15 +12,15 @@ tags:
 
 ## Overview
 
-By default, OpenCost pulls on-demand asset prices from the public AWS pricing API. The AWS Pricing API is limited in it's resolution capabilities, not allowing per-resource costs analysis and other interesting data resolutions. 
+By default, OpenCost pulls on-demand asset prices from the public AWS pricing API. The AWS Pricing API is limited in it's resolution capabilities, not allowing per-resource costs analysis and deep granularity. 
 
 To allow for a more granular resolution of your AWS cost data, Opencost supports ingesting pricing data from [CUR reports](https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html).
 
-In this guide, we will using the OpenCost price capabilities using AWS CUR, and Port's [Ocean OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/opencost.md), to ingest per-resourse cost entities in to our Port organization.
+In this guide, we will use the OpenCost price capabilities using AWS CUR, and Port's [Ocean OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/opencost.md), to ingest per-resource cost entities in to our Port organization.
 
 ## Prerequisites
 
-- Set up OpenCost with AWS CUR - You will need to set up OpenCost AWS Costs and Usage reports ingestion using [this guide](https://docs.kubecost.com/install-and-configure/install/cloud-integration/aws-cloud-integrations). This guide uses KubeCost documentation, but the steps are the same for setting up Opencost.
+- Set up OpenCost with AWS CUR - You will need to set up OpenCost AWS Costs and Usage reports ingestion using [this guide](https://docs.kubecost.com/install-and-configure/install/cloud-integration/aws-cloud-integrations). This guide uses KubeCost documentation, but the steps are the same for setting up OpenCost.
 
 - Install Port's [OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/opencost.md#installation).
 
@@ -91,7 +91,7 @@ If the blueprint **does not** exist:
 # Mapping configuration
 After setting up our data model, we need to update the OpenCost integration's mapping configuration.
 
-OpenCost cloudcost data supports all sorts of time windows, aggregations and filters. In this guide, the data that will be ingested is the cost of all `AmazonEC2` resources in the past week.
+OpenCost cloudcost data supports a variety of time windows, aggregations and filters. In this guide, the data that will be ingested is the cost of all `AmazonEC2` resources in the past week.
 
 Navigate to your [datasources page](https://app.getport.io/settings/data-sources), and click on the `Opencost` datasource. 
 
@@ -101,7 +101,7 @@ Add the following configuration to your datasource mapping:
 <details>
     <summary>`OpenCost CloudCost` mapping configuration</summary>
 
-   If the OpenCost integration was freshly installed, there will already be an existing `cloudcost` config block. Replace the pre-existing config with the following YAML snippet.
+   When installing the integration, a `cloudcost` config block is added automatically. Replace the pre-existing config with the following YAML snippet.
 
 ```yaml showLineNumbers
   - kind: cloudcost
@@ -128,12 +128,13 @@ Add the following configuration to your datasource mapping:
             amortizedCost: .amortizedCost.cost
 ```
 
-:::note
+:::note Service selector
 
 The `.selector.filter.service` field is **required**, and represents the AWS service type (AWS Namespace) we want to ingest. 
 
 We use the `.properties.providerID` field to get the ARN of the AWS resource. Some AWS resources do not have a full ARN as their ID and are ingested as regular IDs.
-For example, an entity which represents an EC2 instance will be ingested to Port with a `i-abc123abc123ab` as it's identifier.
+
+For example, an entity which represents an EC2 instance will be ingested to Port with `i-abc123abc123ab` as its identifier.
 
 :::
 
