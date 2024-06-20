@@ -11,12 +11,12 @@ tags:
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Automating incident managment
+# Automating incident management
 
 ## Overview
 
 Solving incidents efficiently is a crucial part of any production-ready environment. When managing an incident, there are a few base concepts which are important to keep:
-- **Real time notifications** - When an incident has been created, either by an alert or manually, it is important that a push notification will be sent the the relevant owners and stakeholders as soon as possible. This can be in the form of a Slack message, email or any other form of communication.
+- **Real time notifications** - When an incident has been created, either by an alert or manually, it is important that a push notification will be sent to the relevant owners and stakeholders as soon as possible. This can be in the form of a Slack message, email or any other form of communication.
 - **Documentation** - When there is an ongoing incident, it is important that different personas across the organization will be aware of it. Hence, it is important to document the incident in relevant places, for example as a Port entity, a GitHub issue or a Jira issue.
 - **Visibility** - While troubleshooting, it is important to provide information to all relevant personas and stakeholders in the organization. An ideal place to manage an incident would be a group chat with the relevant people.
 
@@ -321,7 +321,7 @@ Create the following automation:
 {
   "identifier": "handle_new_incident",
   "title": "Handle new PagerDuty incident",
-  "icon": "Pagerduty",
+  "icon": "pagerduty",
   "description": "Create Slack channel for incident troubleshooting, and GitHub issue for documentation",
   "trigger": {
     "type": "automation",
@@ -391,8 +391,8 @@ This automation will enable faster notification and response time when handling 
 
 ## Next Steps
 This guide can be enhanced to further meet your organization's needs. Here are some ideas you can implement:
+- Add a DAY-2 `Resolve incident` Port action to the `PagerDuty incident` which resolves the GitHub issue and sends an update in the Slack channel. You can use the following [guide](https://docs.getport.io/guides-and-tutorials/resolve-pagerduty-incident).
 - Add a mirror property in the `PagerDuty incident` blueprint, to show the GitHub issue `Link` in the PagerDuty entity page.
-- Add a DAY-2 `Resolve incident` Port action to the `PagerDuty incident` which resolves the GitHub issue and sends an update in the Slack channel.
 - Filter the automation tirgger to only run for `High` urgency incidents.
 - Add the Port service owner to the Slack channel as part of the automation.
 
