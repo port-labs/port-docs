@@ -8,6 +8,7 @@ import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_azure_docker_params.mdx"
 import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Installation
 
@@ -146,6 +147,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
 | `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)              |                                  | ✅       |
 | `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)          |                                  | ✅       |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
 | `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks                         | https://my-ocean-integration.com | ❌       |
 
 <HelmParameters/>
@@ -186,20 +188,23 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-azure-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
+	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=60 \
 	--set integration.identifier="my-azure-integration"  \
 	--set integration.type="azure"  \
 	--set integration.eventListener.type="POLLING"  \
-        --set "extraEnv[0].name=AZURE_CLIENT_ID"  \
-        --set "extraEnv[0].value=xxxx-your-client-id-xxxxx"  \
-        --set "extraEnv[1].name=AZURE_CLIENT_SECRET"  \
-        --set "extraEnv[1].value=xxxxxxx-your-client-secret-xxxx"  \
-        --set "extraEnv[2].name=AZURE_TENANT_ID"  \
-        --set "extraEnv[2].value=xxxx-your-tenant-id-xxxxx"  \
-        --set "extraEnv[3].name=AZURE_SUBSCRIPTION_ID"  \
-        --set "extraEnv[3].value=xxxx-your-subscription-id-xxxxx"
+	--set "extraEnv[0].name=AZURE_CLIENT_ID"  \
+	--set "extraEnv[0].value=xxxx-your-client-id-xxxxx"  \
+	--set "extraEnv[1].name=AZURE_CLIENT_SECRET"  \
+	--set "extraEnv[1].value=xxxxxxx-your-client-secret-xxxx"  \
+	--set "extraEnv[2].name=AZURE_TENANT_ID"  \
+	--set "extraEnv[2].value=xxxx-your-tenant-id-xxxxx"  \
+	--set "extraEnv[3].name=AZURE_SUBSCRIPTION_ID"  \
+	--set "extraEnv[3].value=xxxx-your-subscription-id-xxxxx"
 ```
+
+<PortApiRegionTip/>
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD">
@@ -265,6 +270,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -276,11 +283,12 @@ spec:
     syncOptions:
     - CreateNamespace=true
 ```
+<PortApiRegionTip/>
 
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+1. Apply your application manifest with `kubectl`:
 
 ```bash
 kubectl apply -f my-ocean-azure-integration.yaml
@@ -333,6 +341,7 @@ jobs:
           identifier: "my-azure-integration"
           port_client_id: ${{ secrets.OCEAN__PORT_CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT_CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
 ```
 
 </TabItem>
@@ -381,6 +390,7 @@ pipeline {
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
                                 -e AZURE_CLIENT_ID=$OCEAN__SECRET__AZURE_CLIENT_ID \
                                 -e AZURE_CLIENT_SECRET=$OCEAN__SECRET__AZURE_CLIENT_SECRET \
                                 -e AZURE_TENANT_ID=$OCEAN__SECRET__AZURE_TENANT_ID \
@@ -430,6 +440,7 @@ steps:
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
           -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
           -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
+          -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
           -e AZURE_CLIENT_ID=$(OCEAN__SECRET__AZURE_CLIENT_ID) \
           -e AZURE_CLIENT_SECRET=$(OCEAN__SECRET__AZURE_CLIENT_SECRET) \
           -e AZURE_TENANT_ID=$(OCEAN__SECRET__AZURE_TENANT_ID) \
@@ -442,6 +453,8 @@ steps:
 </TabItem>
 
 </Tabs>
+
+<PortApiRegionTip/>
 
 </TabItem>
 

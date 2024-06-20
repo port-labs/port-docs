@@ -1,0 +1,125 @@
+---
+id: get-an-integration
+title: "Get an integration"
+description: "This route allows you to fetch a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/)."
+sidebar_label: "Get an integration"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVN9r2zAQ/leEnlpI4naPphQK20rYS+k69lACle1zLKpIrnRK5xn/7zvJTqq06WDsZbAXJ5Lu1/d9d9fzClxpZYvSaJ7zu0Y6Zo1HYEIp8+xYZzxDw2rAsmGCuRZKWcuSSY2wtiL40f9gZtmNsciMXQstf8aXxUVhs8v4uTNMgbCabYyl4AXlSGO4GSsbKB9ZuMcG2H1lSr8BjfF5ddIgti7PMrp2izVgS7kW0mSFl6qah/RzZ2p8FhbmpUChzDpznS7nFR3maPaXpws+4yjWjuf3fJlUwFcz3gorNoBgw2vPHdW0ETzvOXYtED8OrdRrClBBLbxCupLaUWAVYywregLtNyH2mwfKvtRrcEin1TAjA3J/8mA7etSUl45F91mCqmKGQ2GA1eGFeQdVUERWRI6su8hWwuSCfW9AMwcYrB6SpA+zaPsweUqwD2wPmLnGeApfAAkhyKNioiyNrQiv6kYhqSoLT15aqHheC+VgmL1P0g5hK7B5AfiS/CjGlDSCyEz9Gl/syGehcd+WR4pD62EgPR2U3krsopoF9R+lJWksiCqXB9oHawuupQO4AObD2Vn4OSzx4yg7u50s+UAoib/GUFJObclnI96cZ9vzLEmR9S/IBx4qs9tdm3mryGHX4aKVSYPzQPFbA+8ObBKoX4McI4Qd4L0y5PkFkm678lS5nYaVT3o1RA55DVG/2kR3iSrYxwG/ulmSaSh+5OR8cRa0bo3DjdDBfIp+TS0odKrda8l7Xhp61fg/rZ5RCoQfmLVKEOVEXhS4n1rnnm/Poxgpb3kyOKR2Q2wHy74vhINvVg1DuB63SeipSjpRqP2g/pb4f2O1HCXmkdo13YpboXywii2/FVYGkH8I+OR22hOn7K9XztGid9Omu7TiHZhEyGGVro/rT3dkJHzogXRkH+PITn8C1KPxX8/ymCx8wwY56nJBo8xoIVzuzceXdx2m1bBHogOCYfgFHDHjoQ==
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an integration"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/integration/{identifier}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The installation id of the integration you want to fetch.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","default":"installationId","enum":["installationId","logIngestId"]},"in":"query","name":"byField","description":"The field used to identify the integration. When set to `logIngestId`, the `identifier` parameter should be changed accordingly.<br/>","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

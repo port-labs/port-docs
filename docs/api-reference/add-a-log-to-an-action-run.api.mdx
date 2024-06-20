@@ -1,0 +1,165 @@
+---
+id: add-a-log-to-an-action-run
+title: "Add a log to an action run"
+description: "This route allows you to send a log message back to Port, which will be displayed in the action run's page. You can also use this route to update the run's termination status (SUCCESS/FAILURE) and label describing the status.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
+sidebar_label: "Add a log to an action run"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVcFu4zYQ/RWClyaAYyU9GosF3GwKLLpAAzs5FKlRUNLY4oYWVZKy4xr+974hJVvJOtheil4KAzJFzQzfzLw33MuSfOF0E7St5UQ+VNoLZ9tAQhljt17sbCuCFZ7qUihh7EqsyXu1IpGr4pk/3VsXRmJb6aISW22MyEmU2jdG7agUuhahQrSCTxCurX/wooH7WPyGyIWqcZC3ovUEu+PhCNs2peIVnJNXILfWtYpxfFCh9eJi/nh7ezefZz9PP395nN1dCgWYRuVkREos1/Uqxkge4w+5yz7Gx4MVhpSrxdo64Mtx7gClH4miIiTI2+z/VNqiXVMdIoDFRRVC4ydZhm0/XlFoUIWxtlnhCLCvPJklHm6jC7qil4acprognzlaGirCVTrqqnF25VDQ7HIsRzKolZeTJzlNOGbAIRcj6ejPlnz4yZY7OdnLwtYBQHipmsboIkLKvnpu4V56AF8rXoVdQ2iqzb/iRITHYQASNPn49VTPeSzOwMUHh8LB5S096Fwb7PJNj8fiFo0FDwwtg8iNqp+FXkYu2drsxFbV4TyrUoNwMNXtmkvRdRg7XY/l4jCS6eAv3Ojvo552jMCBHSloQIl/AT0Adhv/rKRDVfVxh+rqwyKuKkvNnsrcD5q5hIYo8UQ7KrluPYDFgd1OX4JrCRuNcmpN6CXz7QxnOrSw1IyyUaEC9Bo+eEON/tCl/CYsqOqpaJ0Ouxg1h77IYbk4RBb7xtY+ke/H62v+e12LT7RUrQli1lnGjIGysiVjsD6SmKFMZLa5yVLLoCnoJNsnVIcM1fSSkbhNn17rQBPZS1Y1eqBY5HjOoPWvbAapzblWKYs+wWPZ4PkL7U6VmrYA7/RfUS6yK2ZFqoQXJ8eanZ3Uffei1o2hd9Q50MIr/p+odWTdq/4tbQyoA0eWTCgxvf8Mc65PqvzN+JptucRrFadIn0DZUxxc5GF9VMlbJg/m0v/XyH98jSQyBnoJGeoH0qG3keL7Tj5PcnMDw05ArOQ2/k2O0o4qAusrVh3s9/tceXp05nDgbVDWscix3CinVc7cgtLQMV6Xx5n0LkcuZt3wuBTvQe5FVbOiNsq0/IblMyR2nEIHvg86STGC9PE2nXP1wCFOzt/clyzs44S5/3X+AOO8u2fXtozTTm25QHhO5O/44cU2qW4wivt7iUti1SbppbhxWLdc6+FweI7DoVsw2rMpvp0aKSV+8qw66/IBihYYPR+P5unLuw5dxXprLjhfFX8Dxuh6uQ==
+sidebar_class_name: "post api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Add a log to an action run"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/actions/runs/{run_id}/logs"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to send a log message back to Port, which will be displayed in the action run's page. You can also use this route to update the run's termination status (SUCCESS/FAILURE) and label describing the status.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"terminationStatus"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** [`SUCCESS`, `FAILURE`]"}
+          schema={{"type":"string","description":"The termination status of the action run. Can be left blank if you only want to send a log message.<br/>","enum":["SUCCESS","FAILURE"]}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"statusLabel"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"A label to describe the status of the action run. Can be left blank if you only want to send a log message.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"message"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The log message to send back to Port.<br/>"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

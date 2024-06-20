@@ -28,7 +28,7 @@ The action is defined under the `invocationMethod` key in the automation's JSON 
     "type": "automation",
     "event": {
       "type": "event_type",
-      "blueprintIdentifier": "blueprint_id",
+      "blueprintIdentifier": "blueprint_id"
     },
     "condition": {
       "type": "JQ",

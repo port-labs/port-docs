@@ -530,6 +530,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: UPSERT
           identifier: ${{ fromJson(inputs.production_runtime).identifier }}
           blueprint: running_service

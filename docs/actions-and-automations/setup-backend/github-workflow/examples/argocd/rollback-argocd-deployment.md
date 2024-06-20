@@ -327,7 +327,7 @@ jobs:
           runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: "About to rollback deployment image in argocd..."
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Create PR
         id: create-pr
         uses: fjogeleit/yaml-update-action@main

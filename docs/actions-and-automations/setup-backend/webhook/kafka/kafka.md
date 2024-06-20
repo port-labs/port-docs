@@ -52,4 +52,3 @@ An example flow would be:
 To get started with webhook Self-Service Actions, please check the sources below:
 
 - [Setting up a basic execution runner using AWS Lambda](./examples/execution-basic-runner-using-aws-lambda.md)
-- [Setting up a basic change log listener using AWS Lambda](./examples/changelog-basic-change-listener-using-aws-lambda.md)

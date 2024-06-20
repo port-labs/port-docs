@@ -1,0 +1,106 @@
+---
+id: delete-a-scorecard
+title: "Delete a scorecard"
+description: "This route allows you to delete a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/)."
+sidebar_label: "Delete a scorecard"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVE1PGzEQ/SuWTyCl2aTHFUJCgkPVHhDQUxRVzu6EtXDWxh6Hpqv9753ZzwBLJWhvvSReez7fezOVzCFkXjvUtpSpvCt0EN5GBKGMsU9BHGwUaEUOBvhSBAeZ3upMhMx6yJTP5+Ji/BDkT0aAwm6FjwaCwEIh+W91CXQG8RiV0XhgAyU2JoLzusT52cYn583PnRUGlC/FjoIKtaFyxgRhJrICsgfBtxxuldss7qBExT2sTwpEF9Ikoeswvwd01uNc28R5u7MIn8ZIyelcziSq+yDTlbwd7uV6Jp3yakcde36rZKCcOyXTSuLBAQEVkIq+l/VMasbNKSwoVkk+/NiH+qFzKozgAk+vL6EGMT4zGtzNCCQD/6RKHNFvIaJAHh6j9pDLFH2Eevbe+gbQ31/f4CqeChs+Vi/BGyCLnkTQgLshsqmAdLXmJw/B2TJA4G4+Lxb897yyS9iqaFDcdJaypjaJrMJSBtnmlrO251Qm+2UyVB2Saqr5OjlSRTVFXy25aL/vBRG9odi91pTTR1KTzMhrgxie2RyhcMvstQ33WAxEkudXOIzcXUTq0+tfjdplR28BKievuqF7axt3jYbtrymfuLj+QqZcfIvgcr5gaTgbcKdKNu+iXw5j3mPwUheVzGyJBMt/ui1aVhB+YuKMIvQJx4brqhPcSu6XZDhKjj7SNyZujM5Gk2uDZEKDhhy3qjYqwHdv6pqvHyN4HiA67pXXasN8kzRzHfhMs7BVJsAf+Du56QbzVPzFNpqEpFdvydLdK2qfvuj4QFp+Y0Hy1PzD2j+0qT7QyyS19fp4JV1efbu6uyIPFVkhx7P90Mx2d2D2JpO9HPo2M/8yaJMuZzTzgjbH+WDevrzp0O2Q3ppbX9d1/RtMrtb0
+sidebar_class_name: "delete api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Delete a scorecard"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to delete a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"scorecard_identifier","description":"The identifier of the scorecard you want to delete.<br/>","required":true}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"blueprint_identifier","description":"The identifier of the blueprint whose scorecard you want to delete.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
