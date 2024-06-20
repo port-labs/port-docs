@@ -16,13 +16,13 @@ By default, OpenCost pulls on-demand asset prices from the public AWS pricing AP
 
 To allow for a more granular resolution of your AWS cost data, Opencost supports ingesting pricing data from [CUR reports](https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html).
 
-In this guide, we will using the OpenCost price capabilities using AWS CUR, and Port's [Ocean OpenCost integration](./opencost.md), to ingest per-resourse cost entities in to our Port organization.
+In this guide, we will using the OpenCost price capabilities using AWS CUR, and Port's [Ocean OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/opencost.md), to ingest per-resourse cost entities in to our Port organization.
 
 ## Prerequisites
 
 - Set up OpenCost with AWS CUR - You will need to set up OpenCost AWS Costs and Usage reports ingestion using [this guide](https://docs.kubecost.com/install-and-configure/install/cloud-integration/aws-cloud-integrations). This guide uses KubeCost documentation, but the steps are the same for setting up Opencost.
 
-- Install Port's [OpenCost integration](./opencost.md#installation).
+- Install Port's [OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/opencost.md#installation).
 
 # Data model setup
 When setting up Port's OpenCost integration for the first time, the integration should initialize a [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) called `OpenCost CloudCost`.
