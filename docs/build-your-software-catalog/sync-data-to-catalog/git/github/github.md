@@ -242,6 +242,7 @@ Port's GitHub integration requires the following permissions:
   - Code scanning alert
   - Member
   - Membership
+  - Release
 
 :::note
 You will be prompted to confirm these permissions when first installing the App.
