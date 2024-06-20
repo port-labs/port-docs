@@ -80,3 +80,7 @@ Automations are defined in the [Automations page](https://app.getport.io/setting
    * Define the [action](/actions-and-automations/define-automations/setup-action) that will be executed when the trigger event occurs.
 
 3. Make sure to set the `publish` field to `true` if you want to enable the automation. When finished, click `Save`.
+
+## Examples
+
+See some examples of automation definitions [here](/actions-and-automations/define-automations/examples).

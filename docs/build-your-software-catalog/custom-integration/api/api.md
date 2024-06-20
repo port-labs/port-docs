@@ -3,6 +3,7 @@ sidebar_position: 1
 ---
 
 import FindCredentials from "./\_template_docs/\_find_credentials.mdx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -126,6 +127,8 @@ access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/ac
 </TabItem>
 
 </Tabs>
+
+<PortApiRegionTip/>
 
 ## Ingest data via API
 
@@ -1074,3 +1077,5 @@ It is also possible to delete all entities using Port's web UI:
 </TabItem>
 
 </Tabs>
+
+<PortApiRegionTip/>

@@ -1,3 +1,5 @@
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+
 :::note Prerequisites
 To install and use Port's Terraform provider, you will need to install the [Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 :::
@@ -17,8 +19,11 @@ terraform {
 provider "port" {
   client_id = "{YOUR CLIENT ID}"     # or set the environment variable PORT_CLIENT_ID
   secret    = "{YOUR CLIENT SECRET}" # or set the environment variable PORT_CLIENT_SECRET
+  base_url  = "https://api.getport.io"
 }
 ```
+
+<PortApiRegionTip/>
 
 Then run the following command to install the provider in your Terraform workspace:
 

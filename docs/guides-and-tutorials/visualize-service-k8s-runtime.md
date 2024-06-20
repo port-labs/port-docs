@@ -6,6 +6,7 @@ sidebar_label: Visualize services' k8s runtime
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Visualize your services' k8s runtime
 
@@ -55,6 +56,8 @@ helm upgrade --install my-cluster port-labs/port-k8s-exporter \
 	--set "extraEnv[0].name"="CLUSTER_NAME"  \
 	--set "extraEnv[0].value"="my-cluster"
 ```
+
+<PortApiRegionTip/>
 
 #### What does the exporter do?
 
