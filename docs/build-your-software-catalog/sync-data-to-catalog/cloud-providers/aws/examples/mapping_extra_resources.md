@@ -164,7 +164,7 @@ Create an integration configuration for the resource. The integration configurat
 
 #### `useGetResourceAPI` property
 
-- By default the integration uses the [`CloudControl:ListResources`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/list-resources.html) API to get the resources. The integration can also enrich each resource by running [`CloudControl:GetResource`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/get-resource.html) on each resource, you can use this by enabling `useGetResourceAPI` option.  
+- By default the integration uses the [`CloudControl:ListResources`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/list-resources.html) API to get the resources. The integration can also enrich each resource by running [`CloudControl:GetResource`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/get-resource.html) on each resource, you can use this by enabling `useGetResourceAPI` option.
 
   The `useGetResourceAPI` option is only available for resources that support the `CloudControl:GetResource` API.
 
@@ -202,7 +202,7 @@ resources:
             account: '.__AccountId'
 ```
 
-**Note: Using the `useGetResourceAPI` option will make each resync run slower.**
+**Note: Using the `useGetResourceAPI` option will make each resync run slower and use a lot more memory and cpu so you might want to add memory and cpu limits.**
 
 :::tip Get an example of the AWS resource properties
 To get an example of the AWS resource properties, you can use the [AWS Cloud Control API](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html) to get the resource properties.
