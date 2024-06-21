@@ -12,7 +12,7 @@ Dashboards are available in the following locations:
 
 ### Pie chart
 
-You can create a pie chart illustrating data from entities in your software catalog divided by categories and entity properties inside a specific entity page [**specific entity page**](../page/entity-page.md).
+Pie charts illustrate data from entities in your software catalog divided by categories and entity properties.
 
 ![Pie Chart](/img/software-catalog/widgets/pieChartExample.png)
 
@@ -29,10 +29,11 @@ You can create a pie chart illustrating data from entities in your software cata
 
 ### Number chart
 
-You can create a number chart visualization from related entities in the [**specific entity page**](../page/entity-page.md). 
+Number charts display a number value related to an entity and its properties.
+
 You can choose one of these chart types:
-* **Display single property** - display a property from a specific entity
-* **Count entities** - display the amount of related entities or showw average by time.  
+* **Display single property** - display a property from a specific entity.
+* **Count entities** - display the amount of related entities or show an average by time.  
 * **Aggregate by property** - apply an aggregation function on number properties from multiple entities. 
 
 :::note
@@ -90,6 +91,46 @@ You can also filter entities so the aggregation number chart will only apply to 
 When performing calculations of average time intervals, such as by hour, day, week, or month, it is important to note that any partial interval is considered as a full interval. This approach ensures consistency across different time units.
 
 For example, if the dataset includes information spanning across 2 hours and 20 minutes, but the selected average timeframe is `hour`, then the summed value will be divided by 3 hours.
+:::
+
+### Line chart
+
+Line charts display trends of `number` properties over time.  
+
+When creating a line chart, you need to choose a blueprint, then choose one of its entities, and finally choose one or more of the entity's `number` properties.  
+:::tip Specific entity page
+When creating a line chart in an [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets), the chosen entity will be the entity whose page you are on.
+:::
+
+The chart will display the property values over the span of (up to) **one year** in daily intervals, with the x-axis representing the time and the y-axis representing the property values.
+
+For example, here is a line chart displaying a service's resource usage over a span of 8 days:
+<img src='/img/software-catalog/widgets/lineChartExample.png' width='100%' border='1px' />
+
+#### Line chart properties
+
+| Field         | Type     | Description                                   | Default | Required |
+| ------------- | -------- | --------------------------------------------- | ------- | -------- |
+| `Title`       | `String` | Chart title                                   | `null`  | `true`   |
+| `Icon`        | `String` | Chart Icon                                    | `null`  | `false`  |
+| `Description` | `String` | An optional description of the chart          | `null`  | `false`  |
+| `Blueprint`   | `String` | The chosen blueprint                          | `null`  | `true`   |
+| `Entity`      | `String` | The chosen entity                             | `null`  | `true`   |
+| `Properties`  | `Array`  | The chosen `number` property/ies to visualize | `null`  | `true`   |
+
+#### Potential use cases
+
+Line charts can display data for any `number` property, including [aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) and [calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) properties.  
+
+Consider the following use case:  
+Say you have a Kubernetes `cluster` blueprint, with a related `node` blueprint representing the cluster's nodes. Each `node` has a `cost` property indicating its monthly cost.  
+
+We can create an aggregation property on the `cluster` blueprint, which sums the `cost` properties of all related `node` entities.  
+Then, we can create a line chart displaying the `cost` property of the `cluster` entity over time, showing the total cost of the cluster.
+
+:::info Available historical data
+The line chart will display data starting from the time the property was created.  
+Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
 :::
 
 ### Markdown
