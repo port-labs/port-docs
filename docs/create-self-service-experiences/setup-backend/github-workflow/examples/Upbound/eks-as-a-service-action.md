@@ -1,10 +1,10 @@
-# Port and Upbound capabilities guide
-This is a guide for preparing a test environment to showcase Port + Upbound capabilities, both as a software catalog and self-service hub for developers, and a platform management tool for the platform team.
+# EKS as a service action (EKSaaS)
+This is a guide to integrate Port and Upbound, using their combination as a software catalog and self-service hub for developers, and a platform management tool for the platform team.
 
 At the end of this guide, you should be able to interact with Upbound using Port, provide EKSaaS using Upbound's capabilities and control planes as a backend, while reporting data regarding deployed clusters back to Port.
 
 :::note Clean slate start
-The demo starts off on a completely clean slate - an empty Upbound organization, an empty git repository, and a clean Port environment.
+The demo starts off on a completely clean slate - an empty Upbound organization, an empty Git repository, and an empty Port environment.
 :::
 
 :::tip Prerequisites
@@ -13,21 +13,28 @@ Before following the guide, you will need to set up an Upbound organization, ini
 - Save the `Organization ID` for later;
 - Set up the default EKSaaS configuration in the Upbound organization;
 - Deploy a control plane (or many) and save their `identifiers` for later;
-- Create an API token and save it for later.
+- Create an API token and save it for later:
+  * Click on the dropdown over your name at the top right corner;
+  * Click on "My Account";
+  * On the left side menu, select "API Tokens";
+  * Click on "Create New Token";
+  * Enter a name for your token and click "Create Token";
+  * Save the access ID and token for later.
 
 <h3>Port</h3>
+
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
-- It would be best to start off with a clean Port environment. Make sure that the Port organization used in the demo doesn't have any entities or blueprints.
 - Save the Port organization's `CLIENT_ID` and `CLIENT_SECRET` for later ([how to find your Port credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 
 <h3>Git repository</h3>
-The actions backend, and the state of the different control planes will be handled in a github repository. For Port to interact with the new Github repo, you will need Port's Github app to be installed ([install Port's github app](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation)).
 
-Create a new git repository, and make sure that Port's Github app is installed on it either by:
-- installing Port's github app on all the repositories in the used Github organization;
-- or by adding the new repository to the allowed repository list of Port's Github app in the organization.
+The actions backend, and the state of the different control planes will be handled in a GitHub repository. For Port to interact with the new GitHub repo, you will need Port's GitHub app to be installed ([install Port's GitHub app](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation)).
 
-Also make sure that Github actions [allow creating and approving pull requests](https://docs.github.com/en/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests) in your repository.
+Create a new git repository, and make sure that Port's GitHub app is installed on it either by:
+- Installing Port's GitHub app on all the repositories in the used GitHub organization;
+- Or by adding the new repository to the allowed repository list of Port's GitHub app in the organization.
+
+Also make sure that GitHub actions [allow creating and approving pull requests](https://docs.github.com/en/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests) in your repository.
 
 **Note:** _Save the name of your new repository for later._
 :::
@@ -37,8 +44,10 @@ After completing the [prerequisites](#prerequisites) step, you can start followi
 
 ## Setting up the git repository
 ### Create all the necessary files and directory structure
+
 - Create a GitHub repository
-- Create a folder at `.github/workflows/` - Create `.yaml` files using the collapsed file contents below:
+- Create a folder at `.github/workflows/`
+- Create `.yaml` files using the collapsed file contents below:
 
 <details>
 <summary><b>Apply Clusters (click to expand)</b></summary>
@@ -47,7 +56,10 @@ After completing the [prerequisites](#prerequisites) step, you can start followi
 name: Apply Cluster changes
 
 on:
-  workflow_call:
+  workflow_dispatch:
+    inputs:
+      port_context:
+        type: string
 
 jobs:
   apply-clusters:
@@ -67,7 +79,7 @@ jobs:
         run: |
           curl -sL "https://cli.upbound.io" | sh
           sudo mv up /usr/local/bin/
-      - name: Connect to Upbound using CLI an apply manifests to all of the control planes
+      - name: Connect to Upbound using CLI and apply manifests to all of the control planes
         run: |
           up login -t ${{ secrets.UPBOUND_TOKEN }}
           cd .up/clusters
@@ -670,9 +682,10 @@ spec:
 
 </details>
 
-### Create repository secrets for the Github actions to use
-Follow Github's [guide](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) to add required secrets to the repository. These are the secrets that need to be created:
+### Create repository secrets for the GitHub actions to use
+Follow GitHub's [guide](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) to add required secrets to the repository. These are the secrets that need to be created:
 * `UPBOUND_TOKEN` - The Upbound organization's API token;
+* `UPBOUND_ORG_ID` - The Upbound organization's ID;
 * `PORT_CLIENT_ID` - The Port organization's client id;
 * `PORT_CLIENT_SECRET` - The Port organization's client secret.
 
@@ -847,17 +860,17 @@ Create the following blueprints in the order that they appear below:
 </details>
 You will need to create these blueprints in your Port organization. 
 
-:::warn Blueprint creation
+:::warning Blueprint creation
 Blueprint creation may fail if they are not created in the order that they appear above
 :::
 
 ### Creating actions
-Below are action blueprints which define the different actions we need, to trigger the different Github workflows.
+Below are self-service actions which define the different actions we need, to trigger the different GitHub workflows.
 
 These actions are defined on their appropriate blueprints.
 
-::note Customizing GitHub values
-Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAME` values in the action blueprint.  You need to replace these with your appropriate Github organization name and repository name.
+:::note Customizing GitHub values
+Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAME` values in the action blueprint. You need to replace these with your appropriate GitHub organization name and repository name.
 :::
 
 <details>
@@ -1278,7 +1291,7 @@ Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAM
 ### Creating Upbound control plane Port entities
 After setting up the Port blueprints and actions, we need to insert some entities manually.
 
-These entities will represent the different Upbound control planes which were created earlier.
+These entities will represent the different Upbound control planes which were created in your Upbound organisation.
 
 To do this, follow these steps:
 
@@ -1287,7 +1300,7 @@ To do this, follow these steps:
 2. Click the `Manually add Upbound Control Plane` button (or the `+ Upbound Control plane` at the top right of the page).
 <img src='/img/create-self-service-experiences/setup-backend/github-workflow/examples/Upbound/addUpboundControlPlaneManually.png' border='1px' />
 
-3. In the `identifier` field, insert the Upbound control plane `identifier` which we saved earlier and click create (do this step multiple times if there are more than 1 control planes).
+3. In the `identifier` field, insert the Upbound control plane `identifier` which we saved earlier and click create (do this step multiple times if there are more than 1 control plane).
 <img src='/img/create-self-service-experiences/setup-backend/github-workflow/examples/Upbound/setUpboundControlPlaneIdentifier.png' border='1px' />
 
 ## Using Port
