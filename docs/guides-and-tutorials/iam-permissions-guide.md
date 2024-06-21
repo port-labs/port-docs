@@ -8,6 +8,7 @@ tags:
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # IAM Permission Management
 
@@ -243,10 +244,14 @@ name: Create permissions for AWS resource
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      properties:
         type: string
         required: true
-        description: The Port Payload for triggering this action                
+        description: The form inputs
+      port_context:
+        type: string
+        required: true
+        description: The Port context for triggering this action                  
 
 jobs:
   create-iam-permissions:
@@ -255,7 +260,7 @@ jobs:
     env:
       POLICY_NAME: Permission-${{github.run_id}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           persist-credentials: true
       - name: Configure AWS Credentials
@@ -267,9 +272,9 @@ jobs:
       - name: Create JSON for permissions
         id: create-jsons
         run: |
-          permissions=$(echo '${{ inputs.port_payload }}' | jq -c '.payload.properties.permissions')
+          permissions=$(echo '${{ inputs.properties }}' | jq -c '.permissions')
           echo "PERMISSIONS_ARRAY=${permissions}" >> $GITHUB_OUTPUT
-          jq -r --argjson permissions "${permissions}" --arg resource "${{fromJson(inputs.port_payload).context.entity}}/*" '.Statement[0].Action=$permissions | .Statement[0].Resource=$resource' .github/templates/iamPolicyDocument.json > temp_policy_document.json
+          jq -r --argjson permissions "${permissions}" --arg resource "${{fromJson(inputs.port_context).entity.identifier}}/*" '.Statement[0].Action=$permissions | .Statement[0].Resource=$resource' .github/templates/iamPolicyDocument.json > temp_policy_document.json
           jq -r --arg aws_acc_id "${{ secrets.AWS_ACCOUNT_ID }}" '.Statement[0].Principal.AWS="arn:aws:iam::"+$aws_acc_id+":root"' .github/templates/iamTrustPolicy.json > temp_trust_policy.json
       - name: Apply policies and attachments
         id: apply-policies
@@ -292,31 +297,34 @@ jobs:
         with:
             clientId: ${{ secrets.PORT_CLIENT_ID }}
             clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+            baseUrl: https://api.getport.io
             identifier: ${{ env.POLICY_NAME }}
             title: ${{ env.POLICY_NAME }}
             blueprint: provisioned_permissions
             properties: |
               {
                 "iam_policy": ${{ steps.create-variables.outputs.POLICY }},
-                "requester": "${{ fromJson(inputs.port_payload).trigger.by.user.email }}",
+                "requester": "${{ fromJson(inputs.port_context).trigger.by.user.email }}",
                 "sign_in_url": "${{ steps.create-variables.outputs.SIGN_IN_URL }}",
                 "role_arn": ${{ steps.apply-policies.outputs.ROLE_ARN }},
                 "policy_arn": ${{ steps.apply-policies.outputs.POLICY_ARN }}
               }
             relations: |
               {
-                "aws_resource": "${{ fromJson(inputs.port_payload).context.entity }}",
+                "aws_resource": "${{ fromJson(inputs.port_context).entity.identifier }}",
                 "permissions": ${{ steps.create-jsons.outputs.PERMISSIONS_ARRAY }}
               }
       - uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId}}
+          status: "SUCCESS"
+          runId: ${{ fromJson(inputs.port_context).runId}}
           logMessage: |
-            Created permission for the AWS resource "${{ fromJson(inputs.port_payload).context.entity }}"🚀
-            Requester for this permission is: ${{ fromJson(inputs.port_payload).trigger.by.user.email }}
+            Created permission for the AWS resource "${{ fromJson(inputs.port_context).entity.identifier }}"🚀
+            Requester for this permission is: ${{ fromJson(inputs.port_context).trigger.by.user.email }}
             The sign-in URL: ${{ steps.create-variables.outputs.SIGN_IN_URL }}
 ```
 </details>
@@ -331,19 +339,23 @@ name: Delete IAM permissions for AWS resource
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      properties:
         type: string
         required: true
-        description: The Port Payload for triggering this action                
+        description: The Port Payload for triggering this action
+      port_context:
+        type: string
+        required: true
+        description: The Port context for triggering this action                
 
 jobs:
   delete-permissions:
     name: Delete IAM permissions
     runs-on: ubuntu-latest
     env:
-      POLICY_ARN: ${{ fromJson(inputs.port_payload).payload.entity.properties.policy_arn }}
+      POLICY_ARN: ${{ fromJson(inputs.port_context).entity.properties.policy_arn }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           persist-credentials: true
       - name: Configure AWS Credentials
@@ -356,38 +368,42 @@ jobs:
         id: delete-policies
         run: |
           # Detach the policy from the role
-          aws iam detach-role-policy --role-name ${{ fromJson(inputs.port_payload).context.entity }} --policy-arn ${{ env.POLICY_ARN }}
+          aws iam detach-role-policy --role-name ${{ fromJson(inputs.port_context).entity.identifier }} --policy-arn ${{ env.POLICY_ARN }}
           # Delete the policy
           aws iam delete-policy --policy-arn "${{ env.POLICY_ARN }}" --no-cli-pager
           # Delete the role
-          aws iam delete-role --role-name ${{ fromJson(inputs.port_payload).context.entity }} --no-cli-pager
+          aws iam delete-role --role-name ${{ fromJson(inputs.port_context).entity.identifier }} --no-cli-pager
       - name: "Delete permission from Port 🚢"
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          identifier: ${{ fromJson(inputs.port_payload).context.entity }}
+          baseUrl: https://api.getport.io
+          identifier: ${{ fromJson(inputs.port_context).entity.identifier }}
           operation: DELETE
           blueprint: provisioned_permissions
       - uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId}}
+          runId: ${{ fromJson(inputs.port_context).runId}}
           logMessage: |
-            Permission "${{ fromJson(inputs.port_payload).context.entity}}" has been deleted.
-            To get more information regarding this deletion, contact "${{ fromJson(inputs.port_payload).trigger.by.user.email }}".
+            Permission "${{ fromJson(inputs.port_context).entity.identifier }}" has been deleted.
+            To get more information regarding this deletion, contact "${{ fromJson(inputs.port_context).trigger.by.user.email }}".
 ```
 
 </details> 
+
+<PortApiRegionTip/>
 
 <details>
     <summary>`IAM policy JSON` template file</summary>
 
     This file will act as a template for the generated IAM policies.
 
-    ```json showLineNumbers title=".github/templates/iamPolicyDocument.yaml"
+    ```json showLineNumbers title=".github/templates/iamPolicyDocument.json"
    {
         "Version": "2012-10-17",
         "Statement": [
@@ -408,7 +424,7 @@ jobs:
     
     ***Replace the `<YOUR_AWS_ACCOUNT_ID>` with the AWS account ID you want to allocate permissions for.***
 
-    ```json showLineNumbers title=".github/templates/iamTrustPolicy.yaml"
+    ```json showLineNumbers title=".github/templates/iamTrustPolicy.json"
     {
         "Version": "2012-10-17",
         "Statement": [
@@ -424,13 +440,15 @@ jobs:
 
 </details> 
 
+
+
 ### Creating the Port actions
 After creating our backend in GitHub, we need to create the Port actions to trigger the workflows we created.
 We will create the Port actions using the Port UI.
 
 :::tip Creating actions with JSON
 Don't know how to create actions via the Port UI?
-Click [here](/create-self-service-experiences/setup-ui-for-action)!
+Click [here](/actions-and-automations/create-self-service-experiences/setup-ui-for-action)!
 :::
 
 Let's create the Port actions to trigger the workflows we just created:
@@ -443,9 +461,9 @@ Let's create the Port actions to trigger the workflows we just created:
 
 ```json showLineNumbers
 {
-  "identifier": "aws_resource_request_permissions",
+  "identifier": "request_permissions",
   "title": "Request permissions",
-  "icon": "Unlock",
+  "icon": "DefaultProperty",
   "description": "Request permissions for an AWS resource",
   "trigger": {
     "type": "self-service",
@@ -477,9 +495,7 @@ Let's create the Port actions to trigger the workflows we just created:
       "required": [
         "permissions"
       ],
-      "order": [
-        "permissions"
-      ]
+      "order": []
     },
     "blueprintIdentifier": "aws_resource"
   },
@@ -489,42 +505,17 @@ Let's create the Port actions to trigger the workflows we just created:
     "repo": "port-iam-permissions",
     "workflow": "create-iam-permissions.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"aws_resource_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<YOUR_GITHUB_ORG>",
-              "repo": "port-iam-permissions",
-              "workflow": "create-iam-permissions.yaml",
-              "omitUserInputs": true,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"permissions\")) then \"permissions\" else null end}}": "{{.inputs.\"permissions\" | if type == \"array\" then map(.identifier) else .identifier end}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "properties": "{{ .inputs }}",
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -538,16 +529,16 @@ Let's create the Port actions to trigger the workflows we just created:
 
 ```json showLineNumbers
 {
-  "identifier": "provisioned_permissions_revoke_permissions",
+  "identifier": "revoke_permissions",
   "title": "Revoke permissions",
   "icon": "Alert",
-  "description": "Revokes IAM permissions",
   "trigger": {
     "type": "self-service",
     "operation": "DELETE",
     "userInputs": {
       "properties": {},
-      "required": []
+      "required": [],
+      "order": []
     },
     "blueprintIdentifier": "provisioned_permissions"
   },
@@ -557,40 +548,19 @@ Let's create the Port actions to trigger the workflows we just created:
     "repo": "port-iam-permissions",
     "workflow": "delete-iam-permissions.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
       "port_payload": {
-        "action": "{{ .action.identifier[(\"provisioned_permissions_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
+        "properties": "{{ .inputs }}",
+        "port_context": {
           "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<YOUR_GITHUB_ORG>",
-              "repo": "port-iam-permissions",
-              "workflow": "delete-iam-permissions.yaml",
-              "omitUserInputs": true,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {},
-          "censoredProperties": "{{.action.encryptedProperties}}"
+          "entity": "{{.entity }}",
+          "runId": "{{.run.id}}",
+          "trigger": "{{ .trigger }}"
         }
       }
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -724,6 +694,6 @@ See the [Next Steps](#next-steps) section to understand how to take this guide o
 
 ## Next Steps
 - **Install Port's [AWS exporter](/docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)** - You can use Port's AWS exporter to automatically populates your software catalog from your AWS environement. You can use the AWS exporter to populate your `AWS Resources` blueprints with different AWS resources.
-- **Enforce [manual approval](/docs/create-self-service-experiences/set-self-service-actions-rbac/set-self-service-actions-rbac.md#configure-manual-approval-for-actions) for your Port actions** - To have control over who is provisioning and revoking permissions, you can set up manual approval for your actions. This will enable you to provide a request-approve flow for provisioning and revoking permissions using Port.
+- **Enforce [manual approval](/docs/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/set-self-service-actions-rbac.md#configure-manual-approval-for-actions) for your Port actions** - To have control over who is provisioning and revoking permissions, you can set up manual approval for your actions. This will enable you to provide a request-approve flow for provisioning and revoking permissions using Port.
 <!-- TODO: Remove the `coming soon` when automiations comes out -->
 - ***Coming soon* ⏱️: Temporary permissions using [Automations](https://roadmap.getport.io/ideas/p/automation) and the `Timer` property** - With the automations feature, you will be able to automatically trigger actions using events from the catalog. You can use the `Timer Expired` event to trigger the `Revoke permissions` action and create a temporary permissions experience.

@@ -1,0 +1,101 @@
+---
+id: get-all-teams-in-your-organization
+title: "Get all teams in your organization"
+description: "This route allows you to fetch all of the teams in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Get all teams in your organization"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVMFu2zAM/RVBpw1I43ZHoyhQoENRDBiKLTsVPSg2HQtVLJWinHlG/n2kHSdu0O06YBdbokiKfO9RvS4hFmgDWd/oXK9qGxX6RKCMc34XVeeTIq8qoKIWm/KVohoUgdlGZRtxQPXokZTHjWnsLyO5ltdrzG6Gz8orBwYbtfXIadecfYxeqKKG4kUNBk75VPoibaGhIcPzh5ooxDzL2ByXG6DAlyytz2L0F7g2RSafC98CthZ22celXmgym6jzJ72SC/TzQgeDZgsEKOZeR75ya3Tea+oCcMcG0XQcaAk44GSPhLbZ8AE0aSsZbcmbhnPxr0AwBOUt8TqF8rgO6FtbAvJyjis7RS5gWVmM9HVMMVqcOTNwcdYdd8EWlPB0GhmaxG3t91yw8PWaALuprlxXFlwZz24XVkGNRwOdO9PQidPKowLDC+FkqR4qxXeVC+Ub1w20xACF5fByyrGzLIM1MPmFSyXbWQXiiBCDbyKM3HMVCK/JIpQ6r4yLsGc6IhQJLXUDGWuWBYPF4DKeZU4jZ+I2pRoY+XR5Kb+3Pd1BZZIj9e3gqQUTJrr2fJ1mtQgdhmreZO1VNuaW+7GdtJDQ8emkMhPsTGR6v3jPIcU3PrOGvouwxnqntk4aC/YLzGi6TVwmHiZFH6isGQKOGqmt/BBuyYn/MF23jw/sKsWPAFwtL7lIHXykrWnE/ZD9HmgY1LcTOh/Oc4H0uvAN8eD9Fy/AiDnBT8qCM4wtozQw2R8E8aTbK3GcnoiaIRRr369NhB/o9nsxj7MlQiltNGt31PFf0fs3k/Zu0y+sudmb0BqXxGmQbWvQSk/c3/N8cO4/r9jVJMFprt+XQb+HhWAyHTXdLPW5sMcK5Cvj9G7INeta8XTcHN3Hkz8GHOZk8pZW+T3c/wYqJVXQ
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get all teams in your organization"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/teams"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch all of the teams in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string","enum":["id","name","createdAt","updatedAt","provider","description","users.firstName","users.lastName","users.email","users.picture","users.status"]}},"in":"query","name":"fields","description":"The fields you want to fetch for each team. If used, only the specified fields will be included in the response.<br/>","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

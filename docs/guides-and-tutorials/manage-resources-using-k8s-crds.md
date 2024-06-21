@@ -4,6 +4,7 @@ title: Manage resources using Kubernetes CRDs
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Manage resources using Kubernetes CRDs
 
@@ -60,14 +61,16 @@ helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
     --create-namespace --namespace port-k8s-exporter \
     --set secret.secrets.portClientId=YOUR_PORT_CLIENT_ID \
     --set secret.secrets.portClientSecret=YOUR_PORT_CLIENT_SECRET \
+    --set portBaseUrl='https://api.getport.io' \
     --set stateKey="k8s-exporter"  \
     # highlight-next-line
     --set createDefaultResources=false \
-    --set eventListenerType="POLLING"  \
+    --set eventListener.type="POLLING"  \
     --set "extraEnv[0].name"="CLUSTER_NAME" \
     --set "extraEnv[0].value"=YOUR_PORT_CLUSTER_NAME 
 ```
 
+<PortApiRegionTip/>
 
 After installing the k8s exporter [update the `crdsToDiscover` configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration) with the following value:
 
@@ -152,6 +155,6 @@ By leveraging the power of the K8s API extensions, platform engineers can keep u
 ### Next Steps
 
 - Enrich the catalog and visualize the Runtime existing objects in your K8s cluster, by following the [Visualize services' k8s runtime guide](./visualize-service-k8s-runtime.md).
-- Port allows multiple ways to enhance the experience of executing `Actions`, feel free to alter the `Action` in Port to your needs by visiting [Action Documentation](/create-self-service-experiences/create-self-service-experiences.md).
+- Port allows multiple ways to enhance the experience of executing `Actions`, feel free to alter the `Action` in Port to your needs by visiting [Action Documentation](/actions-and-automations/create-self-service-experiences/create-self-service-experiences.md).
 - [Sync data](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md) and create more `Blueprints` to enrich the data beyond what exists in K8S.
 - Build dashboards and reports to visualize the usage of the CRDs and resources in your K8s cluster by following the [Build dashboards and reports guide](/customize-pages-dashboards-and-plugins/dashboards/dashboards.md).

@@ -1,0 +1,126 @@
+---
+id: get-all-action-runs
+title: "Get all action runs"
+description: "This route allows you to fetch all action runs in your Port account. The route will perform a logical `AND` between all query parameters below, and return all action runs that match the criteria.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
+sidebar_label: "Get all action runs"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVl1r40YU/SvDPLXg2EmhL2ZZCGxJl0JZtulTMPFIurIGj2a082HHNf7vPVeSHdtxTLMOpQ99USzde2fO/Tona1lQyL1uonZWjuV9pYPwLkUSyhi3DGLlkohOlBTzir8JlbOv8MkGoS3bvfjifIQhd8nGobivqD9jqRHQkC+dr4USxs10royY3v7+aSoyiksi2x76LZFfiUZ5VVMkH2DE7QOhbCE8xeTti7tjpaKoFcOKuBBJIFCr4YfMjz62j3snDCmE1s4jnwyQ9k8YiLyifC74M5/wULg81WSjYpfJD1WMTRiPRvgchjOKDZIcajfKPalIV4FMiYdf6Jyu6AlZarI5hZGn0lAer7qrrhrvZp5CGP04lAMZ1SzI8YO87XB8BQ45GcjnzGFcywBktZLjtYyrhtCXEL22M7kZSM1tasuF0yyC8ArMOvL7cTNJ6IKNpSYvXNmm2TkLFYLLNRIp0KXY1fC5OF0VcaKnb0l7KuS4VCbQZvBmcJlJ1MAh/kN8O//3hJg5h1Gwr2HkUxf0AuDnUkyjTzQdCGfNim+1yPRgDNsRz6hbECresXAJw/WIAG1OVq61bIvGvmJZOWykjl3JLqiWTXVGHs41jqtTLcc3+K2eut8/X78C2Ohan+5yHyu6gxn0wSb39PKOtaMn7JJV5hEXPOriJCiYMH4MpuWwTOVzssVAgKwEPam6MdQWURcd19zp+GvKxAyTElrD0vl5CZpixgNt5sryIKAVBafUT/bqqBHoUIikim3nph3C6avJgx0C5cnzhjM3ZKA0NAccAh4qxr5lEPYCyTTOBgpcpZ+ur/nPYdafqFTJRPG195QblA+0UzncJkFxkpkoVngZLW5GHWgQGl/BKPxiS1DJGzhtGVI1eo8gJffrpUMKBz57af3Bve1gb5PbtRmRv9FeY28T0Hr9V8vRsm9+hUIgatMOQ+nacB0N+7fKdPvlM1wZfFeHm+E1D07jQqxBCnDvT7+jeKwzx6OzlrmzEa39Xy3/BbXshiBinUeNUbol8Ha01v2gPsjFDRz7UeX16RW1QnPZvF5nKtCf3mw2/LnjCR7hQgeVmd2enW3z5Tp6MpM5JntPvRcK0ocP7QJdCu/NMnoG4b6EfyfIS6T0DLKdcF9Qu+8U0jOoDpT7AmRvlM0ziLbSfAGY/6hcnlusF/8EPKc/4RcQYMYq8TDZ18G7X+6ZURLTy74OzVsd6n8wg2xNdn95jwWqg8JPLvnJkA/QJwGV+7hz7yyvBvR6t/XmnCebzeZvUUjLow==
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get all action runs"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions/runs"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch all action runs in your Port account. The route will perform a logical `AND` between all query parameters below, and return all action runs that match the criteria.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"entity","description":"The identifier of the entity associated with the action run.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"blueprint","description":"The identifier of the blueprint associated with the action run.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean"},"in":"query","name":"active","description":"If `true`, only running action runs will be fetched.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"user_email","description":"The email of the user who initiated the action run.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"number","minimum":1,"maximum":50},"in":"query","name":"limit","description":"The maximum number of action runs to fetch.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"external_run_id","description":"The run id of your backend, for example the id that GitHub gives the workflow. This can be used to identify the action run instead of the `run_id`.<br/>","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

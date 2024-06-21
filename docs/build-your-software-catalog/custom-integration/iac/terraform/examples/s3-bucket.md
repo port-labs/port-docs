@@ -6,6 +6,7 @@ description: Manage an S3 bucket lifecycle and reflect it in Port
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Manage an S3 Bucket Lifecycle
 
@@ -52,7 +53,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.0.0"
+      version = "~> 2.0.3"
     }
   }
 }
@@ -60,6 +61,7 @@ terraform {
 provider "port" {
   client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
+  base_url  = "https://api.getport.io"
 }
 
 resource "port_blueprint" "s3_bucket" {
@@ -78,6 +80,8 @@ resource "port_blueprint" "s3_bucket" {
 }
 ```
 
+<PortApiRegionTip/>
+
 </TabItem>
 
 </Tabs>
@@ -92,7 +96,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.0.0"
+      version = "~> 2.0.3"
     }
   }
 }
@@ -106,6 +110,7 @@ provider "aws" {
 provider "port" {
   client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
+  base_url  = "https://api.getport.io"
 }
 
 resource "aws_s3_bucket" "port-terraform-example-bucket" {
@@ -134,6 +139,8 @@ resource "port_entity" "s3_bucket" {
 }
 ```
 
+<PortApiRegionTip/>
+
 </details>
 
 To use this example yourself, simply replace the placeholders for `access_key`, `secret_key`, `client_id` and `secret` and then run the following commands to setup your new backend, create the new infrastructure and update the software catalog:
@@ -158,7 +165,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.0.0"
+      version = "~> 2.0.3"
     }
   }
 }
@@ -172,8 +179,11 @@ provider "aws" {
 provider "port" {
   client_id = "YOUR_CLIENT_ID"     # or set the environment variable PORT_CLIENT_ID
   secret    = "YOUR_CLIENT_SECRET" # or set the environment variable PORT_CLIENT_SECRET
+  base_url  = "https://api.getport.io"
 }
 ```
+
+<PortApiRegionTip/>
 
 ## Defining the S3 bucket and bucket ACLs
 

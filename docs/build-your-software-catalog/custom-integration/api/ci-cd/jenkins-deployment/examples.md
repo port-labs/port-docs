@@ -1,5 +1,6 @@
 import ExampleImageBlueprint from "../\_ci_example_image_blueprint.mdx";
 import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Examples
 
@@ -52,6 +53,8 @@ wrap([$class: 'BuildUser']) {
                 [name: "Authorization", value: "Bearer ${token}"],
             ]
 ```
+
+<PortApiRegionTip/>
 
 :::note
 Please notice that you have also created the `image` relation, and added a related image entity called `example-image`. This is the artifact of the ciJob, and you will update it later.

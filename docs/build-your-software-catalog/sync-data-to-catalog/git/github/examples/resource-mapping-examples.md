@@ -43,6 +43,10 @@ import GithubUsersBlueprint from './example-repository-admins/\_github_exporter_
 import RepositoryAdminBlueprint from './example-repository-admins/\_github_export_example_repository_with_admins_relation_blueprint.mdx'
 import RepositoryAdminAppConfig from './example-repository-admins/\_github_exporter_example_admins_users_port_app_config.mdx'
 
+import TagBlueprint from './example-repository-release-tag/\_github_exporter_example_tag_blueprint.mdx'
+import ReleaseBlueprint from './example-repository-release-tag/\_github_exporter_example_release_blueprint.mdx'
+import RepositoryTagReleaseAppConfig from './example-repository-release-tag/\_github_exporter_example_release_tag_port_app_config.mdx'
+
 
 
 # Resource mapping examples
@@ -255,6 +259,20 @@ As Github has strict privacy policies, the GitHub API will only return emails in
 
 In other cases, the GitHub API will return a `null` value for the user's email.
 :::
+
+
+## Mapping repositories, repository releases and tags
+
+In the following example you will ingest your GitHub repositories, their releases and tags to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<RepositoryBlueprint/>
+
+<TagBlueprint/>
+
+<ReleaseBlueprint/>
+
+<RepositoryTagReleaseAppConfig/>
+
 
 
 ## Mapping supported resources

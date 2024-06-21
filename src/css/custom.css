@@ -29,7 +29,7 @@
 }
 
 .menu__list-item:last-child {
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.75rem;
 }
 
 .menu__link {
@@ -45,13 +45,13 @@ h6 {
   font-family: "DM Sans";
 }
 
-h2::first-letter,
+/* h2::first-letter,
 h3::first-letter,
 h4::first-letter,
 h5::first-letter,
 h6::first-letter {
   text-transform: uppercase;
-}
+} */
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme="dark"] {
@@ -73,6 +73,10 @@ h6::first-letter {
 [data-theme="dark"] {
   /* Color which works with dark mode syntax highlighting theme */
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+.hidden {
+  display: none !important;
 }
 
 .operators-tabs {
@@ -166,6 +170,68 @@ html[data-theme="dark"] details details  {
   font-size: 90%;
 }
 
+.api-method > .menu__link {
+  align-items: center;
+  justify-content: start;
+}
+
+.api-method > .menu__link::before {
+  width: 50px;
+  height: 20px;
+  font-size: 12px;
+  line-height: 20px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 0.25rem;
+  border: 1px solid;
+  border-inline-start-width: 5px;
+  margin-right: var(--ifm-spacing-horizontal);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.get > .menu__link::before {
+  content: "get";
+  background-color: var(--ifm-color-primary-contrast-background);
+  color: var(--ifm-color-success-contrast-foreground);
+  border-color: var(--ifm-color-primary-darkest);
+}
+
+.post > .menu__link::before {
+  content: "post";
+  background-color: var(--ifm-color-success-contrast-background);
+  color: var(--ifm-color-success-contrast-foreground);
+  border-color: var(--ifm-color-success-dark);
+}
+
+.delete > .menu__link::before {
+  content: "del";
+  background-color: var(--ifm-color-danger-contrast-background);
+  color: var(--ifm-color-danger-contrast-foreground);
+  border-color: var(--ifm-color-danger-dark);
+}
+
+.put > .menu__link::before {
+  content: "put";
+  background-color: var(--ifm-color-info-contrast-background);
+  color: var(--ifm-color-info-contrast-foreground);
+  border-color: var(--ifm-color-info-dark);
+}
+
+.patch > .menu__link::before {
+  content: "patch";
+  background-color: var(--ifm-color-warning-contrast-background);
+  color: var(--ifm-color-warning-contrast-foreground);
+  border-color: var(--ifm-color-warning-dark);
+}
+
+.head > .menu__link::before {
+  content: "head";
+  background-color: var(--ifm-color-secondary-contrast-background);
+  color: var(--ifm-color-secondary-contrast-foreground);
+  border-color: var(--ifm-color-secondary-dark);
+}
+
 /* sidebar icons */
 
 /* sidebar icons - category items */
@@ -194,6 +260,10 @@ html[data-theme="dark"] details details  {
 
 .sidebar-menu-create-self-service-actions > div .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/create-self-service-actions.svg');
+}
+
+.sidebar-menu-define-automations > div .menu__link::before {
+  content: url('/static/img/sidebar-icons/main-menu/define-automations.svg');
 }
 
 .sidebar-menu-promote-scorecards > div .menu__link::before {
@@ -321,6 +391,182 @@ html[data-theme="dark"] details details  {
   zoom: 100%;
 }
 
-.hidden {
-  display: none
+.header-api-link:hover {
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-menu-color-background-active);
+}
+
+.header-api-link:hover:not(.header-api-link--active) {
+  opacity: 0.8;
+}
+
+.header-home-link:hover {
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-menu-color-background-active);
+}
+
+.header-home-link:hover:not(.header-home-link--active) {
+  opacity: 0.8;
+}
+
+.openapi-params__list-item:not(.anything) {
+  padding: 1rem;
+  margin: 0 0 1rem 0 !important;
+  border-radius: 8px;
+  border: thin solid var(--openapi-tree-line-color) !important;
+}
+
+html[data-theme="light"] .openapi-params__list-item {
+  background-color: rgba(247,249,250,1) !important;
+}
+
+html[data-theme="dark"] .openapi-params__list-item {
+  background-color: rgb(40,42,54) !important;
+}
+
+.openapi-params__list-item::before {
+  display: none !important;
+}
+
+.openapi-schema__list-item:not(.anything) {
+  background-color: rgba(247,249,250,1);
+  padding: 1rem !important;
+  margin: 0 0 1rem 0 !important;
+  border-radius: 8px;
+  border: thin solid var(--openapi-tree-line-color) !important;
+}
+
+html[data-theme="light"] .openapi-schema__list-item {
+  background-color: rgba(247,249,250,1) !important;
+}
+
+html[data-theme="dark"] .openapi-schema__list-item {
+  background-color: rgb(40,42,54) !important;
+}
+
+.openapi-schema__list-item::before {
+  display: none !important;
+}
+
+.openapi-schema__property {
+  font-family: "DM Sans" !important;
+}
+
+.openapi-schema__required {
+  margin-right: 2%;
+}
+
+.openapi-schema__divider {
+  display: none;
+}
+
+.openapi-markdown__details ul {
+  margin-left: 0 !important;
+}
+
+.openapi-explorer__request-title {
+  text-indent: -9999px;
+  line-height: 0;
+}
+
+.openapi-explorer__request-title::after {
+  content: "Try it out";
+  text-indent: 0;
+  display: block;
+  line-height: initial;
+  font-size: small;
+}
+
+.openapi-explorer__details-container:not(.anything) {
+  margin: 0 0 1.5rem 0 !important;
+  border-radius: 8px;
+}
+
+.openapi-explorer__form-item-input:not(.anything) {
+  border: 1px solid black !important;
+}
+
+.openapi-explorer__select-input:not(.anything) {
+  border: 1px solid black !important;
+}
+
+.openapi-explorer__form-item-input::placeholder {
+  text-indent: -9999px;
+  line-height: 0;
+}
+
+.openapi-explorer__details-summary {
+  font-weight: bold !important;
+  font-size: medium !important;
+}
+
+.openapi-explorer__show-more-btn {
+  margin-top: 0.5rem;
+  font-weight: bold;
+  font-family: "DM Sans";
+  font-size: small !important;
+}
+
+.openapi-explorer__playground-editor {
+  zoom: 115%;
+  height: 15rem !important;
+  border: 1px solid black !important;
+  border-radius: 8px !important;
+}
+
+.openapi-explorer__playground-editor > .prism-code {
+  background-color: rgb(131, 224, 255, 0.08) !important;
+  height: 15rem !important;
+}
+
+.openapi-explorer__show-more-btn {
+  font-size: medium !important;
+}
+
+.openapi-explorer__request-btn {
+  display: block;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.openapi-tabs__mime-item {
+  display: none !important;
+}
+
+.openapi-tabs__response-header-section {
+  display:grid !important;
+  gap: 1rem !important;
+}
+
+.openapi-tabs__response-container {
+  padding: 0 !important;
+  max-width: fit-content !important;
+}
+
+.openapi-tabs__code-list-container::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 1rem !important;
+  height: 0.5rem !important;
+}
+
+.openapi-tabs__code-list-container::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+.openapi-markdown__details .openapi-markdown__details {
+  background-color: transparent !important;
+}
+
+.openapi-tabs__schema-item {
+  font-size: 0.75rem !important;
+}
+
+.badge:not(.openapi__method-endpoint *) {
+  margin-bottom: 0.6rem !important;
+}
+
+.theme-code-block-highlighted-line {
+  display: table-row !important;
 }

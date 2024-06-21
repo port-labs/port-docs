@@ -1,0 +1,27 @@
+---
+id: rate-limits
+title: "Rate limits"
+description: ""
+sidebar_label: Rate limits
+sidebar_position: 1
+hide_title: true
+custom_edit_url: null
+---
+
+import ApiLogo from "@theme/ApiLogo";
+import SchemaTabs from "@theme/SchemaTabs";
+import TabItem from "@theme/TabItem";
+import Export from "@theme/ApiExplorer/Export";
+
+# Rate limits
+
+All of the Port API's rate limits are applied at the **IP level**:
+
+| Description | Rate limit |
+|------------|-------------|
+| Unauthenticated requests | 100 requests per 5 minutes |
+| Ocean integrations | 20,000 requests per 5 minutes |
+| External exporters | 15,000 requests per 5 minutes |
+| IaC integrations and CI/CD actions | 5,000 requests per 5 minutes |
+| Entity API requests | 5,000 requests per 5 minutes | 
+| All other API requests | 2,500 requests per 5 minutes |

@@ -55,15 +55,15 @@ resources:
           # Transform & Load
           # highlight-start
           identifier: '.name'
-          title: '.versioned_resources | max_by(.version).resource | .name'
+          title: '.name'
           blueprint: '"gcpPubSubSubscription"'
           properties:
             location: .location
-            topicMesssageRetentionDuration: ".versioned_resources | max_by(.version).resource | .topicMessageRetentionDuration"
-            pushConfig: ".versioned_resources | max_by(.version).resource | .pushConfig"
-            retainAckedMessages: ".versioned_resources | max_by(.version).resource | .retainAckedMessages"
+            topicMesssageRetentionDuration: ".topicMessageRetentionDuration"
+            pushConfig: ".pushConfig"
+            retainAckedMessages: ".retainAckedMessages"
          relations:
-            project: ".project"
+            project: ".__project.name"
           # highlight-end
 ```
 
@@ -117,15 +117,15 @@ The integration configuration is a YAML file that describes the ETL process to l
       entity:
         mappings:
           identifier: '.name'
-          title: '.versioned_resources | max_by(.version).resource | .name'
+          title: '.name'
           blueprint: '"gcpPubSubSubscription"'
           properties:
             location: .location
-            topicMesssageRetentionDuration: ".versioned_resources | max_by(.version).resource | .topicMessageRetentionDuration"
-            pushConfig: ".versioned_resources | max_by(.version).resource | .pushConfig"
-            retainAckedMessages: ".versioned_resources | max_by(.version).resource | .retainAckedMessages"
+            topicMesssageRetentionDuration: ".topicMessageRetentionDuration"
+            pushConfig: ".pushConfig"
+            retainAckedMessages: ".retainAckedMessages"
          relations:
-            project: ".project"
+            project: ".__project.name"
         # highlight-end
   ```
   - The `entity` field describes the Port entity to be created from the GCP resource.
@@ -140,15 +140,15 @@ The integration configuration is a YAML file that describes the ETL process to l
          mappings:
           # Transform & Load
           identifier: '.name'
-          title: '.versioned_resources | max_by(.version).resource | .name'
+          title: '.name'
           blueprint: '"gcpPubSubSubscription"'
           properties:
             location: .location
-            topicMesssageRetentionDuration: ".versioned_resources | max_by(.version).resource | .topicMessageRetentionDuration"
-            pushConfig: ".versioned_resources | max_by(.version).resource | .pushConfig"
-            retainAckedMessages: ".versioned_resources | max_by(.version).resource | .retainAckedMessages"
+            topicMesssageRetentionDuration: ".topicMessageRetentionDuration"
+            pushConfig: ".pushConfig"
+            retainAckedMessages: ".retainAckedMessages"
          relations:
-            project: ".project"
+            project: ".__project.name"
           # highlight-end
     ```
 

@@ -4,6 +4,8 @@ title: Terraform
 description: Comprehensive blueprint with properties, relations and mirror properties
 ---
 
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+
 # Terraform-Managed Blueprint Example
 
 This example includes a complete [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/setup-blueprint.md) resource definition in Terraform, which includes:
@@ -21,7 +23,7 @@ terraform {
   required_providers {
     port = {
       source  = "port-labs/port-labs"
-      version = "~> 1.0.0"
+      version = "~> 2.0.3"
     }
   }
 }
@@ -29,6 +31,7 @@ terraform {
 provider "port" {
   client_id = "PORT_CLIENT_ID"     # or set the env var PORT_CLIENT_ID
   secret    = "PORT_CLIENT_SECRET" # or set the env var PORT_CLIENT_SECRET
+  base_url  = "https://api.getport.io"
 }
 
 resource "port_blueprint" "myBlueprint" {
@@ -159,3 +162,5 @@ resource "port_blueprint" "other" {
   }
 }
 ```
+
+<PortApiRegionTip/>
