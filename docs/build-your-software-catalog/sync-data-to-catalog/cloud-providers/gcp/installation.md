@@ -342,7 +342,7 @@ serviceusage.services.use
 
 # Installation walkthrough
 
-Run the following requests.
+Run the following commands.
 
 :::tip
 If you want the integration to collect resources from more projects/folders/organization, make sure that you [set up permissions](#optional---scaling-the-permissions) properly.
