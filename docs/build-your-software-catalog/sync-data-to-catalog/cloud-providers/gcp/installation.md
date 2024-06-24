@@ -91,7 +91,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    --set integration.type="gcp"  \
    --set integration.eventListener.type="KAFKA"  \
    --set integration.eventListener.brokers="b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196\,b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196\,b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196"  \
-   --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>"  \
+   --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>"
    ```
 
 # Optional- Scale permissions for a Service account
