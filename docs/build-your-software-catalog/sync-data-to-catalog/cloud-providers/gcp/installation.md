@@ -11,7 +11,7 @@ The Google Cloud Ocean integration relies on the Google Cloud Client libraries, 
 
 Choose one of the following installation methods:
 <Tabs groupId="installation-platforms" queryString="installation-platforms">
-<TabItem value="helm" label="Helm">
+<TabItem value="helm" label="Helm ( Scheduled )">  
 
 # Helm installation
 
@@ -92,8 +92,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    --set sendRawDataExamples=true  \
    --set integration.identifier="ocean-gcp-integration"  \
    --set integration.type="gcp"  \
-   --set integration.eventListener.type="KAFKA"  \
-   --set integration.eventListener.brokers="b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196\,b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196\,b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196"  \
+   --set integration.eventListener.type="POLLING"  \
    --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>"
    ```
 
@@ -260,7 +259,7 @@ The above gives a service account permissions in it's Project's scope. You are a
 12. Click on `Save`
 
 </TabItem>
-<TabItem value="terraform" label="Terraform">
+<TabItem value="terraform" label="Terraform ( Real Time Events )">  
 
 # Terraform installation
 
@@ -369,9 +368,8 @@ gcp_projects = [<your_gcp_project>] # The Project list that the integration dige
 integration_identifier = "gcp" 
 initialize_port_resources = true # When set to true the integration will create default blueprints + JQ Mappings
 event_listener = {
-	type = "KAFKA" 
-	brokers = ["b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196","b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196","b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196"] 
-} 
+  type = "POLLING"
+}
 assets_types_for_monitoring = ["cloudresourcemanager.googleapis.com/Organization","cloudresourcemanager.googleapis.com/Project","storage.googleapis.com/Bucket","cloudfunctions.googleapis.com/CloudFunction","pubsub.googleapis.com/Subscription","pubsub.googleapis.com/Topic","container.googleapis.com/Cluster"] # A list of resources to filter events from Google Cloud.
 }' > main.tf
 # Initializing Terraform and Providers
