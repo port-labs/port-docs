@@ -54,7 +54,7 @@ The above gives a service account permissions in it's Project's scope. You are a
 1. Make sure you have your selected project in the top left toggle.
    ![Select Project](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png)
 2. In the search text box, search for `service accounts`. Click the `IAM & Admin` option
-   ![Search Service Account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png)
+   ![Search Service Account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_service_accounts.png)
 3. Click on the Service account. Should look like this:
    ![Selected Service account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png)
 4. Copy the service account's email.
