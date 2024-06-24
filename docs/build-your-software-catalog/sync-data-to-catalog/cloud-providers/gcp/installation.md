@@ -24,16 +24,20 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 1. Make sure you have your selected project in the top left toggle.
 
-   ![Select Project](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png' width='50%' border='1px' /> <br/><br/>
+
 2. In the search text box, search for `service accounts`. Click the `IAM & Admin` option.
 
-   ![Search Service Account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_service_accounts.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_service_accounts.png' width='50%' border='1px' /> <br/><br/>
+
 3. Click on `CREATE SERVICE ACCOUNT`.
 
-   ![Click on Create](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/click_on_create.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/click_on_create.png' width='50%' border='1px' /> <br/><br/>
+
 4. Fill up an ID and a description, `continue`.
 
-   ![Follow instructions](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/follow_instructions.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/follow_instructions.png' width='50%' border='1px' /> <br/><br/>
+
 5. Click the `Select a role` dropdown, then search and add the following Roles:
    1. Browser
    2. Cloud Asset Viewer
@@ -41,11 +45,12 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
    Should look like this:
 
-   ![Give permissions](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/give_permissions.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/give_permissions.png' width='50%' border='1px' /> <br/><br/>
+
 6. Click on continue -> Done
 7. You've successfully finished creating a Service account!
 
-   ![Done Creating](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/done_creating.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/done_creating.png' width='50%' border='1px' /> <br/><br/>
 
 ## Fetching Key file
 
@@ -57,13 +62,16 @@ According to Google Cloud, This isn't the preffered way for Production purposes.
 
 1. Make sure you have your selected project in the top left toggle.
 
-   ![Select Project](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png' width='50%' border='1px' /> <br/><br/>
+
 2. In the search text box, search for `service accounts`. Click the `IAM & Admin` option
 
-   ![Search Service Account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png' width='50%' border='1px' /> <br/><br/>
+
 3. Click on the Service account. Should look like this:
 
-   ![Selected Service account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png' width='50%' border='1px' /> <br/><br/>
+
 4. Click on `Keys` -> `Add Key` -> `Create new key` -> `JSON` -> `CREATE`
 5. This will download your new Service Account Key configuration file.
 6. Done!
@@ -102,29 +110,37 @@ The above gives a service account permissions in it's Project's scope. You are a
 
 1. Make sure you have your selected project in the top left toggle.
 
-   ![Select Project](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png' width='50%' border='1px' /> <br/><br/>
+
 2. In the search text box, search for `service accounts`. Click the `IAM & Admin` option
 
-   ![Search Service Account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_service_accounts.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_service_accounts.png' width='50%' border='1px' /> <br/><br/>
+
 3. Click on the Service account. Should look like this:
 
-   ![Selected Service account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png' width='50%' border='1px' /> <br/><br/>
+
 4. Copy the service account's email.
 5. Switch the top left toggle to your organization
 
-   ![Choose organization](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/your_organization.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/your_organization.png' width='50%' border='1px' /> <br/><br/>
+
 6. In the search text box, search for `manage resources`. Click the `IAM & Admin` option.
 
-   ![Search manage resources](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_manage_resources.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_manage_resources.png' width='50%' border='1px' /> <br/><br/>
+
 7. In the `Resources` Table, you see all projects+folders connected to your organization.
 
-   ![Manage resources table](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/manage_resources_table.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/manage_resources_table.png' width='50%' border='1px' /> <br/><br/>
+
 8. Pick your desired scope (organization/folders/projects), using the left checkboxes.
 
-   ![Click desired scope](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/click_desired_scope.png)
-9. This will open up a menu on the right side.
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/click_desired_scope.png' width='50%' border='1px' /> <br/><br/>
 
-    ![Permissions menu](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/permissions_menu.png)
+9.  This will open up a menu on the right side.
+
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/permissions_menu.png' width='50%' border='1px' /> <br/><br/>
+
 10. Click on `ADD PRINCIPLE`
 11. In the `Add principals` tab add the email to your service account. In the Assign roles, give these three roles to your service account:
     1. Browser
@@ -132,7 +148,8 @@ The above gives a service account permissions in it's Project's scope. You are a
     3. Pub/Sub Viewer
    Should look like this:
 
-    ![Grant access](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/grant_access.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/grant_access.png' width='50%' border='1px' /> <br/><br/>
+
 12. Click on `Save`
 
 </TabItem>
@@ -149,16 +166,20 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 1. Make sure you have your selected project in the top left toggle.
 
-   ![Select Project](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png' width='50%' border='1px' /> <br/><br/>
+
 2. In the search text box, search for `service accounts`. Click the `IAM & Admin` option.
 
-   ![Search Service Account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_service_accounts.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_service_accounts.png' width='50%' border='1px' /> <br/><br/>
+
 3. Click on `CREATE SERVICE ACCOUNT`.
 
-   ![Click on Create](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/click_on_create.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/click_on_create.png' width='50%' border='1px' /> <br/><br/>
+
 4. Fill up an ID and a description, `continue`.
 
-   ![Follow instructions](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/follow_instructions.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/follow_instructions.png' width='50%' border='1px' /> <br/><br/>
+
 5. Click the `Select a role` dropdown, then search and add the following Roles:
    1. Browser
    2. Cloud Asset Viewer
@@ -166,11 +187,12 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
    Should look like this:
 
-   ![Give permissions](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/give_permissions.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/give_permissions.png' width='50%' border='1px' /> <br/><br/>
+
 6. Click on continue -> Done
 7. You've successfully finished creating a Service account!
 
-   ![Done Creating](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/done_creating.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/done_creating.png' width='50%' border='1px' /> <br/><br/>
 
 ## Fetching Key file for Docker service account
 
@@ -181,14 +203,17 @@ According to Google Cloud, This isn't the preffered way for Production purposes.
 :::
 
 1. Make sure you have your selected project in the top left toggle.
+   
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png' width='50%' border='1px' /> <br/><br/>
 
-   ![Select Project](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png)
 2. In the search text box, search for `service accounts`. Click the `IAM & Admin` option
+   
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png' width='50%' border='1px' /> <br/><br/>
 
-   ![Search Service Account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png)
 3. Click on the Service account. Should look like this:
+   
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png' width='50%' border='1px' /> <br/><br/>
 
-   ![Selected Service account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png)
 4. Click on `Keys` -> `Add Key` -> `Create new key` -> `JSON` -> `CREATE`
 5. This will download your new Service Account Key configuration file.
 6. Done!
@@ -225,29 +250,37 @@ The above gives a service account permissions in it's Project's scope. You are a
 
 1. Make sure you have your selected project in the top left toggle.
 
-   ![Select Project](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/select_project.png' width='50%' border='1px' /> <br/><br/>
+
 2. In the search text box, search for `service accounts`. Click the `IAM & Admin` option
 
-   ![Search Service Account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_service_accounts.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_service_accounts.png' width='50%' border='1px' /> <br/><br/>
+
 3. Click on the Service account. Should look like this:
 
-   ![Selected Service account](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/selected_service_account.png' width='50%' border='1px' /> <br/><br/>
+
 4. Copy the service account's email.
 5. Switch the top left toggle to your organization
 
-   ![Choose organization](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/your_organization.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/your_organization.png' width='50%' border='1px' /> <br/><br/>
+
 6. In the search text box, search for `manage resources`. Click the `IAM & Admin` option.
 
-   ![Search manage resources](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_manage_resources.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_manage_resources.png' width='50%' border='1px' /> <br/><br/>
+
 7. In the `Resources` Table, you see all projects+folders connected to your organization.
 
-   ![Manage resources table](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/manage_resources_table.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/manage_resources_table.png' width='50%' border='1px' /> <br/><br/>
+
 8. Pick your desired scope (organization/folders/projects), using the left checkboxes.
 
-   ![Click desired scope](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/click_desired_scope.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/click_desired_scope.png' width='50%' border='1px' /> <br/><br/>
+
 9. This will open up a menu on the right side.
 
-    ![Permissions menu](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/permissions_menu.png)
+   <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/permissions_menu.png' width='50%' border='1px' /> <br/><br/>
+
 10. Click on `ADD PRINCIPLE`
 11. In the `Add principals` tab add the email to your service account. In the Assign roles, give these three roles to your service account:
     1. Browser
@@ -384,29 +417,29 @@ If you want the integration to collect resources from multiple projects/folders 
 
 1. Make sure you are connected to your Organization.
 
-![Select Organization](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/your_organization.png)
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/your_organization.png' width='50%' border='1px' /> <br/><br/>
 
-2. In the search text box, search for `roles`. Click the `IAM & Admin` option.
-3. Click on `CREATE ROLE`.
-4. Click on `ADD PERMISSIONS`, and select all the permissions from [the above section](#required-permissions-to-run-terraform-apply)
-5. In the search text box, search for `manage resources`. Click the `IAM & Admin` option.
+1. In the search text box, search for `roles`. Click the `IAM & Admin` option.
+2. Click on `CREATE ROLE`.
+3. Click on `ADD PERMISSIONS`, and select all the permissions from [the above section](#required-permissions-to-run-terraform-apply)
+4. In the search text box, search for `manage resources`. Click the `IAM & Admin` option.
 
-![Search manage resources](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_manage_resources.png)
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_manage_resources.png' width='50%' border='1px' /> <br/><br/>
 
-6. In the `Resources` Table, you see all projects+folders connected to your organization.
+1. In the `Resources` Table, you see all projects+folders connected to your organization.
 
-![Manage resources table](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/manage_resources_table.png)
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/manage_resources_table.png' width='50%' border='1px' /> <br/><br/>
 
-7. Pick your desired scope (organization/folders/projects), using the left checkboxes.
+1. Pick your desired scope (organization/folders/projects), using the left checkboxes.
 
-![Click desired scope](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/click_desired_scope.png)
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/click_desired_scope.png' width='50%' border='1px' /> <br/><br/>
 
-8. This will open up a menu on the right side.
+1. This will open up a menu on the right side.
 
-![Permissions menu](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/permissions_menu.png)
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/permissions_menu.png' width='50%' border='1px' /> <br/><br/>
 
-9. Click on `ADD PRINCIPLE`
-10. Here, Enter your's or your service account's email, and grant it your newly created `Role`.
+1. Click on `ADD PRINCIPLE`
+2.  Here, Enter your's or your service account's email, and grant it your newly created `Role`.
 
 </TabItem>
 </Tabs>
