@@ -96,7 +96,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 
 ## Optional- Scale permissions for a Docker Service account
 
-<GivePermissionsToNewServiceAccount/
+<GivePermissionsToNewServiceAccount/>
 
 </TabItem>
 <TabItem value="terraform" label="Terraform ( Real Time Events )">  
