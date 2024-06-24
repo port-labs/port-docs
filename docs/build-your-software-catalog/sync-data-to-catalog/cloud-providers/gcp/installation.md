@@ -12,6 +12,11 @@ import GivePermissionsToNewServiceAccount from './\_give-permissions-to-new-serv
 The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials. In these guides, you can install the integration in various ways, varying by the authentication method + platform. For Production setup, we recommend using the Terraform Installation method.
 
 Choose one of the following installation methods:
+
+1. Helm- For initial setup
+2. Docker- for running the integration only once
+3. Terraform- For Having live events
+
 <Tabs groupId="installation-platforms" queryString="installation-platforms">
 <TabItem value="helm" label="Helm ( Scheduled )">  
 
