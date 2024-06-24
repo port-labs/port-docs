@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Creating Deditcated Service Account
+# Creating an Integration-Deditcated Service Account
 
 The Google Cloud Ocean integration uses ADC (Application Default Credentials) in order to login and perform requests to Google Cloud's Platform. This guide gives more information on how to configure a suitable service account.
 
