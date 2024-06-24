@@ -9,9 +9,9 @@ import TabItem from "@theme/TabItem"
 
 The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials. In these guides, you can install the integration in various ways, varying by the authentication method + platform. For Production setup, we recommend using the Terraform Installation method.
 
+Choose one of the following installation methods:
 <Tabs groupId="installation-platforms" queryString="installation-platforms">
 <TabItem value="helm" label="Helm">
-
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
 1. Creating a service account.
@@ -399,6 +399,8 @@ If you want the integration to collect resources from multiple projects/folders 
 10. Here, Enter your's or your service account's email, and grant it your newly created `Role`.
 
 </TabItem>
+</Tabs>
+
 ## Further Examples
 
 Refer to the [examples](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/examples/) page for practical configurations and their corresponding blueprint definitions.
