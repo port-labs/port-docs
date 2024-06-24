@@ -342,10 +342,9 @@ serviceusage.services.use
 
 # Installation walkthrough
 
-Run the following commands.
-
+Run the following commands. Make sure to replace `<placeholders>` with actual values.
 :::tip
-If you want the integration to collect resources from more projects/folders/organization, make sure that you [set up permissions](#optional---scaling-the-permissions) properly.
+If you want the integration to collect resources from more projects/folders/organization, make sure that you set up permissions properly, as instructed in the `Optional - Scaling the permissions` section.
 :::
 
 ```bash
