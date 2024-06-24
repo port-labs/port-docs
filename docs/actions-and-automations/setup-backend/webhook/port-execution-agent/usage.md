@@ -99,5 +99,4 @@ This configuration directs the `requests` library to use the specified CA bundle
 
 Follow one of the guides below:
 
-- [Changelog Listener](/actions-and-automations/setup-backend/webhook/examples/changelog-listener.md) - Create a blueprint with `changelogDestination` to listen and act on changes in the software catalog.
 - [GitLab Pipeline Trigger](/actions-and-automations/setup-backend/gitlab-pipeline/gitlab-pipeline.md) - Create an action that triggers GitLab Pipeline execution.

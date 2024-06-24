@@ -4,6 +4,7 @@ info:
   version: '1.0'
 servers:
   - url: https://api.getport.io
+  - url: https://api.us.getport.io
 components:
   securitySchemes:
     bearer:
@@ -7907,6 +7908,105 @@ paths:
       responses:
         '200':
           description: Default Response
+  /v1/organization:
+    get:
+      summary: Get organization details
+      description: This route allows you to fetch the details of your Port organization, such as its name, id, and hidden blueprints.
+      tags:
+        - Organization
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Default Response
+    put:
+      summary: Update organization details
+      description: This route allows you to update the details of your Port organization, such as its name and hidden blueprints.
+      tags:
+        - Organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the organization.<br/>
+                settings:
+                  type: object
+                  properties:
+                    hiddenBlueprints:
+                      description: An array of blueprint identifiers that should be hidden.<br/>
+                      type: array
+                      items:
+                        type: string
+              additionalProperties: false
+              required:
+                - name
+        required: true
+      security:
+        - bearer:
+            - update:organization
+      responses:
+        "200":
+          description: Updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                additionalProperties: false
+                required:
+                  - ok
+                description: Updated successfully.
+    patch:
+      summary: Patch organization details
+      description: This route allows you to patch the details of your Port organization, such as its name and hidden blueprints.
+      tags:
+        - Organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the organization.<br/>
+                settings:
+                  type: object
+                  properties:
+                    hiddenBlueprints:
+                      type: array
+                      description: An array of blueprint identifiers that should be hidden.<br/>
+                      items:
+                        type: string
+              additionalProperties: false
+              required:
+                - name
+        required: true
+      security:
+        - bearer:
+            - update:organization
+      responses:
+        "200":
+          description: Updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                additionalProperties: false
+                required:
+                  - ok
+                description: Updated successfully.
   '/v1/integration/{identifier}/logs':
     get:
       summary: Get an integration's audit logs

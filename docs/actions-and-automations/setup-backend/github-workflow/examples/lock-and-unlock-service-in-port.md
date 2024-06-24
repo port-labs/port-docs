@@ -18,7 +18,8 @@ In this guide, we will create a self-service action in Port that executes a GitH
 2. Configure a [Slack app](https://api.slack.com/apps) that can post a message to a Slack channel. The app should have a `chat:write` bot scope under **OAuth & Permissions**.
 3. A GitHub repository in which you can trigger a workflow that we will use in this guide.
 
-Below you can find the JSON for the `Service` blueprint required for the guide:
+The `service` blueprint that was created for you as part of the onboarding process will need to be extended with additional properties. Below you can find the JSON definition for the blueprint with the required properties.  
+You can add these properties manually in the Port UI or use the JSON below to replace the existing blueprint.
 
 <details>
 <summary><b>Service blueprint (click to expand)</b></summary>

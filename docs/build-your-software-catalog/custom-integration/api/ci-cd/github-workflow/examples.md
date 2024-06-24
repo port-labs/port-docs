@@ -5,6 +5,7 @@ sidebar_position: 1
 import ExampleImageBlueprint from "../\_ci_example_image_blueprint.mdx";
 import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
 import ExampleCiAction from "../\_ci_example_action.mdx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Examples
 
@@ -23,6 +24,7 @@ After creating the blueprints, you can add the following snippet to your GitHub 
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    baseUrl: https://api.getport.io
     operation: UPSERT
     identifier: new-cijob-run
     icon: GithubActions
@@ -35,6 +37,8 @@ After creating the blueprints, you can add the following snippet to your GitHub 
         "triggeredBy": "${{ env.GITHUB_ACTOR }}"
       }
 ```
+
+<PortApiRegionTip/>
 
 :::tip
 For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets), and access them as shown in the example above.
@@ -57,6 +61,7 @@ get-entity:
       with:
         clientId: ${{ secrets.CLIENT_ID }}
         clientSecret: ${{ secrets.CLIENT_SECRET }}
+        baseUrl: https://api.getport.io
         operation: GET
         identifier: new-cijob-run
         blueprint: ciJob
@@ -67,6 +72,8 @@ use-entity:
   steps:
     - run: echo '${{needs.get-entity.outputs.entity}}' | jq .properties.triggeredBy
 ```
+
+<PortApiRegionTip/>
 
 The first job `get-entity`, uses the GitHub action to get the `new-cijob-run` entity.
 The second job `use-entity`, uses the output from the first job, and prints the `triggeredBy` property of the entity.
@@ -82,6 +89,7 @@ Add the following snippet to your GitHub workflow `yml` file:
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    baseUrl: https://api.getport.io
     operation: UPSERT
     identifier: example-image
     title: Example Image
@@ -100,6 +108,8 @@ Add the following snippet to your GitHub workflow `yml` file:
       }
 ```
 
+<PortApiRegionTip/>
+
 All that’s left is to map the new `image` entity to the `ciJob` , thus making it possible to know which image was created by the ciJob.
 
 ```yaml
@@ -107,6 +117,7 @@ All that’s left is to map the new `image` entity to the `ciJob` , thus making 
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    baseUrl: https://api.getport.io
     operation: UPSERT
     identifier: new-cijob-run
     icon: GithubActions
@@ -142,12 +153,15 @@ To update the new self-service action run, add the following snippet to your Git
   with:
     clientId: ${{ secrets.CLIENT_ID }}
     clientSecret: ${{ secrets.CLIENT_SECRET }}
+    baseUrl: https://api.getport.io
     operation: PATCH_RUN
     runId: ${{ env.PORT_RUN_ID }}
     icon: GithubActions
     status: "SUCCESS"
     logMessage: "Deployment completed successfully"
 ```
+
+<PortApiRegionTip/>
 
 :::tip
 The example above shows how to update the status and add a new log message to the action run, but it is also possible to update just a specific field of an action run.

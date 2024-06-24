@@ -31,7 +31,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Lock service deployment](/guides-and-tutorials/service-lock-github-workflow)
 - [Nudge PR reviewers](/actions-and-automations/setup-backend/github-workflow/examples/nudge-pr-reviewers)
 - [Promote to production](/actions-and-automations/setup-backend/github-workflow/examples/promote-to-production)
-- [Self-service action to lock and unlock a service](http://localhost:4000/actions-and-automations/setup-backend/github-workflow/examples/lock-and_unlock-service-in-port)
+- [Self-service action to lock and unlock a service](/actions-and-automations/setup-backend/github-workflow/examples/lock-and-unlock-service-in-port)
 - [Connect GitHub Codeowners with Service, Team and User](/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/connect-github-codeowners-with-service-team-and-user.md)
 
 ### GitLab
@@ -150,7 +150,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Manual approval for self-service actions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#slack)
 - [Scorecard notifications](/promote-scorecards/manage-using-3rd-party-apps/slack)
-- [Setup a changelog listener notification](/actions-and-automations/setup-backend/webhook/examples/changelog-listener.md)
 - [Broadcast message to API consumers](/actions-and-automations/setup-backend/github-workflow/examples/broadcast-api-consumers-message)
 
 ## SonarQube / SonarCloud
@@ -187,6 +186,9 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Self-service action to acknowledge a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
 - [Self-service action to change a PagerDuty oncall](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)
 - [Self-service action to resolve a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident)
+- PagerDuty Incident Management
+    - [Automation to handle PagerDuty incidents](https://docs.getport.io/guides-and-tutorials/create-slack-channel-for-reported-incident)
+    - [Self-service action to resolve Pagerduty incidents](https://docs.getport.io/guides-and-tutorials/resolve-pagerduty-incidents) - including Slack channel notification and closing GitHub issue.
 
 ## Jira
 

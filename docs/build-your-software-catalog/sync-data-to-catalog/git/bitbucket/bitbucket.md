@@ -53,7 +53,16 @@ When configuring the integration **using Port**, the YAML configuration is globa
 
 <TabItem label="Using Bitbucket" value="bitbucket">
 
-To manage your Bitbucket integration configuration using Bitbucket, you can choose either a global or granular configuration:
+To manage your Bitbucket integration configuration using a config file in BitBucket:
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired BitBucket organization.
+3. A window will open containing the default YAML configuration of your GitHub integration.
+4. Scroll all the way down, and turn on the `Manage this integration using the "port-app-config.yml" file` toggle.
+
+This will clear the configuration in Port's UI.
+
+When configuring the integration **using BitBucket**, you can choose either a global or granular configuration:
 
 - **Global configuration:** create a `.bitbucket-private` repository in your workspace and add the `port-app-config.yml` file to the repository;
   - Using this method applies the configuration to all repositories in your Bitbucket workspace (unless it is overridden by a granular `port-app-config.yml` in a repository);
@@ -67,8 +76,7 @@ When using global configuration **using Bitbucket**, the configuration specified
 </Tabs>
 
 :::info Important
-
-When using global configuration **using Port**, the configuration specified will override any other configuration source (both global configuration using Bitbucket and granular configuration using Bitbucket);
+When **using Port's UI**, the specified configuration will override any `port-app-config.yml` file in your BitBucket repository/ies.
 :::
 
 Here is an example snippet from the `port-app-config.yml` file which demonstrates the ETL process for getting `pullRequest` data from the Bitbucket workspace and into the software catalog:

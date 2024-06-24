@@ -13,6 +13,7 @@ import PagerDutyIncidentBlueprint from "/docs/build-your-software-catalog/custom
 import PagerDutyWebhookConfig from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_config.mdx"
 import PagerDutyWebhookHistory from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx"
 import PagerDutyScript from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_shell_history_config.mdx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # PagerDuty
 
@@ -44,6 +45,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                  | Your port client id                                                                                                     | ✅       |
 | `port.clientSecret`              | Your port client secret                                                                                                 | ✅       |
+| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
 | `integration.identifier`         | Change the identifier to describe your integration                                                                      | ✅       |
 | `integration.type`               | The integration type                                                                                                    | ✅       |
 | `integration.eventListener.type` | The event listener type                                                                                                 | ✅       |
@@ -65,6 +67,7 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
   --set port.clientId="PORT_CLIENT_ID"  \
   --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
   --set initializePortResources=true  \
   --set scheduledResyncInterval=120  \
   --set integration.identifier="my-pagerduty-integration"  \
@@ -73,6 +76,7 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
   --set integration.secrets.token="string"  \
   --set integration.config.apiUrl="string"
 ```
+<PortApiRegionTip/>
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD" default>
@@ -134,6 +138,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -146,10 +152,11 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+1. Apply your application manifest with `kubectl`:
 ```bash
 kubectl apply -f my-ocean-pagerduty-integration.yaml
 ```
@@ -193,6 +200,7 @@ jobs:
           type: 'pagerduty'
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
           config: |
             token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }} 
             api_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__API_URL }} 
@@ -200,11 +208,13 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
+
 This pipeline will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
+
 :::warning
 If you want the integration to update Port in real time using webhooks you should use
 the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
@@ -214,6 +224,7 @@ Make sure to configure the following [Jenkins Credentials](https://www.jenkins.i
 of `Secret Text` type:
 
 <DockerParameters />
+
 <br/>
 
 Here is an example for `Jenkinsfile` groovy pipeline file:
@@ -244,6 +255,7 @@ pipeline {
                                 -e OCEAN__INTEGRATION__CONFIG__API_URL=$OCEAN__INTEGRATION__CONFIG__API_URL \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
                                 $image_name
 
                             exit $?
@@ -293,6 +305,7 @@ steps:
         -e OCEAN__INTEGRATION__CONFIG__API_URL=$(OCEAN__INTEGRATION__CONFIG__API_URL) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $image_name
 
     exit $?
@@ -345,6 +358,7 @@ ingest_data:
         -e OCEAN__INTEGRATION__CONFIG__API_URL=$OCEAN__INTEGRATION__CONFIG__API_URL \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $IMAGE_NAME
 
   rules: # Run only when changes are made to the main branch
@@ -353,6 +367,9 @@ ingest_data:
 
 </TabItem>
   </Tabs>
+
+<PortApiRegionTip/>
+
 </TabItem>
 
 </Tabs>
@@ -647,6 +664,11 @@ resources:
         "type": "string",
         "format": "user"
       },
+      "secondaryOncall": {
+        "title": "Secondary On Call",
+        "type": "string",
+        "format": "user"
+      },
       "escalationLevels": {
         "title": "Escalation Levels",
         "type": "number"
@@ -693,7 +715,8 @@ resources:
           properties:
             status: .status
             url: .html_url
-            oncall: .__oncall_user[] | select(.escalation_level == 1) | .user.email
+            oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+            secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
             escalationLevels: .__oncall_user | map(.escalation_level) | unique | length
             meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
             meanSecondsToFirstAck: .__analytics.mean_seconds_to_first_ack
@@ -944,7 +967,8 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
               properties:
                 status: .status
                 url: .html_url
-                oncall: "[.__oncall_user[].user.email]"
+                oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+                secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
     ```
 
 3. Establish a mapping between the analytics properties and the service analytics data response. Following a convention, the aggregated result of the PagerDuty service analytics API is saved to the `__analytics` key and merged with the response of the service API. Consequently, users can access specific metrics such as the mean seconds to resolve by referencing `__analytics.mean_seconds_to_resolve`.
@@ -965,7 +989,8 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
               properties:
                 status: .status
                 url: .html_url
-                oncall: "[.__oncall_user[].user.email]"
+                oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+                secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
                 # highlight-next-line
                 meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
     ```
@@ -990,7 +1015,8 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
               properties:
                 status: .status
                 url: .html_url
-                oncall: "[.__oncall_user[].user.email]"
+                oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+                secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
                 meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
                 meanSecondsToFirstAck: .__analytics.mean_seconds_to_first_ack
                 meanSecondsToEngage: .__analytics.mean_seconds_to_engage
@@ -1620,6 +1646,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "status": "active",
     "url": "https://getport-io.pagerduty.com/service-directory/PGAAJBE",
     "oncall": "devops-port@pager-demo.com",
+    "secondaryOncall": null,
     "escalationLevels": 1,
     "meanSecondsToResolve": 0,
     "meanSecondsToFirstAck": 0,
