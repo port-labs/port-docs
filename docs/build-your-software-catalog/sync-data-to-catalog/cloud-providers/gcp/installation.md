@@ -12,12 +12,15 @@ The Google Cloud Ocean integration relies on the Google Cloud Client libraries, 
 Choose one of the following installation methods:
 <Tabs groupId="installation-platforms" queryString="installation-platforms">
 <TabItem value="helm" label="Helm">
+
+# Helm installation
+
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
 1. Creating a service account.
 2. Running the Helm Command.
 
-# Creating a service account
+## Creating a service account
 
 1. Make sure you have your selected project in the top left toggle.
 
@@ -65,7 +68,7 @@ According to Google Cloud, This isn't the preffered way for Production purposes.
 5. This will download your new Service Account Key configuration file.
 6. Done!
 
-# Running the Helm command
+## Running the Helm command
 
 :::warning
 The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
@@ -94,7 +97,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>"
    ```
 
-# Optional- Scale permissions for a Service account
+## Optional- Scale permissions for a Service account
 
 The above gives a service account permissions in it's Project's scope. You are able to add permissions at other projects/folders/organization level.
 
@@ -134,14 +137,16 @@ The above gives a service account permissions in it's Project's scope. You are a
 12. Click on `Save`
 
 </TabItem>
-<TabItem value="docker" label="Docker">
+<TabItem value="on-prem" label="On Premise">
+
+# Docker installation
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
 1. Creating a service account.
 2. Running the Docker Command.
 
-# Creating a service account
+## Creating a service account
 
 1. Make sure you have your selected project in the top left toggle.
 
@@ -168,7 +173,7 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
    ![Done Creating](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/done_creating.png)
 
-## Fetching Key file
+## Fetching Key file for Docker service account
 
 There are multiple ways to use the service account we just created. In this guide, we'll use the Service Account Key method.
 
@@ -189,7 +194,7 @@ According to Google Cloud, This isn't the preffered way for Production purposes.
 5. This will download your new Service Account Key configuration file.
 6. Done!
 
-# Running the Docker command
+## Running the Docker command
 
 :::warning
 The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
@@ -215,7 +220,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    ghcr.io/port-labs/port-ocean-gcp:latest
    ```
 
-# Optional- Scale permissions for a Service account
+## Optional- Scale permissions for a Docker Service account
 
 The above gives a service account permissions in it's Project's scope. You are able to add permissions at other projects/folders/organization level.
 
@@ -256,16 +261,19 @@ The above gives a service account permissions in it's Project's scope. You are a
 
 </TabItem>
 <TabItem value="terraform" label="Terraform">
+
+# Terraform installation
+
 The GCP integration is deployed using Terraform on Google Cloud Cloud Run.  
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
-# Prerequisites
+## Prerequisites
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
 - [A logged in gCloud CLI](https://cloud.google.com/sdk/gcloud) with enough [Permissions](#required-permissions-to-run-terraform-apply)
 - [Artifact Registry Image](#artifact-registry-image)
 
-# Artifact Registry Image
+## Artifact Registry Image
 
 In order to run the Cloud Run Service, it's mandatory to have a working Image. Currently our GHCR based images aren't supported by Google Cloud's Cloud run platform, so a manual installation to Dockerhub\Artifact registry is required. In the guide we specify an Artifact registry approach, but a similar DockerHub approach should yield the same results:  
 
@@ -280,7 +288,7 @@ In order to run the Cloud Run Service, it's mandatory to have a working Image. C
 
    ```docker push <your_artifact_registry_/_dockerhub>/port-ocean-gcp:<your_version>```
 
-# Required permissions to run terraform apply
+## Required permissions to run terraform apply
 
 In order to successfully deploy the Google Cloud integration, it's crucial to ensure that the user who deploys the integration in the GCP Organization has the appropriate access permissions.
 
@@ -340,11 +348,11 @@ serviceusage.services.use
 ```
 </details>
 
-# Installation walkthrough
+## Installation walkthrough
 
 Run the following commands. Make sure to replace `<placeholders>` with actual values.
 :::tip
-If you want the integration to collect resources from more projects/folders/organization, make sure that you set up permissions properly, as instructed in the `Optional - Scaling the permissions` section.
+If you want the integration to collect resources from more projects/folders/organization, make sure that you set up [permissions properly](#optional---scaling-the-permissions).
 :::
 
 ```bash
@@ -372,7 +380,7 @@ terraform init
 terraform apply
 ```
 
-# Optional - Scaling the permissions
+## Optional - Scaling the permissions
 
 If you want the integration to collect resources from multiple projects/folders or to have it collect from the entire organization, you need to have permissions to create/view additional resources. Follow these instructions to make sure you are equipped with enough permissions.
 
@@ -382,7 +390,7 @@ If you want the integration to collect resources from multiple projects/folders 
 
 2. In the search text box, search for `roles`. Click the `IAM & Admin` option.
 3. Click on `CREATE ROLE`.
-4. Click on `ADD PERMISSIONS`, and select all the permissions from the above section `Required permissions to run terraform apply`
+4. Click on `ADD PERMISSIONS`, and select all the permissions from [the above section](#required-permissions-to-run-terraform-apply)
 5. In the search text box, search for `manage resources`. Click the `IAM & Admin` option.
 
 ![Search manage resources](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_manage_resources.png)
