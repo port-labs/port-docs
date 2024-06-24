@@ -380,21 +380,26 @@ If you want the integration to collect resources from multiple projects/folders 
 1. Make sure you are connected to your Organization.
 
 ![Select Organization](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/your_organization.png)
+
 2. In the search text box, search for `roles`. Click the `IAM & Admin` option.
 3. Click on `CREATE ROLE`.
 4. Click on `ADD PERMISSIONS`, and select all the [above permissions](#required-permissions-to-run-terraform-apply)
 5. In the search text box, search for `manage resources`. Click the `IAM & Admin` option.
 
 ![Search manage resources](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/search_manage_resources.png)
+
 6. In the `Resources` Table, you see all projects+folders connected to your organization.
 
 ![Manage resources table](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/manage_resources_table.png)
+
 7. Pick your desired scope (organization/folders/projects), using the left checkboxes.
 
 ![Click desired scope](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/click_desired_scope.png)
+
 8. This will open up a menu on the right side.
 
 ![Permissions menu](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/permissions_menu.png)
+
 9. Click on `ADD PRINCIPLE`
 10. Here, Enter your's or your service account's email, and grant it your newly created `Role`.
 
