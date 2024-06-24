@@ -4,8 +4,8 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import CreateServiceAccountAndKey from '../\_create-service-account-and-key.mdx'
-import GivePermissionsToNewServiceAccount from '../\_give-permissions-to-new-service-account.mdx'
+import CreateServiceAccountAndKey from '\_create-service-account-and-key.mdx'
+import GivePermissionsToNewServiceAccount from '\_give-permissions-to-new-service-account.mdx'
 
 # Installation
 
@@ -96,7 +96,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 
 ## Optional- Scale permissions for a Docker Service account
 
-<GivePermissionsToNewServiceAccount/>
+<GivePermissionsToNewServiceAccount/
 
 </TabItem>
 <TabItem value="terraform" label="Terraform ( Real Time Events )">  
