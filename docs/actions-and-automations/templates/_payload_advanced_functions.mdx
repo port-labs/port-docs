@@ -1,0 +1,27 @@
+#### spreadValue() function
+
+You can use the `spreadValue()` function to add multiple keys to the root of the payload at once. This function will spread all of the keys under a given object.  
+A common use case for this function is to add all of the user inputs to the payload:
+
+```json showLineNumbers
+{
+  "{{ spreadValue() }}": "{{ .inputs }}"
+}
+```
+
+This will add all of the action's user inputs to the root of the payload, so that they can be accessed directly by your backend.
+
+#### Using `jq` expressions in keys
+
+The keys in the payload can also be `jq` expressions.  
+For example, the following expression will add the `ref` key to the payload only if a `ref` input was provided when executing the action:
+
+```json
+{
+  "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.ref}}"
+}
+```
+
+:::warning Using jq in keys
+Note that if a **key** in the payload evaluates to `null` for any reason, the entire expression (key + value) will be ommitted from the payload.
+:::
