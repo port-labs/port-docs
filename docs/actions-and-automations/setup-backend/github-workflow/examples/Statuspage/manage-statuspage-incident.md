@@ -2,6 +2,7 @@ import GithubActionModificationHint from '../../\_github_action_modification_req
 import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
 import StatuspageBlueprint from './blueprints/_statuspage_blueprint.mdx'
 import StatuspageIncidentBlueprint from './blueprints/_statuspage_incident_blueprint.mdx'
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Create and Manage Statuspage Incidents
 
@@ -87,6 +88,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
@@ -169,6 +171,7 @@ jobs:
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{ fromJson(inputs.port_context).runId }}
       
@@ -178,6 +181,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           status: "SUCCESS"
@@ -224,6 +228,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
@@ -269,6 +274,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           status: "SUCCESS"
           runId: ${{ fromJson(inputs.port_context).runId }}
@@ -280,6 +286,8 @@ jobs:
 :::tip Customize Your Workflow:
 Refer to the [Statuspage API docs](https://developer.statuspage.io/#operation/postPagesPageIdIncidents) to tailor the data fields sent within your workflow to align perfectly with your needs. 
 :::
+
+<PortApiRegionTip/>
 
 ## Port Configuration
 
