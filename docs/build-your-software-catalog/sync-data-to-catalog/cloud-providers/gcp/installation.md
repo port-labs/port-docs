@@ -38,7 +38,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
 
    ```bash
-   echo <new-configuration-file> | base64 | pbcopy
+   cat <new-configuration-file> | base64 | pbcopy
    ```
 
 2. Run the following command:
@@ -82,7 +82,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
 
    ```bash
-   echo <new-configuration-file> | base64 | pbcopy
+   cat <new-configuration-file> | base64 | pbcopy
    ```
 
 2. Run the following command:
