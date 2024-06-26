@@ -14,7 +14,7 @@ Dashboards are available in the following locations:
 
 Pie charts illustrate data from entities in your software catalog divided by categories and entity properties.
 
-![Pie Chart](/img/software-catalog/widgets/pieChartExample.png)
+<img src='/img/software-catalog/widgets/pieChartExample.png' width='70%' />
 
 #### Visualization properties
 
@@ -52,14 +52,16 @@ You can also filter entities so the aggregation number chart will only apply to 
 | `Chart type`    | `String` | Defines the operation type for the chart. Possible values: `Display single property`, `Count entities`, `Aggregate by property`                                                                                                                      | `null` | `true`   |
 | `Blueprint`       | `String` | The chosen blueprint from which related entities data is visualized from                                                                                                                                                                    | `null`     | `true`   |
 
-##### Chart type: display single property 
+**Chart type: display single property** 
+
 | Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
 | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
 | `Entity`       | `String` | The chosen entity from which property data is visualized from                                                                                                                                                                    | `null`     | `true`   |
 | `Property`        | `String` | The number property which will be visulized                                                 | `null`     | `true`   |                                                                                     | `null`     | `true`   |
 
 
-##### Chart type: Count entities 
+**Chart type: Count entities**
+
 | Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
 | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
 | `Function`        | `String` | `count` and `average` (by time).                                                   | `null`     | `true`   |
@@ -70,9 +72,8 @@ You can also filter entities so the aggregation number chart will only apply to 
 | `Custom unit`      | `String` | Text to display below the number value. The `unitCustom` key is only available when `unit` equals to `custom`                                                                                                                               | `null`     | `true`   |
 | `Unit alignment`   | `String` | `left`, `right`, `bottom`.                                                                                                                                                                                                                  | `null`     | `true`   |
 
+**Chart type: Aggregate by property** 
 
-
-##### Chart type: Aggregate by property 
 | Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
 | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
 | `Property`        | `String` | The number chart value will be the selected property's aggregated value (according to the chosen function) | `null`     | `true`   |
@@ -236,3 +237,22 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
 ### Dynamic filters
 
 You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when filtering a widget.
+
+## Widget type identifiers (Terraform)
+
+When creating widgets using [Port's Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_page), you need to provide the widget type's identifier in the `type` key.  
+The following table lists the identifiers for each widget type:
+
+| Widget type | Identifier |
+| ----------- | ---------- |
+| Number chart | `entities-number-chart` |
+| Pie chart | `entities-pie-chart` |
+| Line chart | `line-chart` |
+| Markdown | `markdown` |
+| IFrame | `iframe-widget` |
+| Table | `table-entities-explorer` |
+| Action card | `action-card-widget` |
+| Action History | `action-runs-table-widget` |
+| My entities | `my-entities` |
+| Recently viewed | `recently-viewed-entities` |
+| Recently used actions | `recently-used-actions` |
