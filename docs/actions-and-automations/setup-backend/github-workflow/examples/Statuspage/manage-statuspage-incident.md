@@ -190,7 +190,7 @@ jobs:
 ```
 </details>
 
-2. Create the file `.github/workflows/update-statuspage-incident.yml` in the `.github/workflows` folder of your repository.
+2. Create the file `update-statuspage-incident.yml` in the `.github/workflows` folder of your repository.
 
 <details>
 <summary>`update-statuspage-incident` GitHub Workflow</summary>
