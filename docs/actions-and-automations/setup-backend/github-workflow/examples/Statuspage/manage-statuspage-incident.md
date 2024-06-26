@@ -283,9 +283,7 @@ jobs:
 ```
 </details>
 
-:::tip Customize Your Workflow:
-Refer to the [Statuspage API docs](https://developer.statuspage.io/#operation/postPagesPageIdIncidents) to tailor the data fields sent within your workflow to align perfectly with your needs. 
-:::
+3. Customize Your Workflow. Refer to the [Statuspage API docs](https://developer.statuspage.io/#operation/postPagesPageIdIncidents) to tailor the data fields sent within your workflow to align perfectly with your needs.
 
 <PortApiRegionTip/>
 
@@ -457,7 +455,7 @@ Now you should see the `Create Statuspage Incident` and `Update Statuspage Incid
 
 ## Let's test it!
 
-:::tip prerequisites
+### Prerequisites
 To test the new actions, you need to make sure that your Port catalog contains your Statuspage entities, or that you added your Statuspage ID as a secret to your GitHub repository (under the `STATUSPAGE_PAGE_ID` secret in GitHub)
 
 To find your Statuspage ID:
@@ -465,7 +463,7 @@ To find your Statuspage ID:
 1. Browse to [Statuspage](https://manage.statuspage.io/)
 2. Select the page you want to create an incident for from the sidebar on the left side
 3. The Statuspage ID will appear in the URL. for example, given the URL: `https://manage.statuspage.io/pages/aaaaaaaaaaaa/incidents`, the Statuspage ID is `aaaaaaaaaaaa`
-:::
+
 
 ### Creating an Incident
 
