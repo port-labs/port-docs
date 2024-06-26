@@ -21,10 +21,10 @@ To understand how mapping works, let's take a look at an example. After you comp
 
 <br/><br/>
 
-Clicking on this entry will open the mapping configuration.  
+Clicking on this entry will open the mapping configuration. In the bottom left panel, you will see the YAML configuration of the mapping.  
 Note that Port provides default mapping, providing values to the properties defined in the relevant blueprint:
 
-<img src='/img/software-catalog/customize-integrations/mappingExampleGithub.png' width='80%' />
+<img src='/img/software-catalog/customize-integrations/mappingExampleGithub.png' width='80%' border='1px' />
 
 <br/><br/>
 
@@ -126,6 +126,23 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
           mappings: ...
   ```
 
+### Test your mapping - JQ playground
+
+The mapping configuration window contains a JQ playground that allows you to test your JQ queries against example responses from the API of the integrated tool. This is useful for validating your queries and ensuring they return the expected results.
+
+For integrations based on the [Ocean framework](https://ocean.getport.io/integrations-library/), examples will be automatically generated for each resource `kind` in your mapping, based on real data ingested from the tool. You can disable this behavior by setting the `sendRawDataExamples` flag to `false` in the integration's configuration.
+
+To test your mapping against the example data, click on the `Test mapping` button in the bottom-right panel.
+
+#### Manually add test examples
+
+For each resource `kind` in your mapping (in the bottom-left panel), you can add an example in the `Test examples` section.  
+Click on the `Add kind` button to add an example:
+
+<img src='/img/software-catalog/customize-integrations/addTestExample.png' width='100%' border='1px' />
+
+After adding your example, click on the `Test mapping` button in the bottom-right panel to test your mapping against the example data.
+
 ## Mapping relations
 
 You can use the mapping YAML file to set the value of a relation between entities. This is very useful when you want to automatically assign an entity to the relation of another entity using a convention of your choice.
@@ -170,6 +187,52 @@ After ingesting all of our services and PagerDuty services, we want to connect e
 
      Now, if a `service's` **identifier** is equal to a `PagerDuty service's` **name**, that service will automatically have its on-call property filled with the relevant PagerDuty service.  
       This is just the convention we chose for this example, but you can use a different one if you'd like.
+
+### Mapping relations using search queries
+
+In the example above we map a relation using a direct reference to the related entity's `identifier`.  
+
+Port also allows you to use a [search query rule](/search-and-query/#rules) to map relations based on a **property** of the related entity.  
+This is useful in cases where you don't have the identifier of the related entity, but you do have one of its properties.
+
+For example, consider the following scenario:  
+Say we have a `service` blueprint that has a relation (named `service_owner`) to a `user` blueprint. The `user` blueprint has a property named `github_username`.  
+
+Now, we want to map the `service_owner` relation based on the `github_username` property of the `user` entity.  
+To achieve this, we can use the following mapping configuration:
+
+```yaml showLineNumbers
+- kind: repository
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .name
+        title: .name
+        blueprint: '"service"'
+        relations:
+          #highlight-start
+          service_owner:
+            combinator: '"and"'
+            rules:
+              - property: '"github_username"'
+                operator: '"="'
+                value: .owner.login
+          #highlight-end
+```
+Instead of directly referencing the `user` entity's `identifier`, we use a search query rule to find the `user` entity whose `github_username` property matches the `.owner.login` value returned from GitHub's API.
+
+When using a search query rule to map a relation, Port will query all entities of the related blueprint (in this case - `user`) and return the one/s that match the rule.
+
+#### Limitations
+
+- One or more entities can be returned by the search query rule. Note the relation's type when using this method:
+  - A ["single type" relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#bust_in_silhouette-single) expects a single entity to be returned.
+  - A ["many type" relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#-many) expects an array of entities to be returned.
+- The maximum number of entities returned by the search query rule is 100.
+- Mirror and calculation properties are currently not supported.
+- Only the `=` operator is supported for the search query rule.
 
 ## Create multiple entities from an array API object
 

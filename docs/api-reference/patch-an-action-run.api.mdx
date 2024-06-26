@@ -1,0 +1,272 @@
+---
+id: patch-an-action-run
+title: "Patch an action run"
+description: "This route allows you to patch an action run's details. This can be used to update the run's status & label, and add links to it (e.g. external logs of the job runner).<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
+sidebar_label: "Patch an action run"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVlFv2zYQ/isEH7YEcKykj0ZRwMvSNViBGk7y1AUrJZ0sxhSpkZQdz/B/3x1J2XKcoAW2x8GALFF3x+/uu/uoLS/BFVa2XhrNJ/y+lo5Z03lgQimzdmxjOuYNa4UvaiY0EwWZMtvpnx0rwQup3JgFvwJf58A6ByW5dG0pMI6vIVk7L3zn2E9MiRzUCKOVTJQlU1IvHXlIz85gvBgzePZgtVBMmYVjpgpBnkxOgTTY8/H73GYfwuXeMAXCatYYi6BzxD7A6EasqKFYMlqmIF9LU3QNaISCJo9ntfetm2QZLrvxAnxrrB9LkxUWEPyFA1Xhxa5kARfw3IKVoAtwmYVKQeEv4lYXrTULC85l52M+4l4sHJ985dOIY444+OOIW/irA+d/MeWGT7a8MNojELoVbatkESBlT46Y2HKHwBtBd37TAnJj8ifcEcPjZgjES3DBLlR1YOe8lXqBdqC7hmDcPVxf39zd4crH6e3nh/kNf9yNkt9nouI15+O+mEbOiKT4Io/EJkoTQ4e6R4I4bkPkUvzjeF80MGMjZ3v6MWYpXavEBhtI6kHntGIBtDIjdthH9IRn0bQKsImCP7mT+XcaJ8EacaPhS4W1Oc3bS6+OFipjG4Es8c4qTGjvIawVm4FDfN6F0nZNI+zmR8qaTE8rOGLrWuLIraVSP1qZfdH7MmDn3Zbfh3EfwzFZEg6ceMtyUSxBlyNWHYodtkUbXwvPfpP+U5ezhVyBCy/Wxi4rlIzXxUCW2Oqy2rzIEqE7D6Ls8/+Ga3/K8lufCuaCCiHJXKjZoO8roRzsdmTQCisawIRdIPRkbk7mYXWFD6t3YQok5Y9jaYlKjXHwcYWhqDBxYqWFst9v9Hb4PhYKZX0IFdN5teCpIhLsKflBdddC+7307jv3AMnbDnYoKw6Kzkq/CdnnqIVg8fZxFxTHtUa7KBTvLi9PB/FXqESnPJsny1ByrGZtyphMQdmEpCY8W11lESQKIIpato357TihsKueApqUCe+lVbRyoKxhhE4NOndkM0jrjgoeM+iTO8xgK3+HAXPTDoFb+XdQUp4YqbG/0IsSI22dH1T4Jvb1UEUHYnkkkIcuioJ2eN4P+6DRjsfvqEUqE/An0aCxZdPZLTVk6roJvxpfkm1rnG9EOAtSerPTQ/hlaw2Olf8P8//mMI+t5jGNDBUYWwq5CQ28TXORFCVNBs1oF/4mafqxmWvkkgy321w4eLBqt6PlKDw0MijvIld7pRnxJWyOpGglVEc4wmyshJVk/rrrmw1xNk/icc7+hQK9WpB+IPVmiLVPIxUiHI5pHAl5fHkd8V3cU4iD88k3ESW+V6bZ9P76E1rn6WOqMWXQW7Gm+uN1wv/AHx31baQFjcL6liuhFx2em2gTA4djpiMqh8qyDMqSbgafCsc5vpScmBNdh98KRy7vceAZ6taHvXl886ZDKllvTRV/RND/AGbJCWc=
+sidebar_class_name: "patch api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Patch an action run"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/actions/runs/{run_id}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to patch an action run's details. This can be used to update the run's status & label, and add links to it (e.g. external logs of the job runner).<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","description":"The identifier of the action run you want to patch.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"status"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** [`SUCCESS`, `FAILURE`]"}
+          schema={{"type":"string","enum":["SUCCESS","FAILURE"]}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"statusLabel"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"A label to describe the status of the action run.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={true}
+          className={"schemaItem"}
+        >
+          <details
+            style={{}}
+            className={"openapi-markdown__details"}
+          >
+            <summary
+              style={{}}
+            >
+              <strong>
+                link
+              </strong><span
+                style={{"opacity":"0.6"}}
+              >
+                 object
+              </span>
+            </summary><div
+              style={{"marginLeft":"1rem"}}
+            >
+              <div
+                style={{"marginTop":".5rem","marginBottom":".5rem"}}
+              >
+                
+                
+                One or more links to be displayed in the run's page in Port. For example, a link to the external logs of the job runner.<br/>
+                
+                
+              </div>
+            </div><div>
+              <span
+                className={"badge badge--info"}
+              >
+                oneOf
+              </span><SchemaTabs>
+                <TabItem
+                  label={"string"}
+                  value={"0-item-properties"}
+                >
+                  <div
+                    style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                  >
+                    
+                    
+                    string
+                    
+                    
+                  </div>
+                </TabItem><TabItem
+                  label={"array"}
+                  value={"1-item-properties"}
+                >
+                  <li>
+                    <div
+                      style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem","paddingBottom":".5rem"}}
+                    >
+                      Array [
+                    </div>
+                  </li><div
+                    style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                  >
+                    
+                    
+                    string
+                    
+                    
+                  </div><li>
+                    <div
+                      style={{"fontSize":"var(--ifm-code-font-size)","opacity":"0.6","marginLeft":"-.5rem"}}
+                    >
+                      ]
+                    </div>
+                  </li>
+                </TabItem>
+              </SchemaTabs>
+            </div>
+          </details>
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"summary"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"A summary of the action run, which will be displayed in the run's page in Port.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"externalRunId"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The run id of your backend, for example the id that GitHub gives the workflow. This can be used to identify the action run instead of the `run_id`.<br/>"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
