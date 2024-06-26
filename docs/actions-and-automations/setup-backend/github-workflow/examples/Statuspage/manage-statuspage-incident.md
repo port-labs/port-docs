@@ -33,7 +33,7 @@ This self-service guide will show you how to seamlessly create and update incide
 
 <GithubDedicatedRepoHint/>
 
-1. Create the file `.github/workflows/create-statuspage-incident.yml` in the `.github/workflows` folder of your repository.
+1. Create the file `create-statuspage-incident.yml` in the `.github/workflows` folder of your repository.
 
 <details>
 <summary>`create-statuspage-incident` GitHub Workflow</summary>
