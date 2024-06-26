@@ -158,7 +158,7 @@ name: Generate Scorecards Reminders
 on:
   workflow_dispatch:
     inputs:
-      run_id:
+      runId:
         description: 'The id of the action run'
         required: true
         type: string
@@ -184,7 +184,7 @@ jobs:
                 clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
                 baseUrl: https://api.getport.io
                 operation: PATCH_RUN
-                runId: ${{ inputs.run_id }}
+                runId: ${{ inputs.runId }}
                 logMessage: |
                     Slack reminder sent successfully 🚀
 ```
