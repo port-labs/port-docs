@@ -452,27 +452,6 @@ You will be able to see `cloud` cost data after you have successfully configured
       port:
   ```
 
-  - **window** - Duration of time over which to query. Accepts: words like `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`.
-  - **aggregate** - Field by which to aggregate the results. Accepts: `cluster`, `node`, `namespace`, `controllerKind`, `controller`, `service`, `pod`, `container`, `label:name`, and `annotation:name`. Also accepts comma-separated lists for multi-aggregation, like `namespace,label:app`.
-  - **step** - Duration of a single allocation set. If unspecified, this defaults to the window, so that you receive exactly one set for the entire window. If specified, such as `30m`, `2h`, `1d` etc, it works chronologically backward, querying in durations of step until the full window is covered. Default is `window`.
-  - **accumulate** - If true, sum the entire range of sets into a single set. Default value is `false`.
-  - **idle** - If true, include idle cost (i.e. the cost of the un-allocated assets) as its own allocation. Default is `true`.
-  - **external** - If true, include external, or out-of-cluster costs in each allocation. Default is `false`.
-  - **filterClusters** - Comma-separated list of clusters to match; e.g. `cluster-one,cluster-two` will return results from only those two clusters.
-  - **filterNodes** - Comma-separated list of nodes to match; e.g. `node-one,node-two` will return results from only those two nodes.
-  - **filterNamespaces** - Comma-separated list of namespaces to match; e.g. `namespace-one,namespace-two` will return results from only those two namespaces.
-  - **filterControllerKinds** - Comma-separated list of controller kinds to match; e.g. `deployment`, job will return results with only those two controller kinds.
-  - **filterControllers** - Comma-separated list of controllers to match; e.g. `deployment-one,statefulset-two` will return results from only those two controllers.
-  - **filterPods** - Comma-separated list of pods to match; e.g. `pod-one,pod-two` will return results from only those two pods.
-  - **filterAnnotations** - Comma-separated list of annotations to match; e.g. `name:annotation-one,name:annotation-two` will return results with either of those two annotation key-value-pairs.
-  - **filterControllerKinds** - Comma-separated list of controller kinds to match; e.g. `deployment`, job will return results with only those two controller kinds.
-  - **filterLabels** - Comma-separated list of annotations to match; e.g. `app:cost-analyzer, app:prometheus` will return results with either of those two label key-value-pairs.
-  - **filterServices** - Comma-separated list of services to match; e.g. `frontend-one,frontend-two` will return results with either of those two services.
-  - **shareIdle** - If true, idle cost is allocated proportionally across all non-idle allocations, per-resource. That is, idle CPU cost is shared with each non-idle allocation's CPU cost, according to the percentage of the total CPU cost represented. Default is `false`.
-  - **splitIdle** - If true, and shareIdle == false, Idle Allocations are created on a per cluster or per node basis rather than being aggregated into a single idle allocation. Default is `false`.
-  - **idleByNode** - If true, idle allocations are created on a per node basis. Which will result in different values when shared and more idle allocations when split. Default is `false`.
-  - And any query parameter that could be found in the [Kubecost allocation API](https://docs.kubecost.com/apis/apis-overview/api-allocation#allocation-api) and [Kubecost Cloud API](https://docs.kubecost.com/apis/apis-overview/cloud-cost-api#cloud-cost-aggregate-api)
-
 - The `port`, `entity` and the `mappings` keys are used to map the Kubecost object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
 ```yaml showLineNumbers
@@ -521,6 +500,45 @@ deleteDependentEntities: true
   :::tip Blueprint key
   Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
   :::
+
+#### Available configuration for `kubesystem` kind
+- **window** - Duration of time over which to query. Accepts: words like `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`.
+- **aggregate** - Field by which to aggregate the results. Accepts: `cluster`, `node`, `namespace`, `controllerKind`, `controller`, `service`, `pod`, `container`, `label:name`, and `annotation:name`. Also accepts comma-separated lists for multi-aggregation, like `namespace,label:app`.
+- **step** - Duration of a single allocation set. If unspecified, this defaults to the window, so that you receive exactly one set for the entire window. If specified, such as `30m`, `2h`, `1d` etc, it works chronologically backward, querying in durations of step until the full window is covered. Default is `window`.
+- **accumulate** - If true, sum the entire range of sets into a single set. Default value is `false`.
+- **idle** - If true, include idle cost (i.e. the cost of the un-allocated assets) as its own allocation. Default is `true`.
+- **external** - If true, include external, or out-of-cluster costs in each allocation. Default is `false`.
+- **filterClusters** - Comma-separated list of clusters to match; e.g. `cluster-one,cluster-two` will return results from only those two clusters.
+- **filterNodes** - Comma-separated list of nodes to match; e.g. `node-one,node-two` will return results from only those two nodes.
+- **filterNamespaces** - Comma-separated list of namespaces to match; e.g. `namespace-one,namespace-two` will return results from only those two namespaces.
+- **filterControllerKinds** - Comma-separated list of controller kinds to match; e.g. `deployment`, job will return results with only those two controller kinds.
+- **filterControllers** - Comma-separated list of controllers to match; e.g. `deployment-one,statefulset-two` will return results from only those two controllers.
+- **filterPods** - Comma-separated list of pods to match; e.g. `pod-one,pod-two` will return results from only those two pods.
+- **filterAnnotations** - Comma-separated list of annotations to match; e.g. `name:annotation-one,name:annotation-two` will return results with either of those two annotation key-value-pairs.
+- **filterControllerKinds** - Comma-separated list of controller kinds to match; e.g. `deployment`, job will return results with only those two controller kinds.
+- **filterLabels** - Comma-separated list of annotations to match; e.g. `app:cost-analyzer, app:prometheus` will return results with either of those two label key-value-pairs.
+- **filterServices** - Comma-separated list of services to match; e.g. `frontend-one,frontend-two` will return results with either of those two services.
+- **shareIdle** - If true, idle cost is allocated proportionally across all non-idle allocations, per-resource. That is, idle CPU cost is shared with each non-idle allocation's CPU cost, according to the percentage of the total CPU cost represented. Default is `false`.
+- **splitIdle** - If true, and shareIdle == false, Idle Allocations are created on a per cluster or per node basis rather than being aggregated into a single idle allocation. Default is `false`.
+- **idleByNode** - If true, idle allocations are created on a per node basis. Which will result in different values when shared and more idle allocations when split. Default is `false`.
+- And any query parameter that could be found in the [Kubecost allocation API](https://docs.kubecost.com/apis/apis-overview/api-allocation#allocation-api) and [Kubecost Cloud API](https://docs.kubecost.com/apis/apis-overview/cloud-cost-api#cloud-cost-aggregate-api)
+
+#### Available configuration for `cloud` kind (v1)
+- **window** - Duration of time over which to query. Accepts: words like `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`.
+- **aggregate** - Field by which to aggregate the results. Accepts: invoiceEntityID, accountID, provider, service, and label:<name>. Supports multi-aggregation using comma-separated lists. Example: `accountID,service`, `namespace,label:app`.
+- **filterInvoiceEntityIDs** - Filter for account
+- **filterAccountIDs** - GCP only, filter for projectID
+- **filterProviders** - Filter for cloud service provider
+- **filterLabel** - Filter for a specific label. Does not support filtering for multiple labels at once.
+- **filterServices** - Comma-separated list of services to match; e.g. `frontend-one,frontend-two` will return results with either of those two services.
+
+#### Available configuration for `cloud` kind (v2)
+- **window** - Duration of time over which to query. Accepts: words like `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`.
+- **aggregate** - Field by which to aggregate the results. Accepts: invoiceEntityID, accountID, provider, service, and label:<name>. Supports multi-aggregation using comma-separated lists. Example: `accountID,service`, `namespace,label:app`.
+- **accumulate** - If true, sum the entire range of sets into a single set. Default value is `false`.
+- **offset** - Refers to the number of line items you are offsetting. Pairs with limit. See [Kubecost docs on Using offset and limit parameters to parse payload results](https://docs.kubecost.com/apis/apis-overview#using-offset-and-limit-parameters-to-parse-payload-results) for more
+- **limit** - Refers to the number of line items per page. Pair with the offset parameter to filter your payload to specific pages of line items.
+- **filter** - Filter your results by any category which you can aggregate by, can support multiple filterable items in the same category in a comma-separated list. See the [Kubecost filter syntax guide](https://docs.kubecost.com/apis/filters-api) for more.
 
 ### Ingest data into Port
 
