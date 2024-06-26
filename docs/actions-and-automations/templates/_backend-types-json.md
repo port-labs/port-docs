@@ -15,6 +15,8 @@ Depending on the backend type you choose, the available fields will be different
 | --------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
 | `agent`   | `boolean` | Defines whether to use [Port Agent](/actions-and-automations/setup-backend/webhook/port-execution-agent/port-execution-agent.md) for execution or not. | `true` or `false`   |
 | `url`     | `string`  | Defines the webhook URL to which Port will send the action via an HTTP POST request.                                                                           | https://example.com |
+| `method`  | `string`  | Defines the HTTP method to be used for the request.                                                                                                           | `POST`, `PUT`, `DELETE`, `PATCH` |
+| `synchronized` | `boolean` | If true, the action will be executed [synchronously](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/#sync-vs-async-execution). | `true` or `false` |
 | `headers` | `object`  | An object containing the payload headers to be sent to the webhook in each execution, in `"key":"value"` pairs.                                        |
 | `body`    | `object`  | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs.                                                  |
 
@@ -45,6 +47,18 @@ Depending on the backend type you choose, the available fields will be different
 | `groupName`            | `string`  | The GitLab *group* name.<br></br>Can only be used if `type` is set to `GITLAB`.                                                                                                                                          | `port-labs`                              |
 | `pipelineVariables` | `object` | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs. |  |
 
+
+</TabItem>
+
+<TabItem value="azure-devops" label="Azure DevOps">
+
+`invocationMethod.type` should be set to `AZURE_DEVOPS`.
+
+| Field | Type | Description | Example values |
+| --- | --- | --- | --- |
+| `webhook` | `string` | The name of the webhook resource in the Azure YAML pipeline file. | |
+| `org` | `string` | The Azure DevOps organization in which the pipeline is located. | `port-labs` |
+| `payload` | `object` | Defines the **payload** that will be sent to the backend upon execution of the action.<br/>An object containing `"key":"value"` pairs. |  |
 
 </TabItem>
 
