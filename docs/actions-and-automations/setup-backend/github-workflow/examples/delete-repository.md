@@ -87,8 +87,8 @@ Follow these steps to get started:
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "delete-repo.yml",
     "workflowInputs": {
-      "org_name": "{{.inputs.\"org_name\"}}",
-      "delete_dependents": "{{.inputs.\"delete_dependents\"}}",
+      "org_name": "{{inputs.org_name}}",
+      "delete_dependents": "{{inputs.delete_dependents}}",
       "port_context": {
         "entity": "{{.entity.identifier}}",
         "blueprint": "{{.action.blueprint}}",

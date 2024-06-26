@@ -5,6 +5,7 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Create cloud resources using IaC
 
@@ -275,6 +276,7 @@ jobs:
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: UPSERT
           runId: ${{ fromJson(inputs.port_context).runId }}
       - name: Create a log message
@@ -282,6 +284,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: Pull request created successfully for "${{ inputs.name }}" 🚀
@@ -696,6 +699,8 @@ pipeline {
 
 </Tabs>
 
+<PortApiRegionTip/>
+
 1. We will now create a simple `.tf` file that will serve as a template for our new resource:
 
 - In your source repository (`port-actions` for example), create a file named `cloudResource.tf` under `/templates/` (it's path should be `/templates/cloudResource.tf`).
@@ -764,6 +769,5 @@ With Port, platform engineers can design precise and flexible self-service actio
 
 More relevant guides and examples:
 
-- [Deploy AWS resources using AWS CloudFormation
-  ](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/deploy-cloudformation-template)
+- [Deploy AWS resources using AWS CloudFormation](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template)
 - [Create an S3 bucket using Self-Service Actions](https://docs.getport.io/actions-and-automations/setup-backend/webhook/examples/s3-using-webhook/)

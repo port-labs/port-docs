@@ -3,6 +3,7 @@ sidebar_position: 4
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Deploy resource in Azure Cloud with Terraform
 
@@ -199,6 +200,7 @@ Follow these steps to get started:
     provider "port" {
         client_id = var.port_client_id
         secret    = var.port_client_secret
+        base_url  = var.base_url
     }
 
     resource "azurerm_storage_account" "storage_account" {
@@ -271,7 +273,14 @@ Follow these steps to get started:
         type        = string
         description = "The Port client secret"
     }
+
+    variable "base_url" {
+    type        = string
+    description = "The Port API URL"
+}
   ```
+
+<PortApiRegionTip/>
 
 </details>
 
