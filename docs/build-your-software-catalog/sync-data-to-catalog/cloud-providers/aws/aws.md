@@ -187,4 +187,4 @@ These permissions are essential for the proper functioning of the integration wi
 
 ## Getting started
 
-Continue to the [installation](./installation.md) guide to learn how to install the AWS integration.
+Continue to the [installation](./installations/installation.md) guide to learn how to install the AWS integration.
