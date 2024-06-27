@@ -6,6 +6,7 @@ import DocCardList from '@theme/DocCardList';
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
+import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
 
 # Setup backend
 
@@ -132,6 +133,13 @@ You can use the `jq` expression `{{ . }}` when testing to see the entire availab
 :::
 
 <PayloadAdvancedFunctions />
+
+## JSON structure
+
+In some cases, you may prefer to define the backend configuration using a JSON object.  
+The backend is defined under the `invocationMethod` object in the action's JSON structure.
+
+<BackendTypesJson />
 
 ___
 
