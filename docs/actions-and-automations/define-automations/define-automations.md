@@ -7,9 +7,9 @@ title: Define automations
 
 Naturally, your developer portal holds valuable information about your organization’s techstack, environments and dependencies. Port enables you to use this data to automate workflows and business logic, simplifying routine processes and making your organization more efficient and secure.
 
-Automations in Port are triggered by events in your infrastructure, such as a new service being created, a cloud account being provisioned, or a new package being added to your software catalog. These events can be used to trigger pre-defined workflows running any logic, such as updating your software catalog, sending notifications, or provisioning new resources.
+Automations in Port are triggered by events in your infrastructure, such as a new service being created, a cloud account being provisioned, or a new package being added to your software catalog. These events can be used to trigger a pre-defined backend running any logic, such as updating your software catalog, sending notifications, or provisioning new resources.
 
-Port uses the same actions for automations and for [self-service actions](/actions-and-automations/create-self-service-experiences/), so any backend option available for self-service actions can be used in automations as well.
+Port uses the same backend types for both automations and [self-service actions](/actions-and-automations/create-self-service-experiences/).
 
 ## Common automations
 
@@ -22,9 +22,13 @@ Port uses the same actions for automations and for [self-service actions](/actio
 Automations are comprised of two parts:
 
 1. **Trigger** - An event in your software catalog that you want to act upon. This can be any one of the events defined [here](/actions-and-automations/define-automations/setup-trigger).
-2. **Action** - The logic that you want to execute when the trigger event occurs. This can be any one of the actions defined [here](/actions-and-automations/define-automations/setup-action). 
+2. **Backend** - The logic that you want to execute when the trigger event occurs. This can be any one of the backends defined [here](/actions-and-automations/define-automations/setup-action). This part includes defining a payload that will be sent to your handler upon execution.
 
-When an event occurs in your software catalog, Port will automatically trigger the associated action, given that the automation is enabled.  
+<br/><center>
+<img src="/img/automations/architecture.jpg" width="80%" border='1px' />
+</center><br/>
+
+When an event occurs in your software catalog, Port will automatically trigger the associated backend, given that the automation is enabled.  
 
 By default, automations are disabled and can be used as drafts until ready to be activated. You can enable them by setting the `publish` field to `true` in their JSON definition.
 
@@ -77,7 +81,7 @@ Automations are defined in the [Automations page](https://app.getport.io/setting
 
 2. Change the JSON configuration to match your desired automation:
    * Setup the [trigger](/actions-and-automations/define-automations/setup-trigger).
-   * Define the [action](/actions-and-automations/define-automations/setup-action) that will be executed when the trigger event occurs.
+   * Define the [backend](/actions-and-automations/define-automations/setup-action) that will be executed when the trigger event occurs.
 
 3. Make sure to set the `publish` field to `true` if you want to enable the automation. When finished, click `Save`.
 
