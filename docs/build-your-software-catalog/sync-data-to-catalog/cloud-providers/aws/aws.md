@@ -32,7 +32,7 @@ Easily fill your software catalog with data directly from your AWS Organization,
 
 ## Installation
 
-To install the integration, follow the [installation](./installation.md) guide.
+To install the integration, follow the [installation](./installations/installation.md) guide.
 
 ## How it works
 
