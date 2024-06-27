@@ -478,5 +478,5 @@ In this example we did not create the Port entity for the S3 bucket.
 
 - You can [Connect Port's AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
   to make sure all of the properties and entities are automatically ingested from AWS.
-  - You can learn how to setup Port's AWS exporter [here](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/installation.md).
+  - You can learn how to setup Port's AWS exporter [here](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/installations/installation.md).
   - You can see example configurations and use cases [here](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md).
