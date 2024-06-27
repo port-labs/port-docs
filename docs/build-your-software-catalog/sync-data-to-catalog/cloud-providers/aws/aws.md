@@ -34,6 +34,8 @@ Easily fill your software catalog with data directly from your AWS Organization,
 
 To install the integration, follow the [installation](./installations/installation.md) guide.
 
+To properly configure permissions for production and to enable multiple accounts collection check out our [multiple accounts guide](./installations/multi_account.md)
+
 ## How it works
 
 Port's AWS integration can retrieve all the resources supported by the [Cloud Control API](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html), and export them to Port as entities of existing blueprints.
@@ -188,3 +190,5 @@ These permissions are essential for the proper functioning of the integration wi
 ## Getting started
 
 Continue to the [installation](./installations/installation.md) guide to learn how to install the AWS integration.
+
+To properly configure permissions for production and to enable multiple accounts collection check out our [multiple accounts guide](./installations/multi_account.md)
