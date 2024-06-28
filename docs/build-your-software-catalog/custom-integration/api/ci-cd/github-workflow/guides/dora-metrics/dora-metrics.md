@@ -224,7 +224,7 @@ Below, you can find the JSON for the `DORA Metrics` and `Team` blueprints requir
       "timeFrame": {
         "icon": "DefaultProperty",
         "type": "number",
-        "title": "DORA Time Frame In Days"
+        "title": "Time Frame In Days"
       }
     },
     "required": []
@@ -641,9 +641,6 @@ from github import Github
 import argparse
 import logging
 
-#Throttling
-SECONDS_BETWEEN_REQUESTS=0.12
-SECONDS_BETWEEN_WRITES=0.5
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -776,9 +773,6 @@ from github import Github
 import argparse
 import logging
 
-#Throttling, set to None to restore default behavior
-SECONDS_BETWEEN_REQUESTS=0.12
-SECONDS_BETWEEN_WRITES=0.5
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -992,17 +986,18 @@ if __name__ == "__main__":
   <summary><b>Team Metrics</b></summary>
 
 ```python showLineNumbers title="team_metrics.py"
-
 import os
-from github import Github, Team, PullRequest,GithubException
+import asyncio
+from github import Github, Team, PullRequest, GithubException
 import datetime
 import json
 import logging
 import argparse
 import re
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 import threading
 from typing import Any, Dict, List, Tuple
+from port import PortAPI
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -1011,73 +1006,169 @@ logging.basicConfig(
 
 class TeamMetrics:
     def __init__(
-        self, owner: str, repo: str, timeframe: int, team_name: str, token: str, base_url: str | None
+        self, owner: str, time_frame: int, token: str, github_host: str | None
     ) -> None:
         try:
-            self.github_client = Github(login_or_token=token, base_url=base_url) if base_url else Github(token)
-            self.repo = self.github_client.get_repo(f"{owner}/{repo}")
+            self.github_client = (
+                Github(login_or_token=token, base_url=github_host)
+                if github_host
+                else Github(token)
+            )
+            self.owner = owner
         except GithubException as e:
             logging.error(f"Failed to initialize GitHub client: {e}")
             raise
         except Exception as e:
-            logging.error(f"Unexpected error during initialization: {e} - verify that your github credentials are valid")
+            logging.error(
+                f"Unexpected error during initialization: {e} - verify that your github credentials are valid"
+            )
             raise
 
-        self.team_slug = self.convert_to_slug(team_name)
-        self.timeframe = timeframe
+        self.time_frame = time_frame
         self.start_date = datetime.datetime.now(
             datetime.timezone.utc
-        ) - datetime.timedelta(days=self.timeframe)
+        ) - datetime.timedelta(days=self.time_frame)
         self.semaphore = threading.Semaphore(5)  # Limit concurrent requests
-        self.team_members = self.get_team_members()
 
     @staticmethod
     def convert_to_slug(name: str) -> str:
         """Convert a team name to a slug by replacing spaces with hyphens and lowercasing."""
         return re.sub(r"\s+", "-", name.strip()).lower()
 
-    def get_team_members(self) -> List[str]:
+    async def get_teams(self) -> List[Team.Team]:
         try:
-            logging.info(f"Fetching team members for {self.team_slug}")
-            team = self.github_client.get_organization(
-                self.repo.owner.login
-            ).get_team_by_slug(self.team_slug)
+            logging.info(f"Fetching teams for organization {self.owner}")
+            org = self.github_client.get_organization(self.owner)
+            teams:List[Team.Team] = [team for team in org.get_teams()]
+            logging.info(f"Found {len(teams)} teams in {self.owner} >> {teams}")
+            return [team for team in teams]
+        except GithubException as e:
+            logging.error(f"Failed to fetch teams: {e}")
+            raise
+        except Exception as e:
+            logging.error(f"Unexpected error while fetching teams: {e}")
+            raise
+
+    def get_team_members(self, team: Team.Team) -> List[str]:
+        try:
+            logging.info(f"Fetching team members for team {team.slug}")
             return [member.login for member in team.get_members()]
-        
         except GithubException as e:
-            logging.error(f"Failed to fetch team members: {e}")
+            logging.error(f"Failed to fetch team members for team {team.slug}: {e}")
             raise
         except Exception as e:
-            logging.error(f"Unexpected error while fetching team members: {e}")
-            raise
-
-    def calculate_metrics(self) -> Dict[str, Any]:
-        try:
-            prs = self.repo.get_pulls(state="all", sort="created", direction="desc")
-            filtered_prs: List[PullRequest.PullRequest] = [
-                pr for pr in prs if pr.created_at >= self.start_date
-            ]
-            logging.info(
-                f"Fetched {len(filtered_prs)} pull requests for the specified timeframe"
+            logging.error(
+                f"Unexpected error while fetching team members for team {team.slug}: {e}"
             )
+            raise
 
-            logging.info(f"Fetching team info for {self.repo.full_name}/{self.team_slug}")
-            response_rate, response_time = self.calculate_response_metrics(filtered_prs)
-            team_info = self.get_team_info()
-            return {**response_rate, **response_time, **team_info}
+    def get_team_repositories(self, team: Team.Team) -> List[str]:
+        try:
+            logging.info(f"Fetching repositories for team {team.slug}")
+            return [repo.full_name for repo in team.get_repos()]
         except GithubException as e:
-            logging.error(f"Failed to calculate metrics: {e}")
+            logging.error(f"Failed to fetch repositories for team {team.slug}: {e}")
             raise
         except Exception as e:
-            logging.error(f"Unexpected error while calculating metrics: {e}")
+            logging.error(
+                f"Unexpected error while fetching repositories for team {team.slug}: {e}"
+            )
             raise
 
-    def get_team_info(self) -> Dict[str, Any]:
+    async def calculate_response_metrics(
+        self,
+        prs: List[PullRequest.PullRequest],
+        team_members: List[str],
+        team_slug: str,
+    ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        logging.info(f"Calculating response rate and time for team {team_slug}")
+        total_requests = 0
+        responded_requests = 0
+        total_response_time = datetime.timedelta(0)
+        total_responses = 0
+
+        def fetch_reviews(pr: PullRequest.PullRequest) -> None:
+            nonlocal responded_requests, total_response_time, total_responses, total_requests
+            try:
+                with self.semaphore:  # Ensure limited concurrent requests
+                    if any(team.slug == team_slug for team in pr.requested_teams):
+                        total_requests += 1
+                        reviews = pr.get_reviews()
+                        for review in reviews:
+                            if review.user.login in team_members:
+                                responded_requests += 1
+                                response_time = review.submitted_at - pr.created_at
+                                total_response_time += response_time
+                                total_responses += 1
+                                break
+            except GithubException as e:
+                logging.error(f"Failed to fetch reviews for PR {pr.number}: {e}")
+            except Exception as e:
+                logging.error(
+                    f"Unexpected error while fetching reviews for PR {pr.number}: {e}"
+                )
+
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            loop = asyncio.get_event_loop()
+            futures = [loop.run_in_executor(executor, fetch_reviews, pr) for pr in prs]
+            for future in asyncio.as_completed(futures):
+                await future
+
+        response_rate = (
+            (responded_requests / total_requests) * 100 if total_requests else 0
+        )
+        average_response_time = (
+            self.timedelta_to_decimal_hours(total_response_time / total_responses)
+            if total_responses
+            else 0
+        )
+
+        logging.info(
+            f"Successfully retrieved team response metrics for team {team_slug}"
+        )
+        return {"response_rate": round(response_rate, 2)}, {
+            "average_response_time": average_response_time
+        }
+
+    @staticmethod
+    def timedelta_to_decimal_hours(td: datetime.timedelta) -> float:
+        return round(td.total_seconds() / 3600, 2)
+
+    async def calculate_metrics_for_team(self, team: Team.Team) -> Dict[str, Any]:
+        all_prs = []
         try:
-            logging.info(f"Fetching team info from {self.repo.owner.login} organization")
-            team:Team.Team = self.github_client.get_organization(
-                self.repo.owner.login
-            ).get_team_by_slug(self.team_slug)
+            team_members = self.get_team_members(team)
+            repos = self.get_team_repositories(team)
+            logging.info(f"Found {len(repos)} repositories for the team {team.slug}")
+
+            for repo_name in repos:
+                repo = self.github_client.get_repo(repo_name)
+                prs = repo.get_pulls(state="all", sort="created", direction="desc")
+                filtered_prs = [pr for pr in prs if pr.created_at >= self.start_date]
+                all_prs.extend(filtered_prs)
+                logging.info(
+                    f"Fetched {len(filtered_prs)} pull requests from {repo_name}"
+                )
+
+            response_rate, response_time = await self.calculate_response_metrics(
+                all_prs, team_members, team.slug
+            )
+            team_info = self.get_team_info(team)
+            return {**response_rate, **response_time, **team_info, "time_frame": self.time_frame}
+        except GithubException as e:
+            logging.error(f"Failed to calculate metrics for team {team.slug}: {e}")
+            raise
+        except Exception as e:
+            logging.error(
+                f"Unexpected error while calculating metrics for team {team.slug}: {e}"
+            )
+            raise
+
+    def get_team_info(self, team: Team.Team) -> Dict[str, Any]:
+        try:
+            logging.info(
+                f"Fetching team info from {self.owner} organization for team {team.slug}"
+            )
             return {
                 "id": team.id,
                 "name": team.name,
@@ -1090,120 +1181,91 @@ class TeamMetrics:
                 "notification_setting": team.notification_setting,
             }
         except GithubException as e:
-            logging.error(f"Failed to fetch team info: {e}")
+            logging.error(f"Failed to fetch team info for team {team.slug}: {e}")
             raise
         except Exception as e:
-            logging.error(f"Unexpected error while fetching team info: {e}")
+            logging.error(
+                f"Unexpected error while fetching team info for team {team.slug}: {e}"
+            )
             raise
 
-    def calculate_response_metrics(
-        self, prs: List[PullRequest.PullRequest]
-    ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-        logging.info("Calculating response rate and time")
-        total_requests = 0
-        responded_requests = 0
-        total_response_time = datetime.timedelta(0)
-        total_responses = 0
-
-        def fetch_reviews(pr: PullRequest.PullRequest) -> None:
-            nonlocal responded_requests, total_response_time, total_responses, total_requests
-            try:
-                with self.semaphore:  # Ensure limited concurrent requests
-                    # Check if the team was explicitly requested to review the PR
-                    if any(team.slug == self.team_slug for team in pr.requested_teams):
-                        total_requests += 1
-                        reviews = pr.get_reviews()
-                        for review in reviews:
-                            if review.user.login in self.team_members:
-                                responded_requests += 1
-                                response_time = review.submitted_at - pr.created_at
-                                total_response_time += response_time
-                                total_responses += 1
-                                break
-            except GithubException as e:
-                logging.error(f"Failed to fetch reviews for PR {pr.number}: {e}")
-            except Exception as e:
-                logging.error(f"Unexpected error while fetching reviews for PR {pr.number}: {e}")
-
+    async def calculate_metrics_for_all_teams(self) -> List[Dict[str, Any]]:
         try:
-
-            with ThreadPoolExecutor(max_workers=10) as executor:
-                future_to_pr = {executor.submit(fetch_reviews, pr): pr for pr in prs}
-                for future in as_completed(future_to_pr):
-                    pass
-        
+            teams = await self.get_teams()
+            tasks = [self.calculate_metrics_for_team(team) for team in teams]
+            return await asyncio.gather(*tasks)
         except Exception as e:
-            logging.error(f"Unexpected error in ThreadPoolExecutor: {e}")
+            logging.error(f"Failed to calculate metrics for all teams: {e}")
             raise
 
-        response_rate = (
-            (responded_requests / total_requests) * 100 if total_requests else 0
-        )
-        average_response_time = (
-            self.timedelta_to_decimal_hours(total_response_time / total_responses)
-            if total_responses
-            else 0
-        )
 
-        logging.info(f"Successfully retrieved team response metrics")
-        return {"response_rate": round(response_rate, 2)}, {
-            "average_response_time": average_response_time
-        }
+class TeamEntityProcessor:
+    def __init__(self, port_api: PortAPI) -> None:
+        self.port_api = port_api
 
     @staticmethod
-    def timedelta_to_decimal_hours(td: datetime.timedelta) -> float:
-        return round(td.total_seconds() / 3600, 2)
+    def remove_symbols_and_title_case(input_string: str) -> str:
+        cleaned_string = re.sub(r"[^A-Za-z0-9\s]", " ", input_string)
+        title_case_string = cleaned_string.title()
+        return title_case_string
+
+    async def process_team_entities(self, team_dora: List[Dict[str, Any]]):
+        blueprint_id = "githubTeam"
+        tasks = [
+            self.port_api.add_entity(
+                blueprint_id=blueprint_id,
+                entity_object={
+                    "identifier": str(data["id"]),
+                    "title": self.remove_symbols_and_title_case(data["name"]),
+                    "properties": {
+                        "description": data["description"],
+                        "members_count": data["members_count"],
+                        "repos_count": data["repos_count"],
+                        "slug": data["slug"],
+                        "link": data["link"],
+                        "permission": data["permission"],
+                        "notificationSetting": data["notification_setting"],
+                        "responseRate": data["response_rate"],
+                        "averageResponseTime": data["average_response_time"],
+                        "timeFrame": data["time_frame"]
+                    },
+                    "relations": {},
+                },
+            )
+            for data in team_dora
+        ]
+        await asyncio.gather(*tasks)
 
 
 if __name__ == "__main__":
-    import time
 
-    start_time = time.time()
-
-    parser = argparse.ArgumentParser(
-        description="Calculate Team Metrics for Pull Requests."
-    )
-    parser.add_argument("--owner", required=True, help="Owner of the repository")
-    parser.add_argument("--repo", required=True, help="Repository name")
+    parser = argparse.ArgumentParser(description="Calculate Team Metrics.")
+    parser.add_argument("--owner", required=True, help="Owner of the organization")
     parser.add_argument("--token", required=True, help="GitHub token")
-    parser.add_argument("--timeframe", type=int, default=30, help="Timeframe in days")
+    parser.add_argument("--time-frame", type=int, default=30, help="Time Frame in days")
     parser.add_argument(
-        "--team", required=True, help="Team name to calculate metrics for"
+        "--github-host",
+        help="Base URL for self-hosted GitHub instance (e.g., https://api.github-example.com)",
+        default=None,
     )
+    parser.add_argument("--port-client-id", help="Port Client ID", required=True)
     parser.add_argument(
-        "--platform",
-        default="github-actions",
-        choices=["github-actions", "self-hosted"],
-        help="CI/CD platform type",
+        "--port-client-secret", help="Port Client Secret", required=True
     )
-    parser.add_argument(
-        "--base-url",
-        help="Base URL for self-hosted GitHub instance (e.g., https://github.example.com/api/v3)",
-        default= None
-    )
-
     args = parser.parse_args()
 
-    try:
-        logging.info(f"Repository Name: {args.owner}/{args.repo}")
-        logging.info(f"TimeFrame (in days): {args.timeframe}")
-        logging.info(f"Team Name: {args.team}")
-        
-        team_metrics = TeamMetrics(
-            args.owner, args.repo, args.timeframe, args.team, token=args.token, base_url= args.base_url
-        )
-        metrics = team_metrics.calculate_metrics()
-        metrics_json = json.dumps(metrics, default=str)
-        logging.info(f"Team info: {metrics_json}")
+    logging.info(f"Owner: {args.owner}")
+    logging.info(f"Time Frame (in days): {args.time_frame}")
 
-        if args.platform == "github-actions":
-            with open(os.getenv("GITHUB_ENV", ""), "a") as github_env:
-                github_env.write(f"team_metrics={metrics_json}\n")
+    team_metrics = TeamMetrics(
+        args.owner, args.time_frame, token=args.token, github_host=args.github_host
+    )
 
-        logging.info(f"Execution Time: {time.time() - start_time}")
-
-    except Exception as e:
-        logging.error(f"Failed to execute script: {e}")
+    loop = asyncio.get_event_loop()
+    metrics = loop.run_until_complete(team_metrics.calculate_metrics_for_all_teams())
+    port_api = PortAPI(args.port_client_id, args.port_client_secret)
+    processor = TeamEntityProcessor(port_api=port_api)
+    asyncio.run(processor.process_team_entities(metrics))
 ```
 </details>
 
@@ -1268,8 +1330,7 @@ class PortAPI:
             except httpx.RequestError as exc:
                 logging.error(f"An error occurred while requesting {exc.request.url!r}: {exc}")
             except httpx.HTTPStatusError as exc:
-                logging.error(f"Error response {exc.response.status_code} while requesting {exc.request.url!r}: {exc.response.text}")
-            
+                logging.error(f"Error response {exc.response.status_code} while requesting {exc.request.url!r}: {exc.response.text}") 
 ```
 </details>
 
