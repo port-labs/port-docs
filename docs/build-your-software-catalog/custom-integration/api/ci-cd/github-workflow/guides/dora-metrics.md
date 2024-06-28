@@ -6,20 +6,21 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # DORA Metrics
 
-In this guide, we will create a GitHub action that computes the DORA Metrics for a service (repository) on schedule and ingests the results to Port.
+In this guide, we will create a GitHub action that computes the DORA Metrics services (repositories) and teams on schedule and ingests the results to Port.
 
 
 ## Prerequisites
 1. A GitHub repository in which you can trigger a workflow that we will use in this guide.
 2. A blueprint in Port to host the Dora Metrics.
+3. A blueprint in Port to host the Team Metrics.
 
 
-Below, you can find the JSON for the `DORA Metrics` blueprint required for the guide:
+Below, you can find the JSON for the `DORA Metrics` and `Team` blueprints required for the guide:
 
 <details>
 <summary><b>DORA Metrics blueprint (click to expand)</b></summary>
 
-```json showLineNumbers
+```json showLineNumbers title="DORA Blueprint"
 {
   "identifier": "doraMetrics",
   "title": "DORA Metrics",
@@ -179,15 +180,72 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
 ```
 </details>
 
+
+<details>
+<summary><b>GitHub Team blueprint (click to expand)</b></summary>
+
+```json showLineNumbers title="github team blueprint"
+{
+  "identifier": "githubTeam",
+  "title": "GitHub Team",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "slug": {
+        "title": "Slug",
+        "type": "string"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "link": {
+        "title": "Link",
+        "icon": "Link",
+        "type": "string",
+        "format": "url"
+      },
+      "permission": {
+        "title": "Permission",
+        "type": "string"
+      },
+      "notificationSetting": {
+        "title": "Notification Setting",
+        "type": "string"
+      },
+      "responseRate": {
+        "type": "number",
+        "title": "Response Rate"
+      },
+      "averageResponseTime": {
+        "type": "number",
+        "title": "Response Time"
+      },
+      "timeFrame": {
+        "icon": "DefaultProperty",
+        "type": "number",
+        "title": "DORA Time Frame In Days"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+</details>
+
 ## Create Github workflow
 
 Follow these steps to get started:
 
 1. Create the following GitHub action secrets:
 
-    - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `PATTOKEN` - GitHub PAT fine-grained token. Ensure that read-only access to actions and metadata permission is set. Grant this action access to the repositories where the metrics are to be estimated for . [learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
+    - `PORT_CLIENT_ID` - [Port Client ID](/build-your-software-catalog/custom-integration/api/#get-api-token)
+    - `PORT_CLIENT_SECRET` - [Port Client Secret](/build-your-software-catalog/custom-integration/api/#get-api-token)
+    - `PATTOKEN` - [GitHub PAT classic token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic). Ensure that the `read:org` and `repo`, scopes are set for the token to grant this action access to the repositories and teams the metrics are to be estimated for . [learn more].
 
 2. In your Github repository, create a workflow file under `.github/workflows/dora-metrics.yml` with the following content:
 
@@ -207,6 +265,13 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
+      owner: ${{ steps.set-matrix.outputs.owner }}
+      doraTimeFrame: ${{ steps.set-matrix.outputs.doraTimeFrame }}
+      doraBlueprint: ${{ steps.set-matrix.outputs.doraBlueprintID }}
+      teamBlueprint: ${{ steps.set-matrix.outputs.teamBlueprintID }}
+      githubHost: ${{ steps.set-matrix.outputs.githubHost }}
+      dora_present: ${{ steps.set-matrix.outputs.dora_present }}
+      team_present: ${{ steps.set-matrix.outputs.team_present }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -217,25 +282,56 @@ jobs:
       - name: Read Config and Output Matrix
         id: set-matrix
         run: |
-          CONFIG_JSON=$(jq -c . dora/dora-config.json)
-          MATRIX_JSON=$(echo $CONFIG_JSON | jq -c '{include: .}')
-          echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
+          CONFIG_JSON=$(cat src/dora-config-v2.json)
+          MATRIX_JSON=$(echo $CONFIG_JSON | jq -c '{include: .items}')
+          OWNER=$(echo $CONFIG_JSON | jq -r '.owner')
+          GITHUB_HOST=$(echo $CONFIG_JSON | jq -r '.githubHost')
+          DORA_TIME_FRAME=$(echo $CONFIG_JSON | jq -r '.doraTimeFrame')
+          DORA_BLUEPRINT=$(echo $CONFIG_JSON | jq -r '.port.blueprints.dora // empty')
+          TEAM_BLUEPRINT=$(echo $CONFIG_JSON | jq -r '.port.blueprints.team // empty')
+          DORA_PRESENT=$([[ -n "$DORA_BLUEPRINT" ]] && echo "true" || echo "false")
+          TEAM_PRESENT=$([[ -n "$TEAM_BLUEPRINT" ]] && echo "true" || echo "false")
+          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
+          echo "owner=$OWNER" >> $GITHUB_OUTPUT
+          echo "githubHost=$GITHUB_HOST" >> $GITHUB_OUTPUT
+          echo "doraTimeFrame=$(( DORA_TIME_FRAME * 7 ))" >> $GITHUB_OUTPUT
+          echo "doraBlueprint=$DORA_BLUEPRINT" >> $GITHUB_OUTPUT
+          echo "teamBlueprint=$TEAM_BLUEPRINT" >> $GITHUB_OUTPUT
+          echo "dora_present=$DORA_PRESENT" >> $GITHUB_OUTPUT
+          echo "team_present=$TEAM_PRESENT" >> $GITHUB_OUTPUT
 
-  compute-dora-metrics:
+  compute-team-metrics:
     needs: setup
     runs-on: ubuntu-latest
+    if: needs.setup.outputs.team_present == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r src/requirements.txt
+          
+      - name: Compute Team Metrics
+        run: |
+          python src/calculate_team_metrics.py --owner "${{ needs.setup.outputs.owner }}" --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --port-client-id "${{ secrets.PORT_CLIENT_ID }}" --port-client-secret "${{ secrets.PORT_CLIENT_SECRET }}" --github-host "${{ needs.setup.outputs.githubHost }}"
+
+  compute-repo-metrics:
+    needs: setup
+    runs-on: ubuntu-latest
+    if: needs.setup.outputs.dora_present == 'true'
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.setup.outputs.matrix)}}
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           repository: ${{ matrix.include.repository }}
-          
+
       - name: Transform Workflow Parameters
         run: |
-          echo "TIMEFRAME_IN_DAYS=$(( ${{ matrix.timeframe }} * 7 ))" >> $GITHUB_ENV
           cleaned_name=$(echo "${{ matrix.repository }}" | tr -c '[:alnum:]' ' ')
           TITLE=$(echo "${cleaned_name}" | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2));}1')
           echo "ENTITY_TITLE=$TITLE" >> $GITHUB_ENV
@@ -248,22 +344,21 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r dora/requirements.txt
+          pip install -r src/requirements.txt
 
       - name: Compute PR Metrics
         run: |
-          python dora/calculate_pr_metrics.py  --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --timeframe ${{env.TIMEFRAME_IN_DAYS}} --platform github-actions
+          python src/calculate_pr_metrics.py  --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
           
       - name: Deployment Frequency
         id: deployment_frequency
-        run: python dora/deployment_frequency.py --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --workflows '${{ toJson(matrix.workflows) }}' --timeframe ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions --ignore_workflows
+        run: python src/deployment_frequency.py --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --branch "${{ matrix.branch }}" --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
       
       - name: Lead Time For Changes
         id: lead_time_for_changes
-        run: python dora/lead_time_for_changes.py --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --workflows '${{ toJson(matrix.workflows) }}' --timeframe ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions
-        
+        run: python src/lead_time_for_changes.py --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --branch ${{ matrix.branch }} --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
 
-      - name: UPSERT Entity
+      - name: UPSERT Repository DORA Metrics
         uses: port-labs/port-github-action@v1
         with:
           identifier: ${{ fromJson(env.metrics).id }}
@@ -271,7 +366,7 @@ jobs:
           blueprint: doraMetrics
           properties: |-
             {
-              "timeFrameInWeeks": ${{ matrix.timeframe }},
+              "timeFrameInWeeks": "${{ needs.setup.outputs.doraTimeFrame }}",
               "totalDeployments": "${{ fromJson(env.deployment_frequency_report).total_deployments }}",
               "deploymentRating": "${{ fromJson(env.deployment_frequency_report).rating }}",
               "numberOfUniqueDeploymentDays": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_days }}",
@@ -306,6 +401,7 @@ jobs:
 
 ```text showLineNumbers title="requirements.txt"
 PyGithub==2.3.0
+httpx==0.27.0
 ```
 
 </details>
@@ -314,34 +410,48 @@ PyGithub==2.3.0
 <details>
   <summary><b>Dora Configuration Template</b></summary>
 :::tip
-- `<GITHUB-ORG>` - your GitHub organization or user name.
-- `<GITHUB-REPO-NAME>` - your GitHub repository name.
-- `<REPO-BRANCH>` - your preferred GitHub repository branch to estimate metrics on.
+You can choose to run any of the metric jobs (`compute-team-metrics` or `compute-repo-metrics`) optionally. This is controlled by setting or unsetting the corresponding Port blueprint parameters in your configuration file (`dora/dora-config.json`)
 :::
 
 | Name                 | Description                                                                                          | Required | Default            |
 |----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------
 | owner              | GitHub organization or user name                                                            | true    | -               |
 | repository              | your GitHub repository name                                                              | true    | -               |
-| timeframe              | Time frame in weeks to calculate metrics on                                                                | false    | 4               |
+| doraTimeframe              | Time frame in weeks to calculate metrics on                                                                | false    | 4               |
 | branch              | your preferred GitHub repository branch to estimate metrics on                                                              | false    | main              |
 | workflows              | An array of workflows to process. Multiple workflows can be separated by a comma (,)                                                              | false    | []               |
+| githubHost              | The api host of your github instance                                                              | false    | https://api.github.com               |
+| blueprints              | blueprint identifiers in port for dora metrics and github team                                                              | true    | -               |
+| items              | An array of defined repository configs (`repository`, `branch`, `workflows`) to compute dora metrics on, required only to compute dora metrics for repositories (not required for team metrics) |false |
 
-
-```json showLineNumbers title="dora-config.json"
-[
-  {
-    "owner": "<GITHUB-ORG>",
-    "repository": "<GITHUB-REPO-NAME>",
-    "branch": "<REPO-BRANCH>",
-    "timeframe": 4,
-    "workflows": ["ci.yaml","cd.yaml"]
-  }
-]
+```json showLineNumbers title="example dora-config.json"
+{
+  "owner": "port-labs",
+  "doraTimeFrame": 2,
+  "githubHost": "https://api.github.com",
+  "port": {
+    "blueprints":{
+      "dora": "doraMetrics",
+      "team": "githubTeam"
+    }
+  },
+  "items": [
+    {
+      "repository": "port-docs",
+      "branch": "main",
+      "workflows": ["build.yml"]
+    },
+    {
+      "repository": "ocean",
+      "branch": "main",
+      "workflows": []
+    }
+  ]
+}
 ```
 </details>
 
-4. Create the following python scripts (`calculate_pr_metrics.py`, `deployment_frequency.py` and `lead_time_for_changes.py` ) in the folder named `dora` created earlier at the root of your GitHub repository:
+4. Create the following python scripts (`calculate_pr_metrics.py`, `deployment_frequency.py`, `lead_time_for_changes.py`, and `team_metrics` ) in the folder named `dora` created earlier at the root of your GitHub repository to run DORA for repositories:
 
 <details>
   <summary><b>Calculate PR Metrics</b></summary>
@@ -531,16 +641,33 @@ from github import Github
 import argparse
 import logging
 
+#Throttling
+SECONDS_BETWEEN_REQUESTS=0.12
+SECONDS_BETWEEN_WRITES=0.5
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class DeploymentFrequency:
-    def __init__(self, owner, repo, workflows, branch, number_of_days, pat_token=""):
+    def __init__(self, owner, repo, workflows, branch, number_of_days, token, github_host):
         self.owner, self.repo = owner, repo
         self.branch = branch
         self.number_of_days = number_of_days
-        self.pat_token = pat_token
-        self.github = Github(login_or_token = self.pat_token)
+        self.token = token
+        try:
+            self.github = (
+                Github(login_or_token=token, base_url=github_host)
+                if github_host
+                else Github(token)
+            )
+            self.owner = owner
+        except GithubException as e:
+            logging.error(f"Failed to initialize GitHub client: {e}")
+            raise
+        except Exception as e:
+            logging.error(
+                f"Unexpected error during initialization: {e} - verify that your github credentials are valid"
+            )
+            raise
         self.repo_object = self.github.get_repo(f"{self.owner}/{self.repo}")
         try:
             self.workflows = json.loads(workflows)
@@ -617,13 +744,18 @@ if __name__ == "__main__":
     parser.add_argument('--owner', required=True, help='Owner of the repository')
     parser.add_argument('--repo', required=True, help='Repository name')
     parser.add_argument('--token', required=True, help='GitHub token')
+    parser.add_argument(
+            "--github-host",
+            help="Base URL for self-hosted GitHub instance (e.g., https://api.example-github.com)",
+            default=None,
+        )
     parser.add_argument('--workflows', required=True, help='GitHub workflows as a JSON string.')
     parser.add_argument('--branch', default='main', help='Branch name')
-    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--time-frame', type=int, default=30, help='Time Frame in days')
     parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
     args = parser.parse_args()
 
-    deployment_frequency = DeploymentFrequency(args.owner, args.repo, args.workflows, args.branch, args.timeframe, pat_token = args.token)
+    deployment_frequency = DeploymentFrequency(args.owner, args.repo, args.workflows, args.branch, args.time_frame, token = args.token, github_host = args.github_host)
     report = deployment_frequency()
     print(report)
     
@@ -644,6 +776,10 @@ from github import Github
 import argparse
 import logging
 
+#Throttling, set to None to restore default behavior
+SECONDS_BETWEEN_REQUESTS=0.12
+SECONDS_BETWEEN_WRITES=0.5
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class LeadTimeForChanges:
@@ -654,8 +790,9 @@ class LeadTimeForChanges:
         workflows,
         branch,
         number_of_days,
+        token,
+        github_host,
         commit_counting_method="last",
-        pat_token="",
         ignore_workflows=True
     ):
         self.owner = owner
@@ -663,7 +800,21 @@ class LeadTimeForChanges:
         self.branch = branch
         self.number_of_days = number_of_days
         self.commit_counting_method = commit_counting_method
-        self.github = Github(login_or_token = pat_token)
+        try:
+            self.github = (
+                Github(login_or_token=token, base_url=github_host)
+                if github_host
+                else Github(token)
+            )
+            self.owner = owner
+        except GithubException as e:
+            logging.error(f"Failed to initialize GitHub client: {e}")
+            raise
+        except Exception as e:
+            logging.error(
+                f"Unexpected error during initialization: {e} - verify that your github credentials are valid"
+            )
+            raise
         self.repo_object = self.github.get_repo(f"{self.owner}/{self.repo}")
         self.ignore_workflows = ignore_workflows
         try:
@@ -813,16 +964,21 @@ if __name__ == "__main__":
     parser.add_argument('--token', required=True, help='GitHub token')
     parser.add_argument('--workflows', default='[]', help='GitHub workflows as a JSON string.')
     parser.add_argument('--branch', default='main', help='Branch name')
-    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--time-frame', type=int, default=30, help='Time Frame in days')
     parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
     parser.add_argument('--ignore_workflows', action='store_true', help='Exclude workflows. Default is False.')
+    parser.add_argument(
+            "--github-host",
+            help="Base URL for self-hosted GitHub instance (e.g., https://api.example-github.com)",
+            default=None,
+        )
     args = parser.parse_args()
 
     lead_time_for_changes = LeadTimeForChanges(
-        args.owner, args.repo, args.workflows, args.branch, args.timeframe, pat_token=args.token,ignore_workflows=args.ignore_workflows
+        args.owner, args.repo, args.workflows, args.branch, args.time_frame, token=args.token,github_host= args.github_host, ignore_workflows=args.ignore_workflows
     )
     report = lead_time_for_changes()
-    print(report)
+    logging.info(f"Lead Time for Changes >> {report}")
     
     if args.platform == "github-actions":
        with open(os.getenv("GITHUB_ENV"), "a") as github_env:
@@ -830,5 +986,291 @@ if __name__ == "__main__":
 ```
 </details>
 
-Congrats 🎉 You've successfully created a scheduled GitHub workflow that periodically calculates and ingests `DORA Metrics` for GitHub repository(s).
+5. Create the following python scripts (`team_metrics`, and `port.py` ) in the folder named `dora` created earlier at the root of your GitHub repository to compute the team response metrics. 
 
+<details>
+  <summary><b>Team Metrics</b></summary>
+
+```python showLineNumbers title="team_metrics.py"
+
+import os
+from github import Github, Team, PullRequest,GithubException
+import datetime
+import json
+import logging
+import argparse
+import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import threading
+from typing import Any, Dict, List, Tuple
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+
+class TeamMetrics:
+    def __init__(
+        self, owner: str, repo: str, timeframe: int, team_name: str, token: str, base_url: str | None
+    ) -> None:
+        try:
+            self.github_client = Github(login_or_token=token, base_url=base_url) if base_url else Github(token)
+            self.repo = self.github_client.get_repo(f"{owner}/{repo}")
+        except GithubException as e:
+            logging.error(f"Failed to initialize GitHub client: {e}")
+            raise
+        except Exception as e:
+            logging.error(f"Unexpected error during initialization: {e} - verify that your github credentials are valid")
+            raise
+
+        self.team_slug = self.convert_to_slug(team_name)
+        self.timeframe = timeframe
+        self.start_date = datetime.datetime.now(
+            datetime.timezone.utc
+        ) - datetime.timedelta(days=self.timeframe)
+        self.semaphore = threading.Semaphore(5)  # Limit concurrent requests
+        self.team_members = self.get_team_members()
+
+    @staticmethod
+    def convert_to_slug(name: str) -> str:
+        """Convert a team name to a slug by replacing spaces with hyphens and lowercasing."""
+        return re.sub(r"\s+", "-", name.strip()).lower()
+
+    def get_team_members(self) -> List[str]:
+        try:
+            logging.info(f"Fetching team members for {self.team_slug}")
+            team = self.github_client.get_organization(
+                self.repo.owner.login
+            ).get_team_by_slug(self.team_slug)
+            return [member.login for member in team.get_members()]
+        
+        except GithubException as e:
+            logging.error(f"Failed to fetch team members: {e}")
+            raise
+        except Exception as e:
+            logging.error(f"Unexpected error while fetching team members: {e}")
+            raise
+
+    def calculate_metrics(self) -> Dict[str, Any]:
+        try:
+            prs = self.repo.get_pulls(state="all", sort="created", direction="desc")
+            filtered_prs: List[PullRequest.PullRequest] = [
+                pr for pr in prs if pr.created_at >= self.start_date
+            ]
+            logging.info(
+                f"Fetched {len(filtered_prs)} pull requests for the specified timeframe"
+            )
+
+            logging.info(f"Fetching team info for {self.repo.full_name}/{self.team_slug}")
+            response_rate, response_time = self.calculate_response_metrics(filtered_prs)
+            team_info = self.get_team_info()
+            return {**response_rate, **response_time, **team_info}
+        except GithubException as e:
+            logging.error(f"Failed to calculate metrics: {e}")
+            raise
+        except Exception as e:
+            logging.error(f"Unexpected error while calculating metrics: {e}")
+            raise
+
+    def get_team_info(self) -> Dict[str, Any]:
+        try:
+            logging.info(f"Fetching team info from {self.repo.owner.login} organization")
+            team:Team.Team = self.github_client.get_organization(
+                self.repo.owner.login
+            ).get_team_by_slug(self.team_slug)
+            return {
+                "id": team.id,
+                "name": team.name,
+                "description": team.description,
+                "members_count": team.members_count,
+                "repos_count": team.repos_count,
+                "slug": team.slug,
+                "link": team.html_url,
+                "permission": team.permission,
+                "notification_setting": team.notification_setting,
+            }
+        except GithubException as e:
+            logging.error(f"Failed to fetch team info: {e}")
+            raise
+        except Exception as e:
+            logging.error(f"Unexpected error while fetching team info: {e}")
+            raise
+
+    def calculate_response_metrics(
+        self, prs: List[PullRequest.PullRequest]
+    ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        logging.info("Calculating response rate and time")
+        total_requests = 0
+        responded_requests = 0
+        total_response_time = datetime.timedelta(0)
+        total_responses = 0
+
+        def fetch_reviews(pr: PullRequest.PullRequest) -> None:
+            nonlocal responded_requests, total_response_time, total_responses, total_requests
+            try:
+                with self.semaphore:  # Ensure limited concurrent requests
+                    # Check if the team was explicitly requested to review the PR
+                    if any(team.slug == self.team_slug for team in pr.requested_teams):
+                        total_requests += 1
+                        reviews = pr.get_reviews()
+                        for review in reviews:
+                            if review.user.login in self.team_members:
+                                responded_requests += 1
+                                response_time = review.submitted_at - pr.created_at
+                                total_response_time += response_time
+                                total_responses += 1
+                                break
+            except GithubException as e:
+                logging.error(f"Failed to fetch reviews for PR {pr.number}: {e}")
+            except Exception as e:
+                logging.error(f"Unexpected error while fetching reviews for PR {pr.number}: {e}")
+
+        try:
+
+            with ThreadPoolExecutor(max_workers=10) as executor:
+                future_to_pr = {executor.submit(fetch_reviews, pr): pr for pr in prs}
+                for future in as_completed(future_to_pr):
+                    pass
+        
+        except Exception as e:
+            logging.error(f"Unexpected error in ThreadPoolExecutor: {e}")
+            raise
+
+        response_rate = (
+            (responded_requests / total_requests) * 100 if total_requests else 0
+        )
+        average_response_time = (
+            self.timedelta_to_decimal_hours(total_response_time / total_responses)
+            if total_responses
+            else 0
+        )
+
+        logging.info(f"Successfully retrieved team response metrics")
+        return {"response_rate": round(response_rate, 2)}, {
+            "average_response_time": average_response_time
+        }
+
+    @staticmethod
+    def timedelta_to_decimal_hours(td: datetime.timedelta) -> float:
+        return round(td.total_seconds() / 3600, 2)
+
+
+if __name__ == "__main__":
+    import time
+
+    start_time = time.time()
+
+    parser = argparse.ArgumentParser(
+        description="Calculate Team Metrics for Pull Requests."
+    )
+    parser.add_argument("--owner", required=True, help="Owner of the repository")
+    parser.add_argument("--repo", required=True, help="Repository name")
+    parser.add_argument("--token", required=True, help="GitHub token")
+    parser.add_argument("--timeframe", type=int, default=30, help="Timeframe in days")
+    parser.add_argument(
+        "--team", required=True, help="Team name to calculate metrics for"
+    )
+    parser.add_argument(
+        "--platform",
+        default="github-actions",
+        choices=["github-actions", "self-hosted"],
+        help="CI/CD platform type",
+    )
+    parser.add_argument(
+        "--base-url",
+        help="Base URL for self-hosted GitHub instance (e.g., https://github.example.com/api/v3)",
+        default= None
+    )
+
+    args = parser.parse_args()
+
+    try:
+        logging.info(f"Repository Name: {args.owner}/{args.repo}")
+        logging.info(f"TimeFrame (in days): {args.timeframe}")
+        logging.info(f"Team Name: {args.team}")
+        
+        team_metrics = TeamMetrics(
+            args.owner, args.repo, args.timeframe, args.team, token=args.token, base_url= args.base_url
+        )
+        metrics = team_metrics.calculate_metrics()
+        metrics_json = json.dumps(metrics, default=str)
+        logging.info(f"Team info: {metrics_json}")
+
+        if args.platform == "github-actions":
+            with open(os.getenv("GITHUB_ENV", ""), "a") as github_env:
+                github_env.write(f"team_metrics={metrics_json}\n")
+
+        logging.info(f"Execution Time: {time.time() - start_time}")
+
+    except Exception as e:
+        logging.error(f"Failed to execute script: {e}")
+```
+</details>
+
+<details>
+  <summary><b>Upsert Team Metrics to Port</b></summary>
+
+```python showLineNumbers title="port.py"
+
+import httpx
+import logging
+from typing import Any, Dict, List,
+
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+
+class PortAPI:
+    def __init__(self,port_client_id:str,port_client_secret:str):
+        self.base_url = "https://api.getport.io/v1"
+        self.port_client_id = port_client_id
+        self.port_client_secret = port_client_secret
+
+    @property
+    async def headers(self)->Dict[str,str]:
+
+        access_token_object:dict = await self.get_token()
+        access_token:str = access_token_object["accessToken"]
+
+        port_headers = {"Authorization": f"Bearer {access_token}"}
+        return port_headers
+
+    async def get_token(self) -> Dict[str, Any]:
+        credentials = {"clientId": self.port_client_id, "clientSecret": self.port_client_secret}
+
+        async with httpx.AsyncClient() as client:
+            try:
+                response = await client.post(
+                    f"{self.base_url}/auth/access_token",
+                    json=credentials
+                )
+                logging.info(f"Successfully retrieved port token")
+                response.raise_for_status()
+                return response.json()
+            except httpx.RequestError as exc:
+                logging.error(f"An error occurred while requesting {exc.request.url!r}: {exc}")
+            except httpx.HTTPStatusError as exc:
+                logging.error(f"Error response {exc.response.status_code} while requesting {exc.request.url!r}: {exc.response.text}")
+
+
+    async def add_entity(self, blueprint_id: str, entity_object: Dict[str, Any]) -> Dict[str, Any]:
+        async with httpx.AsyncClient() as client:
+            try:
+                response = await client.post(
+                    f"{self.base_url}/blueprints/{blueprint_id}/entities?upsert=true&merge=true",
+                    json=entity_object,
+                    headers=await self.headers,
+                )
+                response.raise_for_status()
+                logging.info(f"Entity added: {response.json()}")
+            except httpx.RequestError as exc:
+                logging.error(f"An error occurred while requesting {exc.request.url!r}: {exc}")
+            except httpx.HTTPStatusError as exc:
+                logging.error(f"Error response {exc.response.status_code} while requesting {exc.request.url!r}: {exc.response.text}")
+            
+```
+</details>
+
+Congrats 🎉 You've successfully created a scheduled GitHub workflow that periodically calculates and ingests `DORA Metrics` for GitHub repository(s).
