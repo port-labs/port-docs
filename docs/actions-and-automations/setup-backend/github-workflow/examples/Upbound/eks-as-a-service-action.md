@@ -11,7 +11,7 @@ The demo starts off on a completely clean slate - an empty Upbound organization,
 <h3>Upbound</h3>
 Before following the guide, you will need to set up an Upbound organization, initialize it and keep track of some information:
 - Save the `Organization ID` for later;
-- Set up the default EKSaaS configuration in the Upbound organization;
+- Set up an EKSaaS configuration in the Upbound organization;
 - Deploy a control plane (or many) and save their `identifiers` for later;
 - Create an API token and save it for later:
   * Click on the dropdown over your name at the top right corner;
@@ -830,83 +830,10 @@ These actions are defined on their appropriate blueprints.
 :::note Customizing GitHub values
 Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAME` values in the action blueprint. You need to replace these with your appropriate GitHub organization name and repository name.
 :::
-
-<details>
-<summary><b>Approve Cluster Request (click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "eks_cluster_request_approve_cluster_request",
-  "title": "Approve Cluster Request",
-  "icon": "GithubActions",
-  "trigger": {
-    "type": "self-service",
-    "operation": "DAY-2",
-    "userInputs": {
-      "properties": {},
-      "required": []
-    },
-    "blueprintIdentifier": "eks_cluster_request"
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
-    "repo": "CHANGE_TO_YOUR_REPO_NAME",
-    "workflow": "approve-cluster-request.yaml",
-    "workflowInputs": {
-      "port_context": {
-        "runId": "{{.run.id}}",
-        "entity": "{{.entity}}"
-      }
-    },
-    "reportWorkflowStatus": true
-  },
-  "requiredApproval": false,
-  "publish": true
-}
-```
-</details>
-
-<details>
-<summary><b>Deny Cluster Request (click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "eks_cluster_request_deny_cluster_request",
-  "title": "Deny cluster request",
-  "icon": "Alert",
-  "description": "Deny this EKS cluster request",
-  "trigger": {
-    "type": "self-service",
-    "operation": "DAY-2",
-    "userInputs": {
-      "properties": {},
-      "required": []
-    },
-    "blueprintIdentifier": "eks_cluster_request"
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
-    "repo": "CHANGE_TO_YOUR_REPO_NAME",
-    "workflow": "deny-cluster-request.yaml",
-    "workflowInputs": {
-      "port_context": {
-        "entity": "{{.entity}}",
-        "runId": "{{.run.id}}"
-      }
-    },
-    "reportWorkflowStatus": true
-  },
-  "requiredApproval": false,
-  "publish": true
-}
-```
-
-</details>
-
 <details>
 <summary><b>Request New Cluster (click to expand)</b></summary>
+
+Creates a EKS Cluster Request to request a new Upbound Cluster
 
 ```json showLineNumbers
 {
@@ -989,7 +916,87 @@ Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAM
 </details>
 
 <details>
+<summary><b>Approve Cluster Request (click to expand)</b></summary>
+
+Grants approval to a request to create a new Upbound Cluster
+
+```json showLineNumbers
+{
+  "identifier": "eks_cluster_request_approve_cluster_request",
+  "title": "Approve Cluster Request",
+  "icon": "GithubActions",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {},
+      "required": []
+    },
+    "blueprintIdentifier": "eks_cluster_request"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+    "repo": "CHANGE_TO_YOUR_REPO_NAME",
+    "workflow": "approve-cluster-request.yaml",
+    "workflowInputs": {
+      "port_context": {
+        "runId": "{{.run.id}}",
+        "entity": "{{.entity}}"
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+</details>
+
+<details>
+<summary><b>Deny Cluster Request (click to expand)</b></summary>
+
+Denies a request to create a new Upbound cluster
+
+```json showLineNumbers
+{
+  "identifier": "eks_cluster_request_deny_cluster_request",
+  "title": "Deny cluster request",
+  "icon": "Alert",
+  "description": "Deny this EKS cluster request",
+  "trigger": {
+    "type": "self-service",
+    "operation": "DAY-2",
+    "userInputs": {
+      "properties": {},
+      "required": []
+    },
+    "blueprintIdentifier": "eks_cluster_request"
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
+    "repo": "CHANGE_TO_YOUR_REPO_NAME",
+    "workflow": "deny-cluster-request.yaml",
+    "workflowInputs": {
+      "port_context": {
+        "entity": "{{.entity}}",
+        "runId": "{{.run.id}}"
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "requiredApproval": false,
+  "publish": true
+}
+```
+
+</details>
+
+<details>
 <summary><b>Create New Cluster (click to expand)</b></summary>
+
+Creates a new Upbound Cluster and an EKS Cluster entity
 
 ```json showLineNumbers
 {
@@ -1073,6 +1080,8 @@ Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAM
 <details>
 <summary><b>Delete EKS Cluster (click to expand)</b></summary>
 
+Deletes an existing Upbound Cluster and its corresponding EKS Cluster entity on Port
+
 ```json showLineNumbers
 {
   "identifier": "eks_cluster_delete_eks_cluster",
@@ -1127,6 +1136,6 @@ To do this, follow these steps:
 <img src='/img/create-self-service-experiences/setup-backend/github-workflow/examples/Upbound/setUpboundControlPlaneIdentifier.png' border='1px' />
 
 ## Using Port
-At this point, everything should be set up. Browse to your [Self-service](https://app.getport.io/self-serve) page to view the different actions you defined in Port, and try them out.
+At this point, everything should be set up. Browse to your [Self-service](https://app.getport.io/self-serve) page to view the different actions you defined in Port, and try them out
 
 <img src='/img/create-self-service-experiences/setup-backend/github-workflow/examples/Upbound/selfServicePage.png' border='1px' />
