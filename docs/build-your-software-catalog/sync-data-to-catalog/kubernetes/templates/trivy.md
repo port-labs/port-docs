@@ -46,7 +46,7 @@ This `blueprints.json` file defines the following blueprints:
 - Namespace
 - Workload
 - Trivy Config Audit Report
-- Trivy Vulnerability Report
+- Trivy Vulnerability
 
 :::note
 
@@ -61,7 +61,7 @@ This `blueprints.json` file defines the following blueprints:
 
 - `Trivy Config Audit Report` represents checks performed by Trivy against a Kubernetes object's configuration
 
-- `Trivy Vulnerability Report` represents the latest vulnerabilities found in a container image of a given Kubernetes workload
+- `Trivy Vulnerability` represents the latest vulnerabilities found in a container image of a given Kubernetes workload
 :::
 
 Below are the Trivy blueprint schemas used in the exporter:
@@ -139,11 +139,11 @@ Below are the Trivy blueprint schemas used in the exporter:
    "calculationProperties": {},
    "aggregationProperties": {},
    "relations": {
-      "namespace": {
-      "title": "Namespace",
-      "target": "namespace",
-      "required": false,
-      "many": false
+      "kubernetes_resource": {
+         "title": "Kubernetes Resource",
+         "target": "workload",
+         "required": false,
+         "many": false
       }
    }
 }
@@ -151,12 +151,12 @@ Below are the Trivy blueprint schemas used in the exporter:
 </details>
 
 <details>
-<summary> <b>Trivy vulnerability report blueprint (click to expand)</b> </summary>
+<summary> <b>Trivy vulnerability blueprint (click to expand)</b> </summary>
 
 ```json showLineNumbers
 {
    "identifier": "trivyVulnerabilityReport",
-   "title": "Trivy Vulnerability Report",
+   "title": "Trivy Vulnerability",
    "icon": "Trivy",
    "schema": {
       "properties": {
@@ -242,11 +242,11 @@ Below are the Trivy blueprint schemas used in the exporter:
    "calculationProperties": {},
    "aggregationProperties": {},
    "relations": {
-      "namespace": {
-      "title": "Namespace",
-      "target": "namespace",
-      "required": false,
-      "many": false
+      "kubernetes_resource": {
+         "title": "Kubernetes Resource",
+         "target": "workload",
+         "required": false,
+         "many": false
       }
    }
 }
@@ -290,12 +290,20 @@ Below are the mappings for the Trivy resources:
               createdAt: .metadata.creationTimestamp
               updatedAt: .report.updateTimestamp
             relations:
-              namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+              kubernetes_resource: (
+                if (.metadata.ownerReferences | length > 0) then 
+                     (.metadata.ownerReferences[] | select(.controller == true) |
+                     .name + "-" + .kind + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+                     )
+                  else
+                     empty
+                  end
+                )
 ```
 </details>
 
 <details>
-<summary> <b>Trivy vulnerability report mapping (click to expand)</b> </summary>
+<summary> <b>Trivy vulnerability mapping (click to expand)</b> </summary>
 
 ```yaml showLineNumbers
   - kind: aquasecurity.github.io/v1alpha1/vulnerabilityreports
@@ -324,7 +332,15 @@ Below are the mappings for the Trivy resources:
               scannerVersion: .report.scanner.version
               createdAt: .metadata.creationTimestamp
             relations:
-              namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+              kubernetes_resource: (
+               if (.metadata.ownerReferences | length > 0) then 
+                     (.metadata.ownerReferences[] | select(.controller == true) |
+                     .name + "-" + .kind + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+                     )
+                  else
+                     empty
+                  end
+               )
 ```
 </details>
 

@@ -1,0 +1,152 @@
+---
+id: patch-a-user
+title: "Patch a user"
+description: "This route allows you to patch a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Patch a user"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVcFu2zAM/RVBl7VAGjc7GkWBrhuwYpega09ZMdA2E6u1LU2Sk2aB/32kZCdulw7DrkMAh5ZI8fHxUd7JAl1ulfFKNzKVd6VywurWo4Cq0hsntroVXgsDPi8FiNahfedEgR5U5aYiBOTQiAx5r2Df1hRAB/gSB3erK0ycgIb2EerETS8ym1yGx50WFYJtRK0tZc0oeQhzkxBGf0MYmXmJ+ZNgFz59Uei8rbHxwPAfTkrvjUuThJbddIXeaOunSifO6TObQZ7w40yv0a4VbpLTqZxIDysn04W855TyYSIt/mjR+Q+62Mp0J3PdeMrAJhhTqTzkSh4d87WTjhDVwJbfGiQGdfaIuaeDjdUGrVfoeDeUMnIDa2FLXq/px1h0oH0DjWc+wTm1atgaKI30UXitmhuPNZ08m0gVrX0O561qVrLrqEqm76/SN1BTer0MuULYUSw9EFraY3kzPeWHolCcBKr5iJYlVA674GDAUmLPPUgXR2gdDqM0jJTkWFJKBktvjOQ7+avqaElhRxAEi25fWkA/riwofF8Mq0BZLGTqbYsd6cJh3lrltwFfRopFy7qJYk/bKJ8uCMgZ3bjY7vfn5/z3EtRHXEJbeXHbe4YWUfWlLmJtORcXakxlsp4l4fRkd6izkwzIrge+WluR66B/MGokfyLtmEPrXviMKvzK5Ef4Q50H4Rj1BbcH6q9aQm3VzzAVsu9OiVBQFFfFc3J7mKhPz1CbCkcTsRha+7BX6WEptHupQ37lOU7OCbC4mt9QLq4+EjqbnrM0jHa+hjCXPbz56Np6rY3RbP+P917sp8dnn5gKqG9EYFDJrlfeQq5n5BiVPZHpaMqoVyVxzT67XQYO723VdbxMnbY8ImSuwSrIuGkk0EI5tot+6P/QipPbfvROxb8O79HaBgE3rN41VC2/kflEcn5xhXQsu17CDD06XEeAZ3d8zOGA374JPEj7UZ5f3V1/Ju+s/5jUuuAgCxu+YuiZym/0oxcdmIifCl7fyQqaVQsr9o8Hh3u05c6Mp/EpTGNvMNyjdb4e01gTP/lyOBpyQUMmaNYv9+5x582AnrLBm1l/INC/APMb4aE=
+sidebar_class_name: "patch api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Patch a user"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/users/{user_email}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to patch a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"user_email","description":"The email address of the user you want to patch.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"roles"}
+          required={false}
+          schemaName={"string[]"}
+          qualifierMessage={"**Possible values:** `>= 1`"}
+          schema={{"type":"array","description":"The roles you want to assign to the user.<br/>","minItems":1,"items":{"type":"string"}}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"teams"}
+          required={false}
+          schemaName={"string[]"}
+          qualifierMessage={undefined}
+          schema={{"type":"array","description":"The names of the teams you want to assign the user to.<br/>","items":{"type":"string"}}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

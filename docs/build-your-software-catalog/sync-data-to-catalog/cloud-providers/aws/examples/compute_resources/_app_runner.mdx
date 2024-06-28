@@ -1,0 +1,105 @@
+<details>
+<summary> App Runner Blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "apprunner",
+  "description": "This blueprint represents an AWS App Runner service in our software catalog",
+  "title": "AppRunner",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "CREATE_FAILED",
+          "RUNNING",
+          "DELETED",
+          "DELETE_FAILED",
+          "PAUSED",
+          "OPERATION_IN_PROGRESS"
+        ],
+        "enumColors": {
+          "CREATE_FAILED": "red",
+          "RUNNING": "green",
+          "DELETED": "red",
+          "DELETE_FAILED": "red",
+          "PAUSED": "yellow",
+          "OPERATION_IN_PROGRESS": "blue"
+        },
+        "title": "Status"
+      },
+      "memory": {
+        "type": "number",
+        "title": "Memory"
+      },
+      "cpu": {
+        "type": "number",
+        "title": "CPU"
+      },
+      "serviceUrl": {
+        "type": "string",
+        "format": "url",
+        "title": "Service URL"
+      },
+      "egressType": {
+        "type": "string",
+        "enum": ["DEFAULT", "VPC"],
+        "title": "Egress Type"
+      },
+      "isPubliclyAccessible": {
+        "type": "boolean",
+        "title": "Is Publicly Accessible"
+      },
+      "observabilityEnabled": {
+        "type": "boolean",
+        "title": "Observability Enabled"
+      },
+      "autoDeploymentsEnabled": {
+        "type": "boolean",
+        "title": "Auto Deployments Enabled"
+      },
+      "healthCheckConfiguration": {
+        "type": "object",
+        "title": "Health Check Configuration"
+      },
+      "imageConfiguration": {
+        "type": "object",
+        "title": "Image Configuration"
+      },
+      "imageIdentifier": {
+        "type": "string",
+        "title": "Image Identifier"
+      },
+      "iamRole": {
+        "type": "string",
+        "format": "url",
+        "title": "IAM Role",
+        "icon": "Unlock"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

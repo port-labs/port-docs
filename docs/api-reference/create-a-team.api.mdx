@@ -1,0 +1,141 @@
+---
+id: create-a-team
+title: "Create a team"
+description: "This route allows you to create a new team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Create a team"
+hide_title: true
+hide_table_of_contents: true
+api: eJzVVMtu2zAQ/BWC7aEtbCvp0Q1SpI9D0UOCxD3ZCkBJG4uJJKpLyo4r6N+7S0qx7CRAr4UBmlrOPmfIVmZgU9S106aSc7nItRVoGgdCFYXZWrEzjXBGpAiKjaKCrXCgSqErPkNxZdAJg2tV6T+Kw8zOEozO/bIwogCFlSgNknNCgb2znYg0h/RBeEMOYpmZtCmhcj5C/C53rrbzKCKzna3B1ZRkpk1krZliotKIl6nZAG40bKP3MzmRTq2tnC/lghPIeCIRfjdg3ReT7eS8lampHGXgrarrQqc+V3RvufNWWqqoVLxzuxpoFia5h9RR4BpNDeg0WD6tVAkjlHWoqzWhjgcJgpHC3PkGh7GF4XBQ5RwgQ2+Xt5/eRKvV59XKxsM+/jC2vpXdRDYW0I4yK0S1e5b4sqKcGAYO01LpQqgsQ7AWLBfjozCjZOW/F4vTDkr7vMmuO8r2L1MYWV4ZBodlrjRCxgT6CcfdodlhA2SwkDaoHRG6bGVC2gJklyDPuQvUd558W5vKBs4+npzw32Fx3+BONYUT1z3S11GCyw2lk7WxLtCU01e0OY1CcC4BN54JqqDBgk4Htapaj8RKnL0EaOwBJt73dMMKDAUPne3JrvVPYLaD/ORFQ3Vif+OYMe4oB5WRF/fBqr7e6//7oyrrAvb63TPWy2o5WOJjEgfyOcmd8TVpx7Gkv/oXVz8oCk8kwE9nJ4zl+ZWqGmX8OjwhPMhjqYyu5//9CAW6HDy6qC4U0cI3l0XQ9lpays0pA4dXKmehkbVtE2XhFxZdx2aiDlnltN0o1CrhiS9jitazzPJ7IEnQYMPkpgvOzfCiCZI5euRYa0/6vrq8WRA46R/H0mTsg2pLRl7nckU/+jCeIa9Kb29loap1o9aMD3FZcKrh5sZ6ffB67Tdc7XBU7UZVHgs5tMQrX58XXc5IcoJuw/kTPJy86tBPbEAzKfy8/AXlS2RD
+sidebar_class_name: "post api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create a team"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/teams"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to create a new team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"name"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** Value must match regular expression `^[^;#/\\?\\s][^;#/\\?]*[^;#/\\?\\s]$`"}
+          schema={{"type":"string","description":"The name of the new team.<br/>","pattern":"^[^;#/\\?\\s][^;#/\\?]*[^;#/\\?\\s]$"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"users"}
+          required={false}
+          schemaName={"string[]"}
+          qualifierMessage={undefined}
+          schema={{"type":"array","description":"One or more e-mail addresses of users to add to the new team.<br/>","items":{"type":"string"}}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"description"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The description of the new team.<br/>"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

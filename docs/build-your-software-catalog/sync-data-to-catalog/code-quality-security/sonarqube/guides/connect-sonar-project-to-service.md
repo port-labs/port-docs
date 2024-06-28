@@ -15,13 +15,13 @@ This guide aims to demonstrate how to connect a SonarQube project to a service i
 
 <br/>
 
-### [Add Topics to GitHub Repositories](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/classifying-your-repository-with-topics#adding-topics-to-your-repository)
+### Add Topics to GitHub Repositories
 
-Tagging repositories in GitHub allows you to categorize and label your projects based on various attributes such as technology stack, business domain, team ownership, etc. In this guide, we will add a topic attribute to indicate the SonarQube project that analyzes the repository:
+[Adding topics your repository](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/classifying-your-repository-with-topics#adding-topics-to-your-repository) allows you to categorize and label your projects based on various attributes such as technology stack, business domain, team ownership, etc. In this guide, we will add a topic attribute to indicate the SonarQube project that analyzes the repository:
 
-1. **Login to your [GitHub account](https://github.com/login)**
-2. Once logged in, navigate to the repository you want to tag
-3. In the top right corner of the page, to the right of "About", click the settings icon 
+1. **Login to your [GitHub account](https://github.com/login)**.
+2. Once logged in, navigate to the repository you want to tag.
+3. In the top right corner of the page, to the right of "About", click the settings icon.
 4. Type the topic name (`sonarqube-my_project_key`) into the input field provided. For this guide, let's assume there is a SonarQube project identified by `my_project_key` that analyzes this repository.
 
 <img src='/img/guides/githubRepoAddTopics.png' width='60%' />
@@ -80,7 +80,7 @@ Under the `resources` key, modify the mapping for the `service` kind by using th
 
 :::tip JQ explanation
 
-The JQ below selects all tags that start with the keyword `port`. It then removes "port-" from each tag, leaving only the part that comes after it. It then selects the first match, which is equivalent to the service in Port.
+The JQ below selects all topics that start with the keyword `port`. It then removes "port-" from each topic, leaving only the part that comes after it. It then selects the first match, which is equivalent to the service in Port.
 
 ```yaml
 project: .topics | map(select(startswith("port-"))) | map(sub("port-"; ""; "g")) | .[0]

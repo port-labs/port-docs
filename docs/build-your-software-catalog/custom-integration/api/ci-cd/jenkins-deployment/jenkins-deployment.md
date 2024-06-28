@@ -4,6 +4,7 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Jenkins Deployment
 
@@ -48,7 +49,7 @@ method groovy.json.JsonSlurperClassic parseText java.lang.String
 ## Set up
 
 :::tip
-All Port API routes used in this guide can be found in Port's [API documentation](/api-reference/api-reference.mdx).
+All Port API routes used in this guide can be found in Port's [API documentation](/api-reference/port-api).
 :::
 
 To interact with Port inside your Jenkins builds, follow these steps:
@@ -176,6 +177,8 @@ import groovy.json.JsonSlurperClassic
 
 </TabItem>
 </Tabs>
+
+<PortApiRegionTip/>
 
 ## Examples
 

@@ -3,6 +3,7 @@ sidebar_position: 1
 ---
 
 import FindCredentials from "./\_template_docs/\_find_credentials.mdx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -16,7 +17,7 @@ import TabItem from "@theme/TabItem";
 </center>
 <br/>
 
-Port's [API](../../../api-reference/api-reference.mdx) is a generic interface to model your software catalog, ingest data, invoke actions, query scorecards and more.
+Port's [API](/api-reference/port-api) is a generic interface to model your software catalog, ingest data, invoke actions, query scorecards and more.
 
 ## 💡 Common Port API usage
 
@@ -126,6 +127,8 @@ access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/ac
 </TabItem>
 
 </Tabs>
+
+<PortApiRegionTip/>
 
 ## Ingest data via API
 
@@ -1067,10 +1070,12 @@ It is also possible to delete all entities using Port's web UI:
 2. Click on the "Delete All `BLUEPRINT_NAME`" button on the desired blueprint.
 3. Follow the instructions.
 
-**Note:** only users with the [admin](../../../sso-rbac/rbac/rbac.md#roles) role can use Port's UI to perform the delete all operation.
+**Note:** only users with the [admin](/sso-rbac/rbac/rbac.md#roles) role can use Port's UI to perform the delete all operation.
 
 :::
 
 </TabItem>
 
 </Tabs>
+
+<PortApiRegionTip/>

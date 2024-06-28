@@ -52,6 +52,21 @@ In case you're evaluating Port, it provides you with everything you need, and if
 
 ---
 
+#### Does Port's web application have session timeouts?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+There is an inactivity timeout period of 3 days, and an absolute auto sign-in period of 7 days.
+
+If you are inactive for 2 days and 23:59 hours, then perform any action, you will stay logged in.
+
+In any case, after 7 days you will need to login again.
+
+</details>
+
+---
+
 ## Organization
 
 #### How can I set up SSO for my organization?
@@ -127,7 +142,7 @@ If you are still facing issues, reach out to us via [Slack](https://www.getport.
 Please make sure that:
 
 1. The action backend is set up correctly. This includes the Organization/Group name, repository and workflow file name.
-2. For Gitlab, make sure the [Port execution agent](https://docs.getport.io/create-self-service-experiences/setup-backend/gitlab-pipeline/Installation#installing-the-agent) is installed properly. When triggering the action, you can view the logs of the agent to see what URL was triggered. 
+2. For Gitlab, make sure the [Port execution agent](https://docs.getport.io/actions-and-automations/setup-backend/gitlab-pipeline/Installation#installing-the-agent) is installed properly. When triggering the action, you can view the logs of the agent to see what URL was triggered. 
 
 </details>
 
@@ -178,11 +193,10 @@ This will download a file with all **entities** of the selected blueprints in th
 
 We put a lot of thought into Port’s design to make it secure. Consequently, it doesn’t store secrets or credentials, and doesn't require whitelisting of IPs. 
 
-You can take a look at our secure, push-only architecture [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog).
+Port uses industry-standard encryption protocols, data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing.  
+Port is SOC2 and ISO/IEC 27001:2022 compliant, and undergoes regular pentests, product security and compliance reviews.
 
-Security and privacy are a top priority at Port. We use industry-standard encryption protocols, data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing. Port is SOC2 and ISO/IEC 27001:2022 compliant, and undergoes regular pentests, product security and compliance reviews.
-
-You can find the complete coverage of Port's **security policy** in our security [page](https://www.getport.io/security).
+You can find the complete coverage of the **security policy** in the [security page](https://www.getport.io/security).
 
 </details>
 

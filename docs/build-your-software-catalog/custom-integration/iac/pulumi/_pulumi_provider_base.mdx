@@ -1,6 +1,7 @@
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/_template_docs/_find_credentials_collapsed.mdx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 :::note Prerequisites
 To install and use Port's Pulumi provider, you will need to install the [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/)
@@ -58,4 +59,7 @@ Please make sure to configure the clientId and secret to Port using the commands
 ```bash showLineNumbers
 pulumi config set port:clientId <clientId>
 pulumi config set port:secret <clientSecret> --secret
+pulumi config set port:baseUrl <baseUrl>
 ```
+
+<PortApiRegionTip/>

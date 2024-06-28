@@ -4,6 +4,7 @@ import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
 import AdvancedConfig from '../../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 import SnykBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/snyk/\_example_snyk_vulnerability_blueprint.mdx";
 import SnykConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/snyk/\_example_snyk_vulnerability_webhook_configuration.mdx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Snyk
 
@@ -37,6 +38,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | `port.clientId`                     | Your Port client id                                                                                                | ✅       |
 | `port.clientSecret`                 | Your Port client secret                                                                                            | ✅       |
+| `port.baseUrl`                      | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                            | ✅       |
 | `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
 | `integration.type`                  | The integration type                                                                                               | ✅       |
 | `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
@@ -72,6 +74,7 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-snyk-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
+	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-snyk-integration"  \
@@ -79,6 +82,8 @@ helm upgrade --install my-snyk-integration port-labs/port-ocean \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.token="SNYK_TOKEN"
 ```
+<PortApiRegionTip/>
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
@@ -185,6 +190,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -197,10 +204,12 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
+
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+1. Apply your application manifest with `kubectl`:
 ```bash
 kubectl apply -f my-ocean-snyk-integration.yaml
 ```
@@ -241,6 +250,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                              | ✅       |
 
 <br/>
 
@@ -264,6 +274,7 @@ jobs:
           type: 'snyk'
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
           config: |
             token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }}
 ```
@@ -293,6 +304,7 @@ of `Secret Text` type:
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                          | ✅       |
 
 <br/>
 
@@ -322,6 +334,7 @@ pipeline {
                                 -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
                                 $image_name
 
                             exit $?
@@ -359,6 +372,7 @@ Make sure to configure the following variables using [Azure Devops variable grou
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                          | ✅       |
 
 <br/>
 
@@ -390,6 +404,7 @@ steps:
     -e OCEAN__INTEGRATION__CONFIG__TOKEN=$(OCEAN__INTEGRATION__CONFIG__TOKEN) \
     -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
     -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
+    -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
     $image_name
 
     exit $?
@@ -417,6 +432,7 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 | `OCEAN__INTEGRATION__IDENTIFIER`              | Change the identifier to describe your integration, if not set will use the default one                                                                          | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                      | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                          | ✅       |
 
 
 <br/>
@@ -451,6 +467,7 @@ ingest_data:
         -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $IMAGE_NAME
 
   rules: # Run only when changes are made to the main branch
@@ -459,6 +476,9 @@ ingest_data:
 
 </TabItem>
   </Tabs>
+
+<PortApiRegionTip/>
+
 </TabItem>
 
 </Tabs>
@@ -566,7 +586,6 @@ The following resources can be used to map data from Snyk, it is possible to ref
             blueprint: '"snykProject"'
             properties:
               url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-              owner: .__owner.email
               businessCriticality: .attributes.business_criticality
               environment: .attributes.environment
               lifeCycle: .attributes.lifecycle
@@ -574,8 +593,10 @@ The following resources can be used to map data from Snyk, it is possible to ref
               mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
               lowOpenVulnerabilities: .meta.latest_issue_counts.low
               criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-              importedBy: .__importer.email
               tags: .attributes.tags
+              targetOrigin: .origin
+            relations:
+              snyk_target: '.relationships.target.data.id'
         # highlight-end
     - kind: project # In this instance project is mapped again with a different filter
       selector:
@@ -723,7 +744,10 @@ resources:
           "nexus-cr",
           "pivotal",
           "quay-cr",
-          "terraform-cloud"
+          "terraform-cloud",
+          "bitbucket-connect-app",
+          "acr",
+          "api"
         ]
       }
     },
@@ -731,7 +755,14 @@ resources:
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "synk_organization": {
+      "title": "Snyk Organization",
+      "target": "snykOrganization",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 
@@ -746,19 +777,21 @@ deleteDependentEntities: true
 resources:
   - kind: target
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
-          identifier: .attributes.displayName
-          title: .attributes.displayName
+          identifier: .id
+          title: .attributes.display_name
           blueprint: '"snykTarget"'
           properties:
-            origin: .attributes.origin
-            highOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.high] | add"
-            mediumOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.medium] | add"
-            lowOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.low] | add"
-            criticalOpenVulnerabilities: "[.__projects[].meta.latest_issue_counts.critical] | add"
+            origin: .relationships.integration.data.attributes.integration_type
+            highOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.high] | add'
+            mediumOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.medium] | add'
+            lowOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.low] | add'
+            criticalOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.critical] | add'
+          relations:
+            synk_organization: '.relationships.organization.data.id'
 ```
 
 </details>
@@ -780,12 +813,6 @@ resources:
         "title": "URL",
         "format": "url",
         "icon": "Snyk"
-      },
-      "owner": {
-        "type": "string",
-        "title": "Owner",
-        "format": "user",
-        "icon": "TwoUsers"
       },
       "businessCriticality": {
         "title": "Business Criticality",
@@ -848,33 +875,26 @@ resources:
         "type": "number",
         "title": "Open Low Vulnerabilities"
       },
-      "importedBy": {
-        "icon": "TwoUsers",
-        "type": "string",
-        "title": "Imported By",
-        "format": "user"
-      },
       "tags": {
         "type": "array",
         "title": "Tags",
         "icon": "DefaultProperty"
+      },
+      "targetOrigin": {
+        "type": "string",
+        "title": "Target Origin"
       }
     },
     "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
-    "snykVulnerabilities": {
-      "title": "Snyk Vulnerabilities",
-      "target": "snykVulnerability",
+    "snyk_target": {
+      "title": "Snyk Target",
+      "target": "snykTarget",
       "required": false,
-      "many": true
-    },
-    "snykOrganization": {
-      "title": "Snyk Organization",
-      "target": "snykOrganization",
-      "required": true,
       "many": false
     }
   }
@@ -901,7 +921,6 @@ resources:
           blueprint: '"snykProject"'
           properties:
             url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-            owner: .__owner.email
             businessCriticality: .attributes.business_criticality
             environment: .attributes.environment
             lifeCycle: .attributes.lifecycle
@@ -909,11 +928,10 @@ resources:
             mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
             lowOpenVulnerabilities: .meta.latest_issue_counts.low
             criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-            importedBy: .__importer.email
             tags: .attributes.tags
+            targetOrigin: .origin
           relations:
-            snykVulnerabilities: '[.__issues[] | select(.issueType == "vuln").issueData.id]'
-            snykOrganization: .relationships.organization.data.id
+            snyk_target: '.relationships.target.data.id'
 ```
 
 </details>
@@ -959,12 +977,7 @@ resources:
         "icon": "Alert",
         "title": "Issue Severity",
         "type": "string",
-        "enum": [
-          "low",
-          "medium",
-          "high",
-          "critical"
-        ],
+        "enum": ["low", "medium", "high", "critical"],
         "enumColors": {
           "low": "green",
           "medium": "yellow",
@@ -999,7 +1012,14 @@ resources:
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "snykProject",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 
@@ -1031,6 +1051,8 @@ resources:
             language: .issueData.language // .issueType
             publicationTime: .issueData.publicationTime
             isPatched: .isPatched
+          relations:
+            project: '.links.paths | split("/") | .[8]'
 ```
 
 </details>
