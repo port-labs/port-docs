@@ -110,50 +110,24 @@ name: Approve new cluster PR
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      port_context:
         required: true
-        description: "Port's payload"
+        description: "Port's context"
         type: string
-
-  workflow_call:
-    inputs:
-      pr-id:
-        required: true
-        description: "PR ID to approve"
-        type: string
-      control-plane:
-        type: string
-        required: true
-      cluster-name:
-        type: string
-        required: true
-        description: The cluster name to request
-      node-count:
-        type: string
-        required: true
-        description: Number of nodes for the cluster
-      node-size:
-        required: true
-        description: "Node size"
-        type: string
-      run-id:
-        type: string
-        required: false
-        default: ""
 
 jobs:
   approve-cluster-request-call:
-    if: github.event.inputs.port_payload == '' || inputs.run-id != ''
     runs-on: ubuntu-latest
+
     steps:
-      - uses: port-labs/port-github-action@v1
+      - name: Inform starting of approving EKS cluster request
+        uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run-id }}
-          icon: GithubActions
-          logMessage: "Approving EKS cluster request: ${{ inputs.cluster-name }}"  
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          logMessage: "Approving EKS cluster request: ${{ fromJson(inputs.port_context).entity.properties.title }}"  
 
       - uses: actions/checkout@v4
         with:
@@ -163,7 +137,7 @@ jobs:
         uses: juliangruber/merge-pull-request-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ inputs.pr-id }}
+          number: ${{ fromJson(inputs.port_context).entity.properties.request_pr_number }}
           method: squash
 
       - name: "Report new EKS cluster to Port"
@@ -172,31 +146,32 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          identifier: ${{ inputs.cluster-name }}
-          runId: ${{ inputs.run-id }}
-          title: ${{ inputs.cluster-name }}
+          operation: UPSERT
+          identifier: ${{ fromJson(inputs.port_context).entity.properties.title }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          title: ${{ fromJson(inputs.port_context).entity.properties.title }}
           blueprint: eks_cluster
           properties: |
             {
-              "node_size": "${{ inputs.node-size }}",
-              "node_count": "${{ inputs.node-count }}"
+              "node_size": "${{ fromJson(inputs.port_context).entity.properties.node_size }}",
+              "node_count": "${{ fromJson(inputs.port_context).entity.properties.node_count }}"
             }
           relations: |
             {
-                "upbound_control_plane": "${{ inputs.control-plane }}"
+                "upbound_control_plane": "${{ fromJson(inputs.port_context).entity.relations.control_plane }}"
             }
 
-      - uses: port-labs/port-github-action@v1
+      - name: Inform that EKS cluster request has been approved
+        uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run-id }}
-          icon: GithubActions
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          icon: GitHubActions
           logMessage: "Approved EKS cluster request, and created new Port entity for the EKS cluster🚀 Applying Clusters to Upbound control plane..."
 
   approve-cluster-request-port:
-    if: github.event.inputs.port_payload != '' && inputs.run-id == ''
     runs-on: ubuntu-latest
     steps:
       - uses: port-labs/port-github-action@v1
@@ -204,9 +179,9 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
-          icon: GithubActions
-          logMessage: "Approving EKS cluster request: ${{ fromJson(inputs.port_payload).payload.entity.identifier }}"  
+          runId: ${{ fromJson(inputs.port_context).context.runId }}
+          icon: GitHubActions
+          logMessage: "Approving EKS cluster request: ${{ fromJson(inputs.port_context).entity.identifier }}"  
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
@@ -215,7 +190,7 @@ jobs:
         uses: juliangruber/merge-pull-request-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ fromJson(inputs.port_payload).payload.entity.properties.request_pr_number }}
+          number: ${{ fromJson(inputs.port_context).entity.properties.request_pr_number }}
           method: squash
   
       - name: "Report new EKS cluster to Port"
@@ -224,18 +199,18 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          identifier: ${{ fromJson(inputs.port_payload).payload.entity.identifier }}
-          title: ${{ fromJson(inputs.port_payload).payload.entity.identifier }}
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          identifier: ${{ fromJson(inputs.port_context).payload.entity.identifier }}
+          title: ${{ fromJson(inputs.port_context).payload.entity.identifier }}
+          runId: ${{ fromJson(inputs.port_context).context.runId }}
           blueprint: eks_cluster
           properties: | 
             {
-              "node_size": "${{ fromJson(inputs.port_payload).payload.entity.properties.node_size }}",
-              "node_count": ${{ fromJson(inputs.port_payload).payload.entity.properties.node_count }}
+              "node_size": "${{ fromJson(inputs.port_context).entity.properties.node_size }}",
+              "node_count": ${{ fromJson(inputs.port_context).entity.properties.node_count }}
             }
           relations: |
             {
-                "upbound_control_plane": "${{ fromJson(inputs.port_payload).payload.entity.relations.upbound_control_plane }}"
+                "upbound_control_plane": "${{ fromJson(inputs.port_context).entity.relations.upbound_control_plane }}"
             }
 
       - name: "Approve EKS cluster request"
@@ -244,21 +219,21 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          identifier: ${{ fromJson(inputs.port_payload).payload.entity.identifier }}
+          identifier: ${{ fromJson(inputs.port_context).payload.entity.identifier }}
           blueprint: eks_cluster_request
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).context.runId }}
           properties: |
             {
               "status": "Approved",
-              "eks_cluster": "${{ fromJson(inputs.port_payload).payload.entity.identifier }}"
+              "eks_cluster": "${{ fromJson(inputs.port_context).payload.entity.identifier }}"
             }
       - uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
-          icon: GithubActions
+          runId: ${{ fromJson(inputs.port_context).context.runId }}
+          icon: GitHubActions
           logMessage: "Approved EKS cluster request, and created new Port entity for the EKS cluster🚀 Applying Clusters to Upbound control plane..."
 
         
@@ -276,32 +251,14 @@ jobs:
       - apply-cluster-changes
     if: ${{ always() }}
     steps:
-      - name: Update port action run
-        if: ${{ inputs.run-id != '' }}
+      - name: Inform cluster applied to Upbound
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ inputs.run-id }}
-          icon: GithubActions
-          summary: "Created cluster successfully"
-          logMessage: "Applied cluster to Upbound successfuly✅"
-          
-      - name: Update port action run
-        if: ${{ inputs.run-id == '' }}
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
-          icon: GithubActions
-          status: "SUCCESS"
-          summary: "Created cluster successfully"
-          logMessage: "Applied cluster to Upbound successfuly✅"
-
-        
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          logMessage: "Applied cluster to Upbound successfuly✅"        
 ```
 
 </details>
@@ -316,7 +273,7 @@ name: Delete Cluster
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      port_context:
         required: true
         description: "Port's payload"
         type: string
@@ -328,12 +285,13 @@ jobs:
       # highlight-next-line
       UPBOUND_ORG_ID: <ENTER_UPBOUND_ORG_ID> # `Organization ID` we set aside earlier
     steps:
-      - uses: port-labs/port-github-action@v1
+      - name: Inform starting of deleting EKS cluster
+        uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           icon: GithubActions
           logMessage: "Initiating deletion job 🏗️"  
 
@@ -349,40 +307,40 @@ jobs:
         run: |
           curl -sL "https://cli.upbound.io" | sh
           sudo mv up /usr/local/bin/
-      
+
       - uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           icon: GithubActions
           logMessage: "Connecting to Upbound control plane 🛰️"  
-  
+
       - name: Connect to Upbound using CLI + Fetch kubeconfig
         run: |
           up login -t ${{ secrets.UPBOUND_TOKEN }}
-          up ctp kubeconfig get -a ${{ env.UPBOUND_ORG_ID }} ${{ fromJson(inputs.port_payload).payload.entity.relations.upbound_control_plane }} -f kubeconfig.yaml --token ${{ secrets.UPBOUND_TOKEN }}
+          up ctp kubeconfig get -a ${{ env.UPBOUND_ORG_ID }} ${{ fromJson(inputs.port_context).entity.relations.upbound_control_plane }} -f kubeconfig.yaml --token ${{ secrets.UPBOUND_TOKEN }}
 
       - uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           icon: GithubActions
           logMessage: |
             ❌ Deleteing CRDs from Upbound + claim files from the repository for:
-              Control plane: ${{ fromJson(inputs.port_payload).payload.entity.relations.upbound_control_plane }}
-              Cluster: ${{ fromJson(inputs.port_payload).context.entity }} ❌
+              Control plane: ${{ fromJson(inputs.port_context).entity.relations.upbound_control_plane }}
+              Cluster: ${{ fromJson(inputs.port_context).entity }} ❌
 
       - name: Delete cluster from Upbound
         run: |
-          kubectl --kubeconfig kubeconfig.yaml delete -f .up/clusters/${{ fromJson(inputs.port_payload).payload.entity.relations.upbound_control_plane }}/${{ fromJson(inputs.port_payload).context.entity }}.yaml
-      
+          kubectl --kubeconfig kubeconfig.yaml delete -f .up/clusters/${{ fromJson(inputs.port_context).entity.relations.upbound_control_plane }}/${{ fromJson(inputs.port_context).context.entity }}.yaml
+
       - name: Delete cluster yaml file
         run: | 
-          git rm -f .up/clusters/${{ fromJson(inputs.port_payload).payload.entity.relations.upbound_control_plane }}/${{ fromJson(inputs.port_payload).context.entity }}.yaml
+          git rm -f .up/clusters/${{ fromJson(inputs.port_context).entity.relations.upbound_control_plane }}/${{ fromJson(inputs.port_context).context.entity }}.yaml
           git status
 
       - name: Create Pull Request
@@ -390,9 +348,9 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           add-paths: .up/clusters
-          branch: "DELETE-CLUSTER-REQUEST-${{ fromJson(inputs.port_payload).context.entity }}"
-          title: "Delete cluster request: ${{ fromJson(inputs.port_payload).context.entity }}"
-          commit-message: "Delete cluster in upbound called ${{ fromJson(inputs.port_payload).payload.entity.identifier }}"
+          branch: "DELETE-CLUSTER-REQUEST-${{ fromJson(inputs.port_context).entity }}"
+          title: "Delete cluster request: ${{ fromJson(inputs.port_context).entity }}"
+          commit-message: "Delete cluster in upbound called ${{ fromJson(inputs.port_context).entity.identifier }}"
 
       - name: Merge Pull Request
         uses: juliangruber/merge-pull-request-action@v1
@@ -406,8 +364,8 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          identifier: ${{ fromJson(inputs.port_payload).context.entity }}
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          identifier: ${{ fromJson(inputs.port_context).entity }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           blueprint: eks_cluster
           operation: DELETE
 
@@ -416,12 +374,12 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           icon: GithubActions
           status: "SUCCESS"
           summary: "Deletion successful🚀"
-          logMessage: "Deletion successful ✅ Deleted EKS Cluster Port entity for: ${{ fromJson(inputs.port_payload).context.entity }}"  
-  
+          logMessage: "Deletion successful ✅ Deleted EKS Cluster Port entity for: ${{ fromJson(inputs.port_context).entity }}"  
+
 ```
 
 </details>
@@ -435,24 +393,25 @@ name: Deny cluster request
 on:
   workflow_dispatch:
     inputs:
-      port_payload:
+      port_context:
         required: true
         description: "Port's payload"
         type: string
 
 jobs:
   deny-cluster-request-port:
-    if: github.event.inputs.port_payload != ''
+    if: github.event.inputs.port_context != ''
     runs-on: ubuntu-latest
     steps:
-      - uses: port-labs/port-github-action@v1
+      - name: Inform starting of denying EKS cluster request
+        uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
-          icon: GithubActions
-          logMessage: "Denying EKS cluster request: ${{ fromJson(inputs.port_payload).payload.entity.identifier }}"  
+          runId: ${{ fromJson(inputs.port_context).context.runId }}
+          logMessage: "Denying EKS cluster request: ${{ fromJson(inputs.port_context).entity.identifier }}"  
+
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
@@ -460,8 +419,8 @@ jobs:
       - name: Close Pull Request
         uses: peter-evans/close-pull@v3
         with:
-          pull-request-number: ${{ fromJson(inputs.port_payload).payload.entity.properties.request_pr_number }}
-          comment: "Cluster request ${{ fromJson(inputs.port_payload).payload.entity.identifier }} was denied ❌. Pull request closed."
+          pull-request-number: ${{ fromJson(inputs.port_context).entity.properties.request_pr_number }}
+          comment: "Cluster request ${{ fromJson(inputs.port_context).entity.identifier }} was denied ❌. Pull request closed."
           delete-branch: false
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -471,27 +430,25 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          identifier: ${{ fromJson(inputs.port_payload).payload.entity.identifier }}
+          identifier: ${{ fromJson(inputs.port_context).entity.identifier }}
           blueprint: eks_cluster_request
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).context.runId }}
           properties: |
             {
               "status": "Denied"
             }
 
-      - uses: port-labs/port-github-action@v1
+      - name: Inform that EKS cluster request has been denied
+        uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
-          icon: GithubActions
+          runId: ${{ fromJson(inputs.port_context).context.runId }}
           summary: "Request denied."
           status: "SUCCESS"
           logMessage: "Request updated - status 'denied' ❌"
 
-        
- 
 ```
 </details>
 
@@ -526,7 +483,7 @@ on:
           - small
           - medium
           - large
-      port_payload:
+      port_context:
         type: string
         required: true
         description: Port Payload
@@ -537,12 +494,13 @@ jobs:
     outputs:
       pr-id: ${{ steps.create-pr.outputs.pull-request-number }}
     steps:
-      - uses: port-labs/port-github-action@v1
+      - name: Inform starting of creating EKS cluster request
+        uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           icon: GithubActions
           logMessage: "Initiating EKS clutser request job 🏗️"  
 
@@ -573,7 +531,7 @@ jobs:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           icon: GithubActions
           logMessage: |
             Cluster request information: 
@@ -594,7 +552,7 @@ jobs:
           commit-message: "Create new cluster in upbound called ${{ inputs.cluster-name }}"
 
       - name: "Report new EKS cluster request to Port"
-        if: ${{ fromJson(inputs.port_payload).action == 'request_new_cluster' }}
+        if: ${{ fromJson(inputs.port_context).action == 'request_new_cluster' }}
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -602,7 +560,7 @@ jobs:
           identifier: ${{ inputs.cluster-name }}
           title: ${{ inputs.cluster-name }}
           blueprint: eks_cluster_request
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           properties: |
             {
               "request_pr_url": "${{ steps.create-pr.outputs.pull-request-url }}",
@@ -616,29 +574,29 @@ jobs:
             }
 
       - uses: port-labs/port-github-action@v1
-        if: ${{ fromJson(inputs.port_payload).action == 'request_new_cluster' }}
+        if: ${{ fromJson(inputs.port_context).action == 'request_new_cluster' }}
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           link: ${{ steps.create-pr.outputs.pull-request-url }}
           icon: GithubActions
           logMessage: "Pull request created: ${{ steps.create-pr.outputs.pull-request-url }}"  
 
       - uses: port-labs/port-github-action@v1
-        if: ${{ fromJson(inputs.port_payload).action == 'create_new_cluster' }}
+        if: ${{ fromJson(inputs.port_context).action == 'create_new_cluster' }}
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(inputs.port_context).runId }}
           icon: GithubActions
           logMessage: "Creation job run, auto-approving cluster request..."  
 
   force-approve-request:
     uses: ./.github/workflows/approve-cluster-request.yaml
-    if: ${{ fromJson(inputs.port_payload).action == 'create_new_cluster' }}
+    if: ${{ fromJson(inputs.port_context).action == 'create_new_cluster' }}
     secrets: inherit
     needs: create-cluster-request
     with:
@@ -646,7 +604,7 @@ jobs:
       cluster-name: ${{ inputs.cluster-name }}
       node-count: ${{ inputs.node-count }}
       node-size: ${{ inputs.node-size }}
-      run-id: ${{ fromJson(inputs.port_payload).context.runId }}
+      run-id: ${{ fromJson(inputs.port_context).runId }}
       control-plane: ${{ inputs.control-plane }}
 ```
 
@@ -896,34 +854,9 @@ Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAM
     "repo": "CHANGE_TO_YOUR_REPO_NAME",
     "workflow": "approve-cluster-request.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"eks_cluster_request_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": true,
-              "reportWorkflowStatus": true,
-              "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
-              "repo": "CHANGE_TO_YOUR_REPO_NAME",
-              "workflow": "approve-cluster-request.yaml"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {},
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "port_context": {
+        "runId": "{{.run.id}}",
+        "entity": "{{.entity}}"
       }
     },
     "reportWorkflowStatus": true
@@ -958,34 +891,9 @@ Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAM
     "repo": "CHANGE_TO_YOUR_REPO_NAME",
     "workflow": "deny-cluster-request.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"eks_cluster_request_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": true,
-              "reportWorkflowStatus": true,
-              "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
-              "repo": "CHANGE_TO_YOUR_REPO_NAME",
-              "workflow": "deny-cluster-request.yaml"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {},
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "port_context": {
+        "entity": "{{.entity}}",
+        "runId": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true
@@ -1062,43 +970,13 @@ Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAM
     "repo": "CHANGE_TO_YOUR_REPO_NAME",
     "workflow": "new-cluster-request.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"cluster-name\")) then \"cluster-name\" else null end}}": "{{.inputs.\"cluster-name\"}}",
-      "{{if (.inputs | has(\"node-size\")) then \"node-size\" else null end}}": "{{.inputs.\"node-size\"}}",
-      "{{if (.inputs | has(\"node-count\")) then \"node-count\" else null end}}": "{{.inputs.\"node-count\"}}",
-      "{{if (.inputs | has(\"control-plane\")) then \"control-plane\" else null end}}": "{{.inputs.\"control-plane\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-      "port_payload": {
+      "cluster-name": "{{.inputs.\"cluster-name\"}}",
+      "node-size": "{{.inputs.\"node-size\"}}",
+      "node-count": "{{.inputs.\"node-count\"}}",
+      "control-plane": "{{.inputs.\"control-plane\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "port_context": {
         "action": "{{ .action.identifier[(\"eks_cluster_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": false,
-              "reportWorkflowStatus": true,
-              "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
-              "repo": "CHANGE_TO_YOUR_REPO_NAME",
-              "workflow": "new-cluster-request.yaml"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"cluster-name\")) then \"cluster-name\" else null end}}": "{{.inputs.\"cluster-name\"}}",
-            "{{if (.inputs | has(\"node-size\")) then \"node-size\" else null end}}": "{{.inputs.\"node-size\"}}",
-            "{{if (.inputs | has(\"node-count\")) then \"node-count\" else null end}}": "{{.inputs.\"node-count\"}}",
-            "{{if (.inputs | has(\"control-plane\")) then \"control-plane\" else null end}}": "{{.inputs.\"control-plane\" | if type == \"array\" then map(.identifier) else .identifier end}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+        "runId": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true
@@ -1174,43 +1052,13 @@ Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAM
     "repo": "CHANGE_TO_YOUR_REPO_NAME",
     "workflow": "new-cluster-request.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"cluster-name\")) then \"cluster-name\" else null end}}": "{{.inputs.\"cluster-name\"}}",
-      "{{if (.inputs | has(\"node-size\")) then \"node-size\" else null end}}": "{{.inputs.\"node-size\"}}",
-      "{{if (.inputs | has(\"node-count\")) then \"node-count\" else null end}}": "{{.inputs.\"node-count\"}}",
-      "{{if (.inputs | has(\"control-plane\")) then \"control-plane\" else null end}}": "{{.inputs.\"control-plane\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-      "port_payload": {
+      "cluster-name": "{{.inputs.\"cluster-name\"}}",
+      "node-size": "{{.inputs.\"node-size\"}}",
+      "node-count": "{{.inputs.\"node-count\"}}",
+      "control-plane": "{{.inputs.\"control-plane\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+      "port_context": {
         "action": "{{ .action.identifier[(\"eks_cluster_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": false,
-              "reportWorkflowStatus": true,
-              "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
-              "repo": "CHANGE_TO_YOUR_REPO_NAME",
-              "workflow": "new-cluster-request.yaml"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"cluster-name\")) then \"cluster-name\" else null end}}": "{{.inputs.\"cluster-name\"}}",
-            "{{if (.inputs | has(\"node-size\")) then \"node-size\" else null end}}": "{{.inputs.\"node-size\"}}",
-            "{{if (.inputs | has(\"node-count\")) then \"node-count\" else null end}}": "{{.inputs.\"node-count\"}}",
-            "{{if (.inputs | has(\"control-plane\")) then \"control-plane\" else null end}}": "{{.inputs.\"control-plane\" | if type == \"array\" then map(.identifier) else .identifier end}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+        "runId": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true
@@ -1246,34 +1094,9 @@ Remember to change `CHANGE_TO_YOUR_GITHUB_ORG_NAME` and `CHANGE_TO_YOUR_REPO_NAM
     "repo": "CHANGE_TO_YOUR_REPO_NAME",
     "workflow": "delete-cluster.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"eks_cluster_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "omitPayload": false,
-              "omitUserInputs": true,
-              "reportWorkflowStatus": true,
-              "org": "CHANGE_TO_YOUR_GITHUB_ORG_NAME",
-              "repo": "CHANGE_TO_YOUR_REPO_NAME",
-              "workflow": "delete-cluster.yaml"
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {},
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "port_context": {
+        "runId": "{{.run.id}}",
+        "entity": "{{.entity}}"
       }
     },
     "reportWorkflowStatus": true
