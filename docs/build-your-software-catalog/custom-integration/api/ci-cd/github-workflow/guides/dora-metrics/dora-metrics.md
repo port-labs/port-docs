@@ -6,19 +6,231 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # DORA Metrics
 
-In this guide, we will create a GitHub action that computes the DORA Metrics services (repositories) and teams on schedule and ingests the results to Port.
+In this guide, we will create a GitHub action that computes the DORA Metrics for services (repositories) and teams on schedule and ingests the results to Port.
 
 
 ## Prerequisites
 1. A GitHub repository in which you can trigger a workflow that we will use in this guide.
-2. A blueprint in Port to host the Dora Metrics.
-3. A blueprint in Port to host the Team Metrics.
+2. Create the following GitHub action secrets:
 
+    - `PORT_CLIENT_ID` - [Port Client ID](/build-your-software-catalog/custom-integration/api/#get-api-token)
+    - `PORT_CLIENT_SECRET` - [Port Client Secret](/build-your-software-catalog/custom-integration/api/#get-api-token)
+    - `GH_PAT_CLASSIC` - [GitHub Personal Access Token (Classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic). Ensure that the `read:org` and `repo`, scopes are set for the token to grant this action access to the repositories and teams the metrics are to be estimated for . [learn more].
 
-Below, you can find the JSON for the `DORA Metrics` and `Team` blueprints required for the guide:
+## Create Github workflow
+
+1. In your Github repository, create a workflow file under `.github/workflows/dora-metrics.yml` with the following content:
 
 <details>
-<summary><b>DORA Metrics blueprint (click to expand)</b></summary>
+<summary> GitHub Workflow </summary>
+
+```yaml showLineNumbers title="dora-metrics.yml"
+name: Ingest DORA Metrics
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      owner: ${{ steps.set-matrix.outputs.owner }}
+      doraTimeFrame: ${{ steps.set-matrix.outputs.doraTimeFrame }}
+      doraBlueprint: ${{ steps.set-matrix.outputs.doraBlueprintID }}
+      teamBlueprint: ${{ steps.set-matrix.outputs.teamBlueprintID }}
+      githubHost: ${{ steps.set-matrix.outputs.githubHost }}
+      sync_services: ${{ steps.set-matrix.outputs.sync_services }}
+      sync_teams: ${{ steps.set-matrix.outputs.sync_teams }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Read Config and Output Matrix
+        id: set-matrix
+        run: |
+          CONFIG_JSON=$(cat dora/dora-config-v2.json)
+          MATRIX_JSON=$(echo $CONFIG_JSON | jq -c '{include: .items}')
+          OWNER=$(echo $CONFIG_JSON | jq -r '.owner')
+          GITHUB_HOST=$(echo $CONFIG_JSON | jq -r '.githubHost')
+          DORA_TIME_FRAME=$(echo $CONFIG_JSON | jq -r '.doraTimeFrame')
+          SERVICE_BLUEPRINT=$(echo $CONFIG_JSON | jq -r '.port.blueprints.service // empty')
+          TEAM_BLUEPRINT=$(echo $CONFIG_JSON | jq -r '.port.blueprints.team // empty')
+          SYNC_SERVICES=$([[ -n "$SERVICE_BLUEPRINT" ]] && echo "true" || echo "false")
+          SYNC_TEAMS=$([[ -n "$TEAM_BLUEPRINT" ]] && echo "true" || echo "false")
+          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
+          echo "owner=$OWNER" >> $GITHUB_OUTPUT
+          echo "githubHost=$GITHUB_HOST" >> $GITHUB_OUTPUT
+          echo "doraTimeFrame=$(( DORA_TIME_FRAME * 7 ))" >> $GITHUB_OUTPUT
+          echo "doraBlueprint=$SERVICE_BLUEPRINT" >> $GITHUB_OUTPUT
+          echo "teamBlueprint=$TEAM_BLUEPRINT" >> $GITHUB_OUTPUT
+          echo "sync_services=$SYNC_SERVICES" >> $GITHUB_OUTPUT
+          echo "sync_teams=$SYNC_TEAMS" >> $GITHUB_OUTPUT
+
+  compute-team-metrics:
+    needs: setup
+    runs-on: ubuntu-latest
+    if: needs.setup.outputs.sync_teams == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r dora/requirements.txt
+          
+      - name: Compute Team Metrics
+        run: |
+          python dora/calculate_team_metrics.py --owner "${{ needs.setup.outputs.owner }}" --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --port-client-id "${{ secrets.PORT_CLIENT_ID }}" --port-client-secret "${{ secrets.PORT_CLIENT_SECRET }}" --github-host "${{ needs.setup.outputs.githubHost }}"
+
+  compute-repo-metrics:
+    needs: setup
+    runs-on: ubuntu-latest
+    if: needs.setup.outputs.sync_services == 'true'
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.include.repository }}
+
+      - name: Transform Workflow Parameters
+        run: |
+          cleaned_name=$(echo "${{ matrix.repository }}" | tr -c '[:alnum:]' ' ')
+          TITLE=$(echo "${cleaned_name}" | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2));}1')
+          echo "ENTITY_TITLE=$TITLE" >> $GITHUB_ENV
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r dora/requirements.txt
+
+      - name: Compute PR Metrics
+        run: |
+          python dora/calculate_pr_metrics.py  --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
+          
+      - name: Deployment Frequency
+        id: deployment_frequency
+        run: python dora/deployment_frequency.py --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --branch "${{ matrix.branch }}" --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
+      
+      - name: Lead Time For Changes
+        id: lead_time_for_changes
+        run: python dora/lead_time_for_changes.py --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --branch ${{ matrix.branch }} --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
+
+      - name: UPSERT Repository DORA Metrics
+        uses: port-labs/port-github-action@v1
+        with:
+          identifier: ${{ fromJson(env.metrics).id }}
+          title: ${{ env.ENTITY_TITLE }}
+          blueprint: doraMetrics
+          properties: |-
+            {
+              "timeFrameInWeeks": "${{ needs.setup.outputs.doraTimeFrame }}",
+              "totalDeployments": "${{ fromJson(env.deployment_frequency_report).total_deployments }}",
+              "deploymentRating": "${{ fromJson(env.deployment_frequency_report).rating }}",
+              "numberOfUniqueDeploymentDays": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_days }}",
+              "numberOfUniqueDeploymentWeeks": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_weeks }}",
+              "numberOfUniqueDeploymentMonths": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_months }}",
+              "deploymentFrequency": "${{ fromJson(env.deployment_frequency_report).deployment_frequency }}",
+              "leadTimeForChangesInHours": "${{ fromJson(env.lead_time_for_changes_report).lead_time_for_changes_in_hours }}",
+              "leadTimeRating": "${{ fromJson(env.lead_time_for_changes_report).rating }}",
+              "workflowAverageTimeDuration": "${{ fromJson(env.lead_time_for_changes_report).workflow_average_time_duration }}",
+              "prAverageTimeDuration": "${{ fromJson(env.lead_time_for_changes_report).pr_average_time_duration }}",
+              "averageOpenToCloseTime": "${{ fromJson(env.metrics).average_open_to_close_time }}",
+              "averageTimeToFirstReview": "${{ fromJson(env.metrics).average_time_to_first_review }}",
+              "averageTimeToApproval": "${{ fromJson(env.metrics).average_time_to_approval }}",
+              "prsOpened": "${{ fromJson(env.metrics).prs_opened }}",
+              "weeklyPrsMerged": "${{ fromJson(env.metrics).weekly_prs_merged }}",
+              "averageReviewsPerPr": "${{ fromJson(env.metrics).average_reviews_per_pr }}",
+              "averageCommitsPerPr": "${{ fromJson(env.metrics).average_commits_per_pr }}",
+              "averageLocChangedPerPr": "${{ fromJson(env.metrics).average_loc_changed_per_pr }}",
+              "averagePrsReviewedPerWeek": "${{ fromJson(env.metrics).average_prs_reviewed_per_week }}"
+            }
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: UPSERT
+```
+
+</details>
+
+2. Create a text file (`requirements.txt`) and a json file (`dora-config.json`) in a folder named `dora` to host the required dependencies and configurations for running the workflow respectively.
+<details>
+  <summary> Requirements </summary>
+
+```text showLineNumbers title="requirements.txt"
+PyGithub==2.3.0
+httpx==0.27.0
+```
+
+</details>
+
+
+<details>
+  <summary>Workflow Configuration</summary>
+:::tip
+You can choose to run any of the metric jobs (`compute-team-metrics` or `compute-repo-metrics`) optionally. This is controlled by setting or unsetting the corresponding Port blueprint parameters in your configuration file (`dora/dora-config.json`)
+:::
+
+| Name                 | Description                                                                                          | Required | Default            |
+|----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------
+| owner              | GitHub organization or user name                                                            | true    | -               |
+| repository              | your GitHub repository name                                                              | true    | -               |
+| doraTimeframe              | Time frame in weeks to calculate metrics on                                                                | false    | 4               |
+| branch              | your preferred GitHub repository branch to estimate metrics on                                                              | false    | main              |
+| workflows              | An array of workflows to process. Multiple workflows can be separated by a comma (,)                                                              | false    | []               |
+| githubHost              | The api host of your github instance                                                              | false    | https://api.github.com               |
+| blueprints              | blueprint identifiers in port for dora metrics and github team                                                              | true    | -               |
+| items              | An array of defined repository configs (`repository`, `branch`, `workflows`) to compute dora metrics on, required only to compute dora metrics for repositories (not required for team metrics) |false |
+
+```json showLineNumbers title="example dora-config.json"
+{
+  "owner": "port-labs",
+  "doraTimeFrame": 2,
+  "githubHost": "https://api.github.com",
+  "port": {
+    "blueprints":{
+      "dora": "doraMetrics",
+      "team": "githubTeam"
+    }
+  },
+  "items": [
+    {
+      "repository": "port-docs",
+      "branch": "main",
+      "workflows": ["build.yml"]
+    },
+    {
+      "repository": "ocean",
+      "branch": "main",
+      "workflows": []
+    }
+  ]
+}
+```
+</details>
+
+
+## DORA for Services (Repositories)
+
+1. Create a blueprint for hosting DORA Metrics for the services in port
+
+
+<details>
+<summary>DORA Metrics blueprint (click to expand)</summary>
 
 ```json showLineNumbers title="DORA Blueprint"
 {
@@ -180,281 +392,10 @@ Below, you can find the JSON for the `DORA Metrics` and `Team` blueprints requir
 ```
 </details>
 
+2. Create the following python scripts (`calculate_pr_metrics.py`, `deployment_frequency.py` and `lead_time_for_changes.py`) in the folder named `dora` created earlier at the root of your GitHub repository to run DORA for repositories:
 
 <details>
-<summary><b>GitHub Team blueprint (click to expand)</b></summary>
-
-```json showLineNumbers title="github team blueprint"
-{
-  "identifier": "githubTeam",
-  "title": "GitHub Team",
-  "icon": "Github",
-  "schema": {
-    "properties": {
-      "slug": {
-        "title": "Slug",
-        "type": "string"
-      },
-      "description": {
-        "title": "Description",
-        "type": "string"
-      },
-      "link": {
-        "title": "Link",
-        "icon": "Link",
-        "type": "string",
-        "format": "url"
-      },
-      "permission": {
-        "title": "Permission",
-        "type": "string"
-      },
-      "notificationSetting": {
-        "title": "Notification Setting",
-        "type": "string"
-      },
-      "responseRate": {
-        "type": "number",
-        "title": "Response Rate"
-      },
-      "averageResponseTime": {
-        "type": "number",
-        "title": "Response Time"
-      },
-      "timeFrame": {
-        "icon": "DefaultProperty",
-        "type": "number",
-        "title": "Time Frame In Days"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-</details>
-
-## Create Github workflow
-
-Follow these steps to get started:
-
-1. Create the following GitHub action secrets:
-
-    - `PORT_CLIENT_ID` - [Port Client ID](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `PORT_CLIENT_SECRET` - [Port Client Secret](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `PATTOKEN` - [GitHub PAT classic token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic). Ensure that the `read:org` and `repo`, scopes are set for the token to grant this action access to the repositories and teams the metrics are to be estimated for . [learn more].
-
-2. In your Github repository, create a workflow file under `.github/workflows/dora-metrics.yml` with the following content:
-
-<details>
-<summary><b>GitHub workflow: Ingest DORA Metrics (click to expand)</b></summary>
-
-```yaml showLineNumbers title="dora-metrics.yml"
-name: Ingest DORA Metrics
-
-on:
-  schedule:
-    - cron: '0 2 * * 1'
-  workflow_dispatch:
-
-jobs:
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-      owner: ${{ steps.set-matrix.outputs.owner }}
-      doraTimeFrame: ${{ steps.set-matrix.outputs.doraTimeFrame }}
-      doraBlueprint: ${{ steps.set-matrix.outputs.doraBlueprintID }}
-      teamBlueprint: ${{ steps.set-matrix.outputs.teamBlueprintID }}
-      githubHost: ${{ steps.set-matrix.outputs.githubHost }}
-      dora_present: ${{ steps.set-matrix.outputs.dora_present }}
-      team_present: ${{ steps.set-matrix.outputs.team_present }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install jq
-        run: sudo apt-get install jq
-
-      - name: Read Config and Output Matrix
-        id: set-matrix
-        run: |
-          CONFIG_JSON=$(cat src/dora-config-v2.json)
-          MATRIX_JSON=$(echo $CONFIG_JSON | jq -c '{include: .items}')
-          OWNER=$(echo $CONFIG_JSON | jq -r '.owner')
-          GITHUB_HOST=$(echo $CONFIG_JSON | jq -r '.githubHost')
-          DORA_TIME_FRAME=$(echo $CONFIG_JSON | jq -r '.doraTimeFrame')
-          DORA_BLUEPRINT=$(echo $CONFIG_JSON | jq -r '.port.blueprints.dora // empty')
-          TEAM_BLUEPRINT=$(echo $CONFIG_JSON | jq -r '.port.blueprints.team // empty')
-          DORA_PRESENT=$([[ -n "$DORA_BLUEPRINT" ]] && echo "true" || echo "false")
-          TEAM_PRESENT=$([[ -n "$TEAM_BLUEPRINT" ]] && echo "true" || echo "false")
-          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
-          echo "owner=$OWNER" >> $GITHUB_OUTPUT
-          echo "githubHost=$GITHUB_HOST" >> $GITHUB_OUTPUT
-          echo "doraTimeFrame=$(( DORA_TIME_FRAME * 7 ))" >> $GITHUB_OUTPUT
-          echo "doraBlueprint=$DORA_BLUEPRINT" >> $GITHUB_OUTPUT
-          echo "teamBlueprint=$TEAM_BLUEPRINT" >> $GITHUB_OUTPUT
-          echo "dora_present=$DORA_PRESENT" >> $GITHUB_OUTPUT
-          echo "team_present=$TEAM_PRESENT" >> $GITHUB_OUTPUT
-
-  compute-team-metrics:
-    needs: setup
-    runs-on: ubuntu-latest
-    if: needs.setup.outputs.team_present == 'true'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r src/requirements.txt
-          
-      - name: Compute Team Metrics
-        run: |
-          python src/calculate_team_metrics.py --owner "${{ needs.setup.outputs.owner }}" --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --port-client-id "${{ secrets.PORT_CLIENT_ID }}" --port-client-secret "${{ secrets.PORT_CLIENT_SECRET }}" --github-host "${{ needs.setup.outputs.githubHost }}"
-
-  compute-repo-metrics:
-    needs: setup
-    runs-on: ubuntu-latest
-    if: needs.setup.outputs.dora_present == 'true'
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ matrix.include.repository }}
-
-      - name: Transform Workflow Parameters
-        run: |
-          cleaned_name=$(echo "${{ matrix.repository }}" | tr -c '[:alnum:]' ' ')
-          TITLE=$(echo "${cleaned_name}" | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2));}1')
-          echo "ENTITY_TITLE=$TITLE" >> $GITHUB_ENV
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r src/requirements.txt
-
-      - name: Compute PR Metrics
-        run: |
-          python src/calculate_pr_metrics.py  --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
-          
-      - name: Deployment Frequency
-        id: deployment_frequency
-        run: python src/deployment_frequency.py --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --branch "${{ matrix.branch }}" --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
-      
-      - name: Lead Time For Changes
-        id: lead_time_for_changes
-        run: python src/lead_time_for_changes.py --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --branch ${{ matrix.branch }} --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
-
-      - name: UPSERT Repository DORA Metrics
-        uses: port-labs/port-github-action@v1
-        with:
-          identifier: ${{ fromJson(env.metrics).id }}
-          title: ${{ env.ENTITY_TITLE }}
-          blueprint: doraMetrics
-          properties: |-
-            {
-              "timeFrameInWeeks": "${{ needs.setup.outputs.doraTimeFrame }}",
-              "totalDeployments": "${{ fromJson(env.deployment_frequency_report).total_deployments }}",
-              "deploymentRating": "${{ fromJson(env.deployment_frequency_report).rating }}",
-              "numberOfUniqueDeploymentDays": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_days }}",
-              "numberOfUniqueDeploymentWeeks": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_weeks }}",
-              "numberOfUniqueDeploymentMonths": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_months }}",
-              "deploymentFrequency": "${{ fromJson(env.deployment_frequency_report).deployment_frequency }}",
-              "leadTimeForChangesInHours": "${{ fromJson(env.lead_time_for_changes_report).lead_time_for_changes_in_hours }}",
-              "leadTimeRating": "${{ fromJson(env.lead_time_for_changes_report).rating }}",
-              "workflowAverageTimeDuration": "${{ fromJson(env.lead_time_for_changes_report).workflow_average_time_duration }}",
-              "prAverageTimeDuration": "${{ fromJson(env.lead_time_for_changes_report).pr_average_time_duration }}",
-              "averageOpenToCloseTime": "${{ fromJson(env.metrics).average_open_to_close_time }}",
-              "averageTimeToFirstReview": "${{ fromJson(env.metrics).average_time_to_first_review }}",
-              "averageTimeToApproval": "${{ fromJson(env.metrics).average_time_to_approval }}",
-              "prsOpened": "${{ fromJson(env.metrics).prs_opened }}",
-              "weeklyPrsMerged": "${{ fromJson(env.metrics).weekly_prs_merged }}",
-              "averageReviewsPerPr": "${{ fromJson(env.metrics).average_reviews_per_pr }}",
-              "averageCommitsPerPr": "${{ fromJson(env.metrics).average_commits_per_pr }}",
-              "averageLocChangedPerPr": "${{ fromJson(env.metrics).average_loc_changed_per_pr }}",
-              "averagePrsReviewedPerWeek": "${{ fromJson(env.metrics).average_prs_reviewed_per_week }}"
-            }
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: UPSERT
-```
-
-</details>
-
-3. Create a text file (`requirements.txt`) and a json file (`dora-config.json`) in a folder named `dora` to host the required dependencies and configurations for running the workflow respectively.
-<details>
-  <summary><b>Requirements</b></summary>
-
-```text showLineNumbers title="requirements.txt"
-PyGithub==2.3.0
-httpx==0.27.0
-```
-
-</details>
-
-
-<details>
-  <summary><b>Dora Configuration Template</b></summary>
-:::tip
-You can choose to run any of the metric jobs (`compute-team-metrics` or `compute-repo-metrics`) optionally. This is controlled by setting or unsetting the corresponding Port blueprint parameters in your configuration file (`dora/dora-config.json`)
-:::
-
-| Name                 | Description                                                                                          | Required | Default            |
-|----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------
-| owner              | GitHub organization or user name                                                            | true    | -               |
-| repository              | your GitHub repository name                                                              | true    | -               |
-| doraTimeframe              | Time frame in weeks to calculate metrics on                                                                | false    | 4               |
-| branch              | your preferred GitHub repository branch to estimate metrics on                                                              | false    | main              |
-| workflows              | An array of workflows to process. Multiple workflows can be separated by a comma (,)                                                              | false    | []               |
-| githubHost              | The api host of your github instance                                                              | false    | https://api.github.com               |
-| blueprints              | blueprint identifiers in port for dora metrics and github team                                                              | true    | -               |
-| items              | An array of defined repository configs (`repository`, `branch`, `workflows`) to compute dora metrics on, required only to compute dora metrics for repositories (not required for team metrics) |false |
-
-```json showLineNumbers title="example dora-config.json"
-{
-  "owner": "port-labs",
-  "doraTimeFrame": 2,
-  "githubHost": "https://api.github.com",
-  "port": {
-    "blueprints":{
-      "dora": "doraMetrics",
-      "team": "githubTeam"
-    }
-  },
-  "items": [
-    {
-      "repository": "port-docs",
-      "branch": "main",
-      "workflows": ["build.yml"]
-    },
-    {
-      "repository": "ocean",
-      "branch": "main",
-      "workflows": []
-    }
-  ]
-}
-```
-</details>
-
-4. Create the following python scripts (`calculate_pr_metrics.py`, `deployment_frequency.py`, `lead_time_for_changes.py`, and `team_metrics` ) in the folder named `dora` created earlier at the root of your GitHub repository to run DORA for repositories:
-
-<details>
-  <summary><b>Calculate PR Metrics</b></summary>
+  <summary>Pull Request Metrics</summary>
 
 ```python showLineNumbers title="calculate_pr_metrics.py"
 import os
@@ -468,13 +409,27 @@ import argparse
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class RepositoryMetrics:
-    def __init__(self, owner, repo, timeframe,pat_token):
-        self.github_client = Github(pat_token)
+    def __init__(self, owner, repo, time_frame,token,github_host):
+        try:
+            self.github_client = (
+                Github(login_or_token=token, base_url=github_host)
+                if github_host
+                else Github(token)
+            )
+            self.owner = owner
+        except GithubException as e:
+            logging.error(f"Failed to initialize GitHub client: {e}")
+            raise
+        except Exception as e:
+            logging.error(
+                f"Unexpected error during initialization: {e} - verify that your github credentials are valid"
+            )
+            raise
         self.repo_name = f"{owner}/{repo}"
-        self.timeframe = int(timeframe)
+        self.time_frame = int(time_frame)
         self.start_date = datetime.datetime.now(datetime.UTC).replace(
             tzinfo=datetime.timezone.utc
-        ) - datetime.timedelta(days=self.timeframe)
+        ) - datetime.timedelta(days=self.time_frame)
         self.repo = self.github_client.get_repo(f"{self.repo_name}")
 
     def calculate_pr_metrics(self):
@@ -557,7 +512,7 @@ class RepositoryMetrics:
         review_weeks = {
             review_date.isocalendar()[1] for review_date in aggregated["review_dates"]
         }
-        average_prs_reviewed_per_week = len(review_weeks) / max(1, self.timeframe)
+        average_prs_reviewed_per_week = len(review_weeks) / max(1, self.time_frame)
 
         metrics = {
             "id": self.repo.id,
@@ -578,7 +533,7 @@ class RepositoryMetrics:
             else 0,
             "prs_opened": aggregated["prs_opened"],
             "weekly_prs_merged": self.timedelta_to_decimal_hours(
-                aggregated["total_open_to_close_time"] / max(1, self.timeframe)
+                aggregated["total_open_to_close_time"] / max(1, self.time_frame)
             )
             if aggregated["prs_merged"]
             else 0,
@@ -611,14 +566,19 @@ if __name__ == "__main__":
     parser.add_argument('--owner', required=True, help='Owner of the repository')
     parser.add_argument('--repo', required=True, help='Repository name')
     parser.add_argument('--token', required=True, help='GitHub token')
-    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--time-frame', type=int, default=30, help='Time Frame in days')
     parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
+    parser.add_argument(
+            "--github-host",
+            help="Base URL for self-hosted GitHub instance (e.g., https://api.github-example.com)",
+            default=None,
+        )
     args = parser.parse_args()
 
     logging.info(f"Repository Name: {args.owner}/{args.repo}")
-    logging.info(f"TimeFrame (in days): {args.timeframe}")
+    logging.info(f"TimeFrame (in days): {args.time_frame}")
 
-    repo_metrics = RepositoryMetrics(args.owner, args.repo, args.timeframe, pat_token=args.token)
+    repo_metrics = RepositoryMetrics(args.owner, args.repo, args.time_frame, token=args.token,github_host = args.github_host)
     metrics = repo_metrics.calculate_pr_metrics()
     metrics_json = json.dumps(metrics, default=str)
     print(metrics_json)
@@ -626,7 +586,6 @@ if __name__ == "__main__":
     if args.platform == "github-actions":
         with open(os.getenv("GITHUB_ENV"), "a") as github_env:
             github_env.write(f"metrics={metrics_json}\n")
-
 ```
 </details>
 
@@ -763,7 +722,7 @@ if __name__ == "__main__":
 </details>
 
 <details>
-  <summary><b>Lead Time For Changes</b></summary>
+  <summary>Lead Time For Changes</summary>
 
 ```python showLineNumbers title="lead_time_for_changes.py"
 import datetime
@@ -980,10 +939,71 @@ if __name__ == "__main__":
 ```
 </details>
 
-5. Create the following python scripts (`team_metrics`, and `port.py` ) in the folder named `dora` created earlier at the root of your GitHub repository to compute the team response metrics. 
+## Team Metrics
+
+1. Add the following new properties, `averageResponseTime`, `averageResponseTime`,and `timeFrame` to your GitHub Team blueprint in port
 
 <details>
-  <summary><b>Team Metrics</b></summary>
+<summary> GitHub Team blueprint (click to expand) </summary>
+
+```json showLineNumbers title="github team blueprint" {29,30,31,32,33,34,35,36,37,38,39,40,41}
+{
+  "identifier": "githubTeam",
+  "title": "GitHub Team",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "slug": {
+        "title": "Slug",
+        "type": "string"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "link": {
+        "title": "Link",
+        "icon": "Link",
+        "type": "string",
+        "format": "url"
+      },
+      "permission": {
+        "title": "Permission",
+        "type": "string"
+      },
+      "notificationSetting": {
+        "title": "Notification Setting",
+        "type": "string"
+      },
+      "responseRate": {
+        "type": "number",
+        "title": "Response Rate"
+      },
+      "averageResponseTime": {
+        "type": "number",
+        "title": "Response Time"
+      },
+      "timeFrame": {
+        "icon": "DefaultProperty",
+        "type": "number",
+        "title": "Time Frame In Days"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+</details>
+
+
+2. Create the following python scripts (`team_metrics`, and `port.py` ) in the folder named `dora` created earlier at the root of your GitHub repository to compute the team response metrics. 
+
+<details>
+  <summary> Team Metrics </summary>
 
 ```python showLineNumbers title="team_metrics.py"
 import os
@@ -1334,4 +1354,5 @@ class PortAPI:
 ```
 </details>
 
+<br/>
 Congrats 🎉 You've successfully created a scheduled GitHub workflow that periodically calculates and ingests `DORA Metrics` for GitHub repository(s).
