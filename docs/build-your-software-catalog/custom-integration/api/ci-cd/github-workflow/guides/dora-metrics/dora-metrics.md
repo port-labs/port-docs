@@ -203,7 +203,7 @@ You can choose to run any of the metric jobs (`compute-team-metrics` or `compute
   "githubHost": "https://api.github.com",
   "port": {
     "blueprints":{
-      "dora": "doraMetrics",
+      "service": "doraMetrics",
       "team": "githubTeam"
     }
   },
@@ -590,7 +590,7 @@ if __name__ == "__main__":
 </details>
 
 <details>
-  <summary><b>Deployment Frequency</b></summary>
+  <summary>Deployment Frequency</summary>
 
 ```python showLineNumbers title="deployment_frequency.py"
 import datetime
@@ -1290,7 +1290,7 @@ if __name__ == "__main__":
 </details>
 
 <details>
-  <summary><b>Upsert Team Metrics to Port</b></summary>
+  <summary>Upsert Team Metrics to Port</summary>
 
 ```python showLineNumbers title="port.py"
 
