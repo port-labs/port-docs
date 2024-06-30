@@ -12,13 +12,13 @@ import TabItem from "@theme/TabItem"
 - To get Port API credentials, you check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/).
 - In order to successfully deploy the AWS integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the above resources.
 
-:::tip
-If you want to:
+:::warning
+To do the following:
 
 1. Enable multiple accounts for the integration.
 2. View account data.
 
-Make sure you check out our [Multiple Accounts guide](./multi_account.md)
+Make sure you set-up properly using our [Multiple Accounts guide](./multi_account.md)
 :::
 
 Choose one of the following installation methods:
