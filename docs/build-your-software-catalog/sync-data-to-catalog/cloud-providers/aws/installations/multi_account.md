@@ -6,6 +6,53 @@ sidebar_position: 1
 
 This guide will provide you with the necessary tools for enabling our Ocean AWS Integration to digest multiple account's data.
 
+## Our Permissions model
+
+A few key conecpts in the AWS's permissions model:
+
+1. *Policy*: A document that defines permissions, specifying what actions are allowed or denied for particular resources and under what conditions.
+2. *Role*: An identity with specific permissions and trust policies.
+3. *AssumeRole*: An action that allows for a user / service account to impersonate a Role with temporary credentials. Allowing roles to assume-roles for other roles is enabled via `Trust Policies`.
+4. *Trust Policy*: A document attached to a role that specifies which principals (users, groups, or roles) are allowed to assume the role.
+5. *Account*: A container that holds all your AWS resources and services, identified uniquely by an AWS account ID.
+6. *Root Account*: The primary account created when setting up an AWS environment, providing full administrative access to all AWS resources and services.
+
+### How are permissions granted?
+
+*Very* Briefly, a permission to perform a certain action in AWS must be granted from *both* the entity which performs the action *and* the entity which is affected from the action. This means, that if I want to add permissions to read from a S3 bucket and I'm using a certain role, I *have* to give permissions to the role from the S3's permissions policy *and* to read the S3 bucket from the Role. This is an oversimplification, but it works when trying to understand how you set permissions up from scratch. For more information, check [AWS's docs](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html)
+
+Let's assume you have 3 different accounts:
+
+1. Our `integration account`, where you deploy the integration.
+2. A `Root account`.
+3. `Other account`- A third non-root account, which you want the integration to fetch resources from.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/at_first.png' width='50%' border='1px' /> <br/><br/>
+
+First, we will create a role with permissions (If you're running the terraform installation, this will be done for you). We'll call this role `ReadOnlyPermissionsOceanRole`, with `I can read resources in this account` policy.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/add_integration_readonly.png' width='50%' border='1px' /> <br/><br/>
+
+Then we'll go to the root account, and give it permissions to view some metadata about other accounts. We'll call this role `OrganizationalOceanRole`, and give it `I can view metadata about accounts`.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/add_organization_role.png' width='50%' border='1px' /> <br/><br/>
+
+Then, In order for the integration's role to get accounts metadata, We'll need to give our integration role, `ReadOnlyPermissionsOceanRole`, permissions to assume the role of the root account, `OrganizationalOceanRole`.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/added_first_trust_policy.png' width='50%' border='1px' /> <br/><br/>
+
+That's the flow you need to understand if you want to install the integration in one account.
+
+### How does multiple accounts work?
+
+Multiple accounts is all about bouncing between accounts using AssumeRole to get their metadata using a role with `I can read resources in this account` permissions. We'll have to give `OrganizationalOceanRole` permissions to AssumeRole to the role `ReadOnlyPermissionsOceanRole` in the accounts we want it to digest.
+
+:::warning
+The integration expects the non-root account's role the be named the same (`accountReadRoleName` is the integration's configuration for this name).
+:::
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/new_account.png' width='50%' border='1px' /> <br/><br/>
+
 ## Prerequisites
 
 1. Name of a role in the integration's account giving it the following Policies: (This was created for you if you ran our terraform module)
