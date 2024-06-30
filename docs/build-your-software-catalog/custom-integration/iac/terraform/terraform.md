@@ -476,6 +476,12 @@ terraform import port_entity.myEntity "{blueprintIdentifier}:{entityIdentifier}"
 Before using `terraform import` to bring data from your Port account into your Terraform state file, make sure your resource definitions match the schema of your resources in Port. If they don't, your state will be deleted in the next `terraform apply`, since Terraform will try to apply the empty resources and override the imported state, while also updating Port in the process.                                                                                                                                          
 :::
 
+:::note Advanced Example
+See [this](./examples/import-and-manage-integration) guide which explains more in depth of how you can use import state to manage Port integrations using Terraform
+
+
+:::
+
 ## Examples
 
 Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
