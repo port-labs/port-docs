@@ -12,6 +12,83 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Installation
 
+<Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="helm">
+<TabItem value="helm" label="Helm" >
+
+## Pre-requisites
+- [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0
+- [Kubernetes](https://kubernetes.io/docs/setup/) cluster
+- [Azure App Registration]
+
+## Azure App Registration
+
+1. Create an Azure App Registration in the Azure portal.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/1-app-registration.png' width='85%' border='1px' /> <br/><br/>
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/2-register-an-application.png' width='85%' border='1px' /> <br/><br/>
+
+2. Copy the `Application (client) ID` and `Directory (tenant) ID` from the App Registration.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/3-result-of-app-registration.png' width='85%' border='1px' /> <br/><br/>
+
+3. Create a client secret for the App Registration.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/4-creating-client-secret.png' width='85%' border='1px' /> <br/><br/>
+
+4. Copy the `Application (client) Secret` from the App Registration.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/5-copy-secret-value.png' width='85%' border='1px' /> <br/><br/>
+
+5. Create a new role assignment for the App Registration. Go to the `Access control (IAM)` section of the subscription you want to ingest resources from.<br/><br/>Click on `Add role assignment`.
+
+:::info Multi Account Support
+It is supported to ingest resources from multiple subscriptions, for that you will have to repeat the role assignment for each subscription you want to ingest resources from.
+:::
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/6-add-role-assignment.png' width='85%' border='1px' /> <br/><br/>
+
+6. Assign the `Reader` role to the App Registration.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/7-assign-member-to-role.png' width='85%' border='1px' /> <br/><br/>
+
+
+## Installation
+
+Now that you have the Azure App Registration details, you can install the Azure exporter using Helm.
+
+You should have the following information ready:
+
+- Port API credentials, you check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+  - `PORT_CLIENT_ID`
+  - `PORT_CLIENT_SECRET`
+- Azure Credentials:
+  - `AZURE_CLIENT_ID`: The Application (client) ID from the Azure App Registration.
+  - `AZURE_CLIENT_SECRET`: The Application (client) Secret from the Azure App Registration.
+  - `AZURE_TENANT_ID`: The Directory (tenant) ID from the Azure App Registration.
+
+```bash showLineNumbers
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+helm upgrade --install my-azure-integration port-labs/port-ocean \
+	--set port.clientId="PORT_CLIENT_ID"  \
+	--set port.clientSecret="PORT_CLIENT_SECRET"  \
+	--set port.baseUrl="https://api.getport.io"  \
+	--set initializePortResources=true  \
+	--set scheduledResyncInterval=1440 \
+	--set integration.identifier="my-azure-integration"  \
+	--set integration.type="azure"  \
+	--set integration.eventListener.type="POLLING"  \
+	--set integration.config.azureClientId="<AZURE_CLIENT_ID>"  \
+	--set integration.config.azureClientSecret="<AZURE_CLIENT_SECRET>" \
+	--set integration.config.azureTenantId="<AZURE_TENANT_ID>"
+```
+
+<PortApiRegionTip/>
+
+</TabItem>
+
+<TabItem value="terraform" label="Terraform">
+
 The azure exporter is deployed using Terraform on Azure Container App.
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the exporter.
 
@@ -115,47 +192,8 @@ In order to successfully deploy the Azure exporter, it's crucial to ensure that 
 
     </details>
 
-  - [Assign the following roles](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal) to the user on the subscription that will be used to deploy the integration:
-    - The custom `Azure Exporter Deployment` role we defined above.
-    - The `API Management Workspace Contributor` role.
-    - The `EventGrid Contributor` role.
-    - The `ContainerApp Reader` role.
-    - The `EventGrid EventSubscription Contributor` role.
+  - [Assign the following roles](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal) to the user on the subscription that will be used to deploy
 
-## Installation
-
-:::tip Get your Azure Account Credentials
-Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get your Azure account credentials:
-- AZURE_CLIENT_ID
-- AZURE_CLIENT_SECRET
-- AZURE_TENANT_ID
-- AZURE_SUBSCRIPTION_ID
-
-Or [register an app](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade) in the Azure portal to get your credentials.
-:::
-
-<Tabs groupId="installation-methods" queryString="installation-methods">
-
-  <TabItem value="real-time-always-on" label="Real Time & Always On" default>
-    
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
-
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
-
-| Parameter                                | Description                                                                                                                                | Example                          | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)              |                                  | ✅       |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)          |                                  | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
-| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks                         | https://my-ocean-integration.com | ❌       |
-
-<HelmParameters/>
-
-<br/>
-
-<Tabs groupId="deploy" queryString="deploy">
-<TabItem value="terraform" label="Terraform">
 1. Login to [Port](https://app.getport.io) and browse to the [builder page](https://app.getport.io/dev-portal)
 2. Open the ingest modal by expanding one of the blueprints and clicking the ingest button on the blueprints.
 
@@ -178,283 +216,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
    ![Dev Portal Builder Azure Exporter Installation](/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-terraform-install.png)
 
 5. Run the command in your terminal to deploy the Azure exporter.
-</TabItem>
-
-<TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
-
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-azure-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=60 \
-	--set integration.identifier="my-azure-integration"  \
-	--set integration.type="azure"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set "extraEnv[0].name=AZURE_CLIENT_ID"  \
-	--set "extraEnv[0].value=xxxx-your-client-id-xxxxx"  \
-	--set "extraEnv[1].name=AZURE_CLIENT_SECRET"  \
-	--set "extraEnv[1].value=xxxxxxx-your-client-secret-xxxx"  \
-	--set "extraEnv[2].name=AZURE_TENANT_ID"  \
-	--set "extraEnv[2].value=xxxx-your-tenant-id-xxxxx"  \
-	--set "extraEnv[3].name=AZURE_SUBSCRIPTION_ID"  \
-	--set "extraEnv[3].value=xxxx-your-subscription-id-xxxxx"
-```
-
-<PortApiRegionTip/>
-</TabItem>
-
-<TabItem value="argocd" label="ArgoCD">
-To install the integration using ArgoCD, follow these steps:
-
-1. Create a `values.yaml` file in `argocd/my-ocean-azure-integration` in your git repository with the content:
-
-
-```yaml showLineNumbers
-initializePortResources: true
-scheduledResyncInterval: 120
-integration:
-  identifier: my-ocean-azure-integration
-  type: azure
-  eventListener:
-    type: POLLING
-  extraEnvs:
-    - name: AZURE_CLIENT_ID
-      value: xxxx-your-client-id-xxxxx
-    - name: AZURE_CLIENT_SECRET
-      value: xxxxxxx-your-client-secret-xxxx
-    - name: AZURE_TENANT_ID
-      value: xxxx-your-tenant-id-xxxxx
-    - name: AZURE_SUBSCRIPTION_ID
-      value: xxxx-your-subscription-id-xxxxx
-```
-
-<br/>
-
-2. Install the `my-ocean-azure-integration` ArgoCD Application by creating the following `my-ocean-azure-integration.yaml` manifest:
-
-:::note Replace placeholders
-
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.  
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
-
-:::
-
-<details>
-  <summary>ArgoCD Application</summary>
-
-```yaml showLineNumbers
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: my-ocean-azure-integration
-  namespace: argocd
-spec:
-  destination:
-    namespace: mmy-ocean-azure-integration
-    server: https://kubernetes.default.svc
-  project: default
-  sources:
-  - repoURL: 'https://port-labs.github.io/helm-charts/'
-    chart: port-ocean
-    targetRevision: 0.1.14
-    helm:
-      valueFiles:
-      - $values/argocd/my-ocean-azure-integration/values.yaml
-      // highlight-start
-      parameters:
-        - name: port.clientId
-          value: YOUR_PORT_CLIENT_ID
-        - name: port.clientSecret
-          value: YOUR_PORT_CLIENT_SECRET
-        - name: port.baseUrl
-          value: https://api.getport.io
-  - repoURL: YOUR_GIT_REPO_URL
-  // highlight-end
-    targetRevision: main
-    ref: values
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-    - CreateNamespace=true
-```
-<PortApiRegionTip/>
-
-</details>
-<br/>
-
-1. Apply your application manifest with `kubectl`:
-
-```bash
-kubectl apply -f my-ocean-azure-integration.yaml
-```
-</TabItem> 
-
-</Tabs>
-</TabItem>
-
-<TabItem value="one-time" label="Scheduled">
-
-<Tabs groupId="cicd-method" queryString="cicd-method">
-
-<TabItem value="github" label="GitHub">
-This workflow will run the Azure integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
-
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
-
-<DockerParameters />
-
-<br/>
-
-Here is an example for `azure-integration.yml` workflow file:
-
-```yaml showLineNumbers
-name: Azure Exporter Workflow
-
-# This workflow responsible for running Azure exporter.
-
-on:
-  workflow_dispatch:
-
-jobs:
-  run-integration:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: port-labs/ocean-sail@v1
-        env:
-          AZURE_CLIENT_ID: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
-          AZURE_CLIENT_SECRET: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
-          AZURE_TENANT_ID: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.OCEAN__SECRET__AZURE_SUBSCRIPTION_ID }}
-        with:
-          type: "azure"
-          identifier: "my-azure-integration"
-          port_client_id: ${{ secrets.OCEAN__PORT_CLIENT_ID }}
-          port_client_secret: ${{ secrets.OCEAN__PORT_CLIENT_SECRET }}
-          port_base_url: https://api.getport.io
-```
-
-</TabItem>
-<TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Azure integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::info
-Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
-
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
-
-<DockerParameters />
-<br/>
-
-Here is an example for `Jenkinsfile` groovy pipeline file:
-
-```text showLineNumbers
-pipeline {
-    agent any
-
-    stages {
-        stage('Run Azure Integration') {
-            steps {
-                script {
-                    withCredentials([
-                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
-                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
-                        string(credentialsId: 'OCEAN__SECRET__AZURE_CLIENT_ID', variable: 'OCEAN__SECRET__AZURE_CLIENT_ID'),
-                        string(credentialsId: 'OCEAN__SECRET__AZURE_CLIENT_SECRET', variable: 'OCEAN__SECRET__AZURE_CLIENT_SECRET'),
-                        string(credentialsId: 'OCEAN__SECRET__AZURE_TENANT_ID', variable: 'OCEAN__SECRET__AZURE_TENANT_ID'),
-                        string(credentialsId: 'OCEAN__SECRET__AZURE_SUBSCRIPTION_ID', variable: 'OCEAN__SECRET__AZURE_SUBSCRIPTION_ID'),
-                    ]) {
-                        sh('''
-                            #Set Docker image and run the container
-                            integration_type="azure"
-                            version="latest"
-                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
-                            docker run -i --rm --platform=linux/amd64 \
-                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
-                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
-                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
-                                -e AZURE_CLIENT_ID=$OCEAN__SECRET__AZURE_CLIENT_ID \
-                                -e AZURE_CLIENT_SECRET=$OCEAN__SECRET__AZURE_CLIENT_SECRET \
-                                -e AZURE_TENANT_ID=$OCEAN__SECRET__AZURE_TENANT_ID \
-                                -e AZURE_SUBSRIPTION_ID=$OCEAN__SECRET__AZURE_SUBSCRIPTION_ID
-                                $image_name
-
-                            exit $?
-                        ''')
-                    }
-                }
-            }
-        }
-    }
-}
-```
-
-</TabItem>
-<TabItem value="azure" label="Azure Devops">
-<AzurePremise name="Azure" />
-
-<DockerParameters />
-
-<br/>
-
-Here is an example for `azure-integration.yml` pipeline file:
-
-```yaml showLineNumbers
-trigger:
-  - main
-
-pool:
-  vmImage: "ubuntu-latest"
-
-variables:
-  - group: port-ocean-credentials
-
-steps:
-  - script: |
-      # Set Docker image and run the container
-      integration_type="azure"
-      version="latest"
-
-      image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-
-      docker run -i --rm --platform=linux/amd64 \
-          -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
-          -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-          -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
-          -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
-          -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
-          -e AZURE_CLIENT_ID=$(OCEAN__SECRET__AZURE_CLIENT_ID) \
-          -e AZURE_CLIENT_SECRET=$(OCEAN__SECRET__AZURE_CLIENT_SECRET) \
-          -e AZURE_TENANT_ID=$(OCEAN__SECRET__AZURE_TENANT_ID) \
-          -e AZURE_SUBSRIPTION_ID=$(OCEAN__SECRET__AZURE_SUBSCRIPTION_ID)
-          $image_name
-
-      exit $?
-    displayName: "Ingest Data into Port"
-```
-</TabItem>
-
-</Tabs>
-
-<PortApiRegionTip/>
 
 </TabItem>
 

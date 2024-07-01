@@ -17,7 +17,7 @@ Choose one of the following installation methods:
 2. Docker- for running the integration only once
 3. Terraform- For Having live events
 
-<Tabs groupId="installation-platforms" queryString="installation-platforms">
+<Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm ( Scheduled )">  
 
 # Helm installation
@@ -51,6 +51,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    --set port.baseUrl="https://api.getport.io"  \
    --set initializePortResources=true  \
    --set sendRawDataExamples=true  \
+   --set scheduledResyncInterval=1440 \
    --set integration.identifier="ocean-gcp-integration"  \
    --set integration.type="gcp"  \
    --set integration.eventListener.type="POLLING"  \

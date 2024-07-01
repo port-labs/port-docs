@@ -22,7 +22,7 @@ Make sure you set-up properly using our [Multiple Accounts guide](./multi_accoun
 :::
 
 Choose one of the following installation methods:
-<Tabs groupId="installation-platforms" queryString="installation-platforms">
+<Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm">
 The AWS integration is deployed using Helm on you cluster.
 You can check out the Helm chart [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-ocean).
