@@ -29,6 +29,8 @@ You can check out the Helm chart [here](https://github.com/port-labs/helm-charts
 
 ## Prerequisites
 
+### IAM User
+
 - [create IAM user with the following permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html):
   - `arn:aws:iam::aws:policy/ReadOnlyAccess`
   - `account:ListRegions`
