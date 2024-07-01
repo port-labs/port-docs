@@ -223,4 +223,4 @@ Now, after you set-up permissions properly, You can run your integration with tw
 1. `organizationRoleArn` - Which represents the root-account's role-assuming delegation role
 2. `accountReadRoleName` - Which represents the name of the roles spread in all the accounts we want to assume-role to
 
-These should be provided when [installing the integration](./installation.md/#multiple-account-support) if you want to enable multiple account support.
+These should be provided when [installing the integration](./installation.md#multiple-account-support) if you want to enable multiple account support.
