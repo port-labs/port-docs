@@ -53,7 +53,9 @@ The integration expects the non-root account's role the be named the same (`acco
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/new_account.png' width='50%' border='1px' /> <br/><br/>
 
-## Prerequisites
+## Multiple Accounts Setup
+
+### Prerequisites
 
 1. Name of a role in the integration's account giving it the following Policies: (This was created for you if you ran our terraform module)
    1. `arn:aws:iam::aws:policy/ReadOnlyAccess`
