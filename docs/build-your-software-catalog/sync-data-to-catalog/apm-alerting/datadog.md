@@ -863,7 +863,7 @@ resources:
               unique | map(split(":")[1])
 ```
 :::tip Service Relation
-Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default JQ maps SLOs to services using tags that starts with the `service` keyword
+Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default mapping connects SLOs to services using tags that starts with the `service` keyword.
 :::
 </details>
 
