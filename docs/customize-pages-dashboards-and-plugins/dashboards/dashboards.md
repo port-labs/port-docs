@@ -98,26 +98,34 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 
 Line charts display trends of `number` properties over time.  
 
-When creating a line chart, you need to choose a blueprint, then choose one of its entities, and finally choose one or more of the entity's `number` properties.  
+When creating a line chart, you need to choose a blueprint, then choose one of its entities, and finally choose one or more of the entity's `number` properties to visualize.  
+
 :::tip Specific entity page
 When creating a line chart in an [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets), the chosen entity will be the entity whose page you are on.
 :::
 
-The chart will display the property values over the span of (up to) **one year** in daily intervals, with the x-axis representing the time and the y-axis representing the property values.
+Additionally, you need to specify the following properties:
+- **Time interval** - the amount of time between each data point in the chart.
+- **Time range** - how far back in time the chart will display data.
 
-For example, here is a line chart displaying a service's resource usage over a span of 8 days:
+The chart will display the property values over the span of the selected time range, using the selected intervals.  
+The x-axis represents the time and the y-axis representing the property values.
+
+For example, here is a line chart displaying a service's resource usage over the span of a week, in daily intervals:
 <img src='/img/software-catalog/widgets/lineChartExample.png' width='100%' border='1px' />
 
 #### Line chart properties
 
-| Field         | Type     | Description                                   | Default | Required |
-| ------------- | -------- | --------------------------------------------- | ------- | -------- |
-| `Title`       | `String` | Chart title                                   | `null`  | `true`   |
-| `Icon`        | `String` | Chart Icon                                    | `null`  | `false`  |
-| `Description` | `String` | An optional description of the chart          | `null`  | `false`  |
-| `Blueprint`   | `String` | The chosen blueprint                          | `null`  | `true`   |
-| `Entity`      | `String` | The chosen entity                             | `null`  | `true`   |
-| `Properties`  | `Array`  | The chosen `number` property/ies to visualize | `null`  | `true`   |
+| Field           | Type     | Description                                   | Default | Required |
+| --------------- | -------- | --------------------------------------------- | ------- | -------- |
+| `Title`         | `String` | Chart title                                   | `null`  | `true`   |
+| `Icon`          | `String` | Chart Icon                                    | `null`  | `false`  |
+| `Description`   | `String` | An optional description for the chart         | `null`  | `false`  |
+| `Blueprint`     | `String` | The chosen blueprint                          | `null`  | `true`   |
+| `Entity`        | `String` | The chosen entity                             | `null`  | `true`   |
+| `Properties`    | `Array`  | The chosen `number` property/ies to visualize | `null`  | `true`   |
+| `Time interval` | `String` | The time interval to display in the x-axis of the chart.<br/>Possible values: `hour`, `day`, `week`, `month` | `null` | `true` |
+| `Time range`    | `String` | The time range of the displayed data.<br/>Possible values change according to selected `time interval` - the longer the interval, the longer the available ranges | `null` | `true` |
 
 #### Potential use cases
 

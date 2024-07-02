@@ -32,7 +32,9 @@ Easily fill your software catalog with data directly from your AWS Organization,
 
 ## Installation
 
-To install the integration, follow the [installation](./installation.md) guide.
+To install the integration, follow the [installation](./installations/installation.md) guide.
+
+To properly configure permissions for production and to enable multiple accounts collection check out our [multiple accounts guide](./installations/multi_account.md)
 
 ## How it works
 
@@ -187,4 +189,6 @@ These permissions are essential for the proper functioning of the integration wi
 
 ## Getting started
 
-Continue to the [installation](./installation.md) guide to learn how to install the AWS integration.
+Continue to the [installation](./installations/installation.md) guide to learn how to install the AWS integration.
+
+To properly configure permissions for production and to enable multiple accounts collection check out our [multiple accounts guide](./installations/multi_account.md)

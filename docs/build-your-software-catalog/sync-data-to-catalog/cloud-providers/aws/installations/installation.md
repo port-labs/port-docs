@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 0
 ---
 
 import Tabs from "@theme/Tabs"
@@ -9,8 +9,17 @@ import TabItem from "@theme/TabItem"
 
 ## Permissions
 
-- To get Port API credentials, you check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/).
+- To get Port API credentials, you check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 - In order to successfully deploy the AWS integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the above resources.
+
+:::tip Multiple Account Support
+To do the following:
+
+1. Enable multiple accounts for the integration.
+2. View account data.
+
+Make sure you set-up properly using our [Multiple Accounts guide](./multi_account.md)
+:::
 
 Choose one of the following installation methods:
 <Tabs groupId="installation-platforms" queryString="installation-platforms">
@@ -19,6 +28,8 @@ The AWS integration is deployed using Helm on you cluster.
 You can check out the Helm chart [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-ocean).
 
 ## Prerequisites
+
+### IAM User
 
 - [create IAM user with the following permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html):
   - `arn:aws:iam::aws:policy/ReadOnlyAccess`
@@ -67,6 +78,32 @@ helm upgrade --install aws port-labs/port-ocean \
 --set integration.type="aws"  \
 --set integration.eventListener.type="POLLING"  \
 --set podServiceAccount.name="$SERVICE_ACCOUNT"
+```
+
+### Multiple account support
+
+For running the AWS integration using helm, you'll need to make sure that you have the following: (Check out our [multiple accounts guide](./multi_account.md) for how to get them)
+
+1. An organization role ARN
+2. A Role with Read permissions set-up across your AWS accounts
+3. IRSA or a user with the previous read-permissions role bound to them.
+
+Then, you'll be able to run the integration: (You can switch the `podServiceAccount.name` configuration to your `integration.config.awsAccessKeyId`, `integration.config.awsSecretAccessKey` configurations)
+
+```bash
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+helm upgrade --install aws port-labs/port-ocean \
+--set port.clientId="$PORT_CLIENT_ID"  \
+--set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
+--set port.baseUrl="https://api.getport.io"  \
+--set initializePortResources=true  \
+--set sendRawDataExamples=true  \
+--set integration.identifier="my-aws"  \
+--set integration.type="aws"  \
+--set integration.eventListener.type="POLLING"  \
+--set podServiceAccount.name="$SERVICE_ACCOUNT"  \ 
+--set integration.config.accountReadRoleName="$YOUR_ACCOUNT_READ_ROLE_NAME"  \ 
+--set integration.config.organizationRoleArn="$YOUR_ORGANIZATION_ROLE_ARN"
 ```
 
   </TabItem>
