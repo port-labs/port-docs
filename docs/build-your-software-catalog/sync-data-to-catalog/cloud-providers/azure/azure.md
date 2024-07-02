@@ -25,10 +25,6 @@ Our Azure integration makes it easy to fill the software catalog with data direc
 - Watch for Azure object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Use relations to create complete, easily digestible views of your Azure infrastructure inside Port.
 
-## Installation
-
-To install Port's Azure exporter, follow the [installation](./installation.md) guide.
-
 ## Getting started
 
 Continue to the [installation](./installation.md) guide to learn how to install the Azure exporter.
