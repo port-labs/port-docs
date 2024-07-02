@@ -7,7 +7,8 @@ This guide aims to demonstrate how to connect DORA Metrics to a service in Port.
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
-- Install port [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/installation) 
+- Install Port's [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/installation) 
+
 - We will use the `Github Service` blueprint that was created during the installation process.
 - Ensure you have [DORA Metrics](/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/dora-metrics/dora-metrics.md) configured in your environment.
 :::
