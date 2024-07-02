@@ -29,11 +29,6 @@ Our Azure integration makes it easy to fill the software catalog with data direc
 
 To install Port's Azure exporter, follow the [installation](./installation.md) guide.
 
-
-:::tip
-To find more actions that could be assigned to the exporter, you can use the [Azure Resource provider operation reference](https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations) and look for the resources that you want to export to Port.
-:::
-
 ## Getting started
 
 Continue to the [installation](./installation.md) guide to learn how to install the Azure exporter.

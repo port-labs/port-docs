@@ -18,12 +18,12 @@ To do the following:
 1. Enable multiple accounts for the integration.
 2. View account data.
 
-Make sure you set-up properly using our [Multiple Accounts guide](./multi_account.md)
+Make sure you set up properly using our [Multiple Accounts guide](./multi_account.md)
 :::
 
 Choose one of the following installation methods:
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
-<TabItem value="helm" label="Helm">
+<TabItem value="helm" label="Helm (Scheduled)">
 The AWS integration is deployed using Helm on you cluster.
 You can check out the Helm chart [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-ocean).
 
@@ -47,6 +47,7 @@ helm upgrade --install aws port-labs/port-ocean \
 --set port.baseUrl="https://api.getport.io"  \
 --set initializePortResources=true  \
 --set sendRawDataExamples=true  \
+--set scheduledResyncInterval=1440 \
 --set integration.identifier="my-aws"  \
 --set integration.type="aws"  \
 --set integration.eventListener.type="POLLING"  \
@@ -74,6 +75,7 @@ helm upgrade --install aws port-labs/port-ocean \
 --set port.baseUrl="https://api.getport.io"  \
 --set initializePortResources=true  \
 --set sendRawDataExamples=true  \
+--set scheduledResyncInterval=1440 \
 --set integration.identifier="my-aws"  \
 --set integration.type="aws"  \
 --set integration.eventListener.type="POLLING"  \
@@ -98,6 +100,7 @@ helm upgrade --install aws port-labs/port-ocean \
 --set port.baseUrl="https://api.getport.io"  \
 --set initializePortResources=true  \
 --set sendRawDataExamples=true  \
+--set scheduledResyncInterval=1440 \
 --set integration.identifier="my-aws"  \
 --set integration.type="aws"  \
 --set integration.eventListener.type="POLLING"  \
@@ -107,7 +110,7 @@ helm upgrade --install aws port-labs/port-ocean \
 ```
 
   </TabItem>
-  <TabItem value="terraform" label="Terraform">
+  <TabItem value="terraform" label="Terraform (Real Time)">
   The AWS integration is deployed using Terraform on AWS ECS cluster service.  
   It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
@@ -195,7 +198,7 @@ The AWS integration uses the following AWS infrastructure:
    </center>
 </details>
 </TabItem>
-<TabItem value="on-prem" label="On Premise">
+<TabItem value="on-prem" label="On Premise (Once)">
 
 ## Prerequisites
 
