@@ -20,8 +20,6 @@ For your first deployment of the GCP exporter, we recommend starting with the He
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm ( Scheduled )">  
 
-# Helm installation
-
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
 1. Creating a service account.
@@ -65,8 +63,6 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 </TabItem>
 <TabItem value="on-prem" label="On Premise">
 
-# Docker installation
-
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
 1. Creating a service account.
@@ -106,8 +102,6 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 
 </TabItem>
 <TabItem value="terraform" label="Terraform ( Real Time Events )">  
-
-# Terraform installation
 
 The GCP integration is deployed using Terraform on Google Cloud Cloud Run.  
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
