@@ -76,7 +76,7 @@ To install the integration using ArgoCD, follow these steps:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-statuspage-integration` in your git repository with the content:
 
-:::note
+:::note Replace the placeholder
 Remember to replace the placeholder for `STATUSPAGE_API_KEY`.
 :::
 ```yaml showLineNumbers
@@ -94,14 +94,14 @@ integration:
 <br/>
 
 2. Install the `my-ocean-statuspage-integration` ArgoCD Application by creating the following `my-ocean-statuspage-integration.yaml` manifest:
-:::note
+:::note Replace the placeholders
 Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
 
 Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
 :::
 
 <details>
-  <summary>ArgoCD Application</summary>
+  <summary>ArgoCD Application (Click to exapnd)</summary>
 
 ```yaml showLineNumbers
 apiVersion: argoproj.io/v1alpha1
@@ -161,7 +161,7 @@ kubectl apply -f my-ocean-statuspage-integration.yaml
 
 This workflow will run the Statuspage integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
+:::warning Real Time Updates in Port
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
 :::
 
@@ -200,10 +200,10 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Statuspage integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
+:::tip Jenkins Agent capabilities
 Your Jenkins agent should be able to run docker commands.
 :::
-:::warning
+:::warning Real Time Updates in Port
 If you want the integration to update Port in real time using webhooks you should use
 the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
@@ -462,7 +462,7 @@ Examples of blueprints and the relevant integration configurations:
 ### Page
 
 <details>
-<summary>Page blueprint</summary>
+<summary><b>Page blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -596,7 +596,7 @@ Examples of blueprints and the relevant integration configurations:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -636,7 +636,7 @@ resources:
 ### Component Group
 
 <details>
-<summary>Component Group blueprint</summary>
+<summary><b>Component Group blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -684,7 +684,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -713,7 +713,7 @@ resources:
 ### Component
 
 <details>
-<summary>Component blueprint</summary>
+<summary><b>Component blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -801,7 +801,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -835,7 +835,7 @@ resources:
 ### Incident
 
 <details>
-<summary>Incident blueprint</summary>
+<summary><b>Incident blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1031,7 +1031,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -1079,7 +1079,7 @@ resources:
 ### Incident Update
 
 <details>
-<summary>Incident Update blueprint</summary>
+<summary><b>Incident Update blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1188,7 +1188,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -1228,7 +1228,7 @@ This section includes a sample response data from Statuspage. In addition, it in
 Here is an example of the payload structure from Statuspage:
 
 <details>
-<summary> Page response data</summary>
+<summary><b>Page response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1310,7 +1310,7 @@ Here is an example of the payload structure from Statuspage:
 </details>
 
 <details>
-<summary> Component Group response data</summary>
+<summary><b>Component Group response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1329,7 +1329,7 @@ Here is an example of the payload structure from Statuspage:
 </details>
 
 <details>
-<summary> Component response data</summary>
+<summary><b>Component response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1352,7 +1352,7 @@ Here is an example of the payload structure from Statuspage:
 </details>
 
 <details>
-<summary> Incident response data</summary>
+<summary><b>Incident response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1553,7 +1553,7 @@ Here is an example of the payload structure from Statuspage:
 </details>
 
 <details>
-<summary> Incident Update response data</summary>
+<summary><b>Incident Update response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1579,7 +1579,7 @@ Here is an example of the payload structure from Statuspage:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Page entity in Port</summary>
+<summary><b>Page entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1612,7 +1612,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary>Component Group entity in Port</summary>
+<summary><b>Component Group entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1638,7 +1638,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Component entity in Port</summary>
+<summary><b>Component entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1669,7 +1669,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Incident entity in Port</summary>
+<summary><b>Incident entity in Port (Click to respond)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1719,7 +1719,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 <details>
-<summary> Incident Update entity in Port</summary>
+<summary><b>Incident Update entity in Port (Click to expand)</b>t</summary>
 
 ```json showLineNumbers
 {
