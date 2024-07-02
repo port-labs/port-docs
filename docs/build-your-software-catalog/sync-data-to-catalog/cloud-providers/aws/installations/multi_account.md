@@ -51,6 +51,9 @@ Multiple accounts is all about bouncing between accounts using AssumeRole to get
 The integration expects the non-root account's role the be named the same (`accountReadRoleName` is the integration's configuration for this name).
 :::
 
+<!--- TODO: Update diagrams to show sts:AssumeRole permission as well as trust policy --->
+<!--- TODO: Update diagrams to show Ocean integration role assuming accountReadRoleName in other accounts directly?  --->
+
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/new_account.png' width='50%' border='1px' /> <br/><br/>
 
 ## Multiple Accounts Setup
@@ -60,6 +63,7 @@ The integration expects the non-root account's role the be named the same (`acco
 1. Name of a role in the integration's account giving it the following Policies: (This was created for you if you ran our terraform module)
    1. `arn:aws:iam::aws:policy/ReadOnlyAccess`
    2. Custom policy with `account:ListRegions` permissions
+   3. `sts:AssumeRole` on `arn:aws:iam::<root_account>:root/<organizationRoleArn>`
 
 :::tip
 You can create the custom policy using the following json:
@@ -157,7 +161,7 @@ The ARN of this role is referenced as `organizationRoleArn` in this doc.
 
 1. Go to your root-account's newly created Role
 2. Click on `Trust Relationships`
-3. Click on `Edit trust policy`, paste the following trust policy (Make sure to replace the `<non_root_account>` to your integration's non root account ID):
+3. Click on `Edit trust policy`, paste the following trust policy (Make sure to replace the `<integration_account>` to your integration's non root account ID):
 
     <details>
     <summary> Root Account Trust Policy </summary>
@@ -168,7 +172,7 @@ The ARN of this role is referenced as `organizationRoleArn` in this doc.
             {
                 "Effect": "Allow",
                 "Principal": {
-                    "AWS": "arn:aws:iam::<non_root_account>:root/<accountReadRoleName>"
+                    "AWS": "arn:aws:iam::<integration_account>:role/<accountReadRoleName>"
                 },
                 "Action": "sts:AssumeRole",
                 "Condition": {}
@@ -187,8 +191,10 @@ The ARN of this role is referenced as `organizationRoleArn` in this doc.
 2. Click on the Role created for the integration (either by you or by our terraform module).
 3. On the `Trust Relationships` tab, make sure that you have the following policy:
 
+<!--- TODO: Clarify this is actually needed. The organization role doesn't have sts:AssumeRole permission in any of its policies --->
+
     <details>
-    <summary> Root Account Trust Policy </summary>
+    <summary> Non-root Account Trust Policy </summary>
     ```json
     {
         "Version": "2012-10-17",
@@ -196,7 +202,7 @@ The ARN of this role is referenced as `organizationRoleArn` in this doc.
             {
                 "Effect": "Allow",
                 "Principal": {
-                    "AWS": "arn:aws:iam::<non_root_account>:root/<organizationRoleArn>"
+                    "AWS": "arn:aws:iam::<root_account>:role/<organizationRoleArn>"
                 },
                 "Action": "sts:AssumeRole",
                 "Condition": {}
@@ -206,15 +212,14 @@ The ARN of this role is referenced as `organizationRoleArn` in this doc.
     ```
     </details>
 
-4. Done!
+5. Done!
 
 ### Expanding to multiple accounts
 
 In order to keep adding accounts to the integration's scope, permissions must be delivered for and from each of the accounts.
 For each account you want to have, you should make sure the following applies:
 
-1. In your root-account, The additional account must in the scope of the trust policy of the `organizationRoleArn`. [Reference](#add-permissions-from-the-root-account)
-2. In your non-root account, The Role `accountReadRoleName` must exist (with the same name and permissions), with `organizationRoleArn` in it's trust policy. [Reference](#add-permissions-from-the-integrations-account)
+1. In each non-root account, The Role `accountReadRoleName` must exist (with the same name and permissions), with `accountReadRoleName` from the integration account in it's trust policy. [Reference](#add-permissions-from-the-integrations-account)
 
 ### Running the integration
 
