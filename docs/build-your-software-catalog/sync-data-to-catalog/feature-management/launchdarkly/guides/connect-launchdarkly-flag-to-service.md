@@ -7,7 +7,7 @@ This guide aims to cover how to connect a Launchdarkly `flag` to an existing ser
 :::tip Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- Ensure you have [Launchdarkly installed and configured](/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly.md#installation) in your environment.
+- Ensure you have [Launchdarkly installed and configured](/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly/launchdarkly.md#installation) in your environment.
 
 :::
 
@@ -110,5 +110,5 @@ By following these steps, you can seamlessly connect a Launchdarkly flag with an
 
 More relevant guides and examples:
 
-- [Port's Launchdarkly integration](/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly/)
+- [Port's Launchdarkly integration](/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly)
 - [Toggle Launchdarkly Feature Flag](/actions-and-automations/setup-backend/github-workflow/examples/Launchdarkly/toggle-launchdarkly-feature-flag)
