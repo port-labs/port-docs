@@ -60,7 +60,8 @@ Under the `resources` key, modify the mapping for the `service` kind by using th
 </details>
 
 What we just did was map the `DORA Metrics` to the relation between it and our `Services`.  
-Now, if our `DORA Metrics` identifier is equal to the repository id, the `metrics` will automatically be linked to it &nbsp;🎉
+Now, if our `DORA Metrics` identifier is equal to the repository id, the `metrics` will automatically be linked to it 🎉
+
 
 ![entitiesAfterServiceMapping](/img/guides/entitiesAfterServiceMapping.png)
 
