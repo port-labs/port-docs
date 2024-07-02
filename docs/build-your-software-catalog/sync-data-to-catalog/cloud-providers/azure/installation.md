@@ -186,22 +186,23 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-azure-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=60 \
-	--set integration.identifier="my-azure-integration"  \
-	--set integration.type="azure"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set "extraEnv[0].name=AZURE_CLIENT_ID"  \
-	--set "extraEnv[0].value=xxxx-your-client-id-xxxxx"  \
-	--set "extraEnv[1].name=AZURE_CLIENT_SECRET"  \
-	--set "extraEnv[1].value=xxxxxxx-your-client-secret-xxxx"  \
-	--set "extraEnv[2].name=AZURE_TENANT_ID"  \
-	--set "extraEnv[2].value=xxxx-your-tenant-id-xxxxx"  \
-	--set "extraEnv[3].name=AZURE_SUBSCRIPTION_ID"  \
-	--set "extraEnv[3].value=xxxx-your-subscription-id-xxxxx"
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set scheduledResyncInterval=60 \
+  --set integration.identifier="my-azure-integration"  \
+  --set integration.type="azure"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set "extraEnv[0].name=AZURE_CLIENT_ID"  \
+  --set "extraEnv[0].value=xxxx-your-client-id-xxxxx"  \
+  --set "extraEnv[1].name=AZURE_CLIENT_SECRET"  \
+  --set "extraEnv[1].value=xxxxxxx-your-client-secret-xxxx"  \
+  --set "extraEnv[2].name=AZURE_TENANT_ID"  \
+  --set "extraEnv[2].value=xxxx-your-tenant-id-xxxxx"  \
+  --set "extraEnv[3].name=AZURE_SUBSCRIPTION_ID"  \
+  --set "extraEnv[3].value=xxxx-your-subscription-id-xxxxx"
 ```
 
 <PortApiRegionTip/>
@@ -388,6 +389,7 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -438,6 +440,7 @@ steps:
       docker run -i --rm --platform=linux/amd64 \
           -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
           -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+          -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
           -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
           -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
           -e OCEAN__PORT__BASE_URL='https://api.getport.io' \

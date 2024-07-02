@@ -66,6 +66,7 @@ helm upgrade --install my-servicenow-integration port-labs/port-ocean \
 	--set port.clientSecret="CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
 	--set integration.identifier="my-servicenow-integration"  \
 	--set integration.type="servicenow"  \
 	--set integration.eventListener.type="POLLING"  \
@@ -252,6 +253,7 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME \
                                 -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD \
                                 -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL \
@@ -303,6 +305,7 @@ steps:
     docker run -i --rm --platform=linux/amd64 \
       -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
       -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+      -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
       -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME=$(OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME) \
       -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD=$(OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD) \
       -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL=$(OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL) \
@@ -357,6 +360,7 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_USERNAME \
         -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_PASSWORD \
         -e OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL=$OCEAN__INTEGRATION__CONFIG__SERVICENOW_URL \
