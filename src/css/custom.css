@@ -507,6 +507,10 @@ html[data-theme="dark"] .openapi-schema__list-item {
   font-size: small !important;
 }
 
+.openapi-explorer__playground-container {
+  overflow: hidden !important;
+}
+
 .openapi-explorer__playground-editor {
   zoom: 115%;
   height: 15rem !important;

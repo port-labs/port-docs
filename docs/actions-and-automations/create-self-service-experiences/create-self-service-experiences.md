@@ -55,7 +55,7 @@ Self-service actions are created and managed in the [Self-service](https://app.g
 To begin, click on the `+ New Action` button in the top right corner, then follow the steps below.
 
 :::tip Other supported methods
-Besides Port's UI, you can also create and manage self-service actions using [Port's API](/api-reference/create-an-action), or [Terraform](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_action).
+Besides Port's UI, you can also create and manage self-service actions using [Port's API](/api-reference/create-an-action-automation), or [Terraform](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_action).
 :::
 
 ### Step 1 - setup the action's frontend
