@@ -160,18 +160,18 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Actions",
+      label: "Actions & automations",
       items: [
         {
           type: "doc",
-          id: "api-reference/create-an-action",
-          label: "Create an action",
+          id: "api-reference/create-an-action-automation",
+          label: "Create an action/automation",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api-reference/get-actions",
-          label: "Get actions",
+          id: "api-reference/get-actions-automations",
+          label: "Get actions/automations",
           className: "api-method get",
         },
       ],
