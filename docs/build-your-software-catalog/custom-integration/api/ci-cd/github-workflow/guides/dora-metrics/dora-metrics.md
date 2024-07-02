@@ -181,7 +181,7 @@ httpx==0.27.0
 
 <details>
   <summary>Workflow Configuration</summary>
-:::tip
+:::tip Controlling configurations
 You can choose to run any of the metric jobs (`compute-team-metrics` or `compute-repo-metrics`) optionally. This is controlled by setting or unsetting the corresponding Port blueprint parameters in your configuration file (`dora/dora-config.json`)
 :::
 
