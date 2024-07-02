@@ -100,7 +100,7 @@ The name of this role (not the ARN) is refernced as `accountReadRoleName` in thi
 The ARN of this role is referenced as `organizationRoleArn` in this doc.
 :::
 
-1. Go into the root account $How do i find it?
+1. Go into the root account
 2. Go to `IAM -> Roles`
 3. Click on the top right `Create Role` button.
 4. Pick `AWS Account`. Click on `next`.
