@@ -40,4 +40,6 @@ The AWS integration allows you to perform extract, transform, load (ETL) on data
 
 Continue to the [installation](./installations/installation.md) guide to learn how to install the AWS integration.
 
+## Multiple accounts support
+
 To properly configure permissions for production and to enable multiple accounts collection check out our [multiple accounts guide](./installations/multi_account.md)
