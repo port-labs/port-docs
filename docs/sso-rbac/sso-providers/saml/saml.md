@@ -25,8 +25,8 @@ In order to integrate Port with a SAML SSO application, you will need to do the 
 
 If your login provider does not support metadata files, use the following information:
 
-* IdP EntityID = `https://auth.getport.io`
-* SP EntityID = The EntityDescriptor field in the XML, looks like : `urn:auth0:port-prod:{CONNECTION_NAME}` where the `{CONNECTION_NAME}` is the connection name as provided to you by Port.
-* callback URL = The AssertionConsumerService binding field in the XML, looks like: `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}` where the `{CONNECTION_NAME}` is the connection name as provided to you by Port.
+- IdP EntityID: `https://auth.getport.io`
+- SP EntityID: The EntityDescriptor field in the XML, looks like : `urn:auth0:port-prod:{CONNECTION_NAME}` where the `{CONNECTION_NAME}` is the connection name as provided to you by Port.
+- callback URL: The AssertionConsumerService binding field in the XML, looks like: `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}` where the `{CONNECTION_NAME}` is the connection name as provided to you by Port.
 
 <DocCardList/>
