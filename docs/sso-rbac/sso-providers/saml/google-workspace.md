@@ -1,7 +1,7 @@
 ---
 title: "Google Workspace"
 sidebar_position: 2
-description: Integrate Google Workspace with Port
+description: Integrate Google Workspace with Port using SAML
 ---
 
 import Image from "@theme/IdealImage";

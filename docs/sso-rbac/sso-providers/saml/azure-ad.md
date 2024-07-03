@@ -1,7 +1,7 @@
 ---
 title: "Azure-AD"
 sidebar_position: 1
-description: Integrate Azure AD with Port using SAML application
+description: Integrate Azure AD with Port using SAML
 ---
 
 # How to configure Azure AD
@@ -23,15 +23,15 @@ In order to complete the process you will need to contact us to receive the info
 
 1. Head to your Azure portal and enter the Entra ID portal.
 2. Click on `Enterprise Applications` and create a new application.
-3. Click on `Create your own application` and select "Integrate any other application you don't find in the gallery (Non-gallery)".
-4. In the getting started section, select the "Set up Single Sign On" button, and choose the SAML method.
+3. Click on `Create your own application` and select `Integrate any other application you don't find in the gallery (Non-gallery)`.
+4. In the getting started section, select the `Set up Single Sign On` button, and choose the SAML method.
 5. Under `SAML certificates` (step 3), Click the Edit button to expand the certificates section. Click the 3 dot icon next to the Active certificate, and choose `PEM certificate download`.
 
-Send the PEM certificate file along with the application ID (Which can be found in the properties tab of the application) to Port.
+Send the **PEM certificate file** along with the **application ID** (Which can be found in the properties tab of the application) to Port.
 
 After that, Port will provide you with a metadata XML file for your connection.
 
-At the top of the SAML configuration page, you can find a `upload metadata file` button. Press that one and upload the file provided to you by Port to complete the connection configuration.
+At the top of the SAML configuration page, click on the `upload metadata file` button and upload the file provided to you by Port to complete the connection configuration.
 
 ## Expose groups
 

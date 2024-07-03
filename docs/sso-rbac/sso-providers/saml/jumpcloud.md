@@ -1,7 +1,7 @@
 ---
 title: "JumpCloud"
 sidebar_position: 3
-description: Integrate JumpCloud with Port
+description: Integrate JumpCloud with Port using SAML
 ---
 
 # How to configure JumpCloud
