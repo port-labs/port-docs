@@ -1,5 +1,5 @@
 ---
-title: "Azure-AD"
+title: "Azure Active Directory (SAML)"
 sidebar_position: 1
 description: Integrate Azure AD with Port using SAML
 ---
