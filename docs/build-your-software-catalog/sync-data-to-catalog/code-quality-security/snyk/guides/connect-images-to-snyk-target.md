@@ -93,7 +93,7 @@ The JQ filters all scanned projects from these origins `[ecr, gcr, docker-hub, g
             tags: .attributes.tags
             origin: .attributes.origin
           relations:
-            snykTarget: .relationships.target.data.attributes.display_name
+            snykTarget: .relationships.target.data.id
 ```
 </details>
 
