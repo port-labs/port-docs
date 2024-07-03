@@ -17,8 +17,7 @@ This guide aims to demonstrate how to connect a service entity to its related Sn
 
 ### Create the service relation
 
-After installing the Snyk integration, your Port catalog will be synced with Snyk resources. Let's connect the Snyk target to our services to display the target used in a service.
-First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between our services and the corresponding Snyk target.
+After installing the Snyk integration, your Port catalog will be synced with Snyk resources. Let's connect the Snyk target to our services. First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between our services and the corresponding Snyk target.
 
 1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
@@ -57,7 +56,7 @@ Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, w
 
 :::tip JQ explanation
 
-The `selector.query` filters all targets from your Snyk environment that we added using Snyk's Github integration. Since the identifier of the `Service` entities themselves are the github repository names, the JQ (`.attributes.display_name | split("/") | .[1]`) splits the `display_name` attribute (in the format `account/repo`) and maps the index 1 (`repo`), which is equivalent to the service entity identifier in Port.
+The `selector.query` filters all targets from your Snyk environment that was added from Github. Since the identifier of the `Service` entities themselves are the github repository names, the JQ (`.attributes.display_name | split("/") | .[1]`) splits the `display_name` attribute (which is in the format `account/repo`) and maps the index 1 (`repo`), which is equivalent to the service entity identifier in Port.
 
 :::
 3. Resync the integration and you will see your `Service` entities connected to their Snyk targets:
