@@ -27,7 +27,7 @@ Our Azure integration makes it easy to fill the software catalog with data direc
 
 ## Installation
 
-The Azure exporter can be deployed in multiple ways, including helm, containerApp, docker and more.
+The Azure exporter can be deployed in multiple ways, including Helm, ContainerApp, Docker and more.
 
 Continue to the [installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/installation.md) guide to learn how to install the Azure exporter.
 
