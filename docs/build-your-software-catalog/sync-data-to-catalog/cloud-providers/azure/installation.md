@@ -24,7 +24,7 @@ For your first deployment of the Azure exporter, we recommend starting with the 
 
 The Azure exporter is deployed using helm on kubernetes.
 
-This way of deployment supports scheduled resyncs of the resources from Azure to Port.
+This way of deployment supports scheduled resyncs of resources from Azure to Port.
 
 <h2> Prerequisites </h2>
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
@@ -73,7 +73,7 @@ helm upgrade --install azure port-labs/port-ocean \
 
 <TabItem value="github" label="GitHub Actions">
 
-The Azure exporter is deployed using Github Actions, which supports scheduled resyncs of the resources from Azure to Port.
+The Azure exporter is deployed using Github Actions, which supports scheduled resyncs of resources from Azure to Port.
 
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 - [Azure App Registration Credentials](?ci-methods=github#azure-app-registration)
