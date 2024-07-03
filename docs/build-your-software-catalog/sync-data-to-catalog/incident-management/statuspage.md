@@ -13,7 +13,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Statuspage
 
-Our [Atlassian Statuspage](https://www.atlassian.com/software/statuspage) integration allows you to import `page`, `component_group`, `component`, `incident`, and `incident_update` resources from your Statuspage instance into Port, according to your mapping and definitions.
+Port's [Atlassian Statuspage](https://www.atlassian.com/software/statuspage) integration allows you to import `page`, `component_group`, `component`, `incident`, and `incident_update` resources from your Statuspage instance into Port, according to your mapping and definitions.
 
 ## Common use cases
 
@@ -445,15 +445,15 @@ The following resources can be used to map data from [Statuspage](https://develo
 
 ### Ingest data into Port
 
-To ingest Statuspage objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+To ingest Statuspage objects using the [integration configuration](#configuration-structure), follow the steps below:
 
-1. Go to the DevPortal Builder page.
-2. Select the Data Sources tab at the left sidebar.
-3. Click on `+ Data Source` at the top right corner.
-4. Select Statuspage under the Incident Management category.
+1. Go to the [Builder page](https://app.getport.io/dev-portal/data-model) of your portal.
+2. Select the `Data Sources` tab in the left sidebar.
+3. Click on `+ Data Source` button in the top right corner.
+4. Select `Statuspage` under the `Incident Management` category.
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Run the installation command.
-7. Click `Next` and you can view the integration configuration and update it as necessary.
+7. Click `Next`, you can view the integration configuration and update it as necessary.
 
 ## Examples
 
