@@ -1,0 +1,49 @@
+
+```json showLineNumbers
+{
+  "identifier": "clickupProject",
+  "description": "This blueprint represents a ClickUp project",
+  "title": "ClickUp Project",
+  "icon": "Clickup",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Project URL",
+        "type": "string",
+        "format": "url",
+        "description": "URL to the project in Clickup"
+      },
+      "startDate": {
+        "title": "Project start date",
+        "type": "string",
+        "format": "date-time",
+        "description": "The start date of this project"
+      },
+      "endDate": {
+        "title": "Project end date",
+        "type": "string",
+        "format": "date-time",
+        "description": "The end date of this project"
+      },
+      "totalIssues": {
+        "title": "Total Issues",
+        "type": "number",
+        "description": "The total number of issues in the project"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "team": {
+      "title": "Team",
+      "target": "clickupTeam",
+      "required": false,
+      "many": false
+    }
+  }
+}
+
+```
