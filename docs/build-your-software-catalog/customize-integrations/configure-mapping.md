@@ -145,6 +145,13 @@ After adding your example, click on the `Test mapping` button in the bottom-righ
 
 ## Mapping relations
 
+<center>
+
+<iframe width="50%" height="320" src="https://www.youtube.com/embed/ovV4bLtX78g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+<br/>
+
 You can use the mapping YAML file to set the value of a relation between entities. This is very useful when you want to automatically assign an entity to the relation of another entity using a convention of your choice.
 
 For example, say we have a `service` blueprint and a `PagerDuty Service` blueprint with a relation between them:
@@ -163,7 +170,7 @@ After ingesting all of our services and PagerDuty services, we want to connect e
 
      <img src='/img/software-catalog/customize-integrations/relationManualAssign.png' width='40%' border='1px' />
 
-1. **Option 2** - use the integration's mapping YAML. In our example, we can add an entry to the mapping of the PagerDuty integration:
+2. **Option 2** - use the integration's mapping YAML. In our example, we can add an entry to the mapping of the PagerDuty integration:
 
    - Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the PagerDuty exporter:
 
