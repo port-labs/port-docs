@@ -162,7 +162,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Snyk
 
 - [Snyk integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk)
-- [Fill catalog with container images using Snyk data](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/guides/connect-snyk-to-image)
+- [Connect images with Snyk target](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/guides/connect-images-to-snyk-target)
 - [Visualize image vulnerabilities using Snyk data](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/guides/visualize-image-vulnerability)
 
 ## Wiz
