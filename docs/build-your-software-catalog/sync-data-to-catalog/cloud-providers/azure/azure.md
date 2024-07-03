@@ -29,10 +29,10 @@ Our Azure integration makes it easy to fill the software catalog with data direc
 
 The Azure exporter can be deployed in multiple ways, including helm, containerApp, docker and more.
 
-Continue to the [installation](./installation.md) guide to learn how to install the Azure exporter.
+Continue to the [installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/installation.md) guide to learn how to install the Azure exporter.
 
 ## Ingest Azure resources
 
 The Azure exporter can retrieve all the resources supported by the [Azure Resource Manager REST API](https://learn.microsoft.com/en-us/rest/api/resources/resources/list), and export them to Port as entities of existing blueprints.
 
-For examples on how to map resources head to the [resource templates](./resource_templates/resource_templates.md) page.  
+For examples on how to map resources head to the [resource templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page.  

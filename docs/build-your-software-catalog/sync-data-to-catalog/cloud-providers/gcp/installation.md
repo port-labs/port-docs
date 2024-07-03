@@ -11,7 +11,7 @@ import GivePermissionsToNewServiceAccount from './\_give-permissions-to-new-serv
 
 The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials. 
 
-In these guides, you can install the integration in various ways, varying by the authentication method + platform you choose to run the integration on.
+In these guides, you can install the integration in various ways, according to the authentication method + platform you choose to run the integration on.
 
 :::tip First Time Installation
 For your first deployment of the GCP exporter, we recommend starting with the Helm/scheduled installation method to perform the initial data sync. Once the initial data sync is complete, you can switch to the Terraform deployment method for real-time data sync.
@@ -61,7 +61,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 <GivePermissionsToNewServiceAccount/>
 
 </TabItem>
-<TabItem value="on-prem" label="On Premise">
+<TabItem value="on-premises" label="On Premises">
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 

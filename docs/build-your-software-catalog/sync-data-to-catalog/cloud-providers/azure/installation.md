@@ -248,7 +248,7 @@ The Azure exporter uses the following Azure infrastructure:
 	- Azure Event Grid System Topic of type `Microsoft.Resources.Subscriptions`;
 	- Azure Event Grid Subscription;
 
-:::warning
+:::warning Event Grid System Topic limitation 
 Due to a limitation in Azure **only one** Event Grid system topic of type `Microsoft.Resources.Subscriptions` can be
 created per subscription, so if you already have one you'll need to pass it to the integration
 using `event_grid_system_topic_name=<your-event-grid-system-topic-name>`.
@@ -350,7 +350,7 @@ the Azure subscription has the appropriate access permissions. One of the follow
 	<img src='/img/integrations/azure-exporter/DevPortalIngestCloudProvider.png' width='70%' border='1px' /> <br/><br/>
 
 3. Edit and copy the installation command.
-	 :::tip
+	 :::tip Installation Command
 	 The installation command includes placeholders that allow you to customize the integration's configuration. For
 	 example, you can update the command and specify the `event_grid_system_topic_name` parameter if you already have one.
 
@@ -361,7 +361,7 @@ the Azure subscription has the appropriate access permissions. One of the follow
 
 	 :::
 	<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure-terraform-install.png' width='80%' border='1px' /> <br/><br/>
-	:::tip
+	:::tip Actions Permissions
 	To find more actions that could be assigned to the exporter, you can use the [Azure Resource provider operation reference](https://learn.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations) and look for the resources that you want to export to Port.
 	:::
 
@@ -369,7 +369,7 @@ the Azure subscription has the appropriate access permissions. One of the follow
 
 </TabItem>
 
-<TabItem value="on-premise" label="On-Premise (Once)">
+<TabItem value="on-prem" label="On-Prem (Once)">
 
 <h2> Prerequisites </h2>
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
@@ -380,7 +380,7 @@ the Azure subscription has the appropriate access permissions. One of the follow
 
 <h2> Installation </h2>
 
-Now that you have the Azure App Registration details, you can install the Azure exporter using docker.
+Now that you have the Azure App Registration details, you can install the Azure exporter using Docker.
 
 You should have the following information ready:
 
@@ -452,6 +452,6 @@ For real-time data ingestion, you will need to set up an Event Grid System Topic
 
 If you are using the terraform deployment method, refer to the [Azure Integration example](https://github.com/port-labs/terraform-ocean-integration-factory/blob/main/examples/azure_container_app_azure_integration/main.tf) for more information.
 
-## Further information
+## Next Steps
 
-- Refer to the [Resource Templates](resource_templates/resource_templates.md) for templates on how to map Azure resources to Port.
+- Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.

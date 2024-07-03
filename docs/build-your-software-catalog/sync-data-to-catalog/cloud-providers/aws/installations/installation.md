@@ -198,7 +198,7 @@ The AWS integration uses the following AWS infrastructure:
    </center>
 </details>
 </TabItem>
-<TabItem value="on-prem" label="On Premise (Once)">
+<TabItem value="on-prem" label="On Prem (Once)">
 
 ## Prerequisites
 

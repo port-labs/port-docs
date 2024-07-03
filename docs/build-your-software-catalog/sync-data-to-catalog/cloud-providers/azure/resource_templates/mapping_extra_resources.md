@@ -7,14 +7,14 @@ import StorageAppConfig from './storage/\_port_app_config.mdx'
 
 # Mapping Extra Resources
 
-As you've probably looked at the [Resource Templates](./resource_templates.md) page, you've noticed that the Azure Exporter supports many Azure resources, but not all of them are documented in the Examples page.
+As you've probably looked at the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page, you've noticed that the Azure Exporter supports many Azure resources, but not all of them are documented in the Resource Templates page.
 
 This page will help you understand what kind of Azure resources are supported by the Azure integration and how to map them into Port.
 
 ## Is the resource supported by the Azure Exporter?
 
 The Azure Exporter relies on the Base Azure Resource to have a `List` API by `subscription` to get all the resources of a specific type.
-If it is a resource that is not documented in the Examples page, you can map it to Port by following these steps:
+If it is a resource that is not documented in the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page, you can map it to Port by following these steps:
 
 1. Find the resource in the [Azure REST API reference](https://learn.microsoft.com/en-us/rest/api/azure/).
 2. If it's a base resource (in the format of `Microsoft.<Provider>/<resourceName>`) can be found in the type example response and in the API URL
