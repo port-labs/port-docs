@@ -5,17 +5,17 @@ description: Integrate Google Workspace with Port using SAML
 ---
 
 import Image from "@theme/IdealImage";
-import webAndMobile from "../../../../static/img/sso/google-workspace/webAndMobile.png"
-import addSamlApp from "../../../../static/img/sso/google-workspace/addSamlApp.png"
-import appNameAndIcon from "../../../../static/img/sso/google-workspace/appNameAndIcon.png"
-import urlAndCert from "../../../../static/img/sso/google-workspace/urlAndCert.png"
-import ACSandEntity from "../../../../static/img/sso/google-workspace/ACSandEntity.png"
-import SSOandCert from "../../../../static/img/sso/google-workspace/SSOandCert.png"
-import attributeMapping from "../../../../static/img/sso/google-workspace/attributeMapping.png"
-import userAccessInApp from "../../../../static/img/sso/google-workspace/userAccessInApp.png"
-import turnAccessOn from "../../../../static/img/sso/google-workspace/turnAccessOn.png"
-import loginUsingApp from "../../../../static/img/sso/google-workspace/loginUsingApp.png"
-import acsURLandEntityID from "../../../../static/img/sso/google-workspace/acsURLandEntityID.png"
+import webAndMobile from "/static/img/sso/google-workspace/webAndMobile.png"
+import addSamlApp from "/static/img/sso/google-workspace/addSamlApp.png"
+import appNameAndIcon from "/static/img/sso/google-workspace/appNameAndIcon.png"
+import urlAndCert from "/static/img/sso/google-workspace/urlAndCert.png"
+import ACSandEntity from "/static/img/sso/google-workspace/ACSandEntity.png"
+import SSOandCert from "/static/img/sso/google-workspace/SSOandCert.png"
+import attributeMapping from "/static/img/sso/google-workspace/attributeMapping.png"
+import userAccessInApp from "/static/img/sso/google-workspace/userAccessInApp.png"
+import turnAccessOn from "/static/img/sso/google-workspace/turnAccessOn.png"
+import loginUsingApp from "/static/img/sso/google-workspace/loginUsingApp.png"
+import acsURLandEntityID from "/static/img/sso/google-workspace/acsURLandEntityID.png"
 
 # How to configure Google Workspace
 
@@ -62,7 +62,7 @@ In order to complete the process you will need to contact us to receive the info
    <details>
    <summary>Port Logo</summary>
 
-   ![Port's logo](../../../../static/img/sso/general-assets/PortIcon.png)
+   ![Port's logo](/img/sso/general-assets/PortIcon.png)
 
    </details>
 
