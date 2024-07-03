@@ -17,6 +17,8 @@ import AzureAppRegistration from "./\_azure_app_registration_guide.mdx"
 For your first deployment of the Azure exporter, we recommend starting with the Helm/scheduled installation method to perform the initial data sync. Once the initial data sync is complete, you can switch to the Terraform deployment method for real-time data sync.
 :::
 
+## Installation Methods
+
 <Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="helm">
 <TabItem value="helm" label="Helm (Scheduled)" >
 
@@ -24,14 +26,14 @@ The Azure exporter is deployed using helm on kubernetes.
 
 This way of deployment supports scheduled resyncs of the resources from Azure to Port.
 
-## Prerequisites
+<h2> Prerequisites </h2>
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 - [Helm](https://helm.sh/docs/intro/install/) >= 3.0.0
 - [Azure App Registration Credentials](#azure-app-registration)
 
 <AzureAppRegistration/>
 
-## Installation
+<h2> Installation </h2>
 
 Now that you have the Azure App Registration details, you can install the Azure exporter using Helm.
 
@@ -79,7 +81,7 @@ The Azure exporter is deployed using Github Actions, which supports scheduled re
 <AzureAppRegistration/>
 
 
-## Installation
+<h2> Installation </h2>
 
 Now that you have the Azure App Registration details, you can setup the Azure exporter using Github Actions.
 
@@ -132,7 +134,7 @@ jobs:
 
 <TabItem value="argocd" label="ArgoCD">
 
-## Prerequisites
+<h2> Prerequisites </h2>
 
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 - [Azure App Registration Credentials](?ci-methods=github#azure-app-registration)
@@ -141,7 +143,7 @@ jobs:
 
 <AzureAppRegistration/>
 
-## Installation
+<h2> Installation </h2>
 
 1. Create a `values.yaml` file in `argocd/azure-integration` in your git repository with the content:
 
@@ -237,7 +239,7 @@ Multiple ways to deploy the Azure exporter could be found in the Azure Integrati
 example [README](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest/examples/azure_container_app_azure_integration)
 :::
 
-## Azure infrastructure used by the Azure exporter
+<h2> Azure infrastructure used by the Azure exporter </h2>
 
 The Azure exporter uses the following Azure infrastructure:
 
@@ -255,13 +257,13 @@ In case a system topic already exists and is not provided to the deployment of t
 to not being able to create a new one.
 :::
 
-## Prerequisites
+<h2> Prerequisites </h2>
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) >= 2.26.0
 - [Permissions](#permissions)
 
-## Permissions
+<h2> Permissions </h2>
 
 In order to successfully deploy the Azure exporter, it's crucial to ensure that the user who deploys the integration in
 the Azure subscription has the appropriate access permissions. One of the following permission assignments are required:
@@ -369,14 +371,14 @@ the Azure subscription has the appropriate access permissions. One of the follow
 
 <TabItem value="on-premise" label="On-Premise (Once)">
 
-## Prerequisites
+<h2> Prerequisites </h2>
 - [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Azure App Registration Credentials](?installation-methods=on-premise#azure-app-registration)
 
 <AzureAppRegistration/>
 
-## Installation
+<h2> Installation </h2>
 
 Now that you have the Azure App Registration details, you can install the Azure exporter using docker.
 
@@ -427,25 +429,29 @@ ghcr.io/port-labs/port-ocean-azure:latest
 
 </Tabs>
 
-## Multiple subscriptions setup
+## FAQ: Multiple Subscriptions Support
 
-To configure the Azure exporter to ingest resources from other subscriptions, you'll need to assign permissions to the
-managed identity running the integration in the subscriptions which you wish to ingest resources from.
+<h3> How do I configure the Azure exporter to ingest resources from multiple subscriptions? </h3>
 
-1. Head to the Azure portal and navigate to the subscription you want to ingest resources from.
-2. In the subscription's `Access control (IAM)` section, go to the Role assignment tab and choose the appropriate role
-	 for the managed identity responsible for the integration.
-3. Assign this role to the managed identity associated with the integration.
-4. Repeat this process for each subscription you wish to include.
+To configure the Azure exporter to ingest resources from other subscriptions, follow these steps:
 
-For real-time data ingestion from multiple subscriptions, set up an Event Grid System Topic and an Event Grid
-Subscription in each subscription you want to include, connecting them to the Azure exporter.
+1. **Navigate to the Subscription:**
+   - Go to the Azure portal and select the subscription you want to ingest resources from.
 
-For a detailed example using Terraform to configure the Event Grid System Topic and Event Grid Subscription, based on
-the installation output of the Azure exporter, refer
-to [this example](https://github.com/port-labs/terraform-ocean-integration-factory/blob/main/examples/azure_container_app_azure_integration/main.tf))
+2. **Assign Permissions:**
+   - In the subscription's `Access control (IAM)` section, go to the Role assignment tab.
+   - Choose the appropriate role for the managed identity responsible for the integration.
+   - Assign this role to the managed identity associated with the integration.
+
+3. **Repeat the Process:**
+   - Repeat the above steps for each subscription you wish to include.
+
+<h3> How do I set up real-time data ingestion from multiple subscriptions? </h3>
+
+For real-time data ingestion, you will need to set up an Event Grid System Topic and an Event Grid Subscription in each subscription you want to ingest resources from. The system topic should be of type `Microsoft.Resources.Subscriptions`.
+
+If you are using the terraform deployment method, refer to the [Azure Integration example](https://github.com/port-labs/terraform-ocean-integration-factory/blob/main/examples/azure_container_app_azure_integration/main.tf) for more information.
 
 ## Further information
 
-- Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint
-	definitions.
+- Refer to the [Resource Templates](resource_templates/resource_templates.md) for templates on how to map Azure resources to Port.

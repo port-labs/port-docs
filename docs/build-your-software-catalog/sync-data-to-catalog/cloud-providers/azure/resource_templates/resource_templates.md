@@ -7,7 +7,7 @@ import ResourceGroupAppConfig from './resource_group/\_port_app_config.mdx'
 import CloudResourceBlueprint from './cloud_resource/\_cloud_resource_blueprint.mdx'
 import CloudResourceAppConfig from './cloud_resource/\_port_app_config.mdx'
 
-# Examples
+# Resource Templates
 
 This page contains the base examples for mapping Azure resources to Port.
 
@@ -86,6 +86,6 @@ In certain scenarios you may want to model your Azure resources in a more detail
 For example, you may want to model a Storage Account and its Containers separately.
 
 
-For these cases, head to the [Advanced Examples](./advanced.md) page to learn how to model your Azure resources in a more detailed way.
+For these cases, head to the [Advanced Resource templates](./advanced.md) page to learn how to model your Azure resources in a more detailed way.
 
 

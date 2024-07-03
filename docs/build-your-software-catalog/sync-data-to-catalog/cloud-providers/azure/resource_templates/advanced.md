@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Advanced Examples
+# Advanced Templates
 
 import StorageAccountBlueprint from './storage/\_storage_account_blueprint.mdx'
 import StorageContainerBlueprint from './storage/\_storage_container_blueprint.mdx'

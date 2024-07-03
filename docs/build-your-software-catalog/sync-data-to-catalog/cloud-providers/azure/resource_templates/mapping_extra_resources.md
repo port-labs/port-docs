@@ -7,7 +7,7 @@ import StorageAppConfig from './storage/\_port_app_config.mdx'
 
 # Mapping Extra Resources
 
-As you've probably looked at the [Examples](./examples.md) page, you've noticed that the Azure Exporter supports many Azure resources, but not all of them are documented in the Examples page.
+As you've probably looked at the [Resource Templates](./resource_templates.md) page, you've noticed that the Azure Exporter supports many Azure resources, but not all of them are documented in the Examples page.
 
 This page will help you understand what kind of Azure resources are supported by the Azure integration and how to map them into Port.
 
@@ -18,9 +18,11 @@ If it is a resource that is not documented in the Examples page, you can map it 
 
 1. Find the resource in the [Azure REST API reference](https://learn.microsoft.com/en-us/rest/api/azure/).
 2. If it's a base resource (in the format of `Microsoft.<Provider>/<resourceName>`) can be found in the type example response and in the API URL
-   ![Storage Account Type](/img/integrations/azure-exporter/StorageAccountTypeInAPIURL.png)
+
+  <img src='/img/integrations/azure-exporter/StorageAccountTypeInAPIURL.png' width='80%' border='1px' /> <br/><br/>
    - If it has a List API by subscription it will be supported by the Azure Exporter.
-     ![Storage Account List API](/img/integrations/azure-exporter/StorageAccountListAPIIsValid.png)
+    <img src='/img/integrations/azure-exporter/StorageAccountListAPIIsValid.png' width='80%' border='1px' /> <br/><br/>
+
 3. If it's an extension resource (in the format of `Microsoft.<Provider>/<resourceName>/<extensionName>`) such as `Microsoft.Storage/storageAccounts/blobServices/containers`.
    - Then, if the base resource is supported by the Azure Exporter, the extension resource will be supported as well.
 
@@ -156,7 +158,7 @@ Create an integration configuration for the resource. The integration configurat
     ```yaml showLineNumbers
     apiVersion: "2023-01-01"
     ```
-    ![Storage Account API Version](/img/integrations/azure-exporter/StorageAccountAPIVersion.png)
+    <img src='/img/integrations/azure-exporter/StorageAccountAPIVersion.png' width='80%' border='1px' /> <br/><br/>
 
 - The `port` field describes the Port entity to be created from the Azure resource.
 

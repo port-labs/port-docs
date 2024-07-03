@@ -23,8 +23,16 @@ Our Azure integration makes it easy to fill the software catalog with data direc
 
 - Map resources from your Azure subscriptions, such as **AKS**, **Storage Accounts**, **Container Apps**, **Load Balancers** and other Azure resources.
 - Watch for Azure object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Use relations to create complete, easily digestible views of your Azure infrastructure inside Port.
+- Configure relations to other resources in your organization to create complete, easily digestible views of your resources and their relationships inside Port.
 
-## Getting started
+## Installation
+
+The Azure exporter can be deployed in multiple ways, including helm, containerApp, docker and more.
 
 Continue to the [installation](./installation.md) guide to learn how to install the Azure exporter.
+
+## Ingest Azure resources
+
+The Azure exporter can retrieve all the resources supported by the [Azure Resource Manager REST API](https://learn.microsoft.com/en-us/rest/api/resources/resources/list), and export them to Port as entities of existing blueprints.
+
+For examples on how to map resources head to the [resource templates](./resource_templates/resource_templates.md) page.  
