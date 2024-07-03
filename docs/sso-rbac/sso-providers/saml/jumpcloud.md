@@ -25,11 +25,11 @@ In order to complete the process you will need to contact Port to deliver and re
 1. In the Admin Portal, go to User Authentication -> SSO.
 2. Click `Add New Application`.
 
-![JumpCloud new application wizard](../../../../static/img/sso/jumpcloud/JumpcloudAddApplication.png)
+![JumpCloud new application wizard](/img/sso/jumpcloud/JumpcloudAddApplication.png)
 
 3. In the search box type **Auth0**:
 
-![JumpCloud new application](../../../../static/img/sso/jumpcloud/JumpcloudAuth0Search.png)
+![JumpCloud new application](/img/sso/jumpcloud/JumpcloudAuth0Search.png)
 
 4. Define the initial Port application settings:
 
@@ -39,22 +39,22 @@ In order to complete the process you will need to contact Port to deliver and re
    <details>
    <summary>Port Logo</summary>
 
-   ![Port's logo](../../../../static/img/sso/general-assets/PortLogoLarge.png)
+   ![Port's logo](/img/sso/general-assets/PortLogoLarge.png)
 
    </details>
 
    3. **(Optional)** In the SSO tab, change the default IDP URL suffix.
-      ![JumpCloud initial new application](../../../../static/img/sso/jumpcloud/JumpcloudNewSSO.png)
+      ![JumpCloud initial new application](/img/sso/jumpcloud/JumpcloudNewSSO.png)
 
 Click `activate`.
 
 5. Click on the newly created application.
 
    1. Download the IDP Certificate:
-      ![Jumpcloud download certificate](../../../../static/img/sso/jumpcloud/JumpcloudDownloadCert.png)
+      ![Jumpcloud download certificate](/img/sso/jumpcloud/JumpcloudDownloadCert.png)
 
    2. Copy the `IDP URL` from the SSO tab
-      ![Jumpcloud IDP URL](../../../../static/img/sso/jumpcloud/JumpcloudIDPUrl.png)
+      ![Jumpcloud IDP URL](/img/sso/jumpcloud/JumpcloudIDPUrl.png)
 
 6. Via intercom/slack, provide Port with the downloaded `certificate.pem` file, and the copied `IDP URL`.
 
@@ -76,7 +76,7 @@ In the Port app, go to the `SSO` menu and follow these steps:
 
 3. Under `ACS URLs`, set: `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
 
-![Jumpcloud SSO configuration](../../../../static/img/sso/jumpcloud/JumpcloudConfigureSSO.png)
+![Jumpcloud SSO configuration](/img/sso/jumpcloud/JumpcloudConfigureSSO.png)
 
 Click `Save`.
 
@@ -97,7 +97,7 @@ Make sure the switch next to the `email` field is set to `on`.
 6. Set the `Service Provider Attribute Name` to `family_name`
 7. In the `Value` field enter the value: `lastname`
 
-![JumpCloud user attributes](../../../../static/img/sso/jumpcloud/JumpcloudAttributes.png)
+![JumpCloud user attributes](/img/sso/jumpcloud/JumpcloudAttributes.png)
 
 
 ### Step #4: Add `email_verified` constant attribute to the Port App
@@ -109,7 +109,7 @@ The use of Auth0 requires that JumpCloud passes to Port an `email_verified` fiel
 3. Set the `Service Provider Attribute Name` to `email_verified`
 4. In the `Value` field enter the value: `true`
 
-![JumpCloud email verified attribute](../../../../static/img/sso/jumpcloud/JumpCloudEmailVerified.png)
+![JumpCloud email verified attribute](/img/sso/jumpcloud/JumpCloudEmailVerified.png)
 
 :::note
 It is also possible to manually change the value of the `email_verified` field to `true` for each user that requires access to Port in your organization. However, granting access manually to a large number of users is not scalable.
@@ -120,13 +120,13 @@ It is also possible to manually change the value of the `email_verified` field t
 1. In the Port app, go to the `User Groups` tab.
 2. Select the user groups you want to expose the Port app to:
 
-   ![JumpCloud add user groups](../../../../static/img/sso/jumpcloud/JumpcloudAddUserGroups.png)
+   ![JumpCloud add user groups](/img/sso/jumpcloud/JumpcloudAddUserGroups.png)
 
 3. Click `Save`.
 
 After completing these steps, users with roles that the Port app was assigned to, will see the Port app in their Portal and upon clicking it, will be logged in to Port:
 
-![JumpCloud Portal With Port App](../../../../static/img/sso/jumpcloud/JumpcloudPortApplication.png)
+![JumpCloud Portal With Port App](/img/sso/jumpcloud/JumpcloudPortApplication.png)
 
 ---
 
@@ -147,6 +147,6 @@ To allow automatic Groups Groups support in Port, please follow these steps:
 
 3. Set the group attributes' name: `memberOf`
 
-![JumpCloud Group configuration](../../../../static/img/sso/jumpcloud/JumpcloudGroupConfig.png)
+![JumpCloud Group configuration](/img/sso/jumpcloud/JumpcloudGroupConfig.png)
 
 4. Click `Save`.
