@@ -1,0 +1,18 @@
+```json showLineNumbers
+{
+  "blueprint": "clickupIssue",
+  "entity": {
+    "identifier": ".id",
+    "title": ".name",
+    "properties": {
+      "url": ".url",
+      "status": ".status.status",
+      "assignee": ".assignees[0].user.email",
+      "creator": ".creator.email",
+      "priority": ".priority.priority",
+      "created": ".date_created",
+      "updated": ".date_updated"
+    }
+  }
+}
+```
