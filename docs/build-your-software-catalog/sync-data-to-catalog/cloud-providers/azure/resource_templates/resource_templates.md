@@ -7,7 +7,7 @@ import ResourceGroupAppConfig from './resource_group/\_port_app_config.mdx'
 import CloudResourceBlueprint from './cloud_resource/\_cloud_resource_blueprint.mdx'
 import CloudResourceAppConfig from './cloud_resource/\_port_app_config.mdx'
 
-# Examples
+# Resource Templates
 
 This page contains the base examples for mapping Azure resources to Port.
 
@@ -77,7 +77,7 @@ Here are the API references we used to create those blueprints and app config:
 The resources in this page are only a few of the resources that the Azure Exporter supports.
 
 
-If the resources you want to ingest into Port do not appear in these examples, you can head to the [Mapping Extra Resources](./mapping_extra_resources.md) page to learn about all of the kinds of Azure resources that are supported by the Azure integration and how to map them into Port.
+If the resources you want to ingest into Port do not appear in these examples, you can head to the [Mapping Extra Resources](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/mapping_extra_resources.md) page to learn about all of the kinds of Azure resources that are supported by the Azure integration and how to map them into Port.
 
 ## Advanced Use Cases
 
@@ -86,6 +86,6 @@ In certain scenarios you may want to model your Azure resources in a more detail
 For example, you may want to model a Storage Account and its Containers separately.
 
 
-For these cases, head to the [Advanced Examples](./advanced.md) page to learn how to model your Azure resources in a more detailed way.
+For these cases, head to the [Advanced Resource templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/advanced.md) page to learn how to model your Azure resources in a more detailed way.
 
 
