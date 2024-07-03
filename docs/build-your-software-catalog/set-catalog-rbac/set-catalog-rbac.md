@@ -41,6 +41,107 @@ It is possible to assign global permissions controls on **entities**:
 
 <Tabs groupId="permission" defaultValue="create">
 
+<TabItem value="read" label="Read">
+
+To assign permissions to read (view) an entity, give the desired persona permissions under the `read` object as shown below:
+
+<Tabs groupId="target" defaultValue="role">
+
+<TabItem value="role" label="Role">
+
+To give `read` permissions to another role, add it to the `roles` array:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "read": {
+      // highlight-next-line
+      "roles": ["my-blueprint-moderator", "Admin", "my-role"], // added my-role
+      "users": [],
+      "teams": [],
+      "ownedByTeam": false
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="user" label="User">
+
+To give `read` permissions to another user, add it to the `users` array:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "register": {
+      "roles": ["my-blueprint-moderator", "Admin"],
+      // highlight-next-line
+      "users": ["my-user@example.com"], // added my-user@example.com
+      "teams": [],
+      "ownedByTeam": false
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="team" label="Team">
+
+To give `read` permissions to another team, add it to the `teams` array:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "register": {
+      "roles": ["my-blueprint-moderator", "Admin"],
+      "users": [],
+      // highlight-next-line
+      "teams": ["my-team"], // added my-team
+      "ownedByTeam": false
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="ownership" label="Ownership">
+
+<OwnershipTemplate />
+
+To give `read` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+
+```json showLineNumbers
+{
+  "entities": {
+    ... other permissions
+    "register": {
+      "roles": ["my-blueprint-moderator", "Admin"],
+      "users": [],
+      "teams": [],
+      // highlight-next-line
+      "ownedByTeam": true // changed from false
+    }
+  }
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+:::tip Affected components
+Setting read permissions on entities takes effect in the API level, meaning that any component in Port that fetches entities will be affected by these permissions.  
+For example, a table widget that displays entities will only show entities that the user has read permissions for.
+:::
+
+</TabItem>
+
 <TabItem value="create" label="Create (register)">
 
 To assign permissions to create an entity, give the desired persona permissions under the `register` object as shown below:
