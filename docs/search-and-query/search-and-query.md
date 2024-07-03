@@ -170,6 +170,7 @@ ___
 {label: "Related To", value: "relatedTo"},
 {label: "Required", value: "required"},
 {label: "Direction", value: "direction"},
+{label: "Sub Operator", value: "subOperator"},
 ]}>
 
 <TabItem value="relatedTo">
@@ -184,6 +185,16 @@ The `relatedTo` operator will return all entities that have a relationship with 
 }
 ```
 
+The operator also supports multiple related entities as the searched value:
+
+```json showLineNumbers
+{
+  "operator": "relatedTo",
+  "blueprint": "myBlueprint",
+  "value": ["myFirstEntity", "mySecondEntity"]
+}
+```
+The default comparison sub operator in `'in'`, check out the <b>Sub Operator</b> tab for more info.
 </TabItem>
 
 <TabItem value="required">
@@ -392,6 +403,24 @@ And the result shall be:
 
 </details>
 
+</TabItem>
+
+<TabItem value="subOperator">
+
+The `relatedTo` operator support an array of related entities identifiers as a search value.<br/>
+For that there is the `subOperator` property which defines the comparison operator between the searched entities and the search value.
+
+```json showLineNumbers
+{
+  "operator": "relatedTo",
+  "blueprint": "myBlueprint",
+  "value": ["myEntity", "mySecondEntity"],
+  "subOperator": "in"
+}
+```
+
+Current supported sub operators are `'in'` and `'notIn'`.<br/>
+The default value is `'in'`.
 </TabItem>
 
 </Tabs>
