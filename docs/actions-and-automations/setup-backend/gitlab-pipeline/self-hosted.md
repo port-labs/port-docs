@@ -58,10 +58,29 @@ You can load multiple trigger tokens, for different groups and projects in your 
 
 Done! **Port's execution agent** is now running in your environment and will trigger any GitLab pipeline that you have configured.
 
-## Control the payload
+### Control the payload
 
 The Port agent allows you to control the payload that is sent to the GitLab API when triggering a pipeline.
 
 By customizing the payload you can control which data is sent to GitLab, and ensure that your backend has the information it needs to execute the pipeline correctly.
 
 See the [Control the payload](/actions-and-automations/setup-backend/webhook/port-execution-agent/control-the-payload.md) page for more information and instructions.
+
+## Define the backend
+
+Once the agent is installed, we can finish setting up the backend in Port. 
+
+1. Make sure that `Run Gitlab Pipeline` is selected as the backend type.
+2. Now all we need is to provide the following details:
+
+   <img src="/img/create-self-service-experiences/setup-backend/gitlab/gitlab-backend.png" width='60%' border='1px' />
+    <br/>
+- **Project** - the name of the GitLab project.  
+ The name can be obtained from your project URL: `https://gitlab.com/GROUP/SUBGROUP/PROJECT`.
+- **Group/subgroup** - the group and/or subgroup that the project belongs to.  
+ Can also be obtained from the project URL: `https://gitlab.com/GROUP/SUBGROUP/PROJECT`.
+- **Default ref** - the branch/tag name we want the action/automation to use.
+
+:::tip Create action/automation via API
+If you wish to create a self-service action or automation via [Port's API](https://docs.getport.io/api-reference/create-an-action-automation), choose the `gitlab` backend type under the `invocationMethod` object.
+:::
