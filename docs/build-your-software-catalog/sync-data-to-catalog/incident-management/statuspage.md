@@ -449,7 +449,7 @@ To ingest Statuspage objects using the [integration configuration](#configuratio
 
 1. Go to the [Builder page](https://app.getport.io/dev-portal/data-model) of your portal.
 2. Select the `Data Sources` tab in the left sidebar.
-3. Click on `+ Data Source` button in the top right corner.
+3. Click on the `+ Data Source` button in the top right corner.
 4. Select `Statuspage` under the `Incident Management` category.
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Run the installation command.
