@@ -21,13 +21,13 @@ After installing the Snyk integration, your Port catalog will be synced with Sny
 
 1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
-<img src='/img/guides/githubServiceCreateRelation.png' width='60%' border="1px" />
+<img src='/img/guides/githubServiceCreateRelation.png' width='40%' border="1px" />
 
 <br/><br/>
 
 2. Fill out the form as shown below, then click `Create`:
 
-<img src='/img/guides/githubServiceEditSnykRelation.png' width='60%' border="1px"/>
+<img src='/img/guides/githubServiceEditSnykRelation.png' width='40%' border="1px"/>
 
 <br/><br/>
 
