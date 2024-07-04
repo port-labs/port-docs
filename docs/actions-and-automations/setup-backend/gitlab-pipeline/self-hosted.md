@@ -9,6 +9,15 @@ import CredentialsGuide from "/docs/build-your-software-catalog/custom-integrati
 
 If you use the self-hosted version of GitLab in your organization, you will need to use the Port execution agent to trigger your pipelines from Port.  
 
+<img src="/img/self-service-actions/setup-backend/gitlab-pipeline/gitlab-pipeline-agent-architecture.jpg" width='90%' border='1px' />   
+<br/><br/>
+
+The steps shown in the image above are as follows:
+
+1. Port publishes an invoked `action` message containing the pipeline details to a Kafka topic.
+2. A secure topic (`ORG_ID.runs`) holds all the action invocations.
+3. Port's execution agent pulls the new trigger event from your Kafka topic, and triggers your GitLab Pipeline.
+
 This page will introduce the agent and guide you through the installation and configuration processes.
 
 ## Prerequisites
@@ -58,15 +67,7 @@ You can load multiple trigger tokens, for different groups and projects in your 
 
 Done! **Port's execution agent** is now running in your environment and will trigger any GitLab pipeline that you have configured.
 
-### Control the payload
-
-The Port agent allows you to control the payload that is sent to the GitLab API when triggering a pipeline.
-
-By customizing the payload you can control which data is sent to GitLab, and ensure that your backend has the information it needs to execute the pipeline correctly.
-
-See the [Control the payload](/actions-and-automations/setup-backend/webhook/port-execution-agent/control-the-payload.md) page for more information and instructions.
-
-## Define the backend
+## Configure the backend
 
 Once the agent is installed, we can finish setting up the backend in Port. 
 
@@ -84,3 +85,11 @@ Once the agent is installed, we can finish setting up the backend in Port.
 :::tip Create action/automation via API
 If you wish to create a self-service action or automation via [Port's API](https://docs.getport.io/api-reference/create-an-action-automation), choose the `gitlab` backend type under the `invocationMethod` object.
 :::
+
+### Configure the payload
+
+The payload is the data sent to the webhook URL every time the action/automation is executed. It is defined by the action/automation creator and can include any data that is needed by the GitLab pipeline.
+
+When using the `GitLab` backend, the payload is defined under the `pipelineVariables` field.  
+- For more information about defining a payload for **self-service actions**, click [here](/actions-and-automations/create-self-service-experiences/setup-the-backend/#define-the-actions-payload).
+- For more information about defining a payload for **automations**, click [here](/actions-and-automations/define-automations/setup-action#define-the-payload).

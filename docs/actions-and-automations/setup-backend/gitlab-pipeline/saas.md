@@ -19,7 +19,8 @@ When using the webhook backend, you need to configure several parameters:
 <br/><br/>
 
 - Since we are using GitLab SaaS, the `Use self-hosted agent` option should be set to `No`.
-- Read more about the other parameters in the [webhook backend](/actions-and-automations/setup-backend/webhook/) page.
+- Read about the `Request type` in the [webhook backend](/actions-and-automations/setup-backend/webhook/#request-type---sync-vs-async) page.
+- The `Method` field should be set to `POST`.
 - The `Endpoint URL` field should be filled with the webhook URL you create in GitLab (see below).
 
 :::tip Create action/automation via API
@@ -53,3 +54,11 @@ As you can see, there are two parameters that need to be filled in:
 ### Webhook security
 
 For increased security, you can [validate the webhook signature](/actions-and-automations/setup-backend/webhook/signature-verification/).
+
+### Configure the payload
+
+The payload is the data sent to the webhook URL every time the action/automation is executed. It is defined by the action/automation creator and can include any data that is needed by the GitLab pipeline.
+
+When using the `webhook` backend, the payload is defined under the `headers` and `body` fields.  
+- For more information about defining a payload for **self-service actions**, click [here](/actions-and-automations/create-self-service-experiences/setup-the-backend/#define-the-actions-payload).
+- For more information about defining a payload for **automations**, click [here](/actions-and-automations/define-automations/setup-action#define-the-payload).
