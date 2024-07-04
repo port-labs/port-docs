@@ -193,7 +193,7 @@ The operator also supports multiple related entities as the searched value:
   "value": ["myFirstEntity", "mySecondEntity"]
 }
 ```
-This search will return all the entities that related to one of the identifiers in the value array.
+This query will return all of the entities that are related to one or more of the identifiers in the value array.
 </TabItem>
 
 <TabItem value="required">
