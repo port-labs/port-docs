@@ -135,6 +135,8 @@ To give `read` permissions to members of the owning team of an entity, change th
 
 </Tabs>
 
+**Note** that assigning `create`, `update`, or `delete` permissions to a user or team will automatically grant them `read` permissions as well, as they need to be able to see the entities they are allowed to interact with. 
+
 :::tip Affected components
 Setting `read` permissions on entities takes effect at the API level, meaning that any component in Port that fetches entities will be affected by these permissions.  
 For example, a table widget that displays entities will only show entities that the user has read permissions for.
