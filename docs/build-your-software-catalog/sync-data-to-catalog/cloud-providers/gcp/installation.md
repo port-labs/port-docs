@@ -9,18 +9,16 @@ import GivePermissionsToNewServiceAccount from './\_give-permissions-to-new-serv
 
 # Installation
 
-The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials. In these guides, you can install the integration in various ways, varying by the authentication method + platform. For Production setup, we recommend using the Terraform Installation method.
+The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials. 
 
-Choose one of the following installation methods:
+In these guides, you can install the integration in various ways, according to the authentication method + platform you choose to run the integration on.
 
-1. Helm- For initial setup
-2. Docker- for running the integration only once
-3. Terraform- For Having live events
+:::tip First Time Installation
+For your first deployment of the GCP exporter, we recommend starting with the Helm/scheduled installation method to perform the initial data sync. Once the initial data sync is complete, you can switch to the Terraform deployment method for real-time data sync.
+:::
 
-<Tabs groupId="installation-platforms" queryString="installation-platforms">
+<Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
 <TabItem value="helm" label="Helm ( Scheduled )">  
-
-# Helm installation
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
@@ -51,6 +49,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    --set port.baseUrl="https://api.getport.io"  \
    --set initializePortResources=true  \
    --set sendRawDataExamples=true  \
+   --set scheduledResyncInterval=1440 \
    --set integration.identifier="ocean-gcp-integration"  \
    --set integration.type="gcp"  \
    --set integration.eventListener.type="POLLING"  \
@@ -62,9 +61,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 <GivePermissionsToNewServiceAccount/>
 
 </TabItem>
-<TabItem value="on-prem" label="On Premise">
-
-# Docker installation
+<TabItem value="on-premises" label="On Premises">
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
@@ -105,8 +102,6 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 
 </TabItem>
 <TabItem value="terraform" label="Terraform ( Real Time Events )">  
-
-# Terraform installation
 
 The GCP integration is deployed using Terraform on Google Cloud Cloud Run.  
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
