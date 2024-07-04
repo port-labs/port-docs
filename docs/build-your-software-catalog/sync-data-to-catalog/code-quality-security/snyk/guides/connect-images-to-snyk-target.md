@@ -1,6 +1,6 @@
 # Connect images with Snyk target
 
-Snyk API provides information about scanned images stored in container registries. This guide demonstrates how to enrich your Port software catalog by importing image data from Snyk and establishing relationships between these images and their corresponding Snyk targets.
+Snyk's API provides information about scanned images stored in container registries. This guide demonstrates how to enrich your Port software catalog by importing image data from Snyk and establishing relationships between these images and their corresponding Snyk targets.
 
 ## Prerequisites
 - Ensure you have the [Snyk ocean integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/) installed
