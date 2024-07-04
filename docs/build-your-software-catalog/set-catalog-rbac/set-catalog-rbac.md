@@ -136,7 +136,7 @@ To give `read` permissions to members of the owning team of an entity, change th
 </Tabs>
 
 :::tip Affected components
-Setting read permissions on entities takes effect in the API level, meaning that any component in Port that fetches entities will be affected by these permissions.  
+Setting `read` permissions on entities takes effect at the API level, meaning that any component in Port that fetches entities will be affected by these permissions.  
 For example, a table widget that displays entities will only show entities that the user has read permissions for.
 :::
 
