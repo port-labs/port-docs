@@ -355,7 +355,7 @@ jobs:
 
 <br/>
 
-5. Install Port's Gitlab agent by following our guide [here](/actions-and-automations/setup-backend/gitlab-pipeline/Installation).
+5. Install Port's Gitlab agent by following our guide [here](/actions-and-automations/setup-backend/gitlab-pipeline/self-hosted).
 
 :::info
 Make sure to use your Pipeline Trigger Token while installing Port's Gitlab agent.
