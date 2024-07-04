@@ -18,13 +18,13 @@ This page will help you understand what kind of AWS resources are supported by t
 
 The AWS Integration is relying on AWS's Cloud Control API. That means:
 
-- Does the type of resource I want to injest listed [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html)?
-  - If Yes, It's supported!
+- Does the type of resource I want to ingest listed [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html)?
+- If Yes, It's supported!
   - If not, please contact us, or [add the support to the integration yourself](https://github.com/port-labs/ocean/tree/main/integrations/aws)
 
 ## Mapping the resource to Port
 
-After you've found the resource in the [Cloud Asset Supported Resources](https://cloud.google.com/asset-inventory/docs/supported-asset-types), you can map it to Port by following these steps:
+After you've found the resource in the [AWS CloudControlAPI Docs](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html), you can map it to Port by following these steps:
 
 ### Blueprint
 
@@ -139,7 +139,7 @@ Create an integration configuration for the resource. The integration configurat
             	mappings:
                 identifier: ".id"
                   title:  ".name"
-                  blueprint: '"gcpComputeInstance"'
+                  blueprint: '"awsComputeInstance"'
                   # highlight-start
                   properties:
                     kind: '.__Kind'

@@ -53,7 +53,16 @@ When configuring the integration **using Port**, the YAML configuration is globa
 
 <TabItem label="Using GitHub" value="github">
 
-To manage your GitHub integration configuration using GitHub, you can choose either a global or granular configuration:
+To manage your GitHub integration configuration using a config file in GitHub:
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired GitHub organization.
+3. A window will open containing the default YAML configuration of your GitHub integration.
+4. Scroll all the way down, and turn on the `Manage this integration using the "port-app-config.yml" file` toggle.
+
+This will clear the configuration in Port's UI.
+
+When configuring the integration **using GitHub**, you can choose either a global or granular configuration:
 
 - **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository.
   - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
@@ -67,9 +76,7 @@ When using global configuration **using GitHub**, the configuration specified in
 </Tabs>
 
 :::info Important
-When **using Port**, the specified configuration will override any other configuration source (both global configuration using GitHub and granular configuration using GitHub).
-
-If you want to delete the configuration specified in Port and use Github instead, simply replace the mapping content in Port with `null`, then click `Save & resync`.
+When **using Port's UI**, the specified configuration will override any `port-app-config.yml` file in your GitHub repository/ies.
 :::
 
 Here is an example snippet from the `port-app-config.yml` file which demonstrates the ETL process for getting `githubPullRequest` data from the GitHub organization and into the software catalog:

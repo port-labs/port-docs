@@ -125,7 +125,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Azure exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md)
 - [Azure Active Directory (AD) SSO](/sso-rbac/sso-providers/azure-ad.md)
-- [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/examples/examples.md)
+- [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md)
 - [Add tags to Azure resources](/actions-and-automations/setup-backend/github-workflow/examples/Azure/tag-azure-resource)
 
 ### GCP
@@ -162,8 +162,8 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Snyk
 
 - [Snyk integration and webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk)
-- [Fill catalog with container images using Snyk data](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/guides/connect-snyk-to-image)
-- [Visualize image vulnerabilities using Snyk data](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/guides/visualize-image-vulnerability)
+- [Connect images with Snyk target](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/guides/connect-images-to-snyk-target)
+- [Connect service with Snyk target](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/guides/connect-service-to-target)
 
 ## Wiz
 
@@ -306,6 +306,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Okta SSO](/sso-rbac/sso-providers/okta.md)
 - [OneLogin SSO](/sso-rbac/sso-providers/onelogin.md)
-- [JumpCloud SSO](/sso-rbac/sso-providers/jumpcloud.md)
-- [Google workspace SSO](/sso-rbac/sso-providers/google-workspace.md)
-- [Azure Active Directory (AD) SSO](/sso-rbac/sso-providers/azure-ad.md)
+- [JumpCloud SSO](/sso-rbac/sso-providers/saml/jumpcloud.md)
+- [Google workspace SSO](/sso-rbac/sso-providers/saml/google-workspace.md)
+- [Azure Active Directory (AD) SSO OIDC](/sso-rbac/sso-providers/azure-ad.md)
+- [Azure Active Directory (AD) SSO SAML](/sso-rbac/sso-providers/saml/azure-ad.md)

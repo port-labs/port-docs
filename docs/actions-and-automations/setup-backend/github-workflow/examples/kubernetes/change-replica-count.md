@@ -178,39 +178,13 @@ Follow these steps to get started:
     "repo": "<GITHUB-REPO-NAME>",
     "workflow": "change-replica-count.yaml",
     "workflowInputs": {
-      "{{if (.inputs | has(\"ref\")) then \"ref\" else null end}}": "{{.inputs.\"ref\"}}",
-      "{{if (.inputs | has(\"replica_count\")) then \"replica_count\" else null end}}": "{{.inputs.\"replica_count\"}}",
-      "{{if (.inputs | has(\"auto_merge\")) then \"auto_merge\" else null end}}": "{{.inputs.\"auto_merge\"}}",
-      "port_payload": {
-        "action": "{{ .action.identifier[(\"service_\" | length):] }}",
-        "resourceType": "run",
-        "status": "TRIGGERED",
-        "trigger": "{{ .trigger | {by, origin, at} }}",
-        "context": {
-          "entity": "{{.entity.identifier}}",
-          "blueprint": "{{.action.blueprint}}",
-          "runId": "{{.run.id}}"
-        },
-        "payload": {
-          "entity": "{{ (if .entity == {} then null else .entity end) }}",
-          "action": {
-            "invocationMethod": {
-              "type": "GITHUB",
-              "org": "<GITHUB-ORG>",
-              "repo": "<GITHUB-REPO-NAME>",
-              "workflow": "change-replica-count.yaml",
-              "omitUserInputs": false,
-              "omitPayload": false,
-              "reportWorkflowStatus": true
-            },
-            "trigger": "{{.trigger.operation}}"
-          },
-          "properties": {
-            "{{if (.inputs | has(\"replica_count\")) then \"replica_count\" else null end}}": "{{.inputs.\"replica_count\"}}",
-            "{{if (.inputs | has(\"auto_merge\")) then \"auto_merge\" else null end}}": "{{.inputs.\"auto_merge\"}}"
-          },
-          "censoredProperties": "{{.action.encryptedProperties}}"
-        }
+      "replica_count": "{{.inputs.\"replica_count\"}}",
+      "auto_merge": "{{.inputs.\"auto_merge\"}}",
+      "port_context": {
+        "entity": "{{.entity.identifier}}",
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{.trigger}}"
       }
     },
     "reportWorkflowStatus": true
@@ -248,7 +222,7 @@ on:
         description: Whether the created PR should be merged automatically
         required: true
         type: boolean
-      port_payload:
+      port_context:
         required: true
         description: >-
           Port's payload, including details for who triggered the action and
@@ -264,7 +238,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(github.event.inputs.port_context).runId}}
           logMessage: "About to change replica count in deployment manifest..."
 
       - uses: actions/checkout@v4
@@ -280,7 +254,7 @@ jobs:
           targetBranch: main
           masterBranchName: main
           createPR: true
-          branch: deployment/${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          branch: deployment/${{ fromJson(github.event.inputs.port_context).runId }}
           message: 'Update deployment replica to ${{ github.event.inputs.replica_count }}'
           
       - name: Inform Port about pull request creation status - Success
@@ -291,7 +265,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(github.event.inputs.port_context).runId }}
           logMessage: |
             'The creation of PR was successful: ${{fromJson(steps.create-pr.outputs.pull_request).html_url}}'
           link: '["${{fromJson(steps.create-pr.outputs.pull_request).html_url}}"]'
@@ -304,7 +278,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{ fromJson(github.event.inputs.port_payload).context.runId }}
+          runId: ${{ fromJson(github.event.inputs.port_context).runId }}
           logMessage: |
             The creation of PR was not successful.
   
@@ -338,7 +312,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
-          runId: ${{fromJson(github.event.inputs.port_payload).context.runId}}
+          runId: ${{fromJson(github.event.inputs.port_context).runId}}
           logMessage: 'Pull request merge was ${{ env.merge_status }}'
 
 ```

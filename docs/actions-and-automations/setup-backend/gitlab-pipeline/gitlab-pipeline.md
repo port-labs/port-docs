@@ -1,18 +1,12 @@
-# GitLab Pipelines Actions
+# GitLab pipeline
 
-Port's GitLab Pipeline Action can trigger a [GitLab Pipeline](https://docs.gitlab.com/ee/ci/pipelines/) using a customer provided input and [`port_payload`](/actions-and-automations/reflect-action-progress/#action-run-json-structure), for both self-service actions and automations.
+The GitLab backend allows you to trigger GitLab pipelines for your self-service actions and automations. 
 
-![Port Kafka Architecture](/img/self-service-actions/setup-backend/gitlab-pipeline/gitlab-pipeline-agent-architecture.jpg)
+## SaaS vs. self-hosted
 
-The steps shown in the image above are as follows:
+Depending on your GitLab setup, it is recommended to use a different method to trigger your pipelines.
 
-1. Port publishes an invoked `Action` message containing the pipeline details to a topic;
-2. A secure topic (`ORG_ID.runs`) holds all the action invocations;
-3. Port's execution agent pulls the new trigger event from your Kafka topic, and triggers your GitLab Pipeline.
+- For [**GitLab SaaS**](/actions-and-automations/setup-backend/gitlab-pipeline/saas), the webhook backend is a convenient choice.
+- For [**GitLab self-hosted**](/actions-and-automations/setup-backend/gitlab-pipeline/self-hosted), the Port execution agent is the preferred method.
 
-## Further steps
-
-- See the [Scaffold repositories example](/guides-and-tutorials/scaffold-a-new-service.md?git-provider=gitlab) for GitLab pipelines.
-- Contact us through Intercom to set up a Kafka topic for your organization.
-- [Install the Port execution agent to triggering the GitLab pipelines](./Installation.md).
-- [Learn how to customize the payload sent to gitlab api](./Installation.md#control-the-payload).
+Click on the relevant method above for more information and detailed instructions.  

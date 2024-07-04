@@ -145,6 +145,13 @@ After adding your example, click on the `Test mapping` button in the bottom-righ
 
 ## Mapping relations
 
+<center>
+
+<iframe width="50%" height="320" src="https://www.youtube.com/embed/ovV4bLtX78g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+<br/>
+
 You can use the mapping YAML file to set the value of a relation between entities. This is very useful when you want to automatically assign an entity to the relation of another entity using a convention of your choice.
 
 For example, say we have a `service` blueprint and a `PagerDuty Service` blueprint with a relation between them:
@@ -155,15 +162,7 @@ For example, say we have a `service` blueprint and a `PagerDuty Service` bluepri
 
 After ingesting all of our services and PagerDuty services, we want to connect each `service` to its corresponding `PagerDuty service`. To achieve this, we have two options:
 
-1. **Option 1** - manually assign a PagerDuty service to each service using the UI:
-
-   - Go to the [Services page](https://app.getport.io/services) of your software catalog.
-   - Choose a service you want to assign a PagerDuty service to. Hover over it, click on the `...` button on the right, and select `Edit`.
-   - In the `PagerDuty service` field, select the relevant PagerDuty service from the dropdown list, then click `Update`:
-
-     <img src='/img/software-catalog/customize-integrations/relationManualAssign.png' width='40%' border='1px' />
-
-1. **Option 2** - use the integration's mapping YAML. In our example, we can add an entry to the mapping of the PagerDuty integration:
+1. **Option 1** - use the integration's mapping YAML. In our example, we can add an entry to the mapping of the PagerDuty integration:
 
    - Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the PagerDuty exporter:
 
@@ -187,6 +186,14 @@ After ingesting all of our services and PagerDuty services, we want to connect e
 
      Now, if a `service's` **identifier** is equal to a `PagerDuty service's` **name**, that service will automatically have its on-call property filled with the relevant PagerDuty service.  
       This is just the convention we chose for this example, but you can use a different one if you'd like.
+
+2. **Option 2** - manually assign a PagerDuty service to each service using the UI:
+
+   - Go to the [Services page](https://app.getport.io/services) of your software catalog.
+   - Choose a service you want to assign a PagerDuty service to. Hover over it, click on the `...` button on the right, and select `Edit`.
+   - In the `PagerDuty service` field, select the relevant PagerDuty service from the dropdown list, then click `Update`:
+
+     <img src='/img/software-catalog/customize-integrations/relationManualAssign.png' width='40%' border='1px' />
 
 ### Mapping relations using search queries
 
