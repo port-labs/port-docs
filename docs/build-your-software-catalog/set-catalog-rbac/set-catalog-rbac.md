@@ -37,9 +37,15 @@ Catalog RBAC allows admins to finely control which users have access to specific
 The default permissions assigned to every blueprint upon creation specify that users with the `admin` role, and users with the specific blueprint `moderator` role, can perform any action on a blueprint.  
 See [RBAC permissions](/sso-rbac/rbac/) for more information about the different roles.
 
-It is possible to assign global permissions controls on **entities**:
+It is possible to assign global permissions controls on **entities**, using these steps:
+1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal. 
+2. Select your desired blueprint, click on the `...` button in the top-right corner, and select `Permissions`:
 
-<Tabs groupId="permission" defaultValue="create">
+    <img src='/img/software-catalog/role-based-access-control/permissions/editEntityPermissions.png' width='30%' border='1px' />
+3. A JSON editor will open, where you can set the permissions for the blueprint.  
+   
+
+<Tabs groupId="permission" defaultValue="read" queryString="permission">
 
 <TabItem value="read" label="Read">
 
