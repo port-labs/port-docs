@@ -184,6 +184,16 @@ The `relatedTo` operator will return all entities that have a relationship with 
 }
 ```
 
+The operator also supports multiple related entities as the searched value:
+
+```json showLineNumbers
+{
+  "operator": "relatedTo",
+  "blueprint": "myBlueprint",
+  "value": ["myFirstEntity", "mySecondEntity"]
+}
+```
+This query will return all of the entities that are related to one or more of the identifiers in the value array.
 </TabItem>
 
 <TabItem value="required">
