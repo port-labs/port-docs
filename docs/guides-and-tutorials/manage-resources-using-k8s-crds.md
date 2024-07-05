@@ -8,16 +8,20 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Manage resources using Kubernetes CRDs
 
+<center>
+<iframe width="50%" height="350" src="https://www.youtube.com/embed/PV1sBiC85Yc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+</center>
+
 ### Introduction
 
 Kubernetes provides a great way of extending its API via Custom Resource Definitions (CRDs). CRDs allow you to define your API objects and controllers to manage them. This is a powerful feature that allows you to extend Kubernetes to manage any kind of resource.
 This guide will show you how to integrate Kubernetes CRDs with Port and expose them in the Port UI for developers to use.
 
 :::tip Prerequisites
-- Port account
-- Kubernetes cluster
-- K8S Operator that listens to [CRD](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) changes
-- GitHub account
+- A [Port account](https://app.getport.io).
+- A running Kubernetes cluster.
+- A K8S Operator that listens to [CRD](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) changes.
+- A GitHub account.
 :::
 
 ### The goal of this guide

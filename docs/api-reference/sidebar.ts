@@ -174,6 +174,12 @@ const sidebar: SidebarsConfig = {
           label: "Get actions/automations",
           className: "api-method get",
         },
+        {
+          type: "doc",
+          id: "api-reference/update-an-action-automation",
+          label: "Update an action/automation",
+          className: "api-method put",
+        },
       ],
     },
     {
