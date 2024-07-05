@@ -1,0 +1,36 @@
+```json showLineNumbers
+{
+  "createMissingRelatedEntities": true,
+  "deleteDependentEntities": true,
+  "resources": [
+    {
+      "kind": "issue",
+      "selector": {
+        "query": "true"
+      },
+      "port": {
+        "entity": {
+          "mappings": {
+            "blueprint": "\"clickupIssue\"",
+            "identifier": ".id",
+            "title": ".name",
+            "properties": {
+              "description": ".description",
+              "url": ".url",
+              "status": ".status.status",
+              "assignee": "if (.assignees | length) > 0 then .assignees[0].username else \"\" end",
+              "creator": ".creator.username | tostring",
+              "priority": "if .priority != null then .priority | tostring else \" \" end",
+              "created": "if .date_created != null then (.date_created | todate) else \"946684800\" | todate end",
+              "updated": "if .date_updated != null then (.date_updated | todate) else \"946684800\" | todate  end"
+            },
+            "relations": {
+              "project": ".list.id"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+```
