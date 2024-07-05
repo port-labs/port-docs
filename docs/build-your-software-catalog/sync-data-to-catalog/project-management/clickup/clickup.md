@@ -253,7 +253,7 @@ Make sure to configure the following [Jenkins Credentials](https://www.jenkins.i
 
 Here is an example for `Jenkinsfile` Groovy pipeline file:
 
-```groovy showLineNumbers
+```yml showLineNumbers
 pipeline {
     agent any
 
@@ -445,12 +445,13 @@ In the example above, two additional parameters are used:
 The integration configuration determines which resources will be queried from ClickUp, and which entities and properties will be created in Port.
 
 :::tip Supported resources (`Kind`)
-The following resources can be used to map data from ClickUp, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+The following resources can be used to map data from ClickUp. You can reference any field that appears in the API responses linked below for the mapping configuration.
 
-- `Project`
-- `Issue`
-- `Team`
+- [`Project`](https://docs.clickup.com/en/articles/2546135-getting-started-with-clickup-api)
+- [`Issue`](https://docs.clickup.com/en/articles/2546135-getting-started-with-clickup-api)
+- [`Team`](https://docs.clickup.com/en/articles/2546135-getting-started-with-clickup-api)
   :::
+
 
 - The root key of the integration configuration is the `resources` key:
 
@@ -521,9 +522,10 @@ To ingest ClickUp objects using the [integration configuration](#configuration-s
 1. Go to the DevPortal Builder page.
 2. Select a blueprint you want to ingest using ClickUp.
 3. Choose the **Ingest Data** option from the menu.
-4. Select ClickUp under the Project management providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+4. Click on Data Source
+5. Select ClickUp under the Project management providers category.
+6. Modify the [configuration](#configuration-structure) according to your needs.
+7. Click `Resync`.
 
 ## Examples
 
@@ -632,7 +634,7 @@ You can follow the instruction in [ClickUp's docs](https://docs.clickup.com/en/a
 7. Click **Save Webhook**.
 
 :::tip ClickUp events and payload
-In order to view the different payloads and events available in ClickUp webhooks, [look here](https://docs.clickup.com/en/articles/2546135-getting-started-with-clickup-api)
+ to view the different payloads and events available in ClickUp webhooks, [look here](https://docs.clickup.com/en/articles/2546135-getting-started-with-clickup-api)
 :::
 
 Done! Any change you make to an issue (open, close, edit, etc.) will trigger a webhook event that ClickUp will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
@@ -648,56 +650,67 @@ it includes the entity created from the event based on the webhook configuration
 Here is an example of the payload structure sent to the webhook URL when a ClickUp issue is created:
 
 <details>
-<summary> Webhook event payload</summary>
+:::info
+The following JSON payload is an example of data received from a ClickUp webhook when a task is created.
+:::
 
 ```json showLineNumbers
 {
-  "action": "create",
-  "actor": {
-    "id": "11c5ce7d-229b-4487-b23b-f404e4a8c85d",
-    "name": "Mor Paz",
-    "type": "user"
-  },
-  "createdAt": "2024-05-19T17:55:29.277Z",
-  "data": {
-    "id": "d62a755d-5389-4dbd-98bb-3db03f239d9d",
-    "createdAt": "2024-05-19T17:55:29.277Z",
-    "updatedAt": "2024-05-19T17:55:29.277Z",
-    "number": 5,
-    "title": "New issue again",
-    "priority": 0,
-    "boardOrder": 0,
-    "sortOrder": -3975,
-    "labelIds": [],
-    "teamId": "92d25fa4-fb1c-449f-b314-47f82e8f280d",
-    "previousIdentifiers": [],
-    "creatorId": "11c5ce7d-229b-4487-b23b-f404e4a8c85d",
-    "stateId": "f12cad17-9b8f-470d-b20a-5e17da8e46b9",
-    "priorityLabel": "No priority",
-    "botActor": null,
-    "identifier": "POR-5",
-    "url": "https://clickup.com/getport/issue/POR-5/new-issue-again",
-    "state": {
-      "id": "f12cad17-9b8f-470d-b20a-5e17da8e46b9",
-      "color": "#e2e2e2",
-      "name": "Todo",
-      "type": "unstarted"
+  "event": "taskCreated",
+  "history_items": [
+    {
+      "id": "2800763136717140857",
+      "type": 1,
+      "date": "1642734631523",
+      "field": "status",
+      "parent_id": "162641062",
+      "data": {
+        "status_type": "open"
+      },
+      "source": null,
+      "user": {
+        "id": 183,
+        "username": "John",
+        "email": "john@company.com",
+        "color": "#7b68ee",
+        "initials": "J",
+        "profilePicture": null
+      },
+      "before": {
+        "status": null,
+        "color": "#000000",
+        "type": "removed",
+        "orderindex": -1
+      },
+      "after": {
+        "status": "to do",
+        "color": "#f9d900",
+        "orderindex": 0,
+        "type": "open"
+      }
     },
-    "team": {
-      "id": "92d25fa4-fb1c-449f-b314-47f82e8f280d",
-      "key": "POR",
-      "name": "Port"
-    },
-    "subscriberIds": [
-      "11c5ce7d-229b-4487-b23b-f404e4a8c85d"
-    ],
-    "labels": []
-  },
-  "url": "https://clickup.com/getport/issue/POR-5/new-issue-again",
-  "type": "Issue",
-  "organizationId": "36968e1b-496c-4610-8c25-641364da172e",
-  "webhookTimestamp": 1716141329394,
-  "webhookId": "ee1fa20e-6b57-4448-86f7-39d9672ddedd"
+    {
+      "id": "2800763136700363640",
+      "type": 1,
+      "date": "1642734631523",
+      "field": "task_creation",
+      "parent_id": "162641062",
+      "data": {},
+      "source": null,
+      "user": {
+        "id": 183,
+        "username": "John",
+        "email": "john@company.com",
+        "color": "#7b68ee",
+        "initials": "J",
+        "profilePicture": null
+      },
+      "before": null,
+      "after": null
+    }
+  ],
+  "task_id": "1vj37mc",
+  "webhook_id": "7fa3ec74-69a8-4530-a251-8a13730bd204"
 }
 ```
 
@@ -707,23 +720,20 @@ Here is an example of the payload structure sent to the webhook URL when a Click
 
 The combination of the sample payload and the webhook configuration generates the following Port entity:
 
-```json showLineNumbers
-{
-  "identifier": "POR-5",
-  "title": "New issue again",
-  "team": [],
-  "properties": {
-    "status": "Todo",
-    "url": "https://clickup.com/getport/issue/POR-5/new-issue-again",
-    "created": "2024-05-19T17:55:29.277Z",
-    "priority": "No priority",
-    "updated": "2024-05-19T17:55:29.277Z"
-  },
-  "relations": {
-    "labels": []
-  },
-  "icon": "ClickUp"
-}
+```yaml showLineNumbers
+identifier: "1vj37mc"
+title: "New issue again"
+team: []
+properties:
+  status: "to do"
+  url: "https://clickup.com/getport/issue/1vj37mc"
+  created: "1642734631523"
+  priority: "No priority"
+  updated: "1642734631523"
+relations:
+  labels: []
+icon: "ClickUp"
+
 
 ```
 </details>

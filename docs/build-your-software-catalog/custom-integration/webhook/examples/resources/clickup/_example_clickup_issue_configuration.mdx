@@ -1,24 +1,18 @@
-```json showLineNumbers
-[
-  {
-    "blueprint": "clickupIssue",
-    "entity": {
-      "identifier": ".body.data.identifier",
-      "title": ".body.data.title",
-      "properties": {
-        "description": ".body.data.description",
-        "url": ".body.data.url",
-        "status": ".body.data.status",
-        "assignee": ".body.data.assignee.email",
-        "creator": ".body.data.creator.email",
-        "priority": ".body.data.priorityLabel",
-        "created": ".body.data.createdAt",
-        "updated": ".body.data.updatedAt"
-      },
-      "relations": {
-        "project": ".body.data.project.identifier"
-      }
-    }
-  }
-]
+```yaml showLineNumbers
+- blueprint: clickupIssue
+  entity:
+    identifier: .body.data.identifier
+    title: .body.data.title
+    properties:
+      description: .body.data.description
+      url: .body.data.url
+      status: .body.data.status
+      assignee: .body.data.assignee.email
+      creator: .body.data.creator.email
+      priority: .body.data.priorityLabel
+      created: .body.data.createdAt
+      updated: .body.data.updatedAt
+    relations:
+      project: .body.data.project.identifier
+
 ```
