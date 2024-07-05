@@ -39,7 +39,6 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅       |
 | `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
 | `integration.clickupApikey` | The personal token of the user Clickup account                                                                                                   |                  | ✅       |
-| `integration.config.clickupUrl`            | The URL of Clickup                                                                                                                   | https://api.clickup.com/api/v2    | ✅       |
 
 <HelmParameters/>
 
@@ -60,8 +59,7 @@ helm upgrade --install my-clickup-integration port-labs/port-ocean \
 	--set integration.identifier="my-clickup-integration"  \
 	--set integration.type="clickup"  \
 	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.clickupUrl="string"  \
-    --set integration.clickupApikey="string"
+  --set integration.clickupApikey="string"
 ```
 
 <PortApiRegionTip/>
@@ -86,9 +84,6 @@ integration:
   type: clickup
   eventListener:
     type: POLLING
-  config:
-  // highlight-next-line
-    clickupUrl: CLICKUP_URL
   secrets:
   // highlight-start
     clickupApikey: CLICKUP_APIKEY
@@ -178,11 +173,14 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `port_client_id`                 | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |                               | ✅        |
 | `port_client_secret`             | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |                               | ✅        |
 | `port_base_url`             | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                               | ✅        |
-| `config -> clickup_url`            | The URL of Clickup                                                                                                                                                                                                                                                                     | https://api.clickup.com/api/v2 | ✅        |
-| `config -> clickup_apikey` | The personal token of the user ClickupJira                                                                                                                                                                                                                                                 |              | ✅        |
+
+| `config -> clickup_apikey` | The personal token of the user                                                           |                                         | ✅        |
+
 | `initialize_port_resources`      | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |                               | ❌        |
-| `identifier`                     | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |                               | ❌        |
-| `version`                        | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest                        | ❌        |`
+
+| `identifier`                     | The identifier of the integration that will be installed                                                                                                                         |                               | ❌        |
+
+| `version`                        | The version of the integration that will be installed                                     | latest                        | ❌        |`
 
 <br/>
 
@@ -215,7 +213,6 @@ jobs:
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
           port_base_url: https://api.getport.io
           config: |
-            clickup_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__CLICKUP_URL }}
             clickup_apikey: ${{ secrets.OCEAN__INTEGRATION__CONFIG__CLICKUP_APIKEY }}
 ```
 
@@ -248,7 +245,6 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__CLICKUP_URL', variable: 'OCEAN__INTEGRATION__CONFIG__CLICKUP_URL'),
                         string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__CLICKUP_APIKEY', variable: 'OCEAN__INTEGRATION__CONFIG__CLICKUP_APIKEY'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
                         string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
@@ -261,7 +257,6 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-                                -e OCEAN__INTEGRATION__CONFIG__CLICKUP_URL=$OCEAN__INTEGRATION__CONFIG__CLICKUP_URL \
                                 -e OCEAN__INTEGRATION__CONFIG__CLICKUP_APIKEY=$OCEAN__INTEGRATION__CONFIG__CLICKUP_APIKEY \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
@@ -310,7 +305,6 @@ steps:
       docker run -i --rm \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__CLICKUP_URL=$(OCEAN__INTEGRATION__CONFIG__CLICKUP_URL) \
         -e OCEAN__INTEGRATION__CONFIG__CLICKUP_APIKEY=$(OCEAN__INTEGRATION__CONFIG__CLICKUP_APIKEY) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
@@ -363,7 +357,6 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__INTEGRATION__CONFIG__CLICKUP_URL=$OCEAN__INTEGRATION__CONFIG__CLICKUP_URL \
         -e OCEAN__INTEGRATION__CONFIG__CLICKUP_APIKEY=$OCEAN__INTEGRATION__CONFIG__CLICKUP_APIKEY \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
@@ -490,12 +483,12 @@ resources:
             title: .name
             blueprint: '"clickupProject"'
             properties:
-                url: "\"https://app.clickup.com/\" + .__team + \"/v/li/\" + .id"
+                url: "\"https://app.clickup.com/\" + .__team_id + \"/v/li/\" + .id"
                 startDate: if .start_date==null then .start_date else .start_date | tonumber / 1000 | todate end
                 endDate: if .due_date==null then .due_date else .due_date | tonumber / 1000 | todate end
                 totalIssues: .task_count
           relations:
-            team: .space.id
+            team: .__team_id
         # highlight-end
   ```
 
@@ -651,12 +644,12 @@ resources:
           title: .name
           blueprint: '"clickupProject"'
           properties:
-            url: "\"https://app.clickup.com/\" + .__team + \"/v/li/\" + .id"
+            url: "\"https://app.clickup.com/\" + .__team_id + \"/v/li/\" + .id"
             startDate: if .start_date==null then .start_date else .start_date | tonumber / 1000 | todate end
             endDate: if .due_date==null then .due_date else .due_date | tonumber / 1000 | todate end
             totalIssues: .task_count
           relations:
-            team: .__team
+            team: .__team_id
 ```
 
 </details>
