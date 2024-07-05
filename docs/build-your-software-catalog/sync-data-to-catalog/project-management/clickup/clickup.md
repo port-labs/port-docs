@@ -173,14 +173,14 @@ If you want the integration to update Port in real time using webhooks you shoul
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                          | Description                                                                                                                                                                                                                                                                              | Example | Required |
+| Parameter                          | Description                                                                                                                                                                                                                                                                              | Example | Required |     |
 | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | -------- | --- |
-| `port_client_id`                   | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |         | ✅       |
-| `port_client_secret`               | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |         | ✅       |
-| `port_base_url`                    | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |         | ✅       |
-| `config -> clickup_personal_token` | Clickup [personal token](https://clickup.com/api/developer-portal/authentication/#personal-token) used to access the Clickup API                                                                                                                                                         |         | ✅       |
-| `initialize_port_resources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |         | ❌       |
-| `identifier`                       | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌       |
+| `port_client_id`                   | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |         | ✅       |     |
+| `port_client_secret`               | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |         | ✅       |     |
+| `port_base_url`                    | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |         | ✅       |     |
+| `config -> clickup_personal_token` | Clickup [personal token](https://clickup.com/api/developer-portal/authentication/#personal-token) used to access the Clickup API                                                                                                                                                         |         | ✅       |     |
+| `initialize_port_resources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |         | ❌       |     |
+| `identifier`                       | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌       |     |
 | `version`                          | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest  | ❌       | `   |
 
 <br/>
@@ -413,6 +413,14 @@ In the example above, two additional parameters are used:
 :::
 
 ### Configuration structure
+
+:::tip Supported resources (`Kind`)
+The following resources can be used to map data from Clickup. It is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+
+- [`Team`](https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/)
+- [`Project`](https://clickup.com/api/clickupreference/operation/GetLists/)
+- [`Issue`](https://clickup.com/api/clickupreference/operation/GetTasks/)
+  :::
 
 The integration configuration determines which resources will be queried from Clickup, and which entities and properties will be created in Port.
 
