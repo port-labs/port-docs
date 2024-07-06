@@ -147,7 +147,7 @@ After adding your example, click on the `Test mapping` button in the bottom-righ
 
 <center>
 
-<iframe width="50%" height="320" src="https://www.youtube.com/embed/ovV4bLtX78g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/ovV4bLtX78g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 <br/>

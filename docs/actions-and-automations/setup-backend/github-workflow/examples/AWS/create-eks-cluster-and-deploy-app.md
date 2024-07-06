@@ -12,7 +12,7 @@ In this guide, we are going to use [self-service actions](/actions-and-automatio
 🎬 If you would like to follow along to a **video** that implements this guide, check out this one by @TeKanAid 🎬
 <center>
 
-<iframe width="40%" height="240" src="https://www.youtube.com/embed/2Cw4i_FuSC8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/2Cw4i_FuSC8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 
