@@ -409,6 +409,16 @@ html[data-theme="dark"] details details  {
   opacity: 0.8;
 }
 
+.menu__caret::before {
+  zoom: 70%;
+}
+
+.menu__link--sublist-caret::after {
+  zoom: 70%;
+}
+
+/* OpenAPI spec */
+
 .openapi-params__list-item:not(.anything) {
   padding: 1rem;
   margin: 0 0 1rem 0 !important;
