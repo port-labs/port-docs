@@ -5,8 +5,9 @@
 ```json showLineNumbers
 
 {
-  "identifier": "humanitecWorkloadVersion",
-  "title": "WorkLoad Version",
+  "identifier": "humanitecResourceGraph",
+  "description": "Humanitec Resource Graph",
+  "title": "Resource Graph",
   "icon": "Microservice",
   "schema": {
     "properties": {},
@@ -16,17 +17,11 @@
   "calculationProperties": {},
   "aggregationProperties": {},
   "relations": {
-    "environment": {
-      "title": "Environment",
-      "target": "humanitecEnvironment",
+    "humanitecResourceGraph": {
+      "title": "Resource Graph",
+      "target": "humanitecResourceGraph",
       "required": false,
-      "many": false
-    },
-    "workload": {
-      "title": "Workload",
-      "target": "humanitecWorkload",
-      "required": false,
-      "many": false
+      "many": true
     }
   }
 }

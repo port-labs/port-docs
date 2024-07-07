@@ -9,28 +9,41 @@
   "icon": "Cluster",
   "schema": {
     "properties": {
-      "description": {
-        "title": "Description",
-        "description": "A short description of the workload",
+      "class": {
+        "title": "Class",
+        "description": "The class of the workload",
         "type": "string",
         "icon": "DefaultProperty"
       },
-      "version": {
-        "title": "Workload Version",
+      "driverType": {
+        "title": "Driver Type",
+        "description": "The driver type of the workload",
         "type": "string",
-        "icon": "DefaultProperty",
-        "description": "The workload version"
+        "icon": "DefaultProperty"
       },
-      "createdAt": {
-        "title": "Creation Date",
+      "definitionId": {
+        "title": "Definition ID",
+        "description": "The definition ID of the workload",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "definitionVersionId": {
+        "title": "Definition Version ID",
+        "description": "The definition version ID of the workload",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "status": {
+        "title": "Status",
+        "description": "The status of the workload",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "updatedAt": {
+        "title": "Update Date",
+        "description": "The date and time when the workload was last updated",
         "type": "string",
         "format": "date-time",
-        "description": "The date and time when the workload was created."
-      },
-      "specDefinition": {
-        "title": "Specification Definition",
-        "type": "object",
-        "description": "The workload spec definition",
         "icon": "DefaultProperty"
       }
     },
@@ -40,11 +53,11 @@
   "calculationProperties": {},
   "aggregationProperties": {},
   "relations": {
-    "application": {
-      "title": "Application",
-      "target": "humanitecApplication",
+    "humanitecEnvironment": {
+      "title": "Environment",
+      "target": "humanitecEnvironment",
       "required": false,
-      "many": true
+      "many": false
     }
   }
 }
