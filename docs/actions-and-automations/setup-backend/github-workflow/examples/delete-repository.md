@@ -92,7 +92,8 @@ Follow these steps to get started:
       "port_context": {
         "entity": "{{.entity.identifier}}",
         "blueprint": "{{.action.blueprint}}",
-        "runId": "{{.run.id}}"
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true

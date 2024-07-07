@@ -8,7 +8,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 <center>
 
-<iframe width="60%" height="400" src="https://www.youtube.com/embed/KHuGBQlErWo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/KHuGBQlErWo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 <br/>
@@ -26,14 +26,11 @@ Port's action model is designed to be flexible and can be used to cover a wide r
 ## 💡 Common self-service actions
 
 - **Scaffold** a new service.
-- **Open** a terraform PR to create a cloud account.
-- **Launch** a jupyter notebook.
 - **Create** a cloud resource.
-- **Scaffold** a new in-house package.
-- **Provision** a temporary DevEnv.
+- **Provision** a temporary developer environment.
 - **Redeploy** an image tag.
 - **Rollback** a running service.
-- **Change** replica count.
+- **Change** a deployment's replica count.
 
 In our [live demo](https://demo.getport.io/self-serve), you can see examples for self-service experiences. 🎬
 
@@ -44,7 +41,9 @@ In our [live demo](https://demo.getport.io/self-serve), you can see examples for
 3. A **job is triggered** and the user gets a **continuous indication** about its progress.
 4. Once the action is running, you can use Port's API to **update Port on its status** and provide information such as **logs and links to the resulting handlers**.
 
-<img src='/img/self-service-actions/selfserviceHLarch.png' width='90%' border='1px' />
+<center>
+<img src='/img/self-service-actions/selfserviceHLarch.jpg' width='80%' border='1px' />
+</center>
 
 ## Create a self-service action
 
@@ -56,7 +55,7 @@ Self-service actions are created and managed in the [Self-service](https://app.g
 To begin, click on the `+ New Action` button in the top right corner, then follow the steps below.
 
 :::tip Other supported methods
-Besides Port's UI, you can also create and manage self-service actions using [Port's API](/api-reference/port-api), or [Terraform](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_action).
+Besides Port's UI, you can also create and manage self-service actions using [Port's API](/api-reference/create-an-action-automation), or [Terraform](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_action).
 :::
 
 ### Step 1 - setup the action's frontend
@@ -64,7 +63,7 @@ Besides Port's UI, you can also create and manage self-service actions using [Po
 Choose the name of the action, its icon, and the inputs you would like the user to fill out when executing it.
 Port supports a wide variety of input types, including more advanced conditions to best fit the experience you want for your users.
 
-See [Setup UI for actions](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/) for instructions and examples.
+See [Setup frontend](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/) for instructions and examples.
 
 ### Step 2 - setup backend
 
@@ -153,3 +152,8 @@ The basic structure of a self-service action looks like this (see key descriptio
 | `trigger.condition` | An object containing [conditions](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/#conditions) that determine which entities the action will be available for. |
 | `invocationMethod` | Defines the type of backend the action will use. See [invocation method](/actions-and-automations/setup-backend/#invocation-method-structure-fields) for more information.                                                             |
 | `requiredApproval` | A boolean value that determines whether the action requires approval or not. |
+
+## Examples
+
+For complete examples of self-service actions, choose your desired backend type under the [backend types](/actions-and-automations/setup-backend) section.  
+For instance, examples using GitHub as the backend can be found [here](/actions-and-automations/setup-backend/github-workflow/examples/).
