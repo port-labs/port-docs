@@ -182,6 +182,20 @@ This will download a file with all **entities** of the selected blueprints in th
 
 </details>
 
+#### What can I embed in the iFrame widget?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+iFrame imposes a few security vulnerabilities, so not all services support them. For example, Grafana Cloud does not allow iFrame embedding of the content, while Grafana self-hosted allows. The first step will be to check with the service provider if cross site embedding is supported. After confirming you can embed the relevant content, here are two different approaches for embedding sensitive data:
+
+1. Public page behind a VPN: In the scenario the host of the content is self hosted, you can make it public behind the VPN. This allows you to allow sharing the content with ease, as only users who have the ability to connect to the VPN will be able to view its content. For example, Grafana self-hosted can be used to make a dashboard public, if the host is in your VPN.
+2. PKCE: Port supports [PKCE](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication) authentication flow to authenticate the logged in user with an OIDC application against your IdP to gain access. This requires the end service you are trying to embedf (for example, Grafana dashboard) to support oAuth, in order to use the SSO application. In order to set it up, follow the documentation and make sure you do the following:
+
+    * Create a new application in your IdP and configure the widget to use the correct application ID.
+    * Configure the end service with the application credentials, in order to receive the authentication requests.
+</details>
+
 ---
 
 ## Security
