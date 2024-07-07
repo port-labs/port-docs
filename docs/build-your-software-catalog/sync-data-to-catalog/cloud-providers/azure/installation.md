@@ -397,8 +397,8 @@ You should have the following information ready:
 
 | Variable                                          | Description                                                                                                                           |
 |---------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
-| `OCEAN__PORT__CLIENT_ID`                          | [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).     |
-| `OCEAN__PORT__CLIENT_SECRET`                      | [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API). |
+| `OCEAN__PORT__CLIENT_ID`                          | Your Port client ID.     |
+| `OCEAN__PORT__CLIENT_SECRET`                      | Your Port client secret. |
 | `OCEAN__PORT__BASE_URL`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                               |
 | `OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_ID`     | The client ID of the Azure App Registration.                                                                                          |
 | `OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_SECRET` | The client secret of the Azure App Registration.                                                                                      |
