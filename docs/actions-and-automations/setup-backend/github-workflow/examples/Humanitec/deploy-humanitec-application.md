@@ -16,7 +16,7 @@ This self service guide provides a comprehensive walkthrough on how to deploy an
    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
-3. Optional - Install Port's Humanitec integration [learn more](/docs/build-your-software-catalog/custom-integration/github-workflow/examples/humanitec/humanitec.md)
+3. Optional - Install Port's Humanitec integration [learn more](/docs/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/humanitec/humanitec.md)
 
 :::tip Humanitec Integration
 This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your Humanitec Application.
@@ -166,7 +166,7 @@ Now you should see the `Deploy Application` action in the self-service page. ðŸŽ
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 2. Click on the `Deploy Application` action
-3. Choose the humanitec application you want to deploy (In case you didn't install the [Humanitec integration](/docs/build-your-software-catalog/custom-integration/github-workflow/examples/humanitec/humanitec.md), it means you don't have any Humanitec applications in Port yet, so you will need to create one manually in Port to test this action)
+3. Choose the humanitec application you want to deploy (In case you didn't install the [Humanitec integration](/docs/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/humanitec/humanitec.md), it means you don't have any Humanitec applications in Port yet, so you will need to create one manually in Port to test this action)
 4. Select the new application
 5. Enter the `Delta ID` of the deployment, select an `Environment` you want to deploy to and brief `Comment` about the deployment.
 6. Click on `Execute`
