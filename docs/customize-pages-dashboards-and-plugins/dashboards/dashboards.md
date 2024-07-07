@@ -14,7 +14,7 @@ Dashboards are available in the following locations:
 
 Pie charts illustrate data from entities in your software catalog divided by categories and entity properties.
 
-![Pie Chart](/img/software-catalog/widgets/pieChartExample.png)
+<img src='/img/software-catalog/widgets/pieChartExample.png' width='70%' />
 
 #### Visualization properties
 
@@ -52,14 +52,16 @@ You can also filter entities so the aggregation number chart will only apply to 
 | `Chart type`    | `String` | Defines the operation type for the chart. Possible values: `Display single property`, `Count entities`, `Aggregate by property`                                                                                                                      | `null` | `true`   |
 | `Blueprint`       | `String` | The chosen blueprint from which related entities data is visualized from                                                                                                                                                                    | `null`     | `true`   |
 
-##### Chart type: display single property 
+**Chart type: display single property** 
+
 | Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
 | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
 | `Entity`       | `String` | The chosen entity from which property data is visualized from                                                                                                                                                                    | `null`     | `true`   |
 | `Property`        | `String` | The number property which will be visulized                                                 | `null`     | `true`   |                                                                                     | `null`     | `true`   |
 
 
-##### Chart type: Count entities 
+**Chart type: Count entities**
+
 | Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
 | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
 | `Function`        | `String` | `count` and `average` (by time).                                                   | `null`     | `true`   |
@@ -70,9 +72,8 @@ You can also filter entities so the aggregation number chart will only apply to 
 | `Custom unit`      | `String` | Text to display below the number value. The `unitCustom` key is only available when `unit` equals to `custom`                                                                                                                               | `null`     | `true`   |
 | `Unit alignment`   | `String` | `left`, `right`, `bottom`.                                                                                                                                                                                                                  | `null`     | `true`   |
 
+**Chart type: Aggregate by property** 
 
-
-##### Chart type: Aggregate by property 
 | Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
 | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
 | `Property`        | `String` | The number chart value will be the selected property's aggregated value (according to the chosen function) | `null`     | `true`   |
@@ -97,26 +98,34 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 
 Line charts display trends of `number` properties over time.  
 
-When creating a line chart, you need to choose a blueprint, then choose one of its entities, and finally choose one or more of the entity's `number` properties.  
+When creating a line chart, you need to choose a blueprint, then choose one of its entities, and finally choose one or more of the entity's `number` properties to visualize.  
+
 :::tip Specific entity page
 When creating a line chart in an [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets), the chosen entity will be the entity whose page you are on.
 :::
 
-The chart will display the property values over the span of (up to) **one year** in daily intervals, with the x-axis representing the time and the y-axis representing the property values.
+Additionally, you need to specify the following properties:
+- **Time interval** - the amount of time between each data point in the chart.
+- **Time range** - how far back in time the chart will display data.
 
-For example, here is a line chart displaying a service's resource usage over a span of 8 days:
+The chart will display the property values over the span of the selected time range, using the selected intervals.  
+The x-axis represents the time and the y-axis representing the property values.
+
+For example, here is a line chart displaying a service's resource usage over the span of a week, in daily intervals:
 <img src='/img/software-catalog/widgets/lineChartExample.png' width='100%' border='1px' />
 
 #### Line chart properties
 
-| Field         | Type     | Description                                   | Default | Required |
-| ------------- | -------- | --------------------------------------------- | ------- | -------- |
-| `Title`       | `String` | Chart title                                   | `null`  | `true`   |
-| `Icon`        | `String` | Chart Icon                                    | `null`  | `false`  |
-| `Description` | `String` | An optional description of the chart          | `null`  | `false`  |
-| `Blueprint`   | `String` | The chosen blueprint                          | `null`  | `true`   |
-| `Entity`      | `String` | The chosen entity                             | `null`  | `true`   |
-| `Properties`  | `Array`  | The chosen `number` property/ies to visualize | `null`  | `true`   |
+| Field           | Type     | Description                                   | Default | Required |
+| --------------- | -------- | --------------------------------------------- | ------- | -------- |
+| `Title`         | `String` | Chart title                                   | `null`  | `true`   |
+| `Icon`          | `String` | Chart Icon                                    | `null`  | `false`  |
+| `Description`   | `String` | An optional description for the chart         | `null`  | `false`  |
+| `Blueprint`     | `String` | The chosen blueprint                          | `null`  | `true`   |
+| `Entity`        | `String` | The chosen entity                             | `null`  | `true`   |
+| `Properties`    | `Array`  | The chosen `number` property/ies to visualize | `null`  | `true`   |
+| `Time interval` | `String` | The time interval to display in the x-axis of the chart.<br/>Possible values: `hour`, `day`, `week`, `month` | `null` | `true` |
+| `Time range`    | `String` | The time range of the displayed data.<br/>Possible values change according to selected `time interval` - the longer the interval, the longer the available ranges | `null` | `true` |
 
 #### Potential use cases
 
@@ -236,3 +245,22 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
 ### Dynamic filters
 
 You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when filtering a widget.
+
+## Widget type identifiers (Terraform)
+
+When creating widgets using [Port's Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_page), you need to provide the widget type's identifier in the `type` key.  
+The following table lists the identifiers for each widget type:
+
+| Widget type | Identifier |
+| ----------- | ---------- |
+| Number chart | `entities-number-chart` |
+| Pie chart | `entities-pie-chart` |
+| Line chart | `line-chart` |
+| Markdown | `markdown` |
+| IFrame | `iframe-widget` |
+| Table | `table-entities-explorer` |
+| Action card | `action-card-widget` |
+| Action History | `action-runs-table-widget` |
+| My entities | `my-entities` |
+| Recently viewed | `recently-viewed-entities` |
+| Recently used actions | `recently-used-actions` |

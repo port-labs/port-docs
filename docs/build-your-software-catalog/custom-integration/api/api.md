@@ -12,7 +12,7 @@ import TabItem from "@theme/TabItem";
 
 <center>
 
-<iframe width="60%" height="400" src="https://www.youtube.com/embed/7ACHX2V82M8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/7ACHX2V82M8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 <br/>
