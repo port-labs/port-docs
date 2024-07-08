@@ -250,6 +250,199 @@ After adding the `file` kind to your mapping configuration, click on the `Resync
 
 This will help you see what data is available to use in your `jq` expressions.   
 Click on the `Test mapping` button to test your mapping against the example data.
+
+In any case, the structure of the available data looks like this:
+<details>
+<summary><b>Click to expand</b></summary>
+
+```json showLineNumbers
+{
+  "repo": {
+    "id": 454741906,
+    "node_id": "R_kgDOGxrPkg",
+    "name": "dtgatest",
+    "full_name": "hadar-co/dtgatest",
+    "private": false,
+    "owner": {
+      "login": "hadar-co",
+      "id": 96784606,
+      "node_id": "U_kgDOBcTQ3g",
+      "avatar_url": "https://avatars.githubusercontent.com/u/96784606?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hadar-co",
+      "html_url": "https://github.com/hadar-co",
+      "followers_url": "https://api.github.com/users/hadar-co/followers",
+      "following_url": "https://api.github.com/users/hadar-co/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hadar-co/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hadar-co/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hadar-co/subscriptions",
+      "organizations_url": "https://api.github.com/users/hadar-co/orgs",
+      "repos_url": "https://api.github.com/users/hadar-co/repos",
+      "events_url": "https://api.github.com/users/hadar-co/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hadar-co/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "html_url": "https://github.com/hadar-co/dtgatest",
+    "description": null,
+    "fork": false,
+    "url": "https://api.github.com/repos/hadar-co/dtgatest",
+    "forks_url": "https://api.github.com/repos/hadar-co/dtgatest/forks",
+    "keys_url": "https://api.github.com/repos/hadar-co/dtgatest/keys{/key_id}",
+    "collaborators_url": "https://api.github.com/repos/hadar-co/dtgatest/collaborators{/collaborator}",
+    "teams_url": "https://api.github.com/repos/hadar-co/dtgatest/teams",
+    "hooks_url": "https://api.github.com/repos/hadar-co/dtgatest/hooks",
+    "issue_events_url": "https://api.github.com/repos/hadar-co/dtgatest/issues/events{/number}",
+    "events_url": "https://api.github.com/repos/hadar-co/dtgatest/events",
+    "assignees_url": "https://api.github.com/repos/hadar-co/dtgatest/assignees{/user}",
+    "branches_url": "https://api.github.com/repos/hadar-co/dtgatest/branches{/branch}",
+    "tags_url": "https://api.github.com/repos/hadar-co/dtgatest/tags",
+    "blobs_url": "https://api.github.com/repos/hadar-co/dtgatest/git/blobs{/sha}",
+    "git_tags_url": "https://api.github.com/repos/hadar-co/dtgatest/git/tags{/sha}",
+    "git_refs_url": "https://api.github.com/repos/hadar-co/dtgatest/git/refs{/sha}",
+    "trees_url": "https://api.github.com/repos/hadar-co/dtgatest/git/trees{/sha}",
+    "statuses_url": "https://api.github.com/repos/hadar-co/dtgatest/statuses/{sha}",
+    "languages_url": "https://api.github.com/repos/hadar-co/dtgatest/languages",
+    "stargazers_url": "https://api.github.com/repos/hadar-co/dtgatest/stargazers",
+    "contributors_url": "https://api.github.com/repos/hadar-co/dtgatest/contributors",
+    "subscribers_url": "https://api.github.com/repos/hadar-co/dtgatest/subscribers",
+    "subscription_url": "https://api.github.com/repos/hadar-co/dtgatest/subscription",
+    "commits_url": "https://api.github.com/repos/hadar-co/dtgatest/commits{/sha}",
+    "git_commits_url": "https://api.github.com/repos/hadar-co/dtgatest/git/commits{/sha}",
+    "comments_url": "https://api.github.com/repos/hadar-co/dtgatest/comments{/number}",
+    "issue_comment_url": "https://api.github.com/repos/hadar-co/dtgatest/issues/comments{/number}",
+    "contents_url": "https://api.github.com/repos/hadar-co/dtgatest/contents/{+path}",
+    "compare_url": "https://api.github.com/repos/hadar-co/dtgatest/compare/{base}...{head}",
+    "merges_url": "https://api.github.com/repos/hadar-co/dtgatest/merges",
+    "archive_url": "https://api.github.com/repos/hadar-co/dtgatest/{archive_format}{/ref}",
+    "downloads_url": "https://api.github.com/repos/hadar-co/dtgatest/downloads",
+    "issues_url": "https://api.github.com/repos/hadar-co/dtgatest/issues{/number}",
+    "pulls_url": "https://api.github.com/repos/hadar-co/dtgatest/pulls{/number}",
+    "milestones_url": "https://api.github.com/repos/hadar-co/dtgatest/milestones{/number}",
+    "notifications_url": "https://api.github.com/repos/hadar-co/dtgatest/notifications{?since,all,participating}",
+    "labels_url": "https://api.github.com/repos/hadar-co/dtgatest/labels{/name}",
+    "releases_url": "https://api.github.com/repos/hadar-co/dtgatest/releases{/id}",
+    "deployments_url": "https://api.github.com/repos/hadar-co/dtgatest/deployments",
+    "created_at": "2022-02-02T11:08:23Z",
+    "updated_at": "2024-07-08T07:23:58Z",
+    "pushed_at": "2024-07-08T07:23:54Z",
+    "git_url": "git://github.com/hadar-co/dtgatest.git",
+    "ssh_url": "git@github.com:hadar-co/dtgatest.git",
+    "clone_url": "https://github.com/hadar-co/dtgatest.git",
+    "svn_url": "https://github.com/hadar-co/dtgatest",
+    "homepage": null,
+    "size": 346,
+    "stargazers_count": 0,
+    "watchers_count": 0,
+    "language": "JavaScript",
+    "has_issues": true,
+    "has_projects": true,
+    "has_downloads": true,
+    "has_wiki": true,
+    "has_pages": false,
+    "has_discussions": false,
+    "forks_count": 0,
+    "mirror_url": null,
+    "archived": false,
+    "disabled": false,
+    "open_issues_count": 3,
+    "license": {
+      "key": "mit",
+      "name": "MIT License",
+      "spdx_id": "MIT",
+      "url": "https://api.github.com/licenses/mit",
+      "node_id": "MDc6TGljZW5zZTEz"
+    },
+    "allow_forking": true,
+    "is_template": false,
+    "web_commit_signoff_required": false,
+    "topics": [],
+    "visibility": "public",
+    "forks": 0,
+    "open_issues": 3,
+    "watchers": 0,
+    "default_branch": "main",
+    "permissions": {
+      "admin": false,
+      "maintain": false,
+      "push": false,
+      "triage": false,
+      "pull": false
+    }
+  },
+  "file": {
+    "path": "testfiles/package.json",
+    "mode": "100644",
+    "type": "blob",
+    "sha": "a1e9e0624f68b3f7b69e182187c5e424c2df1f9b",
+    "size": 1817,
+    "url": "https://api.github.com/repos/hadar-co/dtgatest/git/blobs/a1e9e0624f68b3f7b69e182187c5e424c2df1f9b",
+    "content": {
+      "name": "port-docs",
+      "version": "0.0.0",
+      "private": true,
+      "scripts": {
+        "docusaurus": "docusaurus",
+        "start": "docusaurus start --port 4000",
+        "build": "docusaurus build",
+        "swizzle": "docusaurus swizzle",
+        "deploy": "docusaurus deploy",
+        "clear": "docusaurus clear",
+        "serve": "docusaurus serve",
+        "write-translations": "docusaurus write-translations",
+        "write-heading-ids": "docusaurus write-heading-ids",
+        "typecheck": "tsc",
+        "prepare": "husky install"
+      },
+      "dependencies": {
+        "@docsly/react": "1.9.1",
+        "@docusaurus/core": "^3.4.0",
+        "@docusaurus/plugin-client-redirects": "^3.4.0",
+        "@docusaurus/plugin-google-tag-manager": "^3.4.0",
+        "@docusaurus/plugin-ideal-image": "^3.4.0",
+        "@docusaurus/preset-classic": "^3.4.0",
+        "@docusaurus/theme-live-codeblock": "^3.4.0",
+        "@easyops-cn/docusaurus-search-local": "^0.44.2",
+        "@mdx-js/react": "^3.0.1",
+        "@port-labs/docusaurus-plugin-openapi-docs": "^0.0.5",
+        "@port-labs/docusaurus-theme-openapi-docs": "^0.0.5",
+        "@stackql/docusaurus-plugin-hubspot": "^1.0.1",
+        "clsx": "^2.1.1",
+        "docusaurus-plugin-hotjar": "^0.0.2",
+        "docusaurus-plugin-image-zoom": "^2.0.0",
+        "prettier": "^3.3.2",
+        "prism-react-renderer": "^2.3.1",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-tooltip": "^5.27.1"
+      },
+      "devDependencies": {
+        "@docusaurus/module-type-aliases": "^3.4.0",
+        "@docusaurus/tsconfig": "^3.4.0",
+        "@docusaurus/types": "^3.4.0",
+        "husky": "^9.0.11",
+        "pretty-quick": "^4.0.0",
+        "typescript": "~5.5.3"
+      },
+      "browserslist": {
+        "production": [
+          ">0.5%",
+          "not dead",
+          "not op_mini all"
+        ],
+        "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+        ]
+      }
+    },
+    "fileExtension": "json",
+    "name": "package.json"
+  }
+}
+```
+</details>
 :::
 
 #### Create multiple entities from a single file
