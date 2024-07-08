@@ -1,4 +1,4 @@
-```python showLineNumbers
+```python showLineNumbers title="main.py"
 
 import asyncio
 import argparse
@@ -143,15 +143,6 @@ class HumanitecExporter:
 
     async def sync_resource_graphs(self) -> None:
         logger.info(f"Syncing entities for blueprint {BLUEPRINT.RESOURCE_GRAPH}")
-        def get_resource_graph_request_body(modules):
-            return [
-                {
-                    "id": resource["gu_res_id"],
-                    "type": resource["type"],
-                    "resource": resource["resource"],
-                }
-                for resource in modules
-            ]
 
         def create_resource_graph_entity(graph_data, include_relations):
             entity = {
@@ -183,9 +174,8 @@ class HumanitecExporter:
                 if not modules:
                     continue
 
-                data = get_resource_graph_request_body(modules)
-                resource_graph = await humanitec_client.get_resource_graph(
-                    application, environment, data
+                resource_graph = await humanitec_client.get_all_resource_graphs(modules,
+                    application, environment
                 )
 
                 # First pass: Create entities without relations
@@ -298,6 +288,7 @@ class HumanitecExporter:
         await self.sync_workloads()
         await self.sync_resource_graphs()
         await self.sync_resources()
+        logger.info("Event Finished")
 
     async def __call__(self, args) -> None:
         await self.sync_all()

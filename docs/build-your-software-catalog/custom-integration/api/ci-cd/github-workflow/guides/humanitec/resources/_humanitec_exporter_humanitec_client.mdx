@@ -1,4 +1,4 @@
-```python showLineNumbers title=humanitec_client.py
+```python showLineNumbers title="humanitec_client.py"
 
 import httpx
 import asyncio
@@ -101,7 +101,7 @@ class HumanitecClient:
         if cached_resources := await self.cache.get(CACHE_KEYS.RESOURCE):
             cached_resources = cached_resources.get(app["id"], {}).get(env["id"], {})
             logger.info(
-                f"Retrieved {len(cached_resources)} from cache for app {app['id']} and env {env['id']}"
+                f"Retrieved {len(cached_resources)} resources from cache for app {app['id']} and env {env['id']}"
             )
             return list(cached_resources.values())
 
@@ -128,27 +128,31 @@ class HumanitecClient:
     ) -> Any:
         endpoint = f"apps/{app['id']}/envs/{env['id']}/resources/graph"
         humanitec_headers = self.get_humanitec_headers()
-        response = await self.send_api_request(
+        graph = await self.send_api_request(
             "POST", endpoint, headers=humanitec_headers, json=data
         )
 
-        logger.info(f"Received resources graph batch from app: {app} and env: {env}")
-        return response
+        return graph
 
     async def get_all_resource_graphs(
-        self, modules: List[Dict[str, Any]], app_id: str, env_id: str
+        self, modules: List[Dict[str, Any]], app: str, env: str
     ) -> Any:
-        data = []
-        for resource in modules:
-            payload = {
-                "id": resource["gu_res_id"],
-                "type": resource["type"],
-                "resource": resource["resource"],
-            }
-            data.append(payload)
-
-        graph_entities = await self.get_resource_graph(app_id, env_id, data)
-        logger.info(f"Received {len(graph_entities)} graph entities from Humanitec")
+        
+        def get_resource_graph_request_body(modules):
+            return [
+                {
+                    "id": module["gu_res_id"],
+                    "type": module["type"],
+                    "resource": module["resource"],
+                }
+                for module in modules
+            ]
+        data = get_resource_graph_request_body(modules)
+        
+        graph_entities = await self.get_resource_graph(app, env, data)
+        logger.info(
+            f"Received {len(graph_entities)} resource graph entities from app: {app['id']} and env: {env['id']} using data: {data}"
+        )
         return graph_entities
 
     def group_resources_by_type(

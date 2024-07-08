@@ -44,7 +44,7 @@ Create the following blueprint definitions in port:
 <HumanitecResourceGraphBlueprint/>
 
 :::tip Blueprint Properties
-You may modify the properties in your blueprints depending on what you want to track in your Humanitec account.
+You may select the blueprints depending on what you want to track in your Humanitec account.
 :::
 
 ## GitHub Workflow
