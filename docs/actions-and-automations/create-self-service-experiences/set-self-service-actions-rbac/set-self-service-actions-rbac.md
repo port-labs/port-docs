@@ -176,3 +176,6 @@ After toggling on the `Enforce manual approval` option, you can add approvers by
 You can also choose whether **all** specified approvers must approve the action, or if only **one** (any) of them is enough.
 
 <img src='/img/self-service-actions/rbac/chooseApprovers.png' width='50%' border='1px' />
+<br/><br/>
+
+Alternatively, you can allow anyone with the `Admin` role to approve the action, by enabling the `Admins` toggle.
