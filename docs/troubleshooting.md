@@ -194,6 +194,7 @@ iFrame imposes a few security vulnerabilities, so not all services support them.
 
     * Create a new application in your IdP and configure the widget to use the correct application ID.
     * Configure the end service with the application credentials, in order to receive the authentication requests.
+    * Make sure the application is able to get a JWT from the token URL. This is how the application authenticates the user.
 </details>
 
 ---
