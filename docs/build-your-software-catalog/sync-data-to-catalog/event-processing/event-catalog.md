@@ -18,7 +18,7 @@ Port acts as an event catalog for event-driven architectures, serving as a centr
 - Document all event schemas and APIs, enabling developers to have the information needed to write new services and troubleshoot bugs.
 - Automatically ingest schemas, producer/consumer relationships, and APIs, ensuring your catalog is current with your actual architecture.
 
-## Architectural Overview
+## Architectural overview
 
 <Prerequisites />
 
