@@ -53,7 +53,7 @@ You may select the blueprints depending on what you want to track in your Humani
 Fork our [humanitec integration repository](https://github.com/port-labs/humanitec-integration-script.git) to get started.
 :::
 1. Create the following Python files in a folder name `integration` folder at the root of your GitHub repository:
-    1. `main.py` - Orchestrates the synchronization of data between Humanitec and Port, ensuring that resource entities are accurately mirrored and updated across both platforms.
+    1. `main.py` - Orchestrates the synchronization of data from Humanitec to Port, ensuring that resource entities are accurately mirrored and updated on your port catalog.
     2. `requirements.txt` - This file contains the dependencies or necessary external packages need to run the integration
   
 <details>
@@ -70,7 +70,7 @@ Fork our [humanitec integration repository](https://github.com/port-labs/humanit
 
 </details>
 
-2. Create a the following Python files in a folder named `client` at the base directory of the `integration` folder:
+2. Create the following Python files in a folder named `client` at the base directory of the `integration` folder:
     1. `port_client.py` – Manages authentication and API requests to Port, facilitating the creation and updating of entities within Port's system.
     2. `humanitec_client.py` – Handles API interactions with Humanitec, including retrieving data with caching mechanisms to optimize performance.
     3. `cache.py` - Provides an in-memory caching mechanism with thread-safe operations for setting, retrieving, and deleting cache entries asynchronously.
