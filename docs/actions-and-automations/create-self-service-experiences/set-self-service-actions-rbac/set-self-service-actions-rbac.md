@@ -170,21 +170,12 @@ Use this URL in the `url` field of the `approvalNotification` object.
 
 ### Define approvers
 
-You can define approvers for an action by `role`, `user`, or `team`.  
+You can assign specific `users` or `teams` to be approvers for an action.  
+After toggling on the `Enforce manual approval` option, you can add approvers by selecting them from the relevant dropdown menu (`Port Users` and/or `Port Teams`).
 
+You can also choose whether **all** specified approvers must approve the action, or if only **one** (any) of them is enough.
 
-In this example, only users with the Admin role can approve the `clone_env` action:
+<img src='/img/self-service-actions/rbac/chooseApprovers.png' width='50%' border='1px' />
+<br/><br/>
 
-```json showLineNumbers
-{
-  "actions": {
-    "clone_env": {
-      "approve": {
-        "roles": ["Admin"],
-        "users": [],
-        "teams": []
-      }
-    }
-  }
-}
-```
+Alternatively, you can allow anyone with the `Admin` role to approve the action, by enabling the `Admins` toggle.
