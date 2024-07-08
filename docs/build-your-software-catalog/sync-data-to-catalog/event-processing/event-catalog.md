@@ -14,11 +14,13 @@ Port acts as an event catalog for event-driven architectures, serving as a centr
 
 ## Common use cases
 
-- Map relationships between event producers and consumers, allowing engineers to quickly understand your event-driven architecture.
-- Document all event schemas and APIs, enabling developers to have the information needed to write new services and troubleshoot bugs.
-- Automatically ingest schemas, producer/consumer relationships, and APIs, ensuring your catalog is current with your actual architecture.
+- Map relationships between event producers and consumers to allow engineers to quickly understand your event-driven architecture.
+- Document all event schemas and APIs so developers have the information needed to write new services and troubleshoot bugs.
+- Automatically ingest schemas, producer/consumer relationships, and APIs to ensure your catalog is current with your actual architecture.
 
-## Architectural overview
+## Data model overview
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-data-model.png' width='80%' />
 
 <Prerequisites />
 
