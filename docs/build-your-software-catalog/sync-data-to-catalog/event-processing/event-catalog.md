@@ -1,6 +1,5 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_kafka_one_time_docker_params.mdx"
@@ -14,15 +13,28 @@ Port acts as an event catalog for event-driven architectures, serving as a centr
 
 ## Common use cases
 
-- Map relationships between event producers and consumers to allow engineers to quickly understand your event-driven architecture.
-- Document all event schemas and APIs so developers have the information needed to write new services and troubleshoot bugs.
-- Automatically ingest schemas, producer/consumer relationships, and APIs to ensure your catalog is current with your actual architecture.
+- Map relationships between events, producers, and consumers in your event-driven architecture.
+- Document all event schemas and APIs so developers have the information needed to write new services.
+- Automatically ingest schemas, producer/consumer relationships, and APIs to ensure the catalog is up to date.
 
 ## Data model overview
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-data-model.png' width='80%' />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-data-model.png' width='90%' />
 
-<Prerequisites />
+Your architecture in Port will consist of four blueprints: `Producer`, `Event Pipeline`, `Event`, and `Consumer`. The structure of these blueprints may vary based on your architecture and may be different than the examples provided in this guide.
+
+### Producer
+
+- The `Producer` blueprint represents services that will generate events. It has a [relation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) connecting it to the event pipeline blueprint.
+  
+### Event pipeline
+
+- The `Event Pipeline` blueprint represents services that will act as a queue for events and route them to the proper destination. The `Event Pipeline` blueprint has one relation with the `Event` blueprint for events that are ingested by the pipeline, another relation with the `Event` blueprint for events that are produced from the pipeline, and finally the pipeline has a relation connecting it to the `Consumer` blueprint. 
+
+### Event
+
+- The `Event`
+
 
 ## Installation
 
