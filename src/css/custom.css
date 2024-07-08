@@ -282,10 +282,6 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/main-menu/sso-and-rbac.svg');
 }
 
-.sidebar-menu-usage-methods .menu__link::before {
-  content: url('/static/img/sidebar-icons/main-menu/usage-methods.svg');
-}
-
 .sidebar-menu-integrations-index .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/integrations-index.svg');
 }
