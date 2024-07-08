@@ -253,7 +253,7 @@ Click on the `Test mapping` button to test your mapping against the example data
 
 In any case, the structure of the available data looks like this:
 <details>
-<summary><b>Click to expand</b></summary>
+<summary><b>Available data example (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -395,7 +395,7 @@ In any case, the structure of the available data looks like this:
         "prepare": "husky install"
       },
       "dependencies": {
-        "@docsly/react": "1.9.1",
+        "@docsly/react": "^1.9.1",
         "@docusaurus/core": "^3.4.0",
         "@docusaurus/plugin-client-redirects": "^3.4.0",
         "@docusaurus/plugin-google-tag-manager": "^3.4.0",
@@ -486,8 +486,9 @@ Once the array is parsed, we can use the `item` key to refer to each item in the
 #### Limitations
 
 - Currently only files up to 512KB in size are supported.
-- Only JSON and YAML formats are supported.
+- Only JSON and YAML formats are automatically parsed. Other file formats can be ingested as raw files.
 - GLOB patterns are supported for file pattern matching, but wildcards at the end (e.g., `**/*`) are not allowed, in order to prevent matching all files indiscriminately.
+- Currently only the default branch of the repository is supported.
 
 ## Permissions
 
