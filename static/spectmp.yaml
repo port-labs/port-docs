@@ -197,7 +197,7 @@ components:
         - combinator
         - rules
       additionalProperties: false
-      title: /schemas/entitiesQuery
+      title: object
     def-1:
       type: object
       properties:
@@ -8142,6 +8142,138 @@ paths:
       security:
         - bearer:
             - update:actions
+      responses:
+        "200":
+          description: Default Response
+  "/v1/actions/{action_identifier}/permissions":
+    get:
+      summary: Get an action's permissions
+      description: This route allows you to fetch the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
+      tags:
+        - Actions
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: action_identifier
+          description: The identifier of the action you want to fetch permissions for.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Default Response
+    patch:
+      summary: Update an action's permissions
+      description: This route allows you to update the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
+      tags:
+        - Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                execute:
+                  type: object
+                  description: An object used to define who can execute the action.<br/>
+                  properties:
+                    users:
+                      type: array
+                      description: The email addresses of the users who can execute the action.<br/>
+                      items:
+                        type: string
+                    roles:
+                      type: array
+                      description: The roles that can execute the action.<br/>
+                      items:
+                        type: string
+                    teams:
+                      type: array
+                      description: The names of the teams whose members can execute the action.<br/>
+                      items:
+                        type: string
+                    ownedByTeam:
+                      type: boolean
+                      description: Relevant only for [day-2 actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/setup-ui-for-action/#basic-details). If `true`, any member of the team that the entity belongs to can execute the action.<br/>
+                    policy:
+                      description: An optional custom policy the determines if action execution is allowed.<br/>See instructions and examples [here](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/#instructions).
+                      type:
+                        - object
+                        # - "null"
+                      properties:
+                        queries:
+                          type: object
+                          description: One or more queries to fetch data from your software catalog.<br/>
+                          minProperties: 1
+                          additionalProperties:
+                            $ref: "#/components/schemas/def-0"
+                        conditions:
+                          description: "`JQ` expressions that run against the provided queries, and resolve to a boolean value (`true` = allowed to execute).<br/>"
+                          type: array
+                          items:
+                            type: string
+                            minLength: 1
+                          minItems: 1
+                      required:
+                        - queries
+                        - conditions
+                      additionalProperties: false
+                  additionalProperties: false
+                approve:
+                  type: object
+                  description: An object used to define who can approve the action.<br/>
+                  properties:
+                    users:
+                      type: array
+                      description: The email addresses of the users who can approve the action.<br/>
+                      items:
+                        type: string
+                    roles:
+                      type: array
+                      description: The roles that can approve the action.<br/>
+                      items:
+                        type: string
+                    teams:
+                      type: array
+                      description: The names of the teams whose members can approve the action.<br/>
+                      items:
+                        type: string
+                    policy:
+                      description: An optional custom policy the determines who can approve the action.<br/>See instructions and examples [here](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/#instructions).
+                      type:
+                        - object
+                        # - "null"
+                      properties:
+                        queries:
+                          description: One or more queries to fetch data from your software catalog.<br/>
+                          type: object
+                          minProperties: 1
+                          additionalProperties:
+                            type: object
+                            $ref: "#/components/schemas/def-0"
+                        conditions:
+                          description: "`JQ` expressions that run against the provided queries, and resolve to an array of strings (email addresses of users who can approve the action).<br/>"
+                          type: array
+                          items:
+                            type: string
+                            minLength: 1
+                          minItems: 1
+                      required:
+                        - queries
+                        - conditions
+                      additionalProperties: false
+                  additionalProperties: false
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: action_identifier
+          description: The identifier of the action you want to update permissions for.<br/>
+          required: true
+      security:
+        - bearer: []
       responses:
         "200":
           description: Default Response

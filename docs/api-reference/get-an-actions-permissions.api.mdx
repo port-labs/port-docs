@@ -1,0 +1,101 @@
+---
+id: get-an-actions-permissions
+title: "Get an action's permissions"
+description: "This route allows you to fetch the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/)."
+sidebar_label: "Get an action's permissions"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVE1v2zAM/SuCLmuBJE52NIoC2QeKYZei605BMCg2XQu1LZei0maG//tIfzROl+204y6ObD5S5Ht8aXQKPkFbk3WVjvV9br1CFwiUKQr37NXBBUVOZUBJrigHVQOW1nvGe+UyZZSHIpt7wL1NOCuRSourHUbX3ePeqQIMVqp0yOEd1x5A6u7D+uNMJTkkj0o+S/VN6pJQQkVGINuLnKj2cRTxZ794AKod0sK6qC/h56ZK5yaQKzu8jxIEQzCf9jSHF+7ZQpWAjzzQaXAshDuTRJcLPdNkHryON3rdR/R2pmuDpgQClECjPfdcGh03mg41MG2e0FYPup1pKyzWhnIuVHEOv/U3/LApT2UzC8iht6yDOoaFVaFiYEkEeDYVHVWYKpA57MnmoghPwSKkOiYM0HLfHpKAlg5d1zuWgS+PN1sJIfiaC4CXMd4vl/Jz2tUnyEwoSN0NSN3yfMxC7vgGzVroWT9prKP9alQkan6bt40mHWvpCvcjlQELzh9VNrWdiMx8ngMEf4KZjPlNdOknGod9lYgzv8LhqMo68CBof3Z7owfhcjApZ7WdkJnr0i0Vgr/l+9T69gtDpfmeotViKaLXzlNpKoEP1W+At7waJHzn1SkBJzw3OnEVMVf/7dfbr9eL4IWiujCsCzPcbUEzrNtG71cMHFL5FJ+z2JRy3pGcNZLUptkZD9+xaFv5/BQAxR583Bu0Zidi816m1suZNz0zhYe/aHZxN9juUv0jH59lYFzjSnZ4b4ogb3x85KU+9x/Tbqduvfl8L4wFoW9qicfOEsNB5j57zVuv9HfKUxx6NuWKraLYcNev8D7yx4TBeiNaht62bfsLbcJQnA==
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an action's permissions"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions/{action_identifier}/permissions"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"action_identifier","description":"The identifier of the action you want to fetch permissions for.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
