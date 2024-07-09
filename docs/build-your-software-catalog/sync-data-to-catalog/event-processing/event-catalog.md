@@ -48,14 +48,14 @@ Your architecture in Port will consist of four blueprints: `Producer`, `Event Pi
 If you already have blueprints in Port for the services that are serving as your event producer, event consumer, and event pipeline you can skip the deployment for those blueprints and deploy just the event blueprint
 :::
 
-To create an event catalog, we first need to create blueprints for the  `Producer`, `Event Pipeline`, `Event`, and `Consumer` blueprints in our data model. The exact configuration of the blueprints will differ from the examples provided here depending on your environment.
+To create an event catalog, we first need to create the  `Producer`, `Event Pipeline`, `Event`, and `Consumer` blueprints in our data model. This includes defining the relations between the blueprints in your architecture in the `relations` section of each JSON. Examples for each blueprint along with the relation configuration are provided below, but the exact configuration of your blueprints will differ from the examples provided here depending on your architecture.
 
 :::tip Don't know how to deploy blueprints?
 Check out this [guide](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) on how to deploy blueprints in Port
 :::
 
 <details>
-<summary>Example Producer blueprint</summary>
+<summary>Example producer blueprint</summary>
 
 ```json showLineNumbers
 {
@@ -150,7 +150,7 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
 </details>
 
 <details>
-<summary>Example Event Pipeline blueprint</summary>
+<summary>Example event pipeline blueprint</summary>
 
 ```json showLineNumbers
 {
@@ -247,6 +247,24 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
   "calculationProperties": {},
   "aggregationProperties": {},
   "relations": {
+    "event_i_produce": {
+      "title": "Event I Produce",
+      "target": "event",
+      "required": false,
+      "many": false
+    },
+    "event_i_consume": {
+      "title": "Event I Consume",
+      "target": "event",
+      "required": false,
+      "many": false
+    },
+    "domain": {
+      "title": "Domain",
+      "target": "domain",
+      "required": false,
+      "many": false
+    }
   }
 }
 ```
@@ -254,7 +272,123 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
 
 
 <details>
-<summary>Example Event blueprint</summary>
+<summary>Example event blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "event",
+  "title": "Event",
+  "icon": "Mail",
+  "schema": {
+    "properties": {
+      "async_api": {
+        "type": "object",
+        "title": "AsyncAPI",
+        "icon": "ApiDoc",
+        "spec": "async-api"
+      },
+      "repository": {
+        "type": "string",
+        "title": "Repository",
+        "icon": "Github",
+        "format": "url"
+      },
+      "readme": {
+        "icon": "Docs",
+        "type": "string",
+        "title": "README",
+        "format": "markdown"
+      },
+      "code_samples": {
+        "type": "string",
+        "title": "Code Samples",
+        "icon": "Docs",
+        "format": "markdown"
+      },
+      "mermaid_diagram": {
+        "icon": "DefaultProperty",
+        "type": "string",
+        "title": "Mermaid",
+        "format": "markdown"
+      },
+      "labels": {
+        "icon": "DefaultProperty",
+        "type": "array",
+        "title": "Labels",
+        "items": {
+          "enum": [
+            "Auditing",
+            "Critical",
+            "Data Lake"
+          ],
+          "enumColors": {
+            "Auditing": "green",
+            "Critical": "red",
+            "Data Lake": "blue"
+          },
+          "type": "string"
+        }
+      },
+      "version": {
+        "type": "string",
+        "title": "Version",
+        "icon": "Rocket"
+      },
+      "deprecated": {
+        "type": "boolean",
+        "title": "Deprecated?",
+        "default": false
+      },
+      "deprecation_date": {
+        "type": "string",
+        "title": "Deprecation Date",
+        "icon": "Clock",
+        "format": "date-time"
+      },
+      "event_schema": {
+        "type": "string",
+        "title": "Event Schema",
+        "icon": "Docs",
+        "format": "markdown"
+      },
+      "number_of_consumers": {
+        "title": "Number of Consumers",
+        "icon": "DefaultProperty",
+        "type": "number"
+      },
+      "number_of_producers": {
+        "title": "Number Of Producers",
+        "icon": "DefaultProperty",
+        "type": "number"
+      }
+    },
+    "required": [
+      "deprecated"
+    ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "consumers": {
+      "title": "Consumers",
+      "target": "service",
+      "required": false,
+      "many": true
+    },
+    "producers": {
+      "title": "Producers",
+      "target": "service",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+</details>
+
+<details>
+<summary>Example consumer blueprint</summary>
 
 ```json showLineNumbers
 {
