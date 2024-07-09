@@ -1,0 +1,55 @@
+<details>
+<summary> Humanitec Environment Blueprint</summary>
+
+```json showLineNumbers
+
+{
+  "identifier": "humanitecEnvironment",
+  "title": "Humanitec Environment",
+  "icon": "Environment",
+  "schema": {
+    "properties": {
+      "type": {
+        "title": "Type",
+        "icon": "DefaultProperty",
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Creation Date",
+        "description": "The date and time when the environment was created."
+      },
+      "lastDeploymentStatus": {
+        "type": "string",
+        "title": "Last Deployment Status",
+        "description": "The status of the last deployment."
+      },
+      "lastDeploymentDate": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Last Deployment Date",
+        "description": "The date and time of the last time the environment was deployed."
+      },
+      "lastDeploymentComment": {
+        "type": "string",
+        "title": "Last Deployment Comment",
+        "description": "comment on the last deployment"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "humanitecApplication": {
+      "title": "Application",
+      "target": "humanitecApplication",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+</details>
