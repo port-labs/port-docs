@@ -361,7 +361,7 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
-        -e OCEAN__SEND_RAW_EXAMPLES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__LINEAR_API_KEY=$OCEAN__INTEGRATION__CONFIG__LINEAR_API_KEY \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
