@@ -7,16 +7,15 @@ import HumanitecApplicationBlueprint from './blueprints/_humanitec_application_b
 ## Overview
 This self service guide provides a comprehensive walkthrough on how to create an application in Humanitec from Port using Port's self service actions.
 
-## Prerequisites
-
+:::tip Prerequisites
 1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
 2. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
-   - `HUMANITEC_API_TOKEN` - [HUMANITEC API TOKEN](https://developer.humanitec.com/platform-orchestrator/reference/api-references/#authentication)
-   - `HUMANITEC_ORG_ID` - [HUMANITEC ORGANIZATION ID](https://developer.humanitec.com/concepts/organizations/)
+   - `HUMANITEC_API_KEY` - [Humanitec API Key](https://developer.humanitec.com/platform-orchestrator/reference/api-references/#authentication)
+   - `HUMANITEC_ORG_ID` - [Humanitec Organization ID](https://developer.humanitec.com/concepts/organizations/)
    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-
 3. Optional - Install Port's Humanitec integration [learn more](/docs/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/humanitec/humanitec.md)
+:::
 
 :::tip Humanitec Integration
 This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your Humanitec Application.
@@ -68,7 +67,7 @@ jobs:
         with:
           url: 'https://api.humanitec.io/orgs/${{secrets.HUMANITEC_ORG_ID}}/apps'
           method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.HUMANITEC_API_TOKEN }}"}'
+          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.HUMANITEC_API_ KEY
           data: >-
             {
               "env": {
@@ -184,8 +183,8 @@ Create a new self service action using the following JSON configuration.
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "mk-armah",
-    "repo": "jira-actions",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "create-humanitec-application.yaml",
     "workflowInputs": {
       "application_name": "{{ .inputs.\"application_name\" }}",

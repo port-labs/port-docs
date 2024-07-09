@@ -7,16 +7,16 @@ import HumanitecApplicationBlueprint from './blueprints/_humanitec_application_b
 ## Overview
 This self service guide provides a comprehensive walkthrough on how to deploy an application in Humanitec from Port using Port's self service actions.
 
-## Prerequisites
+:::tip Prerequisites
 
 1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
 2. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
-   - `HUMANITEC_API_TOKEN` - [HUMANITEC API TOKEN](https://developer.humanitec.com/platform-orchestrator/reference/api-references/#authentication)
-   - `HUMANITEC_ORG_ID` - [HUMANITEC ORGANIZATION ID](https://developer.humanitec.com/concepts/organizations/)
+   - `HUMANITEC_API_KEY` - [Humanitec API Key](https://developer.humanitec.com/platform-orchestrator/reference/api-references/#authentication)
+   - `HUMANITEC_ORG_ID` - [Humanitec Organization ID](https://developer.humanitec.com/concepts/organizations/)
    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-
 3. Optional - Install Port's Humanitec integration [learn more](/docs/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/humanitec/humanitec.md)
+:::
 
 :::tip Humanitec Integration
 This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your Humanitec Application.
@@ -63,7 +63,7 @@ jobs:
         with:
           url: 'https://api.humanitec.io/orgs/${{secrets.HUMANITEC_ORG_ID}}/apps/${{fromJson(inputs.port_context).entity}}/envs/${{inputs.environment}}/deploys'
           method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.HUMANITEC_API_TOKEN }}"}'
+          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.HUMANITEC_API_KEY }}"}'
 
       - name: Log Deploy Application Request Failure 
         if: failure()
@@ -164,7 +164,7 @@ Now you should see the `Deploy Application` action in the self-service page. ðŸŽ
 
 ## Let's test it!
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Go to the [Self Service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `Deploy Application` action
 3. Choose the humanitec application you want to deploy (In case you didn't install the [Humanitec integration](/docs/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/humanitec/humanitec.md), it means you don't have any Humanitec applications in Port yet, so you will need to create one manually in Port to test this action)
 4. Select the new application

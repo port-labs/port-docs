@@ -7,16 +7,15 @@ import HumanitecWorkloadBlueprint from './blueprints/_humanitec_workload_bluepri
 ## Overview
 This self service guide provides a comprehensive walkthrough on how to create a workload profile in Humanitec from Port using Port's self service actions.
 
-## Prerequisites
-
+:::tip Prerequisites
 1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
 2. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
-   - `HUMANITEC_API_TOKEN` - [HUMANITEC API TOKEN](https://developer.humanitec.com/platform-orchestrator/reference/api-references/#authentication)
-   - `HUMANITEC_ORG_ID` - [HUMANITEC ORGANIZATION ID](https://developer.humanitec.com/concepts/organizations/)
+   - `HUMANITEC_API_KEY` - [Humanitec API Key](https://developer.humanitec.com/platform-orchestrator/reference/api-references/#authentication)
+   - `HUMANITEC_ORG_ID` - [Humanitec Organization ID](https://developer.humanitec.com/concepts/organizations/)
    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-
 3. Optional - Install Port's Humanitec integration [learn more](/docs/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/humanitec/humanitec.md)
+:::
 
 :::tip Humanitec Integration
 This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your Humanitec Workload Profile.
@@ -67,7 +66,7 @@ jobs:
         with:
           url: 'https://api.humanitec.io/orgs/${{secrets.HUMANITEC_ORG_ID}}/workload-profiles'
           method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.HUMANITEC_API_TOKEN }}"}'
+          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.HUMANITEC_API_KEY }}"}'
           data: >-
             {
               "id": "${{ github.event.inputs.id }}",
@@ -195,8 +194,8 @@ Create a new self service action using the following JSON configuration.
   },
   "invocationMethod": {
     "type": "GITHUB",
-    "org": "mk-armah",
-    "repo": "jira-actions",
+    "org": "<GITHUB_ORG>",
+    "repo": "<GITHUB_REPO>",
     "workflow": "create-workload-profile.yaml",
     "workflowInputs": {
       "id": "{{ .inputs.\"id\" }}",
@@ -220,7 +219,7 @@ Now you should see the `Create Workload Profile` action in the self-service page
 
 ## Let's test it!
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Go to the [Self Service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `Create Workload Profile` action
 3. Enter the required details for `Workload Profile ID`, `Spec Definition`, `Workload Profile Chart ID`,and `Workload Profile Chart Version`.
 5. Click on `Execute`
