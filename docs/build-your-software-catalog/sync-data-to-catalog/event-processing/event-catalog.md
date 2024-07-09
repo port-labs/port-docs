@@ -19,7 +19,7 @@ Port acts as an event catalog for event-driven architectures, serving as a centr
 
 ## Data model overview
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-data-model.png' width='90%' />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-data-model.png' width='100%' />
 
 Your architecture in Port will consist of four blueprints: `Producer`, `Event Pipeline`, `Event`, and `Consumer`. The structure of these blueprints may vary based on your architecture and may be different than the examples provided in this guide.
 
@@ -446,4 +446,4 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
 
 After defining your data model in Port for the event catalog, you'll need to create a dashboard to understand and track the different events in your event catalog. This dashboard serves as a one-stop shop to for documentation, event/API schemas, consumer/producer relations, and event-related self-service actions. 
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-events-dashboard.png' width='90%' />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-events-dashboard.png' width='100%' />
