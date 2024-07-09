@@ -10,7 +10,7 @@ sidebar_class_name: custom-sidebar-item sidebar-menu-port-overview
 
 <center>
 
-<iframe width="50%" height="350" src="https://www.youtube.com/embed/z2kR9HSRIpQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/z2kR9HSRIpQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 
@@ -23,9 +23,11 @@ The [Getting started](/quickstart) page will walk you through the different comp
 
 Welcome to Port! :wave:
 
-Internal developer portals need a context-rich software catalog with maturity and quality scorecards. They also must support comprehensive developer self-service actions. Port has it all.
+Port is an internal developer portal solution, allowing you to create compelling developer experiences using the building blocks you need, according to your stack, developer personas and culture.
 
-![Developer Platform complete vision](../static/img/port-overview/port-stack.png)
+<center>
+<img src="/img/port-overview/port-stack.png" width="80%" border='1px' />
+</center>
 
 ### Port product pillars
 
@@ -58,3 +60,11 @@ With Port, you can set up automations to automatically respond to events from yo
 R&D Insights & Reports is a pillar of port that provides data-driven insights and analytical reports on the development process. It allows teams, developers, and management to make informed decisions based on metrics, trends, and usage patterns to improve the development process, optimize performance, and reduce cost.
 
 [Insights & Reports live demo](https://demo.getport.io/svp_engineering) 🎬
+
+## Usage methods
+
+Port is a flexible platform that allows you to build, configure, use and delete components of your portal using several methods:
+
+- [Web UI](https://app.getport.io).
+- [API](/api-reference/port-api).
+- IaC - [Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/latest) and [Pulumi provider](https://www.pulumi.com/registry/packages/port/).
