@@ -54,6 +54,7 @@ helm upgrade --install azure port-labs/port-ocean \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
+  	--set sendRawDataExamples=true  \
 	--set scheduledResyncInterval=1440 \
 	--set integration.identifier="azure"  \
 	--set integration.type="azure"  \
@@ -406,6 +407,8 @@ You should have the following information ready:
 | `OCEAN__EVENT_LISTENER`                           | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                             |
 | `OCEAN__INTEGRATION__IDENTIFIER`                  | The identifier of the integration.                                                                                                    |
 | `OCEAN__INTEGRATION__TYPE`                        | should be set to `azure`.                                                                                                             |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`                 | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |
+| `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                |
 
 </details>
 
