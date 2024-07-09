@@ -37,6 +37,8 @@ In this step-by-step guide, we will create Port blueprints and actions, which wi
                         "iam:CreateRole",
                         "iam:UpdateRole",
                         "iam:DeleteRole",
+                        "iam:CreatePolicy",
+                        "iam:DeletePolicy",
                         "iam:AttachRolePolicy",
                         "iam:DetachRolePolicy"
                     ],
@@ -272,7 +274,7 @@ jobs:
       - name: Create JSON for permissions
         id: create-jsons
         run: |
-          permissions=$(echo '${{ inputs.properties }}' | jq -c '.permissions')
+          permissions=$(echo '${{ inputs.properties }}' | jq -c -r '[.inputs.permissions[].identifier]')
           echo "PERMISSIONS_ARRAY=${permissions}" >> $GITHUB_OUTPUT
           jq -r --argjson permissions "${permissions}" --arg resource "${{fromJson(inputs.port_context).entity.identifier}}/*" '.Statement[0].Action=$permissions | .Statement[0].Resource=$resource' .github/templates/iamPolicyDocument.json > temp_policy_document.json
           jq -r --arg aws_acc_id "${{ secrets.AWS_ACCOUNT_ID }}" '.Statement[0].Principal.AWS="arn:aws:iam::"+$aws_acc_id+":root"' .github/templates/iamTrustPolicy.json > temp_trust_policy.json
@@ -548,14 +550,12 @@ Let's create the Port actions to trigger the workflows we just created:
     "repo": "port-iam-permissions",
     "workflow": "delete-iam-permissions.yaml",
     "workflowInputs": {
-      "port_payload": {
-        "properties": "{{ .inputs }}",
-        "port_context": {
-          "blueprint": "{{.action.blueprint}}",
-          "entity": "{{.entity }}",
-          "runId": "{{.run.id}}",
-          "trigger": "{{ .trigger }}"
-        }
+      "properties": "{{ .inputs }}",
+      "port_context": {
+        "blueprint": "{{ .action.blueprint }}",
+        "entity": "{{.entity }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
       }
     },
     "reportWorkflowStatus": true
@@ -695,5 +695,4 @@ See the [Next Steps](#next-steps) section to understand how to take this guide o
 ## Next Steps
 - **Install Port's [AWS exporter](/docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)** - You can use Port's AWS exporter to automatically populates your software catalog from your AWS environement. You can use the AWS exporter to populate your `AWS Resources` blueprints with different AWS resources.
 - **Enforce [manual approval](/docs/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/set-self-service-actions-rbac.md#configure-manual-approval-for-actions) for your Port actions** - To have control over who is provisioning and revoking permissions, you can set up manual approval for your actions. This will enable you to provide a request-approve flow for provisioning and revoking permissions using Port.
-<!-- TODO: Remove the `coming soon` when automiations comes out -->
-- ***Coming soon* ⏱️: Temporary permissions using [Automations](https://roadmap.getport.io/ideas/p/automation) and the `Timer` property** - With the automations feature, you will be able to automatically trigger actions using events from the catalog. You can use the `Timer Expired` event to trigger the `Revoke permissions` action and create a temporary permissions experience.
+- **Temporary permissions using [Automations](https://roadmap.getport.io/ideas/p/automation) and the `Timer` property** With the automations feature, you will be able to automatically trigger actions using events from the catalog. You can use the `Timer Expired` event to trigger the `Revoke permissions` action and create a temporary permissions experience.

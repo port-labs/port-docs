@@ -1,0 +1,131 @@
+---
+id: get-actions-automations
+title: "Get actions/automations"
+description: "This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>"
+sidebar_label: "Get actions/automations"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVm1v2zYQ/isE92UFrCjJR6MoYMxCZrTNDM8FVgRGQkkni4gkqiQl1zP833ckJVt2ZGOtU2AD+kU2747He3nuZUNjUJHkpeaioEM6T7kiUlQaCMsysVJkLSqiBUlARykRBRAhSS4kEAVZ4imQNY9QODIKFGFF7KMAq7TImSPxwuiQZCqkRrlIVIW+ehtK/539zFMgEb5FVhw/JchEyJwwkoklRzp5Gt2Pn0gIegVQGKPIlwrkmpRMshw0SIVMtHRg3iYSdCWdWMekA3t0yjTBA7qjzduSoxLOuiYJkgFDNdZPFmI4TmkbkCiF6JkYEaPtIRZRlUOhLXvxa6p1qYa+j2R1tQRdYhCuuPAbdR6q8zrq/DfODDqgmi0VHT7QkZOkiwHdu4yMDVX4dM7ocEP1ugRMHpOSrfEqOpSrDl1pyYsl3W6RZZJsA4hyBWoz1+wLjzxGs3nCQSLrGBVA9mxfEZFYb91NvyftvgPOihV6h56daxK+VFxCTIcJyxRsB6/nS5hVUKKE/h53dpeRtEqF2sHa7+LH+sVV+kP8GlAoqtzk/bdZMJoHSBgHHwL3Z/TZu6WLU64LrB1rYq+/Dzs2MS/66jQ2IwlMg9etbw++4nUORQTKV1hjpVdxDyvVayDwS8gUj7wYNOOZevMCIC/BQGaQQW1IosjWBHX1dpRvCm4oBBZuQU9EqKzCDBOHOo4jNEnIk5YVPA2cNTvJXgTYThWCcwTibzLxRZ67TiN5/w5mut8N1LBcgny0Gl8ZdcH9fDL//OjAN0ZGQ/g0HR8SHCoNYT75GMwep7M/psEMGcFf08nMMkb3eGr0/T66vwtOY7d1CWqsyl78Wo7fdO9GHNNjQXa+6/QArZPMy5JX3+Chvj2Zqhp7tavIY/XYzhVEFQ6ftW3mIQ4cbFWoE6svHrK26xtBCarEA9jM3V5fm5/DCI0hYVWm0VUnafsjjopU4IMUa5ua6aFTPPj1TTt9qLFB1u08qWSG/LYrsJJ3mgI18XgpUKkDmY5Tf5rYOYtb1/ZoLPl76ERpVKGhkv/ddi8byRTDgLccYhJhr3OdGXm7SYymExP7JsBDenN1beq+FErn2AJQvNF+B7qvio9RtqGRKLSB388t6D+0BTnEaPiq/TJj3PZ2i8NNA+imCNl+TcLJrQ19s8GhBJ9ktt0asitNA/SYKxZmu1o8C4RXXXx6vXnGUuhfwmqGCwnybPFdbvSl680Z60+sXRc48L/fV85Eq7upfWeIXmdhOWNjd1c6b6OTP1pKLsj8D5/0Z7w+3kP+jef7Gb+XXpgDttPQzKuHRXcY3wVzt+alhxPx2U7E5o/pUi2rWHdUH49KZ4L5Ggt7r7zFSUlw3r7biTvOyQvN5G2lTXxwcdv+A6LOn1w=
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get actions/automations"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"action_identifier","description":"The identifier/s of the action/s and/or automation/s you want to fetch.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"blueprint_identifier","description":"The identifier/s of the blueprint/s whose actions/automations you wish to fetch.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string","enum":["CREATE","DELETE","DAY-2"]}},"in":"query","name":"operation","description":"The [operation type/s](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch. Relevant only for self-service actions.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean"},"in":"query","name":"published","description":"If `true`, only published actions/automations will be fetched.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["self-service","automation"]},"in":"query","name":"trigger_type","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string","enum":["ENTITY_CREATED","ENTITY_UPDATED","ENTITY_DELETED","TIMER_PROPERTY_EXPIRED","ANY_ENTITY_CHANGE"]}},"in":"query","name":"trigger_event","description":"The event/s that triggered the automation/s you want to fetch. Relevant only for automations.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

@@ -8,6 +8,10 @@ import TabItem from "@theme/TabItem"
 
 # Installation
 
+:::tip First Time Installation
+For your first deployment of the AWS exporter, we recommend starting with the Helm/scheduled installation method to perform the initial data sync. Once the initial data sync is complete, you can switch to the Terraform deployment method for real-time data sync.
+:::
+
 ## Prerequisites
 
 - You will need your [Port credentials](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) to install the AWS exporter:

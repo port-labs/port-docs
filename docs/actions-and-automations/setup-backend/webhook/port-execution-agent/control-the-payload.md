@@ -6,7 +6,7 @@ import TabItem from "@theme/TabItem"
 :::info How to define your payload
 Port offers two ways to control the payload sent to your backend:  
 - When using the `Port execution agent` (with a GitLab/Webhook backend), use the instructions on this page to define your payload.  
-- In any other case, you can define the payload [directly via Port](/actions-and-automations/setup-backend/#define-the-actions-payload).
+- In any other case, you can define the payload [directly via Port](/actions-and-automations/create-self-service-experiences/setup-the-backend/#define-the-actions-payload).
 :::
 
 Some of the 3rd party applications that you may want to integrate with may not accept the raw payload incoming from
@@ -31,8 +31,8 @@ Setting up the mapping depends on how you install the agent.
 
 To provide the mapping configuration to the agent, run the [installation command](https://docs.getport.io/actions-and-automations/setup-backend/webhook/port-execution-agent/installation-methods/helm#installation) again, and add the following parameter:
 
-```bash showLineNumbers
-        --set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.yml
+```bash
+--set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.yml
 ```
 
 </TabItem>
@@ -58,7 +58,7 @@ controlThePayloadConfig: |
 <TabItem value="docker">
 To provide the mapping to the agent, mount the mapping file to the container by adding the following parameter to the [installation command](https://docs.getport.io/actions-and-automations/setup-backend/webhook/port-execution-agent/installation-methods/docker#installation):
 
-```bash showLineNumbers
+```bash
 -v /PATH/TO/LOCAL/FILE.json:/app/control_the_payload_config.json
 ```
 </TabItem>

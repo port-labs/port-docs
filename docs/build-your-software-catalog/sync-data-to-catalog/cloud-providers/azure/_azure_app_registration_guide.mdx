@@ -1,0 +1,43 @@
+<h2> Azure App Registration Setup </h2>
+
+To ingest resources from Azure, you will need to create an Azure App Registration and assign it read permissions to the resources you want to ingest.
+
+1. Create an Azure App Registration in the Azure portal.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/1-app-registration.png' width='85%' border='1px' /> <br/><br/>
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/2-register-an-application.png' width='85%' border='1px' /> <br/><br/>
+
+2. Copy the `Application (client) ID` and `Directory (tenant) ID` from the App Registration.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/3-result-of-app-registration.png' width='85%' border='1px' /> <br/><br/>
+
+3. Create a client secret for the App Registration.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/4-creating-client-secret.png' width='85%' border='1px' /> <br/><br/>
+
+4. Copy the `Application (client) Secret` from the App Registration.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/5-copy-secret-value.png' width='85%' border='1px' /> <br/><br/>
+
+5. Create a new role assignment for the App Registration. Go to the `Access control (IAM)` section of the subscription
+	 you want to ingest resources from.<br/><br/>Click on `Add role assignment`.
+
+:::info Multi Account Support
+It is supported to ingest resources from multiple subscriptions, for that you will have to repeat the role assignment
+for each subscription you want to ingest resources from.
+:::
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/6-add-role-assignment.png' width='85%' border='1px' /> <br/><br/>
+
+6. Assign the `Reader` role to the App Registration.
+
+:::tip Permissions
+The Reader role is recommended for querying all resources in your Azure subscription. You can restrict permissions to specific resource groups or types by assigning a different role. If you do this, remember to adjust permissions when adding more resources to the catalog.
+Basic permissions required for ingesting resources from Azure include:
+- `Microsoft.Resources/subscriptions/read` (to list the accessible subscriptions)
+- `Microsoft.Resources/subscriptions/resourceGroups/read` (to list the accessible resource groups)
+- `read`/`list` permissions to the resources you want to ingest
+:::
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/app-registration/7-assign-member-to-role.png' width='85%' border='1px' /> <br/><br/>

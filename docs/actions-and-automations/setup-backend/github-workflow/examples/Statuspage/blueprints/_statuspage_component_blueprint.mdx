@@ -1,0 +1,80 @@
+<details>
+<summary>Statuspage Component Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "statuspageComponent",
+  "title": "Statuspage Component",
+  "icon": "Box",
+  "description": "A component representing a specific part of a system or service on a Statuspage.",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "Description of the component (optional)"
+      },
+      "status": {
+        "type": "string",
+        "title": "Current Status",
+        "enum": [
+          "operational",
+          "degraded_performance",
+          "partial_outage",
+          "major_outage"
+        ],
+        "enumColors": {
+          "operational": "green",
+          "degraded_performance": "yellow",
+          "partial_outage": "orange",
+          "major_outage": "red"
+        },
+        "description": "The operational status of the component"
+      },
+      "position": {
+        "type": "number",
+        "title": "Position",
+        "description": "Order of the component within its group"
+      },
+      "showcase": {
+        "type": "boolean",
+        "title": "Showcase",
+        "description": "Whether to display the component prominently"
+      },
+      "only_show_if_degraded": {
+        "type": "boolean",
+        "title": "Only Show If Degraded",
+        "description": "Whether to display the component only when degraded"
+      },
+      "startDate": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Start Date",
+        "description": "The date when the component tracking started"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At",
+        "description": "When the component was created"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Last Updated At",
+        "description": "When the component was last updated"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "statuspage": {
+      "target": "statuspage",
+      "required": false,
+      "title": "Status Page",
+      "many": false
+    }
+  }
+}
+```
+</details>
