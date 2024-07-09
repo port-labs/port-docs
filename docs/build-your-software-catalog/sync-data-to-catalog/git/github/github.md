@@ -465,7 +465,7 @@ resources:
         - path: '**/package.json'
         # Note that in this case we are fetching from a specific repository
         - repos:
-            - MyRepo
+            - "MyRepo"
     port:
       itemsToParse: .file.content.dependencies | to_entries
       entity:
