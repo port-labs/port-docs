@@ -205,7 +205,8 @@ Now you should see the `Create Application` action in the self-service page. ðŸŽ
 ## Let's test it!
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
-2. Click on the `Create Application` action
+2. Click on the `Create Application` action.
+
 3. Enter the required details for the `Application Name`, and optionally include `Environment`, `Environment Type`, and `Environment Name`.
 4. Click on `Execute`
 5. Done! wait for the application to be created in Humanitec
