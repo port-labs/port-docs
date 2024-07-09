@@ -59,9 +59,9 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
 
 ```json showLineNumbers
 {
-  "identifier": "lambda",
-  "description": "This blueprint represents an AWS Lambda function in our software catalog",
-  "title": "Lambda",
+  "identifier": "producer",
+  "description": "This blueprint represents an event Producer in our software catalog",
+  "title": "Producer",
   "icon": "Lambda",
   "schema": {
     "properties": {
@@ -139,8 +139,8 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
   "aggregationProperties": {},
   "relations": {
     "service": {
-      "title": "Service",
-      "target": "service",
+      "title": "Event Pipeline",
+      "target": "pipeline",
       "required": false,
       "many": false
     }
@@ -154,8 +154,8 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
 
 ```json showLineNumbers
 {
-  "identifier": "service",
-  "title": "Service",
+  "identifier": "pipeline",
+  "title": "Event Pipeline",
   "icon": "GitLab",
   "schema": {
     "properties": {
@@ -259,9 +259,9 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
       "required": false,
       "many": false
     },
-    "domain": {
-      "title": "Domain",
-      "target": "domain",
+    "consumer": {
+      "title": "Consumer",
+      "target": "consumer",
       "required": false,
       "many": false
     }
@@ -372,13 +372,13 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
   "relations": {
     "consumers": {
       "title": "Consumers",
-      "target": "service",
+      "target": "pipeline",
       "required": false,
       "many": true
     },
     "producers": {
       "title": "Producers",
-      "target": "service",
+      "target": "pipeline",
       "required": false,
       "many": true
     }
@@ -392,9 +392,9 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
 
 ```json showLineNumbers
 {
-  "identifier": "domain",
-  "title": "Domain",
-  "icon": "Customer",
+  "identifier": "consumer",
+  "title": "Consumer",
+  "icon": "User",
   "schema": {
     "properties": {
       "confluence_docs": {
@@ -419,9 +419,9 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
   "calculationProperties": {},
   "aggregationProperties": {
     "number_of_services": {
-      "title": "Number of Services",
+      "title": "Number of Pipelines",
       "type": "number",
-      "target": "service",
+      "target": "pipeline",
       "calculationSpec": {
         "func": "count",
         "calculationBy": "entities"
