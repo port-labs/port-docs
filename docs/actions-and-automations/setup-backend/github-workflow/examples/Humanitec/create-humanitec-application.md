@@ -204,7 +204,8 @@ Now you should see the `Create Application` action in the self-service page. ðŸŽ
 
 ## Let's test it!
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Go to the [Self Service page](https://app.getport.io/self-serve) of your portal.
+
 2. Click on the `Create Application` action.
 
 3. Enter the required details for the `Application Name`, and optionally include `Environment`, `Environment Type`, and `Environment Name`.
