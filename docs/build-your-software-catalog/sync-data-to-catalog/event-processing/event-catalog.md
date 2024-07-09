@@ -138,11 +138,17 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
   "calculationProperties": {},
   "aggregationProperties": {},
   "relations": {
-    "service": {
+    "pipeline": {
       "title": "Event Pipeline",
       "target": "pipeline",
       "required": false,
       "many": false
+    },
+    "event_i_produce": {
+      "title": "Event I Produce",
+      "target": "event",
+      "required": false,
+      "many": true
     }
   }
 }
@@ -249,12 +255,6 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
   "relations": {
     "event_i_produce": {
       "title": "Event I Produce",
-      "target": "event",
-      "required": false,
-      "many": false
-    },
-    "event_i_consume": {
-      "title": "Event I Consume",
       "target": "event",
       "required": false,
       "many": false
@@ -372,15 +372,15 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
   "relations": {
     "consumers": {
       "title": "Consumers",
-      "target": "pipeline",
+      "target": "consumer",
       "required": false,
       "many": true
     },
-    "producers": {
-      "title": "Producers",
+     "pipeline": {
+      "title": "Event Pipeline I'm Sent To",
       "target": "pipeline",
       "required": false,
-      "many": true
+      "many": false
     }
   }
 }
