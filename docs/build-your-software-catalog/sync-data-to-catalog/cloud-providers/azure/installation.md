@@ -54,7 +54,7 @@ helm upgrade --install azure port-labs/port-ocean \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
+  	--set sendRawDataExamples=true  \
 	--set scheduledResyncInterval=1440 \
 	--set integration.identifier="azure"  \
 	--set integration.type="azure"  \
