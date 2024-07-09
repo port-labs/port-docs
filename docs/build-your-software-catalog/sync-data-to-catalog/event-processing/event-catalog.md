@@ -45,10 +45,10 @@ Your architecture in Port will consist of four blueprints: `Producer`, `Event Pi
 ### Blueprint creation
 
 :::tip Already deployed?
-If you already have blueprints in Port for the services that are serving as your event producer, event consumer, and event pipeline you can skip the deployment for those blueprints and deploy just the event blueprint
+If you already have blueprints in Port for your event producer, event consumer, and event pipeline you can skip the deployment for those blueprints and deploy just the event blueprint. You will still have to modify the blueprints to create relations between the different components in your event-driven architecture.
 :::
 
-To create an event catalog, we first need to create the  `Producer`, `Event Pipeline`, `Event`, and `Consumer` blueprints in our data model. This includes defining the relations between the blueprints in your architecture in the `relations` section of each JSON. Examples for each blueprint along with the relation configuration are provided below, but the exact configuration of your blueprints will differ from the examples provided here depending on your architecture.
+To create an event catalog, we first need to create the  `Producer`, `Event Pipeline`, `Event`, and `Consumer` blueprints in our data model. This includes defining the relations between the blueprints in your architecture in the `relations` section of each JSON. Examples for each blueprint including the relation configuration are provided below, but the exact configuration of your blueprints will differ from the examples provided here depending on your architecture.
 
 :::tip Don't know how to deploy blueprints?
 Check out this [guide](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) on how to deploy blueprints in Port
@@ -392,113 +392,52 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
 
 ```json showLineNumbers
 {
-  "identifier": "event",
-  "title": "Event",
-  "icon": "Mail",
+  "identifier": "domain",
+  "title": "Domain",
+  "icon": "Customer",
   "schema": {
     "properties": {
-      "async_api": {
-        "type": "object",
-        "title": "AsyncAPI",
-        "icon": "ApiDoc",
-        "spec": "async-api"
-      },
-      "repository": {
+      "confluence_docs": {
+        "icon": "Confluence",
         "type": "string",
-        "title": "Repository",
-        "icon": "Github",
+        "title": "Docs",
         "format": "url"
       },
-      "readme": {
-        "icon": "Docs",
-        "type": "string",
-        "title": "README",
-        "format": "markdown"
-      },
-      "code_samples": {
-        "type": "string",
-        "title": "Code Samples",
-        "icon": "Docs",
-        "format": "markdown"
-      },
-      "mermaid_diagram": {
-        "icon": "DefaultProperty",
-        "type": "string",
-        "title": "Mermaid",
-        "format": "markdown"
-      },
-      "labels": {
-        "icon": "DefaultProperty",
+      "owners": {
+        "icon": "TwoUsers",
         "type": "array",
-        "title": "Labels",
+        "title": "Owners",
         "items": {
-          "enum": [
-            "Auditing",
-            "Critical",
-            "Data Lake"
-          ],
-          "enumColors": {
-            "Auditing": "green",
-            "Critical": "red",
-            "Data Lake": "blue"
-          },
-          "type": "string"
+          "type": "string",
+          "format": "user"
         }
-      },
-      "version": {
-        "type": "string",
-        "title": "Version",
-        "icon": "Rocket"
-      },
-      "deprecated": {
-        "type": "boolean",
-        "title": "Deprecated?",
-        "default": false
-      },
-      "deprecation_date": {
-        "type": "string",
-        "title": "Deprecation Date",
-        "icon": "Clock",
-        "format": "date-time"
-      },
-      "event_schema": {
-        "type": "string",
-        "title": "Event Schema",
-        "icon": "Docs",
-        "format": "markdown"
-      },
-      "number_of_consumers": {
-        "title": "Number of Consumers",
-        "icon": "DefaultProperty",
-        "type": "number"
-      },
-      "number_of_producers": {
-        "title": "Number Of Producers",
-        "icon": "DefaultProperty",
-        "type": "number"
       }
     },
-    "required": [
-      "deprecated"
-    ]
+    "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "consumers": {
-      "title": "Consumers",
+  "aggregationProperties": {
+    "number_of_services": {
+      "title": "Number of Services",
+      "type": "number",
       "target": "service",
-      "required": false,
-      "many": true
+      "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+      }
     },
-    "producers": {
-      "title": "Producers",
-      "target": "service",
-      "required": false,
-      "many": true
+    "number_of_events": {
+      "title": "Number of Events",
+      "type": "number",
+      "target": "event",
+      "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+      }
     }
-  }
+  },
+  "relations": {}
 }
 ```
 </details>
