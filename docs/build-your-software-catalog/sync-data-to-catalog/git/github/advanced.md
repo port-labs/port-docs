@@ -34,7 +34,7 @@ The following advanced configuration parameters are available and can be added t
 
 <TabItem label="Spec path" value="specPath">
 
-The `specPath` parameter specifies a list of [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)[] that Port's GitHub app will search for `port.yml` files in.
+The `specPath` parameter specifies a list of [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns) that Port's GitHub app will search for `port.yml` files in.
 
 - Default value: `**/port.yml`
 - Use case:

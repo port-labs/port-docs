@@ -9,25 +9,27 @@ import TabItem from "@theme/TabItem"
 
 ## Permissions
 
-- To get Port API credentials, you check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/).
+- To get Port API credentials, you check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 - In order to successfully deploy the AWS integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the above resources.
 
-:::tip
-If you want to:
+:::tip Multiple Account Support
+To do the following:
 
 1. Enable multiple accounts for the integration.
 2. View account data.
 
-Make sure you check out our [Multiple Accounts guide](./multi_account.md)
+Make sure you set up properly using our [Multiple Accounts guide](./multi_account.md)
 :::
 
 Choose one of the following installation methods:
-<Tabs groupId="installation-platforms" queryString="installation-platforms">
-<TabItem value="helm" label="Helm">
+<Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
+<TabItem value="helm" label="Helm (Scheduled)">
 The AWS integration is deployed using Helm on you cluster.
 You can check out the Helm chart [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-ocean).
 
 ## Prerequisites
+
+### IAM User
 
 - [create IAM user with the following permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html):
   - `arn:aws:iam::aws:policy/ReadOnlyAccess`
@@ -45,6 +47,7 @@ helm upgrade --install aws port-labs/port-ocean \
 --set port.baseUrl="https://api.getport.io"  \
 --set initializePortResources=true  \
 --set sendRawDataExamples=true  \
+--set scheduledResyncInterval=1440 \
 --set integration.identifier="my-aws"  \
 --set integration.type="aws"  \
 --set integration.eventListener.type="POLLING"  \
@@ -72,14 +75,42 @@ helm upgrade --install aws port-labs/port-ocean \
 --set port.baseUrl="https://api.getport.io"  \
 --set initializePortResources=true  \
 --set sendRawDataExamples=true  \
+--set scheduledResyncInterval=1440 \
 --set integration.identifier="my-aws"  \
 --set integration.type="aws"  \
 --set integration.eventListener.type="POLLING"  \
 --set podServiceAccount.name="$SERVICE_ACCOUNT"
 ```
 
+### Multiple account support
+
+For running the AWS integration using helm, you'll need to make sure that you have the following: (Check out our [multiple accounts guide](./multi_account.md) for how to get them)
+
+1. An organization role ARN
+2. A Role with Read permissions set-up across your AWS accounts
+3. IRSA or a user with the previous read-permissions role bound to them.
+
+Then, you'll be able to run the integration: (You can switch the `podServiceAccount.name` configuration to your `integration.config.awsAccessKeyId`, `integration.config.awsSecretAccessKey` configurations)
+
+```bash
+helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+helm upgrade --install aws port-labs/port-ocean \
+--set port.clientId="$PORT_CLIENT_ID"  \
+--set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
+--set port.baseUrl="https://api.getport.io"  \
+--set initializePortResources=true  \
+--set sendRawDataExamples=true  \
+--set scheduledResyncInterval=1440 \
+--set integration.identifier="my-aws"  \
+--set integration.type="aws"  \
+--set integration.eventListener.type="POLLING"  \
+--set podServiceAccount.name="$SERVICE_ACCOUNT"  \ 
+--set integration.config.accountReadRoleName="$YOUR_ACCOUNT_READ_ROLE_NAME"  \ 
+--set integration.config.organizationRoleArn="$YOUR_ORGANIZATION_ROLE_ARN"
+```
+
   </TabItem>
-  <TabItem value="terraform" label="Terraform">
+  <TabItem value="terraform" label="Terraform (Real Time)">
   The AWS integration is deployed using Terraform on AWS ECS cluster service.  
   It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
@@ -167,7 +198,7 @@ The AWS integration uses the following AWS infrastructure:
    </center>
 </details>
 </TabItem>
-<TabItem value="on-prem" label="On Premise">
+<TabItem value="on-prem" label="On Prem (Once)">
 
 ## Prerequisites
 
@@ -184,8 +215,8 @@ The AWS integration uses the following AWS infrastructure:
 
 | Variable                                             | Description                                                                                                                                                                                                                                                          |
 | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `OCEAN__PORT__CLIENT_ID`                             | [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                    |
-| `OCEAN__PORT__CLIENT_SECRET`                         | [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                |
+| `OCEAN__PORT__CLIENT_ID`                             | Your Port client ID. |
+| `OCEAN__PORT__CLIENT_SECRET`                         | Your Port client secret. |
 | `OCEAN__PORT__BASE_URL`                              | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                              |
 | `OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID`      | [The AWS Access Key ID of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                      |
 | `OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY`  | [The AWS Secret Access Key of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                  |
