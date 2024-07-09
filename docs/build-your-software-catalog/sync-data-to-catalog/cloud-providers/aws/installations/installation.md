@@ -18,12 +18,12 @@ To do the following:
 1. Enable multiple accounts for the integration.
 2. View account data.
 
-Make sure you set-up properly using our [Multiple Accounts guide](./multi_account.md)
+Make sure you set up properly using our [Multiple Accounts guide](./multi_account.md)
 :::
 
 Choose one of the following installation methods:
-<Tabs groupId="installation-platforms" queryString="installation-platforms">
-<TabItem value="helm" label="Helm">
+<Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
+<TabItem value="helm" label="Helm (Scheduled)">
 The AWS integration is deployed using Helm on you cluster.
 You can check out the Helm chart [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-ocean).
 
@@ -47,6 +47,7 @@ helm upgrade --install aws port-labs/port-ocean \
 --set port.baseUrl="https://api.getport.io"  \
 --set initializePortResources=true  \
 --set sendRawDataExamples=true  \
+--set scheduledResyncInterval=1440 \
 --set integration.identifier="my-aws"  \
 --set integration.type="aws"  \
 --set integration.eventListener.type="POLLING"  \
@@ -74,6 +75,7 @@ helm upgrade --install aws port-labs/port-ocean \
 --set port.baseUrl="https://api.getport.io"  \
 --set initializePortResources=true  \
 --set sendRawDataExamples=true  \
+--set scheduledResyncInterval=1440 \
 --set integration.identifier="my-aws"  \
 --set integration.type="aws"  \
 --set integration.eventListener.type="POLLING"  \
@@ -98,6 +100,7 @@ helm upgrade --install aws port-labs/port-ocean \
 --set port.baseUrl="https://api.getport.io"  \
 --set initializePortResources=true  \
 --set sendRawDataExamples=true  \
+--set scheduledResyncInterval=1440 \
 --set integration.identifier="my-aws"  \
 --set integration.type="aws"  \
 --set integration.eventListener.type="POLLING"  \
@@ -107,7 +110,7 @@ helm upgrade --install aws port-labs/port-ocean \
 ```
 
   </TabItem>
-  <TabItem value="terraform" label="Terraform">
+  <TabItem value="terraform" label="Terraform (Real Time)">
   The AWS integration is deployed using Terraform on AWS ECS cluster service.  
   It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
@@ -195,7 +198,7 @@ The AWS integration uses the following AWS infrastructure:
    </center>
 </details>
 </TabItem>
-<TabItem value="on-prem" label="On Premise">
+<TabItem value="on-prem" label="On Prem (Once)">
 
 ## Prerequisites
 
@@ -212,8 +215,8 @@ The AWS integration uses the following AWS infrastructure:
 
 | Variable                                             | Description                                                                                                                                                                                                                                                          |
 | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `OCEAN__PORT__CLIENT_ID`                             | [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                    |
-| `OCEAN__PORT__CLIENT_SECRET`                         | [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                |
+| `OCEAN__PORT__CLIENT_ID`                             | Your Port client ID. |
+| `OCEAN__PORT__CLIENT_SECRET`                         | Your Port client secret. |
 | `OCEAN__PORT__BASE_URL`                              | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                              |
 | `OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID`      | [The AWS Access Key ID of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                      |
 | `OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY`  | [The AWS Secret Access Key of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                  |

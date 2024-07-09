@@ -25,7 +25,7 @@ A great walkthrough detailing how to set up Port and integrate it with Github an
 
 <center>
 
-<iframe width="50%" height="280" src="https://www.youtube.com/embed/tMYaKlMIvZk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/tMYaKlMIvZk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 <br/>
@@ -36,7 +36,7 @@ A follow-up to the previous video, this one explains about self-service actions 
 
 <center>
 
-<iframe width="50%" height="280" src="https://www.youtube.com/embed/2Cw4i_FuSC8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/2Cw4i_FuSC8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 
@@ -46,7 +46,7 @@ The 3rd and final video in this series. This video demonstrates how to integrate
 
 <center>
 
-<iframe width="50%" height="280" src="https://www.youtube.com/embed/XQ6GlcpNJ4c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/XQ6GlcpNJ4c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 
