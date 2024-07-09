@@ -442,6 +442,15 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
 ```
 </details>
 
+With all blueprints deployed, you should see all the blueprint categories in your Port catalog like this.
+
+### Testing your data model
+
+After generating all the blueprints, you'll want to test your data model out by creating example entities based on each of the blueprints you created. 
+
+First we will create a test_consumer entity based on the `Consumer` blueprint. 
+
+
 ### Events dashboard creation
 
 After defining your data model in Port for the event catalog, you'll need to create a dashboard to understand and track the different events in your event catalog. This dashboard serves as a one-stop shop to for documentation, event/API schemas, consumer/producer relations, and event-related self-service actions. 
