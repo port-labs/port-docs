@@ -15,7 +15,7 @@ In this guide, we will create a GitHub action that computes the DORA Metrics for
 
     - `PORT_CLIENT_ID` - [Port Client ID](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PORT_CLIENT_SECRET` - [Port Client Secret](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `GH_PAT_CLASSIC` - [GitHub Personal Access Token (Classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic). Ensure that the `read:org` and `repo`, scopes are set for the token to grant this action access to the repositories and teams the metrics are to be estimated for . [learn more].
+    - `GH_PAT_CLASSIC` - [GitHub Personal Access Token (Classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic). Ensure that the `read:org` and `repo`, scopes are set for the token to grant this action access to the repositories and teams the metrics are to be estimated for .
 
 ## Create Github workflow
 
@@ -25,6 +25,7 @@ In this guide, we will create a GitHub action that computes the DORA Metrics for
 <summary> GitHub Workflow </summary>
 
 ```yaml showLineNumbers title="dora-metrics.yml"
+
 name: Ingest DORA Metrics
 
 on:
@@ -42,8 +43,8 @@ jobs:
       doraBlueprint: ${{ steps.set-matrix.outputs.doraBlueprintID }}
       teamBlueprint: ${{ steps.set-matrix.outputs.teamBlueprintID }}
       githubHost: ${{ steps.set-matrix.outputs.githubHost }}
-      sync_services: ${{ steps.set-matrix.outputs.sync_services }}
-      sync_teams: ${{ steps.set-matrix.outputs.sync_teams }}
+      dora_present: ${{ steps.set-matrix.outputs.dora_present }}
+      team_present: ${{ steps.set-matrix.outputs.team_present }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -59,23 +60,23 @@ jobs:
           OWNER=$(echo $CONFIG_JSON | jq -r '.owner')
           GITHUB_HOST=$(echo $CONFIG_JSON | jq -r '.githubHost')
           DORA_TIME_FRAME=$(echo $CONFIG_JSON | jq -r '.doraTimeFrame')
-          SERVICE_BLUEPRINT=$(echo $CONFIG_JSON | jq -r '.port.blueprints.service // empty')
+          DORA_BLUEPRINT=$(echo $CONFIG_JSON | jq -r '.port.blueprints.service // empty')
           TEAM_BLUEPRINT=$(echo $CONFIG_JSON | jq -r '.port.blueprints.team // empty')
-          SYNC_SERVICES=$([[ -n "$SERVICE_BLUEPRINT" ]] && echo "true" || echo "false")
-          SYNC_TEAMS=$([[ -n "$TEAM_BLUEPRINT" ]] && echo "true" || echo "false")
+          DORA_PRESENT=$([[ -n "$DORA_BLUEPRINT" ]] && echo "true" || echo "false")
+          TEAM_PRESENT=$([[ -n "$TEAM_BLUEPRINT" ]] && echo "true" || echo "false")
           echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
           echo "owner=$OWNER" >> $GITHUB_OUTPUT
           echo "githubHost=$GITHUB_HOST" >> $GITHUB_OUTPUT
           echo "doraTimeFrame=$(( DORA_TIME_FRAME * 7 ))" >> $GITHUB_OUTPUT
-          echo "doraBlueprint=$SERVICE_BLUEPRINT" >> $GITHUB_OUTPUT
+          echo "doraBlueprint=$DORA_BLUEPRINT" >> $GITHUB_OUTPUT
           echo "teamBlueprint=$TEAM_BLUEPRINT" >> $GITHUB_OUTPUT
-          echo "sync_services=$SYNC_SERVICES" >> $GITHUB_OUTPUT
-          echo "sync_teams=$SYNC_TEAMS" >> $GITHUB_OUTPUT
+          echo "dora_present=$DORA_PRESENT" >> $GITHUB_OUTPUT
+          echo "team_present=$TEAM_PRESENT" >> $GITHUB_OUTPUT
 
   compute-team-metrics:
     needs: setup
     runs-on: ubuntu-latest
-    if: needs.setup.outputs.sync_teams == 'true'
+    if: needs.setup.outputs.team_present == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -87,12 +88,12 @@ jobs:
           
       - name: Compute Team Metrics
         run: |
-          python dora/calculate_team_metrics.py --owner "${{ needs.setup.outputs.owner }}" --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --port-client-id "${{ secrets.PORT_CLIENT_ID }}" --port-client-secret "${{ secrets.PORT_CLIENT_SECRET }}" --github-host "${{ needs.setup.outputs.githubHost }}"
+          python dora/calculate_team_metrics.py --owner "${{ needs.setup.outputs.owner }}" --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --port-client-id "${{ secrets.PORT_CLIENT_ID }}" --port-client-secret "${{ secrets.PORT_CLIENT_SECRET }}" --github-host "${{ needs.setup.outputs.githubHost }}"
 
   compute-repo-metrics:
     needs: setup
     runs-on: ubuntu-latest
-    if: needs.setup.outputs.sync_services == 'true'
+    if: needs.setup.outputs.dora_present == 'true'
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
@@ -120,44 +121,48 @@ jobs:
 
       - name: Compute PR Metrics
         run: |
-          python dora/calculate_pr_metrics.py  --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
+          python dora/calculate_pr_metrics.py  --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
           
       - name: Deployment Frequency
         id: deployment_frequency
-        run: python dora/deployment_frequency.py --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --branch "${{ matrix.branch }}" --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
+        run: python dora/deployment_frequency.py --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --branch "${{ matrix.branch }}" --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
       
       - name: Lead Time For Changes
         id: lead_time_for_changes
-        run: python dora/lead_time_for_changes.py --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --branch ${{ matrix.branch }} --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
+        run: python dora/lead_time_for_changes.py --owner "${{ needs.setup.outputs.owner }}" --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame "${{ needs.setup.outputs.doraTimeFrame }}" --branch ${{ matrix.branch }} --platform github-actions --github-host "${{ needs.setup.outputs.githubHost }}"
 
       - name: UPSERT Repository DORA Metrics
         uses: port-labs/port-github-action@v1
         with:
-          identifier: ${{ fromJson(env.metrics).id }}
+          identifier: "${{ matrix.repository }}-${{ needs.setup.outputs.doraTimeFrame }}"
           title: ${{ env.ENTITY_TITLE }}
-          blueprint: doraMetrics
+          blueprint: "${{ needs.setup.outputs.doraBlueprint }}"
           properties: |-
             {
-              "timeFrameInWeeks": "${{ needs.setup.outputs.doraTimeFrame }}",
-              "totalDeployments": "${{ fromJson(env.deployment_frequency_report).total_deployments }}",
+              "timeFrameInWeeks": ${{ needs.setup.outputs.doraTimeFrame }},
+              "totalDeployments": ${{ fromJson(env.deployment_frequency_report).total_deployments }},
               "deploymentRating": "${{ fromJson(env.deployment_frequency_report).rating }}",
-              "numberOfUniqueDeploymentDays": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_days }}",
-              "numberOfUniqueDeploymentWeeks": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_weeks }}",
-              "numberOfUniqueDeploymentMonths": "${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_months }}",
-              "deploymentFrequency": "${{ fromJson(env.deployment_frequency_report).deployment_frequency }}",
-              "leadTimeForChangesInHours": "${{ fromJson(env.lead_time_for_changes_report).lead_time_for_changes_in_hours }}",
+              "numberOfUniqueDeploymentDays": ${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_days }},
+              "numberOfUniqueDeploymentWeeks": ${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_weeks }},
+              "numberOfUniqueDeploymentMonths": ${{ fromJson(env.deployment_frequency_report).number_of_unique_deployment_months }},
+              "deploymentFrequency": ${{ fromJson(env.deployment_frequency_report).deployment_frequency }},
+              "leadTimeForChangesInHours": ${{ fromJson(env.lead_time_for_changes_report).lead_time_for_changes_in_hours }},
               "leadTimeRating": "${{ fromJson(env.lead_time_for_changes_report).rating }}",
-              "workflowAverageTimeDuration": "${{ fromJson(env.lead_time_for_changes_report).workflow_average_time_duration }}",
-              "prAverageTimeDuration": "${{ fromJson(env.lead_time_for_changes_report).pr_average_time_duration }}",
-              "averageOpenToCloseTime": "${{ fromJson(env.metrics).average_open_to_close_time }}",
-              "averageTimeToFirstReview": "${{ fromJson(env.metrics).average_time_to_first_review }}",
-              "averageTimeToApproval": "${{ fromJson(env.metrics).average_time_to_approval }}",
-              "prsOpened": "${{ fromJson(env.metrics).prs_opened }}",
-              "weeklyPrsMerged": "${{ fromJson(env.metrics).weekly_prs_merged }}",
-              "averageReviewsPerPr": "${{ fromJson(env.metrics).average_reviews_per_pr }}",
-              "averageCommitsPerPr": "${{ fromJson(env.metrics).average_commits_per_pr }}",
-              "averageLocChangedPerPr": "${{ fromJson(env.metrics).average_loc_changed_per_pr }}",
-              "averagePrsReviewedPerWeek": "${{ fromJson(env.metrics).average_prs_reviewed_per_week }}"
+              "workflowAverageTimeDuration": ${{ fromJson(env.lead_time_for_changes_report).workflow_average_time_duration }},
+              "prAverageTimeDuration": ${{ fromJson(env.lead_time_for_changes_report).pr_average_time_duration }},
+              "averageOpenToCloseTime": ${{ fromJson(env.metrics).average_open_to_close_time }},
+              "averageTimeToFirstReview": ${{ fromJson(env.metrics).average_time_to_first_review }},
+              "averageTimeToApproval": ${{ fromJson(env.metrics).average_time_to_approval }},
+              "prsOpened": ${{ fromJson(env.metrics).prs_opened }},
+              "weeklyPrsMerged": ${{ fromJson(env.metrics).weekly_prs_merged }},
+              "averageReviewsPerPr": ${{ fromJson(env.metrics).average_reviews_per_pr }},
+              "averageCommitsPerPr": ${{ fromJson(env.metrics).average_commits_per_pr }},
+              "averageLocChangedPerPr": ${{ fromJson(env.metrics).average_loc_changed_per_pr }},
+              "averagePrsReviewedPerWeek": ${{ fromJson(env.metrics).average_prs_reviewed_per_week }}
+            }
+          relations: |- 
+            {
+            "service": "${{ matrix.repository }}"
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
@@ -196,16 +201,19 @@ You can choose to run any of the metric jobs (`compute-team-metrics` or `compute
 | blueprints              | blueprint identifiers in port for dora metrics and github team                                                              | true    | -               |
 | items              | An array of defined repository configs (`repository`, `branch`, `workflows`) to compute dora metrics on, required only to compute dora metrics for repositories (not required for team metrics) |false |
 
-```json showLineNumbers title="example dora-config.json"
+
+```json showLineNumbers title="dora-config.json | Run DORA Metrics for Teams and Services"
 {
   "owner": "port-labs",
   "doraTimeFrame": 2,
   "githubHost": "https://api.github.com",
   "port": {
+    //highlight-start
     "blueprints":{
       "service": "doraMetrics",
       "team": "githubTeam"
     }
+    //highlight-end
   },
   "items": [
     {
@@ -221,8 +229,50 @@ You can choose to run any of the metric jobs (`compute-team-metrics` or `compute
   ]
 }
 ```
-</details>
 
+```json showLineNumbers title="dora-config.json | Run DORA Metrics for Services only"
+{
+  "owner": "port-labs",
+  "doraTimeFrame": 2,
+  "githubHost": "https://api.github.com",
+  "port": {
+    //highlight-start
+    "blueprints":{
+      "service": "doraMetrics"
+    }
+    //highlight-end
+  },
+  "items": [
+    {
+      "repository": "port-docs",
+      "branch": "main",
+      "workflows": ["build.yml"]
+    },
+    {
+      "repository": "ocean",
+      "branch": "main",
+      "workflows": []
+    }
+  ]
+}
+```
+
+```json showLineNumbers title="dora-config.json | Run DORA Metrics for Teams only"
+{
+  "owner": "port-labs",
+  "doraTimeFrame": 2,
+  "githubHost": "https://api.github.com",
+  "port": {
+    //highlight-start
+    "blueprints":{
+      "team": "githubTeam"
+    }
+    //highlight-end
+  }
+}
+```
+
+</details>
 
 ## DORA for Services (Repositories)
 
@@ -946,7 +996,7 @@ if __name__ == "__main__":
 <details>
 <summary> GitHub Team blueprint (click to expand) </summary>
 
-```json showLineNumbers title="github team blueprint" {29,30,31,32,33,34,35,36,37,38,39,40,41}
+```json showLineNumbers title="github team blueprint" 
 {
   "identifier": "githubTeam",
   "title": "GitHub Team",
@@ -969,12 +1019,13 @@ if __name__ == "__main__":
       },
       "permission": {
         "title": "Permission",
-        "type": "string"
+        "type": "string"a
       },
       "notificationSetting": {
         "title": "Notification Setting",
         "type": "string"
       },
+    // highlight-start
       "responseRate": {
         "type": "number",
         "title": "Response Rate"
@@ -988,6 +1039,7 @@ if __name__ == "__main__":
         "type": "number",
         "title": "Time Frame In Days"
       }
+    // highlight-end
     },
     "required": []
   },
