@@ -197,7 +197,7 @@ components:
         - combinator
         - rules
       additionalProperties: false
-      title: /schemas/entitiesQuery
+      title: object
     def-1:
       type: object
       properties:
@@ -3015,7 +3015,7 @@ paths:
                   description: An object containing the properties of the new entity, in `"key":"value"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>
                 relations:
                   type: object
-                  description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>
+                  description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>You can also use a [search query](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to define relations based on a property of the related entity.<br/> 
               additionalProperties: true
             example:
               identifier: new-microservice
@@ -3293,7 +3293,55 @@ paths:
                   description: An object containing the properties of the entity, in `"key":"value"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>
                 relations:
                   type: object
-                  description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.
+                  description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>You can also use a [search query](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to define relations based on a property of the related entity.<br/>
+                  additionalProperties:
+                    type: object
+                    anyOf:
+                      - type: string
+                        title: One relation
+                        pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                      - type: array
+                        title: Multiple relations
+                        items:
+                          type: string
+                          pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                      - type: "null"
+                      - type: object
+                        title: Search query
+                        description: A search query to define relations based on a property of the related entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries).
+                        properties:
+                          combinator:
+                            enum:
+                              - and
+                              - or
+                          rules:
+                            type: array
+                            title: Rule
+                            items:
+                              anyOf:
+                                - type: object
+                                  properties:
+                                    property:
+                                      type: string
+                                    operator:
+                                      enum:
+                                        - =
+                                    value:
+                                      anyOf:
+                                        - type: string
+                                          title: string
+                                        - type: number
+                                          title: number
+                                  additionalProperties: false
+                                  required:
+                                    - property
+                                    - operator
+                                    - value
+                                # - $ref: "#/components/schemas/def-3"
+                        required:
+                          - combinator
+                          - rules
+                        additionalProperties: false
               additionalProperties: false
       parameters:
         - schema:
@@ -4236,136 +4284,6 @@ paths:
               <td>An internal error occurred</td>
             </tr>
             </table>
-  # /v1/entities/aggregate:
-  #   post:
-  #     summary: Aggregate entities
-  #     tags:
-  #       - Entities
-  #     requestBody:
-  #       content:
-  #         application/json:
-  #           schema:
-  #             type: object
-  #             oneOf:
-  #               - type: object
-  #                 properties:
-  #                   func:
-  #                     type: string
-  #                     enum:
-  #                       - average
-  #                       - count
-  #                   averageOf:
-  #                     type: string
-  #                     enum:
-  #                       - hour
-  #                       - day
-  #                       - week
-  #                       - month
-  #                       - total
-  #                   measureTimeBy:
-  #                     type: string
-  #                   calculationBy:
-  #                     type: string
-  #                   query:
-  #                     $ref: '#/components/schemas/def-0'
-  #                 additionalProperties: false
-  #                 required:
-  #                   - func
-  #                   - query
-  #               - type: object
-  #                 properties:
-  #                   property:
-  #                     type: string
-  #                   func:
-  #                     type: string
-  #                     enum:
-  #                       - sum
-  #                       - average
-  #                       - min
-  #                       - max
-  #                       - median
-  #                   averageOf:
-  #                     type: string
-  #                     enum:
-  #                       - hour
-  #                       - day
-  #                       - week
-  #                       - month
-  #                       - total
-  #                   measureTimeBy:
-  #                     type: string
-  #                   calculationBy:
-  #                     type: string
-  #                   query:
-  #                     $ref: '#/components/schemas/def-0'
-  #                 additionalProperties: false
-  #                 required:
-  #                   - func
-  #                   - property
-  #                   - query
-  #               - type: object
-  #                 oneOf:
-  #                   - properties:
-  #                       func:
-  #                         enum:
-  #                           - countValues
-  #                       query:
-  #                         $ref: '#/components/schemas/def-0'
-  #                       property:
-  #                         type: string
-  #                     required:
-  #                       - func
-  #                       - query
-  #                       - property
-  #                     additionalProperties: false
-  #                   - properties:
-  #                       func:
-  #                         enum:
-  #                           - countValues
-  #                       query:
-  #                         $ref: '#/components/schemas/def-0'
-  #                       relation:
-  #                         type: string
-  #                     required:
-  #                       - func
-  #                       - query
-  #                       - relation
-  #                     additionalProperties: false
-  #                   - properties:
-  #                       func:
-  #                         enum:
-  #                           - countValues
-  #                       query:
-  #                         $ref: '#/components/schemas/def-0'
-  #                       scorecard:
-  #                         type: string
-  #                     required:
-  #                       - func
-  #                       - query
-  #                       - scorecard
-  #                     additionalProperties: false
-  #                   - properties:
-  #                       func:
-  #                         enum:
-  #                           - countValues
-  #                       query:
-  #                         $ref: '#/components/schemas/def-0'
-  #                       rule:
-  #                         type: string
-  #                       scorecard:
-  #                         type: string
-  #                     required:
-  #                       - func
-  #                       - query
-  #                       - rule
-  #                       - scorecard
-  #                     additionalProperties: false
-  #     security:
-  #       - bearer:
-  #           - 'read:entities'
-  #     responses:
-  #       '200':
-  #         description: Default Response
   /v1/blueprints:
     get:
       summary: Get all blueprints
@@ -5634,8 +5552,8 @@ paths:
           description: Default Response
   /v1/actions:
     post:
-      summary: Create an action
-      description: This route allows you to create a new self-service action in your Port account.<br/><br/>To learn more about actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/).
+      summary: Create an action/automation
+      description: This route allows you to create a new self-service action or automation in your Port account.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).
       tags:
         - Actions
       requestBody:
@@ -5661,22 +5579,545 @@ paths:
                   oneOf:
                     - type: object
                       description: The trigger definition of the new action.<br/>
-                      title: Self-service
+                      title: Self-service (DAY-2/DELETE)
                       properties:
+                        operation:
+                          type: string
+                          description: The [operation type](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
+                          enum:
+                            - DAY-2
+                            - DELETE
                         type:
                           type: string
                           enum:
                             - self-service
                         blueprintIdentifier:
                           type: string
-                          description: The identifier of the blueprint that the action is associated with. Note that this is optional, as actions do not have to be tied directly to a blueprint.<br/>
+                          description: The identifier of the blueprint that the action is associated with.<br/>Note that this is optional, as actions do not have to be tied directly to a blueprint.<br/>
+                        userInputs:
+                          type: object
+                          description: The [user inputs](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
+                          properties:
+                            properties:
+                              type: object
+                              propertyNames:
+                                pattern: ^[A-Za-z0-9@_=\\-]+$
+                              additionalProperties:
+                                type: object
+                                properties:
+                                  type:
+                                    enum:
+                                      - string
+                                      - number
+                                      - boolean
+                                      - object
+                                      - array
+                                  format:
+                                    enum:
+                                      - date-time
+                                      - url
+                                      - email
+                                      - ipv4
+                                      - ipv6
+                                      - yaml
+                                      - entity
+                                      - user
+                                      - team
+                                      - proto
+                                      - markdown
+                                  blueprint:
+                                    type: string
+                                    description: When using the `entity` format, this is the identifier of the blueprint whose entities will be selectable via this input.<br/>
+                                  dependsOn:
+                                    type: array
+                                    description: The identifiers of the inputs that this input depends on. This input will be disabled until they have been given a value.<br/>
+                                    items:
+                                      type: string
+                                  visible:
+                                    description: The visibility of the input. Resolves to a boolean value (`true` = visible).<br/>
+                                    oneOf:
+                                      - type: object
+                                        title: jqQuery
+                                        properties:
+                                          jqQuery:
+                                            type: string
+                                            title: jqQuery
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves to `true` or `false`, determining the visibility of the input.<br/>
+                                        required:
+                                          - jqQuery
+                                        additionalProperties: false
+                                      - type: boolean
+                                        title: boolean
+                                        description: A boolean value determining the visibility of the input.<br/>
+                                  icon:
+                                    type: string
+                                    description: The icon of the input.<br/>
+                                  dataset:
+                                    type: object
+                                    properties:
+                                      combinator:
+                                        type: string
+                                        description: The combinator to use when calculating the rules.<br/>
+                                        enum:
+                                          - and
+                                          - or
+                                      rules:
+                                        type: array
+                                        minItems: 1
+                                        items:
+                                          anyOf:
+                                            - type: object
+                                              title: Empty Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - isEmpty
+                                                    - isNotEmpty
+                                                property:
+                                                  type: string
+                                              required:
+                                                - operator
+                                                - property
+                                              additionalProperties: false
+                                            - type: object
+                                              title: Date Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - between
+                                                    - notBetween
+                                                    - =
+                                                value:
+                                                  type: object
+                                                  oneOf:
+                                                    - type: object
+                                                      title: Date Range
+                                                      properties:
+                                                        from:
+                                                          type: string
+                                                          format: date-time
+                                                        to:
+                                                          type: string
+                                                          format: date-time
+                                                      required:
+                                                        - from
+                                                        - to
+                                                    - type: object
+                                                      title: Preset
+                                                      properties:
+                                                        preset:
+                                                          type: string
+                                                          enum:
+                                                            - today
+                                                            - tomorrow
+                                                            - yesterday
+                                                            - lastWeek
+                                                            - last2Weeks
+                                                            - lastMonth
+                                                            - last3Months
+                                                            - last6Months
+                                                            - last12Months
+                                                      required:
+                                                        - preset
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                              additionalProperties: false
+                                            - type: object
+                                              title: Number Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - ">"
+                                                    - ">="
+                                                    - <
+                                                    - <=
+                                                value:
+                                                  oneOf:
+                                                    - type: number
+                                                      title: Number
+                                                    - type: object
+                                                      title: jqQuery
+                                                      description: A jq query that resolves to a number.<br/>
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                              additionalProperties: false
+                                            - type: object
+                                              title: String Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - =
+                                                    - "!="
+                                                    - containsAny
+                                                    - contains
+                                                    - doesNotContains
+                                                    - beginsWith
+                                                    - doesNotBeginsWith
+                                                    - endsWith
+                                                    - doesNotEndsWith
+                                                    - in
+                                                    - notIn
+                                                value:
+                                                  anyOf:
+                                                    - type: "null"
+                                                    - type: string
+                                                      title: string
+                                                    - type: number
+                                                      title: number
+                                                    - type: boolean
+                                                      title: boolean
+                                                    - type: array
+                                                      title: array
+                                                      items:
+                                                        type: string
+                                                    - type: string
+                                                      title: date-time
+                                                      format: date-time
+                                                    - type: object
+                                                      title: jqQuery
+                                                      description: A jq query that resolves to a string.<br/>
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              additionalProperties: false
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                            - type: object
+                                              title: Relation Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - relatedTo
+                                                blueprint:
+                                                  type: string
+                                                value:
+                                                  anyOf:
+                                                    - type: string
+                                                      title: string
+                                                    - type: object
+                                                      title: jqQuery
+                                                      description: A jq query that resolves to a string.<br/>
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                                direction:
+                                                  enum:
+                                                    - upstream
+                                                    - downstream
+                                                required:
+                                                  type: boolean
+                                                  description: Determines whether the relation is required or not.<br/>
+                                              additionalProperties: false
+                                              required:
+                                                - operator
+                                                - value
+                                                - blueprint
+                                            - type: object
+                                              title: Schema Rule
+                                              properties:
+                                                propertySchema:
+                                                  type: object
+                                                  properties:
+                                                    type:
+                                                      type: string
+                                                    format:
+                                                      type: string
+                                                  required:
+                                                    - type
+                                                  additionalProperties: false
+                                                operator:
+                                                  enum:
+                                                    - =
+                                                    - "!="
+                                                value:
+                                                  anyOf:
+                                                    - type: string
+                                                      title: string
+                                                    - type: number
+                                                      title: number
+                                                    - type: boolean
+                                                      title: boolean
+                                                    - type: object
+                                                      title: jqQuery
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              required:
+                                                - operator
+                                                - propertySchema
+                                              additionalProperties: false
+                                    required:
+                                      - combinator
+                                      - rules
+                                required:
+                                  - type
+                            required:
+                              description: The required inputs' identifier/s. The inputs specified in this array must be given a value when executing the action.<br/>
+                              oneOf:
+                                - type: object
+                                  title: jqQuery
+                                  properties:
+                                    jqQuery:
+                                      type: string
+                                  required:
+                                    - jqQuery
+                                  additionalProperties: false
+                                - type: array
+                                  title: array
+                                  items:
+                                    type: string
+                            order:
+                              type: array
+                              description: The order of the inputs. The order of the identifiers in this array will determine the order of the inputs in the UI.<br/>
+                              items:
+                                type: string
+                          additionalProperties: false
+                          required:
+                            - properties
+                        condition:
+                          type: object
+                          description: Filters used to include/exclude specific entities from the action.
+                          additionalProperties: false
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                                - SEARCH
+                            rules:
+                              type: array
+                              description: The [rules](https://docs.getport.io/search-and-query/#rules) used to filter entities.<br/>
+                              items:
+                                anyOf:
+                                  - type: object
+                                    title: Number Rule
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        enum:
+                                          - ">"
+                                          - ">="
+                                          - <
+                                          - <=
+                                      value:
+                                        type:
+                                          - number
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    title: Date Rule
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        enum:
+                                          - between
+                                          - notBetween
+                                          - =
+                                      value:
+                                        type: object
+                                        oneOf:
+                                          - type: object
+                                            title: Date Range
+                                            properties:
+                                              from:
+                                                type: string
+                                                format: date-time
+                                              to:
+                                                type: string
+                                                format: date-time
+                                            required:
+                                              - from
+                                              - to
+                                          - type: object
+                                            title: Preset
+                                            properties:
+                                              preset:
+                                                type: string
+                                                enum:
+                                                  - today
+                                                  - tomorrow
+                                                  - yesterday
+                                                  - lastWeek
+                                                  - last2Weeks
+                                                  - lastMonth
+                                                  - last3Months
+                                                  - last6Months
+                                                  - last12Months
+                                            required:
+                                              - preset
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    title: String Rule
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        enum:
+                                          - =
+                                          - "!="
+                                          - containsAny
+                                          - contains
+                                          - doesNotContains
+                                          - beginsWith
+                                          - doesNotBeginsWith
+                                          - endsWith
+                                          - doesNotEndsWith
+                                          - in
+                                          - notIn
+                                      value:
+                                        anyOf:
+                                          - type: "null"
+                                          - type: string
+                                            title: string
+                                          - type: number
+                                            title: number
+                                          - type: boolean
+                                            title: boolean
+                                          - type: array
+                                            title: array
+                                            items:
+                                              type: string
+                                          - type: string
+                                            title: date-time
+                                            format: date-time
+                                    additionalProperties: false
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    title: Empty Rule
+                                    properties:
+                                      operator:
+                                        enum:
+                                          - isEmpty
+                                          - isNotEmpty
+                                      property:
+                                        type: string
+                                    required:
+                                      - operator
+                                      - property
+                                    additionalProperties: false
+                                  - type: object
+                                    title: Relation Rule
+                                    properties:
+                                      operator:
+                                        enum:
+                                          - relatedTo
+                                      blueprint:
+                                        type: string
+                                      value:
+                                        type: string
+                                      direction:
+                                        enum:
+                                          - upstream
+                                          - downstream
+                                      required:
+                                        type: boolean
+                                    additionalProperties: false
+                                    required:
+                                      - operator
+                                      - value
+                                      - blueprint
+                                  - type: object
+                                    title: Schema Rule
+                                    properties:
+                                      propertySchema:
+                                        type: object
+                                        properties:
+                                          type:
+                                            type: string
+                                          format:
+                                            type: string
+                                        required:
+                                          - type
+                                        additionalProperties: false
+                                      operator:
+                                        enum:
+                                          - =
+                                          - "!="
+                                      value:
+                                        anyOf:
+                                          - type: "null"
+                                          - type: string
+                                            title: string
+                                          - type: number
+                                            title: number
+                                          - type: boolean
+                                            title: boolean
+                                    required:
+                                      - operator
+                                      - propertySchema
+                                    additionalProperties: false
+                                  # - $ref: "#/components/schemas/def-0"
+                            combinator:
+                              type: string
+                              enum:
+                                - and
+                                - or
+                          required:
+                            - type
+                            - rules
+                            - combinator
+                      dependencies:
+                        condition:
+                          - blueprintIdentifier
+                      required:
+                        - type
+                        - userInputs
+                        - operation
+                      additionalProperties: false
+                    - type: object
+                      description: The trigger definition of the new action.<br/>
+                      title: Self-service (CREATE)
+                      properties:
                         operation:
                           type: string
                           description: The [operation type](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
                           enum:
                             - CREATE
-                            - DELETE
-                            - DAY-2
+                        type:
+                          type: string
+                          enum:
+                            - self-service
+                        blueprintIdentifier:
+                          type: string
+                          description: The identifier of the blueprint that the action is associated with.<br/>Note that this is optional, as actions do not have to be tied directly to a blueprint.<br/>
                         userInputs:
                           type: object
                           description: The [user inputs](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
@@ -5730,7 +6171,6 @@ paths:
                                         additionalProperties: false
                                       - type: boolean
                                         title: boolean
-                                        description: A boolean value determining the visibility of the input.<br/>
                                   icon:
                                     type: string
                                     description: The icon of the input.<br/>
@@ -5739,7 +6179,6 @@ paths:
                                     properties:
                                       combinator:
                                         type: string
-                                        description: The combinator to use when calculating the rules.<br/>
                                         enum:
                                           - and
                                           - or
@@ -5775,6 +6214,7 @@ paths:
                                                   type: object
                                                   oneOf:
                                                     - type: object
+                                                      title: Date Range
                                                       properties:
                                                         from:
                                                           type: string
@@ -5786,6 +6226,7 @@ paths:
                                                         - from
                                                         - to
                                                     - type: object
+                                                      title: Preset
                                                       properties:
                                                         preset:
                                                           type: string
@@ -5819,9 +6260,10 @@ paths:
                                                     - <=
                                                 value:
                                                   oneOf:
-                                                    - type:
-                                                        - number
+                                                    - type: number
+                                                      title: Number
                                                     - type: object
+                                                      title: jqQuery
                                                       properties:
                                                         jqQuery:
                                                           type: string
@@ -5855,14 +6297,20 @@ paths:
                                                   anyOf:
                                                     - type: "null"
                                                     - type: string
+                                                      title: string
                                                     - type: number
+                                                      title: number
                                                     - type: boolean
+                                                      title: boolean
                                                     - type: array
+                                                      title: array
                                                       items:
                                                         type: string
                                                     - type: string
+                                                      title: date-time
                                                       format: date-time
                                                     - type: object
+                                                      title: jqQuery
                                                       properties:
                                                         jqQuery:
                                                           type: string
@@ -5885,7 +6333,9 @@ paths:
                                                 value:
                                                   anyOf:
                                                     - type: string
+                                                      title: string
                                                     - type: object
+                                                      title: jqQuery
                                                       properties:
                                                         jqQuery:
                                                           type: string
@@ -5898,6 +6348,7 @@ paths:
                                                     - downstream
                                                 required:
                                                   type: boolean
+                                                  description: Determines whether the relation is required or not.<br/>
                                               additionalProperties: false
                                               required:
                                                 - operator
@@ -5924,9 +6375,13 @@ paths:
                                                   anyOf:
                                                     - type: "null"
                                                     - type: string
+                                                      title: string
                                                     - type: number
+                                                      title: number
                                                     - type: boolean
+                                                      title: boolean
                                                     - type: object
+                                                      title: jqQuery
                                                       properties:
                                                         jqQuery:
                                                           type: string
@@ -5956,7 +6411,6 @@ paths:
                                   additionalProperties: false
                                 - type: array
                                   title: array
-                                  description: An array of the required inputs' identifiers.<br/>
                                   items:
                                     type: string
                             order:
@@ -5969,8 +6423,121 @@ paths:
                             - properties
                       required:
                         - type
-                        - operation
                         - userInputs
+                        - operation
+                      additionalProperties: false
+                    - type: object
+                      description: The trigger definition of the new action.<br/>
+                      title: Automation
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - automation
+                        event:
+                          description: The [event](https://docs.getport.io/actions-and-automations/define-automations/setup-trigger) that triggers the action.<br/>
+                          oneOf:
+                            - type: object
+                              title: Entity created
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - ENTITY_CREATED
+                                blueprintIdentifier:
+                                  type: string
+                                  description: The identifier of the blueprint whose entities will trigger the automation.<br/>
+                              required:
+                                - type
+                                - blueprintIdentifier
+                              additionalProperties: false
+                            - type: object
+                              title: Entity updated
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - ENTITY_UPDATED
+                                blueprintIdentifier:
+                                  type: string
+                                  description: The identifier of the blueprint whose entities will trigger the automation.<br/>
+                              required:
+                                - type
+                                - blueprintIdentifier
+                              additionalProperties: false
+                            - type: object
+                              title: Entity deleted
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - ENTITY_DELETED
+                                blueprintIdentifier:
+                                  type: string
+                                  description: The identifier of the blueprint whose entities will trigger the automation.<br/>
+                              required:
+                                - type
+                                - blueprintIdentifier
+                              additionalProperties: false
+                            - type: object
+                              title: Timer property expired
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - TIMER_PROPERTY_EXPIRED
+                                blueprintIdentifier:
+                                  type: string
+                                  description: The identifier of the blueprint whose entities will trigger the automation.<br/>
+                                propertyIdentifier:
+                                  type: string
+                                  description: The identifier of the timer property in the specified blueprint.<br/>
+                              required:
+                                - type
+                                - blueprintIdentifier
+                                - propertyIdentifier
+                              additionalProperties: false
+                            - type: object
+                              title: Any entity change
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - ANY_ENTITY_CHANGE
+                                blueprintIdentifier:
+                                  type: string
+                                  description: The identifier of the blueprint whose entities will trigger the automation.<br/>
+                              required:
+                                - type
+                                - blueprintIdentifier
+                              additionalProperties: false
+                        condition:
+                          description: Filters used to include/exclude specific entities from the automation.
+                          oneOf:
+                            - type: object
+                              title: JQ
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - JQ
+                                expressions:
+                                  type: array
+                                  description: An array of [jq expressions](https://docs.getport.io/search-and-query/#jq-expressions) used to filter entities.<br/>Read more [here](https://docs.getport.io/actions-and-automations/define-automations/setup-trigger#conditions).<br/>
+                                  items:
+                                    type: string
+                                combinator:
+                                  type: string
+                                  enum:
+                                    - and
+                                    - or
+                              required:
+                                - type
+                                - expressions
+                              additionalProperties: false
+                      required:
+                        - type
+                        - event
                       additionalProperties: false
                 invocationMethod:
                   description: Details the action's backend type and details.<br/>
@@ -6110,9 +6677,77 @@ paths:
                         - webhook
                         - org
                       additionalProperties: false
+                    - type: object
+                      title: Upsert Entity
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - UPSERT_ENTITY
+                        blueprintIdentifier:
+                          type: string
+                          description: The identifier of the blueprint whose entity will be upserted.<br/>
+                        mapping:
+                          type: object
+                          description: An object containing the entity's properties and their new values.<br/>
+                          properties:
+                            identifier:
+                              type: string
+                              description: The identifier of the upserted entity.<br/>
+                            title:
+                              type: string
+                              description: The title of the upserted entity.<br/>
+                            team:
+                              description: The team/s the entity belongs to.<br/>
+                              oneOf:
+                                - type: string
+                                  title: string
+                                - type: array
+                                  title: array
+                                  items:
+                                    type: string
+                            icon:
+                              type: string
+                              description: The icon of the upserted entity.<br/>
+                            properties:
+                              type: object
+                              description: The properties of the upserted entity, in `"key"`:`"value"` pairs.<br/>
+                            relations:
+                              type: object
+                              description: The relations of the upserted entity, in `"key"`:`"value"` pairs, where the key is the relation's identifier and the value is the related entity's identifier.<br/>
+                              additionalProperties:
+                                type: object
+                                oneOf:
+                                  - type: string
+                                    title: string
+                                  - type: array
+                                    title: array
+                                    items:
+                                      type: string
+                                  - type: "null"
+                          required:
+                            - identifier
+                      required:
+                        - type
+                        - blueprintIdentifier
+                        - mapping
+                      additionalProperties: false
                 requiredApproval:
-                  type: boolean
-                  description: If `true`, the action will require approval for each execution.<br/>
+                  description: Determines whether the action requires approval before execution.<br/>Choose `ALL` to require all specified users to approve the action, or `ANY` to require only one.<br/>
+                  oneOf:
+                    - type: object
+                      title: User/s
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - ANY
+                            - ALL
+                      required:
+                        - type
+                      additionalProperties: false
+                    - type: boolean
+                      title: boolean
                 approvalNotification:
                   type: object
                   description: The notification configuration for the approval process. Relevant only if `requiredApproval` is set to `true`.<br/>
@@ -6172,8 +6807,8 @@ paths:
         "200":
           description: Default Response
     get:
-      summary: Get actions
-      description: This route allows you to fetch one or more self-service actions in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions that match the criteria.<br/><br/>To learn more about actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/).
+      summary: Get actions/automations
+      description: This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
       tags:
         - Actions
       parameters:
@@ -6183,7 +6818,7 @@ paths:
               type: string
           in: query
           name: action_identifier
-          description: The identifier/s of the action/s you want to fetch.<br/>
+          description: The identifier/s of the action/s and/or automation/s you want to fetch.<br/>
           required: false
         - schema:
             type: array
@@ -6191,7 +6826,7 @@ paths:
               type: string
           in: query
           name: blueprint_identifier
-          description: The identifier/s of the blueprint/s whose actions you wish to fetch.<br/>
+          description: The identifier/s of the blueprint/s whose actions/automations you wish to fetch.<br/>
           required: false
         - schema:
             type: array
@@ -6203,20 +6838,35 @@ paths:
                 - DAY-2
           in: query
           name: operation
-          description: The [operation type/s](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch.<br/>
+          description: The [operation type/s](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch. Relevant only for self-service actions.<br/>
           required: false
         - schema:
             type: boolean
           in: query
           name: published
-          description: If `true`, only published actions will be fetched.<br/>
+          description: If `true`, only published actions/automations will be fetched.<br/>
           required: false
         - schema:
             type: string
             enum:
               - self-service
+              - automation
           in: query
           name: trigger_type
+          required: false
+        - schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - ENTITY_CREATED
+                - ENTITY_UPDATED
+                - ENTITY_DELETED
+                - TIMER_PROPERTY_EXPIRED
+                - ANY_ENTITY_CHANGE
+          in: query
+          name: trigger_event
+          description: The event/s that triggered the automation/s you want to fetch. Relevant only for automations.<br/>
           required: false
         - schema:
             type: string
@@ -6229,6 +6879,1401 @@ paths:
       security:
         - bearer:
             - read:actions
+      responses:
+        "200":
+          description: Default Response
+  "/v1/actions/{action_identifier}":
+    put:
+      summary: Update an action/automation
+      description: This route allows you to update an existing self-service action or automation in your Port account.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+      tags:
+        - Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  description: The identifier of the action/automation you want to update.<br/>
+                  type: string
+                  pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                title:
+                  description: The new title of the action/automation.<br/>
+                  type: string
+                icon:
+                  description: The new icon of the action/automation.<br/>
+                  type: string
+                description:
+                  description: The new description of the action/automation.<br/>
+                  type: string
+                trigger:
+                  oneOf:
+                    - type: object
+                      description: The trigger definition of the new action.<br/>
+                      title: Self-service (DAY-2/DELETE)
+                      properties:
+                        operation:
+                          type: string
+                          description: The [operation type](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
+                          enum:
+                            - DAY-2
+                            - DELETE
+                        type:
+                          type: string
+                          enum:
+                            - self-service
+                        blueprintIdentifier:
+                          type: string
+                          description: The identifier of the blueprint that the action is associated with.<br/>Note that this is optional, as actions do not have to be tied directly to a blueprint.<br/>
+                        userInputs:
+                          type: object
+                          description: The [user inputs](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
+                          properties:
+                            properties:
+                              type: object
+                              propertyNames:
+                                pattern: ^[A-Za-z0-9@_=\\-]+$
+                              additionalProperties:
+                                type: object
+                                properties:
+                                  type:
+                                    enum:
+                                      - string
+                                      - number
+                                      - boolean
+                                      - object
+                                      - array
+                                  format:
+                                    enum:
+                                      - date-time
+                                      - url
+                                      - email
+                                      - ipv4
+                                      - ipv6
+                                      - yaml
+                                      - entity
+                                      - user
+                                      - team
+                                      - proto
+                                      - markdown
+                                  blueprint:
+                                    type: string
+                                    description: When using the `entity` format, this is the identifier of the blueprint whose entities will be selectable via this input.<br/>
+                                  dependsOn:
+                                    type: array
+                                    description: The identifiers of the inputs that this input depends on. This input will be disabled until they have been given a value.<br/>
+                                    items:
+                                      type: string
+                                  visible:
+                                    description: The visibility of the input. Resolves to a boolean value (`true` = visible).<br/>
+                                    oneOf:
+                                      - type: object
+                                        title: jqQuery
+                                        properties:
+                                          jqQuery:
+                                            type: string
+                                            title: jqQuery
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves to `true` or `false`, determining the visibility of the input.<br/>
+                                        required:
+                                          - jqQuery
+                                        additionalProperties: false
+                                      - type: boolean
+                                        title: boolean
+                                        description: A boolean value determining the visibility of the input.<br/>
+                                  icon:
+                                    type: string
+                                    description: The icon of the input.<br/>
+                                  dataset:
+                                    type: object
+                                    properties:
+                                      combinator:
+                                        type: string
+                                        description: The combinator to use when calculating the rules.<br/>
+                                        enum:
+                                          - and
+                                          - or
+                                      rules:
+                                        type: array
+                                        minItems: 1
+                                        items:
+                                          anyOf:
+                                            - type: object
+                                              title: Empty Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - isEmpty
+                                                    - isNotEmpty
+                                                property:
+                                                  type: string
+                                              required:
+                                                - operator
+                                                - property
+                                              additionalProperties: false
+                                            - type: object
+                                              title: Date Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - between
+                                                    - notBetween
+                                                    - =
+                                                value:
+                                                  type: object
+                                                  oneOf:
+                                                    - type: object
+                                                      title: Date Range
+                                                      properties:
+                                                        from:
+                                                          type: string
+                                                          format: date-time
+                                                        to:
+                                                          type: string
+                                                          format: date-time
+                                                      required:
+                                                        - from
+                                                        - to
+                                                    - type: object
+                                                      title: Preset
+                                                      properties:
+                                                        preset:
+                                                          type: string
+                                                          enum:
+                                                            - today
+                                                            - tomorrow
+                                                            - yesterday
+                                                            - lastWeek
+                                                            - last2Weeks
+                                                            - lastMonth
+                                                            - last3Months
+                                                            - last6Months
+                                                            - last12Months
+                                                      required:
+                                                        - preset
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                              additionalProperties: false
+                                            - type: object
+                                              title: Number Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - ">"
+                                                    - ">="
+                                                    - <
+                                                    - <=
+                                                value:
+                                                  oneOf:
+                                                    - type: number
+                                                      title: Number
+                                                    - type: object
+                                                      title: jqQuery
+                                                      description: A jq query that resolves to a number.<br/>
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                              additionalProperties: false
+                                            - type: object
+                                              title: String Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - =
+                                                    - "!="
+                                                    - containsAny
+                                                    - contains
+                                                    - doesNotContains
+                                                    - beginsWith
+                                                    - doesNotBeginsWith
+                                                    - endsWith
+                                                    - doesNotEndsWith
+                                                    - in
+                                                    - notIn
+                                                value:
+                                                  anyOf:
+                                                    - type: "null"
+                                                    - type: string
+                                                      title: string
+                                                    - type: number
+                                                      title: number
+                                                    - type: boolean
+                                                      title: boolean
+                                                    - type: array
+                                                      title: array
+                                                      items:
+                                                        type: string
+                                                    - type: string
+                                                      title: date-time
+                                                      format: date-time
+                                                    - type: object
+                                                      title: jqQuery
+                                                      description: A jq query that resolves to a string.<br/>
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              additionalProperties: false
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                            - type: object
+                                              title: Relation Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - relatedTo
+                                                blueprint:
+                                                  type: string
+                                                value:
+                                                  anyOf:
+                                                    - type: string
+                                                      title: string
+                                                    - type: object
+                                                      title: jqQuery
+                                                      description: A jq query that resolves to a string.<br/>
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                                direction:
+                                                  enum:
+                                                    - upstream
+                                                    - downstream
+                                                required:
+                                                  type: boolean
+                                                  description: Determines whether the relation is required or not.<br/>
+                                              additionalProperties: false
+                                              required:
+                                                - operator
+                                                - value
+                                                - blueprint
+                                            - type: object
+                                              title: Schema Rule
+                                              properties:
+                                                propertySchema:
+                                                  type: object
+                                                  properties:
+                                                    type:
+                                                      type: string
+                                                    format:
+                                                      type: string
+                                                  required:
+                                                    - type
+                                                  additionalProperties: false
+                                                operator:
+                                                  enum:
+                                                    - =
+                                                    - "!="
+                                                value:
+                                                  anyOf:
+                                                    - type: string
+                                                      title: string
+                                                    - type: number
+                                                      title: number
+                                                    - type: boolean
+                                                      title: boolean
+                                                    - type: object
+                                                      title: jqQuery
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              required:
+                                                - operator
+                                                - propertySchema
+                                              additionalProperties: false
+                                    required:
+                                      - combinator
+                                      - rules
+                                required:
+                                  - type
+                            required:
+                              description: The required inputs' identifier/s. The inputs specified in this array must be given a value when executing the action.<br/>
+                              oneOf:
+                                - type: object
+                                  title: jqQuery
+                                  properties:
+                                    jqQuery:
+                                      type: string
+                                  required:
+                                    - jqQuery
+                                  additionalProperties: false
+                                - type: array
+                                  title: array
+                                  items:
+                                    type: string
+                            order:
+                              type: array
+                              description: The order of the inputs. The order of the identifiers in this array will determine the order of the inputs in the UI.<br/>
+                              items:
+                                type: string
+                          additionalProperties: false
+                          required:
+                            - properties
+                        condition:
+                          type: object
+                          description: Filters used to include/exclude specific entities from the action.
+                          additionalProperties: false
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                                - SEARCH
+                            rules:
+                              type: array
+                              description: The [rules](https://docs.getport.io/search-and-query/#rules) used to filter entities.<br/>
+                              items:
+                                anyOf:
+                                  - type: object
+                                    title: Number Rule
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        enum:
+                                          - ">"
+                                          - ">="
+                                          - <
+                                          - <=
+                                      value:
+                                        type:
+                                          - number
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    title: Date Rule
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        enum:
+                                          - between
+                                          - notBetween
+                                          - =
+                                      value:
+                                        type: object
+                                        oneOf:
+                                          - type: object
+                                            title: Date Range
+                                            properties:
+                                              from:
+                                                type: string
+                                                format: date-time
+                                              to:
+                                                type: string
+                                                format: date-time
+                                            required:
+                                              - from
+                                              - to
+                                          - type: object
+                                            title: Preset
+                                            properties:
+                                              preset:
+                                                type: string
+                                                enum:
+                                                  - today
+                                                  - tomorrow
+                                                  - yesterday
+                                                  - lastWeek
+                                                  - last2Weeks
+                                                  - lastMonth
+                                                  - last3Months
+                                                  - last6Months
+                                                  - last12Months
+                                            required:
+                                              - preset
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    title: String Rule
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        enum:
+                                          - =
+                                          - "!="
+                                          - containsAny
+                                          - contains
+                                          - doesNotContains
+                                          - beginsWith
+                                          - doesNotBeginsWith
+                                          - endsWith
+                                          - doesNotEndsWith
+                                          - in
+                                          - notIn
+                                      value:
+                                        anyOf:
+                                          - type: "null"
+                                          - type: string
+                                            title: string
+                                          - type: number
+                                            title: number
+                                          - type: boolean
+                                            title: boolean
+                                          - type: array
+                                            title: array
+                                            items:
+                                              type: string
+                                          - type: string
+                                            title: date-time
+                                            format: date-time
+                                    additionalProperties: false
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    title: Empty Rule
+                                    properties:
+                                      operator:
+                                        enum:
+                                          - isEmpty
+                                          - isNotEmpty
+                                      property:
+                                        type: string
+                                    required:
+                                      - operator
+                                      - property
+                                    additionalProperties: false
+                                  - type: object
+                                    title: Relation Rule
+                                    properties:
+                                      operator:
+                                        enum:
+                                          - relatedTo
+                                      blueprint:
+                                        type: string
+                                      value:
+                                        type: string
+                                      direction:
+                                        enum:
+                                          - upstream
+                                          - downstream
+                                      required:
+                                        type: boolean
+                                    additionalProperties: false
+                                    required:
+                                      - operator
+                                      - value
+                                      - blueprint
+                                  - type: object
+                                    title: Schema Rule
+                                    properties:
+                                      propertySchema:
+                                        type: object
+                                        properties:
+                                          type:
+                                            type: string
+                                          format:
+                                            type: string
+                                        required:
+                                          - type
+                                        additionalProperties: false
+                                      operator:
+                                        enum:
+                                          - =
+                                          - "!="
+                                      value:
+                                        anyOf:
+                                          - type: "null"
+                                          - type: string
+                                            title: string
+                                          - type: number
+                                            title: number
+                                          - type: boolean
+                                            title: boolean
+                                    required:
+                                      - operator
+                                      - propertySchema
+                                    additionalProperties: false
+                                  # - $ref: "#/components/schemas/def-0"
+                            combinator:
+                              type: string
+                              enum:
+                                - and
+                                - or
+                          required:
+                            - type
+                            - rules
+                            - combinator
+                      dependencies:
+                        condition:
+                          - blueprintIdentifier
+                      required:
+                        - type
+                        - userInputs
+                        - operation
+                      additionalProperties: false
+                    - type: object
+                      description: The trigger definition of the new action.<br/>
+                      title: Self-service (CREATE)
+                      properties:
+                        operation:
+                          type: string
+                          description: The [operation type](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
+                          enum:
+                            - CREATE
+                        type:
+                          type: string
+                          enum:
+                            - self-service
+                        blueprintIdentifier:
+                          type: string
+                          description: The identifier of the blueprint that the action is associated with.<br/>Note that this is optional, as actions do not have to be tied directly to a blueprint.<br/>
+                        userInputs:
+                          type: object
+                          description: The [user inputs](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
+                          properties:
+                            properties:
+                              type: object
+                              propertyNames:
+                                pattern: ^[A-Za-z0-9@_=\\-]+$
+                              additionalProperties:
+                                type: object
+                                properties:
+                                  type:
+                                    enum:
+                                      - string
+                                      - number
+                                      - boolean
+                                      - object
+                                      - array
+                                  format:
+                                    enum:
+                                      - date-time
+                                      - url
+                                      - email
+                                      - ipv4
+                                      - ipv6
+                                      - yaml
+                                      - entity
+                                      - user
+                                      - team
+                                      - proto
+                                      - markdown
+                                  blueprint:
+                                    type: string
+                                    description: When using the `entity` format, this is the identifier of the blueprint whose entities will be selectable via this input.<br/>
+                                  dependsOn:
+                                    type: array
+                                    description: The identifiers of the inputs that this input depends on. This input will be disabled until they have been given a value.<br/>
+                                    items:
+                                      type: string
+                                  visible:
+                                    description: The visibility of the input. Resolves to a boolean value (`true` = visible).<br/>
+                                    oneOf:
+                                      - type: object
+                                        title: jqQuery
+                                        properties:
+                                          jqQuery:
+                                            type: string
+                                            description: A [jq query](https://stedolan.github.io/jq/manual/) that resolves to `true` or `false`, determining the visibility of the input.<br/>
+                                        required:
+                                          - jqQuery
+                                        additionalProperties: false
+                                      - type: boolean
+                                        title: boolean
+                                  icon:
+                                    type: string
+                                    description: The icon of the input.<br/>
+                                  dataset:
+                                    type: object
+                                    properties:
+                                      combinator:
+                                        type: string
+                                        enum:
+                                          - and
+                                          - or
+                                      rules:
+                                        type: array
+                                        minItems: 1
+                                        items:
+                                          anyOf:
+                                            - type: object
+                                              title: Empty Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - isEmpty
+                                                    - isNotEmpty
+                                                property:
+                                                  type: string
+                                              required:
+                                                - operator
+                                                - property
+                                              additionalProperties: false
+                                            - type: object
+                                              title: Date Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - between
+                                                    - notBetween
+                                                    - =
+                                                value:
+                                                  type: object
+                                                  oneOf:
+                                                    - type: object
+                                                      title: Date Range
+                                                      properties:
+                                                        from:
+                                                          type: string
+                                                          format: date-time
+                                                        to:
+                                                          type: string
+                                                          format: date-time
+                                                      required:
+                                                        - from
+                                                        - to
+                                                    - type: object
+                                                      title: Preset
+                                                      properties:
+                                                        preset:
+                                                          type: string
+                                                          enum:
+                                                            - today
+                                                            - tomorrow
+                                                            - yesterday
+                                                            - lastWeek
+                                                            - last2Weeks
+                                                            - lastMonth
+                                                            - last3Months
+                                                            - last6Months
+                                                            - last12Months
+                                                      required:
+                                                        - preset
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                              additionalProperties: false
+                                            - type: object
+                                              title: Number Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - ">"
+                                                    - ">="
+                                                    - <
+                                                    - <=
+                                                value:
+                                                  oneOf:
+                                                    - type: number
+                                                      title: Number
+                                                    - type: object
+                                                      title: jqQuery
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                              additionalProperties: false
+                                            - type: object
+                                              title: String Rule
+                                              properties:
+                                                property:
+                                                  type: string
+                                                operator:
+                                                  enum:
+                                                    - =
+                                                    - "!="
+                                                    - containsAny
+                                                    - contains
+                                                    - doesNotContains
+                                                    - beginsWith
+                                                    - doesNotBeginsWith
+                                                    - endsWith
+                                                    - doesNotEndsWith
+                                                    - in
+                                                    - notIn
+                                                value:
+                                                  anyOf:
+                                                    - type: "null"
+                                                    - type: string
+                                                      title: string
+                                                    - type: number
+                                                      title: number
+                                                    - type: boolean
+                                                      title: boolean
+                                                    - type: array
+                                                      title: array
+                                                      items:
+                                                        type: string
+                                                    - type: string
+                                                      title: date-time
+                                                      format: date-time
+                                                    - type: object
+                                                      title: jqQuery
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              additionalProperties: false
+                                              required:
+                                                - property
+                                                - operator
+                                                - value
+                                            - type: object
+                                              title: Relation Rule
+                                              properties:
+                                                operator:
+                                                  enum:
+                                                    - relatedTo
+                                                blueprint:
+                                                  type: string
+                                                value:
+                                                  anyOf:
+                                                    - type: string
+                                                      title: string
+                                                    - type: object
+                                                      title: jqQuery
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                                direction:
+                                                  enum:
+                                                    - upstream
+                                                    - downstream
+                                                required:
+                                                  type: boolean
+                                                  description: Determines whether the relation is required or not.<br/>
+                                              additionalProperties: false
+                                              required:
+                                                - operator
+                                                - value
+                                                - blueprint
+                                            - type: object
+                                              title: Schema Rule
+                                              properties:
+                                                propertySchema:
+                                                  type: object
+                                                  properties:
+                                                    type:
+                                                      type: string
+                                                    format:
+                                                      type: string
+                                                  required:
+                                                    - type
+                                                  additionalProperties: false
+                                                operator:
+                                                  enum:
+                                                    - =
+                                                    - "!="
+                                                value:
+                                                  anyOf:
+                                                    - type: "null"
+                                                    - type: string
+                                                      title: string
+                                                    - type: number
+                                                      title: number
+                                                    - type: boolean
+                                                      title: boolean
+                                                    - type: object
+                                                      title: jqQuery
+                                                      properties:
+                                                        jqQuery:
+                                                          type: string
+                                                      required:
+                                                        - jqQuery
+                                                      additionalProperties: false
+                                              required:
+                                                - operator
+                                                - propertySchema
+                                              additionalProperties: false
+                                    required:
+                                      - combinator
+                                      - rules
+                                required:
+                                  - type
+                            required:
+                              description: The required inputs' identifier/s. The inputs specified in this array must be given a value when executing the action.<br/>
+                              oneOf:
+                                - type: object
+                                  title: jqQuery
+                                  description: A jq query that resolves to an array of the required inputs' identifiers.<br/>
+                                  properties:
+                                    jqQuery:
+                                      type: string
+                                  required:
+                                    - jqQuery
+                                  additionalProperties: false
+                                - type: array
+                                  title: array
+                                  items:
+                                    type: string
+                            order:
+                              type: array
+                              description: The order of the inputs. The order of the identifiers in this array will determine the order of the inputs in the UI.<br/>
+                              items:
+                                type: string
+                          additionalProperties: false
+                          required:
+                            - properties
+                      required:
+                        - type
+                        - userInputs
+                        - operation
+                      additionalProperties: false
+                    - type: object
+                      description: The trigger definition of the new action.<br/>
+                      title: Automation
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - automation
+                        event:
+                          description: The [event](https://docs.getport.io/actions-and-automations/define-automations/setup-trigger) that triggers the action.<br/>
+                          oneOf:
+                            - type: object
+                              title: Entity created
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - ENTITY_CREATED
+                                blueprintIdentifier:
+                                  type: string
+                                  description: The identifier of the blueprint whose entities will trigger the automation.<br/>
+                              required:
+                                - type
+                                - blueprintIdentifier
+                              additionalProperties: false
+                            - type: object
+                              title: Entity updated
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - ENTITY_UPDATED
+                                blueprintIdentifier:
+                                  type: string
+                                  description: The identifier of the blueprint whose entities will trigger the automation.<br/>
+                              required:
+                                - type
+                                - blueprintIdentifier
+                              additionalProperties: false
+                            - type: object
+                              title: Entity deleted
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - ENTITY_DELETED
+                                blueprintIdentifier:
+                                  type: string
+                                  description: The identifier of the blueprint whose entities will trigger the automation.<br/>
+                              required:
+                                - type
+                                - blueprintIdentifier
+                              additionalProperties: false
+                            - type: object
+                              title: Timer property expired
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - TIMER_PROPERTY_EXPIRED
+                                blueprintIdentifier:
+                                  type: string
+                                  description: The identifier of the blueprint whose entities will trigger the automation.<br/>
+                                propertyIdentifier:
+                                  type: string
+                                  description: The identifier of the timer property in the specified blueprint.<br/>
+                              required:
+                                - type
+                                - blueprintIdentifier
+                                - propertyIdentifier
+                              additionalProperties: false
+                            - type: object
+                              title: Any entity change
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - ANY_ENTITY_CHANGE
+                                blueprintIdentifier:
+                                  type: string
+                                  description: The identifier of the blueprint whose entities will trigger the automation.<br/>
+                              required:
+                                - type
+                                - blueprintIdentifier
+                              additionalProperties: false
+                        condition:
+                          description: Filters used to include/exclude specific entities from the automation.
+                          oneOf:
+                            - type: object
+                              title: JQ
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - JQ
+                                expressions:
+                                  type: array
+                                  description: An array of [jq expressions](https://docs.getport.io/search-and-query/#jq-expressions) used to filter entities.<br/>Read more [here](https://docs.getport.io/actions-and-automations/define-automations/setup-trigger#conditions).<br/>
+                                  items:
+                                    type: string
+                                combinator:
+                                  type: string
+                                  enum:
+                                    - and
+                                    - or
+                              required:
+                                - type
+                                - expressions
+                              additionalProperties: false
+                      required:
+                        - type
+                        - event
+                      additionalProperties: false
+                invocationMethod:
+                  description: Details the action's backend type and details.<br/>
+                  oneOf:
+                    - type: object
+                      title: Kafka
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - KAFKA
+                        payload:
+                          description: An object containing the [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload).<br/>
+                          type: object
+                          # oneOf:
+                          #   - type: array
+                          #   - type: object
+                      required:
+                        - type
+                      additionalProperties: false
+                    - type: object
+                      title: Webhook
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - WEBHOOK
+                        url:
+                          type: string
+                          description: The URL of the webhook.<br/>
+                        agent:
+                          type: boolean
+                          description: If `true`, Port's [execution agent](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/) will be used to handle invocations of this action.<br/>
+                          # oneOf:
+                          #   - type: boolean
+                          #   - type: string
+                        synchronized:
+                          type: boolean
+                          description: If `true`, the action will be executed [synchronously](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/#sync-vs-async-execution).<br/>
+                          # oneOf:
+                          #   - type: boolean
+                          #   - type: string
+                        method:
+                          type: string
+                          description: The HTTP method of the webhook (`POST`, `PUT`, `PATCH`, or `DELETE`).<br/>
+                        headers:
+                          type: object
+                          description: A JSON object containing the headers to be sent to the webhook in each execution, in `"key"`:`"value"` pairs.<br/>
+                          # additionalProperties:
+                          #   type: string
+                        body:
+                          type: object
+                          description: The body sent to the webhook in each execution. This is where the [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) is specified.<br/>
+                          # oneOf:
+                          #   - type: array
+                          #   - type: object
+                      required:
+                        - type
+                        - url
+                      additionalProperties: false
+                    - type: object
+                      title: GitHub
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - GITHUB
+                        org:
+                          type: string
+                          description: The Github organization in which the workflow is located.<br/>
+                        repo:
+                          type: string
+                          description: The Github repository in which the workflow is located.<br/>
+                        workflow:
+                          type: string
+                          description: The name of the workflow (YAML file) to trigger. The file should be placed under `.github/workflows/`.<br/>
+                        workflowInputs:
+                          type: object
+                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Github upon execution.<br/>
+                        reportWorkflowStatus:
+                          type: boolean
+                          description: If `true`, the action run will update its status automatically based on the workflow's result (pass/fail).<br/>
+                          # oneOf:
+                          #   - type: boolean
+                          #   - type: string
+                      required:
+                        - type
+                        - org
+                        - repo
+                        - workflow
+                      additionalProperties: false
+                    - type: object
+                      title: GitLab
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - GITLAB
+                        projectName:
+                          type: string
+                          description: The GitLab project in which the pipeline is located.<br/>
+                        groupName:
+                          type: string
+                          description: The GitLab group in which the project is located.<br/>
+                        defaultRef:
+                          type: string
+                          description: The default ref (branch/tag name) we want the action to use. Default ref can be overridden dynamically by adding "ref" as a user input. If not set, the agent triggers the `main` branch.
+                        pipelineVariables:
+                          type: object
+                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to GitLab upon execution.<br/>
+                      required:
+                        - type
+                        - projectName
+                        - groupName
+                      additionalProperties: false
+                    - type: object
+                      title: Azure DevOps
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - AZURE_DEVOPS
+                        webhook:
+                          type: string
+                          description: The name of the webhook resource in the Azure YAML pipeline file.<br/>
+                        org:
+                          type: string
+                          description: The Azure DevOps organization in which the pipeline is located.<br/>
+                        payload:
+                          type: object
+                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Azure DevOps upon execution.<br/>
+                          # oneOf:
+                          #   - type: array
+                          #   - type: object
+                      required:
+                        - type
+                        - webhook
+                        - org
+                      additionalProperties: false
+                    - type: object
+                      title: Upsert Entity
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - UPSERT_ENTITY
+                        blueprintIdentifier:
+                          type: string
+                          description: The identifier of the blueprint whose entity will be upserted.<br/>
+                        mapping:
+                          type: object
+                          description: An object containing the entity's properties and their new values.<br/>
+                          properties:
+                            identifier:
+                              type: string
+                              description: The identifier of the upserted entity.<br/>
+                            title:
+                              type: string
+                              description: The title of the upserted entity.<br/>
+                            team:
+                              description: The team/s the entity belongs to.<br/>
+                              oneOf:
+                                - type: string
+                                  title: string
+                                - type: array
+                                  title: array
+                                  items:
+                                    type: string
+                            icon:
+                              type: string
+                              description: The icon of the upserted entity.<br/>
+                            properties:
+                              type: object
+                              description: The properties of the upserted entity, in `"key"`:`"value"` pairs.<br/>
+                            relations:
+                              type: object
+                              description: The relations of the upserted entity, in `"key"`:`"value"` pairs, where the key is the relation's identifier and the value is the related entity's identifier.<br/>
+                              additionalProperties:
+                                type: object
+                                oneOf:
+                                  - type: string
+                                    title: string
+                                  - type: array
+                                    title: array
+                                    items:
+                                      type: string
+                                  - type: "null"
+                          required:
+                            - identifier
+                      required:
+                        - type
+                        - blueprintIdentifier
+                        - mapping
+                      additionalProperties: false
+                requiredApproval:
+                  description: Determines whether the action requires approval before execution.<br/>Choose `ALL` to require all specified users to approve the action, or `ANY` to require only one.<br/>
+                  oneOf:
+                    - type: object
+                      title: User/s
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - ANY
+                            - ALL
+                      required:
+                        - type
+                      additionalProperties: false
+                    - type: boolean
+                      title: boolean
+                approvalNotification:
+                  type: object
+                  description: The notification configuration for the approval process. Relevant only if `requiredApproval` is set to `true`.<br/>
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                        - webhook
+                        - email
+                      default: email
+                  oneOf:
+                    - type: object
+                      title: Webhook
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - webhook
+                        format:
+                          type: string
+                          enum:
+                            - json
+                            - slack
+                        url:
+                          type: string
+                          description: The URL of the webhook.<br/>
+                          format: uri
+                      required:
+                        - type
+                        - url
+                      additionalProperties: false
+                    - type: object
+                      title: Email
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - email
+                      required:
+                        - type
+                      additionalProperties: false
+                  required:
+                    - type
+                publish:
+                  type: boolean
+                  description: If `true`, the action will be visible to all users and available for use.<br/>
+              additionalProperties: false
+              required:
+                - identifier
+                - trigger
+                - invocationMethod
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          description: The identifier of the action/automation you want to update.<br/>
+          name: action_identifier
+          required: true
+      security:
+        - bearer:
+            - update:actions
+      responses:
+        "200":
+          description: Default Response
+  "/v1/actions/{action_identifier}/permissions":
+    get:
+      summary: Get an action's permissions
+      description: This route allows you to fetch the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
+      tags:
+        - Actions
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: action_identifier
+          description: The identifier of the action you want to fetch permissions for.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Default Response
+    patch:
+      summary: Update an action's permissions
+      description: This route allows you to update the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
+      tags:
+        - Actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                execute:
+                  type: object
+                  description: An object used to define who can execute the action.<br/>
+                  properties:
+                    users:
+                      type: array
+                      description: The email addresses of the users who can execute the action.<br/>
+                      items:
+                        type: string
+                    roles:
+                      type: array
+                      description: The roles that can execute the action.<br/>
+                      items:
+                        type: string
+                    teams:
+                      type: array
+                      description: The names of the teams whose members can execute the action.<br/>
+                      items:
+                        type: string
+                    ownedByTeam:
+                      type: boolean
+                      description: Relevant only for [day-2 actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/setup-ui-for-action/#basic-details). If `true`, any member of the team that the entity belongs to can execute the action.<br/>
+                    policy:
+                      description: An optional custom policy the determines if action execution is allowed.<br/>See instructions and examples [here](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/#instructions).
+                      type:
+                        - object
+                        # - "null"
+                      properties:
+                        queries:
+                          type: object
+                          description: One or more queries to fetch data from your software catalog.<br/>
+                          minProperties: 1
+                          additionalProperties:
+                            $ref: "#/components/schemas/def-0"
+                        conditions:
+                          description: "`JQ` expressions that run against the provided queries, and resolve to a boolean value (`true` = allowed to execute).<br/>"
+                          type: array
+                          items:
+                            type: string
+                            minLength: 1
+                          minItems: 1
+                      required:
+                        - queries
+                        - conditions
+                      additionalProperties: false
+                  additionalProperties: false
+                approve:
+                  type: object
+                  description: An object used to define who can approve the action.<br/>
+                  properties:
+                    users:
+                      type: array
+                      description: The email addresses of the users who can approve the action.<br/>
+                      items:
+                        type: string
+                    roles:
+                      type: array
+                      description: The roles that can approve the action.<br/>
+                      items:
+                        type: string
+                    teams:
+                      type: array
+                      description: The names of the teams whose members can approve the action.<br/>
+                      items:
+                        type: string
+                    policy:
+                      description: An optional custom policy the determines who can approve the action.<br/>See instructions and examples [here](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/#instructions).
+                      type:
+                        - object
+                        # - "null"
+                      properties:
+                        queries:
+                          description: One or more queries to fetch data from your software catalog.<br/>
+                          type: object
+                          minProperties: 1
+                          additionalProperties:
+                            type: object
+                            $ref: "#/components/schemas/def-0"
+                        conditions:
+                          description: "`JQ` expressions that run against the provided queries, and resolve to an array of strings (email addresses of users who can approve the action).<br/>"
+                          type: array
+                          items:
+                            type: string
+                            minLength: 1
+                          minItems: 1
+                      required:
+                        - queries
+                        - conditions
+                      additionalProperties: false
+                  additionalProperties: false
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: action_identifier
+          description: The identifier of the action you want to update permissions for.<br/>
+          required: true
+      security:
+        - bearer: []
       responses:
         "200":
           description: Default Response

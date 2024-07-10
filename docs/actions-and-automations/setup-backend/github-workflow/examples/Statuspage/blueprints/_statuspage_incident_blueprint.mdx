@@ -1,0 +1,189 @@
+<details>
+<summary>Statuspage Incident Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "statuspageIncident",
+  "title": "Statuspage Incident",
+  "icon": "Alert",
+  "description": "An incident reported on a Statuspage",
+  "schema": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "title": "Current Status",
+        "enum": [
+          "investigating",
+          "identified",
+          "monitoring",
+          "resolved",
+          "postmortem",
+          "scheduled",
+          "in_progress",
+          "verifying",
+          "completed"
+        ],
+        "enumColors": {
+          "investigating": "blue",
+          "identified": "orange",
+          "monitoring": "yellow",
+          "resolved": "green",
+          "postmortem": "purple",
+          "scheduled": "lightGray",
+          "in_progress": "blue",
+          "verifying": "yellow",
+          "completed": "green"
+        },
+        "description": "Current status of the incident"
+      },
+      "impact": {
+        "type": "string",
+        "title": "Impact",
+        "enum": ["none", "minor", "major", "critical"],
+        "enumColors": {
+          "none": "green",
+          "minor": "yellow",
+          "major": "orange",
+          "critical": "red"
+        },
+        "description": "The impact level of the incident"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At",
+        "description": "When the incident was first reported"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Last Updated At",
+        "description": "When the incident was last updated"
+      },
+      "startedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Started At",
+        "description": "When the incident actually began"
+      },
+      "resolvedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Resolved At",
+        "description": "When the incident was resolved (null if ongoing)"
+      },
+      "shortlink": {
+        "type": "string",
+        "format": "url",
+        "title": "Short Link",
+        "description": "A shortened URL for sharing the incident status page"
+      },
+      "postmortemPublishedAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Postmortem Published At",
+        "description": "When the postmortem analysis was published (null if not yet published)"
+      },
+      "scheduled_for": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Scheduled For",
+        "description": "Start time for a scheduled incident (null if not scheduled)"
+      },
+      "scheduled_until": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Scheduled Until",
+        "description": "End time for a scheduled incident (null if not scheduled)"
+      },
+      "scheduled_remind_prior": {
+        "type": "boolean",
+        "title": "Scheduled Remind Prior",
+        "description": "Whether to send a reminder before a scheduled incident"
+      },
+      "scheduled_reminded_at": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Scheduled Reminded At",
+        "description": "When the reminder for a scheduled incident was sent (null if not applicable)"
+      },
+      "scheduled_auto_in_progress": {
+        "type": "boolean",
+        "title": "Scheduled Auto In Progress",
+        "description": "Whether to automatically transition the incident to 'in progress'"
+      },
+      "scheduled_auto_completed": {
+        "type": "boolean",
+        "title": "Scheduled Auto Completed",
+        "description": "Whether to automatically mark the incident as completed"
+      },
+      "metadata": {
+        "type": "object",
+        "title": "Metadata",
+        "description": "Custom metadata associated with the incident"
+      },
+      "reminder_intervals": {
+        "type": "string",
+        "title": "Reminder Intervals",
+        "description": "Intervals for sending reminders for a scheduled incident (null if not applicable)"
+      },
+      "postmortem_body": {
+        "type": "string",
+        "format": "markdown",
+        "title": "Postmortem",
+        "description": "The content of the postmortem analysis"
+      },
+      "postmortem_body_last_updated_at": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Postmortem Last Updated At",
+        "description": "When the postmortem body was last updated (null if not applicable)"
+      },
+      "postmortem_ignored": {
+        "type": "boolean",
+        "title": "Postmortem Ignored",
+        "description": "Whether the postmortem has been ignored"
+      },
+      "postmortem_published_at": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Postmortem Published At",
+        "description": "When the postmortem was published (null if not yet published)"
+      },
+      "postmortem_notified_subscribers": {
+        "type": "boolean",
+        "title": "Postmortem Notified Subscribers",
+        "description": "Whether subscribers were notified about the postmortem"
+      },
+      "postmortem_notified_twitter": {
+        "type": "boolean",
+        "title": "Postmortem Notified Twitter",
+        "description": "Whether the postmortem was announced on Twitter"
+      }
+    }
+  },
+  "calculationProperties": {
+    "category": {
+      "title": "Category",
+      "description": "Category of the incident",
+      "calculation": ".properties | .status as $status | if ($status | IN(\"scheduled\", \"in_progress\", \"verifying\", \"completed\")) then \"maintainance\" else \"incident\" end",
+      "type": "string",
+      "colorized": true,
+      "colors": {
+        "maintainance": "bronze",
+        "incident": "red"
+      }
+    }
+  },
+  "relations": {
+    "statuspage": {
+      "target": "statuspage",
+      "required": false,
+      "title": "Status Page",
+      "many": false
+    }
+  }
+}
+```
+
+</details>

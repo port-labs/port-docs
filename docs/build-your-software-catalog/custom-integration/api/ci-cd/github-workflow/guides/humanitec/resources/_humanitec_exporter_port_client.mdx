@@ -1,0 +1,65 @@
+```python showLineNumbers title="port_client.py"
+
+import httpx
+from typing import Any, Dict
+from loguru import logger
+from typing import List, Dict, Optional, Union
+from .cache import InMemoryCache
+
+
+class PortClient:
+    def __init__(self, client_id, client_secret, **kwargs) -> None:
+        self.httpx_async_client = kwargs.get("httpx_async_client", httpx.AsyncClient())
+        self.client_id = client_id
+        self.cache = InMemoryCache()
+        self.client_secret = client_secret
+        self.base_url = kwargs.get("base_url", "https://api.getport.io/v1")
+        self.port_headers = None
+
+    async def get_port_access_token(self) -> str:
+        credentials = {"clientId": self.client_id, "clientSecret": self.client_secret}
+        endpoint = f"/auth/access_token"
+        response = await self.send_api_request("POST", endpoint, json=credentials)
+        access_token = response["accessToken"]
+        return access_token
+
+    async def get_port_headers(self) -> Dict[str, str]:
+        access_token = await self.get_port_access_token()
+        port_headers = {"Authorization": f"Bearer {access_token}"}
+        return port_headers
+
+    async def send_api_request(
+        self,
+        method: str,
+        endpoint: str,
+        headers: Dict[str, str] | None = None,
+        json: Dict[str, Any] | None = None,
+    ) -> Dict[str, Any]:
+        url = f"{self.base_url}{endpoint}"
+        try:
+            response = await self.httpx_async_client.request(
+                method, url, headers=headers, json=json
+            )
+            response.raise_for_status()
+            return response.json()
+        except httpx.HTTPStatusError as e:
+            logger.error(f"HTTP error occurred: {e.response.text}")
+            raise
+        except Exception as e:
+            logger.error(f"An error occurred: {str(e)}")
+            raise
+
+    async def upsert_entity(
+        self, blueprint_id: str, entity_object: Dict[str, Any]
+    ) -> None:
+        endpoint = f"/blueprints/{blueprint_id}/entities?upsert=true&merge=true"
+        port_headers = (
+            self.port_headers if self.port_headers else await self.get_port_headers()
+        )
+        response = await self.send_api_request(
+            "POST", endpoint, headers=port_headers, json=entity_object
+        )
+        logger.info(response)
+        return response
+
+```
