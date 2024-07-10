@@ -8,6 +8,7 @@ import WizBlueprint from "/docs/build-your-software-catalog/custom-integration/w
 import WizConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/wiz/\_example_wiz_issue_webhook_configuration.mdx";
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/_template_docs/_find_credentials.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Wiz
 
@@ -228,6 +229,14 @@ kubectl apply -f my-ocean-wiz-integration.yaml
 </TabItem>
 </Tabs>
 
+<AdvancedConfig/>
+
+</TabItem>
+
+<TabItem value="hosted-by-port" label="Hosted by Port">
+
+<OceanSaasInstallation/>
+
 </TabItem>
 
 <TabItem value="one-time" label="Scheduled">
@@ -443,11 +452,12 @@ ingest_data:
   </Tabs>
 
 <PortApiRegionTip/>
+
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>
 
 ## Ingesting Wiz objects
 

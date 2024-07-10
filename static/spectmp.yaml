@@ -8195,7 +8195,7 @@ paths:
                         type: string
                     ownedByTeam:
                       type: boolean
-                      description: Relevant only for [day-2 actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/setup-ui-for-action/#basic-details). If `true`, any member of the team that the entity belongs to can execute the action.<br/>
+                      description: Relevant only for [DAY-2/DELETE actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/setup-ui-for-action/#basic-details). If `true`, any member of the team that the entity belongs to can execute the action.<br/>
                     policy:
                       description: An optional custom policy the determines if action execution is allowed.<br/>See instructions and examples [here](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/#instructions).
                       type:

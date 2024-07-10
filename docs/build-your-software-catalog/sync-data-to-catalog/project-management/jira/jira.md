@@ -13,6 +13,7 @@ import JiraWebhookConfiguration from "/docs/build-your-software-catalog/custom-i
 import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
 import JiraServerConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_server_configuration_python.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Jira
 
@@ -174,6 +175,14 @@ kubectl apply -f my-ocean-jira-integration.yaml
 
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
+
+</TabItem>
+
+<TabItem value="hosted-by-port" label="Hosted by Port">
+
+<OceanSaasInstallation/>
 
 </TabItem>
 
@@ -401,13 +410,15 @@ ingest_data:
 
   </Tabs>
 
+<PortApiRegionTip/>
+
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
 
-<PortApiRegionTip/>
 
-<AdvancedConfig/>
 
 ## Ingesting Jira objects
 

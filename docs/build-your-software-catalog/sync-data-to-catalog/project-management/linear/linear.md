@@ -9,6 +9,7 @@ import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuratio
 import LinearIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/linear/\_example_linear_issue_blueprint.mdx"
 import LinearIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/linear/\_example_linear_issue_configuration.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Linear
 
@@ -158,6 +159,14 @@ kubectl apply -f my-ocean-linear-integration.yaml
 
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
+
+</TabItem>
+
+<TabItem value="hosted-by-port" label="Hosted by Port">
+
+<OceanSaasInstallation/>
 
 </TabItem>
 
@@ -374,11 +383,13 @@ ingest_data:
 
   <PortApiRegionTip/>
 
+  <AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
 
-<AdvancedConfig/>
+
 
 ## Ingesting Linear objects
 
