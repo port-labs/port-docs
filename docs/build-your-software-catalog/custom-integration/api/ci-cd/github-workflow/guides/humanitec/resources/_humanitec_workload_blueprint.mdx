@@ -1,0 +1,65 @@
+<details>
+<summary>Humanitec Workload Blueprint</summary>
+
+```json showLineNumbers
+
+{
+  "identifier": "humanitecWorkload",
+  "title": "Workload",
+  "icon": "Cluster",
+  "schema": {
+    "properties": {
+      "class": {
+        "title": "Class",
+        "description": "The class of the workload",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "driverType": {
+        "title": "Driver Type",
+        "description": "The driver type of the workload",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "definitionId": {
+        "title": "Definition ID",
+        "description": "The definition ID of the workload",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "definitionVersionId": {
+        "title": "Definition Version ID",
+        "description": "The definition version ID of the workload",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "status": {
+        "title": "Status",
+        "description": "The status of the workload",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "updatedAt": {
+        "title": "Update Date",
+        "description": "The date and time when the workload was last updated",
+        "type": "string",
+        "format": "date-time",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "humanitecEnvironment": {
+      "title": "Environment",
+      "target": "humanitecEnvironment",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+</details>
