@@ -475,6 +475,15 @@ Check out this [guide](https://docs.getport.io/api-reference/create-an-entity/) 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-create-event-entity.png' width='100%' />
 </details>
 
+<details>
+<summary>Event pipeline creation</summary>
+
+1. Navigate to the event pipeline tab, click the create an event pipeline button, and enter the title for the event pipeline.
+2. Select the event and consumer entities you just created in the  `Event I Produce` and `Consumer` dropdown  
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-create-event-pipeline-entity.png' width='100%' />
+</details>
+
 ### Events dashboard creation
 
 After defining your data model in Port for the event catalog, you'll need to create a dashboard to understand and track the different events in your event catalog. This dashboard serves as a one-stop shop to for documentation, event/API schemas, consumer/producer relations, and event-related self-service actions. 
