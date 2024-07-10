@@ -456,6 +456,14 @@ Check out this [guide](https://docs.getport.io/api-reference/create-an-entity/) 
 
 First we will create a consumer entity based on the `Consumer` blueprint. 
 
+1. Go to your catalog.
+2. Navigate to the consumer tab.
+3. Click on the create a consumer button.
+4. Enter the title for your consumer.
+5. Hit the create button. 
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-create-consumer-entity.png' width='100%' />
+
 
 ### Events dashboard creation
 
