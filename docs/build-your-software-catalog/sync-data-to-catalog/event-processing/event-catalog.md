@@ -470,7 +470,7 @@ Check out this [guide](https://docs.getport.io/api-reference/create-an-entity/) 
 <summary>Event creation</summary>
 
 1. Navigate to the event tab, click the create an event button, and enter the title for the event.
-2. Set the consumer that consumes this event by selecting the consumer you just created in the consumer section of the event creation panel
+2. Set the consumer that consumes this event by selecting the consumer you just created in the `Consumers` dropdown
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-create-event-entity.png' width='100%' />
 </details>
@@ -479,9 +479,18 @@ Check out this [guide](https://docs.getport.io/api-reference/create-an-entity/) 
 <summary>Event pipeline creation</summary>
 
 1. Navigate to the event pipeline tab, click the create an event pipeline button, and enter the title for the event pipeline.
-2. Select the event and consumer entities you just created in the  `Event I Produce` and `Consumer` dropdown  
+2. Select the event and consumer entities you just created in the `Event I Produce` and `Consumer` dropdown  
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-create-event-pipeline-entity.png' width='100%' />
+</details>
+
+<details>
+<summary>Producer creation</summary>
+
+1. Navigate to the producer tab, click the create a producer button, and enter the title for the producer.
+2. Select the event and event pipeline entities you just created in the `Event I Produce` and `Event Pipeline` dropdown  
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-create-event-producer-entity.png' width='100%' />
 </details>
 
 ### Events dashboard creation
