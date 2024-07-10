@@ -444,11 +444,13 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
 
 With all blueprints deployed, you should see all the blueprint categories in your Port catalog like this.
 
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-post-blueprint-deployment-catalog-view.png' width='100%' />
+
 ### Testing your data model
 
-After generating all the blueprints, you'll want to test your data model out by creating example entities based on each of the blueprints you created. 
+After generating all the blueprints, you'll want to test your data model out by creating example entities based on each of the blueprints you created. In a real production environment, you'd be generating these entities either automatically via API or integration. 
 
-First we will create a test_consumer entity based on the `Consumer` blueprint. 
+First we will create a consumer entity based on the `Consumer` blueprint. 
 
 
 ### Events dashboard creation
