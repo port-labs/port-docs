@@ -448,7 +448,11 @@ With all blueprints deployed, you should see all the blueprint categories in you
 
 ### Testing your data model
 
-After generating all the blueprints, you'll want to test your data model out by creating example entities based on each of the blueprints you created. In a real production environment, you'd be generating these entities either automatically via API or integration. 
+After generating all the blueprints, you'll want to test your data model out by creating example entities based on each of the blueprints you created. In a real production environment, you'd likely be generating these entities either automatically via an API call or one of our integrations. 
+
+:::tip Don't know how to create entities programmatically?
+Check out this [guide](https://docs.getport.io/api-reference/create-an-entity/) on how to create entities in Port programmatically 
+:::
 
 First we will create a consumer entity based on the `Consumer` blueprint. 
 
