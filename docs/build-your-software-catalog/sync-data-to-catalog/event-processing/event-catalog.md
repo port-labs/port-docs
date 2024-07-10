@@ -446,7 +446,7 @@ With all blueprints deployed, you should see all the blueprint categories in you
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-post-blueprint-deployment-catalog-view.png' width='100%' />
 
-### Testing your data model
+### Entity creation
 
 After generating all the blueprints, you'll want to test your data model out by creating example entities based on each of the blueprints you created. In a real production environment, you'd likely be generating these entities either automatically via an API call or one of our integrations. 
 
@@ -454,7 +454,8 @@ After generating all the blueprints, you'll want to test your data model out by 
 Check out this [guide](https://docs.getport.io/api-reference/create-an-entity/) on how to create entities in Port programmatically 
 :::
 
-First we will create a consumer entity based on the `Consumer` blueprint. 
+<details>
+<summary>Consumer creation</summary>
 
 1. Go to your catalog.
 2. Navigate to the consumer tab.
@@ -463,7 +464,16 @@ First we will create a consumer entity based on the `Consumer` blueprint.
 5. Hit the create button. 
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-create-consumer-entity.png' width='100%' />
+</details>
 
+<details>
+<summary>Event creation</summary>
+
+1. Navigate to the event tab, click the create an event button, and enter the title for the event.
+2. Set the consumer that consumes this event by selecting the consumer you just created in the consumer section of the event creation panel
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-create-event-entity.png' width='100%' />
+</details>
 
 ### Events dashboard creation
 
