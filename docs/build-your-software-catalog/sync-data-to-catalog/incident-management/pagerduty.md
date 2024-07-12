@@ -17,11 +17,11 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # PagerDuty
 
-Our PagerDuty integration allows you to import `schedules`, `oncalls`, `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
+Our PagerDuty integration allows you to import `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` from your PagerDuty account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `schedules`, `oncalls`, `services` and `incidents` in your PagerDuty organization environment.
+- Map `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` in your PagerDuty organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -874,6 +874,81 @@ resources:
             relations:
               pagerdutyService: .service.id
 ```
+
+</details>
+
+### Escalation policy
+
+<details>
+<summary>Escalation policy blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "pagerdutyEscalationPolicy",
+  "description": "This blueprint represents a PagerDuty escalation policy in our software catalog",
+  "title": "PagerDuty Escalation Policy",
+  "icon": "pagerduty",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "URL",
+        "type": "string",
+        "format": "url"
+      },
+      "summary": {
+        "title": "Summary",
+        "type": "string"
+      },
+      "primaryOncall": {
+        "title": "Primary Oncall",
+        "type": "string",
+        "format": "user"
+      },
+      "escalationRules": {
+        "title": "Escalation Rules",
+        "type": "array",
+        "items": {
+          "type": "object"
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: escalation_policies
+    selector:
+      query: 'true'
+      attachOncallUsers: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"pagerdutyEscalationPolicy"'
+          properties:
+            url: .html_url
+            description: .summary
+            primaryOncall: .__oncall_users | sort_by(.escalation_level) | .[0].user.email
+            escalationRules: .escalation_rules
+```
+:::tip Attach oncall users
+When `attachOncallUsers` is set to `true`, it fetches the oncall data per escalation policy. To disable this feature, set the value to `false`.
+:::
 
 </details>
 
