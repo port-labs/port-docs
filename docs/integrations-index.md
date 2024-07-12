@@ -304,8 +304,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## SSO
 
-- [Okta SSO](/sso-rbac/sso-providers/okta.md)
-- [OneLogin SSO](/sso-rbac/sso-providers/onelogin.md)
+- [Okta SSO](/sso-rbac/sso-providers/oidc/okta.md)
+- [OneLogin SSO](/sso-rbac/sso-providers/oidc/onelogin.md)
 - [JumpCloud SSO](/sso-rbac/sso-providers/saml/jumpcloud.md)
 - [Google workspace SSO](/sso-rbac/sso-providers/saml/google-workspace.md)
 - [Azure Active Directory (AD) SSO OIDC](/sso-rbac/sso-providers/azure-ad.md)
