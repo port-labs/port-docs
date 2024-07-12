@@ -555,6 +555,22 @@ Examples of blueprints and the relevant integration configurations:
 <details>
 <summary>Integration configuration</summary>
 
+:::tip filter projects
+The integration provides an option to filter the data that is retrieved from the SonarQube API using the following attributes:
+
+1. `query`: Limits the search to component names that contain the supplied string
+2. `alertStatus`: To filter a project's quality gate status. Accepts a list of values such as `OK`, `ERROR` and `WARN`
+3. `languages`: To filter projects using a list of languages or a single language
+4. `tags`: To filter a list of tags or a single tag
+5. `qualifier`: To filter on a component qualifier. Accepts values such as `TRK` (for projects only) and `APP` (for applications only)
+
+These attributes can be enabled using the path: `selector.apiFilters.filter`. By default, the integration fetches only SonarQube projects using the `qualifier` attribute.
+:::
+
+:::note Supported Sonar environment
+Please note that the API filters are supported on on-premise Sonar environments (SonarQube) only, and will not work on SonarCloud.
+:::
+
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
@@ -562,6 +578,9 @@ resources:
   - kind: projects
     selector:
       query: "true"
+      apiFilters:
+        filter:
+          qualifier: TRK
     port:
       entity:
         mappings:
@@ -659,6 +678,29 @@ resources:
 <details>
 <summary>Integration configuration</summary>
 
+:::tip filter issues
+The integration provides an option to filter the data that is retrieved from the SonarQube API using the following attributes:
+
+1. `assigned`: To retrieve assigned or unassigned issues. Accepts values: `yes`, `no`, `true`, `false`
+2. `assignees`: A list of assignee logins
+3. `cleanCodeAttributeCategories`: List of clean code attribute categories. Accepts values: `ADAPTABLE`, `CONSISTENT`, `INTENTIONAL`, `RESPONSIBLE`
+4. `createdBefore`: To retrieve issues created before the given date
+5. `createdAfter`: To retrieve issues created after the given date
+6. `impactSeverities`: List of impact severities. Accepts values: `HIGH`, `LOW`, `MEDIUM`
+7. `impactSoftwareQualities`: List of impact software qualities. Accepts values: `MAINTAINABILITY`, `RELIABILITY`, `SECURITY`
+8. `statuses`: List of statuses. Accepts values: `OPEN`, `CONFIRMED`, `FALSE_POSITIVE`, `ACCEPTED`, `FIXED`
+9. `languages`: List of languages
+10. `resolved`: To retrieve resolved or unresolved issues. Accepts values: `yes`, `no`, `true`, `false`
+11. `scopes`: List of scopes. Accepts values: `MAIN`, `TESTS`
+12. `tags`: List of tags
+
+These attributes can be enabled using the path: `selector.apiFilters`. By default, the integration fetches unresolved SonarQube issues. It is also possible to configure the integration to fetch issues from a SonarQube project using the path: `selector.projectApiFilters.filter` while specifying any of [the above project attributes](#project) 
+:::
+
+:::note Supported Sonar environment
+Please note that the API filters are supported on on-premise Sonar environments (SonarQube) only, and will not work on SonarCloud.
+:::
+
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
@@ -666,6 +708,11 @@ resources:
   - kind: issues
     selector:
       query: "true"
+      apiFilters:
+        resolved: 'false'
+      projectApiFilters:
+        filter:
+          qualifier: TRK
     port:
       entity:
         mappings:
