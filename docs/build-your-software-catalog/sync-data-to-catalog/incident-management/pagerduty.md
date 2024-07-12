@@ -880,7 +880,7 @@ resources:
 ### Escalation policy
 
 <details>
-<summary>Escalation policy blueprint</summary>
+<summary><b>Escalation policy blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
