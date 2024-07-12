@@ -3,6 +3,8 @@ sidebar_position: 1
 title: Connect Opencost cloudcost with AWS Resource
 ---
 
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+
 # Connect Kubecost `cloudcost` with AWS Resource
 
 This guide aims to cover how to connect an Opencost Cloudcost resource with an AWS resource to draw cost analysis.

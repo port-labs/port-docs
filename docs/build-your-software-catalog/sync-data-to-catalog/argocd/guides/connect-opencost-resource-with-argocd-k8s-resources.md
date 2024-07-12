@@ -3,6 +3,8 @@ sidebar_position: 1
 title: Connect Opencost cloudcost with ArgoCD/K8 resource
 ---
 
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+
 # Connect Opencost `cloudcost` with AWS Resource
 
 This guide aims to cover how to connect an Opencost Resource Allocations resource with an ArgoCD K8 resource to draw cost analysis.
