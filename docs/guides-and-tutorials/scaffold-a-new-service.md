@@ -27,7 +27,7 @@ In this guide we will create an action that initializes a new Git repository. In
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
 - Developers will be able to scaffold new services easily.
-- R&D managers will be able to get an overview of new services - how many were created and by who.
+- R&D managers will be able to get an overview of new services - how many were created and by whom.
 - Platform engineers will be able to control permissions to ensure only the relevant people can create new services.
 
 <br/>
