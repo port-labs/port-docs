@@ -72,16 +72,16 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install launchdarkly port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
   --set sendRawDataExamples=true \
-	--set integration.identifier="my-launchdarkly-integration"  \
-	--set integration.type="launchdarkly"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.launchdarklyHost="string" \
-	--set integration.secrets.launchdarklyToken="string" \
+  --set integration.identifier="my-launchdarkly-integration"  \
+  --set integration.type="launchdarkly"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.secrets.launchdarklyHost="string" \
+  --set integration.secrets.launchdarklyToken="string" \
 ```
 
 <PortApiRegionTip/>
