@@ -39,6 +39,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅       |
 | `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
 | `integration.clickupApikey` | The personal token of the user Clickup account                                                                                                   |                  | ✅       |
+| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Clickup                        | https://my-ocean-integration.com | ❌       |
 
 <HelmParameters/>
 
@@ -676,11 +677,14 @@ resources:
         "type": "string",
         "description": "The status of the issue"
       },
-      "assignee": {
-        "title": "Assignee",
-        "type": "string",
-        "format": "user",
-        "description": "The user assigned to the issue"
+      "assignees": {
+          "title": "Assignees",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "user"
+          },
+          "description": "The users assigned to the issue"
       },
       "creator": {
         "title": "Creator",
@@ -744,7 +748,7 @@ resources:
           properties:
             url: "\"https://app.clickup.com/t/\" + .id"
             status: .status.status
-            assignee: .assignees[0].email
+            assignee: '[.assignees[] | .email]'
             creator:  .creator.email
             priority: .priority
             created:  if .date_created==null then .date_created else .date_created | tonumber / 1000 | todate end
