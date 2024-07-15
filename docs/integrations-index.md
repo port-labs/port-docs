@@ -230,7 +230,9 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/opencost.md)
 
-- 
+- [Connect Opencost resource with ArgoCD K8 resource](/build-your-software-catalog/sync-data-to-catalog/argocd/guides/connect-opencost-resource-with-argocd-k8s-resources.md)
+
+- [Connect Opencost resource with AWS resource](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/guides/connect-opencost-resource-with-aws-resource.md)
 
 ## Dynatrace
 
