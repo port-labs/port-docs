@@ -195,11 +195,11 @@ Fill out the form with your values:
   {
     "port_context": {
       "entity": "{{ .entity.identifier }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
     "domain": "{{ .inputs.domain }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 </TabItem>
@@ -232,11 +232,11 @@ In order to protect the webhook, see the [Validating webhook signatures page](..
   {
     "port_context": {
       "entity": "{{ .entity.identifier }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
     "domain": "{{ .inputs.domain }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 
@@ -270,11 +270,11 @@ Then, fill out your workflow details:
     "port_context": {
       "entity": "{{ .entity.identifier }}",
       "repo_url": "{{ .entity.properties.url }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
     "domain": "{{ .inputs.domain }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 
