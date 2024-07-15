@@ -1829,10 +1829,6 @@ The following parameters are **required**:
 - `name` - the name of the [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md#structure-table) in the blueprint definition;
 - `identifier` - the identifier of the target entity.
 
-:::note
-At the moment, it is only possible to create entities with `many: false` relations using Port's Pulumi provider.
-:::
-
 ## Ingest data using the Pulumi provider
 
 To ingest data to the software catalog using the Pulumi provider, you will create an instance of `port.Entity` resource in your preferred langauge:
