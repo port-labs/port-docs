@@ -51,7 +51,7 @@ If you already have blueprints in Port for your event producer, event consumer, 
 To create an event catalog, we first need to create the  `Producer`, `Event Broker`, `Event`, and `Consumer` blueprints in our data model. This includes defining the relations between the blueprints in your architecture in the `relations` section of each JSON. Examples for each blueprint including the relation configuration are provided below, but the exact configuration of your blueprints will differ from the examples provided here depending on your architecture.
 
 :::tip Don't know how to deploy blueprints?
-Check out this [guide](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) on how to deploy blueprints in Port
+Check out this [guide](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) on how to deploy blueprints in Port.
 :::
 
 <details>
@@ -384,7 +384,92 @@ Check out this [guide](https://docs.getport.io/build-your-software-catalog/custo
 ```
 </details>
 
-With all blueprints deployed, you should see all the blueprint categories in your Port catalog like this.
+Once you have deployed all your blueprints, you'll have to create relations between the blueprints. 
+
+:::tip Don't know how to relate blueprints?
+Check out this [guide](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints) on how to configure relations in Port.
+:::
+
+<details>
+<summary>Relate producer blueprint to event broker blueprint</summary>
+
+```json showLineNumbers
+    "broker": {
+      "title": "Event Broker",
+      "target": "broker",
+      "required": false,
+      "many": false
+    }
+```
+</details>
+
+<details>
+<summary>Relate producer blueprint to event blueprint</summary>
+
+```json showLineNumbers
+"event_i_produce": {
+      "title": "Event I Produce",
+      "target": "event",
+      "required": false,
+      "many": true
+    }
+```
+</details>
+
+<details>
+<summary>Relate event broker blueprint to event blueprint</summary>
+
+```json showLineNumbers
+"event_i_produce": {
+      "title": "Event I Produce",
+      "target": "event",
+      "required": false,
+      "many": false
+    }
+```
+</details>
+
+<details>
+<summary>Relate event broker blueprint to consumer blueprint</summary>
+
+```json showLineNumbers
+    "consumer": {
+      "title": "Consumer",
+      "target": "consumer",
+      "required": false,
+      "many": false
+    }
+```
+</details>
+
+<details>
+<summary>Relate event blueprint to consumer blueprint</summary>
+
+```json showLineNumbers
+   "consumers": {
+      "title": "Consumers",
+      "target": "consumer",
+      "required": false,
+      "many": true
+    }
+```
+</details>
+
+<details>
+<summary>Relate event blueprint to event broker blueprint</summary>
+
+```json showLineNumbers
+   "broker": {
+      "title": "Event Broker I'm Sent To",
+      "target": "broker",
+      "required": false,
+      "many": false
+    }
+```
+</details>
+
+
+Once you have created all your relations between the blueprints, your catalog should look something like this.
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/event-processing/event-catalog-post-blueprint-deployment-catalog-view.png' width='100%' />
 
