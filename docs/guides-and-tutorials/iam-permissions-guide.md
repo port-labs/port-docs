@@ -274,7 +274,7 @@ jobs:
       - name: Create JSON for permissions
         id: create-jsons
         run: |
-          permissions=$(echo '${{ inputs.properties }}' | jq -c -r '[.inputs.permissions[].identifier]')
+          permissions=$(echo '${{ inputs.properties }}' | jq -c -r '[.permissions[].identifier]')
           echo "PERMISSIONS_ARRAY=${permissions}" >> $GITHUB_OUTPUT
           jq -r --argjson permissions "${permissions}" --arg resource "${{fromJson(inputs.port_context).entity.identifier}}/*" '.Statement[0].Action=$permissions | .Statement[0].Resource=$resource' .github/templates/iamPolicyDocument.json > temp_policy_document.json
           jq -r --arg aws_acc_id "${{ secrets.AWS_ACCOUNT_ID }}" '.Statement[0].Principal.AWS="arn:aws:iam::"+$aws_acc_id+":root"' .github/templates/iamTrustPolicy.json > temp_trust_policy.json
