@@ -641,7 +641,7 @@ When the Port action run will end, you will get action logs which will show you 
 - Who requested the IAM permissions.
 - The sign-in URL for the provisioned role.
 
-The actoin will also create a new `Provisioned Permissions` entity which you can see in the [Provisioned Permissions](https://app.getport.io/provisioned_permissions) catalog page.
+The action will also create a new `Provisioned Permissions` entity which you can see in the [Provisioned Permissions](https://app.getport.io/provisioned_permissions) catalog page.
 
 Copy the sign-in URL and paste it to your browser's URL bar. Click the `Switch Role` button. 
 
@@ -677,13 +677,15 @@ When the Port action run will end, you will get action logs which will show you 
 - Which IAM Permission was deleted.
 - Who is responsible for deleting the IAM permission.
 
-The acion will also delete the `Provisioned Permissions` entity which was created when the permissions were provisionsed.
+The action will also delete the `Provisioned Permissions` entity which was created when the permissions were provisioned.
 
 We can retry the previous sign-in URL, and see that it no longer works ❌
 
 <p align="center">
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-revoke-permissions-action.png' width='75%' border='1px' />
 </p>
+
+#### Create temporary permissions using automations
 
 ## Summary 
 That's it! You are all set up to manage IAM permissions for your different AWS resources using Port!🚀
