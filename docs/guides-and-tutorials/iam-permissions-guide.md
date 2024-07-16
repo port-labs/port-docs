@@ -685,7 +685,13 @@ We can retry the previous sign-in URL, and see that it no longer works ❌
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-revoke-permissions-action.png' width='75%' border='1px' />
 </p>
 
-#### Create temporary permissions using automations
+#### Temporary permissions with automations
+
+With the [automations](https://docs.getport.io/actions-and-automations/define-automations) feature, you can automatically trigger actions using events from the catalog. 
+
+For example, you can have your HR system automatically trigger an event to revoke IAM permissions via Port when an employee leaves the company. In a simpler use case, you can use the Timer Expired event to trigger the Revoke permissions action and create a temporary permissions experience, ensuring credentials aren't kept active beyond the time limit specified by your security and compliance teams.
+
+To do this, 
 
 ## Summary 
 That's it! You are all set up to manage IAM permissions for your different AWS resources using Port!🚀
@@ -697,4 +703,3 @@ See the [Next Steps](#next-steps) section to understand how to take this guide o
 ## Next Steps
 - **Install Port's [AWS exporter](/docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)** - You can use Port's AWS exporter to automatically populates your software catalog from your AWS environement. You can use the AWS exporter to populate your `AWS Resources` blueprints with different AWS resources.
 - **Enforce [manual approval](/docs/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/set-self-service-actions-rbac.md#configure-manual-approval-for-actions) for your Port actions** - To have control over who is provisioning and revoking permissions, you can set up manual approval for your actions. This will enable you to provide a request-approve flow for provisioning and revoking permissions using Port.
-- **Temporary permissions using [Automations](https://roadmap.getport.io/ideas/p/automation) and the `Timer` property** With the automations feature, you will be able to automatically trigger actions using events from the catalog. You can use the `Timer Expired` event to trigger the `Revoke permissions` action and create a temporary permissions experience.
