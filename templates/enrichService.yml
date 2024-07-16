@@ -1,0 +1,9 @@
+# enrichService.yml
+
+- identifier: "{{ service_identifier }}"
+  blueprint: service
+  properties:
+    type: "{{ service_type }}"
+    lifecycle: "{{ service_lifecycle }}"
+  relations:
+    domain: "{{ domain_identifier }}"
