@@ -87,7 +87,7 @@ You can create the custom policy using the following json:
 :::
 
 :::tip
-The name of this role (not the ARN) is refernced as `accountReadRoleName` in this doc.
+The name of this role (not the ARN) is referenced as `accountReadRoleName` in this doc.
 :::
 
 ## Walkthrough
