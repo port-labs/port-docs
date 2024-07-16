@@ -182,6 +182,18 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api-reference/get-an-action-automation",
+          label: "Get an action/automation",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-an-action-automation",
+          label: "Delete an action/automation",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
           id: "api-reference/get-an-actions-permissions",
           label: "Get an action's permissions",
           className: "api-method get",

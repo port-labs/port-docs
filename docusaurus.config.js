@@ -241,7 +241,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Port, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Port, Inc.`,
       },
       tableOfContents: {
         minHeadingLevel: 2,
