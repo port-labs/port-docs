@@ -1,0 +1,62 @@
+name: Enrich service
+on:
+  workflow_dispatch:
+    inputs:
+      port_context:
+        required: true
+        description: Includes the entity identifier and the action's run id
+      domain:
+        required: true
+        description: The domain to assign the service to
+        type: string
+      type:
+        required: true
+        description: The type of the service
+        type: string
+      lifecycle:
+        required: true
+        description: The lifecycle state of the service
+        type: string
+jobs:
+  enrichService:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the service's repository
+      - uses: actions/checkout@v4
+        with:
+          repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}"
+          path: ./targetRepo
+          token: ${{ secrets.ORG_ADMIN_TOKEN }}
+      - name: Copy template yml file
+        run: |
+          cp templates/enrichService.yml ./targetRepo/port.yml
+      - name: Update new file data
+        run: |
+          sed -i 's/{{ service_identifier }}/${{ fromJson(inputs.port_context).entity }}/' ./targetRepo/port.yml
+          sed -i 's/{{ domain_identifier }}/${{ inputs.domain }}/' ./targetRepo/port.yml
+          sed -i 's/{{ service_type }}/${{ inputs.type }}/' ./targetRepo/port.yml
+          sed -i 's/{{ service_lifecycle }}/${{ inputs.lifecycle }}/' ./targetRepo/port.yml
+      - name: Open a pull request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.ORG_ADMIN_TOKEN }}
+          path: ./targetRepo
+          commit-message: Enrich service - ${{ fromJson(inputs.port_context).entity}}
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: add-port-yml
+          delete-branch: true
+          title: Create port.yml - ${{ fromJson(inputs.port_context).entity }}
+          body: |
+            Add port.yaml to enrich service in Port.
+          draft: false
+      - name: Create a log message
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{ fromJson(inputs.port_context).runId }}
+          logMessage: Pull request to add port.yml created successfully for service "${{ fromJson(inputs.port_context).entity }}" 🚀
