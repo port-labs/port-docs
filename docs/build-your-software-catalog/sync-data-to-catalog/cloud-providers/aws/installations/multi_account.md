@@ -8,7 +8,7 @@ This guide will provide you with the necessary tools for enabling our Ocean AWS 
 
 ## Our Permissions model
 
-A few key conecpts in the AWS's permissions model:
+A few key concepts in the AWS's permissions model:
 
 1. *Policy*: A document that defines permissions, specifying what actions are allowed or denied for particular resources and under what conditions.
 2. *Role*: An identity with specific permissions and trust policies.
