@@ -63,7 +63,7 @@ The integration expects the non-root account's role the be named the same (`acco
 1. Name of a role in the integration's account giving it the following Policies: (This was created for you if you ran our terraform module)
    1. `arn:aws:iam::aws:policy/ReadOnlyAccess`
    2. Custom policy with `account:ListRegions` permissions
-   3. `sts:AssumeRole` on `arn:aws:iam::<root_account>:root/<organizationRoleArn>`
+   3. `sts:AssumeRole` on `arn:aws:iam::<root_account>:role/<organizationRoleArn>`
 
 :::tip
 You can create the custom policy using the following json:
