@@ -5,6 +5,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_kafka_one_time_docker_params.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 
 # Kafka
@@ -38,6 +39,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
 | `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅       |
 | `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅       |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
 | `integration.secrets.clusterConfMapping` | The Mapping of Kafka cluster names to Kafka client config  |  | ✅       |
 
 
@@ -54,13 +56,18 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install kafka port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
+	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
 	--set scheduledResyncInterval=60  \
 	--set integration.identifier="my-kafka-integration"  \
 	--set integration.type="kafka"  \
 	--set integration.eventListener.type="POLLING"  \
 	--set-json integration.secrets.clusterConfMapping='{"local": {"bootstrap.servers": "localhost:9092"}}'
 ```
+
+<PortApiRegionTip/>
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
@@ -118,6 +125,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -130,10 +139,12 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
+
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+1. Apply your application manifest with `kubectl`:
 ```bash
 kubectl apply -f my-ocean-kafka-integration.yaml
 ```
@@ -178,6 +189,7 @@ jobs:
           type: 'kafka'
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
           config: |
             cluster_conf_mapping: ${{ secrets.OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING }}
 ```
@@ -222,9 +234,11 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING=$OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
                                 $image_name
 
                             exit $?
@@ -271,9 +285,11 @@ steps:
     docker run -i --rm \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING=$(OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $image_name
 
     exit $?
@@ -322,9 +338,11 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING=$OCEAN__INTEGRATION__CONFIG__CLUSTER_CONF_MAPPING \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $IMAGE_NAME
 
   rules: # Run only when changes are made to the main branch
@@ -333,6 +351,8 @@ ingest_data:
 
 </TabItem>
   </Tabs>
+
+<PortApiRegionTip/>
 
 </TabItem>
 

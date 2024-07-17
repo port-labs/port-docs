@@ -39,7 +39,7 @@ resources:
       entity:
         mappings:
           identifier: ".name"
-          title: '.name | split("/") | last'
+          title: ".name | split("/") | last"
           blueprint: '"gcpCloudResource"'
           properties:
             type: '.name | split("/") | .[-2]'

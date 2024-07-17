@@ -6,6 +6,7 @@ title: Ensure production readiness
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Ensure production readiness
 
@@ -18,7 +19,7 @@ This guide takes 10 minutes to complete, and aims to cover:
 🎬 If you would like to follow along to a **video** that implements this guide, check out this one by @TeKanAid 🎬
 <center>
 
-<iframe width="40%" height="240" src="https://www.youtube.com/embed/tMYaKlMIvZk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/tMYaKlMIvZk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 
@@ -102,6 +103,7 @@ helm repo add port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
     --set port.clientId="CLIENT_ID" \   # REPLACE VALUE
     --set port.clientSecret="CLIENT_SECRET"  \   # REPLACE VALUE
+    --set port.baseUrl="https://api.getport.io"  \
     --set initializePortResources=true  \
     --set integration.identifier="my-pagerduty-integration"  \
     --set integration.type="pagerduty"  \
@@ -109,6 +111,8 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
     --set integration.secrets.token="token"  \   # REPLACE VALUE
     --set integration.config.apiUrl="https://api.pagerduty.com"
 ```
+
+<PortApiRegionTip/>
 
 </details>
 

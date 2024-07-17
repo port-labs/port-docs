@@ -9,6 +9,7 @@ import SupportedResources from "../\_supported-resources.mdx"
 import AdvancedConfig from '../../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_blueprint.mdx";
 import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # SonarQube
 
@@ -43,6 +44,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | -------- |
 | `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                 |                                     | ✅       |
 | `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                             |                                     | ✅       |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
 | `integration.secrets.sonarApiToken`      | The [SonarQube API token](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)                                                |                                     | ✅       |
 | `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Not required when using on-prem sonarqube instance) | myOrganization                      | ✅       |
 | `integration.config.sonarIsOnPremise` | A boolean value indicating whether the SonarQube instance is on-premise. The default value is `false` | false                      | ✅       |
@@ -62,7 +64,9 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
   --set port.clientId="PORT_CLIENT_ID"  \
   --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
   --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
   --set scheduledResyncInterval=120  \
   --set integration.identifier="my-sonarqube-integration"  \
   --set integration.type="sonarqube"  \
@@ -71,6 +75,9 @@ helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
   --set integration.secrets.sonarApiToken="<ENTER API TOKEN>"  \
   --set integration.config.sonarOrganizationId="<ENTER ORGANIZATION ID>"
 ```
+
+<PortApiRegionTip/>
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
@@ -133,6 +140,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -145,10 +154,12 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
+
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+1. Apply your application manifest with `kubectl`:
 ```bash
 kubectl apply -f my-ocean-sonarqube-integration.yaml
 ```
@@ -195,6 +206,7 @@ jobs:
           type: 'sonarqube'
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
           config: |
             sonar_api_token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN }}
             sonar_organization_id: ${{ secrets.OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID }}
@@ -246,11 +258,13 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=$OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=$OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID \
                                 -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=$OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
                                 $image_name
 
                             exit $?
@@ -307,12 +321,14 @@ steps:
     docker run -i --rm \
     -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
     -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+    -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=$(OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN) \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=$(OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID) \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=$(OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE) \
     -e OCEAN__INTEGRATION__CONFIG__SONAR_URL=$(OCEAN__INTEGRATION__CONFIG__SONAR_URL) \
     -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
     -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
+    -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
     $image_name
 
     exit $?
@@ -361,11 +377,13 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN=$OCEAN__INTEGRATION__CONFIG__SONAR_API_TOKEN \
         -e OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID=$OCEAN__INTEGRATION__CONFIG__SONAR_ORGANIZATION_ID \
         -e OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE=$OCEAN__INTEGRATION__CONFIG__SONAR_IS_ON_PREMISE \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $IMAGE_NAME
 
   rules: # Run only when changes are made to the main branch
@@ -374,6 +392,8 @@ ingest_data:
 
 </TabItem>
   </Tabs>
+
+<PortApiRegionTip/>
 
 </TabItem>
 

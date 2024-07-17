@@ -12,8 +12,8 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name"
-          title:  ".name | split("/") | last"
+          identifier: ".id"
+          title:  ".name"
           blueprint: '"gcpAutoScaler"'
           properties:
             location: .location
@@ -30,8 +30,8 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name"
-          title:  ".name | split("/") | last"
+          identifier: ".id"
+          title:  ".name"
           blueprint: '"gcpFirewall"'
           properties:
             location: .location
@@ -49,8 +49,8 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name"
-          title:  ".name | split("/") | last"
+          identifier: ".id"
+          title:  ".name"
           blueprint: '"gcpSubnetwork"'
           properties:
             location: .location
@@ -67,8 +67,8 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name"
-          title:  ".name | split("/") | last"
+          identifier: ".id"
+          title:  ".name"
           blueprint: '"gcpComputeInstance"'
           properties:
             location: .location

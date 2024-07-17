@@ -7,6 +7,7 @@ import EventBlueprint from '/docs/build-your-software-catalog/custom-integration
 import ArgoCDWebhookConfig from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_webhook_configuration.mdx'
 import ArgoCDEventWebhookConfig from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_events_webhook_config.mdx'
 import ArgoCDEventManifest from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_events_manifest.mdx'
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # ArgoCD
 
@@ -34,6 +35,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                  | Your port client id                                                                                           | ✅       |
 | `port.clientSecret`              | Your port client secret                                                                                       | ✅       |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                           | ✅       |
 | `integration.identifier`         | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`               | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type` | The event listener type                                                                                       | ✅       |
@@ -41,6 +43,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.serverUrl`   | The ArgoCD server url                                                                                         | ✅       |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+| `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌       |
 
 <br/>
 
@@ -54,7 +57,9 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-argocd-integration port-labs/port-ocean \
   --set port.clientId="CLIENT_ID"  \
   --set port.clientSecret="CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \  
   --set initializePortResources=true  \
+  --set sendRawDataExamples=true \
   --set scheduledResyncInterval=60  \
   --set integration.identifier="my-argocd-integration"  \
   --set integration.type="argocd"  \
@@ -62,6 +67,8 @@ helm upgrade --install my-argocd-integration port-labs/port-ocean \
   --set integration.secrets.token="<your-token>"  \
   --set integration.config.serverUrl="<your-server-url>"
 ```
+
+<PortApiRegionTip/>
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD" default>
@@ -123,6 +130,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.geport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -135,10 +144,12 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
+
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+1. Apply your application manifest with `kubectl`:
 ```bash
 kubectl apply -f my-ocean-argocd-integration.yaml
 ```
@@ -166,6 +177,8 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__INTEGRATION__IDENTIFIER`         | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                 | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`             | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        | ✅       |
+| `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                |  ❌       |
 
 <br/>
 
@@ -189,6 +202,7 @@ jobs:
           type: 'argocd'
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
           config: |
             token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }}
             server_url: ${{ OCEAN__INTEGRATION__CONFIG__SERVER_URL }}
@@ -215,8 +229,10 @@ of `Secret Text` type:
 | `OCEAN__INTEGRATION__CONFIG__SERVER_URL` | The ArgoCD server URL                                                                                              | ✅       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`       | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`         | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
+| `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                   | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                 | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`             | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        | ✅       |
 
 <br/>
 
@@ -244,10 +260,12 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__SERVER_URL=$OCEAN__INTEGRATION__CONFIG__SERVER_URL \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
                                 $image_name
 
                             exit $?
@@ -276,9 +294,11 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`      | The ArgoCD API token                                                                                               | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__SERVER_URL` | The ArgoCD server URL                                                                                              | ✅       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`       | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
+| `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true     | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`         | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                 | Your port client id                                                                                                | ✅       |
 | `OCEAN__PORT__CLIENT_SECRET`             | Your port client secret                                                                                            | ✅       |
+| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                         | ✅       |
 
 <br/>
 
@@ -309,10 +329,12 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
         -e OCEAN__INTEGRATION__CONFIG__SERVER_URL=$OCEAN__INTEGRATION__CONFIG__SERVER_URL \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $IMAGE_NAME
 
   rules: # Run only when changes are made to the main branch
@@ -321,6 +343,9 @@ ingest_data:
 
 </TabItem>
   </Tabs>
+
+<PortApiRegionTip/>
+
 </TabItem>
 
 </Tabs>
@@ -1450,5 +1475,5 @@ Done! any change that happens to your applications in ArgoCD will trigger a webh
 
 More relevant guides and examples:
 
-- [Rollback ArgoCD deployment](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment)
-- [Self-service action to synchronize ArgoCD application](/create-self-service-experiences/setup-backend/github-workflow/examples/argocd/sync-argocd-app)
+- [Rollback ArgoCD deployment](/actions-and-automations/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment)
+- [Self-service action to synchronize ArgoCD application](/actions-and-automations/setup-backend/github-workflow/examples/argocd/sync-argocd-app)

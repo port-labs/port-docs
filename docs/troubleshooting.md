@@ -52,6 +52,21 @@ In case you're evaluating Port, it provides you with everything you need, and if
 
 ---
 
+#### Does Port's web application have session timeouts?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+There is an inactivity timeout period of 3 days, and an absolute auto sign-in period of 7 days.
+
+If you are inactive for 2 days and 23:59 hours, then perform any action, you will stay logged in.
+
+In any case, after 7 days you will need to login again.
+
+</details>
+
+---
+
 ## Organization
 
 #### How can I set up SSO for my organization?
@@ -127,7 +142,7 @@ If you are still facing issues, reach out to us via [Slack](https://www.getport.
 Please make sure that:
 
 1. The action backend is set up correctly. This includes the Organization/Group name, repository and workflow file name.
-2. For Gitlab, make sure the [Port execution agent](https://docs.getport.io/create-self-service-experiences/setup-backend/gitlab-pipeline/Installation#installing-the-agent) is installed properly. When triggering the action, you can view the logs of the agent to see what URL was triggered. 
+2. For Gitlab, make sure the [Port execution agent](https://docs.getport.io/actions-and-automations/setup-backend/gitlab-pipeline/Installation#installing-the-agent) is installed properly. When triggering the action, you can view the logs of the agent to see what URL was triggered. 
 
 </details>
 
@@ -167,6 +182,26 @@ This will download a file with all **entities** of the selected blueprints in th
 
 </details>
 
+#### What can I embed in the iframe widget?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+Iframe is a more limited web environment than a dedicated full-fledged browser tab, and they are a less secure option in general, so not all services support them. For example, Grafana Cloud does not allow iframe embedding of the content, while Grafana self-hosted does support iframe.
+
+To understand if you can embed your desired content, the first step will be to check with the service provider if cross site embedding is supported. After confirming you can embed the relevant content, here are two different approaches for embedding sensitive data:
+
+1. Public page behind a VPN: If the host of the content is self hosted and accessible when users are logged in to your VPN, you can make it publicly accessible to users that are logged in to your VPN. This means that the embedded resource is still secure, because access to your VPN (and therefore, to the resource) is limited only to users with access to the VPN, but it also makes it possible to view the embedded resource in Port, since there is no need for a dedicated authentication flow (again, assuming the user is logged in to the VPN).
+
+    For example, with Grafana self-hosted that accessible from your VPN, you can simply make a dashboard public and embed it, and users who have logged in to your VPN will be able to see it embedded in Port correctly.
+
+2. PKCE: Port supports [PKCE](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication) authentication flow to authenticate the logged in user with an OIDC application against your IdP to gain access. This requires the end service you are trying to embed (for example, a dashboard from self-hosted Grafana) to support OIDC, in order to use the SSO application. In order to set it up, follow the documentation and make sure you do the following:
+
+    - Create a new application in your IdP and configure the widget to use the correct application ID.
+    - Configure the end service with the application credentials, in order to receive the authentication requests.
+    - Make sure the application is able to get a JWT from the token URL. This is how the application authenticates the user.
+</details>
+
 ---
 
 ## Security
@@ -178,11 +213,10 @@ This will download a file with all **entities** of the selected blueprints in th
 
 We put a lot of thought into Port’s design to make it secure. Consequently, it doesn’t store secrets or credentials, and doesn't require whitelisting of IPs. 
 
-You can take a look at our secure, push-only architecture [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog).
+Port uses industry-standard encryption protocols, data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing.  
+Port is SOC2 and ISO/IEC 27001:2022 compliant, and undergoes regular pentests, product security and compliance reviews.
 
-Security and privacy are a top priority at Port. We use industry-standard encryption protocols, data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing. Port is SOC2 and ISO/IEC 27001:2022 compliant, and undergoes regular pentests, product security and compliance reviews.
-
-You can find the complete coverage of Port's **security policy** in our security [page](https://www.getport.io/security).
+You can find the complete coverage of the **security policy** in the [security page](https://www.getport.io/security).
 
 </details>
 

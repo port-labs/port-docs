@@ -6,7 +6,8 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_gitlab_one_time_docker_parameters.mdx"
-import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '/docs/generalTemplates/_ocean_advanced_configuration_note.md'
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Installation
 
@@ -215,8 +216,9 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 | Parameter                          | Description                                                                                                                         | Example                          | Required |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------- |
-| `port.clientId`                    | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅       |
-| `port.clientSecret`                | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) |                                  | ✅       |
+| `port.clientId`                    | Your Port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅       |
+| `port.clientSecret`                | Your Port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) |                                  | ✅       |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
 | `integration.secrets.tokenMapping` | The [token mapping](#tokenmapping) configuration used to query GitLab                                                               |                                  | ✅       |
 | `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in GitLab                | https://my-ocean-integration.com | ❌       |
 | `integration.config.gitlabHost`    | (for self-hosted GitLab) the URL of your GitLab instance                                                                            | https://my-gitlab.com            | ❌       |
@@ -237,12 +239,15 @@ helm upgrade --install my-gitlab-integration port-labs/port-ocean \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
+  --set sendRawDataExamples=true \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-gitlab-integration"  \
 	--set integration.type="gitlab"  \
 	--set integration.eventListener.type="POLLING"  \
 	--set integration.secrets.tokenMapping="\{\"TOKEN\": [\"GROUP_NAME/**\"]\}"
 ```
+
+<PortApiRegionTip/>
 
 It is also possible to get Port's UI to generate your installation command for you, Port will inject values such as your Port client ID and client secret directly into the command, making it easier to get started.
 
@@ -317,6 +322,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -329,10 +336,12 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
+
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+1. Apply your application manifest with `kubectl`:
 ```bash
 kubectl apply -f my-ocean-gitlab-integration.yaml
 ```
@@ -384,14 +393,18 @@ deploy_gitlab:
       docker run -i --rm --platform=linux/amd64 \
       -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
       -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+      -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
       # highlight-next-line
       -e OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING="$OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING" \
       -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
       -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+      -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
       $image_name
   only:
     - main
 ```
+
+<PortApiRegionTip/>
 
 :::note
 When saving the `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` variable, be sure to save it **as-is**, for example given the following token mapping:
@@ -448,9 +461,11 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING="$OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING" \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
                                 $image_name
 
                             exit $?
@@ -462,6 +477,8 @@ pipeline {
     }
 }
 ```
+
+<PortApiRegionTip/>
 
   </TabItem>
   </Tabs>

@@ -6,14 +6,15 @@ import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog
 import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_datadog_one_time_docker_parameters.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Datadog
 
-Our Datadog integration allows you to import `monitors` (also known as alerts), `slos`, and `services` from your Datadog account into Port, according to your mapping and definition.
+Our Datadog integration allows you to import `monitors` (also known as alerts), `services`,  `slos`, and `sloHistory` from your Datadog account into Port, according to your mapping and definition.
 
 ## Common use cases
 
-- Map monitors, slos and services in your Datadog workspace environment.
+- Map monitors, services, slos and slo history in your Datadog workspace environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Datadog objects using self-service actions.
 
@@ -38,6 +39,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
 | `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅       |
 | `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅       |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
 | `integration.secrets.datadogApiKey`       | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)     |         | ✅       |
 | `integration.secrets.datadogApplicationKey`         | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)     |                  | ✅       |
 | `integration.config.datadogBaseUrl` | The base Datadog host. Defaults to https://api.datadoghq.com. If in EU, use https://api.datadoghq.eu |    | ✅       |
@@ -57,6 +59,7 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-datadog-integration port-labs/port-ocean \
 	--set port.clientId="PORT_CLIENT_ID"  \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
+	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set scheduledResyncInterval=60 \
 	--set integration.identifier="my-datadog-integration"  \
@@ -66,6 +69,8 @@ helm upgrade --install my-datadog-integration port-labs/port-ocean \
 	--set integration.secrets.datadogApiKey="<your-datadog-api-key>"  \
 	--set integration.secrets.datadogApplicationKey="<your-datadog-application-key>" 
 ```
+
+<PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
@@ -130,6 +135,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -142,10 +149,12 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
+
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+1. Apply your application manifest with `kubectl`:
 
 ```bash
 kubectl apply -f my-ocean-datadog-integration.yaml
@@ -172,6 +181,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 |----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|----------|
 | `port_client_id`                 | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |                               | ✅        |
 | `port_client_secret`             | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |                               | ✅        |
+| `port_base_url`             | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                               | ✅        |
 | `config -> datadog_base_url` | US: https://api.datadoghq.com EU: https://api.datadoghq.eu   |               | ✅        |
 | `config -> datadog_api_key` | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)  |               | ✅        |
 | `config -> datadog_application_key` | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)    |               | ✅        |
@@ -209,6 +219,7 @@ jobs:
           type: 'datadog'
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
           config: |
             datadog_base_url: https://api.datadoghq.com     
             datadog_api_key: ${{ secrets.DATADOG_API_KEY }}
@@ -263,6 +274,7 @@ pipeline {
                                 -e OCEAN__INTEGRATION__CONFIG__DATADOG_BASE_URL=$OCEAN__INTEGRATION__CONFIG__DATADOG_BASE_URL \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
                                 $image_name
 
                             exit $?
@@ -313,6 +325,7 @@ steps:
         -e OCEAN__INTEGRATION__CONFIG__DATADOG_BASE_URL=$(OCEAN__INTEGRATION__CONFIG__DATADOG_BASE_URL) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $image_name
 
       exit $?
@@ -366,6 +379,7 @@ ingest_data:
         -e OCEAN__INTEGRATION__CONFIG__DATADOG_BASE_URL=$OCEAN__INTEGRATION__CONFIG__DATADOG_BASE_URL \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $IMAGE_NAME
 
   rules: # Run only when changes are made to the main branch
@@ -375,6 +389,8 @@ ingest_data:
 </TabItem>
 
   </Tabs>
+
+<PortApiRegionTip/>
 
 </TabItem>
 
@@ -428,8 +444,9 @@ The integration configuration determines which resources will be queried from Da
 The following resources can be used to map data from Datadog, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Monitor`](https://docs.datadoghq.com/api/latest/monitors/#get-all-monitor-details)
-- [`SLO`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-all-slos)
 - [`Service`](https://docs.datadoghq.com/api/latest/service-definition/#get-all-service-definitions)
+- [`SLO`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-all-slos)
+- [`SLO History`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-an-slos-history)
   :::
 
 - The root key of the integration configuration is the `resources` key:
@@ -751,12 +768,14 @@ resources:
         "type": "string"
       },
       "warningThreshold": {
+        "icon": "DefaultProperty",
         "title": "Warning Threshold",
-        "type": "string"
+        "type": "number"
       },
       "targetThreshold": {
+        "icon": "DefaultProperty",
         "title": "Target Threshold",
-        "type": "string"
+        "type": "number"
       },
       "createdAt": {
         "title": "Created At",
@@ -777,18 +796,32 @@ resources:
   },
   "mirrorProperties": {},
   "calculationProperties": {},
+  "aggregationProperties": {
+    "sli_average": {
+      "title": "SLI Average",
+      "type": "number",
+      "target": "datadogSloHistory",
+      "calculationSpec": {
+        "func": "average",
+        "averageOf": "total",
+        "property": "sliValue",
+        "measureTimeBy": "$createdAt",
+        "calculationBy": "property"
+      }
+    }
+  },
   "relations": {
     "monitors": {
-      "target": "datadogMonitor",
       "title": "SLO Monitors",
       "description": "The monitors tracking this SLO",
+      "target": "datadogMonitor",
       "required": false,
       "many": true
     },
     "services": {
-      "target": "datadogService",
       "title": "Services",
       "description": "The services tracked by this SLO",
+      "target": "datadogService",
       "required": false,
       "many": true
     }
@@ -811,9 +844,9 @@ resources:
     port:
       entity:
         mappings:
-          blueprint: '"datadogSlo"'
           identifier: .id | tostring
           title: .name
+          blueprint: '"datadogSlo"'
           properties:
             tags: .tags
             sloType: .type
@@ -825,10 +858,109 @@ resources:
             updatedAt: .modified_at | todate
           relations:
             monitors: .monitor_ids | map(tostring)
-            services: '.monitor_tags + .tags | map(select(startswith("service:"))) | unique | map(split(":")[1])'
+            services: >-
+              .monitor_tags + .tags | map(select(startswith("service:"))) |
+              unique | map(split(":")[1])
+```
+:::tip Service Relation
+Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default mapping connects SLOs to services using tags that starts with the `service` keyword.
+:::
+</details>
+
+### SLO history
+
+<details>
+<summary>SLO history blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "datadogSloHistory",
+  "description": "This blueprint represents a datadog SLO history",
+  "title": "Datadog SLO History",
+  "icon": "Datadog",
+  "schema": {
+    "properties": {
+      "monitor_type": {
+        "icon": "DefaultProperty",
+        "title": "Type",
+        "type": "string"
+      },
+      "sliValue": {
+        "icon": "DefaultProperty",
+        "title": "SLI Value",
+        "type": "number"
+      },
+      "sampling_start_date": {
+        "icon": "DefaultProperty",
+        "type": "string",
+        "title": "Sampling Start Date",
+        "format": "date-time"
+      },
+      "sampling_end_date": {
+        "icon": "DefaultProperty",
+        "type": "string",
+        "title": "Sampling End Date",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "slo_target": {
+      "title": "SLO Target",
+      "path": "slo.targetThreshold"
+    },
+    "slo_warning_threshold": {
+      "title": "SLO Warning Threshold",
+      "path": "slo.warningThreshold"
+    }
+  },
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "slo": {
+      "title": "SLO",
+      "description": "The SLO to which this history belongs to",
+      "target": "datadogSlo",
+      "required": false,
+      "many": false
+    }
+  }
+}
 ```
 
 </details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: sloHistory
+    selector:
+      query: 'true'
+      sampleIntervalPeriodInDays: 7
+    port:
+      entity:
+        mappings:
+          identifier: .slo.id | tostring
+          title: .slo.name
+          blueprint: '"datadogSloHistory"'
+          properties:
+            monitory_type: .type
+            sampling_start_date: .from_ts | todate
+            sampling_end_date: .to_ts | todate
+            sliValue: .overall.sli_value
+          relations:
+            slo: .slo.id
+```
+:::tip Service Relation
+Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default JQ maps SLOs to services using tags that starts with the `service` keyword
+:::
+</details>
+
 
 ## Let's Test It
 
@@ -1024,6 +1156,80 @@ Here is an example of the payload structure from Datadog:
 
 </details>
 
+<details>
+<summary> SLO history response data</summary>
+
+```json showLineNumbers
+{
+  "thresholds": {
+    "7d": {
+      "timeframe": "7d",
+      "target": 99,
+      "target_display": "99."
+    }
+  },
+  "from_ts": 1719254776,
+  "to_ts": 1719859576,
+  "type": "monitor",
+  "type_id": 0,
+  "slo": {
+    "id": "5ec82408e83c54b4b5b2574ee428a26c",
+    "name": "Host {{host.name}} with IP {{host.ip}} is not having enough memory",
+    "tags": [
+      "p69hx03",
+      "pages-laptop"
+    ],
+    "monitor_tags": [],
+    "thresholds": [
+      {
+        "timeframe": "7d",
+        "target": 99,
+        "target_display": "99."
+      }
+    ],
+    "type": "monitor",
+    "type_id": 0,
+    "description": "Testing SLOs from DataDog",
+    "timeframe": "7d",
+    "target_threshold": 99,
+    "monitor_ids": [
+      147793
+    ],
+    "creator": {
+      "name": "John Doe",
+      "handle": "janesmith@gmail.com",
+      "email": "janesmith@gmail.com"
+    },
+    "created_at": 1683878238,
+    "modified_at": 1684773765
+  },
+  "overall": {
+    "name": "Host {{host.name}} with IP {{host.ip}} is not having enough memory",
+    "preview": false,
+    "monitor_type": "query alert",
+    "monitor_modified": 1683815332,
+    "errors": null,
+    "span_precision": 2,
+    "history": [
+      [
+        1714596313,
+        1
+      ]
+    ],
+    "uptime": 3,
+    "sli_value": 10,
+    "precision": {
+      "custom": 2,
+      "7d": 2
+    },
+    "corrections": [],
+    "state": "breached"
+  }
+}           
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1035,7 +1241,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "15173866",
   "title": "A change @webhook-PORT",
-  "icon": null,
+  "icon": "Datadog",
   "blueprint": "datadogMonitor",
   "team": [],
   "properties": {
@@ -1066,7 +1272,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "inventory-management",
   "title": "inventory-management",
-  "icon": null,
+  "icon": "Datadog",
   "blueprint": "datadogService",
   "team": [],
   "properties": {
@@ -1102,7 +1308,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "b6869ae6189d59baa421feb8b437fe9e",
   "title": "Availability SLO for shopping-cart service",
-  "icon": null,
+  "icon": "Datadog",
   "blueprint": "datadogSlo",
   "team": [],
   "properties": {
@@ -1134,6 +1340,32 @@ The combination of the sample payload and the Ocean configuration generates the 
 }
 ```
 
+</details>
+
+<details>
+<summary>SLO history entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "5ec82408e83c54b4b5b2574ee428a26c",
+  "title": "Host {{host.name}} with IP {{host.ip}} is not having enough memory",
+  "icon": "Datadog",
+  "blueprint": "datadogSloHistory",
+  "team": [],
+  "properties": {
+    "sampling_end_date": "2024-07-01T18:46:16Z",
+    "sliValue": 10,
+    "sampling_start_date": "2024-06-24T18:46:16Z"
+  },
+  "relations": {
+    "slo": "5ec82408e83c54b4b5b2574ee428a26c"
+  },
+  "createdAt": "2024-07-01T09:43:51.946Z",
+  "createdBy": "<port-client-id>",
+  "updatedAt": "2024-07-01T12:02:01.559Z",
+  "updatedBy": "<port-client-id>"
+}
+```
 </details>
 
 ## Alternative installation via webhook

@@ -13,6 +13,7 @@ import PagerDutyIncidentBlueprint from "/docs/build-your-software-catalog/custom
 import PagerDutyWebhookConfig from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_config.mdx"
 import PagerDutyWebhookHistory from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx"
 import PagerDutyScript from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_shell_history_config.mdx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # PagerDuty
 
@@ -44,6 +45,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
 | `port.clientId`                  | Your port client id                                                                                                     | ✅       |
 | `port.clientSecret`              | Your port client secret                                                                                                 | ✅       |
+| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
 | `integration.identifier`         | Change the identifier to describe your integration                                                                      | ✅       |
 | `integration.type`               | The integration type                                                                                                    | ✅       |
 | `integration.eventListener.type` | The event listener type                                                                                                 | ✅       |
@@ -52,6 +54,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in PagerDuty | ❌       |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                               | ❌       |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping           | ❌       |
+| `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true  | ❌       |
 
 <br/>
 
@@ -65,7 +68,9 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
   --set port.clientId="PORT_CLIENT_ID"  \
   --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
   --set initializePortResources=true  \
+  --set sendRawDataExamples=true \
   --set scheduledResyncInterval=120  \
   --set integration.identifier="my-pagerduty-integration"  \
   --set integration.type="pagerduty"  \
@@ -73,6 +78,7 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
   --set integration.secrets.token="string"  \
   --set integration.config.apiUrl="string"
 ```
+<PortApiRegionTip/>
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD" default>
@@ -134,6 +140,8 @@ spec:
           value: YOUR_PORT_CLIENT_ID
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -146,10 +154,11 @@ spec:
     - CreateNamespace=true
 ```
 
+<PortApiRegionTip/>
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+1. Apply your application manifest with `kubectl`:
 ```bash
 kubectl apply -f my-ocean-pagerduty-integration.yaml
 ```
@@ -193,6 +202,7 @@ jobs:
           type: 'pagerduty'
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
           config: |
             token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }} 
             api_url: ${{ secrets.OCEAN__INTEGRATION__CONFIG__API_URL }} 
@@ -200,11 +210,13 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
+
 This pipeline will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
+
 :::warning
 If you want the integration to update Port in real time using webhooks you should use
 the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
@@ -214,6 +226,7 @@ Make sure to configure the following [Jenkins Credentials](https://www.jenkins.i
 of `Secret Text` type:
 
 <DockerParameters />
+
 <br/>
 
 Here is an example for `Jenkinsfile` groovy pipeline file:
@@ -240,10 +253,12 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__API_URL=$OCEAN__INTEGRATION__CONFIG__API_URL \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
                                 $image_name
 
                             exit $?
@@ -289,10 +304,12 @@ steps:
     docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__TOKEN=$(OCEAN__INTEGRATION__CONFIG__TOKEN) \
         -e OCEAN__INTEGRATION__CONFIG__API_URL=$(OCEAN__INTEGRATION__CONFIG__API_URL) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $image_name
 
     exit $?
@@ -341,10 +358,12 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true  \
         -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
         -e OCEAN__INTEGRATION__CONFIG__API_URL=$OCEAN__INTEGRATION__CONFIG__API_URL \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
         $IMAGE_NAME
 
   rules: # Run only when changes are made to the main branch
@@ -353,6 +372,9 @@ ingest_data:
 
 </TabItem>
   </Tabs>
+
+<PortApiRegionTip/>
+
 </TabItem>
 
 </Tabs>
@@ -483,7 +505,11 @@ Examples of blueprints and the relevant integration configurations:
       },
       "users": {
         "title": "Users",
-        "type": "array"
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "user"
+        }
       }
     },
     "required": []
@@ -506,7 +532,7 @@ deleteDependentEntities: true
 resources:
   - kind: schedules
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
@@ -517,7 +543,7 @@ resources:
             url: .html_url
             timezone: .time_zone
             description: .description
-            users: "[.users[].summary]"
+            users: '[.users[] | select(has("__email")) | .__email]'
 ```
 
 </details>
@@ -642,6 +668,27 @@ resources:
         "title": "On Call",
         "type": "string",
         "format": "user"
+      },
+      "secondaryOncall": {
+        "title": "Secondary On Call",
+        "type": "string",
+        "format": "user"
+      },
+      "escalationLevels": {
+        "title": "Escalation Levels",
+        "type": "number"
+      },
+      "meanSecondsToResolve": {
+        "title": "Mean Seconds to Resolve",
+        "type": "number"
+      },
+      "meanSecondsToFirstAck": {
+        "title": "Mean Seconds to First Acknowledge",
+        "type": "number"
+      },
+      "meanSecondsToEngage": {
+        "title": "Mean Seconds to Engage",
+        "type": "number"
       }
     },
     "required": []
@@ -663,7 +710,7 @@ deleteDependentEntities: true
 resources:
   - kind: services
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
@@ -673,7 +720,12 @@ resources:
           properties:
             status: .status
             url: .html_url
-            oncall: .__oncall_user[] | select(.escalation_level == 1) | .user.email
+            oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+            secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
+            escalationLevels: .__oncall_user | map(.escalation_level) | unique | length
+            meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
+            meanSecondsToFirstAck: .__analytics.mean_seconds_to_first_ack
+            meanSecondsToEngage: .__analytics.mean_seconds_to_engage
 ```
 
 </details>
@@ -702,7 +754,16 @@ resources:
           "escalated",
           "reopened",
           "resolved"
-        ]
+        ],
+        "enumColors": {
+          "triggered": "red",
+          "annotated": "blue",
+          "acknowledged": "yellow",
+          "reassigned": "blue",
+          "escalated": "yellow",
+          "reopened": "red",
+          "resolved": "green"
+        }
       },
       "url": {
         "type": "string",
@@ -710,13 +771,46 @@ resources:
         "title": "Incident URL"
       },
       "urgency": {
-        "type": "string",
         "title": "Incident Urgency",
-        "enum": ["high", "low"]
-      },
-      "responder": {
         "type": "string",
-        "title": "Assignee"
+        "enum": [
+          "high",
+          "low"
+        ],
+        "enumColors": {
+          "high": "red",
+          "low": "green"
+        }
+      },
+      "priority": {
+        "type": "string",
+        "title": "Priority",
+        "enum": [
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5"
+        ],
+        "enumColors": {
+          "P1": "red",
+          "P2": "yellow",
+          "P3": "blue",
+          "P4": "lightGray",
+          "P5": "darkGray"
+        }
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "assignees": {
+        "title": "Assignees",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "user"
+        }
       },
       "escalation_policy": {
         "type": "string",
@@ -757,25 +851,28 @@ resources:
 createMissingRelatedEntities: true
 deleteDependentEntities: true
 resources:
-  - kind: incidents
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .id | tostring
-          title: .title
-          blueprint: '"pagerdutyIncident"'
-          properties:
-            status: .status
-            url: .self
-            urgency: .urgency
-            responder: .assignments[0].assignee.summary
-            escalation_policy: .escalation_policy.summary
-            created_at: .created_at
-            updated_at: .updated_at
-          relations:
-            pagerdutyService: .service.id
+    - kind: incidents
+      selector:
+        query: 'true'
+        include: ['assignees']
+      port:
+        entity:
+          mappings:
+            identifier: .id | tostring
+            title: .title
+            blueprint: '"pagerdutyIncident"'
+            properties:
+              status: .status
+              url: .self
+              urgency: .urgency
+              assignees: .assignments | map(.assignee.email)
+              escalation_policy: .escalation_policy.summary
+              created_at: .created_at
+              updated_at: .updated_at
+              priority: if .priority != null then .priority.summary else null end
+              description: .description
+            relations:
+              pagerdutyService: .service.id
 ```
 
 </details>
@@ -875,7 +972,8 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
               properties:
                 status: .status
                 url: .html_url
-                oncall: "[.__oncall_user[].user.email]"
+                oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+                secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
     ```
 
 3. Establish a mapping between the analytics properties and the service analytics data response. Following a convention, the aggregated result of the PagerDuty service analytics API is saved to the `__analytics` key and merged with the response of the service API. Consequently, users can access specific metrics such as the mean seconds to resolve by referencing `__analytics.mean_seconds_to_resolve`.
@@ -896,7 +994,8 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
               properties:
                 status: .status
                 url: .html_url
-                oncall: "[.__oncall_user[].user.email]"
+                oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+                secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
                 # highlight-next-line
                 meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
     ```
@@ -921,7 +1020,8 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
               properties:
                 status: .status
                 url: .html_url
-                oncall: "[.__oncall_user[].user.email]"
+                oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+                secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
                 meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
                 meanSecondsToFirstAck: .__analytics.mean_seconds_to_first_ack
                 meanSecondsToEngage: .__analytics.mean_seconds_to_engage
@@ -959,7 +1059,16 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
               "escalated",
               "reopened",
               "resolved"
-            ]
+            ],
+            "enumColors": {
+              "triggered": "red",
+              "annotated": "blue",
+              "acknowledged": "yellow",
+              "reassigned": "blue",
+              "escalated": "yellow",
+              "reopened": "red",
+              "resolved": "green"
+            }
           },
           "url": {
             "type": "string",
@@ -967,13 +1076,46 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
             "title": "Incident URL"
           },
           "urgency": {
-            "type": "string",
             "title": "Incident Urgency",
-            "enum": ["high", "low"]
-          },
-          "responder": {
             "type": "string",
-            "title": "Assignee"
+            "enum": [
+              "high",
+              "low"
+            ],
+            "enumColors": {
+              "high": "red",
+              "low": "green"
+            }
+          },
+          "priority": {
+            "type": "string",
+            "title": "Priority",
+            "enum": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5"
+            ],
+            "enumColors": {
+              "P1": "red",
+              "P2": "yellow",
+              "P3": "blue",
+              "P4": "lightGray",
+              "P5": "darkGray"
+            }
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "assignees": {
+            "title": "Assignees",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "user"
+            }
           },
           "escalation_policy": {
             "type": "string",
@@ -1037,40 +1179,10 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
 
     ```yaml showLineNumbers
     resources:
-      - kind: incidents
-        selector:
-          query: "true"
-          incidentAnalytics: "true"
-        port:
-          entity:
-            mappings:
-              identifier: .id | tostring
-              title: .title
-              blueprint: '"pagerdutyIncident"'
-              properties:
-                status: .status
-                url: .self
-                urgency: .urgency
-                responder: .assignments[0].assignee.summary
-                escalation_policy: .escalation_policy.summary
-                created_at: .created_at
-                updated_at: .updated_at
-                # highlight-next-line
-                analytics: .__analytics
-              relations:
-                pagerdutyService: .service.id
-    ```
-4. Below is the complete integration configuration for enriching the incident blueprint with analytics data.
-
-    <details>
-    <summary>Incident analytics integration configuration</summary>
-
-    ```yaml showLineNumbers
-    resources:
     - kind: incidents
       selector:
-        query: "true"
-        incidentAnalytics: "true"
+        query: 'true'
+        include: ['assignees']
       port:
         entity:
           mappings:
@@ -1081,10 +1193,45 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
               status: .status
               url: .self
               urgency: .urgency
-              responder: .assignments[0].assignee.summary
+              assignees: .assignments | map(.assignee.email)
               escalation_policy: .escalation_policy.summary
               created_at: .created_at
               updated_at: .updated_at
+              priority: if .priority != null then .priority.summary else null end
+              description: .description
+              # highlight-next-line
+              analytics: .__analytics
+            relations:
+              pagerdutyService: .service.id
+    ```
+4. Below is the complete integration configuration for enriching the incident blueprint with analytics data.
+
+    <details>
+    <summary>Incident analytics integration configuration</summary>
+
+    ```yaml showLineNumbers
+    resources:
+    - kind: incidents
+      selector:
+        query: 'true'
+        include: ['assignees']
+      port:
+        entity:
+          mappings:
+            identifier: .id | tostring
+            title: .title
+            blueprint: '"pagerdutyIncident"'
+            properties:
+              status: .status
+              url: .self
+              urgency: .urgency
+              assignees: .assignments | map(.assignee.email)
+              escalation_policy: .escalation_policy.summary
+              created_at: .created_at
+              updated_at: .updated_at
+              priority: if .priority != null then .priority.summary else null end
+              description: .description
+              # highlight-next-line
               analytics: .__analytics
             relations:
               pagerdutyService: .service.id
@@ -1450,7 +1597,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
     "timezone": "Asia/Jerusalem",
     "description": "Asia/Jerusalem",
-    "users": ["Adam", "Alice", "Doe", "Demo", "Pages"]
+    "users": ["adam@getport-io.com", "alice@getport-io.com", "doe@getport-io.com", "demo@getport-io.com", "pages@getport-io.com"]
   },
   "relations": {},
   "createdAt": "2023-12-01T13:18:02.215Z",
@@ -1474,7 +1621,6 @@ The combination of the sample payload and the Ocean configuration generates the 
   "properties": {
     "url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
     "timezone": null,
-    "description": "Port Test Service - Weekly Rotation",
     "user": "johndoe@domain.io",
     "startDate": "2024-06-03T13:00:00Z",
     "endDate": "2024-06-17T13:00:00Z"
@@ -1504,7 +1650,12 @@ The combination of the sample payload and the Ocean configuration generates the 
   "properties": {
     "status": "active",
     "url": "https://getport-io.pagerduty.com/service-directory/PGAAJBE",
-    "oncall": "devops-port@pager-demo.com"
+    "oncall": "devops-port@pager-demo.com",
+    "secondaryOncall": null,
+    "escalationLevels": 1,
+    "meanSecondsToResolve": 0,
+    "meanSecondsToFirstAck": 0,
+    "meanSecondsToEngage": 0,
   },
   "relations": {},
   "createdAt": "2023-11-01T13:18:02.215Z",
@@ -1533,7 +1684,9 @@ The combination of the sample payload and the Ocean configuration generates the 
     "responder": "Username",
     "escalation_policy": "Test Escalation Policy",
     "created_at": "2023-07-30T11:29:21.000Z",
-    "updated_at": "2023-07-30T11:29:21.000Z"
+    "updated_at": "2023-07-30T11:29:21.000Z",
+    "priority": null,
+    "description": "Example Incident",
   },
   "relations": {
     "pagerdutyService": "PWJAGSD"
@@ -1828,7 +1981,7 @@ Done! you can now import historical data from PagerDuty into Port. Port will par
 ## More relevant guides and examples
 
 - [Ensure production readniness](https://docs.getport.io/guides-and-tutorials/ensure-production-readiness)
-- [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
-- [Self-service action to trigger a PagerDuty incident](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
-- [Self-service action to change a PagerDuty incident owner](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
-- [Self-service action to create a PagerDuty service from Port](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)
+- [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
+- [Self-service action to trigger a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
+- [Self-service action to change a PagerDuty incident owner](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
+- [Self-service action to create a PagerDuty service from Port](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)

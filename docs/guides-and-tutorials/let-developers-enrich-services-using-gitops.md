@@ -7,6 +7,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Let developers enrich services using Gitops
 
@@ -194,11 +195,11 @@ Fill out the form with your values:
   {
     "port_context": {
       "entity": "{{ .entity.identifier }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
     "domain": "{{ .inputs.domain }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 </TabItem>
@@ -217,7 +218,7 @@ We will create the `PROJECT_ID` and `TRIGGER_TOKEN` in the next section and come
 :::info Webhook protection
 
 The webhook URL can be triggered by anyone with access to it.  
-In order to protect the webhook, see the [Validating webhook signatures page](../create-self-service-experiences/setup-backend/webhook/signature-verification.md).
+In order to protect the webhook, see the [Validating webhook signatures page](../actions-and-automations/setup-backend/webhook/signature-verification.md).
 
 :::
 
@@ -231,11 +232,11 @@ In order to protect the webhook, see the [Validating webhook signatures page](..
   {
     "port_context": {
       "entity": "{{ .entity.identifier }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
     "domain": "{{ .inputs.domain }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 
@@ -269,11 +270,11 @@ Then, fill out your workflow details:
     "port_context": {
       "entity": "{{ .entity.identifier }}",
       "repo_url": "{{ .entity.properties.url }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
     "domain": "{{ .inputs.domain }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 
@@ -281,7 +282,7 @@ Then, fill out your workflow details:
 
 </Tabs>
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
 #### Setup the action's backend
 
@@ -346,8 +347,8 @@ Our action will create a pull-request in the service's repository, containing a 
 
 3. Create a Jenkins Pipeline with the following configuration:
 
-  - [Enable webhook trigger](https://docs.getport.io/create-self-service-experiences/setup-backend/jenkins-pipeline/#enabling-webhook-trigger-for-a-pipeline) for the pipeline.
-  - [Define post-content variables](https://docs.getport.io/create-self-service-experiences/setup-backend/jenkins-pipeline/#defining-variables) for the pipeline with the following names and values:
+  - [Enable webhook trigger](https://docs.getport.io/actions-and-automations/setup-backend/jenkins-pipeline/#enabling-webhook-trigger-for-a-pipeline) for the pipeline.
+  - [Define post-content variables](https://docs.getport.io/actions-and-automations/setup-backend/jenkins-pipeline/#defining-variables) for the pipeline with the following names and values:
     
     | Name | Value |
     | --- | --- |
@@ -430,9 +431,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checkout the workflow's repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # Checkout the service's repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}"
           path: ./targetRepo
@@ -466,6 +467,7 @@ jobs:
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: Pull request to add port.yml created successfully for service "${{ fromJson(inputs.port_context).entity }}" 🚀
@@ -502,7 +504,7 @@ enrichService:
     - git config --global user.email "gitRunner@git.com"
     - git config --global user.name "Git Runner"
     - SERVICE_IDENTIFIER=$(echo $PAYLOAD | jq -r '.port_context.entity')
-    - DOMAIN_IDENTIFIER=$(echo $PAYLOAD | jq -r '.domain')
+    - DOMAIN_IDENTIFIER=$(echo $PAYLOAD | jq -r '.domain.identifier')
     - SERVICE_TYPE=$(echo $PAYLOAD | jq -r '.type')
     - SERVICE_LIFECYCLE=$(echo $PAYLOAD | jq -r '.lifecycle')
     - git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git
@@ -714,6 +716,8 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+<PortApiRegionTip/>
 
 ---
 

@@ -1,0 +1,111 @@
+---
+id: get-all-migrations
+title: "Get all migrations"
+description: "This route allows you to fetch all migrations (both past and present) in your Port organization.<br/><br/>The call will perform a logical `AND` operation on the query parameters below, and return all migrations that match the criteria."
+sidebar_label: "Get all migrations"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVW1v2jAQ/iuWv6yVKLT7iKpJqLAKjVLU0Q8bQqsTLsRqEqf2BcYQ/313ToBAX7RJ/TBpUpXad8+d7+W5Yy1n4EKrc9Qmk205jrUT1hQIQiWJWTqxMoVAIyLAMGaZSPXcKoY7cRIYjEWuHAqVzURuwUGGp0JnbGbFyFgUxs5Vpn95k+ZlYFuf/GccgwjZ31LTJwcbGZsKJRIz1yQXD51h90EYUnhLQX9IJk8F2BU9aVUKCNaJACjMhn/fAhY2Ow4SY4UiVRw+O6BkyU6rpmxIVHMn2xN5s0PLaUPunZNuLV0YQ6pkey1xlQPVSFmrVmRNflJXkzu0OpuTArIiZbdXtzejQW/c65Ls7n447A+v6TTqDbvlqT/sj/udQf97ef3c6Q/u73p0uuoMr3qDgTes4D8qWWfcvx3K6WZD73PDfD0IllHIPgaFhaO7hadCW5jJdqQSB5vGC4lUAb/iSoVoLF2PCQJCz6jLOtJghYl8UQtH52VsqPMatUKYefGuC03xjWgUqoyRXjW5BvRm05OWyvWZhQgsZCG05oBn6oxVpxUTiX4kJG6w8IOrvV/y6V3SDZICcgLgH6a8wwvlnAnLpJca46PMX4uQiOYgLIiNK0+zAJQFy7SxoGbtnXuiJGNptHLiJ3jCfTw/53+HYXYhUkWC4q5CSuYI8Tg29KakAkqmNsZ0aS0uWvsJkRyJXWz5XtiEIDFi7tot7k2TbHOa5KY2kgv7HFC4A0wtta/chDLobYL7Ocr1F6h1oFNQrLbaFLLqUkzFIKuS75Hx5hoTxvvt0hn1CcrBl1W4aJ5zh3PjMFUZwyvvzLfDzXDc6LUMTYbU5/9vD5YNQfiJrTxRVHgqoW/zuqLMRC4uCJgeLMqYisyq9TpQDu5tstmwuBwsptJMOxUkO8435CP1u7akFopYTgJPq2fgN5rzT+6gF6tYZrzdpe+a8N9uoDfiqy+/fYxTvhBFAh63ybS+Tq57Y4KqgrlRH+hHP9DVgSmwVWWrmuvjSS+D4C/X5UWTSxp0Qevi0w5eal41qBbHFs3Z0q/m5jfP/xET
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get all migrations"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/migrations"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch all migrations (both past and present) in your Port organization.<br/><br/>The call will perform a logical `AND` operation on the query parameters below, and return all migrations that match the criteria.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"array","items":{"type":"string","enum":["COMPLETED","RUNNING","PENDING","INITIALIZING","FAILURE","CANCELLED","PENDING_CANCELLATION"]}},"in":"query","name":"status","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"actor","description":"The identifier of the user who initiated the migration. You can use the [Get user](/api-reference/get-a-user) route to get a user's identifier.<br/>","required":false}}
+      >
+        
+      </ParamsItem><ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"query","name":"blueprint","description":"The identifier of the blueprint associated with the migration.<br/>","required":false}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
