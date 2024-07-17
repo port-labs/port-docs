@@ -15,7 +15,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Jira
 
-Our Jira integration allows you to import `issues` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
+Our Jira integration allows you to import `issues`, `sprints`, `boards` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
 
 :::info Jira cloud only
 This integration supports `Jira Cloud` at the moment. To integrate Port with `Jira Server`, use [Port's webhook integration](/build-your-software-catalog/custom-integration/webhook/examples/jira-server).
@@ -23,7 +23,8 @@ This integration supports `Jira Cloud` at the moment. To integrate Port with `Ji
 
 ## Common use cases
 
-- Map issues and projects in your Jira organization environment.
+- Map issues, sprints, boards and projects in your Jira organization environment.
+- View issues from active sprints in your Port environment
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Jira objects using self-service actions.
 
@@ -454,8 +455,10 @@ The integration configuration determines which resources will be queried from Ji
 :::tip Supported resources (`Kind`)
 The following resources can be used to map data from Jira, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
-- [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
+- [`Sprint`](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-boardid-sprint-get)
+- [`Board`](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-get)
+- [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
   :::
 
 - The root key of the integration configuration is the `resources` key:
@@ -503,6 +506,41 @@ resources:
       query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
       # highlight-next-line
       jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
+    port:
+```
+
+:::
+
+:::tip Issues source
+By default, the Ocean Jira integration ingests only active sprints and uncompleted tasks from that sprint. To customize this, two additional
+selectors apart from `jql` are available: `source`, `sprintState`.
+
+```yaml showLineNumbers
+resources:
+  # highlight-next-line
+  - kind: issue # `source` and `sprintState` are only available with the "issue" kind
+    selector:
+      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+      # highlight-start
+      source: "sprint" # other available values are "all" and "board" which ingests all issues and only issues sourced from boards directly
+      sprintState: "active" # if `source` is specified, this defines what sprints issues are sourced from. Other available values are "future" and "closed". You can specify values as comma-separated strings such as "active,closed".
+      # highlight-end
+    port:
+```
+
+:::
+
+:::tip Sprint states
+The Ocean Jira integration ingests active sprints by default:
+
+```yaml showLineNumbers
+resources:
+  # highlight-next-line
+  - kind: sprint # `state` is only available with the "spring" kind
+    selector:
+      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+      # highlight-next-line
+      state: "active" # Other available values are "future" and "closed". You can specify values as comma-separated strings such as "active,closed". Note that this has no effect on the source of issues. If you want to customize issues source, do it with the `sprintSource` selector on the "issue" kind. Also, the source on the issue doesn't affect this kind.
     port:
 ```
 
@@ -556,7 +594,7 @@ Examples of blueprints and the relevant integration configurations:
 ### Project
 
 <details>
-<summary>Project blueprint</summary>
+<summary><b>Project blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -588,7 +626,7 @@ Examples of blueprints and the relevant integration configurations:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -610,10 +648,168 @@ resources:
 
 </details>
 
+
+### Board
+
+<details>
+<summary><b>Board blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "jiraBoard",
+  "title": "Jira Board",
+  "description": "This blueprint represents a Jira board",
+  "icon": "Jira",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Board URL",
+        "type": "string",
+        "format": "url",
+        "description": "URL to the board in Jira"
+      },
+      "type": {
+        "title": "Type",
+        "type": "string",
+        "description": "The type of the board"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "project": {
+      "target": "jiraProject",
+      "title": "Project",
+      "description": "The Jira project that contains this board",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Integration configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: board
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"jiraBoard"'
+          properties:
+            url: .self
+            type: .type
+          relations:
+            project: .location.projectId | tostring
+```
+
+</details>
+
+
+### Sprint
+
+<details>
+<summary><b>Sprint blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "jiraSprint",
+  "title": "Jira Sprint",
+  "description": "This blueprint represents a Jira sprint",
+  "icon": "Jira",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Sprint URL",
+        "type": "string",
+        "format": "url",
+        "description": "URL to the sprint in Jira"
+      },
+      "state": {
+        "title": "State",
+        "type": "string",
+        "description": "The state of the sprint",
+        "enum": ["active", "closed", "future"],
+        "enumColors": {
+          "active": "green",
+          "closed": "red",
+          "future": "blue"
+        }
+      },
+      "startDate": {
+        "title": "Start Date",
+        "type": "string",
+        "description": "The start date of the sprint",
+        "format": "date-time"
+      },
+      "endDate": {
+        "title": "End Date",
+        "type": "string",
+        "description": "The end date of the sprint",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "board": {
+      "target": "jiraBoard",
+      "title": "Board",
+      "description": "The Jira board associated with this sprint",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Integration configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: sprint
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .name
+          blueprint: '"jiraSprint"'
+          properties:
+            url: .self
+            state: .state
+            startDate: .startDate
+            endDate: .endDate
+          relations:
+            board: .originBoardId | tostring
+```
+
+</details>
+
 ### Issue
 
 <details>
-<summary>Issue blueprint</summary>
+<summary><b>Issue blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -708,7 +904,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -752,7 +948,7 @@ This section includes a sample response data from Jira. In addition, it includes
 Here is an example of the payload structure from Jira:
 
 <details>
-<summary> Project response data</summary>
+<summary><b>Project response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -780,7 +976,48 @@ Here is an example of the payload structure from Jira:
 </details>
 
 <details>
-<summary> Issue response data</summary>
+<summary><b>Board response data (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "id": 12,
+  "self": "https://myaccount.atlassian.net/rest/agile/1.0/board/12",
+  "name": "Task Force",
+  "type": "scrum",
+  "location": {
+      "projectId": 10000,
+      "displayName": "Port (PORT)",
+      "projectName": "Port",
+      "projectKey": "PORT",
+      "projectTypeKey": "software",
+      "avatarURI": "https://myaccount.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10560?size=small",
+      "name": "Port (PORT)"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Sprint response data (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+    "id": 26,
+    "self": "https://myaccount.atlassian.net/rest/agile/1.0/sprint/26",
+    "state": "active",
+    "name": "DEMO Sprint 1",
+    "startDate": "2024-01-30T07:51:18.262Z",
+    "endDate": "2027-02-28T22:00:00.000Z",
+    "createdDate": "2023-09-21T16:23:30.428Z",
+    "originBoardId": 2,
+    "goal": ""
+}
+```
+</details>
+
+<details>
+<summary><b>Issue response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -968,7 +1205,7 @@ Here is an example of the payload structure from Jira:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Project entity in Port</summary>
+<summary><b>Project entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -992,7 +1229,52 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Issue entity in Port</summary>
+<summary><b>Board entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "12",
+  "title": "Task Force",
+  "team": [],
+  "properties": {
+    "url": "https://myaccount.atlassian.net/jira/software/c/projects/PORT/boards/12",
+    "type": "scrum"
+  },
+  "relations": {
+    "project": "10000"
+  },
+  "icon": "Jira"
+}
+```
+
+</details>
+
+
+<details>
+<summary><b>Sprint entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "26",
+  "title": "DEMO Sprint 1",
+  "team": [],
+  "properties": {
+    "url": "https://myaccount.atlassian.net/rest/agile/1.0/sprint/26",
+    "state": "active",
+    "startDate": "2024-01-30T07:51:18.262Z",
+    "endDate": "2027-02-28T22:00:00.000Z"
+  },
+  "relations": {
+    "board": "2"
+  },
+  "icon": "Jira"
+}
+```
+
+</details>
+
+<details>
+<summary><b>Issue entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
