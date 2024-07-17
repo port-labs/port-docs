@@ -26,10 +26,10 @@ In order to integrate Port with an OIDC SSO application, you will need to do the
    - Provide Port with the following details:
    	 - `Client ID`: The client identifier for your OIDC application.
    	 - `Client Secret`: The client secret for your OIDC application.
-	 - `email_verified`: This custom field must be transmitted to Port during user login, specifically required for certain Identity Providers such as Onelogin.
-5. Configure the Groups claim in the OpenID Connect Token settings to enable automatic groups or roles support in Port.
+5. Add a custom property `email_verified` and configure the OpenID Claims in your identity provider to ensure that Port receives the value `true` for this attribute as part of the connection process. This step may be required specifically for certain identity providers such as [Onelogin](/sso-rbac/sso-providers/oidc/onelogin.md).
+6. Configure the Groups claim in the OpenID Connect Token settings to enable automatic groups or roles support in Port.<br></br><br></br>
    :::note
    This step is OPTIONAL and is required only if you wish to pull all of your groups or roles into Port inherently.
    :::   
-
+<br></br>
 <DocCardList/>
