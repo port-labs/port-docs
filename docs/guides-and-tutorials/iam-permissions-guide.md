@@ -715,7 +715,7 @@ The automation you'll build will search for search for any events related to the
 :::tip Don't know how to build automations?
 Check out our [guide](https://docs.getport.io/actions-and-automations/define-automations/) on how to build automations!
 
-Now you'll go ahead and deploy the automation defined below, remembering to fill in your Github Organization ID in the <YOUR_GITHUB_ORG> field. The automation checks the 
+Now you'll go ahead and deploy the automation defined below. Remember to fill in your Github Organization ID in the <YOUR_GITHUB_ORG> field. 
 
 <details>
     <summary>Revoke Expired Permissions Automation</summary>
@@ -739,10 +739,10 @@ Now you'll go ahead and deploy the automation defined below, remembering to fill
     "workflowInputs": {
       "properties": "{{ .inputs }}",
       "port_context": {
-        "blueprint": "{{ .action.blueprint }}",
-        "entity": "{{.entity }}",
+        "blueprint": "{{ .event.context.blueprintIdentifier }}",
+        "entity": "{{.event.diff.after }}",
         "runId": "{{ .run.id }}",
-        "trigger": "{{ .trigger }}"
+        "trigger": "{{ .event.trigger }}"
       }
     },
     "reportWorkflowStatus": true
