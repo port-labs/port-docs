@@ -8,7 +8,7 @@ This guide will provide you with the necessary tools for enabling our Ocean AWS 
 
 ## Our Permissions model
 
-A few key conecpts in the AWS's permissions model:
+A few key concepts in the AWS's permissions model:
 
 1. *Policy*: A document that defines permissions, specifying what actions are allowed or denied for particular resources and under what conditions.
 2. *Role*: An identity with specific permissions and trust policies.
@@ -63,7 +63,7 @@ The integration expects the non-root account's role the be named the same (`acco
 1. Name of a role in the integration's account giving it the following Policies: (This was created for you if you ran our terraform module)
    1. `arn:aws:iam::aws:policy/ReadOnlyAccess`
    2. Custom policy with `account:ListRegions` permissions
-   3. `sts:AssumeRole` on `arn:aws:iam::<root_account>:root/<organizationRoleArn>`
+   3. `sts:AssumeRole` on `arn:aws:iam::<root_account>:role/<organizationRoleArn>`
 
 :::tip
 You can create the custom policy using the following json:
@@ -87,7 +87,7 @@ You can create the custom policy using the following json:
 :::
 
 :::tip
-The name of this role (not the ARN) is refernced as `accountReadRoleName` in this doc.
+The name of this role (not the ARN) is referenced as `accountReadRoleName` in this doc.
 :::
 
 ## Walkthrough

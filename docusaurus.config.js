@@ -241,7 +241,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Port, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Port, Inc.`,
       },
       tableOfContents: {
         minHeadingLevel: 2,
@@ -285,17 +285,28 @@ const config = {
       hubspot: {
         accountId: 21928972,
       },
-      algolia: {
-        // The application ID provided by Algolia
-        appId: "VHYI0G637S",
-        // Public API key: it is safe to commit it
-        apiKey: "1bacc12054c0224408f2be6b60d697c9",
-        indexName: "getport",
-        contextualSearch: true,
-      },
+      // algolia: {
+      //   // The application ID provided by Algolia
+      //   appId: "VHYI0G637S",
+      //   // Public API key: it is safe to commit it
+      //   apiKey: "1bacc12054c0224408f2be6b60d697c9",
+      //   indexName: "getport",
+      //   contextualSearch: true,
+      // },
     }),
   themes: [
     "@port-labs/docusaurus-theme-openapi-docs",
+    
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        indexBlog: false,
+        indexDocs: true,
+        docsRouteBasePath: "/",
+        hashed: true,
+        explicitSearchResultPath: true,
+      },
+    ]
   ],
 
   plugins: [
