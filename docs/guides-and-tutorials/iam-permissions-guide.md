@@ -70,7 +70,7 @@ Let's create the following blueprints in your Port organization:
 <details>
     <summary>`AWS Resource` blueprint</summary>
 
-    The entities of this blueprint will represent different AWS resources we want to manage IAM permissions for (S3 buckets, EC2 machines, etc.).
+    The entities of this blueprint will represent different AWS resources we want to manage IAM permissions for (S3 buckets, EC2 instances, etc.).
     
     ```json showLineNumbers
     {
@@ -189,6 +189,13 @@ Let's create the following blueprints in your Port organization:
                     "title": "Role ARN",
                     "type": "string",
                     "icon": "DefaultProperty"
+                },
+                "expiry_time": {
+                  "title": "Expiry Time",
+                  "icon": "DefaultProperty",
+                  "description": "When the provisioned permission will expire",
+                  "type": "string",
+                  "format": "timer"
                 }
             },
             "required": []
@@ -685,13 +692,29 @@ We can retry the previous sign-in URL, and see that it no longer works ❌
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-revoke-permissions-action.png' width='75%' border='1px' />
 </p>
 
-#### Temporary permissions with automations
+#### Remove permissions with automations
 
 With the [automations](https://docs.getport.io/actions-and-automations/define-automations) feature, you can automatically trigger actions using events from the catalog. 
 
-For example, you can have your HR system automatically trigger an event to revoke IAM permissions via Port when an employee leaves the company. In a simpler use case, you can use the Timer Expired event to trigger the Revoke permissions action and create a temporary permissions experience, ensuring credentials aren't kept active beyond the time limit specified by your security and compliance teams.
+For example, you can have your HR system automatically trigger an event to revoke permissions via Port when an employee leaves the company. For this guide, we will use the Timer Expired event to trigger the revoke permissions action and create a temporary permissions experience, ensuring permissions aren't left active beyond the expiry time specified by your security or compliance teams.
 
-To do this, 
+
+
+Note that `Provisioned Permissions` blueprint we deployed earlier has a timer property that can be used to set when a particular permission will expire. 
+
+```json showLineNumbers
+"expiry_time": {
+  "title": "Expiry Time",
+  "icon": "DefaultProperty",
+  "description": "When the provisioned permission will expire",
+  "type": "string",
+  "format": "timer"
+  }
+```
+
+For the purposes of this guide, we will manually set the expiry time via the Port UI. In a real life scenario, this would likely be set programmatically based on your organization's time-to-live policy for permissions. 
+
+To do this, we'll execute the `Request Permissions` self-service action on the S3 bucket entity we created earlier and select the `s3:PutObject` in the `Permissions` drop down. Next we'll navigate to the `Provisioned Permissions` tab of the catalog and set an expiry time 10 minutes into the future for the entity we just created. 
 
 ## Summary 
 That's it! You are all set up to manage IAM permissions for your different AWS resources using Port!🚀
