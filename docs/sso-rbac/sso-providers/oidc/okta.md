@@ -1,5 +1,5 @@
 ---
-title: "Okta"
+title: "Okta (OIDC)"
 sidebar_position: 1
 description: Integrate Okta with Port
 ---
