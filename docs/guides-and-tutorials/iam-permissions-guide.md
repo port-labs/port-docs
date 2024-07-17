@@ -696,11 +696,7 @@ We can retry the previous sign-in URL, and see that it no longer works ❌
 
 With the [automations](https://docs.getport.io/actions-and-automations/define-automations) feature, you can automatically trigger actions using events from the catalog. 
 
-For example, you can have your HR system automatically trigger an event to revoke permissions via Port when an employee leaves the company. For this guide, we will use the Timer Expired event to trigger the revoke permissions action and create a temporary permissions experience, ensuring permissions aren't left active beyond the expiry time specified by your security or compliance teams.
-
-First we will deploy our automation that will run the revoke permissions for AWS resource GitHub workflow we created earlier. This automation will search for search for any `Provisioned Permissions` entites in your catalog, check if the 
-
-
+For example, you can have your HR system automatically trigger an event to revoke permissions via Port when an employee leaves the company. For this guide, we will use the timer expired event to trigger the revoke permissions action and create a temporary permissions experience, ensuring permissions aren't left active beyond the expiry time specified by your security or compliance teams.
 
 Note that `Provisioned Permissions` blueprint we deployed earlier has a timer property that can be used to set when a particular permission will expire. 
 
@@ -713,6 +709,49 @@ Note that `Provisioned Permissions` blueprint we deployed earlier has a timer pr
   "format": "timer"
   }
 ```
+
+The automation you'll build will search for search for any events related to the `Provisioned Permissions` entities in your catalog, check if the event is caused by the `expiry_time` timer property expiring and then launch the `Delete IAM Permissions` Github workflow we created earlier in this guide. 
+
+:::tip Don't know how to build automations?
+Check out our [guide](https://docs.getport.io/actions-and-automations/define-automations/) on how to build automations!
+
+Now you'll go ahead and deploy the automation defined below, remembering to fill in your Github Organization ID in the <YOUR_GITHUB_ORG> field. The automation checks the 
+
+<details>
+    <summary>Revoke Expired Permissions Automation</summary>
+```json showLineNumbers
+{
+  "identifier": "automation",
+  "title": "Automation",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "TIMER_PROPERTY_EXPIRED",
+      "blueprintIdentifier": "provisioned_permissions",
+      "propertyIdentifier": "expiry_time"
+    }
+  },
+  "invocationMethod": {
+    "type": "GITHUB",
+    "org": "<YOUR_GITHUB_ORG>",
+    "repo": "port-iam-permissions",
+    "workflow": "delete-iam-permissions.yaml",
+    "workflowInputs": {
+      "properties": "{{ .inputs }}",
+      "port_context": {
+        "blueprint": "{{ .action.blueprint }}",
+        "entity": "{{.entity }}",
+        "runId": "{{ .run.id }}",
+        "trigger": "{{ .trigger }}"
+      }
+    },
+    "reportWorkflowStatus": true
+  },
+  "publish": true
+}
+```
+</details>
+
 
 For the purposes of this guide, we will manually set the expiry time via the Port UI. In a real life scenario, this would likely be set programmatically based on your organization's time-to-live policy for permissions. 
 
