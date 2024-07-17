@@ -768,7 +768,10 @@ Next we'll click on the `Builder` button on the top right and then click into th
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-provisioned-permissions-timer-expired-event.png'width='40%' border='1px' />
 </p>
 
-Now navigate to `Automations` tab on the left side bar and then click on the  `Runs history`
+Now navigate to `Automations` tab on the left side bar and then click on the `Runs history` button on the top right and click on the latest automation run. You should see that the automation run completed successfully and the permission was deleted.
+
+<p align="center">
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-expired-permissions-removal-automation-run.png'width='40%' border='1px' />
 
 ## Summary 
 That's it! You are all set up to manage IAM permissions for your different AWS resources using Port!🚀
