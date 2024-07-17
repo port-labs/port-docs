@@ -698,6 +698,8 @@ With the [automations](https://docs.getport.io/actions-and-automations/define-au
 
 For example, you can have your HR system automatically trigger an event to revoke permissions via Port when an employee leaves the company. For this guide, we will use the Timer Expired event to trigger the revoke permissions action and create a temporary permissions experience, ensuring permissions aren't left active beyond the expiry time specified by your security or compliance teams.
 
+First we will deploy our automation that will run the revoke permissions for AWS resource GitHub workflow we created earlier. This automation will search for search for any `Provisioned Permissions` entites in your catalog, check if the 
+
 
 
 Note that `Provisioned Permissions` blueprint we deployed earlier has a timer property that can be used to set when a particular permission will expire. 
