@@ -716,6 +716,12 @@ For the purposes of this guide, we will manually set the expiry time via the Por
 
 To do this, we'll execute the `Request Permissions` self-service action on the S3 bucket entity we created earlier and select the `s3:PutObject` in the `Permissions` drop down. Next we'll navigate to the `Provisioned Permissions` tab of the catalog and set an expiry time 10 minutes into the future for the entity we just created. 
 
+<p align="center">
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/iam-permissions-provisioned-permissions-entity-add-expiry-time.png' width='40%' border='1px' />
+</p>
+
+
+
 ## Summary 
 That's it! You are all set up to manage IAM permissions for your different AWS resources using Port!🚀
 
