@@ -25,22 +25,22 @@ In order to complete the process you will need to contact Port to deliver and re
 1. In the Admin Console, go to Applications -> Applications.
 2. Click `Add App`.
 
-![Onelogin new application wizard](../../../static/img/sso/onelogin/OneloginCreateApp.png)
+![Onelogin new application wizard](/img/sso/onelogin/OneloginCreateApp.png)
 
 3. In the search box type **OpenID Connect**, then select `OpenId Connect (OIDC)`:
 
-![Onelogin new application OIDC](../../../static/img/sso/onelogin/OneloginSelectOidcFromSearch.png)
+![Onelogin new application OIDC](/img/sso/onelogin/OneloginSelectOidcFromSearch.png)
 
 4. Define the initial Port application settings:
 
    1. `Display Name`: Insert a name of your choice for the Port app, like `Port`.
    2. Add rectangular and square icons (optional):
 
-   ![Port's logo](../../../static/img/sso/general-assets/PortLogo.png)
+   ![Port's logo](/img/sso/general-assets/PortLogo.png)
 
-   ![Port's icon](../../../static/img/sso/general-assets/PortIcon.png)
+   ![Port's icon](/img/sso/general-assets/PortIcon.png)
 
-![Onelogin initial new application](../../../static/img/sso/onelogin/OneloginInitialApp.png)
+![Onelogin initial new application](/img/sso/onelogin/OneloginInitialApp.png)
 
 Click `Save`.
 
@@ -82,7 +82,7 @@ In the Port app, go to the `SSO` menu and follow these steps:
 
 3. Change the Token Endpoint - Authentication Method to `None (PKCE)`:
 
-![Okta app settings](../../../static/img/sso/onelogin/OneloginSSOSetting.png)
+![Okta app settings](/img/sso/onelogin/OneloginSSOSetting.png)
 
 Click `Save`.
 
@@ -96,7 +96,7 @@ The use of OpenID requires that Onelogin passes to Port an `email_verified` fiel
    1. `Name`: Email Verified
    2. `Shortname`: email_verified
 
-![Onelogin email verified user field](../../../static/img/sso/onelogin/OneloginEmailVerifiedUserField.png)
+![Onelogin email verified user field](/img/sso/onelogin/OneloginEmailVerifiedUserField.png)
 
 The custom field is `null` by default, in order to change its value to `true` you will create a custom mapping rule:
 
@@ -116,7 +116,7 @@ The mapping specified here will set the value of the `Email Verified` custom fie
    3. `Actions`: Set the action: Set Email Verified - true.
 4. Click `Save`.
 
-![Onelogin Email Verified Mapping Rule](../../../static/img/sso/onelogin/OneloginEmailVerifiedMappingRule.png)
+![Onelogin Email Verified Mapping Rule](/img/sso/onelogin/OneloginEmailVerifiedMappingRule.png)
 
 After creating the mapping rule, go back to Users -> Mappings and click on `Reapply All Mappings`. The new mapping might process for a few minutes before it is applied. You can check the mapping job status either by going to Activity -> Jobs or by looking at a specific user and verifying that it has the `Email Verified` field set to `true` (and not the default empty field).
 
@@ -135,7 +135,7 @@ Repeat the process two more times and add the following additional parameters:
 
 At the end of the process, your `Parameters` section will look like this:
 
-![Onelogin App Parameters Setting](../../../static/img/sso/onelogin/OneloginParametersSetting.png)
+![Onelogin App Parameters Setting](/img/sso/onelogin/OneloginParametersSetting.png)
 
 Click `Save`.
 
@@ -144,13 +144,13 @@ Click `Save`.
 1. In the `Application` page, select the Port app and go to the `Access` menu.
 2. In the `Roles` section, select the roles you want to expose the Port app to:
 
-   ![Onelogin Assign App Roles](../../../static/img/sso/onelogin/OneloginAssignAppRoles.png)
+   ![Onelogin Assign App Roles](/img/sso/onelogin/OneloginAssignAppRoles.png)
 
 3. Click `Save`.
 
 After completing these steps, users with roles that the Port app was assigned to, will see the Port app in their Portal and upon clicking it, will be logged in to Port:
 
-[Onelogin Portal With Port App](../../../static/img/sso/onelogin/OneloginPortalWithApp.png)
+[Onelogin Portal With Port App](/img/sso/onelogin/OneloginPortalWithApp.png)
 
 ---
 
@@ -169,14 +169,14 @@ To allow automatic Onelogin roles support in Port, please follow these steps:
 
 2. Click on the `Groups` claim:
 
-   ![Onelogin App Parameters Setting](../../../static/img/sso/onelogin/OneloginParametersSetting.png)
+   ![Onelogin App Parameters Setting](/img/sso/onelogin/OneloginParametersSetting.png)
 
 3. Update the groups claim:
 
    1. Change the value of `Default if no value selected` to `User Roles`;
    2. From the dropdown, select `Semicolon delimited input`:
 
-   ![Onelogin App Groups Claim Setting](../../../static/img/sso/onelogin/OneloginGroupsClaim.png)
+   ![Onelogin App Groups Claim Setting](/img/sso/onelogin/OneloginGroupsClaim.png)
 
    3. Click `Save`.
 
