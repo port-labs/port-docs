@@ -1,12 +1,12 @@
 ---
-id: get-an-actions-permissions
-title: "Get an action's permissions"
-description: "This route allows you to fetch the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/)."
-sidebar_label: "Get an action's permissions"
+id: delete-an-action-automation
+title: "Delete an action/automation"
+description: "This route allows you to delete a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>"
+sidebar_label: "Delete an action/automation"
 hide_title: true
 hide_table_of_contents: true
-api: eJztVUtv2kAQ/iurvTSRAJMovVgIibZRVPXQKElPBJHFHsermF13dg2hyP+9M36ASUhOldpDL2bZeX8z3+xWxuAi1LnX1shQ3qXaCbSFB6GyzK6d2NhCeCsS8FEqfAoiB1xq50jfCZsIJRxkSd8BrnREVhF7GowWGIyrz50VGSg0YmmRxAvy3SiJm0+Tzz0RpRA9Cb5m79PYRsUSjFesMjtJvc9dGAR07QaP4HOLfqBtULtwfWXiviq8XVb6LogQlId+N6c+PFPOGkwELnDgD4WtI1yoKDgdyJ706tHJcContUTOejJXqJbgAVmwlY5yXioZbqXf5ECwOY/aPMqyJzWjmCufkiNDNvSvjjDXMVWlEw1Iopeog9iLGVWGokGJG7BWxu+70O1AYrEGm5wi/Cw0QixDjwWUlLeDqEDtN1XWC2oDBQ+nMxYhuJwcgOMyzodD/jnM6raICDHHVV0ML17LvxtoU00sDwtBIADRIg1GRIEplfDe3JuRV4sMxnxA+gox8un4khVHAZ3amy977809/eCBWTx+MNbPE1uY+IGk8e7+bg/YWvtmUtGuCNa4i+1aOUEuROWi8dCGCdo8q5LPz/+VkrVZqUzHc+4vOP+68Fh5ta82tlDXSJxoOFszuh7b94r+eGwO/lbRRDejsnkV6bDmiRGtuE5kl8fbxVF1xODUEjsk7RHZq1kaymB11m6TYPuKq2XQYZtkRuGqXQMFZmTfbiiV686CIjSPKRTuQKdD0VtuTs3Glqi79UKW32Cz3yiTggpB/avaebJZOimomKzKagkltjLXPmP9a4onJtdfSZWTr9t6Nhhyy3Pr/FIZVm+8XwFtaNOw6YMThwAczMZWRpYaYfz/p6N+Oup+eXj2QZ4pXZGqmoJtM25TuTojxcaUTuGx56ELOc1ISj1i0+12oRz8wKws+Zq2AfJqp+NKoeZRr+Yy1o7PNOmJyhy807OTm+bJOBV/6A06ikA7xoZnmHZZwf/o+ERDfex9LGddtl5d3jFiBcPXpcRTRYnmwHUfDfOSK3VM/jJDj5qMiCqCCDfeqdeSNw0a6rXaXPSsLMvfRx5GDw==
-sidebar_class_name: "get api-method"
+api: eJzdVclu2zAQ/RWCpwRwLCdIL4JhwEB8KFqgQeOeUsOhxXFERCZVklLqCvr3zpCSl9rJtUUvMpdZ3gzfGzdcgsusKr0ymqd8nivHrKk8MFEU5tWxramYN0xCAXTIHBTrKwe2VhluM/JjxjJRebMRtBuOVzaZhM/csAKE1WxjLBqvMG7n4pjQ8sDJDViWQ/bCyMTnwB6lyaoNaB+uFxe596VLkwSP3fAZfGmsHyqTdOGuMNzVQbjkMsLgA+7Fs+PpI59GS74Y8FJYscFyLF003GHqjeBpw/22BOyC81bpZ94OuKKmlMLnGEijD+5ixqWSCE6tFVi8svCjUhYkT72toMUUDrLKKr8NCVbYBLRDELGNqeixkKkFV+IGHCG4GY3o5/hVHqosA+cI0O3o9vT+iwZm1qFva0PPhugZWGusYyZDIAgt/a6/67EXqwImtLD4ZWzs88mMDMcJrvqTu3307hx/7JGbnDxp45drU2n5hLdydz7Pe14k+wdhr8rnAWBpTY29k2zfQPYqHMNoLETrgvUZkx5yqP7m5l+pXulaFEou6enB+dMeSOHFvlppINaI/chiJ6LMIvneK/rDOUr8raJRNFoUy5DpuOapZv11BLLD8XZxWB3qMDconE4afBDllvKkvu7VnTQnoms5aczWvYYrW6BPPyVEqQ6GBDbxnEHljmwORPtAbxL12Et3NxvQ8xNs9+NgWiF+q34FmvNuYuQgJHq1YYKsTXBXviD7e8zHpvcf0ZTAx9e8Ho7opUvj/EZoMu+i33VjV59KCgMcUaLhmcH+a/+fjvHYfg8/fVIWQgVphEdtOsY88voaDfvZOuDp6ajGR86xyWTcNCvh4Jst2paOUcWWpjUua2EVUTQQSypHa2ToWhQO3mn6xdfuX+CSvYW355AmAuH8qGiHyxdk1Ll/lnZxqJC72efZfEYlVlTvISVfAiW7BcE+m+lPrsa09CWFnHUZI1UZEn6yM483bzp01O+tqe5F27a/AcEa7NI=
+sidebar_class_name: "delete api-method"
 info_path: api-reference-temp/port-api
 custom_edit_url: null
 ---
@@ -28,20 +28,20 @@ import TabItem from "@theme/TabItem";
 <Heading
   as={"h1"}
   className={"openapi__heading"}
-  children={"Get an action's permissions"}
+  children={"Delete an action/automation"}
 >
 </Heading>
 
 <MethodEndpoint
-  method={"get"}
-  path={"/v1/actions/{action_identifier}/permissions"}
+  method={"delete"}
+  path={"/v1/actions/{action_identifier}"}
 >
   
 </MethodEndpoint>
 
 
 
-This route allows you to fetch the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
+This route allows you to delete a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
 
 <Heading
   id={"request"}
@@ -69,7 +69,7 @@ This route allows you to fetch the permissions of a self-service action.<br/><br
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"action_identifier","description":"The identifier of the action you want to fetch permissions for.<br/>","required":true}}
+        param={{"schema":{"type":"string"},"in":"path","name":"action_identifier","required":true}}
       >
         
       </ParamsItem>
@@ -110,7 +110,7 @@ This route allows you to fetch the permissions of a self-service action.<br/><br
           </tr>
           <tr>
             <td>`not_found`</td>
-            <td>The action with the provided identifier was not found</td>
+            <td>The action/automation with the provided identifier was not found</td>
           </tr>
           </table>
           
