@@ -6805,7 +6805,53 @@ paths:
             - create:actions
       responses:
         "200":
-          description: Default Response
+          description: Success
+        "409":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`identifier_taken`</td>
+              <td>An action/automation with the same identifier already exists</td>
+            </tr>
+            </table>
+        "422":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            <tr>
+              <td>`user_inputs_schema_invalid`</td>
+              <td>The provided user inputs are invalid</td>
+            </tr>
+            </table>
+        "500":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
     get:
       summary: Get actions/automations
       description: This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
@@ -6881,7 +6927,35 @@ paths:
             - read:actions
       responses:
         "200":
-          description: Default Response
+          description: Success
+        "422":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            </table>
+        "500":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   "/v1/actions/{action_identifier}":
     put:
       summary: Update an action/automation
@@ -8144,7 +8218,183 @@ paths:
             - update:actions
       responses:
         "200":
-          description: Default Response
+          description: Success
+        "404":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action/automation with the provided identifier was not found</td>
+            </tr>
+            </table>
+        "409":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`identifier_taken`</td>
+              <td>An action/automation with the same identifier already exists</td>
+            </tr>
+            </table>
+        "422":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            </table>
+        "500":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
+    get:
+      summary: Get an action/automation
+      description: This route allows you to fetch the details of a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+      tags:
+        - Actions
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: action_identifier
+          description: The identifier of the action/automation you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - read:actions
+      responses:
+        "200":
+          description: Success
+        "404":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action/automation with the provided identifier was not found</td>
+            </tr>
+            </table>
+          "422":
+            description: |
+              One of the following errors occurred:
+
+              <table>
+              <tr>
+                <th>Error</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td>`invalid_request`</td>
+                <td>The data provided does not match the route schema</td>
+              </tr>
+              </table>
+        "500":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
+    delete:
+      summary: Delete an action/automation
+      description: This route allows you to delete a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+      tags:
+        - Actions
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: action_identifier
+          description: The identifier of the action/automation you want to delete.<br/>
+          required: true
+      security:
+        - bearer:
+            - delete:actions
+      responses:
+        "200":
+          description: Success
+        "404":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action/automation with the provided identifier was not found</td>
+            </tr>
+            </table>
+        "422":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            </table>
+        "500":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   "/v1/actions/{action_identifier}/permissions":
     get:
       summary: Get an action's permissions
@@ -8162,7 +8412,49 @@ paths:
         - bearer: []
       responses:
         "200":
-          description: Default Response
+          description: Success
+        "404":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action with the provided identifier was not found</td>
+            </tr>
+            </table>
+        "422":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            </table>
+        "500":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
     patch:
       summary: Update an action's permissions
       description: This route allows you to update the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
@@ -8276,7 +8568,49 @@ paths:
         - bearer: []
       responses:
         "200":
-          description: Default Response
+          description: Success
+        "404":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action with the provided identifier was not found</td>
+            </tr>
+            </table>
+        "422":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            </table>
+        "500":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   '/v1/actions/runs/{run_id}':
     patch:
       summary: Patch an action run

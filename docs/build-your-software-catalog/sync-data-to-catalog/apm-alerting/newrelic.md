@@ -69,16 +69,16 @@ If you are using New Relic's EU region, add the following flag to the command:
 
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-newrelic-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-newrelic-integration"  \
-	--set integration.type="newrelic"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
-	--set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>"
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set scheduledResyncInterval=120 \
+  --set integration.identifier="my-newrelic-integration"  \
+  --set integration.type="newrelic"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
+  --set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>"
 ```
 
 <PortApiRegionTip/>

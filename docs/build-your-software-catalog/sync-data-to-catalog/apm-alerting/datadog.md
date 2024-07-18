@@ -58,17 +58,17 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-datadog-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=60 \
-	--set integration.identifier="my-datadog-integration"  \
-	--set integration.type="datadog"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.datadogBaseUrl="https://api.datadoghq.com"  \
-	--set integration.secrets.datadogApiKey="<your-datadog-api-key>"  \
-	--set integration.secrets.datadogApplicationKey="<your-datadog-application-key>" 
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set scheduledResyncInterval=60 \
+  --set integration.identifier="my-datadog-integration"  \
+  --set integration.type="datadog"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.datadogBaseUrl="https://api.datadoghq.com"  \
+  --set integration.secrets.datadogApiKey="<your-datadog-api-key>"  \
+  --set integration.secrets.datadogApplicationKey="<your-datadog-application-key>" 
 ```
 
 <PortApiRegionTip/>

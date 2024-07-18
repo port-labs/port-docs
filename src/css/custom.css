@@ -580,3 +580,7 @@ html[data-theme="dark"] .openapi-schema__list-item {
 .theme-code-block-highlighted-line {
   display: table-row !important;
 }
+
+.openapi-tabs__response-code-item:not(.active) {
+  border: 1px solid var(--openapi-tree-line-color) !important;
+}

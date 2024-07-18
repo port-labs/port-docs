@@ -42,6 +42,8 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.opencostHost` | The Opencost server URL                                                                                       | ✅       |
 | `scheduledResyncInterval`         | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`         | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌       |
+
 
 <br/>
 
@@ -53,14 +55,15 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-opencost-integration port-labs/port-ocean \
-	--set port.clientId="CLIENT_ID"  \
-	--set port.clientSecret="CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set integration.identifier="my-opencost-integration"  \
-	--set integration.type="opencost"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.opencostHost="https://myOpenCostInstance:9003"
+  --set port.clientId="CLIENT_ID"  \
+  --set port.clientSecret="CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set integration.identifier="my-opencost-integration"  \
+  --set integration.type="opencost"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.opencostHost="https://myOpenCostInstance:9003"
 ```
 
 <PortApiRegionTip/>
@@ -232,6 +235,7 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST=$OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
@@ -282,6 +286,7 @@ steps:
     docker run -i --rm \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST=$(OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
         -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
@@ -333,6 +338,7 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST=$OCEAN__INTEGRATION__CONFIG__OPENCOST_HOST \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \

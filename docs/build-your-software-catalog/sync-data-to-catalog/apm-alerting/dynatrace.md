@@ -58,7 +58,7 @@ helm upgrade --install my-dynatrace-integration port-labs/port-ocean \
   --set integration.type="dynatrace"  \
   --set integration.eventListener.type="POLLING"  \
   --set integration.secrets.dynatraceApiKey="<your-api-key>"  \
-  --set integration.config.dynatraceHostUrl="<your-isntance-url>"
+  --set integration.config.dynatraceHostUrl="<your-instance-url>"
 ```
 
 <PortApiRegionTip/>

@@ -66,6 +66,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
 | `integration.secrets.personalAccessToken` | The [personal access token](#tokenmapping) used to query authenticate with your Azure Devops account                                                               |                                  | ✅       |
 | `integration.secrets.organizationUrl` | The URL of your Azure DevOps organization                                                                                           | https://dev.azure.com/organizationName     | ✅       |
+| `integration.secrets.isProjectsLimited` | If using a project-scoped personal access token, this setting is enabled to create webhooks for individual projects. Enabled by default                                                                                           |       | ❌       |
 | `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Azure DevOps                | https://my-ocean-integration.com | ❌       |
 
 <HelmParameters/>
@@ -83,6 +84,7 @@ helm upgrade --install my-azure-devops-integration port-labs/port-ocean \
 	--set port.clientSecret="PORT_CLIENT_SECRET"  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
+  --set sendRawDataExamples=true \
 	--set scheduledResyncInterval=120 \
 	--set integration.identifier="my-azure-devops-integration"  \
 	--set integration.type="azure-devops"  \
@@ -228,6 +230,7 @@ steps:
     docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN=${OCEAN__INTEGRATION__CONFIG__PERSONAL_ACCESS_TOKEN} \
         -e OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL=${OCEAN__INTEGRATION__CONFIG__ORGANIZATION_URL} \
         -e OCEAN__PORT__CLIENT_ID=${OCEAN__PORT__CLIENT_ID} \

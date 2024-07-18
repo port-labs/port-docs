@@ -39,7 +39,7 @@ To define an incoming webhook in Azure, follow the steps below:
     - Choose **Incoming WebHook** as the type.
     - Fill in the following fields:
         - **Webhook Name**: The webhook name e.g. "port_trigger"
-        - **Service connection name**: The sname of the service connection (e.g., "port_trigger").
+        - **Service connection name**: The name of the service connection (e.g., "port_trigger").
         - **Secret key**: Enter your Port `clientSecret` value.
         - **Headers**: Type in `X-Port-Signature`.
     - Check `Grant access to all pipelines`

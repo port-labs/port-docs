@@ -66,16 +66,16 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sentry-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set integration.identifier="my-sentry-integration"  \
-	--set integration.type="sentry"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.sentryHost="https://sentry.io"  \
-	--set integration.secrets.sentryToken="string"  \
-	--set integration.config.sentryOrganization="string"
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set integration.identifier="my-sentry-integration"  \
+  --set integration.type="sentry"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.sentryHost="https://sentry.io"  \
+  --set integration.secrets.sentryToken="string"  \
+  --set integration.config.sentryOrganization="string"
 ```
 <PortApiRegionTip/>
 

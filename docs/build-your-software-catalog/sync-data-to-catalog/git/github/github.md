@@ -221,7 +221,7 @@ This is done using the `file` kind in your Github mapping configuration.
 
 For example, say you want to manage your `package.json` files in Port. One option is to create a `manifest` blueprint, with each of its entities representing a `package.json` file.
 
-The following configuration fetches `package.json` files from all repositories in your organization, and creates an entity for each of them, based on the `manifest` blueprint:
+The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
 
 ```yaml showLineNumbers
 resources:
@@ -231,8 +231,10 @@ resources:
       files:
         # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
-        # Note that the `repos` key can be used to filter the repositories from which the files will be fetched
-        - repos: '*'
+        # The `repos` key can be used to filter the repositories from which the files will be fetched
+        - repos:
+          - "MyRepo"
+          - "MyOtherRepo"
     port:
       entity:
         mappings:
@@ -463,7 +465,7 @@ resources:
         - path: '**/package.json'
         # Note that in this case we are fetching from a specific repository
         - repos:
-            - stale
+            - "MyRepo"
     port:
       itemsToParse: .file.content.dependencies | to_entries
       entity:
