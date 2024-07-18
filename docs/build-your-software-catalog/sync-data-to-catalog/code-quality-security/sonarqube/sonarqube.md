@@ -10,6 +10,7 @@ import AdvancedConfig from '../../../../generalTemplates/\_ocean_advanced_config
 import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_blueprint.mdx";
 import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # SonarQube
 
@@ -165,6 +166,14 @@ kubectl apply -f my-ocean-sonarqube-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
+
+</TabItem>
+
+<TabItem value="hosted-by-port" label="Hosted by Port">
+
+<OceanSaasInstallation/>
 
 </TabItem>
 
@@ -395,11 +404,11 @@ ingest_data:
 
 <PortApiRegionTip/>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>
 
 ## Ingesting SonarQube objects
 

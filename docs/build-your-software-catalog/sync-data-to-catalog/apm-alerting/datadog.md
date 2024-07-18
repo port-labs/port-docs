@@ -7,6 +7,7 @@ import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catal
 import DockerParameters from "./\_datadog_one_time_docker_parameters.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Datadog
 
@@ -162,6 +163,14 @@ kubectl apply -f my-ocean-datadog-integration.yaml
 
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
+
+</TabItem>
+
+<TabItem value="hosted-by-port" label="Hosted by Port">
+
+<OceanSaasInstallation/>
 
 </TabItem>
 
@@ -392,11 +401,11 @@ ingest_data:
 
 <PortApiRegionTip/>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>
 
 ## Ingesting Datadog objects
 

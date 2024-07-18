@@ -8,6 +8,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import DockerParameters from "./\_launchdarkly_one_time_docker_parameters.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # LaunchDarkly
 
@@ -170,6 +171,16 @@ kubectl apply -f my-ocean-launchdarkly-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<h3>Event listener</h3>
+
+The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
+
+</TabItem>
+
+<TabItem value="hosted-by-port" label="Hosted by Port">
+
+<OceanSaasInstallation/>
 
 </TabItem>
 
@@ -334,10 +345,6 @@ ingest_data:
 </TabItem>
 
 </Tabs>
-
-### Event listener
-
-The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
 ## Ingesting LaunchDarkly objects
 

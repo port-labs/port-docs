@@ -5,6 +5,7 @@ import DockerParameters from "./\_newrelic-docker-parameters.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # New Relic
 
@@ -187,6 +188,18 @@ kubectl apply -f my-ocean-newrelic-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
+
+<h3>Event listener</h3>
+
+The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
+
+</TabItem>
+
+<TabItem value="hosted-by-port" label="Hosted by Port">
+
+<OceanSaasInstallation/>
 
 </TabItem>
 
@@ -402,15 +415,12 @@ ingest_data:
   </Tabs>
 
 <PortApiRegionTip/>
+
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-### Event listener
-
-The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
-
-<AdvancedConfig/>
 
 ## Ingesting Newrelic objects
 

@@ -9,6 +9,7 @@ import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_firehydrant_docker_params.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # FireHydrant
 
@@ -159,6 +160,14 @@ kubectl apply -f my-ocean-firehydrant-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
+
+</TabItem>
+
+<TabItem value="hosted-by-port" label="Hosted by Port">
+
+<OceanSaasInstallation/>
 
 </TabItem>
 
@@ -368,11 +377,11 @@ ingest_data:
 
 <PortApiRegionTip/>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>
 
 ## Ingesting FireHydrant objects
 
