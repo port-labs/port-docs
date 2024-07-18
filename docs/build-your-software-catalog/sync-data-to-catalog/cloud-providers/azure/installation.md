@@ -50,17 +50,18 @@ You should have the following information ready:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install azure port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=1440 \
-	--set integration.identifier="azure"  \
-	--set integration.type="azure"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.azureClientId="<AZURE_CLIENT_ID>"  \
-	--set integration.config.azureClientSecret="<AZURE_CLIENT_SECRET>" \
-	--set integration.config.azureTenantId="<AZURE_TENANT_ID>"
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set scheduledResyncInterval=1440 \
+  --set integration.identifier="azure"  \
+  --set integration.type="azure"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.azureClientId="<AZURE_CLIENT_ID>"  \
+  --set integration.config.azureClientSecret="<AZURE_CLIENT_SECRET>" \
+  --set integration.config.azureTenantId="<AZURE_TENANT_ID>"
 ```
 
 <PortApiRegionTip/>
@@ -350,9 +351,9 @@ the Azure subscription has the appropriate access permissions. One of the follow
 	<img src='/img/integrations/azure-exporter/DevPortalIngestCloudProvider.png' width='70%' border='1px' /> <br/><br/>
 
 3. Edit and copy the installation command.
-	 :::tip Installation Command
-	 The installation command includes placeholders that allow you to customize the integration's configuration. For
-	 example, you can update the command and specify the `event_grid_system_topic_name` parameter if you already have one.
+	:::tip Installation Command
+	The installation command includes placeholders that allow you to customize the integration's configuration. For
+	example, you can update the command and specify the `event_grid_system_topic_name` parameter if you already have one.
 
 	- Specify the `event_grid_system_topic_name` parameter if you already have an Event Grid system topic of
 		type `Microsoft.Resources.Subscriptions` in your subscription;
@@ -397,8 +398,8 @@ You should have the following information ready:
 
 | Variable                                          | Description                                                                                                                           |
 |---------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
-| `OCEAN__PORT__CLIENT_ID`                          | [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).     |
-| `OCEAN__PORT__CLIENT_SECRET`                      | [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API). |
+| `OCEAN__PORT__CLIENT_ID`                          | Your Port client ID.     |
+| `OCEAN__PORT__CLIENT_SECRET`                      | Your Port client secret. |
 | `OCEAN__PORT__BASE_URL`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                               |
 | `OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_ID`     | The client ID of the Azure App Registration.                                                                                          |
 | `OCEAN__INTEGRATION__CONFIG__AZURE_CLIENT_SECRET` | The client secret of the Azure App Registration.                                                                                      |
@@ -406,6 +407,8 @@ You should have the following information ready:
 | `OCEAN__EVENT_LISTENER`                           | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                             |
 | `OCEAN__INTEGRATION__IDENTIFIER`                  | The identifier of the integration.                                                                                                    |
 | `OCEAN__INTEGRATION__TYPE`                        | should be set to `azure`.                                                                                                             |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`                 | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |
+| `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                |
 
 </details>
 

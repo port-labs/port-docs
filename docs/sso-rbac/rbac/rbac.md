@@ -153,7 +153,7 @@ Team dropdown selector in the entity create/edit page:
 | ----- | ---- | ------------------------------------------------------ | ------------ |
 | team  | List | System field that defines the team that owns an Entity | `"team": []` |
 
-- We support the manual creation of teams on Port, as well as integrating with identity providers, such as [Okta](../sso-providers/okta.md) and [AzureAD](../sso-providers/azure-ad.md), to import existing teams.
+- We support the manual creation of teams on Port, as well as integrating with identity providers, such as [Okta](/sso-rbac/sso-providers/oidc/okta.md) and [AzureAD](/sso-rbac/sso-providers/azure-ad.md), to import existing teams.
 - When users log in to Port, their groups will be pulled automatically from their identity provider, and the allowed team values will be updated accordingly.
 - It is also possible to configure [team inheritance](/build-your-software-catalog/set-catalog-rbac/examples.md#team-inheritance) and utilize relations to auto-populate the `team` key of entities.
 

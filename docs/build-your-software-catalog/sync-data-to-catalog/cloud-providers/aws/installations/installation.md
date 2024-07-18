@@ -42,17 +42,17 @@ You can check out the Helm chart [here](https://github.com/port-labs/helm-charts
 ```bash
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install aws port-labs/port-ocean \
---set port.clientId="$PORT_CLIENT_ID"  \
---set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
---set port.baseUrl="https://api.getport.io"  \
---set initializePortResources=true  \
---set sendRawDataExamples=true  \
---set scheduledResyncInterval=1440 \
---set integration.identifier="my-aws"  \
---set integration.type="aws"  \
---set integration.eventListener.type="POLLING"  \
---set integration.config.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
---set integration.config.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY"
+  --set port.clientId="$PORT_CLIENT_ID"  \
+  --set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set scheduledResyncInterval=1440 \
+  --set integration.identifier="my-aws"  \
+  --set integration.type="aws"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
+  --set integration.config.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY"
 ```
 
 ### IRSA
@@ -70,16 +70,16 @@ You'll need to:
 ```bash
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install aws port-labs/port-ocean \
---set port.clientId="$PORT_CLIENT_ID"  \
---set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
---set port.baseUrl="https://api.getport.io"  \
---set initializePortResources=true  \
---set sendRawDataExamples=true  \
---set scheduledResyncInterval=1440 \
---set integration.identifier="my-aws"  \
---set integration.type="aws"  \
---set integration.eventListener.type="POLLING"  \
---set podServiceAccount.name="$SERVICE_ACCOUNT"
+  --set port.clientId="$PORT_CLIENT_ID"  \
+  --set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set scheduledResyncInterval=1440 \
+  --set integration.identifier="my-aws"  \
+  --set integration.type="aws"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set podServiceAccount.name="$SERVICE_ACCOUNT"
 ```
 
 ### Multiple account support
@@ -95,18 +95,18 @@ Then, you'll be able to run the integration: (You can switch the `podServiceAcco
 ```bash
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install aws port-labs/port-ocean \
---set port.clientId="$PORT_CLIENT_ID"  \
---set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
---set port.baseUrl="https://api.getport.io"  \
---set initializePortResources=true  \
---set sendRawDataExamples=true  \
---set scheduledResyncInterval=1440 \
---set integration.identifier="my-aws"  \
---set integration.type="aws"  \
---set integration.eventListener.type="POLLING"  \
---set podServiceAccount.name="$SERVICE_ACCOUNT"  \ 
---set integration.config.accountReadRoleName="$YOUR_ACCOUNT_READ_ROLE_NAME"  \ 
---set integration.config.organizationRoleArn="$YOUR_ORGANIZATION_ROLE_ARN"
+  --set port.clientId="$PORT_CLIENT_ID"  \
+  --set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set scheduledResyncInterval=1440 \
+  --set integration.identifier="my-aws"  \
+  --set integration.type="aws"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set podServiceAccount.name="$SERVICE_ACCOUNT"  \ 
+  --set integration.config.accountReadRoleName="$YOUR_ACCOUNT_READ_ROLE_NAME"  \ 
+  --set integration.config.organizationRoleArn="$YOUR_ORGANIZATION_ROLE_ARN"
 ```
 
   </TabItem>
@@ -215,8 +215,8 @@ The AWS integration uses the following AWS infrastructure:
 
 | Variable                                             | Description                                                                                                                                                                                                                                                          |
 | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `OCEAN__PORT__CLIENT_ID`                             | [The client ID of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                    |
-| `OCEAN__PORT__CLIENT_SECRET`                         | [The client secret of the Port integration](https://docs.getport.io/configuration-methods/#:~:text=To%20get%20your%20Port%20API,API).                                                                                                                                |
+| `OCEAN__PORT__CLIENT_ID`                             | Your Port client ID. |
+| `OCEAN__PORT__CLIENT_SECRET`                         | Your Port client secret. |
 | `OCEAN__PORT__BASE_URL`                              | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                              |
 | `OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID`      | [The AWS Access Key ID of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                      |
 | `OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY`  | [The AWS Secret Access Key of the IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).                                                                                                                                                  |

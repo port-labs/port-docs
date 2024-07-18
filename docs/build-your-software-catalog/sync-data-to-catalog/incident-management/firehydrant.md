@@ -49,6 +49,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in FireHydrant | ❌       |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                 | ❌       |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping             | ❌       |
+| `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true  | ❌       |
 
 <br/>
 
@@ -60,15 +61,16 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-firehydrant-integration port-labs/port-ocean \
-	--set port.clientId="CLIENT_ID"  \
-	--set port.clientSecret="CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set integration.identifier="my-firehydrant-integration"  \
-	--set integration.type="firehydrant"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.apiUrl="https://api.firehydrant.io"  \
-	--set integration.secrets.token="<FIREHYDRANT_API_TOKEN>"
+  --set port.clientId="CLIENT_ID"  \
+  --set port.clientSecret="CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set integration.identifier="my-firehydrant-integration"  \
+  --set integration.type="firehydrant"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.apiUrl="https://api.firehydrant.io"  \
+  --set integration.secrets.token="<FIREHYDRANT_API_TOKEN>"
 ```
 
 <PortApiRegionTip/>
@@ -243,6 +245,7 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
@@ -293,6 +296,7 @@ steps:
     docker run -i --rm --platform=linux/amd64 \
       -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
       -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+      -e OCEAN__SEND_RAW_DATA_EXAMPLES=true  \
       -e OCEAN__INTEGRATION__CONFIG__TOKEN=$(OCEAN__INTEGRATION__CONFIG__TOKEN) \
       -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
       -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
@@ -346,6 +350,7 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
         -e OCEAN__INTEGRATION__CONFIG__API_URL=$OCEAN__INTEGRATION__CONFIG__API_URL \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \

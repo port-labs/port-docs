@@ -11,7 +11,7 @@ This guide provides a step-by-step walkthrough for creating Kubernetes clusters 
 
 <center>
 
-<iframe width="65%" height="400" src="https://www.youtube.com/embed/UnNQYghc8uU?si=nv2jbn2Y_VPIpFhh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/UnNQYghc8uU?si=nv2jbn2Y_VPIpFhh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 </center>
 

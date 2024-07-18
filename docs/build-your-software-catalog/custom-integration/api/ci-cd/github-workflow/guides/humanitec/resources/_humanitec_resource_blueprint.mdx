@@ -1,0 +1,66 @@
+<details>
+<summary> Humanitec Resource Blueprint</summary>
+
+
+```json showLineNumbers
+
+{
+  "identifier": "humanitecResource",
+  "title": "Humanitec Resource",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "type": {
+        "title": "Type",
+        "description": "The type of the resource",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "class": {
+        "title": "Class",
+        "description": "The class of the resource",
+        "type": "string",
+        "icon": "DefaultProperty"
+      },
+      "resource": {
+        "title": "Resource",
+        "description": "The resource",
+        "type": "object",
+        "icon": "DefaultProperty"
+      },
+      "resourceSchema": {
+        "title": "Resource Schema",
+        "description": "The schema of the resource",
+        "type": "object",
+        "icon": "DefaultProperty"
+      },
+      "guresid": {
+        "title": "GU Resource ID",
+        "description": "The GU resource ID",
+        "type": "string",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "humanitecResourceGraph": {
+      "title": "Depends On",
+      "description": "Resource Graph",
+      "target": "humanitecResourceGraph",
+      "required": false,
+      "many": true
+    },
+    "humanitecWorkload": {
+      "title": "Humanitec Workload",
+      "target": "humanitecWorkload",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+</details>

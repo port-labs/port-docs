@@ -282,10 +282,6 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/main-menu/sso-and-rbac.svg');
 }
 
-.sidebar-menu-usage-methods .menu__link::before {
-  content: url('/static/img/sidebar-icons/main-menu/usage-methods.svg');
-}
-
 .sidebar-menu-integrations-index .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/integrations-index.svg');
 }
@@ -408,6 +404,16 @@ html[data-theme="dark"] details details  {
 .header-home-link:hover:not(.header-home-link--active) {
   opacity: 0.8;
 }
+
+.menu__caret::before {
+  zoom: 70%;
+}
+
+.menu__link--sublist-caret::after {
+  zoom: 70%;
+}
+
+/* OpenAPI spec */
 
 .openapi-params__list-item:not(.anything) {
   padding: 1rem;
@@ -573,4 +579,8 @@ html[data-theme="dark"] .openapi-schema__list-item {
 
 .theme-code-block-highlighted-line {
   display: table-row !important;
+}
+
+.openapi-tabs__response-code-item:not(.active) {
+  border: 1px solid var(--openapi-tree-line-color) !important;
 }

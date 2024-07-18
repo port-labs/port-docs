@@ -1,0 +1,176 @@
+---
+id: get-an-actions-permissions
+title: "Get an action's permissions"
+description: "This route allows you to fetch the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/)."
+sidebar_label: "Get an action's permissions"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVUtv2kAQ/iurvTSRAJMovVgIibZRVPXQKElPBJHFHsermF13dg2hyP+9M36ASUhOldpDL2bZeX8z3+xWxuAi1LnX1shQ3qXaCbSFB6GyzK6d2NhCeCsS8FEqfAoiB1xq50jfCZsIJRxkSd8BrnREVhF7GowWGIyrz50VGSg0YmmRxAvy3SiJm0+Tzz0RpRA9Cb5m79PYRsUSjFesMjtJvc9dGAR07QaP4HOLfqBtULtwfWXiviq8XVb6LogQlId+N6c+PFPOGkwELnDgD4WtI1yoKDgdyJ706tHJcContUTOejJXqJbgAVmwlY5yXioZbqXf5ECwOY/aPMqyJzWjmCufkiNDNvSvjjDXMVWlEw1Iopeog9iLGVWGokGJG7BWxu+70O1AYrEGm5wi/Cw0QixDjwWUlLeDqEDtN1XWC2oDBQ+nMxYhuJwcgOMyzodD/jnM6raICDHHVV0ML17LvxtoU00sDwtBIADRIg1GRIEplfDe3JuRV4sMxnxA+gox8un4khVHAZ3amy977809/eCBWTx+MNbPE1uY+IGk8e7+bg/YWvtmUtGuCNa4i+1aOUEuROWi8dCGCdo8q5LPz/+VkrVZqUzHc+4vOP+68Fh5ta82tlDXSJxoOFszuh7b94r+eGwO/lbRRDejsnkV6bDmiRGtuE5kl8fbxVF1xODUEjsk7RHZq1kaymB11m6TYPuKq2XQYZtkRuGqXQMFZmTfbiiV686CIjSPKRTuQKdD0VtuTs3Glqi79UKW32Cz3yiTggpB/avaebJZOimomKzKagkltjLXPmP9a4onJtdfSZWTr9t6Nhhyy3Pr/FIZVm+8XwFtaNOw6YMThwAczMZWRpYaYfz/p6N+Oup+eXj2QZ4pXZGqmoJtM25TuTojxcaUTuGx56ELOc1ISj1i0+12oRz8wKws+Zq2AfJqp+NKoeZRr+Yy1o7PNOmJyhy807OTm+bJOBV/6A06ikA7xoZnmHZZwf/o+ERDfex9LGddtl5d3jFiBcPXpcRTRYnmwHUfDfOSK3VM/jJDj5qMiCqCCDfeqdeSNw0a6rXaXPSsLMvfRx5GDw==
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an action's permissions"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions/{action_identifier}/permissions"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"action_identifier","description":"The identifier of the action you want to fetch permissions for.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Success
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"404"}
+        value={"404"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`not_found`</td>
+            <td>The action with the provided identifier was not found</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"422"}
+        value={"422"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`invalid_request`</td>
+            <td>The data provided does not match the route schema</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`internal_error`</td>
+            <td>An internal error occurred</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

@@ -13,7 +13,7 @@ import TabItem from "@theme/TabItem"
 
 <center>
 
-<iframe width="60%" height="400" src="https://www.youtube.com/embed/McUWOC4gcu4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/McUWOC4gcu4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 
@@ -132,7 +132,7 @@ A many type relation is used to map multiple target entities to the source.
 - Map the **cloud resources** used by a **service**.
 - Map the **services deployed** in a **developer environment**.
 
-In this [live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) example, we can see a specific developer environment and the running services it uses. 🎬
+In this [live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) example, we can see a specific Jira issue and its related services. 🎬
 
 #### Many Relation Structure
 
