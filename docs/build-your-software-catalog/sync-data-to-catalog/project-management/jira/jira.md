@@ -709,7 +709,7 @@ resources:
           title: .name
           blueprint: '"jiraBoard"'
           properties:
-            url: .self
+            url: (.self | split("/") | .[:3] | join("/")) + "/jira/software/c/projects/" + .location.projectKey + "/boards/" + (.id | tostring)
             type: .type
           relations:
             project: .location.projectId | tostring
