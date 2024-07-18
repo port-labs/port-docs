@@ -632,6 +632,7 @@ resources:
       aggregate: "pod"
       step: "window"
       resolution: "1m"
+      filter: 'labels:"app:internal-service","app:service-2"+service:"notification","account","functions"'
     port:
       entity:
         mappings:
