@@ -32,6 +32,7 @@ For example, the following definition will cause a message to be sent whenever a
     "condition": {
       "type": "JQ",
       "expressions": [
+        ".diff.before.properties.status == \"Healthy\"",
         ".diff.after.properties.status == \"Unhealthy\""
       ],
       "combinator": "and"

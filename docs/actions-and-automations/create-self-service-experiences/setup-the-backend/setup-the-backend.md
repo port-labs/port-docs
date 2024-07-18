@@ -6,12 +6,13 @@ import DocCardList from '@theme/DocCardList';
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
+import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
 
 # Setup backend
 
 <center>
 
-<iframe width="50%" height="350" src="https://www.youtube.com/embed/cU7W3xYbsEw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/cU7W3xYbsEw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 <br/>
@@ -132,6 +133,13 @@ You can use the `jq` expression `{{ . }}` when testing to see the entire availab
 :::
 
 <PayloadAdvancedFunctions />
+
+## JSON structure
+
+In some cases, you may prefer to define the backend configuration using a JSON object.  
+The backend is defined under the `invocationMethod` object in the action's JSON structure.
+
+<BackendTypesJson />
 
 ___
 

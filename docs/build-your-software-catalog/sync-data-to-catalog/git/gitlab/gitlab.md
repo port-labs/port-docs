@@ -4,16 +4,15 @@ import GitlabResources from './\_gitlab_exporter_supported_resources.mdx'
 
 # GitLab
 
-Our integration with GitLab allows you to export GitLab objects to Port as entities of existing blueprints. The integration supports real-time event processing so Port always provides an accurate real-time representation of your GitLab resources.
+Port's GitLab integration allows you to export GitLab objects to Port as entities of existing blueprints. The integration supports real-time event processing so Port always provides an accurate real-time representation of your GitLab resources.
 
 ## 💡 GitLab integration common use cases
 
 Our GitLab integration makes it easy to fill the software catalog with data directly from your GitLab organization, for example:
 
-- Map all of the resources in your GitLab organization, including **groups**, **projects**, **monorepos**, **merge requests**, **issues**, **pipelines** and other GitLab objects;
-- Watch for GitLab object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port;
-- Manage Port entities using GitOps;
-- etc.
+- Map all of the resources in your GitLab organization, including **groups**, **projects**, **monorepos**, **merge requests**, **issues**, **pipelines** and other GitLab objects.
+- Watch for GitLab object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+- Manage Port entities using GitOps.
 
 ## Installation
 
