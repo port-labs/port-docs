@@ -126,19 +126,19 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-wiz-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
   --set sendRawDataExamples=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-wiz-integration"  \
-	--set integration.type="wiz"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.wizClientId="WIZ_CLIENT_ID"  \
-	--set integration.secrets.wizClientSecret="WIZ_CLIENT_SECRET" \
-	--set integration.secrets.wizApiUrl="WIZ_API_URL"  \
-	--set integration.config.wizTokenUrl="WIZ_TOKEN_URL"  
+  --set scheduledResyncInterval=120 \
+  --set integration.identifier="my-wiz-integration"  \
+  --set integration.type="wiz"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.secrets.wizClientId="WIZ_CLIENT_ID"  \
+  --set integration.secrets.wizClientSecret="WIZ_CLIENT_SECRET" \
+  --set integration.secrets.wizApiUrl="WIZ_API_URL"  \
+  --set integration.config.wizTokenUrl="WIZ_TOKEN_URL"  
 ```
 <PortApiRegionTip/>
 
