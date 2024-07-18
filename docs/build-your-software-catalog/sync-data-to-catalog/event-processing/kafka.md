@@ -54,16 +54,16 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install kafka port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
   --set sendRawDataExamples=true  \
-	--set scheduledResyncInterval=60  \
-	--set integration.identifier="my-kafka-integration"  \
-	--set integration.type="kafka"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set-json integration.secrets.clusterConfMapping='{"local": {"bootstrap.servers": "localhost:9092"}}'
+  --set scheduledResyncInterval=60  \
+  --set integration.identifier="my-kafka-integration"  \
+  --set integration.type="kafka"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set-json integration.secrets.clusterConfMapping='{"local": {"bootstrap.servers": "localhost:9092"}}'
 ```
 
 <PortApiRegionTip/>
