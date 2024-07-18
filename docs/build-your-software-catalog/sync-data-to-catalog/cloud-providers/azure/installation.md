@@ -50,18 +50,18 @@ You should have the following information ready:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install azure port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-  	--set sendRawDataExamples=true  \
-	--set scheduledResyncInterval=1440 \
-	--set integration.identifier="azure"  \
-	--set integration.type="azure"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.azureClientId="<AZURE_CLIENT_ID>"  \
-	--set integration.config.azureClientSecret="<AZURE_CLIENT_SECRET>" \
-	--set integration.config.azureTenantId="<AZURE_TENANT_ID>"
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set scheduledResyncInterval=1440 \
+  --set integration.identifier="azure"  \
+  --set integration.type="azure"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.azureClientId="<AZURE_CLIENT_ID>"  \
+  --set integration.config.azureClientSecret="<AZURE_CLIENT_SECRET>" \
+  --set integration.config.azureTenantId="<AZURE_TENANT_ID>"
 ```
 
 <PortApiRegionTip/>
@@ -351,9 +351,9 @@ the Azure subscription has the appropriate access permissions. One of the follow
 	<img src='/img/integrations/azure-exporter/DevPortalIngestCloudProvider.png' width='70%' border='1px' /> <br/><br/>
 
 3. Edit and copy the installation command.
-	 :::tip Installation Command
-	 The installation command includes placeholders that allow you to customize the integration's configuration. For
-	 example, you can update the command and specify the `event_grid_system_topic_name` parameter if you already have one.
+	:::tip Installation Command
+	The installation command includes placeholders that allow you to customize the integration's configuration. For
+	example, you can update the command and specify the `event_grid_system_topic_name` parameter if you already have one.
 
 	- Specify the `event_grid_system_topic_name` parameter if you already have an Event Grid system topic of
 		type `Microsoft.Resources.Subscriptions` in your subscription;
