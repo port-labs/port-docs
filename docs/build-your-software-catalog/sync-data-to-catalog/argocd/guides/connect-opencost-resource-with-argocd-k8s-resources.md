@@ -1,19 +1,29 @@
 ---
 sidebar_position: 1
-title: Connect Opencost cloudcost with ArgoCD/K8 resource
+title: Connect Opencost Cloud Cost with ArgoCD/K8 resource in Port
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Connect Opencost `cloudcost` with AWS Resource
+# Connect Opencost Cloud Cost with ArgoCD/K8 resource in Port
 
-This guide aims to cover how to connect an Opencost Resource Allocations resource with an ArgoCD K8 resource to draw cost analysis.
+This guide demonstrates how to link OpenCost cloud cost data with your ArgoCD K8 resources within Port, enabling you to gain insights into the cost breakdown of your infrastructure and applications.
 
-:::tip Prerequisites
+:::tip Use Case Examples:
+
+Cost Attribution: Determine which Kubernetes resource contribute the most to your overall cloud costs.
+Budget Management: Track the costs of individual pods or clusters against your budget allocations.
+Anomaly Detection: Identify unusual spikes in resource costs and investigate potential causes.
+Optimization Opportunities: Pinpoint resources that are underutilized or overprovisioned, potentially leading to cost savings.
+
+:::
+
+
+## Prerequisites
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
 - Ensure you have [Port's Opencost integration installed and configured in your environment](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost).
 - Ensure you have [Port's Opencost integration installed and configured in your environment](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost).
-:::
+
 
 ## Create the ArgoCD K8 relation
 
@@ -22,9 +32,9 @@ With Opencost and ArgoCD installed, you should see:
 - Six (6) new blueprints created by the ArgoCD integration, `ArgoCD Cluster`, `ArgoCD Project`, `Running Service`, `ArgoCD Deployment History`, `Kubernetes Resource` and `ArgoCD Namespace`.
 
 If the blueprints aren't created:
-- Navigate to your Port organization's data model page on the builder.
-- Click the + Blueprint button at the top right corner.
-- Click the Edit JSON button.
+- Navigate to [your Port organization's data model page](https://app.getport.io/settings/data-model) on the builder.
+- Click the `+ Blueprint` button at the top right corner.
+- Click the `Edit JSON` button.
 - Copy-paste the blueprint JSON:
 
 :::info Important Blueprints

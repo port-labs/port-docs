@@ -1,19 +1,28 @@
 ---
 sidebar_position: 1
-title: Connect Opencost cloudcost with AWS Resource
+title: Connect Opencost Cloud Cost with AWS Resource in Port
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Connect Kubecost `cloudcost` with AWS Resource
+# Connect Opencost Cloud Cost with AWS Resource in Port
 
-This guide aims to cover how to connect an Opencost Cloudcost resource with an AWS resource to draw cost analysis.
+This guide will show you how to connect an Opencost cloudcost resource with an AWS resource in Port to analyze your cloud cost allocation.
 
-:::tip Prerequisites
+:::tip Use Case Examples:
+
+Cost Attribution: Determine which AWS resources (EC2 instances, RDS databases, etc.) contribute the most to your overall cloud costs.
+Budget Management: Track the costs of individual resources or groups of resources against your budget allocations.
+Anomaly Detection: Identify unusual spikes in resource costs and investigate potential causes.
+Optimization Opportunities: Pinpoint resources that are underutilized or overprovisioned, potentially leading to cost savings.
+
+:::
+
+## Prerequisites
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
 - Ensure you have [Port's Opencost integration installed and configured in your environment](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost).
 - Ensure you have [Port's AWS integration installed and configured in your environment](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/installations/installation). This guide does not support the [deprecated AWS Exporter integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/)
-:::
+
 
 ## Create the Opencost Cloudcost relation
 
@@ -22,9 +31,9 @@ With Opencost and AWS integrations installed, you should see:
 - Two (2) new blueprints created by the AWS integration, `AWS Cloud Resources` and `AWS Accounts`.
 
 If the blueprints aren't created:
-- Navigate to your Port organization's data model page on the builder.
-- Click the + Blueprint button at the top right corner.
-- Click the Edit JSON button.
+- Navigate to [your Port organization's data model page](https://app.getport.io/settings/data-model) on the builder.
+- Click the `+ Blueprint` button at the top right corner.
+- Click the `Edit JSON` button.
 - Copy-paste the blueprint JSON:
 
 :::info Important Blueprints
