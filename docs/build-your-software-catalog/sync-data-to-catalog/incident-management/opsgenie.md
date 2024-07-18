@@ -63,7 +63,7 @@ helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-opsgenie-integration port-labs/port-ocean \
   --set port.clientId="CLIENT_ID"  \
   --set port.clientSecret="CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
+  --set port.baseUrl="https://api.getport.io"  \
   --set initializePortResources=true  \
   --set sendRawDataExamples=true  \
   --set integration.identifier="my-opsgenie-integration"  \

@@ -59,14 +59,14 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-statuspage-integration port-labs/port-ocean \
-	--set port.clientId="CLIENT_ID"  \
-	--set port.clientSecret="CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set integration.identifier="my-statuspage-integration"  \
-	--set integration.type="statuspage"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.statuspageApiKey="<STATUSPAGE_API_KEY>"
+  --set port.clientId="CLIENT_ID"  \
+  --set port.clientSecret="CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set integration.identifier="my-statuspage-integration"  \
+  --set integration.type="statuspage"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.secrets.statuspageApiKey="<STATUSPAGE_API_KEY>"
 ```
 <PortApiRegionTip/>
 

@@ -66,18 +66,18 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-jira-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
   --set sendRawDataExamples=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-jira-integration"  \
-	--set integration.type="jira"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.jiraHost="string"  \
-	--set integration.secrets.atlassianUserEmail="string"  \
-	--set integration.secrets.atlassianUserToken="string"
+  --set scheduledResyncInterval=120 \
+  --set integration.identifier="my-jira-integration"  \
+  --set integration.type="jira"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.jiraHost="string"  \
+  --set integration.secrets.atlassianUserEmail="string"  \
+  --set integration.secrets.atlassianUserToken="string"
 ```
 
 <PortApiRegionTip/>
