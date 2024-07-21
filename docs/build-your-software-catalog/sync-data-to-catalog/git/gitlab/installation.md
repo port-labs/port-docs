@@ -29,7 +29,7 @@ This page outlines the following steps:
 
 :::
 
-## Creating a GitLab group access token
+## Create a GitLab group access token
 
 A group access token can be used for the group it was generated at, as well as for all sub-groups underneath it.
 
@@ -77,7 +77,7 @@ The following steps will guide you how to create a GitLab group access token.
 3. Click "Create group access token".
 4. Copy the generated token and use it when deploying the integration in the following steps.
 
-## Configuring the GitLab integration
+## Configure the GitLab integration
 
 ### `tokenMapping`
 
@@ -109,8 +109,8 @@ Multiple GitLab group access tokens example:
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"],"glpat-xF7Ae-vXu5ts5_QbEgAQ9": ["**/MarketingTeam/*Service"]}
 ```
 
-### Configuring Realtime webhook events
-#### Exposing Endpoint for events
+### Configure Realtime webhook events
+#### Expose Endpoint for events
 ##### App Host
 
 :::tip
@@ -202,11 +202,17 @@ You can configure multiple tokens, and multiple groups per token (the token shou
 - The group path is the full path in gitlab. If a group path is incorrect, the webhook will not be created.
 - The events for each group must match the supported event types mentioned below. if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
 
-## Deploying the GitLab integration
+## Deploy the GitLab integration
 
 Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
+
+<TabItem value="hosted-by-port" label="Hosted by Port">
+
+<OceanSaasInstallation/>
+
+</TabItem>
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
@@ -350,12 +356,6 @@ kubectl apply -f my-ocean-gitlab-integration.yaml
 </Tabs>
 
 <AdvancedConfig/>
-
-</TabItem>
-
-<TabItem value="hosted-by-port" label="Hosted by Port">
-
-<OceanSaasInstallation/>
 
 </TabItem>
 

@@ -35,6 +35,12 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
+<TabItem value="hosted-by-port" label="Hosted by Port">
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
@@ -167,12 +173,6 @@ kubectl apply -f my-ocean-pagerduty-integration.yaml
 </Tabs>
 
 <AdvancedConfig/>
-
-</TabItem>
-
-<TabItem value="hosted-by-port" label="Hosted by Port">
-
-<OceanSaasInstallation/>
 
 </TabItem>
 
