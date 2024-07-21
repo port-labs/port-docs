@@ -11,12 +11,17 @@ import CardMedia from '@mui/material/CardMedia';
 
 # Starter guides
 
+*This page will display a list of all **onboarding** guides - create an action, create an integration, create a scorecard, etc..*  
+
 <center>
   <input type="text" size="80" placeholder="🔎 Search.." >
   </input>
 </center>
 <br/>
 
+<center>
+[View all guides](/guides/onboarding-guides)
+</center>
 <Grid spacing={2} container>
 <Grid item xs={12} sm={6} md={4}>
 <Card sx={{ maxWidth: 275 }}  >
