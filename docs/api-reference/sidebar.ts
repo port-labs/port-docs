@@ -496,7 +496,7 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Organizations",
+      label: "Organization",
       items: [
         {
           type: "doc",
@@ -515,7 +515,31 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/update-organization-details",
           label: "Change an organization",
           className: "api-method put",
-        }
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-all-organization-secrets",
+          label: "Get all organization secrets",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-an-organization-secret",
+          label: "Create an organization secret",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/patch-an-organization-secret",
+          label: "Patch an organization secret",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-an-organization-secret",
+          label: "Delete an organization secret",
+          className: "api-method delete",
+        },
       ],
     }
   ],
