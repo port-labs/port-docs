@@ -92,14 +92,23 @@ const config = {
           {
             to: "/",
             label: "Home",
+            position: "left",
             className: "header-home-link",
-            activeBaseRegex: "^((?!api-reference).)*$",
+            activeBaseRegex: "^((?!api-reference|guides).)*$",
           },
           {
             to: "/api-reference/port-api",
             label: "API Reference",
+            position: "left",
             className: "header-api-link",
             activeBasePath: "api-reference",
+          },
+          {
+            to: "/guides/onboarding-guides",
+            label: "Guides",
+            position: "left",
+            className: "header-guides-link",
+            activeBasePath: "guides",
           },
           {
             to: "https://demo.getport.io",
@@ -253,11 +262,12 @@ const config = {
         respectPrefersColorScheme: true,
       },
       zoom: {
-        selector: ".markdown img",
+        selector: ".markdown img:not(.not-zoom)",
         background: {
           light: "rgb(255, 255, 255)",
           dark: "rgb(50, 50, 50)",
         },
+        
       },
       prism: {
         theme: lightCodeTheme,

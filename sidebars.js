@@ -12,6 +12,7 @@
 // @ts-check
 
 import apiSidebar from './docs/api-reference/sidebar.ts';
+import guidessidebar from './docs/guides/sidebar.ts';
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
@@ -20,6 +21,9 @@ const sidebars = {
   "api-sidebar": [
     apiSidebar,
   ],
+  "guides-sidebar": [
+    guidessidebar,
+  ]
   // But you can create a sidebar manually
   /*
   tutorialSidebar: [
