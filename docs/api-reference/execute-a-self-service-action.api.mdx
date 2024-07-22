@@ -1,0 +1,316 @@
+---
+id: execute-a-self-service-action
+title: "Execute a self-service action"
+description: "This route allows you to execute a self-service action, thus creating an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
+sidebar_label: "Execute a self-service action"
+hide_title: true
+hide_table_of_contents: true
+api: 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
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Execute a self-service action"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/actions/{action_identifier}/runs"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to execute a self-service action, thus creating an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"action_identifier","description":"The identifier of the action you want to execute.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string","format":"email"},"in":"query","name":"run_as","required":false,"description":"The executing user of the action. If not provided, the action will be run on behalf of the user/machine who initiated the action (identified by the bearer token used to execute this route).<br/>"}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"properties"}
+          required={true}
+          schemaName={"object"}
+          qualifierMessage={undefined}
+          schema={{"type":"object","description":"The action's user inputs, in `\"key\"`:`\"value\"` pairs, where the key is the input's identifier and the value is the input's value.<br/>"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"entity"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"The identifier of the entity that the action will be executed on, if relevant.<br/>"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Success
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"403"}
+        value={"403"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`missing_permissions`</td>
+            <td>You are not permitted to execute this action. For further details, please contact your admin</td>
+          </tr>
+          <tr>
+            <td>`not_resolvable_destination`</td>
+            <td>The Endpoint URL provided is not publicly available. Please choose another URL</td>
+          </tr>
+          <tr>
+            <td>`private_destination`</td>
+            <td>Destination is a private IP</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"404"}
+        value={"404"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`not_found`</td>
+            <td>The action with the provided identifier was not found</td>
+          </tr>
+          <tr>
+            <td>`not_found`</td>
+            <td>The entity with the provided identifier was not found</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"422"}
+        value={"422"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`invalid_request`</td>
+            <td>The data provided does not match the route schema</td>
+          </tr>
+          <tr>
+            <td>`run_non_self_service_error`</td>
+            <td>Cannot create run manually for non self service action</td>
+          </tr>
+          <tr>
+            <td>`missing_self_service_action_entity`</td>
+            <td>The desired action requires a specified entity</td>
+          </tr>
+          <tr>
+            <td>`entity_does_not_pass_condition`</td>
+            <td>The specified entity does not pass the condition defined in the action</td>
+          </tr>
+          <tr>
+            <td>`user_inputs_schema_invalid`</td>
+            <td>The provided user inputs do not match the action's schema</td>
+          </tr>
+          <tr>
+            <td>`invalid_evaluated_invocation_method`</td>
+            <td>Failed to validate evaluated invocation method</td>
+          </tr>
+          <tr>
+            <td>`evaluate_invocation_method_error`</td>
+            <td>Failed to evaluate invocation method</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`internal_error`</td>
+            <td>An internal error occurred</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
