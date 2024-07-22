@@ -8611,6 +8611,139 @@ paths:
               <td>An internal error occurred</td>
             </tr>
             </table>
+  "/v1/actions/{action_identifier}/runs":
+    post:
+      summary: Execute a self-service action
+      description: This route allows you to execute a self-service action, thus creating an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+      tags:
+        - Action Runs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                properties:
+                  type: object
+                  description: The action's user inputs, in `"key"`:`"value"` pairs, where the key is the input's identifier and the value is the input's value.<br/>
+                entity:
+                  type: string
+                  description: The identifier of the entity that the action will be executed on, if relevant.<br/>
+              additionalProperties: false
+              required:
+                - properties
+        required: true
+      parameters:
+        - schema:
+            type: string
+            format: email
+          in: query
+          name: run_as
+          required: false
+          description: The executing user of the action. If not provided, the action will be run on behalf of the user/machine who initiated the action (identified by the bearer token used to execute this route).<br/>
+        - schema:
+            type: string
+          in: path
+          name: action_identifier
+          description: The identifier of the action you want to execute.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Success
+        "403":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`missing_permissions`</td>
+              <td>You are not permitted to execute this action. For further details, please contact your admin</td>
+            </tr>
+            <tr>
+              <td>`not_resolvable_destination`</td>
+              <td>The Endpoint URL provided is not publicly available. Please choose another URL</td>
+            </tr>
+            <tr>
+              <td>`private_destination`</td>
+              <td>Destination is a private IP</td>
+            </tr>
+            </table>
+        "404":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action with the provided identifier was not found</td>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The entity with the provided identifier was not found</td>
+            </tr>
+            </table>
+        "422":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            <tr>
+              <td>`run_non_self_service_error`</td>
+              <td>Cannot create run manually for non self service action</td>
+            </tr>
+            <tr>
+              <td>`missing_self_service_action_entity`</td>
+              <td>The desired action requires a specified entity</td>
+            </tr>
+            <tr>
+              <td>`entity_does_not_pass_condition`</td>
+              <td>The specified entity does not pass the condition defined in the action</td>
+            </tr>
+            <tr>
+              <td>`user_inputs_schema_invalid`</td>
+              <td>The provided user inputs do not match the action's schema</td>
+            </tr>
+            <tr>
+              <td>`invalid_evaluated_invocation_method`</td>
+              <td>Failed to validate evaluated invocation method</td>
+            </tr>
+            <tr>
+              <td>`evaluate_invocation_method_error`</td>
+              <td>Failed to evaluate invocation method</td>
+            </tr>
+            </table>
+        "500":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   '/v1/actions/runs/{run_id}':
     patch:
       summary: Patch an action run

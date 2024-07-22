@@ -212,6 +212,12 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
+          id: "api-reference/execute-a-self-service-action",
+          label: "Execute a self-service action",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
           id: "api-reference/patch-an-action-run",
           label: "Patch an action run",
           className: "api-method patch",
