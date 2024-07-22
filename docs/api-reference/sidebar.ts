@@ -224,7 +224,7 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/approve-an-actions-run",
+          id: "api-reference/approve-an-action-run",
           label: "Approve an action's run",
           className: "api-method patch",
         },

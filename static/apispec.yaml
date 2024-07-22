@@ -8671,7 +8671,53 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action run with the provided identifier was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            <tr>
+              <td>`run_synchronized_error`</td>
+              <td>Cannot manually change status of a synchronized action run</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
     get:
       summary: Get an action run's details
       description: This route allows you to fetch the details of an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
@@ -8697,10 +8743,52 @@ paths:
             - 'read:runs'
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action run with the provided identifier was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   '/v1/actions/runs/{run_id}/approval':
     patch:
-      summary: Approve an action's run
+      summary: Approve an action run
       description: This route allows you to approve or decline a request to execute an action that requires approval.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
       tags:
         - Action Runs
@@ -8741,7 +8829,67 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '403':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`missing_permissions`</td>
+              <td>You are not permitted to approve this action. For further details, please contact your admin</td>
+            </tr>
+            </table>
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action run with the provided identifier was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            <tr>
+              <td>`run_not_waiting_for_approval`</td>
+              <td>Action run is not waiting for approval</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   /v1/actions/runs:
     get:
       summary: Get all action runs
@@ -8800,7 +8948,35 @@ paths:
             - 'read:runs'
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   '/v1/actions/runs/{run_id}/logs':
     post:
       summary: Add a log to an action run
@@ -8839,7 +9015,53 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action run with the provided identifier was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            <tr>
+              <td>`run_exhausted`</td>
+              <td>Action run already finished execution</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
     get:
       summary: Get an action's run logs
       description: This route allows you to fetch the logs from an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
@@ -8870,7 +9092,49 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action run with the provided identifier was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   /v1/teams:
     get:
       summary: Get all teams in your organization
