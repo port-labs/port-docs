@@ -229,7 +229,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## KubeCost
 
-- [KubeCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/kubecost.md)
+- [KubeCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/kubecost/kubecost.md)
 
 ## OpenCost
 
