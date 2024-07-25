@@ -6,11 +6,13 @@ sidebar_class_name: custom-sidebar-item sidebar-menu-resources
 
 # Security & Compliance
 
-Security and compliance are always our priority at Port. We're building a product that's meant to be the daily hub for all of your developers. When fully integrated in an organization, Port becomes a main junction for the developers' daily routines, as well as a centerpiece for analytics, metrics, self-service and automation flows. This can only be achieved if we have your trust and confidence that we will treat your data with respect and security in mind.
+Port is an internal developer portal platform and as such we place the utmost importance on data security, privacy and compliance, so that you can trust that your compliance, privacy and security needs are met.
+
+The goal of this document is to provide you with transparency as to security policies and practices at Port. 
 
 Port uses a variety of industry-standard technologies and services to secure your data from unauthorized access, disclosure, use, and loss. All Port employees are trained on security practices during company onboarding and on an annual basis.
 
-Security is directed by Port’s Chief Technology Officer and maintained by Port’s Security & DevOps team.
+Security is managed by Port’s Chief Technology Officer and maintained by Port’s Security & DevOps team.
 
 This document will outline the different measures, protocols, processes and methods we take to ensure that your data stays secure and highly available.
 
@@ -36,13 +38,13 @@ Port is hosted on [Amazon Web Services](https://aws.amazon.com/compliance/data-c
 - Intrusion detection system
 - Biometrics and multi-factor authentication
 
-AWS as one of the largest cloud providers in the world and with multiple data centers spread all around the globe, have vast experience running enterprise-grade data centers that are responsible for a majority of the internet's traffic and infrastructure, and they are a trusted host for thousands of the world's leading enterprises.
+AWS, as one of the largest cloud providers in the world and with multiple data centers spread all around the globe, has vast experience running enterprise-grade data centers that are responsible for a majority of the internet's traffic and infrastructure. As such, AWS is a trusted host for thousands of the world's leading enterprises.
 
 Port employees do not have physical access to AWS data centers, servers, network equipment, or storage.
 
 ### Logical access control
 
-Port is the assigned and only administrator of its infrastructure on AWS. Only designated authorized Port operations team members have access to configure the Port infrastructure on an as-needed basis behind a multi-factor authenticated virtual private network.
+Port is the assigned and sole administrator of its infrastructure on AWS. Only designated authorized Port operations team members have access to configure the Port infrastructure on an as-needed basis behind a multi-factor authenticated virtual private network.
 
 Port uses a separate virtual private network for each of its environments, and enforces complete segregation between test, staging and production environments.
 
@@ -128,11 +130,11 @@ Data ingested into Port can be accessed via Port's user interface and REST APIs.
 
 Port will never make an outbound request to your infrastructure or environment in order to pull information.
 
-To trigger self-service actions and automations, Port supports a variety of backends that change how the action or automation request is sent to your infrastructure.
+To trigger self-service actions and automations, Port supports a variety of backends that determine how the action or automation request is sent to your infrastructure.
 
-Organizations that are more security concerned, limited by compliance requirements or internal policy - you have the option to listen to action triggers by listening to messages coming in from a Kafka topic provided to you by Port, or you can use Port's agent, which is hosted on your premise and listens to the topic on your behalf in order to forward it to the correct destination internally. These two solutions make it possible to receive action triggers without opening any inbound network connectivity to your infrastructure.
+For organizations with stringent security standards, there is an option to listen to action triggers by listening to messages coming in from a Kafka topic provided to you by Port, or you can use Port's agent, which is hosted on your premises and listens to the topic on your behalf in order to forward it to the correct destination internally. These two solutions make it possible to receive action triggers without opening any inbound network connectivity to your infrastructure.
 
-Aside from those, Port also supports other backends such as webhooks which make it possible for Port to directly make a request to your environment and trigger your backend, should you choose to use it.
+Aside from those, Port also supports other backends such as webhooks which make it possible for Port to directly make a request to your environment and trigger your backend, should you choose to do so.
 
 No matter what backend you choose to trigger self-service actions or autoamtions, Port attaches security headers to each trigger request, making it easy to validate Port's identity and ensure that the request originated from Port.
 
@@ -148,7 +150,7 @@ By default the Git integrations will not ingest any source code, and will only s
 
 ### Open source integrations
 
-Port provides a variety of open source integration for different use cases, such as the K8s exporter and Port agent. These integrations are completely open source and you have the option to view the source code on GitHub. In addition, these integrations are fully customizable and are deployed on your premise, so they do not require opening inbound network connectivity to your infrastructure or providing any secrets or credentials to Port.
+Port provides a variety of open source integrations for different use cases, such as the K8s exporter and Port agent. These integrations are completely open source and you have the option to view the source code on GitHub. In addition, these integrations are fully customizable and are deployed on your premises, so they do not require opening inbound network connectivity to your infrastructure or providing any secrets or credentials to Port.
 
 ### Ocean framework integrations
 
@@ -156,21 +158,21 @@ Port develops and maintains the Ocean framework, which is a custom open source f
 
 The Ocean framework and all first party integrations are fully open source. You also have the option to develop new integrations on your own and either use them internally or contribute them back to the Ocean project for the benefit of all Port users.
 
-Ocean integrations are packaged in container images, so they support any containerized runtime to deploy and run them, they can be hosted on your premise or even run as part of your CI/CD process.
+Ocean integrations are packaged in container images, so they support any containerized runtime to deploy and run them, they can be hosted on your premises or even run as part of your CI/CD process.
 
-Deploying and running an Ocean integration on premise ensures there is no need to open inbound network connectivity to your infrastructure or provide any secrets or credentials to Port.
+Deploying and running an Ocean integration on premises ensures there is no need to open inbound network connectivity to your infrastructure or provide any secrets or credentials to Port.
 
 Ocean integrations act as a proxy between Port and your environment, securely handling outbound connections, encrypting data during transit and deliberately controlling the access Port has to your data. Sensitive credentials stay behind your firewall.
 
-Ocean integrations work by querying the data source (either an internal resource or a third-party service), parsing and modifying the data according to the user configuration, and then sending the resulting entries directly to Port. This means Port only receives the end result, and all data is processed on your premise. Ocean integrations come built in with PII and secret keys scrubbing and masking capabilities. Combined with the on premise data processing, this methodology gives you confidence that no secret or confidential information leaves your premise.
+Ocean integrations work by querying the data source (either an internal resource or a third-party service), parsing and modifying the data according to the user configuration, and then sending the resulting entries directly to Port. This means Port only receives the end result, and all data is processed on your premises. Ocean integrations come built in with PII and secret keys scrubbing and masking capabilities. Combined with the on premises data processing, this methodology gives you confidence that no secret or confidential information leaves your premises.
 
-### "Hosted by Port" integrations
+### Port hosted integrations
 
-For some third-party services, a "Hosted by Port" integration option is available. In this deployment type, the integration is hosted and managed on Port's infrastructure, removing the need to personally host, manage and maintain the integration on your premise.
+For some third-party services, a Port hosted integration option is available. In this deployment type, the integration is hosted and managed on Port's infrastructure, removing the need to personally host, manage and maintain the integration on your premises.
 
 While this deployment method does require providing an access token to the relevant third-party service in order for the integration to work, it still provides the same level of security and customizability that all Ocean integrations provide.
 
-When an integration is hosted by Port, it is deployed on Port's infrastructure and makes calls to the third-party service, receives the results, processes the data according to the integration configuration, and then sends the processed results to Port. While this does mean data is processed outside of your premise, there is still complete separation between the integration and Port itself, meaning an additional layer of protection that prevents completely unprocessed data from making its way to your Port account.
+When an integration is hosted by Port, it is deployed on Port's infrastructure and makes calls to the third-party service, receives the results, processes the data according to the integration configuration, and then sends the processed results to Port. While this does mean data is processed outside of your premises, there is still complete separation between the integration and Port itself, meaning an additional layer of protection that prevents completely unprocessed data from making its way to your Port account.
 
 ## Application security
 
