@@ -247,3 +247,11 @@ It is always possible to receive a copy of these reports and certificates by con
 Port undergoes annual penetration testing conducted by an independent, third-party agency. As part of the test, Port provides the agency with an isolated environment of Port and a high-level diagram of the application architecture. No customer data is exposed to the agency through penetration testing.
 
 Information about any security vulnerabilities successfully exploited through penetration testing is used to set mitigation and remediation priorities. A summary of penetration test findings is available to customers upon request.
+
+# Privacy policy
+
+You can find Port's privacy policy [here](https://www.getport.io/legal/privacy-policy)
+
+## Data protection addendum
+
+You can find Port's DPA [here](https://www.getport.io/legal/dpa)
