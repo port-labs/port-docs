@@ -148,9 +148,9 @@ Ocean integrations act as a proxy between Port and your environment, securely ha
 
 Ocean integrations work by querying the data source (either an internal resource or a third-party service), parsing and modifying the data according to the user configuration, and then sending the resulting entries directly to Port. This means Port only receives the end result, and all data is processed on your premise. Ocean integrations come built in with PII and secret keys scrubbing and masking capabilities. Combined with the on premise data processing, this methodology gives you confidence that no secret or confidential information leaves your premise.
 
-### "Hosted by Port" Ocean integrations
+### "Hosted by Port" integrations
 
-For some third party services, a "Hosted by Port" Ocean integration option is available. In this deployment type, the integration is hosted and managed on Port's infrastructure, removing the need to personally host, manage and maintain the integration on your premise.
+For some third party services, a "Hosted by Port" integration option is available. In this deployment type, the integration is hosted and managed on Port's infrastructure, removing the need to personally host, manage and maintain the integration on your premise.
 
 While this deployment method does require providing an access token to the relevant third party service in order for the integration to work, it still provides the same level of security and customizability that all Ocean integrations provide.
 
