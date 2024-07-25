@@ -160,9 +160,7 @@ When an integration is hosted by Port, it is deployed on Port's infrastructure a
 
 ### Multi-factor authentication
 
-In addition to password login and social login, multi-factor authentication (MFA) provides an added layer of security to Sentry. We encourage MFA as an important step towards securing data access from intruders. Port users can use time-based one-time password (TOTP) apps like Google Authenticator as additional factors. This also applies to sign-in with an SSO provider.
-
-Sentry’s organization list also displays who has MFA enabled so users can vet their own organization’s security.
+In addition to password login and social login, multi-factor authentication (MFA) provides an added layer of security to Port. We encourage MFA as an important step towards securing data access from intruders. Port users can use time-based one-time password (TOTP) apps like Google Authenticator as additional factors. This also applies to sign-in with an SSO provider.
 
 ### Single sign-on (SSO)
 
