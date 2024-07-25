@@ -38,79 +38,74 @@ stages:
 
 trigger_pagerduty_incident:
   stage: trigger_incident
+  image: ubuntu:latest
   script:
+    - apt-get update && apt-get install -y jq curl
     - |
-      # Inform starting of PagerDuty trigger
-      curl -X PATCH \
-        -H "Authorization: Bearer ${PORT_CLIENT_ID}:${PORT_CLIENT_SECRET}" \
-        -d '{"logMessage": "About to trigger PagerDuty incident.. ⛴️"}' \
-        https://api.getport.io/actions/${PORT_RUN_ID}/logs
-
-      # Send Event to PagerDuty
+      PORT_RUN_ID=$(echo $PORT_CONTEXT | jq -r ".run_id")
+      if [ -z "$PORT_RUN_ID" ]; then
+        echo "Failed to extract PORT_RUN_ID"
+        exit 1
+      fi
+    - |
+      curl -X PATCH -H "Authorization: Bearer ${PORT_CLIENT_ID}:${PORT_CLIENT_SECRET}" -d "{\"logMessage\": \"About to trigger PagerDuty incident.. ⛴️\"}" https://api.getport.io/actions/$PORT_RUN_ID/logs
+    - |
       response=$(curl -s -X POST \
         -H "Content-Type: application/json" \
-        -d '{
-              "payload": {
-                "summary": "'"${CI_JOB_NAME}"'",
-                "source": "GitLab CI",
-                "severity": "'"${CI_PIPELINE_SOURCE}"'"
+        -d "{
+              \"payload\": {
+                \"summary\": \"$SUMMARY\",
+                \"source\": \"$SOURCE\",
+                \"severity\": \"$SEVERITY\"
               },
-              "event_action": "'"${CI_JOB_STAGE}"'",
-              "routing_key": "'"${PAGERDUTY_ROUTING_KEY}"'"
-            }' \
+              \"event_action\": \"$EVENT_ACTION\",
+              \"routing_key\": \"$ROUTING_KEY\"
+            }" \
         https://events.pagerduty.com/v2/enqueue)
-
-      incident_id=$(echo $response | jq -r '.dedup_key')
-
-      # Get PagerDuty Incident Details
+      incident_id=$(echo $response | jq -r ".dedup_key")
+    - |
       incident_details=$(curl -s -X GET \
-        -H "Authorization: Token token=${PAGERDUTY_API_KEY}" \
+        -H "Authorization: Token token=$PAGERDUTY_API_KEY" \
         -H "Accept: application/vnd.pagerduty+json;version=2" \
-        https://api.pagerduty.com/incidents/${incident_id})
-
-      # Log Before Updating Entity
+        https://api.pagerduty.com/incidents/$incident_id)
+    - |
       curl -X PATCH \
-        -H "Authorization: Bearer ${PORT_CLIENT_ID}:${PORT_CLIENT_SECRET}" \
-        -d '{"logMessage": "Reporting the updated incident back to port ..."}' \
-        https://api.getport.io/actions/${PORT_RUN_ID}/logs
-
-      # Update Entity
+        -H "Authorization: Bearer $PORT_CLIENT_ID:$PORT_CLIENT_SECRET" \
+        -d "{\"logMessage\": \"Reporting the updated incident back to port ...\"}" \
+        https://api.getport.io/actions/$PORT_RUN_ID/logs
+    - |
       curl -X POST \
-        -H "Authorization: Bearer ${PORT_CLIENT_ID}:${PORT_CLIENT_SECRET}" \
+        -H "Authorization: Bearer $PORT_CLIENT_ID:$PORT_CLIENT_SECRET" \
         -H "Content-Type: application/json" \
-        -d '{
-              "identifier": "'"${incident_id}"'",
-              "title": "'"${CI_JOB_NAME}"'",
-              "properties": {
-                "status": "'"$(echo $incident_details | jq -r '.incident.status')"'", 
-                "url": "'"$(echo $incident_details | jq -r '.incident.self')"'", 
-                "urgency": "'"$(echo $incident_details | jq -r '.incident.urgency')"'", 
-                "responder": "'"$(echo $incident_details | jq -r '.incident.assignments[0].assignee.summary')"'", 
-                "escalation_policy": "'"$(echo $incident_details | jq -r '.incident.escalation_policy.summary')"'", 
-                "created_at": "'"$(echo $incident_details | jq -r '.incident.created_at')"'", 
-                "updated_at": "'"$(echo $incident_details | jq -r '.incident.updated_at')"'" 
+        -d "{
+              \"identifier\": \"$incident_id\",
+              \"title\": \"$SUMMARY\",
+              \"properties\": {
+                \"status\": \"$(echo $incident_details | jq -r '.incident.status')\", 
+                \"url\": \"$(echo $incident_details | jq -r '.incident.self')\", 
+                \"urgency\": \"$(echo $incident_details | jq -r '.incident.urgency')\", 
+                \"responder\": \"$(echo $incident_details | jq -r '.incident.assignments[0].assignee.summary')\", 
+                \"escalation_policy\": \"$(echo $incident_details | jq -r '.incident.escalation_policy.summary')\", 
+                \"created_at\": \"$(echo $incident_details | jq -r '.incident.created_at')\", 
+                \"updated_at\": \"$(echo $incident_details | jq -r '.incident.updated_at')\" 
               },
-              "relations": "'"${CI_JOB_ID}"'"
-            }' \
+              \"relations\": \"$PORT_CONTEXT\"
+            }" \
         https://api.getport.io/entities/upsert
-
-      # Log After Updating Entity
-      curl -X PATCH \
-        -H "Authorization: Bearer ${PORT_CLIENT_ID}:${PORT_CLIENT_SECRET}" \
-        -d '{"logMessage": "PagerDuty incident triggered! ✅"}' \
-        https://api.getport.io/actions/${PORT_RUN_ID}/logs
+    - |
+      curl -X PATCH -H "Authorization: Bearer $PORT_CLIENT_ID:$PORT_CLIENT_SECRET" -d "{\"logMessage\": \"PagerDuty incident triggered! ✅\"}" https://api.getport.io/actions/$PORT_RUN_ID/logs
   only:
-    - master
+    - main
   variables:
-    PAGERDUTY_API_KEY: ${{ secrets.PAGERDUTY_API_KEY }}
-    PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
-    PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
-    PORT_RUN_ID: ${{fromJson(inputs.port_context).run_id}}
-    PAGERDUTY_ROUTING_KEY: ${{ github.event.inputs.routing_key }}
-    CI_PIPELINE_SOURCE: ${{ github.event.inputs.source }}
-    CI_JOB_STAGE: ${{ github.event.inputs.event_action }}
-    CI_JOB_NAME: ${{ github.event.inputs.summary }}
-    CI_JOB_ID: ${{ github.event.inputs.port_context }}
+    PAGERDUTY_API_KEY: $PAGERDUTY_API_KEY
+    PORT_CLIENT_ID: $PORT_CLIENT_ID
+    PORT_CLIENT_SECRET: $PORT_CLIENT_SECRET
+    PORT_CONTEXT: $port_context
+    ROUTING_KEY: $routing_key
+    EVENT_ACTION: $event_action
+    SUMMARY: $summary
+    SOURCE: $source
+    SEVERITY: $severity
 ```
 </details>
 
@@ -126,8 +121,8 @@ Create a new self service action using the following JSON configuration.
 
 ```json showLineNumbers
 {
-  "identifier": "pagerdutyIncident_trigger_incident",
-  "title": "Trigger Incident",
+  "identifier": "pagerdutyIncident_trigger_incident_gitlab",
+  "title": "Trigger Incident Gitlab",
   "icon": "pagerduty",
   "description": "Trigger a PagerDuty incident using self-service",
   "trigger": {
@@ -147,8 +142,8 @@ Create a new self service action using the following JSON configuration.
             "resolve"
           ],
           "enumColors": {
-            "trigger": "lightGray", 
-            "acknowledge": "lightGray", 
+            "trigger": "lightGray",
+            "acknowledge": "lightGray",
             "resolve": "lightGray"
           }
         },
@@ -179,29 +174,29 @@ Create a new self service action using the following JSON configuration.
           "default": "info",
           "enum": [
             "critical",
-            "error", 
+            "error",
             "warning",
             "info"
           ],
           "enumColors": {
-            "critical": "red", 
-            "error": "orange", 
-            "warning": "yellow", 
+            "critical": "red",
+            "error": "orange",
+            "warning": "yellow",
             "info": "blue"
           }
         }
       },
       "required": [
-        "routing_key", 
-        "event_action", 
-        "summary", 
-        "source", 
+        "routing_key",
+        "event_action",
+        "summary",
+        "source",
         "severity"
       ],
       "order": [
-        "routing_key", 
-        "event_action", 
-        "summary", 
+        "routing_key",
+        "event_action",
+        "summary",
         "source",
         "severity"
       ]
@@ -209,24 +204,29 @@ Create a new self service action using the following JSON configuration.
     "blueprintIdentifier": "pagerdutyIncident"
   },
   "invocationMethod": {
-    "type": "GITLAB",
-    "org": "<GITLAB_GROUP>",
-    "repo": "<GITLAB_REPO>",
-    "workflow": ".gitlab-ci.yml",
-    "workflowInputs": {
-      "summary": "{{.inputs.\"summary\"}}",
-      "source": "{{.inputs.\"source\"}}",
-      "severity": "{{.inputs.\"severity\"}}",
-      "event_action": "{{.inputs.\"event_action\"}}",
-      "routing_key": "{{.inputs.\"routing_key\"}}",
-      "port_context": {
-        "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity.identifier}}",
-        "run_id": "{{.run.id}}",
-        "relations": "{{.entity.relations}}"
-      }
+    "type": "WEBHOOK",
+    "url": "https://gitlab.com/api/v4/projects/<YOUR_PROJECT_ID>/trigger/pipeline",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
     },
-    "reportWorkflowStatus": true
+    "body": {
+      "token": "<YOUR_TRIGGER_TOKEN>",
+      "ref": "main",
+      "variables": {
+        "summary": "{{.inputs.\"summary\"}}",
+        "source": "{{.inputs.\"source\"}}",
+        "severity": "{{.inputs.\"severity\"}}",
+        "event_action": "{{.inputs.\"event_action\"}}",
+        "routing_key": "{{.inputs.\"routing_key\"}}",
+        "port_context": {
+          "blueprint": "{{.action.blueprint}}",
+          "entity": "{{.entity.identifier}}",
+          "run_id": "{{.run.id}}",
+          "relations": "{{.entity.relations}}"
+        }
+      }
+    }
   },
   "requiredApproval": false,
   "publish": true
