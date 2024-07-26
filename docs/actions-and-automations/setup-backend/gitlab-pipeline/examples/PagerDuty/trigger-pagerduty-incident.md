@@ -36,76 +36,135 @@ Create the file `.gitlab-ci.yml` in the `root` of your repository with the follo
 stages:
   - trigger_incident
 
-trigger_pagerduty_incident:
+variables:
+  PAGERDUTY_API_KEY: $PAGERDUTY_API_KEY
+  PORT_CLIENT_ID: $PORT_CLIENT_ID
+  PORT_CLIENT_SECRET: $PORT_CLIENT_SECRET
+  PORT_BASE_URL: "https://api.getport.io/v1"
+
+trigger_incident_job:
   stage: trigger_incident
-  image: ubuntu:latest
+  before_script:
+    - apt-get update && apt-get install -y jq
   script:
-    - apt-get update && apt-get install -y jq curl
     - |
-      PORT_RUN_ID=$(echo $PORT_CONTEXT | jq -r ".run_id")
-      if [ -z "$PORT_RUN_ID" ]; then
-        echo "Failed to extract PORT_RUN_ID"
+      set -e
+
+      report_to_port() {
+        local message=$1
+        curl -X POST -s \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -d '{"message":"'"$message"'"}' \
+          "${PORT_BASE_URL}/actions/runs/$RUN_ID/logs"
+      }
+
+      failure() {
+        report_to_port "CI job failed. Please check the logs for more details."
+        curl -X PATCH -s \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -d '{"status":"FAILURE"}' \
+          "${PORT_BASE_URL}/actions/runs/$RUN_ID"
+        exit 1
+      }
+
+      trap 'failure' ERR
+
+      payload=$(cat $TRIGGER_PAYLOAD)
+
+      PAYLOAD_SUMMARY=$(echo $payload | jq -r '.summary')
+      PAYLOAD_SOURCE=$(echo $payload | jq -r '.source')
+      PAYLOAD_SEVERITY=$(echo $payload | jq -r '.severity')
+      EVENT_ACTION=$(echo $payload | jq -r '.event_action')
+      ROUTING_KEY=$(echo $payload | jq -r '.routing_key')
+      PORT_CONTEXT_BLUEPRINT=$(echo $payload | jq -r '.port_context.blueprint')
+      PORT_CONTEXT_ENTITY=$(echo $payload | jq -r '.port_context.entity')
+      PORT_CONTEXT_RUN_ID=$(echo $payload | jq -r '.port_context.run_id')
+      PORT_CONTEXT_RELATIONS=$(echo $payload | jq -r '.port_context.relations')
+
+      report_to_port "Getting access token from Port API."
+      ACCESS_TOKEN=$(curl -X POST -s \
+        -H 'Content-Type: application/json' \
+        -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
+        'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
+
+      if [ -z "$ACCESS_TOKEN" ]; then
+        report_to_port "Failed to get access token from Port API."
         exit 1
       fi
-    - |
-      curl -X PATCH -H "Authorization: Bearer ${PORT_CLIENT_ID}:${PORT_CLIENT_SECRET}" -d "{\"logMessage\": \"About to trigger PagerDuty incident.. ⛴️\"}" https://api.getport.io/actions/$PORT_RUN_ID/logs
-    - |
-      response=$(curl -s -X POST \
+
+      RUN_ID=$PORT_CONTEXT_RUN_ID
+
+      report_to_port "About to trigger PagerDuty incident.. ⛴️"
+
+      curl -X PATCH -s \
         -H "Content-Type: application/json" \
-        -d "{
-              \"payload\": {
-                \"summary\": \"$SUMMARY\",
-                \"source\": \"$SOURCE\",
-                \"severity\": \"$SEVERITY\"
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"link":"'"$CI_PIPELINE_URL"'"}' \
+        "${PORT_BASE_URL}/actions/runs/$RUN_ID"
+
+      pagerduty_response=$(curl -X POST -s \
+        -H "Content-Type: application/json" \
+        -H "Accept: application/json" \
+        -d '{
+              "payload": {
+                "summary": "'"${PAYLOAD_SUMMARY}"'",
+                "source": "'"${PAYLOAD_SOURCE}"'",
+                "severity": "'"${PAYLOAD_SEVERITY}"'"
               },
-              \"event_action\": \"$EVENT_ACTION\",
-              \"routing_key\": \"$ROUTING_KEY\"
-            }" \
+              "event_action": "'"${EVENT_ACTION}"'",
+              "routing_key": "'"${ROUTING_KEY}"'"
+            }' \
         https://events.pagerduty.com/v2/enqueue)
-      incident_id=$(echo $response | jq -r ".dedup_key")
-    - |
-      incident_details=$(curl -s -X GET \
-        -H "Authorization: Token token=$PAGERDUTY_API_KEY" \
-        -H "Accept: application/vnd.pagerduty+json;version=2" \
-        https://api.pagerduty.com/incidents/$incident_id)
-    - |
-      curl -X PATCH \
-        -H "Authorization: Bearer $PORT_CLIENT_ID:$PORT_CLIENT_SECRET" \
-        -d "{\"logMessage\": \"Reporting the updated incident back to port ...\"}" \
-        https://api.getport.io/actions/$PORT_RUN_ID/logs
-    - |
-      curl -X POST \
-        -H "Authorization: Bearer $PORT_CLIENT_ID:$PORT_CLIENT_SECRET" \
+
+      report_to_port "PagerDuty response: $pagerduty_response"
+
+      incident_id=$(echo $pagerduty_response | jq -r '.dedup_key')
+      if [ "$incident_id" == "null" ]; then
+        report_to_port "Failed to get incident ID from PagerDuty response."
+        exit 1
+      fi
+
+      incident_details=$(curl -X GET -s \
         -H "Content-Type: application/json" \
-        -d "{
-              \"identifier\": \"$incident_id\",
-              \"title\": \"$SUMMARY\",
-              \"properties\": {
-                \"status\": \"$(echo $incident_details | jq -r '.incident.status')\", 
-                \"url\": \"$(echo $incident_details | jq -r '.incident.self')\", 
-                \"urgency\": \"$(echo $incident_details | jq -r '.incident.urgency')\", 
-                \"responder\": \"$(echo $incident_details | jq -r '.incident.assignments[0].assignee.summary')\", 
-                \"escalation_policy\": \"$(echo $incident_details | jq -r '.incident.escalation_policy.summary')\", 
-                \"created_at\": \"$(echo $incident_details | jq -r '.incident.created_at')\", 
-                \"updated_at\": \"$(echo $incident_details | jq -r '.incident.updated_at')\" 
+        -H "Accept: application/vnd.pagerduty+json;version=2" \
+        -H "Authorization: Token token=${PAGERDUTY_API_KEY}" \
+        https://api.pagerduty.com/incidents/$incident_id)
+
+
+      curl -X PATCH -s \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{
+              "identifier": "'"${incident_id}"'",
+              "title": "'"$(echo $incident_details | jq -r '.incident.title')"'",
+              "team": "[]",
+              "icon": "pagerduty",
+              "blueprint": "'"${PORT_CONTEXT_BLUEPRINT}"'",
+              "properties": {
+                "status": "'"$(echo $incident_details | jq -r '.incident.status')"'",
+                "url": "'"$(echo $incident_details | jq -r '.incident.self')"'",
+                "urgency": "'"$(echo $incident_details | jq -r '.incident.urgency')"'",
+                "responder": "'"$(echo $incident_details | jq -r '.incident.assignments[0].assignee.summary')"'",
+                "escalation_policy": "'"$(echo $incident_details | jq -r '.incident.escalation_policy.summary')"'",
+                "created_at": "'"$(echo $incident_details | jq -r '.incident.created_at')"'",
+                "updated_at": "'"$(echo $incident_details | jq -r '.incident.updated_at')"'"
               },
-              \"relations\": \"$PORT_CONTEXT\"
-            }" \
-        https://api.getport.io/entities/upsert
-    - |
-      curl -X PATCH -H "Authorization: Bearer $PORT_CLIENT_ID:$PORT_CLIENT_SECRET" -d "{\"logMessage\": \"PagerDuty incident triggered! ✅\"}" https://api.getport.io/actions/$PORT_RUN_ID/logs
-  only:
-    - main
-  variables:
-    PAGERDUTY_API_KEY: $PAGERDUTY_API_KEY
-    PORT_CLIENT_ID: $PORT_CLIENT_ID
-    PORT_CLIENT_SECRET: $PORT_CLIENT_SECRET
-    PORT_CONTEXT: $port_context
-    ROUTING_KEY: $routing_key
-    EVENT_ACTION: $event_action
-    SUMMARY: $summary
-    SOURCE: $source
-    SEVERITY: $severity
+              "relations": "'"${PORT_CONTEXT_RELATIONS}"'",
+              "operation": "UPSERT",
+              "runId": "'"${RUN_ID}"'"
+            }' \
+        "${PORT_BASE_URL}/entities"
+
+      report_to_port "PagerDuty incident triggered! ✅"
+
+      curl -X PATCH -s \
+        -H "Content-Type: application/json" \
+        -H "Authorization: Bearer $ACCESS_TOKEN" \
+        -d '{"status":"SUCCESS"}' \
+        "${PORT_BASE_URL}/actions/runs/$RUN_ID"
+
 ```
 </details>
 
@@ -205,26 +264,21 @@ Create a new self service action using the following JSON configuration.
   },
   "invocationMethod": {
     "type": "WEBHOOK",
-    "url": "https://gitlab.com/api/v4/projects/<YOUR_PROJECT_ID>/trigger/pipeline",
+    "url": "https://gitlab.com/api/v4/projects/<YOUR_PROJECT_ID>/ref/main/trigger/pipeline?token=<YOUR_TRIGGER_TOKEN>",
+    "agent": false,
+    "synchronized": false,
     "method": "POST",
-    "headers": {
-      "Content-Type": "application/json"
-    },
     "body": {
-      "token": "<YOUR_TRIGGER_TOKEN>",
-      "ref": "main",
-      "variables": {
-        "summary": "{{.inputs.\"summary\"}}",
-        "source": "{{.inputs.\"source\"}}",
-        "severity": "{{.inputs.\"severity\"}}",
-        "event_action": "{{.inputs.\"event_action\"}}",
-        "routing_key": "{{.inputs.\"routing_key\"}}",
-        "port_context": {
-          "blueprint": "{{.action.blueprint}}",
-          "entity": "{{.entity.identifier}}",
-          "run_id": "{{.run.id}}",
-          "relations": "{{.entity.relations}}"
-        }
+      "summary": "{{.inputs.\"summary\"}}",
+      "source": "{{.inputs.\"source\"}}",
+      "severity": "{{.inputs.\"severity\"}}",
+      "event_action": "{{.inputs.\"event_action\"}}",
+      "routing_key": "{{.inputs.\"routing_key\"}}",
+      "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "entity": "{{.entity.identifier}}",
+        "run_id": "{{.run.id}}",
+        "relations": "{{.entity.relations}}"
       }
     }
   },
