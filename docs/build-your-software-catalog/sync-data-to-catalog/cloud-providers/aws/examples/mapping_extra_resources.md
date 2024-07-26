@@ -38,15 +38,15 @@ This page will help you understand what kind of AWS resources are supported by t
 
 The AWS Integration is relying on AWS's Cloud Control API. That means:
 
-- Does the type of resource I want to ingest listed [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html)?
-- If Yes, It's supported!
-  - If not, please contact us, or [add the support to the integration yourself](https://github.com/port-labs/ocean/tree/main/integrations/aws)
+1. Does the type of resource I want to ingest listed [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html)?
+   - **If so**:, Great! It's supported.
+   - **If not**, Please contact us or contribute by [adding support](https://ocean.getport.io/develop-an-integration/) to [the integration](https://github.com/port-labs/ocean/tree/main/integrations/aws) yourself.
 
 ## Mapping the resource to Port
 
 After you've found the resource in the [AWS CloudControlAPI Docs](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html), you can map it to Port by following these steps:
 
-### Compute Resources Blueprint Example
+### Compute resources blueprint example
 
 Create a Port blueprint definition for the resource. The blueprint definition is based on the resource API specified per asset type.
 A few examples of blueprints for compute resources are provided below:
@@ -57,20 +57,20 @@ A few examples of blueprints for compute resources are provided below:
 <SQSBlueprint/>
 <LambdaBlueprint/>
 
-### Compute Resources Integration Configuration Example
+### Compute resources integration configuration example
 
 Create an integration configuration for the resource. The integration configuration is a YAML file that describes the ETL process to load data into the developer portal.
 
 <ComputeAppConfig/>
 
-### Developer Tools Blueprint and Configuration Example
+### Developer tools  blueprint and configuration example
 
 <AmplifyBlueprint/>
 
 
 <DeveloperToolsAppConfig/>
 
-### Application Integration Blueprint and Configuration Example
+### Application integration blueprint and configuration example
 
 <KinesisBlueprint/>
 <SNSBlueprint/>
@@ -78,33 +78,33 @@ Create an integration configuration for the resource. The integration configurat
 
 <ApplicationIntegrationAppConfig/>
 
-### Machine Learning Blueprint and Configuration Example
+### Machine learning blueprint and configuration example
 
 <LexBlueprint/>
 
 
 <MachineLearningAppConfig/>
 
-### Management and Governance Blueprint and Configuration Example
+### Management and governance blueprint and configuration example
 <AutoScalingBlueprint/>
 <CloudFormationBlueprint/>
 
 
 <ManagementAndGovernanceAppConfig/>
 
-### Networking and Content Delivery Blueprint and Configuration Example
+### Networking and content delivery blueprint and configuration example
 <CloudFrontBlueprint/>
 
 
 <NetworkingAndContentDeliveryAppConfig/>
 
-### Security, Identity, and Compliance Blueprint and Configuration Example
+### Security, identity, and compliance blueprint and configuration example
 <CognitoBlueprint/>
 
 
 <SecurityIdentityAndComplianceAppConfig/>
 
-### Storage Blueprint and Configuration Example
+### Storage blueprint and configuration example
 <DynamoDBBlueprint/>
 <ElasticacheBlueprint/>
 <RDSBlueprint/>
@@ -113,7 +113,7 @@ Create an integration configuration for the resource. The integration configurat
 <StorageAppConfig/>
 
 
-## Integration Configuration Basics and the Use of `useGetResourceAPI`
+## Integration configuration basics and the use of `useGetResourceAPI`
 
 #### The integration configuration structure
 
