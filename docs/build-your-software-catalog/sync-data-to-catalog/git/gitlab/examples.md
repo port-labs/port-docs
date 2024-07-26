@@ -197,7 +197,7 @@ In the following example you will ingest your GitLab groups and their members to
  - An admin token is required, rather than a group access token, to retrieve the `primary email addresses` of members.
 
 <b> Offering: GitLab Enterprise </b>
-- Enterprise users can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
+- Enterprise accounts can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
 
 <b> Offering: Gitlab Free Plan </b>
 - The GitLab members must [set their public email](https://docs.gitlab.com/ee/user/profile/#set-your-public-email) on their account to retrieve the `public email address` of members.
