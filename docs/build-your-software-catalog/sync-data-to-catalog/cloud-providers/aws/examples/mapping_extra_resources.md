@@ -112,6 +112,9 @@ Create an integration configuration for the resource. The integration configurat
 
 <StorageAppConfig/>
 
+
+## Integration Configuration Basics and the Use of `useGetResourceAPI`
+
 #### The integration configuration structure
 
 - The `kind` field describes the AWS resource type to be ingested into Port.
