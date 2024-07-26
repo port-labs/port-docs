@@ -30,7 +30,7 @@ import StorageAppConfig from './storage/\_port_app_config.mdx'
 
 # Mapping Extra Resources
 
-As you've probably looked at the [Examples](./examples.md) page, you've noticed that the AWS Integration supports some AWS resources, but most of them are documented in the Examples page.
+As you've probably looked at the [Examples](./examples.md) page, you've noticed that the AWS Integration supports some AWS resources, but most of them are not documented in the Examples page.
 
 This page will help you understand what kind of AWS resources are supported by the AWS integration and how to map them into Port.
 
@@ -63,50 +63,53 @@ Create an integration configuration for the resource. The integration configurat
 
 <ComputeAppConfig/>
 
-### Developer Tools Blueprint Example
+### Developer Tools Blueprint and Configuration Example
+
 <AmplifyBlueprint/>
 
-### Developer Tools Integration Configuration Example
+
 <DeveloperToolsAppConfig/>
 
-### Application Integration Blueprint Example
+### Application Integration Blueprint and Configuration Example
+
 <KinesisBlueprint/>
 <SNSBlueprint/>
 
-### Application Integration Integration Configuration Example
+
 <ApplicationIntegrationAppConfig/>
 
-### Machine Learning Blueprint Example
+### Machine Learning Blueprint and Configuration Example
+
 <LexBlueprint/>
 
-### Machine Learning Integration Configuration Example
+
 <MachineLearningAppConfig/>
 
-### Management and Governance Blueprint Example
+### Management and Governance Blueprint and Configuration Example
 <AutoScalingBlueprint/>
 <CloudFormationBlueprint/>
 
-### Management and Governance Integration Configuration Example
+
 <ManagementAndGovernanceAppConfig/>
 
-### Networking and Content Delivery Blueprint Example
+### Networking and Content Delivery Blueprint and Configuration Example
 <CloudFrontBlueprint/>
 
-### Networking and Content Delivery Integration Configuration Example
+
 <NetworkingAndContentDeliveryAppConfig/>
 
-### Security, Identity, and Compliance Blueprint Example
+### Security, Identity, and Compliance Blueprint and Configuration Example
 <CognitoBlueprint/>
 
-### Security, Identity, and Compliance Integration Configuration Example
+
 <SecurityIdentityAndComplianceAppConfig/>
 
-### Storage Blueprint Example
+### Storage Blueprint and Configuration Example
 <DynamoDBBlueprint/>
 <ElasticacheBlueprint/>
 <RDSBlueprint/>
 
-### Storage Integration Configuration Example
+
 <StorageAppConfig/>
 
 #### The integration configuration structure
