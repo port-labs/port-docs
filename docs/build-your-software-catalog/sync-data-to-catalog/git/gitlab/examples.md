@@ -191,6 +191,18 @@ After creating the blueprints and saving the integration configuration, you will
 
 In the following example you will ingest your GitLab groups and their members to Port, you may use the following Port blueprint definitions and integration configuration:
 
+:::tip Prerequisites
+
+<b> Offering: GiLab Self Hosted </b>
+ - An admin token is required, rather than a group access token, to retrieve the `primary email addresses` of members.
+
+<b> Offering: GitLab Enterprise </b>
+- Enterprise users can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
+
+<b> Offering: Gitlab Free Plan </b>
+- The GitLab members must [set their public email](https://docs.gitlab.com/ee/user/profile/#set-your-public-email) on their account to retrieve the `public email address` of members.
+:::
+
 <GroupWithMemberRelationBlueprint/>
 
 <MemberBlueprint/>
@@ -209,12 +221,10 @@ By default, this parameter is not set, and the integration will sync all members
       # highlight-next-line
       publicEmailVisibility: 'false'
 ```
-
-This feature is particularly useful for users on the gitlab.com (free plan), as it allows viewing the email addresses of members.
 :::
 
 :::note
-The GitLab member must [set their public email](https://docs.gitlab.com/ee/user/profile/#set-your-public-email) on their account to allow their public email address to be synced to Port.
+The `publicEmailVisibility` filter is required to sync public email addresses for GitLab free plan users.
 :::
 
 
