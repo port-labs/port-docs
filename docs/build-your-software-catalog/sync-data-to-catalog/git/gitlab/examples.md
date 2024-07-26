@@ -197,6 +197,27 @@ In the following example you will ingest your GitLab groups and their members to
 
 <GroupMemberPortAppConfig/>
 
+:::tip Public Email Visibility
+
+You can also specify a `publicEmailVisibility` flag to control the inclusion of public email addresses in the member data.
+By default, this parameter is not set, and the integration will sync all members without the `public_email` property.
+ 
+```yaml
+  - kind: member
+    selector:
+      query: 'true'
+      # highlight-next-line
+      publicEmailVisibility: 'false'
+```
+
+This feature is particularly useful for users on the gitlab.com (free plan), as it allows viewing the email addresses of members.
+:::
+
+:::note
+The GitLab member must [set their public email](https://docs.gitlab.com/ee/user/profile/#set-your-public-email) on their account to allow their public email address to be synced to Port.
+:::
+
+
 :::tip To Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
