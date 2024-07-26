@@ -44,7 +44,7 @@ The AWS Integration is relying on AWS's Cloud Control API. That means:
 
 ## Mapping the resource to Port
 
-After you've found the resource in the [AWS CloudControlAPI Docs](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html), you can map it to Port by following these steps:
+After you've found the resource in the [AWS Cloud Control API Docs](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html), you can map it to Port by following these steps:
 
 ### Compute Resources Blueprint Example
 
