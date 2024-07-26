@@ -107,6 +107,7 @@ Create an integration configuration for the resource. The integration configurat
 <RDSBlueprint/>
 
 ### Storage Integration Configuration Example
+<StorageAppConfig/>
 
 #### The integration configuration structure
 
