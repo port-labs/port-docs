@@ -1,6 +1,6 @@
 <details>
 
-<summary>Mapping Configuration for ECS Service, AppRunner, Lambda, SQS</summary>
+<summary>Mapping Configuration for Lambda, ECS Service, SQS, Lightsail, ElasticBeanstalk</summary>
 
 ```yaml showLineNumbers
 resources:
@@ -76,115 +76,36 @@ resources:
             link: .Properties.QueueUrl
           relations:
             account: .__AccountId
-  - kind: AWS::RDS::DBInstance
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.DBName
-          blueprint: rdsInstance
-          properties:
-            link: >-
-               'https://console.aws.amazon.com/rds/home?region=' +
-               .__Region +
-               '#dbinstance:id=' +
-               .Properties.DBInstanceIdentifier
-            dbInstanceClass: .Properties.DBInstanceClass
-            dbInstanceStatus: .Properties.DBInstanceStatus
-            engine: .Properties.Engine
-            engineVersion: .Properties.EngineVersion
-            port: .Properties.Port
-            allocatedStorage: .Properties.AllocatedStorage
-            endpoint: .Properties.Endpoint
-            multiAZ: .Properties.MultiAZ
-            arn: .Properties.Arn
-          relations:
-            account: .__AccountId
-  - kind: AWS::Kinesis::Stream
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.Name
-          blueprint: kinesisStream
-          properties:
-            link: >-
-               'https://console.aws.amazon.com/kinesis/home?region=' +
-               .__Region +
-               '#/streams/details/' +
-               .Properties.StreamName
-            streamStatus: .Properties.StreamStatus
-            shardCount: .Properties.ShardCount
-            retentionPeriodHours: .Properties.RetentionPeriodHours
-            arn: .Properties.Arn
-          relations:
-            account: .__AccountId
-  - kind: AWS::SNS::Topic
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.TopicName
-          blueprint: snsTopic
-          properties:
-            link: >- 
-               'https://console.aws.amazon.com/sns/v3/home?region=' + 
-               .__Region +
-               '#/topic/' + 
-               .Properties.Arn
-            arn: .Properties.Arn
-            displayName: .Properties.DisplayName
-            subscriptions: .Properties.Subscriptions
-          relations:
-            account: .__AccountId
-  - kind: AWS::Cognito::UserPool
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.UserPoolName
-          blueprint: cognitoUserPool
-          properties:
-            link: >-
-                'https://console.aws.amazon.com/cognito/users/?region=' +
-                .__Region + '#/pool/' + .Properties.Id
-            arn: .Properties.Arn
-            userPoolId: .Properties.Id
-            status: .Properties.Status
-            creationDate: .Properties.CreationDate
-          relations:
-            account: .__AccountId
   - kind: AWS::Lightsail::Instance
     selector:
       query: 'true'
-      useGetResourceAPI: 'true'
     port:
       entity:
         mappings:
           identifier: .Identifier
-          title: .Properties.Name
-          blueprint: lightsailInstance
+          title: .Properties.InstanceName
+          blueprint: '"lightsailInstance"'
           properties:
-            link: 'https://lightsail.aws.amazon.com/ls/webapp/us-east-1/instances/ + .Properties.Name'
+            link: >-
+                'https://console.aws.amazon.com/go/view?arn=' +
+                .Properties.InstanceArn
             state: .Properties.State.Name
             blueprintId: .Properties.BlueprintId
             bundleId: .Properties.BundleId
-            arn: .Properties.Arn
+            arn: .Properties.InstanceArn
+            privateIpAddress: .Properties.PrivateIpAddress
+            publicIpAddress: .Properties.PublicIpAddress
+            cpuCount: .Properties.Hardware.CpuCount
+            ramSize: .Properties.Hardware.RamSizeInGb
+            regionName: Properties.RegionName
+            availabilityZone: .Properties.AvailabilityZone
+            monthlyTransfer: .Properties.MonthlyTransfer.GbPerMonthAllocated
+            ports: .Properties.Networking.Ports[](.FromPort | tostring + ' - ' + .ToPort | tostring + ' - ' + .AccessDirection)
+            username: .Properties.UserName
+            tags: .Properties.Tags
           relations:
             account: .__AccountId
-  - kind: AWS::DynamoDB::Table
+  - kind: AWS::ElasticBeanstalk::Application
     selector:
       query: 'true'
       useGetResourceAPI: 'true'
@@ -192,206 +113,19 @@ resources:
       entity:
         mappings:
           identifier: .Identifier
-          title: .Properties.TableName
-          blueprint: dynamoDBTable
+          title: .Properties.ApplicationName
+          blueprint: '"elasticBeanstalkApplication"'
           properties:
-            link: 'https://console.aws.amazon.com/dynamodb/home?region= + .Properties.Region + #tables/overview?table= + .Properties.TableName'
-            tableStatus: .Properties.TableStatus
-            itemCount: .Properties.ItemCount
-            creationDateTime: .Properties.CreationDateTime
-            arn: .Properties.TableArn
-          relations:
-            account: .__AccountId
-
-  - kind: AWS::SQS::Queue
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.QueueName
-          blueprint: sqsQueue
-          properties:
-            link: 'https://console.aws.amazon.com/sqs/v2/home?region= + .Properties.Region + #/queues/ + .Properties.QueueUrl'
-            arn: .Properties.QueueArn
-            approximateNumberOfMessages: .Properties.ApproximateNumberOfMessages
-            visibilityTimeout: .Properties.VisibilityTimeout
-          relations:
-            account: .__AccountId
-
-  - kind: AWS::ElastiCache::Cluster
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.CacheClusterId
-          blueprint: elasticacheCluster
-          properties:
-            link: 'https://console.aws.amazon.com/elasticache/home?region= + .Properties.Region + #cache:cacheClusterId= + .Properties.CacheClusterId'
-            engine: .Properties.Engine
-            cacheNodeType: .Properties.CacheNodeType
-            cacheClusterStatus: .Properties.CacheClusterStatus
-            arn: .Properties.ARN
-          relations:
-            account: .__AccountId
-
-  - kind: AWS::CloudFormation::Stack
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.StackName
-          blueprint: cloudformationStack
-          properties:
-            link: 'https://console.aws.amazon.com/cloudformation/home?region= + .Properties.Region + #/stacks/stackinfo?filteringText=&viewNested=true&stackId= + .Properties.StackId'
-            stackStatus: .Properties.StackStatus
-            creationTime: .Properties.CreationTime
-            lastUpdatedTime: .Properties.LastUpdatedTime
-            arn: .Properties.StackId
-          relations:
-            account: .__AccountId
-
-  - kind: AWS::Amplify::App
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.AppName
-          blueprint: amplifyApp
-          properties:
-            link: 'https://console.aws.amazon.com/amplify/home?region= + .Properties.Region + #/apps/ + .Properties.AppId'
-            appId: .Properties.AppId
-            appName: .Properties.AppName
-            creationTime: .Properties.CreateTime
-            arn: .Properties.AppArn
-          relations:
-            account: .__AccountId
-
-  - kind: AWS::WAF::WebACL
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.Name
-          blueprint: webAcl
-          properties:
-            link: 'https://console.aws.amazon.com/wafv2/homev2/web-acl/ + .Properties.Name'
-            defaultAction: .Properties.DefaultAction
-            metricName: .Properties.MetricName
-            arn: .Properties.ARN
-          relations:
-            account: .__AccountId
-
-  - kind: AWS::Lex::Bot
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.Name
-          blueprint: lexBot
-          properties:
-            link: 'https://console.aws.amazon.com/lexv2/homev2/bots/ + .Properties.Name'
-            status: .Properties.Status
-            creationDate: .Properties.CreatedDate
-            lastUpdatedDate: .Properties.LastUpdatedDate
-            arn: .Properties.BotArn
-          relations:
-            account: .__AccountId
-
-  - kind: AWS::QuickSight::Dashboard
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.Name
-          blueprint: quicksightDashboard
-          properties:
-            link: 'https://quicksight.aws.amazon.com/sn/dashboards/ + .Properties.DashboardId'
-            dashboardId: .Properties.DashboardId
-            name: .Properties.Name
-            createdTime: .Properties.CreatedTime
-            lastPublishedTime: .Properties.LastPublishedTime
-            arn: .Properties.DashboardArn
-          relations:
-            account: .__AccountId
-
-  - kind: AWS::CloudFront::Distribution
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.DomainName
-          blueprint: cloudFrontDistribution
-          properties:
-            link: 'https://console.aws.amazon.com/cloudfront/home?region= + .Properties.Region + #/distribution/ + .Properties.Id'
-            status: .Properties.Status
-            domainName: .Properties.DomainName
-            lastModifiedTime: .Properties.LastModifiedTime
-            arn: .Properties.Id
-          relations:
-            account: .__AccountId
-
-  - kind: AWS::ElasticBeanstalk::Environment
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.EnvironmentName
-          blueprint: elasticBeanstalkEnvironment
-          properties:
-            link: 'https://console.aws.amazon.com/elasticbeanstalk/home?region= + .Properties.Region + #/environment/dashboard?applicationName= + .Properties.ApplicationName + &environmentId= + .Properties.EnvironmentId'
-            environmentName: .Properties.EnvironmentName
+            link: >-
+                'https://console.aws.amazon.com/elasticbeanstalk/home?region=' +
+                .__Region +
+                '#/application/overview?applicationName=' + .Properties.ApplicationName
             applicationName: .Properties.ApplicationName
-            status: .Properties.Status
-            health: .Properties.Health
-            arn: .Properties.EnvironmentArn
+            maxAgeInDays: .Properties.ResourceLifecycleConfig.VersionLifecycleConfig.MaxAgeRule.MaxAgeInDays
+            maxCount: .Properties.ResourceLifecycleConfig.VersionLifecycleConfig.MaxCountRule.MaxCount
+            kind: .__Kind
+            region: .__Region
           relations:
             account: .__AccountId
-
-  - kind: AWS::AutoScaling::AutoScalingGroup
-    selector:
-      query: 'true'
-      useGetResourceAPI: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .Identifier
-          title: .Properties.AutoScalingGroupName
-          blueprint: autoScalingGroup
-          properties:
-            link: 'https://console.aws.amazon.com/ec2/autoscaling/home?region= + .Properties.Region + #AutoScalingGroups:viewAutoScalingGroup= + .Properties.AutoScalingGroupName'
-            desiredCapacity: .Properties.DesiredCapacity
-            minSize: .Properties.MinSize
-            maxSize: .Properties.MaxSize
-            arn: .Properties.AutoScalingGroupARN
-          relations:
-            account: .__AccountId    
 ```
-
 </details>

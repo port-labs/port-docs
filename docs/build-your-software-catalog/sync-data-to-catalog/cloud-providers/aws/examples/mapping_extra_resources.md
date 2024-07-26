@@ -7,6 +7,26 @@ import AppRunnerBlueprint from './compute_resources/\_app_runner.mdx'
 import SQSBlueprint from './compute_resources/\_sqs.mdx'
 import LambdaBlueprint from './compute_resources/\_lambda.mdx'
 import ComputeAppConfig from './compute_resources/\_port_app_config.mdx'
+import ElasticBeanstalkBlueprint from './compute_resources/\_elasticbeanstalk.mdx'
+import LightsailBlueprint from './compute_resources/\_lightsail.mdx'
+import AmplifyBlueprint from './developer_tools/\_amplify.mdx'
+import DeveloperToolsAppConfig from './developer_tools/\_port_app_config.mdx'
+import KinesisBlueprint from './application_integration/\_kinesis.mdx'
+import SNSBlueprint from './application_integration/\_sns.mdx'
+import ApplicationIntegrationAppConfig from './application_integration/\_port_app_config.mdx'
+import LexBlueprint from './machine_learning/\_lex.mdx'
+import MachineLearningAppConfig from './machine_learning/\_port_app_config.mdx'
+import AutoScalingBlueprint from './management_and_governance/\_auto_scaling_group.mdx'
+import CloudFormationBlueprint from './management_and_governance/\_cloudformation.mdx'
+import ManagementAndGovernanceAppConfig from './management_and_governance/\_port_app_config.mdx'
+import CloudFrontBlueprint from './networking_and_content_delivery/\_cloudfront.mdx'
+import NetworkingAndContentDeliveryAppConfig from './networking_and_content_delivery/\_port_app_config.mdx'
+import CognitoBlueprint from './security_identity_and_compliance/\_cognito.mdx'
+import SecurityIdentityAndComplianceAppConfig from './security_identity_and_compliance/\_port_app_config.mdx'
+import DynamoDBBlueprint from './storage/\_dynamodb.mdx'
+import ElasticacheBlueprint from './storage/\_elasticache.mdx'
+import RDSBlueprint from './storage/\_rds.mdx'
+import StorageAppConfig from './storage/\_port_app_config.mdx'
 
 # Mapping Extra Resources
 
@@ -26,20 +46,67 @@ The AWS Integration is relying on AWS's Cloud Control API. That means:
 
 After you've found the resource in the [AWS CloudControlAPI Docs](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html), you can map it to Port by following these steps:
 
-### Blueprint
+### Compute Resources Blueprint Example
 
 Create a Port blueprint definition for the resource. The blueprint definition is based on the resource API specified per asset type.
-A few examples:
+A few examples of blueprints for compute resources are provided below:
 
+<LightsailBlueprint/>
+<ElasticBeanstalkBlueprint/>
 <EcsServiceBlueprint/>
 <SQSBlueprint/>
 <LambdaBlueprint/>
 
-### Integration configuration
+### Compute Resources Integration Configuration Example
 
 Create an integration configuration for the resource. The integration configuration is a YAML file that describes the ETL process to load data into the developer portal.
 
 <ComputeAppConfig/>
+
+### Developer Tools Blueprint Example
+<AmplifyBlueprint/>
+
+### Developer Tools Integration Configuration Example
+<DeveloperToolsAppConfig/>
+
+### Application Integration Blueprint Example
+<KinesisBlueprint/>
+<SNSBlueprint/>
+
+### Application Integration Integration Configuration Example
+<ApplicationIntegrationAppConfig/>
+
+### Machine Learning Blueprint Example
+<LexBlueprint/>
+
+### Machine Learning Integration Configuration Example
+<MachineLearningAppConfig/>
+
+### Management and Governance Blueprint Example
+<AutoScalingBlueprint/>
+<CloudFormationBlueprint/>
+
+### Management and Governance Integration Configuration Example
+<ManagementAndGovernanceAppConfig/>
+
+### Networking and Content Delivery Blueprint Example
+<CloudFrontBlueprint/>
+
+### Networking and Content Delivery Integration Configuration Example
+<NetworkingAndContentDeliveryAppConfig/>
+
+### Security, Identity, and Compliance Blueprint Example
+<CognitoBlueprint/>
+
+### Security, Identity, and Compliance Integration Configuration Example
+<SecurityIdentityAndComplianceAppConfig/>
+
+### Storage Blueprint Example
+<DynamoDBBlueprint/>
+<ElasticacheBlueprint/>
+<RDSBlueprint/>
+
+### Storage Integration Configuration Example
 
 #### The integration configuration structure
 

@@ -1,0 +1,32 @@
+<details>
+<summary>Mapping Configuration for Cognito User Pool</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::Cognito::UserPool
+    selector:
+      query: 'true'
+      useGetResourceAPI: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.UserPoolName
+          blueprint: '"cognitoUserPool"'
+          properties:
+            link: >-
+                'https://console.aws.amazon.com/go/view?arn=' +
+                .Properties.Arn
+            arn: .Properties.Arn
+            userPoolId: .Properties.UserPoolId
+            providerName: .Properties.ProviderName
+            status: .Properties.Status
+            creationDate: .Properties.CreationDate
+            mfaConfiguration: .Properties.MfaConfiguration
+            kind: .__Kind
+            region: .__Region
+          relations:
+            account: .__AccountId
+```
+
+</details>
