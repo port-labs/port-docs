@@ -13,6 +13,7 @@ Our OpenCost integration allows you to import `cost` from your OpenCost instance
 ## Common use cases
 
 - Map your monitored Kubernetes resources and cost allocations in OpenCost.
+- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
 

@@ -18,6 +18,7 @@ Our Kubecost integration allows you to import `kubesystem` and `cloud` cost allo
 ## Common use cases
 
 - Map your monitored Kubernetes resources and cloud cost allocations in Kubecost.
+- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
 
