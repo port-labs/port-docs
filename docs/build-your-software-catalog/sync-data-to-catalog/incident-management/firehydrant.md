@@ -9,6 +9,7 @@ import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_firehydrant_docker_params.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # FireHydrant
 
@@ -29,7 +30,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -61,16 +68,16 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-firehydrant-integration port-labs/port-ocean \
-	--set port.clientId="CLIENT_ID"  \
-	--set port.clientSecret="CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
+  --set port.clientId="CLIENT_ID"  \
+  --set port.clientSecret="CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
   --set sendRawDataExamples=true  \
-	--set integration.identifier="my-firehydrant-integration"  \
-	--set integration.type="firehydrant"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.apiUrl="https://api.firehydrant.io"  \
-	--set integration.secrets.token="<FIREHYDRANT_API_TOKEN>"
+  --set integration.identifier="my-firehydrant-integration"  \
+  --set integration.type="firehydrant"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.apiUrl="https://api.firehydrant.io"  \
+  --set integration.secrets.token="<FIREHYDRANT_API_TOKEN>"
 ```
 
 <PortApiRegionTip/>
@@ -159,6 +166,8 @@ kubectl apply -f my-ocean-firehydrant-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
 
 </TabItem>
 
@@ -368,11 +377,11 @@ ingest_data:
 
 <PortApiRegionTip/>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>
 
 ## Ingesting FireHydrant objects
 

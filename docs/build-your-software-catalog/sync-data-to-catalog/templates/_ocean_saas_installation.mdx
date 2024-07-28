@@ -1,0 +1,43 @@
+Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
+
+To install, follow the following steps:
+
+1. Go to the [Data sources](https://app.getport.io/settings/data-sources) page of your portal.
+
+2. Click on the `+ Data source` button in the top-right corner.
+
+3. Click on the relevant integration in the list.
+
+4. Under `Select your installation method`, choose `Hosted by Port`.
+
+5. Configure the `integration settings` and `application settings` as you wish (see below for details).
+
+<h3>Application settings</h3>
+
+Every integration hosted by Port has the following customizable application settings:
+
+- `Resync interval`: The frequency at which Port will ingest data from the integration. There are various options available, ranging from every 1 hour to once a day.
+
+- `Send raw data examples`: A boolean toggle (`enabled` by default). If enabled, raw data examples will be sent from the integration to Port. These examples are used when [testing your mapping configuration](/build-your-software-catalog/customize-integrations/configure-mapping#test-your-mapping---jq-playground), they allow you to run your `jq` expressions against real data and see the results.
+
+<h3>Integration settings</h3>
+
+Every integration has its own tool-specific settings, under the `Integration settings` section.  
+Each of these settings has an ⓘ icon next to it, which you can hover over to see a description of the setting.
+
+<h4>Port secrets</h4>
+
+Some integration settings require sensitive pieces of data, such as tokens.  
+For these settings, [Port secrets](/sso-rbac/port-secrets/) will be used, ensuring that your sensitive data is encrypted and secure.
+
+When changing such a setting, you will be prompted to choose an existing secret or create a new one:
+
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/oceanSaasSecretExample.png" width="50%" border="1px" />
+
+:::info Live event support
+Currently, live events are not supported for integrations hosted by Port.  
+Resyncs will be performed **periodically**, based on the `Resync interval` you have configured, or **manually** triggered by you via Port's UI.  
+
+Therefore, real-time events such as GitOps pushes will not be ingested into Port immediately.  
+Live events are WIP and will be supported in the future.
+:::

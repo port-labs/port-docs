@@ -1,0 +1,151 @@
+---
+id: get-an-action-automation
+title: "Get an action/automation"
+description: "This route allows you to fetch the details of a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>"
+sidebar_label: "Get an action/automation"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVctu2zAQ/BWCpwRwLCdIL4JhwECDoOihQeOeEsOhpVVERCZVcuXUFfTv3RUlP2In1xboRSLFWe5rZlXLFHzidInaGhnLWa69cLZCEKoo7KsXG1sJtCIDTHKBOYgUUOnCC5sJJTwU2YUHt9YJWSR8i7BOqArtSvFuOF66aNI+ZlYUoJwRK+sIvCQvnYkXyqR7Rn4gkhySF8EQ9vmQ2qRagcH2eH6WI5Y+jiL67IfPgKV1ONQ26q67oOsu9q6LzkMYciBRPXsZP8hpQMr5QJbKqRUgOD6opSfXKyXjWuKmBKqJR6fNs2wGUnOJSoU5XWTIhnbB40KnFJzONDg6cvCz0g5SGaOroCEXHpLKady0DpZUBMJREA5UGqs+EgY68CVtwLP/q9GIX4cduq+SBLzncK5H13x+fXV1DPtmgDvExcssd5JSEOCcddS5hKKh+OJH82jGqJYFTHjh6CnEGPPJDQPHEa36L593t3ff6eUOzNLJkzZrVeh0wRUAj0+ESbenMyaPQiVKZ9dUsFSkFrwwFgX1qWNX4F7oQWfdO4r6SDn3fyFbinyR2cqkx3mGpkY7DopXjSHDbfY7zohXFerQ3vZR2p9OUeJv9ZokY1SxaD0dlmBqRH8cAtnG8X5ylB2pMLckG0mSloOgtFhG68te2FF9pLdGsrzcupdv5Qqy6QeEKvXefKAKngJU/gCzp9d75mEQY6/a7Vggy6+w2U2CaUXBO/27bbfshkVOCierph0emW3NNRaMvyN/Ynr3haAcfGjl5XDEbS6tx5UyDO9uvwUaluaYV/KNFGqZWKq8wf9imIdOIPzCqCyUbiXS9rfuyPMg15cE7GfsQMbHA5v6nVO9GVzXS+Xhhyuahj/TEHM8s2m5Vk4zVVuOpdrzmpiaqcLDBy04+979C87Fe/H2dDLMJRqfFe9o+ULkOvV/aeb7Srm9mXF+FSe7T82XlprdgmM+6eYtZ4NPfrJSTpqMibKCiD/ZwsPJuwadBHo0Jz1vmuYPYjXyqA==
+sidebar_class_name: "get api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an action/automation"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions/{action_identifier}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch the details of a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"action_identifier","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Success
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"404"}
+        value={"404"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`not_found`</td>
+            <td>The action/automation with the provided identifier was not found</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`internal_error`</td>
+            <td>An internal error occurred</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

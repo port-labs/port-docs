@@ -55,15 +55,15 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-opencost-integration port-labs/port-ocean \
-	--set port.clientId="CLIENT_ID"  \
-	--set port.clientSecret="CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
+  --set port.clientId="CLIENT_ID"  \
+  --set port.clientSecret="CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
   --set sendRawDataExamples=true  \
-	--set integration.identifier="my-opencost-integration"  \
-	--set integration.type="opencost"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.opencostHost="https://myOpenCostInstance:9003"
+  --set integration.identifier="my-opencost-integration"  \
+  --set integration.type="opencost"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.opencostHost="https://myOpenCostInstance:9003"
 ```
 
 <PortApiRegionTip/>

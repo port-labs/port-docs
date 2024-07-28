@@ -174,6 +174,11 @@ This page contains a list of Port's available integrations, organized by the pla
 - [ServiceNow integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
 - [Self-service action to trigger ServiceNow incident](/actions-and-automations/setup-backend/github-workflow/examples/ServiceNow/trigger-servicenow-incident)
 
+## Statuspage
+
+- [Statuspage integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
+- [Self-service action to create and manage Statuspage Incidents](/actions-and-automations/setup-backend/github-workflow/examples/Statuspage/manage-statuspage-incident)
+
 ## PagerDuty
 
 - [PagerDuty integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
@@ -304,8 +309,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## SSO
 
-- [Okta SSO](/sso-rbac/sso-providers/okta.md)
-- [OneLogin SSO](/sso-rbac/sso-providers/onelogin.md)
+- [Okta SSO](/sso-rbac/sso-providers/oidc/okta.md)
+- [OneLogin SSO](/sso-rbac/sso-providers/oidc/onelogin.md)
 - [JumpCloud SSO](/sso-rbac/sso-providers/saml/jumpcloud.md)
 - [Google workspace SSO](/sso-rbac/sso-providers/saml/google-workspace.md)
 - [Azure Active Directory (AD) SSO OIDC](/sso-rbac/sso-providers/azure-ad.md)

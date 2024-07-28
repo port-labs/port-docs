@@ -156,8 +156,8 @@ As part of the onboarding process, you should already have an action named `Send
 If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
 :::
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button in the top right corner, and choose "Edit":
-    <img src='/img/guides/gitopsEditAction.png' width='35%' border='1px' />
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Enrich service` action, click the `...` button in the top right corner, and choose "Edit":
+    <img src='/img/guides/gitopsEditAction.png' width='40%' border='1px' />
 
 2. Click on the `Backend` tab.
 
@@ -195,11 +195,11 @@ Fill out the form with your values:
   {
     "port_context": {
       "entity": "{{ .entity.identifier }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
-    "domain": "{{ .inputs.domain }}",
+    "domain": "{{ .inputs.domain.identifier }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 </TabItem>
@@ -232,11 +232,11 @@ In order to protect the webhook, see the [Validating webhook signatures page](..
   {
     "port_context": {
       "entity": "{{ .entity.identifier }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
-    "domain": "{{ .inputs.domain }}",
+    "domain": "{{ .inputs.domain.identifier }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 
@@ -270,11 +270,11 @@ Then, fill out your workflow details:
     "port_context": {
       "entity": "{{ .entity.identifier }}",
       "repo_url": "{{ .entity.properties.url }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
-    "domain": "{{ .inputs.domain }}",
+    "domain": "{{ .inputs.domain.identifier }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 

@@ -5,9 +5,9 @@ description: "This route allows you to fetch the details of an action run.<br/><
 sidebar_label: "Get an action run's details"
 hide_title: true
 hide_table_of_contents: true
-api: eJzdU8tu2zAQ/BWClyaAbCU5CkEAAy2CopcgTU+BUdDSyiJCk8qSVOIK+vfu6uHIiXPqrRfJomeXszM7rSzA56jroJ2VmXyotBfoYgChjHEvXuxdFMGJEkJeiVCBKCAobbxwpVBWqJwrBUa7vN5getM/HpwwoNCKnUNqtKF+M6BPRF5B/iT4mDs+Fi6PO7BBMWR9VoVQ+yxN6dgvtxBqh2GpXZojqAALD6akBzY6hwW81oAabA4+RSgN5GExXLWo0W0RvE/PlzKRQW29zB7lauBxTzzkOpG1QrWDAMh/ttITs52SWSvDvgYSxAfUdkv1YOOO65tL+miu5LpLpGbJniPgns4s9aHPhlqxlolEeI4aoZBZqYyHLvm8/dSrVqF6a0Va/dYFfb/3CIQuSC5dakD2gUV807e37EXZcPBtsOaIUsAIHc3vIY+ow76ffkOmAfKUpHSRYa8Ro0jG2lkPnqlfXVzw65jUVyhVNEHcj0jZ0UwkbOXoMkkmymSYLpNpc5kObMkyuiJth0E7yXSwmbyIaAg9LYOq9WwXJKv5ERD9EWY2309WfuA/TXkwgSp/wMzCVSTaqP/06yhHaypShKq63qrS9eU6GMbf0X1idfedF2N0P5OXywu2tXY+7JRl+Nj9FsJxcL74KVPvrW5l7mwgp//vZA4uBHgNaW0UqU269d6248qMqRuXhvc49q9sTAj5XJHODGzbjfLwC03X8fEQTt6mQnu1MYc0JvKJLJ/HtVEmMo9+bRqFmuGnSz816ex+DNi5+IeUnhRk2lW7n3OdxhiF6Nbz1N1+e2DVIks4X/anftnHHzzgyd7vUzBcxE/O3smSawqBoCjdHODDP58WjKGa0Dzpuuu6vxVFQt0=
+api: eJzdVU1v1DAQ/SuWL4C03bQVXKLVSpVACHEAQTnBqvUmk8Zq1g7jccqyyn9nJh/bbLvlwgHEJR/2zHjmzbznnc4hZGhrst7pVF+WNij0kUCZqvJ3QW19VORVAZSVikpQOZCxVVC+UMYpk4mnwujmizUmy+5x6VUFBp3aeORAa443MQwzlZWQ3SpZlohfc5/FDTgyYrJ6XhLVIU0SXg7zG6DaI82tTzIEQ3ASoCr4gY3N4AR+1IAWXAYhQSgqyOikP+qkRn+DEELyYq5nmsxN0OlXfdHn8Ynz0KuZrg2aDRCgbO504Mw2Rqc7TdsaGJBAaN0N+4OLG/FvzvinOderdqatQPY9Am55zXEc/m04lGA50wjfo0XIdVqYKkA7ezr8GKs2VN6HYqyubM7/D3sEyuYMly0soPRBQLzHt2vZnXG071vfmoOUCCO0XH+ALKKlbVf9mpsGKFUy0nmKHUZixTDW3gUIkvr56am8DpP6HDNuQZBKXp6+fLz/wcGYaeFlsrhsBYgeeZIyzoGzSr+5b25BZl3BUj6Qn0otqFy+EcNFwl/jyuv76MM6v/DALV9eO09XhY8uv+bdfL9+eYjXnaV+tHliGkY2n8J7Z4LiMKoLM0QZj0rGXLuyz8//lbKta0xl8ytpNwR6XHxuyNxXm3voa9yYkeS9BPTj+ruiXx2bhb9VNLPYmeqqO+mw5gunxu0+kX0eTxfH1bEwlJ7JolmE9KxnZ6qT5izpp4clhymS7HqitlrohM2oJRErth7FzNR2omVa1OCxQQwHNhN+fpZW9PwbWboXEfZ8DxMJuoicNtqfnZzqQVpKZjR7tZ3UFL5zt1SJ/Uc+T118fCfCNqhXqs/mp9Lg2gfaGCfmQ/S3QIfC/yyMd8JDqdrpzDPsjv7vm6XvAsEPSurK2I4YXW93w8gMt8YwNKLDsXulg8Jzn0vGWQx3u7UJ8AWrtpXl/nKRacptkNEcb5OZvuWWT68bpnyUPLqxaQxaMT/u+mSTnn8aLogX6g9umaOAjLPqttNcxzIGINrVlHVv31wKalEgnA77bTfsw4cUeDT2Qxb0B8lTuHfUZcEkUEyl5d6833nSYSDVaC2Vrtq2/QWbzznF
 sidebar_class_name: "get api-method"
-info_path: api-reference-temp/port-api
+info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
@@ -112,7 +112,82 @@ This route allows you to fetch the details of an action run.<br/><br/>To learn m
         <div>
           
           
-          Default Response
+          Success
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"404"}
+        value={"404"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`not_found`</td>
+            <td>The action run with the provided identifier was not found</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"422"}
+        value={"422"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`invalid_request`</td>
+            <td>The data provided does not match the route schema</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`internal_error`</td>
+            <td>An internal error occurred</td>
+          </tr>
+          </table>
+          
           
           
         </div><div>
