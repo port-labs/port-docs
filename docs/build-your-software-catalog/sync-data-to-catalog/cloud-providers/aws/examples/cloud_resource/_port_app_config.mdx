@@ -7,6 +7,7 @@ resources:
   - kind: AWS::S3::Bucket
     selector:
       query: 'true'
+      useGetResourceAPI: 'true'
     port:
       entity:
         mappings:
@@ -26,6 +27,7 @@ resources:
   - kind: AWS::EC2::Instance
     selector:
       query: 'true'
+      useGetResourceAPI: 'true'
     port:
       entity:
         mappings:

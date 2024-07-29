@@ -7,6 +7,7 @@ import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catal
 import DockerParameters from "./\_datadog_one_time_docker_parameters.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Datadog
 
@@ -28,7 +29,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -57,17 +64,17 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-datadog-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=60 \
-	--set integration.identifier="my-datadog-integration"  \
-	--set integration.type="datadog"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.datadogBaseUrl="https://api.datadoghq.com"  \
-	--set integration.secrets.datadogApiKey="<your-datadog-api-key>"  \
-	--set integration.secrets.datadogApplicationKey="<your-datadog-application-key>" 
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set scheduledResyncInterval=60 \
+  --set integration.identifier="my-datadog-integration"  \
+  --set integration.type="datadog"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.datadogBaseUrl="https://api.datadoghq.com"  \
+  --set integration.secrets.datadogApiKey="<your-datadog-api-key>"  \
+  --set integration.secrets.datadogApplicationKey="<your-datadog-application-key>" 
 ```
 
 <PortApiRegionTip/>
@@ -162,6 +169,8 @@ kubectl apply -f my-ocean-datadog-integration.yaml
 
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
 
 </TabItem>
 
@@ -392,11 +401,11 @@ ingest_data:
 
 <PortApiRegionTip/>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>
 
 ## Ingesting Datadog objects
 

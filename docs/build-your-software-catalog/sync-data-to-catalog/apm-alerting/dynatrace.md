@@ -2,6 +2,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Dynatrace
 
@@ -18,7 +19,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -57,7 +64,7 @@ helm upgrade --install my-dynatrace-integration port-labs/port-ocean \
   --set integration.type="dynatrace"  \
   --set integration.eventListener.type="POLLING"  \
   --set integration.secrets.dynatraceApiKey="<your-api-key>"  \
-  --set integration.config.dynatraceHostUrl="<your-isntance-url>"
+  --set integration.config.dynatraceHostUrl="<your-instance-url>"
 ```
 
 <PortApiRegionTip/>
@@ -156,7 +163,7 @@ kubectl apply -f my-ocean-dynatrace-integration.yaml
 This workflow will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+If you want the integration to update Port in real time using webhooks, use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):

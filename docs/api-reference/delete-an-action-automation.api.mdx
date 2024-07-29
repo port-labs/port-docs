@@ -1,0 +1,176 @@
+---
+id: delete-an-action-automation
+title: "Delete an action/automation"
+description: "This route allows you to delete a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>"
+sidebar_label: "Delete an action/automation"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVclu2zAQ/RWCpwRwLCdIL4JhwEB8KFqgQeOeUsOhxXFERCZVklLqCvr3zpCSl9rJtUUvMpdZ3gzfGzdcgsusKr0ymqd8nivHrKk8MFEU5tWxramYN0xCAXTIHBTrKwe2VhluM/JjxjJRebMRtBuOVzaZhM/csAKE1WxjLBqvMG7n4pjQ8sDJDViWQ/bCyMTnwB6lyaoNaB+uFxe596VLkwSP3fAZfGmsHyqTdOGuMNzVQbjkMsLgA+7Fs+PpI59GS74Y8FJYscFyLF003GHqjeBpw/22BOyC81bpZ94OuKKmlMLnGEijD+5ixqWSCE6tFVi8svCjUhYkT72toMUUDrLKKr8NCVbYBLRDELGNqeixkKkFV+IGHCG4GY3o5/hVHqosA+cI0O3o9vT+iwZm1qFva0PPhugZWGusYyZDIAgt/a6/67EXqwImtLD4ZWzs88mMDMcJrvqTu3307hx/7JGbnDxp45drU2n5hLdydz7Pe14k+wdhr8rnAWBpTY29k2zfQPYqHMNoLETrgvUZkx5yqP7m5l+pXulaFEou6enB+dMeSOHFvlppINaI/chiJ6LMIvneK/rDOUr8raJRNFoUy5DpuOapZv11BLLD8XZxWB3qMDconE4afBDllvKkvu7VnTQnoms5aczWvYYrW6BPPyVEqQ6GBDbxnEHljmwORPtAbxL12Et3NxvQ8xNs9+NgWiF+q34FmvNuYuQgJHq1YYKsTXBXviD7e8zHpvcf0ZTAx9e8Ho7opUvj/EZoMu+i33VjV59KCgMcUaLhmcH+a/+fjvHYfg8/fVIWQgVphEdtOsY88voaDfvZOuDp6ajGR86xyWTcNCvh4Jst2paOUcWWpjUua2EVUTQQSypHa2ToWhQO3mn6xdfuX+CSvYW355AmAuH8qGiHyxdk1Ll/lnZxqJC72efZfEYlVlTvISVfAiW7BcE+m+lPrsa09CWFnHUZI1UZEn6yM483bzp01O+tqe5F27a/AcEa7NI=
+sidebar_class_name: "delete api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Delete an action/automation"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/actions/{action_identifier}"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to delete a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"action_identifier","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Success
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"404"}
+        value={"404"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`not_found`</td>
+            <td>The action/automation with the provided identifier was not found</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"422"}
+        value={"422"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`invalid_request`</td>
+            <td>The data provided does not match the route schema</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`internal_error`</td>
+            <td>An internal error occurred</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

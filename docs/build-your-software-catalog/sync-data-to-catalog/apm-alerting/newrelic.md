@@ -5,6 +5,7 @@ import DockerParameters from "./\_newrelic-docker-parameters.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # New Relic
 
@@ -28,7 +29,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time.
 
@@ -68,16 +75,16 @@ If you are using New Relic's EU region, add the following flag to the command:
 
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-newrelic-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-newrelic-integration"  \
-	--set integration.type="newrelic"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
-	--set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>"
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set scheduledResyncInterval=120 \
+  --set integration.identifier="my-newrelic-integration"  \
+  --set integration.type="newrelic"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
+  --set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>"
 ```
 
 <PortApiRegionTip/>
@@ -187,6 +194,12 @@ kubectl apply -f my-ocean-newrelic-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
+
+<h3>Event listener</h3>
+
+The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
 </TabItem>
 
@@ -402,15 +415,12 @@ ingest_data:
   </Tabs>
 
 <PortApiRegionTip/>
+
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-### Event listener
-
-The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
-
-<AdvancedConfig/>
 
 ## Ingesting Newrelic objects
 

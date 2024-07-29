@@ -60,11 +60,26 @@ This is the action's permission configuration in JSON format. Every action in Po
 - `"execute"` - any logic defined here pertains to the execution of the action. Here you can define who can **run** the action.
 - `"approve"` - any logic defined here pertains to the approval of the action's execution. If [manual approval](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions) is not enabled for this action, this key is irrelevant since no approval is needed to execute the action.
 
-Under each of these two keys, you can add a `policy` key, which allows you to use more complex logic using two keys:
+Under each of these two keys, you can add one or more of the following keys:
 
-1. [`"queries"`](/search-and-query/) - a collection of [rules](/search-and-query/#rules) you can use to fetch and filter the data you need from your software catalog.
-2. `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data.
+- A `roles` key, which allows you to specify which **roles** can execute/approve the action.
+- A `users` key, which allows you to specify which **users** can execute/approve the action.
+- A `teams` key, which allows you to specify which **teams** can execute/approve the action.
+- A `policy` key, which allows you to use more complex logic using two keys:
+  - [`"queries"`](/search-and-query/) - a collection of [rules](/search-and-query/#rules) you can use to fetch and filter the data you need from your software catalog.
+  - `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data.
 
+There is an implicit `'OR'` between the `roles`, `users`, `teams`, and `policy` keys, meaning that if any of them evaluate to `true`, the action will be allowed.  
+For example, the following configuration will allow the action to be executed by any user who is either an `Admin` **or** a member of the `Engineering` team:
+
+```json
+"execute": {
+    "roles": ["Admin"],
+    "users": [],
+    "teams": ["Engineering"]
+```
+
+Here is an example of using the policy key in a permissions JSON:
 <details>
 <summary><b>Example snippet (click to expand)</b></summary>
 
