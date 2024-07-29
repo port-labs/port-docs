@@ -6,15 +6,15 @@ sidebar_class_name: custom-sidebar-item sidebar-menu-security
 
 # Security & Compliance
 
-Port is an internal developer portal platform and as such we place the utmost importance on data security, privacy and compliance, so that you can trust that your compliance, privacy and security needs are met.
+Port is an internal developer portal platform and as such we place the utmost importance on data security, privacy and compliance, so that you can trust that your security needs are met.
 
-The goal of this document is to provide you with transparency as to security policies and practices at Port. 
+The goal of this document is to provide you with transparency as to Port's security policies and practices. 
 
 Port uses a variety of industry-standard technologies and services to secure your data from unauthorized access, disclosure, use, and loss. All Port employees are trained on security practices during company onboarding and on an annual basis.
 
 Security is managed by Port’s Chief Technology Officer and maintained by Port’s Security & DevOps team.
 
-This document will outline the different measures, protocols, processes and methods we take to ensure that your data stays secure and highly available.
+This document will outline the different measures, protocols, processes and methods we use to ensure that your data stays secure and highly available.
 
 ## Certifications and compliance
 
