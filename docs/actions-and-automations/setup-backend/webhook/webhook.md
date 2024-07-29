@@ -67,6 +67,65 @@ Alternatively, you can set the execution type to **synchronous**, which will cau
 By default, a `POST` request will be sent to the specified endpoint URL.  
 You can change the request to any of the supported types: `POST`, `PUT`, `DELETE`, or `PATCH`.
 
+## Trigger Port API
+
+You can use this backend type to trigger [Port's API](http://localhost:4001/api-reference/port-api), allowing you to execute any route you wish with automatic authentication.  
+Port will automatically use the organization's API key to authenticate the request.
+
+This can be useful when you want to perform an operation in Port, such as creating a new user or executing a self-service action, especially if you want to trigger logic that you have already defined.
+
+### Example - Triggering a self-service action
+
+Say you have a self-service action that sends a Slack notification, with the identifier `slack_notify`.  
+The following example shows an automation definition that triggers this self-service action, when a service's `passed` property changes from `Passed` to `Not passed`:
+
+<details>
+<summary><b>Automation definition (click to expand)</b></summary>
+```yaml showLineNumbers
+{
+  "identifier": "slack_notify_on_service_failure",
+  "title": "Notify via Slack on service failure",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_UPDATED",
+      "blueprintIdentifier": "service"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.before.properties.passed == \"Passed\"",
+        ".diff.after.properties.passed == \"Not passed\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/actions/slack_notify/runs?run_as=user-email@gmail.com",
+    "synchronized": true,
+    "method": "POST",
+    "body": {
+      "properties": {
+        "message": "Service {{.diff.before.title}} has degraded from `Passed` to `Not passed`."
+      }
+    }
+  },
+  "publish": true
+}
+```
+</details>
+
+- `synchronized` must be set to `true`, so that the API will automatically report its result back to Port.
+- In the `url` field, you can add `run_as` to the url to specify the user that will execute the action (replace `user-email@gmail.com` with the desired user's email).  
+  If you don't specify a user, the action will be executed using the organization's default credentials.
+- The `body.properties` object contains the action's user inputs. If the action does not require any inputs, pass an empty object:
+   ```json
+   "body": {
+      "properties": {}
+   }
+   ```
+
 ## Next steps
 
 To get started with webhook actions, check out the sources below:
