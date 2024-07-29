@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: Let developers enrich services using Gitops
+title: Enrich services using Gitops
 ---
 
 import Tabs from "@theme/Tabs"
@@ -9,7 +9,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Let developers enrich services using Gitops
+# Enrich services using Gitops
 
 This guide takes 10 minutes to complete, and aims to demonstrate Port's flexibility when working with Gitops.
 
