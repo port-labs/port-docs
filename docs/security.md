@@ -1,4 +1,5 @@
 ---
+sidebar_position: 12
 title: Security & Compliance
 sidebar_label: Security & Compliance
 sidebar_class_name: custom-sidebar-item sidebar-menu-security
