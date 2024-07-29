@@ -96,7 +96,7 @@ The name of this role (not the ARN) is referenced as `integration_account` in th
         {
             "Effect": "Allow",
             "Action": "sts:AssumeRole",
-            "Resource": "arn:aws:iam::<member_account>:role/<MemberRole>"
+            "Resource": "arn:aws:iam::<member_account>:role/<accountReadRoleName>"
         }
     ]
 }

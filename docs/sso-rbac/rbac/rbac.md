@@ -1,4 +1,5 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
 
 # Port Roles & User management
 
@@ -162,6 +163,8 @@ Okta and AzureAD integrations are only available after configuring SSO from the 
 :::
 
 ### Users and teams as blueprints
+
+<BetaFeatureNotice />
 
 Port allows you to manage users and teams as <PortTooltip id="blueprint">blueprints</PortTooltip>.  
 This option is disabled by default, and can be [enabled via Port's API](/sso-rbac/rbac/#enable-the-feature). 
