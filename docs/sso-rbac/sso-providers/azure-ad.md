@@ -9,7 +9,7 @@ description: Integrate AzureAD with Port
 Follow this step-by-step guide to configure the integration between Port and Azure Active Directory.
 
 :::info
-In order to complete the process you will need to contact us to receive the information you require, as well as the [information Port requires from you](https://docs.getport.io/sso-rbac/sso-providers/azure-ad#step-6-providing-the-application-information-to-port). All is elaborated below in the following section.
+In order to complete the process you will need to contact us to receive the information you require, as well as the [information Port requires from you](https://docs.getport.io/sso-rbac/sso-providers/azure-ad#step-6-providing-the-application-information-to-port). Read below for more information.
 
 :::
 
