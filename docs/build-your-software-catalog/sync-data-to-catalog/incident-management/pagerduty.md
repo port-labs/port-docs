@@ -407,6 +407,7 @@ The following resources can be used to map data from PagerDuty, it is possible t
 - [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
 - [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
 - [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
+- [`Escalation Policy`](https://developer.pagerduty.com/api-reference/51b21014a4f5a-list-escalation-policies)
 
 :::
 
@@ -882,6 +883,78 @@ resources:
               description: .description
             relations:
               pagerdutyService: .service.id
+```
+
+</details>
+
+### Escalation Policy
+
+<details>
+<summary>Escalation Policy blueprint</summary>
+
+```json showLineNumbers
+{
+   "identifier": "pagerdutyEscalationPolicy",
+   "description": "This blueprint represents a PagerDuty escalation policy in our software catalog",
+   "title": "PagerDuty Escalation Policy",
+   "icon": "pagerduty",
+   "schema": {
+      "properties": {
+         "url": {
+            "title": "URL",
+            "type": "string",
+            "format": "url"
+         },
+         "summary": {
+            "title": "Summary",
+            "type": "string"
+         },
+         "primaryOncall": {
+            "title": "Primary Oncall",
+            "type": "string",
+            "format": "user"
+         },
+         "escalationRules": {
+            "title": "Escalation Rules",
+            "type": "array",
+            "items": {
+               "type": "object"
+            }
+         }
+      },
+      "required": []
+   },
+   "mirrorProperties": {},
+   "calculationProperties": {},
+   "aggregationProperties": {},
+   "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+   - kind: escalation_policies
+     selector:
+       query: 'true'
+       attachOncallUsers: 'true'
+     port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"pagerdutyEscalationPolicy"'
+          properties:
+            url: .html_url
+            description: .summary
+            primaryOncall: .__oncall_users | sort_by(.escalation_level) | .[0].user.email
+            escalationRules: .escalation_rules
 ```
 
 </details>
