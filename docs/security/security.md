@@ -1,7 +1,7 @@
 ---
 title: Security & Compliance
 sidebar_label: Security & Compliance
-sidebar_class_name: custom-sidebar-item sidebar-menu-resources
+sidebar_class_name: custom-sidebar-item sidebar-menu-security
 ---
 
 # Security & Compliance
