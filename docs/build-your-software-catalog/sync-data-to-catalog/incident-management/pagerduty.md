@@ -407,6 +407,7 @@ The following resources can be used to map data from PagerDuty, it is possible t
 - [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
 - [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
 - [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
+- [`Escalation Policy`](https://developer.pagerduty.com/api-reference/51b21014a4f5a-list-escalation-policies)
 
 :::
 
@@ -886,47 +887,47 @@ resources:
 
 </details>
 
-### Escalation policy
+### Escalation Policy
 
 <details>
-<summary><b>Escalation policy blueprint (Click to expand)</b></summary>
+<summary>Escalation Policy blueprint</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "pagerdutyEscalationPolicy",
-  "description": "This blueprint represents a PagerDuty escalation policy in our software catalog",
-  "title": "PagerDuty Escalation Policy",
-  "icon": "pagerduty",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "URL",
-        "type": "string",
-        "format": "url"
+   "identifier": "pagerdutyEscalationPolicy",
+   "description": "This blueprint represents a PagerDuty escalation policy in our software catalog",
+   "title": "PagerDuty Escalation Policy",
+   "icon": "pagerduty",
+   "schema": {
+      "properties": {
+         "url": {
+            "title": "URL",
+            "type": "string",
+            "format": "url"
+         },
+         "summary": {
+            "title": "Summary",
+            "type": "string"
+         },
+         "primaryOncall": {
+            "title": "Primary Oncall",
+            "type": "string",
+            "format": "user"
+         },
+         "escalationRules": {
+            "title": "Escalation Rules",
+            "type": "array",
+            "items": {
+               "type": "object"
+            }
+         }
       },
-      "summary": {
-        "title": "Summary",
-        "type": "string"
-      },
-      "primaryOncall": {
-        "title": "Primary Oncall",
-        "type": "string",
-        "format": "user"
-      },
-      "escalationRules": {
-        "title": "Escalation Rules",
-        "type": "array",
-        "items": {
-          "type": "object"
-        }
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
+      "required": []
+   },
+   "mirrorProperties": {},
+   "calculationProperties": {},
+   "aggregationProperties": {},
+   "relations": {}
 }
 ```
 
@@ -939,11 +940,11 @@ resources:
 createMissingRelatedEntities: true
 deleteDependentEntities: true
 resources:
-  - kind: escalation_policies
-    selector:
-      query: 'true'
-      attachOncallUsers: 'true'
-    port:
+   - kind: escalation_policies
+     selector:
+       query: 'true'
+       attachOncallUsers: 'true'
+     port:
       entity:
         mappings:
           identifier: .id
@@ -955,6 +956,7 @@ resources:
             primaryOncall: .__oncall_users | sort_by(.escalation_level) | .[0].user.email
             escalationRules: .escalation_rules
 ```
+ 
 :::tip Attach oncall users
 When `attachOncallUsers` is set to `true`, it fetches the oncall data per escalation policy. To disable this feature, set the value to `false`.
 :::
