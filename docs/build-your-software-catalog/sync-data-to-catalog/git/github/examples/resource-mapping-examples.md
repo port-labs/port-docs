@@ -15,6 +15,8 @@ import BranchProtectionBlueprint from './example-branch/\_git_exporter_example_b
 import PortBranchProtectionAppConfig from './example-branch/\_github_exporter_example_branch_protection_port_app_config.mdx'
 import BranchBlueprint from './example-branch/\_git_exporter_example_branch_blueprint.mdx'
 import PortBrAppConfig from './example-branch/\_github_exporter_example_branch_port_app_config.mdx'
+import LastContributorAppConfig from './example-branch/\_github_exporter_example_last_contributor_port_app_config.mdx'
+import LastContributorBlueprint from './example-branch/\_git_exporter_example_last_contributor_blueprint.mdx'
 
 import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
 
@@ -237,6 +239,17 @@ In the following example you will ingest your GitHub repositories and their bran
 <BranchBlueprint/>
 
 <PortBrAppConfig/>
+
+## Map repositories and last contributor
+
+In the following example you will ingest your GitHub repositories and their last contributor to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<LastContributorBlueprint/>
+<LastContributorAppConfig/>
+
+:::info supported last contributor
+The last contributor is the author of the last commit in the default branch of the repository
+:::
 
 ## Map repositories and branch protection rules
 
