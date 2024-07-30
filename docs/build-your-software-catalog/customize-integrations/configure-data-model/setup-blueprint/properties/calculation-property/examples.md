@@ -121,7 +121,7 @@ If the calculation is `".properties.obj1 * .properties.obj2"` , the result will 
 
 If the calculation is `".properties.obj2 * .properties.obj1"` , the result will be `{cpu: 200}`,
 
-For merging YAML properties, the merging behavior will be the same, but if you specify `type: "string` and `format: "yaml"`, the result will be a YAML object.
+For merging YAML properties, the merging behavior will be the same, but if you specify `type: "string"` and `format: "yaml"`, the result will be a YAML object.
 :::
 
 ## If-else conditions
