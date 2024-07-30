@@ -232,9 +232,9 @@ resources:
         # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
         # The `repos` key can be used to filter the repositories from which the files will be fetched
-        - repos:
-          - "MyRepo"
-          - "MyOtherRepo"
+          repos:
+            - "MyRepo"
+            - "MyOtherRepo"
     port:
       entity:
         mappings:
@@ -464,7 +464,7 @@ resources:
       files:
         - path: '**/package.json'
         # Note that in this case we are fetching from a specific repository
-        - repos:
+          repos:
             - "MyRepo"
     port:
       itemsToParse: .file.content.dependencies | to_entries
