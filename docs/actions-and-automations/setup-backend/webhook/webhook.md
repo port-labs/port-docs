@@ -116,7 +116,7 @@ The following example shows an automation definition that triggers this self-ser
 ```
 </details>
 
-- `synchronized` must be set to `true`, so that the API will automatically report its result back to Port.
+- `synchronized` must be set to `true`, so that the automation's status will be updated when the action is triggered.
 - In the `url` field, you can add `run_as` to the url to specify the user that will execute the action (replace `user-email@gmail.com` with the desired user's email).  
   If you don't specify a user, the action will be executed using the organization's default credentials.
 - The `body.properties` object contains the action's user inputs. If the action does not require any inputs, pass an empty object:
