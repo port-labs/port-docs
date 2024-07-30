@@ -7,6 +7,12 @@ import SubnetworkBlueprint from './compute_resources/\_subnetwork.mdx'
 import ComputeInstanceBlueprint from './compute_resources/\_compute_instance.mdx'
 import ComputeAppConfig from './compute_resources/\_port_app_config.mdx'
 
+import DatasetBlueprint from './bigquery_resources/\_dataset_blueprint.mdx'
+import TableBlueprint from './bigquery_resources/\_table_blueprint.mdx'
+import ModelBlueprint from './bigquery_resources/\_model_blueprint.mdx'
+import BigQueryConfig from './bigquery_resources/\_port_app_config.mdx'
+
+
 # Mapping Extra Resources
 
 As you've probably looked at the [Examples](./examples.md) page, you've noticed that the GCP Integration supports some GCP resources, but most of them are documented in the Examples page.
@@ -30,16 +36,23 @@ After you've found the resource in the [Cloud Asset Supported Resources](https:/
 Create a Port blueprint definition for the resource. The blueprint definition is based on the resource API specified per asset type.
 A few examples:
 
+#### Compute
 <SubnetworkBlueprint/>
 <FirewallBlueprint/>
 <SubnetworkBlueprint/>
 <ComputeInstanceBlueprint/>
 
-### Integration configuration
+#### BigQuery
+<DatasetBlueprint/>
+<TableBlueprint/>
+<ModelBlueprint/>
+
+#### Integration configuration
 
 Create an integration configuration for the resource. The integration configuration is a YAML file that describes the ETL process to load data into the developer portal.
 
 <ComputeAppConfig/>
+<BigQueryConfig/>
 
 #### The integration configuration structure
 
