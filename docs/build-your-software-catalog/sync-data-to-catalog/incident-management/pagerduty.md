@@ -18,11 +18,11 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # PagerDuty
 
-Our PagerDuty integration allows you to import `schedules`, `oncalls`, `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
+Our PagerDuty integration allows you to import `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` from your PagerDuty account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `schedules`, `oncalls`, `services` and `incidents` in your PagerDuty organization environment.
+- Map `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` in your PagerDuty organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -956,6 +956,10 @@ resources:
             primaryOncall: .__oncall_users | sort_by(.escalation_level) | .[0].user.email
             escalationRules: .escalation_rules
 ```
+ 
+:::tip Attach oncall users
+When `attachOncallUsers` is set to `true`, it fetches the oncall data per escalation policy. To disable this feature, set the value to `false`.
+:::
 
 </details>
 
