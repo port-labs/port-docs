@@ -2,7 +2,7 @@ Using this installation option means that the integration will be hosted by Port
 
 :::info Live event support
 Currently, live events are not supported for integrations hosted by Port.  
-Resyncs will be performed **periodically**, based on the `Resync interval` you have configured, or **manually** triggered by you via Port's UI.  
+Resyncs will be performed **periodically** every 1 hour by default (can be configured differently after installation), or **manually** triggered by you via Port's UI.
 
 Therefore, real-time events (including GitOps) will not be ingested into Port immediately.  
 Support for live events is WIP and will be supported in the near future.
@@ -22,7 +22,7 @@ To install, follow the following steps:
 
 <h3>Application settings</h3>
 
-Every integration hosted by Port has the following customizable application settings:
+Every integration hosted by Port has the following customizable application settings, which are configurable after installation:
 
 - `Resync interval`: The frequency at which Port will ingest data from the integration. There are various options available, ranging from every 1 hour to once a day.
 
