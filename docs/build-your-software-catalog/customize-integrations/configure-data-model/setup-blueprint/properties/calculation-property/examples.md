@@ -121,14 +121,14 @@ If the calculation is `".properties.obj1 * .properties.obj2"` , the result will 
 
 If the calculation is `".properties.obj2 * .properties.obj1"` , the result will be `{cpu: 200}`,
 
-For merging YAML properties, the merging behavior will be the same, but if you specify `type: "string"` and `format: "yaml"`, the result will be a YAML object.
+For merging YAML properties, the merging behavior will be the same, but if you specify `type: "string` and `format: "yaml"`, the result will be a YAML object.
 :::
 
 ## If-else conditions
 
-Assume that your services uses multiple packages, some services use packages written in Python and some services use packages written in Node.js.
+Assume that your services use multiple packages; some services use packages written in Python and some services use packages written in Node.js.
 
-By using an if-else JQ rule, you can specify a different URL to each package, based on its language:
+By using an if-else JQ rule, you can specify a different URL for each package, based on its language:
 
 ```json showLineNumbers
 "calculationProperties" : {
