@@ -1,5 +1,13 @@
 Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
 
+:::info Live event support
+Currently, live events are not supported for integrations hosted by Port.  
+Resyncs will be performed **periodically**, based on the `Resync interval` you have configured, or **manually** triggered by you via Port's UI.  
+
+Therefore, real-time events (including GitOps) will not be ingested into Port immediately.  
+Support for live events is WIP and will be supported in the near future.
+:::
+
 To install, follow the following steps:
 
 1. Go to the [Data sources](https://app.getport.io/settings/data-sources) page of your portal.
@@ -33,11 +41,3 @@ For these settings, [Port secrets](/sso-rbac/port-secrets/) will be used, ensuri
 When changing such a setting, you will be prompted to choose an existing secret or create a new one:
 
 <img src="/img/build-your-software-catalog/sync-data-to-catalog/oceanSaasSecretExample.png" width="50%" border="1px" />
-
-:::info Live event support
-Currently, live events are not supported for integrations hosted by Port.  
-Resyncs will be performed **periodically**, based on the `Resync interval` you have configured, or **manually** triggered by you via Port's UI.  
-
-Therefore, real-time events such as GitOps pushes will not be ingested into Port immediately.  
-Live events are WIP and will be supported in the future.
-:::
