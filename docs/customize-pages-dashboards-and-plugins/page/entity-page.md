@@ -62,19 +62,28 @@ This tab displays all actions (including CRUD) that caused any change to the ent
 
 [Visualization widgets](/customize-pages-dashboards-and-plugins/dashboards/) can be added to an entity page to display data using graphic elements.
 
-You can add widgets to an entity page by using the `Add visualization` menu:
+You can add widgets to an entity page by clicking on the `+ Widget` button in the top right corner:
 
-![addVisualizations](../../../static/img/software-catalog/pages/addVisualizations.png)
+<img src='/img/software-catalog/pages/addVisualizations.png' width='100%' border='1px' />
+<br/><br/>
 
 Let's create a simple number chart that displays the number of `System` entities related to this `Domain`:
 
 <img src='/img/software-catalog/pages/demoNumberChart.png' width='350rem' />
+<br/><br/>
 
 After the first widget is created, a new tab called `dashboard` will be created in the entity page displaying the new widget:
 
-![entityAfterVisualization](../../../static/img/software-catalog/pages/entityAfterVisualization.png)
+![entityAfterVisualization](/img/software-catalog/pages/entityAfterVisualization.png)
 
 Each additional visualization will be added as a widget to the `dashboard` tab.
+
+### Chart filters
+
+[Pie charts](#pie-chart), [number charts](#number-chart) and [tables](#table) support filters, which allow you to include or exclude specific data from them. The filters are based on Port's [Search Rules](/search-and-query/search-and-query.md#rules), and are set when creating the widget.  
+
+For more information and examples of chart filters, click [here](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters).
+
 
 ## Additional tabs
 

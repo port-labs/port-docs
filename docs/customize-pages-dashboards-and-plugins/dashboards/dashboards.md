@@ -220,9 +220,74 @@ The table will automatically display data about each run, including status, inpu
 
 ## Chart filters
 
-[Pie charts](#pie-chart), [number charts](#number-chart) and [tables](#table) support filters, which allow you to include or exclude specific data from them. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules), and are set when creating the widget:
+[Pie charts](/customize-pages-dashboards-and-plugins/dashboards/#pie-chart), [number charts](/customize-pages-dashboards-and-plugins/dashboards/#number-chart) and [tables](/customize-pages-dashboards-and-plugins/dashboards/#table) support filters, which allow you to include or exclude specific data from them. The filters are based on Port's [Search Rules](/search-and-query/search-and-query.md#rules), and are set when creating the widget:
 
-<img src='/img/software-catalog/widgets/widgetFilterForm.png' width='400rem' />
+<img src='/img/software-catalog/widgets/widgetFilterForm.png' width='45%' />
+<br/><br/>
+
+Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
+
+<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' border='1px' />
+<br/><br/>
+
+These are used internally in Port and cannot be modified/removed.  
+You can add additional filters as you wish, by adding new objects to the `rules` array, for example:
+
+<details>
+<summary><b>Filter with additional rule example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "operator": "=",
+      "value": "someValue",
+      "property": "someProp"
+    }
+  ]
+}
+```
+</details>
+
+If you want to add additional rules with a different combinator, you can nest them inside a new object, for example:
+
+<details>
+<summary><b>Filter with nested rules example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "combinator": "or",
+      "rules": [
+        {
+          "operator": "=",
+          "value": "someValue",
+          "property": "someProp"
+        },
+        {
+          "operator": "=",
+          "value": "anotherValue",
+          "property": "anotherProp"
+        }
+      ]
+    }
+  ]
+}
+```
+</details>
 
 ### Filter example: only deployment entities from the last week
 
