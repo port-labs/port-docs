@@ -2,6 +2,8 @@
 sidebar_position: 2
 ---
 
+import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
+
 # Entity page
 
 Each [entity](../../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) has a dedicated page that contains 3 tabs (by default):
@@ -80,10 +82,81 @@ Each additional visualization will be added as a widget to the `dashboard` tab.
 
 ### Chart filters
 
-[Pie charts](#pie-chart), [number charts](#number-chart) and [tables](#table) support filters, which allow you to include or exclude specific data from them. The filters are based on Port's [Search Rules](/search-and-query/search-and-query.md#rules), and are set when creating the widget.  
+<ChartFilters />
 
-For more information and examples of chart filters, click [here](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters).
+Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
 
+<img src='/img/software-catalog/pages/defaultInternalChartFilters.png' width='35%' border='1px' />
+<br/><br/>
+
+These are used internally in Port and cannot be modified/removed.
+You can add additional filters as you wish, by adding new objects to the `rules` array, for example:
+
+<details>
+<summary><b>Filter with additional rule example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "operator": "relatedTo",
+      "blueprint": "{{blueprint}}",
+      "value": "{{url.identifier}}"
+    },
+    {
+      "operator": "=",
+      "value": "someValue",
+      "property": "someProp"
+    }
+  ]
+}
+```
+</details>
+
+If you want to add additional rules with a different combinator, you can nest them inside a new object, for example:
+
+<details>
+<summary><b>Filter with nested rules example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "operator": "relatedTo",
+      "blueprint": "{{blueprint}}",
+      "value": "{{url.identifier}}"
+    },
+    {
+      "combinator": "or",
+      "rules": [
+        {
+          "operator": "=",
+          "value": "someValue",
+          "property": "someProp"
+        },
+        {
+          "operator": "=",
+          "value": "anotherValue",
+          "property": "anotherProp"
+        }
+      ]
+    }
+  ]
+}
+```
+</details>
 
 ## Additional tabs
 

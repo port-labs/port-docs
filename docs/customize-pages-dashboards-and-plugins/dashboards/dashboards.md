@@ -1,3 +1,5 @@
+import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
+
 # Dashboard widgets
 
 Port supports various visualizations in the form of widgets, allowing you to display data from your software catalog using graphic elements, making it easier to make sense of large datasets.
@@ -220,17 +222,14 @@ The table will automatically display data about each run, including status, inpu
 
 ## Chart filters
 
-[Pie charts](/customize-pages-dashboards-and-plugins/dashboards/#pie-chart), [number charts](/customize-pages-dashboards-and-plugins/dashboards/#number-chart) and [tables](/customize-pages-dashboards-and-plugins/dashboards/#table) support filters, which allow you to include or exclude specific data from them. The filters are based on Port's [Search Rules](/search-and-query/search-and-query.md#rules), and are set when creating the widget:
-
-<img src='/img/software-catalog/widgets/widgetFilterForm.png' width='45%' />
-<br/><br/>
+<ChartFilters />
 
 Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
 
 <img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' border='1px' />
 <br/><br/>
 
-These are used internally in Port and cannot be modified/removed.  
+These are used internally in Port and cannot be modified/removed.
 You can add additional filters as you wish, by adding new objects to the `rules` array, for example:
 
 <details>
