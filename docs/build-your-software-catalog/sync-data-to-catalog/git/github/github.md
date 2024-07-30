@@ -489,7 +489,10 @@ Once the array is parsed, we can use the `item` key to refer to each item in the
 
 For multi-document YAML files (a single file containing multiple YAML documents separated by `---`), `.file.content` will not resolve to an object, but to an array of objects.
 
-You can either use the `itemsToParse` key to create multiple entities from such a file, or map it to an `array` property.
+You can use one of these methods to ingest multi-document YAML files:
+
+1. Use the `itemsToParse` key to create multiple entities from such a file (see example above). 
+2. Map the result to an `array` property.
 
 #### Limitations
 
