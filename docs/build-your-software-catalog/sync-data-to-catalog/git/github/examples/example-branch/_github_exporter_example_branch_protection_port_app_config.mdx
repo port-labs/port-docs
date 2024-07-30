@@ -18,7 +18,7 @@ resources:
             defaultBranch: .default_branch
   - kind: branch
     selector:
-      query: 'true'
+      query: '.repository.default_branch == .branch.name'
     port:
       entity:
         mappings:
