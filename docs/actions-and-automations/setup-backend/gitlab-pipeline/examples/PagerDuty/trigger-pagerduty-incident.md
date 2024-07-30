@@ -20,6 +20,8 @@ This self-service guide provides a detailed walkthrough on how to trigger an inc
 	:::
 
 4. In case you decided not to install the PagerDuty integration, you will need to create a blueprint for PagerDuty incidents in Port.
+   <br />
+   <img src='/img/self-service-actions/setup-backend/gitlab-pipeline/addingBlueprint.png' width='85%' border="1px" />
 
 <PagerDutyIncidentBlueprint/>
 
@@ -172,9 +174,11 @@ trigger_incident_job:
 ## Port Configuration
 
 Create a new self service action using the following JSON configuration.
+<br />
+<img src='/img/self-service-actions/setup-backend/gitlab-pipeline/createNewSelfServiceAction.png' width='85%' border="1px" />
 
 <details>
-<summary><b> Trigger Incident In PagerDuty (click to expand) </b></summary>
+<summary><b> Trigger Incident In PagerDuty (click to expand) Gitlab </b></summary>
 
 <GitLabActionModificationHint/>
 
@@ -288,17 +292,21 @@ Create a new self service action using the following JSON configuration.
 ```
 </details>
 
-Now you should see the `Trigger Incidents` action in the self-service page. 🎉
+Now you should see the `Trigger Incidents Gitlab` action in the self-service page. 🎉
+<br />
+<img src='/img/self-service-actions/setup-backend/gitlab-pipeline/triggerGitlabIncident.png' width='85%' border="1px" />
 
 ## Let's test it!
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
-2. Click on the `Trigger Incident` action
+2. Click on the `Trigger Incident Gitlab` action
 3. Choose the pagerduty incident you want to trigger (In case you didn't install the [PagerDuty integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty), it means you don't have any PagerDuty incidents in Port yet, so you will need to create one manually in Port to test this action)
-4. Select the new incident
-5. Enter the email address of a valid user associated with the account making the request.
+4. Click on `Execute`
+5. Fill the fields in the form
 6. Click on `Execute`
 7. Done! wait for the incident's status to be changed in PagerDuty
+<br />
+<img src='/img/self-service-actions/setup-backend/gitlab-pipeline/successTriggerGitlabIncident.png' width='85%' border="1px" />
 
 Congrats 🎉 You've triggered a PagerDuty incident in Port 🔥
 
