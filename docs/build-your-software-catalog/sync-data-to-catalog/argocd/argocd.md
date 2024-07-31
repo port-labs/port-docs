@@ -39,7 +39,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.identifier`         | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`               | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type` | The event listener type                                                                                       | ✅       |
-| `integration.secrets.token`      | The ArgoCD API token token                                                                                    | ✅       |
+| `integration.secrets.token`      | The ArgoCD API token                                                                                          | ✅       |
 | `integration.config.serverUrl`   | The ArgoCD server url                                                                                         | ✅       |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
