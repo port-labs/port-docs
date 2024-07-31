@@ -194,39 +194,85 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 <br/><br/>
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant SonarQube analysis to each of our pull requests. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your SonarQube integration:
-
-<img src='/img/guides/sonarQubeIntegrationDataSource.png' border='1px' />
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related,
+we need to assign the relevant SonarQube analysis to each of our pull requests.
+This can be done by adding some mapping logic.
+Go to your [data sources page](https://app.getport.io/settings/data-sources),
+and click on your GitHub Pull Request integration:
+<img src='/img/guides/githubPrIntegrationDataSource.png' border='1px' />
 
 <br/><br/>
 
-Under the `resources` key, the following YAML block to map the pull request entities with analysis. Then click `Save & Resync`:
+## Relation Mapping
+There are two ways to establish the relationship between `pull-request` kind and the `sonarqube-analysis` kind:
+
+<img src='/img/guides/pullReqSonarQubeRelationship.png' width='70%' border='1px' />
+
+<br/><br/>
+
+
+1. **Option 1** - using the `title` and `branch` **property** to perform a search query[ rule](/search-and-query/#rules) to map relations based on the **property** of the related entity:
+
+   - Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the GitHub exporter:
+
+      <img src='/img/githubExporter.png' width='100%' border='1px' />
+
+   - Add the following entry to the mapping YAML:
+
+     ```yaml showLineNumbers
+     relations:
+     sonarAnalysis:
+        combinator: '"and"'
+        rules:
+           - property: '"$title"'
+             operator: '"="'
+             value: .title
+           - property: '"$branch"'
+             operator: '"="'
+             value: .head.ref
+     ```
+
+     Now this uses the `title` and `branch` as the parameters for the search rule
+     to establish a relationship with sonarQube analysis based on any of it's properties
+     matching these and having equal value.
+
+2. **Option 2** - modify the `sonarQube Analysis` <PortTooltip id="blueprint">blueprints</PortTooltip> to add a `commitSha` **property**:
+   
+   - Click on Builder on the top right conner
+   - Go to the `SonarQube` <PortTooltip id="blueprint">blueprints</PortTooltip>.
+   - Hover over it, click on the `...` button on the right, and select `Edit`.
+<br></br>
+   <img src='/img/guides/sonarQubeAnalysisBlueprintUpdate.png' width='40%' border='1px' />
+
+   - Click on `Edit JSON`, add the `commitSha` **property** and `Save`:
+   
+     <img src='/img/guides/editSonarQubeAnalysisJson.png' width='40%' border='1px' />
+   
+<br></br>
 
 <details>
 <summary>Relation mapping (click to expand)</summary>
 
 ```yaml showLineNumbers
-  - kind: analysis
-    selector:
-      query: . | has("pullRequest")
-    port:
-      entity:
-        mappings:
-          blueprint: '"githubPullRequest"'
-          identifier: .__component.name + "-" + .pullRequest.key
-          title: .pullRequest.commit.message
-          properties: {}
-          relations:
-            sonarAnalysis: .analysisId
+  relations:
+     sonarAnalysis:
+        combinator: '"and"'
+        rules:
+           - property: '"$commitSha"'
+             operator: '"="'
+             value: .head.sha
 ```
 
 </details>
 
 :::tip Mapping explanation
 
-The configuration mapping above uses the `query` key to filter all SonarQube analyses that have `pullRequest` data. It then goes ahead to establish a relation between the `githubPullRequest` entities and the `sonarAnalysis` entities &nbsp;🎉. 
-
-Please note that the `__component.name` property refers to the name of the repository, while the `pullRequest.key` property indicates the pull request number. In our GitHub integration mapping, we have defined these two pieces of information as the identifiers for the `githubPullRequest` entities.
+In this implementation,
+we used search relation features
+to map relationships between `githubPullRequest` entities and `sonarAnalysis` entities based on specific **properties** rather than direct identifiers.
+By using **properties** like `title`, `branch`, and `commitSha`, we are able to establish a between the two entities.
+This approach leverages the flexibility of property-based matching,
+allowing us to define relationships even when direct identifiers are unavailable.
 :::
 
 <img src='/img/guides/githubPREntityAfterAnalysisMapping.png' width="70%" border='1px' />
