@@ -35,23 +35,6 @@ Port API's rate limits are enforced at the **IP level**. The table below shows t
 
 ## How to prevent getting rate-limited
 
-### Use selectors in Ocean integrations
-
-The Ocean port-app-config `selector` and the `query` keys let you filter exactly which objects from the specified kind will be ingested to the software catalog.
-In order to make less requests to Port, try to use Selectors as much as you can, to filter-out non-relevant data, Making unnecessary requests.
-For example, if you try to fetch all Pull requests from Gitlab, Make sure you are filtering out closed PRs if you don't have any use for those.
-
-```yaml
-resources:
-  - kind: myIntegrationKind
-    # highlight-start
-    selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-    # highlight-end
-    port:
-```
-
-
 ### Use Exponential backoff
 
 Exponential backoff is a technique used to prevent overwhelming a server with too many requests in a short period of time. It involves progressively increasing the delay between retries when encountering rate limits or server errors.
@@ -128,6 +111,7 @@ function retryWithExponentialBackoff() {
     console.log('Exceeded maximum retries');
   }
 }
+
 retryWithExponentialBackoff();
 ```
 
