@@ -203,67 +203,112 @@ and click on your GitHub Pull Request integration:
 
 <br/><br/>
 
-## Relation Mapping
-There are two ways to establish the relationship between `pull-request` kind and the `sonarqube-analysis` kind:
+# Relation Mapping
+There are two ways
+to establish the relationship between a GitHub `pull-request` entity and a SonarQube `analysis` entity:
 
-<img src='/img/guides/pullReqSonarQubeRelationship.png' width='70%' border='1px' />
+## Matching Common Pull Request Title and Branch
 
-<br/><br/>
+To establish the relationship between a GitHub `pull-request` entity and a SonarQube `analysis` entity using the `title` and `branch` properties:
+- **Why use `title` and `branch` properties?**
+  The `title` property is common to both GitHub pull requests and SonarQube analyses,
+  making it a reliable identifier for matching related entities.
+  The `branch` property helps specify the exact code changes,
+  ensuring accurate mapping even if there are pull requests with similar titles on different branches.
 
-
-1. **Option 1** - using the `title` and `branch` **property** to perform a search query[ rule](/search-and-query/#rules) to map relations based on the **property** of the related entity:
-
-   - Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the GitHub exporter:
-
-      <img src='/img/githubExporter.png' width='100%' border='1px' />
-
-   - Add the following entry to the mapping YAML:
-
-     ```yaml showLineNumbers
-     relations:
-     sonarAnalysis:
-        combinator: '"and"'
-        rules:
-           - property: '"$title"'
-             operator: '"="'
-             value: .title
-           - property: '"$branch"'
-             operator: '"="'
-             value: .head.ref
-     ```
-
-     Now this uses the `title` and `branch` as the parameters for the search rule
-     to establish a relationship with sonarQube analysis based on any of it's properties
-     matching these and having equal value.
-
-2. **Option 2** - modify the `sonarQube Analysis` <PortTooltip id="blueprint">blueprints</PortTooltip> to add a `commitSha` **property**:
-   
-   - Click on Builder on the top right conner
-   - Go to the `SonarQube` <PortTooltip id="blueprint">blueprints</PortTooltip>.
-   - Hover over it, click on the `...` button on the right, and select `Edit`.
-<br></br>
-   <img src='/img/guides/sonarQubeAnalysisBlueprintUpdate.png' width='40%' border='1px' />
-
-   - Click on `Edit JSON`, add the `commitSha` **property** and `Save`:
-   
-     <img src='/img/guides/editSonarQubeAnalysisJson.png' width='40%' border='1px' />
-   
+- Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the GitHub exporter:
+  <img src='/img/guides/githubExporter.png' width='100%' border='1px' />
 <br></br>
 
-<details>
-<summary>Relation mapping (click to expand)</summary>
+- Update the mapping YAML with this content:
+
+  ```yaml showLineNumbers
+  resources:
+  - kind: pull-request
+    selector:
+    query: 'true'
+    port:
+    entity:
+    mappings:
+    identifier: .head.repo.name + '-' + (.number|tostring)
+    title: .title
+    blueprint: '"githubPullRequest"'
+    properties:
+    creator: .user.login
+    assignees: '[.assignees[].login]'
+    reviewers: '[.requested_reviewers[].login]'
+    status: .status
+    closedAt: .closed_at
+    updatedAt: .updated_at
+    mergedAt: .merged_at
+    prNumber: .id
+    link: .html_url
+    relations:
+    sonarAnalysis:
+    combinator: '"and"'
+    rules:
+    - property: '"$title"'
+      operator: '"="'
+      value: .title
+    - property: '"branch"'
+      operator: '"="'
+      value: .head.ref
+
+  ```
+
+This configuration uses the `title` and `branch` properties to establish a relationship with SonarQube analysis based on matching properties.
+
+## Matching Pull Request Commit SHA
+
+To establish the relationship using the `commitSha` property:
+   
+- Click on Builder on the top right conner
+- Go to the `SonarQube` <PortTooltip id="blueprint">blueprints</PortTooltip>.
+- Hover over it, click on the `...` button on the right, and select `Edit`.
+<br></br>
+
+<img src='/img/guides/sonarQubeAnalysisBlueprintUpdate.png' width='40%' border='1px' />
+
+<br></br>
+
+Click on `Edit JSON`, add the `commitSha` **property** and `Save`:
+
+<img src='/img/guides/editSonarQubeAnalysisJson.png' width='40%' border='1px' />
+   
+<br></br>
+- Update the mapping YAML with this content
 
 ```yaml showLineNumbers
-  relations:
-     sonarAnalysis:
-        combinator: '"and"'
-        rules:
-           - property: '"$commitSha"'
-             operator: '"="'
-             value: .head.sha
+  resources:
+     - kind: pull-request
+       selector:
+          query: 'true'
+       port:
+          entity:
+             mappings:
+                identifier: .head.repo.name + '-' + (.number|tostring)
+                title: .title
+                blueprint: '"githubPullRequest"'
+                properties:
+                   creator: .user.login
+                   assignees: '[.assignees[].login]'
+                   reviewers: '[.requested_reviewers[].login]'
+                   status: .status
+                   closedAt: .closed_at
+                   updatedAt: .updated_at
+                   mergedAt: .merged_at
+                   prNumber: .id
+                   link: .html_url
+                relations:
+                   sonarAnalysis:
+                      combinator: '"and"'
+                      rules:
+                         - property: '"commitSha"'
+                           operator: '"="'
+                           value: .head.sha
+
 ```
 
-</details>
 
 :::tip Mapping explanation
 
