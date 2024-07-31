@@ -3,8 +3,6 @@
 The `Send Slack message` backend type allows you to send a message to a Slack channel, using a webhook URL.  
 This can be useful when you want to notify certain users/teams about a specific event that occurred in your software catalog.
 
-This backend type is a simplified version of the [Webhook backend type](/actions-and-automations/setup-backend/webhook/), with a `synchronized` request type, and no headers.
-
 ## Define the backend
 
 This backend type requires a Slack webhook URL.  
