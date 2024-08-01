@@ -426,25 +426,6 @@ we can run custom logic whenever the `openDuration` timer property expires on a 
 }
 ```
 
-### Adding the Automation in Port
-
-1. **Navigate to the Automation Menu:**
-    - Click on the builder icon on the top right of the Port UI.
-    - Select "Automations" from the menu.
-
-2. **Create a New Automation:**
-    - Click on "New Automation".
-    - Paste the provided JSON into the configuration editor.
-
-3. **Save and Activate the Automation:**
-    - Save the automation.
-    - Ensure it is active and monitor for triggers as per the defined conditions.
-
-Hurray &nbsp;🎉, your automation is ready
-<br></br>
-<img src='/img/automations/slackPRAutomation.png' width='60%' />
-<br></br>
-
 ## Run History
 
 - To check your run history click on this icon on the top right conner beneath the `Builder` icon
