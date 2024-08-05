@@ -444,7 +444,7 @@ jobs:
       - name: Update new file data
         run: |
           sed -i 's/{{ service_identifier }}/${{ fromJson(inputs.port_context).entity }}/' ./targetRepo/port.yml
-          sed -i 's/{{ domain_identifier }}/${{ inputs.domain }}/' ./targetRepo/port.yml
+          sed -i 's/{{ domain_identifier }}/${{ fromJson(inputs.domain).identifier }}/' ./targetRepo/port.yml
           sed -i 's/{{ service_type }}/${{ inputs.type }}/' ./targetRepo/port.yml
           sed -i 's/{{ service_lifecycle }}/${{ inputs.lifecycle }}/' ./targetRepo/port.yml
       - name: Open a pull request
