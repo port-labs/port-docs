@@ -136,7 +136,7 @@ jobs:
           logMessage: "Creating a new GitHub issue for PagerDuty incident '${{ env.PD_INCIDENT_ID }}'..."
 
       - name: Get incident's related service
-        id: get-incidient-service
+        id: get-incident-service
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -150,7 +150,7 @@ jobs:
       - name: Extract related service
         id: get-service-info
         run: |
-          service_title=$(echo '${{ steps.get-incidient-service.outputs.entity }}' | jq -r '.title')
+          service_title=$(echo '${{ steps.get-incident-service.outputs.entity }}' | jq -r '.title')
           echo "SERVICE_TITLE=$service_title" >> $GITHUB_OUTPUT
           echo "SERVICE_IDENTIFIER=$(echo $service_title | tr '[:upper:] ' '[:lower:]-')" >> $GITHUB_OUTPUT
 
@@ -163,7 +163,7 @@ jobs:
           title: PagerDuty incident - ID ${{ env.PD_INCIDENT_ID }}
           labels: bug, incident, pagerduty
           body: |
-            PagerDuty incidient issue reported.
+            PagerDuty incident issue reported.
             Port Incident Entity URL: ${{ env.PORT_INCIDENT_URL }}.
             PagerDuty incident URL: ${{ env.PD_INCIDENT_URL }}.
 
