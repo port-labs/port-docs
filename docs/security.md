@@ -111,6 +111,8 @@ Every part of the Port service uses properly-provisioned, redundant servers (e.g
 
 Port keeps hourly encrypted backups of data in multiple regions on AWS. While never expected, in the case of production data loss (i.e., primary data stores lost), we will restore organizational data from these backups.
 
+Port's BCP is fully outlined in a document that is reviewed, updated and tested annually, it is available upon request.
+
 ### Disaster recovery
 
 In the event of a region-wide outage, Port has a documented protocol outlining the steps to deploy a duplicate environment of Port in a different AWS region. The Port operations team undergoes an annual DR simulation to ensure the process is up to date and aligns with the latest innovations in Port.
