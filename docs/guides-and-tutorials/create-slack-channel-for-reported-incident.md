@@ -159,7 +159,7 @@ jobs:
         id: create-github-issue
         with:
           token: ${{ secrets.ISSUES_TOKEN }}
-          repo: ${{ steps.get-service.info.outputs.SERVICE_IDENTIFIER }}
+          repo: ${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}
           title: PagerDuty incident - ID ${{ env.PD_INCIDENT_ID }}
           labels: bug, incident, pagerduty
           body: |
