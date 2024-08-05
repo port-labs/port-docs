@@ -158,7 +158,7 @@ jobs:
         uses: dacbd/create-issue-action@main
         id: create-github-issue
         with:
-          token: ${{ secrets.ISSUES_TOKEN }}
+          token: ${{ secrets.ORG_ADMIN_TOKEN }}
           repo: ${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}
           title: PagerDuty incident - ID ${{ env.PD_INCIDENT_ID }}
           labels: bug, incident, pagerduty
@@ -300,7 +300,10 @@ jobs:
 We also need to create the following secrets in our GitHub repository:
 - `PORT_CLIENT_ID` - Your Port client ID.
 - `PORT_CLIENT_SECRET` - Your Port client secret.
+- `ORG_ADMIN_TOKEN` - Your personal access token.
 - `BOT_USER_OAUTH_TOKEN` - The Slack app bot token.
+
+If you've already completed the [scaffold a new service guide](/guides-and-tutorials/scaffold-a-new-service), you should already have these configured.
 
 ### Automation trigger
 After setting up the automation backend, we will create the Port automation which will trigger the backend.
