@@ -300,7 +300,7 @@ jobs:
 We also need to create the following secrets in our GitHub repository:
 - `PORT_CLIENT_ID` - Your Port client ID.
 - `PORT_CLIENT_SECRET` - Your Port client secret.
-- `ORG_ADMIN_TOKEN` - Your personal access token.
+- `ORG_ADMIN_TOKEN` - Your GitHub personal access token.
 - `BOT_USER_OAUTH_TOKEN` - The Slack app bot token.
 
 If you've already completed the [scaffold a new service guide](/guides-and-tutorials/scaffold-a-new-service), you should already have the first three configured.
