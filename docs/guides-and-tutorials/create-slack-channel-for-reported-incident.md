@@ -360,7 +360,7 @@ Now that we have both the automation backend, and the Port automation set up, le
 <img src='/img/guides/slackIncidentGuide/newIncidentEntity.png' width='75%' border='1px' />
 </p>
 
-4. Navigate to your [runs audit page](https://app.getport.io/settings/AuditLog?activeTab=5). You should see a new `Automation` run was triggered.
+4. Navigate to your [runs audit page](https://app.getport.io/settings/AuditLog?activeTab=4). You should see a new `Automation` run was triggered.
 
 <!-- Runs page - showing the new automation run -->
 <p align="center">
