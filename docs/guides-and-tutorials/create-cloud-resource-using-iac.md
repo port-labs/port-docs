@@ -761,7 +761,7 @@ You may have noticed that even though we updated the service's `Resource definit
 
     <img src='/img/guides/iacEntityAfterAction.png' width='50%' />
 
-1. Click on the `Resource definitions` link to access the service's resources.
+3. Click on the `Resource definitions` link to access the service's resources.
 
 All done! You can now create resources for your services directly from Port 💪🏽
 
