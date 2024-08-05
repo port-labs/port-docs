@@ -239,7 +239,7 @@ When using a search query rule to map a relation, Port will query all entities o
   - A ["many type" relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#-many) expects an array of entities to be returned.
 - The maximum number of entities returned by the search query rule is 100.
 - Mirror and calculation properties are currently not supported.
-- Only the `=` operator is supported for the search query rule.
+- Only the `=` and `in` operators are supported for the search query rule.
 
 ## Create multiple entities from an array API object
 
