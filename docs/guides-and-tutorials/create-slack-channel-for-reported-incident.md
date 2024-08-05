@@ -136,7 +136,7 @@ jobs:
           logMessage: "Creating a new GitHub issue for PagerDuty incident '${{ env.PD_INCIDENT_ID }}'..."
 
       - name: Get incident's related service
-        id: get-incidient-service
+        id: get-incident-service
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -150,7 +150,7 @@ jobs:
       - name: Extract related service
         id: get-service-info
         run: |
-          service_title=$(echo '${{ steps.get-incidient-service.outputs.entity }}' | jq -r '.title')
+          service_title=$(echo '${{ steps.get-incident-service.outputs.entity }}' | jq -r '.title')
           echo "SERVICE_TITLE=$service_title" >> $GITHUB_OUTPUT
           echo "SERVICE_IDENTIFIER=$(echo $service_title | tr '[:upper:] ' '[:lower:]-')" >> $GITHUB_OUTPUT
 
@@ -158,12 +158,12 @@ jobs:
         uses: dacbd/create-issue-action@main
         id: create-github-issue
         with:
-          token: ${{ secrets.ISSUES_TOKEN }}
-          repo: ${{ steps.get-service.info.outputs.SERVICE_IDENTIFIER }}
+          token: ${{ secrets.ORG_ADMIN_TOKEN }}
+          repo: ${{ steps.get-service-info.outputs.SERVICE_IDENTIFIER }}
           title: PagerDuty incident - ID ${{ env.PD_INCIDENT_ID }}
           labels: bug, incident, pagerduty
           body: |
-            PagerDuty incidient issue reported.
+            PagerDuty incident issue reported.
             Port Incident Entity URL: ${{ env.PORT_INCIDENT_URL }}.
             PagerDuty incident URL: ${{ env.PD_INCIDENT_URL }}.
 
@@ -300,7 +300,10 @@ jobs:
 We also need to create the following secrets in our GitHub repository:
 - `PORT_CLIENT_ID` - Your Port client ID.
 - `PORT_CLIENT_SECRET` - Your Port client secret.
+- `ORG_ADMIN_TOKEN` - Your GitHub personal access token.
 - `BOT_USER_OAUTH_TOKEN` - The Slack app bot token.
+
+If you've already completed the [scaffold a new service guide](/guides-and-tutorials/scaffold-a-new-service), you should already have the first three configured.
 
 ### Automation trigger
 After setting up the automation backend, we will create the Port automation which will trigger the backend.
@@ -360,7 +363,7 @@ Now that we have both the automation backend, and the Port automation set up, le
 <img src='/img/guides/slackIncidentGuide/newIncidentEntity.png' width='75%' border='1px' />
 </p>
 
-4. Navigate to your [runs audit page](https://app.getport.io/settings/AuditLog?activeTab=5). You should see a new `Automation` run was triggered.
+4. Navigate to your [runs audit page](https://app.getport.io/settings/AuditLog?activeTab=4). You should see a new `Automation` run was triggered.
 
 <!-- Runs page - showing the new automation run -->
 <p align="center">
