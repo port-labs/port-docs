@@ -23,6 +23,7 @@ Solving incidents efficiently is a crucial part of any production-ready environm
 In this guide, we will be using Port's [Automations](../actions-and-automations/define-automations/define-automations.md) capabilities to automate incident management. 
 
 ## Prerequisites
+
 - Install Port's [GitHub app](https://github.com/apps/getport-io) in your GitHub organization.
 - Install Port's [PagerDuty integration](../build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md) for real-time incident ingestion to Port. This integration will in turn trigger our automation when a new incident is created in PagerDuty.
 - [Ingest GitHub issues](../build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-issues) using Port's GitHub app.

@@ -12,7 +12,7 @@ The script initializes the <PortTooltip id="blueprint">blueprints</PortTooltip> 
 
 The source code of the import script is open and available on [**GitHub**](https://github.com/port-labs/backstage-import.git).
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - While it is not mandatory for this guide, we recommend that you complete the [onboarding process](/quickstart) before proceeding.
 - [Docker](https://docs.docker.com/engine/install/).
