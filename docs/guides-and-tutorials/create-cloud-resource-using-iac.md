@@ -89,10 +89,10 @@ Fill out the form with your values:
   {
     "port_context": {
       "entity": "{{ .entity.identifier }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
     "name": "{{ .inputs.name }}",
-    "visibility": "{{ .inputs.visibility }}",
+    "visibility": "{{ .inputs.visibility }}"
   }
   ```
 
