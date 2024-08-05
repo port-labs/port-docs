@@ -6,7 +6,7 @@ sidebar_position: 1
 
 This example helps internal developer teams to trigger an [Argo Workflow](https://argoproj.github.io/workflows/) using Port's self service actions. We will create a blueprint for `argoWorkflow` that will be connected to a backend action. We will then add some configuration files (`invocations.json`) to control the payload and trigger your Argo Workflows directly from Port using the sync execution method.
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have Kafka credentials available and ready to use within your Port account.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).

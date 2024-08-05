@@ -4,7 +4,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide aims to demonstrate how to connect a service entity to its related Snyk target using integration mapping updates.
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - Ensure you have [Snyk ocean integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/snyk/snyk.md) installed and configured in your environment.
