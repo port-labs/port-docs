@@ -203,13 +203,13 @@ and click on your GitHub Pull Request integration:
 
 <br/><br/>
 
-# Relation Mapping
+## Relation Mapping
 There are two ways
 to establish the relationship between a GitHub `pull-request` entity and a SonarQube `analysis` entity:
 
-## Matching Common Pull Request Title and Branch
+### Matching Common Pull Request Title and Branch
 
-To establish the relationship between a GitHub `pull-request` entity and a SonarQube `analysis` entity using the `title` and `branch` properties:
+The first way is to use the `title` and `branch` properties:
 - **Why use `title` and `branch` properties?**
   The `title` property is common to both GitHub pull requests and SonarQube analyses,
   making it a reliable identifier for matching related entities.
@@ -218,9 +218,9 @@ To establish the relationship between a GitHub `pull-request` entity and a Sonar
 
 - Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the GitHub exporter:
   <img src='/img/guides/githubExporter.png' width='100%' border='1px' />
-<br></br>
 
-- Update the mapping YAML with this content:
+
+- Replace the mapping YAML with this content:
 
   ```yaml showLineNumbers
   resources:
@@ -258,25 +258,24 @@ To establish the relationship between a GitHub `pull-request` entity and a Sonar
 
 This configuration uses the `title` and `branch` properties to establish a relationship with SonarQube analysis based on matching properties.
 
-## Matching Pull Request Commit SHA
+### Matching Pull Request Commit SHA
 
-To establish the relationship using the `commitSha` property:
+The second way is to use the `commitSha` property:
    
-- Click on Builder on the top right conner
-- Go to the `SonarQube` <PortTooltip id="blueprint">blueprints</PortTooltip>.
-- Hover over it, click on the `...` button on the right, and select `Edit`.
+- Go to the [data model](https://github.com/port-labs/port-docs/pull/link-to-data-model) page of your portal
+- Go to the `SonarQube` <PortTooltip id="blueprint">blueprint</PortTooltip>.
+- Hover over it, click on the `...` button on the right, and select `Edit JSON`.
 <br></br>
 
 <img src='/img/guides/sonarQubeAnalysisBlueprintUpdate.png' width='40%' border='1px' />
 
 <br></br>
 
-Click on `Edit JSON`, add the `commitSha` **property** and `Save`:
+Add the `commitSha` **property** and `Save`:
 
-<img src='/img/guides/editSonarQubeAnalysisJson.png' width='40%' border='1px' />
-   
-<br></br>
-- Update the mapping YAML with this content
+- Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the GitHub exporter:
+
+- Replace the `pull-request` mapping YAML with this content:
 
 ```yaml showLineNumbers
   resources:
@@ -316,8 +315,6 @@ In this implementation,
 we used search relation features
 to map relationships between `githubPullRequest` entities and `sonarAnalysis` entities based on specific **properties** rather than direct identifiers.
 By using **properties** like `title`, `branch`, and `commitSha`, we are able to establish a between the two entities.
-This approach leverages the flexibility of property-based matching,
-allowing us to define relationships even when direct identifiers are unavailable.
 :::
 
 <img src='/img/guides/githubPREntityAfterAnalysisMapping.png' width="70%" border='1px' />
