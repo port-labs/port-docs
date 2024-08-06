@@ -205,3 +205,45 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
 1. Go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`. 
 2. Click on the `Generate API token` button, and copy the generated token.
 :::
+
+#### Consequent changes
+
+After enabling this feature, some functionalities will be affected:
+
+- Any search query that includes `$team` will use the team's `identifier` instead of its `name`.  
+  For example:
+  ```json
+  {
+    "operator": "containsAny",
+    "property": "$team",
+     "value": ["team-identifier"] // instead of ["team-name"]
+  }
+  ```
+  This change will affect all search queries that include the `$team` property, in any component (widget filters, entity search, dynamic permissions, etc.).  
+  **Note** that the [getUserTeams()](/search-and-query/#dynamic-properties) function will automatically return the team's `identifier`, so it can be used as is.
+
+- In [Advanced input configurations](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations) of self-service actions, when using a [jqQuery](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations#filter-the-dropdowns-available-options-based-on-properties-of-the-user-that-executes-the-action), team identifiers should be used instead of team names.  
+  For example:
+  ```json
+  {
+    "properties": {
+      "namespace": {
+        "type": "string",
+        "format": "entity",
+        "blueprint": "namespace",
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "$team",
+              "operator": "containsAny",
+              "value": {
+                "jqQuery": "[.user.teamsIdentifiers[]]" // instead of [.user.teams[].name]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+  ```
