@@ -9,6 +9,7 @@ import SentryCommentsConfiguration from "/docs/build-your-software-catalog/custo
 import SentryIssuesBluePrint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_issue_event_blueprint.mdx"
 import SentryIssuesConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_issue_event_webhook_configuration.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Sentry
 
@@ -34,7 +35,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -165,6 +172,12 @@ kubectl apply -f my-ocean-sentry-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
+
+<h3>Event listener</h3>
+
+The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
 </TabItem>
 
@@ -375,15 +388,12 @@ ingest_data:
 
   </Tabs>
 <PortApiRegionTip/>
+
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-### Event listener
-
-The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
-
-<AdvancedConfig/>
 
 ## Ingesting Sentry objects
 

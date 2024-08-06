@@ -1,5 +1,5 @@
 ---
-sidebar_position: 14
+sidebar_position: 13
 title: Troubleshooting
 sidebar_label: Troubleshooting
 sidebar_class_name: custom-sidebar-item sidebar-menu-troubleshooting

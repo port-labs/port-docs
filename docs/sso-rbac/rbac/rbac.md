@@ -1,4 +1,5 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
 
 # Port Roles & User management
 
@@ -33,7 +34,8 @@ For example, if **Members** are allowed to edit `Cluster` entities, then `Micros
 
 You can view (and edit) each user’s role in the users table:
 
-![Users page](/img/software-catalog/role-based-access-control/permissions/usersPageRolesHightlight.png)
+<img src="/img/software-catalog/role-based-access-control/permissions/usersPageRolesHightlight.png" width="70%" border='1px' />
+<br/><br/>
 
 Refer to the [Users and Teams](#users-and-teams-management) section for more information about the users page
 
@@ -67,7 +69,7 @@ Users and teams can be managed via:
 
 ### Users & Teams Page
 
-![Teams and Users page](/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png)
+<img src="/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png" width="80%" border='1px' />
 
 #### Users tab
 
@@ -147,7 +149,8 @@ Entity JSON example with `team` field:
 
 Team dropdown selector in the entity create/edit page:
 
-![Team property](/img/software-catalog/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png)
+<img src="/img/software-catalog/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png" width="70%" border='1px' />
+<br/><br/>
 
 | Field | Type | Description                                            | Default      |
 | ----- | ---- | ------------------------------------------------------ | ------------ |
@@ -162,6 +165,8 @@ Okta and AzureAD integrations are only available after configuring SSO from the 
 :::
 
 ### Users and teams as blueprints
+
+<BetaFeatureNotice />
 
 Port allows you to manage users and teams as <PortTooltip id="blueprint">blueprints</PortTooltip>.  
 This option is disabled by default, and can be [enabled via Port's API](/sso-rbac/rbac/#enable-the-feature). 

@@ -138,7 +138,7 @@ We can create an aggregation property on the `cluster` blueprint, which sums the
 Then, we can create a line chart displaying the `cost` property of the `cluster` entity over time, showing the total cost of the cluster.
 
 :::info Available historical data
-The line chart will display data starting from the time the property was created.  
+The line chart will display data starting from the time the property was created on the blueprint.  
 Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
 :::
 

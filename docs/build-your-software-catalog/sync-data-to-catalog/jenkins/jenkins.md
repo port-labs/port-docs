@@ -9,6 +9,7 @@ import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_jenkins-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Jenkins
 
@@ -30,7 +31,7 @@ To generate a token for authenticating the Jenkins API calls:
 4. Click Generate.
 5. Copy the API token that is generated to use as the `JENKINS_TOKEN`.
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' border='1px' />
 
 :::info Install the People View Plugin
 Recent Jenkins versions ([2.452 and above](https://issues.jenkins.io/browse/JENKINS-18884)) no longer include the "People" view by default.  This view is essential for providing the user information API that will be queried by the integration.
@@ -46,7 +47,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -183,6 +190,8 @@ kubectl apply -f my-ocean-jenkins-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
 
 </TabItem>
 
@@ -395,11 +404,11 @@ ingest_data:
 
 <PortApiRegionTip/>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>
 
 ## Ingesting Jenkins objects
 

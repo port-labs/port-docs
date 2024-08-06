@@ -9,6 +9,7 @@ import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuratio
 import LinearIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/linear/\_example_linear_issue_blueprint.mdx"
 import LinearIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/linear/\_example_linear_issue_configuration.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Linear
 
@@ -30,7 +31,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -159,6 +166,8 @@ kubectl apply -f my-ocean-linear-integration.yaml
 
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
 
 </TabItem>
 
@@ -378,11 +387,13 @@ ingest_data:
 
   <PortApiRegionTip/>
 
+  <AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
 
-<AdvancedConfig/>
+
 
 ## Ingesting Linear objects
 
