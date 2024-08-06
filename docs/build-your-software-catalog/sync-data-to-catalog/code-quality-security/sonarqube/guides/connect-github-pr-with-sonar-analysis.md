@@ -11,7 +11,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide aims to cover how to connect a GitHub pull request with a SonarQube analysis to understand the scan results of your PR.
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
 - Ensure you have [SonarQube ocean integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md) installed and configured in your environment.

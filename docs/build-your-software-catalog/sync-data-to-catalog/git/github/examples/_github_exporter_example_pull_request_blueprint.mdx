@@ -45,6 +45,11 @@
         "type": "string",
         "format": "date-time"
       },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
       "link": {
         "format": "url",
         "type": "string"
@@ -53,7 +58,19 @@
     "required": []
   },
   "mirrorProperties": {},
-  "calculationProperties": {},
+  "calculationProperties": {
+    "days_old": {
+      "title": "Days Old",
+      "icon": "DefaultProperty",
+      "calculation": "(now / 86400) - (.properties.updatedAt | capture(\"(?<date>\\\\d{4}-\\\\d{2}-\\\\d{2})\") | .date | strptime(\"%Y-%m-%d\") | mktime / 86400) | floor",
+      "type": "number"
+    },
+    "lead_time_days": {
+      "title": "Lead time (Days)",
+      "calculation": ".properties.createdAt as $createdAt | .properties.mergedAt as $mergedAt | ($createdAt | sub(\"\\\\..*Z$\"; \"Z\") | strptime(\"%Y-%m-%dT%H:%M:%SZ\") | mktime) as $createdTimestamp | ($mergedAt | if . == null then null else sub(\"\\\\..*Z$\"; \"Z\") | strptime(\"%Y-%m-%dT%H:%M:%SZ\") | mktime end) as $mergedTimestamp | if $mergedTimestamp == null then null else ($mergedTimestamp - $createdTimestamp) / 86400 end",
+      "type": "number"
+    }
+  },
   "relations": {
     "service": {
       "title": "Service",
