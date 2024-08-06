@@ -34,7 +34,8 @@ For example, if **Members** are allowed to edit `Cluster` entities, then `Micros
 
 You can view (and edit) each user’s role in the users table:
 
-![Users page](/img/software-catalog/role-based-access-control/permissions/usersPageRolesHightlight.png)
+<img src="/img/software-catalog/role-based-access-control/permissions/usersPageRolesHightlight.png" width="70%" border='1px' />
+<br/><br/>
 
 Refer to the [Users and Teams](#users-and-teams-management) section for more information about the users page
 
@@ -68,7 +69,7 @@ Users and teams can be managed via:
 
 ### Users & Teams Page
 
-![Teams and Users page](/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png)
+<img src="/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png" width="80%" border='1px' />
 
 #### Users tab
 
@@ -148,7 +149,8 @@ Entity JSON example with `team` field:
 
 Team dropdown selector in the entity create/edit page:
 
-![Team property](/img/software-catalog/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png)
+<img src="/img/software-catalog/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png" width="70%" border='1px' />
+<br/><br/>
 
 | Field | Type | Description                                            | Default      |
 | ----- | ---- | ------------------------------------------------------ | ------------ |
@@ -203,3 +205,45 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
 1. Go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`. 
 2. Click on the `Generate API token` button, and copy the generated token.
 :::
+
+#### Consequent changes
+
+After enabling this feature, some functionalities will be affected:
+
+- Any search query that includes `$team` will use the team's `identifier` instead of its `name`.  
+  For example:
+  ```json
+  {
+    "operator": "containsAny",
+    "property": "$team",
+     "value": ["team-identifier"] // instead of ["team-name"]
+  }
+  ```
+  This change will affect all search queries that include the `$team` property, in any component (widget filters, entity search, dynamic permissions, etc.).  
+  **Note** that the [getUserTeams()](/search-and-query/#dynamic-properties) function will automatically return the team's `identifier`, so it can be used as is.
+
+- In [Advanced input configurations](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations) of self-service actions, when using a [jqQuery](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations#filter-the-dropdowns-available-options-based-on-properties-of-the-user-that-executes-the-action), team identifiers should be used instead of team names.  
+  For example:
+  ```json
+  {
+    "properties": {
+      "namespace": {
+        "type": "string",
+        "format": "entity",
+        "blueprint": "namespace",
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "$team",
+              "operator": "containsAny",
+              "value": {
+                "jqQuery": "[.user.teamsIdentifiers[]]" // instead of [.user.teams[].name]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+  ```

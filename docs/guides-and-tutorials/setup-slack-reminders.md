@@ -14,7 +14,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate:
 * How to initiate changes in the organization using scorecards
 * How to automate Slack reminders using Port's self service actions
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need a Git repository in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
