@@ -536,7 +536,7 @@ The Ocean Jira integration ingests active sprints by default:
 ```yaml showLineNumbers
 resources:
   # highlight-next-line
-  - kind: sprint # `state` is only available with the "spring" kind
+  - kind: sprint # `state` is only available with the "sprint" kind
     selector:
       query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
       # highlight-next-line
