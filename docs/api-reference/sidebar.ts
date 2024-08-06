@@ -547,7 +547,43 @@ const sidebar: SidebarsConfig = {
           className: "api-method delete",
         },
       ],
-    }
+    },
+    {
+      type: "category",
+      label: "Apps",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-all-credentials",
+          label: "Get all credentials",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-credentials",
+          label: "Create credentials",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/rotate-secret",
+          label: "Rotate secret",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-credentials",
+          label: "Delete credentials",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-credentials",
+          label: "Update credentials",
+          className: "api-method put",
+        },
+      ],
+    },
   ],
 };
 
