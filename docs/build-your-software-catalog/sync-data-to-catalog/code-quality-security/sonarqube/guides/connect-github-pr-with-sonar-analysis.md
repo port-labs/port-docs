@@ -213,8 +213,7 @@ The first way is to use the `title` and `branch` properties:
 - **Why use `title` and `branch` properties?**
   The `title` property is common to both GitHub pull requests and SonarQube analyses,
   making it a reliable identifier for matching related entities.
-  The `branch` property helps specify the exact code changes,
-  ensuring accurate mapping even if there are pull requests with similar titles on different branches.
+  The `branch` property gives information about the source and destination of the the code changes. Combining the title with the branch offers a robust mapping, ensuring that entities are correctly matched in situations where there are similar pull request titles but on different branches.
 
 - Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the GitHub exporter:
   <img src='/img/guides/githubExporter.png' width='100%' border='1px' />
@@ -260,7 +259,7 @@ This configuration uses the `title` and `branch` properties to establish a relat
 
 ### Matching Pull Request Commit SHA
 
-The second way is to use the `commitSha` property:
+The second way is to use the `commitSha` property that is common to both the pull request and SonarQube analysis:
    
 - Go to the [data model](https://github.com/port-labs/port-docs/pull/link-to-data-model) page of your portal
 - Go to the `SonarQube` <PortTooltip id="blueprint">blueprint</PortTooltip>.
