@@ -224,35 +224,35 @@ The first way is to use the `title` and `branch` properties:
 
   ```yaml showLineNumbers
   resources:
-  - kind: pull-request
-    selector:
-    query: 'true'
-    port:
-    entity:
-    mappings:
-    identifier: .head.repo.name + '-' + (.number|tostring)
-    title: .title
-    blueprint: '"githubPullRequest"'
-    properties:
-    creator: .user.login
-    assignees: '[.assignees[].login]'
-    reviewers: '[.requested_reviewers[].login]'
-    status: .status
-    closedAt: .closed_at
-    updatedAt: .updated_at
-    mergedAt: .merged_at
-    prNumber: .id
-    link: .html_url
-    relations:
-    sonarAnalysis:
-    combinator: '"and"'
-    rules:
-    - property: '"$title"'
-      operator: '"="'
-      value: .title
-    - property: '"branch"'
-      operator: '"="'
-      value: .head.ref
+     - kind: pull-request
+       selector:
+          query: 'true'
+       port:
+          entity:
+             mappings:
+                identifier: .head.repo.name + '-' + (.number|tostring)
+                title: .title
+                blueprint: '"githubPullRequest"'
+                properties:
+                   creator: .user.login
+                   assignees: '[.assignees[].login]'
+                   reviewers: '[.requested_reviewers[].login]'
+                   status: .status
+                   closedAt: .closed_at
+                   updatedAt: .updated_at
+                   mergedAt: .merged_at
+                   prNumber: .id
+                   link: .html_url
+                relations:
+                   sonarAnalysis:
+                      combinator: '"and"'
+                      rules:
+                         - property: '"$title"'
+                           operator: '"="'
+                           value: .title
+                         - property: '"branch"'
+                           operator: '"="'
+                           value: .head.ref
 
   ```
 
