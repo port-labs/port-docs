@@ -11,7 +11,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide takes 7 minutes to complete, and aims to demonstrate the power of self-service actions in Port.
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
@@ -36,18 +36,18 @@ After completing it, you will get a sense of how it can benefit different person
 
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve).  
+As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service page](https://app.getport.io/self-serve).  
 
 If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
 :::
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button in the top right corner, and choose "Edit":
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button, and choose "Edit":
 
-    <img src='/img/guides/scaffoldEditAction.png' width='45%' border='1px' />
+    <img src='/img/guides/scaffoldEditAction.png' width='35%' border='1px' />
 
 2. The action's basic details should look like the image below. You can click on the `User Form` tab to see the user inputs created for the action. When ready, click on the `Backend` tab to proceed.
 
-    <img src='/img/guides/scaffoldActionDetails.png' width='60%' border='1px' />
+    <img src='/img/guides/scaffoldActionDetails.png' width='70%' border='1px' />
 
 #### Define backend type
 
@@ -215,10 +215,14 @@ If your organization uses SAML SSO, you will need to authorize your token. Follo
 
 <br/><br/>
 
-3. Now let's create the workflow file that contains our logic. First, ensure that you have a `.github/workflows` directory, then create a new file named `port-create-repo.yml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` on line 22 to your GitHub organization name):
+3. Now let's create the workflow file that contains our logic.  
+   First, ensure that you have a `.github/workflows` directory, then create a new file named `port-create-repo.yml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` on line 15 to your GitHub organization name):
 
 :::tip
-The GitHub workflow example below assumes that you will use the cookiecutter template specified in line 34. If you would instead prefer to use a template from a private repository, replace line 34 in the template below with the following, ensuring to specify the GitHub org and repo name where instructed: `cookiecutterTemplate: https://oauth2:$ORG_ADMIN_TOKEN@github.com/$<SPECIFY GITHUB ORG NAME HERE>/$<SPECIFY TEMPLATE REPO HERE>.git`. If the template GitHub repo is not within the same organization where this repo will be placed, please ensure you replace the `ORG_ADMIN_TOKEN` parameter with a token containing the same parameters used when you created the token in the previous step.
+The GitHub workflow example below assumes that you will use the cookiecutter template specified in line 27.  
+If you would instead prefer to use a template from a private repository, replace the line in the template below with the following, ensuring to specify the GitHub org and repo name where instructed:  
+`cookiecutterTemplate: https://oauth2:$ORG_ADMIN_TOKEN@github.com/$<GITHUB-ORG-NAME>/$<TEMPLATE-REPO>.git`.  
+If the template GitHub repo is not within the same organization where this repo will be placed, please ensure you replace the `ORG_ADMIN_TOKEN` parameter with a token containing the same parameters used when you created the token in the previous step.
 :::
 
 <details>
@@ -236,13 +240,6 @@ on:
         required: true
         description: The name of the new service
         type: string
-    secrets:
-      ORG_ADMIN_TOKEN:
-        required: true
-      PORT_CLIENT_ID:
-        required: true
-      PORT_CLIENT_SECRET:
-        required: true
 jobs:
   scaffold-service:
     env:
@@ -766,13 +763,12 @@ The cookiecutter templates provided in the workflows are just examples, you can 
 
 All done! The action is ready to be used 🚀
 
-<br/>
 
 ### Execute the action
 
-Head back to the `Self-service` page of your Port application:
+Head back to the [Self-service page](https://app.getport.io/self-serve) of your Port application:
 
-<img src='/img/guides/selfServiceAfterScaffoldCreation.png' width='75%' />
+<img src='/img/guides/scaffoldSelfServiceAfterCreation.png' width='30%' border='1px' />
 
 1. Click on `Create` to begin executing the action.
 

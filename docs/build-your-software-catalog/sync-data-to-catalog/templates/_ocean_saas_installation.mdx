@@ -1,4 +1,18 @@
+import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
+
 Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
+
+<BetaFeatureNotice />
+
+<h3>Live event support</h3>
+
+Currently, live events are not supported for integrations hosted by Port.  
+Resyncs will be performed **periodically** every 1 hour by default (can be configured differently after installation), or **manually** triggered by you via Port's UI.
+
+Therefore, real-time events (including GitOps) will not be ingested into Port immediately.  
+Support for live events is WIP and will be supported in the near future.
+
+<h3>Installation</h3>
 
 To install, follow the following steps:
 
@@ -14,7 +28,7 @@ To install, follow the following steps:
 
 <h3>Application settings</h3>
 
-Every integration hosted by Port has the following customizable application settings:
+Every integration hosted by Port has the following customizable application settings, which are configurable after installation:
 
 - `Resync interval`: The frequency at which Port will ingest data from the integration. There are various options available, ranging from every 1 hour to once a day.
 
@@ -33,11 +47,3 @@ For these settings, [Port secrets](/sso-rbac/port-secrets/) will be used, ensuri
 When changing such a setting, you will be prompted to choose an existing secret or create a new one:
 
 <img src="/img/build-your-software-catalog/sync-data-to-catalog/oceanSaasSecretExample.png" width="50%" border="1px" />
-
-:::info Live event support
-Currently, live events are not supported for integrations hosted by Port.  
-Resyncs will be performed **periodically**, based on the `Resync interval` you have configured, or **manually** triggered by you via Port's UI.  
-
-Therefore, real-time events such as GitOps pushes will not be ingested into Port immediately.  
-Live events are WIP and will be supported in the future.
-:::

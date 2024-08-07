@@ -1,3 +1,5 @@
+import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
+
 # Dashboard widgets
 
 Port supports various visualizations in the form of widgets, allowing you to display data from your software catalog using graphic elements, making it easier to make sense of large datasets.
@@ -138,7 +140,7 @@ We can create an aggregation property on the `cluster` blueprint, which sums the
 Then, we can create a line chart displaying the `cost` property of the `cluster` entity over time, showing the total cost of the cluster.
 
 :::info Available historical data
-The line chart will display data starting from the time the property was created.  
+The line chart will display data starting from the time the property was created on the blueprint.  
 Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
 :::
 
@@ -220,9 +222,71 @@ The table will automatically display data about each run, including status, inpu
 
 ## Chart filters
 
-[Pie charts](#pie-chart), [number charts](#number-chart) and [tables](#table) support filters, which allow you to include or exclude specific data from them. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules), and are set when creating the widget:
+<ChartFilters />
 
-<img src='/img/software-catalog/widgets/widgetFilterForm.png' width='400rem' />
+Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
+
+<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' border='1px' />
+<br/><br/>
+
+These are used internally in Port and cannot be modified/removed.
+You can add additional filters as you wish, by adding new objects to the `rules` array, for example:
+
+<details>
+<summary><b>Filter with additional rule example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "operator": "=",
+      "value": "someValue",
+      "property": "someProp"
+    }
+  ]
+}
+```
+</details>
+
+If you want to add additional rules with a different combinator, you can nest them inside a new object, for example:
+
+<details>
+<summary><b>Filter with nested rules example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "combinator": "or",
+      "rules": [
+        {
+          "operator": "=",
+          "value": "someValue",
+          "property": "someProp"
+        },
+        {
+          "operator": "=",
+          "value": "anotherValue",
+          "property": "anotherProp"
+        }
+      ]
+    }
+  ]
+}
+```
+</details>
 
 ### Filter example: only deployment entities from the last week
 

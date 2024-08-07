@@ -11960,3 +11960,124 @@ paths:
       responses:
         '200':
           description: Default Response
+  /v1/apps:
+    get:
+      summary: Get all credentials
+      description: This route allows you to fetch all credentials in your Port organization.<br/>
+      tags:
+        - Apps
+      parameters:
+        - schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - id
+                - name
+                - createdAt
+                - updatedAt
+                - secret
+                - enabled
+          in: query
+          name: fields
+          description: The fields to include in the response. If not specified, all fields will be included.<br/>
+          required: false
+      security:
+        - bearer:
+            - read:apps
+      responses:
+        "200":
+          description: Default Response
+    post:
+      summary: Create credentials
+      description: This route allows you to create a set of credentials in your Port organization, containing a `client ID` and `client secret`.<br/>
+      tags:
+        - Apps
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the credentials set.<br/>
+              additionalProperties: false
+              required:
+                - name
+        required: true
+      security:
+        - bearer:
+            - update:apps
+      responses:
+        "200":
+          description: Default Response
+  "/v1/apps/{id}/rotate-secret":
+    post:
+      summary: Rotate secret
+      description: This route allows you to rotate the secret of a set of credentials in your Port organization.<br/>
+      tags:
+        - Apps
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          description: The `id` of the credentials set you want to rotate the secret for.<br/>
+          required: true
+      security:
+        - bearer:
+            - update:apps
+      responses:
+        "200":
+          description: Default Response
+  "/v1/apps/{id}":
+    delete:
+      summary: Delete credentials
+      description: This route allows you to delete a set of credentials in your Port organization.<br/>
+      tags:
+        - Apps
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          description: The `id` of the credentials set you want to delete.<br/>
+          required: true
+      security:
+        - bearer:
+            - update:apps
+      responses:
+        "200":
+          description: Default Response
+    put:
+      summary: Update credentials
+      description: This route allows you to update the name of a set of credentials in your Port organization.<br/>
+      tags:
+        - Apps
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The new name of the credentials set.<br/>
+              additionalProperties: false
+              required:
+                - name
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          description: The `id` of the credentials set you want to update.<br/>
+          required: true
+      security:
+        - bearer:
+            - update:apps
+      responses:
+        "200":
+          description: Default Response
