@@ -203,15 +203,15 @@ In the following example you will ingest your GitLab groups and their members to
 - The GitLab members must [set their public email](https://docs.gitlab.com/ee/user/profile/#set-your-public-email) on their account to retrieve the `public email address` of members.
 :::
 
-<GroupWithMemberRelationBlueprint/>
-
 <MemberBlueprint/>
+
+<GroupWithMemberRelationBlueprint/>
 
 <GroupMemberPortAppConfig/>
 
 :::tip Public Email Visibility
 
-You can also specify a `publicEmailVisibility` flag to control the inclusion of public email addresses in the member data.
+You can also specify a `enrichWithPublicEmail` flag to control the inclusion of public email addresses in the member data.
 By default, this parameter is not set, and the integration will sync all members without the `public_email` property.
  
 ```yaml
@@ -219,12 +219,12 @@ By default, this parameter is not set, and the integration will sync all members
     selector:
       query: 'true'
       # highlight-next-line
-      publicEmailVisibility: 'false'
+      enrichWithPublicEmail: 'false'
 ```
 :::
 
 :::note
-The `publicEmailVisibility` filter is required to sync public email addresses for GitLab free plan users.
+The `enrichWithPublicEmail` filter is required to sync public email addresses for GitLab free plan users.
 :::
 
 
