@@ -23,6 +23,11 @@ import RepositoryGroupBlueprint from './example-groups-subgroups/\_gitlab_export
 import GroupBlueprint from './example-groups-subgroups/\_gitlab_exporter_example_group_blueprint.mdx'
 import PortGroupsAppConfig from './example-groups-subgroups/\_gitlab_exporter_example_group_repository_port_app_config.mdx'
 
+import MemberBlueprint from './example-groups-members/\_gitlab_exporter_example_member_blueprint.mdx'
+import GroupWithMemberRelationBlueprint from './example-groups-members/\_gitlab_exporter_example_group_blueprint.mdx'
+import GroupMemberPortAppConfig from './example-groups-members/\_gitlab_exporter_example_group_member_port_app_config.mdx' 
+
+
 # Examples
 
 ## Mapping projects, file contents and merge requests
@@ -181,6 +186,57 @@ In the following example you will ingest your GitLab projects and their issues t
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their issues.
 
+
+## Mapping members and groups
+
+In the following example you will ingest your GitLab groups and their members to Port, you may use the following Port blueprint definitions and integration configuration:
+
+:::tip Prerequisites
+
+<b> Offering: GiLab Self Hosted </b>
+ - An admin token is required, rather than a group access token, to retrieve the `primary email addresses` of members.
+
+<b> Offering: GitLab Enterprise </b>
+- Enterprise accounts can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
+
+<b> Offering: Gitlab Free Plan </b>
+- The GitLab members must [set their public email](https://docs.gitlab.com/ee/user/profile/#set-your-public-email) on their account to retrieve the `public email address` of members.
+:::
+
+<MemberBlueprint/>
+
+<GroupWithMemberRelationBlueprint/>
+
+<GroupMemberPortAppConfig/>
+
+:::tip Public Email Visibility
+
+You can also specify a `enrichWithPublicEmail` flag to control the inclusion of public email addresses in the member data.
+By default, this parameter is not set, and the integration will sync all members without the `public_email` property.
+ 
+```yaml
+  - kind: member
+    selector:
+      query: 'true'
+      # highlight-next-line
+      enrichWithPublicEmail: 'false'
+```
+:::
+
+:::note
+The `enrichWithPublicEmail` filter is required to sync public email addresses for GitLab free plan users.
+:::
+
+
+:::tip To Learn more
+
+- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
+- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
+- Click [Here](https://docs.gitlab.com/ee/api/issues.html#list-project-issues) for the GitLab issue object structure.
+
+:::
+
 ## Mapping supported resources
 
 The above examples shows a specific use cases, but Port's GitLab integration supports the ingestion of many other GitLab objects, to adapt the examples above, use the GitLab API reference to learn about the available fields for the different supported objects:
@@ -188,3 +244,5 @@ The above examples shows a specific use cases, but Port's GitLab integration sup
 <GitlabResources/>
 
 When adding the ingestion of other resources, remember to add an entry to the `resources` array and change the value provided to the `kind` key accordingly.
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their issues.
