@@ -1,0 +1,60 @@
+<details>
+<summary><b> PagerDuty Service Blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+  {
+    "identifier": "pagerdutyService",
+    "description": "This blueprint represents a PagerDuty service in our software catalog",
+    "title": "PagerDuty Service",
+    "icon": "pagerduty",
+    "schema": {
+      "properties": {
+        "status": {
+          "title": "Status",
+          "type": "string",
+          "enum": [
+            "active",
+            "warning",
+            "critical",
+            "maintenance",
+            "disabled"
+          ],
+          "enumColors": {
+            "active": "green",
+            "warning": "yellow",
+            "critical": "red",
+            "maintenance": "lightGray",
+            "disabled": "darkGray"
+          }
+        },
+        "url": {
+          "title": "URL",
+          "type": "string",
+          "format": "url"
+        },
+        "oncall": {
+          "title": "On Call",
+          "type": "string",
+          "format": "user"
+        },
+        "meanSecondsToResolve": {
+          "title": "Mean Seconds to Resolve",
+          "type": "number"
+        },
+        "meanSecondsToFirstAck": {
+          "title": "Mean Seconds to First Acknowledge",
+          "type": "number"
+        },
+        "meanSecondsToEngage": {
+          "title": "Mean Seconds to Engage",
+          "type": "number"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "relations": {}
+  }
+```
+</details>
