@@ -4,6 +4,7 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/templates/_save_table_view.md"
 
 # Catalog page
 
@@ -310,38 +311,13 @@ It's possible to filter, sort, group by, and use the table widget controls to ch
 
 ### Save a view
 
-Every change made on a specific page, such as filtering or sorting, enables the `Save this view` button.  
-Clicking on it will save the new view for all users.
+Since the main component of a catalog page is a table, the same rules apply to it.
 
-![Page operations marked](/img/software-catalog/pages/PageOperationsMarked.png)
+<SaveTableView />
 
-:::note
-The ability to save a view for all users is available only for the [Admin role](/sso-rbac/rbac/rbac.md#roles)
-:::
+To save the view for all users as a new page, click the small arrow on the right side of the button:
 
-### Save a new page
-
-Each time a change is made on a page, and the `Save this view` becomes enabled, you can press the small arrow on its right side to open a dropdown menu:
-
-<center>
-
-![Save view menu button marked](/img/software-catalog/pages/SaveViewDropMenuButton.png)
-
-</center>
-
-After clicking the `Save as a new page` button, a window will pop up:
-
-![Save as a new page popup](/img/software-catalog/pages/SaveAPageForm.png)
-
-#### Choose page icon
-
-When saving a new page or editing an existing one, a set of icons is available to you:
-
-<center>
-
-![Page Icons dropdown menu](/img/software-catalog/pages/PageIcons.png)
-
-</center>
+<img src='/img/software-catalog/pages/catalogPageSaveView.png' width='70%' border='1px' />
 
 ### Edit, lock or delete a page
 
