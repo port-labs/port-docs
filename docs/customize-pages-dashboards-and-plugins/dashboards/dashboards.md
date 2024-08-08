@@ -1,4 +1,5 @@
 import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
+import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/templates/_save_table_view.md"
 
 # Dashboard widgets
 
@@ -11,6 +12,24 @@ Dashboards are available in the following locations:
 3. The [software catalog](https://app.getport.io/services) allows you to create customizable [dashboard pages](/customize-pages-dashboards-and-plugins/page/dashboard-page).
 
 ## Widget types
+
+### Table
+
+This widget allows you to create tables displaying all entities based on a selected blueprint.  
+Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
+
+<img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
+
+#### Save table view
+
+<SaveTableView />
+
+#### Customization
+
+Just like catalog pages, tables support the following customization options:
+
+- [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
+- [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
 ### Pie chart
 
@@ -179,20 +198,6 @@ The entity identifier will be concatenated under the `entity` query param and th
 | `clientId`          | `String`       | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
 | `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
 | `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
-
-### Table
-
-This widget allows you to create tables displaying all entities based on a selected blueprint.  
-Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
-
-<img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
-
-#### Customization
-
-Just like catalog pages, tables support the following customization options:
-
-- [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
-- [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
 ### Action card
 
