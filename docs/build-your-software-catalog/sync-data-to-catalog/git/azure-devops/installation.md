@@ -8,6 +8,7 @@ import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx
 import DockerParameters from "./\_azuredevops_one_time_docker_parameters.mdx"
 import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Installation
 
@@ -51,7 +52,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -179,6 +186,8 @@ kubectl apply -f my-ocean-azure-devops-integration.yaml
 </TabItem>
 </Tabs>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 <TabItem value="one-time" label="Scheduled">
@@ -240,8 +249,8 @@ steps:
 
   </Tabs>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>

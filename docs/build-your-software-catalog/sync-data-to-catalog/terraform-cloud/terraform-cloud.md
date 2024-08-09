@@ -8,6 +8,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Terraform Cloud and Terraform Enterprise
 
@@ -48,7 +49,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -176,6 +183,10 @@ kubectl apply -f my-ocean-terraform-cloud-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<h3>Event listener</h3>
+
+The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
 </TabItem>
 
@@ -341,10 +352,6 @@ ingest_data:
 </TabItem>
 
 </Tabs>
-
-### Event listener
-
-The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
 ## Ingesting Terraform Cloud objects
 

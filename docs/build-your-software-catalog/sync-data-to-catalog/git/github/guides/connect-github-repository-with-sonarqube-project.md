@@ -4,7 +4,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide aims to demonstrate how to connect a GitHub repository (referred to as Service for the rest of the guide) to a SonarQube project in Port.
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - Ensure you have [SonarQube installed and configured](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md#installation) in your environment.
@@ -103,5 +103,5 @@ By following these steps, you can seamlessly connect a GitHub repository with an
 
 More relevant guides and examples:
 - [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/)
-- [Mini guide to connect SonarQube Project to a ](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/Jira/change-status-of-jira-ticket)
+- [Mini guide to connect SonarQube Project to a service](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/guides/connect-sonar-project-to-service)
 - [Self-service action to add tags to SonarQube Project](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/SonarQube/add-tags-to-sonarqube-project.md)

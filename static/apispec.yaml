@@ -8487,7 +8487,7 @@ paths:
                         type: string
                     ownedByTeam:
                       type: boolean
-                      description: Relevant only for [day-2 actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/setup-ui-for-action/#basic-details). If `true`, any member of the team that the entity belongs to can execute the action.<br/>
+                      description: Relevant only for [DAY-2/DELETE actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/setup-ui-for-action/#basic-details). If `true`, any member of the team that the entity belongs to can execute the action.<br/>
                     policy:
                       description: An optional custom policy the determines if action execution is allowed.<br/>See instructions and examples [here](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/#instructions).
                       type:
@@ -8611,6 +8611,139 @@ paths:
               <td>An internal error occurred</td>
             </tr>
             </table>
+  "/v1/actions/{action_identifier}/runs":
+    post:
+      summary: Execute a self-service action
+      description: This route allows you to execute a self-service action, thus creating an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+      tags:
+        - Action Runs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                properties:
+                  type: object
+                  description: The action's user inputs, in `"key"`:`"value"` pairs, where the key is the input's identifier and the value is the input's value.<br/>
+                entity:
+                  type: string
+                  description: The identifier of the entity that the action will be executed on, if relevant.<br/>
+              additionalProperties: false
+              required:
+                - properties
+        required: true
+      parameters:
+        - schema:
+            type: string
+            format: email
+          in: query
+          name: run_as
+          required: false
+          description: The executing user of the action. If not provided, the action will be run on behalf of the user/machine who initiated the action (identified by the bearer token used to execute this route).<br/>
+        - schema:
+            type: string
+          in: path
+          name: action_identifier
+          description: The identifier of the action you want to execute.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Success
+        "403":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`missing_permissions`</td>
+              <td>You are not permitted to execute this action. For further details, please contact your admin</td>
+            </tr>
+            <tr>
+              <td>`not_resolvable_destination`</td>
+              <td>The Endpoint URL provided is not publicly available. Please choose another URL</td>
+            </tr>
+            <tr>
+              <td>`private_destination`</td>
+              <td>Destination is a private IP</td>
+            </tr>
+            </table>
+        "404":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action with the provided identifier was not found</td>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The entity with the provided identifier was not found</td>
+            </tr>
+            </table>
+        "422":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            <tr>
+              <td>`run_non_self_service_error`</td>
+              <td>Cannot create run manually for non self service action</td>
+            </tr>
+            <tr>
+              <td>`missing_self_service_action_entity`</td>
+              <td>The desired action requires a specified entity</td>
+            </tr>
+            <tr>
+              <td>`entity_does_not_pass_condition`</td>
+              <td>The specified entity does not pass the condition defined in the action</td>
+            </tr>
+            <tr>
+              <td>`user_inputs_schema_invalid`</td>
+              <td>The provided user inputs do not match the action's schema</td>
+            </tr>
+            <tr>
+              <td>`invalid_evaluated_invocation_method`</td>
+              <td>Failed to validate evaluated invocation method</td>
+            </tr>
+            <tr>
+              <td>`evaluate_invocation_method_error`</td>
+              <td>Failed to evaluate invocation method</td>
+            </tr>
+            </table>
+        "500":
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   '/v1/actions/runs/{run_id}':
     patch:
       summary: Patch an action run
@@ -8671,7 +8804,53 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action run with the provided identifier was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            <tr>
+              <td>`run_synchronized_error`</td>
+              <td>Cannot manually change status of a synchronized action run</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
     get:
       summary: Get an action run's details
       description: This route allows you to fetch the details of an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
@@ -8697,10 +8876,52 @@ paths:
             - 'read:runs'
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action run with the provided identifier was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   '/v1/actions/runs/{run_id}/approval':
     patch:
-      summary: Approve an action's run
+      summary: Approve an action run
       description: This route allows you to approve or decline a request to execute an action that requires approval.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
       tags:
         - Action Runs
@@ -8741,7 +8962,67 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '403':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`missing_permissions`</td>
+              <td>You are not permitted to approve this action. For further details, please contact your admin</td>
+            </tr>
+            </table>
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action run with the provided identifier was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            <tr>
+              <td>`run_not_waiting_for_approval`</td>
+              <td>Action run is not waiting for approval</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   /v1/actions/runs:
     get:
       summary: Get all action runs
@@ -8800,7 +9081,35 @@ paths:
             - 'read:runs'
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   '/v1/actions/runs/{run_id}/logs':
     post:
       summary: Add a log to an action run
@@ -8839,7 +9148,53 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action run with the provided identifier was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            <tr>
+              <td>`run_exhausted`</td>
+              <td>Action run already finished execution</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
     get:
       summary: Get an action's run logs
       description: This route allows you to fetch the logs from an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
@@ -8870,7 +9225,49 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Default Response
+          description: Success
+        '404':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`not_found`</td>
+              <td>The action run with the provided identifier was not found</td>
+            </tr>
+            </table>
+        '422':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`invalid_request`</td>
+              <td>The data provided does not match the route schema</td>
+            </tr>
+            </table>
+        '500':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`internal_error`</td>
+              <td>An internal error occurred</td>
+            </tr>
+            </table>
   /v1/teams:
     get:
       summary: Get all teams in your organization
@@ -11474,4 +11871,213 @@ paths:
         - bearer: []
       responses:
         '200':
+          description: Default Response
+  '/v1/organization/secrets':
+    get:
+      description: This route allows you to retrieve all of the secrets in your organization.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).
+      summary: Get all organization secrets
+      tags:
+        - Organization
+      security:
+        - bearer:
+            - 'read:blueprints'
+      responses:
+        '200':
+          description: Default Response
+    post:
+      summary: Create an organization secret
+      description: This route allows you to create an organization secret.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).
+      tags:
+        - Organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                secret_name:
+                  type: string
+                  description: The name of the new secret.<br/>
+                secret_value:
+                  type: string
+                  description: The value of the new secret.<br/>
+                description:
+                  type: string
+                  description: An optional description of the new secret.<br/>
+              required:
+                - secret_name
+                - secret_value
+        required: true
+      security:
+        - bearer: [ ]
+      responses:
+        '200':
+          description: Default Response
+    patch:
+      summary: Patch an organization secret
+      description: This route allows you to patch an organization secret.<br/><br/>To learn more about secrets management, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).
+      tags:
+        - Organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                secretValue:
+                  type: string
+                  description: The new value of the secret.<br/>
+                description:
+                  type: string
+                  description: The new description of the secret.<br/>
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: secret_name
+          required: true
+          description: The name of the secret you want to patch.<br/>
+      security:
+        - bearer: []
+      responses:
+        '200':
+          description: Default Response
+    delete:
+      summary: Delete an organization secret
+      description: This route allows you to delete an organization secret.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).
+      tags:
+        - Organization
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: secret_name
+          required: true
+          description: The name of the secret you want to delete.<br/>
+      security:
+        - bearer: [ ]
+      responses:
+        '200':
+          description: Default Response
+  /v1/apps:
+    get:
+      summary: Get all credentials
+      description: This route allows you to fetch all credentials in your Port organization.<br/>
+      tags:
+        - Apps
+      parameters:
+        - schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - id
+                - name
+                - createdAt
+                - updatedAt
+                - secret
+                - enabled
+          in: query
+          name: fields
+          description: The fields to include in the response. If not specified, all fields will be included.<br/>
+          required: false
+      security:
+        - bearer:
+            - read:apps
+      responses:
+        "200":
+          description: Default Response
+    post:
+      summary: Create credentials
+      description: This route allows you to create a set of credentials in your Port organization, containing a `client ID` and `client secret`.<br/>
+      tags:
+        - Apps
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the credentials set.<br/>
+              additionalProperties: false
+              required:
+                - name
+        required: true
+      security:
+        - bearer:
+            - update:apps
+      responses:
+        "200":
+          description: Default Response
+  "/v1/apps/{id}/rotate-secret":
+    post:
+      summary: Rotate secret
+      description: This route allows you to rotate the secret of a set of credentials in your Port organization.<br/>
+      tags:
+        - Apps
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          description: The `id` of the credentials set you want to rotate the secret for.<br/>
+          required: true
+      security:
+        - bearer:
+            - update:apps
+      responses:
+        "200":
+          description: Default Response
+  "/v1/apps/{id}":
+    delete:
+      summary: Delete credentials
+      description: This route allows you to delete a set of credentials in your Port organization.<br/>
+      tags:
+        - Apps
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          description: The `id` of the credentials set you want to delete.<br/>
+          required: true
+      security:
+        - bearer:
+            - update:apps
+      responses:
+        "200":
+          description: Default Response
+    put:
+      summary: Update credentials
+      description: This route allows you to update the name of a set of credentials in your Port organization.<br/>
+      tags:
+        - Apps
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The new name of the credentials set.<br/>
+              additionalProperties: false
+              required:
+                - name
+        required: true
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: id
+          description: The `id` of the credentials set you want to update.<br/>
+          required: true
+      security:
+        - bearer:
+            - update:apps
+      responses:
+        "200":
           description: Default Response
