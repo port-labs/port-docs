@@ -1,0 +1,97 @@
+<details>
+<summary>RDS Instance Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "rdsInstance",
+  "description": "This blueprint represents an AWS RDS DBInstance in our software catalog",
+  "title": "RDS Instance",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "dbInstanceClass": {
+        "type": "string",
+        "title": "DB Instance Class"
+      },
+      "dbInstanceStatus": {
+        "type": "string",
+        "title": "DB Instance Status"
+      },
+      "engine": {
+        "type": "string",
+        "title": "Engine"
+      },
+      "storageType": {
+        "type": "string",
+        "title": "Storage Type"
+      },
+      "engineVersion": {
+        "type": "string",
+        "title": "Engine Version"
+      },
+      "port": {
+        "type": "number",
+        "title": "Port"
+      },
+      "allocatedStorage": {
+        "type": "number",
+        "title": "Allocated Storage"
+      },
+      "endpoint": {
+        "type": "string",
+        "title": "Endpoint"
+      },
+      "multiAZ": {
+        "type": "boolean",
+        "title": "Multi-AZ"
+      },
+      "deletionProtection": {
+        "type": "boolean",
+        "title": "Deletion Protection"
+      },
+      "availabilityZone": {
+        "type": "string",
+        "title": "Availability Zone"
+      },
+      "masterUsername": {
+        "type": "string",
+        "title": "Master Username"
+      },
+      "publicAccess": {
+        "type": "boolean",
+        "title": "Public Access"
+      },
+      "vpcSecurityGroups": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "VPC Security Groups"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

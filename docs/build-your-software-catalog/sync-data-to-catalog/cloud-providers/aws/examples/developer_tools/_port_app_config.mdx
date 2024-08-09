@@ -1,0 +1,33 @@
+<details>
+<summary>Mapping Configuration for Amplify App</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::Amplify::App
+    selector:
+      query: 'true'
+      useGetResourceAPI: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.AppName
+          blueprint: '"amplifyApp"'
+          properties:
+            link: >-
+                'https://console.aws.amazon.com/go/view?arn=' +
+                .Properties.Arn
+            appId: .Properties.AppId
+            repository: .Properties.Repository
+            platform: .Properties.Platform
+            defaultDomain: .Properties.DefaultDomain
+            customHeaders: .Properties.CustomHeaders
+            appName: .Properties.AppName
+            arn: .Properties.Arn
+            kind: .__Kind
+            region: .__Region
+          relations:
+            account: .__AccountId
+```
+
+</details>

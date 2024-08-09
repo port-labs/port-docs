@@ -1,0 +1,31 @@
+<details>
+<summary>Mapping Configuration for Lex Bot</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::Lex::Bot
+    selector:
+      query: 'true'
+      useGetResourceAPI: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.Name
+          blueprint: '"lexBot"'
+          properties:
+            link: >-
+                'https://console.aws.amazon.com/go/view?arn=' +
+                .Properties.Arn
+            arn: .Properties.Arn
+            role: .Properties.RoleArn
+            name: .Properties.Name
+            idleSessionTTLInSeconds: .Properties.IdleSessionTTLInSeconds
+            dataPrivacy: .Properties.DataPrivacy
+            kind: .__Kind
+            region: .__Region
+          relations:
+            account: .__AccountId
+```
+
+</details>

@@ -1,0 +1,96 @@
+<details>
+<summary>Lightsail Instance Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "lightsailInstance",
+  "description": "This blueprint represents an AWS Lightsail Instance in our software catalog",
+  "title": "Lightsail Instance",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "state": {
+        "type": "string",
+        "title": "State"
+      },
+      "blueprintId": {
+        "type": "string",
+        "title": "Blueprint ID"
+      },
+      "bundleId": {
+        "type": "string",
+        "title": "Bundle ID"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "privateIpAddress": {
+        "type": "string",
+        "title": "Private IP Address"
+      },
+      "publicIpAddress": {
+        "type": "string",
+        "title": "Public IP Address"
+      },
+      "cpuCount": {
+        "type": "number",
+        "title": "CPU Count"
+      },
+      "ramSize": {
+        "type": "number",
+        "title": "RAM Size (GB)"
+      },
+      "regionName": {
+        "type": "string",
+        "title": "Region Name"
+      },
+      "availabilityZone": {
+        "type": "string",
+        "title": "Availability Zone"
+      },
+      "monthlyTransfer": {
+        "type": "number",
+        "title": "Monthly Transfer (GB)"
+      },
+      "ports": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Ports"
+      },
+      "username": {
+        "type": "string",
+        "title": "Username"
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Tags"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

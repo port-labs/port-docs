@@ -1,0 +1,83 @@
+<details>
+<summary>DynamoDB Table Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "dynamoDBTable",
+  "description": "This blueprint represents an AWS DynamoDB Table in our software catalog",
+  "title": "DynamoDB Table",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "tableStatus": {
+        "type": "string",
+        "title": "Table Status"
+      },
+      "itemCount": {
+        "type": "number",
+        "title": "Item Count"
+      },
+      "creationDateTime": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Creation Date Time"
+      },
+      "billingMode": {
+        "type": "string",
+        "title": "Billing Mode"
+      },
+      "writeCapacityUnits": {
+        "type": "number",
+        "title": "Write Capacity Units"
+      },
+      "readCapacityUnits": {
+        "type": "number",
+        "title": "Read Capacity Units"
+      },
+      "timeToLive": {
+        "type": "boolean",
+        "title": "Time to Live"
+      },
+      "pointInTimeRecovery": {
+        "type": "boolean",
+        "title": "Point in Time Recovery"
+      },
+      "deletionProtection": {
+        "type": "boolean",
+        "title": "Deletion Protection"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "kind": {
+        "type": "string",
+        "title": "Kind"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

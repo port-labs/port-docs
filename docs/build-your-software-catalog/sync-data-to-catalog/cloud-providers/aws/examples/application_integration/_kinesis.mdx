@@ -1,0 +1,57 @@
+<details>
+<summary>Kinesis Stream Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "kinesisStream",
+  "description": "This blueprint represents an AWS Kinesis Stream in our software catalog",
+  "title": "Kinesis Stream",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "streamMode": {
+        "type": "string",
+        "title": "Stream Mode"
+      },
+      "shardCount": {
+        "type": "number",
+        "title": "Shard Count"
+      },
+      "retentionPeriodHours": {
+        "type": "number",
+        "title": "Retention Period Hours"
+      },
+      "shardLevelMetrics": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Shard Level Metrics"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

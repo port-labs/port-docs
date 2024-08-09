@@ -1,0 +1,67 @@
+<details>
+<summary>Cognito User Pool Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "cognitoUserPool",
+  "description": "This blueprint represents an AWS Cognito User Pool in our software catalog",
+  "title": "Cognito User Pool",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "userPoolId": {
+        "type": "string",
+        "title": "User Pool ID"
+      },
+      "providerName": {
+        "type": "string",
+        "title": "Provider Name"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status"
+      },
+      "creationDate": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Creation Date"
+      },
+      "mfaConfiguration": {
+        "type": "string",
+        "title": "MFA Configuration"
+      },
+      "kind": {
+        "type": "string",
+        "title": "Kind"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

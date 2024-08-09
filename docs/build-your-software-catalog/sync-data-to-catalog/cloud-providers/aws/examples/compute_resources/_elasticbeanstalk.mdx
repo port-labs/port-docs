@@ -1,0 +1,54 @@
+<details>
+<summary>Elastic Beanstalk Application Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "elasticBeanstalkApplication",
+  "description": "This blueprint represents an AWS Elastic Beanstalk Application in our software catalog",
+  "title": "Elastic Beanstalk Application",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "applicationName": {
+        "type": "string",
+        "title": "Application Name"
+      },
+      "maxAgeInDays": {
+        "type": "number",
+        "title": "Max Age In Days"
+      },
+      "maxCount": {
+        "type": "number",
+        "title": "Max Count"
+      },
+      "kind": {
+        "type": "string",
+        "title": "Kind"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

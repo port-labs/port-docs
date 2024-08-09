@@ -1,0 +1,46 @@
+<details>
+<summary>SNS Topic Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "snsTopic",
+  "description": "This blueprint represents an AWS SNS Topic in our software catalog",
+  "title": "SNS Topic",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "kind": {
+        "type": "string",
+        "title": "Kind"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
