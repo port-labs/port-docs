@@ -5,16 +5,16 @@ title: Connect Opencost Cloud Cost with AWS Resource in Port
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Connect Opencost Cloud Cost with AWS Resource in Port
+# Connect Opencost Clou- d Cost with AWS Resource in Port
 
 This guide will show you how to connect an Opencost cloudcost resource with an AWS resource in Port to analyze your cloud cost allocation.
 
-:::tip Use Case Examples:
+## Use Case Examples:
 
-Cost Attribution: Determine which AWS resources (EC2 instances, RDS databases, etc.) contribute the most to your overall cloud costs.
-Budget Management: Track the costs of individual resources or groups of resources against your budget allocations.
-Anomaly Detection: Identify unusual spikes in resource costs and investigate potential causes.
-Optimization Opportunities: Pinpoint resources that are underutilized or overprovisioned, potentially leading to cost savings.
+- Cost Attribution: Determine which AWS resources (EC2 instances, RDS databases, etc.) contribute the most to your overall cloud costs.
+- Budget Management: Track the costs of individual resources or groups of resources against your budget allocations.
+- Anomaly Detection: Identify unusual spikes in resource costs and investigate potential causes.
+- Optimization Opportunities: Pinpoint resources that are underutilized or overprovisioned, potentially leading to cost savings.
 
 :::
 
@@ -26,201 +26,13 @@ Optimization Opportunities: Pinpoint resources that are underutilized or overpro
 
 ## Create the Opencost Cloudcost relation
 
-With Opencost and AWS integrations installed, you should see:
-- Two (2) new blueprints created by the Opencost integration, "Opencost Resource Allocations" and `Opencost Cloudcost`
-- Two (2) new blueprints created by the AWS integration, `AWS Cloud Resources` and `AWS Accounts`.
-
-If the blueprints aren't created:
-- Navigate to [your Port organization's data model page](https://app.getport.io/settings/data-model) on the builder.
-- Click the `+ Blueprint` button at the top right corner.
-- Click the `Edit JSON` button.
-- Copy-paste the blueprint JSON:
-
-:::info Important Blueprints
-The `Opencost Cloudcost`, `AWS Cloud Resources` and `AWS Accounts` are the only blueprints of interest here.
-
-:::
-
-
-<details>
-<summary><b>Opencost Cloudcost (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "openCostCloudcost",
-  "description": "This blueprint represents cloud cost allocations from your OpenCost instance",
-  "title": "OpenCost CloudCost",
-  "icon": "Opencost",
-  "schema": {
-    "properties": {
-      "startDate": {
-        "title": "Start Date",
-        "type": "string",
-        "format": "date-time"
-      },
-      "endDate": {
-        "title": "End Date",
-        "type": "string",
-        "format": "date-time"
-      },
-      "listCost": {
-        "title": "List Cost",
-        "type": "number"
-      },
-      "netCost": {
-        "title": "Net Cost",
-        "type": "number"
-      },
-      "amortizedNetCost": {
-        "title": "Amortized Net Cost",
-        "type": "number"
-      },
-      "invoicedCost": {
-        "title": "Invoiced Cost",
-        "type": "number"
-      },
-      "amortizedCost": {
-        "title": "Amortized Cost",
-        "type": "number"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary><b>AWS Account (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "awsAccount",
-  "title": "AWS account",
-  "icon": "AWS",
-  "schema": {
-    "properties": {
-      "arn": {
-        "type": "string",
-        "title": "Arn"
-      },
-      "email": {
-        "type": "string",
-        "title": "Email"
-      },
-      "status": {
-        "type": "array",
-        "title": "Status",
-        "default": [
-          "ACTIVE"
-        ],
-        "items": {
-          "enum": [
-            "ACTIVE",
-            "SUSPENDED",
-            "PENDING_CLOSURE"
-          ],
-          "enumColors": {
-            "ACTIVE": "green",
-            "SUSPENDED": "red",
-            "PENDING_CLOSURE": "yellow"
-          },
-          "type": "string"
-        }
-      },
-      "joined_method": {
-        "type": "string",
-        "title": "Joined Method",
-        "enum": [
-          "INVITED",
-          "CREATED"
-        ],
-        "enumColors": {
-          "INVITED": "lightGray",
-          "CREATED": "lightGray"
-        }
-      },
-      "joined_timestamp": {
-        "type": "string",
-        "title": "Joined Timestamp",
-        "format": "date-time"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary><b>AWS Cloud Resource (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "cloudResource",
-  "title": "AWS Cloud Resource",
-  "icon": "AWS",
-  "schema": {
-    "properties": {
-      "kind": {
-        "title": "Kind",
-        "type": "string"
-      },
-      "tags": {
-        "items": {
-          "type": "object"
-        },
-        "type": "array",
-        "title": "Tags"
-      },
-      "arn": {
-        "type": "string",
-        "title": "ARN"
-      },
-      "link": {
-        "type": "string",
-        "title": "Link",
-        "icon": "AWS",
-        "format": "url"
-      },
-      "region": {
-        "type": "string",
-        "title": "Region"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "account": {
-      "title": "Account",
-      "target": "awsAccount",
-      "required": true,
-      "many": false
-    }
-  }
-}
-```
-
-</details>
+With Opencost and AWS integrations installed, you should see some blueprints created by both integrations
 
 Now that Port is synced with our AWS and Opencost resources, let's map the Opencost Cloudcost to the AWS Cloud Resources.
 
 First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/relate-blueprints.md) between our `openCostCloudcost` and the corresponding `cloudResource`.
 
-1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
+1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `Opencost Cloudcost` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/guides/newRelationOpenCost.png' width='60%' border='1px' />
 
@@ -283,6 +95,8 @@ For the `awsCloudCost` relation, we extract the resource ID from the Provider ID
 By following these steps, you can seamlessly connect Opencost Cloudcost data with its respective AWS resources.
 
 :::
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/guides/awsToCloudcostRelation.png' border='1px' />
 
 More relevant guides and examples:
 - [Port's Opencost integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost)
