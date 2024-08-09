@@ -11,171 +11,157 @@ import PackageWebhookConfig from './resources/javascript/\_example_package_webho
 
 # JavaScript
 
-In this example you are going to create a `package` blueprint that ingests all third party dependencies and libraries in your `package.json` file using a combination of Port's [API](/build-your-software-catalog/custom-integration/api) and [webhook functionality](/build-your-software-catalog/custom-integration/webhook). You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
+In this example you are going to create a `package` blueprint that ingests all third party dependencies and libraries in your `package.json` file using Port's GitHub file ingesting feature. You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
 
-To ingest the packages to Port, a script that sends information about packages according to the webhook configuration is used.
+To ingest the packages to Port, a `port-app-config.yml` file in the needed repository or organisation is used.
 
 ## Prerequisites
+This guide assumes:
+- You have a Port account
+- You have installed [Port's GitHub app](docs/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) in your organisation or in repositories you are interested in.
 
-Create the following blueprint definition and webhook configuration:
+## GitHub configuration
 
-<details>
-<summary>Service blueprint</summary>
-<ServiceBlueprint/>
-</details>
+To ingest GitHub objects, use one of the following methods:
 
-<details>
-<summary>Package blueprint</summary>
-<PackageBlueprint/>
-</details>
+<Tabs queryString="method">
 
-<details>
-<summary>Package webhook configuration</summary>
+<TabItem label="Using Port's UI" value="port">
 
-<PackageWebhookConfig/>
+To manage your GitHub integration configuration using Port:
 
-</details>
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired GitHub organization.
+3. A window will open containing the default YAML configuration of your GitHub integration.
+4. Here you can modify the configuration to suit your needs, by adding/removing entries.
+5. When finished, click `resync` to apply any changes.
 
-## Working with Port's API and Bash script
+Using this method applies the configuration to all repositories that the GitHub app has permissions to.
 
-Here is an example snippet showing how to integrate Port's API and webhook with your existing pipelines using Python and Bash:
-
-<Tabs groupId="usage" defaultValue="python" values={[
-{label: "Python", value: "python"},
-{label: "Bash", value: "bash"}
-]}>
-
-<TabItem value="python">
-
-Create the following Python script in your repository to create or update Port entities as part of your pipeline:
-
-<details>
-  <summary> Python script example </summary>
-
-```python showLineNumbers
-import requests
-import json
-
-# Get environment variables using the config object or os.environ["KEY"]
-WEBHOOK_URL = os.environ['WEBHOOK_URL'] ## the value of the URL you receive after creating the Port webhook
-SERVICE_ID = os.environ['SERVICE_ID'] ## The identifier of your service in Port
-PATH_TO_PACKAGE_JSON_FILE = os.environ['PATH_TO_PACKAGE_JSON_FILE']
-
-
-def add_entity_to_port(entity_object):
-    """A function to create the passed entity in Port using the webhook URL
-
-    Params
-    --------------
-    entity_object: dict
-        The entity to add in your Port catalog
-
-    Returns
-    --------------
-    response: dict
-        The response object after calling the webhook
-    """
-    headers = {"Accept": "application/json"}
-    response = requests.post(WEBHOOK_URL, json=entity_object, headers=headers)
-    return response.json()
-
-
-def convert_package_json(package_json_path):
-    """This function takes a package.json file path, converts the "dependencies" property into a
-    JSON array using three keys (name, version, and id). It then sends the data to Port
-
-    Params
-    --------------
-    package_json_path: str
-        The path to the package.json file relative to the project's root folder
-
-    Returns
-    --------------
-    response: dict
-        The response object after calling the webhook
-    """
-    with open(package_json_path) as file:
-        data = json.load(file)
-
-    dependencies = data.get('dependencies', {})
-
-    converted_dependencies = []
-    for index, (name, version) in enumerate(dependencies.items(), start=1):
-        pkg_id = f"pkg-{index}"
-        converted_dependencies.append({
-            'name': name,
-            'version': version,
-            'id': pkg_id
-        })
-
-    entity_object = {
-        "service": SERVICE_ID,
-        "dependencies": converted_dependencies
-    }
-    webhook_response = add_entity_to_port(entity_object)
-    return webhook_response
-
-converted_data = convert_package_json(PATH_TO_PACKAGE_JSON_FILE)
-print(converted_data)
-```
-
-</details>
+When configuring the integration **using Port**, the YAML configuration is global, allowing you to specify mappings for multiple Port blueprints.
 
 </TabItem>
 
-<TabItem value="bash">
+<TabItem label="Using GitHub" value="github">
 
-Create the following Bash script in your repository to create or update Port entities as part of your pipeline:
+To manage your GitHub integration configuration using a config file in GitHub:
 
-<details>
-  <summary> Bash script example </summary>
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired GitHub organization.
+3. A window will open containing the default YAML configuration of your GitHub integration.
+4. Scroll all the way down, and turn on the `Manage this integration using the "port-app-config.yml" file` toggle.
 
-```bash showLineNumbers
-#!/bin/sh
+This will clear the configuration in Port's UI.
 
-# Get environment variables
-WEBHOOK_URL="$WEBHOOK_URL"
-SERVICE_ID="$SERVICE_ID"
-PATH_TO_PACKAGE_JSON_FILE="$PATH_TO_PACKAGE_JSON_FILE"
+When configuring the integration **using GitHub**, you can choose either a global or granular configuration:
 
-add_entity_to_port() {
-    local entity_object="$1"
-    local headers="Accept: application/json"
-    local response=$(curl -X POST -H "$headers" -H "Content-Type: application/json" -d "$entity_object" "$WEBHOOK_URL")
-    echo "$response"
-}
+- **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository.
+  - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
+- **Granular configuration:** add the `port-app-config.yml` file to the `.github` directory of your desired repository.
+  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
 
-# This function takes a package.json file path, converts the "dependencies" property into a
-# JSON array using three keys (name, version, and id). It then sends this data to Port
-convert_package_json() {
-    local package_json_path="$1"
-    local data=$(cat "$package_json_path")
-    local dependencies=$(echo "$data" | jq -r '.dependencies // {}')
-
-    local converted_dependencies=""
-    local index=1
-    while IFS="=" read -r dep_name version; do
-        pkg_id="pkg-$index"
-        converted_dependencies="$converted_dependencies{\"name\":\"$dep_name\",\"version\":\"$version\",\"id\":\"$pkg_id\"},"
-        index=$((index + 1))
-    done <<EOF
-$(echo "$dependencies" | jq -r 'to_entries[] | .key + "=" + .value')
-EOF
-
-    local entity_object="{\"service\":\"$SERVICE_ID\",\"dependencies\":[${converted_dependencies%,}]}"
-    local webhook_response=$(add_entity_to_port "$entity_object")
-    echo "$webhook_response"
-}
-
-converted_data=$(convert_package_json "$PATH_TO_PACKAGE_JSON_FILE")
-echo "$converted_data"
-```
-
-</details>
+When using global configuration **using GitHub**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
 
 </TabItem>
+
 </Tabs>
 
-For an example showing how to integrate the above scripts with your existing Gitlab CI pipelines, visit:
+:::info Important
+When **using Port's UI**, the specified configuration will override any `port-app-config.yml` file in your GitHub repository/ies.
+:::
+
+## Setting up the blueprint and mapping configuration
+
+Create the following blueprint definition and mapping configuration:
+
+<details>
+<summary><b>Service blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "service",
+  "title": "Service",
+  "icon": "Service",
+  "schema": {
+    "properties": {
+      "description": {
+        "title": "Description",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary><b>Package blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "package",
+  "description": "This blueprint represents a software package file in our catalog",
+  "title": "Package",
+  "icon": "Package",
+  "schema": {
+    "properties": {
+      "version": {
+        "type": "string",
+        "title": "Depedency Version"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "service": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Package mapping config (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: '**/package.json'
+    port:
+      itemsToParse: .file.content.dependencies | to_entries
+      entity:
+        mappings:
+          # Since identifier cannot contain special characters, we are using jq to remove them
+          identifier: >-
+            .item.key + "_" + if (.item.value | startswith("^")) then
+            .item.value[1:] else .item.value end
+          title: .item.key + "@" + .item.value
+          blueprint: '"package"'
+          properties:
+            package: .item.key
+            version: .item.value
+          relations: {}
+```
+
+</details>
+
+Then click on `Resync` and wait for the entities to be ingested in your Port environment
+
+For an example showing how to integrate the above with your existing Gitlab CI pipelines, visit:
 
 - [Package.json example](https://github.com/port-labs/package-json-webhook-example)
