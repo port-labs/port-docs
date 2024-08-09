@@ -29,7 +29,10 @@ import PortFolderMappingAppConfig from './example-repository-folders/\_github_ex
 
 import TeamBlueprint from './example-repository-teams/\_github_export_example_team_blueprint.mdx'
 import RepositoryTeamBlueprint from './example-repository-teams/\_github_export_example_repository_with_teams_relation_blueprint.mdx'
+import RepositoryUserTeamBlueprint from './example-repository-teams/\_github_export_example_team_with_github_user_relation_blueprint.mdx'
+import RepositoryUserBlueprint from './example-repository-teams/\_github_export_example_github_user_blueprint.mdx'
 import PortRepositoryTeamMappingAppConfig from './example-repository-teams/\_github_exporter_example_repository_with_teams_port_app_config.mdx'
+import PortRepositoryTeamUserMappingAppConfig from './example-repository-teams/\_github_exporter_example_repository_with_teams_and_users_port_app_config.mdx'
 
 import DependabotAlertBlueprint from './example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
 import CodeScanAlertBlueprint from './example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
@@ -201,6 +204,34 @@ To retrieve the teams of your repositories, you will need to add the `teams` pro
 ```
 
 :::
+
+## Map Repositories, Teams, and Team Members
+
+In the following example, you will ingest your GitHub repositories, their associated teams, and the members within those teams into Port. You may use the following Port blueprint definitions and `port-app-config.yml`:
+
+:::note
+Teams are GitHub organization-level resources, therefore you will need to specify the mapping of the teams and their members in a [global integration configuration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) (through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
+:::
+
+<RepositoryUserTeamBlueprint/>
+
+<RepositoryUserBlueprint/>
+
+<RepositoryTeamBlueprint/>
+
+<PortRepositoryTeamUserMappingAppConfig/>
+
+:::tip
+To retrieve the teams of your repositories, you will need to add the `teams` property to the `selector` in the repository resource kind in your `port-app-config.yml`:
+
+```yaml
+- kind: repository
+  selector:
+    query: 'true'  # JQ boolean query. If evaluated to false - skip syncing the object.
+    teams: true  # Boolean flag to indicate whether to include the repository teams.
+```
+:::
+
 
 ## Map repositories, deployments and environments
 
