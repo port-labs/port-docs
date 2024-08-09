@@ -68,7 +68,7 @@ In the following example you will ingest your GitHub repositories, their README.
 
 <PortAppConfig/>
 
-:::tip
+:::tip setup and github object structures
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -101,7 +101,7 @@ In the following example you will ingest your GitHub repositories, their workflo
 
 <PortWfWfrAppConfig/>
 
-:::tip
+:::tip additional resources
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -123,7 +123,7 @@ In the following example you will ingest your GitHub repositories and their issu
 
 <PortIssueAppConfig/>
 
-:::tip
+:::tip useful links and setup guidance
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -142,7 +142,7 @@ In the following example you will ingest your GitHub repositories and their fold
 
 <PortMonoRepoAppConfig/>
 
-:::tip
+:::tip retrieving monorepo root folders
 To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
 
 ```yaml
@@ -157,7 +157,8 @@ To retrieve the root folders of your monorepo, you can use this following syntax
 ```
 
 :::
-:::tip
+
+:::tip setup guidance and object structures
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -182,7 +183,7 @@ In the following example you will ingest your GitHub repositories, the repositor
 
 In the following example you will ingest your GitHub repositories and their teams to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
-:::note
+:::note team mapping requirement
 Teams are GitHub organization level resources, therefore you will need to specify the mapping of the teams in a [global integration configuration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) (Through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
 :::
 
@@ -192,7 +193,7 @@ Teams are GitHub organization level resources, therefore you will need to specif
 
 <PortRepositoryTeamMappingAppConfig/>
 
-:::tip
+:::tip adding teams to repository selector
 To retrieve the teams of your repositories, you will need to add the `teams` property to the `selector` in the repository resource kind in your `port-app-config.yml`:
 
 ```yaml
@@ -209,8 +210,8 @@ To retrieve the teams of your repositories, you will need to add the `teams` pro
 
 In the following example, you will ingest your GitHub repositories, their associated teams, and the members within those teams into Port. You may use the following Port blueprint definitions and `port-app-config.yml`:
 
-:::note
-Teams are GitHub organization-level resources, therefore you will need to specify the mapping of the teams and their members in a [global integration configuration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) (through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
+:::note teams mapping
+Teams are GitHub organization-level resources, therefore, you will need to specify the mapping of the teams and their members in a [global integration configuration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) (through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
 :::
 
 <RepositoryUserTeamBlueprint/>
@@ -221,7 +222,7 @@ Teams are GitHub organization-level resources, therefore you will need to specif
 
 <PortRepositoryTeamUserMappingAppConfig/>
 
-:::tip
+:::tip repository teams
 To retrieve the teams of your repositories, you will need to add the `teams` property to the `selector` in the repository resource kind in your `port-app-config.yml`:
 
 ```yaml
