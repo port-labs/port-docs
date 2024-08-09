@@ -17,9 +17,9 @@ resources:
           title: .name
           blueprint: '"service"'
           properties:
-            readme: "file://README.md"
-            url: ".html_url"
-            defaultBranch: ".default_branch"
+            readme: file://README.md
+            url: .html_url
+            defaultBranch: .default_branch
           relations:
             admins: "[.collaborators[] | select(.is_admin == true) | .login]"
             githubTeams: "[.teams[].id | tostring]"
@@ -30,15 +30,15 @@ resources:
       entity:
         mappings:
           identifier: ".id | tostring"
-          title: ".name"
+          title: .name
           blueprint: '"githubTeam"'
           properties:
-            name: ".name"
-            slug: ".slug"
-            description: ".description"
-            link: ".html_url"
-            permission: ".permission"
-            notification_setting: ".notification_setting"
+            name: .name
+            slug: .slug
+            description: .description
+            link: .html_url
+            permission: .permission
+            notification_setting: .notification_setting
           relations:
             members: "[.members[].login]"
   - kind: user
@@ -47,13 +47,13 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".email"
-          title: ".email"
+          identifier: .email
+          title: .email
           blueprint: '"githubUser"'
           properties:
-            email: ".email"
+            email: .email
           relations:
-            user: ".email"
+            user: .email
 ```
 
 </details>

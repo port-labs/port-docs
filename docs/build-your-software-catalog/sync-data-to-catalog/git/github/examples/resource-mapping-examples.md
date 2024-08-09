@@ -214,9 +214,9 @@ In the following example, you will ingest your GitHub repositories, their associ
 Teams are GitHub organization-level resources, therefore, you will need to specify the mapping of the teams and their members in a [global integration configuration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) (through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
 :::
 
-<RepositoryUserTeamBlueprint/>
-
 <RepositoryUserBlueprint/>
+
+<RepositoryUserTeamBlueprint/>
 
 <RepositoryTeamBlueprint/>
 
@@ -334,7 +334,7 @@ In the following example you will ingest your GitHub repositories, their release
 
 ## Map supported resources
 
-The above examples shows a specific use cases, but Port's GitHub app supports the ingestion of many other GitHub objects, to adapt the examples above, use the GitHub API reference to learn about the available fields for the different supported objects:
+The above examples show a specific use cases, but Port's GitHub app supports the ingestion of many other GitHub objects, to adapt the examples above, use the GitHub API reference to learn about the available fields for the different supported objects:
 
 <GitHubResources/>
 
