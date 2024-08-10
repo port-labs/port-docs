@@ -39,7 +39,7 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `Service` (GitHub repository) <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/github/addNewRelationToService.png' width='50%' border='1px' />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/github/addNewRelationToService.png' width='40%' border='1px' />
 
 <br/><br/>
 
