@@ -1,7 +1,6 @@
 # Create Jira Issue from Dependabot Alert
 
-This self-service action shows how to create a Jira issue with a from dependapot alert that links the issue to a concerned service in Port.
-
+This self-service action shows how to create a Jira issue from a dependabot alert that links the issue to a service in Port.
 ## Use cases
 * Automatically create Jira issues from Dependabot alerts.
 * Add detailed metadata to Jira issues from Dependabot alerts.
@@ -22,7 +21,7 @@ This self-service action shows how to create a Jira issue with a from dependapot
 :::tip Jira integration
 This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog in real time with the new issue created.
 :::
-5. In case you decided not to install the Jira integration, you will need to create a blueprint for the Jira Project and Jira Issue in Port.
+5. In case you decided not to install the Jira integration, you will need to create a blueprint for the Jira Project in Port.
 <details>
 <summary><b>Jira Project Blueprint (Click to expand)</b></summary>
 
@@ -56,102 +55,6 @@ This step is not required for this example, but it will create all the blueprint
 ```
 </details>
 
-<details>
-<summary><b>Jira Issue Blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-  {
-   "identifier": "jiraIssue",
-   "title": "Jira Issue",
-   "icon": "Jira",
-   "schema": {
-      "properties": {
-         "url": {
-            "title": "Issue URL",
-            "type": "string",
-            "format": "url",
-            "description": "URL to the issue in Jira"
-         },
-         "status": {
-            "title": "Status",
-            "type": "string",
-            "description": "The status of the issue"
-         },
-         "issueType": {
-            "title": "Type",
-            "type": "string",
-            "description": "The type of the issue"
-         },
-         "components": {
-            "title": "Components",
-            "type": "array",
-            "description": "The components related to this issue"
-         },
-         "assignee": {
-            "title": "Assignee",
-            "type": "string",
-            "format": "user",
-            "description": "The user assigned to the issue"
-         },
-         "reporter": {
-            "title": "Reporter",
-            "type": "string",
-            "description": "The user that reported to the issue",
-            "format": "user"
-         },
-         "creator": {
-            "title": "Creator",
-            "type": "string",
-            "description": "The user that created to the issue",
-            "format": "user"
-         },
-         "priority": {
-            "title": "Priority",
-            "type": "string",
-            "description": "The priority of the issue"
-         },
-         "created": {
-            "title": "Created At",
-            "type": "string",
-            "description": "The created datetime of the issue",
-            "format": "date-time"
-         },
-         "updated": {
-            "title": "Updated At",
-            "type": "string",
-            "description": "The updated datetime of the issue",
-            "format": "date-time"
-         }
-      },
-      "required": []
-   },
-   "mirrorProperties": {},
-   "calculationProperties": {},
-   "aggregationProperties": {},
-   "relations": {
-      "parentIssue": {
-         "title": "Parent Issue",
-         "target": "jiraIssue",
-         "required": false,
-         "many": false
-      },
-      "project": {
-         "title": "Project",
-         "description": "The Jira project that contains this issue",
-         "target": "jiraProject",
-         "required": false,
-         "many": false
-      },
-      "subtasks": {
-         "title": "Subtasks",
-         "target": "jiraIssue",
-         "required": false,
-         "many": true
-      }
-   }
-}
-```
-</details>
 
 6. You have finished the [onboarding process](/quickstart) and created a `Service` blueprint from the onboarding steps. You can alternatively create the `Service` blueprint in Port using the schema below: 
 
@@ -264,10 +167,119 @@ To effectively manage your Dependabot alerts, map them to your `service` bluepri
 Follow this [resource mapping guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-dependabot-alerts-and-code-scan-alerts) for detailed steps on how to map Dependabot alerts.
 :::
 
+Below is the blueprint for Dependabot Alert
+
+<details>
+<summary><b>Dependabot Blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+   "identifier": "githubDependabotAlert",
+   "title": "Dependabot Alert",
+   "icon": "Github",
+   "schema": {
+      "properties": {
+         "severity": {
+            "icon": "DefaultProperty",
+            "title": "Severity",
+            "type": "string",
+            "enum": [
+               "low",
+               "medium",
+               "high",
+               "critical"
+            ],
+            "enumColors": {
+               "low": "green",
+               "medium": "orange",
+               "high": "red",
+               "critical": "red"
+            }
+         },
+         "state": {
+            "title": "State",
+            "type": "string",
+            "enum": [
+               "auto_dismissed",
+               "dismissed",
+               "fixed",
+               "open"
+            ],
+            "enumColors": {
+               "auto_dismissed": "green",
+               "dismissed": "green",
+               "fixed": "green",
+               "open": "red"
+            },
+            "icon": "DefaultProperty"
+         },
+         "packageName": {
+            "icon": "DefaultProperty",
+            "title": "Package Name",
+            "type": "string"
+         },
+         "packageEcosystem": {
+            "title": "Package Ecosystem",
+            "type": "string"
+         },
+         "manifestPath": {
+            "title": "Manifest Path",
+            "type": "string"
+         },
+         "scope": {
+            "title": "Scope",
+            "type": "string"
+         },
+         "ghsaID": {
+            "title": "GHSA ID",
+            "type": "string"
+         },
+         "cveID": {
+            "title": "CVE ID",
+            "type": "string"
+         },
+         "url": {
+            "title": "URL",
+            "type": "string",
+            "format": "url"
+         },
+         "references": {
+            "icon": "Vulnerability",
+            "title": "References",
+            "type": "array",
+            "items": {
+               "type": "string",
+               "format": "url"
+            }
+         }
+      },
+      "required": []
+   },
+   "mirrorProperties": {},
+   "calculationProperties": {},
+   "aggregationProperties": {},
+   "relations": {
+      "jira_issue": {
+         "title": "JIRA Issue",
+         "target": "jiraIssue",
+         "required": false,
+         "many": false
+      },
+      "service": {
+         "title": "Service",
+         "target": "service",
+         "required": false,
+         "many": false
+      }
+   }
+}
+```
+</details>
+
 
 ## GitHub Workflow
 
-Create the file `create-jira-issue-from-dependapot.yml` in the `.github/workflows` folder of your repository and copy the content of the workflow configuration below:
+Create the file `create-jira-issue-from-dependabot.yml` in the `.github/workflows` folder of your repository and copy the content of the workflow configuration below:
 
 :::tip Dedicated repository
 We recommend creating a dedicated repository for the workflows that are used by Port actions.
@@ -282,13 +294,10 @@ name: Create Jira Issue from Dependabot Alert
 on:
    workflow_dispatch:
       inputs:
-         title:
+         project:
             required: true
             type: string
          type:
-            required: true
-            type: string
-         project:
             required: true
             type: string
          port_context:
@@ -300,7 +309,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
          - name: Checkout code
-           uses: actions/checkout@v2
+           uses: actions/checkout@v3
 
          - name: Login to Jira
            uses: atlassian/gajira-login@v3
@@ -324,7 +333,7 @@ jobs:
            with:
               project: ${{ inputs.project }}
               issuetype: ${{ inputs.type }}
-              summary: "Dependabot Alert: ${{ inputs.title }}"
+              summary: "Dependabot Alert: ${{ fromJson(inputs.port_context).entity.properties.packageName }}"
               description: |
                  **Severity**: ${{ fromJson(inputs.port_context).entity.properties.severity }}
                  **State**: ${{ fromJson(inputs.port_context).entity.properties.state }}
@@ -336,10 +345,9 @@ jobs:
                  **CVE ID**: ${{ fromJson(inputs.port_context).entity.properties.cveID }}
                  **URL**: ${{ fromJson(inputs.port_context).entity.properties.url }}
                  **References**:
-                 ${{ fromJson(inputs.port_context).entity.properties.references | join("\n") }}
+                 ${{ join(fromJson(inputs.port_context).entity.properties.references, '\n            ') }}
               fields: |
                  {
-                   "customfield_12345": "${{ fromJson(inputs.port_context).entity.properties.severity }}",
                    "labels": ["port-${{ fromJson(inputs.port_context).entity.identifier }}"]
                  }
 
@@ -380,11 +388,13 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
       "operation": "DAY-2",
       "userInputs": {
          "properties": {
-            "title": {
-               "title": "Title",
-               "description": "Title of the Jira issue",
+            "project": {
+               "title": "Project",
+               "description": "The issue will be created on this project",
                "icon": "Jira",
-               "type": "string"
+               "type": "string",
+               "blueprint": "jiraProject",
+               "format": "entity"
             },
             "type": {
                "title": "Type",
@@ -404,31 +414,11 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
                   "Bug": "red",
                   "Epic": "pink"
                }
-            },
-            "issue": {
-               "title": "Issue",
-               "description": "The issue will being created",
-               "icon": "Jira",
-               "type": "string",
-               "blueprint": "jiraIssue",
-               "format": "entity"
-            },
-            "project": {
-               "title": "Project",
-               "description": "The issue will be created on this project",
-               "icon": "Jira",
-               "type": "string",
-               "blueprint": "jiraProject",
-               "format": "entity"
             }
          },
          "required": [
-            "title",
-            "type"
-         ],
-         "order": [
-            "title",
-            "type"
+            "type",
+            "project"
          ]
       },
       "blueprintIdentifier": "githubDependabotAlert"
@@ -437,11 +427,9 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
       "type": "GITHUB",
       "org": "<GITHUB_ORG>",
       "repo": "<GITHUB_REPO>",
-      "workflow": "create-jira-issue-from-dependapot.yml",
+      "workflow": "create-jira-issue-from-dependabot.yml",
       "workflowInputs": {
-         "title": "{{.inputs.\"title\"}}",
          "type": "{{.inputs.\"type\"}}",
-         "issue": "{{.inputs.\"issue\"}}",
          "project": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}",
          "port_context": {
             "entity": "{{.entity.identifier}}",
@@ -458,8 +446,12 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
 
 ## Let's test it
 
-1. Trigger the action from Port's [Self Service hub](https://app.getport.io/self-serve)
-
-2. Done! wait for the issue to be created in Jira
+1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+2. Click on `Execute` on the `Create Jira Issue from Dependabot` action
+3. Select the dependabot alert
+4. Select the project 
+5. Select the task type
+6. Click on `Execute`
+7. Done! wait for the issue to be created in Jira
 
 Congrats 🎉 You've created your first Jira issue from a Dependabot alert!
