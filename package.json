@@ -17,11 +17,11 @@
   },
   "dependencies": {
     "@docsly/react": "^1.9.1",
-    "@docusaurus/core": "^3.4.0",
-    "@docusaurus/plugin-client-redirects": "^3.4.0",
+    "@docusaurus/core": "^3.5.1",
+    "@docusaurus/plugin-client-redirects": "^3.5.1",
     "@docusaurus/plugin-google-tag-manager": "^3.4.0",
     "@docusaurus/plugin-ideal-image": "^3.4.0",
-    "@docusaurus/preset-classic": "^3.4.0",
+    "@docusaurus/preset-classic": "^3.5.1",
     "@docusaurus/theme-live-codeblock": "^3.4.0",
     "@easyops-cn/docusaurus-search-local": "^0.44.4",
     "@mdx-js/react": "^3.0.1",
@@ -39,8 +39,8 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.4.0",
-    "@docusaurus/tsconfig": "^3.4.0",
-    "@docusaurus/types": "^3.4.0",
+    "@docusaurus/tsconfig": "^3.5.1",
+    "@docusaurus/types": "^3.5.1",
     "husky": "^9.1.4",
     "pretty-quick": "^4.0.0",
     "typescript": "~5.5.4"
