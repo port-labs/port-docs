@@ -204,3 +204,39 @@ jobs:
 ```
 
 ---
+
+## Update a service default values upon creation
+
+### Automation definition
+
+When a new service is created, we want to set default values to some properties. By using the `ENTITY_CREATED` trigger type, we can run custom logic for this use case.
+ 
+The following definition will set a default `type` and `domain` to a new `service` entity:
+
+```json showLineNumbers
+{
+  "identifier": "serviceCreatedSetDefaults",
+  "title": "Update defaults when service is created",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_CREATED",
+      "blueprintIdentifier": "Service"
+    }
+  },
+  "invocationMethod": {
+    "type": "UPSERT_ENTITY",
+    "blueprintIdentifier": "Service",
+    "mapping": {
+      "identifier": "{{ .event.context.entityIdentifier }} ",
+      "properties": {
+        "domain": "default_domain",
+        "type": "backend"
+      }
+    }
+  },
+  "publish": true
+}
+```
+
+---
