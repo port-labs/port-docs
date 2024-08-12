@@ -205,7 +205,7 @@ jobs:
 
 ---
 
-## Update a service default values upon creation
+## Update a service's default values upon creation
 
 ### Automation definition
 
