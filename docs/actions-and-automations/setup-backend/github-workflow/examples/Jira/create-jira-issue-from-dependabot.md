@@ -167,7 +167,7 @@ To effectively manage your Dependabot alerts, map them to your `service` bluepri
 Follow this [resource mapping guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-dependabot-alerts-and-code-scan-alerts) for detailed steps on how to map Dependabot alerts.
 :::
 
-Below is the blueprint for Dependabot Alert
+7. Create the Dependabot Alert blueprint using this schema if you don't have it created already:
 
 <details>
 <summary><b>Dependabot Blueprint (Click to expand)</b></summary>
