@@ -1,0 +1,22 @@
+```json showLineNumbers
+[
+  {
+    "blueprint": "dynatraceProblem",
+    "entity": {
+      "identifier": ".body.PID | tostring",
+      "title": ".body.ProblemTitle",
+      "properties": {
+        "state": ".body.State",
+        "url": ".body.ProblemURL",
+        "details": ".body.ProblemDetailsText",
+        "impact": ".body.ProblemImpact",
+        "severity": ".body.ProblemSeverity",
+        "tags": ".body.ProblemTags | split(\", \")"
+      },
+      "relations": {
+        "microservice": "[.body.ImpactedEntities[].entity]"
+      }
+    }
+  }
+]
+```
