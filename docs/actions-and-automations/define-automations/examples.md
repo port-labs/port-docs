@@ -209,7 +209,8 @@ jobs:
 
 ### Automation definition
 
-When a new service is created, we want to set default values to some properties. By using the `ENTITY_CREATED` trigger type, we can run custom logic for this use case.
+When a new service is created, we may want to set default values for some of its properties.  
+By using the `ENTITY_CREATED` trigger type, we can automate this.
  
 The following definition will set a default `type` and `domain` to a new `service` entity:
 
