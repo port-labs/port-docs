@@ -56,7 +56,8 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
 {label: "GitLab", value: "gitlab"},
-{label: "Bitbucket (Jenkins)", value: "bitbucket"}
+{label: "Bitbucket (Jenkins)", value: "bitbucket"},
+{label: "Azure DevOps", value: "azure-devops"}
 ]}>
 
 <TabItem value="github">
@@ -167,6 +168,11 @@ Then, fill out your workflow details:
 
 </TabItem>
 
+<TabItem value="azure-devops">
+
+First, choose `Run Azure pipeline` as the invocation type.
+
+</TabItem>
 </Tabs>
 
 <br/>
