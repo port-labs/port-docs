@@ -212,7 +212,7 @@ jobs:
 When a new service is created, we may want to set default values for some of its properties.  
 By using the `ENTITY_CREATED` trigger type, we can automate this.
  
-The following definition will set a default `type` and `domain` to a new `service` entity:
+The following definition will set a default `type` and `domain` to every new `service` entity:
 
 ```json showLineNumbers
 {
