@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: Let developers enrich services using Gitops
+title: Enrich services using Gitops
 ---
 
 import Tabs from "@theme/Tabs"
@@ -9,11 +9,11 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Let developers enrich services using Gitops
+# Enrich services using Gitops
 
 This guide takes 10 minutes to complete, and aims to demonstrate Port's flexibility when working with Gitops.
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
@@ -151,13 +151,13 @@ As platform engineers, we want to enable our developers to perform certain actio
 
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
+As part of the onboarding process, you should already have an action named `Enrich service` in your [self-service tab](https://app.getport.io/self-serve).  
 
 If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
 :::
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button in the top right corner, and choose "Edit":
-    <img src='/img/guides/gitopsEditAction.png' width='35%' border='1px' />
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Enrich service` action, click the `...` button in the top right corner, and choose "Edit":
+    <img src='/img/guides/gitopsEditAction.png' width='40%' border='1px' />
 
 2. Click on the `Backend` tab.
 
@@ -195,11 +195,11 @@ Fill out the form with your values:
   {
     "port_context": {
       "entity": "{{ .entity.identifier }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
-    "domain": "{{ .inputs.domain }}",
+    "domain": "{{ .inputs.domain.identifier }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 </TabItem>
@@ -232,11 +232,11 @@ In order to protect the webhook, see the [Validating webhook signatures page](..
   {
     "port_context": {
       "entity": "{{ .entity.identifier }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
-    "domain": "{{ .inputs.domain }}",
+    "domain": "{{ .inputs.domain.identifier }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 
@@ -270,11 +270,11 @@ Then, fill out your workflow details:
     "port_context": {
       "entity": "{{ .entity.identifier }}",
       "repo_url": "{{ .entity.properties.url }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
-    "domain": "{{ .inputs.domain }}",
+    "domain": "{{ .inputs.domain.identifier }}",
     "type": "{{ .inputs.type }}",
-    "lifecycle": "{{ .inputs.lifecycle }}",
+    "lifecycle": "{{ .inputs.lifecycle }}"
   }
   ```
 

@@ -13,6 +13,7 @@ import JiraWebhookConfiguration from "/docs/build-your-software-catalog/custom-i
 import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
 import JiraServerConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_server_configuration_python.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Jira
 
@@ -38,7 +39,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -66,18 +73,18 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-jira-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
   --set sendRawDataExamples=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-jira-integration"  \
-	--set integration.type="jira"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.jiraHost="string"  \
-	--set integration.secrets.atlassianUserEmail="string"  \
-	--set integration.secrets.atlassianUserToken="string"
+  --set scheduledResyncInterval=120 \
+  --set integration.identifier="my-jira-integration"  \
+  --set integration.type="jira"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.jiraHost="string"  \
+  --set integration.secrets.atlassianUserEmail="string"  \
+  --set integration.secrets.atlassianUserToken="string"
 ```
 
 <PortApiRegionTip/>
@@ -175,6 +182,8 @@ kubectl apply -f my-ocean-jira-integration.yaml
 
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
 
 </TabItem>
 
@@ -407,13 +416,15 @@ ingest_data:
 
   </Tabs>
 
+<PortApiRegionTip/>
+
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
 
-<PortApiRegionTip/>
 
-<AdvancedConfig/>
 
 ## Ingesting Jira objects
 

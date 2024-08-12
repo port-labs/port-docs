@@ -290,6 +290,10 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/main-menu/api.svg');
 }
 
+.sidebar-menu-security .menu__link::before {
+  content: url('/static/img/sidebar-icons/main-menu/security.svg');
+}
+
 .sidebar-menu-troubleshooting .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/troubleshooting.svg');
 }
@@ -579,4 +583,8 @@ html[data-theme="dark"] .openapi-schema__list-item {
 
 .theme-code-block-highlighted-line {
   display: table-row !important;
+}
+
+.openapi-tabs__response-code-item:not(.active) {
+  border: 1px solid var(--openapi-tree-line-color) !important;
 }

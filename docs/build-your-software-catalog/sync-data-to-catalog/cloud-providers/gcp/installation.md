@@ -44,16 +44,16 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    ```bash
    helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
    helm upgrade --install gcp port-labs/port-ocean \
-   --set port.clientId="$PORT_CLIENT_ID"  \
-   --set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
-   --set port.baseUrl="https://api.getport.io"  \
-   --set initializePortResources=true  \
-   --set sendRawDataExamples=true  \
-   --set scheduledResyncInterval=1440 \
-   --set integration.identifier="ocean-gcp-integration"  \
-   --set integration.type="gcp"  \
-   --set integration.eventListener.type="POLLING"  \
-   --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>"
+     --set port.clientId="$PORT_CLIENT_ID"  \
+     --set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
+     --set port.baseUrl="https://api.getport.io"  \
+     --set initializePortResources=true  \
+     --set sendRawDataExamples=true  \
+     --set scheduledResyncInterval=1440 \
+     --set integration.identifier="ocean-gcp-integration"  \
+     --set integration.type="gcp"  \
+     --set integration.eventListener.type="POLLING"  \
+     --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>"
    ```
 
 ## Optional- Scale permissions for a Service account

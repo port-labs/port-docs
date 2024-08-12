@@ -13,6 +13,7 @@ Our OpenCost integration allows you to import `cost` from your OpenCost instance
 ## Common use cases
 
 - Map your monitored Kubernetes resources and cost allocations in OpenCost.
+- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
 
@@ -55,15 +56,15 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-opencost-integration port-labs/port-ocean \
-	--set port.clientId="CLIENT_ID"  \
-	--set port.clientSecret="CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
+  --set port.clientId="CLIENT_ID"  \
+  --set port.clientSecret="CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
   --set sendRawDataExamples=true  \
-	--set integration.identifier="my-opencost-integration"  \
-	--set integration.type="opencost"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.opencostHost="https://myOpenCostInstance:9003"
+  --set integration.identifier="my-opencost-integration"  \
+  --set integration.type="opencost"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.opencostHost="https://myOpenCostInstance:9003"
 ```
 
 <PortApiRegionTip/>
@@ -458,6 +459,7 @@ The following resources can be used to map data from OpenCost, it is possible to
   - **aggregate** - Field by which to aggregate the results. Accepts: `cluster`, `node`, `namespace`, `controllerKind`, `controller`, `service`, `pod`, `container`, `label:name`, and `annotation:name`. Also accepts comma-separated lists for multi-aggregation, like `namespace,label:app`.
   - **step** - Duration of a single allocation set. If unspecified, this defaults to the window, so that you receive exactly one set for the entire window. If specified, such as `30m`, `2h`, `1d` etc, it works chronologically backward, querying in durations of step until the full window is covered. Default is `window`.
   - **resolution** - Duration to use as resolution in Prometheus queries. Smaller values (i.e. higher resolutions) will provide better accuracy, but worse performance (i.e. slower query time, higher memory use). Larger values (i.e. lower resolutions) will perform better, but at the expense of lower accuracy for short-running workloads. Default is `1m`.
+  - **filter** - Filter your results by any category which you can aggregate by, can support multiple filterable items in the same category in a comma-separated list. See the [Kubecost filter syntax guide](https://docs.kubecost.com/apis/filters-api) for more.
 
 - The `port`, `entity` and the `mappings` keys are used to map the OpenCost object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
@@ -637,6 +639,7 @@ resources:
       aggregate: "pod"
       step: "window"
       resolution: "1m"
+      filter: 'labels:"app:internal-service","app:service-2"+service:"notification","account","functions"'
     port:
       entity:
         mappings:
