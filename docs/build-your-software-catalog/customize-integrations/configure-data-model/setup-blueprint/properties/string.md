@@ -493,15 +493,15 @@ func main() {
 
 String validations support the following operators:
 
-- `minLength` - enforce minimal string length;
-- `maxLength` - enforce maximal string length;
+- `minLength` - enforce minimal string length.
+- `maxLength` - enforce maximal string length.
 - `pattern` - enforce Regex patterns.
 
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Array", value: "array"},
 {label: "Terraform", value: "tf"},
-{label: "Pulumi - coming soon", value: "pulumi"}
+{label: "Pulumi", value: "pulumi"}
 ]}>
 
 <TabItem value="basic">
@@ -550,10 +550,8 @@ String validations support the following operators:
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-
 resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
-  # highlight-start
   properties = {
     string_props = {
       "myStringProp" = {
@@ -567,9 +565,28 @@ resource "port_blueprint" "myBlueprint" {
       }
     }
   }
-  # highlight-end
 }
+```
 
+</TabItem>
+
+<TabItem value="pulumi">
+
+```typescript showLineNumbers
+export const blueprint = new port.Blueprint("myBlueprint", {
+  // ...blueprint properties
+  properties: {
+    stringProps: {
+      myStringProp: {
+        // highlight-start
+        maxLength: 32,
+        minLength: 1,
+        pattern: "^[a-zA-Z0-9-]*-service$"
+        // highlight-end
+      }
+    }
+  }
+});
 ```
 
 </TabItem>

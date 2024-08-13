@@ -19,17 +19,15 @@ This guide takes 10 minutes to complete, and aims to cover:
 🎬 If you would like to follow along to a **video** that implements this guide, check out this one by @TeKanAid 🎬
 <center>
 
-<iframe width="568" height="320" src="https://www.youtube.com/embed/tMYaKlMIvZk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/tMYaKlMIvZk?start=946" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 
 <br/><br/>
 
-:::tip Prerequisites
+:::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
-- [Helm](https://helm.sh/docs/intro/install/) - required to install a relevant integration.
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `service` blueprint that was created during the onboarding process.
 
 :::
 
@@ -54,7 +52,8 @@ In this guide we will add two new properties to our `service` <PortTooltip id="b
 
 ### Add an on-call to your services
 
-In this guide we will use Pagerduty to get our services' on-call. Note that Port also has integrations for other incident response platforms.
+Port offers various integrations with incident response platforms.  
+In this guide, we will use **Pagerduty** to get our services' on-call. 
 
 #### Create the necessary Pagerduty resources
 
@@ -73,48 +72,29 @@ If you already have a Pagerduty account that you can play around with, feel free
 
 #### Integrate Pagerduty into Port
 
-Now let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.
+Now let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.  
+To install the integration:
 
-:::info K8s cluster required
-For this installation you will need Helm and a running K8s cluster (see [prerequisites](/guides-and-tutorials/ensure-production-readiness)).
-:::
+1. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on the `+ Data source` button in the top-right corner.
 
-1. Install Port's Pagerduty integration using Helm, by running the command below in your terminal.
+2. Under the `Incident Management` section, choose `Pagerduty`.
 
-:::tip Alternative installation
-The command below will install the integration in `Realtime & always on` mode. If you prefer to use a one-time (scheduled) installation instead, see the [Pagerduty installation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/?installation-methods=one-time#installation) section.
-:::
+3. As you can see in this form, Port supports multiple installation methods. This integration can be installed in your environment (e.g. on your Kubernetes cluster), or it can be hosted by Port, on Port's infrastructure.  
+   For this guide, we will use the `Hosted by Port` method.  
 
-- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)).
+4. Enter the required parameters:
+   - Token - Your Pagerduty API token. To create one, see the [Pagerduty documentation](https://support.pagerduty.com/docs/api-access-keys).
+      :::info Port secrets
+      The `Token` field is a Port secret, meaning it will be encrypted and stored securely in Port.  
+      Select a secret from the dropdown, or create a new one by clicking on `+ Add secret`.  
 
-- Replace `token` with your Pagerduty token. To obtain it:
-  - Hover over your avatar in the top right corner of your Pagerduty app, then click `My profile`.
-  - Click the `User settings` tab and scroll to the bottom.
-  - Click on `Create API User Token` and provide a name.
-  - Copy the new token value.
+      Learn more about Port secrets [here](/sso-rbac/port-secrets/).  
+      :::
+   - API URL - The Pagerduty API URL. For most users, this will be `https://api.pagerduty.com`. If you use the EU data centers, set this to `https://api.eu.pagerduty.com`.
 
-![pagerdutyUserSettings](/img/guides/pagerdutyUserSettings.png)
-
-<details>
-<summary><b>Installation command (click to expand)</b></summary>
-
-```bash showLineNumbers
-helm repo add port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
-    --set port.clientId="CLIENT_ID" \   # REPLACE VALUE
-    --set port.clientSecret="CLIENT_SECRET"  \   # REPLACE VALUE
-    --set port.baseUrl="https://api.getport.io"  \
-    --set initializePortResources=true  \
-    --set integration.identifier="my-pagerduty-integration"  \
-    --set integration.type="pagerduty"  \
-    --set integration.eventListener.type="POLLING"  \
-    --set integration.secrets.token="token"  \   # REPLACE VALUE
-    --set integration.config.apiUrl="https://api.pagerduty.com"
-```
-
-<PortApiRegionTip/>
-
-</details>
+5. Click `Done`. Port will now install the integration and start fetching your Pagerduty data. This may take a few minutes.    
+   You can see the integration in the `Data sources` page, when ready it will look like this:
+   <img src='/img/guides/prodReadinessInstallationCompleteDataSources.png' width='75%' border='1px' />
 
 Great! Now that the integration is installed, we should see some new components in Port:
 
@@ -238,9 +218,10 @@ Let's see how we can easily ingest a CODEOWNERS file into our existing services:
 
 4. Under `Exporters`, click on the Github exporter with your organization name.
 
-5. In the mapping YAML, add the line `code_owners: file://CODEOWNERS` as shown here, then click `Resync`:
+5. In the mapping YAML (the bottom-left panel), add the line `code_owners: file://CODEOWNERS` as shown here, then click `Resync`:
 
-![mappingAddCodeOwners](/img/guides/mappingAddCodeOwners.png)
+<img src='/img/guides/prodReadinessMappingAddCodeOwners.png' width='70%' border='1px' />
+<br/><br/>
 
 _Remember the `identifier` from step 2? This tells Port how to populate the new property_ 😎
 
@@ -273,7 +254,7 @@ Now let's implement it:
 2. Replace the content with this, then click `Save`:
 
 <details>
-<summary>Scorecard schema (click to expand)</summary>
+<summary><b>Scorecard schema (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -282,6 +263,7 @@ Now let's implement it:
   "rules": [
     {
       "identifier": "hasReadme",
+      "description": "Checks if the service has a readme file in the repository",
       "title": "Has a readme",
       "level": "Bronze",
       "query": {
@@ -295,44 +277,47 @@ Now let's implement it:
       }
     },
     {
-      "identifier": "hasTeam",
-      "title": "Has Team",
+      "identifier": "usesSupportedLang",
+      "description": "Checks if the service uses one of the supported languages. You can change this rule to include the supported languages in your organization by editing the blueprint via the \"Builder\" page",
+      "title": "Uses a supported language",
       "level": "Silver",
       "query": {
-        "combinator": "and",
+        "combinator": "or",
         "conditions": [
           {
-            "operator": "isNotEmpty",
-            "property": "$team"
+            "operator": "=",
+            "property": "language",
+            "value": "Python"
+          },
+          {
+            "operator": "=",
+            "property": "language",
+            "value": "JavaScript"
+          },
+          {
+            "operator": "=",
+            "property": "language",
+            "value": "React"
+          },
+          {
+            "operator": "=",
+            "property": "language",
+            "value": "GoLang"
           }
         ]
       }
     },
     {
-      "identifier": "hasSlackChannel",
-      "title": "Has a Slack channel",
+      "identifier": "hasTeam",
+      "description": "Checks if the service has a team that owns it (according to the \"Team\" property of the service)",
+      "title": "Has a Team",
       "level": "Gold",
       "query": {
         "combinator": "and",
         "conditions": [
           {
             "operator": "isNotEmpty",
-            "property": "slack"
-          }
-        ]
-      }
-    },
-    {
-      "identifier": "hasCodeowners",
-      "title": "Has Codeowners",
-      "description": "Checks if a service has a codeowners file",
-      "level": "Silver",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": "isNotEmpty",
-            "property": "code_owners"
+            "property": "$team"
           }
         ]
       }
@@ -357,9 +342,10 @@ Now let's implement it:
 
 </details>
 
-Now go to your Catalog and click on any of your services. Click on the `Scorecards` tab and you will see the score of the service, with details of which checks passed/failed:
+Now go to your Catalog and click on any of your services.  
+Click on the `Scorecards` tab and you will see the score of the service, with details of which checks passed/failed:
 
-<img src='/img/guides/entityAfterReadinessScorecard.png' width='100%' />
+<img src='/img/guides/prodReadinessEntityAfterScorecard.png' width='100%' border='1px' />
 
 ### Possible daily routine integrations
 
