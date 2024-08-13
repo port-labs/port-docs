@@ -333,7 +333,7 @@ jobs:
            with:
               project: ${{ inputs.project }}
               issuetype: ${{ inputs.type }}
-              summary: "Dependabot Alert: ${{ fromJson(inputs.port_context).entity.properties.packageName }}"
+              summary: "Dependabot Alert: ${{ fromJson(inputs.port_context).entity.title }}"
               description: |
                  **Severity**: ${{ fromJson(inputs.port_context).entity.properties.severity }}
                  **State**: ${{ fromJson(inputs.port_context).entity.properties.state }}
@@ -432,7 +432,7 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
          "type": "{{.inputs.\"type\"}}",
          "project": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}",
          "port_context": {
-            "entity": "{{.entity.identifier}}",
+            "entity": "{{.entity}}",
             "run_id": "{{.run.id}}"
          }
       },
