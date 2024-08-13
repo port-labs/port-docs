@@ -420,6 +420,36 @@ we can run custom logic whenever the `openDuration` timer property expires on a 
     "synchronized": true,
     "body": {
       "text": ":warning: *PR Overdue Notification*\n\n:page_facing_up: *Title:* {{ .event.diff.after.title }}\n\n:link: *Link:* <{{ .event.diff.after.properties.link }}|View PR>\n\n:bust_in_silhouette: *Creator:* {{ .event.diff.after.properties.creator }}\n\n:busts_in_silhouette: *Assignees:* {{ .event.diff.after.properties.assignees }}\n\n:eyes: *Reviewers:* {{ .event.diff.after.properties.reviewers }}"
+
+## Update a service's default values upon creation
+
+### Automation definition
+
+When a new service is created, we may want to set default values for some of its properties.  
+By using the `ENTITY_CREATED` trigger type, we can automate this.
+ 
+The following definition will set a default `type` and `domain` to every new `service` entity:
+
+```json showLineNumbers
+{
+  "identifier": "serviceCreatedSetDefaults",
+  "title": "Update defaults when service is created",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_CREATED",
+      "blueprintIdentifier": "Service"
+    }
+  },
+  "invocationMethod": {
+    "type": "UPSERT_ENTITY",
+    "blueprintIdentifier": "Service",
+    "mapping": {
+      "identifier": "{{ .event.context.entityIdentifier }} ",
+      "properties": {
+        "domain": "default_domain",
+        "type": "backend"
+      }
     }
   },
   "publish": true
