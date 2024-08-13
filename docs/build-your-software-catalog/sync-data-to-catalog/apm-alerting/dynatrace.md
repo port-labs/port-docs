@@ -1217,12 +1217,18 @@ The combination of the sample payload and the Ocean configuration generates the 
 ```
 </details>
 
+To adjust the content as suggested, you'll need to move the section that describes creating the `dynatrace_entity` blueprint and the Python script example to come after the "Mapping Result" section in the documentation.
+
+Here’s how you can revise the flow:
+
+
 ## Alternative installation via webhook
+We can create a webhook integration between [Dynatrace](https://www.dynatrace.com/) and Port, which will ingest problem entities to Port and map them to your microservice entities.
 
-We can create a webhook integration between [Dynatrace](https://www.dynatrace.com/) and Port,
-which will ingest problem entities to Port and map them to your microservice entities.
+<details>
+<summary><b>Webhook installation (click to expand)</b></summary>
 
-### Port configuration
+<h2>Port configuration</h2>
 
 Create the following blueprint definitions:
 
@@ -1236,7 +1242,7 @@ Create the following blueprint definitions:
 <DynatraceProblemBlueprint/>
 </details>
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints):
 
 <details>
 <summary>Dynatrace problem webhook configuration</summary>
@@ -1261,7 +1267,7 @@ The webhook configuration's relation mapping will function properly only when th
 
 If there is a mismatch, you can utilize [Dynatrace Tags](https://www.dynatrace.com/support/help/manage/tags-and-metadata) to align the actual identifier in Port.
 
-To do this, create a tag with the key proj and value `microservice_identifier`.
+To do this, create a tag with the key `proj` and value `microservice_identifier`.
 
 Then, update the relation JQ syntax to establish a connection between the Dynatrace problem and the Port microservice. Here is the updated JQ Mappings:
 
@@ -1269,7 +1275,7 @@ Then, update the relation JQ syntax to establish a connection between the Dynatr
 {
     "blueprint": "dynatraceProblem",
     "entity": {
-     ...Properties mappings
+     ...Properties mappings,
       "relations": {
          "microservice": ".body.ProblemTags | split(\", \") | map(select(test(\"proj:\")) | sub(\"proj:\";\"\"))"
       }
@@ -1283,18 +1289,19 @@ The above JQ expression will split the tags by comma and space, then filter the 
 </details>
 :::
 
-### Create a webhook in Dynatrace
+<h2>Create a webhook in Dynatrace</h2>
 
-1. Log in to Dynatrace with your credentials;
-2. Click on **Settings** at the left sidebar of the page;
-3. Choose **Integration** and click on **Problem notifications**;
-4. Select **Add notification**;
-5. Select **Custom integration** from the available intregration types;
+1. Log in to Dynatrace with your credentials.
+2. Click on **Settings** at the left sidebar of the page.
+3. Choose **Integration** and click on **Problem notifications**.
+4. Select **Add notification**.
+5. Select **Custom integration** from the available integration types.
 6. Input the following details:
-    1. `Display name` - use a meaningful name such as Port Webhook;
-    2. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration;
-    3. `Overview` - you can add an optional HTTP header to your webhook request;
-    4. `Custom payload` - When a problem is detected or resolved on your entity, this payload will be sent to the webhook URL. You can enter this JSON placeholder in the textbox;
+    1. `Display name` - use a meaningful name such as Port Webhook.
+    2. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration.
+    3. `Overview` - you can add an optional HTTP header to your webhook request.
+    4. `Custom payload` - When a problem is detected or resolved on your entity, this payload will be sent to the webhook URL. You can enter this JSON placeholder in the textbox:
+
        ```json showLineNumbers
        {
           "State":"{State}",
@@ -1305,30 +1312,25 @@ The above JQ expression will split the tags by comma and space, then filter the 
           "ProblemImpact": "{ProblemImpact}",
           "ProblemSeverity": "{ProblemSeverity}",
           "ProblemURL": "{ProblemURL}",
-          "ProblemTags": "{Tags}",
+          "ProblemTags": "{ProblemTags}",
           "ImpactedEntities": {ImpactedEntities}
        }
        ```
-    5. `Alerting profile` - configure your preferred alerting rule or use the default one;
-7. Click **Save changes** at the bottom of the page;
+
+    5. `Alerting profile` - configure your preferred alerting rule or use the default one.
+7. Click **Save changes** at the bottom of the page.
 
 :::tip
-In order to view the different payloads and events available in Dynatrace webhooks, [look here](https://www.dynatrace.com/support/help/observe-and-explore/notifications-and-alerting/problem-notifications/webhook-integration)
+In order to view the different payloads and events available in Dynatrace webhooks, [look here](https://www.dynatrace.com/support/help/observe-and-explore/notifications-and-alerting/problem-notifications/webhook-integration).
 :::
 
-Done! any problem detected on your Dynatrace entity will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
+Done! Any problem detected on your Dynatrace entity will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-### Ingest Dynatrace Entities
-
-In this example you will create a `dynatrace_entity` blueprint that ingests monitored entities from your Dynatrace account. You will then add some python script to make API calls to Dynatrace REST API and fetch data for your account.
-
-- [Code Repository Example](https://github.com/port-labs/example-dynatrace-entities)
-
-### Let's Test It
+<h2>Let's Test It</h2>
 
 This section includes a sample response data from Dynatrace. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
 
-#### Payload
+<h3>Payload</h3>
 
 Here is an example of the payload structure from Dynatrace:
 
@@ -1435,7 +1437,7 @@ Here is an example of the payload structure from Dynatrace:
 
 </details>
 
-#### Mapping Result
+<h3>Mapping Result</h3>
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
@@ -1468,7 +1470,18 @@ The combination of the sample payload and the Ocean configuration generates the 
   "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
   "updatedAt": "2024-2-6T11:49:20.881Z",
   "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+  
 }
 ```
+
+</details>
+
+<h2>Ingest Dynatrace Entities</h2>
+
+In this example,
+you will create a `dynatrace_entity` blueprint that ingests monitored entities from your Dynatrace account.
+You will then add a Python script to make API calls to Dynatrace REST API and fetch data for your account.
+
+- [Code Repository Example](https://github.com/port-labs/example-dynatrace-entities)
 
 </details>
