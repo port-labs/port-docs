@@ -4,7 +4,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide aims to show how to connect an ECR `repository` to an existing service in Port.
 
-:::tip Prerequisites
+:::info Prerequisites
 This guide assumes you have:
 
 - A Port account and that you have completed the [onboarding process](/quickstart). We will use the `Service` blueprint created during the onboarding process.

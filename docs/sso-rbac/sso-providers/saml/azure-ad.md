@@ -27,7 +27,7 @@ In order to complete the process you will need to contact us to receive the info
 4. In the getting started section, select the `Set up Single Sign On` button, and choose the SAML method.
 5. Under `SAML certificates` (step 3), Click the Edit button to expand the certificates section. Click the 3 dot icon next to the Active certificate, and choose `PEM certificate download`.
 
-Send the **PEM certificate file** along with the **application ID** (Which can be found in the properties tab of the application) to Port.
+Send the **PEM certificate file** along with the **Login URL** (Which can be found in the Single Sign-on section, Card 4 (Set up)) to Port.
 
 After that, Port will provide you with a metadata XML file for your connection.
 
