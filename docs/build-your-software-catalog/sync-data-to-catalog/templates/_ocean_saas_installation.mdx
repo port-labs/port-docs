@@ -1,4 +1,6 @@
-import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
+import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
 
@@ -51,4 +53,28 @@ For these settings, [Port secrets](/sso-rbac/port-secrets/) will be used, ensuri
 
 When changing such a setting, you will be prompted to choose an existing secret or create a new one:
 
-<img src="/img/build-your-software-catalog/sync-data-to-catalog/oceanSaasSecretExample.png" width="50%" border="1px" />
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/oceanSaasSecretExample.png" width="40%" border="1px" />
+<br/><br/>
+
+<h3>Port source IP addresses</h3>
+
+When using this installation method, Port will make outbound calls to your 3rd-party applications from static IP addresses.  
+You may need to add these addresses to your allowlist, in order to allow Port to interact with the integrated service:
+
+<Tabs>
+<TabItem value="eu" label="Europe (EU)">
+```
+54.73.167.226  
+63.33.143.237  
+54.76.185.219
+```
+</TabItem>
+<TabItem value="us" label="United States (US)">
+```
+3.234.37.33  
+54.225.172.136  
+3.225.234.99
+```
+</TabItem>
+</Tabs>
+
