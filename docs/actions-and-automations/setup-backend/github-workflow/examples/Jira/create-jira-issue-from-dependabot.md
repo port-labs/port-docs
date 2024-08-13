@@ -344,8 +344,6 @@ jobs:
                  **GHSA ID**: ${{ fromJson(inputs.port_context).entity.properties.ghsaID }}
                  **CVE ID**: ${{ fromJson(inputs.port_context).entity.properties.cveID }}
                  **URL**: ${{ fromJson(inputs.port_context).entity.properties.url }}
-                 **References**:
-                 ${{ join(fromJson(inputs.port_context).entity.properties.references, '\n            ') }}
               fields: |
                  {
                    "labels": ["port-${{ fromJson(inputs.port_context).entity.identifier }}"]
