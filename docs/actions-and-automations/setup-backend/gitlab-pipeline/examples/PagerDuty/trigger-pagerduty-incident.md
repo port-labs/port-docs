@@ -20,8 +20,6 @@ This self-service guide provides a detailed walkthrough on how to trigger an inc
 	:::
 
 4. In case you decided not to install the PagerDuty integration, you will need to create a blueprint for PagerDuty incidents in Port.
-   <br />
-   <img src='/img/self-service-actions/setup-backend/gitlab-pipeline/addingBlueprint.png' width='85%' border="1px" />
 
 <PagerDutyIncidentBlueprint/>
 
@@ -173,9 +171,13 @@ trigger_incident_job:
 
 ## Port Configuration
 
-Create a new self service action using the following JSON configuration.
-<br />
-<img src='/img/self-service-actions/setup-backend/gitlab-pipeline/createNewSelfServiceAction.png' width='85%' border="1px" />
+### Create a new self service action using the following JSON configuration.
+
+1. Head to the self-service page.
+2. Click on the `+ New Action` button.
+3. Choose the Pagerduty Incident blueprint and click `Next`.
+4. Click on the `{...} Edit JSON` button.
+5. Copy and paste the following JSON configuration into the editor:
 
 <details>
 <summary><b> Trigger Incident In PagerDuty (click to expand) Gitlab </b></summary>
@@ -294,7 +296,7 @@ Create a new self service action using the following JSON configuration.
 
 Now you should see the `Trigger Incidents Gitlab` action in the self-service page. 🎉
 <br />
-<img src='/img/self-service-actions/setup-backend/gitlab-pipeline/triggerGitlabIncident.png' width='85%' border="1px" />
+<img src='/img/self-service-actions/setup-backend/gitlab-pipeline/triggerGitlabIncident.png' width='60%' border="1px" />
 
 ## Let's test it!
 
