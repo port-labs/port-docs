@@ -40,3 +40,11 @@ In order to expose your Azure groups to Port via the application, do the followi
 2. Press the `Add a group claim` button
 3. Select `Groups assigned to the application` and in the source attribute select `Cloud-only group display names`.
 4. Assign the relevant groups you want to expose to the application, these will be ingested into Port as teams you can use to manage user permissions and RBAC in your Port account.
+
+## SCIM Configuration
+
+AzureAD SAML applications supports [SCIM](https://scim.cloud/). 
+
+To set up SCIM for AzureAD SAML based applications, contact Port's support team. You will be provided with an SCIM `Endpoint` and `Token` which are required to set up the SCIM integration.
+
+After receiving the endpoint and token, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-azure-ad-saml-connections#configure-scim-in-azure-ad-for-saml-apps) to enable SCIM.

@@ -133,3 +133,12 @@ To allow automatic Okta group support in Port, please follow these steps:
    ![Okta application set group claims](/img/sso/okta/OktaAppSetGroupClaims.png)
 
    3.3 Click `Save`.
+
+
+## SCIM Configuration
+
+Okta OIDC applications supports [SCIM](https://scim.cloud/). 
+
+To set up SCIM for Okta OIDC based applications, contact Port's support team. You will be provided with an SCIM `Endpoint` and `Token` which are required to set up the SCIM integration.
+
+After receiving the endpoint and token, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-okta-workforce-connections#configure-scim-in-okta-workforce-for-oidc-apps) to enable SCIM.
