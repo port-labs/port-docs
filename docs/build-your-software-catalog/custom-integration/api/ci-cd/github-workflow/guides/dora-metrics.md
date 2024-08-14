@@ -256,7 +256,7 @@ jobs:
       - name: Read Config and Output Matrix
         id: set-matrix
         run: |
-          CONFIG_JSON=$(jq -c . src/dora-config.json)
+          CONFIG_JSON=$(jq -c . dora/dora-config.json)
           MATRIX_JSON=$(echo $CONFIG_JSON | jq -c '{include: .}')
           echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
 
@@ -287,7 +287,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r src/requirements.txt
+          pip install -r dora/requirements.txt
 
       - name: Compute PR Metrics
         run: |
