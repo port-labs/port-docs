@@ -56,7 +56,7 @@ Check out the following examples for using Port's webhook integration to ingest 
   },
   {
     type: 'link',
-    href: '/build-your-software-catalog/custom-integration/webhook/examples/datadog',
+    href: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/#alternative-installation-via-webhook',
     label: 'Datadog',
     description: 'Ingest Datadog alerts/monitors',
   },
