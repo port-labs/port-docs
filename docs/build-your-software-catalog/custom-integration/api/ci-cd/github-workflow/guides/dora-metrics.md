@@ -683,7 +683,7 @@ class DeploymentFrequency:
             "rating": rating,
             "number_of_unique_deployment_days": len(unique_dates),
             "number_of_unique_deployment_weeks": len({date.isocalendar()[1] for date in unique_dates}),
-            "number_of_unique_deployment_month": len({date.month for date in unique_dates}),
+            "number_of_unique_deployment_months": len({date.month for date in unique_dates}),
             "total_deployments": len(workflow_runs_list),
         }, default=str)
 
