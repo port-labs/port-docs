@@ -11,7 +11,10 @@ In this guide, we will create a GitHub action that computes pull-request metrics
 
 ## Prerequisites
 1. A GitHub repository in which you can trigger a workflow that we will use in this guide.
-2. A blueprint in Port to host the Github Service
+2. A blueprint in Port to host the Github Service and its entities
+:::note Note
+This guide assumes that the service for which the metrics are being computed already exists in the service blueprint. The service should have an ID that matches the name of the repository.
+:::
 3. A blueprint in Port to host the Dora Metrics.
 
 
