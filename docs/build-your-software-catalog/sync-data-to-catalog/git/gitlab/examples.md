@@ -51,7 +51,8 @@ After creating the blueprints and saving the integration configuration, you will
 
 ## Mapping files and file contents
 
-In the following example you will ingest dependencies from a package.json file in your GitLab repository to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example shows how to ingest dependencies from a `package.json` file in your GitLab repository into Port.  
+You can use the following Port blueprint definitions and integration configuration:
 
 <PackageBlueprint/>
 
