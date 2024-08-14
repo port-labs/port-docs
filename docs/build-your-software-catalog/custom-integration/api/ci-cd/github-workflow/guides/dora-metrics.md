@@ -291,15 +291,15 @@ jobs:
 
       - name: Compute PR Metrics
         run: |
-          python dora/calculate_pr_metrics.py  --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --time-frame ${{env.TIMEFRAME_IN_DAYS}} --platform github-actions
+          python dora/calculate_pr_metrics.py  --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --time-frame ${{env.TIMEFRAME_IN_DAYS}} --platform github-actions
           
       - name: Deployment Frequency
         id: deployment_frequency
-        run:  python dora/deployment_frequency.py --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame ${{env.TIMEFRAME_IN_DAYS}} --branch "${{ matrix.branch }}" --platform github-actions
+        run:  python dora/deployment_frequency.py --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame ${{env.TIMEFRAME_IN_DAYS}} --branch "${{ matrix.branch }}" --platform github-actions
 
       - name: Lead Time For Changes
         id: lead_time_for_changes
-        run:  python dora/lead_time_for_changes.py --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions
+        run:  python dora/lead_time_for_changes.py --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions
         
 
       - name: UPSERT Entity
