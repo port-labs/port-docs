@@ -210,11 +210,14 @@ jobs:
 
 
 ## Send a Slack message when a PR is open for more than 3 days
+This automation sends a Slack message when a Pull Request (PR) has been open for more than 3 days,
+helping teams stay informed and ensuring that PRs are reviewed and merged in a timely manner.
 
 ### Prerequisites
 
 To use this automation, ensure you have:
-- Port installed on GitHub.
+- Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
+- Configure a [Slack app](https://api.slack.com/apps) that can post a message to a Slack channel. The app should have a `chat:write` bot scope under OAuth & Permissions.
 
 ### Integrate GitHub resources with Port
 
@@ -227,10 +230,10 @@ For the GitHub app installation, you will need to have a registered organization
 1. **Install Port's GitHub app:**
    Follow the [installation guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation).
 
-2. **Check if `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip> exists:**
-    - Go to your [Builder](https://app.getport.io/settings/data-model)
-    - If the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip> exists, proceed to step 3 to add the `openDuration` property.
-    - If the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip> does not exist, create it with the schema provided below.
+2. **Create the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip> if it doesn't exist:**
+   - Go to your [Builder](https://app.getport.io/settings/data-model)
+   - If the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip> exists, proceed to step 3 to add the `openDuration` property.
+   - If the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip> does not exist, create it with the schema provided below.
 
     <details>
     <summary>GitHub pull request blueprint (click to expand)</summary>
@@ -303,18 +306,17 @@ For the GitHub app installation, you will need to have a registered organization
     ```
     </details>
 
-3. **Add `openDuration` **property** to `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip> (if it already exists):**
-    - Navigate to the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip> in your Port Builder.
-    - Hover over it, click on the `...` button on the right, and select `Edit blueprint`.
-   
-      <br></br>
-
-     <img src='/img/guides/githubPullRequestBlueprintUpdate.png' border='1px' />
+3. **Add an `openDuration` property to the `Pull Request` blueprint (if it already exists):**
+   - Navigate to the `Pull Request` <PortTooltip id="blueprint">blueprint</PortTooltip> in your Port Builder.
+   - Hover over it, click on the `...` button on the right, and select `Edit JSON`.
 
      <br></br>
 
-    - Click on `Edit JSON`
-    - Add the following property:
+     <img src='/img/guides/githubPullRequestBlueprintUpdate.png' border='1px' />
+
+   <br></br>
+
+   - Add the following property:
 
     ```json showLineNumbers
     "openDuration": {
@@ -326,11 +328,11 @@ For the GitHub app installation, you will need to have a registered organization
     ```
 
 4. **Ingest GitHub PR Data:**
-    - Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your GitHub integration:
+   - Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your GitHub integration:
 
     <img src='/img/guides/githubAppIntegration.png' border='1px' />
 
-    - Under the `resources` key, add the following YAML block to map the pull request entities and click `Save & Resync`:
+   - Under the `resources` key, add the following YAML block to map the pull request entities and click `Save & Resync`:
 
     <details>
     <summary>Relation mapping (click to expand)</summary>
@@ -365,23 +367,7 @@ For the GitHub app installation, you will need to have a registered organization
 
 ### Create a Slack Webhook
 
-To send messages to Slack, you need to create a Slack webhook. Follow the instructions below to create one:
-
-1. **Create a Slack App:**
-    - Go to [Slack API: Applications](https://api.slack.com/apps).
-    - Click "Create New App"
-    - Select "From scratch" and provide an app name and the workspace where the app will be installed.
-
-2. **Add Incoming Webhooks:**
-    - In your app settings, go to "Incoming Webhooks"
-    - Click "Activate Incoming Webhooks"
-
-3. **Create a Webhook URL:**
-    - Click "Add New Webhook to Workspace"
-    - Select a channel where the messages will be posted and click "Allow"
-    - Copy the generated webhook URL.
-
-For more details, refer to the [Slack Incoming Webhooks Guide](https://api.slack.com/messaging/webhooks).
+To send messages to Slack, you need to create a Slack webhook. Follow the steps in the [Slack Incoming Webhooks Guide](https://api.slack.com/messaging/webhooks) to create one.
 
 :::tip Note
 Replace `<Your Generated Slack Webhook>` in the automation definition with your actual Slack webhook URL.
@@ -394,79 +380,35 @@ we can run custom logic whenever the `openDuration` timer property expires on a 
 
 ```json showLineNumbers
 {
-  "identifier": "prOpenForMoreThan3Days",
-  "title": "Notify Slack on PR Open for More Than 3 Days",
-  "icon": "Slack",
-  "description": "Sends a Slack message when a PR has been open for more than 3 Days.",
-  "trigger": {
-    "type": "automation",
-    "event": {
-      "type": "TIMER_PROPERTY_EXPIRED",
-      "blueprintIdentifier": "githubPullRequest",
-      "propertyIdentifier": "openDuration"
-    },
-    "condition": {
-      "type": "JQ",
-      "expressions": [
-        ".diff.after.properties.status == \"open\""
-      ],
-      "combinator": "and"
-    }
-  },
-  "invocationMethod": {
-    "type": "WEBHOOK",
-    "url": "<Your Generated Slack Webhook>",
-    "agent": false,
-    "synchronized": true,
-    "body": {
-      "text": ":warning: *PR Overdue Notification*\n\n:page_facing_up: *Title:* {{ .event.diff.after.title }}\n\n:link: *Link:* <{{ .event.diff.after.properties.link }}|View PR>\n\n:bust_in_silhouette: *Creator:* {{ .event.diff.after.properties.creator }}\n\n:busts_in_silhouette: *Assignees:* {{ .event.diff.after.properties.assignees }}\n\n:eyes: *Reviewers:* {{ .event.diff.after.properties.reviewers }}"
-
-## Update a service's default values upon creation
-
-### Automation definition
-
-When a new service is created, we may want to set default values for some of its properties.  
-By using the `ENTITY_CREATED` trigger type, we can automate this.
- 
-The following definition will set a default `type` and `domain` to every new `service` entity:
-
-```json showLineNumbers
-{
-  "identifier": "serviceCreatedSetDefaults",
-  "title": "Update defaults when service is created",
-  "trigger": {
-    "type": "automation",
-    "event": {
-      "type": "ENTITY_CREATED",
-      "blueprintIdentifier": "Service"
-    }
-  },
-  "invocationMethod": {
-    "type": "UPSERT_ENTITY",
-    "blueprintIdentifier": "Service",
-    "mapping": {
-      "identifier": "{{ .event.context.entityIdentifier }} ",
-      "properties": {
-        "domain": "default_domain",
-        "type": "backend"
+   "identifier": "prOpenForMoreThan3Days",
+   "title": "Notify Slack on PR Open for More Than 3 Days",
+   "icon": "Slack",
+   "description": "Sends a Slack message when a PR has been open for more than 3 Days.",
+   "trigger": {
+      "type": "automation",
+      "event": {
+         "type": "TIMER_PROPERTY_EXPIRED",
+         "blueprintIdentifier": "githubPullRequest",
+         "propertyIdentifier": "openDuration"
+      },
+      "condition": {
+         "type": "JQ",
+         "expressions": [
+            ".diff.after.properties.status == \"open\""
+         ],
+         "combinator": "and"
       }
-    }
-  },
-  "publish": true
+   },
+   "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "<Your Generated Slack Webhook>",
+      "agent": false,
+      "synchronized": true,
+      "body": {
+         "text": ":warning: *PR Overdue Notification*\n\n:page_facing_up: *Title:* {{ .event.diff.after.title }}\n\n:link: *Link:* <{{ .event.diff.after.properties.link }}|View PR>\n\n:bust_in_silhouette: *Creator:* {{ .event.diff.after.properties.creator }}\n\n:busts_in_silhouette: *Assignees:* {{ .event.diff.after.properties.assignees }}\n\n:eyes: *Reviewers:* {{ .event.diff.after.properties.reviewers }}"
+      }
+   },
+   "publish": true
 }
 ```
-
-## Run History
-
-- To check your run history click on this icon on the top right conner beneath the `Builder` icon
-
-<br></br>
-<img src='/img/automations/automationRunHistoryPointer.png' width='60%' />
-<br></br>
-
-- Click on it to view your run history
-<br></br>
-<img src='/img/automations/automationRunHistory.png' width='60%' />
-<br></br>
-
 ---
