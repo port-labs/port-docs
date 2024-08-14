@@ -148,7 +148,7 @@ In this guide, we will create a self-service action in Port that executes a GitH
 
    :::note Lock property
    Our Service blueprint has a boolean property called `locked_in_prod`.
-   When the `update entity` backend is triggered,
+   When the `UPDATE_ENTITY` backend is triggered,
    we will update the value of this field to `true` if locking and `false` if unlocking.
    The `locked_reason_prod` property will be updated to reflect the reason for the lock or unlock.
    The same logic applies to the development environment (`locked_in_test`).
@@ -158,21 +158,9 @@ In this guide, we will create a self-service action in Port that executes a GitH
    :::
 
 
-2. Create a Slack Webhook: Follow the instructions below to create one:
+2. Create a Slack Webhook:
 
-   1. **Create a Slack App:**
-       - Go to [Slack API: Applications](https://api.slack.com/apps).
-       - Click "Create New App"
-       - Select "From scratch" and provide an app name and the workspace where the app will be installed.
-   2. **Add Incoming Webhooks:**
-       - In your app settings, go to "Incoming Webhooks"
-       - Click "Activate Incoming Webhooks"
-   3. **Create a Webhook URL:**
-       - Click "Add New Webhook to Workspace"
-       - Select a channel where the messages will be posted and click "Allow"
-       - Copy the generated webhook URL.
-
-For more details, refer to the [Slack Incoming Webhooks Guide](https://api.slack.com/messaging/webhooks)
+- To create a Slack webhook URL, follow the steps in the [Slack Incoming Webhooks Guide](https://api.slack.com/messaging/webhooks).
 
 
 ##  Create Service Action 
