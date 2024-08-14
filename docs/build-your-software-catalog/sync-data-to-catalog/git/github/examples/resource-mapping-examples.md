@@ -15,6 +15,8 @@ import BranchProtectionBlueprint from './example-branch/\_git_exporter_example_b
 import PortBranchProtectionAppConfig from './example-branch/\_github_exporter_example_branch_protection_port_app_config.mdx'
 import BranchBlueprint from './example-branch/\_git_exporter_example_branch_blueprint.mdx'
 import PortBrAppConfig from './example-branch/\_github_exporter_example_branch_port_app_config.mdx'
+import LastContributorAppConfig from './example-branch/\_github_exporter_example_last_contributor_port_app_config.mdx'
+import LastContributorBlueprint from './example-branch/\_git_exporter_example_last_contributor_blueprint.mdx'
 
 import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
 
@@ -63,7 +65,7 @@ In the following example you will ingest your GitHub repositories, their README.
 
 <PortAppConfig/>
 
-:::tip
+:::tip setup and github object structures
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -96,7 +98,7 @@ In the following example you will ingest your GitHub repositories, their workflo
 
 <PortWfWfrAppConfig/>
 
-:::tip
+:::tip additional resources
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -118,7 +120,7 @@ In the following example you will ingest your GitHub repositories and their issu
 
 <PortIssueAppConfig/>
 
-:::tip
+:::tip useful links and setup guidance
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -137,7 +139,7 @@ In the following example you will ingest your GitHub repositories and their fold
 
 <PortMonoRepoAppConfig/>
 
-:::tip
+:::tip retrieving monorepo root folders
 To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
 
 ```yaml
@@ -152,7 +154,8 @@ To retrieve the root folders of your monorepo, you can use this following syntax
 ```
 
 :::
-:::tip
+
+:::tip setup guidance and object structures
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -177,7 +180,7 @@ In the following example you will ingest your GitHub repositories, the repositor
 
 In the following example you will ingest your GitHub repositories and their teams to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
-:::note
+:::note team mapping requirement
 Teams are GitHub organization level resources, therefore you will need to specify the mapping of the teams in a [global integration configuration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) (Through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
 :::
 
@@ -187,7 +190,7 @@ Teams are GitHub organization level resources, therefore you will need to specif
 
 <PortRepositoryTeamMappingAppConfig/>
 
-:::tip
+:::tip adding teams to repository selector
 To retrieve the teams of your repositories, you will need to add the `teams` property to the `selector` in the repository resource kind in your `port-app-config.yml`:
 
 ```yaml
@@ -199,6 +202,7 @@ To retrieve the teams of your repositories, you will need to add the `teams` pro
 ```
 
 :::
+
 
 ## Map repositories, deployments and environments
 
@@ -237,6 +241,17 @@ In the following example you will ingest your GitHub repositories and their bran
 <BranchBlueprint/>
 
 <PortBrAppConfig/>
+
+## Map repositories and last contributor
+
+In the following example you will ingest your GitHub repositories and their last contributor to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<LastContributorBlueprint/>
+<LastContributorAppConfig/>
+
+:::info supported last contributor
+The last contributor is the author of the last commit in the default branch of the repository
+:::
 
 ## Map repositories and branch protection rules
 
@@ -289,7 +304,7 @@ In the following example you will ingest your GitHub repositories, their release
 
 ## Map supported resources
 
-The above examples shows a specific use cases, but Port's GitHub app supports the ingestion of many other GitHub objects, to adapt the examples above, use the GitHub API reference to learn about the available fields for the different supported objects:
+The above examples show a specific use cases, but Port's GitHub app supports the ingestion of many other GitHub objects, to adapt the examples above, use the GitHub API reference to learn about the available fields for the different supported objects:
 
 <GitHubResources/>
 

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: Let developers enrich services using Gitops
+title: Enrich services using Gitops
 ---
 
 import Tabs from "@theme/Tabs"
@@ -9,11 +9,11 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Let developers enrich services using Gitops
+# Enrich services using Gitops
 
 This guide takes 10 minutes to complete, and aims to demonstrate Port's flexibility when working with Gitops.
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
@@ -151,7 +151,7 @@ As platform engineers, we want to enable our developers to perform certain actio
 
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
+As part of the onboarding process, you should already have an action named `Enrich service` in your [self-service tab](https://app.getport.io/self-serve).  
 
 If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
 :::

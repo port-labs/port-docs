@@ -4,9 +4,9 @@ sidebar_position: 10
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# DORA Metrics
+# Pull-request metrics
 
-In this guide, we will create a GitHub action that computes the DORA Metrics for a service (repository) on schedule and ingests the results to Port.
+In this guide, we will create a GitHub action that computes pull-request metrics for a service (repository) on schedule and ingests the results to Port.
 
 
 ## Prerequisites
