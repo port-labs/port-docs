@@ -226,7 +226,7 @@ Follow these steps to get started:
 
     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `PATTOKEN` - GitHub PAT fine-grained token. Ensure that read-only access to actions and metadata permission is set. Grant this action access to the repositories where the metrics are to be estimated for . [learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
+    - `GH_PAT_CLASSIC` - [GitHub Personal Access Token (Classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic). Ensure that the read:org and repo, scopes are set for the token to grant this action access to the repositories and teams the metrics are to be estimated for.
 
 2. In your Github repository, create a workflow file under `.github/workflows/dora-metrics.yml` with the following content:
 
@@ -256,7 +256,7 @@ jobs:
       - name: Read Config and Output Matrix
         id: set-matrix
         run: |
-          CONFIG_JSON=$(jq -c . dora/dora-config.json)
+          CONFIG_JSON=$(jq -c . src/dora-config.json)
           MATRIX_JSON=$(echo $CONFIG_JSON | jq -c '{include: .}')
           echo "matrix=${MATRIX_JSON}" >> $GITHUB_OUTPUT
 
@@ -287,25 +287,25 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r dora/requirements.txt
+          pip install -r src/requirements.txt
 
       - name: Compute PR Metrics
         run: |
-          python dora/calculate_pr_metrics.py  --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --timeframe ${{env.TIMEFRAME_IN_DAYS}} --platform github-actions
+          python dora/calculate_pr_metrics.py  --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --time-frame ${{env.TIMEFRAME_IN_DAYS}} --platform github-actions
           
       - name: Deployment Frequency
         id: deployment_frequency
-        run: python dora/deployment_frequency.py --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --workflows '${{ toJson(matrix.workflows) }}' --timeframe ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions --ignore_workflows
-      
+        run:  python dora/deployment_frequency.py --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame ${{env.TIMEFRAME_IN_DAYS}} --branch "${{ matrix.branch }}" --platform github-actions
+
       - name: Lead Time For Changes
         id: lead_time_for_changes
-        run: python dora/lead_time_for_changes.py --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --workflows '${{ toJson(matrix.workflows) }}' --timeframe ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions
+        run:  python dora/lead_time_for_changes.py --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_TEAM_ACCESS_TOKEN }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions
         
 
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: ${{ fromJson(env.metrics).id }}
+          identifier: "${{ matrix.repository }}-${{env.TIMEFRAME_IN_DAYS}}"
           title: ${{ env.ENTITY_TITLE }}
           blueprint: doraMetrics
           properties: |-
@@ -330,6 +330,10 @@ jobs:
               "averageCommitsPerPr": "${{ fromJson(env.metrics).average_commits_per_pr }}",
               "averageLocChangedPerPr": "${{ fromJson(env.metrics).average_loc_changed_per_pr }}",
               "averagePrsReviewedPerWeek": "${{ fromJson(env.metrics).average_prs_reviewed_per_week }}"
+            }
+          relations: |- 
+            {
+            "service": "${{ matrix.repository }}"
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
