@@ -11,10 +11,49 @@ In this guide, we will create a GitHub action that computes the DORA Metrics for
 
 ## Prerequisites
 1. A GitHub repository in which you can trigger a workflow that we will use in this guide.
-2. A blueprint in Port to host the Dora Metrics.
+2. A blueprint in Port to host the Github Service
+3. A blueprint in Port to host the Dora Metrics.
 
 
-Below, you can find the JSON for the `DORA Metrics` blueprint required for the guide:
+## Create Blueprints In Port: 
+
+1. Create a github service blueprint in port
+
+<details>
+<summary><b>Service blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "service",
+  "title": "Service",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown"
+      },
+      "url": {
+        "title": "Service URL",
+        "type": "string",
+        "format": "url"
+      },
+      "defaultBranch": {
+        "title": "Default branch",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+</details>
+
+2. Below, you can find the JSON for the `DORA Metrics` blueprint required for the guide:
 
 <details>
 <summary><b>DORA Metrics blueprint (click to expand)</b></summary>
@@ -358,13 +397,27 @@ import argparse
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class RepositoryMetrics:
-    def __init__(self, owner, repo, timeframe,pat_token):
-        self.github_client = Github(pat_token)
+    def __init__(self, owner, repo, time_frame,token,github_host):
+        try:
+            self.github_client = (
+                Github(login_or_token=token, base_url=github_host)
+                if github_host
+                else Github(token)
+            )
+            self.owner = owner
+        except GithubException as e:
+            logging.error(f"Failed to initialize GitHub client: {e}")
+            raise
+        except Exception as e:
+            logging.error(
+                f"Unexpected error during initialization: {e} - verify that your github credentials are valid"
+            )
+            raise
         self.repo_name = f"{owner}/{repo}"
-        self.timeframe = int(timeframe)
+        self.time_frame = int(time_frame)
         self.start_date = datetime.datetime.now(datetime.UTC).replace(
             tzinfo=datetime.timezone.utc
-        ) - datetime.timedelta(days=self.timeframe)
+        ) - datetime.timedelta(days=self.time_frame)
         self.repo = self.github_client.get_repo(f"{self.repo_name}")
 
     def calculate_pr_metrics(self):
@@ -447,7 +500,7 @@ class RepositoryMetrics:
         review_weeks = {
             review_date.isocalendar()[1] for review_date in aggregated["review_dates"]
         }
-        average_prs_reviewed_per_week = len(review_weeks) / max(1, self.timeframe)
+        average_prs_reviewed_per_week = len(review_weeks) / max(1, self.time_frame)
 
         metrics = {
             "id": self.repo.id,
@@ -468,7 +521,7 @@ class RepositoryMetrics:
             else 0,
             "prs_opened": aggregated["prs_opened"],
             "weekly_prs_merged": self.timedelta_to_decimal_hours(
-                aggregated["total_open_to_close_time"] / max(1, self.timeframe)
+                aggregated["total_open_to_close_time"] / max(1, self.time_frame)
             )
             if aggregated["prs_merged"]
             else 0,
@@ -501,14 +554,19 @@ if __name__ == "__main__":
     parser.add_argument('--owner', required=True, help='Owner of the repository')
     parser.add_argument('--repo', required=True, help='Repository name')
     parser.add_argument('--token', required=True, help='GitHub token')
-    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--time-frame', type=int, default=30, help='Time Frame in days')
     parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
+    parser.add_argument(
+            "--github-host",
+            help="Base URL for self-hosted GitHub instance (e.g., https://api.github-example.com)",
+            default=None,
+        )
     args = parser.parse_args()
 
     logging.info(f"Repository Name: {args.owner}/{args.repo}")
-    logging.info(f"TimeFrame (in days): {args.timeframe}")
+    logging.info(f"TimeFrame (in days): {args.time_frame}")
 
-    repo_metrics = RepositoryMetrics(args.owner, args.repo, args.timeframe, pat_token=args.token)
+    repo_metrics = RepositoryMetrics(args.owner, args.repo, args.time_frame, token=args.token,github_host = args.github_host)
     metrics = repo_metrics.calculate_pr_metrics()
     metrics_json = json.dumps(metrics, default=str)
     print(metrics_json)
@@ -531,16 +589,29 @@ from github import Github
 import argparse
 import logging
 
-
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class DeploymentFrequency:
-    def __init__(self, owner, repo, workflows, branch, number_of_days, pat_token=""):
+    def __init__(self, owner, repo, workflows, branch, number_of_days, token, github_host):
         self.owner, self.repo = owner, repo
         self.branch = branch
         self.number_of_days = number_of_days
-        self.pat_token = pat_token
-        self.github = Github(login_or_token = self.pat_token)
+        self.token = token
+        try:
+            self.github = (
+                Github(login_or_token=token, base_url=github_host)
+                if github_host
+                else Github(token)
+            )
+            self.owner = owner
+        except GithubException as e:
+            logging.error(f"Failed to initialize GitHub client: {e}")
+            raise
+        except Exception as e:
+            logging.error(
+                f"Unexpected error during initialization: {e} - verify that your github credentials are valid"
+            )
+            raise
         self.repo_object = self.github.get_repo(f"{self.owner}/{self.repo}")
         try:
             self.workflows = json.loads(workflows)
@@ -617,13 +688,18 @@ if __name__ == "__main__":
     parser.add_argument('--owner', required=True, help='Owner of the repository')
     parser.add_argument('--repo', required=True, help='Repository name')
     parser.add_argument('--token', required=True, help='GitHub token')
+    parser.add_argument(
+            "--github-host",
+            help="Base URL for self-hosted GitHub instance (e.g., https://api.example-github.com)",
+            default=None,
+        )
     parser.add_argument('--workflows', required=True, help='GitHub workflows as a JSON string.')
     parser.add_argument('--branch', default='main', help='Branch name')
-    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--time-frame', type=int, default=30, help='Time Frame in days')
     parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
     args = parser.parse_args()
 
-    deployment_frequency = DeploymentFrequency(args.owner, args.repo, args.workflows, args.branch, args.timeframe, pat_token = args.token)
+    deployment_frequency = DeploymentFrequency(args.owner, args.repo, args.workflows, args.branch, args.time_frame, token = args.token, github_host = args.github_host)
     report = deployment_frequency()
     print(report)
     
@@ -644,6 +720,7 @@ from github import Github
 import argparse
 import logging
 
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class LeadTimeForChanges:
@@ -654,8 +731,9 @@ class LeadTimeForChanges:
         workflows,
         branch,
         number_of_days,
+        token,
+        github_host,
         commit_counting_method="last",
-        pat_token="",
         ignore_workflows=True
     ):
         self.owner = owner
@@ -663,7 +741,21 @@ class LeadTimeForChanges:
         self.branch = branch
         self.number_of_days = number_of_days
         self.commit_counting_method = commit_counting_method
-        self.github = Github(login_or_token = pat_token)
+        try:
+            self.github = (
+                Github(login_or_token=token, base_url=github_host)
+                if github_host
+                else Github(token)
+            )
+            self.owner = owner
+        except GithubException as e:
+            logging.error(f"Failed to initialize GitHub client: {e}")
+            raise
+        except Exception as e:
+            logging.error(
+                f"Unexpected error during initialization: {e} - verify that your github credentials are valid"
+            )
+            raise
         self.repo_object = self.github.get_repo(f"{self.owner}/{self.repo}")
         self.ignore_workflows = ignore_workflows
         try:
@@ -813,16 +905,21 @@ if __name__ == "__main__":
     parser.add_argument('--token', required=True, help='GitHub token')
     parser.add_argument('--workflows', default='[]', help='GitHub workflows as a JSON string.')
     parser.add_argument('--branch', default='main', help='Branch name')
-    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--time-frame', type=int, default=30, help='Time Frame in days')
     parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
     parser.add_argument('--ignore_workflows', action='store_true', help='Exclude workflows. Default is False.')
+    parser.add_argument(
+            "--github-host",
+            help="Base URL for self-hosted GitHub instance (e.g., https://api.example-github.com)",
+            default=None,
+        )
     args = parser.parse_args()
 
     lead_time_for_changes = LeadTimeForChanges(
-        args.owner, args.repo, args.workflows, args.branch, args.timeframe, pat_token=args.token,ignore_workflows=args.ignore_workflows
+        args.owner, args.repo, args.workflows, args.branch, args.time_frame, token=args.token,github_host= args.github_host, ignore_workflows=args.ignore_workflows
     )
     report = lead_time_for_changes()
-    print(report)
+    logging.info(f"Lead Time for Changes >> {report}")
     
     if args.platform == "github-actions":
        with open(os.getenv("GITHUB_ENV"), "a") as github_env:
