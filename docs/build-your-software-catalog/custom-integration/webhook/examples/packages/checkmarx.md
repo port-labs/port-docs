@@ -3,6 +3,8 @@ sidebar_position: 9
 description: Ingest Checkmarx KICS scan into your catalog
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 import PythonScript from './resources/checkmarx/\_example_python_script.mdx'
 import CheckmarxBlueprint from './resources/checkmarx/\_example_checkmarx_blueprint.mdx'
 import CheckmarxWebhookConfig from './resources/checkmarx/\_example_checkmarx_webhook_config.mdx'
@@ -82,7 +84,28 @@ Create the following blueprint definition and webhook configuration:
 <summary><b>Checkmarx KICS mapping configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
-
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: '**/results.json'
+    
+    port:
+      itemsToParse: .file.content.queries
+      entity:
+        mappings:
+          identifier: .item.query_id
+          title: .item.query_name
+          blueprint: '"checkmarxScan"'
+          properties:
+            severity: .item.severity
+            url: .item.query_url
+            platform: .item.platform
+            files: [.item.files[] | {file_name, issue_type}]
+            cloud_provider: .item.cloud_provider
+            description: .item.description
+            category: .item.category
 ```
 
 </details>

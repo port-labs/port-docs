@@ -3,6 +3,8 @@ sidebar_position: 10
 description: Ingest Trivy vulnerabilities into your catalog
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 import PythonScript from './resources/trivy/\_example_python_script.mdx'
 import TrivyBlueprint from './resources/trivy/\_example_trivy_blueprint.mdx'
 import TrivyWebhookConfig from './resources/trivy/\_example_trivy_webhook_config.mdx'
@@ -86,7 +88,26 @@ Create the following blueprint definition and webhook configuration:
 <summary><b>Trivy mapping configuration</b></summary>
 
 ```yaml showLineNumbers
-
+- kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: '**/result.json' # path to results json file
+    port:
+      itemsToParse: [.file.content[] | select(.Vulnerabilities != null) as $input | .Vulnerabilities[] | {VulnerabilityID, PkgName, InstalledVersion, FixedVersion, Title, Description, Severity, References, PrimaryURL, DataSource, Target: $input.Target}]
+      entity:
+        mappings:
+          identifier: .item.VulnerabilityID
+          title: .item.Title
+          blueprint: '"trivyVulnerability"'
+          properties:
+            version: .item.InstalledVersion
+            package_name: .item.PkgName
+            primaryUrl: .item.PrimaryURL
+            description: .item.Description
+            target: .item.Target
+            severity: .item.Severity
+            data_source: .item.DataSource
 ```
 
 </details>
