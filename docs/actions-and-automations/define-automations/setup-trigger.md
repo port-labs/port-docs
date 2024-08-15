@@ -3,22 +3,42 @@ sidebar_position: 1
 title: Setup trigger
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Setup trigger
 
-Automation triggers are entity events in your software catalog that you want to act upon.  
-All triggers are defined for a specific blueprint, and will apply to entities based on that blueprint.
+Automation triggers events in your software catalog that you want to act upon.  
+Port supports two types of triggers:
+- **Entity**: Triggered when an an entity of a specified blueprint is modified.
+- **Action run**: Triggered when an [action run](/actions-and-automations/reflect-action-progress/) of a specified action is modified.
 
 ## Available triggers
 
-The following trigger events are available to use in your automations:
+The following trigger events are available for each type:
+
+<Tabs>
+<TabItem value="entity" label="Entity">
 
 | Trigger | Description | JSON event type identifier |
 | --- | --- | --- |
-| Any entity change | Triggered when any entity based on the selected blueprint is **created**, **updated**, or **deleted**. | `ANY_ENTITY_CHANGE` |
 | Entity creation | Triggered when any entity based on the selected blueprint is **created**. | `ENTITY_CREATED` |
 | Entity update | Triggered when any entity based on the selected blueprint is **updated**. | `ENTITY_UPDATED` |
 | Entity deletion | Triggered when any entity based on the selected blueprint is **deleted**. | `ENTITY_DELETED` |
+| Any entity change | Triggered when any entity based on the selected blueprint is **created**, **updated**, or **deleted**. | `ANY_ENTITY_CHANGE` |
 | Timer expiration | Triggered when the selected timer property set on an entity based on the selected blueprint **expires**. | `TIMER_PROPERTY_EXPIRED` |
+
+</TabItem>
+<TabItem value="action" label="Action run">
+
+| Trigger | Description | JSON event type identifier |
+| --- | --- | --- |
+| Action run creation | Triggered when an action run is **created**. In other words, whenever the specified action is executed. | `RUN_CREATED` |
+| Action run update | Triggered when an action run is [patched](https://docs.getport.io/api-reference/patch-an-action-run/) or [approved](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).<br/>**Note** that sending logs to the action run will **not** count as a trigger. | `RUN_UPDATED` |
+| Any action run change | Triggered when an action run is **created**, **patched**, or **approved**. | `ANY_RUN_CHANGE` |
+
+</TabItem>
+</Tabs>
 
 ## JSON structure
 
@@ -35,7 +55,10 @@ An automation's trigger is defined under the `trigger` key:
     "type": "automation",
     "event": {
       "type": "event_type",
-      "blueprintIdentifier": "blueprint_id"
+      // Only one of "blueprintIdentifier" or "actionIdentifier" should be present depending on the trigger type
+      "blueprintIdentifier": "blueprint_id",
+      // OR
+      "actionIdentifier": "action_id"
     },
     "condition": {
       "type": "JQ",
@@ -60,7 +83,7 @@ The table below describes the fields in the JSON structure under the `trigger` k
 | **`type`** | The automation's trigger type. Should be set to `automation`. |
 | **`event`** | An object containing data about the event that triggers the automation. |
 | **`event.type`** | The [trigger event type](/actions-and-automations/define-automations/setup-trigger#available-triggers). |
-| **`event.blueprintIdentifier`** | The identifier of the blueprint whose entities will trigger the automation. |
+| **`event.blueprintIdentifier`**<br/>or<br/>**`event.actionIdentifier`** | If using an *entity trigger* - the identifier of the blueprint whose entities will trigger the automation.<br/>If using an *action run trigger* - the identifier of the action whose runs will trigger the automation. |
 | `condition` | An optional object containing `jq` expressions used to determine which entities the automation will be triggered for. |
 | `condition.type` | The type of condition. Should be set to `JQ`. |
 | `condition.expressions` | An array of expressions used to filter the entities for which the automation will be triggered. |

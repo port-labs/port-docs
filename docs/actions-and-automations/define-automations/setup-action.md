@@ -5,6 +5,8 @@ title: Setup backend
 
 import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
 import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 
 # Setup backend
 
@@ -82,7 +84,12 @@ The data that is available to you when constructing the payload is detailed in t
 When a self-service action or automation is executed, Port creates an object that contains data about the execution.  
 
 This entire object is accessible to you when constructing the payload.  
-Here is an example of what trigger data could look like for an automation that triggers whenever a `service` entity is **updated**:
+Depending on the [trigger type](/actions-and-automations/define-automations/setup-trigger), the object's structure will differ:  
+
+<Tabs queryString="type">
+<TabItem value="entity" label="Entity trigger">
+
+Below is an example of trigger data for an automation that triggers whenever a `service` entity is **updated**:
 
 ```json showLineNumbers
 {
@@ -193,5 +200,162 @@ The other trigger events have the same structure, with the following differences
 - `ANY_ENTITY_CHANGE` - The `diff` object will contain `before` and `after` data according to the entity change.
 
 - `TIMER_PROPERTY_EXPIRED` - In the `diff` object, there will be an `after` object containing the entity data.
+
+</TabItem>
+
+<TabItem value="action-run" label="Action run trigger">
+
+Below is an example of trigger data for an automation that triggers whenever an action run is **created**:
+
+```json showLineNumbers
+{
+  "inputs": null,
+  "trigger": {
+    "by": {
+      "orgId": "org_BneDtWovPqXaA2VZ",
+      "userId": "auth0|62ceaaa497ea00f09d7c4f41",
+      "user": {
+        "email": "test-admin-user@test.com",
+        "firstName": "James",
+        "lastName": "Hetfield",
+        "status": "ACTIVE",
+        "id": "auth0|82zea497e300f09d7c1f41",
+        "createdAt": "2024-08-15T11:17:02.699Z",
+        "updatedAt": "2024-08-15T11:17:02.699Z"
+      }
+    },
+    "origin": "AUTOMATION",
+    "at": "2024-08-15T12:30:05.569Z"
+  },
+  "event": {
+    "id": "event_GH2680QIOEzwwNZB",
+    "resourceType": "run",
+    "action": "UPDATE",
+    "trigger": {
+      "by": {
+        "orgId": "org_BneVtWovPbXaA6V6Z",
+        "userId": "auth0|82zea497e300f09d7c1f41"
+      },
+      "origin": "UI",
+      "at": "2024-08-15T12:30:05.505Z"
+    },
+    "context": {
+      "action": {
+        "identifier": "myActionId",
+        "title": "Some action title",
+        "trigger": {
+          "type": "self-service",
+          "operation": "CREATE",
+          "userInputs": {
+            "properties": {},
+            "required": [],
+            "order": []
+          }
+        },
+        "invocationMethod": {
+          "type": "WEBHOOK",
+          "url": "https://example.com",
+          "agent": false,
+          "synchronized": false,
+          "method": "POST",
+          "headers": {
+            "RUN_ID": "{{ .run.id }}"
+          },
+          "body": {
+            "{{ spreadValue() }}": "{{ .inputs }}",
+            "port_context": {
+              "runId": "{{ .run.id }}"
+            }
+          }
+        },
+        "requiredApproval": false,
+        "createdBy": "auth0|82zea497e300f09d7c1f41",
+        "updatedBy": "auth0|82zea497e300f09d7c1f41",
+        "createdAt": "2024-08-15T12:29:45.817Z",
+        "updatedAt": "2024-08-15T12:29:45.817Z"
+      },
+      "affectedEntities": []
+    },
+    "diff": {
+      "before": {
+        "id": "r_Q0YotCZMKxDLdlaU",
+        "status": "IN_PROGRESS",
+        "action": {
+          "identifier": "myActionId",
+          "title": null,
+          "icon": null,
+          "deleted": true
+        },
+        "source": "UI",
+        "link": [],
+        "requiredApproval": false,
+        "properties": {},
+        "createdAt": "2024-08-15T12:29:57.379Z",
+        "updatedAt": "2024-08-15T12:29:57.379Z",
+        "createdBy": "auth0|82zea497e300f09d7c1f41",
+        "updatedBy": "auth0|82zea497e300f09d7c1f41",
+        "payload": {
+          "type": "WEBHOOK",
+          "url": "https://example.com",
+          "agent": false,
+          "synchronized": false,
+          "method": "POST",
+          "headers": {
+            "RUN_ID": "r_Q0YotCZMKxDLdlaU"
+          },
+          "body": {
+            "port_context": {
+              "runId": "r_Q0YotCZMKxDLdlaU"
+            }
+          }
+        }
+      },
+      "after": {
+        "id": "r_Q0YotCZMKxDLdlaU",
+        "status": "IN_PROGRESS",
+        "action": {
+          "identifier": "myActionId",
+          "title": null,
+          "icon": null,
+          "deleted": true
+        },
+        "source": "UI",
+        "link": [],
+        "requiredApproval": false,
+        "properties": {},
+        "createdAt": "2024-08-15T12:29:57.379Z",
+        "updatedAt": "2024-08-15T12:30:05.481Z",
+        "createdBy": "auth0|82zea497e300f09d7c1f41",
+        "updatedBy": "auth0|82zea497e300f09d7c1f41",
+        "payload": {
+          "type": "WEBHOOK",
+          "url": "https://example.com",
+          "agent": false,
+          "synchronized": false,
+          "method": "POST",
+          "headers": {
+            "RUN_ID": "r_Q0YotCZMKxDLdlaU"
+          },
+          "body": {
+            "port_context": {
+              "runId": "r_Q0YotCZMKxDLdlaU"
+            }
+          }
+        }
+      }
+    }
+  },
+  "entity": null,
+  "action": {
+    "identifier": "automation"
+  },
+  "run": {
+    "id": "r_au3aJdlOHUO3d99n"
+  }
+}
+```
+
+</TabItem>
+</Tabs>
 
 <PayloadAdvancedFunctions />
