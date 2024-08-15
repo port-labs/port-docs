@@ -42,7 +42,7 @@ A few examples:
 <SubnetworkBlueprint/>
 <ComputeInstanceBlueprint/>
 
-#### BigQuery
+#### Data Management
 <DatasetBlueprint/>
 <TableBlueprint/>
 <ModelBlueprint/>
