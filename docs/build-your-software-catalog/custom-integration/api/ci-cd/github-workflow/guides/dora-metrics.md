@@ -80,7 +80,7 @@ DORA Metrics entities have a one to one relationship with service. To make this 
       },
       "averageTimeToFirstReview": {
         "title": "Average Time To First Review",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Average time until first PR review in hours."
       },
@@ -128,7 +128,7 @@ DORA Metrics entities have a one to one relationship with service. To make this 
       },
       "totalDeployments": {
         "title": "Total Deployments",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Total number of deployments in the timeframe."
       },
@@ -154,31 +154,19 @@ DORA Metrics entities have a one to one relationship with service. To make this 
       },
       "numberOfUniqueDeploymentDays": {
         "title": "Unique Deployment Days",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Days with at least one deployment."
       },
-      "numberOfUniqueDeploymentWeeks": {
-        "title": "Unique Deployment Weeks",
-        "type": "string",
-        "icon": "DefaultProperty",
-        "description": "Number of weeks with at least one deployment."
-      },
-      "numberOfUniqueDeploymentMonths": {
-        "title": "Unique Deployment Months",
-        "type": "string",
-        "icon": "DefaultProperty",
-        "description": "Number of months with at least one deployment."
-      },
       "deploymentFrequency": {
         "title": "Deployment Frequency",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Frequency of deployments"
       },
       "leadTimeForChangesInHours": {
         "title": "Lead Time For Changes In Hours",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Average time from commit to deployment in hours."
       },
@@ -204,7 +192,7 @@ DORA Metrics entities have a one to one relationship with service. To make this 
       },
       "workflowAverageTimeDuration": {
         "title": "Workflow Average Time Duration",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Average duration of CI/CD workflows in hours."
       },
@@ -213,6 +201,18 @@ DORA Metrics entities have a one to one relationship with service. To make this 
         "title": "TimeFrame in Weeks",
         "type": "number",
         "description": "Timeframe for the metrics in weeks."
+      },
+      "numberOfUniqueDeploymentWeeks": {
+        "title": "Unique Deployment Weeks",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "Number of weeks with at least one deployment."
+      },
+      "numberOfUniqueDeploymentMonths": {
+        "title": "Unique Deployment Months",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "Number of months with at least one deployment."
       }
     },
     "required": []
