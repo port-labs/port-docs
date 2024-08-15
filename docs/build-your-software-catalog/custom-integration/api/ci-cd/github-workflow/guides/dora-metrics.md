@@ -15,7 +15,8 @@ In this guide, we will create a GitHub action that computes pull-request metrics
 :::note Note
 This guide assumes that the service for which the metrics are being computed already exists in the service blueprint. The service should have an ID that matches the name of the repository.
 :::
-3. A blueprint in Port to host the Dora Metrics.
+3. A blueprint in Port representing Dora Metrics.
+
 
 
 ## Create blueprints in Port
