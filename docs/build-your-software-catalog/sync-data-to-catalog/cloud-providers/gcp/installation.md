@@ -108,7 +108,7 @@ It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [mod
 
 ## Prerequisites
 
-- [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.9.1
 - [A logged in gCloud CLI](https://cloud.google.com/sdk/gcloud) with enough [Permissions](#required-permissions-to-run-terraform-apply)
 - [Artifact Registry Image](#artifact-registry-image)
 

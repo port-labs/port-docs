@@ -11,10 +11,57 @@ In this guide, we will create a GitHub action that computes pull-request metrics
 
 ## Prerequisites
 1. A GitHub repository in which you can trigger a workflow that we will use in this guide.
-2. A blueprint in Port to host the Dora Metrics.
+2. A blueprint in Port representing a Github service (repository).
+3. A blueprint in Port representing Dora Metrics.
 
+:::note Mapping convention
 
-Below, you can find the JSON for the `DORA Metrics` blueprint required for the guide:
+DORA Metrics entities have a one to one relationship with service. The guide assumes that the service ID is the name of the repository, and as such, the relationship uses the the repository name as the ID.
+:::
+
+## Create blueprints in Port
+
+1. Create the `Service` and `DORA Metrics` blueprint.
+    - Go to your [Builder](https://app.getport.io/settings/data-model) page.
+
+    - Click on the `+ Blueprint` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor.
+
+<details>
+<summary><b>Service blueprint (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "service",
+  "title": "Service",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown"
+      },
+      "url": {
+        "title": "Service URL",
+        "type": "string",
+        "format": "url"
+      },
+      "defaultBranch": {
+        "title": "Default branch",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+</details>
+
 
 <details>
 <summary><b>DORA Metrics blueprint (click to expand)</b></summary>
@@ -34,7 +81,7 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
       },
       "averageTimeToFirstReview": {
         "title": "Average Time To First Review",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Average time until first PR review in hours."
       },
@@ -82,7 +129,7 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
       },
       "totalDeployments": {
         "title": "Total Deployments",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Total number of deployments in the timeframe."
       },
@@ -108,31 +155,19 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
       },
       "numberOfUniqueDeploymentDays": {
         "title": "Unique Deployment Days",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Days with at least one deployment."
       },
-      "numberOfUniqueDeploymentWeeks": {
-        "title": "Unique Deployment Weeks",
-        "type": "string",
-        "icon": "DefaultProperty",
-        "description": "Number of weeks with at least one deployment."
-      },
-      "numberOfUniqueDeploymentMonths": {
-        "title": "Unique Deployment Months",
-        "type": "string",
-        "icon": "DefaultProperty",
-        "description": "Number of months with at least one deployment."
-      },
       "deploymentFrequency": {
         "title": "Deployment Frequency",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Frequency of deployments"
       },
       "leadTimeForChangesInHours": {
         "title": "Lead Time For Changes In Hours",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Average time from commit to deployment in hours."
       },
@@ -158,7 +193,7 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
       },
       "workflowAverageTimeDuration": {
         "title": "Workflow Average Time Duration",
-        "type": "string",
+        "type": "number",
         "icon": "DefaultProperty",
         "description": "Average duration of CI/CD workflows in hours."
       },
@@ -167,6 +202,18 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
         "title": "TimeFrame in Weeks",
         "type": "number",
         "description": "Timeframe for the metrics in weeks."
+      },
+      "numberOfUniqueDeploymentWeeks": {
+        "title": "Unique Deployment Weeks",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "Number of weeks with at least one deployment."
+      },
+      "numberOfUniqueDeploymentMonths": {
+        "title": "Unique Deployment Months",
+        "type": "number",
+        "icon": "DefaultProperty",
+        "description": "Number of months with at least one deployment."
       }
     },
     "required": []
@@ -174,7 +221,14 @@ Below, you can find the JSON for the `DORA Metrics` blueprint required for the g
   "mirrorProperties": {},
   "calculationProperties": {},
   "aggregationProperties": {},
-  "relations": {}
+  "relations": {
+    "service": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 </details>
@@ -187,7 +241,7 @@ Follow these steps to get started:
 
     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
     - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `PATTOKEN` - GitHub PAT fine-grained token. Ensure that read-only access to actions and metadata permission is set. Grant this action access to the repositories where the metrics are to be estimated for . [learn more](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
+    - `GH_PAT_CLASSIC` - [GitHub Personal Access Token (Classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic). Ensure that the read:org and repo, scopes are set for the token to grant this action access to the repositories and teams the metrics are to be estimated for.
 
 2. In your Github repository, create a workflow file under `.github/workflows/dora-metrics.yml` with the following content:
 
@@ -252,21 +306,21 @@ jobs:
 
       - name: Compute PR Metrics
         run: |
-          python dora/calculate_pr_metrics.py  --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --timeframe ${{env.TIMEFRAME_IN_DAYS}} --platform github-actions
+          python dora/calculate_pr_metrics.py  --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --time-frame ${{env.TIMEFRAME_IN_DAYS}} --platform github-actions
           
       - name: Deployment Frequency
         id: deployment_frequency
-        run: python dora/deployment_frequency.py --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --workflows '${{ toJson(matrix.workflows) }}' --timeframe ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions --ignore_workflows
-      
+        run:  python dora/deployment_frequency.py --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame ${{env.TIMEFRAME_IN_DAYS}} --branch "${{ matrix.branch }}" --platform github-actions
+
       - name: Lead Time For Changes
         id: lead_time_for_changes
-        run: python dora/lead_time_for_changes.py --owner ${{ matrix.owner }} --repo ${{ matrix.repository }} --token ${{ secrets.PATTOKEN }} --workflows '${{ toJson(matrix.workflows) }}' --timeframe ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions
+        run:  python dora/lead_time_for_changes.py --owner ${{ matrix.owner }} --repo "${{ matrix.repository }}" --token "${{ secrets.GH_PAT_CLASSIC }}" --workflows '${{ toJson(matrix.workflows) }}' --time-frame ${{env.TIMEFRAME_IN_DAYS}} --branch ${{ matrix.branch }} --platform github-actions
         
 
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: ${{ fromJson(env.metrics).id }}
+          identifier: "${{ matrix.repository }}-${{env.TIMEFRAME_IN_DAYS}}"
           title: ${{ env.ENTITY_TITLE }}
           blueprint: doraMetrics
           properties: |-
@@ -291,6 +345,10 @@ jobs:
               "averageCommitsPerPr": "${{ fromJson(env.metrics).average_commits_per_pr }}",
               "averageLocChangedPerPr": "${{ fromJson(env.metrics).average_loc_changed_per_pr }}",
               "averagePrsReviewedPerWeek": "${{ fromJson(env.metrics).average_prs_reviewed_per_week }}"
+            }
+          relations: |- 
+            {
+            "service": "${{ matrix.repository }}"
             }
           clientId: ${{ secrets.PORT_CLIENT_ID }}
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
@@ -322,7 +380,7 @@ PyGithub==2.3.0
 | Name                 | Description                                                                                          | Required | Default            |
 |----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------
 | owner              | GitHub organization or user name                                                            | true    | -               |
-| repository              | your GitHub repository name                                                              | true    | -               |
+| repository              | your GitHub repository name. The GitHub repository name should be represented as an entity ID in the service blueprint.                                                              | true    | -               |
 | timeframe              | Time frame in weeks to calculate metrics on                                                                | false    | 4               |
 | branch              | your preferred GitHub repository branch to estimate metrics on                                                              | false    | main              |
 | workflows              | An array of workflows to process. Multiple workflows can be separated by a comma (,)                                                              | false    | []               |
@@ -358,13 +416,27 @@ import argparse
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class RepositoryMetrics:
-    def __init__(self, owner, repo, timeframe,pat_token):
-        self.github_client = Github(pat_token)
+    def __init__(self, owner, repo, time_frame,token,github_host):
+        try:
+            self.github_client = (
+                Github(login_or_token=token, base_url=github_host)
+                if github_host
+                else Github(token)
+            )
+            self.owner = owner
+        except GithubException as e:
+            logging.error(f"Failed to initialize GitHub client: {e}")
+            raise
+        except Exception as e:
+            logging.error(
+                f"Unexpected error during initialization: {e} - verify that your github credentials are valid"
+            )
+            raise
         self.repo_name = f"{owner}/{repo}"
-        self.timeframe = int(timeframe)
+        self.time_frame = int(time_frame)
         self.start_date = datetime.datetime.now(datetime.UTC).replace(
             tzinfo=datetime.timezone.utc
-        ) - datetime.timedelta(days=self.timeframe)
+        ) - datetime.timedelta(days=self.time_frame)
         self.repo = self.github_client.get_repo(f"{self.repo_name}")
 
     def calculate_pr_metrics(self):
@@ -447,7 +519,7 @@ class RepositoryMetrics:
         review_weeks = {
             review_date.isocalendar()[1] for review_date in aggregated["review_dates"]
         }
-        average_prs_reviewed_per_week = len(review_weeks) / max(1, self.timeframe)
+        average_prs_reviewed_per_week = len(review_weeks) / max(1, self.time_frame)
 
         metrics = {
             "id": self.repo.id,
@@ -468,7 +540,7 @@ class RepositoryMetrics:
             else 0,
             "prs_opened": aggregated["prs_opened"],
             "weekly_prs_merged": self.timedelta_to_decimal_hours(
-                aggregated["total_open_to_close_time"] / max(1, self.timeframe)
+                aggregated["total_open_to_close_time"] / max(1, self.time_frame)
             )
             if aggregated["prs_merged"]
             else 0,
@@ -501,14 +573,19 @@ if __name__ == "__main__":
     parser.add_argument('--owner', required=True, help='Owner of the repository')
     parser.add_argument('--repo', required=True, help='Repository name')
     parser.add_argument('--token', required=True, help='GitHub token')
-    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--time-frame', type=int, default=30, help='Time Frame in days')
     parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
+    parser.add_argument(
+            "--github-host",
+            help="Base URL for self-hosted GitHub instance (e.g., https://api.github-example.com)",
+            default=None,
+        )
     args = parser.parse_args()
 
     logging.info(f"Repository Name: {args.owner}/{args.repo}")
-    logging.info(f"TimeFrame (in days): {args.timeframe}")
+    logging.info(f"TimeFrame (in days): {args.time_frame}")
 
-    repo_metrics = RepositoryMetrics(args.owner, args.repo, args.timeframe, pat_token=args.token)
+    repo_metrics = RepositoryMetrics(args.owner, args.repo, args.time_frame, token=args.token,github_host = args.github_host)
     metrics = repo_metrics.calculate_pr_metrics()
     metrics_json = json.dumps(metrics, default=str)
     print(metrics_json)
@@ -531,16 +608,29 @@ from github import Github
 import argparse
 import logging
 
-
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class DeploymentFrequency:
-    def __init__(self, owner, repo, workflows, branch, number_of_days, pat_token=""):
+    def __init__(self, owner, repo, workflows, branch, number_of_days, token, github_host):
         self.owner, self.repo = owner, repo
         self.branch = branch
         self.number_of_days = number_of_days
-        self.pat_token = pat_token
-        self.github = Github(login_or_token = self.pat_token)
+        self.token = token
+        try:
+            self.github = (
+                Github(login_or_token=token, base_url=github_host)
+                if github_host
+                else Github(token)
+            )
+            self.owner = owner
+        except GithubException as e:
+            logging.error(f"Failed to initialize GitHub client: {e}")
+            raise
+        except Exception as e:
+            logging.error(
+                f"Unexpected error during initialization: {e} - verify that your github credentials are valid"
+            )
+            raise
         self.repo_object = self.github.get_repo(f"{self.owner}/{self.repo}")
         try:
             self.workflows = json.loads(workflows)
@@ -608,7 +698,7 @@ class DeploymentFrequency:
             "rating": rating,
             "number_of_unique_deployment_days": len(unique_dates),
             "number_of_unique_deployment_weeks": len({date.isocalendar()[1] for date in unique_dates}),
-            "number_of_unique_deployment_month": len({date.month for date in unique_dates}),
+            "number_of_unique_deployment_months": len({date.month for date in unique_dates}),
             "total_deployments": len(workflow_runs_list),
         }, default=str)
 
@@ -617,13 +707,18 @@ if __name__ == "__main__":
     parser.add_argument('--owner', required=True, help='Owner of the repository')
     parser.add_argument('--repo', required=True, help='Repository name')
     parser.add_argument('--token', required=True, help='GitHub token')
+    parser.add_argument(
+            "--github-host",
+            help="Base URL for self-hosted GitHub instance (e.g., https://api.example-github.com)",
+            default=None,
+        )
     parser.add_argument('--workflows', required=True, help='GitHub workflows as a JSON string.')
     parser.add_argument('--branch', default='main', help='Branch name')
-    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--time-frame', type=int, default=30, help='Time Frame in days')
     parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
     args = parser.parse_args()
 
-    deployment_frequency = DeploymentFrequency(args.owner, args.repo, args.workflows, args.branch, args.timeframe, pat_token = args.token)
+    deployment_frequency = DeploymentFrequency(args.owner, args.repo, args.workflows, args.branch, args.time_frame, token = args.token, github_host = args.github_host)
     report = deployment_frequency()
     print(report)
     
@@ -644,6 +739,7 @@ from github import Github
 import argparse
 import logging
 
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class LeadTimeForChanges:
@@ -654,8 +750,9 @@ class LeadTimeForChanges:
         workflows,
         branch,
         number_of_days,
+        token,
+        github_host,
         commit_counting_method="last",
-        pat_token="",
         ignore_workflows=True
     ):
         self.owner = owner
@@ -663,7 +760,21 @@ class LeadTimeForChanges:
         self.branch = branch
         self.number_of_days = number_of_days
         self.commit_counting_method = commit_counting_method
-        self.github = Github(login_or_token = pat_token)
+        try:
+            self.github = (
+                Github(login_or_token=token, base_url=github_host)
+                if github_host
+                else Github(token)
+            )
+            self.owner = owner
+        except GithubException as e:
+            logging.error(f"Failed to initialize GitHub client: {e}")
+            raise
+        except Exception as e:
+            logging.error(
+                f"Unexpected error during initialization: {e} - verify that your github credentials are valid"
+            )
+            raise
         self.repo_object = self.github.get_repo(f"{self.owner}/{self.repo}")
         self.ignore_workflows = ignore_workflows
         try:
@@ -813,16 +924,21 @@ if __name__ == "__main__":
     parser.add_argument('--token', required=True, help='GitHub token')
     parser.add_argument('--workflows', default='[]', help='GitHub workflows as a JSON string.')
     parser.add_argument('--branch', default='main', help='Branch name')
-    parser.add_argument('--timeframe', type=int, default=30, help='Timeframe in days')
+    parser.add_argument('--time-frame', type=int, default=30, help='Time Frame in days')
     parser.add_argument('--platform', default='github-actions', choices=['github-actions', 'self-hosted'], help='CI/CD platform type')
     parser.add_argument('--ignore_workflows', action='store_true', help='Exclude workflows. Default is False.')
+    parser.add_argument(
+            "--github-host",
+            help="Base URL for self-hosted GitHub instance (e.g., https://api.example-github.com)",
+            default=None,
+        )
     args = parser.parse_args()
 
     lead_time_for_changes = LeadTimeForChanges(
-        args.owner, args.repo, args.workflows, args.branch, args.timeframe, pat_token=args.token,ignore_workflows=args.ignore_workflows
+        args.owner, args.repo, args.workflows, args.branch, args.time_frame, token=args.token,github_host= args.github_host, ignore_workflows=args.ignore_workflows
     )
     report = lead_time_for_changes()
-    print(report)
+    logging.info(f"Lead Time for Changes >> {report}")
     
     if args.platform == "github-actions":
        with open(os.getenv("GITHUB_ENV"), "a") as github_env:
