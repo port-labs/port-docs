@@ -73,7 +73,7 @@ When **using Port's UI**, the specified configuration will override any `port-ap
 
 ## Setting up the blueprint and mapping configuration
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint and mapping configuration:
 
 <details>
 <summary><b>Checkmarx KICS blueprint (Click to expand)</b></summary>
@@ -111,10 +111,3 @@ resources:
 </details>
 
 Then click on `Resync` and wait for the entities to be ingested in your Port environment
-
-<details>
-<summary>Python script example</summary>
-
-<PythonScript/>
-
-</details>
