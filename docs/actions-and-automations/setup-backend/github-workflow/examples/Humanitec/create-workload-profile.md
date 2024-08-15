@@ -7,7 +7,7 @@ import HumanitecWorkloadBlueprint from './blueprints/_humanitec_workload_bluepri
 ## Overview
 This self service guide provides a comprehensive walkthrough on how to create a workload profile in Humanitec from Port using Port's self service actions.
 
-:::tip Prerequisites
+:::info Prerequisites
 1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
 2. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
    - `HUMANITEC_API_KEY` - [Humanitec API Key](https://developer.humanitec.com/platform-orchestrator/reference/api-references/#authentication)

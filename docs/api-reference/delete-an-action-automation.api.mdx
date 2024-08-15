@@ -5,9 +5,9 @@ description: "This route allows you to delete a self-service action or automatio
 sidebar_label: "Delete an action/automation"
 hide_title: true
 hide_table_of_contents: true
-api: eJzdVclu2zAQ/RWCpwRwLCdIL4JhwEB8KFqgQeOeUsOhxXFERCZVklLqCvr3zpCSl9rJtUUvMpdZ3gzfGzdcgsusKr0ymqd8nivHrKk8MFEU5tWxramYN0xCAXTIHBTrKwe2VhluM/JjxjJRebMRtBuOVzaZhM/csAKE1WxjLBqvMG7n4pjQ8sDJDViWQ/bCyMTnwB6lyaoNaB+uFxe596VLkwSP3fAZfGmsHyqTdOGuMNzVQbjkMsLgA+7Fs+PpI59GS74Y8FJYscFyLF003GHqjeBpw/22BOyC81bpZ94OuKKmlMLnGEijD+5ixqWSCE6tFVi8svCjUhYkT72toMUUDrLKKr8NCVbYBLRDELGNqeixkKkFV+IGHCG4GY3o5/hVHqosA+cI0O3o9vT+iwZm1qFva0PPhugZWGusYyZDIAgt/a6/67EXqwImtLD4ZWzs88mMDMcJrvqTu3307hx/7JGbnDxp45drU2n5hLdydz7Pe14k+wdhr8rnAWBpTY29k2zfQPYqHMNoLETrgvUZkx5yqP7m5l+pXulaFEou6enB+dMeSOHFvlppINaI/chiJ6LMIvneK/rDOUr8raJRNFoUy5DpuOapZv11BLLD8XZxWB3qMDconE4afBDllvKkvu7VnTQnoms5aczWvYYrW6BPPyVEqQ6GBDbxnEHljmwORPtAbxL12Et3NxvQ8xNs9+NgWiF+q34FmvNuYuQgJHq1YYKsTXBXviD7e8zHpvcf0ZTAx9e8Ho7opUvj/EZoMu+i33VjV59KCgMcUaLhmcH+a/+fjvHYfg8/fVIWQgVphEdtOsY88voaDfvZOuDp6ajGR86xyWTcNCvh4Jst2paOUcWWpjUua2EVUTQQSypHa2ToWhQO3mn6xdfuX+CSvYW355AmAuH8qGiHyxdk1Ll/lnZxqJC72efZfEYlVlTvISVfAiW7BcE+m+lPrsa09CWFnHUZI1UZEn6yM483bzp01O+tqe5F27a/AcEa7NI=
+api: eJzdVU1v2zAM/SuCTi2QxknRXYwgQIDmMKzAijU7tUGq2Ews1JE8SU6WGf7vIyU73+1pwIZdbH2QFN8TH1XxFGxiZOGkVjzmk0xaZnTpgIk81xvLtrpkTrMUcqBFZiFf3Fgwa5ngNCE/pg0TpdMrQbPuYG6iof9MNMtBGMVW2qDxHOM2LpYJlR442Q5LMkjeGJm4DNhzqpNyBcr57elV5lxh4yjCZdtdgiu0cV2poybcDYa7OQgXXYc0eIc7sbQ8fuajYMmnHV4II1YIx9BGxS0evRI8rrjbFoAsWGekWqLvSqoHUEuX8bhfd7gkigqB0w5XGAFn4fyZTDFVuZBgcOuUUmD7baYXHl/wi/Ype6I3Qrk92zsIBn6U0kDKY2dKqBGBhaQ00m19/nPkGA9GjMEvFi1UMjVgC5yAJYC3vR79jjN8KpMErOWI8K53d77/VUGb9kJTVSA5DIzRxjKdYCKYWvyiXtTAiXkOQxoY/DI2cNlwTIaDCEftyv0+erOOP3Pklg5flXazhS5V+oq76W59cpG8jXSZT7Aweo1sp4eUb4RlGI35aE2w9sSoTdmjv739V9BLtRa5TGd09WDdOQepcGKPNtUQMCIfSWAiqDjU9kegP10qib8FGjWpRD7zJx1jHinWbodEdnm8Dw7RocwzjcJppME7Qb8xj9b9tnlE1ZmKa04aM+u2RZQmR5+2CYlCHvQgJPGSQWmPbA5E+0R3EvTYSnfXetDzC2z3/WVUYv5G/vJlzpsWlIFI0av2LWmhvbt0Odk/4nls9PgZTSn5cJv9bo9uutDWrYQi8yb6fdPV1bmkTvtYxRON/Cv3n74SgX4HP11U5EJ6afhLrZqKeebrPhq2vbXD4/Pej5ecIclkXFVzYeG7yeuallHFhro1DtfCSCpRX1iptDTGCl2I3MIHpF99a16Ba/YHnpSLeNsaVFSA2H9KmuHwDSvy0lNXTw8Vdj9+GE/GRFFJfB2W9Jsv6WZAsC+edFrr4Vj6ksIuugyw1BkKZrgzDzvvOjTSaa0J97Su699kYiW0
 sidebar_class_name: "delete api-method"
-info_path: api-reference/port-api
+info_path: api-reference-temp/port-api
 custom_edit_url: null
 ---
 
@@ -69,7 +69,7 @@ This route allows you to delete a self-service action or automation.<br/><br/>To
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"action_identifier","required":true}}
+        param={{"schema":{"type":"string","minLength":1},"in":"path","name":"action_identifier","description":"The identifier of the action/automation you want to delete.<br/>","required":true}}
       >
         
       </ParamsItem>

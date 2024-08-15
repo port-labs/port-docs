@@ -11,7 +11,7 @@ import FindCredentials from "/docs/build-your-software-catalog/custom-integratio
 
 This guide takes 5 minutes to complete, and aims to quickly integrate your AWS environment into Port.
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - While it is not mandatory for this guide, we recommend that you complete the [onboarding process](/quickstart) before proceeding.
 - You will need an active [Port account](https://app.getport.io/).

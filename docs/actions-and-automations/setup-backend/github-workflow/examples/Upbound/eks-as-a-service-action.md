@@ -7,7 +7,7 @@ At the end of this guide, you should be able to interact with Upbound using Port
 The demo starts off on a completely clean slate - an empty Upbound organization, an empty Git repository, and an empty Port environment.
 :::
 
-:::tip Prerequisites
+:::info Prerequisites
 <h3>Upbound</h3>
 Before following the guide, you will need to set up an Upbound organization, initialize it and keep track of some information:
 - Save the `Organization ID` for later;
