@@ -24,7 +24,8 @@ Import service resources into your Port account using the [Github Exporter](/bui
 :::
 
 1. Create the `Service` and `DORA Metrics` blueprint.
-    - Head to the Builder page.
+    - Go to your [Builder](https://app.getport.io/settings/data-model) page.
+
     - Click on the `+ Blueprint` button.
     - Click on the `{...} Edit JSON` button.
     - Copy and paste the following JSON configuration into the editor.
