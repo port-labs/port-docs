@@ -23,9 +23,12 @@ import RepositoryGroupBlueprint from './example-groups-subgroups/\_gitlab_export
 import GroupBlueprint from './example-groups-subgroups/\_gitlab_exporter_example_group_blueprint.mdx'
 import PortGroupsAppConfig from './example-groups-subgroups/\_gitlab_exporter_example_group_repository_port_app_config.mdx'
 
+import PackageBlueprint from './example-file/\_gitlab_exporter_example_package_blueprint.mdx'
+import PortPackageAppConfig from './example-file/\_gitlab_exporter_example_package_port_app_config.mdx'
+
 # Examples
 
-## Mapping projects, file contents and merge requests
+## Mapping projects, README.md and merge requests
 
 In the following example you will ingest your GitLab projects, their README.md file contents and merge requests to Port, you may use the following Port blueprint definitions and integration configuration:
 
@@ -45,6 +48,18 @@ In the following example you will ingest your GitLab projects, their README.md f
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their `README.md` file contents and merge requests.
+
+## Mapping files and file contents
+
+The following example shows how to ingest dependencies from a `package.json` file in your GitLab repository into Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<PackageBlueprint/>
+
+<PortPackageAppConfig/>
+
+The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
+For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/#ingest-files-from-your-repositories)
 
 ## Mapping Groups, Subgroups and Projects
 
