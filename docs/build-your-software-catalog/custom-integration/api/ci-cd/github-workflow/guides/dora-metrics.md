@@ -18,7 +18,8 @@ This guide assumes that the service for which the metrics are being computed alr
 3. A blueprint in Port to host the Dora Metrics.
 
 
-## Create Blueprints In Port: 
+## Create blueprints in Port
+
 
 1. Create a `service` blueprint:
 
