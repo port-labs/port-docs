@@ -222,7 +222,14 @@ Import service resources into your Port account using the [Github Exporter](/bui
   "mirrorProperties": {},
   "calculationProperties": {},
   "aggregationProperties": {},
-  "relations": {}
+  "relations": {
+    "service": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 </details>
