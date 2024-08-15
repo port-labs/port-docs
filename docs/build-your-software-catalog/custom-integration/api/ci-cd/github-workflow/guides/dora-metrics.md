@@ -12,18 +12,22 @@ In this guide, we will create a GitHub action that computes pull-request metrics
 ## Prerequisites
 1. A GitHub repository in which you can trigger a workflow that we will use in this guide.
 2. A blueprint in Port representing a Github service (repository).
-:::note Note
-This guide assumes that the service for which the metrics are being computed already exists in the service blueprint. The service should have an ID that matches the name of the repository.
-:::
 3. A blueprint in Port representing Dora Metrics.
 
 
 
 ## Create blueprints in Port
 
+:::note Important
+Import service resources into your Port account using the [Github Exporter](/build-your-software-catalog/sync-data-to-catalog/git/github/)
 
-1. Create a `service` blueprint:
+:::
 
+1. Create the `Service` and `DORA Metrics` blueprint.
+    - Head to the Builder page.
+    - Click on the `+ Blueprint` button.
+    - Click on the `{...} Edit JSON` button.
+    - Copy and paste the following JSON configuration into the editor.
 
 <details>
 <summary><b>Service blueprint (click to expand)</b></summary>
@@ -58,8 +62,6 @@ This guide assumes that the service for which the metrics are being computed alr
 }
 ```
 </details>
-
-2. Create a `DORA Metrics` blueprint:
 
 
 <details>
