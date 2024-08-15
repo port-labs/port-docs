@@ -1079,3 +1079,7 @@ It is also possible to delete all entities using Port's web UI:
 </Tabs>
 
 <PortApiRegionTip/>
+
+## Rate limits
+
+For more information about Port's rate limits and how to avoid them, check out the [rate limits page](/api-reference/rate-limits).

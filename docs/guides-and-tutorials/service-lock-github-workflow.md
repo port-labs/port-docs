@@ -22,7 +22,7 @@ The CI/CD deployment check described in this guide will follow these steps:
 5. If the value of the `locked_in_prod` field is `false`, the deployment check will succeed
 
 ## Prerequisites
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart)
 - You will need a GitHub repository in which you can trigger a workflow that we will use in this guide
