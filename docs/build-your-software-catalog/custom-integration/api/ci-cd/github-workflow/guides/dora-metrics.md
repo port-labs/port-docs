@@ -374,7 +374,7 @@ PyGithub==2.3.0
 | Name                 | Description                                                                                          | Required | Default            |
 |----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------
 | owner              | GitHub organization or user name                                                            | true    | -               |
-| repository              | your GitHub repository name                                                              | true    | -               |
+| repository              | your GitHub repository name. The GitHub repository name should be represented as an entity ID in the service blueprint.                                                              | true    | -               |
 | timeframe              | Time frame in weeks to calculate metrics on                                                                | false    | 4               |
 | branch              | your preferred GitHub repository branch to estimate metrics on                                                              | false    | main              |
 | workflows              | An array of workflows to process. Multiple workflows can be separated by a comma (,)                                                              | false    | []               |
