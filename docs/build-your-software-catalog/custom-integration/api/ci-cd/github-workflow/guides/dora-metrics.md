@@ -14,8 +14,9 @@ In this guide, we will create a GitHub action that computes pull-request metrics
 2. A blueprint in Port representing a Github service (repository).
 3. A blueprint in Port representing Dora Metrics.
 
-:::note Note
-DORA Metrics entities have a one to one relationship with service. To make this possible, the service should be pre-installed in the port account with entities in it. The guide assumes that the service ID is the name of the repository, and as such, the relationship uses the the repository name as the ID.
+:::note Mapping convention
+
+DORA Metrics entities have a one to one relationship with service. The guide assumes that the service ID is the name of the repository, and as such, the relationship uses the the repository name as the ID.
 :::
 
 ## Create blueprints in Port
