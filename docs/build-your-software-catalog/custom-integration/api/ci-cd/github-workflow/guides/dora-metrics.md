@@ -59,7 +59,8 @@ This guide assumes that the service for which the metrics are being computed alr
 ```
 </details>
 
-2. Below, you can find the JSON for the `DORA Metrics` blueprint required for the guide:
+2. Create a `DORA Metrics` blueprint:
+
 
 <details>
 <summary><b>DORA Metrics blueprint (click to expand)</b></summary>
