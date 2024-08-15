@@ -18,11 +18,6 @@ In this guide, we will create a GitHub action that computes pull-request metrics
 
 ## Create blueprints in Port
 
-:::note Important
-Import service resources into your Port account using the [Github Exporter](/build-your-software-catalog/sync-data-to-catalog/git/github/)
-
-:::
-
 1. Create the `Service` and `DORA Metrics` blueprint.
     - Head to the Builder page.
     - Click on the `+ Blueprint` button.
