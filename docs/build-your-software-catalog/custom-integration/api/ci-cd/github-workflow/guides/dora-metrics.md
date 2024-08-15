@@ -20,7 +20,8 @@ This guide assumes that the service for which the metrics are being computed alr
 
 ## Create Blueprints In Port: 
 
-1. Create a github service blueprint in port
+1. Create a `service` blueprint:
+
 
 <details>
 <summary><b>Service blueprint (click to expand)</b></summary>
