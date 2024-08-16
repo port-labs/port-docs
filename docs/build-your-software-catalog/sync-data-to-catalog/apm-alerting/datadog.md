@@ -11,11 +11,11 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Datadog
 
-Our Datadog integration allows you to import `monitors` (also known as alerts), `services`,  `slos`, and `sloHistory` from your Datadog account into Port, according to your mapping and definition.
+Our Datadog integration allows you to import `monitors` (also known as alerts), `services`, `slos`, `sloHistory`, and `serviceMetrics` from your Datadog account into Port, according to your mapping and definition.
 
 ## Common use cases
 
-- Map monitors, services, slos and slo history in your Datadog workspace environment.
+- Map monitors, services, slos, slo history, and service metrics in your Datadog workspace environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Datadog objects using self-service actions.
 
@@ -356,7 +356,6 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 
 <br/>
 
-
 Here is an example for `.gitlab-ci.yml` pipeline file:
 
 ```yaml showLineNumbers
@@ -366,7 +365,7 @@ default:
     - docker:24.0.5-dind
   before_script:
     - docker info
-    
+
 variables:
   INTEGRATION_TYPE: datadog
   VERSION: latest
@@ -456,6 +455,7 @@ The following resources can be used to map data from Datadog, it is possible to 
 - [`Service`](https://docs.datadoghq.com/api/latest/service-definition/#get-all-service-definitions)
 - [`SLO`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-all-slos)
 - [`SLO History`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-an-slos-history)
+- [`Service Metric`](https://docs.datadoghq.com/api/latest/metrics/#query-timeseries-points)
   :::
 
 - The root key of the integration configuration is the `resources` key:
@@ -871,9 +871,11 @@ resources:
               .monitor_tags + .tags | map(select(startswith("service:"))) |
               unique | map(split(":")[1])
 ```
+
 :::tip Service Relation
 Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default mapping connects SLOs to services using tags that starts with the `service` keyword.
 :::
+
 </details>
 
 ### SLO history
@@ -965,11 +967,155 @@ resources:
           relations:
             slo: .slo.id
 ```
+
 :::tip Service Relation
 Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default JQ maps SLOs to services using tags that starts with the `service` keyword
 :::
+
 </details>
 
+### Service Metric
+
+<details>
+<summary>Service Metric blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "datadogServiceMetric",
+  "description": "This blueprint represents a Datadog service metric",
+  "title": "Datadog Service Metric",
+  "icon": "Datadog",
+  "schema": {
+    "properties": {
+      "query": {
+        "type": "string",
+        "title": "Query",
+        "description": "The Datadog query used to retrieve this metric"
+      },
+      "series": {
+        "type": "array",
+        "title": "Series",
+        "description": "Array containing detailed information about the metric series"
+      },
+      "res_type": {
+        "type": "string",
+        "title": "Response Type",
+        "description": "The type of response from the Datadog API"
+      },
+      "from_date": {
+        "type": "string",
+        "format": "date-time",
+        "title": "From Date",
+        "description": "Unix timestamp of the start of the queried time period"
+      },
+      "to_date": {
+        "type": "string",
+        "format": "date-time",
+        "title": "To Date",
+        "description": "Unix timestamp of the end of the queried time period"
+      },
+      "metric_name": {
+        "type": "string",
+        "title": "Metric Name",
+        "description": "The name of the metric"
+      },
+      "env": {
+        "type": "string",
+        "title": "Environment",
+        "description": "The environment of the service"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "service": {
+      "title": "Service",
+      "description": "The service associated with this query",
+      "target": "datadogService",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+:::tip Configuration Mapping for Flexible Metric Fetching
+The `datadogSelector` section within each `serviceMetric` resource demonstrates how to fetch multiple metrics (e.g., `system.mem.used`, `system.disk.used`) from Datadog with a variety of filters. You can control the:
+
+*   **Metric:** Specify the exact metric name (e.g., `avg:system.mem.used`)
+*   **Environment:** Filter by specific environments (e.g., `prod`, or use `*` for all)
+*   **Service:** Filter by specific services in your [datadog service catalog](https://docs.datadoghq.com/service_catalog/) (use `*` for all)
+*   **Timeframe:** Define the time range for data retrieval (in minutes)
+
+This configuration allows you to tailor your data fetching to specific needs and scenarios.
+:::
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: serviceMetric
+    selector:
+      query: "true"
+      datadogSelector:
+        metric: "avg:system.mem.used"
+        env: "*"
+        service: "*"
+        timeframe: 10
+    port:
+      entity:
+        mappings:
+          blueprint: '"datadogServiceMetric"'
+          identifier: .__query_id
+          title: .query
+          properties:
+            query: .__query
+            series: .series
+            res_type: .res_type
+            from_date: ".from_date / 1000 | todate"
+            to_date: ".to_date / 1000 | todate"
+            metric_name: .__metric
+            env: .__env
+          relations:
+            service: .__service
+  - kind: serviceMetric
+    selector:
+      query: "true"
+      datadogSelector:
+        metric: "avg:system.disk.used"
+        env: "prod"
+        service: "*"
+        timeframe: 5
+    port:
+      entity:
+        mappings:
+          blueprint: '"datadogServiceMetric"'
+          identifier: .__query_id
+          title: .query
+          properties:
+            query: .__query
+            series: .series
+            res_type: .res_type
+            from_date: ".from_date / 1000 | todate"
+            to_date: ".to_date / 1000 | todate"
+            metric_name: .__metric
+            env: .__env
+          relations:
+            service: .__service
+```
+
+:::tip Service Relation
+Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default JQ maps service metrics to services using tags that starts with the `service` keyword
+:::
+
+</details>
 
 ## Let's Test It
 
@@ -1004,7 +1150,7 @@ Here is an example of the payload structure from Datadog:
     "notify_no_data":false,
     "timeout_h":0,
     "silenced":{
-        
+
     }
   },
   "multi":true,
@@ -1027,7 +1173,7 @@ Here is an example of the payload structure from Datadog:
     "id":1001199545
   },
   "matching_downtimes":[
-    
+
   ]
 }
 ```
@@ -1115,12 +1261,12 @@ Here is an example of the payload structure from Datadog:
             }
          }
       }
-   }
+    }
+  }
 }
 ```
 
 </details>
-
 
 <details>
 <summary> SLO response data</summary>
@@ -1166,6 +1312,7 @@ Here is an example of the payload structure from Datadog:
 </details>
 
 <details>
+
 <summary> SLO history response data</summary>
 
 ```json showLineNumbers
@@ -1234,7 +1381,99 @@ Here is an example of the payload structure from Datadog:
     "corrections": [],
     "state": "breached"
   }
-}           
+}
+```
+
+</details>
+
+<details>
+
+<summary> Service metric response data</summary>
+
+:::tip Response Enrichment
+The Datadog response is enriched with a variety of metadata fields, including:
+
+- `__service`: The name or identifier of the service generating the data.
+- `__metric`: The name of the metric being measured.
+- `__query_id`: A unique identifier for the query that generated the data.
+- `__query`: The original query used to retrieve the data.
+- `__env`: The environment associated with the data (e.g., production, staging).
+
+This enrichment significantly enhances the usability of the Datadog response by providing valuable context and facilitating easier analysis and troubleshooting.
+:::
+
+```json showLineNumbers
+{
+  "status": "ok",
+  "res_type": "time_series",
+  "resp_version": 1,
+  "query": "avg:system.mem.used{service:inventory-management,env:staging}",
+  "from_date": 1723796537000,
+  "to_date": 1723797137000,
+  "series": [
+    {
+      "unit": [
+        {
+          "family": "bytes",
+          "id": 2,
+          "name": "byte",
+          "short_name": "B",
+          "plural": "bytes",
+          "scale_factor": 1.0
+        }
+      ],
+      "query_index": 0,
+      "aggr": "avg",
+      "metric": "system.mem.used",
+      "tag_set": [],
+      "expression": "avg:system.mem.used{env:staging,service:inventory-management}",
+      "scope": "env:staging,service:inventory-management",
+      "interval": 2,
+      "length": 39,
+      "start": 1723796546000,
+      "end": 1723797117000,
+      "pointlist": [
+        [1723796546000.0, 528986112.0],
+        [1723796562000.0, 531886080.0],
+        [1723796576000.0, 528867328.0],
+        [1723796592000.0, 522272768.0],
+        [1723796606000.0, 533704704.0],
+        [1723796846000.0, 533028864.0],
+        [1723796862000.0, 527417344.0],
+        [1723796876000.0, 531513344.0],
+        [1723796892000.0, 533577728.0],
+        [1723796906000.0, 533471232.0],
+        [1723796922000.0, 528125952.0],
+        [1723796936000.0, 530542592.0],
+        [1723796952000.0, 530767872.0],
+        [1723796966000.0, 526966784.0],
+        [1723796982000.0, 528560128.0],
+        [1723796996000.0, 530792448.0],
+        [1723797012000.0, 527384576.0],
+        [1723797026000.0, 529534976.0],
+        [1723797042000.0, 521650176.0],
+        [1723797056000.0, 531001344.0],
+        [1723797072000.0, 525955072.0],
+        [1723797086000.0, 529469440.0],
+        [1723797102000.0, 532279296.0],
+        [1723797116000.0, 526979072.0]
+      ],
+      "display_name": "system.mem.used",
+      "attributes": {}
+    }
+  ],
+  "values": [],
+  "times": [],
+  "message": "",
+  "group_by": [],
+  // highlight-start
+  "__service": "inventory-management",
+  "__metric": "system.mem.used",
+  "__query_id": "avg:system.mem.used/service:inventory-management/env:staging",
+  "__query": "avg:system.mem.used",
+  "__env": "staging"
+  // highlight-end
+}
 ```
 
 </details>
@@ -1375,6 +1614,38 @@ The combination of the sample payload and the Ocean configuration generates the 
   "updatedBy": "<port-client-id>"
 }
 ```
+
+</details>
+
+<details>
+<summary>Service metric entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "avg:system.disk.used/service:inventory-management/env:prod",
+  "title": "avg:system.disk.used{service:inventory-management,env:prod}",
+  "icon": null,
+  "blueprint": "datadogServiceMetric",
+  "team": [],
+  "properties": {
+    "query": "avg:system.disk.used",
+    "series": [],
+    "res_type": "time_series",
+    "from_date": "2024-08-16T07:32:00Z",
+    "to_date": "2024-08-16T08:02:00Z",
+    "metric_name": "system.disk.used",
+    "env": "prod"
+  },
+  "relations": {
+    "service": "inventory-management"
+  },
+  "createdAt": "2024-08-15T15:54:36.638Z",
+  "createdBy": "<port-client-id>",
+  "updatedAt": "2024-08-16T08:02:02.399Z",
+  "updatedBy": "<port-client-id>"
+}
+```
+
 </details>
 
 ## Alternative installation via webhook
