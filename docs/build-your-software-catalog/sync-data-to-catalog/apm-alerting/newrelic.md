@@ -13,7 +13,7 @@ Our New Relic integration allows you to import `entities`, `issues` and `service
 
 An `Entity` can be a host, an application, a service, a database, or any other component that sends data to New Relic.  
 An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
-A `Service Level` are your key measurements or goals used to determine the performance of your monitored system.
+A `Service Level` can be one of your key measurements or goals used to determine the performance of your monitored system.
 
 
 ## Common use cases
