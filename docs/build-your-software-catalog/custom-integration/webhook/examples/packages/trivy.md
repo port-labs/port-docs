@@ -89,25 +89,25 @@ Create the following blueprint definition and webhook configuration:
 
 ```yaml showLineNumbers
 - kind: file
-    selector:
-      query: 'true'
-      files:
-        - path: '**/result.json' # path to results json file
-    port:
-      itemsToParse: [.file.content[] | select(.Vulnerabilities != null) as $input | .Vulnerabilities[] | {VulnerabilityID, PkgName, InstalledVersion, FixedVersion, Title, Description, Severity, References, PrimaryURL, DataSource, Target: $input.Target}]
-      entity:
-        mappings:
-          identifier: .item.VulnerabilityID
-          title: .item.Title
-          blueprint: '"trivyVulnerability"'
-          properties:
-            version: .item.InstalledVersion
-            package_name: .item.PkgName
-            primaryUrl: .item.PrimaryURL
-            description: .item.Description
-            target: .item.Target
-            severity: .item.Severity
-            data_source: .item.DataSource
+  selector:
+    query: 'true'
+    files:
+      - path: '**/result.json' # path to results json file
+  port:
+    itemsToParse: '[.file.content[] | select(.Vulnerabilities != null) as $input | .Vulnerabilities[] | {VulnerabilityID, PkgName, InstalledVersion, FixedVersion, Title, Description, Severity, References, PrimaryURL, DataSource, Target: $input.Target}]'
+    entity:
+      mappings:
+        identifier: .item.VulnerabilityID
+        title: .item.Title
+        blueprint: '"trivyVulnerability"'
+        properties:
+          version: .item.InstalledVersion
+          package_name: .item.PkgName
+          primaryUrl: .item.PrimaryURL
+          description: .item.Description
+          target: .item.Target
+          severity: .item.Severity
+          data_source: .item.DataSource
 ```
 
 </details>
