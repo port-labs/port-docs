@@ -1540,8 +1540,6 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
-</details>
-
 <h2>Ingest service level objectives (SLOs)</h2>
 
 This guide will walk you through the steps to ingest Datadog SLOs into Port. By following these steps, you will be able to create a blueprint for a `microservice` entity in Port, representing a service in your Datadog account. Furthermore, you will establish a relation between this service and the `datadogSLO` blueprint, allowing the ingestion of all defined SLOs from your Datadog account.
@@ -1561,3 +1559,7 @@ In this example, you will create a `service` blueprint that ingests all services
 In this example, you will create a `datadogServiceCatalog` blueprint that ingests all service catalogs from your Datadog account. You will then add some python script to make API calls to Datadog REST API and fetch data for your account.
 
 - [Code Repository Example](https://github.com/port-labs/datadog-service-catalog)
+
+</details>
+
+
