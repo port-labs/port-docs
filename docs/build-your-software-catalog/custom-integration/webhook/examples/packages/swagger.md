@@ -9,7 +9,7 @@ import SwaggerBlueprint from './resources/swagger/\_example_swagger_blueprint.md
 import SwaggerWebhookConfig from './resources/swagger/\_example_swagger_webhook_config.mdx'
 
 # Swagger
-In this example you are going to create a swaggerPath` blueprint that ingests all API paths in your `swagger.json` file using Port's GitHub file ingesting feature.
+The following example shows you how to create a `swaggerPath` blueprint that ingests all API paths in your `swagger.json` file using Port's GitHub file ingesting feature.
 
 To ingest the packages to Port, the GitHub integration is used.
 

@@ -11,7 +11,7 @@ import SbomWebhookConfig from './resources/sbom/\_example_sbom_webhook_config.md
 
 # SBOM
 
-In this example you are going to create a `sbomComponent` blueprint that ingests all third party components in your `sbom.json` or `sbom.xml` file using both Port's GitHub file ingesting feature (for `sbom.json`) and a combination of Port's [API](/build-your-software-catalog/custom-integration/api) and [webhook functionality](/build-your-software-catalog/custom-integration/webhook) (for `sbom.xml`). You will then relate this blueprint to a `sbomVulnerability` blueprint, allowing you to map all the components affected by a security vulnerability.
+The following example shows you how to create a `sbomComponent` blueprint that ingests all third party components in your `sbom.json` or `sbom.xml` file using both Port's GitHub file ingesting feature (for `sbom.json`) and a combination of Port's [API](/build-your-software-catalog/custom-integration/api) and [webhook functionality](/build-your-software-catalog/custom-integration/webhook) (for `sbom.xml`). You will then relate this blueprint to a `sbomVulnerability` blueprint, allowing you to map all the components affected by a security vulnerability.
 
 To ingest the packages to Port, a `port-app-config.yml` file in the needed repository or organisation is used.
 

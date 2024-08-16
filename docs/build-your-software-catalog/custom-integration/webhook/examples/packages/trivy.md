@@ -11,7 +11,7 @@ import TrivyWebhookConfig from './resources/trivy/\_example_trivy_webhook_config
 
 # Trivy
 
-In this example, you will create a `trivyVulnerability` blueprint that ingests all vulnerabilities in your Trivy result file using Port's GitHub file ingesting feature.
+The following example shows you how to create a `trivyVulnerability` blueprint that ingests all vulnerabilities in your Trivy result file using Port's GitHub file ingesting feature.
 
 To ingest the packages to Port, a `port-app-config.yml` file in the needed repository or organisation is used.
 

@@ -11,7 +11,7 @@ import PackageWebhookConfig from './resources/javascript/\_example_package_webho
 
 # JavaScript
 
-In this example you are going to create a `package` blueprint that ingests all third party dependencies and libraries in your `package.json` file using Port's GitHub file ingesting feature. You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
+The following example shows you how to create a `package` blueprint that ingests all third party dependencies and libraries in your `package.json` file using Port's GitHub file ingesting feature. You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
 
 To ingest the packages to Port, a `port-app-config.yml` file in the needed repository or organisation is used.
 

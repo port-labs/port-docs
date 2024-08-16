@@ -11,7 +11,7 @@ import CheckmarxWebhookConfig from './resources/checkmarx/\_example_checkmarx_we
 
 # Checkmarx KICS
 
-In this example, you will create a `checkmarxScan` blueprint that ingests all scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature.
+The following example shows you how to create a `checkmarxScan` blueprint that ingests all scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature.
 
 
 To ingest the packages to Port, a `port-app-config.yml` file in the needed repository or organisation is used.
@@ -90,22 +90,21 @@ resources:
       query: 'true'
       files:
         - path: '**/results.json'
-    
     port:
-      itemsToParse: .file.content.queries
+      itemsToParse: '[.file.content[] | select(.Vulnerabilities != null) as $input | .Vulnerabilities[] | {VulnerabilityID, PkgName, InstalledVersion, FixedVersion, Title, Description, Severity, References, PrimaryURL, DataSource, Target: $input.Target}]'
       entity:
         mappings:
-          identifier: .item.query_id
-          title: .item.query_name
-          blueprint: '"checkmarxScan"'
+          identifier: .item.VulnerabilityID
+          title: .item.Title
+          blueprint: '"trivyVulnerability"'
           properties:
-            severity: .item.severity
-            url: .item.query_url
-            platform: .item.platform
-            files: [.item.files[] | {file_name, issue_type}]
-            cloud_provider: .item.cloud_provider
-            description: .item.description
-            category: .item.category
+            version: .item.InstalledVersion
+            package_name: .item.PkgName
+            primaryUrl: .item.PrimaryURL
+            description: .item.Description
+            target: .item.Target
+            severity: .item.Severity
+            data_source: .item.DataSource
 ```
 
 </details>
