@@ -442,6 +442,14 @@ The integration makes use of the [JQ JSON processor](https://stedolan.github.io/
 
 The integration configuration determines which resources will be queried from Jenkins, and which entities and properties will be created in Port.
 
+:::tip Supported resources
+The following resources can be used to map data from Jenkins, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+
+- `job` - `<your-jenkins-host>/api/json)
+- `build` - `<your-jenkins-host>/api/json)
+- `user` - `<your-jenkins-host>/people/api/json)
+
+:::
 
 - The root key of the integration configuration is the `resources` key:
 

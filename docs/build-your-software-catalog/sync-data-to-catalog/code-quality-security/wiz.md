@@ -502,7 +502,7 @@ The following resources can be used to map data from Wiz, it is possible to refe
 - [`Project`](https://integrate.wiz.io/reference/pull-projects)
 - [`Issue`](https://integrate.wiz.io/reference/issues-tutorial)
 - [`Control`](https://integrate.wiz.io/docs/welcome#controls)
-
+- [`Service ticket`](https://integrate.wiz.io/reference/issues-query#:~:text=string-,serviceTickets,-array)
 :::
 
 - The root key of the integration configuration is the `resources` key:

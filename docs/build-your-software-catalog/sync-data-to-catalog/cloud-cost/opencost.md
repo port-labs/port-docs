@@ -415,7 +415,8 @@ The integration configuration determines which resources will be queried from Op
 :::tip Supported resources
 The following resources can be used to map data from OpenCost, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
-- [`Cost`](https://www.opencost.io/docs/integrations/api-examples)
+- [`Cost`](https://www.opencost.io/docs/integrations/api-examples#allocation-examples)
+- [`cloudcost`](https://www.opencost.io/docs/integrations/api-examples#cloudcost-examples)
 
 :::
 
