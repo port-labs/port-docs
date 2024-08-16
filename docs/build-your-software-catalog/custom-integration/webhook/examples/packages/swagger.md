@@ -77,15 +77,6 @@ Create the following blueprint definition and mapping configuration:
 <summary>Swagger path blueprint</summary>
 
 ```json showLineNumbers
-
-```
-
-</details>
-
-<details>
-<summary>Swagger path mapping configuration</summary>
-
-```yaml showLineNumbers
 {
   "identifier": "swaggerPath",
   "description": "This blueprint represents a Swagger path in our software catalog",
@@ -145,6 +136,38 @@ Create the following blueprint definition and mapping configuration:
   "calculationProperties": {},
   "relations": {}
 }
+```
+
+</details>
+
+<details>
+<summary>Swagger path mapping configuration</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: '**/swagger.json' # or .yaml
+    
+    port:
+      itemsToParse: '[. as $root | .paths | to_entries[] as $entries | {version: $root.info.version, host: $root.host, base_path: $root.basePath, title: $root.info.title, path: $entries.key, methods: ($entries.value | to_entries[] as $inner | {method: ($inner.key), rest: $inner.value, path: $entries.key})}][] | {id: .title + "-" + .path + .methods.method, path, method: .methods.method, summary: .methods.rest.summary, description: .methods.rest.description, parameters: .methods.rest.parameters, responses: .methods.rest.responses, project: .title, version, host: "https://" + .host + .base_path}'
+      entity:
+        mappings:
+          identifier: '.item.id | sub("[^A-Za-z0-9@_.:/=-]"; "-"; "g")'
+          title: .item.method + .item.path
+          blueprint: '"swaggerPath"'
+          properties:
+            method: .item.method
+            host: .item.host
+            path: .item.path
+            parameters: .item.parameters
+            responses: .item.responses
+            description: .item.description
+            version: .item.version
+            summary: .item.summary
+          relations: {}
 ```
 
 </details>
