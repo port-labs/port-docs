@@ -9,6 +9,8 @@ import GivePermissionsToNewServiceAccount from './\_give-permissions-to-new-serv
 
 # Installation
 
+## Installation Methods
+
 The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials. 
 
 In these guides, you can install the integration in various ways, according to the authentication method + platform you choose to run the integration on.
@@ -27,7 +29,7 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 <CreateServiceAccountAndKey/>
 
-## Running the Helm command
+<h2> Running the Helm command </h2>
 
 :::warning
 The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
@@ -56,7 +58,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
      --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>"
    ```
 
-## Optional- Scale permissions for a Service account
+<h2> Optional- Scale permissions for a Service account </h2>
 
 <GivePermissionsToNewServiceAccount/>
 
@@ -75,7 +77,7 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 <CreateServiceAccountAndKey/>
 
-## Setting up the GitHub Actions workflow
+<h2> Setting up the GitHub Actions workflow </h2>
 
 :::warning
 The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
@@ -138,7 +140,7 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 <CreateServiceAccountAndKey/>
 
-## Running the Docker command
+<h2> Running the Docker command </h2>
 
 :::warning
 The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
@@ -164,7 +166,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    ghcr.io/port-labs/port-ocean-gcp:latest
    ```
 
-## Optional- Scale permissions for a Docker Service account
+<h2> Optional- Scale permissions for a Docker Service account </h2>
 
 <GivePermissionsToNewServiceAccount/>
 
@@ -175,13 +177,13 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 The GCP integration is deployed using Terraform on Google Cloud Cloud Run.  
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
-## Prerequisites
+<h2> Prerequisites </h2>
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 1.9.1
 - [A logged in gCloud CLI](https://cloud.google.com/sdk/gcloud) with enough [Permissions](#required-permissions-to-run-terraform-apply)
 - [Artifact Registry Image](#artifact-registry-image)
 
-## Artifact Registry Image
+<h2> Artifact Registry Image </h2>
 
 In order to run the Cloud Run Service, it's mandatory to have a working Image. Currently our GHCR based images aren't supported by Google Cloud's Cloud run platform, so a manual installation to Dockerhub\Artifact registry is required. In the guide we specify an Artifact registry approach, but a similar DockerHub approach should yield the same results:  
 
@@ -196,7 +198,7 @@ In order to run the Cloud Run Service, it's mandatory to have a working Image. C
 
    ```docker push <your_artifact_registry_/_dockerhub>/port-ocean-gcp:<your_version>```
 
-## Required permissions to run terraform apply
+<h2> Required permissions to run terraform apply </h2>
 
 In order to successfully deploy the Google Cloud integration, it's crucial to ensure that the user who deploys the integration in the GCP Organization has the appropriate access permissions.
 
@@ -256,7 +258,7 @@ serviceusage.services.use
 ```
 </details>
 
-## Installation walkthrough
+<h2> Installation walkthrough </h2>
 
 Run the following commands. Make sure to replace `<placeholders>` with actual values.
 :::tip
@@ -287,7 +289,7 @@ terraform init
 terraform apply
 ```
 
-## Optional - Scaling the permissions
+<h2> Optional - Scaling the permissions </h2>
 
 If you want the integration to collect resources from multiple projects/folders or to have it collect from the entire organization, you need to have permissions to create/view additional resources. Follow these instructions to make sure you are equipped with enough permissions.
 
