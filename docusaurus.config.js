@@ -104,7 +104,7 @@ const config = {
             activeBasePath: "api-reference",
           },
           {
-            to: "/guides/onboarding-guides",
+            to: "/guides",
             label: "Guides",
             position: "left",
             className: "header-guides-link",

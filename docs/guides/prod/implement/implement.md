@@ -2,8 +2,6 @@
 
 *This section will explain how to implement various use-cases in your developer portal.*
 
-*The many existing guides in our docs will be included here, and will be searchable by name and/or tag.*
-
 *It will answer questions like:*
 
 - *How do I fetch data from my AWS account into my developer portal?*

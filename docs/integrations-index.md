@@ -89,7 +89,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Terraform provider](/build-your-software-catalog/custom-integration/iac/terraform/terraform.md)
 - [Terraform managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/terraform-managed-blueprint.md)
-- [Create cloud resources using IaC](/guides-and-tutorials/create-cloud-resource-using-iac.md)
+<!-- - [Create cloud resources using IaC](/guides-and-tutorials/create-cloud-resource-using-iac.md) -->
 - [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/custom-integration/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](/build-your-software-catalog/custom-integration/iac/terraform/examples/create-dev-env.md)
 - [Terraform no-code resource provisioning using self-service actions](/actions-and-automations/setup-backend/webhook/examples/terraform-no-code-resource-provisioning.md)
