@@ -135,10 +135,10 @@ Here is an example search rule:
 
 Port has 2 types of search rule operators:
 
-1. Comparison operators (`=` `>`, etc.);
-2. Relation operators (`relatedTo`, etc.).
+1. Comparison (`=` `>`, etc.);
+2. Relation (`relatedTo`).
 
-### Comparison and operators
+### Comparison operators
 
 #### Structure
 
@@ -154,7 +154,7 @@ A wide variety of operators are available, see them [here](./comparison-operator
 
 ___
 
-### Relation structure and operators
+### Relation operators
 
 #### Structure
 
@@ -168,8 +168,6 @@ ___
 
 <Tabs groupId="relation" defaultValue="relatedTo" values={[
 {label: "Related To", value: "relatedTo"},
-{label: "Required", value: "required"},
-{label: "Direction", value: "direction"},
 ]}>
 
 <TabItem value="relatedTo">
@@ -194,9 +192,8 @@ The operator also supports multiple related entities as the searched value:
 }
 ```
 This query will return all of the entities that are related to one or more of the identifiers in the value array.
-</TabItem>
 
-<TabItem value="required">
+<h4> Required </h4>
 
 The `relatedTo` operator also supports the `required` property - which allows you to search for:
 
@@ -215,9 +212,7 @@ For example, to search only for related entities that _require_ the `myEntity` e
 }
 ```
 
-</TabItem>
-
-<TabItem value="direction">
+<h4> Direction </h4>
 
 The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent entities in a specific direction on the dependency graph. To better understand the functionality of this property, let's take a look at the example below:
 
@@ -403,7 +398,6 @@ And the result shall be:
 </details>
 
 </TabItem>
-
 </Tabs>
 
 ### Dynamic properties

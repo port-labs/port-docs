@@ -260,7 +260,7 @@ to not being able to create a new one.
 
 <h2> Prerequisites </h2>
 
-- [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.9.1
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) >= 2.26.0
 - [Permissions](#permissions)
 
