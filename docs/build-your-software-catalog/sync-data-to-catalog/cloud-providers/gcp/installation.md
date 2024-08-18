@@ -18,7 +18,7 @@ For your first deployment of the GCP exporter, we recommend starting with the He
 :::
 
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
-<TabItem value="helm" label="Helm ( Scheduled )">  
+<TabItem value="helm" label="Helm (Scheduled)">  
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
@@ -61,7 +61,75 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 <GivePermissionsToNewServiceAccount/>
 
 </TabItem>
-<TabItem value="on-premises" label="On Premises">
+
+<TabItem value="ci" label="CI/CD (Scheduled)">
+
+<Tabs groupId="ci-methods" defaultValue="github" queryString="ci-methods">
+
+<TabItem value="github" label="GitHub Actions">
+
+The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
+
+1. Creating a service account.
+2. Setting up the GitHub Actions workflow.
+
+<CreateServiceAccountAndKey/>
+
+## Setting up the GitHub Actions workflow
+
+:::warning
+The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
+:::
+
+1. Take the service account [key file you create](#fetching-key-file), and run this command:
+
+   ```bash
+   cat <new-configuration-file> | base64 | pbcopy
+   ```
+   
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+  - `OCEAN__PORT_CLIENT_ID`
+  - `OCEAN__PORT_CLIENT_SECRET`
+
+- Google Cloud Service Account Key
+  - `OCEAN__SECRET__ENCODED_ADC_CONFIGURATION` - Paste the encoded file content here.
+
+Here is an example for `gcp-integration.yml` workflow file:
+
+```yaml
+name: GCP Integration
+
+schedule:
+  # Every 24 hours at 00:00
+  - cron: "0 0 * * *
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: port-labs/ocean-sail@v1
+        env:
+          OCEAN__INTEGRATION__CONFIG__ENCODED_ADC_CONFIGURATION: ${{ secrets.OCEAN__SECRET__ENCODED_ADC_CONFIGURATION }}
+        with:
+          type: "gcp"
+          identifier: "gcp"
+          port_client_id: ${{ secrets.OCEAN__PORT_CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT_CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
+```
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+<TabItem value="docker" label="Docker(Once)">
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
@@ -101,6 +169,7 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 <GivePermissionsToNewServiceAccount/>
 
 </TabItem>
+
 <TabItem value="terraform" label="Terraform ( Real Time Events )">  
 
 The GCP integration is deployed using Terraform on Google Cloud Cloud Run.  
