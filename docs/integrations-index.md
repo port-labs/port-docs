@@ -236,14 +236,12 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Dynatrace
 
 - [Dynatrace integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace)
-- [Dynatrace webhook](/build-your-software-catalog/custom-integration/webhook/examples/dynatrace.md)
 
 ## Datadog
 
 - [Datadog integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog)
 - [Embed dashboards from Datadog](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
-- [Datadog webhook](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md)
-- [Datadog service catalog](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md#ingest-service-catalog)
+- [Datadog service catalog](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog.md#ingest-service-catalog)
 - [Self-service action to trigger Datadog incident](/actions-and-automations/setup-backend/github-workflow/examples/Datadog/trigger-datadog-incident)
 
 ## Prometheus
@@ -272,7 +270,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/jenkins)
 - [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
-- [Jenkins webhook integration with Port](/build-your-software-catalog/custom-integration/webhook/examples/jenkins.md)
 - [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
 - [GitHub scaffolder using Jenkins](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [Bitbucket scaffolder using Jenkins](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
