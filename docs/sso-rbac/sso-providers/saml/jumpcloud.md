@@ -150,3 +150,12 @@ To allow automatic Groups Groups support in Port, please follow these steps:
 ![JumpCloud Group configuration](/img/sso/jumpcloud/JumpcloudGroupConfig.png)
 
 4. Click `Save`.
+
+
+## SCIM Configuration
+
+Jumpcloud SAML applications supports [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
+
+To set up SCIM for Jumpcloud SAML based applications, contact Port's support team. You will be provided with an SCIM `endpoint` and `token` which are required to set up the SCIM integration.
+
+After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://jumpcloud.com/support/provision-and-manage-users-and-groups-in-apps-using-custom-scim-identity-management-integration#to-manually-configure-a-custom-scim-identity-management-connector) to enable SCIM.

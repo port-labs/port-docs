@@ -43,8 +43,8 @@ In order to expose your Azure groups to Port via the application, do the followi
 
 ## SCIM Configuration
 
-AzureAD SAML applications supports [SCIM](https://scim.cloud/). 
+AzureAD SAML applications supports [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
 
-To set up SCIM for AzureAD SAML based applications, contact Port's support team. You will be provided with an SCIM `Endpoint` and `Token` which are required to set up the SCIM integration.
+To set up SCIM for AzureAD SAML based applications, contact Port's support team. You will be provided with an SCIM `endpoint` and `token` which are required to set up the SCIM integration.
 
-After receiving the endpoint and token, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-azure-ad-saml-connections#configure-scim-in-azure-ad-for-saml-apps) to enable SCIM.
+After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-azure-ad-saml-connections#configure-scim-in-azure-ad-for-saml-apps) to enable SCIM.
