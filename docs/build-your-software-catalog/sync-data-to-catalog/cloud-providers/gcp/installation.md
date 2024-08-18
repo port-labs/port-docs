@@ -79,8 +79,9 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 <h2> Setting up the GitHub Actions workflow </h2>
 
-:::warning
-The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
+:::info Data security
+The Ocean integration does not store the encoded file anywhere.  
+It is saved locally, and is NOT sent to Port at any time.
 :::
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
