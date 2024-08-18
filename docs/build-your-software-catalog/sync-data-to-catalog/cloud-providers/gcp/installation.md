@@ -31,7 +31,7 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 <h2> Running the Helm command </h2>
 
-:::warning
+:::info Data security
 The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
 :::
 
