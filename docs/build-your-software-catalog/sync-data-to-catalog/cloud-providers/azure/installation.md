@@ -108,8 +108,8 @@ name: Azure Exporter Workflow
 # This workflow responsible for running Azure exporter.
 
 schedule:
-	# Every 24 hours at 00:00
-	- cron: "0 0 * * *
+  # Every 24 hours at 00:00
+  - cron: "0 0 * * *
 on:
   workflow_dispatch:
 
