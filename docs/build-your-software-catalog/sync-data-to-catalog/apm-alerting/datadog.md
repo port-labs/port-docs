@@ -43,15 +43,15 @@ This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
 | Parameter                                | Description                                                                                                                                | Example                          | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅       |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
-| `integration.secrets.datadogApiKey`       | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)     |         | ✅       |
-| `integration.secrets.datadogApplicationKey`         | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)     |                  | ✅       |
-| `integration.config.datadogBaseUrl` | The base Datadog host. Defaults to https://api.datadoghq.com. If in EU, use https://api.datadoghq.eu |    | ✅       |
-| `integration.secrets.datadogWebhookToken`  | Datadog webhook token. Learn [more](https://docs.datadoghq.com/integrations/webhooks/#setup)    |      | ❌       |
-| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                         | https://my-ocean-integration.com | ❌       |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | ------- |
+| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅      |
+| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅      |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅      |
+| `integration.secrets.datadogApiKey`       | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)     |         | ✅      |
+| `integration.secrets.datadogApplicationKey`         | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)     |                  | ✅      |
+| `integration.config.datadogBaseUrl` | The base Datadog host. Defaults to https://api.datadoghq.com. If in EU, use https://api.datadoghq.eu |    | ✅      |
+| `integration.secrets.datadogWebhookToken`  | Datadog webhook token. Learn [more](https://docs.datadoghq.com/integrations/webhooks/#setup)    |      | ❌      |
+| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                         | https://my-ocean-integration.com | ✅       |
 
 <HelmParameters/>
 

@@ -42,22 +42,22 @@ Set them as you wish in the script below, then copy it and run it in your termin
 
 
 | Parameter                           | Description                                                                                                        | Required |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `port.clientId`                     | Your Port client id                                                                                                | ✅       |
-| `port.clientSecret`                 | Your Port client secret                                                                                            | ✅       |
-| `port.baseUrl`                      | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                            | ✅       |
-| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
-| `integration.type`                  | The integration type                                                                                               | ✅       |
-| `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
-| `integration.secrets.token`         | The Snyk API token                                                                                                 | ✅       |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
+| `port.clientId`                     | Your Port client id                                                                                                | ✅      |
+| `port.clientSecret`                 | Your Port client secret                                                                                            | ✅      |
+| `port.baseUrl`                      | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                            | ✅      |
+| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅      |
+| `integration.type`                  | The integration type                                                                                               | ✅      |
+| `integration.eventListener.type`    | The event listener type                                                                                            | ✅      |
+| `integration.secrets.token`         | The Snyk API token                                                                                                 | ✅      |
 | `integration.config.organizationId` | The Snyk organization ID. Fetches data for this organization when provided                                                                     |❌       |
 | `integration.config.groups` | A comma-separated list of Snyk group ids to filter data for. Fetches data for organizations within the specified groups                                                          |❌       |
-| `integration.config.apiUrl`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                        | ❌       |
-| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Snyk | ❌       |
-| `integration.secret.webhookSecret`  | This is a password you create, that Snyk uses to sign webhook events to Port                                       | ❌       |
-| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
-| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
-| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌       |
+| `integration.config.apiUrl`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                        | ❌      |
+| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Snyk | ✅       |
+| `integration.secret.webhookSecret`  | This is a password you create, that Snyk uses to sign webhook events to Port                                       | ❌      |
+| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌      |
+| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌      |
+| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌      |
 
 
 <br/>
