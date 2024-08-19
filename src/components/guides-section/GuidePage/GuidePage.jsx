@@ -1,53 +1,35 @@
 import React, { useState } from "react";
-import GuideLabel from "/src/components/guides-section/GuideLabel/GuideLabel.jsx";
 import "/src/components/guides-section/styles.css";
-import { Typography } from "@mui/material";
-import { useHistory } from "react-router-dom";
-import Tags from "/src/components/guides-section/Tags/Tags.jsx";
+import Tags from "/src/components/guides-section/Tag/Tags.jsx";
 import SearchBar from "/src/components/guides-section/SearchBar/SearchBar.jsx";
-import GuideCard from "/src/components/guides-section/GuideCard/GuideCard.jsx";
+import GuideCards from "/src/components/guides-section/GuideCard/GuideCards.jsx";
+import { availableGuides } from "../consts.js";
 
-const availableGuides = [
-    {
-        title: "title",
-        description: "description",
-        tags: ["AWS", "Actions"],
-        logos: ["AWS", "Github"],
-        category: "Getting started",
-    },
-    {
-        title: "title",
-        description: "description",
-        tags: ["AWS", "Actions"],
-        logos: ["AWS", "Github"],
-        category: "Getting started",
-    }
-]
-function GuidePage(props = { tags: [], logos: [] }) {
-  const history = useHistory();
+function GuidePage() {
   const [searchText, setSearchText] = useState('');
-  const [selectedLabels, setSelectedLabels] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
-  const allTags = [...new Set(availableGuides.flatMap(guide => guide.tags))];
-    
+  const toggleTag = (tag) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag)
+        ? prev.filter((l) => l !== tag)
+        : [...prev, tag]
+    );
+  };
+
+  const filteredGuides = availableGuides.filter((guide) => {
+    const matchesTag = selectedTags.length === 0 || selectedTags.every((tag) => guide.tags.includes(tag));
+    const matchesSearch = guide.title.toLowerCase().includes(searchText.toLowerCase()) || guide.description.toLowerCase().includes(searchText.toLowerCase());
+    return matchesTag && matchesSearch;
+  });
+
   return (
     <>
       <div className="guide-tags-and-search-container">
-        <Tags tags={allTags} />
-        <SearchBar />
+        <Tags toggleTag={toggleTag} />
+        <SearchBar searchText={searchText} setSearchText={setSearchText} />
       </div>
-      {/* <GuideCards /> */}
-      <div className="guide-cards-container">
-        <GuideCard
-          tags={["AWS", "Actions"]}
-          logos={["AWS"]}
-          title="Create cloud resources using IaC"
-          description="blah blah blah"
-        />
-        <GuideCard tags={["AWS", "Actions"]} logos={["Github", "AWS"]} />
-        <GuideCard tags={["AWS", "Actions"]} logos={["Github", "AWS"]} />
-        <GuideCard tags={["AWS", "Actions"]} logos={["Github", "AWS"]} />
-      </div>
+      <GuideCards guides={filteredGuides} />
     </>
   );
 }
