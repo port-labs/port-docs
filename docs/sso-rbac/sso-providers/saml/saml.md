@@ -38,7 +38,7 @@ Most SAML SSO applications support [SCIM](https://auth0.com/docs/authenticate/pr
 
 :::tip
 
-If you are unsure whether or not your SSO provider support SCIM, reach our to the Port team.
+If you are unsure whether or not your SSO provider support SCIM, reach out to the Port team.
 
 :::
 
