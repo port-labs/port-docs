@@ -166,7 +166,12 @@
 }
 
 .guide-tags-and-search-container {
-    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+    align-self: stretch;
+    padding-bottom: 60px;
 }
 
 /* Guide label button */

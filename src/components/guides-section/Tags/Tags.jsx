@@ -27,7 +27,7 @@ const tagsCategoryMap = {
     "Snyk",
   ],
   "Port pillars": ["Actions", "Automations", "Widgets", "Scorecards", "RBAC"],
-  Experiences: ["Actions", "Automations", "Widgets", "Scorecards", "RBAC"],
+  Experiences: ["Incident management", "Cloud access management", "Feature flag management", "DORA metrics", "Cost visibility"]
 };
 
 function Tags(props) {
