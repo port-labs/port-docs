@@ -1014,11 +1014,6 @@ Based on the [best practices for tagging infrastructure](https://www.datadoghq.c
         "title": "To Date",
         "description": "Unix timestamp of the end of the queried time period"
       },
-      "metric_name": {
-        "type": "string",
-        "title": "Metric Name",
-        "description": "The name of the metric"
-      },
       "env": {
         "type": "string",
         "title": "Environment",
@@ -1081,7 +1076,6 @@ resources:
             res_type: .res_type
             from_date: ".from_date / 1000 | todate"
             to_date: ".to_date / 1000 | todate"
-            metric_name: .__metric
             env: .__env
           relations:
             service: .__service
@@ -1105,7 +1099,6 @@ resources:
             res_type: .res_type
             from_date: ".from_date / 1000 | todate"
             to_date: ".to_date / 1000 | todate"
-            metric_name: .__metric
             env: .__env
           relations:
             service: .__service
@@ -1394,7 +1387,6 @@ Here is an example of the payload structure from Datadog:
 The Datadog response is enriched with a variety of metadata fields, including:
 
 - `__service`: The name or identifier of the service generating the data.
-- `__metric`: The name of the metric being measured.
 - `__query_id`: A unique identifier for the query that generated the data.
 - `__query`: The original query used to retrieve the data.
 - `__env`: The environment associated with the data (e.g., production, staging).
@@ -1468,7 +1460,6 @@ This enrichment significantly enhances the usability of the Datadog response by 
   "group_by": [],
   // highlight-start
   "__service": "inventory-management",
-  "__metric": "system.mem.used",
   "__query_id": "avg:system.mem.used/service:inventory-management/env:staging",
   "__query": "avg:system.mem.used",
   "__env": "staging"
@@ -1633,7 +1624,6 @@ The combination of the sample payload and the Ocean configuration generates the 
     "res_type": "time_series",
     "from_date": "2024-08-16T07:32:00Z",
     "to_date": "2024-08-16T08:02:00Z",
-    "metric_name": "system.disk.used",
     "env": "prod"
   },
   "relations": {
