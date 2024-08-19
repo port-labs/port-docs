@@ -105,30 +105,27 @@ Here is an example for `azure-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Azure Exporter Workflow
 
-# This workflow responsible for running Azure exporter.
-
-schedule:
-	# Every 24 hours at 00:00
-	- cron: "0 0 * * *
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */4 * * *' # Determines the scheduled interval for this workflow. This example runs every 4 hours.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: port-labs/ocean-sail@v1
-        env:
-          AZURE_CLIENT_ID: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
-          AZURE_CLIENT_SECRET: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
-          AZURE_TENANT_ID: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
+      - name: Run azure Integration
+        uses: port-labs/ocean-sail@v1
         with:
-          type: "azure"
-          identifier: "azure"
-          port_client_id: ${{ secrets.OCEAN__PORT_CLIENT_ID }}
-          port_client_secret: ${{ secrets.OCEAN__PORT_CLIENT_SECRET }}
-          port_base_url: https://api.getport.io
+          type: azure
+          port_client_id: ${{ secrets.PORT_CLIENT_ID }}
+          port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
+					port_base_url: "https://api.getport.io"
+					config: |
+						azure_client_id: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
+						azure_client_secret: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
+						azure_tenant_id: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
 ```
 
 </TabItem>
