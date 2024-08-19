@@ -533,8 +533,8 @@ resources:
     selector:
       query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
       # highlight-start
-      source: "sprint" # other available values are "all" and "board" which ingests all issues and only issues sourced from boards directly
-      sprintState: "active" # if `source` is specified, this defines what sprints issues are sourced from. Other available values are "future" and "closed". You can specify values as comma-separated strings such as "active,closed".
+      source: "sprint" #  or "all" for ingesting all issues across all projects
+      sprintState: "active" # if `source` is specified as "sprint", this defines the state of the sprints where issues are sourced from. Other available values are "future" and "closed". You can specify values as comma-separated strings such as "active,closed".
       # highlight-end
     port:
 ```
