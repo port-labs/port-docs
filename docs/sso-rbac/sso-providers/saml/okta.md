@@ -9,7 +9,9 @@ description: Integrate Okta with Port using SAML
 Follow this step-by-step guide to configure the integration between Port and Okta using a SAML application.
 
 :::info
-To complete the process, you will need to contact us to receive the necessary information and provide the details Port requires from you. These steps are elaborated in the following section.
+To complete the process, you will need to contact us to receive the necessary information and provide the details Port requires from you.
+
+The Port team will provide you with your `CONNECTION_NAME`, which will be used in the SSO application's configuration.
 :::
 
 ## Port-Okta integration benefits
@@ -26,8 +28,8 @@ To complete the process, you will need to contact us to receive the necessary in
 4. In the pop-up, select `SAML 2.0` and click on `Next`.
 5. In the `General Settings`, enter a name for the application and click on `Next`.
 6. On the `Configure SAML` page, under `SAML Settings`, you’ll need to fill in some details:
-    - **Single sign on URL**: This is where Port’s SAML endpoint URL will go, which you’ll receive from Port.
-    - **Audience URI (SP Entity ID)**: This should be set to Port’s Entity ID, also provided by Port.
+    - **Single sign on URL**: `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
+    - **Audience URI (SP Entity ID)**: `urn:auth0:port-prod:{CONNECTION_NAME}`
 7. Scroll down to the `Attribute Statements (Optional)` section:
     - Add an attribute statement for `email`, with the `Value` set to `user.email`.
 8. Click `Next` and then `Finish` to create the application.
