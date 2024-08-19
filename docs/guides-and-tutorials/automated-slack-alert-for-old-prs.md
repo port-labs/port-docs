@@ -1,6 +1,6 @@
 ---
 sidebar_position: 9
-title: Send a Slack message when a PR is open for more than 3 days
+title:  Automated Slack Alert for Old PRs
 ---
 
 import Tabs from "@theme/Tabs"
@@ -8,9 +8,12 @@ import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx" 
 
 
-# Send a Slack message when a PR is open for more than 3 days
+#  Automated Slack Alert for Old PRs
 
-This automation sends a Slack message when a Pull Request (PR) has been open for more than 3 days, helping teams stay informed and ensuring that PRs are reviewed and merged in a timely manner.
+This automation helps you set up a Slack notification for Pull Requests
+(PRs) that have been open longer than a specified time.
+While this guide uses 3 days as an example, you can customize the timeframe to suit your needs,
+ensuring that your team stays on top of PRs and keeps the review process moving smoothly.
 
 ## Prerequisites
 
