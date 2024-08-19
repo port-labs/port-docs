@@ -2777,6 +2777,7 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           required: true
@@ -2923,6 +2924,7 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           required: true
@@ -3039,7 +3041,7 @@ paths:
           in: query
           name: merge
           required: false
-          description: If `true` and `merge` is also `true`, this call will update the entity if it already exists.<br/>
+          description: If `true` and `upsert` is also `true`, this call will update the entity if it already exists.<br/>
         - schema:
             type: boolean
             default: false
@@ -3062,6 +3064,7 @@ paths:
           description: You can provide a `run_id` to associate the created entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           required: true
@@ -3208,6 +3211,7 @@ paths:
           required: false
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           required: true
@@ -3359,12 +3363,14 @@ paths:
           description: You can provide a `run_id` to associate the created entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: string
+            minLength: 1
           in: path
           name: entity_identifier
           required: true
           description: The identifier of the entity you want to patch.<br/>
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           required: true
@@ -3530,12 +3536,14 @@ paths:
           description: You can provide a `run_id` to associate the modified entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: string
+            minLength: 1
           in: path
           name: entity_identifier
           required: true
           description: The identifier of the entity you want to change.<br/>
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           required: true
@@ -3696,12 +3704,14 @@ paths:
         #   required: false
         - schema:
             type: string
+            minLength: 1
           in: path
           name: entity_identifier
           required: true
           description: The identifier of the entity you want to fetch.<br/>
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           required: true
@@ -3779,12 +3789,14 @@ paths:
           description: You can provide a `run_id` to associate the deleted entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: string
+            minLength: 1
           in: path
           name: entity_identifier
           required: true
           description: The identifier of the entity you want to delete.<br/>
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           required: true
@@ -3879,6 +3891,7 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           required: true
@@ -3951,6 +3964,7 @@ paths:
           description: If `true`, this call will also delete the blueprint itself.<br/>
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           required: true
@@ -8209,6 +8223,7 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           description: The identifier of the action/automation you want to update.<br/>
           name: action_identifier
@@ -8283,6 +8298,7 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: action_identifier
           description: The identifier of the action/automation you want to fetch.<br/>
@@ -8343,6 +8359,7 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: action_identifier
           description: The identifier of the action/automation you want to delete.<br/>
@@ -8404,6 +8421,7 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: action_identifier
           description: The identifier of the action you want to fetch permissions for.<br/>
@@ -8560,6 +8578,7 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: action_identifier
           description: The identifier of the action you want to update permissions for.<br/>
@@ -8643,6 +8662,7 @@ paths:
           description: The executing user of the action. If not provided, the action will be run on behalf of the user/machine who initiated the action (identified by the bearer token used to execute this route).<br/>
         - schema:
             type: string
+            minLength: 1
           in: path
           name: action_identifier
           description: The identifier of the action you want to execute.<br/>
@@ -10038,6 +10058,7 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           description: The identifier of the blueprint you want to run scorecards for.<br/>
@@ -10314,6 +10335,7 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           description: The identifier of the blueprint whose scorecard you want to change.<br/>
@@ -10331,6 +10353,7 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           description: The identifier of the blueprint whose scorecards you want to fetch.<br/>
@@ -10610,12 +10633,14 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: scorecard_identifier
           description: The identifier of the scorecard you want to change.<br/>
           required: true
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           description: The identifier of the blueprint whose scorecard you want to change.<br/>
@@ -10633,12 +10658,14 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: scorecard_identifier
           description: The identifier of the scorecard you want to fetch.<br/>
           required: true
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           description: The identifier of the blueprint whose scorecard you want to fetch.<br/>
@@ -10657,12 +10684,14 @@ paths:
       parameters:
         - schema:
             type: string
+            minLength: 1
           in: path
           name: scorecard_identifier
           description: The identifier of the scorecard you want to delete.<br/>
           required: true
         - schema:
             type: string
+            minLength: 1
           in: path
           name: blueprint_identifier
           description: The identifier of the blueprint whose scorecard you want to delete.<br/>

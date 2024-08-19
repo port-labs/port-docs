@@ -151,7 +151,7 @@ As platform engineers, we want to enable our developers to perform certain actio
 
 :::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
+As part of the onboarding process, you should already have an action named `Enrich service` in your [self-service tab](https://app.getport.io/self-serve).  
 
 If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
 :::

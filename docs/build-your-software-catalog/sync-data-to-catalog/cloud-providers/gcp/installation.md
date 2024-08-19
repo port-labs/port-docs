@@ -9,6 +9,8 @@ import GivePermissionsToNewServiceAccount from './\_give-permissions-to-new-serv
 
 # Installation
 
+## Installation Methods
+
 The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials. 
 
 In these guides, you can install the integration in various ways, according to the authentication method + platform you choose to run the integration on.
@@ -18,7 +20,7 @@ For your first deployment of the GCP exporter, we recommend starting with the He
 :::
 
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
-<TabItem value="helm" label="Helm ( Scheduled )">  
+<TabItem value="helm" label="Helm (Scheduled)">  
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
@@ -27,10 +29,11 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 <CreateServiceAccountAndKey/>
 
-## Running the Helm command
+<h2> Running the Helm command </h2>
 
-:::warning
-The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
+:::info Data security
+The Ocean integration does not store the encoded file anywhere.  
+It is saved locally, and is NOT sent to Port at any time.
 :::
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
@@ -56,12 +59,79 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
      --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>"
    ```
 
-## Optional- Scale permissions for a Service account
+<h2> Optional- Scale permissions for a Service account </h2>
 
 <GivePermissionsToNewServiceAccount/>
 
 </TabItem>
-<TabItem value="on-premises" label="On Premises">
+
+<TabItem value="ci" label="CI/CD (Scheduled)">
+
+<Tabs groupId="ci-methods" defaultValue="github" queryString="ci-methods">
+
+<TabItem value="github" label="GitHub Actions">
+
+The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
+
+1. Creating a service account.
+2. Setting up the GitHub Actions workflow.
+
+<CreateServiceAccountAndKey/>
+
+<h2> Setting up the GitHub Actions workflow </h2>
+
+:::info Data security
+The Ocean integration does not store the encoded file anywhere.  
+It is saved locally, and is NOT sent to Port at any time.
+:::
+
+1. Take the service account [key file you create](#fetching-key-file), and run this command:
+
+   ```bash
+   cat <new-configuration-file> | base64 | pbcopy
+   ```
+   
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+  - `OCEAN__PORT_CLIENT_ID`
+  - `OCEAN__PORT_CLIENT_SECRET`
+
+- Google Cloud Service Account Key
+  - `OCEAN__SECRET__ENCODED_ADC_CONFIGURATION` - Paste the encoded file content here.
+
+Here is an example for `gcp-integration.yml` workflow file:
+
+```yaml
+name: GCP Integration
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */4 * * *' # Determines the scheduled interval for this workflow. This example runs every 4 hours.
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run gcp Integration
+        uses: port-labs/ocean-sail@v1
+        with:
+          type: gcp
+          port_client_id: ${{ secrets.PORT_CLIENT_ID }}
+          port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
+          port_base_url: "https://api.getport.io"
+          config: |
+            encoded_adc_configuration: ${{ secrets.OCEAN__SECRET__ENCODED_ADC_CONFIGURATION }}
+```
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+<TabItem value="docker" label="Docker(Once)">
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
@@ -70,7 +140,7 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 <CreateServiceAccountAndKey/>
 
-## Running the Docker command
+<h2> Running the Docker command </h2>
 
 :::warning
 The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
@@ -96,23 +166,24 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    ghcr.io/port-labs/port-ocean-gcp:latest
    ```
 
-## Optional- Scale permissions for a Docker Service account
+<h2> Optional- Scale permissions for a Docker Service account </h2>
 
 <GivePermissionsToNewServiceAccount/>
 
 </TabItem>
+
 <TabItem value="terraform" label="Terraform ( Real Time Events )">  
 
 The GCP integration is deployed using Terraform on Google Cloud Cloud Run.  
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
-## Prerequisites
+<h2> Prerequisites </h2>
 
-- [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.9.1
 - [A logged in gCloud CLI](https://cloud.google.com/sdk/gcloud) with enough [Permissions](#required-permissions-to-run-terraform-apply)
 - [Artifact Registry Image](#artifact-registry-image)
 
-## Artifact Registry Image
+<h2> Artifact Registry Image </h2>
 
 In order to run the Cloud Run Service, it's mandatory to have a working Image. Currently our GHCR based images aren't supported by Google Cloud's Cloud run platform, so a manual installation to Dockerhub\Artifact registry is required. In the guide we specify an Artifact registry approach, but a similar DockerHub approach should yield the same results:  
 
@@ -127,7 +198,7 @@ In order to run the Cloud Run Service, it's mandatory to have a working Image. C
 
    ```docker push <your_artifact_registry_/_dockerhub>/port-ocean-gcp:<your_version>```
 
-## Required permissions to run terraform apply
+<h2> Required permissions to run terraform apply </h2>
 
 In order to successfully deploy the Google Cloud integration, it's crucial to ensure that the user who deploys the integration in the GCP Organization has the appropriate access permissions.
 
@@ -187,7 +258,7 @@ serviceusage.services.use
 ```
 </details>
 
-## Installation walkthrough
+<h2> Installation walkthrough </h2>
 
 Run the following commands. Make sure to replace `<placeholders>` with actual values.
 :::tip
@@ -218,7 +289,7 @@ terraform init
 terraform apply
 ```
 
-## Optional - Scaling the permissions
+<h2> Optional - Scaling the permissions </h2>
 
 If you want the integration to collect resources from multiple projects/folders or to have it collect from the entire organization, you need to have permissions to create/view additional resources. Follow these instructions to make sure you are equipped with enough permissions.
 

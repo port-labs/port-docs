@@ -5,9 +5,9 @@ description: "This route allows you to fetch the details of a self-service actio
 sidebar_label: "Get an action/automation"
 hide_title: true
 hide_table_of_contents: true
-api: eJzlVctu2zAQ/BWCpwRwLCdIL4JhwECDoOihQeOeEsOhpVVERCZVcuXUFfTv3RUlP2In1xboRSLFWe5rZlXLFHzidInaGhnLWa69cLZCEKoo7KsXG1sJtCIDTHKBOYgUUOnCC5sJJTwU2YUHt9YJWSR8i7BOqArtSvFuOF66aNI+ZlYUoJwRK+sIvCQvnYkXyqR7Rn4gkhySF8EQ9vmQ2qRagcH2eH6WI5Y+jiL67IfPgKV1ONQ26q67oOsu9q6LzkMYciBRPXsZP8hpQMr5QJbKqRUgOD6opSfXKyXjWuKmBKqJR6fNs2wGUnOJSoU5XWTIhnbB40KnFJzONDg6cvCz0g5SGaOroCEXHpLKady0DpZUBMJREA5UGqs+EgY68CVtwLP/q9GIX4cduq+SBLzncK5H13x+fXV1DPtmgDvExcssd5JSEOCcddS5hKKh+OJH82jGqJYFTHjh6CnEGPPJDQPHEa36L593t3ff6eUOzNLJkzZrVeh0wRUAj0+ESbenMyaPQiVKZ9dUsFSkFrwwFgX1qWNX4F7oQWfdO4r6SDn3fyFbinyR2cqkx3mGpkY7DopXjSHDbfY7zohXFerQ3vZR2p9OUeJv9ZokY1SxaD0dlmBqRH8cAtnG8X5ylB2pMLckG0mSloOgtFhG68te2FF9pLdGsrzcupdv5Qqy6QeEKvXefKAKngJU/gCzp9d75mEQY6/a7Vggy6+w2U2CaUXBO/27bbfshkVOCierph0emW3NNRaMvyN/Ynr3haAcfGjl5XDEbS6tx5UyDO9uvwUaluaYV/KNFGqZWKq8wf9imIdOIPzCqCyUbiXS9rfuyPMg15cE7GfsQMbHA5v6nVO9GVzXS+Xhhyuahj/TEHM8s2m5Vk4zVVuOpdrzmpiaqcLDBy04+979C87Fe/H2dDLMJRqfFe9o+ULkOvV/aeb7Srm9mXF+FSe7T82XlprdgmM+6eYtZ4NPfrJSTpqMibKCiD/ZwsPJuwadBHo0Jz1vmuYPYjXyqA==
+api: eJzlVUtv2zAM/iuCTi2QxknRXYwgQIAVxbABK9bu1AapYtOxUEfyJDpZZvi/j/Qj7/aywwbsYutBivw+faRKGYOPnM5RWyND+ZhqL5wtEITKMrv2YmMLgVYkgFEqMAURAyqdeWEToYSHLLny4FY6Io+ITxHWCVWgXSqe9UdzF4zrz6MVGShnxNI6Mp5TlNbFC2XiPSffE1EK0atgE475FNuoWILBent6kSLmPgwCWvb9BWBuHfa1Ddrjrui4q73jgssmDdmTqBZehk9y0ljKaU/myqklIDjeKKWn0Eslw1LiJgfixKPTZkG+S22+gFlgKsNh1ZOaCcsVTXvS0Ak0a+LPdEyp6kSDo61jgkHstplExtf4BbuUa9rXyuCW+y0CBz8K7SCWIboCKgLgISqcxk2d/pwoprgE0YGKQ9XhZEMHPqcJeEZ3PRjw7zC9hyKKwHtJ8G4GN7x/c319avbVQJd6YlknRJAA56wjXUSUDeUXPptnM0I1z2DMA0dfIUaYjm/ZcBTQqFv5uDu9XaefO3CLxy/arFSm4xkzAB5fyCbe7jKxsUIlcmdXxHAsYgteGIuCKG212yi7ueHWuwsUdJky9n8BLWU+S2xh4lOcp3JZa2wQbtHviWytGh7q096D/eGcJP7WXVNBGpXN6kiHFEyM6LabRLZ5vA2O0FGNp5bKRlLDkL2mckMZrIZd2wjKk/qtJJeXW3XNoXAZ+XTtR+V6r/sQg+cMCn9gs1evD6zDphi7qt02HfL8DJtdZ5kUlLzTv+rrlm3zSanCyauqm1Fia3eNGdvfUzwxuf9Eppx8c5XD/oCvObcel8qweXv6HVArNqe6Om5fpYwsMW/wv3gqmptA+IlBnildl0h9v2Urnie5GpJh12N7Mjx9AOi+U+Kbjctyrjx8d1lV8TI1Mcc9m4Yr5TRLtdZYrD2PSamJyjy8cwUX39q34FL8+btyFm6nRsNSpO5b8IyGr6TNc89dNd0vtLvbR6anYK72lf1aK7sdMOSzYY4l38TkLxfaWZcRKV5Q3Yy35s3Omw5tBXXWDHpaVdVvvBgquA==
 sidebar_class_name: "get api-method"
-info_path: api-reference/port-api
+info_path: api-reference-temp/port-api
 custom_edit_url: null
 ---
 
@@ -69,7 +69,7 @@ This route allows you to fetch the details of a self-service action or automatio
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"action_identifier","required":true}}
+        param={{"schema":{"type":"string","minLength":1},"in":"path","name":"action_identifier","description":"The identifier of the action/automation you want to fetch.<br/>","required":true}}
       >
         
       </ParamsItem>

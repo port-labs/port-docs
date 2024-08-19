@@ -116,7 +116,7 @@ helm upgrade --install aws port-labs/port-ocean \
 
 ## Prerequisites
 
-- [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.9.1
 - [A logged in aws CLI 2](https://aws.amazon.com/cli/)
 - [Certificate domain name (Optional)](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html)
 
