@@ -75,7 +75,7 @@ Once you have received the SCIM `endpoint` and `token`, follow Okta’s document
 :::note
 When configuring SCIM:
 
-- Set the `Unique identifier field` to `userName`
-- For authenticating the SCIM connection, choose `HTTP Header`, and use the SCIM token provided by Port.
+- Set the `Unique identifier field` to `userName`.
+- For authenticating the SCIM connection, choose `HTTP Header`, and use the SCIM `token` provided by Port.
 
 :::
