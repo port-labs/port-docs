@@ -197,7 +197,7 @@ The other trigger events have the same structure, with the following differences
 
 - `ENTITY_DELETED` - In the `diff` object, `before` will contain the entity data before deletion, and `after` will be `null`.
 
-- `ANY_ENTITY_CHANGE` - The `diff` object will contain `before` and `after` data according to the entity change.
+- `ANY_ENTITY_CHANGE` - The `diff` object will contain `before` and/or `after` data according to the entity change.
 
 - `TIMER_PROPERTY_EXPIRED` - In the `diff` object, there will be an `after` object containing the entity data.
 
@@ -205,7 +205,7 @@ The other trigger events have the same structure, with the following differences
 
 <TabItem value="action-run" label="Action run trigger">
 
-Below is an example of trigger data for an automation that triggers whenever an action run is **created**:
+Below is an example of trigger data for an automation that triggers whenever an action run is **updated**:
 
 ```json showLineNumbers
 {
@@ -354,6 +354,14 @@ Below is an example of trigger data for an automation that triggers whenever an 
   }
 }
 ```
+
+The example above is for an automation that uses the `RUN_UPDATED` trigger event. The `event.diff` object contains data from `before` and `after` the update.  
+
+The other trigger events have the same structure, with the following differences:
+
+- `RUN_CREATED` - In the `diff` object, `before` will be `null`, and `after` will contain the new action run data.
+
+- `ANY_RUN_CHANGE` - The `diff` object will contain `before` and/or `after` data according to the entity change.
 
 </TabItem>
 </Tabs>
