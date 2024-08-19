@@ -62,6 +62,20 @@ These groups will be ingested into Port as teams, enabling you to manage user pe
 
 Okta supports [SCIM](https://auth0.com/docs/authenticate/protocols/scim) for SAML applications.
 
-To set up SCIM for Okta SAML-based applications, contact Port's support team. You will be provided with a SCIM `endpoint` and `token` that are required to set up the SCIM integration.
+To set up SCIM for AzureAD SAML based applications, contact Port's support team.
+
+You will be provided with:
+
+- An SCIM `endpoint`
+- An SCIM `token`
+
 
 Once you have received the SCIM `endpoint` and `token`, follow Okta’s documentation on [Setting Up SCIM in Okta](https://help.okta.com/en-us/content/topics/apps/apps_app_integration_wizard_scim.htm) to enable SCIM.
+
+:::note
+When configuring SCIM:
+
+- Set the `Unique identifier field` to `userName`
+- For authenticating the SCIM connection, choose `HTTP Header`, and use the SCIM token provided by Port.
+
+:::
