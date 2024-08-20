@@ -223,8 +223,9 @@ After enabling this feature, some functionalities will be affected:
   **Note** that the [getUserTeams()](/search-and-query/#dynamic-properties) function will automatically return the team's `identifier`, so it can be used as is.
 
 - In [Advanced input configurations](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations) of self-service actions, when using a [jqQuery](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations#filter-the-dropdowns-available-options-based-on-properties-of-the-user-that-executes-the-action), team identifiers should be used instead of team names.  
+  Also, when using `.user` in the jqQuery, you have access any of the user's properties and/or relations.  
   For example:
-  ```json
+  ```json showLineNumbers
   {
     "properties": {
       "namespace": {
@@ -238,7 +239,7 @@ After enabling this feature, some functionalities will be affected:
               "property": "$team",
               "operator": "containsAny",
               "value": {
-                "jqQuery": "[.user.teamsIdentifiers[]]" // instead of [.user.teams[].name]
+                "jqQuery": "[.user.relations.teams[].identifier]" // instead of [.user.teams[].name]
               }
             }
           ]
@@ -247,3 +248,33 @@ After enabling this feature, some functionalities will be affected:
     }
   }
   ```
+
+- In [dynamic permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions) of self-service actions, under the `rules` and/or `conditions` keys, you can access the entire user object, including its properties and relations.  
+  For example:
+  ```json showLineNumbers
+  {
+    "policy": {
+      "queries": {
+        "search_entity": {
+          "rules": [
+            {
+              "value": "service",
+              "operator": "=",
+              "property": "$blueprint"
+            },
+            {
+              "value": "{{ .inputs.name }}",
+              "operator": "=",
+              "property": "$identifier"
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "conditions": [
+        // highlight-next-line
+        ".user.properties.role == \"Manager\""
+      ]
+    }
+  }
+  ``` 
