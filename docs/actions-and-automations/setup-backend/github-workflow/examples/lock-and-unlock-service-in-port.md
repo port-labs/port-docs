@@ -169,7 +169,8 @@ Follow these steps to get started:
 
 1. Create two Port actions in the [self-service page](https://app.getport.io/self-serve) on the `Service` blueprint with the following JSON definitions:
 
-### Port Action: Lock Service
+<details>
+  <summary>Click to expand: Port Action - Lock Service</summary>
 
 ```json showLineNumbers
 {
@@ -226,7 +227,11 @@ Follow these steps to get started:
 }
 ```
 
-### Port Action: Unlock Service
+</details>
+
+<details>
+  <summary>Click to expand: Port Action - Unlock Service</summary>
+
 ```json showLineNumbers
 {
   "identifier": "unlock_service",
@@ -283,19 +288,22 @@ Follow these steps to get started:
 }
 ```
 
+</details>
 
-<br />
+
+
 
 
 ## Automation for Slack Notification
 
-Create an [automation](/actions-and-automations/create-self-service-experiences/)
-that listens to changes in the `locked` field of the entity
-and makes a `WEBHOOK` backend request to send a Slack message.
+Create an [automation](/actions-and-automations/create-self-service-experiences/) that listens to changes in the `locked` field of the entity and makes a `WEBHOOK` backend request to send a Slack message.
 
-:::tip Note
+:::info Note
 Replace `<Your Generated Slack Webhook>` in the automation definition with your actual Slack webhook URL.
 :::
+
+<details>
+  <summary>Click to expand: Automation Definition - Notify Slack on Service Lock Status Change</summary>
 
 ```json showLineNumbers
 {
@@ -323,14 +331,17 @@ Replace `<Your Generated Slack Webhook>` in the automation definition with your 
     "agent": false,
     "synchronized": true,
     "body": {
-      "text": "*Port Service {{ .event.diff.after.properties.trigger_type }}*\n\n*Service Name*: {{ .event.diff.after.title }}\n*Link*: https://app.getport.io/{{ .event.context.blueprintIdentifier }}Entity?identifier={{ .event.context.entityIdentifier }}\n\n*Environment:* {{ .event.diff.after.properties.triggered_environment }}\n*Reason:* {{ if .event.diff.after.properties.triggered_environment == 'Production' then .event.diff.after.properties.locked_reason_prod else .event.diff.after.properties.locked_reason_test end }}"    }
+      "text": "*Port Service {{ .event.diff.after.properties.trigger_type }}*\n\n*Service Name*: {{ .event.diff.after.title }}\n*Link*: https://app.getport.io/{{ .event.context.blueprintIdentifier }}Entity?identifier={{ .event.context.entityIdentifier }}\n\n*Environment:* {{ .event.diff.after.properties.triggered_environment }}\n*Reason:* {{ if .event.diff.after.properties.triggered_environment == 'Production' then .event.diff.after.properties.locked_reason_prod else .event.diff.after.properties.locked_reason_test end }}"
+    }
   },
   "publish": true
 }
 ```
-<br />
 
-## Trigger the actions from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+</details>
+
+
+## Test the actions in [self-service](https://app.getport.io/self-serve)
 
 Below is the result of a successful service lock and unlock alert sent to a Slack channel:
 
