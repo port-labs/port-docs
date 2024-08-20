@@ -1217,10 +1217,6 @@ The combination of the sample payload and the Ocean configuration generates the 
 ```
 </details>
 
-To adjust the content as suggested, you'll need to move the section that describes creating the `dynatrace_entity` blueprint and the Python script example to come after the "Mapping Result" section in the documentation.
-
-Here’s how you can revise the flow:
-
 
 ## Alternative installation via webhook
 We can create a webhook integration between [Dynatrace](https://www.dynatrace.com/) and Port, which will ingest problem entities to Port and map them to your microservice entities.
