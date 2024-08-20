@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Typography } from "@mui/material";
 import "/src/components/guides-section/styles.css";
 import Tags from "/src/components/guides-section/Tag/Tags.jsx";
 import SearchBar from "/src/components/guides-section/SearchBar/SearchBar.jsx";
@@ -16,16 +17,26 @@ function GuidePage() {
         : [...prev, tag]
     );
   };
-
+  
   const filteredGuides = availableGuides.filter((guide) => {
     const matchesTag = selectedTags.length === 0 || selectedTags.every((tag) => guide.tags.includes(tag));
     const matchesSearch = guide.title.toLowerCase().includes(searchText.toLowerCase()) || guide.description.toLowerCase().includes(searchText.toLowerCase());
     return matchesTag && matchesSearch;
   });
 
+  if(filteredGuides.length === 0) {
+    return "No guides found";
+  }
+  
   return (
     <>
       <div className="guide-tags-and-search-container">
+        <div className="guide-tags-reset-button-container">
+            <div className="guide-tags-reset-button" onClick={()=>{setSelectedTags([]); setSearchText('');}}>
+                <img src="/img/guides/icons/Reset.svg" width="20px" className="not-zoom" />
+                <Typography className="guide-tags-reset-button-text">Clear filters</Typography>
+            </div>
+        </div>
         <Tags toggleTag={toggleTag} />
         <SearchBar searchText={searchText} setSearchText={setSearchText} />
       </div>

@@ -169,9 +169,43 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 40px;
+    gap: 24px;
     align-self: stretch;
     padding-bottom: 60px;
+}
+
+.guide-tags-reset-button-container {
+    display: flex;
+    height: var(--Button-H-36, 36px);
+    justify-content: flex-end;
+    width: 845px;
+    align-items: center;
+    align-self: stretch;
+}
+
+.guide-tags-reset-button {
+    display: flex;
+    height: var(--Button-H-36, 36px);
+    padding: 0px var(--Padding-12, 12px);
+    
+    justify-content: center;
+    align-items: center;
+    gap: var(--Gap-4, 4px);
+    border-radius: var(--Corner-radius-8, 8px);
+    cursor: pointer;
+    user-select: none;
+}
+
+.guide-tags-reset-button-text {
+    color: var(--Text-Medium, rgba(0, 0, 0, 0.60)) !important;
+    font-feature-settings: 'liga' off, 'clig' off !important;
+    
+    /* Paragraph/P1 14px 500 */
+    font-family: "DM Sans" !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
 }
 
 /* Guide label button */
