@@ -30,3 +30,18 @@ If your login provider does not support metadata files, use the following inform
 - callback URL: The AssertionConsumerService binding field in the XML, looks like: `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}` where the `{CONNECTION_NAME}` is the connection name as provided to you by Port.
 
 <DocCardList/>
+
+
+## SCIM Configuration
+
+Most SAML SSO applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
+
+:::tip
+
+If you are unsure whether or not your SSO provider support SCIM, reach out to the Port team.
+
+:::
+
+To set up SCIM for SAML based applications, contact Port's support team. You will be provided with an SCIM `endpoint` and `token` which are required to set up the SCIM integration.
+
+After receiving the SCIM `endpoint` and `token`, enable SCIM in your SAML app in and pass the SCIM endpoint and token.
