@@ -1,11 +1,10 @@
 import React from "react";
-import Button from "@mui/material/Button";
 import Tag from "/src/components/guides-section/Tag/Tag.jsx";
 import "/src/components/guides-section/styles.css";
 import { Typography } from "@mui/material";
 import { tagsCategoryMap } from "../consts.js";
 
-function Tags({ toggleTag }) {
+function Tags({ toggleTag, selectedTags}) {
   return (
     <div className="guide-tags-container">
       {Object.entries(tagsCategoryMap).map(([category, tags]) => (
@@ -13,7 +12,7 @@ function Tags({ toggleTag }) {
           <Typography className="guide-tags-title">{category}</Typography>
           <div className="guide-tags-category-content">
             {tags.map((tag) => (
-              <Tag key={tag} tag={tag} toggleTag={toggleTag} />
+              <Tag key={tag} tag={tag} toggleTag={toggleTag} isSelected={selectedTags.includes(tag)}/>
             ))}
           </div>
         </div>
