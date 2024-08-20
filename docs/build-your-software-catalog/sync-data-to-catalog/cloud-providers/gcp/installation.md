@@ -105,27 +105,25 @@ Here is an example for `gcp-integration.yml` workflow file:
 ```yaml
 name: GCP Integration
 
-schedule:
-  # Every 24 hours at 00:00
-  - cron: "0 0 * * *
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */4 * * *' # Determines the scheduled interval for this workflow. This example runs every 4 hours.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: port-labs/ocean-sail@v1
-        env:
-          OCEAN__INTEGRATION__CONFIG__ENCODED_ADC_CONFIGURATION: ${{ secrets.OCEAN__SECRET__ENCODED_ADC_CONFIGURATION }}
+      - name: Run gcp Integration
+        uses: port-labs/ocean-sail@v1
         with:
-          type: "gcp"
-          identifier: "gcp"
-          port_client_id: ${{ secrets.OCEAN__PORT_CLIENT_ID }}
-          port_client_secret: ${{ secrets.OCEAN__PORT_CLIENT_SECRET }}
-          port_base_url: https://api.getport.io
+          type: gcp
+          port_client_id: ${{ secrets.PORT_CLIENT_ID }}
+          port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
+          port_base_url: "https://api.getport.io"
+          config: |
+            encoded_adc_configuration: ${{ secrets.OCEAN__SECRET__ENCODED_ADC_CONFIGURATION }}
 ```
 </TabItem>
 
