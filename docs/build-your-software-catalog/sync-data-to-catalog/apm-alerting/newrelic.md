@@ -9,7 +9,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # New Relic
 
-Our New Relic integration allows you to import `entities`, `issues` and `service-level` from your New Relic cloud account into Port, according to your mapping and definition.
+Port's New Relic integration allows you to import `entities`, `issues` and `service-level` from your New Relic cloud account into Port, according to your mapping and definition.
 
 An `Entity` can be a host, an application, a service, a database, or any other component that sends data to New Relic.  
 An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
