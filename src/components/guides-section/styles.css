@@ -11,7 +11,7 @@
     padding: 12px;
     background: var(--Background-Primary, #FFF);
     height: 36px;
-    width: 70%;
+    width: 845px;
 }
 
 .guides-search-bar {
@@ -154,6 +154,41 @@
     gap: 8px;
     align-self: stretch;
     flex-wrap: wrap;
+}
+
+.guides-card-empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    width: 845px;
+    align-self: stretch;
+}
+
+.guides-card-empty-state-title {
+    color: var(--Text-High-Emphasis, var(--Text-High, rgba(0, 0, 0, 0.90))) !important;
+    text-align: center !important;
+    
+    /* Headers/H2 24px 500 */
+    font-family: "DM Sans" !important;
+    font-size: 24px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
+}
+
+.guides-card-empty-state-body {
+    color: var(--Text-Medium, rgba(0, 0, 0, 0.60)) !important;
+    text-align: center !important;
+    font-feature-settings: 'liga' off, 'clig' off !important;
+    
+    /* Paragraph/P1 14px 400 */
+    font-family: "DM Sans" !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: normal !important;
 }
 
 .guide-cards-container {
