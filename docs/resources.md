@@ -1,5 +1,5 @@
 ---
-sidebar_position: 15
+sidebar_position: 14
 title: Resources
 sidebar_label: Resources
 sidebar_class_name: custom-sidebar-item sidebar-menu-resources

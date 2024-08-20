@@ -232,9 +232,9 @@ resources:
         # Note that glob patterns are supported, so you can use wildcards to match multiple files
         - path: '**/package.json'
         # The `repos` key can be used to filter the repositories from which the files will be fetched
-        - repos:
-          - "MyRepo"
-          - "MyOtherRepo"
+          repos:
+            - "MyRepo"
+            - "MyOtherRepo"
     port:
       entity:
         mappings:
@@ -464,7 +464,7 @@ resources:
       files:
         - path: '**/package.json'
         # Note that in this case we are fetching from a specific repository
-        - repos:
+          repos:
             - "MyRepo"
     port:
       itemsToParse: .file.content.dependencies | to_entries
@@ -484,6 +484,23 @@ resources:
 
 The `itemsToParse` key is used to specify the path to the array of items you want to parse from the file. In this case, we are parsing the `dependencies` array from the `package.json` file.  
 Once the array is parsed, we can use the `item` key to refer to each item in the array.
+
+#### Multi-document YAML files
+
+For multi-document YAML files (a single file containing multiple YAML documents separated by `---`), `.file.content` will not resolve to an object, but to an array of objects.
+
+You can use one of these methods to ingest multi-document YAML files:
+
+1. Use the `itemsToParse` key to create multiple entities from such a file (see example above). 
+2. Map the result to an `array` property.
+
+:::tip Mixed YAML types
+If you have both single-document and multi-document YAML files in your repositories, you can use the `itemsToParse` key like this to handle both cases:
+
+```yaml
+itemsToParse: .file.content | if type== "object" then [.] else . end
+```
+:::
 
 #### Limitations
 

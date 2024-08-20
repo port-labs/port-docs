@@ -8,6 +8,7 @@ import WizBlueprint from "/docs/build-your-software-catalog/custom-integration/w
 import WizConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/wiz/\_example_wiz_issue_webhook_configuration.mdx";
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/_template_docs/_find_credentials.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Wiz
 
@@ -90,7 +91,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -126,19 +133,19 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-wiz-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
   --set sendRawDataExamples=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-wiz-integration"  \
-	--set integration.type="wiz"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.wizClientId="WIZ_CLIENT_ID"  \
-	--set integration.secrets.wizClientSecret="WIZ_CLIENT_SECRET" \
-	--set integration.secrets.wizApiUrl="WIZ_API_URL"  \
-	--set integration.config.wizTokenUrl="WIZ_TOKEN_URL"  
+  --set scheduledResyncInterval=120 \
+  --set integration.identifier="my-wiz-integration"  \
+  --set integration.type="wiz"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.secrets.wizClientId="WIZ_CLIENT_ID"  \
+  --set integration.secrets.wizClientSecret="WIZ_CLIENT_SECRET" \
+  --set integration.secrets.wizApiUrl="WIZ_API_URL"  \
+  --set integration.config.wizTokenUrl="WIZ_TOKEN_URL"  
 ```
 <PortApiRegionTip/>
 
@@ -230,6 +237,8 @@ kubectl apply -f my-ocean-wiz-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
 
 </TabItem>
 
@@ -449,11 +458,12 @@ ingest_data:
   </Tabs>
 
 <PortApiRegionTip/>
+
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>
 
 ## Ingesting Wiz objects
 

@@ -1,0 +1,260 @@
+---
+id: approve-an-action-run
+title: "Approve an action run"
+description: "This route allows you to approve or decline a request to execute an action that requires approval.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions)."
+sidebar_label: "Approve an action run"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVt9v2zYQ/lcI7aUFYivJuhcjCOClGVZsWI3UK1AkgUuLtMVGJjWSspMa/t/3HUnZcuz0ZQPWh8GATIl35H3347tbZ0K6wqraK6OzQTYulWPWNF4yXlVm5diTaZg3jNe1NUvJjGVCFpXSEGBW/tVI52lfPsoiaGnGCzqM+ZL7IKGsdEmfV/2Lqc0vw2NsWCW51WxhLBSnuJUtuG54tZVmM9wXz3MnrChl8cBIzJeS3QpTNAupPaft+1el97Ub5Dk+u/5c+tpY31cmL6zkXvacrGZ42KUqZE8+1tIqqQvpcif9/ma6r2envMh/KIyeqXljZS/a1mtt68G2VvZ1PzvJPJ+7bHCbDSP+m0a77P4kS0762YinbLDOcJ6H0bTESZUqgvn5F0f+X2cOIBecVv6ploiImX6RhcfxuBVGeyVdkAPsxnXknLdKzyEndbMIZoxGN+8/XuPL2+ur39/9cZ3db072w32ovJ8NQ9Z5R2hFjnDAnbA1RIbCMFdLqVk0JwY32+AeLoQiLV6NOnbPeOVkdAmyQpCZCcj9hrR2G942Eh9qbvlCemnJs0e8kwyHpCKDa+5LoNDQwZtt9ESJA1RjWK0EYqBmSlpmZgFHylrohJRfce07eZ+npE8IDyxFnB0KwCr/FAydIrGlxfJ+E1LA1ciSGLnz01P627fpQ1MgFx0BeXP64+H+e9RbMnRmqDCBmklrjXXMFLgYpgzu9J2+8HxayUtaWDwZu/Dl5TUJXuRYtV/e7k5P3/Fn99TE5eeFcg4XTRC/sASGz5ATW4lP8BSAMm08C0LeS9GlC098El3bZ78gZWaNBQgiEc9VhaKuwQFOMioLyJHvUfFioXS6qLUrb4FFH735XnwE6JOZabTY98x4P6VWypfBMnILkk90M3DFXfBgOOabsM/PvxfYSoMClZgkdjsEL7jnO7TCyIhxwX0RPRG7TKzoZ6C7F1ERk49XHHyCXATvTFoK3r91uHO3ipclndhFks63/PvTsdL8r/wL0gN7TsJNz4ACYNqOhmzteBkc0IFHSyMiSxZEk4EtB1m+PMtTH8vhPJevI3Fu8tZnGbGbXbYs3NgKam2/5bXqtFu48ZhA4/ZkOnT5gRIgMmNLmlt2h+Zv8mlH6MMGCKz6Glpmlji/lFxAixBSE73ZtdvrR74AvXTbZacr7ke520hmJtigPOlmIxjNhqN3UCEPRPGz/inJ1sZ5jAUk3pqYiG83B8GZz2/rTAH/T1z/ZOKKaeLlo8/riqtQxCH51im5b7PlGQSTEvXtJvwNtrPBNseRkyXCSTrr9RQ96U9bbTb0GS631NaxXHKrqKZCHQjlaC22c82LQX51k8aF1+xfmT6OAm+LRlPFAFFDb1g+oIS2w9CGhsBUMoQhbl5FS3tjOmKnfDCgUuFuaWQ0HF/9CulpmmwXRoSpi6/Iz3gOsjv88GLq6H4Ihe/rrOJ63vA5yceDw8zYUMi61f8Qqj8tyNyjGJ/TQsRETyKjoyoXKGgGbrncisedFxWSy1pp8jiNrH8D6TukqA==
+sidebar_class_name: "patch api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Markdown from "@theme/Markdown";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Approve an action run"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/actions/runs/{run_id}/approval"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to approve or decline a request to execute an action that requires approval.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","description":"The identifier of the action run you want to approve/decline.<br/>","required":true}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3><strong
+          className={"openapi-schema__required"}
+        >
+          required
+        </strong>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"status"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** [`APPROVE`, `DECLINE`]"}
+          schema={{"type":"string","enum":["APPROVE","DECLINE"]}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"description"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"A description and/or reason for the given status.<br/>"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Success
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"403"}
+        value={"403"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`missing_permissions`</td>
+            <td>You are not permitted to approve this action. For further details, please contact your admin</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"404"}
+        value={"404"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`not_found`</td>
+            <td>The action run with the provided identifier was not found</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"422"}
+        value={"422"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`invalid_request`</td>
+            <td>The data provided does not match the route schema</td>
+          </tr>
+          <tr>
+            <td>`run_not_waiting_for_approval`</td>
+            <td>Action run is not waiting for approval</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem><TabItem
+        label={"500"}
+        value={"500"}
+      >
+        <div>
+          
+          
+          One of the following errors occurred:
+          
+          <table>
+          <tr>
+            <th>Error</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>`internal_error`</td>
+            <td>An internal error occurred</td>
+          </tr>
+          </table>
+          
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      

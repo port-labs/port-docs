@@ -10,6 +10,7 @@ import AdvancedConfig from '../../../../generalTemplates/\_ocean_advanced_config
 import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_blueprint.mdx";
 import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # SonarQube
 
@@ -33,7 +34,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -165,6 +172,8 @@ kubectl apply -f my-ocean-sonarqube-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
 
 </TabItem>
 
@@ -395,11 +404,11 @@ ingest_data:
 
 <PortApiRegionTip/>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>
 
 ## Ingesting SonarQube objects
 
@@ -555,6 +564,26 @@ Examples of blueprints and the relevant integration configurations:
 <details>
 <summary>Integration configuration</summary>
 
+:::tip filter projects
+The integration provides an option to filter the data that is retrieved from the SonarQube API using the following attributes:
+
+1. `query`: Limits the search to component names that contain the supplied string
+2. `alertStatus`: To filter a project's quality gate status. Accepts a list of values such as `OK`, `ERROR` and `WARN`
+3. `languages`: To filter projects using a list of languages or a single language
+4. `tags`: To filter a list of tags or a single tag
+5. `qualifier`: To filter on a component qualifier. Accepts values such as `TRK` (for projects only) and `APP` (for applications only)
+
+These attributes can be enabled using the path: `selector.apiFilters.filter`. By default, the integration fetches only SonarQube projects using the `qualifier` attribute.
+:::
+
+:::tip Define your own metrics
+Besides filtering the API data, the integration provides a mechanism to allow users to define their own list of metrics used in SonarQube to evaluate the code. This list can be defined in the `selector.metrics` property. A complete list of valid SonarQube metrics can be in the [SonarQube documentation](https://docs.sonarsource.com/sonarqube/latest/user-guide/code-metrics/metrics-definition/)
+:::
+
+:::note Supported Sonar environment
+Please note that the API filters are supported on on-premise Sonar environments (SonarQube) only, and will not work on SonarCloud.
+:::
+
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
@@ -562,6 +591,19 @@ resources:
   - kind: projects
     selector:
       query: "true"
+      apiFilters:
+        filter:
+          qualifier: TRK
+      metrics:
+        - code_smells
+        - coverage
+        - bugs
+        - vulnerabilities
+        - duplicated_files
+        - security_hotspots
+        - new_violations
+        - new_coverage
+        - new_duplicated_lines_density
     port:
       entity:
         mappings:
@@ -582,7 +624,6 @@ resources:
             mainBranch: .__branch.name
             tags: .tags
 ```
-
 </details>
 
 ### Issue
@@ -659,6 +700,29 @@ resources:
 <details>
 <summary>Integration configuration</summary>
 
+:::tip filter issues
+The integration provides an option to filter the data that is retrieved from the SonarQube API using the following attributes:
+
+1. `assigned`: To retrieve assigned or unassigned issues. Accepts values: `yes`, `no`, `true`, `false`
+2. `assignees`: A list of assignee logins
+3. `cleanCodeAttributeCategories`: List of clean code attribute categories. Accepts values: `ADAPTABLE`, `CONSISTENT`, `INTENTIONAL`, `RESPONSIBLE`
+4. `createdBefore`: To retrieve issues created before the given date
+5. `createdAfter`: To retrieve issues created after the given date
+6. `impactSeverities`: List of impact severities. Accepts values: `HIGH`, `LOW`, `MEDIUM`
+7. `impactSoftwareQualities`: List of impact software qualities. Accepts values: `MAINTAINABILITY`, `RELIABILITY`, `SECURITY`
+8. `statuses`: List of statuses. Accepts values: `OPEN`, `CONFIRMED`, `FALSE_POSITIVE`, `ACCEPTED`, `FIXED`
+9. `languages`: List of languages
+10. `resolved`: To retrieve resolved or unresolved issues. Accepts values: `yes`, `no`, `true`, `false`
+11. `scopes`: List of scopes. Accepts values: `MAIN`, `TESTS`
+12. `tags`: List of tags
+
+These attributes can be enabled using the path: `selector.apiFilters`. By default, the integration fetches unresolved SonarQube issues. It is also possible to configure the integration to fetch issues from a SonarQube project using the path: `selector.projectApiFilters.filter` while specifying any of [the above project attributes](#project) 
+:::
+
+:::note Supported Sonar environment
+Please note that the API filters are supported on on-premise Sonar environments (SonarQube) only, and will not work on SonarCloud.
+:::
+
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
@@ -666,6 +730,11 @@ resources:
   - kind: issues
     selector:
       query: "true"
+      apiFilters:
+        resolved: 'false'
+      projectApiFilters:
+        filter:
+          qualifier: TRK
     port:
       entity:
         mappings:

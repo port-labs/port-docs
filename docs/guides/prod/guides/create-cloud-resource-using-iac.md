@@ -14,7 +14,7 @@ This guide takes 8 minutes to complete, and aims to demonstrate:
 - A complete flow to create a resource using IaC.
 - The simplicity of communicating with Port from a self-service action backend.
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
@@ -32,11 +32,23 @@ After completing it, you will get a sense of how it can benefit different person
 - Platform engineers will be able to define powerful actions that developers can use within controlled permission boundaries.
 - Developers will be able to easily create and track cloud resources from Port.
 
+### Add a URL to your new resource's definition
+
+In this guide we will add a new property to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we can use to access our cloud resource definitions.
+
+1. Go to your [Data model](https://app.getport.io/settings/data-model) page.
+2. Expand your `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, then click on `+ New property`.
+3. Choose `URL` as the type, fill it like this and click `Save`:
+
+    <img src='/img/guides/iacPropertyForm.png' width='40%' border='1px' />
+
+This property is empty for now in all services, we will fill it as part of the action we're about to create 😎
+
 ### Setup the action's frontend
 
 1. Head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application. Since you completed the [onboarding process](/quickstart), you should already have an action named `Create s3 bucket`. Hover over the action, click the `...` button in the top right corner, and choose "Edit":
 
-    <img src='/img/guides/iacEditAction.png' width='35%' border='1px' />
+    <img src='/img/guides/iacEditAction.png' width='30%' border='1px' />
 
 2. The action's basic details should look like the image below. When ready, click on the `User Form` tab to proceed.
 
@@ -77,10 +89,10 @@ Fill out the form with your values:
   {
     "port_context": {
       "entity": "{{ .entity.identifier }}",
-      "runId": "{{ .run.id }}",
+      "runId": "{{ .run.id }}"
     },
     "name": "{{ .inputs.name }}",
-    "visibility": "{{ .inputs.visibility }}",
+    "visibility": "{{ .inputs.visibility }}"
   }
   ```
 
@@ -728,19 +740,17 @@ All done! The action is ready to be executed 🚀
 
 After creating an action, it will appear under the `Self-service` tab of your Port application:
 
-<img src='/img/guides/iacActionAfterCreation.png' width='35%' />
+<img src='/img/guides/iacActionAfterCreation.png' width='30%' border='1px' />
 
 1. Click on `Execute`.
 
 2. Enter a name for your s3 bucket and choose a visibility, select any service from the list and click `Execute`. A small popup will appear, click on `View details`:
 
-<img src='/img/guides/iacActionExecutePopup.png' width='40%' />
-
-<br/><br/>
+    <img src='/img/guides/iacActionExecutePopup.png' width='40%' />
 
 3. This page provides details about the action run. We can see that the backend returned `Success` and the pull-request was created successfully:
 
-<img src='/img/guides/iacActionRunAfterExecution.png' width='90%' />
+    <img src='/img/guides/iacActionRunAfterExecution.png' width='90%' />
 
 #### Access the bucket's definition from Port
 
@@ -749,9 +759,7 @@ You may have noticed that even though we updated the service's `Resource definit
 1. Merge the pull-request.
 2. Go to the <PortTooltip id="entity">entity</PortTooltip> page of the service that you executed the action for:
 
-<img src='/img/guides/iacEntityAfterAction.png' width='50%' />
-
-<br/><br/>
+    <img src='/img/guides/iacEntityAfterAction.png' width='50%' />
 
 3. Click on the `Resource definitions` link to access the service's resources.
 

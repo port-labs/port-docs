@@ -5,13 +5,16 @@ import DockerParameters from "./\_newrelic-docker-parameters.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # New Relic
 
-Our New Relic integration allows you to import `entities` and `issues` from your New Relic cloud account into Port, according to your mapping and definition.
+Port's New Relic integration allows you to import `entities`, `issues` and `service-level` from your New Relic cloud account into Port, according to your mapping and definition.
 
 An `Entity` can be a host, an application, a service, a database, or any other component that sends data to New Relic.  
 An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
+A `Service Level` can be one of your key measurements or goals used to determine the performance of your monitored system.
+
 
 ## Common use cases
 
@@ -28,7 +31,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time.
 
@@ -68,16 +77,16 @@ If you are using New Relic's EU region, add the following flag to the command:
 
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-newrelic-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-newrelic-integration"  \
-	--set integration.type="newrelic"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
-	--set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>"
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set scheduledResyncInterval=120 \
+  --set integration.identifier="my-newrelic-integration"  \
+  --set integration.type="newrelic"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
+  --set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>"
 ```
 
 <PortApiRegionTip/>
@@ -187,6 +196,12 @@ kubectl apply -f my-ocean-newrelic-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
+
+<h3>Event listener</h3>
+
+The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
 </TabItem>
 
@@ -402,15 +417,12 @@ ingest_data:
   </Tabs>
 
 <PortApiRegionTip/>
+
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-### Event listener
-
-The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
-
-<AdvancedConfig/>
 
 ## Ingesting Newrelic objects
 
@@ -815,6 +827,101 @@ resources:
 
 </details>
 
+
+### Service Level
+
+<details>
+<summary>Service Level blueprint</summary>
+
+```json showLineNumbers
+{
+    "identifier": "newRelicServiceLevel",
+    "description": "This blueprint represents a New Relic Service Level",
+    "title": "New Relic Service Level",
+    "icon": "NewRelic",
+    "schema": {
+      "properties": {
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "targetThreshold": {
+          "icon": "DefaultProperty",
+          "title": "Target Threshold",
+          "type": "number"
+        },
+        "createdAt": {
+          "title": "Created At",
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "title": "Updated At",
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdBy": {
+          "title": "Creator",
+          "type": "string",
+          "format": "user"
+        },
+        "sli": {
+          "type": "number",
+          "title": "SLI"
+        },
+        "tags": {
+          "type": "object",
+          "title": "Tags"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "newRelicService": {
+        "title": "New Relic service",
+        "target": "newRelicService",
+        "required": false,
+        "many": false
+      }
+    }
+  }
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: newRelicServiceLevel
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          blueprint: '"newRelicServiceLevel"'
+          identifier: .serviceLevel.indicators[0].id
+          title: .serviceLevel.indicators[0].name
+          properties:
+            description: .serviceLevel.indicators[0].description
+            targetThreshold: .serviceLevel.indicators[0].objectives[0].target
+            createdAt: if .serviceLevel.indicators[0].createdAt != null then (.serviceLevel.indicators[0].createdAt | tonumber / 1000 | todate) else null end
+            updatedAt: .serviceLevel.indicators[0].updatedAt
+            createdBy: .serviceLevel.indicators[0].createdBy.email
+            sli: .__SLI.SLI
+            tags: .tags
+          relations:
+            newRelicService: .serviceLevel.indicators[0].guid
+```
+
+</details>
+
 ## Let's Test It
 
 This section includes a sample response data from New Relic. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
@@ -824,7 +931,8 @@ This section includes a sample response data from New Relic. In addition, it inc
 Here is an example of the payload structure from New Relic:
 
 <details>
-<summary>Service (Entity) response data</summary>
+<summary><b>Service (Entity) response data (Click to expand)</b></summary>
+
 
 ```json showLineNumbers
 {
@@ -936,7 +1044,8 @@ Here is an example of the payload structure from New Relic:
 </details>
 
 <details>
-<summary>Issue response data</summary>
+<summary><b>Issue response data (Click to expand)</b></summary>
+
 
 ```json showLineNumbers
 {
@@ -948,6 +1057,84 @@ Here is an example of the payload structure from New Relic:
   "conditionName": ["My Condition"],
   "policyName": ["My Policy"],
   "activatedAt": "2022-01-01T00:00:00Z"
+}
+```
+</details>
+
+<details>
+<summary><b>Service Level response data (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "serviceLevel": {
+    "indicators": [
+      {
+        "createdAt": 1721030560937,
+        "createdBy": {
+          "email": "user@domain.com"
+        },
+        "description": "Proportion of requests that are served faster than a threshold.",
+        "guid": "NDM2OTY4MHxFWFR8U0VSVklDRV9MRVZFTHw1OTk0MzQ",
+        "id": "599434",
+        "name": "Service Level Name - Metric",
+        "objectives": [
+          {
+            "description": null,
+            "name": null,
+            "target": 95,
+            "timeWindow": {
+              "rolling": {
+                "count": 7,
+                "unit": "DAY"
+              }
+            }
+          }
+        ],
+        "resultQueries": {
+          "indicator": {
+            "nrql": "SELECT clamp_max(sum(newrelic.sli.good) / sum(newrelic.sli.valid) * 100, 100) AS 'SLI' FROM Metric WHERE entity.guid = 'NDM2OTY4MHxFWFR8U0VSVklDRV9MRVZFTHw1OTk0MzQ' UNTIL 2 minutes AGO"
+          }
+        },
+        "updatedAt": null,
+        "updatedBy": null
+      }
+    ]
+  },
+  "tags": {
+    "account": [
+      "Account [REDACTED]"
+    ],
+    "accountId": [
+      "[REDACTED]"
+    ],
+    "category": [
+      "latency"
+    ],
+    "nr.associatedEntityGuid": [
+      "NDM2OTY4MHxBUE18QVBQTElDQVRJT058NTkxMTYyMjE0"
+    ],
+    "nr.associatedEntityName": [
+      "Service Name 01"
+    ],
+    "nr.associatedEntityType": [
+      "APM_APPLICATION"
+    ],
+    "nr.sliComplianceCategory": [
+      "Non-compliant"
+    ],
+    "nr.sloPeriod": [
+      "7d"
+    ],
+    "nr.sloTarget": [
+      "95.0%"
+    ],
+    "trustedAccountId": [
+      "[REDACTED]"
+    ]
+  },
+  "__SLI": {
+    "SLI": 87.56
+  }
 }
 ```
 </details>
@@ -1077,7 +1264,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary><b>Issue entity in Port(Click to expand)</b></summary>
+<summary><b>Issue entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1102,6 +1289,66 @@ The combination of the sample payload and the Ocean configuration generates the 
   "updatedAt": "2024-2-6T11:49:20.881Z",
   "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
 }
+```
+
+</details>
+
+<details>
+<summary><b>Service Level entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+    "blueprint": "newRelicServiceLevel",
+    "identifier": "599434",
+    "title": "Service Level Name - Metric",
+    "properties": {
+      "description": "Proportion of requests that are served faster than a threshold.",
+      "targetThreshold": 95,
+      "createdAt": "2024-07-15T08:02:40Z",
+      "updatedAt": null,
+      "createdBy": "user@domain.com",
+      "serviceLevelIndicator": 87.56,
+      "tags": {
+        "account": [
+          "Account [REDACTED]"
+        ],
+        "accountId": [
+          "[REDACTED]"
+        ],
+        "category": [
+          "latency"
+        ],
+        "nr.associatedEntityGuid": [
+          "NDM2OTY4MHxBUE18QVBQTElDQVRJT058NTkxMTYyMjE0"
+        ],
+        "nr.associatedEntityName": [
+          "Service Name 01"
+        ],
+        "nr.associatedEntityType": [
+          "APM_APPLICATION"
+        ],
+        "nr.sliComplianceCategory": [
+          "Non-compliant"
+        ],
+        "nr.sloPeriod": [
+          "7d"
+        ],
+        "nr.sloTarget": [
+          "95.0%"
+        ],
+        "trustedAccountId": [
+          "[REDACTED]"
+        ]
+      }
+    },
+    "relations": {
+      "newRelicService": "NDM2OTY4MHxFWFR8U0VSVklDRV9MRVZFTHw1OTk0MzQ"
+    },
+  "createdAt": "2024-08-06T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-08-06T09:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+  }
 ```
 
 </details>

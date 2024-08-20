@@ -10,6 +10,7 @@ import DockerParameters from "./\_statuspage_docker_parameters.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Statuspage
 
@@ -30,7 +31,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -59,14 +66,14 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-statuspage-integration port-labs/port-ocean \
-	--set port.clientId="CLIENT_ID"  \
-	--set port.clientSecret="CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set integration.identifier="my-statuspage-integration"  \
-	--set integration.type="statuspage"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.statuspageApiKey="<STATUSPAGE_API_KEY>"
+  --set port.clientId="CLIENT_ID"  \
+  --set port.clientSecret="CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set integration.identifier="my-statuspage-integration"  \
+  --set integration.type="statuspage"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.secrets.statuspageApiKey="<STATUSPAGE_API_KEY>"
 ```
 <PortApiRegionTip/>
 
@@ -152,6 +159,8 @@ kubectl apply -f my-ocean-statuspage-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<AdvancedConfig/>
 
 </TabItem>
 
@@ -354,11 +363,11 @@ ingest_data:
 
 <PortApiRegionTip/>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>
 
 ## Ingesting Statuspage objects
 

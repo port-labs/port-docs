@@ -1,0 +1,47 @@
+<details>
+<summary>Service blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "service",
+  "title": "Service",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown"
+      },
+      "url": {
+        "title": "Service URL",
+        "type": "string",
+        "format": "url"
+      },
+      "defaultBranch": {
+        "title": "Default branch",
+        "type": "string"
+      },
+      "last_contributor": {
+        "title": "Last contributor",
+        "icon": "TwoUsers",
+        "type": "string",
+        "format": "user"
+      },
+      "last_push": {
+        "icon": "GitPullRequest",
+        "title": "Last push",
+        "description": "Last commit to the main branch",
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
