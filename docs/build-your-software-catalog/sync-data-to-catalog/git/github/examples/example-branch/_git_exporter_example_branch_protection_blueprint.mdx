@@ -4,32 +4,32 @@
 ```json showLineNumbers
 {
   "identifier": "branch_protection",
-  "title": "Branch",
+  "title": "Branch Protection",
   "icon": "Microservice",
   "schema": {
     "properties": {
       "require_approval_count": {
-        "title": "Require approvals",
+        "title": "Require Approvals",
         "type": "number",
         "icon": "DefaultProperty"
       },
       "is_protected": {
-        "title": "Is branch protected",
+        "title": "Is Branch Protected",
         "type": "boolean",
         "icon": "DefaultProperty"
       },
       "require_code_owner_review": {
-        "title": "Require code owner review",
+        "title": "Require Code Owner Review",
         "type": "boolean",
         "icon": "DefaultProperty"
       },
       "allow_deletions": {
-        "icon": "DefaultProperty",
         "title": "Allow Deletions",
-        "type": "boolean"
+        "type": "boolean",
+        "icon": "DefaultProperty"
       },
       "allow_force_pushes": {
-        "title": "Allow force pushes",
+        "title": "Allow Force Pushes",
         "type": "boolean",
         "icon": "DefaultProperty"
       },
@@ -37,6 +37,41 @@
         "title": "Branch URL",
         "type": "string",
         "format": "url"
+      },
+      "require_signed_commits": {
+        "title": "Require Signed Commits",
+        "type": "boolean",
+        "icon": "DefaultProperty"
+      },
+      "require_linear_history": {
+        "title": "Require Linear History",
+        "type": "boolean",
+        "icon": "DefaultProperty"
+      },
+      "restrict_creations": {
+        "title": "Restrict Creations",
+        "type": "boolean",
+        "icon": "DefaultProperty"
+      },
+      "restrict_updates": {
+        "title": "Restrict Updates",
+        "type": "boolean",
+        "icon": "DefaultProperty"
+      },
+      "require_conversation_resolution": {
+        "title": "Require Conversation Resolution",
+        "type": "boolean",
+        "icon": "DefaultProperty"
+      },
+      "lock_branch": {
+        "title": "Lock Branch",
+        "type": "boolean",
+        "icon": "DefaultProperty"
+      },
+      "block_force_pushes": {
+        "title": "Block Force Pushes",
+        "type": "boolean",
+        "icon": "DefaultProperty"
       }
     },
     "required": []
