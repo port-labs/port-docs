@@ -416,7 +416,7 @@ By using the `TIMER_PROPERTY_EXPIRED` trigger type, we can run custom logic when
 This automation marks the PR's `isNotificationSent` property as true after the notification is sent, ensuring that only one notification is sent per PR.
 
 <details>
-  <summary>Click to view the automation definition for marking notification as sent</summary>
+  <summary>Automation for marking notification as sent (click to expand)</summary>
 
 ```json showLineNumbers
 {
