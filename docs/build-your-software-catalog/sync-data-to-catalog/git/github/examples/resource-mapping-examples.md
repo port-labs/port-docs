@@ -59,7 +59,8 @@ import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 When using the GitHub Cloud app with Port, certain fields and data points may not be accessible due to the lack of `write` API permissions. These limitations affect advanced repository settings, security features (such as code scanning and secret scanning status), and other GitHub objects that require elevated permissions to retrieve data.
 
 If you need to ingest these fields, consider one of the following approaches:
-- Use a [self-hosted](/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation) GitHub app with the appropriate permissions.
+- Use our [self-hosted](/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation) GitHub app which gives you options to enable appropriate `write` permissions.
+
 - Implement a GitHub workflow to manually gather and send the required data to Port.
 
 Refer to specific sections below where these limitations might apply.
