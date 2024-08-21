@@ -139,6 +139,7 @@ The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) a
 		base_url = "https://api.getport.io"
 	}
 	initialize_port_resources = true # When set to true the integration will create default blueprints + JQ Mappings
+	scheduled_resync_interval = 60
 	integration = {
 		identifier = "my-aws-integration" # Change the identifier to describe your integration
 		config = {
@@ -174,6 +175,7 @@ The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) a
 | cluster_name (optional) | Name of the ECS cluster.  |
 | vpc_id | VPC ID where the cluster will be created.  |
 | initialize_port_resources | Boolean to initialize Port resources.  |
+| scheduled_resync_interval | The interval to resync the integration in minutes.  |
 | create_default_sg | Boolean to create a default security group.  |
 | allow_incoming_requests | Boolean to allow incoming requests to the ECS tasks.  |
 

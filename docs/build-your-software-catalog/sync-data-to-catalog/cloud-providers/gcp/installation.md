@@ -278,6 +278,7 @@ gcp_ocean_setup_project = "<your_gcp_project>"
 gcp_projects = [<your_gcp_project>] # The Project list that the integration digests resources from. leave empty
 integration_identifier = "gcp" 
 initialize_port_resources = true # When set to true the integration will create default blueprints + JQ Mappings
+scheduled_resync_interval = 60
 event_listener = {
   type = "POLLING"
 }
