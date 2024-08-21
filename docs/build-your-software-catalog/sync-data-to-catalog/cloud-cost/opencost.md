@@ -416,7 +416,7 @@ The integration configuration determines which resources will be queried from Op
 The following resources can be used to map data from OpenCost, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Cost`](https://www.opencost.io/docs/integrations/api-examples#allocation-examples)
-- [`cloudcost`](https://www.opencost.io/docs/integrations/api-examples#cloudcost-examples)
+- [`Cloudcost`](https://www.opencost.io/docs/integrations/api-examples#cloudcost-examples)
 
 :::
 
