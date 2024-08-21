@@ -139,7 +139,7 @@ The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) a
 		base_url = "https://api.getport.io"
 	}
 	initialize_port_resources = true # When set to true the integration will create default blueprints + JQ Mappings
-	scheduled_resync_interval = 60
+	scheduled_resync_interval = 1440
 	integration = {
 		identifier = "my-aws-integration" # Change the identifier to describe your integration
 		config = {
