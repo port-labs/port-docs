@@ -209,13 +209,30 @@
     padding-bottom: 60px;
 }
 
-.guide-tags-reset-button-container {
+.guide-tags-and-search-title-container {
     display: flex;
     height: var(--Button-H-36, 36px);
     justify-content: flex-end;
     width: 845px;
     align-items: center;
     align-self: stretch;
+}
+
+.guide-tags-and-search-title {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 1 !important;
+    flex: 1 0 0 !important;
+    overflow: hidden !important;
+    color: var(--Colorful-High-Grey, #5D5D5D) !important;
+    text-overflow: ellipsis !important;
+
+    /* Headers/H3 18px 500 */
+    font-family: "DM Sans" !important;
+    font-size: 18px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
 }
 
 .guide-tags-reset-button {

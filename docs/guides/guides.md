@@ -7,6 +7,6 @@ import "/src/components/guides-section/styles.css";
 
 # Guides
 
-All guides are listed below, use the tags and/or search bar to filter them.
+All guides are listed below, use the filters and/or search bar to narrow down the list.
 
 <GuidePage />

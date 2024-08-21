@@ -27,7 +27,8 @@ function GuidePage() {
   return (
     <>
       <div className="guide-tags-and-search-container">
-        <div className="guide-tags-reset-button-container">
+        <div className="guide-tags-and-search-title-container">
+          <Typography className="guide-tags-and-search-title">Filters</Typography>
           <div className="guide-tags-reset-button" onClick={() => { setSelectedTags([]); setSearchText(''); }}>
             <img src="/img/guides/icons/Reset.svg" width="20px" className="not-zoom" />
             <Typography className="guide-tags-reset-button-text">Clear filters</Typography>

@@ -4,7 +4,7 @@ export const tagsCategoryMap = {
         "Terraform",
         "Jira",
         "SonarQube",
-        "Cluster",
+        "Kubernetes",
         "Argo",
         "AWS",
         "Azure",
@@ -22,14 +22,14 @@ export const tagsCategoryMap = {
         "Snyk",
     ],
     "Port pillars": ["Actions", "Automations", "Widgets", "Scorecards", "RBAC"],
-    Experiences: ["Incident management", "Cloud access management", "Feature flag management", "DORA metrics", "Cost visibility"]
+    "Use-cases": ["Incident management", "IaC", "Cloud access management", "Feature flag management", "AppSec", "Cloud cost", "K8s for devs", "Dev environments", "DORA metrics"]
 };
 
 export const availableGuides = [
     {
         title: "Create cloud resources using IaC",
         description: "Create a self-service action that provisions cloud resources using IaC",
-        tags: ["AWS", "Slack", "Cloud access management"],
+        tags: ["AWS", "Actions", "Cloud access management"],
         logos: ["AWS", "Github"],
         category: "Getting started",
     },
