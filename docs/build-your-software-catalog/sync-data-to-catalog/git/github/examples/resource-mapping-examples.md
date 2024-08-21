@@ -229,7 +229,7 @@ In the following example you will ingest your GitHub repositories, their deploym
 
 ## Map repositories, Dependabot Alerts, and Code scan alerts
 
-In the following example, you will ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) to Port. You may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example shows how to ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) into Port. You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -247,7 +247,6 @@ For Code scan alerts, only open alerts on the default branch are supported.
 - Advanced security status (e.g., whether code scanning or secret scanning is enabled)
 
 If you need to ingest these fields, consider using a self-hosted GitHub app with the appropriate permissions or creating a GitHub workflow to manually gather and ingest this data into Port.
-:::
 
 :::tip self-hosted gitHub app option
 For users who need access to the full range of repository fields, including enabling WRITE permissions, we recommend setting up a self-hosted GitHub app. This allows full customization of permissions, ensuring all necessary data can be ingested into Port.
