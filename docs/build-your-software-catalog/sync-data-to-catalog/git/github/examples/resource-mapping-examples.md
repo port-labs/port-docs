@@ -55,6 +55,17 @@ import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
 # Resource mapping examples
 
+:::warning General permissions limitation with gitHub cloud app
+When using the GitHub Cloud app with Port, certain fields and data points may not be accessible due to the lack of `write` API permissions. These limitations affect advanced repository settings, security features (such as code scanning and secret scanning status), and other GitHub objects that require elevated permissions to retrieve data.
+
+If you need to ingest these fields, consider one of the following approaches:
+- Use our [self-hosted](/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation) GitHub app which gives you options to enable appropriate `write` permissions.
+
+- Implement a GitHub workflow to manually gather and send the required data to Port.
+
+Refer to specific sections below where these limitations might apply.
+:::
+
 ## Map repositories and pull requests
 
 In the following example you will ingest your GitHub repositories, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
@@ -216,9 +227,9 @@ In the following example you will ingest your GitHub repositories, their deploym
 
 <PortRepoDeploymentAndEnvironmentAppConfig/>
 
-## Map repositories, Dependabot Alerts and Code scan alerts
+## Map repositories, Dependabot Alerts, and Code scan alerts
 
-In the following example you will ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example shows how to ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) into Port. You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -229,7 +240,19 @@ In the following example you will ingest your GitHub repositories and their aler
 <PortRepositoryDependabotAlertMappingAppConfig/>
 
 :::info supported alerts
-For Code scan alerts only open alerts on the default branch are supported
+For Code scan alerts, only open alerts on the default branch are supported.
+:::
+
+- `allow_squash_merge`
+- Advanced security status (e.g., whether code scanning or secret scanning is enabled)
+
+If you need to ingest these fields, consider using a self-hosted GitHub app with the appropriate permissions or creating a GitHub workflow to manually gather and ingest this data into Port.
+
+:::tip self-hosted gitHub app option
+For users who need access to the full range of repository fields, including enabling WRITE permissions, we recommend setting up a self-hosted GitHub app. This allows full customization of permissions, ensuring all necessary data can be ingested into Port.
+Refer to our [Self-Hosted Installation Guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation/) for detailed instructions.
+
+Alternatively, you can create a GitHub workflow that gathers the required data and sends it to Port, allowing you to work around the limitations of the Cloud app.
 :::
 
 ## Map repositories and branches
