@@ -372,7 +372,7 @@ through setting up the automation that sends Slack notifications for PRs that ha
 By using the `TIMER_PROPERTY_EXPIRED` trigger type, we can run custom logic whenever the `openDuration` timer property expires on a `githubPullRequest` entity:
 
 <details>
-<summary>Click to view the automation definition for sending Slack notifications</summary>
+<summary>Automation for sending Slack notifications (click to expand)</summary>
 
 ```json showLineNumbers
 {
