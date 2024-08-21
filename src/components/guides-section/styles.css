@@ -9,7 +9,7 @@
     border-radius: var(--Corner-radius-8, 8px);
     border: 1px solid var(--Border-Medium, #D3D3D3);
     padding: 12px;
-    background: var(--Background-Primary, #FFF);
+    /* background: var(--Background-Primary, #FFF); */
     height: 36px;
     width: 845px;
 }
@@ -45,7 +45,6 @@
     flex-shrink: 0;
     border-radius: 8px;
     border: 1px solid var(--Border-Low, #E3E3E3);
-    background: linear-gradient(180deg, #F7F9FA 0%, #FFF 100%);
     cursor: pointer;
 
     -webkit-touch-callout: none;
@@ -55,6 +54,10 @@
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+}
+
+html[data-theme="light"] .guide-card {
+    background: linear-gradient(180deg, #F7F9FA 0%, #FFF 100%);
 }
 
 .guide-card:hover {
@@ -301,6 +304,10 @@
     cursor: not-allowed;
 }
 
+html[data-theme="dark"] .unclickable-label {
+    background: var(--Colorful-Low-Grey, rgba(199, 199, 199, 0.15));
+}
+
 /* Tags */ 
 
 .guide-tags-container {
@@ -330,6 +337,10 @@
     font-style: normal !important;
     font-weight: 400 !important;
     line-height: normal !important;
+}
+
+html[data-theme="dark"] .guide-tags-title {
+    color: var(--Text-Medium, rgba(255, 255, 255, 0.80)) !important;
 }
 
 .guide-tags-category-content {

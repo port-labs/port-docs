@@ -1,4 +1,6 @@
 export const tagsCategoryMap = {
+    "Use-cases": ["Incident management", "IaC", "Cloud access management", "Feature flag management", "AppSec", "Cloud cost", "K8s for devs", "Dev environments", "DORA metrics"],
+    "Port pillars": ["Actions", "Automations", "Widgets", "Scorecards", "RBAC"],
     Technologies: [
         "Slack",
         "Terraform",
@@ -20,9 +22,7 @@ export const tagsCategoryMap = {
         "Opencost",
         "PagerDuty",
         "Snyk",
-    ],
-    "Port pillars": ["Actions", "Automations", "Widgets", "Scorecards", "RBAC"],
-    "Use-cases": ["Incident management", "IaC", "Cloud access management", "Feature flag management", "AppSec", "Cloud cost", "K8s for devs", "Dev environments", "DORA metrics"]
+    ]
 };
 
 export const availableGuides = [
