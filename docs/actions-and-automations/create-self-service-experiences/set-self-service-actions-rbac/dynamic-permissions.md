@@ -63,7 +63,7 @@ This is the action's permission configuration in JSON format. Every action in Po
 Under each of these two keys, you can add a `policy` key, which allows you to use more complex logic using two keys:
 
 1. [`"queries"`](/search-and-query/) - a collection of [rules](/search-and-query/#rules) you can use to fetch and filter the data you need from your software catalog.
-2. `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data.
+2. `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data. There is an implicit `"OR"` between each condition.
 
 <details>
 <summary><b>Example snippet (click to expand)</b></summary>
@@ -209,7 +209,7 @@ The `condition` checks if the approver is the executer's team leader, via the re
     // a policy key may be added here, with queries and conditions within it
   },
   "approve": {
-    "roles": ["Admin"], // all admins may approve this action
+    "roles": [],
     "users": [],
     "teams": [],
     "policy": {
