@@ -15,6 +15,8 @@ import BranchProtectionBlueprint from './example-branch/\_git_exporter_example_b
 import PortBranchProtectionAppConfig from './example-branch/\_github_exporter_example_branch_protection_port_app_config.mdx'
 import BranchBlueprint from './example-branch/\_git_exporter_example_branch_blueprint.mdx'
 import PortBrAppConfig from './example-branch/\_github_exporter_example_branch_port_app_config.mdx'
+import LastContributorAppConfig from './example-branch/\_github_exporter_example_last_contributor_port_app_config.mdx'
+import LastContributorBlueprint from './example-branch/\_git_exporter_example_last_contributor_blueprint.mdx'
 
 import PortMonoRepoAppConfig from './example-monorepo/\_github_exporter_example_monorepo_port_app_config.mdx'
 
@@ -53,6 +55,17 @@ import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
 # Resource mapping examples
 
+:::warning General permissions limitation with gitHub cloud app
+When using the GitHub Cloud app with Port, certain fields and data points may not be accessible due to the lack of `write` API permissions. These limitations affect advanced repository settings, security features (such as code scanning and secret scanning status), and other GitHub objects that require elevated permissions to retrieve data.
+
+If you need to ingest these fields, consider one of the following approaches:
+- Use our [self-hosted](/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation) GitHub app which gives you options to enable appropriate `write` permissions.
+
+- Implement a GitHub workflow to manually gather and send the required data to Port.
+
+Refer to specific sections below where these limitations might apply.
+:::
+
 ## Map repositories and pull requests
 
 In the following example you will ingest your GitHub repositories, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
@@ -63,7 +76,7 @@ In the following example you will ingest your GitHub repositories, their README.
 
 <PortAppConfig/>
 
-:::tip
+:::tip setup and github object structures
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -96,7 +109,7 @@ In the following example you will ingest your GitHub repositories, their workflo
 
 <PortWfWfrAppConfig/>
 
-:::tip
+:::tip additional resources
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -118,7 +131,7 @@ In the following example you will ingest your GitHub repositories and their issu
 
 <PortIssueAppConfig/>
 
-:::tip
+:::tip useful links and setup guidance
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -137,7 +150,7 @@ In the following example you will ingest your GitHub repositories and their fold
 
 <PortMonoRepoAppConfig/>
 
-:::tip
+:::tip retrieving monorepo root folders
 To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
 
 ```yaml
@@ -152,7 +165,8 @@ To retrieve the root folders of your monorepo, you can use this following syntax
 ```
 
 :::
-:::tip
+
+:::tip setup guidance and object structures
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process;
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
@@ -177,7 +191,7 @@ In the following example you will ingest your GitHub repositories, the repositor
 
 In the following example you will ingest your GitHub repositories and their teams to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
 
-:::note
+:::note team mapping requirement
 Teams are GitHub organization level resources, therefore you will need to specify the mapping of the teams in a [global integration configuration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) (Through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
 :::
 
@@ -187,7 +201,7 @@ Teams are GitHub organization level resources, therefore you will need to specif
 
 <PortRepositoryTeamMappingAppConfig/>
 
-:::tip
+:::tip adding teams to repository selector
 To retrieve the teams of your repositories, you will need to add the `teams` property to the `selector` in the repository resource kind in your `port-app-config.yml`:
 
 ```yaml
@@ -199,6 +213,7 @@ To retrieve the teams of your repositories, you will need to add the `teams` pro
 ```
 
 :::
+
 
 ## Map repositories, deployments and environments
 
@@ -212,9 +227,9 @@ In the following example you will ingest your GitHub repositories, their deploym
 
 <PortRepoDeploymentAndEnvironmentAppConfig/>
 
-## Map repositories, Dependabot Alerts and Code scan alerts
+## Map repositories, Dependabot Alerts, and Code scan alerts
 
-In the following example you will ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example shows how to ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) into Port. You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -225,7 +240,19 @@ In the following example you will ingest your GitHub repositories and their aler
 <PortRepositoryDependabotAlertMappingAppConfig/>
 
 :::info supported alerts
-For Code scan alerts only open alerts on the default branch are supported
+For Code scan alerts, only open alerts on the default branch are supported.
+:::
+
+- `allow_squash_merge`
+- Advanced security status (e.g., whether code scanning or secret scanning is enabled)
+
+If you need to ingest these fields, consider using a self-hosted GitHub app with the appropriate permissions or creating a GitHub workflow to manually gather and ingest this data into Port.
+
+:::tip self-hosted gitHub app option
+For users who need access to the full range of repository fields, including enabling WRITE permissions, we recommend setting up a self-hosted GitHub app. This allows full customization of permissions, ensuring all necessary data can be ingested into Port.
+Refer to our [Self-Hosted Installation Guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation/) for detailed instructions.
+
+Alternatively, you can create a GitHub workflow that gathers the required data and sends it to Port, allowing you to work around the limitations of the Cloud app.
 :::
 
 ## Map repositories and branches
@@ -237,6 +264,17 @@ In the following example you will ingest your GitHub repositories and their bran
 <BranchBlueprint/>
 
 <PortBrAppConfig/>
+
+## Map repositories and last contributor
+
+In the following example you will ingest your GitHub repositories and their last contributor to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+
+<LastContributorBlueprint/>
+<LastContributorAppConfig/>
+
+:::info supported last contributor
+The last contributor is the author of the last commit in the default branch of the repository
+:::
 
 ## Map repositories and branch protection rules
 
@@ -289,7 +327,7 @@ In the following example you will ingest your GitHub repositories, their release
 
 ## Map supported resources
 
-The above examples shows a specific use cases, but Port's GitHub app supports the ingestion of many other GitHub objects, to adapt the examples above, use the GitHub API reference to learn about the available fields for the different supported objects:
+The above examples show a specific use cases, but Port's GitHub app supports the ingestion of many other GitHub objects, to adapt the examples above, use the GitHub API reference to learn about the available fields for the different supported objects:
 
 <GitHubResources/>
 

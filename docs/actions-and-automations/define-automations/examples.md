@@ -2,7 +2,9 @@
 sidebar_position: 3
 title: Examples
 ---
-
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import SlackTeamsMessagingWebhook from "/docs/actions-and-automations/define-automations/templates/_slack_teams_webhook_setup_instructions.mdx"
 
 # Examples
@@ -202,5 +204,3 @@ jobs:
         run: |
           curl -H 'Content-Type: application/json' -d '{"text": "The TTL property of service ${{ inputs.service_name }} has expired."}' $TEAMS_WEBHOOK_URL
 ```
-
----

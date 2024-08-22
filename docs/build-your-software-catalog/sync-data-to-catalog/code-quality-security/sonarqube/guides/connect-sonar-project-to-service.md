@@ -4,7 +4,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide aims to demonstrate how to connect a SonarQube project to a service in Port.
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - Ensure you have [SonarQube ocean integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md) installed and configured in your environment.

@@ -18,11 +18,11 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # PagerDuty
 
-Our PagerDuty integration allows you to import `schedules`, `oncalls`, `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
+Our PagerDuty integration allows you to import `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` from your PagerDuty account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `schedules`, `oncalls`, `services` and `incidents` in your PagerDuty organization environment.
+- Map `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` in your PagerDuty organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -35,7 +35,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -167,12 +173,6 @@ kubectl apply -f my-ocean-pagerduty-integration.yaml
 </Tabs>
 
 <AdvancedConfig/>
-
-</TabItem>
-
-<TabItem value="hosted-by-port" label="Hosted by Port">
-
-<OceanSaasInstallation/>
 
 </TabItem>
 
@@ -407,6 +407,7 @@ The following resources can be used to map data from PagerDuty, it is possible t
 - [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
 - [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
 - [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
+- [`Escalation Policy`](https://developer.pagerduty.com/api-reference/51b21014a4f5a-list-escalation-policies)
 
 :::
 
@@ -883,6 +884,82 @@ resources:
             relations:
               pagerdutyService: .service.id
 ```
+
+</details>
+
+### Escalation Policy
+
+<details>
+<summary>Escalation Policy blueprint</summary>
+
+```json showLineNumbers
+{
+   "identifier": "pagerdutyEscalationPolicy",
+   "description": "This blueprint represents a PagerDuty escalation policy in our software catalog",
+   "title": "PagerDuty Escalation Policy",
+   "icon": "pagerduty",
+   "schema": {
+      "properties": {
+         "url": {
+            "title": "URL",
+            "type": "string",
+            "format": "url"
+         },
+         "summary": {
+            "title": "Summary",
+            "type": "string"
+         },
+         "primaryOncall": {
+            "title": "Primary Oncall",
+            "type": "string",
+            "format": "user"
+         },
+         "escalationRules": {
+            "title": "Escalation Rules",
+            "type": "array",
+            "items": {
+               "type": "object"
+            }
+         }
+      },
+      "required": []
+   },
+   "mirrorProperties": {},
+   "calculationProperties": {},
+   "aggregationProperties": {},
+   "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+   - kind: escalation_policies
+     selector:
+       query: 'true'
+       attachOncallUsers: 'true'
+     port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"pagerdutyEscalationPolicy"'
+          properties:
+            url: .html_url
+            description: .summary
+            primaryOncall: .__oncall_users | sort_by(.escalation_level) | .[0].user.email
+            escalationRules: .escalation_rules
+```
+ 
+:::tip Attach oncall users
+When `attachOncallUsers` is set to `true`, it fetches the oncall data per escalation policy. To disable this feature, set the value to `false`.
+:::
 
 </details>
 

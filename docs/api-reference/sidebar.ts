@@ -212,6 +212,12 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
+          id: "api-reference/execute-a-self-service-action",
+          label: "Execute a self-service action",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
           id: "api-reference/patch-an-action-run",
           label: "Patch an action run",
           className: "api-method patch",
@@ -224,7 +230,7 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/approve-an-actions-run",
+          id: "api-reference/approve-an-action-run",
           label: "Approve an action's run",
           className: "api-method patch",
         },
@@ -496,7 +502,7 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Organizations",
+      label: "Organization",
       items: [
         {
           type: "doc",
@@ -515,9 +521,69 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/update-organization-details",
           label: "Change an organization",
           className: "api-method put",
-        }
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-all-organization-secrets",
+          label: "Get all organization secrets",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-an-organization-secret",
+          label: "Create an organization secret",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/patch-an-organization-secret",
+          label: "Patch an organization secret",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-an-organization-secret",
+          label: "Delete an organization secret",
+          className: "api-method delete",
+        },
       ],
-    }
+    },
+    {
+      type: "category",
+      label: "Apps",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-all-credentials",
+          label: "Get all credentials",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-credentials",
+          label: "Create credentials",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/rotate-secret",
+          label: "Rotate secret",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-credentials",
+          label: "Delete credentials",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-credentials",
+          label: "Update credentials",
+          className: "api-method put",
+        },
+      ],
+    },
   ],
 };
 

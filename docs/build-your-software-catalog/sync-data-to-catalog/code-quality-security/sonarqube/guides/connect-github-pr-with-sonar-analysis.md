@@ -11,7 +11,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide aims to cover how to connect a GitHub pull request with a SonarQube analysis to understand the scan results of your PR.
 
-:::tip Prerequisites
+:::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
 - Ensure you have [SonarQube ocean integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md) installed and configured in your environment.
@@ -194,39 +194,126 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 <br/><br/>
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant SonarQube analysis to each of our pull requests. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your SonarQube integration:
-
-<img src='/img/guides/sonarQubeIntegrationDataSource.png' border='1px' />
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related,
+we need to assign the relevant SonarQube analysis to each of our pull requests.
+This can be done by adding some mapping logic.
+Go to your [data sources page](https://app.getport.io/settings/data-sources),
+and click on your GitHub Pull Request integration:
+<img src='/img/guides/githubPrIntegrationDataSource.png' border='1px' />
 
 <br/><br/>
 
-Under the `resources` key, the following YAML block to map the pull request entities with analysis. Then click `Save & Resync`:
+## Relation Mapping
+There are two ways
+to establish the relationship between a GitHub `pull-request` entity and a SonarQube `analysis` entity:
 
-<details>
-<summary>Relation mapping (click to expand)</summary>
+### Matching Common Pull Request Title and Branch
+
+The first way is to use the `title` and `branch` properties:
+- **Why use `title` and `branch` properties?**
+  The `title` property is common to both GitHub pull requests and SonarQube analyses,
+  making it a reliable identifier for matching related entities.
+  The `branch` property gives information about the source and destination of the the code changes. Combining the title with the branch offers a robust mapping, ensuring that entities are correctly matched in situations where there are similar pull request titles but on different branches.
+
+- Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the GitHub exporter:
+  <img src='/img/guides/githubExporter.png' width='100%' border='1px' />
+
+
+- Replace the mapping YAML with this content:
+
+  ```yaml showLineNumbers
+  resources:
+     - kind: pull-request
+       selector:
+          query: 'true'
+       port:
+          entity:
+             mappings:
+                identifier: .head.repo.name + '-' + (.number|tostring)
+                title: .title
+                blueprint: '"githubPullRequest"'
+                properties:
+                   creator: .user.login
+                   assignees: '[.assignees[].login]'
+                   reviewers: '[.requested_reviewers[].login]'
+                   status: .status
+                   closedAt: .closed_at
+                   updatedAt: .updated_at
+                   mergedAt: .merged_at
+                   prNumber: .id
+                   link: .html_url
+                relations:
+                   sonarAnalysis:
+                      combinator: '"and"'
+                      rules:
+                         - property: '"$title"'
+                           operator: '"="'
+                           value: .title
+                         - property: '"branch"'
+                           operator: '"="'
+                           value: .head.ref
+
+  ```
+
+This configuration uses the `title` and `branch` properties to establish a relationship with SonarQube analysis based on matching properties.
+
+### Matching Pull Request Commit SHA
+
+The second way is to use the `commitSha` property that is common to both the pull request and SonarQube analysis:
+   
+- Go to the [data model](https://github.com/port-labs/port-docs/pull/link-to-data-model) page of your portal
+- Go to the `SonarQube` <PortTooltip id="blueprint">blueprint</PortTooltip>.
+- Hover over it, click on the `...` button on the right, and select `Edit JSON`.
+<br></br>
+
+<img src='/img/guides/sonarQubeAnalysisBlueprintUpdate.png' width='40%' border='1px' />
+
+<br></br>
+
+Add the `commitSha` **property** and `Save`:
+
+- Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on the GitHub exporter:
+
+- Replace the `pull-request` mapping YAML with this content:
 
 ```yaml showLineNumbers
-  - kind: analysis
-    selector:
-      query: . | has("pullRequest")
-    port:
-      entity:
-        mappings:
-          blueprint: '"githubPullRequest"'
-          identifier: .__component.name + "-" + .pullRequest.key
-          title: .pullRequest.commit.message
-          properties: {}
-          relations:
-            sonarAnalysis: .analysisId
+  resources:
+     - kind: pull-request
+       selector:
+          query: 'true'
+       port:
+          entity:
+             mappings:
+                identifier: .head.repo.name + '-' + (.number|tostring)
+                title: .title
+                blueprint: '"githubPullRequest"'
+                properties:
+                   creator: .user.login
+                   assignees: '[.assignees[].login]'
+                   reviewers: '[.requested_reviewers[].login]'
+                   status: .status
+                   closedAt: .closed_at
+                   updatedAt: .updated_at
+                   mergedAt: .merged_at
+                   prNumber: .id
+                   link: .html_url
+                relations:
+                   sonarAnalysis:
+                      combinator: '"and"'
+                      rules:
+                         - property: '"commitSha"'
+                           operator: '"="'
+                           value: .head.sha
+
 ```
 
-</details>
 
 :::tip Mapping explanation
 
-The configuration mapping above uses the `query` key to filter all SonarQube analyses that have `pullRequest` data. It then goes ahead to establish a relation between the `githubPullRequest` entities and the `sonarAnalysis` entities &nbsp;🎉. 
-
-Please note that the `__component.name` property refers to the name of the repository, while the `pullRequest.key` property indicates the pull request number. In our GitHub integration mapping, we have defined these two pieces of information as the identifiers for the `githubPullRequest` entities.
+In this implementation,
+we used search relation features
+to map relationships between `githubPullRequest` entities and `sonarAnalysis` entities based on specific **properties** rather than direct identifiers.
+By using **properties** like `title`, `branch`, and `commitSha`, we are able to establish a between the two entities.
 :::
 
 <img src='/img/guides/githubPREntityAfterAnalysisMapping.png' width="70%" border='1px' />

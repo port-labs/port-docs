@@ -17,15 +17,20 @@
         "title": "Service URL",
         "type": "string",
         "format": "url"
+      },
+      "defaultBranch": {
+        "title": "Default Branch",
+        "type": "string"
       }
     },
     "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
     "githubTeams": {
-      "title": "GitHub teams",
+      "title": "GitHub Teams",
       "target": "githubTeam",
       "required": false,
       "many": true

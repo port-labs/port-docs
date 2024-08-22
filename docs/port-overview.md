@@ -47,19 +47,19 @@ Drive developer productivity by allowing developers to run free and use self-ser
 
 Port scorecards let you define and track standards and KPIs for quality, production readiness, productivity, and more. Drive visibility and a culture of software quality.
 
-[Software Maturity Live Demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=5) 🎬
+[Software Maturity Live Demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=1) 🎬
 
 #### Workflow automation
 
 With Port, you can set up automations to automatically respond to events from your software catalog such as `TTL=0`, service degradation, and many more. This allows you to streamline your engineering processes, maintain a high level of performance, security, and compliance, and ensure your systems run smoothly.
 
-[Workflow Automation Live Demo ](https://demo.getport.io/self-serve) 🎬
+[Workflow Automation Live Demo ](https://demo.getport.io/settings/automations) 🎬
 
 #### R&D Insights & Reports
 
 R&D Insights & Reports is a pillar of port that provides data-driven insights and analytical reports on the development process. It allows teams, developers, and management to make informed decisions based on metrics, trends, and usage patterns to improve the development process, optimize performance, and reduce cost.
 
-[Insights & Reports live demo](https://demo.getport.io/svp_engineering) 🎬
+[Insights & Reports live demo](https://demo.getport.io/engineering_overview) 🎬
 
 ## Usage methods
 

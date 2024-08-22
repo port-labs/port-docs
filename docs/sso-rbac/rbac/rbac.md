@@ -1,4 +1,5 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
 
 # Port Roles & User management
 
@@ -33,7 +34,8 @@ For example, if **Members** are allowed to edit `Cluster` entities, then `Micros
 
 You can view (and edit) each user’s role in the users table:
 
-![Users page](/img/software-catalog/role-based-access-control/permissions/usersPageRolesHightlight.png)
+<img src="/img/software-catalog/role-based-access-control/permissions/usersPageRolesHightlight.png" width="70%" border='1px' />
+<br/><br/>
 
 Refer to the [Users and Teams](#users-and-teams-management) section for more information about the users page
 
@@ -67,7 +69,7 @@ Users and teams can be managed via:
 
 ### Users & Teams Page
 
-![Teams and Users page](/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png)
+<img src="/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png" width="80%" border='1px' />
 
 #### Users tab
 
@@ -147,7 +149,8 @@ Entity JSON example with `team` field:
 
 Team dropdown selector in the entity create/edit page:
 
-![Team property](/img/software-catalog/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png)
+<img src="/img/software-catalog/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png" width="70%" border='1px' />
+<br/><br/>
 
 | Field | Type | Description                                            | Default      |
 | ----- | ---- | ------------------------------------------------------ | ------------ |
@@ -162,6 +165,8 @@ Okta and AzureAD integrations are only available after configuring SSO from the 
 :::
 
 ### Users and teams as blueprints
+
+<BetaFeatureNotice />
 
 Port allows you to manage users and teams as <PortTooltip id="blueprint">blueprints</PortTooltip>.  
 This option is disabled by default, and can be [enabled via Port's API](/sso-rbac/rbac/#enable-the-feature). 
@@ -200,3 +205,76 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
 1. Go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`. 
 2. Click on the `Generate API token` button, and copy the generated token.
 :::
+
+#### Consequent changes
+
+After enabling this feature, some functionalities will be affected:
+
+- Any search query that includes `$team` will use the team's `identifier` instead of its `name`.  
+  For example:
+  ```json
+  {
+    "operator": "containsAny",
+    "property": "$team",
+     "value": ["team-identifier"] // instead of ["team-name"]
+  }
+  ```
+  This change will affect all search queries that include the `$team` property, in any component (widget filters, entity search, dynamic permissions, etc.).  
+  **Note** that the [getUserTeams()](/search-and-query/#dynamic-properties) function will automatically return the team's `identifier`, so it can be used as is.
+
+- In [Advanced input configurations](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations) of self-service actions, when using a [jqQuery](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations#filter-the-dropdowns-available-options-based-on-properties-of-the-user-that-executes-the-action), team identifiers should be used instead of team names.  
+  Also, when using `.user` in the jqQuery, you have access any of the user's properties and/or relations.  
+  For example:
+  ```json showLineNumbers
+  {
+    "properties": {
+      "namespace": {
+        "type": "string",
+        "format": "entity",
+        "blueprint": "namespace",
+        "dataset": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "$team",
+              "operator": "containsAny",
+              "value": {
+                "jqQuery": "[.user.relations.teams[].identifier]" // instead of [.user.teams[].name]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+  ```
+
+- In [dynamic permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions) of self-service actions, under the `rules` and/or `conditions` keys, you can access the entire user object, including its properties and relations.  
+  For example:
+  ```json showLineNumbers
+  {
+    "policy": {
+      "queries": {
+        "search_entity": {
+          "rules": [
+            {
+              "value": "service",
+              "operator": "=",
+              "property": "$blueprint"
+            },
+            {
+              "value": "{{ .inputs.name }}",
+              "operator": "=",
+              "property": "$identifier"
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "conditions": [
+        // highlight-next-line
+        ".user.properties.role == \"Manager\""
+      ]
+    }
+  }
+  ``` 
