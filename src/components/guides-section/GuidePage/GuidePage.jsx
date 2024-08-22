@@ -5,6 +5,7 @@ import Tags from "/src/components/guides-section/Tag/Tags.jsx";
 import SearchBar from "/src/components/guides-section/SearchBar/SearchBar.jsx";
 import GuideCards from "/src/components/guides-section/GuideCard/GuideCards.jsx";
 import { availableGuides } from "../consts.js";
+import ResetIcon from "/static/img/guides/icons/Reset.svg";
 
 function GuidePage() {
   const [searchText, setSearchText] = useState('');
@@ -19,8 +20,8 @@ function GuidePage() {
   };
 
   const filteredGuides = availableGuides.filter((guide) => {
-    const matchesTag = selectedTags.length === 0 || selectedTags.every((tag) => guide.tags.includes(tag));
-    const matchesSearch = guide.title.toLowerCase().includes(searchText.toLowerCase()) || guide.description.toLowerCase().includes(searchText.toLowerCase());
+    const matchesTag = selectedTags.length === 0 || selectedTags.every((tag) => guide.tags.includes(tag) || guide.logos.includes(tag));
+    const matchesSearch = guide.title.toLowerCase().includes(searchText.toLowerCase()) || guide.description.toLowerCase().includes(searchText.toLowerCase()) ;
     return matchesTag && matchesSearch;
   });
 
@@ -30,7 +31,8 @@ function GuidePage() {
         <div className="guide-tags-and-search-title-container">
           <Typography className="guide-tags-and-search-title">Filters</Typography>
           <div className="guide-tags-reset-button" onClick={() => { setSelectedTags([]); setSearchText(''); }}>
-            <img src="/img/guides/icons/Reset.svg" width="20px" className="not-zoom" />
+            {/* <img src="/img/guides/icons/Reset.svg" width="20px" className="not-zoom" /> */}
+            <ResetIcon className="reset-icon" />
             <Typography className="guide-tags-reset-button-text">Clear filters</Typography>
           </div>
         </div>

@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Tag from '/src/components/guides-section/Tag/Tag.jsx'
 import "/src/components/guides-section/styles.css";
+import { GetImage, GetImageLight } from '/src/components/guides-section/Utils.js';
 import { Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 
-function GuideCard({ title, description, tags, logos, category }) {
+function GuideCard({ title, description, tags, logos, category, link }) {
     const history = useHistory();
-    return <div className="guide-card" onClick={()=> history.push("/guides/prod/guides/create-cloud-resource-using-iac")}>
+    
+    return <div className="guide-card" onClick={()=> history.push(link)}>
         <div className='guide-card-header'>
             <div className='guide-card-header-left'>
                 {logos.map(logo => 
                     <div className='guide-card-header-img-box'>
-                    <img src={"/img/guides/icons/" + logo + ".svg"} width='32px' className='not-zoom'/>
+                    <img src={GetImage(logo)} onError={(e)=>{e.target.onError = null; e.target.src = GetImageLight(logo)}} width='32px' className='not-zoom'/>
                     </div>)
                 }
             </div>
