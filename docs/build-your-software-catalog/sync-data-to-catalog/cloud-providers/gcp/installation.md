@@ -280,6 +280,10 @@ gcp_organization = "<your_gcp_organization>"
 gcp_ocean_setup_project = "<your_gcp_project>" 
 gcp_included_projects = ["<your_gcp_project>"] # The Project list that the integration digests resources from.
 integration_identifier = "gcp"
+scheduled_resync_interval = 1440
+event_listener = {
+  type = "POLLING"
+}
 }' > main.tf
 # Initializing Terraform and Providers
 terraform init
