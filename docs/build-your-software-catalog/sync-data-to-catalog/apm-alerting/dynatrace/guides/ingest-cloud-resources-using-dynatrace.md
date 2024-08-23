@@ -123,7 +123,7 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .entityId
+          identifier: .displayName | gsub(" "; "-")
           title: .displayName
           blueprint: '"dynatraceEntityCloudResource"'
           properties:
@@ -140,7 +140,7 @@ Next, click on resync and watch your cloud resources from Dynatrace being ingest
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace/guides/dynatraceCloudResourcesResults.png' border='1px' />
 
-
+![alt text](image.png)
 ### Cloud entity types
 The `entityTypes` selector in the mapping above are entity types that corresponds to possible cloud resources in your Dynatrace environment. However, these are not the only types that are cloud resources. You can get the list of entity types, by making a GET request to `https://<your dynatrace environment ID>.live.dynatrace.com/api/v2/entityTypes`. Below is an exhaustive list of entity types you can use in the `entityTypes` selector:
 
