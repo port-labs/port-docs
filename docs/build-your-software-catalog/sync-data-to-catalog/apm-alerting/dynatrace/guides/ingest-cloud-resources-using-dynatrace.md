@@ -5,13 +5,12 @@ This guide aims to show you how to ingest cloud resources using Dynatrace to hav
 
 ## Common use cases
 - Map your monitored resources from cloud providers in Dynatrace
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
 This guide assumes the following:
 - You have a Port account and that you have finished the [onboarding process](/quickstart).
 - You have [installed and setup Port's Dynatrace integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace/dynatrace.md)
-- You have entities from cloud providers configured on Dynatrace. See Dynatrace documentation for this.
+- You have entities from cloud providers configured on Dynatrace. See [Dynatrace documentation](https://docs.dynatrace.com/managed#deploy-on) for this.
 
 
 ## Ingesting cloud resources into Port
@@ -25,20 +24,16 @@ We will be making use of the `entity` kind in Port's Dynatrace integration which
 - `cloud:gcp:pubsub_topic`
 - `cloud:gcp:gcs_bucket`
 - `cloud:gcp:gae_app`
-- `cloud:gcp:cloudsql_database`
-- `cloud:gcp:cloud_function`
-- `cloud:gcp:project`
-- `cloud:gcp:bigquery_biengine_model`
-- `cloud:gcp:autoscaler`
-- `cloud:gcp:gce_instance`
-- `cloud:gcp:autoscaler`
-- `cloud:gcp:cloud_run_revision`
-- `cloud:gcp:https_lb`
-- `cloud:gcp:instance_group`
-- `cloud:gcp:k8s_container`
-- `cloud:gcp:k8s_node`
-- `cloud:gcp:filestore_instance`
-- `cloud:gcp:pubsub_snapshot`
+- `cloud:aws:acmprivateca`
+- `cloud:aws:api_gateway`
+- `cloud:aws:app_runner`
+- `cloud:aws:appstream`
+- `cloud:aws:appsync`
+- `cloud:azure:apimanagement:service`
+- `cloud:azure:app:containerapps`
+- `cloud:azure:app:managedenvironments`
+- `cloud:azure:appconfiguration:configurationstores`
+- `cloud:azure:appplatform:spring`
 
 </details>
 
@@ -109,25 +104,21 @@ resources:
     selector:
       query: 'true'
       entityTypes:
-        - cloud:gcp:k8s_cluster
-        - cloud:gcp:pubsub_subscription
-        - cloud:gcp:pubsub_topic
-        - cloud:gcp:gcs_bucket
-        - cloud:gcp:gae_app
-        - cloud:gcp:cloudsql_database
-        - cloud:gcp:cloud_function
-        - cloud:gcp:project
-        - cloud:gcp:bigquery_biengine_model
-        - cloud:gcp:autoscaler
-        - cloud:gcp:gce_instance
-        - cloud:gcp:autoscaler
-        - cloud:gcp:cloud_run_revision
-        - cloud:gcp:https_lb
-        - cloud:gcp:instance_group
-        - cloud:gcp:k8s_container
-        - cloud:gcp:k8s_node
-        - cloud:gcp:filestore_instance
-        - cloud:gcp:pubsub_snapshot
+        - `cloud:gcp:k8s_cluster`
+        - `cloud:gcp:pubsub_subscription`
+        - `cloud:gcp:pubsub_topic`
+        - `cloud:gcp:gcs_bucket`
+        - `cloud:gcp:gae_app`
+        - `cloud:aws:acmprivateca`
+        - `cloud:aws:api_gateway`
+        - `cloud:aws:app_runner`
+        - `cloud:aws:appstream`
+        - `cloud:aws:appsync`
+        - `cloud:azure:apimanagement:service`
+        - `cloud:azure:app:containerapps`
+        - `cloud:azure:app:managedenvironments`
+        - `cloud:azure:appconfiguration:configurationstores`
+        - `cloud:azure:appplatform:spring`
         # see below section for more entity types
     port:
       entity:
@@ -151,7 +142,7 @@ Next, click on resync and watch your cloud resources from Dynatrace being ingest
 
 
 ### Cloud entity types
-The `entityTypes` selector in the mapping above are entity types that corresponds to possible cloud resources in your Dynatrace environment. However, these are not the only types that are cloud resources. Below is an exhaustive list of entity types you can use in the `entityTypes` selector:
+The `entityTypes` selector in the mapping above are entity types that corresponds to possible cloud resources in your Dynatrace environment. However, these are not the only types that are cloud resources. You can get the list of entity types, by making a GET request to `https://<your dynatrace environment ID>.live.dynatrace.com/api/v2/entityTypes`. Below is an exhaustive list of entity types you can use in the `entityTypes` selector:
 
 <details>
 <summary><b>Cloud resources entity types</b></summary>
