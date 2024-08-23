@@ -29,7 +29,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Create GitHub secret using GitHub workflows](/actions-and-automations/setup-backend/github-workflow/examples/create-github-secret.md)
 - [Script to ingest GitHub packages](https://github.com/port-labs/example-github-packages)
 - [Lock service deployment](/guides-and-tutorials/service-lock-github-workflow)
-- [Nudge PR reviewers](/docs/actions-and-automations/setup-backend/send-slack-message/examples/nudge-pr-reviewers.md)
+- [Nudge PR reviewers](/actions-and-automations/setup-backend/send-slack-message/examples/nudge-pr-reviewers)
 - [Promote to production](/actions-and-automations/setup-backend/github-workflow/examples/promote-to-production)
 - [Self-service action to lock and unlock a service](/actions-and-automations/setup-backend/github-workflow/examples/lock-and-unlock-service-in-port)
 - [Connect GitHub Codeowners with Service, Team and User](/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/connect-github-codeowners-with-service-team-and-user.md)
