@@ -44,7 +44,7 @@
     "@docusaurus/module-type-aliases": "^3.5.2",
     "@docusaurus/tsconfig": "^3.5.2",
     "@docusaurus/types": "^3.5.2",
-    "husky": "^9.1.4",
+    "husky": "^9.1.5",
     "pretty-quick": "^4.0.0",
     "typescript": "~5.5.4"
   },
