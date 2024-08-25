@@ -33,7 +33,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         logos: ["SDLC"],
         category: "Getting started",
-        link: "/guides/prod/guides/scaffold-a-new-service",
+        link: "/guides/all/scaffold-a-new-service",
     },
     {
         title: "Ensure production readiness",
@@ -41,7 +41,7 @@ export const availableGuides = [
         tags: ["Scorecards", "PagerDuty"],
         logos: ["SDLC", "PagerDuty"],
         category: "Getting started",
-        link: "/guides/prod/guides/ensure-production-readiness",
+        link: "/guides/all-guides/ensure-production-readiness",
     },
     {
         title: "Create cloud resources using IaC",
@@ -49,7 +49,7 @@ export const availableGuides = [
         tags: ["IaC", "AWS", "Actions", "Cloud access management"],
         logos: ["AWS", "SDLC"],
         category: "Getting started",
-        link: "/guides/prod/guides/create-cloud-resource-using-iac",
+        link: "/guides/all/create-cloud-resource-using-iac",
     },
     {
         title: "Visualize your services' k8s runtime",
@@ -57,7 +57,7 @@ export const availableGuides = [
         tags: ["K8s for devs", "Actions", "Dashboards", "Scorecards"],
         logos: ["Kubernetes" ],
         category: "Getting started",
-        link: "/guides/prod/guides/visualize-your-services-k8s-runtime",
+        link: "/guides/all-guides/visualize-your-services-k8s-runtime",
     },
     {
         title: "Visualize your services' k8s runtime using ArgoCD",
@@ -65,7 +65,7 @@ export const availableGuides = [
         tags: ["K8s for devs", "ArgoCD", "Actions", "Dashboards", "Scorecards"],
         logos: ["ArgoCD", "Kubernetes"],
         category: "Getting started",
-        link: "/guides/prod/guides/visualize-your-services-argocd-runtime",
+        link: "/guides/all-guides/visualize-your-services-argocd-runtime",
     },
     {
         title: "Enrich services using Gitops",
@@ -73,7 +73,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         logos: ["SDLC"],
         category: "Getting started",
-        link: "/guides/prod/guides/let-developers-enrich-services-using-gitops",
+        link: "/guides/all-guides/let-developers-enrich-services-using-gitops",
     },
     {
         title: "IAM permission management",
@@ -81,7 +81,7 @@ export const availableGuides = [
         tags: ["Cloud access management", "Actions", "RBAC"],
         logos: ["AWS" ],
         category: "Getting started",
-        link: "/guides/prod/guides/iam-permissions-guide",
+        link: "/guides/all-guides/iam-permissions-guide",
     },
     {
         title: "Lock service deployment",
@@ -89,7 +89,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         logos: ["SDLC", "Github"],
         category: "Getting started",
-        link: "/guides/prod/guides/let-developers-enrich-services-using-gitops",
+        link: "/guides/all-guides/let-developers-enrich-services-using-gitops",
     },
     {
         title: "Slack reminders for scorecards",
@@ -97,7 +97,7 @@ export const availableGuides = [
         tags: ["Engineering metrics", "Actions", "Scorecards"],
         logos: ["Slack"],
         category: "Getting started",
-        link: "/guides/prod/guides/setup-slack-reminders",
+        link: "/guides/all-guides/setup-slack-reminders",
     },
     {
         title: "Automate Slack alerts for old PRs",
@@ -105,7 +105,7 @@ export const availableGuides = [
         tags: ["SDLC", "Automations"],
         logos: ["Slack"],
         category: "Getting started",
-        link: "/guides/prod/guides/automated-slack-alert-for-old-prs",
+        link: "/guides/all-guides/automated-slack-alert-for-old-prs",
     },
     {
         title: "Manage resources using Kubernetes CRDs",
@@ -113,7 +113,7 @@ export const availableGuides = [
         tags: ["K8s for devs", "Actions"],
         logos: ["Kubernetes"],
         category: "Getting started",
-        link: "/guides/prod/guides/manage-resources-using-k8s-crds",
+        link: "/guides/all-guides/manage-resources-using-k8s-crds",
     },
     {
         title: "Automate incident management",
@@ -121,7 +121,7 @@ export const availableGuides = [
         tags: ["Incident management", "Automations"],
         logos: ["PagerDuty", "Github"],
         category: "Getting started",
-        link: "/guides/prod/guides/let-developers-enrich-services-using-gitops",
+        link: "/guides/all-guides/let-developers-enrich-services-using-gitops",
     },
     {
         title: "Resolve PagerDuty incidents",
@@ -129,7 +129,7 @@ export const availableGuides = [
         tags: ["Incident management", "Automations"],
         logos: ["PagerDuty", "Github"],
         category: "Getting started",
-        link: "/guides/prod/guides/let-developers-enrich-services-using-gitops",
+        link: "/guides/all-guides/let-developers-enrich-services-using-gitops",
     },
 ]
 

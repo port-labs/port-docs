@@ -21,7 +21,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub workflow self-service actions](/actions-and-automations/setup-backend/github-workflow/github-workflow.md)
 - [Sync repositories, file contents, pull-requests, workflows, teams and more](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md)
 - [Sync Dependabot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-dependabot-alerts)
-- [GitHub scaffolder using GitHub workflows](/guides-and-tutorials/scaffold-a-new-service.md?git-provider=github)
+- [GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-service.md?git-provider=github)
 - [GitHub scaffolder using Jenkins pipelines](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [GitHub scaffolder using FastAPI backend](/actions-and-automations/setup-backend/webhook/examples/software-templates.md)
 - [Deploy AWS resources using AWS CloudFormation](/actions-and-automations/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
@@ -41,7 +41,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitLab advanced file search and search checks](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/mapping_extensions.md)
 - [Sync GitLab pipelines](/build-your-software-catalog/custom-integration/api/ci-cd/gitlab-pipelines/gitlab-pipelines.md)
 - [GitLab pipeline self-service actions](/actions-and-automations/setup-backend/gitlab-pipeline/gitlab-pipeline.md)
-- [GitLab scaffolder](/guides-and-tutorials/scaffold-a-new-service.md?git-provider=gitlab)
+- [GitLab scaffolder](/guides/all/scaffold-a-new-service.md?git-provider=gitlab)
 - [Sync projects, file contents, merge-requests and more](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
 
 ### Bitbucket
@@ -89,7 +89,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Terraform provider](/build-your-software-catalog/custom-integration/iac/terraform/terraform.md)
 - [Terraform managed blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/Iac/terraform-managed-blueprint.md)
-<!-- - [Create cloud resources using IaC](/guides-and-tutorials/create-cloud-resource-using-iac.md) -->
+- [Create cloud resources using IaC](/guides/all/create-cloud-resource-using-iac.md)
 - [Terraform manage S3 buckets lifecycle](/build-your-software-catalog/custom-integration/iac/terraform/examples/s3-bucket.md)
 - [Terraform manage developer environment](/build-your-software-catalog/custom-integration/iac/terraform/examples/create-dev-env.md)
 - [Terraform no-code resource provisioning using self-service actions](/actions-and-automations/setup-backend/webhook/examples/terraform-no-code-resource-provisioning.md)
@@ -139,10 +139,10 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Cookiecutter
 
-- [Cookiecutter GitHub scaffolder using GitHub workflows](/guides-and-tutorials/scaffold-a-new-service.md?git-provider=github)
+- [Cookiecutter GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-service.md?git-provider=github)
 - [Cookiecutter GitHub scaffolder using Jenkins pipelines](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [Cookiecutter GitHub scaffolder using FastAPI backend](/actions-and-automations/setup-backend/webhook/examples/software-templates.md)
-- [Cookiecutter GitLab scaffolder using GitLab pipelines](/guides-and-tutorials/scaffold-a-new-service.md?git-provider=gitlab)
+- [Cookiecutter GitLab scaffolder using GitLab pipelines](/guides/all/scaffold-a-new-service.md?git-provider=gitlab)
 - [Cookiecutter Bitbucket scaffolder using Jenkins pipelines](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
 - [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/actions-and-automations/setup-backend/azure-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
 
