@@ -291,9 +291,9 @@ terraform init
 terraform apply
 ```
 
-<h2> Our module's configuration options </h2>
+<h2> Configuration options </h2>
 
-Our GCP Ocean integration's Terraform module offers a set of configurations:
+The Port GCP integration's Terraform module offers a set of configurations:
 
 | Configuration | Default value | Required | Description |
 | --- | --- | --- | --- |
