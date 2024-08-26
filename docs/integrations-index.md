@@ -287,9 +287,9 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Sync CircleCI workflows](/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/circleci-workflow.md)
 - [CircleCI actions](/actions-and-automations/setup-backend/circle-ci)
 
-## Backstage
+<!-- ## Backstage
 
-- [Import catalog from Backstage](/guides-and-tutorials/import-backstage-resources.md)
+- [Import catalog from Backstage](/guides-and-tutorials/import-backstage-resources.md) -->
 
 ## JFrog
 
