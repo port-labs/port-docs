@@ -225,6 +225,14 @@ The table will automatically display data about each run, including status, inpu
 
 <img src='/img/software-catalog/widgets/actionRunsTableExample.png' width='100%' />
 
+### Entity information
+
+This widget displays information about a specific entity, including its properties and scorecard compliance.
+
+Simply choose a blueprint and a specific entity, and the widget will display information similar to that found on the entity's page.
+
+<img src='/img/software-catalog/widgets/entityInformationExample.png' width='100%' border='1px' />
+
 ## Chart filters
 
 <ChartFilters />
