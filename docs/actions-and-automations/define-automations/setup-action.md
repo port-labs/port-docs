@@ -274,7 +274,45 @@ Below is an example of trigger data for an automation that triggers whenever an 
         "createdAt": "2024-08-15T12:29:45.817Z",
         "updatedAt": "2024-08-15T12:29:45.817Z"
       },
-      "affectedEntities": []
+      "affectedEntities": [
+        {
+          "identifier": "event_jz7DoTdpdiWF5vqb",
+          "action": "CREATE",
+          "resourceType": "entity",
+          "trigger": {
+            "at": "2024-08-26T06:23:34.877Z",
+            "by": {
+              "orgId": "org_BneDtWovPqXaA2VZ",
+              "appId": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+              "runId": "r_YpBfKZThzML9t4hq"
+            },
+            "origin": "API"
+          },
+          "context": {
+            "blueprintId": "bp_YjBvtqItU5nYQwVU",
+            "blueprint": "exampleBlueprint",
+            "entityId": "e_2WL7eCG9bkZV5fzQ",
+            "entity": "e_2WL7eCG9bkZV5fzQ"
+          },
+          "diff": {
+            "before": null,
+            "after": {
+              "identifier": "e_2WL7eCG9bkZV5fzQ",
+              "title": "string",
+              "icon": null,
+              "blueprint": "exampleBlueprint",
+              "team": [],
+              "properties": {},
+              "relations": {},
+              "createdAt": "2024-08-26T06:23:34.877Z",
+              "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+              "updatedAt": "2024-08-26T06:23:34.877Z",
+              "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ"
+            }
+          },
+          "status": "SUCCESS"
+        }
+      ]
     },
     "diff": {
       "before": {
