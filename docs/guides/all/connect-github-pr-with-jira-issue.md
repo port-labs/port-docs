@@ -1,6 +1,7 @@
 ---
 sidebar_position: 10
 title: Connect GitHub Pull Request with Jira Issue
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"

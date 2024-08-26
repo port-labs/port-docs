@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Scaffold a new service
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"

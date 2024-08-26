@@ -1,6 +1,7 @@
 ---
 sidebar_position: 8
 title: Send Slack reminders for scorecards
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"

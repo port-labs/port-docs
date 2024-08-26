@@ -362,4 +362,4 @@ More relevant guides and examples:
 
 - [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
 - [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)
-- [Connect GitHub repository with SonarQube Project](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/guides/connect-github-repository-with-sonarqube-project.md)
+- [Connect GitHub repository with SonarQube Project](https://docs.getport.io/guides/all/connect-github-repository-with-sonarqube-project.md)

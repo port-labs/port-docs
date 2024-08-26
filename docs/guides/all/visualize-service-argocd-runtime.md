@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
 sidebar_label: Visualize services' k8s runtime using ArgoCD
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"

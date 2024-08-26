@@ -6,6 +6,7 @@ tags:
   - Slack
   - Incident
   - GitHub
+displayed_sidebar: null
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
@@ -20,13 +21,13 @@ Solving incidents efficiently is a crucial part of any production-ready environm
 - **Documentation** - When there is an ongoing incident, it is important that different personas across the organization will be aware of it. Hence, it is important to document the incident in relevant places, for example as a Port entity, a GitHub issue or a Jira issue.
 - **Visibility** - While troubleshooting, it is important to provide information to all relevant personas and stakeholders in the organization. An ideal place to manage an incident would be a group chat with the relevant people.
 
-In this guide, we will be using Port's [Automations](../actions-and-automations/define-automations/define-automations.md) capabilities to automate incident management. 
+In this guide, we will be using Port's [Automations](/actions-and-automations/define-automations/define-automations.md) capabilities to automate incident management. 
 
 ## Prerequisites
 
 - Install Port's [GitHub app](https://github.com/apps/getport-io) in your GitHub organization.
-- Install Port's [PagerDuty integration](../build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md) for real-time incident ingestion to Port. This integration will in turn trigger our automation when a new incident is created in PagerDuty.
-- [Ingest GitHub issues](../build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-issues) using Port's GitHub app.
+- Install Port's [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md) for real-time incident ingestion to Port. This integration will in turn trigger our automation when a new incident is created in PagerDuty.
+- [Ingest GitHub issues](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-issues) using Port's GitHub app.
 - Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 - Prepare a GitHub repository for maintaining your GitHub workflows, and other dependency files. In this guide we will be using `port-actions` as the repository name. 
 - Configure a Slack app:
@@ -395,7 +396,7 @@ This automation will enable faster notification and response time when handling 
 
 ## Next Steps
 This guide can be enhanced to further meet your organization's needs. Here are some ideas you can implement:
-- Add a DAY-2 `Resolve incident` Port action to the `PagerDuty incident` which resolves the GitHub issue and sends an update in the Slack channel. You can use the following [guide](https://docs.getport.io/guides-and-tutorials/resolve-pagerduty-incident).
+- Add a DAY-2 `Resolve incident` Port action to the `PagerDuty incident` which resolves the GitHub issue and sends an update in the Slack channel. You can use the following [guide](https://docs.getport.io/guides/all/resolve-pagerduty-incident).
 - Add a mirror property in the `PagerDuty incident` blueprint, to show the GitHub issue `Link` in the PagerDuty entity page.
 - Filter the automation tirgger to only run for `High` urgency incidents.
 - Add the Port service owner to the Slack channel as part of the automation.

@@ -28,7 +28,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Deploy Azure resources using Terraform](/actions-and-automations/setup-backend/github-workflow/examples/Azure/create-azure-resource.md)
 - [Create GitHub secret using GitHub workflows](/actions-and-automations/setup-backend/github-workflow/examples/create-github-secret.md)
 - [Script to ingest GitHub packages](https://github.com/port-labs/example-github-packages)
-- [Lock service deployment](/guides-and-tutorials/service-lock-github-workflow)
+- [Lock service deployment](/guides/all/service-lock-github-workflow)
 - [Nudge PR reviewers](/actions-and-automations/setup-backend/github-workflow/examples/nudge-pr-reviewers)
 - [Promote to production](/actions-and-automations/setup-backend/github-workflow/examples/promote-to-production)
 - [Self-service action to lock and unlock a service](/actions-and-automations/setup-backend/github-workflow/examples/lock-and-unlock-service-in-port)
@@ -180,7 +180,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## PagerDuty
 
 - [PagerDuty integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
-- [Ensure production readiness](/guides-and-tutorials/ensure-production-readiness.md)
+- [Ensure production readiness](/guides/all/ensure-production-readiness.md)
 - [Self service for a new PagerDuty incident using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/pagerduty)
 - [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
 - [Self-service action to trigger a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
@@ -190,7 +190,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Self-service action to change a PagerDuty oncall](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)
 - [Self-service action to resolve a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident)
 - PagerDuty Incident Management
-    - [Automation to handle PagerDuty incidents](https://docs.getport.io/guides-and-tutorials/create-slack-channel-for-reported-incident)
+    - [Automation to handle PagerDuty incidents](https://docs.getport.io/guides/all/create-slack-channel-for-reported-incident)
     - [Self-service action to resolve Pagerduty incidents](https://docs.getport.io/guides-and-tutorials/resolve-pagerduty-incidents) - including Slack channel notification and closing GitHub issue.
 
 ## Jira

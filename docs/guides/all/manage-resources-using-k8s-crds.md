@@ -1,6 +1,7 @@
 ---
 sidebar_position: 11
 title: Manage resources using Kubernetes CRDs
+displayed_sidebar: null
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"

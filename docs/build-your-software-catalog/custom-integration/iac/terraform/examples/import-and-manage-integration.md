@@ -17,7 +17,7 @@ In this example we'll use the Import State feature of Terraform, then manage our
 
 ## Prerequisites
 
-You will need to create an integration within the Port UI, For example the [Kubernetes Exporter](../../../../../guides-and-tutorials/visualize-service-k8s-runtime)
+You will need to create an integration within the Port UI, For example the [Kubernetes Exporter](/guides/all/visualize-service-k8s-runtime)
 
 :::note  Installation Id
 As you create the integration, take note of the installation Id.

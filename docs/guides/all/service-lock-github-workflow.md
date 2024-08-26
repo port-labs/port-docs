@@ -1,6 +1,7 @@
 ---
 sidebar_position: 8
 sidebar_label: Lock service deployment
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"

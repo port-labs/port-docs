@@ -1,6 +1,7 @@
 ---
 sidebar_position: 9
 title:  Automated Slack Alert for Old PRs
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"

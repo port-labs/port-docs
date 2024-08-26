@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: Visualize services' k8s runtime
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"

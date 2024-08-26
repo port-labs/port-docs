@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: Ensure production readiness
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"

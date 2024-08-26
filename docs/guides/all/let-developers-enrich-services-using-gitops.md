@@ -1,6 +1,7 @@
 ---
 sidebar_position: 6
 title: Enrich services using Gitops
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"
@@ -218,7 +219,7 @@ We will create the `PROJECT_ID` and `TRIGGER_TOKEN` in the next section and come
 :::info Webhook protection
 
 The webhook URL can be triggered by anyone with access to it.  
-In order to protect the webhook, see the [Validating webhook signatures page](../actions-and-automations/setup-backend/webhook/signature-verification.md).
+In order to protect the webhook, see the [Validating webhook signatures page](/actions-and-automations/setup-backend/webhook/signature-verification.md).
 
 :::
 

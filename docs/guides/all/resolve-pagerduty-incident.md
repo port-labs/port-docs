@@ -6,6 +6,7 @@ tags:
   - Slack
   - Incident
   - GitHub
+displayed_sidebar: null
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
@@ -23,12 +24,12 @@ Solving incidents efficiently is a crucial part of any production-ready environm
 While it is important to efficiently manage an incident as it is being addressed, it is also just as important to efficiently summarize the incident and perform cleanup. In this guide, we will be using Port's [Self-Service Actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/) capabilities to efficiently resolve and cleanup the resources related to the PagerDuty incident.
 
 ## Prerequisites
-- Complete the [Automating incident management](https://docs.getport.io/guides-and-tutorials/create-slack-channel-for-reported-incident) guide.
+- Complete the [Automating incident management](https://docs.getport.io/guides/all/create-slack-channel-for-reported-incident) guide.
 - User email of a member in your PagerDuty account.
 
 
 ## Data model setup
-For this guide, we will be using the same data model as in the [Automating incident management](https://docs.getport.io/guides-and-tutorials/create-slack-channel-for-reported-incident) guide.
+For this guide, we will be using the same data model as in the [Automating incident management](https://docs.getport.io/guides/all/create-slack-channel-for-reported-incident) guide.
 
 
 ### Action backend
@@ -203,7 +204,7 @@ jobs:
 </details>
 
 
-Make sure you created the following secrets in your GitHub repository (If you followed the [incident automation guide](https://docs.getport.io/guides-and-tutorials/create-slack-channel-for-reported-incident) then they should all already be in place):
+Make sure you created the following secrets in your GitHub repository (If you followed the [incident automation guide](https://docs.getport.io/guides/all/create-slack-channel-for-reported-incident) then they should all already be in place):
 - `PORT_CLIENT_ID` - Your Port client ID.
 - `PORT_CLIENT_SECRET` - Your Port client secret.
 - `BOT_USER_OAUTH_TOKEN` - The Slack app bot token.

@@ -529,4 +529,4 @@ Below is the result of a successful service lock and unlock alert sent to a Slac
 <img src="/img/self-service-actions/unlockServiceSlackAlert.png" border="1px" />
 
 ## More relevant guides and examples
-- [Mini guide on controlling deployment using service lock](/guides-and-tutorials/service-lock-github-workflow.md)
+- [Mini guide on controlling deployment using service lock](/guides/all/service-lock-github-workflow.md)
