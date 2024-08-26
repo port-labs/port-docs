@@ -29,10 +29,7 @@ import PortFolderMappingAppConfig from './example-repository-folders/\_github_ex
 
 import TeamBlueprint from './example-repository-teams/\_github_export_example_team_blueprint.mdx'
 import RepositoryTeamBlueprint from './example-repository-teams/\_github_export_example_repository_with_teams_relation_blueprint.mdx'
-import RepositoryUserTeamBlueprint from './example-repository-teams/\_github_export_example_team_with_github_user_relation_blueprint.mdx'
-import RepositoryUserBlueprint from './example-repository-teams/\_github_export_example_github_user_blueprint.mdx'
 import PortRepositoryTeamMappingAppConfig from './example-repository-teams/\_github_exporter_example_repository_with_teams_port_app_config.mdx'
-import PortRepositoryTeamUserMappingAppConfig from './example-repository-teams/\_github_exporter_example_repository_with_teams_and_users_port_app_config.mdx'
 
 import DependabotAlertBlueprint from './example-repository-alerts/\_github_exporter_example_dependabot_alert_blueprint.mdx'
 import CodeScanAlertBlueprint from './example-repository-alerts/\_github_exporter_example_codeScan_alert_blueprint.mdx'
@@ -57,6 +54,17 @@ import PackageAppConfig from './example-file-kind/\_package_json_app_config.mdx'
 
 
 # Resource mapping examples
+
+:::warning General permissions limitation with gitHub cloud app
+When using the GitHub Cloud app with Port, certain fields and data points may not be accessible due to the lack of `write` API permissions. These limitations affect advanced repository settings, security features (such as code scanning and secret scanning status), and other GitHub objects that require elevated permissions to retrieve data.
+
+If you need to ingest these fields, consider one of the following approaches:
+- Use our [self-hosted](/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation) GitHub app which gives you options to enable appropriate `write` permissions.
+
+- Implement a GitHub workflow to manually gather and send the required data to Port.
+
+Refer to specific sections below where these limitations might apply.
+:::
 
 ## Map repositories and pull requests
 
@@ -206,33 +214,6 @@ To retrieve the teams of your repositories, you will need to add the `teams` pro
 
 :::
 
-## Map Repositories, Teams, and Team Members
-
-In the following example, you will ingest your GitHub repositories, their associated teams, and the members within those teams into Port. You may use the following Port blueprint definitions and `port-app-config.yml`:
-
-:::note teams mapping
-Teams are GitHub organization-level resources, therefore, you will need to specify the mapping of the teams and their members in a [global integration configuration](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) (through Port's UI or through the `port-app-config.yml` file in the `.github-private` repository).
-:::
-
-<RepositoryUserBlueprint/>
-
-<RepositoryUserTeamBlueprint/>
-
-<RepositoryTeamBlueprint/>
-
-<PortRepositoryTeamUserMappingAppConfig/>
-
-:::tip repository teams
-To retrieve the teams of your repositories, you will need to add the `teams` property to the `selector` in the repository resource kind in your `port-app-config.yml`:
-
-```yaml
-- kind: repository
-  selector:
-    query: 'true'  # JQ boolean query. If evaluated to false - skip syncing the object.
-    teams: true  # Boolean flag to indicate whether to include the repository teams.
-```
-:::
-
 
 ## Map repositories, deployments and environments
 
@@ -246,9 +227,9 @@ In the following example you will ingest your GitHub repositories, their deploym
 
 <PortRepoDeploymentAndEnvironmentAppConfig/>
 
-## Map repositories, Dependabot Alerts and Code scan alerts
+## Map repositories, Dependabot Alerts, and Code scan alerts
 
-In the following example you will ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+The following example shows how to ingest your GitHub repositories and their alerts (Dependabot and Code scan alerts) into Port. You can use the following Port blueprint definitions and `port-app-config.yml`:
 
 <RepositoryBlueprint/>
 
@@ -259,7 +240,19 @@ In the following example you will ingest your GitHub repositories and their aler
 <PortRepositoryDependabotAlertMappingAppConfig/>
 
 :::info supported alerts
-For Code scan alerts only open alerts on the default branch are supported
+For Code scan alerts, only open alerts on the default branch are supported.
+:::
+
+- `allow_squash_merge`
+- Advanced security status (e.g., whether code scanning or secret scanning is enabled)
+
+If you need to ingest these fields, consider using a self-hosted GitHub app with the appropriate permissions or creating a GitHub workflow to manually gather and ingest this data into Port.
+
+:::tip self-hosted gitHub app option
+For users who need access to the full range of repository fields, including enabling WRITE permissions, we recommend setting up a self-hosted GitHub app. This allows full customization of permissions, ensuring all necessary data can be ingested into Port.
+Refer to our [Self-Hosted Installation Guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation/) for detailed instructions.
+
+Alternatively, you can create a GitHub workflow that gathers the required data and sends it to Port, allowing you to work around the limitations of the Cloud app.
 :::
 
 ## Map repositories and branches
