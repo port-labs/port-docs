@@ -274,6 +274,7 @@ Below is an example of trigger data for an automation that triggers whenever an 
         "createdAt": "2024-08-15T12:29:45.817Z",
         "updatedAt": "2024-08-15T12:29:45.817Z"
       },
+      // "affectedEntities" will contain up to 10 entities that were affected by the action run
       "affectedEntities": [
         {
           "identifier": "event_jz7DoTdpdiWF5vqb",
@@ -392,6 +393,11 @@ Below is an example of trigger data for an automation that triggers whenever an 
   }
 }
 ```
+
+:::tip Affected entities
+The `affectedEntities` array will contain diffs of the entities that were affected by the action run. This can be used in the payload.  
+Note that the array will contain up to 10 items to avoid payload size issues.
+:::
 
 The example above is for an automation that uses the `RUN_UPDATED` trigger event. The `event.diff` object contains data from `before` and `after` the update.  
 
