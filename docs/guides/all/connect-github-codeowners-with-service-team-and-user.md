@@ -1,4 +1,8 @@
-# Connect GitHub CODEOWNERS with Service, GitHub Team and User
+---
+displayed_sidebar: null
+---
+
+# Connect GitHub CODEOWNERS with Service, Team & User
 
 This guide shows you how to map CODEOWNERS file patterns in GitHub repositories (Service) to their respective Service, Team and User in port.
 
@@ -15,14 +19,13 @@ The goal of this section is to fill the software catalog with data directly from
 ### Steps
 
 1. Create the following GitHub action secrets:
-    * PORT_CLIENT_ID - Your port [client id]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))
-    * PORT_CLIENT_SECRET - Your port [client secret]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))
+    * PORT_CLIENT_ID - Your port [client id](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+    * PORT_CLIENT_SECRET - Your port [client secret](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
 2. Create the following blueprints:
 
 :::info Blueprints creation
-If you already have the `githubUser`, `githubTeam` and `service` blueprints created, you do not need to recreate them. Ensure to adjust the relations' targets as necessary
-
+If you already have the `githubUser`, `githubTeam` and `service` blueprints created, you do not need to recreate them. Ensure to adjust the relations' targets as necessary.
 :::
 
 <details>

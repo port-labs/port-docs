@@ -35,7 +35,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/scaffold-a-new-service",
     },
     {
@@ -44,7 +44,7 @@ export const availableGuides = [
         tags: ["SDLC", "Scorecards", "PagerDuty"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["PagerDuty", "Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/ensure-production-readiness",
     },
     {
@@ -53,7 +53,7 @@ export const availableGuides = [
         tags: ["IaC", "AWS", "Actions", "Cloud access management"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["AWS", "Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/create-cloud-resource-using-iac",
     },
     {
@@ -61,7 +61,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime",
         tags: ["K8s for devs", "Actions", "Dashboards", "Scorecards"],
         logos: ["Kubernetes" ],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/visualize-service-k8s-runtime",
     },
     {
@@ -69,7 +69,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime using ArgoCD",
         tags: ["K8s for devs", "ArgoCD", "Actions", "Dashboards", "Scorecards"],
         logos: ["ArgoCD", "Kubernetes"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/visualize-service-argocd-runtime",
     },
     {
@@ -78,7 +78,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/let-developers-enrich-services-using-gitops",
     },
     {
@@ -86,7 +86,7 @@ export const availableGuides = [
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["Cloud access management", "Actions", "RBAC"],
         logos: ["AWS" ],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/iam-permissions-guide",
     },
     {
@@ -94,7 +94,7 @@ export const availableGuides = [
         description: "Implement a service locking mechanism using Port's GitHub Action",
         tags: ["SDLC", "Actions"],
         logos: ["GitHub"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/service-lock-github-workflow",
     },
     {
@@ -102,7 +102,7 @@ export const availableGuides = [
         description: "Send a Slack reminder for uncompleted scorecard rules using a self-service action",
         tags: ["Engineering metrics", "Actions", "Scorecards"],
         logos: ["Slack"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/setup-slack-reminders",
     },
     {
@@ -110,7 +110,7 @@ export const availableGuides = [
         description: "Send a Slack notification for pull requests that have been open longer than a specified time using an automation",
         tags: ["SDLC", "Automations"],
         logos: ["Slack"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/automated-slack-alert-for-old-prs",
     },
     {
@@ -118,7 +118,7 @@ export const availableGuides = [
         description: "Integrate Kubernetes CRDs with Port and expose them in the Port UI for developers to use",
         tags: ["K8s for devs", "Actions"],
         logos: ["Kubernetes"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/manage-resources-using-k8s-crds",
     },
     {
@@ -126,7 +126,7 @@ export const availableGuides = [
         description: "Automate notifications and documentation of incidents",
         tags: ["Incident management", "Automations"],
         logos: ["PagerDuty", "GitHub"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/create-slack-channel-for-reported-incident",
     },
     {
@@ -134,7 +134,7 @@ export const availableGuides = [
         description: "Create a self-service action to resolve incidents and notify stakeholders",
         tags: ["Incident management", "Automations"],
         logos: ["PagerDuty", "GitHub"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/resolve-pagerduty-incident",
     },
     {
@@ -142,7 +142,7 @@ export const availableGuides = [
         description: "Create a logical connection between your services and their corresponding SonarQube projects",
         tags: ["AppSec", "SonarQube", "GitHub"],
         logos: ["SonarQube", "GitHub"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/connect-github-repository-with-sonarqube-project",
     },
     {
@@ -150,7 +150,7 @@ export const availableGuides = [
         description: "Create a logical connection between your GitHub PRs and their corresponding Jira issues",
         tags: ["SDLC", "Jira", "GitHub"],
         logos: ["Jira", "GitHub"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/connect-github-pr-with-jira-issue",
     },
     {
@@ -158,7 +158,7 @@ export const availableGuides = [
         description: "Create a logical connection between your Jira issues and their corresponding services",
         tags: ["SDLC", "Jira"],
         logos: ["Jira", "Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/connect-jira-issue-to-service",
     },
     {
@@ -166,7 +166,7 @@ export const availableGuides = [
         description: "Create a logical connection between your services and their corresponding Launchdarkly projects",
         tags: ["Feature flag management", "Launchdarkly", "GitHub"],
         logos: ["Launchdarkly", "GitHub"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/connect-github-repository-with-launchdarkly-project",
     },
     {
@@ -174,7 +174,7 @@ export const availableGuides = [
         description: "Create a logical connection between a feature flag and a service",
         tags: ["Feature flag management", "Launchdarkly"],
         logos: ["Launchdarkly", "Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/connect-launchdarkly-flag-to-service",
     },
     {
@@ -182,7 +182,7 @@ export const availableGuides = [
         description: "Ingest any cloud resources from your Dynatrace environment into Port",
         tags: ["Engineering metrics", "Dynatrace"],
         logos: ["Dynatrace"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/ingest-cloud-resources-using-dynatrace",
     },
     {
@@ -190,7 +190,7 @@ export const availableGuides = [
         description: "Create a logical connection between your GitHub PRs and their corresponding SonarQube analyses",
         tags: ["AppSec", "SonarQube", "GitHub"],
         logos: ["SonarQube", "GitHub"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/connect-github-pr-with-sonar-analysis",
     },
     {
@@ -198,8 +198,32 @@ export const availableGuides = [
         description: "Create a logical connection between your SonarQube projects and their corresponding services",
         tags: ["AppSec", "SonarQube"],
         logos: ["SonarQube", "Git"],
-        category: "Getting started",
+        // category: "Getting started",
         link: "/guides/all/connect-sonar-project-to-service",
+    },
+    {
+        title: "Humanitec Integration",
+        description: "Ingest various Humanitec resources into your Port software catalog",
+        tags: ["Humanitec"],
+        logos: ["Humanitec"],
+        // category: "Getting started",
+        link: "/guides/all/humanitec-integration",
+    },
+    {
+        title: "Pull-request metrics",
+        description: "Compute pull-request metrics for a GitHub repository",
+        tags: ["Engineering metrics", "GitHub"],
+        logos: ["GitHub"],
+        // category: "Getting started",
+        link: "/guides/all/pull-request-metrics",
+    },
+    {
+        title: "Connect CODEOWNERS with Service, Team & User",
+        description: "Create a logical connection between your GitHub CODEOWNERS and their corresponding services, teams, and users",
+        tags: ["RBAC", "GitHub"],
+        logos: ["GitHub"],
+        // category: "Getting started",
+        link: "/guides/all/connect-github-codeowners-with-service-team-and-user",
     }
 
 ]

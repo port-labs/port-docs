@@ -17,9 +17,10 @@ function GuideCard({ title, description, tags, logos, category, link }) {
                     </div>)
                 }
             </div>
+            {category ?
             <div className='guide-card-header-category'>
-                    <Typography className='guide-card-category-text'>{category || "Getting started"}</Typography>
-            </div>
+                <Typography className='guide-card-category-text'>{category}</Typography>
+            </div> : null}
         </div>
         <div className='guide-card-body'>
             <Typography className='guide-card-title'>{title || "Create Slack channel for incident management"}</Typography>

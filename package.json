@@ -28,8 +28,8 @@
     "@emotion/styled": "^11.11.5",
     "@mdx-js/react": "^3.0.1",
     "@mui/material": "^5.16.3",
-    "docusaurus-plugin-openapi-docs": "^4.0.0",
-    "docusaurus-theme-openapi-docs": "^4.0.0",
+    "docusaurus-plugin-openapi-docs": "^4.0.1",
+    "docusaurus-theme-openapi-docs": "^4.0.1",
     "@stackql/docusaurus-plugin-hubspot": "^1.0.1",
     "clsx": "^2.1.1",
     "docusaurus-plugin-hotjar": "^0.0.2",
@@ -41,10 +41,6 @@
     "react-tooltip": "^5.28.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.5.2",
-    "@docusaurus/tsconfig": "^3.5.2",
-    "@docusaurus/types": "^3.5.2",
-    "husky": "^9.1.5",
     "@docusaurus/module-type-aliases": "^3.5.2",
     "@docusaurus/tsconfig": "^3.5.2",
     "@docusaurus/types": "^3.5.2",

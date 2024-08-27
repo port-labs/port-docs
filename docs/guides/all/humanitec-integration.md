@@ -2,9 +2,10 @@
 sidebar_position: 1
 description: Ingest Humanitec applications, environments, workloads, resources and resource graphs into your catalog
 title: Humanitec Integration
+displayed_sidebar: null
 ---
 
-<!-- import HumanitecApplicationBlueprint from "/docs/guides/templates/humanitec/\_humanitec_application_blueprint.mdx";
+import HumanitecApplicationBlueprint from "/docs/guides/templates/humanitec/\_humanitec_application_blueprint.mdx";
 import HumanitecEnvironmentBlueprint from "/docs/guides/templates/humanitec/_humanitec_environment_blueprint.mdx";
 import HumanitecWorkloadBlueprint from "/docs/guides/templates/humanitec/_humanitec_workload_blueprint.mdx";
 import HumanitecResourceBlueprint from "/docs/guides/templates/humanitec/_humanitec_resource_blueprint.mdx";
@@ -13,7 +14,7 @@ import HumanitecExporterCacheScript from "/docs/guides/templates/humanitec/_huma
 import HumanitecExporterMainScript from "/docs/guides/templates/humanitec/_humanitec_exporter_main.mdx";
 import HumanitecExporterRequirements from "/docs/guides/templates/humanitec/_humanitec_exporter_requirements.mdx";
 import HumanitecExporterPortClient from "/docs/guides/templates/humanitec/_humanitec_exporter_port_client.mdx";
-import HumanitecExporterHumanitecClient from "/docs/guides/templates/humanitec/_humanitec_exporter_humanitec_client.mdx"; -->
+import HumanitecExporterHumanitecClient from "/docs/guides/templates/humanitec/_humanitec_exporter_humanitec_client.mdx";
 
 # Humanitec Integration
 
@@ -34,7 +35,7 @@ In this example, you are going to create a github worklow integration to facilit
 
 Create the following blueprint definitions in port:
 
-<!-- <HumanitecApplicationBlueprint/>
+<HumanitecApplicationBlueprint/>
 
 <HumanitecEnvironmentBlueprint/>
 
@@ -42,7 +43,7 @@ Create the following blueprint definitions in port:
 
 <HumanitecResourceBlueprint/>
 
-<HumanitecResourceGraphBlueprint/> -->
+<HumanitecResourceGraphBlueprint/>
 
 :::tip Blueprint Properties
 You may select the blueprints depending on what you want to track in your Humanitec account.
@@ -60,14 +61,14 @@ Fork our [humanitec integration repository](https://github.com/port-labs/humanit
 <details>
 <summary>Main Executable Script</summary>
 
-<!-- <HumanitecExporterMainScript/> -->
+<HumanitecExporterMainScript/>
 
 </details>
 
 <details>
 <summary>Requirements</summary>
 
-<!-- <HumanitecExporterRequirements/> -->
+<HumanitecExporterRequirements/>
 
 </details>
 
@@ -79,14 +80,14 @@ Fork our [humanitec integration repository](https://github.com/port-labs/humanit
 <details>
 <summary>Port Client</summary>
 
-<!-- <HumanitecExporterPortClient/> -->
+<HumanitecExporterPortClient/>
 
 </details>
 
 <details>
 <summary>Humanitec Client</summary>
 
-<!-- <HumanitecExporterHumanitecClient/> -->
+<HumanitecExporterHumanitecClient/>
 
 </details>
 
@@ -94,7 +95,7 @@ Fork our [humanitec integration repository](https://github.com/port-labs/humanit
 <details>
 <summary>Cache</summary>
 
-<!-- <HumanitecExporterCacheScript/> -->
+<HumanitecExporterCacheScript/>
 
 </details>
 
