@@ -15,7 +15,7 @@ This self service guide provides a comprehensive walkthrough on how to deploy an
    - `HUMANITEC_ORG_ID` - [Humanitec Organization ID](https://developer.humanitec.com/concepts/organizations/)
    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-3. Optional - Install Port's Humanitec integration [learn more](/guides/all/humanitec)
+3. Optional - Install Port's Humanitec integration [learn more](/guides/all/humanitec-integration)
 :::
 
 :::tip Humanitec Integration
@@ -166,7 +166,7 @@ Now you should see the `Deploy Application` action in the self-service page. ðŸŽ
 
 1. Go to the [Self Service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `Deploy Application` action
-3. Choose the humanitec application you want to deploy (In case you didn't install the [Humanitec integration](/guides/all/humanitec), it means you don't have any Humanitec applications in Port yet, so you will need to create one manually in Port to test this action)
+3. Choose the humanitec application you want to deploy (In case you didn't install the [Humanitec integration](/guides/all/humanitec-integration), it means you don't have any Humanitec applications in Port yet, so you will need to create one manually in Port to test this action)
 4. Select the new application
 5. Enter the `Delta ID` of the deployment, select an `Environment` you want to deploy to and brief `Comment` about the deployment.
 6. Click on `Execute`

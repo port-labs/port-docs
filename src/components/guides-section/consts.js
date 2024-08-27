@@ -225,6 +225,4 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/connect-github-codeowners-with-service-team-and-user",
     }
-
 ]
-

@@ -14,7 +14,7 @@ This self service guide provides a comprehensive walkthrough on how to create a 
    - `HUMANITEC_ORG_ID` - [Humanitec Organization ID](https://developer.humanitec.com/concepts/organizations/)
    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-3. Optional - Install Port's Humanitec integration [learn more](/guides/all/humanitec)
+3. Optional - Install Port's Humanitec integration [learn more](/guides/all/humanitec-integration)
 :::
 
 :::tip Humanitec Integration
