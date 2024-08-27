@@ -137,6 +137,22 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Cloud build self-service action](/actions-and-automations/setup-backend/cloudbuild-pipeline/cloudbuild-pipeline.md)
 
+## CI/CD
+
+### Jenkins
+
+- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/cicd/jenkins)
+- [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
+- [Jenkins webhook integration with Port](/build-your-software-catalog/custom-integration/webhook/examples/jenkins.md)
+- [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
+- [GitHub scaffolder using Jenkins](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
+- [Bitbucket scaffolder using Jenkins](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
+- [Create Github pull request](/actions-and-automations/setup-backend/jenkins-pipeline/examples/create-github-pull-request)
+
+### Octopus Deploy
+
+- [Octopus Deploy integration](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
+
 ## Cookiecutter
 
 - [Cookiecutter GitHub scaffolder using GitHub workflows](/guides-and-tutorials/scaffold-a-new-service.md?git-provider=github)
@@ -267,16 +283,6 @@ This page contains a list of Port's available integrations, organized by the pla
 ## StackHawk
 
 - [StackHawk webhook](/build-your-software-catalog/custom-integration/webhook/examples/stackhawk.md)
-
-## Jenkins
-
-- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/jenkins)
-- [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
-- [Jenkins webhook integration with Port](/build-your-software-catalog/custom-integration/webhook/examples/jenkins.md)
-- [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
-- [GitHub scaffolder using Jenkins](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
-- [Bitbucket scaffolder using Jenkins](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
-- [Create Github pull request](/actions-and-automations/setup-backend/jenkins-pipeline/examples/create-github-pull-request)
 
 ## CodeFresh
 
