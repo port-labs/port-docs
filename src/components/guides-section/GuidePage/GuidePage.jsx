@@ -20,7 +20,7 @@ function GuidePage() {
   };
 
   const filteredGuides = availableGuides.filter((guide) => {
-    const matchesTag = selectedTags.length === 0 || selectedTags.every((tag) => guide.tags.includes(tag) || guide.logos.includes(tag));
+    const matchesTag = selectedTags.length === 0 || selectedTags.every((tag) => guide.tags.includes(tag) || guide.logos.includes(tag) || guide.additionalTags && guide.additionalTags.includes(tag));
     const matchesSearch = guide.title.toLowerCase().includes(searchText.toLowerCase()) || guide.description.toLowerCase().includes(searchText.toLowerCase()) ;
     return matchesTag && matchesSearch;
   });

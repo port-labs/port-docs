@@ -107,5 +107,5 @@ By following these steps, you can seamlessly connect a GitHub repository with an
 
 More relevant guides and examples:
 - [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/)
-- [Mini guide to connect SonarQube Project to a service](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/guides/connect-sonar-project-to-service)
+- [Mini guide to connect SonarQube Project to a service](https://docs.getport.io/guides/all/connect-sonar-project-to-service)
 - [Self-service action to add tags to SonarQube Project](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/SonarQube/add-tags-to-sonarqube-project.md)

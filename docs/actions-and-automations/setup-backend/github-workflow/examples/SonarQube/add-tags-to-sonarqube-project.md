@@ -220,4 +220,4 @@ Congrats 🎉 You've added tags to your SonarQube project from Port!
 
 
 ## More relevant guides and examples
-- [A mini guide to connect SonarQube project to a service](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/guides/connect-sonar-project-to-service)
+- [A mini guide to connect SonarQube project to a service](https://docs.getport.io/guides/all/connect-sonar-project-to-service)

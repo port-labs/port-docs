@@ -1,5 +1,5 @@
 export const tagsCategoryMap = {
-    "Use-cases": ["SDLC", "Incident management", "IaC", "Cloud access management", "Feature flag management", "AppSec", "Cloud cost", "K8s for devs", "Dev environments", "Engineering metrics"],
+    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC", "Cloud access management", "Feature flag management", "AppSec", "Cloud cost", "Dev environments", "Engineering metrics"],
     "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "Slack",
@@ -23,6 +23,8 @@ export const tagsCategoryMap = {
         "PagerDuty",
         "Snyk",
         "Datadog",
+        "Dynatrace",
+        "Humanitec"
     ]
 };
 
@@ -31,15 +33,17 @@ export const availableGuides = [
         title: "Scaffold a new service",
         description: "Create a self-service action that scaffolds a new service",
         tags: ["SDLC", "Actions"],
-        logos: ["SDLC"],
+        additionalTags: ["BitBucket", "GitHub", "GitLab"],
+        logos: ["Git"],
         category: "Getting started",
         link: "/guides/all/scaffold-a-new-service",
     },
     {
         title: "Ensure production readiness",
         description: "Define and track metrics for your services to ensure their production readiness",
-        tags: ["Scorecards", "PagerDuty"],
-        logos: ["SDLC", "PagerDuty"],
+        tags: ["SDLC", "Scorecards", "PagerDuty"],
+        additionalTags: ["BitBucket", "GitHub", "GitLab"],
+        logos: ["PagerDuty", "Git"],
         category: "Getting started",
         link: "/guides/all/ensure-production-readiness",
     },
@@ -47,7 +51,8 @@ export const availableGuides = [
         title: "Create cloud resources using IaC",
         description: "Create a self-service action that provisions cloud resources from a pre-defined template in your Git repository",
         tags: ["IaC", "AWS", "Actions", "Cloud access management"],
-        logos: ["AWS", "SDLC"],
+        additionalTags: ["BitBucket", "GitHub", "GitLab"],
+        logos: ["AWS", "Git"],
         category: "Getting started",
         link: "/guides/all/create-cloud-resource-using-iac",
     },
@@ -71,7 +76,8 @@ export const availableGuides = [
         title: "Enrich services using Gitops",
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["SDLC", "Actions"],
-        logos: ["SDLC"],
+        additionalTags: ["BitBucket", "GitHub", "GitLab"],
+        logos: ["Git"],
         category: "Getting started",
         link: "/guides/all/let-developers-enrich-services-using-gitops",
     },
@@ -87,7 +93,7 @@ export const availableGuides = [
         title: "Lock service deployment",
         description: "Implement a service locking mechanism using Port's GitHub Action",
         tags: ["SDLC", "Actions"],
-        logos: ["SDLC", "GitHub"],
+        logos: ["GitHub"],
         category: "Getting started",
         link: "/guides/all/service-lock-github-workflow",
     },
@@ -132,7 +138,7 @@ export const availableGuides = [
         link: "/guides/all/resolve-pagerduty-incident",
     },
     {
-        title: "Connect GitHub repo (service) to a SonarQube project",
+        title: "Connect GitHub repository (service) to a SonarQube project",
         description: "Create a logical connection between your services and their corresponding SonarQube projects",
         tags: ["AppSec", "SonarQube", "GitHub"],
         logos: ["SonarQube", "GitHub"],
@@ -140,7 +146,7 @@ export const availableGuides = [
         link: "/guides/all/connect-github-repository-with-sonarqube-project",
     },
     {
-        title: "Connect GitHub Pull Request with Jira Issue",
+        title: "Connect GitHub pull request with Jira Issue",
         description: "Create a logical connection between your GitHub PRs and their corresponding Jira issues",
         tags: ["SDLC", "Jira", "GitHub"],
         logos: ["Jira", "GitHub"],
@@ -151,10 +157,50 @@ export const availableGuides = [
         title: "Connect Jira issue to a service",
         description: "Create a logical connection between your Jira issues and their corresponding services",
         tags: ["SDLC", "Jira"],
-        logos: ["Jira", "SDLC"],
+        logos: ["Jira", "Git"],
         category: "Getting started",
         link: "/guides/all/connect-jira-issue-to-service",
     },
+    {
+        title: "Connect GitHub repository (service) to a Launchdarkly project",
+        description: "Create a logical connection between your services and their corresponding Launchdarkly projects",
+        tags: ["Feature flag management", "Launchdarkly", "GitHub"],
+        logos: ["Launchdarkly", "GitHub"],
+        category: "Getting started",
+        link: "/guides/all/connect-github-repository-with-launchdarkly-project",
+    },
+    {
+        title: "Connect Launchdarkly feature flag to a service",
+        description: "Create a logical connection between a feature flag and a service",
+        tags: ["Feature flag management", "Launchdarkly"],
+        logos: ["Launchdarkly", "Git"],
+        category: "Getting started",
+        link: "/guides/all/connect-launchdarkly-flag-to-service",
+    },
+    {
+        title: "Ingest cloud resources using Dynatrace",
+        description: "Ingest any cloud resources from your Dynatrace environment into Port",
+        tags: ["Engineering metrics", "Dynatrace"],
+        logos: ["Dynatrace"],
+        category: "Getting started",
+        link: "/guides/all/ingest-cloud-resources-using-dynatrace",
+    },
+    {
+        title: "Connect GitHub pull request to SonarQube analysis",
+        description: "Create a logical connection between your GitHub PRs and their corresponding SonarQube analyses",
+        tags: ["AppSec", "SonarQube", "GitHub"],
+        logos: ["SonarQube", "GitHub"],
+        category: "Getting started",
+        link: "/guides/all/connect-github-pr-with-sonar-analysis",
+    },
+    {
+        title: "Connect SonarQube project to service",
+        description: "Create a logical connection between your SonarQube projects and their corresponding services",
+        tags: ["AppSec", "SonarQube"],
+        logos: ["SonarQube", "Git"],
+        category: "Getting started",
+        link: "/guides/all/connect-sonar-project-to-service",
+    }
 
 ]
 

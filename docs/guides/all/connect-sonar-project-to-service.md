@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Connect SonarQube project to service

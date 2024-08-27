@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 # Ingest cloud resources with Dynatrace
 
 This guide aims to show you how to ingest cloud resources using Dynatrace to have a good grasp of the cloud resources/entities you have from your cloud provider.

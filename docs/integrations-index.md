@@ -32,7 +32,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Nudge PR reviewers](/actions-and-automations/setup-backend/github-workflow/examples/nudge-pr-reviewers)
 - [Promote to production](/actions-and-automations/setup-backend/github-workflow/examples/promote-to-production)
 - [Self-service action to lock and unlock a service](/actions-and-automations/setup-backend/github-workflow/examples/lock-and-unlock-service-in-port)
-- [Connect GitHub Codeowners with Service, Team and User](/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/connect-github-codeowners-with-service-team-and-user.md)
+- [Connect GitHub Codeowners with Service, Team and User](/guides/all/connect-github-codeowners-with-service-team-and-user)
 
 ### GitLab
 
@@ -156,8 +156,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [SonarQube/SonarCloud integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md)
 - [SonarCloud webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube#alternative-installation-via-webhook)
-- [Connect GitHub PR to SonarQube analysis](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/guides/connect-github-pr-with-sonar-analysis)
-- [Connect SonarQube project to service](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/guides/connect-sonar-project-to-service)
+- [Connect GitHub PR to SonarQube analysis](/guides/all/connect-github-pr-with-sonar-analysis)
+- [Connect SonarQube project to service](/guides/all/connect-sonar-project-to-service)
 
 ## Snyk
 

@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Connect Launchdarkly Feature Flag to a service

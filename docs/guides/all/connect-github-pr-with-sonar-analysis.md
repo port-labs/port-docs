@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: Connect GitHub pull request to SonarQube analysis
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"

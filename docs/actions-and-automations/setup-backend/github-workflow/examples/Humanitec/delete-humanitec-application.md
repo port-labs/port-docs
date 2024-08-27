@@ -14,7 +14,7 @@ This self service guide provides a comprehensive walkthrough on how to delete an
    - `HUMANITEC_ORG_ID` - [Humanitec Organization ID](https://developer.humanitec.com/concepts/organizations/)
    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-3. Optional - Install Port's Humanitec integration [learn more](/docs/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/humanitec/humanitec.md)
+3. Optional - Install Port's Humanitec integration [learn more](/guides/all/humanitec)
 :::
 
 :::tip Humanitec Integration
@@ -171,7 +171,7 @@ Now you should see the `Delete Application` action in the self-service page. ðŸŽ
 
 1. Go to the [Self Service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `Delete Application` action
-3. Choose the humanitec application you want to delete (In case you didn't install the [Humanitec integration](/docs/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/humanitec/humanitec.md), it means you don't have any Humanitec applications in Port yet, so you will need to create one manually in Port to test this action)
+3. Choose the humanitec application you want to delete (In case you didn't install the [Humanitec integration](/guides/all/humanitec), it means you don't have any Humanitec applications in Port yet, so you will need to create one manually in Port to test this action)
 5. Click on `Execute`
 6. Done! wait for the application to be deleted in Humanitec
 
