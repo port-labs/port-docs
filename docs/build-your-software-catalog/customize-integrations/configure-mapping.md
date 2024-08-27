@@ -278,14 +278,14 @@ resources:
 In the example above, we search for a `service` entity whose `pagerduty_service_id` property is equal to the `id` of the PagerDuty service, and map data from the PagerDuty service to it.
 
 :::tip API usage
-Searching by property can also be used when using Port's API to create or update entities, for example - [Patch an entity](/api-reference/patch-an-entity/).
+Searching by property can also be used when using Port's API to update entities, for example - [Patch an entity](/api-reference/patch-an-entity/).
 :::
 
 ### Limitations
 
 - The search query must return exactly one entity (else the entire request will fail).
 - The query will be executed on the same blueprint from the request’s url.
-- Only the `=` operator is supported for the search query rule.
+- Only the `=` and `in` operators is supported for the search query rule.
 - `Calculation` and `mirror` properties are not supported.
 
 ## Create multiple entities from an array API object
