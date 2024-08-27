@@ -188,7 +188,7 @@ kubectl apply -f my-octopus-integration.yaml
 <TabItem value="one-time" label="Scheduled">
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Jenkins integration once and then exit, this is useful for **scheduled** ingestion of data.
+This workflow will run the Octopus integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
@@ -261,7 +261,7 @@ pipeline {
                     ]) {
                         sh('''
                             #Set Docker image and run the container
-                            integration_type="jenkins"
+                            integration_type="octopus"
                             version="latest"
                             image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
                             docker run -i --rm --platform=linux/amd64 \
@@ -459,11 +459,11 @@ The integration configuration specifies which resources to query from Octopus an
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Jenkins object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+- The `port`, `entity` and the `mappings` keys are used to map the Octopus object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
   ```yaml showLineNumbers
   resources:
-    - kind: job
+    - kind: space
       selector:
         query: "true"
       port:
@@ -950,7 +950,7 @@ This section includes a sample response data from Octopus. In addition, it inclu
 
 ### Payload
 
-Here is an example of the payload structure from Jenkins:
+Here is an example of the payload structure from Octopus:
 
 <details>
 <summary>Space response data</summary>
