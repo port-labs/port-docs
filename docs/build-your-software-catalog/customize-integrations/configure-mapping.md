@@ -271,11 +271,11 @@ resources:
           # highlight-end
           blueprint: '"service"'
           properties:
-            status: .status
-            url: .html_url
             oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
-            ... # Other properties
+            ... # Any other properties you want to map
 ```
+
+In the example above, we search for a `service` entity whose `pagerduty_service_id` property is equal to the `id` of the PagerDuty service, and map data from the PagerDuty service to it.
 
 :::tip API usage
 Searching by property can also be used when using Port's API to create or update entities, for example - [Patch an entity](/api-reference/patch-an-entity/).
