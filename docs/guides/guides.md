@@ -10,6 +10,8 @@ import "/src/components/guides-section/styles.css";
 
 # Guides
 
-All guides are listed below, use the filters and/or search bar to narrow down the list.
+This section contains guides and examples that will help you learn and implement various use cases with Port.  
+
+All available guides are listed below, use the filters and/or search bar to narrow down the list.
 
 <GuidePage />
