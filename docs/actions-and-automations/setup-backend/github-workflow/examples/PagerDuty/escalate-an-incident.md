@@ -1,5 +1,5 @@
-import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
-import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
+import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
+import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
 import PagerDutyIncidentBlueprint from './blueprints/_pagerduty_incident_blueprint.mdx'
 
 # Escalate incident in PagerDuty

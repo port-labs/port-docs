@@ -29,9 +29,9 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Create GitHub secret using GitHub workflows](/guides/all/create-github-secret.md)
 - [Script to ingest GitHub packages](https://github.com/port-labs/example-github-packages)
 - [Lock service deployment](/guides/all/service-lock-github-workflow)
-- [Nudge PR reviewers](/actions-and-automations/setup-backend/github-workflow/examples/nudge-pr-reviewers)
-- [Promote to production](/actions-and-automations/setup-backend/github-workflow/examples/promote-to-production)
-- [Self-service action to lock and unlock a service](/actions-and-automations/setup-backend/github-workflow/examples/lock-and-unlock-service-in-port)
+- [Nudge PR reviewers](/guides/all/nudge-pr-reviewers)
+- [Promote to production](/guides/all/promote-to-production)
+- [Self-service action to lock and unlock a service](/guides/all/lock-and-unlock-service-in-port)
 - [Connect GitHub Codeowners with Service, Team and User](/guides/all/connect-github-codeowners-with-service-team-and-user)
 
 ### GitLab
@@ -73,15 +73,15 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/fluxcd.md)
 - [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
 - [Port entity CRD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md)
-- [Create and managed Kubernetes cluster](/actions-and-automations/setup-backend/github-workflow/examples/kubernetes/manage-clusters)
-- [Change deployment replica count](/actions-and-automations/setup-backend/github-workflow/examples/kubernetes/change-replica-count)
+- [Create and managed Kubernetes cluster](/guides/all/manage-clusters)
+- [Change deployment replica count](/guides/all/change-replica-count)
 
 ## ArgoCD
 
 - [ArgoCD exporter and webhook integration](/build-your-software-catalog/sync-data-to-catalog/argocd/)
 - [ArgoCD events](/build-your-software-catalog/sync-data-to-catalog/argocd/argocd.md#argocd-events)
-- [Rollback ArgoCD deployment](/actions-and-automations/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment)
-- [Self-service action to synchronize ArgoCD application](/actions-and-automations/setup-backend/github-workflow/examples/argocd/sync-argocd-app)
+- [Rollback ArgoCD deployment](/guides/all/rollback-argocd-deployment)
+- [Self-service action to synchronize ArgoCD application](/guides/all/sync-argocd-app)
 
 ## Infrastructure as Code (IaC)
 
@@ -150,7 +150,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Manual approval for self-service actions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#slack)
 - [Scorecard notifications](/promote-scorecards/manage-using-3rd-party-apps/slack)
-- [Broadcast message to API consumers](/actions-and-automations/setup-backend/github-workflow/examples/broadcast-api-consumers-message)
+- [Broadcast message to API consumers](/guides/all/broadcast-api-consumers-message)
 
 ## SonarQube / SonarCloud
 

@@ -14,7 +14,7 @@ We will show you how to utilize Port Actions to open a Merge Request in your Git
 We will cover using both GitLab and GitHub Pipelines to create Merge/Pull Requests that commit a file to the project.
 
 :::tip GitOps Setup: 
-To streamline deployments with this example, ensure you have a GitOps tool configured. Otherwise, refer to this [guide](/actions-and-automations/setup-backend/github-workflow/examples/kubernetes/manage-clusters) for an end to end tutorial of creating resources in Kubernetes with Crossplane and ArgoCD.
+To streamline deployments with this example, ensure you have a GitOps tool configured. Otherwise, refer to this [guide](/guides/all/manage-clusters) for an end to end tutorial of creating resources in Kubernetes with Crossplane and ArgoCD.
 :::
 
 ## Prerequisites

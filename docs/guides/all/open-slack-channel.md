@@ -1,10 +1,11 @@
 ---
 sidebar_position: 9
+displayed_sidebar: null
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
-import GithubActionModificationHint from '../\_github_action_modification_required_hint.mdx'
-import GithubDedicatedRepoHint from '../\_github_dedicated_workflows_repository_hint.mdx'
+import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
+import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
 
 # Create Slack channel for Incident Management
 

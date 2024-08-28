@@ -1,9 +1,10 @@
 ---
 sidebar_position: 3
+displayed_sidebar: null
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
-import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
+import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 
 # Create and manage Kubernetes clusters
 

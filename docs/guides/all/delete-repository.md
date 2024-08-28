@@ -198,5 +198,5 @@ jobs:
 ## More Relevant Guides
 
 - [Scaffold a new service](/guides/all/scaffold-a-new-service/)
-- [Manage Pull Requests](/actions-and-automations/setup-backend/github-workflow/examples/manage-pull-requests)
+- [Manage Pull Requests](/guides/all/manage-pull-requests)
 - [Create GitHub Secrets](/guides/all/create-github-secret)

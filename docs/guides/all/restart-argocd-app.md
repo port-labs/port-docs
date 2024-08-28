@@ -1,12 +1,13 @@
 ---
 sidebar_position: 3
+displayed_sidebar: null
 ---
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
-import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
+import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
+import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
 
 # Restart Argo CD Application
 
@@ -448,6 +449,6 @@ Now you should see the `Restart Application` action in the self-service page. �
 Congrats 🎉 You've restarted your first Argo CD Application from Port 🔥
 
 ## More Self Service Argo CD Actions Examples
-- [Rollback Argo CD Deployment](/actions-and-automations/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment) using Port's self-service actions.
+- [Rollback Argo CD Deployment](/guides/all/rollback-argocd-deployment) using Port's self-service actions.
 
-- [Synchronize Argo CD Application](/actions-and-automations/setup-backend/github-workflow/examples/argocd/sync-argocd-app) using Port's self-service actions.
+- [Synchronize Argo CD Application](/guides/all/sync-argocd-app) using Port's self-service actions.

@@ -1,12 +1,13 @@
 ---
 sidebar_position: 1
+displayed_sidebar: null
 ---
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-import GithubActionModificationHint from '../../\_github_action_modification_required_hint.mdx'
-import GithubDedicatedRepoHint from '../../\_github_dedicated_workflows_repository_hint.mdx'
+import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
+import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
 
 # Synchronize Argo CD Application
 
@@ -283,4 +284,4 @@ Now you should see the `Sync Argo CD Application` action in the self-service pag
 Congrats 🎉 You've successfully synchronized your Argo CD Application in Port 🔥
 
 ## More Self Service Argo CD Actions Examples
-- [Rollback Argo CD Deployment](/actions-and-automations/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment) using Port's self-service actions.
+- [Rollback Argo CD Deployment](/guides/all/rollback-argocd-deployment) using Port's self-service actions.
