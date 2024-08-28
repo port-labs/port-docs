@@ -13,11 +13,11 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Jenkins
 
-Our Jenkins integration allows you to import `jobs`, `builds`, and `users` from your Jenkins environment into Port, according to your mapping and definitions.
+Our Jenkins integration allows you to import `jobs`, `builds`, `stages`, and `users` from your Jenkins environment into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `jobs`, `builds`, and `users` in your Jenkins environment.
+- Map `jobs`, `builds`, `stages`, and `users` in your Jenkins environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -25,6 +25,7 @@ Our Jenkins integration allows you to import `jobs`, `builds`, and `users` from 
 <Prerequisites />
 
 To generate a token for authenticating the Jenkins API calls:
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' border='1px' />
 
 1. In the Jenkins banner frame, click your user name to open the user menu.
 2. Navigate to Your **Username** > **Configure** > **API Token**.
@@ -32,16 +33,20 @@ To generate a token for authenticating the Jenkins API calls:
 4. Click Generate.
 5. Copy the API token that is generated to use as the `JENKINS_TOKEN`.
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' border='1px' />
 
-:::info Install the People View Plugin
-Recent Jenkins versions ([2.452 and above](https://issues.jenkins.io/browse/JENKINS-18884)) no longer include the "People" view by default. This view is essential for providing the user information API that will be queried by the integration.
+:::info Install Required Plugins
+To ensure full functionality of the Jenkins integration, please install the following plugins:
 
-**To install the plugin:**
+1. **People View Plugin**: Required for user information API (for Jenkins versions 2.452 and above)
+   - Navigate to **Manage Jenkins** -> **Plugins**
+   - Search for and install the [**"People View"** plugin](https://plugins.jenkins.io/people-view/)
 
-- In Jenkins, navigate to **Manage Jenkins** -> **Plugins**.
-- Search for and install the [**"People View"** plugin](https://plugins.jenkins.io/people-view/).
-  :::
+2. **Pipeline: Stage View Plugin**: Required for fetching stages data
+   - Navigate to **Manage Jenkins** -> **Plugins**
+   - Search for and install the [**"Pipeline: Stage View"** plugin](https://plugins.jenkins.io/pipeline-stage-view/)
+
+These plugins are essential for the integration to access user information and pipeline stage data.
+:::
 
 ## Installation
 
@@ -766,6 +771,99 @@ resources:
 
 </details>
 
+
+### Stage
+
+<details>
+<summary>Stage blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "jenkinsStage",
+  "description": "This blueprint represents a stage in a Jenkins build",
+  "title": "Jenkins Stage",
+  "icon": "Jenkins",
+  "schema": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "title": "Stage Status",
+        "enum": [
+          "SUCCESS",
+          "FAILURE",
+          "UNSTABLE",
+          "ABORTED",
+          "IN_PROGRESS",
+          "NOT_BUILT",
+          "PAUSED_PENDING_INPUT"
+        ],
+        "enumColors": {
+          "SUCCESS": "green",
+          "FAILURE": "red",
+          "UNSTABLE": "yellow",
+          "ABORTED": "darkGray",
+          "IN_PROGRESS": "blue",
+          "NOT_BUILT": "lightGray",
+          "PAUSED_PENDING_INPUT": "orange"
+        }
+      },
+      "startTimeMillis": {
+        "type": "number",
+        "title": "Start Time (ms)",
+        "description": "Timestamp in milliseconds when the stage started"
+      },
+      "durationMillis": {
+        "type": "number",
+        "title": "Duration (ms)",
+        "description": "Duration of the stage in milliseconds"
+      },
+      "stageUrl": {
+        "type": "string",
+        "title": "Stage URL",
+        "description": "URL to the stage"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "parentBuild": {
+      "title": "Jenkins Build",
+      "target": "jenkinsBuild",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+- kind: stage
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: '._links.self.href  | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-")'
+          title: .name
+          blueprint: '"jenkinsStage"'
+          properties:
+            status: .status
+            startTimeMillis: .startTimeMillis
+            durationMillis: .durationMillis
+            stageUrl: '.__fullUrl'
+          relations:
+            parentBuild: '._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$"; "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-")'
+```
+
+</details>
+
 ## Let's Test It
 
 This section includes a sample response data from Jenkins. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
@@ -851,6 +949,33 @@ Here is an example of the payload structure from Jenkins:
 
 </details>
 
+<details>
+<summary>Stage response data</summary>
+
+:::tip
+The `__fullUrl` is an enrichment field that is automatically added to the response data. It is used to store the full URL of the stage.
+:::
+
+```json showLineNumbers
+{
+  "_links": {
+    "self": {
+      "href": "/job/Phalbert/job/salesdash/job/master/227/execution/node/17/wfapi/describe"
+    }
+  },
+  "id": "17",
+  "name": "Declarative: Post Actions",
+  "execNode": "",
+  "status": "SUCCESS",
+  "startTimeMillis": 1717073271079,
+  "durationMillis": 51,
+  "pauseDurationMillis": 0,
+  "__fullUrl": "http://localhost:8080/job/Phalbert/job/salesdash/job/master/227/execution/node/17/wfapi/describe"
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -922,6 +1047,34 @@ The combination of the sample payload and the Ocean configuration generates the 
   "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
   "updatedAt": "2023-12-18T08:37:21.637Z",
   "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>Stage entity</summary>
+
+```json showLineNumbers
+{
+  "identifier": "job-Phalbert-job-salesdash-job-master-229-execution-node-17-wfapi-describe",
+  "title": "Declarative: Post Actions",
+  "icon": null,
+  "blueprint": "jenkinsStage",
+  "team": [],
+  "properties": {
+    "status": "SUCCESS",
+    "startTimeMillis": 1717073272012,
+    "durationMillis": 26,
+    "stageUrl": "http://localhost:8080/job/Phalbert/job/salesdash/job/master/229/execution/node/17/wfapi/describe"
+  },
+  "relations": {
+    "parentBuild": "job-Phalbert-job-salesdash-job-master-229"
+  },
+  "createdAt": "2024-08-28T10:27:33.549Z",
+  "createdBy": "<port-client-id>",
+  "updatedAt": "2024-08-28T10:27:30.274Z",
+  "updatedBy": "<port-client-id>"
 }
 ```
 
