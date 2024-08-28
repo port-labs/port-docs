@@ -341,7 +341,7 @@ Replace `<Your Generated Slack Webhook>` in the automation definition with your 
 </details>
 
 
-## Test the actions in [self-service](https://app.getport.io/self-serve)
+## Test the lock and unlock actions
 
 Below is the result of a successful service lock and unlock alert sent to a Slack channel after triggering the action in the [self-service](https://app.getport.io/self-serve) page of your Port application:
 
