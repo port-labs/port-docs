@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+displayed_sidebar: null
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
@@ -198,4 +199,4 @@ jobs:
 
 - [Scaffold a new service](/guides/all/scaffold-a-new-service/)
 - [Manage Pull Requests](/actions-and-automations/setup-backend/github-workflow/examples/manage-pull-requests)
-- [Create GitHub Secrets](/actions-and-automations/setup-backend/github-workflow/examples/create-github-secret)
+- [Create GitHub Secrets](/guides/all/create-github-secret)

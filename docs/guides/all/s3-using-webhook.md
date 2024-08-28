@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+displayed_sidebar: null
 ---
 
 # Create an S3 bucket using Self-Service Actions

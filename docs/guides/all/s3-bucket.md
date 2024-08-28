@@ -2,6 +2,7 @@
 sidebar_position: 2
 title: Manage an S3 Bucket Lifecycle
 description: Manage an S3 bucket lifecycle and reflect it in Port
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs";

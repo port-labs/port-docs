@@ -2,6 +2,7 @@
 sidebar_position: 3
 title: Import and Manage an Integration
 description: Manage an integrations mappings using Terraform
+displayed_sidebar: null
 ---
 
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
