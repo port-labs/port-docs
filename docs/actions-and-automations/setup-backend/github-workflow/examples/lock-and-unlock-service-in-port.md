@@ -170,7 +170,7 @@ Follow these steps to get started:
 1. Create two Port actions in the [self-service page](https://app.getport.io/self-serve) on the `Service` blueprint with the following JSON definitions:
 
 <details>
-  <summary>Click to expand: Port Action - Lock Service</summary>
+  <summary></b>Port Action - Lock Service (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
