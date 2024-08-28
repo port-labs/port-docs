@@ -278,10 +278,40 @@ resources:
 </details>
 
 <details>
-<summary><b>CODEOWNERS mapping configuration (Click to expand)</b></summary>
+<summary><b>CODEOWNERS Pattern mapping configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
+  - kind: file
+    selector:
+      query: .repo.archived == false
+      files:
+        - path: '**/.github/CODEOWNERS'
+    port:
+      itemsToParse: >-
+        [. as $root | .file.content | split("\n\n") | map( if (startswith("# ")
+        | not) then { component: $root.repo.name, patterns: [], teams: [. |
+        split(" ")[] | select(startswith("@")) | rtrimstr("\n") |
+        ltrimstr("\n")] } else split("\n") as $lines | { component: ($lines[0] |
+        ltrimstr("# ") | ltrimstr(" ")), patterns: ($lines[1:] | map(split("
+        ")[0])), teams: [($lines[1:] | map(split(" ")[1:] | join(" ")) | [.[] |
+        split(" ") | .[]] | unique)[] | select(startswith("@"))] } end
+        )[]]
+      entity:
+        mappings:
+          identifier: .item.component | gsub(" "; "_") | gsub("&"; "and") | gsub("-"; "")
+          title: .item.component
+          blueprint: '"Component"'
+          properties:
+            codeowners_file_patterns: .item.patterns
+          relations:
+            service: .repo.name
+            owning_teams:
+              combinator: '''and'''
+              rules:
+                - property: '''github_team'''
+                  value: .item.teams
+                  operator: '"in"'
 ```
 
 </details>
@@ -336,45 +366,6 @@ resources:
   }
 }
 
-```
-
-</details>
-
-<details>
-<summary><b>CODEOWNERS Pattern mapping configuration (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-resources:
-  - kind: file
-    selector:
-      query: .repo.archived == false
-      files:
-        - path: '**/.github/CODEOWNERS'
-    port:
-      itemsToParse: >-
-        [. as $root | .file.content | split("\n\n") | map( if (startswith("# ")
-        | not) then { component: $root.repo.name, patterns: [], teams: [. |
-        split(" ")[] | select(startswith("@")) | rtrimstr("\n") |
-        ltrimstr("\n")] } else split("\n") as $lines | { component: ($lines[0] |
-        ltrimstr("# ") | ltrimstr(" ")), patterns: ($lines[1:] | map(split("
-        ")[0])), teams: [($lines[1:] | map(split(" ")[1:] | join(" ")) | [.[] |
-        split(" ") | .[]] | unique)[] | select(startswith("@"))] } end
-        )[]]
-      entity:
-        mappings:
-          identifier: .item.component | gsub(" "; "_") | gsub("&"; "and") | gsub("-"; "")
-          title: .item.component
-          blueprint: '"Component"'
-          properties:
-            codeowners_file_patterns: .item.patterns
-          relations:
-            service: .repo.name
-            owning_teams:
-              combinator: '''and'''
-              rules:
-                - property: '''github_team'''
-                  value: .item.teams
-                  operator: '"in"'
 ```
 
 </details>
