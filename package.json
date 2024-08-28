@@ -23,7 +23,7 @@
     "@docusaurus/plugin-ideal-image": "^3.5.2",
     "@docusaurus/preset-classic": "^3.5.2",
     "@docusaurus/theme-live-codeblock": "^3.5.2",
-    "@easyops-cn/docusaurus-search-local": "^0.44.4",
+    "@easyops-cn/docusaurus-search-local": "^0.44.5",
     "@mdx-js/react": "^3.0.1",
     "docusaurus-plugin-openapi-docs": "^4.0.0",
     "docusaurus-theme-openapi-docs": "^4.0.0",
@@ -41,7 +41,7 @@
     "@docusaurus/module-type-aliases": "^3.5.2",
     "@docusaurus/tsconfig": "^3.5.2",
     "@docusaurus/types": "^3.5.2",
-    "husky": "^9.1.4",
+    "husky": "^9.1.5",
     "pretty-quick": "^4.0.0",
     "typescript": "~5.5.4"
   },

@@ -31,8 +31,9 @@ If your login provider does not support metadata files, use the following inform
 
 <DocCardList/>
 
+<!-- 
 
-## SCIM Configuration
+## SCIM Configuration (beta)
 
 Most SAML SSO applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
 
@@ -44,4 +45,4 @@ If you are unsure whether or not your SSO provider support SCIM, reach out to th
 
 To set up SCIM for SAML based applications, contact Port's support team. You will be provided with an SCIM `endpoint` and `token` which are required to set up the SCIM integration.
 
-After receiving the SCIM `endpoint` and `token`, enable SCIM in your SAML app in and pass the SCIM endpoint and token.
+After receiving the SCIM `endpoint` and `token`, enable SCIM in your SAML app in and pass the SCIM endpoint and token. -->

@@ -180,6 +180,8 @@ It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [mod
 <h2> Prerequisites </h2>
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 1.9.1
+- [hashicorp/google Terraform Provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs) >= 5.25
+- [hashicorp/google-beta Terraform Provider](https://registry.terraform.io/providers/hashicorp/google-beta/latest) >= 5.25
 - [A logged in gCloud CLI](https://cloud.google.com/sdk/gcloud) with enough [Permissions](#required-permissions-to-run-terraform-apply)
 - [Artifact Registry Image](#artifact-registry-image)
 
@@ -266,28 +268,57 @@ If you want the integration to collect resources from more projects/folders/orga
 :::
 
 ```bash
-echo 'module "gcp" {
-source = "port-labs/integration-factory/ocean//examples/gcp_integration_with_real_time" 
-version = ">=0.0.25" 
+echo 'provider "google-beta" { user_project_override = true }
+provider "google" { user_project_override = true }
+module "gcp" {
+source = "port-labs/integration-factory/ocean//examples/gcp_cloud_run" 
+version = ">=0.0.31" 
 port_client_id = "<your_port_client_id>" 
 port_client_secret = "<your_port_client_secret>" 
-port_base_url = "https://api.getport.io" 
 gcp_ocean_integration_image = "<your_artifact_registry_/_dockerhub>/port-ocean-gcp:<your_version>" 
 gcp_organization = "<your_gcp_organization>" 
 gcp_ocean_setup_project = "<your_gcp_project>" 
-gcp_projects = [<your_gcp_project>] # The Project list that the integration digests resources from. leave empty
-integration_identifier = "gcp" 
-initialize_port_resources = true # When set to true the integration will create default blueprints + JQ Mappings
+gcp_included_projects = ["<your_gcp_project>"] # The Project list that the integration digests resources from.
+integration_identifier = "gcp"
+scheduled_resync_interval = 1440
 event_listener = {
   type = "POLLING"
 }
-assets_types_for_monitoring = ["cloudresourcemanager.googleapis.com/Organization","cloudresourcemanager.googleapis.com/Project","storage.googleapis.com/Bucket","cloudfunctions.googleapis.com/CloudFunction","pubsub.googleapis.com/Subscription","pubsub.googleapis.com/Topic","container.googleapis.com/Cluster"] # A list of resources to filter events from Google Cloud.
 }' > main.tf
 # Initializing Terraform and Providers
 terraform init
 # Creating the resources (Cloud Run, PubSub Topic + Subscription, Cloud Assets Feed, Service account + Role)
 terraform apply
 ```
+
+<h2> Configuration options </h2>
+
+The Port GCP integration's Terraform module offers a set of configurations:
+
+| Configuration | Default value | Required | Description |
+| --- | --- | --- | --- |
+| port_client_id |  | True | The Port client id.  |
+| port_client_secret |  | True | The Port client secret.  |
+| gcp_organization |  | True | Your Google Cloud Organization Id.  |
+| gcp_ocean_setup_project |  | True | The Project ot create all the Integration's infrastructure (Topic, Subscription, Service account etc.) on.  |
+| gcp_ocean_integration_image |  | True | The Artifact Registry / Dockerhub image to deploy.  |
+| integration_identifier |  | True | The Integration's identifier in Port  |
+| port_base_url | 'https://api.getport.io' | False | The Port Base url.  |
+| gcp_included_projects | [] | False | The Projects list you want the integration to collect from. If left empty, It will collect *All* projects in the organization.  |
+| gcp_excluded_projects | [] | False | The Projects list you want the integration NOT to collect from. This will be overriden by any value in gcp_included_projects besides []. |
+| assets_types_for_monitoring | ["cloudresourcemanager.googleapis.com/Organization", "cloudresourcemanager.googleapis.com/Project", "storage.googleapis.com/Bucket", "cloudfunctions.googleapis.com/CloudFunction", "pubsub.googleapis.com/Subscription", "pubsub.googleapis.com/Topic"] | False | The list of asset types the integration will digest real-time events for.  |
+| ocean_integration_service_account_permissions | ["cloudasset.assets.exportResource", "cloudasset.assets.listCloudAssetFeeds", "cloudasset.assets.listResource", "cloudasset.assets.searchAllResources", "cloudasset.feeds.create", "cloudasset.feeds.list", "pubsub.topics.list", "pubsub.topics.get", "resourcemanager.projects.get", "resourcemanager.projects.list", "resourcemanager.folders.get", "resourcemanager.folders.list", "resourcemanager.organizations.get", "run.routes.invoke", "run.jobs.run"] | False | The permissions granted to the integration's service_account. We recommend not changing it to prevent unexpected errors.  |
+| assets_feed_topic_id | "ocean-integration-topic" | False | The name of the topic created to recieve real time events.  |
+| assets_feed_id | "ocean-gcp-integration-assets-feed" | False | The ID for the Ocean GCP Integration feed.  |
+| service_account_name | "ocean-service-account" | False | The name of the service account used by the Ocean integration.  |
+| role_name | "OceanIntegrationRole" | False | The name of the role created for the Integration's Service account.  |
+| gcp_ocean_integration_cloud_run_location | "europe-west1" | False | Location in which the Cloud Run will run.  |
+| environment_variables | [] | False | List of environment variables set to the Cloud Run job. We recommend not changing this variable.  |
+| initialize_port_resources | True | False | Boolean to initialize Port resources.  |
+| event_listener | Polling | False | Port's event listener configurations.  |
+| integration_version | "latest" | False | The version of the integration to deploy.  |
+| integration_type | "gcp" | False | The type of the integration.  |
+| scheduled_resync_interval | 1440 | False | The interval to resync the integration (in minutes).  |
 
 <h2> Optional - Scaling the permissions </h2>
 
