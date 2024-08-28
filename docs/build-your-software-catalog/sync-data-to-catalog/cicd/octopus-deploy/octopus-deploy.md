@@ -20,18 +20,6 @@ Port's Octopus Deploy integration allows you to import `spaces`, `projects`, `re
 - Map `spaces`, `projects`, `releases`, `deployments`, and `machines` from Octopus Deploy to Port.
 - Monitor real-time changes (create/update/delete) in Octopus Deploy and automatically sync them with your entities in Port.
 
-## Prerequisites
-
-<Prerequisites />
-
-To generate a Api Key for authenticating the Octopus Deploy API calls:
-1. Log into the Octopus Web Portal, click your profile image and select Profile.
-2. Click My API Keys.
-3. Click New API key, state the purpose of the API key, set the expiry and click Generate new.
-4. Copy the new API key to your clipboard and use as `OCTOPUS_API_KEY`.
-
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/octopus-deploy/configure-api-token.png' width='80%' border='1px' />
-
 
 ## Installation
 
@@ -78,8 +66,8 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install octopus port-labs/port-ocean \
-	--set port.clientId="zhOWp1YybWfY12bAxNz3d1ByX18iA1yT"  \
-	--set port.clientSecret="744pUpiZImxIrjYrYWPojqOuU9UquYU5XZvMcRys3ty4Tp2tEYAnqE8FZrV6Lekk"  \
+	--set port.clientId=<YOUR_PORT_CLIENT_ID>  \
+	--set port.clientSecret=<YOUR_PORT_CLIENT_SECRET>  \
 	--set port.baseUrl="https://api.getport.io"  \
 	--set initializePortResources=true  \
 	--set sendRawDataExamples=true  \
@@ -395,7 +383,18 @@ ingest_data:
 
 </Tabs>
 
-## Importing Octopus Objects
+### Generating Octopus API Key
+
+To generate a Api Key for authenticating the Octopus Deploy API calls:
+1. Log into the Octopus Web Portal, click your profile image and select Profile.
+2. Click My API Keys.
+3. Click New API key, state the purpose of the API key, set the expiry and click Generate new.
+4. Copy the new API key to your clipboard and use as `OCTOPUS_API_KEY`.
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/octopus-deploy/configure-api-token.png' width='80%' border='1px' />
+
+
+## Ingesting Octopus Objects
 
 The Octopus integration uses a YAML configuration to define how data is loaded into the developer portal.
 
@@ -422,82 +421,16 @@ resources:
 
 The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Octopus's API events.
 
-### Configuration Structure
-
-The integration configuration specifies which resources to query from Octopus and which entities and properties to create in Port.
-
-
-- The top-level key in the integration configuration is `resources`:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: space
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Octopus object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: space
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: space
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Octopus object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: space
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Octopus object to a Port entity. Each value is a JQ query.
-            identifier: .Id
-            title: .Name
-            blueprint: '"octopusSpace"'
-            properties:
-              url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .Id
-              description: .Description
-        # highlight-end
-    - kind: space # In this instance space is mapped again with a different filter
-      selector:
-        query: '.Name == "MySpaceName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
 ### Ingest data into Port
 
-To ingest Octopus objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+To ingest Octopus objects using the [integration configuration](/build-your-software-catalog/customize-integrations/configure-mapping), you can follow the steps below:
 
 1. Go to the DevPortal Builder page.
 2. Select a blueprint you want to ingest using Octopus.
 3. Choose the **Ingest Data** option from the menu.
 4. Click the Octopus integration to open the edit page.
-5. Modify the [configuration](#configuration-structure) according to your needs.
+5. Modify the [configuration](/build-your-software-catalog/customize-integrations/configure-mapping) according to your needs.
 6. Click `Resync`.
 
 ## Examples
@@ -602,15 +535,7 @@ resources:
     }
   },
   "calculationProperties": {},
-  "relations": {
-    "space": {
-      "target": "octopusSpace",
-      "title": "Space",
-      "description": "The space to which this project belongs",
-      "required": false,
-      "many": false
-    }
-  }
+  "relations": {}
 }
 ```
 
@@ -637,8 +562,6 @@ resources:
               description: .Description
               isDisabled: .IsDisabled
               tenantedDeploymentMode: .TenantedDeploymentMode
-            relations:
-              space: .SpaceId
 ```
 
 </details>
@@ -687,15 +610,7 @@ resources:
     }
   },
   "calculationProperties": {},
-  "relations": {
-    "project": {
-      "target": "octopusProject",
-      "title": "Project",
-      "description": "The project to which this release belongs",
-      "required": false,
-      "many": false
-    }
-  }
+  "relations": {}
 }
 ```
 
@@ -723,8 +638,6 @@ resources:
             channelId: .ChannelId
             releaseNotes: .ReleaseNotes
             url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .SpaceId + "/releases/" + .Id
-          relations:
-            project: .ProjectId
 
 ```
 
@@ -779,22 +692,7 @@ resources:
     }
   },
   "calculationProperties": {},
-  "relations": {
-    "release": {
-      "target": "octopusRelease",
-      "title": "Release",
-      "description": "The release associated with this deployment",
-      "required": false,
-      "many": false
-    },
-    "project": {
-      "target": "octopusProject",
-      "title": "Project",
-      "description": "The project associated with this deployment",
-      "required": false,
-      "many": false
-    }
-  }
+  "relations": {}
 }
 ```
 
@@ -823,9 +721,6 @@ resources:
             failureEncountered: .FailureEncountered
             comments: .Comments
             url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .SpaceId + "/deployments/" + .Id
-          relations:
-            release: .ReleaseId
-            project: .ProjectId
 
 ```
 
@@ -897,15 +792,7 @@ resources:
     }
   },
   "calculationProperties": {},
-  "relations": {
-    "space": {
-      "target": "octopusSpace",
-      "title": "Space",
-      "description": "The space associated with this target",
-      "required": false,
-      "many": false
-    }
-  }
+  "relations": {}
 }
 ```
 
@@ -937,8 +824,6 @@ resources:
             statusSummary: .StatusSummary
             endpointType: .Endpoint.DeploymentTargetTypeId
             communicationStyle: .Endpoint.CommunicationStyle
-          relations:
-            space: .SpaceId
 
 ```
 
@@ -1287,9 +1172,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "isDisabled": false,
     "tenantedDeploymentMode": "Untenanted"
   },
-  "relations": {
-    "space": "Spaces-1"
-  },
+  "relations": {},
   "createdAt": "2024-08-22T14:27:37.814Z",
   "createdBy": "zhOWp1YybWfY12bAxNz3d1ByX18iA1yT",
   "updatedAt": "2024-08-22T14:27:37.814Z",
@@ -1316,9 +1199,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "releaseNotes": null,
     "url": "https://testport.octopus.app/app#/Spaces-1/releases/Releases-44"
   },
-  "relations": {
-    "project": "Projects-41"
-  },
+  "relations": {},
   "createdAt": "2024-08-22T14:27:41.697Z",
   "createdBy": "zhOWp1YybWfY12bAxNz3d1ByX18iA1yT",
   "updatedAt": "2024-08-22T14:27:41.697Z",
@@ -1346,10 +1227,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "comments": null,
     "url": "https://testport.octopus.app/app#/Spaces-1/deployments/Deployments-1"
   },
-  "relations": {
-    "release": "Releases-1",
-    "project": "Projects-1"
-  },
+  "relations": {},
   "createdAt": "2024-08-22T14:27:45.276Z",
   "createdBy": "zhOWp1YybWfY12bAxNz3d1ByX18iA1yT",
   "updatedAt": "2024-08-22T14:27:45.276Z",
@@ -1382,9 +1260,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "endpointType": "aws-ecs-target",
     "communicationStyle": "StepPackage"
   },
-  "relations": {
-    "space": "Spaces-1"
-  },
+  "relations": {},
   "createdAt": "2024-08-22T14:27:53.944Z",
   "createdBy": "zhOWp1YybWfY12bAxNz3d1ByX18iA1yT",
   "updatedAt": "2024-08-27T12:29:12.362Z",
