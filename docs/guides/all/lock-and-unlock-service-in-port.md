@@ -231,7 +231,7 @@ Follow these steps to get started:
 </details>
 
 <details>
-  <summary>Click to expand: Port Action - Unlock Service</summary>
+  <summary></b>Port Action - Unlock Service (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
