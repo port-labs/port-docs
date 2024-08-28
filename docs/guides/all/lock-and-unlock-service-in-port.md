@@ -304,7 +304,7 @@ Replace `<Your Generated Slack Webhook>` in the automation definition with your 
 :::
 
 <details>
-  <summary>Click to expand: Automation Definition - Notify Slack on Service Lock Status Change</summary>
+  <summary></b>Automation - Notify Slack on Service Lock Status (click to expand)</b></summary>
 
 ```json showLineNumbers
 {
