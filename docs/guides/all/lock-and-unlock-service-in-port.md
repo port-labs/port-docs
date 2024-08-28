@@ -171,7 +171,7 @@ Follow these steps to get started:
 1. Create two Port actions in the [self-service page](https://app.getport.io/self-serve) on the `Service` blueprint with the following JSON definitions:
 
 <details>
-  <summary></b>Port Action - Lock Service (click to expand)</b></summary>
+  <summary>Port Action - Lock Service (click to expand)</summary>
 
 ```json showLineNumbers
 {
@@ -231,7 +231,7 @@ Follow these steps to get started:
 </details>
 
 <details>
-  <summary></b>Port Action - Unlock Service (click to expand)</b></summary>
+  <summary>Port Action - Unlock Service (click to expand)</summary>
 
 ```json showLineNumbers
 {
@@ -304,7 +304,7 @@ Replace `<Your Generated Slack Webhook>` in the automation definition with your 
 :::
 
 <details>
-  <summary></b>Automation - Notify Slack on Service Lock Status (click to expand)</b></summary>
+  <summary>Automation - Notify Slack on Service Lock Status (click to expand)</summary>
 
 ```json showLineNumbers
 {
