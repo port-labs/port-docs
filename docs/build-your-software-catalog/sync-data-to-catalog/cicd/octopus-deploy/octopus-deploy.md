@@ -13,7 +13,7 @@ import OceanSaasInstallation from "./\_octopus_deploy_ocean_saas_installation.md
 
 # Octopus Deploy Integration
 
-Easily import `spaces`, `projects`, `releases`, `deployments`, and `machines` from Octopus Deploy into Port based on your mappings and definitions.
+Port's Octopus Deploy integration allows you to import `spaces`, `projects`, `releases`, `deployments`, and `machines` from Octopus Deploy into Port based on your mappings and definitions.
 
 ## Common Use Cases
 
