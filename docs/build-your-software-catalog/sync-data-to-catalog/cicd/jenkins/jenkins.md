@@ -952,10 +952,6 @@ Here is an example of the payload structure from Jenkins:
 <details>
 <summary>Stage response data</summary>
 
-:::tip
-The `__fullUrl` is an enrichment field that is automatically added to the response data. It is used to store the full URL of the stage.
-:::
-
 ```json showLineNumbers
 {
   "_links": {
@@ -969,8 +965,7 @@ The `__fullUrl` is an enrichment field that is automatically added to the respon
   "status": "SUCCESS",
   "startTimeMillis": 1717073271079,
   "durationMillis": 51,
-  "pauseDurationMillis": 0,
-  "__fullUrl": "http://localhost:8080/job/Phalbert/job/salesdash/job/master/227/execution/node/17/wfapi/describe"
+  "pauseDurationMillis": 0
 }
 ```
 
