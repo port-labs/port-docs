@@ -445,9 +445,9 @@ The integration configuration determines which resources will be queried from Je
 :::tip Supported resources
 The following resources can be used to map data from Jenkins, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
-- `job` - (`\<your-jenkins-host\>/api/json`)
-- `build` - (`\<your-jenkins-host\>/api/json`)
-- `user` - (`\<your-jenkins-host\>/people/api/json`)
+- `job` - (`<your-jenkins-host>/api/json`)
+- `build` - (`<your-jenkins-host>/api/json`)
+- `user` - (`<your-jenkins-host>/people/api/json`)
 
 :::
 
