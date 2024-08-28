@@ -1,6 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import DynatraceProblemBlueprint from "./resources/dynatrace/\_example_dynatrace_problem_blueprint.mdx";

@@ -152,11 +152,17 @@ jobs:
   create_secret:
     runs-on: ubuntu-latest
     steps:
+      - name: Mask secret value
+        run: echo "::add-mask::${{ inputs.secret_value }}"
+
       - uses: gliech/create-github-secret-action@v1
         with:
           name: ${{ inputs.secret_key }}
           value: ${{ inputs.secret_value }}
           pa_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Mask secret key
+        run: echo "::add-mask::${{ inputs.secret_key }}"
 
       - name: UPSERT Entity
         uses: port-labs/port-github-action@v1
