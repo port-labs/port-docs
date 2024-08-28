@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 # Report a bug
 
 ## Overview

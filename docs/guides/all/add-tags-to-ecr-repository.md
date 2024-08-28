@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 # Add tags to ECR repository
 
 This guide demonstrates how to add meaningful tags to your AWS ECR repository using [Port's self-service action](/actions-and-automations/create-self-service-experiences/)

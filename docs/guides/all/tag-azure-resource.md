@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+displayed_sidebar: null
 ---
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -458,5 +459,5 @@ jobs:
 
 ## More relevant guides
 
-1. [Add tags to S3 Bucket](/actions-and-automations/setup-backend/github-workflow/examples/AWS/add-tags-to-s3-bucket)
-2. [Add tags to ECR Repository](/actions-and-automations/setup-backend/github-workflow/examples/AWS/add-tags-to-ecr-repository)
+1. [Add tags to S3 Bucket](/guides/all/add-tags-to-s3-bucket)
+2. [Add tags to ECR Repository](/guides/all/add-tags-to-ecr-repository)

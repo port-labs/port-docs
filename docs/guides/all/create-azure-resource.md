@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+displayed_sidebar: null
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
@@ -443,4 +444,4 @@ jobs:
 
 ## More Relevant Guides
 
-1. [Provision AWS resources with Terraform](/actions-and-automations/setup-backend/github-workflow/examples/AWS/terraform-plan-and-apply-aws-resource)
+1. [Provision AWS resources with Terraform](/guides/all/terraform-plan-and-apply-aws-resource)

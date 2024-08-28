@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Create an EKS cluster and deploy a Node.js app

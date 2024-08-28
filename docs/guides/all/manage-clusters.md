@@ -584,4 +584,4 @@ Done! 🎉 You can now create and delete clusters from Port.
 
 ## More relevant guides!
 
-- [Create an EKS cluster and deploy a Node.js app](/actions-and-automations/setup-backend/github-workflow/examples/AWS/create-eks-cluster-and-deploy-app)
+- [Create an EKS cluster and deploy a Node.js app](/guides/all/create-eks-cluster-and-deploy-app)

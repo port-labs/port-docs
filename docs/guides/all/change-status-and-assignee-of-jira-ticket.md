@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
 
@@ -393,7 +397,7 @@ Now you should see the `Change Jira ticket status and assignee` action in the se
 Congrats 🎉 You've changed a ticket status and its assignee in Port 🔥
 
 ## More Self Service Jira Actions Examples
-- [Report a bug in Jira](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/Jira/report-a-bug/) using Port's self-service actions
-- [Open Jira issues with automatic labels](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/Jira/open-jira-issue-with-automatic-label)
+- [Report a bug in Jira](https://docs.getport.io/guides/all/report-a-bug/) using Port's self-service actions
+- [Open Jira issues with automatic labels](https://docs.getport.io/guides/all/open-jira-issue-with-automatic-label)
 - [Open/close JIRA issues for entities with violated scorecard rules](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/jira)
 - Add a comment to a Jira ticket using Port's self-service actions

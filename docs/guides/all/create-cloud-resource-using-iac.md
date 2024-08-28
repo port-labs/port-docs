@@ -778,5 +778,5 @@ With Port, platform engineers can design precise and flexible self-service actio
 
 More relevant guides and examples:
 
-- [Deploy AWS resources using AWS CloudFormation](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template)
+- [Deploy AWS resources using AWS CloudFormation](https://docs.getport.io/guides/all/deploy-cloudformation-template)
 - [Create an S3 bucket using Self-Service Actions](https://docs.getport.io/actions-and-automations/setup-backend/webhook/examples/s3-using-webhook/)

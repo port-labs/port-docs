@@ -24,8 +24,8 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-service.md?git-provider=github)
 - [GitHub scaffolder using Jenkins pipelines](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
 - [GitHub scaffolder using FastAPI backend](/actions-and-automations/setup-backend/webhook/examples/software-templates.md)
-- [Deploy AWS resources using AWS CloudFormation](/actions-and-automations/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
-- [Deploy Azure resources using Terraform](/actions-and-automations/setup-backend/github-workflow/examples/Azure/create-azure-resource.md)
+- [Deploy AWS resources using AWS CloudFormation](/guides/all/deploy-cloudformation-template.md)
+- [Deploy Azure resources using Terraform](/guides/all/create-azure-resource.md)
 - [Create GitHub secret using GitHub workflows](/guides/all/create-github-secret.md)
 - [Script to ingest GitHub packages](https://github.com/port-labs/example-github-packages)
 - [Lock service deployment](/guides/all/service-lock-github-workflow)
@@ -111,22 +111,22 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
 - [Map AWS Resources to your integration](docs/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples/examples.md)
-- [Deploy AWS resources using AWS CloudFormation](/actions-and-automations/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template.md)
+- [Deploy AWS resources using AWS CloudFormation](/guides/all/deploy-cloudformation-template.md)
 - [Terraform manage S3 buckets lifecycle](/guides/all/s3-bucket.md)
 - [Terraform manage developer environment](/guides/all/create-dev-env.md)
 - [Connect ECR repository to Service](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples/connect-ecr-repo-to-service-using-tags.md)
 - [Script to ingest ECR Images and Repositories](https://github.com/port-labs/example-ecr-images)
-- [Self-service action to create EC2 instance](/actions-and-automations/setup-backend/github-workflow/examples/AWS/create-an-ec2-instance)
-- [Provision AWS cloud resource using Terraform Plan and Apply](/actions-and-automations/setup-backend/github-workflow/examples/AWS/terraform-plan-and-apply-aws-resource)
-- [Add tags to ECR repository](/actions-and-automations/setup-backend/github-workflow/examples/AWS/add-tags-to-ecr-repository)
-- [Generate ECR image with tags](/actions-and-automations/setup-backend/github-workflow/examples/AWS/push-image-to-ecr)
+- [Self-service action to create EC2 instance](/guides/all/create-an-ec2-instance)
+- [Provision AWS cloud resource using Terraform Plan and Apply](/guides/all/terraform-plan-and-apply-aws-resource)
+- [Add tags to ECR repository](/guides/all/add-tags-to-ecr-repository)
+- [Generate ECR image with tags](/guides/all/push-image-to-ecr)
 
 ### Azure
 
 - [Azure exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md)
 - [Azure Active Directory (AD) SSO](/sso-rbac/sso-providers/azure-ad.md)
 - [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md)
-- [Add tags to Azure resources](/actions-and-automations/setup-backend/github-workflow/examples/Azure/tag-azure-resource)
+- [Add tags to Azure resources](/guides/all/tag-azure-resource)
 
 ### GCP
 
@@ -175,7 +175,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Statuspage
 
 - [Statuspage integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
-- [Self-service action to create and manage Statuspage Incidents](/actions-and-automations/setup-backend/github-workflow/examples/Statuspage/manage-statuspage-incident)
+- [Self-service action to create and manage Statuspage Incidents](/guides/all/manage-statuspage-incident)
 
 ## PagerDuty
 
@@ -244,7 +244,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Embed dashboards from Datadog](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
 - [Datadog webhook](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md)
 - [Datadog service catalog](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md#ingest-service-catalog)
-- [Self-service action to trigger Datadog incident](/actions-and-automations/setup-backend/github-workflow/examples/Datadog/trigger-datadog-incident)
+- [Self-service action to trigger Datadog incident](/guides/all/trigger-datadog-incident)
 
 ## Prometheus
 

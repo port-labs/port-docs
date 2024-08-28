@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 # Trigger Datadog Incident
 
 This GitHub action allows you to quickly trigger incidents in Datadog directly from Port using Port's self service actions.

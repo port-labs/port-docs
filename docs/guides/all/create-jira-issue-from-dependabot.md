@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 # Create Jira Issue from Dependabot Alert
 
 This self-service action shows how to create a Jira issue from a dependabot alert that links the issue to a service in Port.

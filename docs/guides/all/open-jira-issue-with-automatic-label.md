@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 # Open Jira issue with automatic label
 
 This self-service action shows how to create a Jira issue with a label that links the issue to a concerned service in Port.

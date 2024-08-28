@@ -1,7 +1,11 @@
+---
+displayed_sidebar: null
+---
+
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
-import StatuspageBlueprint from './blueprints/_statuspage_blueprint.mdx'
-import StatuspageIncidentBlueprint from './blueprints/_statuspage_incident_blueprint.mdx'
+import StatuspageBlueprint from '/docs/guides/templates/statuspage/_statuspage_blueprint.mdx'
+import StatuspageIncidentBlueprint from '/docs/guides/templates/statuspage/_statuspage_incident_blueprint.mdx'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Create and Manage Statuspage Incidents

@@ -4,6 +4,7 @@ tags:
   - ECR
   - Guide
   - GitHub Actions
+displayed_sidebar: null
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
@@ -277,7 +278,7 @@ Now you should see the `Build ECR Image` action in the self-service page. 🎉
 <br />
 <br />
 
-Let's assume your AWS ECR repository is named `your-ecr-repository-name`. Here's how the Docker image names will be tagged based on the [provided workflow](/actions-and-automations/setup-backend/github-workflow/examples/AWS/push-image-to-ecr#github-workflow):
+Let's assume your AWS ECR repository is named `your-ecr-repository-name`. Here's how the Docker image names will be tagged based on the [provided workflow](/guides/all/push-image-to-ecr#github-workflow):
 
 1. **Primary Tag: Short Commit ID**
    - Tag: `your-ecr-repository-name:abc123` (assuming `abc123` is the short commit ID)
@@ -297,6 +298,6 @@ Done! 🎉 You can now build and push images for your repositories from Port.
 
 
 ## More Self Service AWS Actions Examples
-- [Deploy EKS cluster and deploy application](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/AWS/create-eks-cluster-and-deploy-app)
-- [Create an EC2 instance](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/AWS/create-an-ec2-instance)
-- [Deploy cloud formation stack](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/AWS/deploy-cloudformation-template)
+- [Deploy EKS cluster and deploy application](https://docs.getport.io/guides/all/create-eks-cluster-and-deploy-app)
+- [Create an EC2 instance](https://docs.getport.io/guides/all/create-an-ec2-instance)
+- [Deploy cloud formation stack](https://docs.getport.io/guides/all/deploy-cloudformation-template)

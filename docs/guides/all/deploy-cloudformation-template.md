@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"

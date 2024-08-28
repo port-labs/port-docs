@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 # Add tags to S3 Bucket
 
 This GitHub action allows you to add tags to an S3 Bucket via Port Actions with ease.

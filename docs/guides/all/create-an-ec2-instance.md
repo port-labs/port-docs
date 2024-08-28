@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+displayed_sidebar: null
 ---
 
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
