@@ -2,7 +2,9 @@
 sidebar_position: 3
 title: Examples
 ---
-
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import SlackTeamsMessagingWebhook from "/docs/actions-and-automations/define-automations/templates/_slack_teams_webhook_setup_instructions.mdx"
 
 # Examples
@@ -202,42 +204,3 @@ jobs:
         run: |
           curl -H 'Content-Type: application/json' -d '{"text": "The TTL property of service ${{ inputs.service_name }} has expired."}' $TEAMS_WEBHOOK_URL
 ```
-
----
-
-## Update a service's default values upon creation
-
-### Automation definition
-
-When a new service is created, we may want to set default values for some of its properties.  
-By using the `ENTITY_CREATED` trigger type, we can automate this.
- 
-The following definition will set a default `type` and `domain` to every new `service` entity:
-
-```json showLineNumbers
-{
-  "identifier": "serviceCreatedSetDefaults",
-  "title": "Update defaults when service is created",
-  "trigger": {
-    "type": "automation",
-    "event": {
-      "type": "ENTITY_CREATED",
-      "blueprintIdentifier": "Service"
-    }
-  },
-  "invocationMethod": {
-    "type": "UPSERT_ENTITY",
-    "blueprintIdentifier": "Service",
-    "mapping": {
-      "identifier": "{{ .event.context.entityIdentifier }} ",
-      "properties": {
-        "domain": "default_domain",
-        "type": "backend"
-      }
-    }
-  },
-  "publish": true
-}
-```
-
----

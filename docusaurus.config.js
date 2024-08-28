@@ -295,7 +295,7 @@ const config = {
       // },
     }),
   themes: [
-    "@port-labs/docusaurus-theme-openapi-docs",
+    "docusaurus-theme-openapi-docs",
     
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
@@ -327,7 +327,7 @@ const config = {
       },
     ],
     [
-      "@port-labs/docusaurus-plugin-openapi-docs",
+      "docusaurus-plugin-openapi-docs",
       {
         id: "api", // plugin id
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs

@@ -24,7 +24,7 @@
       "status": {
         "title": "Status",
         "type": "string",
-        "enum": ["MERGED", "OPEN", "DECLINED"],
+        "enum": ["MERGED","OPEN","DECLINED"],
         "enumColors": {
           "MERGED": "purple",
           "OPEN": "green",
@@ -32,7 +32,7 @@
         }
       },
       "createdAt": {
-        "title": "Create At",
+        "title": "Created At",
         "type": "string",
         "format": "date-time"
       },
@@ -50,7 +50,14 @@
     "required": []
   },
   "mirrorProperties": {},
-  "calculationProperties": {},
+  "calculationProperties": {
+    "lead_time_days": {
+      "title": "Lead time (Days)",
+      "calculation": "if .properties.status == \"MERGED\" then ((.properties.updatedAt | sub(\"\\\\.[0-9]+\\\\+00:00$\"; \"Z\") | strptime(\"%Y-%m-%dT%H:%M:%SZ\") | mktime) - (.properties.createdAt | sub(\"\\\\.[0-9]+\\\\+00:00$\"; \"Z\") | strptime(\"%Y-%m-%dT%H:%M:%SZ\") | mktime)) / 86400 | tonumber else null end",
+      "type": "number"
+    }
+  },
+  "aggregationProperties": {},
   "relations": {
     "service": {
       "title": "Service",
