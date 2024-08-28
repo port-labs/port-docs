@@ -67,7 +67,7 @@ Under each of these two keys, you can add one or more of the following keys:
 - A `teams` key, which allows you to specify which **teams** can execute/approve the action.
 - A `policy` key, which allows you to use more complex logic using two keys:
   - [`"queries"`](/search-and-query/) - a collection of [rules](/search-and-query/#rules) you can use to fetch and filter the data you need from your software catalog.
-  - `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data.
+  - `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data. There is an implicit `"OR"` between each condition.
 
 There is an implicit `'OR'` between the `roles`, `users`, `teams`, and `policy` keys, meaning that if any of them evaluate to `true`, the action will be allowed.  
 For example, the following configuration will allow the action to be executed by any user who is either an `Admin` **or** a member of the `Engineering` team:
@@ -224,7 +224,7 @@ The `condition` checks if the approver is the executer's team leader, via the re
     // a policy key may be added here, with queries and conditions within it
   },
   "approve": {
-    "roles": ["Admin"], // all admins may approve this action
+    "roles": [],
     "users": [],
     "teams": [],
     "policy": {

@@ -2,7 +2,7 @@
 
 This guide shows you how to map CODEOWNERS file patterns in GitHub repositories (Service) to their respective Service, Team and User in port.
 
-:::tip Prerequisites
+:::info Prerequisites
 This guide assumes that:
 - You have a Port account and that you have finished the [onboarding process](/quickstart).
 - You have the [GitHub exporter installed and configured in your environment](/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md)

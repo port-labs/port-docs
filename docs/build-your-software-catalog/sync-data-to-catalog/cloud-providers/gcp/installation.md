@@ -9,6 +9,8 @@ import GivePermissionsToNewServiceAccount from './\_give-permissions-to-new-serv
 
 # Installation
 
+## Installation Methods
+
 The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials. 
 
 In these guides, you can install the integration in various ways, according to the authentication method + platform you choose to run the integration on.
@@ -18,7 +20,7 @@ For your first deployment of the GCP exporter, we recommend starting with the He
 :::
 
 <Tabs groupId="installation-platforms" queryString="installation-platforms" defaultValue="helm">
-<TabItem value="helm" label="Helm ( Scheduled )">  
+<TabItem value="helm" label="Helm (Scheduled)">  
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
@@ -27,10 +29,11 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 <CreateServiceAccountAndKey/>
 
-## Running the Helm command
+<h2> Running the Helm command </h2>
 
-:::warning
-The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
+:::info Data security
+The Ocean integration does not store the encoded file anywhere.  
+It is saved locally, and is NOT sent to Port at any time.
 :::
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
@@ -56,12 +59,79 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
      --set integration.config.encodedADCConfiguration="<paste_the_encoded_file_content_here>"
    ```
 
-## Optional- Scale permissions for a Service account
+<h2> Optional- Scale permissions for a Service account </h2>
 
 <GivePermissionsToNewServiceAccount/>
 
 </TabItem>
-<TabItem value="on-premises" label="On Premises">
+
+<TabItem value="ci" label="CI/CD (Scheduled)">
+
+<Tabs groupId="ci-methods" defaultValue="github" queryString="ci-methods">
+
+<TabItem value="github" label="GitHub Actions">
+
+The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
+
+1. Creating a service account.
+2. Setting up the GitHub Actions workflow.
+
+<CreateServiceAccountAndKey/>
+
+<h2> Setting up the GitHub Actions workflow </h2>
+
+:::info Data security
+The Ocean integration does not store the encoded file anywhere.  
+It is saved locally, and is NOT sent to Port at any time.
+:::
+
+1. Take the service account [key file you create](#fetching-key-file), and run this command:
+
+   ```bash
+   cat <new-configuration-file> | base64 | pbcopy
+   ```
+   
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+- Port API credentials, you can check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+  - `OCEAN__PORT_CLIENT_ID`
+  - `OCEAN__PORT_CLIENT_SECRET`
+
+- Google Cloud Service Account Key
+  - `OCEAN__SECRET__ENCODED_ADC_CONFIGURATION` - Paste the encoded file content here.
+
+Here is an example for `gcp-integration.yml` workflow file:
+
+```yaml
+name: GCP Integration
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */4 * * *' # Determines the scheduled interval for this workflow. This example runs every 4 hours.
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run gcp Integration
+        uses: port-labs/ocean-sail@v1
+        with:
+          type: gcp
+          port_client_id: ${{ secrets.PORT_CLIENT_ID }}
+          port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
+          port_base_url: "https://api.getport.io"
+          config: |
+            encoded_adc_configuration: ${{ secrets.OCEAN__SECRET__ENCODED_ADC_CONFIGURATION }}
+```
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
+<TabItem value="docker" label="Docker(Once)">
 
 The Ocean Google Cloud integration uses Google's ADC (Application Default Credentials). In order to properly set-up, this guide will be divided into two parts:
 
@@ -70,7 +140,7 @@ The Ocean Google Cloud integration uses Google's ADC (Application Default Creden
 
 <CreateServiceAccountAndKey/>
 
-## Running the Docker command
+<h2> Running the Docker command </h2>
 
 :::warning
 The Ocean integration doesn't store the encoded file anywhere but locally. It's NOT being sent to Port.
@@ -96,23 +166,26 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
    ghcr.io/port-labs/port-ocean-gcp:latest
    ```
 
-## Optional- Scale permissions for a Docker Service account
+<h2> Optional- Scale permissions for a Docker Service account </h2>
 
 <GivePermissionsToNewServiceAccount/>
 
 </TabItem>
+
 <TabItem value="terraform" label="Terraform ( Real Time Events )">  
 
 The GCP integration is deployed using Terraform on Google Cloud Cloud Run.  
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the integration.
 
-## Prerequisites
+<h2> Prerequisites </h2>
 
-- [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.9.1
+- [hashicorp/google Terraform Provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs) >= 5.25
+- [hashicorp/google-beta Terraform Provider](https://registry.terraform.io/providers/hashicorp/google-beta/latest) >= 5.25
 - [A logged in gCloud CLI](https://cloud.google.com/sdk/gcloud) with enough [Permissions](#required-permissions-to-run-terraform-apply)
 - [Artifact Registry Image](#artifact-registry-image)
 
-## Artifact Registry Image
+<h2> Artifact Registry Image </h2>
 
 In order to run the Cloud Run Service, it's mandatory to have a working Image. Currently our GHCR based images aren't supported by Google Cloud's Cloud run platform, so a manual installation to Dockerhub\Artifact registry is required. In the guide we specify an Artifact registry approach, but a similar DockerHub approach should yield the same results:  
 
@@ -127,7 +200,7 @@ In order to run the Cloud Run Service, it's mandatory to have a working Image. C
 
    ```docker push <your_artifact_registry_/_dockerhub>/port-ocean-gcp:<your_version>```
 
-## Required permissions to run terraform apply
+<h2> Required permissions to run terraform apply </h2>
 
 In order to successfully deploy the Google Cloud integration, it's crucial to ensure that the user who deploys the integration in the GCP Organization has the appropriate access permissions.
 
@@ -187,7 +260,7 @@ serviceusage.services.use
 ```
 </details>
 
-## Installation walkthrough
+<h2> Installation walkthrough </h2>
 
 Run the following commands. Make sure to replace `<placeholders>` with actual values.
 :::tip
@@ -195,22 +268,22 @@ If you want the integration to collect resources from more projects/folders/orga
 :::
 
 ```bash
-echo 'module "gcp" {
-source = "port-labs/integration-factory/ocean//examples/gcp_integration_with_real_time" 
-version = ">=0.0.25" 
+echo 'provider "google-beta" { user_project_override = true }
+provider "google" { user_project_override = true }
+module "gcp" {
+source = "port-labs/integration-factory/ocean//examples/gcp_cloud_run" 
+version = ">=0.0.31" 
 port_client_id = "<your_port_client_id>" 
 port_client_secret = "<your_port_client_secret>" 
-port_base_url = "https://api.getport.io" 
 gcp_ocean_integration_image = "<your_artifact_registry_/_dockerhub>/port-ocean-gcp:<your_version>" 
 gcp_organization = "<your_gcp_organization>" 
 gcp_ocean_setup_project = "<your_gcp_project>" 
-gcp_projects = [<your_gcp_project>] # The Project list that the integration digests resources from. leave empty
-integration_identifier = "gcp" 
-initialize_port_resources = true # When set to true the integration will create default blueprints + JQ Mappings
+gcp_included_projects = ["<your_gcp_project>"] # The Project list that the integration digests resources from.
+integration_identifier = "gcp"
+scheduled_resync_interval = 1440
 event_listener = {
   type = "POLLING"
 }
-assets_types_for_monitoring = ["cloudresourcemanager.googleapis.com/Organization","cloudresourcemanager.googleapis.com/Project","storage.googleapis.com/Bucket","cloudfunctions.googleapis.com/CloudFunction","pubsub.googleapis.com/Subscription","pubsub.googleapis.com/Topic","container.googleapis.com/Cluster"] # A list of resources to filter events from Google Cloud.
 }' > main.tf
 # Initializing Terraform and Providers
 terraform init
@@ -218,7 +291,36 @@ terraform init
 terraform apply
 ```
 
-## Optional - Scaling the permissions
+<h2> Configuration options </h2>
+
+The Port GCP integration's Terraform module offers a set of configurations:
+
+| Configuration | Default value | Required | Description |
+| --- | --- | --- | --- |
+| port_client_id |  | True | The Port client id.  |
+| port_client_secret |  | True | The Port client secret.  |
+| gcp_organization |  | True | Your Google Cloud Organization Id.  |
+| gcp_ocean_setup_project |  | True | The Project ot create all the Integration's infrastructure (Topic, Subscription, Service account etc.) on.  |
+| gcp_ocean_integration_image |  | True | The Artifact Registry / Dockerhub image to deploy.  |
+| integration_identifier |  | True | The Integration's identifier in Port  |
+| port_base_url | 'https://api.getport.io' | False | The Port Base url.  |
+| gcp_included_projects | [] | False | The Projects list you want the integration to collect from. If left empty, It will collect *All* projects in the organization.  |
+| gcp_excluded_projects | [] | False | The Projects list you want the integration NOT to collect from. This will be overriden by any value in gcp_included_projects besides []. |
+| assets_types_for_monitoring | ["cloudresourcemanager.googleapis.com/Organization", "cloudresourcemanager.googleapis.com/Project", "storage.googleapis.com/Bucket", "cloudfunctions.googleapis.com/CloudFunction", "pubsub.googleapis.com/Subscription", "pubsub.googleapis.com/Topic"] | False | The list of asset types the integration will digest real-time events for.  |
+| ocean_integration_service_account_permissions | ["cloudasset.assets.exportResource", "cloudasset.assets.listCloudAssetFeeds", "cloudasset.assets.listResource", "cloudasset.assets.searchAllResources", "cloudasset.feeds.create", "cloudasset.feeds.list", "pubsub.topics.list", "pubsub.topics.get", "resourcemanager.projects.get", "resourcemanager.projects.list", "resourcemanager.folders.get", "resourcemanager.folders.list", "resourcemanager.organizations.get", "run.routes.invoke", "run.jobs.run"] | False | The permissions granted to the integration's service_account. We recommend not changing it to prevent unexpected errors.  |
+| assets_feed_topic_id | "ocean-integration-topic" | False | The name of the topic created to recieve real time events.  |
+| assets_feed_id | "ocean-gcp-integration-assets-feed" | False | The ID for the Ocean GCP Integration feed.  |
+| service_account_name | "ocean-service-account" | False | The name of the service account used by the Ocean integration.  |
+| role_name | "OceanIntegrationRole" | False | The name of the role created for the Integration's Service account.  |
+| gcp_ocean_integration_cloud_run_location | "europe-west1" | False | Location in which the Cloud Run will run.  |
+| environment_variables | [] | False | List of environment variables set to the Cloud Run job. We recommend not changing this variable.  |
+| initialize_port_resources | True | False | Boolean to initialize Port resources.  |
+| event_listener | Polling | False | Port's event listener configurations.  |
+| integration_version | "latest" | False | The version of the integration to deploy.  |
+| integration_type | "gcp" | False | The type of the integration.  |
+| scheduled_resync_interval | 1440 | False | The interval to resync the integration (in minutes).  |
+
+<h2> Optional - Scaling the permissions </h2>
 
 If you want the integration to collect resources from multiple projects/folders or to have it collect from the entire organization, you need to have permissions to create/view additional resources. Follow these instructions to make sure you are equipped with enough permissions.
 

@@ -5,7 +5,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide provides a step-by-step process to automate the creation of a new AWS account and associated resources using GitLab and Port.
 
-:::tip Prerequisites
+:::info Prerequisites
 This guide assumes you have:
 - A Port account and that you have completed the [onboarding process](/quickstart).
 - A GitLab account with a repository set up for CI/CD.
@@ -268,7 +268,7 @@ Create a new self-service action using the `self-service-action.json` file. This
 
 <details>
 <summary><b>Click to expand</b></summary>
-:::tip Prerequisites
+:::info Prerequisites
 Make sure to change 'WEBHOOK-URL-FROM-GITLAB' into your webhook URL from gitlab.
 :::
 

@@ -576,6 +576,10 @@ The integration provides an option to filter the data that is retrieved from the
 These attributes can be enabled using the path: `selector.apiFilters.filter`. By default, the integration fetches only SonarQube projects using the `qualifier` attribute.
 :::
 
+:::tip Define your own metrics
+Besides filtering the API data, the integration provides a mechanism to allow users to define their own list of metrics used in SonarQube to evaluate the code. This list can be defined in the `selector.metrics` property. A complete list of valid SonarQube metrics can be in the [SonarQube documentation](https://docs.sonarsource.com/sonarqube/latest/user-guide/code-metrics/metrics-definition/)
+:::
+
 :::note Supported Sonar environment
 Please note that the API filters are supported on on-premise Sonar environments (SonarQube) only, and will not work on SonarCloud.
 :::
@@ -590,6 +594,16 @@ resources:
       apiFilters:
         filter:
           qualifier: TRK
+      metrics:
+        - code_smells
+        - coverage
+        - bugs
+        - vulnerabilities
+        - duplicated_files
+        - security_hotspots
+        - new_violations
+        - new_coverage
+        - new_duplicated_lines_density
     port:
       entity:
         mappings:
@@ -610,7 +624,6 @@ resources:
             mainBranch: .__branch.name
             tags: .tags
 ```
-
 </details>
 
 ### Issue
