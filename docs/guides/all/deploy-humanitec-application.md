@@ -1,6 +1,10 @@
+---
+displayed_sidebar: null
+---
+
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
-import HumanitecApplicationBlueprint from './blueprints/_humanitec_application_blueprint.mdx'
+import HumanitecApplicationBlueprint from '/docs/guides/templates/humanitec/_humanitec_application_blueprint.mdx'
 
 # Deploy Application In Humanitec
 
@@ -175,4 +179,4 @@ Now you should see the `Deploy Application` action in the self-service page. �
 Congrats 🎉 You've deployed a Humanitec application in Port 🔥
 
 ## More Self Service Humanitec Actions Examples
-- [Create Humanitec application](/docs/actions-and-automations/setup-backend/github-workflow/examples/Humanitec/create-humanitec-application.md)
+- [Create Humanitec application](/guides/all/create-humanitec-application.md)

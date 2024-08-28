@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 # EKS as a service action (EKSaaS)
 This is a guide to integrate Port and Upbound, using their combination as a software catalog and self-service hub for developers, and a platform management tool for the platform team.
 

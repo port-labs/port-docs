@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
 

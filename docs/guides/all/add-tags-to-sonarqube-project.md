@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 # Add tags to SonarQube project
 
 This guide shows how to quickly add tags to a SonarQube project via Port's self-service actions with ease. Tagging projects in SonarQube allows you to categorize and label your projects based on various attributes such as technology stack, business domain, team ownership etc. In this action, we will add tags to enable you to more easily connect a SonarQube project to a service in Port.

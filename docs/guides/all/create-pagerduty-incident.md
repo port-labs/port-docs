@@ -1,8 +1,12 @@
+---
+displayed_sidebar: null
+---
+
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
-import PagerDutyServiceBlueprint from './blueprints/_pagerduty_incident_blueprint.mdx'
+import PagerDutyServiceBlueprint from '/docs/guides/templates/pagerduty/_pagerduty_incident_blueprint.mdx'
 
-# Create PagerDuty Incident Action
+# Create a PagerDuty Incident
 
 ## Overview
 This self service guide provides a comprehensive walkthrough on how to create an incident in Pagerduty from Port using Port's self service actions.

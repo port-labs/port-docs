@@ -1,11 +1,15 @@
+---
+displayed_sidebar: null
+---
+
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
-import PagerDutyIncidentBlueprint from './blueprints/_pagerduty_incident_blueprint.mdx'
+import PagerDutyIncidentBlueprint from '/docs/guides/templates/pagerduty/_pagerduty_incident_blueprint.mdx'
 
-# Resolve incident in PagerDuty
+# Escalate incident in PagerDuty
 
 ## Overview
-This self service guide provides a comprehensive walkthrough on how to resolve an incident in Pagerduty from Port using Port's self service actions.
+This self service guide provides a comprehensive walkthrough on how to escalate incident in Pagerduty from Port using Port's self service actions.
 
 ## Prerequisites
 1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
@@ -25,18 +29,27 @@ This self service guide provides a comprehensive walkthrough on how to resolve a
 
 ## GitHub Workflow
 
-Create the file `.github/workflows/resolve-incident.yaml` in the `.github/workflows` folder of your repository.
+Create the file `.github/workflows/escalate-incident.yaml` in the `.github/workflows` folder of your repository.
 
 <GithubDedicatedRepoHint/>
 
 <details>
 <summary>GitHub Workflow</summary>
 
-```yaml showLineNumbers title = "resolve-incident.yaml"
-name: Resolve Incident In PagerDuty
+```yaml showLineNumbers title="escalate-incident.yaml"
+name: Escalate PagerDuty Incident
+
 on:
   workflow_dispatch:
     inputs:
+      escalation_policy_id:
+        description: PagerDuty Escalation Policy ID to apply
+        required: true
+        type: string
+      urgency:
+        description: New urgency level for the incident (e.g., "high")
+        required: false
+        type: string
       from:
         description: The email address of a valid user associated with the account making the request.
         required: true
@@ -46,11 +59,10 @@ on:
         description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
-  resolve_incident:
+  escalate-incident:
     runs-on: ubuntu-latest
     steps:
-      
-      - name: Log Executing Request to Resolve Incident
+      - name: Inform execution of request to escalate incident
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -58,27 +70,29 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_context).run_id}}
-          logMessage: "About to make a request to pagerduty..."
+          logMessage: "About to escalate incident in PagerDuty..."
 
-      - name: Request to Resolve Incident
-        id: resolve_incident
+      - name: Escalate Incident in PagerDuty
+        id: escalate_incident
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.pagerduty.com/incidents'
+          url: 'https://api.pagerduty.com/incidents/${{fromJson(inputs.port_context).entity}}'
           method: 'PUT'
           customHeaders: '{"Content-Type": "application/json", "Accept": "application/vnd.pagerduty+json;version=2", "Authorization": "Token token=${{ secrets.PAGERDUTY_API_KEY }}", "From": "${{ github.event.inputs.from }}"}'
           data: >-
-              {
-                "incidents": [
-                  {
-                    "id": "${{fromJson(inputs.port_context).entity}}",
-                    "type": "incident_reference",
-                    "status": "resolved"
-                  }
-                ]
+            {
+              "incident": {
+                "type": "incident_reference",
+                "escalation_policy": {
+                  "id": "${{ github.event.inputs.escalation_policy_id }}",
+                  "type": "escalation_policy_reference"
+                },
+                "urgency": "${{ github.event.inputs.urgency }}"
               }
+            }
 
-      - name: Log Before Processing Incident Response
+      - name: Inform PagerDuty request failure
+        if: failure()
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -86,9 +100,9 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_context).run_id}}
-          logMessage: "Getting incident object from response received ..."
+          logMessage: "Request to escalate incident failed ..."
 
-      - name: Log Before Upserting Entity
+      - name: Inform ingestion of PagerDuty escalation to Port
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -96,23 +110,24 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_context).run_id}}
-          logMessage: "Reporting the updated incident back to port ..."
+          logMessage: "Reporting the escalated incident back to Port ..."
 
-      - name: UPSERT Entity
+      - name: Upsert pagerduty entity to Port 
+        id: upsert_entity
         uses: port-labs/port-github-action@v1
         with:
-          identifier: "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].id }}"
-          title: "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].title }}"
-          blueprint: ${{fromJson(inputs.port_context).blueprint}}
+          identifier: ${{inputs.entity_identifier}}
+          title: "${{ fromJson(steps.escalate_incident.outputs.response).incident.title }}"
+          blueprint: "pagerdutyIncident"
           properties: |-
             {
-              "status": "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].status }}",
-              "url": "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].self }}",
-              "urgency": "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].urgency }}",
-              "responder": "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].assignments[0].assignee.summary}}",
-              "escalation_policy": "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].escalation_policy.summary }}",
-              "created_at": "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].created_at }}",
-              "updated_at": "${{ fromJson(steps.resolve_incident.outputs.response).incidents[0].updated_at }}"
+              "status": "${{ fromJson(steps.escalate_incident.outputs.response).incident.status }}",
+              "url": "${{ fromJson(steps.escalate_incident.outputs.response).incident.self }}",
+              "urgency": "${{ fromJson(steps.escalate_incident.outputs.response).incident.urgency }}",
+              "responder": "${{ fromJson(steps.escalate_incident.outputs.response).incident.assignments[0].assignee.summary}}",
+              "escalation_policy": "${{ fromJson(steps.escalate_incident.outputs.response).incident.escalation_policy.summary }}",
+              "created_at": "${{ fromJson(steps.escalate_incident.outputs.response).incident.created_at }}",
+              "updated_at": "${{ fromJson(steps.escalate_incident.outputs.response).incident.updated_at }}"
             }
           relations: "${{ toJson(fromJson(inputs.port_context).relations) }}"
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -121,7 +136,8 @@ jobs:
           operation: UPSERT
           runId: ${{fromJson(inputs.port_context).run_id}}
 
-      - name: Log After Upserting Entity
+      - name: Inform Entity upsert failure
+        if: steps.upsert_entity.outcome == 'failure'
         uses: port-labs/port-github-action@v1
         with:
           clientId: ${{ secrets.PORT_CLIENT_ID }}
@@ -129,7 +145,17 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_context).run_id}}
-          logMessage: "Entity upserting was successful ✅"
+          logMessage: "Failed to report the escalated incident back to Port ..."
+
+      - name: Inform completion of PagerDuty incident escalation
+        uses: port-labs/port-github-action@v1
+        with:
+          clientId: ${{ secrets.PORT_CLIENT_ID }}
+          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+          baseUrl: https://api.getport.io
+          operation: PATCH_RUN
+          runId: ${{fromJson(inputs.port_context).run_id}}
+          logMessage: "Incident escalation process was successful ✅"
 ```
 </details>
 
@@ -138,31 +164,58 @@ jobs:
 Create a new self service action using the following JSON configuration.
 
 <details>
-<summary><b> Resolve Incident In PagerDuty (click to expand) </b></summary>
+<summary><b> Escalate Incident In PagerDuty (click to expand) </b></summary>
 
 <GithubActionModificationHint/>
 
 ```json showLineNumbers
 {
-  "identifier": "pagerdutyIncident_resolve_incident",
-  "title": "Resolve Incident",
+  "identifier": "pagerdutyIncident_escalate_incident",
+  "title": "Escalate Incident",
   "icon": "pagerduty",
-  "description": "Resolve incident in pagerduty",
+  "description": "Escalate a pagerduty incident",
   "trigger": {
     "type": "self-service",
     "operation": "DAY-2",
     "userInputs": {
       "properties": {
+        "escalation_policy_id": {
+          "title": "Escalation Policy ID",
+          "description": "PagerDuty Escalation Policy ID to apply",
+          "icon": "pagerduty",
+          "type": "string"
+        },
+        "urgency": {
+          "icon": "pagerduty",
+          "title": "Urgency",
+          "description": "New urgency level for the incident (e.g., \"high\")",
+          "type": "string",
+          "default": "low",
+          "enum": [
+            "high",
+            "low"
+          ],
+          "enumColors": {
+            "high": "orange",
+            "low": "lightGray"
+          }
+        },
         "from": {
           "icon": "User",
           "title": "From",
-          "description": "User Email",
+          "description": "The email address of a valid pagerduty user associated with the account making the request.",
           "type": "string",
           "format": "user"
         }
       },
-      "required": [],
+      "required": [
+        "escalation_policy_id",
+        "urgency",
+        "from"
+      ],
       "order": [
+        "escalation_policy_id",
+        "urgency",
         "from"
       ]
     },
@@ -172,14 +225,15 @@ Create a new self service action using the following JSON configuration.
     "type": "GITHUB",
     "org": "<GITHUB_ORG>",
     "repo": "<GITHUB_REPO>",
-    "workflow": "resolve-incident.yaml",
+    "workflow": "ecalate-an-incident.yaml",
     "workflowInputs": {
+      "escalation_policy_id": "{{.inputs.\"escalation_policy_id\"}}",
+      "urgency": "{{.inputs.\"urgency\"}}",
       "from": "{{.inputs.\"from\"}}",
       "port_context": {
         "blueprint": "{{.action.blueprint}}",
         "entity": "{{.entity.identifier}}",
-        "run_id": "{{.run.id}}",
-        "relations": "{{.entity.relations}}"
+        "run_id": "{{.run.id}}"
       }
     },
     "reportWorkflowStatus": true
@@ -190,19 +244,19 @@ Create a new self service action using the following JSON configuration.
 ```
 </details>
 
-Now you should see the `Resolve Incident` action in the self-service page. 🎉
+Now you should see the `Escalate Incidents` action in the self-service page. 🎉
 
 ## Let's test it!
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
-2. Click on the `Resolve Incident` action
-3. Choose the pagerduty incident you want to resolve (In case you didn't install the [PagerDuty integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty), it means you don't have any PagerDuty incidents in Port yet, so you will need to create one manually in Port to test this action)
+2. Click on the `Escalate Incident` action
+3. Choose the pagerduty incident you want to escalate (In case you didn't install the [PagerDuty integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty), it means you don't have any PagerDuty incidents in Port yet, so you will need to create one manually in Port to test this action)
 4. Select the new incident
-5. Enter the email address of a valid user associated with the account making the request.
+5. Enter the `Escalation Policy ID`, `Urgency` and `From` (email address of a valid pagerduty user associated with the account making the request).
 6. Click on `Execute`
-7. Done! wait for the incident's status to be changed in PagerDuty
+7. Done! wait for the incident's status to be changed in PagerDuty.
 
-Congrats 🎉 You've resolved a PagerDuty incident in Port 🔥
+Congrats 🎉 You've escalated a PagerDuty incident in Port 🔥
 
 ## More Self Service PagerDuty Actions Examples
 - [Acknowledge Incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
@@ -210,5 +264,5 @@ Congrats 🎉 You've resolved a PagerDuty incident in Port 🔥
 - [Change PagerDuty incident owner](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
 - [Create PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-incident)
 - [Create PagerDuty service](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)
-- [Escalate an incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
+- [Resolve an incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident)
 - [Trigger PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)

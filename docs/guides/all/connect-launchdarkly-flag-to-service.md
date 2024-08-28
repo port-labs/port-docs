@@ -115,4 +115,4 @@ By following these steps, you can seamlessly connect a Launchdarkly flag with an
 More relevant guides and examples:
 
 - [Port's Launchdarkly integration](/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly)
-- [Toggle Launchdarkly Feature Flag](/actions-and-automations/setup-backend/github-workflow/examples/Launchdarkly/toggle-launchdarkly-feature-flag)
+- [Toggle Launchdarkly Feature Flag](/guides/all/toggle-launchdarkly-feature-flag)

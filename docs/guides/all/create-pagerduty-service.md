@@ -1,8 +1,12 @@
+---
+displayed_sidebar: null
+---
+
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
-import PagerDutyServiceBlueprint from './blueprints/_pagerduty_service_blueprint.mdx'
+import PagerDutyServiceBlueprint from '/docs/guides/templates/pagerduty/_pagerduty_service_blueprint.mdx'
 
-# Create PagerDuty Service Action
+# Create a PagerDuty Service
 
 ## Overview
 This self service guide provides a comprehensive walkthrough on how to create a service in Pagerduty from Port using Port's self service actions.
