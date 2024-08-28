@@ -13,7 +13,8 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Jenkins
 
-Our Jenkins integration allows you to import `jobs`, `builds`, `stages`, and `users` from your Jenkins environment into Port, according to your mapping and definitions.
+Port's Jenkins integration allows you to import `jobs`, `builds`, `stages`, and `users` from your Jenkins environment into Port, according to your mapping and definitions.
+
 
 ## Common use cases
 
