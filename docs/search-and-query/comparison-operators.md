@@ -77,7 +77,7 @@ The `>=` operator checks values larger than or equal to the specified value:
 }
 ```
 
-### > (Less Than)
+### < (Less Than)
 
 The `<` operator checks values less than the specified value:
 
