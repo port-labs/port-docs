@@ -6,10 +6,11 @@ import SearchBar from "/src/components/guides-section/SearchBar/SearchBar.jsx";
 import GuideCards from "/src/components/guides-section/GuideCard/GuideCards.jsx";
 import { availableGuides } from "../consts.js";
 import ResetIcon from "/static/img/guides/icons/Reset.svg";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 function GuidePage() {
   const history = useHistory();
+  const location = useLocation();
 
   const [searchText, setSearchText] = useState('');
   const paramsTags = new URLSearchParams(location.search).getAll("tags");
