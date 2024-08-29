@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+displayed_sidebar: null
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
@@ -139,9 +140,9 @@ provider "azurerm" {
   
 4. Now let's create the pipeline file:
 
-    1. [Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-    2. [Define variables for a pipeline](../jenkins-pipeline.md#defining-variables): Define the STORAGE_NAME, STORAGE_LOCATION, REPO_URL and PORT_RUN_ID variables.
-    3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
+    1. [Enable webhook trigger for a pipeline](/actions-and-automations/setup-backend/jenkins-pipeline#enabling-webhook-trigger-for-a-pipeline)
+    2. [Define variables for a pipeline](/actions-and-automations/setup-backend/jenkins-pipeline#defining-variables): Define the STORAGE_NAME, STORAGE_LOCATION, REPO_URL and PORT_RUN_ID variables.
+    3. [Token Setup](/actions-and-automations/setup-backend/jenkins-pipeline#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
 
 Our pipeline will consist of 3 steps for the selected service's repository:
 
@@ -374,4 +375,4 @@ You may create a Jenkins pipeline to trigger the resource deployment on merging 
 
 More relevant guides and examples:
 
-- [Deploy resource in Azure Cloud with Terraform](/actions-and-automations/setup-backend/jenkins-pipeline/examples/deploy-azure-resource.md)
+- [Deploy resource in Azure Cloud with Terraform](/guides/all/deploy-azure-resource.md)

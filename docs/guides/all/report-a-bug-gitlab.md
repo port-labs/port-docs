@@ -1,3 +1,7 @@
+---
+displayed_sidebar: null
+---
+
 # Create a Jira Issue
 
 ## Overview

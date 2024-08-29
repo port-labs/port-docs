@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+displayed_sidebar: null
 ---
 
 # Add a Disk to an AWS EC2 Instance
@@ -11,7 +12,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 In the following guide, you are going to create a self-service action in Port that executes a [GitLab pipeline](/actions-and-automations/setup-backend/gitlab-pipeline/) to add a disk to an EC2 Instance in AWS using Terraform templates.
 
 :::tip Complementary guide
-This guide complements the [Creating an EC2 Instance](/actions-and-automations/setup-backend/gitlab-pipeline/examples/create-ec2-instance) guide.
+This guide complements the [Creating an EC2 Instance](/guides/all/create-an-ec2-instance-gitlab) guide.
 :::
 
 ## Prerequisites

@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+displayed_sidebar: null
 ---
 
 # Scaffold BitBucket Repositories Using Cookiecutter
@@ -135,12 +136,12 @@ Make sure to replace the placeholders for JENKINS_URL and JOB_TOKEN.
 
 4. Create a Jenkins Pipeline with the following configuration:
 
-   1. [Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-   2. [Define variables for a pipeline](../jenkins-pipeline.md#defining-variables): Define the REPO_NAME, BITBUCKET_WORKSPACE_NAME, BITBUCKET_PROJECT_KEY and RUN_ID variables.
+   1. [Enable webhook trigger for a pipeline](/actions-and-automations/setup-backend/jenkins-pipeline#enabling-webhook-trigger-for-a-pipeline)
+   2. [Define variables for a pipeline](/actions-and-automations/setup-backend/jenkins-pipeline#defining-variables): Define the REPO_NAME, BITBUCKET_WORKSPACE_NAME, BITBUCKET_PROJECT_KEY and RUN_ID variables.
 
       ![Define Vars](/img/self-service-actions/setup-backend/jenkins-pipeline/scaffold-jenkins-bitbucket-vars.png)
 
-   3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
+   3. [Token Setup](/actions-and-automations/setup-backend/jenkins-pipeline#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
 
 5. Add the following content to the new pipeline:
 

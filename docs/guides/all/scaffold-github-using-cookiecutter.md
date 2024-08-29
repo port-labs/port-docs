@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+displayed_sidebar: null
 ---
 
 # Scaffold GitHub Repositories Using Cookiecutter
@@ -128,10 +129,10 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 
 4. Create a Jenkins Pipeline with the following configuration:
 
-   1. [Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-   2. [Define variables for a pipeline](../jenkins-pipeline.md#defining-variables): Define the REPO_NAME,GITHUB_ORG_NAME and RUN_ID variables.
+   1. [Enable webhook trigger for a pipeline](/actions-and-automations/setup-backend/jenkins-pipeline#enabling-webhook-trigger-for-a-pipeline)
+   2. [Define variables for a pipeline](/actions-and-automations/setup-backend/jenkins-pipeline#defining-variables): Define the REPO_NAME,GITHUB_ORG_NAME and RUN_ID variables.
       ![Define Vars](/img/self-service-actions/setup-backend/jenkins-pipeline/scaffold-jenkins-vars.png)
-   3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
+   3. [Token Setup](/actions-and-automations/setup-backend/jenkins-pipeline#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
 
 5. Create a Jenkins Pipeline with the following content:
 

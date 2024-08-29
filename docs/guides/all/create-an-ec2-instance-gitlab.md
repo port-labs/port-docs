@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+displayed_sidebar: null
 ---
 
 # Create An AWS EC2 Instance
@@ -855,5 +856,5 @@ Congrats 🎉 You've created an EC2 Instance in Port 🔥
 
 ## Next Steps
 
-1. [Add a disk to the EC2 instance](/actions-and-automations/setup-backend/gitlab-pipeline/examples/add-ec2-volume)
+1. [Add a disk to the EC2 instance](/guides/all/add-ec2-volume)
 

@@ -22,7 +22,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Sync repositories, file contents, pull-requests, workflows, teams and more](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md)
 - [Sync Dependabot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-dependabot-alerts)
 - [GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-service.md?git-provider=github)
-- [GitHub scaffolder using Jenkins pipelines](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
+- [GitHub scaffolder using Jenkins pipelines](/guides/all/scaffold-github-using-cookiecutter.md)
 - [GitHub scaffolder using FastAPI backend](/actions-and-automations/setup-backend/webhook/examples/software-templates.md)
 - [Deploy AWS resources using AWS CloudFormation](/guides/all/deploy-cloudformation-template.md)
 - [Deploy Azure resources using Terraform](/guides/all/create-azure-resource.md)
@@ -49,14 +49,14 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Bitbucket app](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/bitbucket.md)
 - [BitBucket GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md)
 - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
-- [Bitbucket scaffolder](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
+- [Bitbucket scaffolder](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
 - [Webhook integration between Bitbucket (self-hosted) server and Port](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server.md)
 
 ### Azure DevOps
 
 - [Sync Azure pipelines](/build-your-software-catalog/custom-integration/api/ci-cd/azure-pipelines/azure-pipelines.md)
 - [Azure pipelines self-service actions](/actions-and-automations/setup-backend/azure-pipeline/azure-pipeline.md)
-- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/actions-and-automations/setup-backend/azure-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
+- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/guides/all/scaffold-repositories-using-cookiecutter.md)
 
 ### GitOps using Port CRDs
 
@@ -140,11 +140,11 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Cookiecutter
 
 - [Cookiecutter GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-service.md?git-provider=github)
-- [Cookiecutter GitHub scaffolder using Jenkins pipelines](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
+- [Cookiecutter GitHub scaffolder using Jenkins pipelines](/guides/all/scaffold-github-using-cookiecutter.md)
 - [Cookiecutter GitHub scaffolder using FastAPI backend](/actions-and-automations/setup-backend/webhook/examples/software-templates.md)
 - [Cookiecutter GitLab scaffolder using GitLab pipelines](/guides/all/scaffold-a-new-service.md?git-provider=gitlab)
-- [Cookiecutter Bitbucket scaffolder using Jenkins pipelines](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
-- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/actions-and-automations/setup-backend/azure-pipeline/examples/scaffold-repositories-using-cookiecutter.md)
+- [Cookiecutter Bitbucket scaffolder using Jenkins pipelines](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
+- [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/guides/all/scaffold-repositories-using-cookiecutter.md)
 
 ## Slack
 
@@ -274,9 +274,9 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
 - [Jenkins webhook integration with Port](/build-your-software-catalog/custom-integration/webhook/examples/jenkins.md)
 - [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
-- [GitHub scaffolder using Jenkins](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-github-using-cookiecutter.md)
-- [Bitbucket scaffolder using Jenkins](/actions-and-automations/setup-backend/jenkins-pipeline/examples/scaffold-bitbucket-using-cookiecutter.md)
-- [Create Github pull request](/actions-and-automations/setup-backend/jenkins-pipeline/examples/create-github-pull-request)
+- [GitHub scaffolder using Jenkins](/guides/all/scaffold-github-using-cookiecutter.md)
+- [Bitbucket scaffolder using Jenkins](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
+- [Create Github pull request](/guides/all/create-github-pull-request)
 
 ## CodeFresh
 
