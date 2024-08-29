@@ -25,7 +25,7 @@ function GuidePage() {
       const params = new URLSearchParams(location.search);
       params.delete("tags");
       newTags.forEach(tag => params.append("tags", tag));
-      history.push({ search: params.toString() });
+      history.replace({ search: params.toString() });
 
       return newTags;
     });
