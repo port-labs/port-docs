@@ -1,9 +1,9 @@
 
 const darkTags = [ "AWS", "Datadog", "GitHub", "Kafka", "Launchdarkly" ] 
 
-export const getDarkImage = (tag) => {
-    if (darkTags.includes(tag)) {
-        return "/img/guides/icons/dark/" + tag.replace(/ /g, '') + ".svg";
+export const getImagePath = (image) => {
+    if (darkTags.includes(image)) {
+        return "/img/guides/icons/dark/" + image.replace(/ /g, '') + ".svg";
     }
-    return "/img/guides/icons/" + tag.replace(/ /g, '') + ".svg";
+    return "/img/guides/icons/" + image.replace(/ /g, '') + ".svg";
 }

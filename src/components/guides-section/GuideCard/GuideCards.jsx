@@ -8,7 +8,6 @@ function GuideCards({ guides }) {
   if (guides.length === 0) {
     return (
       <div className="guides-card-empty-state">
-        {/* <img src="/img/guides/icons/Search.svg" width="40px" className="not-zoom" /> */}
         <SearchIcon
           className="search-icon"
           style={{ height: "40px", width: "40px" }}

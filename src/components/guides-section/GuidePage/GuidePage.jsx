@@ -29,7 +29,7 @@ function GuidePage() {
 
       return newTags;
     });
-  }, [history]);
+  }, [history. location.search]);
 
   const filteredGuides = useMemo(() => availableGuides.filter((guide) => {
     const matchesTag = selectedTags.length === 0 || selectedTags.every((tag) => guide.tags.includes(tag) || guide.logos.includes(tag) || guide.additionalTags && guide.additionalTags.includes(tag));
@@ -43,7 +43,6 @@ function GuidePage() {
         <div className="guide-tags-and-search-title-container">
           <Typography className="guide-tags-and-search-title">Filters</Typography>
           <div className="guide-tags-reset-button" onClick={() => { setSelectedTags([]); setSearchText(''); }}>
-            {/* <img src="/img/guides/icons/Reset.svg" width="20px" className="not-zoom" /> */}
             <ResetIcon className="reset-icon" />
             <Typography className="guide-tags-reset-button-text">Clear filters</Typography>
           </div>

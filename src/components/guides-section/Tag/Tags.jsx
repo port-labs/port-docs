@@ -12,7 +12,12 @@ function Tags({ toggleTag, selectedTags}) {
           <Typography className="guide-tags-title">{category}</Typography>
           <div className="guide-tags-category-content">
             {tags.map((tag) => (
-              <Tag key={tag} tag={tag} toggleTag={toggleTag} isSelected={selectedTags.includes(tag)}/>
+              <Tag 
+                key={tag} 
+                tag={tag} 
+                toggleTag={toggleTag} 
+                isSelected={selectedTags.includes(tag)}
+              />
             ))}
           </div>
         </div>
