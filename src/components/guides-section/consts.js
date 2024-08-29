@@ -1,5 +1,5 @@
 export const tagsCategoryMap = {
-    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC", "Cloud access management", "Feature flag management", "AppSec", "Cloud cost", "Dev environments", "Engineering metrics"],
+    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics"],
     "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
@@ -18,12 +18,12 @@ export const tagsCategoryMap = {
         "PagerDuty",
         "Terraform",
         "SonarQube",
-        "GCP",
-        "Kubecost",
+        // "GCP",
+        // "Kubecost",
         "Launchdarkly",
-        "Linear",
-        "Opencost",
-        "Snyk",
+        // "Linear",
+        // "Opencost",
+        // "Snyk",
         "Datadog",
         "Dynatrace",
         "Humanitec"
