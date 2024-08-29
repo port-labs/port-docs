@@ -1,24 +1,67 @@
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Connect GitHub CODEOWNERS with Service, GitHub Team and User
 
 This guide shows you how to map CODEOWNERS file patterns in GitHub repositories (Service) to their respective Service, Team and User in port.
 
-:::info Prerequisites
-This guide assumes that:
-- You have a Port account and that you have finished the [onboarding process](/quickstart).
-- You have the [GitHub exporter installed and configured in your environment](/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md)
+## Prerequisites
+This guide assumes:
+- You have a Port account
+- You have installed [Port's GitHub app](docs/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) in your organisation or in repositories you are interested in.
 
+## GitHub configuration
+
+To ingest GitHub objects, use one of the following methods:
+
+<Tabs queryString="method">
+
+<TabItem label="Using Port's UI" value="port">
+
+To manage your GitHub integration configuration using Port:
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired GitHub organization.
+3. A window will open containing the default YAML configuration of your GitHub integration.
+4. Here you can modify the configuration to suit your needs, by adding/removing entries.
+5. When finished, click `resync` to apply any changes.
+
+Using this method applies the configuration to all repositories that the GitHub app has permissions to.
+
+When configuring the integration **using Port**, the YAML configuration is global, allowing you to specify mappings for multiple Port blueprints.
+
+</TabItem>
+
+<TabItem label="Using GitHub" value="github">
+
+To manage your GitHub integration configuration using a config file in GitHub:
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired GitHub organization.
+3. A window will open containing the default YAML configuration of your GitHub integration.
+4. Scroll all the way down, and turn on the `Manage this integration using the "port-app-config.yml" file` toggle.
+
+This will clear the configuration in Port's UI.
+
+When configuring the integration **using GitHub**, you can choose either a global or granular configuration:
+
+- **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository.
+  - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
+- **Granular configuration:** add the `port-app-config.yml` file to the `.github` directory of your desired repository.
+  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
+
+When using global configuration **using GitHub**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
+
+</TabItem>
+
+</Tabs>
+
+:::info Important
+When **using Port's UI**, the specified configuration will override any `port-app-config.yml` file in your GitHub repository/ies.
 :::
 
-## Integrate GitHub resources with Port
-The goal of this section is to fill the software catalog with data directly from your GitHub repositories. [Port's GitHub app](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/) allows you to import `services`, `pull requests`, `workflows`, `teams`, `users` and other GitHub objects. For the purpose of this guide, we shall focus on the User, Team and Service objects only. Follow the steps below to ingest your PR data to Port:
 
-### Steps
-
-1. Create the following GitHub action secrets:
-    * PORT_CLIENT_ID - Your port [client id]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))
-    * PORT_CLIENT_SECRET - Your port [client secret]([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials))
-
-2. Create the following blueprints:
+## Setting up the blueprint and mapping configuration
 
 :::info Blueprints creation
 If you already have the `githubUser`, `githubTeam` and `service` blueprints created, you do not need to recreate them. Ensure to adjust the relations' targets as necessary
@@ -49,6 +92,25 @@ If you already have the `githubUser`, `githubTeam` and `service` blueprints crea
     }
   }
 }
+```
+
+</details>
+
+<details>
+<summary><b>GitHub User mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: user
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .login
+          title: .login
+          blueprint: '"githubUser"'
+          relations:
 ```
 
 </details>
@@ -98,6 +160,32 @@ If you already have the `githubUser`, `githubTeam` and `service` blueprints crea
 
 
 <details>
+<summary><b>GitHub Team mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: team
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".id | tostring"
+          title: .name
+          blueprint: '"githubTeam"'
+          properties:
+            name: .name
+            slug: .slug
+            description: .description
+            link: .html_url
+            permission: .permission
+            notification_setting: .notification_setting
+```
+
+</details>
+
+
+<details>
 <summary><b>Service (GitHub Repository) Blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
@@ -133,6 +221,28 @@ If you already have the `githubUser`, `githubTeam` and `service` blueprints crea
 </details>
 
 <details>
+<summary><b>GitHub Service (Repository) mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".name" # The Entity identifier will be the repository name.
+          title: ".name"
+          blueprint: '"service"'
+          properties:
+            readme: file://README.md # fetching the README.md file that is within the root folder of the repository and ingesting its contents as a markdown property
+            url: .html_url
+            defaultBranch: .default_branch
+```
+
+</details>
+
+<details>
 <summary><b>CODEOWNERS blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
@@ -163,6 +273,45 @@ If you already have the `githubUser`, `githubTeam` and `service` blueprints crea
     }
   }
 }
+```
+
+</details>
+
+<details>
+<summary><b>CODEOWNERS Pattern mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: .repo.archived == false
+      files:
+        - path: '**/.github/CODEOWNERS'
+    port:
+      itemsToParse: >-
+        [. as $root | .file.content | split("\n\n") | map( if (startswith("# ")
+        | not) then { component: $root.repo.name, patterns: [], teams: [. |
+        split(" ")[] | select(startswith("@")) | rtrimstr("\n") |
+        ltrimstr("\n")] } else split("\n") as $lines | { component: ($lines[0] |
+        ltrimstr("# ") | ltrimstr(" ")), patterns: ($lines[1:] | map(split("
+        ")[0])), teams: [($lines[1:] | map(split(" ")[1:] | join(" ")) | [.[] |
+        split(" ") | .[]] | unique)[] | select(startswith("@"))] } end
+        )[]]
+      entity:
+        mappings:
+          identifier: .item.component | gsub(" "; "_") | gsub("&"; "and") | gsub("-"; "")
+          title: .item.component
+          blueprint: '"Component"'
+          properties:
+            codeowners_file_patterns: .item.patterns
+          relations:
+            service: .repo.name
+            owning_teams:
+              combinator: '''and'''
+              rules:
+                - property: '''github_team'''
+                  value: .item.teams
+                  operator: '"in"'
 ```
 
 </details>
@@ -221,304 +370,10 @@ If you already have the `githubUser`, `githubTeam` and `service` blueprints crea
 
 </details>
 
-3. Create a `codeowners_parser.py` file at any convienient location in your Github Repository and copy this script into it:
 
-:::info CODEOWNERS parser?
-Prior to ingestion, a parser is run to extract teams, users, emails and file patterns from the `CODEOWNERS` file. This is then used to build up every instance of the `githubCodeowner` entity.
-
-The location of the `CODEOWNERS` file is not of much importance as the script combs the codebase for the `CODEOWNERS` file in the exact order defined by the [GitHub CODEOWNERS documentation](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#codeowners-file-location)
-:::
-
-<details>
-<summary><b>`codeowners_parser.py` script (Click to expand)</b></summary>
-
-```python showLineNumbers
-import asyncio
-import os
-import re
-import sys
-from dataclasses import dataclass
-from enum import StrEnum
-from typing import Any
-
-import httpx
-import requests
-from loguru import logger
-
-PORT_API_URL = "https://api.getport.io/v1"
-PORT_CLIENT_ID = os.getenv("PORT_CLIENT_ID")
-PORT_CLIENT_SECRET = os.getenv("PORT_CLIENT_SECRET")
-REPOSITORY_NAME = os.getenv("REPO_NAME")
-
-CODEOWNERS_PATTERN_BLUEPRINT = "githubCodeownersPattern"
-CODEOWNERS_BLUEPRINT = "githubCodeowners"
-
-CODEOWNERS_FILE_PATHS = [
-    ".github/CODEOWNERS",
-    "CODEOWNERS",
-    "docs/CODEOWNERS",
-]
-
-
-def get_codeowner_file():
-    for path in CODEOWNERS_FILE_PATHS:
-        if os.path.isfile(path):
-            return path
-
-    return None
-
-
-CODEOWNERS_FILE = get_codeowner_file()
-
-if not CODEOWNERS_FILE:
-    logger.error("Error parsing file: CODEOWNERS not found in the right location")
-    sys.exit(1)
-
-
-# Get Port Access Token
-credentials = {"clientId": PORT_CLIENT_ID, "clientSecret": PORT_CLIENT_SECRET}
-token_response = requests.post(f"{PORT_API_URL}/auth/access_token", json=credentials)
-if not token_response.ok:
-    logger.error(f"Error retrieving access token: {token_response.json()}")
-    sys.exit(1)
-
-access_token = token_response.json()["accessToken"]
-
-# You can now use the value in access_token when making further requests
-headers = {"Authorization": f"Bearer {access_token}"}
-
-
-async def add_entity_to_port(client: httpx.AsyncClient, blueprint_id, entity_object):
-    """A function to create the passed entity in Port
-
-    Params
-    --------------
-    blueprint_id: str
-        The blueprint id to create the entity in Port
-
-    entity_object: dict
-        The entity to add in your Port catalog
-
-    Returns
-    --------------
-    response: dict
-        The response object after calling the webhook
-    """
-    logger.info(f"Adding entity to Port: {entity_object}")
-    response = await client.post(
-        (
-            f"{PORT_API_URL}/blueprints/"
-            f"{blueprint_id}/entities?upsert=true&merge=true"
-        ),
-        json=entity_object,
-        headers=headers,
-    )
-    if not response.is_success:
-        logger.info(f"Ingesting {blueprint_id} entity to port failed, skipping...")
-    logger.info(f"Added entity to Port: {entity_object}")
-
-
-def remove_comment_lines(text: list[str]):
-    COMMENT_CHAR = "#"
-    for line in text:
-        if (current_line := line.strip()) and not current_line.startswith(COMMENT_CHAR):
-            yield line
-
-
-def split_pattern_into_tokens(text: str):
-    return text.split()
-
-
-EMAIL_REGEX = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-TEAM_REGEX = r"\@[\w|-]+\/[\w+|-]+"
-USERNAME_REGEX = r"\@[\w|-]+"
-
-
-class GithubEntityType(StrEnum):
-    USERNAME = "username"
-    EMAIL = "email"
-    TEAM = "team"
-
-
-@dataclass
-class GithubEntity:
-    type: GithubEntityType
-    value: str
-    pattern: str
-
-
-PATTERNS = {
-    GithubEntityType.USERNAME: USERNAME_REGEX,
-    GithubEntityType.EMAIL: EMAIL_REGEX,
-    GithubEntityType.TEAM: TEAM_REGEX,
-}
-
-def convert_to_valid_characters(input_string):
-    pattern = r"[^A-Za-z0-9@_.:\\/=-]"
-    output_string = re.sub(pattern, "@", input_string)
-
-    return output_string
-
-def parse_string_to_entity_type(text: str):
-    for key, value in PATTERNS.items():
-        if re.fullmatch(value, text):
-            return key, text
-
-    return None
-
-
-def create_entity_from_value(
-    entity_type: GithubEntityType, value: str, pattern: str
-) -> GithubEntity:
-    if entity_type == GithubEntityType.USERNAME:
-        value = value.replace("@", "")
-    entity = GithubEntity(entity_type, value, pattern)
-    return entity
-
-
-async def provide_entities():
-    with open(CODEOWNERS_FILE) as codeowners:
-        # CODEOWNERS files aren't supposed to be more than 3mb so we can
-        # safely load into memory
-        cleaned_lines = remove_comment_lines(codeowners.readlines())
-
-    for cleaned_line in cleaned_lines:
-        tokens = split_pattern_into_tokens(cleaned_line)
-        pattern, *entities = tokens
-        valid_entries = list(filter(None, map(parse_string_to_entity_type, entities)))
-        for entry in valid_entries:
-            yield create_entity_from_value(*entry, pattern)
-
-
-def prepare_codeowner_pattern_entity(entity: GithubEntity, codeowner: dict[str, Any]):
-
-    entity_object = {
-        "identifier": convert_to_valid_characters(entity.pattern),
-        "title": f"{entity.pattern} | {REPOSITORY_NAME}",
-        "properties": {},
-        "relations": {
-            "team": [entity.value] if entity.type == GithubEntityType.TEAM else [],
-            "service": REPOSITORY_NAME,
-            "user": [entity.value]
-            if entity.type in [GithubEntityType.USERNAME, GithubEntityType.EMAIL]
-            else [],
-            "codeownersFile": codeowner["identifier"],
-        },
-    }
-
-    return entity_object
-
-
-def crunch_entities(existing_entities: dict[str, Any], entity: dict[str, Any]):
-    if entity["identifier"] in existing_entities:
-        teams = set(
-            [
-                *entity["relations"]["team"],
-                *existing_entities[entity["identifier"]]["relations"]["team"],
-            ]
-        )
-        users = set(
-            [
-                *entity["relations"]["user"],
-                *existing_entities[entity["identifier"]]["relations"]["user"],
-            ]
-        )
-        existing_entities[entity["identifier"]]["relations"]["team"] = list(teams)
-        existing_entities[entity["identifier"]]["relations"]["user"] = list(users)
-    else:
-        existing_entities[entity["identifier"]] = entity
-
-    return existing_entities
-
-
-async def main():
-    logger.info("Starting Port integration")
-    crunched_entities: dict[str, Any] = {}
-    async with httpx.AsyncClient() as client:
-        entities = provide_entities()
-        codeowner_entity = {
-            "identifier": REPOSITORY_NAME,
-            "title": f"Codeowners in {REPOSITORY_NAME}",
-            "properties": {"location": CODEOWNERS_FILE},
-            "relations": {"service": REPOSITORY_NAME},
-        }
-        await add_entity_to_port(client, CODEOWNERS_BLUEPRINT, codeowner_entity)
-
-        async for pattern in entities:
-            pattern_entity = prepare_codeowner_pattern_entity(pattern, codeowner_entity)
-            crunched_entities = crunch_entities(crunched_entities, pattern_entity)
-
-        for entity in crunched_entities.values():
-            await add_entity_to_port(client, CODEOWNERS_PATTERN_BLUEPRINT, entity)
-
-    logger.info("Finished Port integration")
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
-
-```
-
-</details>
-
-4. Create a workflow file under `.github/workflows/ingest-codeowners.yml` using the workflow:
-
-<details>
-<summary><b>Ingest GitHub Codeowners workflow (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-name: Ingest Codeowners
-on:
-  push:
-    branches:
-      - "main"
-      - "releases/**"
-
-jobs:
-  ingest_codeowners:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          pip install httpx requests loguru
-
-      - name: Ingest Codeowners
-        run: |
-          python <path/to/codeowners_parser.py>
-        env:
-          REPO_NAME: ${{ github.event.repository.name }}
-          PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
-          PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
-
-```
-
-</details>
-
-:::info Update workflow details
-Update the workflow with branches you want this workflow to run on. Also update the path to the script to reflect the path the script is located in the repository
-
-:::
-
-:::info Execution frequency
-This workflow will run on every change made to the branches specified to ensure the CODEOWNERS information is always up-to-date. This frequency choice is in line with GitHub's policy to enforce CODEOWNERS on the base branch a Pull Request is made to, rather than on every branch.
-
-:::
-
-5. Add content to your `CODEOWNERS` file and wait for data to be ingested into Port:
+Add content to your `CODEOWNERS` file, then click on `Resync` and wait for the entities to be ingested in your Port environment.
 
 <img src='/img/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/gitHubCodeownersAfterIngestionIntoPort.png' border='1px' />
 <br />
 <img src='/img/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/gitHubCodeownersPatternAfterIngestionIntoPort.png' border='1px' />
 <br />
-
-You have successfully mapped `CODEOWNERS` information using a GitHub workflow, into Port.

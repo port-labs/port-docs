@@ -11,11 +11,21 @@ import SbomWebhookConfig from './resources/sbom/\_example_sbom_webhook_config.md
 
 # SBOM
 
-In this example you are going to create a `sbomComponent` blueprint that ingests all third party components in your `sbom.json` or `sbom.xml` file using a combination of Port's [API](/build-your-software-catalog/custom-integration/api) and [webhook functionality](/build-your-software-catalog/custom-integration/webhook). You will then relate this blueprint to a `sbomVulnerability` blueprint, allowing you to map all the components affected by a security vulnerability.
+The following example shows you how to create a `sbomComponent` blueprint that ingests all third party components in your `sbom.json` or `sbom.xml` file using both Port's GitHub file ingesting feature (for `sbom.json`) and a combination of Port's [API](/build-your-software-catalog/custom-integration/api) and [webhook functionality](/build-your-software-catalog/custom-integration/webhook) (for `sbom.xml`). You will then relate this blueprint to a `sbomVulnerability` blueprint, allowing you to map all the components affected by a security vulnerability.
 
-To ingest the components and vulnerabilities to Port, a script that sends information about the SBOM file according to the webhook configuration is used.
+To ingest the packages to Port, a `port-app-config.yml` file in the needed repository or organisation is used.
 
 ## Prerequisites
+This guide assumes:
+- You have a Port account
+- You have installed [Port's GitHub app](docs/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) in your organisation or in repositories you are interested in.
+
+## GitHub configuration
+
+To ingest GitHub objects, use one of the following methods:
+
+
+## Setting up the blueprint and mapping configuration
 
 Create the following blueprint definition and webhook configuration:
 
@@ -29,12 +39,6 @@ Create the following blueprint definition and webhook configuration:
 <VulnerabilityBlueprint/>
 </details>
 
-<details>
-<summary>SBOM webhook configuration</summary>
-
-<SbomWebhookConfig/>
-
-</details>
 
 :::note
 This documentation uses the [CycloneDX](https://cyclonedx.org/) SBOM standard. For more information on the schema structure, you can look [here](https://cyclonedx.org/docs/1.5/json/#components)
@@ -51,98 +55,101 @@ Here are example snippets showing how to integrate Port's API and Webhook with y
 
 <TabItem value="json">
 
-Create the following Python script in your repository to create or update Port entities as part of your pipeline:
+<Tabs queryString="method">
+
+<TabItem label="Using Port's UI" value="port">
+
+To manage your GitHub integration configuration using Port:
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired GitHub organization.
+3. A window will open containing the default YAML configuration of your GitHub integration.
+4. Here you can modify the configuration to suit your needs, by adding/removing entries.
+5. When finished, click `resync` to apply any changes.
+
+Using this method applies the configuration to all repositories that the GitHub app has permissions to.
+
+When configuring the integration **using Port**, the YAML configuration is global, allowing you to specify mappings for multiple Port blueprints.
+
+</TabItem>
+
+<TabItem label="Using GitHub" value="github">
+
+To manage your GitHub integration configuration using a config file in GitHub:
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired GitHub organization.
+3. A window will open containing the default YAML configuration of your GitHub integration.
+4. Scroll all the way down, and turn on the `Manage this integration using the "port-app-config.yml" file` toggle.
+
+This will clear the configuration in Port's UI.
+
+When configuring the integration **using GitHub**, you can choose either a global or granular configuration:
+
+- **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository.
+  - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
+- **Granular configuration:** add the `port-app-config.yml` file to the `.github` directory of your desired repository.
+  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
+
+When using global configuration **using GitHub**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
+
+</TabItem>
+
+</Tabs>
+
+:::info Important
+When **using Port's UI**, the specified configuration will override any `port-app-config.yml` file in your GitHub repository/ies.
+:::
+
+Put the following config in your `port-app-config.yml` file in your location of choice: repository level or organisation level.
 
 <details>
-  <summary> Python script for CycloneDX JSON </summary>
+<summary><b>SBOM mapping config (Click to expand)</b></summary>
 
-```python showLineNumbers
-import requests
-import json
-import os
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: '**/sbom.json'
+    port:
+      itemsToParse: .file.content.components
+      entity:
+        mappings:
+          identifier: .item.bom-ref
+          title: .item.name
+          blueprint: '"sbomComponent"'
+          properties:
+            version: .item.version
+            package_url: .item.purl
+            type: .item.type
+            external_references: .item.external_references
+            licenses: .item.licenses
+            software_product: .body.software_product + "-" + .body.software_version
+          relations: {}
 
-WEBHOOK_URL = os.environ['WEBHOOK_URL'] ## the value of the URL you receive after creating the Port webhook
-PATH_TO_SBOM_JSON_FILE = os.environ['PATH_TO_SBOM_JSON_FILE']
-
-def add_entity_to_port(entity_object):
-    """A function to create the passed entity in Port using the webhook URL
-
-    Params
-    --------------
-    entity_object: dict
-        The entity to add in your Port catalog
-
-    Returns
-    --------------
-    response: dict
-        The response object after calling the webhook
-    """
-    headers = {"Content-Type": "application/json"}
-    response = requests.post(WEBHOOK_URL, json=entity_object, headers=headers)
-    return response.json()
-
-
-def extract_sbom_data(sbom_file):
-    """This function takes an sbom file path, converts the "components" and "vulnerabilities" property into a
-    JSON array and it then sends this data to Port
-
-    Params
-    --------------
-    sbom_file: str
-        The path to the sbom file relative to the project's root folder
-
-    Returns
-    --------------
-    response: dict
-        The response object after calling the webhook
-    """
-    with open(sbom_file, 'r') as file:
-        sbom_data = json.load(file)
-    software_information = sbom_data["metadata"]["component"]
-    software_product = software_information.get("name", "")
-    software_version = software_information.get("version", "")
-
-    components = []
-    vulnerabilities = []
-    for component in sbom_data.get("components", []):
-        component_data = {
-            "type": component.get("type", ""),
-            "reference": component.get("bom-ref", ""),
-            "name": component.get("name", ""),
-            "version": component.get("version", ""),
-            "purl": component.get("purl", ""),
-            "external_references": component.get("externalReferences", []),
-            "licenses": [license_data.get("license", "") for license_data in component.get("licenses", [])]
-        }
-        components.append(component_data)
-
-    for vulnerability in sbom_data.get("vulnerabilities", []):
-        vulnerability_data = {
-            "id": vulnerability.get("id"),
-            "description": vulnerability.get("description", ""),
-            "reference": vulnerability.get("bom-ref", ""),
-            "recommendation": vulnerability.get("recommendation", ""),
-            "state": vulnerability.get("analysis", {}).get("state"),
-            "ratings": vulnerability.get("ratings", []),
-            "source": vulnerability.get("source", {}).get("name"),
-            "affects": [bom_component.get("ref", "") for bom_component in vulnerability.get("affects", [])],
-            "published": vulnerability.get("published", "")
-        }
-        vulnerabilities.append(vulnerability_data)
-
-    entity_object = {
-        "components": components,
-        "vulnerabilities": vulnerabilities,
-        "software_product": software_product,
-        "software_version": software_version
-    }
-    webhook_response = add_entity_to_port(entity_object)
-    return webhook_response
-
-
-# Example usage
-response = extract_sbom_data(PATH_TO_SBOM_JSON_FILE)
-print(response)
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: '**/sbom.json'
+    port:
+      itemsToParse: .file.content.vulnerabilities
+      entity:
+        mappings:
+          identifier: .item.id
+          title: .item.id
+          blueprint: '"sbomVulnerability"'
+          properties:
+            description: .item.description
+            reference: .item.reference
+            recommendation: .item.recommendation
+            ratings: .item.ratings
+            source: .item.source
+            published: .item.published
+            state: .item.state
+          relations: {}
 ```
 
 </details>
@@ -150,6 +157,15 @@ print(response)
 </TabItem>
 
 <TabItem value="xml">
+
+Create the following webhook config:
+
+<details>
+<summary>SBOM webhook configuration</summary>
+
+<SbomWebhookConfig/>
+
+</details>
 
 Create the following Python script in your repository to create or update Port entities as part of your pipeline:
 
