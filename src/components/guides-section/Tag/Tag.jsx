@@ -1,23 +1,23 @@
 import { Typography } from '@mui/material';
-import { useColorMode } from '@docusaurus/theme-common';
-import { getTagImage } from '/src/components/guides-section/utils.js';
+import { getDarkImage } from '/src/components/guides-section/Utils.js';
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 function Tag({ tag, toggleTag, className, isSelected }) {
-    const { isDarkTheme } = useColorMode();
-
-    const imgPath = getTagImage(tag, isDarkTheme);
-    const fallbackImgPath = "/img/guides/icons/" + tag.replace(/ /g, '') + ".svg";
+    const imgPath = '/img/guides/icons/' + tag.replace(/ /g, '') + '.svg';
 
     return (
         <button 
             className={(isSelected ? "label-button-pressed" : "label-button") + " " + className} 
             onClick={() => toggleTag(tag)}
         >
-            <img 
-                src={imgPath} 
-                onError={(e) => { e.target.src = fallbackImgPath; }} 
-                width='16px' 
-                className='not-zoom' 
+            <ThemedImage
+                width='16px'
+                className='not-zoom'
+                sources={{
+                    light: useBaseUrl(imgPath),
+                    dark: useBaseUrl(getDarkImage(tag)),
+                }}
             />
             <Typography className="label-button-text">{tag}</Typography>
         </button>
