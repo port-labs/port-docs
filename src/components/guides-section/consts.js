@@ -1,5 +1,5 @@
 export const tagsCategoryMap = {
-    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics"],
+    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics"],
     "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
@@ -52,7 +52,7 @@ export const availableGuides = [
     {
         title: "Create cloud resources using IaC",
         description: "Create a self-service action that provisions cloud resources from a pre-defined template in your Git repository",
-        tags: ["IaC", "AWS", "Actions", "Cloud access management"],
+        tags: ["IaC for devs", "AWS", "Actions", "Cloud access management"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["AWS", "Git"],
         // category: "Getting started",
@@ -230,7 +230,7 @@ export const availableGuides = [
     {
         title: "Manage an S3 Bucket Lifecycle",
         description: "Create and manage an S3 bucket using Port & Terraform",
-        tags: ["IaC", "AWS", "Terraform"],
+        tags: ["IaC for devs", "AWS", "Terraform"],
         logos: ["AWS", "Terraform"],
         // category: "Getting started",
         link: "/guides/all/s3-bucket",
@@ -238,7 +238,7 @@ export const availableGuides = [
     {
         title: "Manage a Developer Environment Lifecycle",
         description: "Create and manage a developer environment in AWS using Port & Terraform",
-        tags: ["Dev environments", "IaC", "AWS", "Terraform"],
+        tags: ["Dev environments", "IaC for devs", "AWS", "Terraform"],
         logos: ["AWS", "Terraform"],
         // category: "Getting started",
         link: "/guides/all/create-dev-env",
@@ -246,7 +246,7 @@ export const availableGuides = [
     {
         title: "Manage integration mapping using Terraform",
         description: "Configure integration mapping using Port & Terraform",
-        tags: ["IaC", "Terraform"],
+        tags: ["IaC for devs", "Terraform"],
         logos: ["Terraform"],
         // category: "Getting started",
         link: "/guides/all/import-and-manage-integration",
@@ -374,7 +374,7 @@ export const availableGuides = [
     {
         title: "Deploy AWS resources using CloudFormation",
         description: "Create a self-service action that deploys AWS resources using an AWS CloudFormation template",
-        tags: ["IaC", "AWS", "Actions"],
+        tags: ["IaC for devs", "AWS", "Actions"],
         logos: ["AWS", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/deploy-cloudformation-template",
@@ -382,7 +382,7 @@ export const availableGuides = [
     {
         title: "Create An AWS EC2 Instance",
         description: "Create a self-service action that creates an AWS EC2 instance using a Terraform template",
-        tags: ["IaC", "AWS", "Terraform", "Actions", "GitHub"],
+        tags: ["IaC for devs", "AWS", "Terraform", "Actions", "GitHub"],
         logos: ["AWS", "Terraform", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/create-an-ec2-instance",
@@ -406,7 +406,7 @@ export const availableGuides = [
     {
         title: "Provision Cloud Resource using Terraform",
         description: "Create a self-service action that provisions cloud resources using Terraform",
-        tags: ["IaC", "AWS", "Terraform", "Actions"],
+        tags: ["IaC for devs", "AWS", "Terraform", "Actions"],
         logos: ["AWS", "Terraform"],
         // category: "Getting started",
         link: "/guides/all/terraform-plan-and-apply-aws-resource",
@@ -454,7 +454,7 @@ export const availableGuides = [
     {
         title: "Deploy Azure Resource using Terraform",
         description: "Create a self-service action that deployes a storage account in Azure using Terraform",
-        tags: ["IaC", "Azure", "Terraform", "Actions"],
+        tags: ["IaC for devs", "Azure", "Terraform", "Actions"],
         logos: ["Azure", "Terraform"],
         // category: "Getting started",
         link: "/guides/all/create-azure-resource",
@@ -646,7 +646,7 @@ export const availableGuides = [
     {
         title: "Create An AWS EC2 Instance",
         description: "Create a self-service action that creates an AWS EC2 instance using a Terraform template",
-        tags: ["IaC", "AWS", "Terraform", "Actions", "GitLab"],
+        tags: ["IaC for devs", "AWS", "Terraform", "Actions", "GitLab"],
         logos: ["AWS", "Terraform", "GitLab"],
         // category: "Getting started",
         link: "/guides/all/create-an-ec2-instance-gitlab",
@@ -654,7 +654,7 @@ export const availableGuides = [
     {
         title: "Add a Disk to an AWS EC2 Instance",
         description: "Create a self-service action that adds a disk to an AWS EC2 instance using a Terraform template",
-        tags: ["IaC", "AWS", "Terraform", "Actions", "GitLab"],
+        tags: ["IaC for devs", "AWS", "Terraform", "Actions", "GitLab"],
         logos: ["AWS", "Terraform", "GitLab"],
         // category: "Getting started",
         link: "/guides/all/add-ec2-volume",
@@ -702,7 +702,7 @@ export const availableGuides = [
     {
         title: "Create Github pull request to add a Terraform resource",
         description: "Create a self-service action that adds a resource to a Terraform file and creates a pull request to add it to the repository",
-        tags: ["IaC", "Jenkins", "GitHub", "Actions"],
+        tags: ["IaC for devs", "Jenkins", "GitHub", "Actions"],
         logos: ["Jenkins", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/create-github-pull-request",
@@ -710,7 +710,7 @@ export const availableGuides = [
     {
         title: "Deploy resource in Azure Cloud with Terraform",
         description: "Create a self-service action that deploys a storage account in Azure Cloud using a Terraform template",
-        tags: ["IaC", "Jenkins", "Terraform", "Azure", "Actions"],
+        tags: ["IaC for devs", "Jenkins", "Terraform", "Azure", "Actions"],
         logos: ["Jenkins", "Terraform", "Azure"],
         // category: "Getting started",
         link: "/guides/all/deploy-azure-resource",
@@ -726,7 +726,7 @@ export const availableGuides = [
     {
         title: "Create Azure Resource with Terraform",
         description: "Create a self-service action that creates a storage account in Azure using a Terraform template",
-        tags: ["IaC", "Azure", "Terraform", "Actions"],
+        tags: ["IaC for devs", "Azure", "Terraform", "Actions"],
         logos: ["Azure", "Terraform"],
         // category: "Getting started",
         link: "/guides/all/create-azure-resource-ado",

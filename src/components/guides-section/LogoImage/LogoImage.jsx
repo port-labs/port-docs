@@ -1,6 +1,6 @@
 import React from 'react';
 import "/src/components/guides-section/styles.css";
-import { getImagePath } from '/src/components/guides-section/utils.js';
+import { getImagePath } from '/src/components/guides-section/Utils.js';
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
