@@ -141,7 +141,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ### Jenkins
 
-- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/jenkins)
+- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/cicd/jenkins)
 - [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
 - [Jenkins webhook integration with Port](/build-your-software-catalog/custom-integration/webhook/examples/jenkins.md)
 - [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
