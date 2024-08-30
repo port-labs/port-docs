@@ -9,193 +9,166 @@ import SwaggerBlueprint from './resources/swagger/\_example_swagger_blueprint.md
 import SwaggerWebhookConfig from './resources/swagger/\_example_swagger_webhook_config.mdx'
 
 # Swagger
+The following example shows you how to create a `swaggerPath` blueprint that ingests all API paths in your `swagger.json` file using Port's GitHub file ingesting feature.
 
-In this example you are going to create a `swaggerPath` blueprint that ingests all API paths in your `swagger.json` file using a combination of Port's [API](/build-your-software-catalog/custom-integration/api) and [webhook functionality](/build-your-software-catalog/custom-integration/webhook).
+To ingest the packages to Port, the GitHub integration is used.
 
-To ingest the API paths to Port, a script that sends information about the paths according to the webhook configuration is used.
 
 ## Prerequisites
+This guide assumes:
+- You have a Port account
+- You have installed [Port's GitHub app](docs/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) in your organisation or in repositories you are interested in.
 
-Create the following blueprint definition and webhook configuration:
+## GitHub configuration
+
+To ingest GitHub objects, use one of the following methods:
+
+<Tabs queryString="method">
+
+<TabItem label="Using Port's UI" value="port">
+
+To manage your GitHub integration configuration using Port:
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired GitHub organization.
+3. A window will open containing the default YAML configuration of your GitHub integration.
+4. Here you can modify the configuration to suit your needs, by adding/removing entries.
+5. When finished, click `resync` to apply any changes.
+
+Using this method applies the configuration to all repositories that the GitHub app has permissions to.
+
+When configuring the integration **using Port**, the YAML configuration is global, allowing you to specify mappings for multiple Port blueprints.
+
+</TabItem>
+
+<TabItem label="Using GitHub" value="github">
+
+To manage your GitHub integration configuration using a config file in GitHub:
+
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under `Exporters`, click on your desired GitHub organization.
+3. A window will open containing the default YAML configuration of your GitHub integration.
+4. Scroll all the way down, and turn on the `Manage this integration using the "port-app-config.yml" file` toggle.
+
+This will clear the configuration in Port's UI.
+
+When configuring the integration **using GitHub**, you can choose either a global or granular configuration:
+
+- **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository.
+  - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
+- **Granular configuration:** add the `port-app-config.yml` file to the `.github` directory of your desired repository.
+  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
+
+When using global configuration **using GitHub**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
+
+</TabItem>
+
+</Tabs>
+
+:::info Important
+When **using Port's UI**, the specified configuration will override any `port-app-config.yml` file in your GitHub repository/ies.
+:::
+
+## Setting up the blueprint and mapping configuration
+
+Create the following blueprint definition and mapping configuration:
 
 <details>
 <summary>Swagger path blueprint</summary>
-<SwaggerBlueprint/>
-</details>
 
-<details>
-<summary>Swagger path webhook configuration</summary>
-
-<SwaggerWebhookConfig/>
-
-</details>
-
-## Working with Port's API and Bash script
-
-Here is an example snippet showing how to integrate Port's API and Webhook with your existing pipelines using Python and Bash:
-
-<Tabs groupId="usage" defaultValue="python" values={[
-{label: "Python", value: "python"},
-{label: "Bash", value: "bash"}
-]}>
-
-<TabItem value="python">
-
-Create the following Python script in your repository to create or update Port entities as part of your pipeline:
-
-<details>
-  <summary> Python script example </summary>
-
-```python showLineNumbers
-## Import the needed libraries
-
-import requests
-import json
-import os
-
-# Get environment variables using the config object or os.environ["KEY"]
-WEBHOOK_URL = os.environ['WEBHOOK_URL'] ## the value of the URL you receive after creating the Port webhook
-PATH_TO_SWAGGER_JSON_FILE = os.environ["PATH_TO_SWAGGER_JSON_FILE"]
-
-
-def add_entity_to_port(entity_object):
-    """A function to create the passed entity in Port using the webhook URL
-
-    Params
-    --------------
-    entity_object: dict
-        The entity to add in your Port catalog
-
-    Returns
-    --------------
-    response: dict
-        The response object after calling the webhook
-    """
-    headers = {"Accept": "application/json"}
-    response = requests.post(WEBHOOK_URL, json=entity_object, headers=headers)
-    return response.json()
-
-
-def read_swagger_file(swagger_json_path):
-    """This function takes a swagger.json file path, converts the "paths" property into a
-    JSON array and then sends this data to Port
-
-    Params
-    --------------
-    swagger_json_path: str
-        The path to the swagger.json file relative to the project's root folder
-
-    Returns
-    --------------
-    response: dict
-        The response object after calling the webhook
-    """
-    with open(swagger_json_path) as file:
-        data = json.load(file)
-
-    project_info = data.get("info")
-    project_title = project_info.get("title")
-    project_version = project_info.get("version")
-    hosted_url = data.get("host")
-    base_path = data.get("basePath")
-
-    paths = data.get('paths', {})
-    path_list = []
-    index = 1
-    for path, methods in paths.items():
-        for method, method_info in methods.items():
-            path_id = f"{project_title}-{index}"
-            path_info = {
-                "id": path_id,
-                "path": path,
-                "method": method,
-                "summary": method_info.get('summary'),
-                "description": method_info.get('description'),
-                "parameters": method_info.get("parameters"),
-                "responses": method_info.get("responses"),
-                "project": project_title,
-                "version": project_version,
-                "host": "https://" + hosted_url + base_path
-            }
-            path_list.append(path_info)
-            index+=1
-
-    entity_object = {
-        "paths": path_list
-    }
-    webhook_response = add_entity_to_port(entity_object)
-    return webhook_response
-
-response = read_swagger_file(PATH_TO_SWAGGER_JSON_FILE)
-print(response)
+```json showLineNumbers
+{
+  "identifier": "swaggerPath",
+  "description": "This blueprint represents a Swagger path in our software catalog",
+  "title": "Swagger API Paths",
+  "icon": "Swagger",
+  "schema": {
+    "properties": {
+      "method": {
+        "type": "string",
+        "title": "Method",
+        "default": "get",
+        "enum": ["get", "post", "delete", "put", "patch"],
+        "enumColors": {
+          "get": "yellow",
+          "post": "green",
+          "delete": "red",
+          "put": "purple",
+          "patch": "purple"
+        }
+      },
+      "host": {
+        "type": "string",
+        "title": "API Base URL",
+        "format": "url"
+      },
+      "path": {
+        "title": "Path",
+        "type": "string"
+      },
+      "parameters": {
+        "items": {
+          "type": "object"
+        },
+        "title": "Parameters",
+        "type": "array"
+      },
+      "responses": {
+        "title": "Responses",
+        "type": "object"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "version": {
+        "title": "Version",
+        "type": "string"
+      },
+      "summary": {
+        "title": "Summary",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
 ```
 
 </details>
 
-</TabItem>
-
-<TabItem value="bash">
-
-Create the following Bash script in your repository to create or update Port entities as part of your pipeline:
-
 <details>
-  <summary> Bash script example </summary>
+<summary>Swagger path mapping configuration</summary>
 
-```bash showLineNumbers
-#!/bin/bash
-
-# Set the environment variables
-WEBHOOK_URL="$WEBHOOK_URL"
-PATH_TO_SWAGGER_JSON_FILE="$PATH_TO_SWAGGER_JSON_FILE"
-
-add_entity_to_port() {
-    local entity_object="$1"
-    local headers="Accept: application/json"
-    local response=$(curl -X POST -H "$headers" -H "Content-Type: application/json" -d "$entity_object" "$WEBHOOK_URL")
-    echo "$response"
-}
-
-read_swagger_json() {
-    local swagger_json_path="$1"
-    local data=$(cat "$swagger_json_path")
-
-    local project_info=$(echo "$data" | jq -r '.info')
-    local project_title=$(echo "$project_info" | jq -r '.title')
-    local project_version=$(echo "$project_info" | jq -r '.version')
-    local hosted_url=$(echo "$data" | jq -r '.host')
-    local base_path=$(echo "$data" | jq -r '.basePath')
-    local paths=$(echo "$data" | jq -r '.paths')
-
-    local path_list=""
-    local index=1
-    while IFS="=" read -r path methods; do
-        while IFS="=" read -r method method_info; do
-            local path_id="${project_title}-${index}"
-            local summary=$(echo "$method_info" | jq -r '.summary')
-            local description=$(echo "$method_info" | jq -r '.description')
-            local parameters=$(echo "$method_info" | jq -r '.parameters')
-            local responses=$(echo "$method_info" | jq -r '.responses')
-
-            local path_info="{\"id\":\"$path_id\",\"path\":\"$path\",\"method\":\"$method\",\"summary\":\"$summary\",\"description\":\"$description\",\"parameters\":$parameters,\"responses\":$responses,\"project\":\"$project_title\",\"version\":\"$project_version\",\"host\":\"https://${hosted_url}${base_path}\"}"
-            path_list="${path_list}${path_info},"
-            index=$((index + 1))
-        done <<EOF
-$(echo "$methods" | jq -r 'to_entries[] | .key + "=" + (.value | @json)')
-EOF
-    done <<EOF
-$(echo "$paths" | jq -r 'to_entries[] | .key + "=" + (.value | @json)')
-EOF
-
-    local entity_object="{\"paths\":[${path_list%,}]}"
-    local webhook_response=$(add_entity_to_port "$entity_object")
-    echo "$webhook_response"
-}
-
-response=$(read_swagger_json "$PATH_TO_SWAGGER_JSON_FILE")
-echo "$response"
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: '**/swagger.json' # or .yaml
+    
+    port:
+      itemsToParse: '[. as $root | .paths | to_entries[] as $entries | {version: $root.info.version, host: $root.host, base_path: $root.basePath, title: $root.info.title, path: $entries.key, methods: ($entries.value | to_entries[] as $inner | {method: ($inner.key), rest: $inner.value, path: $entries.key})}][] | {id: .title + "-" + .path + .methods.method, path, method: .methods.method, summary: .methods.rest.summary, description: .methods.rest.description, parameters: .methods.rest.parameters, responses: .methods.rest.responses, project: .title, version, host: "https://" + .host + .base_path}'
+      entity:
+        mappings:
+          identifier: '.item.id | sub("[^A-Za-z0-9@_.:/=-]"; "-"; "g")'
+          title: .item.method + .item.path
+          blueprint: '"swaggerPath"'
+          properties:
+            method: .item.method
+            host: .item.host
+            path: .item.path
+            parameters: .item.parameters
+            responses: .item.responses
+            description: .item.description
+            version: .item.version
+            summary: .item.summary
+          relations: {}
 ```
 
 </details>
-
-</TabItem>
-</Tabs>
+Then click on `Resync` and wait for the entities to be ingested in your Port environment.
