@@ -477,11 +477,9 @@ Before using `terraform import` to bring data from your Port account into your T
 :::
 
 :::note Advanced Example
-See [this](./examples/import-and-manage-integration) guide which explains more in depth of how you can use import state to manage Port integrations using Terraform
+See [this](/guides/all/import-and-manage-integration) guide which explains more in depth of how you can use import state to manage Port integrations using Terraform
 
 
 :::
 
-## Examples
 
-Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
