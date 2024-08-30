@@ -36,7 +36,7 @@ And the final flow that allows data to be read is where the `integration account
 
 <CenterRoundedImage imgSrc='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-single-step-2.jpg' />
 
-First, we will create a role with necessary permissions (If you're running the terraform installation, this will be done for you). We'll call this role `ReadOnlyPermissionsOceanRole`, with `I can read resources in this account` policy.
+First, we will create a role with necessary permissions (if you're running the terraform installation, this will be done for you). We'll call this role `ReadOnlyPermissionsOceanRole`, with `I can read resources in this account` policy.
 
 
 <CenterRoundedImage imgSrc='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-role-step-1.jpg' />
