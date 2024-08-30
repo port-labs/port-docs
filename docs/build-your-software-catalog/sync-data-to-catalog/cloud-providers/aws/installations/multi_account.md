@@ -77,8 +77,7 @@ Together with the permissions and trust policies:
 :::tip
 The name of this role (not the ARN) is referenced as `integration_account` in this doc.
 
-If you need to read from the integration account you'll need to add CloudControl (cloudformation) and the resources permissions
-in this example it's S3 bucket permissions
+If you need to read from the `integration account`, you'll need to add CloudControl (cloudformation) and the resources permissions. In this example, we refer to the S3 bucket permissions
 :::
 
 <details>
