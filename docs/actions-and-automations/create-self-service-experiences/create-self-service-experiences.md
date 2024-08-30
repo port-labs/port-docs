@@ -155,5 +155,4 @@ The basic structure of a self-service action looks like this (see key descriptio
 
 ## Examples
 
-For complete examples of self-service actions, choose your desired backend type under the [backend types](/actions-and-automations/setup-backend) section.  
-For instance, examples using GitHub as the backend can be found [here](/actions-and-automations/setup-backend/github-workflow/examples/).
+For complete examples of self-service actions using GitHub as the backend, check out the [guides section](/guides?tags=GitHub&tags=Actions).
