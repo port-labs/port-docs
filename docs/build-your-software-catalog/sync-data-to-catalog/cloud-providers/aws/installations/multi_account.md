@@ -244,7 +244,7 @@ The name of this role (not the ARN) is referenced as `organizationRoleArn` in th
 In order to keep adding accounts to the integration's scope, permissions must be delivered for and from each of the accounts.
 For each account you want to have, you should make sure the following applies:
 
-In each non-root account (target member account), The Role `accountReadRoleName` must exist with necessary permissions to access S3 resources, list regions, and interact with CloudFormation resources, and include `accountReadRoleName` from the integration account in its trust policy. See [reference](#member-account)
+In each non-root account (target member account), The Role `accountReadRoleName` must exist with the necessary permissions to access S3 resources, list regions, interact with CloudFormation resources, and include `accountReadRoleName` from the `integration account` in its trust policy. See [reference](#member-account)
 
 ### Running the integration
 
