@@ -132,7 +132,7 @@ To get started with webhook actions, check out the sources below:
 
 ### Examples
 
-- [Create an S3 bucket using Self-Service Actions](./examples/s3-using-webhook.md)
+- [Create an S3 bucket using Self-Service Actions](/guides/all/s3-using-webhook.md)
 - [Provisioning software templates using Cookiecutter](./examples/software-templates.md)
 
 ### Local setup, debugging and security validation
