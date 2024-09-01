@@ -15,7 +15,7 @@ In order to integrate Port with an OIDC SSO application, you will need to do the
 2. Configure the application with the following details:
    - Redirect URI: `https://auth.getport.io/login/callback`
    - Login URI: 
-     ````text showLineNumbers
+     ````text 
      https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
      ````
      :::note
