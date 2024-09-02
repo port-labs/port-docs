@@ -126,16 +126,12 @@ The following example shows an automation definition that triggers this self-ser
    }
    ```
 
-## Next steps
-
-To get started with webhook actions, check out the sources below:
-
-### Examples
-
-- [Create an S3 bucket using Self-Service Actions](/guides/all/s3-using-webhook.md)
-- [Provisioning software templates using Cookiecutter](./examples/software-templates.md)
-
-### Local setup, debugging and security validation
+## Local setup, debugging and security validation
 
 - [Debugging webhooks locally](./local-debugging-webhook.md)
 - [Validating webhook signatures](./signature-verification.md)
+
+## Examples
+
+For guides and examples of self-service actions using a webhook as the backend, check out the [**guides section**](/guides?tags=Webhook).
+
