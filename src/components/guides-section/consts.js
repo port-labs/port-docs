@@ -332,7 +332,7 @@ export const availableGuides = [
         link: "/guides/all/open-slack-channel",
     },
     {
-        title: "Deply/rollback using ArgoCD",
+        title: "Deploy/rollback using ArgoCD",
         description: "Create a self-service action that performs a deployment/rollback using ArgoCD",
         tags: ["K8s for devs", "ArgoCD", "Actions", "GitHub"],
         logos: ["ArgoCD", "GitHub"],
@@ -730,5 +730,13 @@ export const availableGuides = [
         logos: ["Azure", "Terraform"],
         // category: "Getting started",
         link: "/guides/all/create-azure-resource-ado",
+    },
+    {
+        title: "Ingest dependencies from package.json file to service",
+        description: "Ingest dependencies from a package.json file and relate them to the corresponding service entities",
+        tags: ["SDLC","GitHub"],
+        logos: ["GitHub"],
+        // category: "Getting started",
+        link: "/guides/all/ingest-dependencies-from-package-json-to-service",
     }
 ]

@@ -6,7 +6,7 @@ displayed_sidebar: null
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Get dependencies from a `package.json` file and relate them to service
+# Ingest dependencies from a package.json file and relate them to service
 
 This guide will demonstrate how to ingest dependencies from a `package.json` file and relate them to the corresponding service entities in Port.
 
@@ -20,11 +20,11 @@ This guide will demonstrate how to ingest dependencies from a `package.json` fil
 
 <br/>
 
-Add the `Dependency` blueprint if it doesn't exists:
+Add the `Dependency` blueprint if it doesn't exist:
 
 1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
 2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
+3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON"
 4. **Add ths JSON schema**:
 
 <details>
