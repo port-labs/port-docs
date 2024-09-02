@@ -1,6 +1,5 @@
 ---
 sidebar_position: 8
-displayed_sidebar: null
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
@@ -17,14 +16,14 @@ In this guide, we will create a self-service action in Port that executes a GitH
 ## Prerequisites
 1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
 
-    The `service` blueprint that was created for you as part of the onboarding process will need
+   The `service` blueprint that was created for you as part of the onboarding process will need
    to be extended with additional properties.
    Below, you can find the JSON definition for the blueprint with the required properties.  
    You can add these properties manually in the Port UI or use the JSON below to replace the existing blueprint.
-    
+
     <details>
     <summary><b>Service blueprint (click to expand)</b></summary>
-    
+
     ```json showLineNumbers
     {
       "identifier": "service",
@@ -164,7 +163,7 @@ In this guide, we will create a self-service action in Port that executes a GitH
 - To create a Slack webhook URL, follow the steps in the [Slack Incoming Webhooks Guide](https://api.slack.com/messaging/webhooks).
 
 
-##  Create Service Action 
+##  Create Service Action
 
 Follow these steps to get started:
 
