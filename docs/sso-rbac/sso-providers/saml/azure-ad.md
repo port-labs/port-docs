@@ -1,5 +1,5 @@
 ---
-title: "Azure Active Directory (SAML)"
+title: "Microsoft Entra ID (AzureAD)"
 sidebar_position: 1
 description: Integrate Azure AD with Port using SAML
 ---

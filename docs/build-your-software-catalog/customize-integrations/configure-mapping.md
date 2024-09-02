@@ -241,6 +241,53 @@ When using a search query rule to map a relation, Port will query all entities o
 - Mirror and calculation properties are currently not supported.
 - Only the `=` and `in` operators are supported for the search query rule.
 
+## Map by property
+
+In some cases, we may not know the identifier of the entity we want to map to. If that entity has a property that we do know, we can use it to map the data.  
+This is especially useful when patching entities whose identifiers are not known in advance. Take the following example:  
+
+- Say we installed Port's PagerDuty integration, and we want to connect each `service` (Git repository) to the relevant `PagerDuty service`.  
+- We can create a property in our `service` blueprint named `pagerduty_service_id`, containing the identifier of the relevant PagerDuty service.  
+- Then, in the `PagerDuty` integration mapping, we can use this property to map each `PagerDuty service` to the relevant `service`.  
+- This way, we would not need to have a separate blueprint for `PagerDuty services`, since the integration maps directly to the `service` blueprint.
+
+Mapping by property is done using a [search query rule](/search-and-query/#rules) in the following format:
+
+```yaml showLineNumbers
+resources:
+  - kind: services
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          # highlight-start
+          identifier:
+            combinator: '"and"'
+            rules:
+              - operator: '"="'
+                property: '"pagerduty_service_id"'
+                value: .id
+          # highlight-end
+          blueprint: '"service"'
+          properties:
+            oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+            ... # Any other properties you want to map
+```
+
+In the example above, we search for a `service` entity whose `pagerduty_service_id` property is equal to the `id` of the PagerDuty service, and map data from the PagerDuty service to it.
+
+:::tip API usage
+Searching by property can also be used when using Port's API to update entities, for example - [Patch an entity](/api-reference/patch-an-entity/).
+:::
+
+### Limitations
+
+- The search query must return exactly one entity (else the entire request will fail).
+- The query will be executed on the same blueprint from the request’s url.
+- Only the `=` and `in` operators is supported for the search query rule.
+- `Calculation` and `mirror` properties are not supported.
+
 ## Create multiple entities from an array API object
 
 In some cases, an application's API returns an array of objects that you want to map to multiple entities in Port.  
