@@ -1050,6 +1050,8 @@ The `datadogSelector` section within each `serviceMetric` resource demonstrates 
 *   **Timeframe:** Define the time range for data retrieval (in minutes)
 
 This configuration allows you to tailor your data fetching to specific needs and scenarios.
+
+**Note**: The `env` and `service` filters let you specify custom tag names in your Datadog account. For example, your service tag could be `servicename`, and your environment tag could be `envt` or `environment`.
 :::
 
 ```yaml showLineNumbers
@@ -1061,8 +1063,12 @@ resources:
       query: "true"
       datadogSelector:
         metric: "avg:system.mem.used"
-        env: "*"
-        service: "*"
+        env:
+          tag: env
+          value: "*"
+        service:
+          tag: servicename
+          value: "*"
         timeframe: 10
     port:
       entity:
@@ -1084,8 +1090,12 @@ resources:
       query: "true"
       datadogSelector:
         metric: "avg:system.disk.used"
-        env: "prod"
-        service: "*"
+        env:
+          tag: env
+          value: "prod"
+        service:
+          tag: servicename
+          value: "*"
         timeframe: 5
     port:
       entity:
