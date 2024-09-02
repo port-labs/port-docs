@@ -83,7 +83,7 @@ To ingest dependencies listed in `package.json` files, follow these steps:
 <summary><b>Port Configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
-resources:
+
   - kind: file
     selector:
       query: 'true'
@@ -141,7 +141,7 @@ Once the dependencies have been ingested, the next step is to establish relation
 <summary><b>Relation Mapping (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
-resources:
+
   - kind: file
     selector:
       query: 'true'
