@@ -1475,5 +1475,5 @@ Done! any change that happens to your applications in ArgoCD will trigger a webh
 
 More relevant guides and examples:
 
-- [Rollback ArgoCD deployment](/actions-and-automations/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment)
-- [Self-service action to synchronize ArgoCD application](/actions-and-automations/setup-backend/github-workflow/examples/argocd/sync-argocd-app)
+- [Rollback ArgoCD deployment](/guides/all/rollback-argocd-deployment)
+- [Self-service action to synchronize ArgoCD application](/guides/all/sync-argocd-app)
