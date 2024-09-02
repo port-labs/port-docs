@@ -5,7 +5,7 @@ title:  Automate Slack Alert for Overdue PRs
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import PortTooltip from "/src/components/tooltip/tooltip.jsx" 
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 
 #  Automate Slack Alert for Overdue PRs
@@ -51,7 +51,7 @@ For this guide, we will be using the same data model as in the [GitHub installat
      :::
 
 4. Add the mirror properties:
-   
+
    ```json
    "mirrorProperties": {
        "serviceSlackChannel": {
@@ -98,7 +98,7 @@ Add the `slackChannel` property. If it does not exist, with the schema below:
 
    <details>
      <summary>Configuration mapping (click to expand)</summary>
-   
+
    ```yaml showLineNumbers
    resources:
      - kind: pull-request
@@ -122,7 +122,7 @@ Add the `slackChannel` property. If it does not exist, with the schema below:
                    link: ".html_url"
                    prOpenTimer: "((.created_at | fromdateiso8601) + (3 * 24 * 60 * 60) | todateiso8601)" # For 1-minute timer, use ((.created_at | fromdateiso8601) + 60 | todateiso8601)
    ```
-   
+
    </details>
 
 :::tip Update property value
@@ -189,36 +189,36 @@ This automation marks the PR's `isNotificationSent` property as true after the n
 
 ```json showLineNumbers
 {
-  "identifier": "markNudgeSent",
-  "title": "Mark Notification as Sent",
-  "description": "Marks the PR's isNotificationSent property as true after the notification is sent.",
-  "trigger": {
-    "type": "automation",
-    "event": {
-      "type": "TIMER_PROPERTY_EXPIRED",
-      "blueprintIdentifier": "githubPullRequest",
-      "propertyIdentifier": "prOpenTimer"
-    },
-    "condition": {
-      "type": "JQ",
-      "expressions": [
-        ".diff.after.properties.status == \"open\"",
-        ".diff.after.properties.isNotificationSent == false"
-      ],
-      "combinator": "and"
-    }
-  },
-  "invocationMethod": {
-    "type": "UPSERT_ENTITY",
-    "blueprintIdentifier": "githubPullRequest",
-    "mapping": {
-      "identifier": "{{ .event.context.entityIdentifier }}",
-      "properties": {
-        "isNotificationSent": true
+   "identifier": "markNudgeSent",
+   "title": "Mark Notification as Sent",
+   "description": "Marks the PR's isNotificationSent property as true after the notification is sent.",
+   "trigger": {
+      "type": "automation",
+      "event": {
+         "type": "TIMER_PROPERTY_EXPIRED",
+         "blueprintIdentifier": "githubPullRequest",
+         "propertyIdentifier": "prOpenTimer"
+      },
+      "condition": {
+         "type": "JQ",
+         "expressions": [
+            ".diff.after.properties.status == \"open\"",
+            ".diff.after.properties.isNotificationSent == false"
+         ],
+         "combinator": "and"
       }
-    }
-  },
-  "publish": true
+   },
+   "invocationMethod": {
+      "type": "UPSERT_ENTITY",
+      "blueprintIdentifier": "githubPullRequest",
+      "mapping": {
+         "identifier": "{{ .event.context.entityIdentifier }}",
+         "properties": {
+            "isNotificationSent": true
+         }
+      }
+   },
+   "publish": true
 }
 ```
 
