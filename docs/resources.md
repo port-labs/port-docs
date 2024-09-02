@@ -50,6 +50,16 @@ The 3rd and final video in this series. This video demonstrates how to integrate
 
 </center>
 
+#### Secure Secrets Management in IDPs - @[TeKanAid](https://www.youtube.com/@TeKanAid)
+
+This video demonstrates how to build a simple yet effective platform to create and manage an S3 bucket, using **Akeyless** for secrets management, **Port** as the front-end portal, **GitHub Actions** for CI/CD, and **Terraform** for infrastructure as code.
+
+<center>
+
+<iframe width="568" height="320" src="https://www.youtube.com/embed/QO45jaeAA2o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
 ---
 
 ## Links 
