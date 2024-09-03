@@ -2767,6 +2767,61 @@ components:
         - groups
         - displayMode
       title: /schemas/grouperWidget
+    def-3:
+      type: object
+      title: Search query
+      properties:
+        combinator:
+          enum:
+            - and
+            - or
+        rules:
+          type: array
+          description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
+          items:
+            anyOf:
+              - type: object
+                title: "`=` Rule"
+                properties:
+                  property:
+                    type: string
+                  operator:
+                    enum:
+                      - =
+                  value:
+                    anyOf:
+                      - type: string
+                        title: String
+                      - type: number
+                        title: Number
+                      - type: "null"
+                additionalProperties: false
+                required:
+                  - property
+                  - operator
+                  - value
+              - type: object
+                title: "`in` Rule"
+                properties:
+                  property:
+                    type: string
+                  operator:
+                    enum:
+                      - in
+                  value:
+                    type: array
+                    items:
+                      type: string
+                additionalProperties: false
+                required:
+                  - property
+                  - operator
+                  - value
+              - $ref: "#/components/schemas/def-3"
+      required:
+        - combinator
+        - rules
+      additionalProperties: false
 paths:
   '/v1/blueprints/{blueprint_identifier}/permissions':
     get:
@@ -2994,9 +3049,65 @@ paths:
               type: object
               properties:
                 identifier:
-                  type: string
-                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                  description: The identifier of the new entity.<br/>
+                  oneOf:
+                    - type: string
+                      pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                      title: String identifier
+                      description: The identifier of the new entity.<br/>
+                    - type: object
+                      title: Search query
+                      properties:
+                        combinator:
+                          enum:
+                            - and
+                            - or
+                        rules:
+                          description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
+                          type: array
+                          items:
+                            anyOf:
+                              - type: object
+                                title: "`=` rule"
+                                properties:
+                                  property:
+                                    type: string
+                                  operator:
+                                    enum:
+                                      - =
+                                  value:
+                                    anyOf:
+                                      - type: string
+                                        title: String
+                                      - type: number
+                                        title: Number
+                                      - type: "null"
+                                additionalProperties: false
+                                required:
+                                  - property
+                                  - operator
+                                  - value
+                              - type: object
+                                title: "`in` rule"
+                                properties:
+                                  property:
+                                    type: string
+                                  operator:
+                                    enum:
+                                      - in
+                                  value:
+                                    type: array
+                                    items:
+                                      type: string
+                                additionalProperties: false
+                                required:
+                                  - property
+                                  - operator
+                                  - value
+                              - $ref: "#/components/schemas/def-3"
+                      required:
+                        - combinator
+                        - rules
+                      additionalProperties: false
                 title:
                   type: string
                   description: The title of the new entity.<br/>
@@ -3501,9 +3612,63 @@ paths:
               type: object
               properties:
                 identifier:
-                  type: string
-                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                  description: The new identifier of the entity.<br/>
+                  oneOf:
+                    - type: string
+                      title: String identifier
+                      pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                      description: The new identifier of the entity.<br/>
+                    - type: object
+                      title: Search query
+                      description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
+                      properties:
+                        combinator:
+                          enum:
+                            - and
+                            - or
+                        rules:
+                          description: One or more rules to define the entity's identifier based on a property of the entity.
+                          type: array
+                          items:
+                            anyOf:
+                              - type: object
+                                title: Equals rule
+                                properties:
+                                  property:
+                                    type: string
+                                  operator:
+                                    enum:
+                                      - =
+                                  value:
+                                    anyOf:
+                                      - type: string
+                                      - type: number
+                                      - type: "null"
+                                additionalProperties: false
+                                required:
+                                  - property
+                                  - operator
+                                  - value
+                              - type: object
+                                properties:
+                                  property:
+                                    type: string
+                                  operator:
+                                    enum:
+                                      - in
+                                  value:
+                                    type: array
+                                    items:
+                                      type: string
+                                additionalProperties: false
+                                required:
+                                  - property
+                                  - operator
+                                  - value
+                              - $ref: "#/components/schemas/def-3"
+                      required:
+                        - combinator
+                        - rules
+                      additionalProperties: false
                 title:
                   type: string
                   description: The new title of the entity.<br/>
@@ -11819,6 +11984,8 @@ paths:
           in: query
           name: status
           required: false
+          style: form
+          explode: true
         - schema:
             type: string
           in: query
