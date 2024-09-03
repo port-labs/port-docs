@@ -334,7 +334,7 @@ satisfied.
 
 ## Filter elements
 
-Filters enable you to apply scorecard checks only for the entities and properties that you really care about.
+Filters allow you to apply scorecard checks only for entities that meet certain criteria.
 
 Filters follow the same querying structure as [rules](#rule-elements).
 
