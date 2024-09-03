@@ -1,5 +1,5 @@
 ---
-sidebar_position: 9
+displayed_sidebar: null
 title:  Automate Slack Alert for Overdue PRs
 ---
 
