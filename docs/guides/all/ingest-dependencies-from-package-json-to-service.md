@@ -1,5 +1,4 @@
 ---
-sidebar_position: 9
 title: Ingest dependencies from package.json file to service
 displayed_sidebar: null
 ---
