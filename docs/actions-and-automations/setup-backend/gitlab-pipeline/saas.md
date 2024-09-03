@@ -62,3 +62,7 @@ The payload is the data sent to the webhook URL every time the action/automation
 When using the `webhook` backend, the payload is defined under the `headers` and `body` fields.  
 - For more information about defining a payload for **self-service actions**, click [here](/actions-and-automations/create-self-service-experiences/setup-the-backend/#define-the-actions-payload).
 - For more information about defining a payload for **automations**, click [here](/actions-and-automations/define-automations/setup-action#define-the-payload).
+
+## Examples
+
+For guides and examples of self-service actions using a GitLab pipeline as the backend, check out the [**guides section**](/guides?tags=GitLab&tags=Actions).

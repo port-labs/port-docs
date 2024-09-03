@@ -1,11 +1,6 @@
----
-title: Integrate Port with any tool
-sidebar_label: Integrate Port with any tool
----
-
 import DocCardList from '@theme/DocCardList';
 
-# Integrate Port with any tool
+# Install an integration
 
 Port is designed to be flexible. It can be integrated with any tool, and can be used to build a software catalog that reflects your exact data model.
 
