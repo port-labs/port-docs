@@ -11,7 +11,7 @@ import GivePermissionsToNewServiceAccount from './\_give-permissions-to-new-serv
 
 ## Installation Methods
 
-The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials. 
+The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials.
 
 In these guides, you can install the integration in various ways, according to the authentication method + platform you choose to run the integration on.
 
@@ -184,6 +184,10 @@ It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [mod
 - [hashicorp/google-beta Terraform Provider](https://registry.terraform.io/providers/hashicorp/google-beta/latest) >= 5.25
 - [A logged in gCloud CLI](https://cloud.google.com/sdk/gcloud) with enough [Permissions](#required-permissions-to-run-terraform-apply)
 - [Artifact Registry Image](#artifact-registry-image)
+- Enabled APIs:
+  - [Cloud Asset API](https://cloud.google.com/asset-inventory/docs/export-asset-metadata)
+  - [Cloud Resource Manager API](https://cloud.google.com/resource-manager/docs/manage-google-cloud-resources)
+  - [Cloud Quota API](https://cloud.google.com/docs/quotas/development-environment)
 
 <h2> Artifact Registry Image </h2>
 
