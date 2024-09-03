@@ -82,6 +82,10 @@ If you need to read from the `integration account`, you'll need to add CloudCont
 
 <details>
 <summary>Permissions</summary>
+```
+AWS::ReadOnlyAccess
+```
+
 ```json
 {
     "Statement": [
