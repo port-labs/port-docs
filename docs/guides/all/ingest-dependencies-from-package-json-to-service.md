@@ -25,7 +25,7 @@ Add the `Dependency` blueprint if it doesn't exist:
 1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
 2. **Click on "+ Blueprint"**.
 3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON"
-4. **Add ths JSON schema**:
+4. **Add this JSON schema**:
 
 <details>
 <summary><b> Dependency blueprint (Click to expand)</b></summary>
@@ -135,7 +135,7 @@ Once the dependencies have been ingested, the next step is to establish relation
       }
     }
     ```
-3. Head back to the [data sources page](https://app.getport.io/settings/data-sources) Add the mapping below:
+3. Head back to the [data sources page](https://app.getport.io/settings/data-sources) and add the mapping below:
 
 <details>
 <summary><b>Relation Mapping (Click to expand)</b></summary>
@@ -185,6 +185,5 @@ By following these steps, you can effectively ingest dependencies from `package.
 
 More relevant guides and examples:
 - [Port's GitHub integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/)
-- [Mini guide to connecting services](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/guides/)
 - [Self-service actions and workflows](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/)
 
