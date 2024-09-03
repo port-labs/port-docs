@@ -137,22 +137,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Cloud build self-service action](/actions-and-automations/setup-backend/cloudbuild-pipeline/cloudbuild-pipeline.md)
 
-## CI/CD
-
-### Jenkins
-
-- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/cicd/jenkins)
-- [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
-- [Jenkins webhook integration with Port](/build-your-software-catalog/custom-integration/webhook/examples/jenkins.md)
-- [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
-- [GitHub scaffolder using Jenkins](/guides/all/scaffold-github-using-cookiecutter.md)
-- [Bitbucket scaffolder using Jenkins](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
-- [Create Github pull request](/guides/all/create-github-pull-request)
-
-### Octopus Deploy
-
-- [Octopus Deploy integration](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
-
 ## Cookiecutter
 
 - [Cookiecutter GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-service.md?git-provider=github)
@@ -283,6 +267,20 @@ This page contains a list of Port's available integrations, organized by the pla
 ## StackHawk
 
 - [StackHawk webhook](/build-your-software-catalog/custom-integration/webhook/examples/stackhawk.md)
+
+## Jenkins
+
+- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/cicd/jenkins)
+- [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
+- [Jenkins webhook integration with Port](/build-your-software-catalog/custom-integration/webhook/examples/jenkins.md)
+- [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
+- [GitHub scaffolder using Jenkins](/guides/all/scaffold-github-using-cookiecutter.md)
+- [Bitbucket scaffolder using Jenkins](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
+- [Create Github pull request](/guides/all/create-github-pull-request)
+
+## Octopus Deploy
+
+- [Octopus Deploy integration](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
 
 ## CodeFresh
 
