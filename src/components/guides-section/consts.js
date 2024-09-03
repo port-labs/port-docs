@@ -108,12 +108,12 @@ export const availableGuides = [
         link: "/guides/all/setup-slack-reminders",
     },
     {
-        title: "Automate Slack alerts for old PRs",
+        title: "Automate Slack alerts for Overdue PRs",
         description: "Send a Slack notification for pull requests that have been open longer than a specified time using an automation",
         tags: ["SDLC", "Automations"],
         logos: ["Slack"],
         // category: "Getting started",
-        link: "/guides/all/automated-slack-alert-for-old-prs",
+        link: "/guides/all/automate-slack-alert-for-overdue-prs",
     },
     {
         title: "Manage resources using Kubernetes CRDs",
