@@ -278,7 +278,7 @@ resources:
 In the example above, we search for a `service` entity whose `pagerduty_service_id` property is equal to the `id` of the PagerDuty service, and map data from the PagerDuty service to it.
 
 :::tip API usage
-Searching by property can also be used when using Port's API to update entities, for example - [Patch an entity](/api-reference/patch-an-entity/).
+Searching by property can also be used when using Port's API to [create an entity](/api-reference/create-an-entity/).
 :::
 
 ### Limitations
