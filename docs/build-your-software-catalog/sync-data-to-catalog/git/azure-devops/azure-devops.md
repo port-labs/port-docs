@@ -123,6 +123,22 @@ query: .name | startswith("service")
 
 <br/>
 
+:::tip WIQL Support
+The Ocean Azure DevOps integration supports querying objects from the `work-item` kind using [WIQL](https://learn.microsoft.com/en-us/azure/devops/boards/queries/wiql-syntax?view=azure-devops), providing fine-grained control over which work items are ingested into Port.
+
+To leverage WIQL filtering, add a `wiql` key with your WIQL query as the value within the `selector` object. For example:
+
+```yaml showLineNumbers
+resources:
+  - kind: work-item  # WIQL filtering can only be used with the "work-item" kind
+    selector:
+      query: "true" 
+      wiql: "[System.WorkItemType] = 'Task' AND [System.State] = 'Active'"  # WIQL query, will only ingest work items of type "Task" whose state is "Active"
+    port:
+```
+
+:::
+
 The `port`, `entity` and the `mappings` keys open the section used to map the Azure DevOps API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
 
   ```yaml showLineNumbers
