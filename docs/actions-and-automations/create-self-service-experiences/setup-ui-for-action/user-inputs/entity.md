@@ -74,9 +74,9 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
 | ----- | ----------- | ----- |
 | `"format":"entity"` &nbsp; &nbsp; &nbsp; &nbsp; | Used to specify that this is an entity input | **Required** |
 | `"blueprint":"myBp"` &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Used to specify the identifier of the target blueprint that entities will be queried from | **Required**. Must specify an existing blueprint identifier |
-| `sort` | Used to specify the sorting order of the entities in the dropdown | Optional. Default is by entity's name, ascending |
+| `sort` | Used to specify the sorting order of the entities in the dropdown | Optional. Default is by entity's title, ascending |
 | `sort.property` | The identifier of the property by which to sort the entities | |
-| `sort.order` | Can be either `ASC`(ascending) or `DESC`(descending) | |
+| `sort.order` | Can be either `ASC` (ascending) or `DESC` (descending) | |
 
 ## API definition
 
