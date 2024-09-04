@@ -64,4 +64,4 @@ When using this backend, you need to provide the following:
 
 ## Examples
 
-Examples of self-service actions using Azure pipelines can be found [here](/actions-and-automations/setup-backend/azure-pipeline/examples/).
+For complete examples of self-service actions using Azure pipelines as the backend, check out the [guides section](/guides?tags=Azure&tags=Actions).

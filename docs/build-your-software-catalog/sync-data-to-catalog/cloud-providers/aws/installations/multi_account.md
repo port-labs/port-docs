@@ -79,6 +79,10 @@ The name of this role (not the ARN) is referenced as `integration_account` in th
 
 <details>
 <summary>Permissions</summary>
+```
+AWS::ReadOnlyAccess
+```
+
 ```json
 {
     "Version": "2012-10-17",
