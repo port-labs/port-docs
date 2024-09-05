@@ -14,6 +14,8 @@ The automation's backend is the logic that you want to execute when a trigger ev
 
 Port uses the same backend types for automations and for [self-service actions](/actions-and-automations/create-self-service-experiences/).
 
+## Backend JSON structure
+
 The backend is defined under the `invocationMethod` key in the automation's JSON structure:
 
 ```json showLineNumbers
