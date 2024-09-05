@@ -392,8 +392,8 @@ The following resources can be used to map data from Terraform Cloud, it is poss
 
 - [`Organization`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/organizations)
 - [`Project`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/projects)
-- [`Workspace`](https://www.terraform.io/docs/cloud/api/workspaces.html)
-- [`Run`](https://www.terraform.io/docs/cloud/api/runs.html)
+- [`Workspace`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/workspaces)
+- [`Run`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run)
 - [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
 
 :::
