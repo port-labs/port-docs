@@ -738,5 +738,13 @@ export const availableGuides = [
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/ingest-dependencies-from-package-json-to-service",
+    },
+    {
+        title: "Setup Dora Metrics",
+        description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
+        tags: ["SDLC","GitHub"],
+        logos: ["GitHub"],
+        // category: "Getting started",
+        link: "/guides/all/setup-dora-metrics",
     }
 ]
