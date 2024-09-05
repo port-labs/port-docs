@@ -24,7 +24,7 @@ This integration supports `Jira Cloud` at the moment. To integrate Port with `Ji
 
 ## Common use cases
 
-- Map issues, sprints, boards and projects in your Jira organization environment.
+- Map issues, sprints and projects in your Jira organization environment.
 - View issues from active sprints in your Port environment
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Jira objects using self-service actions.
@@ -504,59 +504,6 @@ The following resources can be used to map data from Jira, it is possible to ref
       port:
   ```
 
-:::tip JQL Support
-The Ocean Jira integration supports querying objects from the `issue` kind using [JQL](https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/), making it possible to specifically filter the issues that are queried from Jira and ingested to Port.
-
-To use JQL filtering, add to the `selector` object a `jql` key with your desired JQL query as the value. For example:
-
-```yaml showLineNumbers
-resources:
-  # highlight-next-line
-  - kind: issue # JQL filtering can only be used with the "issue" kind
-    selector:
-      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-next-line
-      jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
-    port:
-```
-
-:::
-
-:::tip Issues source
-By default, the Ocean Jira integration ingests only active sprints and uncompleted tasks from that sprint. To customize this, two additional
-selectors apart from `jql` are available: `source`, `sprintState`.
-
-```yaml showLineNumbers
-resources:
-  # highlight-next-line
-  - kind: issue # `source` and `sprintState` are only available with the "issue" kind
-    selector:
-      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-start
-      source: "sprint" #  or "all" for ingesting all issues across all projects
-      sprintState: "active" # if `source` is specified as "sprint", this defines the state of the sprints where issues are sourced from. Other available values are "future" and "closed". You can specify values as comma-separated strings such as "active,closed".
-      # highlight-end
-    port:
-```
-
-:::
-
-:::tip Sprint states
-The Ocean Jira integration ingests active sprints by default:
-
-```yaml showLineNumbers
-resources:
-  # highlight-next-line
-  - kind: sprint # `state` is only available with the "sprint" kind
-    selector:
-      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-next-line
-      state: "active" # Other available values are "future" and "closed". You can specify values as comma-separated strings such as "active,closed". Note that this has no effect on the source of issues. If you want to customize issues source, do it with the `sprintSource` selector on the "issue" kind. Also, the source on the issue doesn't affect this kind.
-    port:
-```
-
-:::
-
 - The `port`, `entity` and the `mappings` keys are used to map the Jira object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
   ```yaml showLineNumbers
@@ -660,75 +607,6 @@ resources:
 </details>
 
 
-### Board
-
-<details>
-<summary><b>Board blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "jiraBoard",
-  "title": "Jira Board",
-  "description": "This blueprint represents a Jira board",
-  "icon": "Jira",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "Board URL",
-        "type": "string",
-        "format": "url",
-        "description": "URL to the board in Jira"
-      },
-      "type": {
-        "title": "Type",
-        "type": "string",
-        "description": "The type of the board"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "project": {
-      "target": "jiraProject",
-      "title": "Project",
-      "description": "The Jira project that contains this board",
-      "required": false,
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: board
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .id | tostring
-          title: .name
-          blueprint: '"jiraBoard"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/jira/software/c/projects/" + .location.projectKey + "/boards/" + (.id | tostring)
-            type: .type
-          relations:
-            project: .location.projectId | tostring
-```
-
-</details>
-
-
 ### Sprint
 
 <details>
@@ -792,6 +670,21 @@ resources:
 
 <details>
 <summary><b>Integration configuration (Click to expand)</b></summary>
+
+:::tip Sprint states
+The Ocean Jira integration ingests active sprints by default, setting `state` to `"active"`. Other available values are `"future"` and `"closed"`. You can specify values as comma-separated strings such as `"active,closed"`. Note that this has no effect on the source of issues. If you want to customize issues source, do it with the `sprintSource` selector on the "issue" kind. Also, the `source` selector on the issue doesn't affect this kind.
+
+```yaml showLineNumbers
+resources:
+  # highlight-next-line
+  - kind: sprint # `state` is only available with the "sprint" kind
+    selector:
+      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+      # highlight-next-line
+      state: "active"
+    port:
+```
+:::
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -916,6 +809,65 @@ resources:
 
 <details>
 <summary><b>Integration configuration (Click to expand)</b></summary>
+
+
+:::tip JQL Support
+The Ocean Jira integration supports querying objects from the `issue` kind using [JQL](https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/), making it possible to specifically filter the issues that are queried from Jira and ingested to Port.
+
+To use JQL filtering, add to the `selector` object a `jql` key with your desired JQL query as the value. For example:
+
+```yaml showLineNumbers
+resources:
+  # highlight-next-line
+  - kind: issue # JQL filtering can only be used with the "issue" kind
+    selector:
+      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+      # highlight-next-line
+      jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
+    port:
+```
+
+:::
+
+:::tip Issues source
+By default, the Ocean Jira integration ingests all issues from the Jira organisation and this is specified by setting `source` to `"all"`. To ingest issues based on sprints, you can set the `source` selector to `"sprint"`. A greater level of customization can be achieved using two additional
+selectors apart from `jql` are available: `source`, `sprintState`. See the `Sprint states` tip next for more information.
+
+```yaml showLineNumbers
+resources:
+  # highlight-next-line
+  - kind: issue # `source` and `sprintState` are only available with the "issue" kind
+    selector:
+      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+      # highlight-start
+      source: "sprint" #  or "all" for ingesting all issues across all projects
+      sprintState: "active" # if `source` is specified as "sprint", this defines the state of the sprints where issues are sourced from. Other available values are "future" and "closed". You can specify values as comma-separated strings such as "active,closed".
+      # highlight-end
+    port:
+```
+
+:::
+
+:::tip Sprint states
+When the `source` selector is set to `"sprint"`, you can customize what type of sprints issues are sourced from. The Ocean Jira integration ingests active sprints by default, setting `source` to `"active"`. Other available values are "future" and "closed". You can specify values as comma-separated strings such as "active,closed".
+
+if `source` is set to `"sprint"` and `sprintState` is also set, it is redundant to have a JQL filter (using the `jql` selector) that does any filtering based on the state of the sprint since the `sprintState` will be applied before the `jql` filter is applied.
+
+If `sprintState` is not set, all issues from all sprints will be ingested. Again, this will not ingest all issues, but issues that are under a sprint.
+
+**Note:** `sprintState` under the issues kinds should not be mistaken for `state` under the `sprint` kind. While the former applies to the ingesting of issues, the latter applies to ingesting of the `sprint` kind only and neither affects the other.
+
+```yaml showLineNumbers
+resources:
+  # highlight-next-line
+  - kind: issue # `state` is only available with the "sprint" kind
+    selector:
+      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+      # highlight-next-line
+      sprintState: "active"
+    port:
+```
+:::
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
