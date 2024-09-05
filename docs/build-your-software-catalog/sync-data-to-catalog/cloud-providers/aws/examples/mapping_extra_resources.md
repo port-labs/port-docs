@@ -22,7 +22,7 @@ The AWS Integration is relying on AWS's Cloud Control API. That means:
 - If Yes, It's supported!
   - If not, please contact us, or [add the support to the integration yourself](https://github.com/port-labs/ocean/tree/main/integrations/aws)
 
-:::info Limitation
+:::info Resource limitation
 In Cloud Control, some resources require an input in order to be queried. Currently, the integration does not support passing these inputs, which means those resources are currently not supported.
 :::
 
