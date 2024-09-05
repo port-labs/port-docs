@@ -39,7 +39,11 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
       "environment": {
         "title": "Environment",
         "type": "string",
-        "enum": ["Production", "Staging", "Testing"],
+        "enum": [
+          "Production", 
+          "Staging", 
+          "Testing"
+        ],
         "description": "The environment where the deployment occurred."
       },
       "createdAt": {
@@ -51,7 +55,10 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
       "deploymentStatus": {
         "title": "Deployment Status",
         "type": "string",
-        "enum": ["Successful", "Failed"],
+        "enum": [
+          "Successful", 
+          "Failed"
+        ],
         "description": "Indicates whether the deployment was successful or failed."
       },
       "leadTime": {
@@ -72,15 +79,18 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
           "combinator": "and",
           "rules": [
             {
+              "operator": "between",
               "property": "createdAt",
-              "operator": "within",
-              "value": "last_30_days"
+              "value": {
+                "preset": "lastMonth"
+              }
             }
           ]
         },
         "description": "Counts the number of deployments over the past 30 days."
       }
     },
+    
     "calculationProperties": {
       "changeFailureRate": {
         "title": "Change Failure Rate",
@@ -144,8 +154,10 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
         "rules": [
           {
             "property": "createdAt",
-            "operator": "within",
-            "value": "last_30_days"
+            "operator": "between",
+            "value": {
+              "preset": "lastMonth"
+            },
           }
         ]
       }
@@ -214,28 +226,38 @@ Here’s how you can implement this:
 2. **Use Lead Time Calculation**:
     - The lead time for the PR is calculated using the time between `createdAt` and `mergedAt`.
     - This lead time will be associated with the deployment entity once the PR is merged.
-in such cases we can ingest data into PORT using the configuration below:
-<details> 
-<summary><b>deployment config (click to expand)</b></summary>
+  in such cases we can ingest data into PORT using the configuration below:
+  <details> 
+  <summary><b>deployment config (click to expand)</b></summary>
+  
+  ```yaml showLineNumbers
+  - kind: pull-request
+    selector:
+      query: ".base.ref == 'main'"  # Track PRs merged into the main branch
+    port:
+      entity:
+        mappings:
+          identifier: ".head.repo.name + '-' + (.id|tostring)"
+          title: "Deployment for PR {{ .head.repo.name }}"
+          blueprint: '"deployment"'
+          properties:
+          environment: '"Production"' #Hard coded for now
+          createdAt: ".merged_at"
+          deploymentStatus: '"Successful"' #Hard coded for now
+          leadTime: |
+            (.created_at as $createdAt | .merged_at as $mergedAt | 
+            ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | 
+            ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp | 
+            if $mergedTimestamp == null then null else ($mergedTimestamp - $createdTimestamp) / 86400 end)
+  
+   ```
+  </details>
+  :::tip hardcoded values
+    The value for deploymentStatus is hardcoded to `Successful` to treat all deployment as success
+    and environment is hardcoded to production for main/master in this example.
+    You can modify these values based on your requirements.
+  :::
 
-```yaml showLineNumbers
-- kind: pull-request
- selector:
-    query: ".base.ref == 'main'"  # Track PRs merged into the main branch
- port:
-  entity:
-    mappings:
-      identifier: ".head.repo.name + '-' + (.id|tostring)"
-      title: "Deployment for PR {{ .head.repo.name }}"
-      blueprint: '"deployment"'
-      properties:
-      environment: '"Production"' #Hard coded for now
-      createdAt: ".merged_at"
-      deploymentStatus: '"Successful"' #Hard coded for now
-      leadTime: ".lead_time_days"
-
- ```
-</details>
 3. **Deployment Creation**:
     - Use Port’s **automation** features to trigger the creation of a deployment entity each time a PR is merged into the main branch.
 
@@ -269,12 +291,11 @@ in such cases we can ingest data into PORT using the configuration below:
       "title": "Deployment for PR {{ .event.context.entityIdentifier }}",
       "properties": {
         "environment": "Production",
-        "createdAt": "{{ .trigger.at }}",
-        "leadTime": "{{ .properties.lead_time_days }}",
+        "createdAt": "{{ .event.context.properties.mergedAt }}",
+        "leadTime": "{{ (.properties.mergedAt | sub(\"\\\\..*Z$\"; \"Z\") | strptime(\"%Y-%m-%dT%H:%M:%SZ\") | mktime) - (.properties.createdAt | sub(\"\\\\..*Z$\"; \"Z\") | strptime(\"%Y-%m-%dT%H:%M:%SZ\") | mktime) }} / 86400",
         "deploymentStatus": "Successful"
       },
       "relations": {
-        "service": "{{ .properties.service }}",
         "pullRequest": "{{ .event.context.entityIdentifier }}"
       }
     }
