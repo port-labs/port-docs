@@ -276,7 +276,7 @@ specified [`combinator`](#combinator):
 | `<`                 | `String`, `Number`                               | checks if the rule value is less than the entity value                |
 | `>`                 | `String`, `Number`                               | checks if the rule value is greater than the entity value             |
 | `contains`          | `String`, `Number`                               | checks if the rule value is contained within the entity value         |
-| `containsAny`       | `String`, `Number`                               | checks if any of the specified strings exist in the target array      |
+| `containsAny`       | `Array`                                          | checks if any of the specified strings exist in the target array      |
 | `doesNotContains`   | `String`, `Number`                               | checks if the rule value is not contained within the entity value     |
 | `endsWith`          | `String`, `Number`                               | checks if the rule value ends with the entity value                   |
 | `doesNotEndsWith`   | `String`, `Number`                               | checks if the rule value does not end with the entity value           |
