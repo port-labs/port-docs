@@ -1,6 +1,7 @@
 ---
-sidebar_position: 1
-description: Ingest Javascript packages into your catalog
+description: Ingests all Javascript packages in `package.json` file using Port's GitHub file ingesting feature.
+displayed_sidebar: null
+title: Ingest Javascript packages into your catalog
 ---
 
 import Tabs from "@theme/Tabs"

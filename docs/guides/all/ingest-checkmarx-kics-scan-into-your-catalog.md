@@ -1,6 +1,7 @@
 ---
-sidebar_position: 9
-description: Ingest Checkmarx KICS scan into your catalog
+description: Ingests Checkmarx KICS scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature.
+displayed_sidebar: null
+title: Ingest Checkmarx KICS scan into your catalog
 ---
 
 import Tabs from "@theme/Tabs"

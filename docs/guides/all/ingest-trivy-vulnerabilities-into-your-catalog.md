@@ -1,6 +1,7 @@
 ---
-sidebar_position: 10
-description: Ingest Trivy vulnerabilities into your catalog
+description: Ingests Trivy vulnerabilities in your Trivy scan results file using Port's GitHub file ingesting feature.
+displayed_sidebar: null
+title: Ingest Trivy vulnerabilities into your catalog
 ---
 
 import Tabs from "@theme/Tabs"

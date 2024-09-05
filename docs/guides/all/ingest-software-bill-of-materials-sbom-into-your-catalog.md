@@ -1,6 +1,7 @@
 ---
-sidebar_position: 7
-description: Ingest software bill of material (SBOM) into your catalog
+description: Ingests software bill of material (SBOM) in your `SBOM.json` or `SBOM.xml` file using Port's GitHub file ingesting feature.
+displayed_sidebar: null
+title: Ingest software bill of material (SBOM) into your catalog
 ---
 
 import Tabs from "@theme/Tabs"

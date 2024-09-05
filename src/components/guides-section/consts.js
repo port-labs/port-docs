@@ -738,5 +738,40 @@ export const availableGuides = [
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/ingest-dependencies-from-package-json-to-service",
+    },
+    {
+        title: "Ingest Swagger paths from swagger.json file into your catalog",
+        description: "Ingests all API paths in `swagger.json` file using Port's GitHub file ingesting feature.",
+        tags: ["Swagger", "SDLC", "GitHub"],
+        logos: ["Swagger", "GitHub"],
+        link: "/guides/all/ingest-swagger-paths-from-swagger-json-file-into-your-catalog",
+    },
+    {
+        title: "Ingest Checkmarx KICS scan into your catalog",
+        description: "Ingests Checkmarx KICS scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature.",
+        tags: ["checkmarx", "SDLC", "GitHub"],
+        logos: [" heckmarx", "GitHub"],
+        link: "/guides/all/ingest-checkmarx-kics-scan-into-your-catalog"
+    },
+    {
+        title: "Ingest Javascript packages into your catalog",
+        description: "Ingests all Javascript packages in `package.json` file using Port's GitHub file ingesting feature.",
+        tags: ["JavaScript", "Packages", "SDLC", "GitHub"],
+        logos: ["JavaScript", "Package", "GitHub"],
+        link: "/guides/all/ingest-javascript-packages-into-your-catalog"
+    },
+    {
+        title: "Ingest software bill of material (SBOM) into your catalog",
+        description: "Ingests software bill of material (SBOM) in your `SBOM.json` or `SBOM.xml` file using Port's GitHub file ingesting feature.",
+        tags: ["SBOM", "SDLC", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-software-bill-of-materials-sbom-into-your-catalog"
+    },
+    {
+        title: "Ingest Trivy vulnerabilities into your catalog",
+        description: "Ingests Trivy vulnerabilities in your Trivy scan results file using Port's GitHub file ingesting feature.",
+        tags: ["Trivy", "SDLC", "GitHub"],
+        logos: ["Trivy", "GitHub"],
+        link: "/guides/all/ingest-trivy-vulnerabilities-into-your-catalog"
     }
 ]
