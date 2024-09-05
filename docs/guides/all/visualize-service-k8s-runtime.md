@@ -197,7 +197,7 @@ We now have a lot of data about our workloads, and some metrics to track their q
 
 In the configuration provided for this guide, a `workload` is considered `Healthy` if its defined number of replicas is equal to its available replicas (of course, you can change this definition).
 
-1. Go to your [homepage](https://app.getport.io/home), click on the `+ Add` button in the top right corner, then select `Table`.
+1. Go to your [homepage](https://app.getport.io/home), click on the `+ Widget` button in the top right corner, then select `Table`.
 
 2. Fill the form out like this, then click `Save`:
 
