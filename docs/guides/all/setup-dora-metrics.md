@@ -82,15 +82,13 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
     },
     "pullRequest": {
       "title": "Pull Request",
-      "target": "pullRequest",
+      "target": "githubPullRequest",
       "many": false
     }
   }
 }
 ```
 </details>
-
-
 
 
 
@@ -118,8 +116,7 @@ The lead time for these merges is calculated as the difference between when the 
 
 Here’s how you can implement this:
 
-1. **Define a Pull Request Blueprint**:
-    - A sample PR blueprint can be found [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples).
+1. **Add Pull Request blueprint, sample can be found [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**:
 
 2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration:
 
@@ -129,17 +126,17 @@ Here’s how you can implement this:
 ```yaml showLineNumbers
 - kind: pull-request
   selector:
-    query: ".base.ref == 'main'"  # Track PRs merged into the main branch
+    query: .base.ref == 'main'  # Track PRs merged into the main branch
   port:
     entity:
       mappings:
-        identifier: ".head.repo.name + '-' + (.id|tostring)"
-        title: "Deployment for PR {{ .head.repo.name }}"
+        identifier: .head.repo.name + '-' + (.id|tostring)
+        title: Deployment for PR {{ .head.repo.name }}
         blueprint: '"deployment"'
         properties:
           environment: '"Production"'  # Hard coded for now
-          createdAt: ".merged_at"
-          deploymentStatus: '"Successful"'  # Hard coded for now
+          createdAt: .merged_at
+          deploymentStatus: 'success'  # Hard coded for now
           leadTime: |
             (.created_at as $createdAt | .merged_at as $mergedAt | 
             ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | 
@@ -150,7 +147,8 @@ Here’s how you can implement this:
 </details>
 
 :::tip Hardcoded values
-The value for deploymentStatus is hardcoded to `Successful` to treat all deployments as successful, and the environment is hardcoded to Production for the **main** branch in this example.
+The value for deploymentStatus is hardcoded to `success` to treat all deployments as successful,
+and the environment is hardcoded to Production for the **main** branch in this example.
 You can modify these values based on your requirements.
 :::
 
@@ -158,7 +156,44 @@ You can modify these values based on your requirements.
 
 <TabItem value="workflow-job" label="Workflow/Job">
 
-coming soon
+Track deployments by monitoring workflow runs in your pipeline.
+This setup captures all workflow runs from the main branch and maps them to deployment entities.
+The deployment status is set dynamically based on whether the workflow run concluded successfully or failed.
+
+Here’s how you can implement this:
+- **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration:
+
+<details>
+<summary><b>Deployment via Workflow Runs (click to expand)</b></summary>
+
+```yaml showLineNumber
+
+- kind: workflow-run
+  selector:
+    query: .base_ref == 'main' # Track all workflow runs in the main branch
+  port:
+    entity:
+      mappings:
+        identifier: .repository.name + '-' + (.run_number|tostring)
+        title: Deployment from Workflow Run {{ .repository.name }}
+        blueprint: '"deployment"'
+        properties:
+          environment: '"Production"'  # Set environment based on branch (main/master as Production)
+          createdAt: .run_started_at
+          deploymentStatus: .conclusion
+          leadTime: |
+            (.run_started_at as $startTime | .updated_at as $endTime |
+            ($startTime | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $startTimestamp |
+            ($endTime | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $endTimestamp |
+            ($endTimestamp - $startTimestamp) / 86400)
+```
+</details>
+
+:::tip Using regex
+You can use regex to track only workflows related to deployments
+(e.g., workflows containing the word "deploy").
+The environment is automatically determined based on the branch, where the main branch corresponds to Production.
+:::
 
 </TabItem>
 
