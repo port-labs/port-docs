@@ -199,7 +199,93 @@ The environment is automatically determined based on the branch, where the main 
 
 <TabItem value="ci-cd-pipelines" label="CI/CD Pipelines">
 
-coming soon
+
+
+CI/CD pipelines, such as those run by Jenkins, provide a robust way to track deployments. Jenkins, in particular, allows you to create and update entities in Port dynamically using Port's API as part of the pipeline execution.
+
+**Example**:
+
+In Jenkins, each time a build is triggered or completed,
+you can use the API to automatically report the build status and create/update deployment entities in Port.
+This approach ensures the catalog is always up-to-date with your CI/CD activities.
+
+Here’s how you can implement this:
+
+1. **Set Up Jenkins with Port Integration**:  
+   Jenkins can be integrated with Port
+   using either [Port's Ocean plugin](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/#available-ocean-integration) or [Port's API](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment).
+   For this example, we will use Port's API to dynamically create or update deployment entities.
+   Detailed instructions
+   for setting up Jenkins with Port can be found in the [Port Jenkins integration documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/).
+
+2. **Create/Update Deployment Entity**:  
+   Below is an example of how you can set up a Jenkins pipeline to report a deployment entity to Port using Port's API.
+
+<details>
+<summary><b>Jenkins Pipeline Example (click to expand)</b></summary>
+
+```groovy showLineNumbers
+pipeline {
+  agent any
+  environment {
+    API_URL = "https://api.getport.io" // EU region Port API URL
+  }
+  stages {
+    stage('Report Deployment to Port') {
+      steps {
+        withCredentials([
+                string(credentialsId: 'port-client-id', variable: 'PORT_CLIENT_ID'),
+                string(credentialsId: 'port-client-secret', variable: 'PORT_CLIENT_SECRET')
+        ]) {
+          script {
+            def auth_body = """
+              {
+                "clientId": "${PORT_CLIENT_ID}",
+                "clientSecret": "${PORT_CLIENT_SECRET}"
+              }
+            """
+            def token_response = httpRequest contentType: 'APPLICATION_JSON',
+                    httpMode: 'POST',
+                    requestBody: auth_body,
+                    url: "${API_URL}/v1/auth/access_token"
+
+            def slurped_response = new groovy.json.JsonSlurperClassic().parseText(token_response.content)
+            def token = slurped_response.accessToken
+
+            def entity_body = """
+              {
+                "identifier": "${env.JOB_NAME}-${env.BUILD_NUMBER}",
+                "title": "Deployment for ${env.JOB_NAME}",
+                "properties": {
+                  "environment": "Production",
+                  "createdAt": "${env.BUILD_TIMESTAMP}",
+                  "deploymentStatus": "${env.BUILD_STATUS == 'SUCCESS' ? 'Success' : 'Failed'}"
+                }
+              }
+            """
+
+            httpRequest contentType: "APPLICATION_JSON",
+                    httpMode: "POST",
+                    url: "${API_URL}/v1/blueprints/deployment/entities?upsert=true&merge=true",
+                    requestBody: entity_body,
+                    customHeaders: [
+                            [name: 'Authorization', value: "Bearer ${token}"]
+                    ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+</details>
+
+
+
+
+
+
 
 </TabItem>
 
