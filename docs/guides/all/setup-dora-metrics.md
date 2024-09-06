@@ -105,7 +105,9 @@ The following strategies can help improve your deployment frequency and change f
 
 <TabItem value="pr-merge" label="PR Merge">
 
-One of the ways to track deployments is by monitoring when pull requests (PRs) are merged into a branch, typically the **main** or **production** branch. This is the recommended approach for tracking deployments and calculating lead time.
+One of the ways to track deployments is by monitoring when pull requests (PRs) are merged into a branch,
+typically the **main**/**master** branch.
+This is the **recommended** approach for tracking deployments and calculating lead time.
 
 The lead time for these merges is calculated as the difference between when the PR was created and when it was merged.
 
@@ -136,7 +138,7 @@ Here’s how you can implement this:
         properties:
           environment: '"Production"'  # Hard coded for now
           createdAt: .merged_at
-          deploymentStatus: 'success'  # Hard coded for now
+          deploymentStatus: 'Success'  # Hard coded for now
           leadTime: |
             (.created_at as $createdAt | .merged_at as $mergedAt | 
             ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | 
@@ -147,7 +149,7 @@ Here’s how you can implement this:
 </details>
 
 :::tip Hardcoded values
-The value for deploymentStatus is hardcoded to `success` to treat all deployments as successful,
+The value for deploymentStatus is hardcoded to `Success` to treat all deployments as successful,
 and the environment is hardcoded to Production for the **main** branch in this example.
 You can modify these values based on your requirements.
 :::
@@ -281,17 +283,61 @@ pipeline {
 
 </details>
 
-
-
-
-
-
-
 </TabItem>
 
 <TabItem value="github-deployment" label="GitHub Deployment">
 
-coming soon
+GitHub deployments can be tracked by mapping repository releases and tags to deployment entities in Port.
+These repositories can hold critical information related to service versions, commits, and releases.
+
+Here’s how you can implement this:
+
+1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration.
+
+<details>
+<summary><b>Releases and Tags config (click to expand)</b></summary>
+
+```yaml showLineNumbers
+
+  - kind: release
+    selector:
+      query: "true"  
+    port:
+      entity:
+        mappings:
+          identifier: .release.name
+          title: Deployment for Release {{ .release.name }}
+          blueprint: '"deployment"'  
+          properties:
+            environment: '"Production"'  
+            createdAt: .release.created_at
+            deploymentStatus: '"Success"'  
+          relations:
+            tag: .release.tag_name
+            service: .repo.name
+  - kind: tag
+    selector:
+      query: "true"  
+    port:
+      entity:
+        mappings:
+          identifier: .tag.name
+          title: Tag {{ .tag.name }}
+          blueprint: '"tag"'  
+          properties:
+            commit_sha: .commit.sha
+          relations:
+            service: .repo.name
+
+```
+
+</details>
+
+:::tip
+This configuration maps the repository, release, and tag information to deployment entities in Port.
+You can find more details about setting up GitHub integrations for repositories, releases,
+and tags [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-repository-releases-and-tags).
+:::
 
 </TabItem>
 
