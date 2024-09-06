@@ -18,9 +18,19 @@ By tracking these metrics,
 you can identify areas for improvement and ensure that your team is delivering high-quality software efficiently.
 This guide will cover the four key metrics: Deployment Frequency, Lead Time, Change Failure Rate, and Mean Time to Recovery.
 
+:::info Prerequisites
+- Complete the [Port onboarding process](https://docs.getport.io/quickstart).
+- Access a GitHub repository (e.g., `port-dora-metrics`) with workflows or pipelines for tracking deployments. Follow the [GitHub integration guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github) to sync deployments, pull requests, and workflows to Port.
+- Connect your incident management system (e.g., PagerDuty, OpsGenie, or ServiceNow) to Port to sync incidents for calculating **Change Failure Rate (CFR)** and **Mean Time to Recovery (MTTR)**.
+:::
+
 ## Tracking Deployment
-In this section, we will cover how to track your team's deployment frequency. Deployment releases new or updated code into an environment (e.g., Production, Staging, or Testing). 
-Tracking deployments helps understand how efficiently your team ships features and monitors release stability. Deployments are used to calculate two key DORA metrics:
+In this section, we will cover how to track your team deployments.
+Deployment releases new or updated code into an environment
+(e.g., Production, Staging,
+or Testing). Tracking deployments helps
+understand how efficiently your team ships features and monitors release stability.
+Deployments are used to calculate two key DORA metrics:
 
 - **Deployment Frequency**: How often changes are deployed to production or other environments.
 - **Change Failure Rate**: The percentage of deployments that fail and require intervention, rollback, or generate issues.
@@ -70,7 +80,7 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
       "leadTime": {
         "title": "Lead Time",
         "type": "number",
-        "description": "The time in hours between a pull request being merged and its deployment."
+         "description": "The time in minutes between a pull request being merged and its deployment."
       }
     }
    },
@@ -143,7 +153,7 @@ Here’s how you can implement this:
             (.created_at as $createdAt | .merged_at as $mergedAt | 
             ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | 
             ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp | 
-            if $mergedTimestamp == null then null else ($mergedTimestamp - $createdTimestamp) / 86400 end)
+            if $mergedTimestamp == null then null else ($mergedTimestamp - $createdTimestamp) / 60 end)
 ```
 
 </details>
@@ -187,7 +197,7 @@ Here’s how you can implement this:
             (.run_started_at as $startTime | .updated_at as $endTime |
             ($startTime | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $startTimestamp |
             ($endTime | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $endTimestamp |
-            ($endTimestamp - $startTimestamp) / 86400)
+            ($endTimestamp - $startTimestamp) / 60)
 ```
 </details>
 
@@ -343,21 +353,208 @@ and tags [here](https://docs.getport.io/build-your-software-catalog/sync-data-to
 
 </Tabs>
 
+### Monorepo Tracking
+
+Port doesn’t provide a specific solution for monorepos,
+but **custom integrations** can be used to effectively track services or components within a monorepo.
+
+- **Define blueprints** for each service or component inside the monorepo. Each microservice or feature can have unique properties such as name, deployment status, and dependencies.
+
+- **Ingest data** via Port’s API by setting up logic to track changes, deployments, or PR merges for individual services within the monorepo. Use selectors to filter and map the relevant parts of the monorepo to your service blueprints.
+
+Example configuration for a monorepo with multiple services:
+
+```yaml
+resources:
+  - kind: service
+    selector:
+      query: ".repository.name == 'monorepo' && (.service == 'service-A' || .service == 'service-B')"
+    port:
+      entity:
+        mappings:
+          identifier: .service
+          title: .service
+          blueprint: '"service"'
+          properties:
+            url: .html_url
+            defaultBranch: .default_branch
+```
+
+:::tip Why Custom Integration?
+If your monorepo setup includes multiple services or components,
+**Port’s custom integration API** provides the flexibility
+to tailor tracking and deployment updates to each component individually.
+This allows granular visibility and management of each microservice in your monorepo.
+:::
 
 
+## Tracking Incidents
 
+Incidents are key to calculating important DevOps metrics, including **Change Failure Rate (CFR)** and **Mean Time to Recovery (MTTR)**. Effective incident tracking provides insights into how frequently deployments result in failures and how quickly these failures are resolved.
 
+This section covers how to:
 
-### Metrics Calculation
+- Use incidents to calculate **CFR** and **MTTR**.
+- Link incidents to services to monitor the impact of failures.
 
-#### Deployment Frequency
+### Data Model Setup
 
-**Deployment Frequency** measures how often new code is deployed within a specific period, typically weekly or monthly. This metric is important because it reflects how quickly a team can ship new changes.
-- **Add these properties to the Service Blueprint**:
+Ensure that your PagerDuty incident blueprint is configured properly.
+You can follow the detailed steps in the [PagerDuty Incident Blueprint](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty).
+
+- Add the following properties to the blueprint to capture the resolution time and time to recovery:  
 <details>
-<summary><b> Aggregation for deployment frequency (click to expand)</b></summary>
+<summary><b>Additional properties for PagerDuty Incident Blueprint (click to expand)</b></summary>
 
-```json showLineNumbers
+```json
+{
+  "properties": {
+    "resolvedAt": {
+      "title": "Incident Resolution Time",
+      "type": "string",
+      "format": "date-time",
+      "description": "The timestamp when the incident was resolved."
+    },
+    "recoveryTime": {
+      "title": "Time to Recovery",
+      "type": "number",
+      "description": "The time (in minutes) between the incident being triggered and resolved."
+    }
+  }
+}
+```
+</details>
+
+### Syncing Incidents with PagerDuty and Other Tools
+
+To sync incidents from **PagerDuty**,
+follow the steps in the [PagerDuty guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty).
+The guide walks you through setting up the necessary integrations to track incidents related to deployments.
+
+For other integrations, follow these guides to sync incidents:
+- [OpsGenie](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie)
+- [FireHydrant](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant)
+- [ServiceNow](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
+- [Statuspage](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
+
+For example, **OpsGenie** and **ServiceNow** allow you to map incidents to services similarly to **PagerDuty**.
+The process involves syncing the incidents, creating relations between services,
+and ensuring consistent data capture for CFR and MTTR.
+
+### Relating Incidents to Services
+
+Once the incident data is synced, you'll want to create a relation between incidents and services in your Port Builder.
+This allows incidents caused by deployment failures to be linked directly to the impacted services,
+making it easier to track recovery times and overall service health.
+
+To relate incidents to services:
+
+1. **Add a Relation Between Incident and Service**: Create a relation in Port Builder between your **Incident Blueprint** and the **Service Blueprint**. This links each incident to the service it affects, ensuring that failures caused by deployment issues are captured and tracked.
+
+2. **Create a Mirror Property**: Set up mirror properties to reflect key incident data (e.g., **recoveryTime**, **resolvedAt**) on the related service. This makes it easier to track MTTR at the service level.
+
+<details>
+<summary><b>Relation and Mirror Property JSON (click to expand)</b></summary>
+
+```json
+{
+  "relations": {
+    "pagerdutyService": {
+      "title": "Related Service",
+      "target": "service",
+      "many": false
+    }
+  },
+  "mirrorProperties": {
+    "recoveryTime": {
+      "title": "Recovery Time",
+      "mirror": ".properties.recoveryTime"
+    },
+    "resolvedAt": {
+      "title": "Resolution Time",
+      "mirror": ".properties.resolvedAt"
+    }
+  }
+}
+```
+</details>
+
+
+
+### Metric Calculations
+
+<Tabs groupId="metrics" defaultValue="cfr" values={[
+{label: 'Change Failure Rate', value: 'cfr'},
+{label: 'Mean Time to Recovery', value: 'mttr'},
+{label: 'Deployment Frequency', value: 'df'}
+]}>
+
+<TabItem value="cfr" label="Change Failure Rate">
+
+**CFR** measures the percentage of deployments that fail and result in incidents. This is calculated by dividing the number of incidents by the total number of deployments.
+
+<details>
+<summary><b>Calculation for CFR (click to expand)</b></summary>
+
+```json
+{
+  "calculationProperties": {
+    "changeFailureRate": {
+      "title": "Change Failure Rate",
+      "type": "number",
+      "calculation": "(count(.relations.incident) / count(.identifier)) * 100"
+    }
+  }
+}
+```
+</details>
+
+</TabItem>
+
+<TabItem value="mttr" label="Mean Time to Recovery">
+
+**MTTR** measures the average time it takes to resolve incidents. This metric is critical for understanding how long your services are impacted after a failure.
+
+<details>
+<summary><b>Aggregation for MTTR (click to expand)</b></summary>
+
+```json
+{
+  "aggregationProperties": {
+    "meanTimeToResolve": {
+      "title": "Mean Time to Recovery",
+      "target": "incident",
+      "calculationSpec": {
+        "calculationBy": "entities",
+        "func": "avg",
+        "field": "recoveryTime"
+      },
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "equals",
+            "value": "resolved"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+</details>
+
+</TabItem>
+
+<TabItem value="df" label="Deployment Frequency">
+
+**Deployment Frequency** tracks how often code is deployed to production. This metric is critical for understanding your team's release cadence and how often changes are shipped.
+
+<details>
+<summary><b>Aggregation for Deployment Frequency (click to expand)</b></summary>
+
+```json
 {
   "aggregationProperties": {
     "deploymentFrequency": {
@@ -383,41 +580,33 @@ and tags [here](https://docs.getport.io/build-your-software-catalog/sync-data-to
   }
 }
 ```
-
 </details>
 
+</TabItem>
 
-####  Change Failure Rate (CFR)
-
-**Change Failure Rate** measures the percentage of deployments that fail and require a rollback or lead to incidents. It helps assess the stability and reliability of new releases.
-
-- **Using Port’s Calculation Property**:
-    - We will introduce a property called **deploymentStatus** to track whether a deployment was **Successful** or **Failed**.
-    - The **Change Failure Rate** will be calculated by dividing the number of failed deployments by the total number of deployments in the same period.
-
-  **Steps**:
-    - Count all deployments with `deploymentStatus` set to **Failed**.
-    - Divide this count by the total number of deployments, and multiply by 100 to get the percentage.
-
-  **Example**:
-    - If 2 out of 10 deployments failed, the **Change Failure Rate** would be:
-
-  CFR = (Failed Deployments / Total Deployments) × 100
-  CFR = (2 / 10) × 100 = 20%
+</Tabs>
 
 
-<details>
-<summary><b> Calculation for CFR (click to expand)</b></summary>
 
-```json showLineNumbers
+### Aggregating Metrics for Other Integrations
+
+For integrations such as **OpsGenie**, **ServiceNow**, or **FireHydrant**,
+you’ll need to create aggregated properties at the service level manually.
+These properties will help you track **MTTR** and other metrics consistently across all incident management tools.
+
+Ensure you create an aggregated property for **meanMinutesToResolve** at the service level, using a similar formula to convert seconds to minutes where needed.
+
+```json
 {
-  "calculationProperties": {
-    "changeFailureRate": {
-      "title": "Change Failure Rate",
+  "properties": {
+    "meanMinutesToResolve": {
+      "title": "Mean Minutes to Resolve",
       "type": "number",
-      "calculation": "(.properties.deploymentStatus == 'Failed') / count(.properties.deploymentStatus) * 100"
+      "calculation": "meanSecondsToResolve / 60"
     }
   }
 }
 ```
-</details>
+:::tip Conclusion
+This guide enables you to effectively track incidents and their impact on services, ensuring you can calculate **CFR**, **MTTR**, and **Deployment Frequency** consistently across different incident management tools. By establishing the right relationships between services and incidents and standardizing the metrics in **minutes**, you ensure consistency and accuracy in your DevOps tracking.
+:::
