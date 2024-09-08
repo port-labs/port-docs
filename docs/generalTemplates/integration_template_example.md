@@ -10,6 +10,8 @@ Port's X integration allows you to ingest X resources into Port.
 
 ## Capabilities
 
+<!-- Make sure to elaborate on the integration capabilities -->
+
 - If real time is supported - Watch for X object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - If real time is not supported - Periodically ingest X resources into Port.
 - If there are any special capabilities of the integration such as gitops, multi-account support, etc. - Describe them here.
@@ -54,6 +56,8 @@ In Port, integrations use a [yaml mapping](/docs/build-your-software-catalog/cus
 <IngestDataIntoPort/>
 
 ## Examples
+
+<!-- Make sure to add examples of supported blueprints and mappings -->
 
 Examples of blueprints and the relevant integration configurations:
 
@@ -120,5 +124,6 @@ resources:
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Jira).
+<!-- Make sure to replace the ?tags=<X> with your integration identifier -->
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=<X>).
 
