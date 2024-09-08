@@ -427,11 +427,11 @@ Note that the array will contain up to 10 items to avoid payload size issues.
 
 The example above is for an automation that uses the `RUN_UPDATED` trigger event. The `event.diff` object contains data from `before` and `after` the update.  
 
-<!-- The other trigger events have the same structure, with the following differences:
+The other trigger events have the same structure, with the following differences:
 
 - `RUN_CREATED` - In the `diff` object, `before` will be `null`, and `after` will contain the new action run data.
 
-- `ANY_RUN_CHANGE` - The `diff` object will contain `before` and/or `after` data according to the entity change. -->
+- `ANY_RUN_CHANGE` - The `diff` object will contain `before` and/or `after` data according to the entity change.
 
 </TabItem>
 </Tabs>
