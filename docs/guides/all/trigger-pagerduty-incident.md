@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to trigger a PagerDuty incident in Port, ensuring timely alerts and efficient incident management.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'

@@ -7,6 +7,7 @@ tags:
   - Incident
   - GitHub
 displayed_sidebar: null
+description: Learn how to create a Slack channel for reported incidents in Port, enhancing team communication and incident response.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"

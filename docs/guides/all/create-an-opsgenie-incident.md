@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to create an Opsgenie incident in Port with this guide, ensuring rapid response and effective incident management.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'

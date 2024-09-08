@@ -2,6 +2,7 @@
 sidebar_position: 6
 title: Enrich services using Gitops
 displayed_sidebar: null
+description: Learn how developers can enrich services using GitOps in Port, enabling efficient and automated service management.
 ---
 
 import Tabs from "@theme/Tabs"

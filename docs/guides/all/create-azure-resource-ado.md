@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 displayed_sidebar: null
+description: Follow this guide to create Azure resources for ADO in Port, ensuring seamless integration and cloud management.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

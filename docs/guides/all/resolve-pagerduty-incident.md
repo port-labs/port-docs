@@ -7,6 +7,7 @@ tags:
   - Incident
   - GitHub
 displayed_sidebar: null
+description: Learn how to resolve PagerDuty incidents in Port, ensuring efficient incident management and quick resolution.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
