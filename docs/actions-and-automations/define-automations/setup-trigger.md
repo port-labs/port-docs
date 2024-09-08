@@ -40,7 +40,7 @@ The following trigger events are available for each type:
 </TabItem>
 </Tabs>
 
-## JSON structure
+## Trigger JSON structure
 
 An automation's trigger is defined under the `trigger` key:
 
