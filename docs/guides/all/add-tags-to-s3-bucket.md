@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Effortlessly add tags to your S3 buckets in Port, enabling enhanced resource organization and efficient management.
 ---
 
 # Add tags to S3 Bucket
