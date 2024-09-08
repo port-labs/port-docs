@@ -61,6 +61,7 @@ In Port, integrations use a [yaml mapping](/docs/build-your-software-catalog/cus
 
 Examples of blueprints and the relevant integration configurations:
 
+<!-- Here is an example of blueprint and integration configuration (Replace with the integration resources) -->
 ### Team
 
 <details>
@@ -124,6 +125,7 @@ resources:
 
 ## Relevant Guides
 
+<!-- This section should contain one or more links (using bullets) to the guides section, filtered by technology/use-case. -->
 <!-- Make sure to replace the ?tags=<X> with your integration identifier -->
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=<X>).
-
+- For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=<X>).
+- For guides on USE_CASE, see the [guides section](https://docs.getport.io/guides?tags=<USE_CASE>).
