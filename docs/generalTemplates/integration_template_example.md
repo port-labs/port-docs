@@ -118,7 +118,7 @@ resources:
 
 </details>
 
-## Common Use Cases
+## Relevant Guides
 
-- Describe common use cases for the integration. e.g. "Joined view of urgent task by domain and team"
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Jira).
 
