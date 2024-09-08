@@ -34,13 +34,13 @@ The following trigger events are available for each type:
 | Trigger | Description | JSON event type identifier |
 | --- | --- | --- |
 | Action run update | Triggered when an action run is [patched](https://docs.getport.io/api-reference/patch-an-action-run/) or [approved](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).<br/>**Note** that sending logs to the action run will **not** count as a trigger. | `RUN_UPDATED` |
-<!-- | Action run creation | Triggered when an action run is **created**. In other words, whenever the specified action is executed. | `RUN_CREATED` | -->
-<!-- | Any action run change | Triggered when an action run is **created**, **patched**, or **approved**. | `ANY_RUN_CHANGE` | -->
+| Action run creation | Triggered when an action run is **created**. In other words, whenever the specified action is executed. | `RUN_CREATED` |
+| Any action run change | Triggered when an action run is **created**, **patched**, or **approved**. | `ANY_RUN_CHANGE` |
 
 </TabItem>
 </Tabs>
 
-## JSON structure
+## Trigger JSON structure
 
 An automation's trigger is defined under the `trigger` key:
 
