@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
-sidebar_label: Visualize services' k8s runtime using ArgoCD
 displayed_sidebar: null
+description: Learn how to visualize ArgoCD service runtime in Port, enhancing monitoring and management of your Kubernetes applications.
 ---
 
 import Tabs from "@theme/Tabs"

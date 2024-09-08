@@ -2,6 +2,7 @@
 sidebar_position: 1
 title: Scaffold a new service
 displayed_sidebar: null
+description: Learn how to scaffold a new service in Port with this guide, ensuring efficient setup and streamlined development.
 ---
 
 import Tabs from "@theme/Tabs"

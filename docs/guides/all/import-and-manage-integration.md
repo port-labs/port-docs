@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: Import and Manage an Integration
-description: Manage an integrations mappings using Terraform
+description: Learn how to import and manage integrations in Port, streamlining your workflows and enhancing system connectivity.
 displayed_sidebar: null
 ---
 

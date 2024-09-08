@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 displayed_sidebar: null
+description: Learn how to restart an ArgoCD app in Port, ensuring smooth application operations and minimal downtime.
 ---
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"

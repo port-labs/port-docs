@@ -6,6 +6,7 @@ tags:
   - Guide
   - GitHub Actions
 displayed_sidebar: null
+description: Understand IAM permissions in Port with this comprehensive guide, ensuring secure and effective access management.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"

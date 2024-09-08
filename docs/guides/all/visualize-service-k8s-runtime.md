@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
-sidebar_label: Visualize services' k8s runtime
 displayed_sidebar: null
+description: Learn how to visualize Kubernetes service runtime in Port, improving monitoring and management of your cloud-native applications.
 ---
 
 import Tabs from "@theme/Tabs"
