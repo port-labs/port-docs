@@ -749,21 +749,21 @@ export const availableGuides = [
     {
         title: "Ingest Checkmarx KICS scan into your catalog",
         description: "Ingests Checkmarx KICS scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature.",
-        tags: ["checkmarx", "SDLC", "GitHub"],
+        tags: ["Checkmarx", "SDLC", "GitHub"],
         logos: ["checkmarx", "GitHub"],
         link: "/guides/all/ingest-checkmarx-kics-scan-into-your-catalog"
     },
     {
         title: "Ingest Javascript packages into your catalog",
         description: "Ingests all Javascript packages in `package.json` file using Port's GitHub file ingesting feature.",
-        tags: ["JavaScript", "Packages", "SDLC", "GitHub"],
-        logos: ["JavaScript", "Package", "GitHub"],
+        tags: ["SDLC", "GitHub"],
+        logos: ["GitHub"],
         link: "/guides/all/ingest-javascript-packages-into-your-catalog"
     },
     {
         title: "Ingest software bill of material (SBOM) into your catalog",
         description: "Ingests software bill of material (SBOM) in your `SBOM.json` or `SBOM.xml` file using Port's GitHub file ingesting feature.",
-        tags: ["Vulnerability", "SDLC", "GitHub"],
+        tags: ["SDLC", "GitHub"],
         logos: ["GitHub"],
         link: "/guides/all/ingest-software-bill-of-materials-sbom-into-your-catalog"
     },
