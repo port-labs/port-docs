@@ -110,8 +110,7 @@ Add the following configuration to your datasource mapping:
       aggregate: providerID
       accumulate: week
       window: week
-      filter:
-        service: AmazonEC2
+      filter: service:"AmazonEC2"
     port:
       entity:
         mappings:
@@ -150,4 +149,3 @@ Using Port Ocean's OpenCost integration, we have successfully ingested AWS resou
 <p align="center">
 <img src='/img/integrations/opencost/opencostCloudcostResources.png' width='75%' border='1px' />
 </p>
-
