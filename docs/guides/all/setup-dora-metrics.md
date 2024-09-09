@@ -25,15 +25,14 @@ This guide will cover the four key metrics: Deployment Frequency, Lead Time, Cha
 :::
 
 ## Tracking Deployment
-In this section, we will cover how to track your team deployments.
-Deployment releases new or updated code into an environment
-(e.g., Production, Staging,
-or Testing). Tracking deployments helps
-understand how efficiently your team ships features and monitors release stability.
-Deployments are used to calculate two key DORA metrics:
+
+In this section, we will cover how to track your team's deployments. Deployments refer to releasing new or updated code into various environments, such as **Production**, **Staging**, or **Testing**. Tracking deployments helps you understand how efficiently your team ships features and monitors release stability.
+
+Deployments contribute to three key DORA metrics:
 
 - **Deployment Frequency**: How often changes are deployed to production or other environments.
 - **Change Failure Rate**: The percentage of deployments that fail and require intervention, rollback, or generate issues.
+- **Lead Time for Changes**: The time it takes from code commit to deployment into production.
 
 To track the necessary data for these metrics, we will create a **Deployment Blueprint** with properties that capture the essential information for each deployment.
 
@@ -76,13 +75,16 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
           "Failed"
         ],
         "description": "Indicates whether the deployment was successful or failed."
-      },
-      "leadTime": {
-        "title": "Lead Time",
-        "type": "number",
-         "description": "The time in minutes between a pull request being merged and its deployment."
       }
     }
+   },
+   "mirrorProperties": {
+      "leadTimeDays": {
+         "title": "Lead Time (Days)",
+         "mirror": ".relations.pullRequest.properties.lead_time_days",
+         "type": "number",
+         "description": "Mirrored lead time from Pull Request Blueprint in days."
+      }
    },
   "relations": {
     "service": {
@@ -103,14 +105,14 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
 
 
 ### Tracking Strategies
-
-The following strategies can help improve your deployment frequency and change failure rate:
+Below are the main ways to track deployments in your portal:
 
 <Tabs groupId="deployment-strategies" queryString defaultValue="pr-merge" values={[
 {label: "PR Merge", value: "pr-merge"},
 {label: "Workflow/Job", value: "workflow-job"},
 {label: "CI/CD Pipelines", value: "ci-cd-pipelines"},
-{label: "GitHub Deployment", value: "github-deployment"}
+{label: "GitHub Deployment", value: "github-deployment"},
+{label: "Custom API", value: "custom-api"}
 ]}>
 
 <TabItem value="pr-merge" label="PR Merge">
@@ -149,11 +151,6 @@ Here’s how you can implement this:
           environment: '"Production"'  # Hard coded for now
           createdAt: .merged_at
           deploymentStatus: 'Success'  # Hard coded for now
-          leadTime: |
-            (.created_at as $createdAt | .merged_at as $mergedAt | 
-            ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp | 
-            ($mergedAt | if . == null then null else sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $mergedTimestamp | 
-            if $mergedTimestamp == null then null else ($mergedTimestamp - $createdTimestamp) / 60 end)
 ```
 
 </details>
@@ -193,11 +190,6 @@ Here’s how you can implement this:
           environment: '"Production"'  # Set environment based on branch (main/master as Production)
           createdAt: .run_started_at
           deploymentStatus: .conclusion
-          leadTime: |
-            (.run_started_at as $startTime | .updated_at as $endTime |
-            ($startTime | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $startTimestamp |
-            ($endTime | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $endTimestamp |
-            ($endTimestamp - $startTimestamp) / 60)
 ```
 </details>
 
@@ -207,6 +199,10 @@ You can use regex to track only workflows related to deployments
 The environment is automatically determined based on the branch, where the main branch corresponds to Production.
 :::
 
+This approach can also be implemented for other CI/CD tools such as Jenkins, GitLab CI, CircleCI, or Azure DevOps. Each tool allows you to monitor workflows or pipeline runs and map them into Port as deployment entities, ensuring consistency across multiple platforms.
+
+By following a similar pattern for other tools, you will be able to capture deployment metadata, dynamically set the deployment status, and represent all your deployment activities in a unified way in Port.
+
 </TabItem>
 
 <TabItem value="ci-cd-pipelines" label="CI/CD Pipelines">
@@ -215,23 +211,13 @@ The environment is automatically determined based on the branch, where the main 
 
 CI/CD pipelines, such as those run by Jenkins, provide a robust way to track deployments. Jenkins, in particular, allows you to create and update entities in Port dynamically using Port's API as part of the pipeline execution.
 
-**Example**:
+**Examples**:
 
-In Jenkins, each time a build is triggered or completed,
-you can use the API to automatically report the build status and create/update deployment entities in Port.
-This approach ensures the catalog is always up-to-date with your CI/CD activities.
+Port supports tracking deployments from various CI/CD tools by monitoring pipelines and reporting the deployment status to Port. Here are examples for some commonly used CI/CD tools:
 
-Here’s how you can implement this:
+- **Jenkins**
 
-1. **Set Up Jenkins with Port Integration**:  
-   Jenkins can be integrated with Port
-   using either [Port's Ocean plugin](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/#available-ocean-integration) or [Port's API](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment).
-   For this example, we will use Port's API to dynamically create or update deployment entities.
-   Detailed instructions
-   for setting up Jenkins with Port can be found in the [Port Jenkins integration documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/).
-
-2. **Create/Update Deployment Entity**:  
-   Below is an example of how you can set up a Jenkins pipeline to report a deployment entity to Port using Port's API.
+Jenkins provides a robust way to track deployments by dynamically reporting build statuses to Port using Port's API.
 
 <details>
 <summary><b>Jenkins Pipeline Example (click to expand)</b></summary>
@@ -240,7 +226,7 @@ Here’s how you can implement this:
 pipeline {
   agent any
   environment {
-    API_URL = "https://api.getport.io" // EU region Port API URL
+    API_URL = "https://api.getport.io"
   }
   stages {
     stage('Report Deployment to Port') {
@@ -261,8 +247,7 @@ pipeline {
                     requestBody: auth_body,
                     url: "${API_URL}/v1/auth/access_token"
 
-            def slurped_response = new groovy.json.JsonSlurperClassic().parseText(token_response.content)
-            def token = slurped_response.accessToken
+            def token = new groovy.json.JsonSlurperClassic().parseText(token_response.content).accessToken
 
             def entity_body = """
               {
@@ -292,6 +277,158 @@ pipeline {
 ```
 
 </details>
+
+- **Octopus Deploy**
+
+Octopus can be used to track deployments by reporting to Port using custom API calls after deployments are triggered.
+
+<details>
+<summary><b>Octopus Deploy Example (click to expand)</b></summary>
+
+```yaml
+# Octopus script example for deployment tracking in Port
+steps:
+  - run: |
+      curl -X POST \
+      -H "Authorization: Bearer <YOUR_TOKEN>" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "identifier": "octopus-{{build_id}}",
+        "title": "Deployment for Octopus {{build_id}}",
+        "properties": {
+          "environment": "Production",
+          "createdAt": "{{timestamp}}",
+          "deploymentStatus": "Success"
+        }
+      }' \
+      https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true
+```
+
+</details>
+
+- **CircleCI**
+
+Track deployments in CircleCI by reporting pipeline runs to Port using a configuration similar to Jenkins.
+
+<details>
+<summary><b>CircleCI Pipeline Example (click to expand)</b></summary>
+
+```yaml
+version: 2.1
+
+jobs:
+  deploy:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - run:
+          name: "Notify Port of deployment"
+          command: |
+            curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true \
+            -H "Authorization: Bearer $PORT_API_TOKEN" \
+            -d '{
+              "identifier": "circleci-{{build_number}}",
+              "title": "Deployment for CircleCI {{build_number}}",
+              "properties": {
+                "environment": "Production",
+                "createdAt": "{{timestamp}}",
+                "deploymentStatus": "Success"
+              }
+            }'
+```
+
+</details>
+
+- **Azure Pipelines**
+
+Azure Pipelines can track deployments by integrating with Port's API in a similar manner.
+
+<details>
+<summary><b>Azure Pipelines Example (click to expand)</b></summary>
+
+```yaml
+trigger:
+- master
+
+jobs:
+- job: DeployToProd
+  steps:
+  - script: |
+      curl -X POST \
+      -H "Authorization: Bearer $PORT_API_TOKEN" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "identifier": "azure-$(Build.BuildId)",
+        "title": "Deployment for Azure $(Build.BuildId)",
+        "properties": {
+          "environment": "Production",
+          "createdAt": "$(Build.QueuedTime)",
+          "deploymentStatus": "Success"
+        }
+      }' \
+      https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true
+```
+
+</details>
+
+- **Codefresh**
+
+Track deployments in Codefresh by integrating Port's API with your pipeline configurations.
+
+<details>
+<summary><b>Codefresh Pipeline Example (click to expand)</b></summary>
+
+```yaml
+version: '1.0'
+steps:
+  ReportToPort:
+    title: Reporting to Port
+    type: freestyle
+    image: curlimages/curl
+    commands:
+      - curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true \
+        -H "Authorization: Bearer $PORT_API_TOKEN" \
+        -d '{
+          "identifier": "codefresh-{{CF_BUILD_ID}}",
+          "title": "Deployment for Codefresh {{CF_BUILD_ID}}",
+          "properties": {
+            "environment": "Production",
+            "createdAt": "{{CF_BUILD_TIMESTAMP}}",
+            "deploymentStatus": "Success"
+          }
+        }'
+```
+
+</details>
+
+- **GitLab Pipelines**
+
+Track GitLab pipeline deployments using a similar approach to report data to Port.
+
+<details>
+<summary><b>GitLab Pipeline Example (click to expand)</b></summary>
+
+```yaml
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true \
+      -H "Authorization: Bearer $PORT_API_TOKEN" \
+      -d '{
+        "identifier": "gitlab-{{CI_JOB_ID}}",
+        "title": "Deployment for GitLab {{CI_JOB_ID}}",
+        "properties": {
+          "environment": "Production",
+          "createdAt": "{{CI_JOB_TIMESTAMP}}",
+          "deploymentStatus": "Success"
+        }
+      }'
+```
+</details>
+
 
 </TabItem>
 
@@ -351,58 +488,96 @@ and tags [here](https://docs.getport.io/build-your-software-catalog/sync-data-to
 
 </TabItem>
 
+
+<TabItem value="custom-api" label="Custom API">
+If your tool or workflow is not natively supported, you can create custom integrations by directly interacting with Port’s API. This method allows you to track deployments from any system that can make HTTP API calls.
+
+Here’s how you can use the API to create a deployment entity in Port:
+
+<details>
+<summary><b>Custom API Example (click to expand)</b></summary>
+
+```bash
+curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true \
+-H "Authorization: Bearer $PORT_API_TOKEN" \
+-H "Content-Type: application/json" \
+-d '{
+  "identifier": "custom-deployment-1234",
+  "title": "Custom Deployment for ID 1234",
+  "properties": {
+    "environment": "Production",
+    "createdAt": "2024-09-01T12:00:00Z",
+    "deploymentStatus": "Success"
+  }
+}'
+```
+</details>
+
+By using this approach, you can ensure any deployment system is integrated into Port,
+giving you full flexibility across all your deployment workflows.
+
+</TabItem>
+
 </Tabs>
+
+<br/>
 
 ### Monorepo Tracking
 
-Port doesn’t provide a specific solution for monorepos,
-but **custom integrations** can be used to effectively track services or components within a monorepo.
+Port does not offer a built-in solution specifically tailored for monorepos.
+However, by using **custom integrations**, you can track services or components within a monorepo effectively.
 
-- **Define blueprints** for each service or component inside the monorepo. Each microservice or feature can have unique properties such as name, deployment status, and dependencies.
+Here’s how you can do this:
 
-- **Ingest data** via Port’s API by setting up logic to track changes, deployments, or PR merges for individual services within the monorepo. Use selectors to filter and map the relevant parts of the monorepo to your service blueprints.
+- **Define Blueprints**: Set up blueprints for each service or component within your monorepo. Each microservice or feature should have distinct properties such as `name`, `deployment status`, and `dependencies`.
 
-Example configuration for a monorepo with multiple services:
+- **Ingest Data via Port API**: Use Port's API to track changes, deployments, or pull request merges for each service individually. By using selectors, you can map specific parts of the monorepo (e.g., specific directories) to corresponding services.
+
+
+The following YAML example demonstrates how to track multiple services (e.g., `service-A`, `service-B`) within a monorepo:
 
 ```yaml
 resources:
   - kind: service
     selector:
-      query: ".repository.name == 'monorepo' && (.service == 'service-A' || .service == 'service-B')"
+      query: ".repository.name == 'monorepo' && (.path | startswith('service-A/') || .path | startswith('service-B/'))"
     port:
       entity:
         mappings:
-          identifier: .service
-          title: .service
+          identifier: .path
+          title: .path | split('/')[0]
           blueprint: '"service"'
           properties:
             url: .html_url
             defaultBranch: .default_branch
 ```
 
-:::tip Why Custom Integration?
-If your monorepo setup includes multiple services or components,
-**Port’s custom integration API** provides the flexibility
-to tailor tracking and deployment updates to each component individually.
-This allows granular visibility and management of each microservice in your monorepo.
+In this setup:
+- The `query` checks if the repository is the monorepo and if the file path starts with either `service-A/` or `service-B/`.
+- The `identifier` is mapped to the path, which uniquely identifies the service.
+- The `title` is derived from the service name in the file path.
+
+By this method, individual services within a monorepo are mapped to Port blueprints.
+
+:::tip Custom Integration Benefits
+Custom integrations provide flexibility in mapping and tracking each service or microservice within a monorepo. With Port’s API, you can track deployments and updates for each component separately, giving you granular control over monitoring and managing services in a monorepo.
 :::
 
 
 ## Tracking Incidents
 
-Incidents are key to calculating important DevOps metrics, including **Change Failure Rate (CFR)** and **Mean Time to Recovery (MTTR)**. Effective incident tracking provides insights into how frequently deployments result in failures and how quickly these failures are resolved.
-
-This section covers how to:
+Incidents are essential for tracking key DORA metrics, including **Change Failure Rate (CFR)** and **Mean Time to Recovery (MTTR)**. Effective incident tracking reveals insights into how frequently deployments fail and how quickly teams can resolve issues. This section outlines how to:
 
 - Use incidents to calculate **CFR** and **MTTR**.
-- Link incidents to services to monitor the impact of failures.
+- Link incidents to services to track the impact of failures.
+- Aggregate metrics across incidents for better monitoring.
 
 ### Data Model Setup
 
-Ensure that your PagerDuty incident blueprint is configured properly.
-You can follow the detailed steps in the [PagerDuty Incident Blueprint](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty).
+Ensure that your **PagerDuty incident blueprint** is configured properly. You can follow the detailed steps in the [PagerDuty Incident Blueprint](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty).
 
-- Add the following properties to the blueprint to capture the resolution time and time to recovery:  
+- Add the following properties to capture incident resolution time and recovery time:
+
 <details>
 <summary><b>Additional properties for PagerDuty Incident Blueprint (click to expand)</b></summary>
 
@@ -427,34 +602,22 @@ You can follow the detailed steps in the [PagerDuty Incident Blueprint](https://
 
 ### Syncing Incidents with PagerDuty and Other Tools
 
-To sync incidents from **PagerDuty**,
-follow the steps in the [PagerDuty guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty).
-The guide walks you through setting up the necessary integrations to track incidents related to deployments.
+To sync incidents from **PagerDuty**, follow the steps in the [PagerDuty guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty). The guide provides detailed steps for setting up integrations to track incidents related to deployments.
 
-For other integrations, follow these guides to sync incidents:
+For other incident management tools, follow these respective guides:
 - [OpsGenie](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie)
 - [FireHydrant](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant)
 - [ServiceNow](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
 - [Statuspage](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
 
-For example, **OpsGenie** and **ServiceNow** allow you to map incidents to services similarly to **PagerDuty**.
-The process involves syncing the incidents, creating relations between services,
-and ensuring consistent data capture for CFR and MTTR.
-
 ### Relating Incidents to Services
 
-Once the incident data is synced, you'll want to create a relation between incidents and services in your Port Builder.
-This allows incidents caused by deployment failures to be linked directly to the impacted services,
-making it easier to track recovery times and overall service health.
+To track incidents in relation to services, create a **relation** between the **Incident Blueprint** and the **Service Blueprint** in Port Builder. This allows incidents to be linked to services affected by deployment failures, enabling better monitoring of **MTTR** and overall service health.
 
-To relate incidents to services:
-
-1. **Add a Relation Between Incident and Service**: Create a relation in Port Builder between your **Incident Blueprint** and the **Service Blueprint**. This links each incident to the service it affects, ensuring that failures caused by deployment issues are captured and tracked.
-
-2. **Create a Mirror Property**: Set up mirror properties to reflect key incident data (e.g., **recoveryTime**, **resolvedAt**) on the related service. This makes it easier to track MTTR at the service level.
+Instead of mirroring properties like `recoveryTime` and `resolvedAt` at the service level, **aggregate** them to calculate the average **MTTR** across multiple incidents.
 
 <details>
-<summary><b>Relation and Mirror Property JSON (click to expand)</b></summary>
+<summary><b>Relation and Aggregation Property JSON (click to expand)</b></summary>
 
 ```json
 {
@@ -465,61 +628,6 @@ To relate incidents to services:
       "many": false
     }
   },
-  "mirrorProperties": {
-    "recoveryTime": {
-      "title": "Recovery Time",
-      "mirror": ".properties.recoveryTime"
-    },
-    "resolvedAt": {
-      "title": "Resolution Time",
-      "mirror": ".properties.resolvedAt"
-    }
-  }
-}
-```
-</details>
-
-
-
-### Metric Calculations
-
-<Tabs groupId="metrics" defaultValue="cfr" values={[
-{label: 'Change Failure Rate', value: 'cfr'},
-{label: 'Mean Time to Recovery', value: 'mttr'},
-{label: 'Deployment Frequency', value: 'df'}
-]}>
-
-<TabItem value="cfr" label="Change Failure Rate">
-
-**CFR** measures the percentage of deployments that fail and result in incidents. This is calculated by dividing the number of incidents by the total number of deployments.
-
-<details>
-<summary><b>Calculation for CFR (click to expand)</b></summary>
-
-```json
-{
-  "calculationProperties": {
-    "changeFailureRate": {
-      "title": "Change Failure Rate",
-      "type": "number",
-      "calculation": "(count(.relations.incident) / count(.identifier)) * 100"
-    }
-  }
-}
-```
-</details>
-
-</TabItem>
-
-<TabItem value="mttr" label="Mean Time to Recovery">
-
-**MTTR** measures the average time it takes to resolve incidents. This metric is critical for understanding how long your services are impacted after a failure.
-
-<details>
-<summary><b>Aggregation for MTTR (click to expand)</b></summary>
-
-```json
-{
   "aggregationProperties": {
     "meanTimeToResolve": {
       "title": "Mean Time to Recovery",
@@ -545,11 +653,77 @@ To relate incidents to services:
 ```
 </details>
 
+## Metric Calculations
+
+By tracking incidents, you can calculate the following metrics:
+
+<Tabs groupId="metrics" defaultValue="cfr" values={[
+{label: 'Change Failure Rate', value: 'cfr'},
+{label: 'Mean Time to Recovery', value: 'mttr'},
+{label: 'Deployment Frequency', value: 'df'}
+]}>
+
+<TabItem value="cfr" label="Change Failure Rate">
+
+**CFR** is the percentage of deployments that fail and result in incidents. This is calculated by dividing the number of incidents by the total number of deployments.
+
+<details>
+<summary><b>Calculation for CFR (click to expand)</b></summary>
+
+```json
+{
+  "calculationProperties": {
+    "changeFailureRate": {
+      "title": "Change Failure Rate",
+      "type": "number",
+      "calculation": "(count(.relations.incident) / count(.identifier)) * 100"
+    }
+  }
+}
+```
+</details>
+
+</TabItem>
+
+<TabItem value="mttr" label="Mean Time to Recovery">
+
+**MTTR** measures the average time taken to resolve incidents. This is an essential metric for understanding how long services are impacted after a failure.
+
+<details>
+<summary><b>Aggregation for MTTR (click to expand)</b></summary>
+
+```json
+{
+  "aggregationProperties": {
+    "meanTimeToResolve": {
+      "title": "Mean Time to Recovery",
+      "target": "incident",
+      "calculationSpec": {
+        "calculationBy": "entities",
+        "func": "avg",
+        "field": "recoveryTime"
+      },
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "resolved"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+</details>
+
 </TabItem>
 
 <TabItem value="df" label="Deployment Frequency">
 
-**Deployment Frequency** tracks how often code is deployed to production. This metric is critical for understanding your team's release cadence and how often changes are shipped.
+**Deployment Frequency** tracks how often code is deployed to production. This helps measure your team's release cadence.
 
 <details>
 <summary><b>Aggregation for Deployment Frequency (click to expand)</b></summary>
@@ -586,15 +760,11 @@ To relate incidents to services:
 
 </Tabs>
 
-
-
 ### Aggregating Metrics for Other Integrations
 
-For integrations such as **OpsGenie**, **ServiceNow**, or **FireHydrant**,
-you’ll need to create aggregated properties at the service level manually.
-These properties will help you track **MTTR** and other metrics consistently across all incident management tools.
+For tools like **OpsGenie**, **ServiceNow**, or **FireHydrant**, create aggregated properties at the service level to consistently track **MTTR** and other metrics.
 
-Ensure you create an aggregated property for **meanMinutesToResolve** at the service level, using a similar formula to convert seconds to minutes where needed.
+Make sure to define an aggregated property for **meanMinutesToResolve**:
 
 ```json
 {
@@ -607,6 +777,7 @@ Ensure you create an aggregated property for **meanMinutesToResolve** at the ser
   }
 }
 ```
+
 :::tip Conclusion
-This guide enables you to effectively track incidents and their impact on services, ensuring you can calculate **CFR**, **MTTR**, and **Deployment Frequency** consistently across different incident management tools. By establishing the right relationships between services and incidents and standardizing the metrics in **minutes**, you ensure consistency and accuracy in your DevOps tracking.
+This guide helps you effectively track incidents and their impact on services, ensuring you can consistently calculate **CFR**, **MTTR**, and **Deployment Frequency** across different tools. Aggregating metrics across incidents provides deeper insight into service health and helps you standardize metrics in **minutes** for better DevOps tracking.
 :::
