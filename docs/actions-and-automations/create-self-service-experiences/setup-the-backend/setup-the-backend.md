@@ -7,6 +7,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
 import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
+import ExecuteActionLocations from '/docs/actions-and-automations/create-self-service-experiences/templates/_execute_action_locations.mdx'
 
 # Setup backend
 
@@ -150,11 +151,4 @@ Optionally, you can [configure permissions and/or manual approval](/actions-and-
 
 ### Execute the action
 
-Self-service actions can be executed from the following locations:
-
-- The [self-service page](https://app.getport.io/self-serve) of your portal.
-- Certain [dashboard widgets](https://docs.getport.io/customize-pages-dashboards-and-plugins/dashboards/#action-card) that can be added to your homepage or catalog.
-- Actions that are tied to a specific blueprint can be executed directly from any entity page that is based on that blueprint.  
-  For example, the following page of an entity of type `service` displays a list of actions that can be executed on that entity:
-
-  <img src='/img/self-service-actions/setup-backend/entityPageActionsExample.png' width='100%' border='1px' />
+<ExecuteActionLocations />
