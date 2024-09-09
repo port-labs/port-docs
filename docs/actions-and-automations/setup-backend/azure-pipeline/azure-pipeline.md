@@ -39,7 +39,7 @@ To define an incoming webhook in Azure, follow the steps below:
     - Choose **Incoming WebHook** as the type.
     - Fill in the following fields:
         - **Webhook Name**: The webhook name e.g. "port_trigger"
-        - **Service connection name**: The sname of the service connection (e.g., "port_trigger").
+        - **Service connection name**: The name of the service connection (e.g., "port_trigger").
         - **Secret key**: Enter your Port `clientSecret` value.
         - **Headers**: Type in `X-Port-Signature`.
     - Check `Grant access to all pipelines`
@@ -64,4 +64,4 @@ When using this backend, you need to provide the following:
 
 ## Examples
 
-Examples of self-service actions using Azure pipelines can be found [here](/actions-and-automations/setup-backend/azure-pipeline/examples/).
+For complete examples of self-service actions using Azure pipelines as the backend, check out the [guides section](/guides?tags=Azure&tags=Actions).

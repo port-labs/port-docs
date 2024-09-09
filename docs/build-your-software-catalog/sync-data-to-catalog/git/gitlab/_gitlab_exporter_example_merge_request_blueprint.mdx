@@ -15,7 +15,12 @@
       "status": {
         "title": "Status",
         "type": "string",
-        "enum": ["opened", "closed", "merged", "locked"],
+        "enum": [
+          "opened",
+          "closed",
+          "merged",
+          "locked"
+        ],
         "enumColors": {
           "opened": "yellow",
           "closed": "red",
@@ -24,12 +29,17 @@
         }
       },
       "createdAt": {
-        "title": "Create At",
+        "title": "Created At",
         "type": "string",
         "format": "date-time"
       },
       "updatedAt": {
         "title": "Updated At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "mergedAt": {
+        "title": "Merged At",
         "type": "string",
         "format": "date-time"
       },
@@ -45,17 +55,26 @@
           "type": "string"
         }
       }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {
+    "lead_time_days": {
+      "title": "Lead time (Days)",
+      "calculation": "if .properties.status == \"merged\" then ((.properties.mergedAt | sub(\"\\\\.[0-9]+\\\\+00:00$\"; \"Z\") | strptime(\"%Y-%m-%dT%H:%M:%SZ\") | mktime) - (.properties.createdAt | sub(\"\\\\.[0-9]+\\\\+00:00$\"; \"Z\") | strptime(\"%Y-%m-%dT%H:%M:%SZ\") | mktime)) / 86400 | tonumber else null end",
+      "type": "number"
     }
   },
+  "aggregationProperties": {},
   "relations": {
     "service": {
+      "title": "Service",
       "target": "service",
       "required": false,
       "many": false
     }
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {}
+  }
 }
 ```
 

@@ -1,5 +1,5 @@
 ---
-title: "Azure Active Directory (SAML)"
+title: "Microsoft Entra ID (AzureAD)"
 sidebar_position: 1
 description: Integrate Azure AD with Port using SAML
 ---
@@ -27,7 +27,7 @@ In order to complete the process you will need to contact us to receive the info
 4. In the getting started section, select the `Set up Single Sign On` button, and choose the SAML method.
 5. Under `SAML certificates` (step 3), Click the Edit button to expand the certificates section. Click the 3 dot icon next to the Active certificate, and choose `PEM certificate download`.
 
-Send the **PEM certificate file** along with the **application ID** (Which can be found in the properties tab of the application) to Port.
+Send the **PEM certificate file** along with the **Login URL** (Which can be found in the Single Sign-on section, Card 4 (Set up)) to Port.
 
 After that, Port will provide you with a metadata XML file for your connection.
 
@@ -40,3 +40,18 @@ In order to expose your Azure groups to Port via the application, do the followi
 2. Press the `Add a group claim` button
 3. Select `Groups assigned to the application` and in the source attribute select `Cloud-only group display names`.
 4. Assign the relevant groups you want to expose to the application, these will be ingested into Port as teams you can use to manage user permissions and RBAC in your Port account.
+
+<!-- ## SCIM Configuration (beta)
+
+AzureAD SAML applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
+
+To set up SCIM for AzureAD SAML based applications, contact Port's support team.
+
+You will be provided with:
+
+- An SCIM `endpoint`
+- An SCIM `token`
+
+ The `endpoint` and `token` will be used to set up the SCIM integration in your identity provider.
+
+After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-azure-ad-saml-connections#configure-scim-in-azure-ad-for-saml-apps) to enable SCIM. -->

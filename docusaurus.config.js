@@ -92,14 +92,23 @@ const config = {
           {
             to: "/",
             label: "Home",
+            position: "left",
             className: "header-home-link",
-            activeBaseRegex: "^((?!api-reference).)*$",
+            activeBaseRegex: "^((?!api-reference|guides).)*$",
           },
           {
             to: "/api-reference/port-api",
             label: "API Reference",
+            position: "left",
             className: "header-api-link",
             activeBasePath: "api-reference",
+          },
+          {
+            to: "/guides",
+            label: "Guides",
+            position: "left",
+            className: "header-guides-link",
+            activeBasePath: "guides",
           },
           {
             to: "https://demo.getport.io",
@@ -241,7 +250,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Port, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Port, Inc.`,
       },
       tableOfContents: {
         minHeadingLevel: 2,
@@ -253,11 +262,12 @@ const config = {
         respectPrefersColorScheme: true,
       },
       zoom: {
-        selector: ".markdown img",
+        selector: ".markdown img:not(.not-zoom)",
         background: {
           light: "rgb(255, 255, 255)",
           dark: "rgb(50, 50, 50)",
         },
+        
       },
       prism: {
         theme: lightCodeTheme,
@@ -285,17 +295,28 @@ const config = {
       hubspot: {
         accountId: 21928972,
       },
-      algolia: {
-        // The application ID provided by Algolia
-        appId: "VHYI0G637S",
-        // Public API key: it is safe to commit it
-        apiKey: "1bacc12054c0224408f2be6b60d697c9",
-        indexName: "getport",
-        contextualSearch: true,
-      },
+      // algolia: {
+      //   // The application ID provided by Algolia
+      //   appId: "VHYI0G637S",
+      //   // Public API key: it is safe to commit it
+      //   apiKey: "1bacc12054c0224408f2be6b60d697c9",
+      //   indexName: "getport",
+      //   contextualSearch: true,
+      // },
     }),
   themes: [
-    "@port-labs/docusaurus-theme-openapi-docs",
+    "docusaurus-theme-openapi-docs",
+    
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        indexBlog: false,
+        indexDocs: true,
+        docsRouteBasePath: "/",
+        hashed: true,
+        explicitSearchResultPath: true,
+      },
+    ]
   ],
 
   plugins: [
@@ -316,13 +337,13 @@ const config = {
       },
     ],
     [
-      "@port-labs/docusaurus-plugin-openapi-docs",
+      "docusaurus-plugin-openapi-docs",
       {
         id: "api", // plugin id
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
         config: {
           port: { // the <id> referenced when running CLI commands
-            specPath: './static/spectmp.yaml', // path to OpenAPI spec, URLs supported
+            specPath: './static/apispec.yaml', // path to OpenAPI spec, URLs supported
             outputDir: "docs/api-reference-temp", // dir of generated files, REMEMBER to move them to /api-reference when ready
             sidebarOptions: {
               groupPathsBy: "tag",

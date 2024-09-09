@@ -71,7 +71,7 @@ Keep the file, you will need it for the deployment step.
 
 :::note Prerequisites
 
-You will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
+You will need your Port `ORG_ID`, `CLIENT_ID` and `CLIENT_SECRET`.
 
 <FindCredentials/>
 
@@ -88,7 +88,7 @@ It can be deployed on any platform that allows deploying images as containers su
 You can pull the Docker image by running:
 
 ```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.12.0
+docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.15.0
 ```
 
 Run the following command to start the app:
@@ -100,20 +100,22 @@ docker run \
   -e GHE_HOST=<GITHUB BASE HOST, ie github.compay.com> \
   -e PORT=<Any PORT> \
   -e PORT_URL=https://api.getport.io \
+  -e PORT_ORG_ID=<ORG_ID> \
   -e PORT_CLIENT_ID=<CLIENT_ID> \
   -e PORT_CLIENT_SECRET=<CLIENT_SECRET> \
   -e PRIVATE_KEY=<BASE 64 PRIVATEKEY> \
   -p <PORT>:<PORT> \
-  ghcr.io/port-labs/port-self-hosted-github-app
+  ghcr.io/port-labs/port-self-hosted-github-app:0.15.0
 ```
 
 | Env variable         | Description                                                                         |
-| -------------------- | ----------------------------------------------------------------------------------- |
+|----------------------|-------------------------------------------------------------------------------------|
 | `APP_ID`             | Application ID, you can find it in the edit GitHub App page                         |
 | `WEBHOOK_SECRET`     | The same string that was used to register the application in the previous step      |
 | `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                     |
 | `PORT`               | The port that the GitHub App will listen to                                         |
 | `PORT_URL`           | Port's API Base URL                                                                 |
+| `PORT_ORG_ID`        | Your Port org id                                                                    |
 | `PORT_CLIENT_ID`     | Port client id for interacting with the API                                         |
 | `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                     |
 | `PRIVATE_KEY`        | A base64 encoded private key. You can use a tool like https://www.base64encode.org/ |

@@ -2,6 +2,8 @@
 sidebar_position: 2
 ---
 
+import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
+
 # Entity page
 
 Each [entity](../../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) has a dedicated page that contains 3 tabs (by default):
@@ -62,19 +64,99 @@ This tab displays all actions (including CRUD) that caused any change to the ent
 
 [Visualization widgets](/customize-pages-dashboards-and-plugins/dashboards/) can be added to an entity page to display data using graphic elements.
 
-You can add widgets to an entity page by using the `Add visualization` menu:
+You can add widgets to an entity page by clicking on the `+ Widget` button in the top right corner:
 
-![addVisualizations](../../../static/img/software-catalog/pages/addVisualizations.png)
+<img src='/img/software-catalog/pages/addVisualizations.png' width='100%' border='1px' />
+<br/><br/>
 
 Let's create a simple number chart that displays the number of `System` entities related to this `Domain`:
 
 <img src='/img/software-catalog/pages/demoNumberChart.png' width='350rem' />
+<br/><br/>
 
 After the first widget is created, a new tab called `dashboard` will be created in the entity page displaying the new widget:
 
-![entityAfterVisualization](../../../static/img/software-catalog/pages/entityAfterVisualization.png)
+![entityAfterVisualization](/img/software-catalog/pages/entityAfterVisualization.png)
 
 Each additional visualization will be added as a widget to the `dashboard` tab.
+
+### Chart filters
+
+<ChartFilters />
+
+Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
+
+<img src='/img/software-catalog/pages/defaultInternalChartFilters.png' width='35%' border='1px' />
+<br/><br/>
+
+These are used internally in Port and cannot be modified/removed.
+You can add additional filters as you wish, by adding new objects to the `rules` array, for example:
+
+<details>
+<summary><b>Filter with additional rule example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "operator": "relatedTo",
+      "blueprint": "{{blueprint}}",
+      "value": "{{url.identifier}}"
+    },
+    {
+      "operator": "=",
+      "value": "someValue",
+      "property": "someProp"
+    }
+  ]
+}
+```
+</details>
+
+If you want to add additional rules with a different combinator, you can nest them inside a new object, for example:
+
+<details>
+<summary><b>Filter with nested rules example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "operator": "relatedTo",
+      "blueprint": "{{blueprint}}",
+      "value": "{{url.identifier}}"
+    },
+    {
+      "combinator": "or",
+      "rules": [
+        {
+          "operator": "=",
+          "value": "someValue",
+          "property": "someProp"
+        },
+        {
+          "operator": "=",
+          "value": "anotherValue",
+          "property": "anotherProp"
+        }
+      ]
+    }
+  ]
+}
+```
+</details>
 
 ## Additional tabs
 

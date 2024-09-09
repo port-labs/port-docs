@@ -14,14 +14,15 @@ import PagerDutyWebhookConfig from "/docs/build-your-software-catalog/custom-int
 import PagerDutyWebhookHistory from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx"
 import PagerDutyScript from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_shell_history_config.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # PagerDuty
 
-Our PagerDuty integration allows you to import `schedules`, `oncalls`, `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
+Our PagerDuty integration allows you to import `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` from your PagerDuty account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `schedules`, `oncalls`, `services` and `incidents` in your PagerDuty organization environment.
+- Map `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` in your PagerDuty organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -34,7 +35,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -42,18 +49,19 @@ This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
 | Parameter                        | Description                                                                                                             | Required |
-| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                  | Your port client id                                                                                                     | ✅       |
-| `port.clientSecret`              | Your port client secret                                                                                                 | ✅       |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
-| `integration.identifier`         | Change the identifier to describe your integration                                                                      | ✅       |
-| `integration.type`               | The integration type                                                                                                    | ✅       |
-| `integration.eventListener.type` | The event listener type                                                                                                 | ✅       |
-| `integration.secrets.token`      | PagerDuty API token                                                                                                | ✅       |
-| `integration.config.apiUrl`      | Pagerduty api url. If not specified, the default will be https://api.pagerduty.com                                      | ✅       |
-| `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in PagerDuty | ❌       |
-| `scheduledResyncInterval`        | The number of minutes between each resync                                                                               | ❌       |
-| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping           | ❌       |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------- |
+| `port.clientId`                  | Your port client id                                                                                                     | ✅      |
+| `port.clientSecret`              | Your port client secret                                                                                                 | ✅      |
+| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅      |
+| `integration.identifier`         | Change the identifier to describe your integration                                                                      | ✅      |
+| `integration.type`               | The integration type                                                                                                    | ✅      |
+| `integration.eventListener.type` | The event listener type                                                                                                 | ✅      |
+| `integration.secrets.token`      | PagerDuty API token                                                                                                | ✅      |
+| `integration.config.apiUrl`      | Pagerduty api url. If not specified, the default will be https://api.pagerduty.com                                      | ✅      |
+| `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in PagerDuty | ✅       |
+| `scheduledResyncInterval`        | The number of minutes between each resync                                                                               | ❌      |
+| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping           | ❌      |
+| `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true  | ❌      |
 
 <br/>
 
@@ -69,6 +77,7 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
   --set port.clientSecret="PORT_CLIENT_SECRET"  \
   --set port.baseUrl="https://api.getport.io"  \
   --set initializePortResources=true  \
+  --set sendRawDataExamples=true \
   --set scheduledResyncInterval=120  \
   --set integration.identifier="my-pagerduty-integration"  \
   --set integration.type="pagerduty"  \
@@ -163,6 +172,8 @@ kubectl apply -f my-ocean-pagerduty-integration.yaml
 </TabItem>
 </Tabs>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 <TabItem value="one-time" label="Scheduled">
@@ -251,6 +262,7 @@ pipeline {
                             docker run -i --rm --platform=linux/amd64 \
                                 -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
                                 -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__API_URL=$OCEAN__INTEGRATION__CONFIG__API_URL \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
@@ -301,6 +313,7 @@ steps:
     docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__TOKEN=$(OCEAN__INTEGRATION__CONFIG__TOKEN) \
         -e OCEAN__INTEGRATION__CONFIG__API_URL=$(OCEAN__INTEGRATION__CONFIG__API_URL) \
         -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
@@ -354,6 +367,7 @@ ingest_data:
       docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__SEND_RAW_DATA_EXAMPLES=true  \
         -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
         -e OCEAN__INTEGRATION__CONFIG__API_URL=$OCEAN__INTEGRATION__CONFIG__API_URL \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
@@ -370,11 +384,11 @@ ingest_data:
 
 <PortApiRegionTip/>
 
+<AdvancedConfig/>
+
 </TabItem>
 
 </Tabs>
-
-<AdvancedConfig/>
 
 ## Ingesting PagerDuty objects
 
@@ -393,6 +407,7 @@ The following resources can be used to map data from PagerDuty, it is possible t
 - [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
 - [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
 - [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
+- [`Escalation Policy`](https://developer.pagerduty.com/api-reference/51b21014a4f5a-list-escalation-policies)
 
 :::
 
@@ -869,6 +884,82 @@ resources:
             relations:
               pagerdutyService: .service.id
 ```
+
+</details>
+
+### Escalation Policy
+
+<details>
+<summary>Escalation Policy blueprint</summary>
+
+```json showLineNumbers
+{
+   "identifier": "pagerdutyEscalationPolicy",
+   "description": "This blueprint represents a PagerDuty escalation policy in our software catalog",
+   "title": "PagerDuty Escalation Policy",
+   "icon": "pagerduty",
+   "schema": {
+      "properties": {
+         "url": {
+            "title": "URL",
+            "type": "string",
+            "format": "url"
+         },
+         "summary": {
+            "title": "Summary",
+            "type": "string"
+         },
+         "primaryOncall": {
+            "title": "Primary Oncall",
+            "type": "string",
+            "format": "user"
+         },
+         "escalationRules": {
+            "title": "Escalation Rules",
+            "type": "array",
+            "items": {
+               "type": "object"
+            }
+         }
+      },
+      "required": []
+   },
+   "mirrorProperties": {},
+   "calculationProperties": {},
+   "aggregationProperties": {},
+   "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+   - kind: escalation_policies
+     selector:
+       query: 'true'
+       attachOncallUsers: 'true'
+     port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"pagerdutyEscalationPolicy"'
+          properties:
+            url: .html_url
+            description: .summary
+            primaryOncall: .__oncall_users | sort_by(.escalation_level) | .[0].user.email
+            escalationRules: .escalation_rules
+```
+ 
+:::tip Attach oncall users
+When `attachOncallUsers` is set to `true`, it fetches the oncall data per escalation policy. To disable this feature, set the value to `false`.
+:::
 
 </details>
 
@@ -1975,7 +2066,7 @@ Done! you can now import historical data from PagerDuty into Port. Port will par
 
 ## More relevant guides and examples
 
-- [Ensure production readniness](https://docs.getport.io/guides-and-tutorials/ensure-production-readiness)
+- [Ensure production readniness](https://docs.getport.io/guides/all/ensure-production-readiness)
 - [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
 - [Self-service action to trigger a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
 - [Self-service action to change a PagerDuty incident owner](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)

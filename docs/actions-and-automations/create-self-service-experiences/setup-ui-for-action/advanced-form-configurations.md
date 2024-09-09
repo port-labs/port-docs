@@ -786,8 +786,8 @@ values={[
         "combinator": "and",
         "rules": [
           {
-            "blueprint": "Cluster",
             "operator": "relatedTo",
+            "blueprint": "Cluster",
             "value": {
               "jqQuery": ".form.Cluster.identifier"
             }
@@ -864,8 +864,8 @@ action = Action(
           "combinator": "and",
           "rules": [
             {
-              "blueprint": "Cluster",
               "operator": "relatedTo",
+              "blueprint": "Cluster",
               "value": {
                 "jq_query": ".form.Cluster.identifier"
               }
@@ -988,7 +988,12 @@ action = Action(
 </TabItem>
 </Tabs>
 
-![Cluster And Namespace Action](/img/software-catalog/blueprint/userPropertiesModal.png)
+:::info Users and teams as blueprints
+If you are using the [manage users and teams as blueprints](/sso-rbac/rbac/#users-and-teams-as-blueprints) feature, there is a small change to make in the `jqQuery` value.  
+See more information and an example [here](/sso-rbac/rbac/#consequent-changes).
+:::
+
+<img src='/img/software-catalog/blueprint/userPropertiesModal.png' width='70%' border='1px' />
 
 :point_up: These are the only namespaces that are associated with the logged-in user's teams. :point_up:
 
@@ -1284,8 +1289,8 @@ values={[
             "combinator": "and",
             "rules": [
               {
-                "blueprint": "Cluster",
                 "operator": "relatedTo",
+                "blueprint": "Cluster",
                 "value": {
                   "jqQuery": ".form.Cluster.identifier"
                 }
@@ -1431,8 +1436,8 @@ action = Action(
               "combinator": "and",
               "rules": [
                 {
-                  "blueprint": "Cluster",
                   "operator": "relatedTo",
+                  "blueprint": "Cluster",
                   "value": {
                     "jq_query": ".form.Cluster.identifier"
                   }
@@ -1501,8 +1506,8 @@ const entity = new Action("create-running-service", {
           "combinator": "and",
           "rules": [
             {
-              "blueprint": "Cluster",
               "operator": "relatedTo",
+              "blueprint": "Cluster",
               "value": {
                 "jqQuery": ".form.Cluster.identifier"
               }

@@ -8,7 +8,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 <center>
 
-<iframe width="568" height="320" src="https://www.youtube.com/embed/KHuGBQlErWo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/PAqwCJ44ql8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 <br/>
@@ -155,5 +155,4 @@ The basic structure of a self-service action looks like this (see key descriptio
 
 ## Examples
 
-For complete examples of self-service actions, choose your desired backend type under the [backend types](/actions-and-automations/setup-backend) section.  
-For instance, examples using GitHub as the backend can be found [here](/actions-and-automations/setup-backend/github-workflow/examples/).
+For complete examples of self-service actions using GitHub as the backend, check out the [guides section](/guides?tags=GitHub&tags=Actions).

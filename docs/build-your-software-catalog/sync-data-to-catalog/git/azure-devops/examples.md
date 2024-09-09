@@ -16,6 +16,8 @@ import PortTeamsAppConfig from './example-teams/\_azuredevops_exporter_example_t
 
 import PortProjectAppConfig from './example-project/\_azuredevops_exporter_example_project_port_app_config.mdx'
 import ProjectBlueprint from './example-project/\_azuredevops_exporter_example_project_blueprint.mdx'
+import WorkItemBlueprint from './example-project/\_azuredevops_exporter_example_work_item_blueprint.mdx'
+import PortWorkItemAppConfig from './example-project/\_azuredevops_exporter_example_work_item_port_app_config.mdx'
 
 # Examples
 
@@ -102,6 +104,21 @@ In the following example you will ingest your Azure Devops teams and their membe
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your teams alongside their members.
+
+## Mapping Work Items
+
+In the following example you will ingest your Azure Devops work items to Port, you may use the following Port blueprint definitions and integration configuration:
+
+<WorkItemBlueprint/>
+
+<PortWorkItemAppConfig/>
+
+:::tip To Learn more
+
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/work-items/list?view=azure-devops-rest-7.1&tabs=HTTP#get-list-of-work-items) for the Azure Devops work item object structure.
+- Click [Here](https://learn.microsoft.com/en-us/azure/devops/boards/queries/wiql-syntax?view=azure-devops#example-clauses) for WIQL clauses
+
+:::
 
 ## Mapping supported resources
 

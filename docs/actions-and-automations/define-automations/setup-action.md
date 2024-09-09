@@ -5,12 +5,16 @@ title: Setup backend
 
 import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
 import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 
 # Setup backend
 
 The automation's backend is the logic that you want to execute when a trigger event occurs. It will run on all entities tied to the blueprint specified in the automation's definition, whenever the trigger event occurs.
 
 Port uses the same backend types for automations and for [self-service actions](/actions-and-automations/create-self-service-experiences/).
+
+## Backend JSON structure
 
 The backend is defined under the `invocationMethod` key in the automation's JSON structure:
 
@@ -82,7 +86,12 @@ The data that is available to you when constructing the payload is detailed in t
 When a self-service action or automation is executed, Port creates an object that contains data about the execution.  
 
 This entire object is accessible to you when constructing the payload.  
-Here is an example of what trigger data could look like for an automation that triggers whenever a `service` entity is **updated**:
+Depending on the [trigger type](/actions-and-automations/define-automations/setup-trigger), the object's structure will differ:  
+
+<Tabs queryString="type">
+<TabItem value="entity" label="Entity trigger">
+
+Below is an example of trigger data for an automation that triggers whenever a `service` entity is **updated**:
 
 ```json showLineNumbers
 {
@@ -190,8 +199,241 @@ The other trigger events have the same structure, with the following differences
 
 - `ENTITY_DELETED` - In the `diff` object, `before` will contain the entity data before deletion, and `after` will be `null`.
 
-- `ANY_ENTITY_CHANGE` - The `diff` object will contain `before` and `after` data according to the entity change.
+- `ANY_ENTITY_CHANGE` - The `diff` object will contain `before` and/or `after` data according to the entity change.
 
 - `TIMER_PROPERTY_EXPIRED` - In the `diff` object, there will be an `after` object containing the entity data.
+
+</TabItem>
+
+<TabItem value="action-run" label="Action run trigger">
+
+Below is an example of trigger data for an automation that triggers whenever an action run is **updated**:
+
+```json showLineNumbers
+{
+  "inputs": null,
+  "trigger": {
+    "by": {
+      "orgId": "org_BneDtWovPqXaA2VZ",
+      "userId": "auth0|62ceaaa497ea00f09d7c4f41",
+      "user": {
+        "email": "test-admin-user@test.com",
+        "firstName": "James",
+        "lastName": "Hetfield",
+        "status": "ACTIVE",
+        "id": "auth0|82zea497e300f09d7c1f41",
+        "createdAt": "2024-08-15T11:17:02.699Z",
+        "updatedAt": "2024-08-15T11:17:02.699Z"
+      }
+    },
+    "origin": "AUTOMATION",
+    "at": "2024-08-15T12:30:05.569Z"
+  },
+  "event": {
+    "id": "event_GH2680QIOEzwwNZB",
+    "resourceType": "run",
+    "action": "UPDATE",
+    "trigger": {
+      "by": {
+        "orgId": "org_BneVtWovPbXaA6V6Z",
+        "userId": "auth0|82zea497e300f09d7c1f41"
+      },
+      "origin": "UI",
+      "at": "2024-08-15T12:30:05.505Z"
+    },
+    "context": {
+      "action": {
+        "identifier": "myActionId",
+        "title": "Some action title",
+        "trigger": {
+          "type": "self-service",
+          "operation": "CREATE",
+          "userInputs": {
+            "properties": {},
+            "required": [],
+            "order": []
+          }
+        },
+        "invocationMethod": {
+          "type": "WEBHOOK",
+          "url": "https://example.com",
+          "agent": false,
+          "synchronized": false,
+          "method": "POST",
+          "headers": {
+            "RUN_ID": "{{ .run.id }}"
+          },
+          "body": {
+            "{{ spreadValue() }}": "{{ .inputs }}",
+            "port_context": {
+              "runId": "{{ .run.id }}"
+            }
+          }
+        },
+        "requiredApproval": false,
+        "createdBy": "auth0|82zea497e300f09d7c1f41",
+        "updatedBy": "auth0|82zea497e300f09d7c1f41",
+        "createdAt": "2024-08-15T12:29:45.817Z",
+        "updatedAt": "2024-08-15T12:29:45.817Z"
+      },
+      // "affectedEntities" will contain up to 10 entities that were affected by the action run
+      "affectedEntities": [
+        {
+          "identifier": "event_jz7DoTdpdiWF5vqb",
+          "action": "CREATE",
+          "resourceType": "entity",
+          "trigger": {
+            "at": "2024-08-26T06:23:34.877Z",
+            "by": {
+              "orgId": "org_BneDtWovPqXaA2VZ",
+              "appId": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+              "runId": "r_YpBfKZThzML9t4hq"
+            },
+            "origin": "API"
+          },
+          "context": {
+            "blueprintId": "bp_YjBvtqItU5nYQwVU",
+            "blueprint": "exampleBlueprint",
+            "entityId": "e_2WL7eCG9bkZV5fzQ",
+            "entity": "e_2WL7eCG9bkZV5fzQ"
+          },
+          "diff": {
+            "before": null,
+            "after": {
+              "identifier": "e_2WL7eCG9bkZV5fzQ",
+              "title": "string",
+              "icon": null,
+              "blueprint": "exampleBlueprint",
+              "team": [],
+              "properties": {},
+              "relations": {},
+              "createdAt": "2024-08-26T06:23:34.877Z",
+              "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+              "updatedAt": "2024-08-26T06:23:34.877Z",
+              "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ"
+            }
+          },
+          "status": "SUCCESS"
+        }
+      ]
+    },
+    "diff": {
+      "before": {
+        "id": "r_Q0YotCZMKxDLdlaU",
+        "status": "IN_PROGRESS",
+        // "blueprint" and "entity" will be available if the action is tied to a blueprint
+        // (meaning that the action run is tied to an entity)
+        "blueprint": {
+          "identifier": "blueprintIdentifier",
+          "title": "blueprintTitle",
+          "icon": "blueprintIcon"
+        },
+        "entity": {
+          "identifier": "entityIdentifier",
+          "title": "entityTitle",
+          "icon": "entityIcon",
+        },
+        "action": {
+          "identifier": "myActionId",
+          "title": null,
+          "icon": null,
+          "deleted": true
+        },
+        "source": "UI",
+        "link": [],
+        "requiredApproval": false,
+        "properties": {},
+        "createdAt": "2024-08-15T12:29:57.379Z",
+        "updatedAt": "2024-08-15T12:29:57.379Z",
+        "createdBy": "auth0|82zea497e300f09d7c1f41",
+        "updatedBy": "auth0|82zea497e300f09d7c1f41",
+        "payload": {
+          "type": "WEBHOOK",
+          "url": "https://example.com",
+          "agent": false,
+          "synchronized": false,
+          "method": "POST",
+          "headers": {
+            "RUN_ID": "r_Q0YotCZMKxDLdlaU"
+          },
+          "body": {
+            "port_context": {
+              "runId": "r_Q0YotCZMKxDLdlaU"
+            }
+          }
+        }
+      },
+      "after": {
+        "id": "r_Q0YotCZMKxDLdlaU",
+        "status": "IN_PROGRESS",
+        // "blueprint" and "entity" will be available if the action is tied to a blueprint
+        // (meaning that the action run is tied to an entity)
+        "blueprint": {
+          "identifier": "blueprintIdentifier",
+          "title": "blueprintTitle",
+          "icon": "blueprintIcon"
+        },
+        "entity": {
+          "identifier": "entityIdentifier",
+          "title": "entityTitle",
+          "icon": "entityIcon",
+        },
+        "action": {
+          "identifier": "myActionId",
+          "title": null,
+          "icon": null,
+          "deleted": true
+        },
+        "source": "UI",
+        "link": [],
+        "requiredApproval": false,
+        "properties": {},
+        "createdAt": "2024-08-15T12:29:57.379Z",
+        "updatedAt": "2024-08-15T12:30:05.481Z",
+        "createdBy": "auth0|82zea497e300f09d7c1f41",
+        "updatedBy": "auth0|82zea497e300f09d7c1f41",
+        "payload": {
+          "type": "WEBHOOK",
+          "url": "https://example.com",
+          "agent": false,
+          "synchronized": false,
+          "method": "POST",
+          "headers": {
+            "RUN_ID": "r_Q0YotCZMKxDLdlaU"
+          },
+          "body": {
+            "port_context": {
+              "runId": "r_Q0YotCZMKxDLdlaU"
+            }
+          }
+        }
+      }
+    }
+  },
+  "entity": null,
+  "action": {
+    "identifier": "automation"
+  },
+  "run": {
+    "id": "r_au3aJdlOHUO3d99n"
+  }
+}
+```
+
+:::tip Affected entities
+The `affectedEntities` array will contain diffs of the entities that were affected by the action run. This can be used in the payload.  
+Note that the array will contain up to 10 items to avoid payload size issues.
+:::
+
+The example above is for an automation that uses the `RUN_UPDATED` trigger event. The `event.diff` object contains data from `before` and `after` the update.  
+
+The other trigger events have the same structure, with the following differences:
+
+- `RUN_CREATED` - In the `diff` object, `before` will be `null`, and `after` will contain the new action run data.
+
+- `ANY_RUN_CHANGE` - The `diff` object will contain `before` and/or `after` data according to the entity change.
+
+</TabItem>
+</Tabs>
 
 <PayloadAdvancedFunctions />

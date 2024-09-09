@@ -132,7 +132,7 @@ A many type relation is used to map multiple target entities to the source.
 - Map the **cloud resources** used by a **service**.
 - Map the **services deployed** in a **developer environment**.
 
-In this [live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) example, we can see a specific developer environment and the running services it uses. 🎬
+In this [live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) example, we can see a specific Jira issue and its related services. 🎬
 
 #### Many Relation Structure
 

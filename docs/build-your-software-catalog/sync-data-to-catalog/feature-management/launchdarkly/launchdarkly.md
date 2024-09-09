@@ -8,6 +8,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import DockerParameters from "./\_launchdarkly_one_time_docker_parameters.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # LaunchDarkly
 
@@ -41,7 +42,13 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="hosted-by-port" label="Hosted by Port" default>
+
+<OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-always-on" label="Real Time & Always On">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -49,18 +56,18 @@ This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
 | Parameter                                | Description                                                                                                   | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                          | Your Port client id                                                                                           | ✅       |
-| `port.clientSecret`                      | Your Port client secret                                                                                       | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US | ✅       |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`                       | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
-| `integration.config.launchdarklyHost` | Your LaunchDarkly host. For example https://app.launchdarkly.com for the default endpoint                                                                        | ✅       |
-| `integration.config.launchdarklyToken` | The LaunchDarkly API token                                                                           | ✅       |
-| `integration.config.appHost`             | Your application's host url                                                                                   | ❌       |
-| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------- |
+| `port.clientId`                          | Your Port client id                                                                                           | ✅      |
+| `port.clientSecret`                      | Your Port client secret                                                                                       | ✅      |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US | ✅      |
+| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅      |
+| `integration.type`                       | The integration type                                                                                          | ✅      |
+| `integration.eventListener.type`         | The event listener type                                                                                       | ✅      |
+| `integration.config.launchdarklyHost` | Your LaunchDarkly host. For example https://app.launchdarkly.com for the default endpoint                                                                        | ✅      |
+| `integration.config.launchdarklyToken` | The LaunchDarkly API token                                                                           | ✅      |
+| `integration.config.appHost`             | Your application's host url                                                                                   | ✅       |
+| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌      |
+| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌      |
 | `sendRawDataExamples` | Default, true, Enable sending raw data examples from the third part API to port for testing and managing the integration mapping |  ❌   | 
 
 <br/>
@@ -72,16 +79,16 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install launchdarkly port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
   --set sendRawDataExamples=true \
-	--set integration.identifier="my-launchdarkly-integration"  \
-	--set integration.type="launchdarkly"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.launchdarklyHost="string" \
-	--set integration.secrets.launchdarklyToken="string" \
+  --set integration.identifier="my-launchdarkly-integration"  \
+  --set integration.type="launchdarkly"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.secrets.launchdarklyHost="string" \
+  --set integration.secrets.launchdarklyToken="string" \
 ```
 
 <PortApiRegionTip/>
@@ -170,6 +177,10 @@ kubectl apply -f my-ocean-launchdarkly-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+<h3>Event listener</h3>
+
+The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
 </TabItem>
 
@@ -334,10 +345,6 @@ ingest_data:
 </TabItem>
 
 </Tabs>
-
-### Event listener
-
-The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
 ## Ingesting LaunchDarkly objects
 

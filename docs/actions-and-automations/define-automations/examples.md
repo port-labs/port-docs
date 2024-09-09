@@ -2,7 +2,9 @@
 sidebar_position: 3
 title: Examples
 ---
-
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import SlackTeamsMessagingWebhook from "/docs/actions-and-automations/define-automations/templates/_slack_teams_webhook_setup_instructions.mdx"
 
 # Examples
@@ -32,6 +34,7 @@ For example, the following definition will cause a message to be sent whenever a
     "condition": {
       "type": "JQ",
       "expressions": [
+        ".diff.before.properties.status == \"Healthy\"",
         ".diff.after.properties.status == \"Unhealthy\""
       ],
       "combinator": "and"
@@ -203,3 +206,48 @@ jobs:
 ```
 
 ---
+
+## Send a Slack message when a deployment fails
+
+By using the `RUN_UPDATED` trigger type, we can run custom logic whenever a change occurs in an [action run](/actions-and-automations/reflect-action-progress/).  
+
+The following example uses a [`Send Slack message`](/actions-and-automations/setup-backend/send-slack-message/) backend to notify a dedicated Slack channel when a deployment fails:
+
+```json showLineNumbers
+{
+  "identifier": "notifyFailedDeployment",
+  "title": "Notify via Slack about failed deployments",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "RUN_UPDATED",
+      "actionIdentifier": "deploy_an_image"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.before.status == \"IN_PROGRESS\"",
+        ".diff.after.status == \"FAILURE\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "<SLACK_WEBHOOK_URL>",
+    "body": {
+      "text": "Deployment of service \"{{ .event.diff.after.entity.identifier }}\" (image: {{ .event.diff.after.properties.image }}) to environment \"{{ .event.diff.after.properties.environment }}\" has failed.\nAction run details: https://app.getport.io/organization/run?runId={{ .event.diff.after.id }}"
+    }
+  },
+  "publish": true
+}
+```
+
+### Explanation
+
+- This example assumes you have a `deploy_an_image` action that deploys an image to an environment.
+- The automation is triggered whenever a change occurs in an action run of the `deploy_an_image` action.
+  - Note the `condition` block that checks if the status of the action run has changed from `IN_PROGRESS` to `FAILURE`. Only this specific change will trigger the automation.
+- The `invocationMethod` specifies a webhook that sends a message to a Slack channel.
+  - The message includes details about the failed deployment, such as the service name, image, and environment.
+  - The message also includes a link to the action run page in Port.

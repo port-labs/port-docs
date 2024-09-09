@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem"
 ## Permissions
 
 - To get Port API credentials, you check out the [Port API documentation](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
-- In order to successfully deploy the AWS integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the above resources.
+- In order to successfully deploy the AWS integration, it's crucial to ensure that the user who deploys the integration in the AWS Organization has the appropriate access permissions to create all of the relevant resources (ECS, IAM, and VPC).
 
 :::tip Multiple Account Support
 To do the following:
@@ -42,17 +42,17 @@ You can check out the Helm chart [here](https://github.com/port-labs/helm-charts
 ```bash
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install aws port-labs/port-ocean \
---set port.clientId="$PORT_CLIENT_ID"  \
---set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
---set port.baseUrl="https://api.getport.io"  \
---set initializePortResources=true  \
---set sendRawDataExamples=true  \
---set scheduledResyncInterval=1440 \
---set integration.identifier="my-aws"  \
---set integration.type="aws"  \
---set integration.eventListener.type="POLLING"  \
---set integration.config.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
---set integration.config.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY"
+  --set port.clientId="$PORT_CLIENT_ID"  \
+  --set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set scheduledResyncInterval=1440 \
+  --set integration.identifier="my-aws"  \
+  --set integration.type="aws"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
+  --set integration.config.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY"
 ```
 
 ### IRSA
@@ -70,16 +70,16 @@ You'll need to:
 ```bash
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install aws port-labs/port-ocean \
---set port.clientId="$PORT_CLIENT_ID"  \
---set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
---set port.baseUrl="https://api.getport.io"  \
---set initializePortResources=true  \
---set sendRawDataExamples=true  \
---set scheduledResyncInterval=1440 \
---set integration.identifier="my-aws"  \
---set integration.type="aws"  \
---set integration.eventListener.type="POLLING"  \
---set podServiceAccount.name="$SERVICE_ACCOUNT"
+  --set port.clientId="$PORT_CLIENT_ID"  \
+  --set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set scheduledResyncInterval=1440 \
+  --set integration.identifier="my-aws"  \
+  --set integration.type="aws"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set podServiceAccount.name="$SERVICE_ACCOUNT"
 ```
 
 ### Multiple account support
@@ -95,18 +95,18 @@ Then, you'll be able to run the integration: (You can switch the `podServiceAcco
 ```bash
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install aws port-labs/port-ocean \
---set port.clientId="$PORT_CLIENT_ID"  \
---set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
---set port.baseUrl="https://api.getport.io"  \
---set initializePortResources=true  \
---set sendRawDataExamples=true  \
---set scheduledResyncInterval=1440 \
---set integration.identifier="my-aws"  \
---set integration.type="aws"  \
---set integration.eventListener.type="POLLING"  \
---set podServiceAccount.name="$SERVICE_ACCOUNT"  \ 
---set integration.config.accountReadRoleName="$YOUR_ACCOUNT_READ_ROLE_NAME"  \ 
---set integration.config.organizationRoleArn="$YOUR_ORGANIZATION_ROLE_ARN"
+  --set port.clientId="$PORT_CLIENT_ID"  \
+  --set port.clientSecret="$PORT_CLIENT_SECRET_ID"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set scheduledResyncInterval=1440 \
+  --set integration.identifier="my-aws"  \
+  --set integration.type="aws"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set podServiceAccount.name="$SERVICE_ACCOUNT"  \ 
+  --set integration.config.accountReadRoleName="$YOUR_ACCOUNT_READ_ROLE_NAME"  \ 
+  --set integration.config.organizationRoleArn="$YOUR_ORGANIZATION_ROLE_ARN"
 ```
 
   </TabItem>
@@ -116,7 +116,7 @@ helm upgrade --install aws port-labs/port-ocean \
 
 ## Prerequisites
 
-- [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.9.1
 - [A logged in aws CLI 2](https://aws.amazon.com/cli/)
 - [Certificate domain name (Optional)](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html)
 
@@ -139,6 +139,7 @@ The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) a
 		base_url = "https://api.getport.io"
 	}
 	initialize_port_resources = true # When set to true the integration will create default blueprints + JQ Mappings
+	scheduled_resync_interval = 1440
 	integration = {
 		identifier = "my-aws-integration" # Change the identifier to describe your integration
 		config = {
@@ -174,6 +175,7 @@ The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) a
 | cluster_name (optional) | Name of the ECS cluster.  |
 | vpc_id | VPC ID where the cluster will be created.  |
 | initialize_port_resources | Boolean to initialize Port resources.  |
+| scheduled_resync_interval | The interval to resync the integration in minutes.  |
 | create_default_sg | Boolean to create a default security group.  |
 | allow_incoming_requests | Boolean to allow incoming requests to the ECS tasks.  |
 

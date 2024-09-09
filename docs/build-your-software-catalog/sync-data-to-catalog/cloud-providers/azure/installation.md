@@ -50,17 +50,18 @@ You should have the following information ready:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install azure port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=1440 \
-	--set integration.identifier="azure"  \
-	--set integration.type="azure"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.azureClientId="<AZURE_CLIENT_ID>"  \
-	--set integration.config.azureClientSecret="<AZURE_CLIENT_SECRET>" \
-	--set integration.config.azureTenantId="<AZURE_TENANT_ID>"
+  --set port.clientId="PORT_CLIENT_ID"  \
+  --set port.clientSecret="PORT_CLIENT_SECRET"  \
+  --set port.baseUrl="https://api.getport.io"  \
+  --set initializePortResources=true  \
+  --set sendRawDataExamples=true  \
+  --set scheduledResyncInterval=1440 \
+  --set integration.identifier="azure"  \
+  --set integration.type="azure"  \
+  --set integration.eventListener.type="POLLING"  \
+  --set integration.config.azureClientId="<AZURE_CLIENT_ID>"  \
+  --set integration.config.azureClientSecret="<AZURE_CLIENT_SECRET>" \
+  --set integration.config.azureTenantId="<AZURE_TENANT_ID>"
 ```
 
 <PortApiRegionTip/>
@@ -104,30 +105,27 @@ Here is an example for `azure-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Azure Exporter Workflow
 
-# This workflow responsible for running Azure exporter.
-
-schedule:
-	# Every 24 hours at 00:00
-	- cron: "0 0 * * *
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */4 * * *' # Determines the scheduled interval for this workflow. This example runs every 4 hours.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: port-labs/ocean-sail@v1
-        env:
-          AZURE_CLIENT_ID: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
-          AZURE_CLIENT_SECRET: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
-          AZURE_TENANT_ID: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
+      - name: Run azure Integration
+        uses: port-labs/ocean-sail@v1
         with:
-          type: "azure"
-          identifier: "azure"
-          port_client_id: ${{ secrets.OCEAN__PORT_CLIENT_ID }}
-          port_client_secret: ${{ secrets.OCEAN__PORT_CLIENT_SECRET }}
-          port_base_url: https://api.getport.io
+          type: azure
+          port_client_id: ${{ secrets.PORT_CLIENT_ID }}
+          port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
+					port_base_url: "https://api.getport.io"
+					config: |
+						azure_client_id: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_ID }}
+						azure_client_secret: ${{ secrets.OCEAN__SECRET__AZURE_CLIENT_SECRET }}
+						azure_tenant_id: ${{ secrets.OCEAN__SECRET__AZURE_TENANT_ID }}
 ```
 
 </TabItem>
@@ -259,7 +257,7 @@ to not being able to create a new one.
 
 <h2> Prerequisites </h2>
 
-- [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.9.1
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) >= 2.26.0
 - [Permissions](#permissions)
 
@@ -350,9 +348,9 @@ the Azure subscription has the appropriate access permissions. One of the follow
 	<img src='/img/integrations/azure-exporter/DevPortalIngestCloudProvider.png' width='70%' border='1px' /> <br/><br/>
 
 3. Edit and copy the installation command.
-	 :::tip Installation Command
-	 The installation command includes placeholders that allow you to customize the integration's configuration. For
-	 example, you can update the command and specify the `event_grid_system_topic_name` parameter if you already have one.
+	:::tip Installation Command
+	The installation command includes placeholders that allow you to customize the integration's configuration. For
+	example, you can update the command and specify the `event_grid_system_topic_name` parameter if you already have one.
 
 	- Specify the `event_grid_system_topic_name` parameter if you already have an Event Grid system topic of
 		type `Microsoft.Resources.Subscriptions` in your subscription;
@@ -406,6 +404,8 @@ You should have the following information ready:
 | `OCEAN__EVENT_LISTENER`                           | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                             |
 | `OCEAN__INTEGRATION__IDENTIFIER`                  | The identifier of the integration.                                                                                                    |
 | `OCEAN__INTEGRATION__TYPE`                        | should be set to `azure`.                                                                                                             |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`                 | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |
+| `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                |
 
 </details>
 
