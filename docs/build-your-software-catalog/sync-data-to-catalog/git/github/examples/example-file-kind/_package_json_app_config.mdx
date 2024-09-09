@@ -10,7 +10,6 @@ resources:
       files:
         - path: '**/package.json'
         - repos:
-            # The repository NAME should be used here, not the URL slug, e.g. "Repo Name" not "repo-name"
             - stale
     port:
       itemsToParse: .file.content.dependencies | to_entries
