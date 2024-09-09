@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 displayed_sidebar: null
+description: Learn how to scaffold GitHub projects using Cookiecutter in Port, enabling efficient project setup and management.
 ---
 
 # Scaffold GitHub Repositories Using Cookiecutter

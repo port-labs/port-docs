@@ -1,6 +1,7 @@
 ---
 sidebar_position: 9
 displayed_sidebar: null
+description: Learn how to open a Slack channel in Port, enhancing team collaboration and communication with this easy guide.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

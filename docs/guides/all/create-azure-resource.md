@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 displayed_sidebar: null
+description: Learn how to create Azure resources in Port, enabling efficient cloud management and scalable infrastructure deployment.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 displayed_sidebar: null
+description: Learn how to scaffold repositories using Cookiecutter in Port, streamlining project initialization and development.
 ---
 
 # Scaffold Repositories Using Cookiecutter

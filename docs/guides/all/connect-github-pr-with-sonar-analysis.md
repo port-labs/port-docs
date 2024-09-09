@@ -2,6 +2,7 @@
 sidebar_position: 2
 title: Connect GitHub pull request to SonarQube analysis
 displayed_sidebar: null
+description: Learn how to connect GitHub PRs with Sonar analysis in Port, ensuring code quality and streamlined review processes.
 ---
 
 import Tabs from "@theme/Tabs"
@@ -363,4 +364,4 @@ More relevant guides and examples:
 
 - [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
 - [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)
-- [Connect GitHub repository with SonarQube Project](https://docs.getport.io/guides/all/connect-github-repository-with-sonarqube-project.md)
+- [Connect GitHub repository with SonarQube Project](https://docs.getport.io/guides/all/connect-github-repository-with-sonarqube-project)

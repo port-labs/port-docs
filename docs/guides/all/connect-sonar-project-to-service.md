@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Effortlessly connect Sonar projects to services in Port, ensuring code quality and streamlined service management.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
