@@ -6,9 +6,9 @@ title: Ingest software bill of material (SBOM) into your catalog
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import ComponentBlueprint from './resources/sbom/\_example_sbom_component_blueprint.mdx'
-import VulnerabilityBlueprint from './resources/sbom/\_example_sbom_vulnerability_blueprint.mdx'
-import SbomWebhookConfig from './resources/sbom/\_example_sbom_webhook_config.mdx'
+import ComponentBlueprint from '../templates/sbom/\_example_sbom_component_blueprint.mdx'
+import VulnerabilityBlueprint from '../templates/sbom/\_example_sbom_vulnerability_blueprint.mdx'
+import SbomWebhookConfig from '../templates/sbom/\_example_sbom_webhook_config.mdx'
 
 # SBOM
 

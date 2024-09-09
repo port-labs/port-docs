@@ -6,9 +6,9 @@ title: Ingest Trivy vulnerabilities into your catalog
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import PythonScript from './resources/trivy/\_example_python_script.mdx'
-import TrivyBlueprint from './resources/trivy/\_example_trivy_blueprint.mdx'
-import TrivyWebhookConfig from './resources/trivy/\_example_trivy_webhook_config.mdx'
+import PythonScript from '../templates/trivy/\_example_python_script.mdx'
+import TrivyBlueprint from '../templates/trivy/\_example_trivy_blueprint.mdx'
+import TrivyWebhookConfig from '../templates/trivy/\_example_trivy_webhook_config.mdx'
 
 # Trivy
 

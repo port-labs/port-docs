@@ -6,9 +6,9 @@ title: Ingest Checkmarx KICS scan into your catalog
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import PythonScript from './resources/checkmarx/\_example_python_script.mdx'
-import CheckmarxBlueprint from './resources/checkmarx/\_example_checkmarx_blueprint.mdx'
-import CheckmarxWebhookConfig from './resources/checkmarx/\_example_checkmarx_webhook_config.mdx'
+import PythonScript from '../templates/checkmarx/\_example_python_script.mdx'
+import CheckmarxBlueprint from '../templates/checkmarx/\_example_checkmarx_blueprint.mdx'
+import CheckmarxWebhookConfig from '../templates/checkmarx/\_example_checkmarx_webhook_config.mdx'
 
 # Checkmarx KICS
 

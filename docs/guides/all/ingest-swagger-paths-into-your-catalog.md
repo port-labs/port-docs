@@ -6,8 +6,8 @@ title: Ingest Swagger paths into your catalog
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import SwaggerBlueprint from './resources/swagger/\_example_swagger_blueprint.mdx'
-import SwaggerWebhookConfig from './resources/swagger/\_example_swagger_webhook_config.mdx'
+import SwaggerBlueprint from '../templates/swagger/\_example_swagger_blueprint.mdx'
+import SwaggerWebhookConfig from '../templates/swagger/\_example_swagger_webhook_config.mdx'
 
 # Swagger
 The following example shows you how to create a `swaggerPath` blueprint that ingests all API paths in your `swagger.json` file using Port's GitHub file ingesting feature.
