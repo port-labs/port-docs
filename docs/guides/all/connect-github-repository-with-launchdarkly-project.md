@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Seamlessly connect your GitHub repository with a LaunchDarkly project in Port for efficient feature management.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"

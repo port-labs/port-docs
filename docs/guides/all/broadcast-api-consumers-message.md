@@ -1,6 +1,7 @@
 ---
 sidebar_position: 7
 displayed_sidebar: null
+description: Learn how to broadcast messages to API consumers in Port, enhancing communication and system transparency.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

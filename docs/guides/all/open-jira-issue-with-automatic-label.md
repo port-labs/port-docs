@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to open Jira issues with automatic labels in Port, streamlining issue categorization and tracking.
 ---
 
 # Open Jira issue with automatic label

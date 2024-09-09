@@ -1,6 +1,7 @@
 ---
 sidebar_position: 6
 displayed_sidebar: null
+description: Follow this guide to promote services to production in Port, ensuring smooth deployments and reliable operations.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

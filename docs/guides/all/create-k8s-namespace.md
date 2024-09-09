@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 displayed_sidebar: null
+description: Follow this guide to create a Kubernetes namespace in Port, enabling organized and efficient resource management.
 ---
 
 # Create a Kubernetes namespace
