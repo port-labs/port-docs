@@ -2,6 +2,7 @@
 sidebar_position: 2
 title: Connect GitHub pull request to SonarQube analysis
 displayed_sidebar: null
+description: Learn how to connect GitHub PRs with Sonar analysis in Port, ensuring code quality and streamlined review processes.
 ---
 
 import Tabs from "@theme/Tabs"

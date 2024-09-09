@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to ingest cloud resources using Dynatrace in Port, enhancing visibility and performance monitoring.
 ---
 
 # Ingest cloud resources with Dynatrace

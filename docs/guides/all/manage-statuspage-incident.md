@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to manage StatusPage incidents in Port, ensuring clear communication and effective incident resolution.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'

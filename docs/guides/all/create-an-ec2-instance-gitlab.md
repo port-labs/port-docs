@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 displayed_sidebar: null
+description: Follow this guide to create an EC2 instance for GitLab in Port, ensuring a seamless and scalable CI/CD environment.
 ---
 
 # Create An AWS EC2 Instance

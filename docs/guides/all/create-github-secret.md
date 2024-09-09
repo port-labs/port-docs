@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 displayed_sidebar: null
+description: Learn how to create GitHub secrets in Port with this guide, enhancing security and managing sensitive data efficiently.
 ---
 
 # Create GitHub Secret

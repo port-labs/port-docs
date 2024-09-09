@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 displayed_sidebar: null
+description: Learn how to deploy CloudFormation templates in Port, enabling automated and efficient cloud resource management.
 ---
 
 import Tabs from "@theme/Tabs"

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 displayed_sidebar: null
+description: Learn how to execute a basic runner using AWS Lambda in Port, enabling scalable and efficient task automation.
 ---
 
 # Setting up a basic execution runner using AWS Lambda
