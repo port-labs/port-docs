@@ -37,7 +37,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/scaffold-a-new-service",
     },
     {
@@ -46,7 +46,7 @@ export const availableGuides = [
         tags: ["SDLC", "Scorecards", "PagerDuty"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["PagerDuty", "Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/ensure-production-readiness",
     },
     {
@@ -55,7 +55,7 @@ export const availableGuides = [
         tags: ["IaC for devs", "AWS", "Actions", "Cloud access management"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["AWS", "Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/create-cloud-resource-using-iac",
     },
     {
@@ -63,7 +63,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime",
         tags: ["K8s for devs", "Actions", "Dashboards", "Scorecards"],
         logos: ["Kubernetes" ],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/visualize-service-k8s-runtime",
     },
     {
@@ -71,7 +71,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime using ArgoCD",
         tags: ["K8s for devs", "ArgoCD", "Actions", "Dashboards", "Scorecards"],
         logos: ["ArgoCD", "Kubernetes"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/visualize-service-argocd-runtime",
     },
     {
@@ -80,8 +80,16 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/let-developers-enrich-services-using-gitops",
+    },
+    {
+        title: "Slack reminders for scorecards",
+        description: "Send a Slack reminder for uncompleted scorecard rules using a self-service action",
+        tags: ["Engineering metrics", "Actions", "Scorecards"],
+        logos: ["Slack"],
+        category: "Getting started",
+        link: "/guides/all/setup-slack-reminders",
     },
     {
         title: "IAM permission management",
@@ -100,20 +108,12 @@ export const availableGuides = [
         link: "/guides/all/service-lock-github-workflow",
     },
     {
-        title: "Slack reminders for scorecards",
-        description: "Send a Slack reminder for uncompleted scorecard rules using a self-service action",
-        tags: ["Engineering metrics", "Actions", "Scorecards"],
-        logos: ["Slack"],
-        // category: "Getting started",
-        link: "/guides/all/setup-slack-reminders",
-    },
-    {
-        title: "Automate Slack alerts for old PRs",
+        title: "Automate Slack alerts for Overdue PRs",
         description: "Send a Slack notification for pull requests that have been open longer than a specified time using an automation",
         tags: ["SDLC", "Automations"],
         logos: ["Slack"],
         // category: "Getting started",
-        link: "/guides/all/automated-slack-alert-for-old-prs",
+        link: "/guides/all/automate-slack-alert-for-overdue-prs",
     },
     {
         title: "Manage resources using Kubernetes CRDs",
@@ -332,7 +332,7 @@ export const availableGuides = [
         link: "/guides/all/open-slack-channel",
     },
     {
-        title: "Deply/rollback using ArgoCD",
+        title: "Deploy/rollback using ArgoCD",
         description: "Create a self-service action that performs a deployment/rollback using ArgoCD",
         tags: ["K8s for devs", "ArgoCD", "Actions", "GitHub"],
         logos: ["ArgoCD", "GitHub"],
@@ -730,5 +730,13 @@ export const availableGuides = [
         logos: ["Azure", "Terraform"],
         // category: "Getting started",
         link: "/guides/all/create-azure-resource-ado",
+    },
+    {
+        title: "Ingest dependencies from package.json file to service",
+        description: "Ingest dependencies from a package.json file and relate them to the corresponding service entities",
+        tags: ["SDLC","GitHub"],
+        logos: ["GitHub"],
+        // category: "Getting started",
+        link: "/guides/all/ingest-dependencies-from-package-json-to-service",
     }
 ]

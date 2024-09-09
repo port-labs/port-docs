@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to trigger a Datadog incident in Port, ensuring effective monitoring and prompt issue response.
 ---
 
 # Trigger Datadog Incident

@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to acknowledge incidents in Port with step-by-step guides and examples for efficient incident management
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'

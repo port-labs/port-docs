@@ -1,6 +1,7 @@
 ---
 sidebar_position: 6
 displayed_sidebar: null
+description: Learn how to use Terraform to plan and apply AWS resources in Port, ensuring efficient infrastructure management and deployment.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
