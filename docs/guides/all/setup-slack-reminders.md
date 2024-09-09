@@ -2,6 +2,7 @@
 sidebar_position: 8
 title: Send Slack reminders for scorecards
 displayed_sidebar: null
+description: Learn how to set up Slack reminders in Port, ensuring timely notifications and improved team productivity.
 ---
 
 import Tabs from "@theme/Tabs"

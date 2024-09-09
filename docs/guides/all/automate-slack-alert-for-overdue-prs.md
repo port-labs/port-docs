@@ -1,6 +1,7 @@
 ---
 displayed_sidebar: null
 title:  Automate Slack Alert for Overdue PRs
+description: Set up automated Slack alerts for overdue PRs in Port, ensuring timely reviews and efficient project management.
 ---
 
 import Tabs from "@theme/Tabs"

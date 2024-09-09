@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to resolve incidents in Port, ensuring quick and effective issue management for seamless operations.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'

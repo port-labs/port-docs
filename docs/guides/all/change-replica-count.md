@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 displayed_sidebar: null
+description: Learn how to change the replica count in Port, optimizing resource allocation and maintaining system stability.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
