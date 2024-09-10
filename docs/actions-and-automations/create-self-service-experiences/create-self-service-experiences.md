@@ -3,6 +3,7 @@ sidebar_label: Create self-service actions
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import ExecuteActionLocations from '/docs/actions-and-automations/create-self-service-experiences/templates/_execute_action_locations.mdx'
 
 # Self-service actions
 
@@ -87,6 +88,10 @@ See [Setup backend](/actions-and-automations/create-self-service-experiences/set
 Port supports a variety of ways to add manual approvals, policies, and TTL to actions, to ensure that organizational standards are met.
 
 See [Set actions RBAC](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) for instructions and examples.
+
+### Execute the action
+
+<ExecuteActionLocations />
 
 ### Reflect action progress
 
