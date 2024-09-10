@@ -642,72 +642,6 @@ Instead of mirroring properties like `recoveryTime` and `resolvedAt` at the serv
         "rules": [
           {
             "property": "status",
-            "operator": "equals",
-            "value": "resolved"
-          }
-        ]
-      }
-    }
-  }
-}
-```
-</details>
-
-## Metric Calculations
-
-By tracking incidents, you can calculate the following metrics:
-
-<Tabs groupId="metrics" defaultValue="cfr" values={[
-{label: 'Change Failure Rate', value: 'cfr'},
-{label: 'Mean Time to Recovery', value: 'mttr'},
-{label: 'Deployment Frequency', value: 'df'}
-]}>
-
-<TabItem value="cfr" label="Change Failure Rate">
-
-**CFR** is the percentage of deployments that fail and result in incidents. This is calculated by dividing the number of incidents by the total number of deployments.
-
-<details>
-<summary><b>Calculation for CFR (click to expand)</b></summary>
-
-```json
-{
-  "calculationProperties": {
-    "changeFailureRate": {
-      "title": "Change Failure Rate",
-      "type": "number",
-      "calculation": "(count(.relations.incident) / count(.identifier)) * 100"
-    }
-  }
-}
-```
-</details>
-
-</TabItem>
-
-<TabItem value="mttr" label="Mean Time to Recovery">
-
-**MTTR** measures the average time taken to resolve incidents. This is an essential metric for understanding how long services are impacted after a failure.
-
-<details>
-<summary><b>Aggregation for MTTR (click to expand)</b></summary>
-
-```json
-{
-  "aggregationProperties": {
-    "meanTimeToResolve": {
-      "title": "Mean Time to Recovery",
-      "target": "incident",
-      "calculationSpec": {
-        "calculationBy": "entities",
-        "func": "avg",
-        "field": "recoveryTime"
-      },
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "status",
             "operator": "=",
             "value": "resolved"
           }
@@ -719,36 +653,187 @@ By tracking incidents, you can calculate the following metrics:
 ```
 </details>
 
-</TabItem>
+
+## Metrics
+
+We will demonstrate how to calculate the four main DORA metrics using aggregated data:
+
+1. **Deployment Frequency**: Number of successful deployments within a timeframe.
+2. **Change Lead Time**: Time from PR opened to deployment.
+3. **Change Failure Rate (CFR)**: Incidents divided by total deployments.
+4. **Mean Time to Recovery (MTTR)**: Time from the incident's onset to resolution.
+
+To achieve this, we will aggregate data at the **Organization** level.
+We'll create an **Organization** blueprint and add the necessary relationships for **Deployments**,
+**PRs**, **Incidents**, and **Services**.
+
+
+
+### Data Model Setup
+
+Define the **Organization** blueprint and add these relationships to connect it with Deployments,
+Pull Requests, Incidents, and Services:
+
+<details> 
+<summary><b>Organization Blueprint (click to expand)</b></summary>
+
+```json
+{
+  "identifier": "organization",
+  "title": "Organization",
+  "schema": {
+    "properties": {},
+    "required": []
+  },
+  "relations": {
+    "deployment": {
+      "title": "Related Deployment",
+      "target": "deployment",
+      "many": true
+    },
+    "pull_request": {
+      "title": "Related Pull Request",
+      "target": "githubPullRequest",
+      "many": true
+    },
+    "incident": {
+      "title": "Related Incident",
+      "target": "incident",
+      "many": true
+    },
+    "service": {
+      "title": "Related Service",
+      "target": "service",
+      "many": true
+    }
+  }
+}
+```
+</details>
+
+:::tip Why define these relationships?
+These relationships enable the **Organization** blueprint
+to pull data from the other relevant blueprints such as **Deployment**,
+**Pull Request**, **Incident**, and **Service**.
+Without these relationships,
+the **Organization** entity wouldn’t be able to aggregate the required data to calculate the DORA metrics.
+:::
+
+
+### Calculations
+
+We will calculate each of the four key DORA metrics using the aggregation of data in the **Organization** blueprint.
+
+<Tabs groupId="metrics" defaultValue="df" values={[
+{ label: 'Deployment Frequency', value: 'df' },
+{ label: 'Change Lead Time', value: 'clt' },
+{ label: 'Change Failure Rate', value: 'cfr' },
+{ label: 'Mean Time to Recovery', value: 'mttr' }
+]}>
 
 <TabItem value="df" label="Deployment Frequency">
 
-**Deployment Frequency** tracks how often code is deployed to production. This helps measure your team's release cadence.
+This metric counts the total number of successful deployments for the organization.
 
-<details>
-<summary><b>Aggregation for Deployment Frequency (click to expand)</b></summary>
+<details> 
+<summary><b>Deployment Frequency Calculation (click to expand)</b></summary>
 
 ```json
 {
   "aggregationProperties": {
-    "deploymentFrequency": {
-      "title": "Deployment Frequency",
+    "total_deployments": {
+      "title": "Total Deployments",
+      "type": "number",
       "target": "deployment",
       "calculationSpec": {
-        "calculationBy": "entities",
-        "func": "count"
-      },
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "createdAt",
-            "operator": "between",
-            "value": {
-              "preset": "lastMonth"
-            }
-          }
-        ]
+        "func": "count",
+        "calculationBy": "entities"
+      }
+    },
+    "average_deployments": {
+      "title": "Average Deployments",
+      "type": "number",
+      "target": "deployment",
+      "calculationSpec": {
+        "func": "avg",
+        "property": "deployment_frequency",
+        "calculationBy": "property"
+      }
+    }
+  }
+}
+```
+</details>
+
+</TabItem>
+
+<TabItem value="clt" label="Change Lead Time">
+
+This metric calculates the average time taken from when a PR is opened until it is deployed.
+
+<details> 
+<summary><b>Change Lead Time Calculation (click to expand)</b></summary>
+
+```json
+{
+  "aggregationProperties": {
+    "average_lead_time": {
+      "title": "Average Lead Time (PR)",
+      "type": "number",
+      "target": "githubPullRequest",
+      "calculationSpec": {
+        "func": "avg",
+        "property": "lead_time_days",
+        "calculationBy": "property"
+      }
+    }
+  }
+}
+```
+</details>
+
+</TabItem>
+
+<TabItem value="cfr" label="Change Failure Rate (CFR)">
+
+This metric calculates the percentage of failed deployments by dividing the number of incidents by the total number of deployments.
+
+<details> 
+<summary><b>Change Failure Rate Calculation (click to expand)</b></summary>
+
+```json
+{
+  "aggregationProperties": {
+    "failure_rate": {
+      "title": "Change Failure Rate",
+      "type": "number",
+      "calculation": "(count(.relations.incident) / count(.relations.deployment)) * 100"
+    }
+  }
+}
+```
+</details>
+
+</TabItem>
+
+<TabItem value="mttr" label="Mean Time to Recovery (MTTR)">
+
+This metric calculates the average time taken to resolve incidents that occur after deployments.
+
+<details> 
+<summary><b>MTTR Calculation (click to expand)</b></summary>
+
+```json
+{
+  "aggregationProperties": {
+    "mean_time_to_recovery": {
+      "title": "Mean Time to Recovery",
+      "type": "number",
+      "target": "incident",
+      "calculationSpec": {
+        "func": "avg",
+        "property": "recoveryTime",
+        "calculationBy": "property"
       }
     }
   }
@@ -760,24 +845,101 @@ By tracking incidents, you can calculate the following metrics:
 
 </Tabs>
 
-### Aggregating Metrics for Other Integrations
+Here is the **complete JSON setup** for the **Organization** blueprint,
+including both the **relationships** and the **aggregated DORA metrics**:
 
-For tools like **OpsGenie**, **ServiceNow**, or **FireHydrant**, create aggregated properties at the service level to consistently track **MTTR** and other metrics.
-
-Make sure to define an aggregated property for **meanMinutesToResolve**:
+<details>
+<summary><b>Complete Organization Blueprint JSON (click to expand)</b></summary>
 
 ```json
 {
-  "properties": {
-    "meanMinutesToResolve": {
-      "title": "Mean Minutes to Resolve",
+  "identifier": "organization",
+  "title": "Organization",
+  "schema": {
+    "properties": {},
+    "required": []
+  },
+  "relations": {
+    "deployment": {
+      "title": "Related Deployment",
+      "target": "deployment",
+      "many": true
+    },
+    "pull_request": {
+      "title": "Related Pull Request",
+      "target": "githubPullRequest",
+      "many": true
+    },
+    "incident": {
+      "title": "Related Incident",
+      "target": "incident",
+      "many": true
+    },
+    "service": {
+      "title": "Related Service",
+      "target": "service",
+      "many": true
+    }
+  },
+  "aggregationProperties": {
+    "total_deployments": {
+      "title": "Total Deployments",
       "type": "number",
-      "calculation": "meanSecondsToResolve / 60"
+      "target": "deployment",
+      "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+      }
+    },
+    "average_deployments": {
+      "title": "Average Deployments",
+      "type": "number",
+      "target": "deployment",
+      "calculationSpec": {
+        "func": "avg",
+        "property": "deployment_frequency",
+        "calculationBy": "property"
+      }
+    },
+    "average_lead_time": {
+      "title": "Average Lead Time (PR)",
+      "type": "number",
+      "target": "githubPullRequest",
+      "calculationSpec": {
+        "func": "avg",
+        "property": "lead_time_days",
+        "calculationBy": "property"
+      }
+    },
+    "total_incidents": {
+      "title": "Total Incidents",
+      "type": "number",
+      "target": "incident",
+      "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+      }
+    },
+    "failure_rate": {
+      "title": "Change Failure Rate",
+      "type": "number",
+      "calculation": "(count(.relations.incident) / count(.relations.deployment)) * 100"
+    },
+    "mean_time_to_recovery": {
+      "title": "Mean Time to Recovery",
+      "type": "number",
+      "target": "incident",
+      "calculationSpec": {
+        "func": "avg",
+        "property": "recoveryTime",
+        "calculationBy": "property"
+      }
     }
   }
 }
 ```
+</details>
 
-:::tip Conclusion
-This guide helps you effectively track incidents and their impact on services, ensuring you can consistently calculate **CFR**, **MTTR**, and **Deployment Frequency** across different tools. Aggregating metrics across incidents provides deeper insight into service health and helps you standardize metrics in **minutes** for better DevOps tracking.
-:::
+
+
+By defining the **Organization** blueprint, adding the necessary relationships, and using these calculation blocks, you can successfully calculate the four main DORA metrics: **Deployment Frequency**, **Change Lead Time**, **Change Failure Rate (CFR)**, and **Mean Time to Recovery (MTTR)**.
