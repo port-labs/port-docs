@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 displayed_sidebar: null
+description: Follow this guide to rollback an ArgoCD deployment in Port, ensuring stability and quick recovery from issues.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

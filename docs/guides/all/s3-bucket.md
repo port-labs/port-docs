@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Manage an S3 Bucket Lifecycle
-description: Manage an S3 bucket lifecycle and reflect it in Port
+description: Learn how to manage S3 buckets in Port, ensuring efficient cloud storage organization and access management.
 displayed_sidebar: null
 ---
 

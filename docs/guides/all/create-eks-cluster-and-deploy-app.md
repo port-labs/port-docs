@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to create an EKS cluster and deploy your application in Port for scalable and efficient cloud infrastructure.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Follow this guide to create a Humanitec application in Port, ensuring streamlined deployment and application management.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'

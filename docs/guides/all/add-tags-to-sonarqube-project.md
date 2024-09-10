@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to add tags to your SonarQube projects in Port, improving project categorization and streamlined workflows.
 ---
 
 # Add tags to SonarQube project

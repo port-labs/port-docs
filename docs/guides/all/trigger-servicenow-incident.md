@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to trigger a ServiceNow incident in Port, ensuring prompt issue resolution and effective incident management.
 ---
 
 # Trigger ServiceNow Incident

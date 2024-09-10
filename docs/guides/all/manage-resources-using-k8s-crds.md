@@ -2,6 +2,7 @@
 sidebar_position: 11
 title: Manage resources using Kubernetes CRDs
 displayed_sidebar: null
+description: Learn how to manage resources using Kubernetes CRDs in Port, enabling customized and efficient resource handling.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
