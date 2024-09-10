@@ -126,6 +126,24 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
           mappings: ...
   ```
 
+### Additional options
+
+Several more advanced options are available in the mapping configuration:
+
+- `createMissingRelatedEntities` - used to enable the creation of missing related entities in Port. This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.
+
+- `deleteDependentEntities` - used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this parameter is set to `false`. If set to `true`, the source entity will be deleted as well.
+
+To use these options, add them to the root of the mapping configuration:
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: repository
+    ...
+```
+
 ### Test your mapping - JQ playground
 
 The mapping configuration window contains a JQ playground that allows you to test your JQ queries against example responses from the API of the integrated tool. This is useful for validating your queries and ensuring they return the expected results.

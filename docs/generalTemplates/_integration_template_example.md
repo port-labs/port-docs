@@ -2,7 +2,6 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
-import IngestDataIntoPort from "/docs/generalTemplates/_ingest_data_into_port.md"
 
 # Integration Name
 
@@ -18,7 +17,7 @@ Port's X integration allows you to ingest X resources into Port.
 
 ### Supported Resources
 
-- List the resources that can be ingested using this integration.
+- List the resources that can be ingested using this integration, with links to the 3rd party API documentation.
 - If there are any limitations, describe them here.
 - If we support generic resources and its based on the third party api capabilities link to the docs and how to find it. e.g. like in aws. 
 
@@ -51,13 +50,13 @@ Choose one of the following installation methods:
 
 ## Configuration
 
-In Port, integrations use a [yaml mapping](/docs/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third party api to Port.
-
-<IngestDataIntoPort/>
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api to Port.
 
 ## Examples
 
 <!-- Make sure to add examples of supported blueprints and mappings -->
+
+**If there are 5 or more examples, create a new page for the examples and link to it here.**
 
 Examples of blueprints and the relevant integration configurations:
 
