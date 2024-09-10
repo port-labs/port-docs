@@ -119,7 +119,7 @@ resources:
             link: >-
                 'https://console.aws.amazon.com/elasticbeanstalk/home?region=' +
                 .__Region +
-                '#/application/overview?applicationName=' + .Properties.ApplicationName
+                '/application/overview?applicationName=' + .Properties.ApplicationName
             applicationName: .Properties.ApplicationName
             maxAgeInDays: .Properties.ResourceLifecycleConfig.VersionLifecycleConfig.MaxAgeRule.MaxAgeInDays
             maxCount: .Properties.ResourceLifecycleConfig.VersionLifecycleConfig.MaxCountRule.MaxCount
