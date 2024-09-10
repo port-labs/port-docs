@@ -4,7 +4,7 @@
     "blueprint": "splitImpression",
     "itemsToParse": ".body",
     "entity": {
-      "identifier": ".item.key + \"-\" + .item.time",
+      "identifier": ".item.key + \"-\" + (.item.time | tostring)",
       "title": ".item.split",
       "properties": {
        "environment_id": ".item.environmentId",
