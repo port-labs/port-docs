@@ -1,6 +1,7 @@
 ---
 sidebar_position: 8
 displayed_sidebar: null
+description: Learn how to lock and unlock services in Port, ensuring secure and controlled access to critical resources.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

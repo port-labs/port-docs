@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Follow this guide to create a workload profile in Port, optimizing resource allocation and managing workloads efficiently.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'

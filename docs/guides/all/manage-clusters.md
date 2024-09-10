@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 displayed_sidebar: null
+description: Master the management of clusters in Port with this guide, ensuring efficient and scalable infrastructure operations.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

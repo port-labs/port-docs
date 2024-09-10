@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: Manage a Developer Environment Lifecycle
-description: Manage a developer environment and reflect it in Port
+description: Learn how to create a development environment in Port, streamlining your workflow for efficient project setup and testing.
 displayed_sidebar: null
 ---
 

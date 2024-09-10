@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to create a PagerDuty incident in Port with this guide, ensuring prompt and effective incident management.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'

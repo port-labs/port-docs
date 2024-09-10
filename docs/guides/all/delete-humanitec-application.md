@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to delete a Humanitec application in Port with this guide, ensuring proper application lifecycle management.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
