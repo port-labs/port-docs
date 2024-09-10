@@ -233,7 +233,6 @@ resources:
         - path: '**/package.json'
         # The `repos` key can be used to filter the repositories from which the files will be fetched
           repos:
-            # The repository NAME should be used here, not the URL slug, e.g. "Repo Name" not "repo-name"
             - "MyRepo"
             - "MyOtherRepo"
     port:
