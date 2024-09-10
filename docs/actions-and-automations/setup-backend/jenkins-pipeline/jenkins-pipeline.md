@@ -112,3 +112,7 @@ The agent pulls the new invocation event from your dedicated Kafka topic, and se
 If you prefer to send a webhook without using the agent, you can [validate the webhook signature](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/signature-verification) for increased security.
 
 To use the agent, set the `agent` field to `true` in the `invocationMethod` object, or set the `Use self-hosted agent` toggle to `Yes` if using the UI.
+
+## Examples
+
+For guides and examples of self-service actions using a Jenkins pipeline as the backend, check out the [**guides section**](/guides?tags=Jenkins&tags=Actions).

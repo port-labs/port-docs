@@ -400,6 +400,15 @@ html[data-theme="dark"] details details  {
   opacity: 0.8;
 }
 
+.header-guides-link:hover {
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-menu-color-background-active);
+}
+
+.header-guides-link:hover:not(.header-guides-link--active) {
+  opacity: 0.8;
+}
+
 .header-home-link:hover {
   border-radius: var(--ifm-global-radius);
   background: var(--ifm-menu-color-background-active);
