@@ -609,6 +609,14 @@ curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=tru
 ```
 </details>
 
+:::tip
+we use the **search relation** entity to map the deployment to the correct service based on the service's `$title`.
+To learn more about using search relations,
+see [our documentation on Mapping Relations
+Using Search Queries](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries).
+You can change the query to match the naming convention in your organization.
+:::
+
 By using this approach, you can ensure any deployment system is integrated into Port,
 giving you full flexibility across all your deployment workflows.
 
