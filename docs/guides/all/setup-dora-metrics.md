@@ -20,8 +20,8 @@ This guide will cover the four key metrics: Deployment Frequency, Lead Time, Cha
 
 :::info Prerequisites
 - Complete the [Port onboarding process](https://docs.getport.io/quickstart).
-- Access a GitHub repository (e.g., `port-dora-metrics`) with workflows or pipelines for tracking deployments. Follow the [GitHub integration guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github) to sync deployments, pull requests, and workflows to Port.
-- Connect your incident management system (e.g., PagerDuty, OpsGenie, or ServiceNow) to Port to sync incidents for calculating **Change Failure Rate (CFR)** and **Mean Time to Recovery (MTTR)**.
+- Access a GitHub repository (e.g., port-dora-metrics) to sync your pull requests or deployments. You can follow the [GitHub integration guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github) to ensure your deployments are tracked in Port.
+- Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD or GitHub Actions.
 :::
 
 ## Tracking Deployment
@@ -151,6 +151,9 @@ Here’s how you can implement this:
           environment: '"Production"'  # Hard coded for now
           createdAt: .merged_at
           deploymentStatus: 'Success'  # Hard coded for now
+        relations:
+          pullRequest: .id  
+          service: .head.repo.name
 ```
 
 </details>
@@ -190,6 +193,8 @@ Here’s how you can implement this:
           environment: '"Production"'  # Set environment based on branch (main/master as Production)
           createdAt: .run_started_at
           deploymentStatus: .conclusion
+        relations:
+          service: .repository.name
 ```
 </details>
 
@@ -257,6 +262,18 @@ pipeline {
                   "environment": "Production",
                   "createdAt": "${env.BUILD_TIMESTAMP}",
                   "deploymentStatus": "${env.BUILD_STATUS == 'SUCCESS' ? 'Success' : 'Failed'}"
+                },
+                "relations": {
+                  "service": {
+                    "combinator": "and",
+                    "rules": [
+                      {
+                        "property": "$title",
+                        "operator": "=",
+                        "value": "${env.JOB_NAME}"
+                      }
+                    ]
+                  }
                 }
               }
             """
@@ -299,6 +316,18 @@ steps:
           "environment": "Production",
           "createdAt": "{{timestamp}}",
           "deploymentStatus": "Success"
+        },
+        "relations": {
+          "service": {
+            "combinator": "and",
+            "rules": [
+              {
+                "property": "$title",
+                "operator": "=",
+                "value": "{{project.name}}"
+              }
+            ]
+          }
         }
       }' \
       https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true
@@ -333,6 +362,18 @@ jobs:
                 "environment": "Production",
                 "createdAt": "{{timestamp}}",
                 "deploymentStatus": "Success"
+              },
+              "relations": {
+                "service": {
+                  "combinator": "and",
+                  "rules": [
+                    {
+                      "property": "$title",
+                      "operator": "=",
+                      "value": "{{.repository.name}}"
+                    }
+                  ]
+                }
               }
             }'
 ```
@@ -364,6 +405,18 @@ jobs:
           "environment": "Production",
           "createdAt": "$(Build.QueuedTime)",
           "deploymentStatus": "Success"
+        },
+        "relations": {
+          "service": {
+            "combinator": "and",
+            "rules": [
+              {
+                "property": "$title",
+                "operator": "=",
+                "value": "$(Build.Repository.Name)"
+              }
+            ]
+          }
         }
       }' \
       https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true
@@ -395,7 +448,19 @@ steps:
             "environment": "Production",
             "createdAt": "{{CF_BUILD_TIMESTAMP}}",
             "deploymentStatus": "Success"
+          },
+          "relations": {
+          "service": {
+            "combinator": "and",
+            "rules": [
+              {
+                "property": "$title",
+                "operator": "=",
+                "value": "{{repository.name}}"
+              }
+            ]
           }
+        }
         }'
 ```
 
@@ -424,10 +489,29 @@ deploy:
           "environment": "Production",
           "createdAt": "{{CI_JOB_TIMESTAMP}}",
           "deploymentStatus": "Success"
-        }
+        },
+        "relations": {
+         "service": {
+           "combinator": "and",
+           "rules": [
+             {
+               "property": "$title",
+               "operator": "=",
+               "value": "{{.project.name}}"
+             }
+           ]
+         }
+       }
       }'
 ```
 </details>
+
+:::tip
+we use the **search relation** entity to map the deployment to the correct service based on the service's `$title`.
+To learn more about using search relations,
+see [our documentation on Mapping Relations
+Using Search Queries](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries).
+:::
 
 
 </TabItem>
@@ -508,6 +592,18 @@ curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=tru
     "environment": "Production",
     "createdAt": "2024-09-01T12:00:00Z",
     "deploymentStatus": "Success"
+  },
+  "relations": {
+    "service": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "$title",
+          "operator": "=",
+          "value": "Custom-Service-Name"
+        }
+      ]
+    }
   }
 }'
 ```
@@ -610,24 +706,15 @@ For other incident management tools, follow these respective guides:
 - [ServiceNow](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
 - [Statuspage](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
 
-### Relating Incidents to Services
+### Aggregating Incident Data for MTTR
 
-To track incidents in relation to services, create a **relation** between the **Incident Blueprint** and the **Service Blueprint** in Port Builder. This allows incidents to be linked to services affected by deployment failures, enabling better monitoring of **MTTR** and overall service health.
-
-Instead of mirroring properties like `recoveryTime` and `resolvedAt` at the service level, **aggregate** them to calculate the average **MTTR** across multiple incidents.
+Add the following **aggregation properties** to the **Incident Blueprint**
 
 <details>
-<summary><b>Relation and Aggregation Property JSON (click to expand)</b></summary>
+<summary><b>Aggregation Property JSON (click to expand)</b></summary>
 
 ```json
 {
-  "relations": {
-    "pagerdutyService": {
-      "title": "Related Service",
-      "target": "service",
-      "many": false
-    }
-  },
   "aggregationProperties": {
     "meanTimeToResolve": {
       "title": "Mean Time to Recovery",
@@ -653,6 +740,8 @@ Instead of mirroring properties like `recoveryTime` and `resolvedAt` at the serv
 ```
 </details>
 
+This aggregation setup will calculate the **average MTTR** by considering incidents that have been resolved,
+giving a better picture of recovery performance across services.
 
 ## Metrics
 
