@@ -1383,4 +1383,4 @@ The examples below pull data from the OpsGenie REST Api, in a defined scheduled 
 
 ## More relevant guides and examples
 
-- [Self-service action to trigger an OpsGenie incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/Opsgenie/trigger-an-incident)
+- [Self-service action to trigger an OpsGenie incident](https://docs.getport.io/guides/all/create-an-opsgenie-incident)
