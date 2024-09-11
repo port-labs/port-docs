@@ -1,39 +1,38 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_azure_premise.mdx"
-import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
-import DockerParameters from "./\_jira_one_time_docker_parameters.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
+import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_azure_premise.mdx"
+import DockerParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/_jira_one_time_docker_parameters.mdx"
+import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import JiraIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_blueprint.mdx"
 import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
-import JiraProjectBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_project_blueprint.mdx";
-import JiraWebhookConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_webhook_configuration.mdx";
 import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
-import JiraServerConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_server_configuration_python.mdx";
-import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
 # Jira
 
-Our Jira integration allows you to import `issues` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
+Port's Jira integration allows you to model Jira resources in Port and ingest data into them.
 
 :::info Jira cloud only
 This integration supports `Jira Cloud` at the moment. To integrate Port with `Jira Server`, use [Port's webhook integration](/build-your-software-catalog/custom-integration/webhook/examples/jira-server).
 :::
 
-## Common use cases
+## Capabilities
 
-- Map issues and projects in your Jira organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Create/delete Jira objects using self-service actions.
+- Watch for Jira object changes (create/update/delete) in real-time, and automatically apply them to your entities in Port.
+- Define self-service actions that can create/delete Jira objects or perform any other logic on Jira resources.
 
-## Prerequisites
+### Supported Resources
 
-<Prerequisites />
+The resources that can be ingested from Jira into Port are listed below.  
+It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-## Installation
+- [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
+- [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -45,7 +44,7 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -187,7 +186,7 @@ kubectl apply -f my-ocean-jira-integration.yaml
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="One-time (CI)">
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
@@ -424,85 +423,14 @@ ingest_data:
 
 </Tabs>
 
+## Configuration
 
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-## Ingesting Jira objects
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-The Jira integration uses a YAML configuration to describe the process of loading data into the developer portal.
+### JQL support
 
-Here is an example snippet from the config which demonstrates the process for getting `project` data from Jira:
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"jiraProject"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
-            totalIssues: .insight.totalIssueCount
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Jira's API events.
-
-:::info Additional parameters
-In the example above, two additional parameters are used:  
-`createMissingRelatedEntities` - used to enable the creation of missing related entities in Port. This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.
-
-`deleteDependentEntities` - used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this parameter is set to `false`. If set to `true`, the source entity will be deleted as well.
-:::
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Jira, and which entities and properties will be created in Port.
-
-:::tip Supported resources (`Kind`)
-The following resources can be used to map data from Jira, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
-- [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
-  :::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: project
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Jira object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: project
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-:::tip JQL Support
 The Ocean Jira integration supports querying objects from the `issue` kind using [JQL](https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/), making it possible to specifically filter the issues that are queried from Jira and ingested to Port.
 
 To use JQL filtering, add to the `selector` object a `jql` key with your desired JQL query as the value. For example:
@@ -518,48 +446,40 @@ resources:
     port:
 ```
 
+## Limitations
+
+### Getting user emails from Jira
+
+By default, Jira does not attach user emails to its API responses. For example, when making an API request to Jira to get an issue, fields such as `assignee`, `creator`, `reporter` and other user fields, will only include information such as the internal user ID and user display name, but not the user email.
+
+In order to display the user email in API responses (and also use that data in the mapping from Jira to Port), follow these steps:
+
+**Verify your domain in Jira:**
+
+- Go to the [Jira admin panel](https://admin.atlassian.com/).
+- Go to the **Settings** tab.
+- Select **Domains** in the sidebar on the left.
+- If your domain (for example - `acme.com`) does not appear in the list, click on **Add domain**.
+- Enter your domain name and click on **Next**.
+- Verify your domain ownership in whichever way is convenient for you.
+
+When you are done, you will see in the domain menu that your domain is listed, and its status is `VERIFIED` under the **Domain status** column.
+
+**Claim your Jira user accounts:**
+
+- Go to the [Jira admin panel](https://admin.atlassian.com/).
+- Go to the **Settings** tab.
+- Select **Domains** in the sidebar on the left.
+- Find your verified domain in the list whose accounts need to be claimed.
+- Click the 3 horizontal dots (`...`) under the **Actions** column.
+- Select **Claim accounts**.
+- You will receive an email from Jira when the claim process is complete.
+
+That's it! Now Jira API responses will include the `emailAddress` field when returning a user from Jira.
+
+:::tip Jira docs
+All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
 :::
-
-- The `port`, `entity` and the `mappings` keys are used to map the Jira object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Jira object to a Port entity. Each value is a JQ query.
-            identifier: .key
-            title: .name
-            blueprint: '"jiraProject"'
-            properties:
-              url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
-              totalIssues: .insight.totalIssueCount
-        # highlight-end
-    - kind: project # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyProjectName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-:::
-
-### Ingest data into Port
-
-To ingest Jira objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Jira.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Jira under the Project management providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
 
@@ -568,7 +488,7 @@ Examples of blueprints and the relevant integration configurations:
 ### Project
 
 <details>
-<summary>Project blueprint</summary>
+<summary><b>Project blueprint</b></summary>
 
 ```json showLineNumbers
 {
@@ -600,7 +520,7 @@ Examples of blueprints and the relevant integration configurations:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -625,7 +545,7 @@ resources:
 ### Issue
 
 <details>
-<summary>Issue blueprint</summary>
+<summary><b>Issue blueprint</b></summary>
 
 ```json showLineNumbers
 {
@@ -720,7 +640,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -1039,43 +959,9 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
-## Getting user emails from Jira
+## Relevant Guides
 
-By default, Jira does not attach user emails to its API responses. For example, when making an API request to Jira to get an issue, fields such as `assignee`, `creator`, `reporter` and other user fields, will only include information such as the internal user ID and user display name, but not the user email.
-
-In order to display the user email in API responses (and also use that data in the mapping from Jira to Port), please follow these steps:
-
-### Verify your domain in Jira
-
-To verify your domain in Jira:
-
-- Go to the [Jira admin panel](https://admin.atlassian.com/).
-- Go to the **Settings** tab.
-- Select **Domains** in the sidebar on the left.
-- If your domain (for example - `acme.com`) does not appear in the list, click on **Add domain**.
-- Enter your domain name and click on **Next**.
-- Verify your domain ownership in whichever way is convenient for you.
-
-When you are done, you will see in the domain menu that your domain is listed, and its status is `VERIFIED` under the **Domain status** column.
-
-### Claim your Jira users
-
-To claim your user accounts in Jira:
-
-- Go to the [Jira admin panel](https://admin.atlassian.com/).
-- Go to the **Settings** tab.
-- Select **Domains** in the sidebar on the left.
-- Find your verified domain in the list whose accounts need to be claimed.
-- Click the 3 horizontal dots (`...`) under the **Actions** column.
-- Select **Claim accounts**.
-- You will receive an email from Jira when the claim process is complete.
-
-That's it! Now Jira API responses will include the `emailAddress` field when returning a user from Jira.
-
-:::tip Jira docs
-All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
-:::
-
+- For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Jira).
 
 ## Alternative installation via webhook
 
