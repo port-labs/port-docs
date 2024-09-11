@@ -23,7 +23,7 @@ Our Opsgenie integration allows you to import `alert`, `service` and `incident` 
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
-:::note Prerequisites
+:::info API Token
 An OpsGenie API token with the `read` and `configuration access` scopes. Port requires the `read` permission to allow the integration to access incidents and alerts. Port also needs the `configuraton access` permission to allow the integration to access service, teams, and schedules. See [here](https://support.atlassian.com/opsgenie/docs/api-key-management/) for more information on OpsGenie API key management.
 :::
 
