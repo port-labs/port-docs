@@ -67,10 +67,11 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 ## Examples
 
 <!-- Make sure to add examples of supported blueprints and mappings -->
+<!--If there are 5 or more examples, create a new page for the examples and link to it here. -->
 
-**If there are 5 or more examples, create a new page for the examples and link to it here.**
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
-Examples of blueprints and the relevant integration configurations:
+Additional examples of blueprints and the relevant integration configurations:
 
 <!-- Here is an example of blueprint and integration configuration (Replace with the integration resources) -->
 ### Team
@@ -134,10 +135,6 @@ resources:
 
 </details>
 
-## Let's test it
-
-<!-- This section includes a sample response data from the 3rd party app. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section. -->
-
 ## Relevant Guides
 
 <!-- This section should contain one or more links (using bullets) to the guides section, filtered by technology/use-case. -->
@@ -148,3 +145,7 @@ resources:
 ## Alternative installation via webhook
 
 <!-- If the integration has an alternative installation method section, add it here. -->
+
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Jira. If so, use the following instructions:
+
+**Note** that when using the webhook installation method, data will be ingested into Port only when the webhook is triggered.
