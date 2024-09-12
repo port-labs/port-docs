@@ -55,8 +55,8 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
         "title": "Environment",
         "type": "string",
         "enum": [
-          "Production", 
-          "Staging", 
+          "Production",
+          "Staging",
           "Testing"
         ],
         "description": "The environment where the deployment occurred."
@@ -71,31 +71,33 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
         "title": "Deployment Status",
         "type": "string",
         "enum": [
-          "Successful", 
+          "Successful",
           "Failed"
         ],
         "description": "Indicates whether the deployment was successful or failed."
       }
     }
-   },
-   "mirrorProperties": {
-      "leadTimeDays": {
-         "title": "Lead Time (Days)",
-         "mirror": ".relations.pullRequest.properties.lead_time_days",
-         "type": "number",
-         "description": "Mirrored lead time from Pull Request Blueprint in days."
-      }
-   },
+  },
+  "mirrorProperties": {
+    "leadTimeDays": {
+      "title": "Lead Time (Days)",
+      "mirror": ".pullRequest.lead_time_days",
+      "type": "number",
+      "description": "Mirrored lead time from Pull Request Blueprint in days."
+    }
+  },
   "relations": {
     "service": {
       "title": "Service",
       "target": "service",
-      "many": false
+      "many": false,
+      "required": false
     },
     "pullRequest": {
       "title": "Pull Request",
       "target": "githubPullRequest",
-      "many": false
+      "many": false,
+      "required": false
     }
   }
 }
@@ -852,7 +854,8 @@ This metric counts the total number of successful deployments for the organizati
       "type": "number",
       "target": "deployment",
       "calculationSpec": {
-        "func": "avg",
+        "func": "average",
+        "averageOf": "hour",
         "property": "deployment_frequency",
         "calculationBy": "property"
       }
@@ -1040,3 +1043,110 @@ including both the **relationships** and the **aggregated DORA metrics**:
 
 
 By defining the **Organization** blueprint, adding the necessary relationships, and using these calculation blocks, you can successfully calculate the four main DORA metrics: **Deployment Frequency**, **Change Lead Time**, **Change Failure Rate (CFR)**, and **Mean Time to Recovery (MTTR)**.
+
+
+## Visualization
+Let's visualize the DORA metrics using **Port's Dashboard** feature. You can create custom dashboards to track these metrics and monitor your team's performance over time.
+
+### Dashboard Setup
+1. Go to **Catalog** in the navigation bar
+2. Click **new**
+3. Select **New dashboard**
+4. Name the dashboard (e.g., DORA Metrics), choose an icon if desired, and click **Create**
+
+This will create a new empty dashboard. Let's get ready-to-add widgets 
+
+### Adding Widgets
+
+<details>
+<summary><b>1. Deployment Frequency</b></summary>
+
+1. Click **+ Widget** and select **Number Chart**.
+2. Title: `Deployment Frequency - Monthly`, (add rocket icon, optional).
+3. Select **Organization** as the **Blueprint**, choose the **Entity**, and select `Monthly Deployment Frequency` as the **Property**.
+4. Click **Save**.
+</details>
+
+<details>
+<summary><b>2. MTTR</b></summary>
+
+1. Click **+ Widget** and select **Number Chart**.
+2. Title: `MTTR – Monthly Average (Seconds)`, (add icon, optional).
+3. Select **Service** as the **Blueprint**, choose the **Entity**, and select `Mean Seconds to Resolve` as the **Property**.
+4. Set the **Function** to `Average` and select `Total` under **Average of**. Set custom unit as `Average MTTR (Seconds)`.
+5. Click **Save**.
+
+</details>
+
+<details>
+<summary><b>3. Mean Lead Time</b></summary>
+
+1. Click **+ Widget** and select **Number Chart**.
+2. Title: `Mean lead time for changes (Days)`, (add appropriate icon).
+3. Select **Organization** as the **Blueprint**, choose the **Entity**, and select `Average Time to Merge` as the **Property**.
+4. Click **Save**.
+
+</details>
+
+<details>
+<summary><b>4. Monthly Change Failure Rate</b></summary>
+
+1. Click **+ Widget** and select **Number Chart**.
+2. Title: `Monthly Change Failure Rate`, (add icon, optional).
+3. Select **Organization** as the **Blueprint**, choose the **Entity**, and select `Services - Change Failure Rate` as the **Property**.
+4. Click **Save**.
+
+</details>
+
+<details>
+<summary><b>5. Change Failure Rate Over Time</b></summary>
+
+1. Click **+ Widget** and select **Line Chart**.
+2. Title: `Change Failure Rate over time`, (add icon, optional).
+3. Select **Organization** as the **Blueprint**, and select `Services - Change Failure Rate` as the **Property**.
+4. Set Time Interval to `Month` and Time Range to `In the past 365 days`.
+5. Click **Save**.
+
+</details>
+
+<details>
+<summary><b>6. Monthly Average Time for Changes (Days)</b></summary>
+
+1. Click **+ Widget** and select **Line Chart**.
+2. Title: `Monthly Average Time for Changes (Days)`, (add icon, optional).
+3. Select **Organization** as the **Blueprint**, choose the **Entity**, and select `Average Time To Merge` as the **Property**.
+4. Set the **Time Interval** to `Month` and **Time Range** to `In the past 365 days`.
+5. Click **Save**.
+
+</details>
+
+<details>
+<summary><b>7. Average Monthly MTTR (Seconds)</b></summary>
+
+1. Click **+ Widget** and select **Line Chart**.
+2. Title: `Average Monthly MTTR (Seconds)`, (add icon, optional).
+3. Select **Organization** as the **Blueprint**, and select `MTTR - Services` as the **Property**.
+4. Set **Time Interval** to `Month` and **Time Range** to `In the past 365 days`.
+5. Click **Save**.
+
+</details>
+
+<details>
+<summary><b>8. Deployment Frequency Over Time</b></summary>
+
+1. Click **+ Widget** and select **Line Chart**.
+2. Title: `Deployment Frequency over time`, (add icon, optional).
+3. Select **Organization** as the **Blueprint**, and select `Monthly Deployment Frequency` as the **Property**.
+4. Set Time Interval to `Month` and Time Range to `In the past 365 days`.
+5. Click **Save**.
+
+</details>
+
+:::tip Metric widget groupings
+It would be visually cleaner and more informative to group related widgets, such as the **Line Chart** and **Number Chart** widgets, side by side for easier comparison.
+:::
+
+<img src="/img/guides/doraMetricsDBVisualization.png"/>
+
+By following these steps, you can create a custom dashboard to visualize the DORA metrics.
+Congrats 🎉 You've successfully setup dora metrics in Port 🔥
