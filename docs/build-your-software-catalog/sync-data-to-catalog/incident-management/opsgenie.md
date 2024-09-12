@@ -1378,6 +1378,447 @@ The examples below pull data from the OpsGenie REST Api, in a defined scheduled 
 - [GitLab CI Pipeline](https://gitlab.com/getport-labs/opsgenie-oncall-example)
 </details>
 
+## Migration Guide to Version 0.2.0
+This guide outlines how to update your existing OpsGenie integration configuration to take advantage of the performance improvements and breaking changes introduced in version 0.2.0.
+
+Below is an overview of changes in version 0.2.0
+
+### Key Improvements
+
+- **New Blueprints and Kinds**: Added new kinds for team, schedule, and schedule-oncall.
+- **Data Filtering**: Introduced support for filtering data from the OpsGenie API to fetch only the necessary information.
+- **Enhanced Logging**: Added logs for easier debugging and better insight into integration issues.
+
+### Breaking Changes
+
+- **Optimized API Calls**: Removed redundant API calls for fetching impacted services and alert-incident relationships, improving performance by leveraging existing relations and JQ
+- **Blueprint Changes**: The `OpsGenieService` blueprint no longer contains team properties like `oncallTeam`, `teamMembers`, and `oncallUsers`. These have been moved to a new `OpsGenieTeam` blueprint, reflecting a new relation between services and teams.
+
+
+### Migration Steps
+
+#### Step 1: Understand Existing Configuration
+In versions prior to 0.2.0, your Port app's configuration may have used a mapping like the one below:
+
+<details>
+<summary>Existing configuration (click to expand)</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: service
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name | gsub("[^a-zA-Z0-9@_.:/=-]"; "-") | tostring
+          title: .name
+          blueprint: '"opsGenieService"'
+          properties:
+            description: .description
+            url: .links.web
+            tags: .tags
+            oncallTeam: .__team.name
+            teamMembers: '[.__team.members[].user.username]'
+            oncallUsers: .__oncalls.onCallRecipients
+  - kind: alert
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .message
+          blueprint: '"opsGenieAlert"'
+          properties:
+            status: .status
+            acknowledged: .acknowledged
+            responders: .responders
+            priority: .priority
+            sourceName: .source
+            tags: .tags
+            count: .count
+            createdBy: .owner
+            createdAt: .createdAt
+            updatedAt: .updatedAt
+            description: .description
+            integration: .integration.name
+          relations:
+            relatedIncident: .__relatedIncident.id
+  - kind: incident
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .message
+          blueprint: '"opsGenieIncident"'
+          properties:
+            status: .status
+            responders: .responders
+            priority: .priority
+            tags: .tags
+            url: .links.web
+            createdAt: .createdAt
+            updatedAt: .updatedAt
+            description: .description
+          relations:
+            services: '[.__impactedServices[] | .name | gsub("[^a-zA-Z0-9@_.:/=-]"; "-") | tostring]'
+```
+</details>
+
+#### Step 2: Update to New Configuration
+To adapt to version 0.2.0, you will need to update your configuration as follows:
+
+<details>
+<summary>New configuration (click to expand)</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: service
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          // highlight-next-line
+          identifier: .id  # The identifier of the service now uses the unique ID from OpsGenie instead of the name
+          title: .name
+          blueprint: '"opsGenieService"'
+          properties:
+            description: .description
+            url: .links.web
+            tags: .tags
+  - kind: alert
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .message
+          blueprint: '"opsGenieAlert"'
+          properties:
+            status: .status
+            acknowledged: .acknowledged
+            responders: .responders
+            priority: .priority
+            sourceName: .source
+            tags: .tags
+            count: .count
+            createdBy: .owner
+            createdAt: .createdAt
+            updatedAt: .updatedAt
+            description: .description
+            integration: .integration.name
+          relations:
+            // highlight-next-line
+            relatedIncident: 'if (.alias | contains("_")) then (.alias | split("_")[0]) else null end'  # We now use JQ logic to map alerts to incidents to avoid making extra API call
+  - kind: incident
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .message
+          blueprint: '"opsGenieIncident"'
+          properties:
+            status: .status
+            responders: .responders
+            priority: .priority
+            tags: .tags
+            url: .links.web
+            createdAt: .createdAt
+            updatedAt: .updatedAt
+            description: .description
+          relations:
+            // highlight-next-line
+            services: .impactedServices  # We can now directly map incidents to impacted services using the data that is coming from the API
+```
+</details>
+
+In the updated configuration, the `opsGenieService` blueprint no longer includes properties like `oncallTeam`, `teamMembers`, and `oncallUsers`. These properties are now part of the new `OpsGenieTeam` blueprint. If you need to track on-call teams and users for each service, follow the steps below.
+
+#### Step 3: Create the OpsGenieTeam Blueprint
+
+To manage team-related data, create a new `OpsGenieTeam` blueprint in Port using the following schema: 
+
+<details>
+<summary> OpsGenie team blueprint (click to expand)</summary>
+
+```json showLineNumbers
+{
+  "identifier": "opsGenieTeam",
+  "description": "This blueprint represents an OpsGenie team in our software catalog",
+  "title": "OpsGenie Team",
+  "icon": "OpsGenie",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "icon": "DefaultProperty"
+      },
+      "url": {
+        "title": "URL",
+        "type": "string",
+        "description": "URL to the service",
+        "format": "url",
+        "icon": "DefaultProperty"
+      },
+      "oncallUsers": {
+        "type": "array",
+        "title": "Current Oncalls",
+        "items": {
+          "type": "string",
+          "format": "user"
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+</details>
+
+#### Step 4: Update the OpsGenieService Blueprint
+
+Next, update the `opsGenieService` blueprint to reference the `OpsGenieTeam` blueprint by establishing a relation and mirroring relevant properties:
+
+<details>
+<summary> Updated OpsGenie service blueprint (click to expand)</summary>
+
+```json showLineNumbers
+{
+  "identifier": "opsGenieService",
+  "description": "This blueprint represents an OpsGenie service in our software catalog",
+  "title": "OpsGenie Service",
+  "icon": "OpsGenie",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "icon": "DefaultProperty"
+      },
+      "url": {
+        "title": "URL",
+        "type": "string",
+        "description": "URL to the service",
+        "format": "url",
+        "icon": "DefaultProperty"
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Tags",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {
+    "oncallUsers": {
+      "title": "Current Oncalls",
+      "path": "ownerTeam.oncallUsers"
+    }
+  },
+  "calculationProperties": {
+  },
+  "aggregationProperties": {
+    "numberOfOpenIncidents": {
+      "title": "Number of open incidents",
+      "type": "number",
+      "target": "opsGenieIncident",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "open"
+          }
+        ]
+      },
+      "calculationSpec": {
+        "calculationBy": "entities",
+        "func": "count"
+      }
+    }
+  },
+  "relations": {
+    "ownerTeam": {
+      "title": "Owner Team",
+      "target": "opsGenieTeam",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+</details>
+
+#### Step 5: Update the Mapping Configuration
+
+Update your configuration mapping to correctly populate the `OpsGenieTeam` blueprint with team and on-call data. This will enable you to view on-call team information at the service level:
+
+<details>
+<summary>Updated configuration to add teams and oncalls (click to expand)</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: team
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"opsGenieTeam"'
+          properties:
+            description: .description
+            url: .links.web
+  - kind: service
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"opsGenieService"'
+          properties:
+            description: .description
+            url: .links.web
+            tags: .tags
+          relations:
+            ownerTeam: .teamId
+  - kind: schedule-oncall
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .ownerTeam.id
+          title: .ownerTeam.name
+          blueprint: '"opsGenieTeam"'
+          properties:
+            oncallUsers: .__currentOncalls.onCallRecipients
+```
+</details>
+
+#### Final Step: Full Configuration Example
+
+After completing these changes, your configuration should look like this, incorporating blueprints for `team`, `service`, `alert` and `incident`:
+<details>
+<summary>Full configuration (click to expand)</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: team
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"opsGenieTeam"'
+          properties:
+            description: .description
+            url: .links.web
+  - kind: service
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"opsGenieService"'
+          properties:
+            description: .description
+            url: .links.web
+            tags: .tags
+          relations:
+            ownerTeam: .teamId
+  - kind: alert
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .message
+          blueprint: '"opsGenieAlert"'
+          properties:
+            status: .status
+            acknowledged: .acknowledged
+            responders: .responders
+            priority: .priority
+            sourceName: .source
+            tags: .tags
+            count: .count
+            createdBy: .owner
+            createdAt: .createdAt
+            updatedAt: .updatedAt
+            description: .description
+            integration: .integration.name
+          relations:
+            relatedIncident: 'if (.alias | contains("_")) then (.alias | split("_")[0]) else null end'
+  - kind: incident
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .message
+          blueprint: '"opsGenieIncident"'
+          properties:
+            status: .status
+            responders: .responders
+            priority: .priority
+            tags: .tags
+            url: .links.web
+            createdAt: .createdAt
+            updatedAt: .updatedAt
+            description: .description
+          relations:
+            services: .impactedServices
+  - kind: schedule-oncall
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .ownerTeam.id
+          title: .ownerTeam.name
+          blueprint: '"opsGenieTeam"'
+          properties:
+            oncallUsers: .__currentOncalls.onCallRecipients
+```
+</details>
+
+Following this guide will ensure your integration is up-to-date and optimized for performance with version 0.2.0. For any issues during the migration, refer to the newly introduced debug logs to identify and contact your support personnel to resolve problems efficiently.
+
 ## More relevant guides and examples
 
 - [Self-service action to trigger an OpsGenie incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/Opsgenie/trigger-an-incident)
