@@ -15,7 +15,7 @@
     }
   },
   {
-    "blueprint": "service",
+    "blueprint": "bitbucketRepository",
     "filter": ".body.eventKey == \"repo:modified\"",
     "entity": {
       "identifier": ".body.new.slug",
@@ -47,11 +47,11 @@
         "link": ".body.pullRequest.links.self[0].href",
         "destination": ".body.pullRequest.toRef.displayId",
         "source": ".body.pullRequest.fromRef.displayId",
-        "participants": "[.body.pullRequest.participants[].user.displayName]",
         "reviewers": "[.body.pullRequest.reviewers[].user.displayName]"
       },
       "relations": {
-        "repository": ".body.pullRequest.toRef.repository.slug"
+        "repository": ".body.pullRequest.toRef.repository.slug",
+        "participants": "[.body.pullRequest.participants[].user.displayName]"
       }
     }
   }
