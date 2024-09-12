@@ -14,7 +14,10 @@ You can find your existing action runs using one of the following methods:
 - Go to the [audit logs](https://app.getport.io/settings/AuditLog) page of your portal, then select the `Runs` tab.  
    This page will display all action runs that have been executed in your organization.
 
-- Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired Entity, then select the `Runs` tab.  
+- Go to the [Self-Service Hub](https://app.getport.io/self-serve) or the [Automations](https://app.getport.io/settings/automations), then select `Runs history` at the top of the page.
+   These pages will display all self-service runs or automation runs that have been executed in your organization.
+
+- Go to the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired Entity, then select the `Runs` tab.  
    This page will display all action runs that have been executed for the selected Entity.
 
 - Once you have at least one `in-progress` action run, a panel will be displayed on the right side of the page, showing the  runs that are currently in progress.
