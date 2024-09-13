@@ -49,8 +49,15 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
 {
   "identifier": "deployment",
   "title": "Deployment",
+  "icon": "Rocket",
   "schema": {
     "properties": {
+      "createdAt": {
+        "title": "Deployment Time",
+        "type": "string",
+        "format": "date-time",
+        "description": "The timestamp when the deployment was triggered."
+      },
       "environment": {
         "title": "Environment",
         "type": "string",
@@ -61,43 +68,38 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
         ],
         "description": "The environment where the deployment occurred."
       },
-      "createdAt": {
-        "title": "Deployment Time",
-        "type": "string",
-        "format": "date-time",
-        "description": "The timestamp when the deployment was triggered."
-      },
       "deploymentStatus": {
         "title": "Deployment Status",
         "type": "string",
         "enum": [
-          "Successful",
+          "Success",
           "Failed"
         ],
         "description": "Indicates whether the deployment was successful or failed."
       }
-    }
+    },
+    "required": []
   },
   "mirrorProperties": {
-    "leadTimeDays": {
-      "title": "Lead Time (Days)",
-      "mirror": ".pullRequest.lead_time_days",
-      "type": "number",
-      "description": "Mirrored lead time from Pull Request Blueprint in days."
+    "leadTimeHours": {
+      "title": "Lead Time (Hours)",
+      "path": "pullRequest.leadTimeHours"
     }
   },
+  "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
     "service": {
       "title": "Service",
       "target": "service",
-      "many": false,
-      "required": false
+      "required": false,
+      "many": false
     },
     "pullRequest": {
       "title": "Pull Request",
       "target": "githubPullRequest",
-      "many": false,
-      "required": false
+      "required": false,
+      "many": false
     }
   }
 }
@@ -140,22 +142,22 @@ Here’s how you can implement this:
 <summary><b>Deployment config (click to expand)</b></summary>
 
 ```yaml showLineNumbers
-- kind: pull-request
-  selector:
-    query: .base.ref == 'main'  # Track PRs merged into the main branch
-  port:
-    entity:
-      mappings:
-        identifier: .head.repo.name + '-' + (.id|tostring)
-        title: Deployment for PR {{ .head.repo.name }}
-        blueprint: '"deployment"'
-        properties:
-          environment: '"Production"'  # Hard coded for now
-          createdAt: .merged_at
-          deploymentStatus: 'Success'  # Hard coded for now
-        relations:
-          pullRequest: .id  
-          service: .head.repo.name
+  - kind: pull-request
+    selector:
+      query: .base.ref == 'main'  # Track PRs merged into the main branch
+    port:
+      entity:
+        mappings:
+          identifier: .head.repo.name + '-' + (.id|tostring)
+          title: .head.repo.name + " Deployment"
+          blueprint: '"deployment"'
+          properties:
+            environment: '"Production"'  # Hard coded for now
+            createdAt: .merged_at
+            deploymentStatus: '"Success"'  # Hard coded for now
+          relations:
+            pullRequest: .head.repo.name + (.id|tostring)
+            service: .head.repo.name
 ```
 
 </details>
@@ -184,19 +186,19 @@ Here’s how you can implement this:
 
 - kind: workflow-run
   selector:
-    query: .base_ref == 'main' # Track all workflow runs in the main branch
+    query: .head_branch == 'main'
   port:
     entity:
       mappings:
-        identifier: .repository.name + '-' + (.run_number|tostring)
-        title: Deployment from Workflow Run {{ .repository.name }}
+        identifier: .head_repository.name + '-' + (.run_number|tostring)
+        title: .head_repository.name + " Deployment on workflow"
         blueprint: '"deployment"'
         properties:
-          environment: '"Production"'  # Set environment based on branch (main/master as Production)
-          createdAt: .run_started_at
-          deploymentStatus: .conclusion
+          environment: '"Production"'
+          createdAt: .created_at
+          deploymentStatus: (.conclusion | ascii_upcase[0:1] + .[1:])
         relations:
-          service: .repository.name
+          service: .head_repository.name
 ```
 </details>
 
