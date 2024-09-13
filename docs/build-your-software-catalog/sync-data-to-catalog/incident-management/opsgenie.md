@@ -15,11 +15,11 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Opsgenie
 
-Our Opsgenie integration allows you to import `alert`, `service` and `incident` from your Opsgenie account into Port, according to your mapping and definitions.
+Our Opsgenie integration allows you to import `alert`, `incident`, `service`, `team`, `schedule` and `schedule-oncall` from your Opsgenie account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `alert`, `service` and `incident` in your Opsgenie account.
+- Map `alert`, `incident`, `service`, `team`, `schedule`, and `schedule-oncall` in your Opsgenie account.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -401,8 +401,12 @@ The integration configuration determines which resources will be queried from Op
 The following resources can be used to map data from Opsgenie, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Alert`](https://docs.opsgenie.com/docs/alert-api#list-alerts)
-- [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
 - [`Incident`](https://docs.opsgenie.com/docs/incident-api#list-incidents)
+- [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
+- [`Team`](https://docs.opsgenie.com/docs/team-api#list-teams)
+- [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
+- [`Schedule`](https://docs.opsgenie.com/docs/schedule-api#list-schedules)
+- [`Schedule-Oncall`](https://docs.opsgenie.com/docs/who-is-on-call-api#get-on-calls)
 
 :::
 
@@ -514,6 +518,170 @@ To ingest Opsgenie objects using the [integration configuration](#configuration-
 
 Examples of blueprints and the relevant integration configurations:
 
+### Team
+
+<details>
+<summary>Team blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "opsGenieTeam",
+  "description": "This blueprint represents an OpsGenie team in our software catalog",
+  "title": "OpsGenie Team",
+  "icon": "OpsGenie",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "icon": "DefaultProperty"
+      },
+      "url": {
+        "title": "URL",
+        "type": "string",
+        "description": "URL to the service",
+        "format": "url",
+        "icon": "DefaultProperty"
+      },
+      "oncallUsers": {
+        "type": "array",
+        "title": "Current Oncalls",
+        "items": {
+          "type": "string",
+          "format": "user"
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: team
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"opsGenieTeam"'
+          properties:
+            description: .description
+            url: .links.web
+```
+
+</details>
+
+
+### Schedule
+
+<details>
+<summary>Schedule blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "opsGenieSchedule",
+  "description": "This blueprint represents a OpsGenie schedule in our software catalog",
+  "title": "OpsGenie Schedule",
+  "icon": "OpsGenie",
+  "schema": {
+    "properties": {
+      "timezone": {
+        "title": "Timezone",
+        "type": "string"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "users": {
+        "title": "Users",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "user"
+        }
+      },
+      "startDate": {
+        "title": "Start Date",
+        "type": "string",
+        "format": "date-time"
+      },
+      "endDate": {
+        "title": "End Date",
+        "type": "string",
+        "format": "date-time"
+      },
+      "rotationType": {
+        "type": "string",
+        "title": "Rotation Type"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "ownerTeam": {
+      "title": "Owner Team",
+      "target": "opsGenieTeam",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: schedule
+    selector:
+      query: 'true'
+      apiQueryParams:
+        expand: rotation
+    port:
+      itemsToParse: .rotations
+      entity:
+        mappings:
+          identifier: .id + "_" + .item.id
+          title: .name + "_" + .item.name
+          blueprint: '"opsGenieSchedule"'
+          properties:
+            timezone: .timezone
+            description: .description
+            startDate: .item.startDate
+            endDate: .item.endDate
+            rotationType: .item.type
+            users: '[.item.participants[] | select(has("username")) | .username]'
+          relations:
+            ownerTeam: .ownerTeam.id
+```
+
+</details>
+
+
 ### Service
 
 <details>
@@ -546,51 +714,47 @@ Examples of blueprints and the relevant integration configurations:
         },
         "title": "Tags",
         "icon": "DefaultProperty"
-      },
-      "oncallTeam": {
-        "type": "string",
-        "title": "OnCall Team",
-        "description": "Name of the team responsible for this service",
-        "icon": "DefaultProperty"
-      },
-      "teamMembers": {
-        "icon": "TwoUsers",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "format": "user"
-        },
-        "title": "Team Members",
-        "description": "Members of team responsible for this service"
-      },
-      "oncallUsers": {
-        "icon": "TwoUsers",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "format": "user"
-        },
-        "title": "Oncall Users",
-        "description": "Who is on call for this service"
-      },
-      "numOpenIncidents": {
-        "title": "Number of Open Incidents",
-        "type": "number"
       }
     },
     "required": []
   },
-  "mirrorProperties": {},
-  "calculationProperties": {
-    "teamSize": {
-      "title": "Team Size",
-      "icon": "DefaultProperty",
-      "description": "Size of the team",
-      "calculation": ".properties.teamMembers | length",
-      "type": "number"
+  "mirrorProperties": {
+    "oncallUsers": {
+      "title": "Current Oncalls",
+      "path": "ownerTeam.oncallUsers"
     }
   },
-  "relations": {}
+  "calculationProperties": {
+  },
+  "aggregationProperties": {
+    "numberOfOpenIncidents": {
+      "title": "Number of open incidents",
+      "type": "number",
+      "target": "opsGenieIncident",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "open"
+          }
+        ]
+      },
+      "calculationSpec": {
+        "calculationBy": "entities",
+        "func": "count"
+      }
+    }
+  },
+  "relations": {
+    "ownerTeam": {
+      "title": "Owner Team",
+      "target": "opsGenieTeam",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 
@@ -605,21 +769,19 @@ deleteDependentEntities: true
 resources:
   - kind: service
     selector:
-      query: "true"
+      query: 'true'
     port:
       entity:
         mappings:
-          identifier: .name | gsub("[^a-zA-Z0-9@_.:/=-]"; "-") | tostring
+          identifier: .id
           title: .name
           blueprint: '"opsGenieService"'
           properties:
             description: .description
             url: .links.web
             tags: .tags
-            oncallTeam: .__team.name
-            teamMembers: "[.__team.members[].user.username]"
-            oncallUsers: .__oncalls.onCallRecipients
-            numOpenIncidents: '[ .__incidents[] | select(.status == "open")] | length'
+          relations:
+            ownerTeam: .teamId
 ```
 
 </details>
@@ -644,7 +806,11 @@ resources:
       "status": {
         "type": "string",
         "title": "Status",
-        "enum": ["closed", "open", "resolved"],
+        "enum": [
+          "closed",
+          "open",
+          "resolved"
+        ],
         "enumColors": {
           "closed": "blue",
           "open": "red",
@@ -710,7 +876,9 @@ deleteDependentEntities: true
 resources:
   - kind: incident
     selector:
-      query: "true"
+      query: 'true'
+      apiQueryParams:
+        status: open
     port:
       entity:
         mappings:
@@ -727,7 +895,7 @@ resources:
             updatedAt: .updatedAt
             description: .description
           relations:
-            services: '[.__impactedServices[] | .name | gsub("[^a-zA-Z0-9@_.:/=-]"; "-") | tostring]'
+            services: .impactedServices
 ```
 
 </details>
@@ -752,7 +920,10 @@ resources:
       "status": {
         "type": "string",
         "title": "Status",
-        "enum": ["closed", "open"],
+        "enum": [
+          "closed",
+          "open"
+        ],
         "enumColors": {
           "closed": "green",
           "open": "red"
@@ -835,7 +1006,9 @@ deleteDependentEntities: true
 resources:
   - kind: alert
     selector:
-      query: "true"
+      query: 'true'
+      apiQueryParams:
+        status: open
     port:
       entity:
         mappings:
@@ -856,10 +1029,56 @@ resources:
             description: .description
             integration: .integration.name
           relations:
-            relatedIncident: .__relatedIncident.id
+            relatedIncident: 'if (.alias | contains("_")) then (.alias | split("_")[0]) else null end'
 ```
 
 </details>
+
+:::tip filter alerts and incidents
+The integration provides an option to filter the data that is retrieved from the OpsGenie API using the following attributes:
+
+1. `createdAt`: The date and time the alert or incident was created
+2. `lastOccurredAt`: The date and time the alert or incident was last occurred
+3. `snoozedUntil`: The date and time the alert or incident was snoozed until
+4. `priority`: The priority of the alert or incident. Accepts values such as `P1`, `P2`, `P3`, `P4` and `P5`
+5. `status`: The status of the alert or incident. Accepts values such as `open`, `closed` and `resolved`
+6. `isSeen`: Whether the alert or incident has been seen. Accepts a boolean `true` or `false`
+7. `acknowledged`: Whether the alert or incident has been acknowledged. Accepts a boolean `true` or `false`
+8. `snoozed`: Whether the alert or incident has been snoozed. Accepts a boolean `true` or `false`
+9. `owner`: The owner of the alert or incident. Accepts an OpsGenie username
+10. `teams`: The teams associated with the alert or incident
+11. `acknowledgedBy`: The user who acknowledged the alert or incident
+12. `closedBy`: The user who closed the alert or incident
+13. `message`: The message of the alert or incident
+
+These attributes can be enabled using the path: `selector.apiQueryParams`. By default, the integration fetches `open` alerts and incidents.
+:::
+
+### Current On-call
+To bring the current on-call users, update your configuration mapping to populate the `OpsGenieTeam` blueprint with team and on-call data. This will enable you to view on-call information at the service level:
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: schedule-oncall
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .ownerTeam.id
+          title: .ownerTeam.name
+          blueprint: '"opsGenieTeam"'
+          properties:
+            oncallUsers: .__currentOncalls.onCallRecipients
+```
+
+</details>
+
 
 ## Let's Test It
 
@@ -870,123 +1089,108 @@ This section includes a sample response data from Opsgenie. In addition, it incl
 Here is an example of the payload structure from Opsgenie:
 
 <details>
+<summary> Team response data</summary>
+
+```json showLineNumbers
+{
+  "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
+  "name": "Data Science Team",
+  "description": "",
+  "links": {
+    "web": "https://app.opsgenie.com/teams/dashboard/63374eee-0b03-42d4-bb8c-50d1fa64827c/main",
+    "api": "https://api.opsgenie.com/v2/teams/63374eee-0b03-42d4-bb8c-50d1fa64827c"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Schedule response data</summary>
+
+```json showLineNumbers
+{
+  "item": {
+    "id": "c4fa16f1-8675-4a26-9c2a-7b7a0c98a9cb",
+    "name": "Rota2",
+    "startDate": "2024-09-02T08:00:00Z",
+    "endDate": "2024-09-14T09:00:00Z",
+    "type": "weekly",
+    "length": 3,
+    "participants": [
+      {
+        "type": "user",
+        "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4",
+        "username": "dev@domain.com"
+      }
+    ],
+    "timeRestriction": null
+  },
+  "id": "977805c9-ede6-4cc1-a535-93e93767a436",
+  "name": "Devops Team_schedule",
+  "description": "",
+  "timezone": "Africa/Monrovia",
+  "enabled": true,
+  "ownerTeam": {
+    "id": "bae765bb-a288-4731-b826-b2c65ff16f24",
+    "name": "Devops Team"
+  },
+  "rotations": [
+    {
+      "id": "c4fa16f1-8675-4a26-9c2a-7b7a0c98a9cb",
+      "name": "Rota2",
+      "startDate": "2024-09-02T08:00:00Z",
+      "endDate": "2024-09-14T09:00:00Z",
+      "type": "weekly",
+      "length": 3,
+      "participants": [
+        {
+          "type": "user",
+          "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4",
+          "username": "dev@domain.com"
+        }
+      ],
+      "timeRestriction": null
+    },
+    {
+      "id": "1fbeb5b1-4e00-483e-ab01-323881535159",
+      "name": "Rota1",
+      "startDate": "2024-09-02T08:00:00Z",
+      "endDate": "2024-09-10T09:00:00Z",
+      "type": "weekly",
+      "length": 1,
+      "participants": [
+        {
+          "type": "user",
+          "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4",
+          "username": "dev@domain.com"
+        }
+      ],
+      "timeRestriction": null
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
 <summary> Service response data</summary>
 
 ```json showLineNumbers
 {
-  "id": "daa0d66f-ad35-4396-b30d-70f0314c697a",
-  "name": "Port Outbound Service",
-  "description": "For outbound communications and integrations",
+  "id": "96856ebc-1db0-497b-b90a-5172e6ca0cb3",
+  "name": "Pricing Service",
+  "description": "Product pricing algorithm service",
   "teamId": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
-  "tags": ["communication", "channel"],
-  "links": {
-    "web": "https://mytestaccount.app.opsgenie.com/service/daa0d66f-ad35-4396-b30d-70f0314c697a/status",
-    "api": "https://api.opsgenie.com/v1/services/daa0d66f-ad35-4396-b30d-70f0314c697a"
-  },
-  "isExternal": false,
-  "__team": {
-    "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
-    "name": "Data Science Team",
-    "description": "",
-    "members": [
-      {
-        "user": {
-          "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4",
-          "username": "testuser@gmail.com"
-        },
-        "role": "admin"
-      },
-      {
-        "user": {
-          "id": "9ea8f86a-6648-46d6-a2fc-1a6eb5f739c8",
-          "username": "devtester@gmail.com"
-        },
-        "role": "user"
-      }
-    ],
-    "links": {
-      "web": "https://app.opsgenie.com/teams/dashboard/63374eee-0b03-42d4-bb8c-50d1fa64827c/main",
-      "api": "https://api.opsgenie.com/v2/teams/63374eee-0b03-42d4-bb8c-50d1fa64827c"
-    }
-  },
-  "__incidents": [
-    {
-      "id": "652f14b3-019a-4d4c-8b83-e4da527a416c",
-      "description": "summary",
-      "impactedServices": ["daa0d66f-ad35-4396-b30d-70f0314c697a"],
-      "tinyId": "3",
-      "message": "OpenAI Incident",
-      "status": "open",
-      "tags": ["tags"],
-      "createdAt": "2023-09-26T17:06:16.824Z",
-      "updatedAt": "2023-09-26T17:49:10.17Z",
-      "priority": "P3",
-      "ownerTeam": "",
-      "responders": [
-        {
-          "type": "team",
-          "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c"
-        },
-        {
-          "type": "user",
-          "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
-        }
-      ],
-      "extraProperties": {},
-      "links": {
-        "web": "https://mytestaccount.app.opsgenie.com/incident/detail/652f14b3-019a-4d4c-8b83-e4da527a416c",
-        "api": "https://api.opsgenie.com/v1/incidents/652f14b3-019a-4d4c-8b83-e4da527a416c"
-      },
-      "impactStartDate": "2023-09-26T17:06:16.824Z",
-      "impactEndDate": "2023-09-26T17:45:25.719Z",
-      "actions": []
-    },
-    {
-      "id": "4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
-      "description": "descirption",
-      "impactedServices": [
-        "59591948-d418-4bb9-af16-170d6b232b7d",
-        "daa0d66f-ad35-4396-b30d-70f0314c697a"
-      ],
-      "tinyId": "2",
-      "message": "My Incident",
-      "status": "open",
-      "tags": ["hello"],
-      "createdAt": "2023-09-20T13:33:00.941Z",
-      "updatedAt": "2023-09-26T17:48:54.48Z",
-      "priority": "P3",
-      "ownerTeam": "",
-      "responders": [
-        {
-          "type": "team",
-          "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c"
-        },
-        {
-          "type": "user",
-          "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
-        },
-        {
-          "type": "user",
-          "id": "9ea8f86a-6648-46d6-a2fc-1a6eb5f739c8"
-        }
-      ],
-      "extraProperties": {},
-      "links": {
-        "web": "https://mytestaccount.app.opsgenie.com/incident/detail/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
-        "api": "https://api.opsgenie.com/v1/incidents/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473"
-      },
-      "impactStartDate": "2023-09-20T13:33:00.941Z",
-      "actions": []
-    }
+  "tags": [
+    "frontend"
   ],
-  "__oncalls": {
-    "_parent": {
-      "id": "d55e148e-d320-4766-9dcf-4fc2ce9daef1",
-      "name": "Data Science Team_schedule",
-      "enabled": true
-    },
-    "onCallRecipients": ["testuser@gmail.com"]
-  }
+  "links": {
+    "web": "https://mydomain.app.opsgenie.com/service/96856ebc-1db0-497b-b90a-5172e6ca0cb3/status",
+    "api": "https://api.opsgenie.com/v1/services/96856ebc-1db0-497b-b90a-5172e6ca0cb3"
+  },
+  "isExternal": false
 }
 ```
 
@@ -997,18 +1201,19 @@ Here is an example of the payload structure from Opsgenie:
 
 ```json showLineNumbers
 {
-  "id": "4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
-  "description": "descirption",
+  "id": "652f14b3-019a-4d4c-8b83-e4da527a416c",
+  "description": "summary",
   "impactedServices": [
-    "59591948-d418-4bb9-af16-170d6b232b7d",
     "daa0d66f-ad35-4396-b30d-70f0314c697a"
   ],
-  "tinyId": "2",
-  "message": "My Incident",
+  "tinyId": "3",
+  "message": "OpenAI Token Incident",
   "status": "open",
-  "tags": ["hello"],
-  "createdAt": "2023-09-20T13:33:00.941Z",
-  "updatedAt": "2023-09-26T17:48:54.48Z",
+  "tags": [
+    "incident"
+  ],
+  "createdAt": "2023-09-26T17:06:16.824Z",
+  "updatedAt": "2023-09-26T17:49:10.17Z",
   "priority": "P3",
   "ownerTeam": "",
   "responders": [
@@ -1019,45 +1224,16 @@ Here is an example of the payload structure from Opsgenie:
     {
       "type": "user",
       "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
-    },
-    {
-      "type": "user",
-      "id": "9ea8f86a-6648-46d6-a2fc-1a6eb5f739c8"
     }
   ],
   "extraProperties": {},
   "links": {
-    "web": "https://mytestaccount.app.opsgenie.com/incident/detail/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
-    "api": "https://api.opsgenie.com/v1/incidents/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473"
+    "web": "https://mydomain.app.opsgenie.com/incident/detail/652f14b3-019a-4d4c-8b83-e4da527a416c",
+    "api": "https://api.opsgenie.com/v1/incidents/652f14b3-019a-4d4c-8b83-e4da527a416c"
   },
-  "impactStartDate": "2023-09-20T13:33:00.941Z",
-  "actions": [],
-  "__impactedServices": [
-    {
-      "id": "59591948-d418-4bb9-af16-170d6b232b7d",
-      "name": "My Test Service",
-      "description": "This is for Opsgenie testing",
-      "teamId": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
-      "tags": ["port", "devops", "ai"],
-      "links": {
-        "web": "https://mytestaccount.app.opsgenie.com/service/59591948-d418-4bb9-af16-170d6b232b7d/status",
-        "api": "https://api.opsgenie.com/v1/services/59591948-d418-4bb9-af16-170d6b232b7d"
-      },
-      "isExternal": false
-    },
-    {
-      "id": "daa0d66f-ad35-4396-b30d-70f0314c697a",
-      "name": "Port Outbound Service",
-      "description": "For outbound communications and integrations",
-      "teamId": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
-      "tags": ["ui", "comment"],
-      "links": {
-        "web": "https://mytestaccount.app.opsgenie.com/service/daa0d66f-ad35-4396-b30d-70f0314c697a/status",
-        "api": "https://api.opsgenie.com/v1/services/daa0d66f-ad35-4396-b30d-70f0314c697a"
-      },
-      "isExternal": false
-    }
-  ]
+  "impactStartDate": "2023-09-26T17:06:16.824Z",
+  "impactEndDate": "2023-09-26T17:45:25.719Z",
+  "actions": []
 }
 ```
 
@@ -1069,22 +1245,21 @@ Here is an example of the payload structure from Opsgenie:
 ```json showLineNumbers
 {
   "seen": true,
-  "id": "580e9625-ecc7-42b0-8836-3d3637438bc4-169486700232",
-  "tinyId": "2",
-  "alias": "355f1681-f6e3-4355-a927-897cd8edaf8f_4d37bc8a-030b-4e8f-a230-aa429947253c",
-  "message": "Login Auth not working",
+  "id": "886b285b-b35e-487b-afe6-3d5001370363-1724857097467",
+  "tinyId": "13",
+  "alias": "355f1681-f6e3-4355-a927-897cd8edaf8f_886b285b-b35e-487b-afe6-3d5001370363-1724857097467",
+  "message": "Test scaling alerts",
   "status": "open",
-  "integration": "Default API",
   "acknowledged": false,
   "isSeen": true,
-  "tags": ["auth", "login"],
+  "tags": [],
   "snoozed": false,
   "count": 1,
-  "lastOccurredAt": "2023-04-21T08:36:18.46Z",
-  "createdAt": "2023-04-21T08:36:18.46Z",
-  "updatedAt": "2023-08-11T10:41:16.533Z",
-  "source": "testuser@gmail.com",
-  "owner": "testuser@gmail.com",
+  "lastOccurredAt": "2024-08-28T14:58:17.467Z",
+  "createdAt": "2024-08-28T14:58:17.467Z",
+  "updatedAt": "2024-08-28T14:58:59.285Z",
+  "source": "dev@domain.com",
+  "owner": "",
   "priority": "P3",
   "teams": [],
   "responders": [
@@ -1093,44 +1268,41 @@ Here is an example of the payload structure from Opsgenie:
       "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
     }
   ],
-  "report": {
-    "ackTime": 4852912663
+  "integration": {
+    "id": "00c228b7-80a4-48ae-be9c-3a1471bad69d",
+    "name": "Default API",
+    "type": "API"
   },
-  "ownerTeamId": "",
-  "__relatedIncident": {
-    "id": "4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
-    "description": "descirption",
-    "impactedServices": [
-      "59591948-d418-4bb9-af16-170d6b232b7d",
-      "daa0d66f-ad35-4396-b30d-70f0314c697a"
-    ],
-    "tinyId": "2",
-    "message": "My Incident",
-    "status": "open",
-    "tags": ["hello"],
-    "createdAt": "2023-09-20T13:33:00.941Z",
-    "updatedAt": "2023-09-26T17:48:54.48Z",
-    "priority": "P3",
-    "ownerTeam": "",
-    "responders": [
-      {
-        "type": "team",
-        "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c"
-      },
-      {
-        "type": "user",
-        "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
-      },
-      {
-        "type": "user",
-        "id": "9ea8f86a-6648-46d6-a2fc-1a6eb5f739c8"
-      }
-    ],
-    "extraProperties": {},
-    "links": {
-      "web": "https://mytestaccount.app.opsgenie.com/incident/detail/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
-      "api": "https://api.opsgenie.com/v1/incidents/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473"
-    }
+  "ownerTeamId": ""
+}
+```
+
+</details>
+
+<details>
+<summary> Oncall response data</summary>
+
+```json showLineNumbers
+{
+  "id": "977805c9-ede6-4cc1-a535-93e93767a436",
+  "name": "Devops Team_schedule",
+  "description": "",
+  "timezone": "Africa/Monrovia",
+  "enabled": true,
+  "ownerTeam": {
+    "id": "bae765bb-a288-4731-b826-b2c65ff16f24",
+    "name": "Devops Team"
+  },
+  "rotations": [],
+  "__currentOncalls": {
+    "_parent": {
+      "id": "977805c9-ede6-4cc1-a535-93e93767a436",
+      "name": "Devops Team_schedule",
+      "enabled": true
+    },
+    "onCallRecipients": [
+      "dev@domain.com"
+    ]
   }
 }
 ```
@@ -1142,24 +1314,87 @@ Here is an example of the payload structure from Opsgenie:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
+<summary> Team entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
+  "title": "Data Science Team",
+  "icon": "OpsGenie",
+  "blueprint": "opsGenieTeam",
+  "team": [],
+  "properties": {
+    "description": "",
+    "url": "https://app.opsgenie.com/teams/dashboard/63374eee-0b03-42d4-bb8c-50d1fa64827c/main"
+  },
+  "relations": {},
+  "createdAt": "2024-09-02T21:01:40.937Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-09-02T21:01:40.937Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Schedule entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "d55e148e-d320-4766-9dcf-4fc2ce9daef1_fefc6b88-e44d-4acc-93a2-daf3ba803690",
+  "title": "Data Science Team_schedule_Rota3",
+  "icon": "OpsGenie",
+  "blueprint": "opsGenieSchedule",
+  "team": [],
+  "properties": {
+    "timezone": "Africa/Monrovia",
+    "description": "",
+    "users": [],
+    "startDate": "2024-09-02T08:00:00Z",
+    "endDate": "2024-10-02T08:00:00Z",
+    "rotationType": "daily"
+  },
+  "relations": {
+    "ownerTeam": "63374eee-0b03-42d4-bb8c-50d1fa64827c"
+  },
+  "createdAt": "2024-09-10T12:24:02.999Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-09-10T12:24:02.999Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
 <summary> Service entity in Port</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "Port-Outbound-Service",
-  "title": "Port Outbound Service",
+  "identifier": "96856ebc-1db0-497b-b90a-5172e6ca0cb3",
+  "title": "Pricing Service",
+  "icon": "OpsGenie",
+  "blueprint": "opsGenieService",
   "team": [],
   "properties": {
-    "description": "For outbound communications and integrations",
-    "url": "https://mytestaccount.app.opsgenie.com/service/daa0d66f-ad35-4396-b30d-70f0314c697a/status",
-    "tags": ["communication", "channel"],
-    "oncallTeam": "Data Science Team",
-    "teamMembers": ["testuser@gmail.com", "devtester@gmail.com"],
-    "oncallUsers": ["testuser@gmail.com"],
-    "numOpenIncidents": 2
+    "description": "Product pricing algorithm service",
+    "url": "https://mydomain.app.opsgenie.com/service/96856ebc-1db0-497b-b90a-5172e6ca0cb3/status",
+    "tags": [
+      "frontend"
+    ],
+    "oncallUsers": [
+      "dev@domain.com"
+    ],
+    "numberOfOpenIncidents": null
   },
-  "relations": {},
-  "icon": "OpsGenie"
+  "relations": {
+    "ownerTeam": null
+  },
+  "createdAt": "2024-09-02T21:02:01.207Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-09-02T21:02:01.207Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
 }
 ```
 
@@ -1170,36 +1405,41 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ```json showLineNumbers
 {
-  "identifier": "4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
+  "identifier": "652f14b3-019a-4d4c-8b83-e4da527a416c",
+  "title": "OpenAI Token Incident",
+  "icon": "OpsGenie",
   "blueprint": "opsGenieIncident",
-  "title": "My Incident",
+  "team": [],
   "properties": {
+    "description": "summary",
     "status": "open",
+    "url": "https://mydomain.app.opsgenie.com/incident/detail/652f14b3-019a-4d4c-8b83-e4da527a416c",
+    "tags": [
+      "tags"
+    ],
     "responders": [
       {
-        "type": "team",
-        "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c"
+        "id": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
+        "type": "team"
       },
       {
-        "type": "user",
-        "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
-      },
-      {
-        "type": "user",
-        "id": "9ea8f86a-6648-46d6-a2fc-1a6eb5f739c8"
+        "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4",
+        "type": "user"
       }
     ],
     "priority": "P3",
-    "tags": ["hello"],
-    "url": "https://mytestaccount.app.opsgenie.com/incident/detail/4a0c5e6d-b239-4cd9-a7e8-a5f880e99473",
-    "createdAt": "2023-09-20T13:33:00.941Z",
-    "updatedAt": "2023-09-26T17:48:54.48Z",
-    "description": "descirption"
+    "createdAt": "2023-09-26T17:06:16.824Z",
+    "updatedAt": "2023-09-26T17:49:10.17Z"
   },
   "relations": {
-    "services": ["Port-Outbound-Service", "My-Test-Service"]
+    "services": [
+      "daa0d66f-ad35-4396-b30d-70f0314c697a"
+    ]
   },
-  "icon": "OpsGenie"
+  "createdAt": "2024-08-28T16:58:15.414Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-08-28T16:58:15.414Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
 }
 ```
 
@@ -1210,31 +1450,66 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ```json showLineNumbers
 {
-  "identifier": "580e9625-ecc7-42b0-8836-3d3637438bc4-1694867002321",
-  "title": "Login Auth not working",
+  "identifier": "886b285b-b35e-487b-afe6-3d5001370363-1724857097467",
+  "title": "Test scaling alerts",
+  "icon": "OpsGenie",
+  "blueprint": "opsGenieAlert",
   "team": [],
   "properties": {
+    "description": null,
     "status": "open",
-    "acknowledged": true,
-    "tags": ["auth", "login"],
+    "acknowledged": false,
+    "tags": [],
     "responders": [
       {
-        "type": "user",
-        "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4"
+        "id": "ce544b61-7b35-43ea-89ee-a8750638d3a4",
+        "type": "user"
       }
     ],
     "integration": "Default API",
     "priority": "P3",
-    "sourceName": "testuser@gmail.com",
-    "createdBy": "testuser@gmail.com",
-    "createdAt": "2023-09-16T12:23:22.321Z",
-    "updatedAt": "2023-09-26T17:51:00.346Z",
+    "sourceName": "dev@domain.com",
+    "createdBy": "",
+    "createdAt": "2024-08-28T14:58:17.467Z",
+    "updatedAt": "2024-08-28T14:58:59.285Z",
     "count": 1
   },
   "relations": {
-    "relatedIncident": "4a0c5e6d-b239-4cd9-a7e8-a5f880e99473"
+    "relatedIncident": "355f1681-f6e3-4355-a927-897cd8edaf8f"
   },
-  "icon": "OpsGenie"
+  "createdAt": "2024-08-29T10:31:34.381Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-08-29T10:31:34.381Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Oncall entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "63374eee-0b03-42d4-bb8c-50d1fa64827c",
+  "title": "Data Science Team",
+  "icon":"OpsGenie",
+  "blueprint": "opsGenieTeam",
+  "team": [],
+  "properties": {
+    "description": "",
+    "url": "https://app.opsgenie.com/teams/dashboard/63374eee-0b03-42d4-bb8c-50d1fa64827c/main",
+    "oncallUsers": [
+      "janedoe@devportal.io",
+      "johnsmith@gmail.com",
+      "dev@domain.com"
+    ]
+  },
+  "relations": {},
+  "createdAt": "2024-09-02T21:01:40.937Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-09-10T11:41:09.535Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
 }
 ```
 
