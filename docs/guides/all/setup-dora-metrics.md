@@ -226,8 +226,9 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
 
 - **Jenkins**
 
-Jenkins provides a robust way to track deployments by dynamically reporting build statuses to Port using Port's API.
+Jenkins provides a robust way to track deployments by dynamically reporting build statuses to Port using Port's API. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/)
 
+Add this example to your Jenkins pipeline to report deployments to Port:
 <details>
 <summary><b>Jenkins Pipeline Example (click to expand)</b></summary>
 
@@ -301,8 +302,9 @@ pipeline {
 
 - **Octopus Deploy**
 
-Octopus can be used to track deployments by reporting to Port using custom API calls after deployments are triggered.
+Octopus can be used to track deployments by reporting to Port using custom API calls after deployments are triggered. [find more here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
 
+Add this example to your Octopus script to report deployments to Port:
 <details>
 <summary><b>Octopus Deploy Example (click to expand)</b></summary>
 
@@ -341,8 +343,9 @@ steps:
 
 - **CircleCI**
 
-Track deployments in CircleCI by reporting pipeline runs to Port using a configuration similar to Jenkins.
+Track deployments in CircleCI by reporting pipeline runs to Port using a configuration similar to Jenkins. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/)
 
+Add this example to your CircleCI pipeline to report deployments to Port:
 <details>
 <summary><b>CircleCI Pipeline Example (click to expand)</b></summary>
 
@@ -386,8 +389,9 @@ jobs:
 
 - **Azure Pipelines**
 
-Azure Pipelines can track deployments by integrating with Port's API in a similar manner.
+Azure Pipelines can track deployments by integrating with Port's API in a similar manner. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/azure-pipelines/)
 
+Add this example to your Azure Pipelines script to report deployments to Port:
 <details>
 <summary><b>Azure Pipelines Example (click to expand)</b></summary>
 
@@ -430,8 +434,9 @@ jobs:
 
 - **Codefresh**
 
-Track deployments in Codefresh by integrating Port's API with your pipeline configurations.
+Track deployments in Codefresh by integrating Port's API with your pipeline configurations. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/codefresh-workflow-template/)
 
+Add this example to your Codefresh pipeline to report deployments to Port:
 <details>
 <summary><b>Codefresh Pipeline Example (click to expand)</b></summary>
 
@@ -472,8 +477,9 @@ steps:
 
 - **GitLab Pipelines**
 
-Track GitLab pipeline deployments using a similar approach to report data to Port.
+Track GitLab pipeline deployments using a similar approach to report data to Port. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/gitlab-pipelines/)
 
+Add this example to your GitLab pipeline to report deployments to Port:
 <details>
 <summary><b>GitLab Pipeline Example (click to expand)</b></summary>
 
