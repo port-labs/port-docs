@@ -593,7 +593,7 @@ Here’s how you can use the API to create a deployment entity in Port:
 
 ```bash
 curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true \
--H "Authorization: Bearer $PORT_API_TOKEN" \
+-H "Authorization: Bearer $YOUR_PORT_API_TOKEN" \
 -H "Content-Type: application/json" \
 -d '{
   "identifier": "custom-deployment-1234",
@@ -624,7 +624,8 @@ we use the **search relation** entity to map the deployment to the correct servi
 To learn more about using search relations,
 see [our documentation on Mapping Relations
 Using Search Queries](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries).
-You can change the query to match the naming convention in your organization.
+You can change the query to match the naming convention in your organization
+and remember to replace `$YOUR_PORT_API_TOKEN` with your actual API token from port
 :::
 
 By using this approach, you can ensure any deployment system is integrated into Port,
@@ -654,7 +655,7 @@ The following YAML example demonstrates how to track multiple services (e.g., `s
 resources:
   - kind: service
     selector:
-      query: ".repository.name == 'monorepo' && (.path | startswith('service-A/') || .path | startswith('service-B/'))"
+      query: ".name == 'monorepo' && (.path | startswith('service-A/') || .path | startswith('service-B/'))"
     port:
       entity:
         mappings:
@@ -702,12 +703,12 @@ Ensure that your **PagerDuty incident blueprint** is configured properly. You ca
       "title": "Incident Resolution Time",
       "type": "string",
       "format": "date-time",
-      "description": "The timestamp when the incident was resolved."
+      "description": "The timestamp when the incident was resolved"
     },
     "recoveryTime": {
       "title": "Time to Recovery",
       "type": "number",
-      "description": "The time (in minutes) between the incident being triggered and resolved."
+      "description": "The time (in minutes) between the incident being triggered and resolved"
     }
   }
 }
@@ -724,24 +725,52 @@ For other incident management tools, follow these respective guides:
 - [ServiceNow](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
 - [Statuspage](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
 
+### Relating Incident to services
+Add this relationship to the **Incident blueprint** to link incidents to GitHub repository (service):
+
+<details> 
+<summary><b>PagerDuty Incident Relations</b> (click to expand)</summary>
+
+ ```json showLineNumbers
+  "relations": {
+    "gitHubRepository": {
+      "title": "Github Service",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
+
+```
+</details>
+
+Add the mapping config to pagerduty incident [data source](https://app.getport.io/settings/data-sources):
+<details>
+<summary><b>Incident mapping config (click to expand)</b></summary>
+
+```yaml showLineNumbers
+   gitHubRepository:
+   combinator: '"and"'
+   rules:
+     - property: '"$title"'
+       operator: '"="'
+       value: .title
+```
+</details>
+
 ### Aggregating Incident Data for MTTR
 
-Add the following **aggregation properties** to the **Incident Blueprint**
+Add the following **aggregation properties** to the **Incident blueprint**
 
 <details>
 <summary><b>Aggregation Property JSON (click to expand)</b></summary>
 
-```json
-{
+```json showLineNumbers
   "aggregationProperties": {
     "meanTimeToResolve": {
       "title": "Mean Time to Recovery",
-      "target": "incident",
-      "calculationSpec": {
-        "calculationBy": "entities",
-        "func": "avg",
-        "field": "recoveryTime"
-      },
+      "type": "number",
+      "target": "pagerdutyIncident",
       "query": {
         "combinator": "and",
         "rules": [
@@ -751,10 +780,17 @@ Add the following **aggregation properties** to the **Incident Blueprint**
             "value": "resolved"
           }
         ]
+      },
+      "calculationSpec": {
+        "calculationBy": "entities",
+        "func": "average",
+        "averageOf": "hour",
+        "field": "recoveryTime",
+        "measureTimeBy": "$createdAt"
       }
     }
   }
-}
+
 ```
 </details>
 
@@ -763,73 +799,13 @@ giving a better picture of recovery performance across services.
 
 ## Metrics
 
-We will demonstrate how to calculate the four main DORA metrics using aggregated data:
+We will now aggregate the **DORA metrics** at the **service level**, allowing us to track metrics such as **Deployment Frequency**, **Change Lead Time**, **Change Failure Rate (CFR)**, and **Mean Time to Recovery (MTTR)** for each service.
 
-1. **Deployment Frequency**: Number of successful deployments within a timeframe.
-2. **Change Lead Time**: Time from PR opened to deployment.
-3. **Change Failure Rate (CFR)**: Incidents divided by total deployments.
-4. **Mean Time to Recovery (MTTR)**: Time from the incident's onset to resolution.
-
-To achieve this, we will aggregate data at the **Organization** level.
-We'll create an **Organization** blueprint and add the necessary relationships for **Deployments**,
-**PRs**, **Incidents**, and **Services**.
-
-
-
-### Data Model Setup
-
-Define the **Organization** blueprint and add these relationships to connect it with Deployments,
-Pull Requests, Incidents, and Services:
-
-<details> 
-<summary><b>Organization Blueprint (click to expand)</b></summary>
-
-```json
-{
-  "identifier": "organization",
-  "title": "Organization",
-  "schema": {
-    "properties": {},
-    "required": []
-  },
-  "relations": {
-    "deployment": {
-      "title": "Related Deployment",
-      "target": "deployment",
-      "many": true
-    },
-    "pull_request": {
-      "title": "Related Pull Request",
-      "target": "githubPullRequest",
-      "many": true
-    },
-    "incident": {
-      "title": "Related Incident",
-      "target": "incident",
-      "many": true
-    },
-    "service": {
-      "title": "Related Service",
-      "target": "service",
-      "many": true
-    }
-  }
-}
-```
-</details>
-
-:::tip Why define these relationships?
-These relationships enable the **Organization** blueprint
-to pull data from the other relevant blueprints such as **Deployment**,
-**Pull Request**, **Incident**, and **Service**.
-Without these relationships,
-the **Organization** entity wouldn’t be able to aggregate the required data to calculate the DORA metrics.
+:::note Metrics Aggregation
+If you want to track these metrics at higher levels, such as **team** or **domain**, makes sure the appropriate **team** or **domain** blueprints exist, and that they have relationships defined with the **service** blueprint. Then, you can apply the aggregation properties for these higher hierarchies, similar to how we are doing for the **service** blueprint below.
 :::
 
-
-### Calculations
-
-We will calculate each of the four key DORA metrics using the aggregation of data in the **Organization** blueprint.
+###  Aggregation
 
 <Tabs groupId="metrics" defaultValue="df" values={[
 { label: 'Deployment Frequency', value: 'df' },
@@ -839,218 +815,447 @@ We will calculate each of the four key DORA metrics using the aggregation of dat
 ]}>
 
 <TabItem value="df" label="Deployment Frequency">
+Add this aggregation property to calculate deployment frequency:
+<details>
+<summary><b>Deployment Frequency (click to expand)</b></summary>
 
-This metric counts the total number of successful deployments for the organization.
-
-<details> 
-<summary><b>Deployment Frequency Calculation (click to expand)</b></summary>
-
-```json
+```json showLineNumbers
 {
-  "aggregationProperties": {
-    "total_deployments": {
-      "title": "Total Deployments",
-      "type": "number",
-      "target": "deployment",
-      "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-      }
+  "deployment_frequency": {
+    "title": "Monthly Deployment Frequency",
+    "icon": "DeploymentIcon",
+    "type": "number",
+    "target": "deployment",
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "deploymentStatus",
+          "operator": "=",
+          "value": "Success"
+        }
+      ]
     },
-    "average_deployments": {
-      "title": "Average Deployments",
-      "type": "number",
-      "target": "deployment",
-      "calculationSpec": {
-        "func": "average",
-        "averageOf": "hour",
-        "property": "deployment_frequency",
-        "calculationBy": "property"
-      }
+    "calculationSpec": {
+      "func": "count",
+      "averageOf": "month",
+      "measureTimeBy": "$createdAt",
+      "calculationBy": "entities"
     }
   }
 }
 ```
 </details>
-
 </TabItem>
 
 <TabItem value="clt" label="Change Lead Time">
+Add this aggregation property to calculate the lead time for changes:
+<details>
+<summary><b>Lead Time for Change (click to expand)</b></summary>
 
-This metric calculates the average time taken from when a PR is opened until it is deployed.
-
-<details> 
-<summary><b>Change Lead Time Calculation (click to expand)</b></summary>
-
-```json
+```json showLineNumbers
 {
-  "aggregationProperties": {
-    "average_lead_time": {
-      "title": "Average Lead Time (PR)",
-      "type": "number",
-      "target": "githubPullRequest",
-      "calculationSpec": {
-        "func": "avg",
-        "property": "lead_time_days",
-        "calculationBy": "property"
-      }
+  "lead_time_for_change": {
+    "title": "Lead Time for Change",
+    "type": "number",
+    "target": "githubPullRequest",
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "=",
+          "value": "merged"
+        }
+      ]
+    },
+    "calculationSpec": {
+      "func": "average",
+      "averageOf": "hour",
+      "property": "leadTimeHours",
+      "calculationBy": "property",
+      "measureTimeBy": "$createdAt"
+    }
+  }
+}
+```
+</details>
+</TabItem>
+
+<TabItem value="cfr" label="Change Failure Rate">
+Add the following to the aggregated property in service:
+<details>
+<summary><b>CFR aggregation property (click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "resolved_incidents": {
+    "title": "Resolved Incidents",
+    "type": "number",
+    "target": "pagerdutyIncident",
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "=",
+          "value": "resolved"
+        },
+        {
+          "property": "incidentType",
+          "operator": "=",
+          "value": "Deployment"
+        }
+      ]
+    },
+    "calculationSpec": {
+      "func": "count",
+      "calculationBy": "entities"
+    }
+  },
+  "total_deployments": {
+    "title": "Total Deployments",
+    "type": "number",
+    "target": "deployment",
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "deploymentStatus",
+          "operator": "=",
+          "value": "Success"
+        }
+      ]
+    },
+    "calculationSpec": {
+      "func": "count",
+      "calculationBy": "entities"
     }
   }
 }
 ```
 </details>
 
-</TabItem>
-
-<TabItem value="cfr" label="Change Failure Rate (CFR)">
-
-This metric calculates the percentage of failed deployments by dividing the number of incidents by the total number of deployments.
-
-<details> 
-<summary><b>Change Failure Rate Calculation (click to expand)</b></summary>
-
-```json
-{
-  "aggregationProperties": {
-    "failure_rate": {
-      "title": "Change Failure Rate",
-      "type": "number",
-      "calculation": "(count(.relations.incident) / count(.relations.deployment)) * 100"
+Add this calculation property to calculate the cfr from the aggregated properties:
+<details>
+<summary><b>CFR calculation property (click to expand)</b></summary>
+    
+```json showLineNumbers
+    {
+      "changeFailureRate": {
+        "title": "Change Failure Rate",
+        "calculation": "(.properties.resolved_incidents / .properties.total_deployments) * 100",
+        "type": "number"
+      }
     }
-  }
-}
+     
 ```
 </details>
 
 </TabItem>
 
-<TabItem value="mttr" label="Mean Time to Recovery (MTTR)">
+<TabItem value="mttr" label="Mean Time to Recovery">
+Add this aggregation property to calculate the MTTR:
 
-This metric calculates the average time taken to resolve incidents that occur after deployments.
+<details>
+<summary><b>Mean Time to Recovery (click to expand)</b></summary>
 
-<details> 
-<summary><b>MTTR Calculation (click to expand)</b></summary>
-
-```json
+```json showLineNumbers
 {
-  "aggregationProperties": {
-    "mean_time_to_recovery": {
-      "title": "Mean Time to Recovery",
-      "type": "number",
-      "target": "incident",
-      "calculationSpec": {
-        "func": "avg",
-        "property": "recoveryTime",
-        "calculationBy": "property"
-      }
+  "mean_time_to_recovery": {
+    "title": "Mean Time to Recovery",
+    "type": "number",
+    "target": "pagerdutyIncident",
+    "query": {
+      "combinator": "and",
+      "rules": [
+        {
+          "property": "status",
+          "operator": "=",
+          "value": "resolved"
+        }
+      ]
+    },
+    "calculationSpec": {
+      "func": "average",
+      "averageOf": "hour",
+      "property": "recoveryTime",
+      "calculationBy": "property",
+      "measureTimeBy": "$createdAt"
     }
   }
 }
 ```
+
 </details>
 
 </TabItem>
 
 </Tabs>
 
-Here is the **complete JSON setup** for the **Organization** blueprint,
-including both the **relationships** and the **aggregated DORA metrics**:
 
+### Complete setup
+
+Here is the complete **Service Blueprint** with the aggregation properties defined for DORA metrics:
 <details>
-<summary><b>Complete Organization Blueprint JSON (click to expand)</b></summary>
+<summary><b>Complete service blueprint</b></summary>
 
-```json
+```json showLineNumbers
 {
-  "identifier": "organization",
-  "title": "Organization",
+  "identifier": "service",
+  "title": "Service",
+  "icon": "Github",
   "schema": {
-    "properties": {},
+    "properties": {
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown",
+        "icon": "Book"
+      },
+      "url": {
+        "title": "URL",
+        "format": "url",
+        "type": "string",
+        "icon": "Link"
+      },
+      "language": {
+        "icon": "Git",
+        "type": "string",
+        "title": "Language"
+      },
+      "slack": {
+        "icon": "Slack",
+        "type": "string",
+        "title": "Slack",
+        "format": "url"
+      },
+      "code_owners": {
+        "title": "Code owners",
+        "description": "This service's code owners",
+        "type": "string",
+        "icon": "TwoUsers"
+      },
+      "type": {
+        "title": "Type",
+        "description": "This service's type",
+        "type": "string",
+        "enum": [
+          "Backend",
+          "Frontend",
+          "Library"
+        ],
+        "enumColors": {
+          "Backend": "purple",
+          "Frontend": "pink",
+          "Library": "green"
+        },
+        "icon": "DefaultProperty"
+      },
+      "lifecycle": {
+        "title": "Lifecycle",
+        "type": "string",
+        "enum": [
+          "Production",
+          "Staging",
+          "Development"
+        ],
+        "enumColors": {
+          "Production": "green",
+          "Staging": "yellow",
+          "Development": "blue"
+        },
+        "icon": "DefaultProperty"
+      },
+      "locked_in_prod": {
+        "icon": "DefaultProperty",
+        "title": "Locked in Prod",
+        "type": "boolean",
+        "default": false
+      },
+      "locked_reason_prod": {
+        "icon": "DefaultProperty",
+        "title": "Locked Reason Prod",
+        "type": "string"
+      },
+      "locked_in_test": {
+        "icon": "DefaultProperty",
+        "title": "Locked in Test",
+        "type": "boolean",
+        "default": false
+      },
+      "locked_reason_test": {
+        "icon": "DefaultProperty",
+        "title": "Locked Reason Test",
+        "type": "string"
+      },
+      "trigger_type": {
+        "icon": "DefaultProperty",
+        "title": "Lock or Unlock",
+        "type": "string"
+      },
+      "triggered_environment": {
+        "icon": "DefaultProperty",
+        "title": "Triggered Environment",
+        "type": "string"
+      },
+      "slackChannel": {
+        "icon": "Slack",
+        "type": "string",
+        "title": "Slack Channel",
+        "description": "The Slack channel name where notifications will be sent."
+      },
+      "namespace": {
+        "title": "Namespace",
+        "type": "string"
+      },
+      "fullPath": {
+        "title": "Full Path",
+        "type": "string"
+      },
+      "defaultBranch": {
+        "title": "Default Branch",
+        "type": "string"
+      }
+    },
     "required": []
   },
-  "relations": {
-    "deployment": {
-      "title": "Related Deployment",
-      "target": "deployment",
-      "many": true
-    },
-    "pull_request": {
-      "title": "Related Pull Request",
-      "target": "githubPullRequest",
-      "many": true
-    },
-    "incident": {
-      "title": "Related Incident",
-      "target": "incident",
-      "many": true
-    },
-    "service": {
-      "title": "Related Service",
-      "target": "service",
-      "many": true
+  "mirrorProperties": {},
+  "calculationProperties": {
+    "changeFailureRate": {
+      "title": "Change Failure Rate",
+      "calculation": "(.properties.resolved_incidents / .properties.total_deployments) * 100",
+      "type": "number"
     }
   },
   "aggregationProperties": {
-    "total_deployments": {
-      "title": "Total Deployments",
+    "deployment_frequency": {
+      "title": "Monthly Deployment Frequency",
+      "icon": "DeploymentIcon",
       "type": "number",
       "target": "deployment",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "deploymentStatus",
+            "operator": "=",
+            "value": "Success"
+          }
+        ]
+      },
       "calculationSpec": {
         "func": "count",
+        "averageOf": "month",
+        "measureTimeBy": "$createdAt",
         "calculationBy": "entities"
       }
     },
-    "average_deployments": {
-      "title": "Average Deployments",
-      "type": "number",
-      "target": "deployment",
-      "calculationSpec": {
-        "func": "avg",
-        "property": "deployment_frequency",
-        "calculationBy": "property"
-      }
-    },
-    "average_lead_time": {
-      "title": "Average Lead Time (PR)",
+    "lead_time_for_change": {
+      "title": "Lead Time for Change",
       "type": "number",
       "target": "githubPullRequest",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "merged"
+          }
+        ]
+      },
       "calculationSpec": {
-        "func": "avg",
-        "property": "lead_time_days",
-        "calculationBy": "property"
+        "func": "average",
+        "averageOf": "hour",
+        "property": "leadTimeHours",
+        "calculationBy": "property",
+        "measureTimeBy": "$createdAt"
       }
-    },
-    "total_incidents": {
-      "title": "Total Incidents",
-      "type": "number",
-      "target": "incident",
-      "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-      }
-    },
-    "failure_rate": {
-      "title": "Change Failure Rate",
-      "type": "number",
-      "calculation": "(count(.relations.incident) / count(.relations.deployment)) * 100"
     },
     "mean_time_to_recovery": {
       "title": "Mean Time to Recovery",
       "type": "number",
-      "target": "incident",
+      "target": "pagerdutyIncident",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "resolved"
+          }
+        ]
+      },
       "calculationSpec": {
-        "func": "avg",
+        "func": "average",
+        "averageOf": "hour",
         "property": "recoveryTime",
-        "calculationBy": "property"
+        "calculationBy": "property",
+        "measureTimeBy": "$createdAt"
       }
+    },
+    "resolved_incidents": {
+      "title": "Resolved Incidents",
+      "type": "number",
+      "target": "pagerdutyIncident",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "resolved"
+          },
+          {
+            "property": "incidentType",
+            "operator": "=",
+            "value": "Deployment"
+          }
+        ]
+      },
+      "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+      }
+    },
+    "total_deployments": {
+      "title": "Total Deployments",
+      "type": "number",
+      "target": "deployment",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "deploymentStatus",
+            "operator": "=",
+            "value": "Success"
+          }
+        ]
+      },
+      "calculationSpec": {
+        "func": "count",
+        "calculationBy": "entities"
+      }
+    }
+  },
+  "relations": {
+    "admins": {
+      "title": "Admins",
+      "target": "githubUser",
+      "required": false,
+      "many": true
+    },
+    "githubTeams": {
+      "title": "GitHub Teams",
+      "target": "githubTeam",
+      "required": false,
+      "many": true
     }
   }
 }
 ```
 </details>
-
-
-
-By defining the **Organization** blueprint, adding the necessary relationships, and using these calculation blocks, you can successfully calculate the four main DORA metrics: **Deployment Frequency**, **Change Lead Time**, **Change Failure Rate (CFR)**, and **Mean Time to Recovery (MTTR)**.
 
 
 ## Visualization
@@ -1067,91 +1272,54 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 ### Adding Widgets
 
 <details>
-<summary><b>1. Deployment Frequency</b></summary>
+<summary><b>Setup Deployment Frequency Widget</b></summary>
 
 1. Click **+ Widget** and select **Number Chart**.
 2. Title: `Deployment Frequency - Monthly`, (add rocket icon, optional).
-3. Select **Organization** as the **Blueprint**, choose the **Entity**, and select `Monthly Deployment Frequency` as the **Property**.
-4. Click **Save**.
+3. Select `Display single property` and choose **Service** as the **Blueprint**.
+4. Select an `Entity` and choose `Monthly Deployment Frequency` as the **Property**.
+5. Click **Save**.
+
 </details>
 
 <details>
-<summary><b>2. MTTR</b></summary>
+<summary><b>Setup MTTR Widget</b></summary>
 
 1. Click **+ Widget** and select **Number Chart**.
 2. Title: `MTTR – Monthly Average (Seconds)`, (add icon, optional).
-3. Select **Service** as the **Blueprint**, choose the **Entity**, and select `Mean Seconds to Resolve` as the **Property**.
-4. Set the **Function** to `Average` and select `Total` under **Average of**. Set custom unit as `Average MTTR (Seconds)`.
+3. Select `Display single property` and choose **Service** as the **Blueprint**.
+4. Select an `Entity` and choose `Mean Time to Recovery` as the **Property**.
 5. Click **Save**.
 
 </details>
 
+
 <details>
-<summary><b>3. Mean Lead Time</b></summary>
+<summary><b>Setup Change Lead Time Widget</b></summary>
 
 1. Click **+ Widget** and select **Number Chart**.
-2. Title: `Mean lead time for changes (Days)`, (add appropriate icon).
-3. Select **Organization** as the **Blueprint**, choose the **Entity**, and select `Average Time to Merge` as the **Property**.
-4. Click **Save**.
+2. Title: `Lead Time for Changes (Hours)`, (add appropriate icon).
+3. Select `Display single property` and choose **Service** as the **Blueprint**.
+4. Select an `Entity` and choose `Lead Time for Change` as the **Property**.
+5. Click **Save**.
 
 </details>
 
+
 <details>
-<summary><b>4. Monthly Change Failure Rate</b></summary>
+<summary><b>Setup Change Failure Rate Widget</b></summary>
 
 1. Click **+ Widget** and select **Number Chart**.
-2. Title: `Monthly Change Failure Rate`, (add icon, optional).
-3. Select **Organization** as the **Blueprint**, choose the **Entity**, and select `Services - Change Failure Rate` as the **Property**.
-4. Click **Save**.
-
-</details>
-
-<details>
-<summary><b>5. Change Failure Rate Over Time</b></summary>
-
-1. Click **+ Widget** and select **Line Chart**.
-2. Title: `Change Failure Rate over time`, (add icon, optional).
-3. Select **Organization** as the **Blueprint**, and select `Services - Change Failure Rate` as the **Property**.
-4. Set Time Interval to `Month` and Time Range to `In the past 365 days`.
-5. Click **Save**.
-
-</details>
-
-<details>
-<summary><b>6. Monthly Average Time for Changes (Days)</b></summary>
-
-1. Click **+ Widget** and select **Line Chart**.
-2. Title: `Monthly Average Time for Changes (Days)`, (add icon, optional).
-3. Select **Organization** as the **Blueprint**, choose the **Entity**, and select `Average Time To Merge` as the **Property**.
-4. Set the **Time Interval** to `Month` and **Time Range** to `In the past 365 days`.
-5. Click **Save**.
-
-</details>
-
-<details>
-<summary><b>7. Average Monthly MTTR (Seconds)</b></summary>
-
-1. Click **+ Widget** and select **Line Chart**.
-2. Title: `Average Monthly MTTR (Seconds)`, (add icon, optional).
-3. Select **Organization** as the **Blueprint**, and select `MTTR - Services` as the **Property**.
-4. Set **Time Interval** to `Month` and **Time Range** to `In the past 365 days`.
-5. Click **Save**.
-
-</details>
-
-<details>
-<summary><b>8. Deployment Frequency Over Time</b></summary>
-
-1. Click **+ Widget** and select **Line Chart**.
-2. Title: `Deployment Frequency over time`, (add icon, optional).
-3. Select **Organization** as the **Blueprint**, and select `Monthly Deployment Frequency` as the **Property**.
-4. Set Time Interval to `Month` and Time Range to `In the past 365 days`.
+2. Title: `Change Failure Rate`, (add icon, optional).
+3. Select `Display single property` and choose **Service** as the **Blueprint**.
+4. Select an `Entity` and choose `Change Failure Rate` as the **Property**.
 5. Click **Save**.
 
 </details>
 
 :::tip Metric widget groupings
 It would be visually cleaner and more informative to group related widgets, such as the **Line Chart** and **Number Chart** widgets, side by side for easier comparison.
+You can replicate more examples by checking our dora metrics dashboard on the [demo environment](https://demo.getport.io/dora_metrics).
 :::
 
 <img src="/img/guides/doraMetricsDBVisualization.png"/>
