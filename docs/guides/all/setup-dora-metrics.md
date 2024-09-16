@@ -11,7 +11,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 This guide is designed
 to help you
-understand and implement [DevOps Research and Assessment (DORA) metrics](https://cloud.google.com/devops/research/dora) within your organization in Port.
+understand and implement [DevOps Research and Assessment (DORA) metrics](https://cloud.google.com/blog/products/devops-sre/using-the-four-keys-to-measure-your-devops-performance) within your organization in Port.
 DORA Metrics are a set of key performance indicators
 that measure the effectiveness and efficiency of your software development and delivery process. 
 By tracking these metrics,
@@ -109,7 +109,7 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
 
 
 ### Tracking Strategies
-Below are the main ways to track deployments in your portal:
+Below are the main ways you can track deployments directly within Port:
 
 <Tabs groupId="deployment-strategies" queryString defaultValue="pr-merge" values={[
 {label: "PR Merge", value: "pr-merge"},
@@ -302,7 +302,7 @@ pipeline {
 
 - **Octopus Deploy**
 
-Octopus can be used to track deployments by reporting to Port using custom API calls after deployments are triggered. [find more here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
+Octopus can be used to track deployments by reporting to Port using custom API calls after deployments are triggered. [Find more here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
 
 Add this example to your Octopus script to report deployments to Port:
 <details>
@@ -343,7 +343,7 @@ steps:
 
 - **CircleCI**
 
-Track deployments in CircleCI by reporting pipeline runs to Port using a configuration similar to Jenkins. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/)
+Track deployments in CircleCI by reporting pipeline runs to Port using a configuration similar to Jenkins. [Find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/)
 
 Add this example to your CircleCI pipeline to report deployments to Port:
 <details>
@@ -516,7 +516,7 @@ deploy:
 ```
 </details>
 
-:::tip
+:::tip Service relation
 we use the **search relation** entity to map the deployment to the correct service based on the service's `$title`.
 To learn more about using search relations,
 see [our documentation on Mapping Relations
@@ -574,7 +574,7 @@ Here’s how you can implement this:
 
 </details>
 
-:::tip
+:::tip Mapping Repositories, Releases, and Tags
 This configuration maps the repository, release, and tag information to deployment entities in Port.
 You can find more details about setting up GitHub integrations for repositories, releases,
 and tags [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-repository-releases-and-tags).
@@ -619,7 +619,7 @@ curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=tru
 ```
 </details>
 
-:::tip
+:::tip Custom api service relation
 we use the **search relation** entity to map the deployment to the correct service based on the service's `$title`.
 To learn more about using search relations,
 see [our documentation on Mapping Relations
@@ -644,7 +644,7 @@ However, by using **custom integrations**, you can track services or components 
 
 Here’s how you can do this:
 
-- **Define Blueprints**: Set up blueprints for each service or component within your monorepo. Each microservice or feature should have distinct properties such as `name`, `deployment status`, and `dependencies`.
+- **Mapping Service with Monorepo**: You can track the individual services or features within a monorepo by adjusting the mappings associated with the file kind. Each microservice or feature should have distinct properties such as `name`, `deployment status`, and `dependencies`.
 
 - **Ingest Data via Port API**: Use Port's API to track changes, deployments, or pull request merges for each service individually. By using selectors, you can map specific parts of the monorepo (e.g., specific directories) to corresponding services.
 
@@ -653,7 +653,7 @@ The following YAML example demonstrates how to track multiple services (e.g., `s
 
 ```yaml
 resources:
-  - kind: service
+  - kind: repository
     selector:
       query: ".name == 'monorepo' && (.path | startswith('service-A/') || .path | startswith('service-B/'))"
     port:
@@ -758,6 +758,12 @@ Add the mapping config to pagerduty incident [data source](https://app.getport.i
 ```
 </details>
 
+:::tip Mapping Incidents to Services
+we use the **search relation** entity to map the `pagerdutyIncident` blueprint to the correct service based on the service's `$title` and the pagerduty incident title.
+To learn more about using search relations, see [our documentation on Mapping Relations
+Using Search Queries](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries). You can modify this query to map them based on properties of your choice
+:::
+
 ### Aggregating Incident Data for MTTR
 
 Add the following **aggregation properties** to the **Incident blueprint**
@@ -794,7 +800,7 @@ Add the following **aggregation properties** to the **Incident blueprint**
 ```
 </details>
 
-This aggregation setup will calculate the **average MTTR** by considering incidents that have been resolved,
+This aggregation setup will calculate the **MTTR** by considering incidents that have been resolved,
 giving a better picture of recovery performance across services.
 
 ## Metrics
@@ -1259,7 +1265,7 @@ Here is the complete **Service Blueprint** with the aggregation properties defin
 
 
 ## Visualization
-Let's visualize the DORA metrics using **Port's Dashboard** feature. You can create custom dashboards to track these metrics and monitor your team's performance over time.
+By leveraging Port's Dashboards, you can create custom dashboards to track the metrics and monitor your team's performance over time.
 
 ### Dashboard Setup
 1. Go to **Catalog** in the navigation bar
@@ -1274,22 +1280,28 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <details>
 <summary><b>Setup Deployment Frequency Widget</b></summary>
 
-1. Click **+ Widget** and select **Number Chart**.
-2. Title: `Deployment Frequency - Monthly`, (add rocket icon, optional).
-3. Select `Display single property` and choose **Service** as the **Blueprint**.
-4. Select an `Entity` and choose `Monthly Deployment Frequency` as the **Property**.
-5. Click **Save**.
+1. Click **+ Widget** and select **Number Chart**
+2. Title: `Deployment Frequency - Monthly`, (add the rocket icon)
+3. Select `Display single property` and choose **Service** as the **Blueprint**
+4. Select an `Entity` and choose `Monthly Deployment Frequency` as the **Property**
+
+   <img src="/img/guides/deploymentFrequencyChartDoraMetrics.png" width="50%"/>
+   
+5. Click **Save**
 
 </details>
 
 <details>
 <summary><b>Setup MTTR Widget</b></summary>
 
-1. Click **+ Widget** and select **Number Chart**.
-2. Title: `MTTR – Monthly Average (Seconds)`, (add icon, optional).
-3. Select `Display single property` and choose **Service** as the **Blueprint**.
-4. Select an `Entity` and choose `Mean Time to Recovery` as the **Property**.
-5. Click **Save**.
+1. Click **+ Widget** and select **Number Chart**
+2. Title: `MTTR – Monthly Average (Seconds)`, (add the pagerduty icon)
+3. Select `Display single property` and choose **Service** as the **Blueprint**
+4. Select an `Entity` and choose `Mean Time to Recovery` as the **Property**
+
+   <img src="/img/guides/mttrDoraMetricsChart.png" width="50%"/>
+   
+5. Click **Save**
 
 </details>
 
@@ -1297,11 +1309,15 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <details>
 <summary><b>Setup Change Lead Time Widget</b></summary>
 
-1. Click **+ Widget** and select **Number Chart**.
-2. Title: `Lead Time for Changes (Hours)`, (add appropriate icon).
-3. Select `Display single property` and choose **Service** as the **Blueprint**.
-4. Select an `Entity` and choose `Lead Time for Change` as the **Property**.
-5. Click **Save**.
+1. Click **+ Widget** and select **Number Chart**
+2. Title: `Lead Time for Changes (Hours)`, (add LineChart icon)
+3. Select `Display single property` and choose **Service** as the **Blueprint**
+4. Select an `Entity` and choose `Lead Time for Change` as the **Property**
+5. Select the `Hour` time interval and preferred time range
+
+   <img src="/img/guides/leadTimeForChangesDoraMetrics.png"  width="50%"/>
+   
+6. Click **Save**.
 
 </details>
 
@@ -1309,10 +1325,13 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <details>
 <summary><b>Setup Change Failure Rate Widget</b></summary>
 
-1. Click **+ Widget** and select **Number Chart**.
-2. Title: `Change Failure Rate`, (add icon, optional).
-3. Select `Display single property` and choose **Service** as the **Blueprint**.
-4. Select an `Entity` and choose `Change Failure Rate` as the **Property**.
+1. Click **+ Widget** and select **Number Chart**
+2. Title: `Change Failure Rate`, (add the LineChart icon)
+3. Select `Display single property` and choose **Service** as the **Blueprint**
+4. Select an `Entity` and choose `Change Failure Rate` as the **Property**
+
+   <img src="/img/guides/changeFailureRateDoraMetrics.png"  width="50%"/>
+
 5. Click **Save**.
 
 </details>
@@ -1325,4 +1344,4 @@ You can replicate more examples by checking our dora metrics dashboard on the [d
 <img src="/img/guides/doraMetricsDBVisualization.png"/>
 
 By following these steps, you can create a custom dashboard to visualize the DORA metrics.
-Congrats 🎉 You've successfully setup dora metrics in Port 🔥
+Congrats 🎉 You've successfully setup DORA metrics in Port 🔥
