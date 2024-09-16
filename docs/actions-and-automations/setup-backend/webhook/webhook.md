@@ -118,7 +118,7 @@ The following example shows an automation definition that triggers this self-ser
     "method": "POST",
     "body": {
       "properties": {
-        "message": "Service {{.diff.before.title}} has degraded from `Passed` to `Not passed`."
+        "message": "Service {{ .event.diff.before.title }} has degraded from `Passed` to `Not passed`."
       }
     }
   },
