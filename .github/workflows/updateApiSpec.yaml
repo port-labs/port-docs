@@ -44,7 +44,7 @@ jobs:
     # Step 5: Update the YAML file in the repository if differences are found
     - name: Update YAML file
       if: steps.diff_check.outputs.diff_found == 'true'
-      run: cp newSpec.yaml static/rawApiSpec.yaml
+      run: mv newSpec.yaml static/rawApiSpec.yaml
 
     # Step 6: Create a pull request with the changes
     - name: Create Pull Request
