@@ -2,57 +2,57 @@ name: Check for YAML File Changes
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Run daily at midnight UTC
-  workflow_dispatch:  # Allow manual trigger
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+  workflow_dispatch:       # Allows manual triggering
+
+permissions:
+  contents: write          # Grants write permissions for the GITHUB_TOKEN
+  pull-requests: write
 
 jobs:
   check-diff:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository
+    # Step 1: Get the current date
+    - name: Get current date
+      id: date
+      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+    # Step 2: Checkout the repository
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch all history for accurate diff
 
-    # Set up Git for creating branches and PRs
-    - name: Set up Git
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-    # Download the YAML file from the URL
+    # Step 3: Download the YAML file from the URL
     - name: Download YAML file
-      run: curl -sL https://api.getport.io/yaml -o new_file.yaml
+      run: curl -sL https://api.getport.io/yaml -o newSpec.yaml
 
-    # Compare the downloaded file with the existing file in the repository
+    # Step 4: Check for differences between the new file and the existing file
     - name: Check for differences
       id: diff_check
       run: |
-        if diff new_file.yaml path/to/current_file.yaml > diff_output.txt; then
+        if cmp -s newSpec.yaml static/rawApiSpec.yaml; then
+          echo "diff_found=false" >> $GITHUB_OUTPUT
           echo "No changes detected."
-          exit 0
         else
+          echo "diff_found=true" >> $GITHUB_OUTPUT
           echo "Differences detected!"
         fi
 
-    # Create a new branch with the date if differences are found
-    - name: Create new branch
-      if: steps.diff_check.outcome == 'failure'
-      run: |
-        branch_name="update-yaml-$(date +'%Y-%m-%d')"
-        git checkout -b "$branch_name"
-        cp new_file.yaml path/to/current_file.yaml
-        git add path/to/current_file.yaml
-        git commit -m "Update YAML file on $(date +'%Y-%m-%d')"
-        git push origin "$branch_name"
+    # Step 5: Update the YAML file in the repository if differences are found
+    - name: Update YAML file
+      if: steps.diff_check.outputs.diff_found == 'true'
+      run: mv newSpec.yaml static/rawApiSpec.yaml
 
-    # Create a Pull Request if differences are found
+    # Step 6: Create a pull request with the changes
     - name: Create Pull Request
-      if: steps.diff_check.outcome == 'failure'
+      if: steps.diff_check.outputs.diff_found == 'true'
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: "Update YAML file on $(date +'%Y-%m-%d')"
-        branch: "update-yaml-$(date +'%Y-%m-%d')"  # The branch created
-        title: "Update YAML file on $(date +'%Y-%m-%d')"
-        body: "This PR updates the YAML file from the URL https://api.getport.io/yaml. Please review the changes."
+        branch: update-${{ steps.date.outputs.date }}
+        commit-message: "Update YAML file (update-${{ steps.date.outputs.date }})"
+        title: "Update YAML file (update-${{ steps.date.outputs.date }})"
+        body: "This PR updates the YAML file to the latest version."
