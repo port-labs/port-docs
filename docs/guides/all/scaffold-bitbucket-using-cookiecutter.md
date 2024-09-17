@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 displayed_sidebar: null
+description: Learn how to scaffold Bitbucket projects using Cookiecutter in Port, streamlining project setup and management.
 ---
 
 # Scaffold BitBucket Repositories Using Cookiecutter

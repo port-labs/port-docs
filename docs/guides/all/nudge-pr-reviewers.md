@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
 displayed_sidebar: null
+description: Learn how to nudge PR reviewers in Port, ensuring timely code reviews and efficient project progression.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

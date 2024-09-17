@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
-sidebar_label: Lock service deployment
 displayed_sidebar: null
+description: Learn how to implement service locks in GitHub workflows using Port, ensuring secure and controlled deployment processes.
 ---
 
 import Tabs from "@theme/Tabs"

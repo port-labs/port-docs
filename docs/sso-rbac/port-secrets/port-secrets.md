@@ -2,10 +2,10 @@
 
 Port provides a secure way to store sensitive data, such as tokens, passwords, and other secrets used in different Port components. 
 
-:::warning Feature support
-Currently, using secrets is supported only in [Port-hosted integrations](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog?installation-methods=hosted-by-port&deploy=argocd&cicd-method=github#installation).  
-*Support for secrets in self-service actions and automations coming soon!*
-:::
+Port secrets can be used in:
+- Port-hosted integrations - any integration that is installed using the "Hosted by Port" method, for example: [Datadog](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog?installation-methods=hosted-by-port&deploy=argocd&cicd-method=github#installation).
+- [Self-service actions payload](/actions-and-automations/create-self-service-experiences/setup-the-backend/#define-the-actions-payload).
+- [Automations payload](/actions-and-automations/define-automations/setup-action#define-the-payload).
 
 ## Usage
 

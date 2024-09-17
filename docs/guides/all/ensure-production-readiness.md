@@ -2,6 +2,7 @@
 sidebar_position: 2
 title: Ensure production readiness
 displayed_sidebar: null
+description: Follow this guide to ensure production readiness in Port, optimizing your deployments for reliability and performance.
 ---
 
 import Tabs from "@theme/Tabs"

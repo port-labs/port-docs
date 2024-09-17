@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to toggle LaunchDarkly feature flags in Port, enabling dynamic feature management and testing in your applications.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
