@@ -179,6 +179,7 @@ resources:
         # The `repos` key can be used to filter the repositories from which the files will be fetched. 
         # Remove the `repos` key if you want to fetch files from all repository
         repos:
+          # The repository NAME should be used here, not the URL slug, e.g. "Repo Name" not "repo-name"
           - "MyRepoName"
           - "MyOtherRepoName"
     port:
