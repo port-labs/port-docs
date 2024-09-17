@@ -27,7 +27,7 @@ This guide will demonstrate how to create the following workflow:
 
 2. The action creates a `workflow_delete_namespace` entity in Port representing the deletion request.
 
-3. An **automation** is triggered when the `workflow_delete_namespace` entity is created, checking the namespace's details and waiting for approval.
+3. An **automation** is triggered when the `workflow_delete_namespace` entity is created, checking the namespace's details and updating the entity's status in Port.
 
 4. Another **automation** is triggered when the `workflow_delete_namespace` entity's status is updated to *"Namespace found, waiting for approval"*, sending a Slack message requesting approval from an admin.
 
