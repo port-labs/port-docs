@@ -216,305 +216,325 @@ By following a similar pattern for other tools, you will be able to capture depl
 
 <TabItem value="ci-cd-pipelines" label="CI/CD Pipelines">
 
-
-
 CI/CD pipelines, such as those run by Jenkins, provide a robust way to track deployments. Jenkins, in particular, allows you to create and update entities in Port dynamically using Port's API as part of the pipeline execution.
 
 **Examples**:
 
 Port supports tracking deployments from various CI/CD tools by monitoring pipelines and reporting the deployment status to Port. Here are examples for some commonly used CI/CD tools:
 
-- **Jenkins**
+   <Tabs groupId="ci-cd" defaultValue="jenkins" values={[
+   { label: 'Jenkins', value: 'jenkins' },
+   { label: 'Octopus Deploy', value: 'octopus-deploy' },
+   { label: 'CircleCI', value: 'circleci' },
+   { label: 'Azure Pipelines', value: 'azure-pipelines' },
+   { label: 'Codefresh', value: 'codefresh' },
+   { label: 'Gitlab', value: 'gitlab' },
+   ]}>
+   
+   <TabItem value="jenkins" label="Jenkins">
+    
+   Jenkins provides a robust way to track deployments by dynamically reporting build statuses to Port using Port's API. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/)
 
-Jenkins provides a robust way to track deployments by dynamically reporting build statuses to Port using Port's API. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/)
-
-Add this example to your Jenkins pipeline to report deployments to Port:
-<details>
-<summary><b>Jenkins Pipeline Example (click to expand)</b></summary>
-
-```groovy showLineNumbers
-pipeline {
-  agent any
-  environment {
-    API_URL = "https://api.getport.io"
-  }
-  stages {
-    stage('Report Deployment to Port') {
-      steps {
-        withCredentials([
-                string(credentialsId: 'port-client-id', variable: 'PORT_CLIENT_ID'),
-                string(credentialsId: 'port-client-secret', variable: 'PORT_CLIENT_SECRET')
-        ]) {
-          script {
-            def auth_body = """
-              {
-                "clientId": "${PORT_CLIENT_ID}",
-                "clientSecret": "${PORT_CLIENT_SECRET}"
-              }
-            """
-            def token_response = httpRequest contentType: 'APPLICATION_JSON',
-                    httpMode: 'POST',
-                    requestBody: auth_body,
-                    url: "${API_URL}/v1/auth/access_token"
-
-            def token = new groovy.json.JsonSlurperClassic().parseText(token_response.content).accessToken
-
-            def entity_body = """
-              {
-                "identifier": "${env.JOB_NAME}-${env.BUILD_NUMBER}",
-                "title": "Deployment for ${env.JOB_NAME}",
-                "properties": {
-                  "environment": "Production",
-                  "createdAt": "${env.BUILD_TIMESTAMP}",
-                  "deploymentStatus": "${env.BUILD_STATUS == 'SUCCESS' ? 'Success' : 'Failed'}"
-                },
-                "relations": {
-                  "service": {
-                    "combinator": "and",
-                    "rules": [
-                      {
-                        "property": "$title",
-                        "operator": "=",
-                        "value": "${env.JOB_NAME}"
-                      }
-                    ]
-                  }
-                }
-              }
-            """
-
-            httpRequest contentType: "APPLICATION_JSON",
-                    httpMode: "POST",
-                    url: "${API_URL}/v1/blueprints/deployment/entities?upsert=true&merge=true",
-                    requestBody: entity_body,
-                    customHeaders: [
-                            [name: 'Authorization', value: "Bearer ${token}"]
-                    ]
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-</details>
-
-- **Octopus Deploy**
-
-Octopus can be used to track deployments by reporting to Port using custom API calls after deployments are triggered. [Find more here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
-
-Add this example to your Octopus script to report deployments to Port:
-<details>
-<summary><b>Octopus Deploy Example (click to expand)</b></summary>
-
-```yaml
-# Octopus script example for deployment tracking in Port
-steps:
-  - run: |
-      curl -X POST \
-      -H "Authorization: Bearer <YOUR_TOKEN>" \
-      -H "Content-Type: application/json" \
-      -d '{
-        "identifier": "octopus-{{build_id}}",
-        "title": "Deployment for Octopus {{build_id}}",
-        "properties": {
-          "environment": "Production",
-          "createdAt": "{{timestamp}}",
-          "deploymentStatus": "Success"
-        },
-        "relations": {
-          "service": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "$title",
-                "operator": "=",
-                "value": "{{project.name}}"
-              }
-            ]
-          }
-        }
-      }' \
-      https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true
-```
-
-</details>
-
-- **CircleCI**
-
-Track deployments in CircleCI by reporting pipeline runs to Port using a configuration similar to Jenkins. [Find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/)
-
-Add this example to your CircleCI pipeline to report deployments to Port:
-<details>
-<summary><b>CircleCI Pipeline Example (click to expand)</b></summary>
-
-```yaml
-version: 2.1
-
-jobs:
-  deploy:
-    docker:
-      - image: circleci/node:latest
-    steps:
-      - run:
-          name: "Notify Port of deployment"
-          command: |
-            curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true \
-            -H "Authorization: Bearer $PORT_API_TOKEN" \
-            -d '{
-              "identifier": "circleci-{{build_number}}",
-              "title": "Deployment for CircleCI {{build_number}}",
-              "properties": {
-                "environment": "Production",
-                "createdAt": "{{timestamp}}",
-                "deploymentStatus": "Success"
-              },
-              "relations": {
-                "service": {
-                  "combinator": "and",
-                  "rules": [
-                    {
-                      "property": "$title",
-                      "operator": "=",
-                      "value": "{{.repository.name}}"
-                    }
-                  ]
-                }
-              }
-            }'
-```
-
-</details>
-
-- **Azure Pipelines**
-
-Azure Pipelines can track deployments by integrating with Port's API in a similar manner. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/azure-pipelines/)
-
-Add this example to your Azure Pipelines script to report deployments to Port:
-<details>
-<summary><b>Azure Pipelines Example (click to expand)</b></summary>
-
-```yaml
-trigger:
-- master
-
-jobs:
-- job: DeployToProd
-  steps:
-  - script: |
-      curl -X POST \
-      -H "Authorization: Bearer $PORT_API_TOKEN" \
-      -H "Content-Type: application/json" \
-      -d '{
-        "identifier": "azure-$(Build.BuildId)",
-        "title": "Deployment for Azure $(Build.BuildId)",
-        "properties": {
-          "environment": "Production",
-          "createdAt": "$(Build.QueuedTime)",
-          "deploymentStatus": "Success"
-        },
-        "relations": {
-          "service": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "$title",
-                "operator": "=",
-                "value": "$(Build.Repository.Name)"
-              }
-            ]
-          }
-        }
-      }' \
-      https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true
-```
-
-</details>
-
-- **Codefresh**
-
-Track deployments in Codefresh by integrating Port's API with your pipeline configurations. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/codefresh-workflow-template/)
-
-Add this example to your Codefresh pipeline to report deployments to Port:
-<details>
-<summary><b>Codefresh Pipeline Example (click to expand)</b></summary>
-
-```yaml
-version: '1.0'
-steps:
-  ReportToPort:
-    title: Reporting to Port
-    type: freestyle
-    image: curlimages/curl
-    commands:
-      - curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true \
-        -H "Authorization: Bearer $PORT_API_TOKEN" \
-        -d '{
-          "identifier": "codefresh-{{CF_BUILD_ID}}",
-          "title": "Deployment for Codefresh {{CF_BUILD_ID}}",
-          "properties": {
-            "environment": "Production",
-            "createdAt": "{{CF_BUILD_TIMESTAMP}}",
-            "deploymentStatus": "Success"
-          },
-          "relations": {
-          "service": {
-            "combinator": "and",
-            "rules": [
-              {
-                "property": "$title",
-                "operator": "=",
-                "value": "{{repository.name}}"
-              }
-            ]
-          }
-        }
-        }'
-```
-
-</details>
-
-- **GitLab Pipelines**
-
-Track GitLab pipeline deployments using a similar approach to report data to Port. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/gitlab-pipelines/)
-
-Add this example to your GitLab pipeline to report deployments to Port:
-<details>
-<summary><b>GitLab Pipeline Example (click to expand)</b></summary>
-
-```yaml
-stages:
-  - deploy
-
-deploy:
-  stage: deploy
-  script:
-    - curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true \
-      -H "Authorization: Bearer $PORT_API_TOKEN" \
-      -d '{
-        "identifier": "gitlab-{{CI_JOB_ID}}",
-        "title": "Deployment for GitLab {{CI_JOB_ID}}",
-        "properties": {
-          "environment": "Production",
-          "createdAt": "{{CI_JOB_TIMESTAMP}}",
-          "deploymentStatus": "Success"
-        },
-        "relations": {
-         "service": {
-           "combinator": "and",
-           "rules": [
-             {
-               "property": "$title",
-               "operator": "=",
-               "value": "{{.project.name}}"
+   Add this example to your Jenkins pipeline to report deployments to Port:
+   <details>
+   <summary><b>Jenkins Pipeline Example (click to expand)</b></summary>
+   
+   ```groovy showLineNumbers
+   pipeline {
+     agent any
+     environment {
+       API_URL = "https://api.getport.io"
+     }
+     stages {
+       stage('Report Deployment to Port') {
+         steps {
+           withCredentials([
+                   string(credentialsId: 'port-client-id', variable: 'PORT_CLIENT_ID'),
+                   string(credentialsId: 'port-client-secret', variable: 'PORT_CLIENT_SECRET')
+           ]) {
+             script {
+               def auth_body = """
+                 {
+                   "clientId": "${PORT_CLIENT_ID}",
+                   "clientSecret": "${PORT_CLIENT_SECRET}"
+                 }
+               """
+               def token_response = httpRequest contentType: 'APPLICATION_JSON',
+                       httpMode: 'POST',
+                       requestBody: auth_body,
+                       url: "${API_URL}/v1/auth/access_token"
+   
+               def token = new groovy.json.JsonSlurperClassic().parseText(token_response.content).accessToken
+   
+               def entity_body = """
+                 {
+                   "identifier": "${env.JOB_NAME}-${env.BUILD_NUMBER}",
+                   "title": "Deployment for ${env.JOB_NAME}",
+                   "properties": {
+                     "environment": "Production",
+                     "createdAt": "${env.BUILD_TIMESTAMP}",
+                     "deploymentStatus": "${env.BUILD_STATUS == 'SUCCESS' ? 'Success' : 'Failed'}"
+                   },
+                   "relations": {
+                     "service": {
+                       "combinator": "and",
+                       "rules": [
+                         {
+                           "property": "$title",
+                           "operator": "=",
+                           "value": "${env.JOB_NAME}"
+                         }
+                       ]
+                     }
+                   }
+                 }
+               """
+   
+               httpRequest contentType: "APPLICATION_JSON",
+                       httpMode: "POST",
+                       url: "${API_URL}/v1/blueprints/deployment/entities?upsert=true&merge=true",
+                       requestBody: entity_body,
+                       customHeaders: [
+                               [name: 'Authorization', value: "Bearer ${token}"]
+                       ]
              }
-           ]
+           }
          }
        }
-      }'
-```
-</details>
+     }
+   }
+   ```
+   
+   </details>
+   </TabItem>
+
+   <TabItem value="octopus-deploy" label="Octopus Deploy">
+
+
+   Octopus can be used to track deployments by reporting to Port using custom API calls after deployments are triggered. [Find more here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
+   
+   Add this example to your Octopus script to report deployments to Port:
+   <details>
+   <summary><b>Octopus Deploy Example (click to expand)</b></summary>
+   
+   ```yaml
+   # Octopus script example for deployment tracking in Port
+   steps:
+     - run: |
+         curl -X POST \
+         -H "Authorization: Bearer <YOUR_TOKEN>" \
+         -H "Content-Type: application/json" \
+         -d '{
+           "identifier": "octopus-{{build_id}}",
+           "title": "Deployment for Octopus {{build_id}}",
+           "properties": {
+             "environment": "Production",
+             "createdAt": "{{timestamp}}",
+             "deploymentStatus": "Success"
+           },
+           "relations": {
+             "service": {
+               "combinator": "and",
+               "rules": [
+                 {
+                   "property": "$title",
+                   "operator": "=",
+                   "value": "{{project.name}}"
+                 }
+               ]
+             }
+           }
+         }' \
+         https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true
+   ```
+   
+   </details>
+
+   </TabItem>
+
+   <TabItem value="circleci" label="CircleCI">
+
+   Track deployments in CircleCI by reporting pipeline runs to Port using a configuration similar to Jenkins. [Find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/)
+   
+   Add this example to your CircleCI pipeline to report deployments to Port:
+   <details>
+      <summary><b>CircleCI Pipeline Example (click to expand)</b></summary>
+   
+```yaml
+      version: 2.1
+      
+      jobs:
+        deploy:
+          docker:
+            - image: circleci/node:latest
+          steps:
+            - run:
+                name: "Notify Port of deployment"
+                command: |
+                  curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true \
+                  -H "Authorization: Bearer $PORT_API_TOKEN" \
+                  -d '{
+                    "identifier": "circleci-{{build_number}}",
+                    "title": "Deployment for CircleCI {{build_number}}",
+                    "properties": {
+                      "environment": "Production",
+                      "createdAt": "{{timestamp}}",
+                      "deploymentStatus": "Success"
+                    },
+                    "relations": {
+                      "service": {
+                        "combinator": "and",
+                        "rules": [
+                          {
+                            "property": "$title",
+                            "operator": "=",
+                            "value": "{{.repository.name}}"
+                          }
+                        ]
+                      }
+                    }
+                  }'
+                   ```
+   </details>
+  </TabItem>
+      
+  
+  <TabItem value="azure-pipelines" label="Azure Pipelines">
+      
+    Azure Pipelines can track deployments by integrating with Port's API in a similar manner. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/azure-pipelines/)
+
+   Add this example to your Azure Pipelines script to report deployments to Port:
+   <details>
+   <summary><b>Azure Pipelines Example (click to expand)</b></summary>
+   
+   ```yaml
+   trigger:
+   - master
+   
+   jobs:
+   - job: DeployToProd
+     steps:
+     - script: |
+         curl -X POST \
+         -H "Authorization: Bearer $PORT_API_TOKEN" \
+         -H "Content-Type: application/json" \
+         -d '{
+           "identifier": "azure-$(Build.BuildId)",
+           "title": "Deployment for Azure $(Build.BuildId)",
+           "properties": {
+             "environment": "Production",
+             "createdAt": "$(Build.QueuedTime)",
+             "deploymentStatus": "Success"
+           },
+           "relations": {
+             "service": {
+               "combinator": "and",
+               "rules": [
+                 {
+                   "property": "$title",
+                   "operator": "=",
+                   "value": "$(Build.Repository.Name)"
+                 }
+               ]
+             }
+           }
+         }' \
+         https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true
+   ```
+   
+   </details>
+
+  </TabItem>
+
+   
+  <TabItem value="codefresh" label="Codefresh">
+  Track deployments in Codefresh by integrating Port's API with your pipeline configurations. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/codefresh-workflow-template/)
+
+   Add this example to your Codefresh pipeline to report deployments to Port:
+   <details>
+   <summary><b>Codefresh Pipeline Example (click to expand)</b></summary>
+   
+   ```yaml
+   version: '1.0'
+   steps:
+     ReportToPort:
+       title: Reporting to Port
+       type: freestyle
+       image: curlimages/curl
+       commands:
+         - curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true \
+           -H "Authorization: Bearer $PORT_API_TOKEN" \
+           -d '{
+             "identifier": "codefresh-{{CF_BUILD_ID}}",
+             "title": "Deployment for Codefresh {{CF_BUILD_ID}}",
+             "properties": {
+               "environment": "Production",
+               "createdAt": "{{CF_BUILD_TIMESTAMP}}",
+               "deploymentStatus": "Success"
+             },
+             "relations": {
+             "service": {
+               "combinator": "and",
+               "rules": [
+                 {
+                   "property": "$title",
+                   "operator": "=",
+                   "value": "{{repository.name}}"
+                 }
+               ]
+             }
+           }
+           }'
+   ```
+   
+   </details>
+  </TabItem>
+
+  <TabItem value="gitlab" label="Gitlab">
+
+   Track GitLab pipeline deployments using a similar approach to report data to Port. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/gitlab-pipelines/)
+   
+   Add this example to your GitLab pipeline to report deployments to Port:
+   <details>
+   <summary><b>GitLab Pipeline Example (click to expand)</b></summary>
+   
+   ```yaml
+   stages:
+     - deploy
+   
+   deploy:
+     stage: deploy
+     script:
+       - curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true \
+         -H "Authorization: Bearer $PORT_API_TOKEN" \
+         -d '{
+           "identifier": "gitlab-{{CI_JOB_ID}}",
+           "title": "Deployment for GitLab {{CI_JOB_ID}}",
+           "properties": {
+             "environment": "Production",
+             "createdAt": "{{CI_JOB_TIMESTAMP}}",
+             "deploymentStatus": "Success"
+           },
+           "relations": {
+            "service": {
+              "combinator": "and",
+              "rules": [
+                {
+                  "property": "$title",
+                  "operator": "=",
+                  "value": "{{.project.name}}"
+                }
+              ]
+            }
+          }
+         }'
+   ```
+   </details>
+
+  </TabItem>
+
+
+   </Tabs>
 
 :::tip Service relation
 we use the **search relation** entity to map the deployment to the correct service based on the service's `$title`.
@@ -522,6 +542,8 @@ To learn more about using search relations,
 see [our documentation on Mapping Relations
 Using Search Queries](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries).
 :::
+
+
 
 
 </TabItem>
@@ -1323,17 +1345,33 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 
 
 <details>
-<summary><b>Setup Change Failure Rate Widget</b></summary>
+<summary><b>Change Lead Time Over Time</b></summary>
 
-1. Click **+ Widget** and select **Number Chart**
-2. Title: `Change Failure Rate`, (add the LineChart icon)
-3. Select `Display single property` and choose **Service** as the **Blueprint**
-4. Select an `Entity` and choose `Change Failure Rate` as the **Property**
+1. Click **+ Widget** and select **Line Chart**
+2. Title: `Change Lead Time Over Time`, (add the LineChart icon)
+3. Choose **Service** as the **Blueprint**
+4. Select an `Entity` and choose `Lead time for change` as the **Property**
+5. Select the preferred time interval
 
-   <img src="/img/guides/changeFailureRateDoraMetrics.png"  width="50%"/>
+   <img src="/img/guides/changeLeadTimeOverTimeDM.png"  width="50%"/>
 
-5. Click **Save**.
+6. Click **Save**.
 
+</details>
+
+
+<details>
+<summary><b>Deployments Frequency Over Time</b></summary>
+
+1. Click **+ Widget** and select **Line Chart**
+2. Title: `Deployments Frequency Over Time` (add the rocket icon)
+3. Select **Service** as the **Blueprint**
+4. Select `Monthly Deployment Frequency` as the **Property**
+5. Set **Time Interval** to `Month` and **Time Range** to `In the past 365 days`
+
+   <img src="/img/guides/deploymentFrequencyOverTime.png" width="50%"/>
+
+6. Click **Save**.
 </details>
 
 :::tip Metric widget groupings
