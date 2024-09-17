@@ -3512,6 +3512,48 @@ paths:
       responses:
         "200":
           description: Default Response
+  /v1/auth/access_token:
+    post:
+      tags:
+        - Authentication / Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientId:
+                  type: string
+                clientSecret:
+                  type: string
+              additionalProperties: false
+              required:
+                - clientId
+                - clientSecret
+        required: true
+      responses:
+        "200":
+          description: Authorized successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  accessToken:
+                    type: string
+                  expiresIn:
+                    type: number
+                  tokenType:
+                    type: string
+                additionalProperties: false
+                required:
+                  - accessToken
+                  - expiresIn
+                  - tokenType
+                description: Authorized successfully
   "/v1/blueprints/{blueprint_identifier}/entities":
     post:
       tags:
