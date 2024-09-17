@@ -561,36 +561,21 @@ Here’s how you can implement this:
 <summary><b>Releases and Tags config (click to expand)</b></summary>
 
 ```yaml showLineNumbers
-
-  - kind: release
-    selector:
-      query: "true"  
-    port:
+- kind: workflow-run
+   selector:
+   query: .head_branch == 'main'
+   port:
       entity:
-        mappings:
-          identifier: .release.name
-          title: Deployment for Release {{ .release.name }}
-          blueprint: '"deployment"'  
-          properties:
-            environment: '"Production"'  
-            createdAt: .release.created_at
-            deploymentStatus: '"Success"'  
-          relations:
-            tag: .release.tag_name
-            service: .repo.name
-  - kind: tag
-    selector:
-      query: "true"  
-    port:
-      entity:
-        mappings:
-          identifier: .tag.name
-          title: Tag {{ .tag.name }}
-          blueprint: '"tag"'  
-          properties:
-            commit_sha: .commit.sha
-          relations:
-            service: .repo.name
+         mappings:
+            identifier: .head_repository.name + '-' + (.run_number|tostring)
+            title: .head_repository.name + " Deployment on workflow"
+            blueprint: '"deployment"'
+            properties:
+               environment: '"Production"'
+               createdAt: .created_at
+               deploymentStatus: (.conclusion | ascii_upcase[0:1] + .[1:])
+            relations:
+               service: .head_repository.name
 
 ```
 
