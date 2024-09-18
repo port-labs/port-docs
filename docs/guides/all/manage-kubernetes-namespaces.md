@@ -541,4 +541,4 @@ Create the following automations using the JSON definitions below:
 
 Once all of the above components are created, you will have a the necessary setup to run the workflow described in the [scenario overview](#scenario-overview).
 
-You can use this chaining mechanism to create complex workflows for many use-cases, that involve multiple actions and automations, enabling you to automate and streamline your DevOps processes. 
+You can use this chaining mechanism to create complex workflows for many use-cases, that involve multiple actions and automations, enabling you to streamline your DevOps processes. 
