@@ -101,10 +101,10 @@ We can define a scorecard that checks that all of our services have a related do
 
 ### Validate number of related entities
 
-We want to track the deployment frequency of a team, and set rules to it. Checking the `Deployment` relation to the `Team` is not enough, we want to see how many there are.
-To achieve this, we will:
-1. Create an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property.md) to count the number of related entities (for example, the number of deployments in the past week)
-2. Add a scorecard with a rule based on that property.
+To effectively track the `Team` deployment frequency and set rules based on it, simply checking the `Deployment` relation to the Team is not enough—we need to know the exact number of deployments. To achieve this, we will:
+
+- Create an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property.md) to count the number of related entities (e.g., the number of deployments in the past week).
+- Add a scorecard with a rule based on that property.
 
 ```json showLineNumbers
 {
@@ -112,7 +112,7 @@ To achieve this, we will:
   "identifier": "dora_metrics",
   "rules": [
     {
-      "identifier": "deploymentFrequency",
+      "identifier": "deployFreqBronze",
       "title": "Deployment frequency > 2",
       "level": "Bronze",
       "query": {
@@ -121,13 +121,13 @@ To achieve this, we will:
           {
             "operator": ">",
             "property": "deployment_frequency",
-            "valu": 3
+            "value": 3
           }
         ]
       }
     },
     {
-      "identifier": "deploymentFrequency",
+      "identifier": "deployFreqSilver",
       "title": "Deployment frequency > 4",
       "level": "Silver",
       "query": {
@@ -136,7 +136,7 @@ To achieve this, we will:
           {
             "operator": ">",
             "property": "deployment_frequency",
-            "valu": 4
+            "value": 4
           }
         ]
       }
