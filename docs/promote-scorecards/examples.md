@@ -99,11 +99,11 @@ We can define a scorecard that checks that all of our services have a related do
 }
 ```
 
-### Validate number of related entities
+### DORA metrics based on number of deployments
 
-To effectively track the `Team` deployment frequency and set rules based on it, simply checking the `Deployment` relation to the Team is not enough—we need to know the exact number of deployments. To achieve this, we will:
+To assess the deployment frequency of a `Service`, simply checking the `Deployment` relation is not enough—we need to know the exact number of deployments. To achieve this, we will:
 
-- Create an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property.md) to count the number of related entities (e.g., the number of deployments in the past week).
+- Add an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property.md) to the `Service` blueprtint that counts the number of related `Deployment` entities.
 - Add a scorecard with a rule based on that property.
 
 ```json showLineNumbers
