@@ -197,7 +197,9 @@ Create the following actions using the JSON definitions below:
 
 #### Approve deletion of a namespace
 
-- Action definition:
+- Action definition:  
+  Remember to replace the `GITLAB_PROJECT_ID` and `GITLAB_TRIGGER_TOKEN` placeholders with your values.  
+  To learn how to obtain these values, see the [GitLab backend documentation](/actions-and-automations/setup-backend/gitlab-pipeline/saas#create-the-webhook-url).
   <details>
   <summary><b>Approve deletion of a namespace</b></summary>
 
@@ -228,7 +230,7 @@ Create the following actions using the JSON definitions below:
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://gitlab.com/api/v4/projects/59636748/ref/main/trigger/pipeline?token=glptt-84ad70275d319428cecdca7687ea9af4746cdd36",
+      "url": "https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}",
       "agent": false,
       "synchronized": false,
       "method": "POST",
@@ -255,51 +257,100 @@ Create the following actions using the JSON definitions below:
   <details>
   <summary><b>GitLab pipeline</b></summary>
 
-  ```json showLineNumbers
-  {
-    "identifier": "delete_namespace",
-    "title": "Approve the deletion of a k8s namespace",
-    "trigger": {
-      "type": "self-service",
-      "operation": "DAY-2",
-      "userInputs": {
-        "properties": {},
-        "required": [],
-        "order": []
-      },
-      "condition": {
-        "type": "SEARCH",
-        "rules": [
-          {
-            "operator": "=",
-            "property": "current_status",
-            "value": "Namespace found, waiting for approval"
-          }
-        ],
-        "combinator": "and"
-      },
-      "blueprintIdentifier": "workflow_delete_namespace"
-    },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "https://gitlab.com/api/v4/projects/59636748/ref/main/trigger/pipeline?token=glptt-84ad70275d319428cecdca7687ea9af4746cdd36",
-      "agent": false,
-      "synchronized": false,
-      "method": "POST",
-      "headers": {
-        "RUN_ID": "{{ .run.id }}"
-      },
-      "body": {
-        "runId": "{{ .run.id }}",
-        "blueprint": "{{ .action.blueprint }}",
-        "entity": "{{ .entity }}",
-        "namespace": "{{ .entity.relations.namespace }}",
-        "workflow": "{{ .entity.identifier }}",
-        "approved_by": "{{.trigger.by.user.email}}"
-      }
-    },
-    "requiredApproval": false
-  }
+  ```yaml showLineNumbers
+  stages:
+  - prerequisites
+  - delete-namespace
+  - port-update
+
+  image:
+    name: hashicorp/terraform:light
+    entrypoint:
+      - '/usr/bin/env'
+      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+  variables:
+    PORT_CLIENT_ID: ${PORT_CLIENT_ID}
+    PORT_CLIENT_SECRET: ${PORT_CLIENT_SECRET}
+    PORT_API_URL: "https://api.getport.io/v1/blueprints/k8s_namespace/entities"
+    PORT_API_WORKFLOW_URL: "https://api.getport.io/v1/blueprints/workflow_delete_namespace/entities"
+    PORT_ACTIONS_URL: "https://api.getport.io/v1/actions/runs"
+
+  before_script:
+    - apk update
+    - apk add --upgrade curl jq -q
+
+  fetch-port-access-token:
+    stage: prerequisites
+    except:
+      - pushes
+    script:
+      - |
+        echo "Getting access token from Port API"
+        accessToken=$(curl -X POST \
+          -H 'Content-Type: application/json' \
+          -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
+          -s 'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
+    
+        echo "ACCESS_TOKEN=$accessToken" >> data.env
+        runId=$(cat $TRIGGER_PAYLOAD | jq -r '.runId')
+        namespace=$(cat $TRIGGER_PAYLOAD | jq -r '.namespace')
+        workflow=$(cat $TRIGGER_PAYLOAD | jq -r '.workflow')
+        approved_by=$(cat $TRIGGER_PAYLOAD | jq -r '.approved_by')
+        echo "runId=$runId" >> data.env
+        echo "namespace=$namespace" >> data.env
+        echo "workflow=$workflow" >> data.env
+        echo "approved_by=$approved_by" >> data.env
+        curl -X POST \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: Bearer $accessToken" \
+          -d '{"message":"🏃‍♂️ Deleting namespace"}' \
+          "https://api.getport.io/v1/actions/runs/$runId/logs"
+        curl -X PATCH \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: Bearer $accessToken" \
+          -d '{"link":"'"$CI_PIPELINE_URL"'"}' \
+          "https://api.getport.io/v1/actions/runs/$runId"
+    artifacts:
+      reports:
+        dotenv: data.env
+    
+  delete-namespace:
+    stage: delete-namespace
+    dependencies:
+      - fetch-port-access-token
+    script:
+      - |
+        curl -X 'DELETE' \
+          -H 'accept: application/json' \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          "${PORT_API_URL}/${namespace}?delete_dependents=false"
+
+        curl -X PATCH \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -d "{\"identifier\": \"${workflow}\", \"properties\": {\"current_status\": \"Approved/Deleted\"},{\"approved_by\": {\"${approved_by}\""}"}}" \
+          "${PORT_API_WORKFLOW_URL}/${workflow}"
+
+        # For demonstration purposes, simulate success status
+        curl -X PATCH \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -d "{\"identifier\": \"${workflow}\", \"properties\": {\"current_status\": \"Approved/Deleted\", \"approved_by\": \"${approved_by}\"}}" \
+          "${PORT_API_WORKFLOW_URL}/${workflow}"
+
+  send-data-to-port:
+    stage: port-update
+    dependencies:
+      - fetch-port-access-token
+    script:
+      - |     
+        # For demonstration purposes, simulate success status
+        curl -X PATCH \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -d '{"status": "SUCCESS", "message": {"run_status": "Run completed successfully!"}}' \
+          "${PORT_ACTIONS_URL}/$runId"
   ```
   </details>
 
@@ -311,7 +362,9 @@ Create the following automations using the JSON definitions below:
 
 #### Check namespace details
 
-- Automation definition:
+- Automation definition:  
+  Remember to replace the `GITLAB_PROJECT_ID` and `GITLAB_TRIGGER_TOKEN` placeholders with your values.  
+  To learn how to obtain these values, see the [GitLab backend documentation](/actions-and-automations/setup-backend/gitlab-pipeline/saas#create-the-webhook-url).
   <details>
   <summary><b>Check namespace details</b></summary>
 
@@ -329,7 +382,7 @@ Create the following automations using the JSON definitions below:
     },
     "invocationMethod": {
       "type": "WEBHOOK",
-      "url": "https://gitlab.com/api/v4/projects/59634184/ref/main/trigger/pipeline?token=glptt-432b3bc15fe91f9fc9b3511bafef103b18d04bd5",
+      "url": "https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}",
       "agent": false,
       "synchronized": false,
       "method": "POST",
@@ -352,34 +405,88 @@ Create the following automations using the JSON definitions below:
   <details>
   <summary><b>GitLab pipeline</b></summary>
 
-  ```json showLineNumbers
-  {
-    "identifier": "triggerNamspaceCheckerAfterRequest",
-    "title": "Check namespace details",
-    "description": "When a request is made to delete a k8s namespace, check its details.",
-    "trigger": {
-      "type": "automation",
-      "event": {
-        "type": "ENTITY_CREATED",
-        "blueprintIdentifier": "workflow_delete_namespace"
-      }
-    },
-    "invocationMethod": {
-      "type": "WEBHOOK",
-      "url": "https://gitlab.com/api/v4/projects/59634184/ref/main/trigger/pipeline?token=glptt-432b3bc15fe91f9fc9b3511bafef103b18d04bd5",
-      "agent": false,
-      "synchronized": false,
-      "method": "POST",
-      "headers": {
-        "RUN_ID": "{{ .run.id }}"
-      },
-      "body": {
-        "RUN_ID": "{{ .run.id }}",
-        "workflow": "{{ .event.context.entityIdentifier }}"
-      }
-    },
-    "publish": true
-  }
+  ```yaml showLineNumbers
+  stages:
+    - prerequisites
+    - check-namespace
+    - port-update
+
+  image:
+    name: hashicorp/terraform:light
+    entrypoint:
+      - '/usr/bin/env'
+      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+  variables:
+    PORT_CLIENT_ID: ${PORT_CLIENT_ID}
+    PORT_CLIENT_SECRET: ${PORT_CLIENT_SECRET}
+    PORT_API_URL: "https://api.getport.io/v1/blueprints/workflow_delete_namespace/entities"
+    PORT_ACTIONS_URL: "https://api.getport.io/v1/actions/runs"
+    PORT_API_URL_NAMESPACE: "https://api.getport.io/v1/blueprints/k8s_namespace/entities/"
+
+  before_script:
+    - apk update
+    - apk add --upgrade curl jq -q
+
+  fetch-port-access-token:
+    stage: prerequisites
+    except:
+      - pushes
+    script:
+      - |
+        echo "Getting access token from Port API"
+        accessToken=$(curl -X POST \
+          -H 'Content-Type: application/json' \
+          -d '{"clientId": "'"$PORT_CLIENT_ID"'", "clientSecret": "'"$PORT_CLIENT_SECRET"'"}' \
+          -s 'https://api.getport.io/v1/auth/access_token' | jq -r '.accessToken')
+    
+        echo "ACCESS_TOKEN=$accessToken" >> data.env
+        cat $TRIGGER_PAYLOAD 
+        runId=$(cat $TRIGGER_PAYLOAD | jq -r '.RUN_ID')
+        workflow=$(cat $TRIGGER_PAYLOAD | jq -r '.workflow')
+        echo "RUN_ID=$runId" >> data.env
+        echo "workflow=$workflow" >> data.env
+        curl -X POST \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: Bearer $accessToken" \
+          -d '{"message":"🏃‍♂️ Checking namespace data"}' \
+          "https://api.getport.io/v1/actions/runs/$runId/logs"
+        curl -X PATCH \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: Bearer $accessToken" \
+          -d '{"link":"'"$CI_PIPELINE_URL"'"}' \
+          "https://api.getport.io/v1/actions/runs/$runId"
+    artifacts:
+      reports:
+        dotenv: data.env
+
+  check-namespace:
+    stage: check-namespace
+    needs:
+      - job: fetch-port-access-token
+        artifacts: true
+    script:
+      - echo "Checking Namespace"
+      - sleep 1
+
+  send-data-to-port:
+    stage: port-update
+    dependencies:
+      - fetch-port-access-token
+    script:
+      - |      
+        curl -X PATCH \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -d "{\"identifier\": \"${workflow}\", \"properties\": {\"current_status\": \"Namespace found, waiting for approval\"}}" \
+          "${PORT_API_URL}/${workflow}"
+
+        # For demonstration purposes, simulate success status
+        curl -X PATCH \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -d '{"status": "SUCCESS", "message": {"run_status": "Run completed successfully!"}}' \
+          "${PORT_ACTIONS_URL}/$RUN_ID"
   ```
   </details>
 
