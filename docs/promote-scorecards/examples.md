@@ -101,7 +101,7 @@ We can define a scorecard that checks that all of our services have a related do
 
 ### DORA metrics based on number of deployments
 
-To assess the deployment frequency of a `Service`, simply checking the `Deployment` relation is not enough—we need to know the exact number of deployments. To achieve this, we will:
+To assess the deployment frequency of a `Service`, simply checking the `Deployment` relation is not enough — we need to know the exact number of deployments. To achieve this, we will:
 
 - Add an [aggregation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property.md) to the `Service` blueprtint that counts the number of related `Deployment` entities.
 - Add a scorecard with a rule based on that property.
