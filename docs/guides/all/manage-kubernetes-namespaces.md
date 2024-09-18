@@ -151,6 +151,7 @@ Create the following actions using the JSON definitions below:
 
 #### Request deletion of a namespace
 
+This action can be executed by a developer to request the deletion of a Kubernetes namespace. It creates a `workflow_delete_namespace` entity in Port representing the deletion request.
 - Action definition:  
   <details>
   <summary><b>Request deletion of a namespace</b></summary>
@@ -197,6 +198,7 @@ Create the following actions using the JSON definitions below:
 
 #### Approve deletion of a namespace
 
+This action can be executed by an admin to approve the deletion of a Kubernetes namespace. It deletes the namespace and updates the status of the `workflow_delete_namespace` entity in Port to *"Approved/Deleted"*.
 - Action definition:  
   Remember to replace the `GITLAB_PROJECT_ID` and `GITLAB_TRIGGER_TOKEN` placeholders with your values.  
   To learn how to obtain these values, see the [GitLab backend documentation](/actions-and-automations/setup-backend/gitlab-pipeline/saas#create-the-webhook-url).
@@ -362,6 +364,7 @@ Create the following automations using the JSON definitions below:
 
 #### Check namespace details
 
+This automation is triggered when an entity of type `workflow_delete_namespace` is created. It checks the details of the namespace and updates the entity's status in Port.
 - Automation definition:  
   Remember to replace the `GITLAB_PROJECT_ID` and `GITLAB_TRIGGER_TOKEN` placeholders with your values.  
   To learn how to obtain these values, see the [GitLab backend documentation](/actions-and-automations/setup-backend/gitlab-pipeline/saas#create-the-webhook-url).
@@ -491,6 +494,8 @@ Create the following automations using the JSON definitions below:
   </details>
 
 #### Request approval
+
+This automation is triggered when the status of an entity of type `workflow_delete_namespace` is updated to *"Namespace found, waiting for approval"*. It sends a Slack message requesting approval from an admin.
 
 - Automation definition:
   <details>
