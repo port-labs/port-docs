@@ -24,6 +24,15 @@ This guide will cover the four key metrics: Deployment Frequency, Lead Time, Cha
 - Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD or GitHub Actions.
 :::
 
+:::tip Adding JSON Schema Using Port's UI
+1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
+2. **Click on "+ Blueprint"** to create a new blueprint.
+3. **Click on the `{...}` button** in the top right corner, and choose **"Edit JSON"**.
+4. **Add this JSON schema** to define the properties and relations needed for your blueprint.
+
+By following these steps, you can paste and manage the JSON schema required to track DORA metrics in Port.
+:::
+
 ## Tracking Deployment
 
 In this section, we will cover how to track your team's deployments. Deployments refer to releasing new or updated code into various environments, such as **Production**, **Staging**, or **Testing**. Tracking deployments helps you understand how efficiently your team ships features and monitors release stability.
