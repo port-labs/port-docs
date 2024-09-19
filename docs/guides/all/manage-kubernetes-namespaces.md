@@ -19,6 +19,10 @@ This guides aims to:
 - Demonstrate the power and flexibility of chaining self-service actions and automations in Port.
 - Provide a real-world example of how to use action chaining to manage Kubernetes namespaces using Port.
 
+<center>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/gj6NnfOihSU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+</center>
+
 ## Scenario overview
 
 This guide will demonstrate how to create the following workflow:
