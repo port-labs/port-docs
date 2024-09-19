@@ -897,29 +897,33 @@ Add the following to the aggregated property in service:
       ]
     },
     "calculationSpec": {
-      "func": "count",
-      "calculationBy": "entities"
+       "func": "average", 
+       "averageOf": "month",
+       "measureTimeBy": "$createdAt",
+       "calculationBy": "entities"
     }
-  },
-  "total_deployments": {
-    "title": "Total Deployments",
-    "type": "number",
-    "target": "deployment",
-    "query": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "deploymentStatus",
-          "operator": "=",
-          "value": "Success"
-        }
-      ]
-    },
-    "calculationSpec": {
-      "func": "count",
-      "calculationBy": "entities"
-    }
-  }
+  }, 
+   "total_deployments": {
+      "title": "Total Monthly Deployment Frequency",
+      "type": "number",
+      "target": "deployment",
+      "query": {
+         "combinator": "and",
+         "rules": [
+            {
+               "property": "deploymentStatus",
+               "operator": "=",
+               "value": "Success"
+            }
+         ]
+      },
+      "calculationSpec": {
+         "func": "average",
+         "averageOf": "month",
+         "measureTimeBy": "$createdAt",
+         "calculationBy": "entities"
+      }
+   }
 }
 ```
 </details>
