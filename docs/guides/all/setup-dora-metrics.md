@@ -81,8 +81,8 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
     "required": []
   },
   "mirrorProperties": {
-    "leadTimeDays": {
-      "title": "Lead Time (Days)",
+    "leadTimeHours": {
+      "title": "Lead Time (Hours)",
       "path": "pullRequest.leadTimeDays"
     }
   },
