@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Master the process of adding tags to your ECR repository in Port with this step-by-step guide for better resource management.
 ---
 
 # Add tags to ECR repository

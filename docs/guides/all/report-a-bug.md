@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to report a bug in Port, ensuring prompt issue resolution and improving overall platform reliability.
 ---
 
 # Report a bug

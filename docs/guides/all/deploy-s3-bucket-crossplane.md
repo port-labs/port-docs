@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 displayed_sidebar: null
+description: Learn how to deploy an S3 bucket using Crossplane in Port, enabling flexible and efficient cloud resource management.
 ---
 
 import Tabs from "@theme/Tabs"

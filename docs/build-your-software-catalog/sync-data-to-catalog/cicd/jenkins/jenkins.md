@@ -4,10 +4,10 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_jenkins-docker-parameters.mdx"
-import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
@@ -61,20 +61,20 @@ This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
 | Parameter                           | Description                                                                                                        | Required |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                               | ✅       |
-| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                           | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |  ✅       |
-| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅       |
-| `integration.type`                  | The integration type                                                                                               | ✅       |
-| `integration.eventListener.type`    | The event listener type                                                                                            | ✅       |
-| `integration.secrets.jenkinsUser`   | The Jenkins username                                                                                               | ✅       |
-| `integration.secrets.jenkinsToken`  | The Jenkins password or token                                                                                     | ✅       |
-| `integration.config.jenkinsHost`    | The Jenkins host                                                                                                  | ✅       |
-| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jenkins  | ❌       |
-| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
-| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
-| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌       |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
+| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                               | ✅      |
+| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                           | ✅      |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |  ✅      |
+| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅      |
+| `integration.type`                  | The integration type                                                                                               | ✅      |
+| `integration.eventListener.type`    | The event listener type                                                                                            | ✅      |
+| `integration.secrets.jenkinsUser`   | The Jenkins username                                                                                               | ✅      |
+| `integration.secrets.jenkinsToken`  | The Jenkins password or token                                                                                     | ✅      |
+| `integration.config.jenkinsHost`    | The Jenkins host                                                                                                  | ✅      |
+| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jenkins  | ✅       |
+| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌      |
+| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌      |
+| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌      |
 
 
 <br/>
@@ -442,6 +442,14 @@ The integration makes use of the [JQ JSON processor](https://stedolan.github.io/
 
 The integration configuration determines which resources will be queried from Jenkins, and which entities and properties will be created in Port.
 
+:::tip Supported resources
+The following resources can be used to map data from Jenkins, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+
+- `job` - (`<your-jenkins-host>/api/json`)
+- `build` - (`<your-jenkins-host>/api/json`)
+- `user` - (`<your-jenkins-host>/people/api/json`)
+
+:::
 
 - The root key of the integration configuration is the `resources` key:
 

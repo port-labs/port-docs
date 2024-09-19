@@ -124,7 +124,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ### Azure
 
 - [Azure exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md)
-- [Azure Active Directory (AD) SSO](/sso-rbac/sso-providers/azure-ad.md)
+- [Azure Active Directory (AD) SSO](/sso-rbac/sso-providers/oidc/azure-ad.md)
 - [Map resource groups, storage groups, compute resources database resources and more](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md)
 - [Add tags to Azure resources](/guides/all/tag-azure-resource)
 
@@ -270,13 +270,17 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Jenkins
 
-- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/jenkins)
+- [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/cicd/jenkins)
 - [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
 - [Jenkins webhook integration with Port](/build-your-software-catalog/custom-integration/webhook/examples/jenkins.md)
 - [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
 - [GitHub scaffolder using Jenkins](/guides/all/scaffold-github-using-cookiecutter.md)
 - [Bitbucket scaffolder using Jenkins](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
 - [Create Github pull request](/guides/all/create-github-pull-request)
+
+## Octopus Deploy
+
+- [Octopus Deploy integration](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
 
 ## CodeFresh
 
@@ -311,5 +315,5 @@ This page contains a list of Port's available integrations, organized by the pla
 - [OneLogin SSO](/sso-rbac/sso-providers/oidc/onelogin.md)
 - [JumpCloud SSO](/sso-rbac/sso-providers/saml/jumpcloud.md)
 - [Google workspace SSO](/sso-rbac/sso-providers/saml/google-workspace.md)
-- [Azure Active Directory (AD) SSO OIDC](/sso-rbac/sso-providers/azure-ad.md)
+- [Azure Active Directory (AD) SSO OIDC](/sso-rbac/sso-providers/oidc/azure-ad.md)
 - [Azure Active Directory (AD) SSO SAML](/sso-rbac/sso-providers/saml/azure-ad.md)

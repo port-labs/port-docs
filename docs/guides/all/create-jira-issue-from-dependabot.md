@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to create Jira issues from Dependabot alerts in Port, ensuring timely vulnerability tracking and resolution.
 ---
 
 # Create Jira Issue from Dependabot Alert

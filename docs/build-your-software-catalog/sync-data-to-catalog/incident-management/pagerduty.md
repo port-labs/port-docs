@@ -49,19 +49,19 @@ This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
 | Parameter                        | Description                                                                                                             | Required |
-| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                  | Your port client id                                                                                                     | ✅       |
-| `port.clientSecret`              | Your port client secret                                                                                                 | ✅       |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
-| `integration.identifier`         | Change the identifier to describe your integration                                                                      | ✅       |
-| `integration.type`               | The integration type                                                                                                    | ✅       |
-| `integration.eventListener.type` | The event listener type                                                                                                 | ✅       |
-| `integration.secrets.token`      | PagerDuty API token                                                                                                | ✅       |
-| `integration.config.apiUrl`      | Pagerduty api url. If not specified, the default will be https://api.pagerduty.com                                      | ✅       |
-| `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in PagerDuty | ❌       |
-| `scheduledResyncInterval`        | The number of minutes between each resync                                                                               | ❌       |
-| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping           | ❌       |
-| `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true  | ❌       |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------- |
+| `port.clientId`                  | Your port client id                                                                                                     | ✅      |
+| `port.clientSecret`              | Your port client secret                                                                                                 | ✅      |
+| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅      |
+| `integration.identifier`         | Change the identifier to describe your integration                                                                      | ✅      |
+| `integration.type`               | The integration type                                                                                                    | ✅      |
+| `integration.eventListener.type` | The event listener type                                                                                                 | ✅      |
+| `integration.secrets.token`      | PagerDuty API token                                                                                                | ✅      |
+| `integration.config.apiUrl`      | Pagerduty api url. If not specified, the default will be https://api.pagerduty.com                                      | ✅      |
+| `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in PagerDuty | ✅       |
+| `scheduledResyncInterval`        | The number of minutes between each resync                                                                               | ❌      |
+| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping           | ❌      |
+| `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true  | ❌      |
 
 <br/>
 

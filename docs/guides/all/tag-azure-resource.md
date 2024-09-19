@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 displayed_sidebar: null
+description: Learn how to tag Azure resources in Port, improving organization and management of your cloud infrastructure.
 ---
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"

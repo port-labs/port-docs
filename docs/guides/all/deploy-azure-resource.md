@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 displayed_sidebar: null
+description: Follow this guide to deploy Azure resources in Port, ensuring efficient cloud management and streamlined operations.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"

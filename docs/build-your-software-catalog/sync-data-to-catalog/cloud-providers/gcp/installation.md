@@ -11,7 +11,7 @@ import GivePermissionsToNewServiceAccount from './\_give-permissions-to-new-serv
 
 ## Installation Methods
 
-The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials. 
+The Google Cloud Ocean integration relies on the Google Cloud Client libraries, which are authenticated using Application Default Credentials.
 
 In these guides, you can install the integration in various ways, according to the authentication method + platform you choose to run the integration on.
 
@@ -184,6 +184,10 @@ It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [mod
 - [hashicorp/google-beta Terraform Provider](https://registry.terraform.io/providers/hashicorp/google-beta/latest) >= 5.25
 - [A logged in gCloud CLI](https://cloud.google.com/sdk/gcloud) with enough [Permissions](#required-permissions-to-run-terraform-apply)
 - [Artifact Registry Image](#artifact-registry-image)
+- Enabled APIs:
+  - [Cloud Asset API](https://cloud.google.com/asset-inventory/docs/export-asset-metadata)
+  - [Cloud Resource Manager API](https://cloud.google.com/resource-manager/docs/manage-google-cloud-resources)
+  - [Cloud Quota API](https://cloud.google.com/docs/quotas/development-environment)
 
 <h2> Artifact Registry Image </h2>
 
@@ -297,28 +301,29 @@ The Port GCP integration's Terraform module offers a set of configurations:
 
 | Configuration | Default value | Required | Description |
 | --- | --- | --- | --- |
-| port_client_id |  | True | The Port client id.  |
-| port_client_secret |  | True | The Port client secret.  |
-| gcp_organization |  | True | Your Google Cloud Organization Id.  |
-| gcp_ocean_setup_project |  | True | The Project ot create all the Integration's infrastructure (Topic, Subscription, Service account etc.) on.  |
-| gcp_ocean_integration_image |  | True | The Artifact Registry / Dockerhub image to deploy.  |
-| integration_identifier |  | True | The Integration's identifier in Port  |
-| port_base_url | 'https://api.getport.io' | False | The Port Base url.  |
-| gcp_included_projects | [] | False | The Projects list you want the integration to collect from. If left empty, It will collect *All* projects in the organization.  |
-| gcp_excluded_projects | [] | False | The Projects list you want the integration NOT to collect from. This will be overriden by any value in gcp_included_projects besides []. |
-| assets_types_for_monitoring | ["cloudresourcemanager.googleapis.com/Organization", "cloudresourcemanager.googleapis.com/Project", "storage.googleapis.com/Bucket", "cloudfunctions.googleapis.com/CloudFunction", "pubsub.googleapis.com/Subscription", "pubsub.googleapis.com/Topic"] | False | The list of asset types the integration will digest real-time events for.  |
-| ocean_integration_service_account_permissions | ["cloudasset.assets.exportResource", "cloudasset.assets.listCloudAssetFeeds", "cloudasset.assets.listResource", "cloudasset.assets.searchAllResources", "cloudasset.feeds.create", "cloudasset.feeds.list", "pubsub.topics.list", "pubsub.topics.get", "resourcemanager.projects.get", "resourcemanager.projects.list", "resourcemanager.folders.get", "resourcemanager.folders.list", "resourcemanager.organizations.get", "run.routes.invoke", "run.jobs.run"] | False | The permissions granted to the integration's service_account. We recommend not changing it to prevent unexpected errors.  |
-| assets_feed_topic_id | "ocean-integration-topic" | False | The name of the topic created to recieve real time events.  |
-| assets_feed_id | "ocean-gcp-integration-assets-feed" | False | The ID for the Ocean GCP Integration feed.  |
-| service_account_name | "ocean-service-account" | False | The name of the service account used by the Ocean integration.  |
-| role_name | "OceanIntegrationRole" | False | The name of the role created for the Integration's Service account.  |
-| gcp_ocean_integration_cloud_run_location | "europe-west1" | False | Location in which the Cloud Run will run.  |
-| environment_variables | [] | False | List of environment variables set to the Cloud Run job. We recommend not changing this variable.  |
-| initialize_port_resources | True | False | Boolean to initialize Port resources.  |
-| event_listener | Polling | False | Port's event listener configurations.  |
-| integration_version | "latest" | False | The version of the integration to deploy.  |
-| integration_type | "gcp" | False | The type of the integration.  |
-| scheduled_resync_interval | 1440 | False | The interval to resync the integration (in minutes).  |
+| `port_client_id` |  | True | The Port client id.  |
+| `port_client_secret` |  | True | The Port client secret.  |
+| `gcp_organization` |  | True | Your Google Cloud Organization Id.  |
+| `gcp_ocean_setup_project` |  | True | The Project ot create all the Integration's infrastructure (Topic, Subscription, Service account etc.) on.  |
+| `gcp_ocean_integration_image` |  | True | The Artifact Registry / Dockerhub image to deploy.  |
+| `integration_identifier` |  | True | The Integration's identifier in Port  |
+| `port_base_url` | 'https://api.getport.io' | False | The Port Base url.  |
+| `gcp_included_projects` | [] | False | The Projects list you want the integration to collect from. If left empty, It will collect *All* projects in the organization.  |
+| `gcp_excluded_projects` | [] | False | The Projects list you want the integration NOT to collect from. This will be overriden by any value in gcp_included_projects besides []. |
+| `assets_types_for_monitoring` | ["cloudresourcemanager.googleapis.com/Organization", "cloudresourcemanager.googleapis.com/Project", "storage.googleapis.com/Bucket", "cloudfunctions.googleapis.com/CloudFunction", "pubsub.googleapis.com/Subscription", "pubsub.googleapis.com/Topic"] | False | The list of asset types the integration will digest real-time events for.  |
+| `ocean_integration_service_account_permissions` | ["cloudasset.assets.exportResource", "cloudasset.assets.listCloudAssetFeeds", "cloudasset.assets.listResource", "cloudasset.assets.searchAllResources", "cloudasset.feeds.create", "cloudasset.feeds.list", "pubsub.topics.list", "pubsub.topics.get", "pubsub.subscriptions.list", "pubsub.subscriptions.get", "resourcemanager.projects.get", "resourcemanager.projects.list", "resourcemanager.folders.get", "resourcemanager.folders.list", "resourcemanager.organizations.get", "cloudquotas.quotas.get", "run.routes.invoke", "run.jobs.run"] | False | The permissions granted to the integration's service_account. We recommend not changing it to prevent unexpected errors.  |
+| `assets_feed_topic_id` | "ocean-integration-topic" | False | The name of the topic created to recieve real time events.  |
+| `assets_feed_id` | "ocean-gcp-integration-assets-feed" | False | The ID for the Ocean GCP Integration feed.  |
+| `service_account_name` | "ocean-service-account" | False | The name of the service account used by the Ocean integration.  |
+| `role_name` | "OceanIntegrationRole" | False | The name of the role created for the Integration's Service account.  |
+| `gcp_ocean_integration_cloud_run_location` | "europe-west1" | False | Location in which the Cloud Run will run.  |
+| `environment_variables` | [] | False | List of environment variables set to the Cloud Run job. We recommend not changing this variable.  |
+| `initialize_port_resources` | True | False | Boolean to initialize Port resources.  |
+| `event_listener` | Polling | False | Port's event listener configurations.  |
+| `integration_version` | "latest" | False | The version of the integration to deploy.  |
+| `integration_type` | "gcp" | False | The type of the integration.  |
+| `scheduled_resync_interval` | 1440 | False | The interval to resync the integration (in minutes).  |
+| `ocean_service_account_custom_roles` | [] | False | A list of custom roles you want to grant the Integration's Service account. The module will grant these permissions to every available project and to the setup project `gcp_ocean_setup_project`. Example value: ["organizations/1234567890/roles/MyCustomRole", "organizations/1234567890/roles/MyOtherCustomRole"]  |
 
 <h2> Optional - Scaling the permissions </h2>
 

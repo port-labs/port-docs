@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 displayed_sidebar: null
+description: Learn how to sync an ArgoCD app in Port, ensuring your deployments are up-to-date and accurately reflected.
 ---
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"

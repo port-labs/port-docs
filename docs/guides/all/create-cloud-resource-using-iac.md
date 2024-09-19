@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 displayed_sidebar: null
+description: Learn how to create cloud resources using Infrastructure as Code (IaC) in Port for efficient and automated deployments.
 ---
 
 import Tabs from "@theme/Tabs"

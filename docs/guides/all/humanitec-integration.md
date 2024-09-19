@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-description: Ingest Humanitec applications, environments, workloads, resources and resource graphs into your catalog
+description: Learn how to integrate Humanitec with Port, enabling seamless application deployment and environment management.
 title: Humanitec Integration
 displayed_sidebar: null
 ---
