@@ -738,5 +738,13 @@ export const availableGuides = [
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/ingest-dependencies-from-package-json-to-service",
+    },
+    {
+        title: "Manage Kubernetes namespaces via a Port workflow",
+        description: "Chain actions and automations to automate the deletion of Kubernetes namespaces",
+        tags: ["K8s for devs", "Actions", "Automations", "GitLab"],
+        logos: ["Kubernetes", "GitLab"],
+        // category: "Getting started",
+        link: "/guides/all/manage-kubernetes-namespaces",
     }
 ]
