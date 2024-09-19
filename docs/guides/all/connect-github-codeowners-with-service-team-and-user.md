@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to connect GitHub Codeowners with service teams in Port, ensuring seamless collaboration and code ownership.
 ---
 
 import Tabs from "@theme/Tabs"

@@ -7,6 +7,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PayloadAdvancedFunctions from '/docs/actions-and-automations/templates/_payload_advanced_functions.mdx'
 import BackendTypesJson from '/docs/actions-and-automations/templates/_backend-types-json.md'
+import ExecuteActionLocations from '/docs/actions-and-automations/create-self-service-experiences/templates/_execute_action_locations.mdx'
 
 # Setup backend
 
@@ -147,3 +148,7 @@ ___
 
 Once the backend is set up, the action is ready to be used.  
 Optionally, you can [configure permissions and/or manual approval](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) for your actions to control who is allowed to execute them.
+
+### Execute the action
+
+<ExecuteActionLocations />

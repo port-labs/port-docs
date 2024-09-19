@@ -23,6 +23,27 @@ The entity input type can be used to reference any existing entity from the soft
 
 In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Domain` input is an entity input. 🎬
 
+## Sorting entities
+
+When using the `entity` input type, a user executing the action will see a dropdown list of entities from the specified blueprint.  
+By default, the entities are sorted in **ascending** order based on the **entity's title**.
+
+In some cases, you may have a large number of entities and want to sort them based on a specific property.  
+The entities can be sorted in either **ascending** or **descending** order based on a specified property, provided that the property is not of type `object` or `array`.  
+
+This is done in the action form when creating the entity input, for example:
+
+<img src="/img/self-service-actions/setup-frontend/sortEntityInput.png" width="50%" border="1px" />
+<br/><br/>
+
+When executing the action, the entities will be sorted based on the specified property, in the selected order.  
+In this case, they are sorted by `Last Update`, descending:
+
+<img src="/img/self-service-actions/setup-frontend/sortedEntityInput.png" width="60%" border="1px" />
+<br/><br/>
+
+This can also be done when using Port's API, see the `sort` key in the JSON structure below.
+
 ## Entity input structure
 
 The entity is represented by the unique `entity` _format_ and the `blueprint` key that accompanies it, as shown in the following section:
@@ -36,7 +57,12 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
     // highlight-start
     "type": "string",
     "format": "entity",
-    "blueprint": "myBlueprint"
+    "blueprint": "myBp",
+    "sort": {
+      "property": "propertyIdentifier",
+      // order should have either "ASC" or "DESC" value
+      "order": "ASC/DESC"
+    }
     // highlight-end
   }
 }
@@ -44,10 +70,13 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
 
 ### Structure table
 
-| Field                        | Description                                                                               | Notes                                                       |
-| ---------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| `"format": "entity"`         | Used to specify that this is an entity input                                              | **Required**                                                |
-| `"blueprint": "myBlueprint"` | Used to specify the identifier of the target blueprint that entities will be queried from | **Required**. Must specify an existing blueprint identifier |
+| Field | Description | Notes |
+| ----- | ----------- | ----- |
+| `"format":"entity"` &nbsp; &nbsp; &nbsp; &nbsp; | Used to specify that this is an entity input | **Required** |
+| `"blueprint":"myBp"` &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Used to specify the identifier of the target blueprint that entities will be queried from | **Required**. Must specify an existing blueprint identifier |
+| `sort` | Used to specify the sorting order of the entities in the dropdown | Optional. Default is by entity's title, ascending |
+| `sort.property` | The identifier of the property by which to sort the entities | |
+| `sort.order` | Can be either `ASC` (ascending) or `DESC` (descending) | |
 
 ## API definition
 
@@ -67,7 +96,12 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
     // highlight-start
     "type": "string",
     "format": "entity",
-    "blueprint": "myBlueprint"
+    "blueprint": "myBlueprint",
+    "sort": {
+      "property": "propertyIdentifier",
+      // order should have either "ASC" or "DESC" value
+      "order": "ASC/DESC"
+    }
     // highlight-end
   }
 }

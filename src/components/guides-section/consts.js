@@ -37,7 +37,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/scaffold-a-new-service",
     },
     {
@@ -46,7 +46,7 @@ export const availableGuides = [
         tags: ["SDLC", "Scorecards", "PagerDuty"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["PagerDuty", "Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/ensure-production-readiness",
     },
     {
@@ -55,7 +55,7 @@ export const availableGuides = [
         tags: ["IaC for devs", "AWS", "Actions", "Cloud access management"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["AWS", "Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/create-cloud-resource-using-iac",
     },
     {
@@ -63,7 +63,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime",
         tags: ["K8s for devs", "Actions", "Dashboards", "Scorecards"],
         logos: ["Kubernetes" ],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/visualize-service-k8s-runtime",
     },
     {
@@ -71,7 +71,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime using ArgoCD",
         tags: ["K8s for devs", "ArgoCD", "Actions", "Dashboards", "Scorecards"],
         logos: ["ArgoCD", "Kubernetes"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/visualize-service-argocd-runtime",
     },
     {
@@ -80,8 +80,16 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/let-developers-enrich-services-using-gitops",
+    },
+    {
+        title: "Slack reminders for scorecards",
+        description: "Send a Slack reminder for uncompleted scorecard rules using a self-service action",
+        tags: ["Engineering metrics", "Actions", "Scorecards"],
+        logos: ["Slack"],
+        category: "Getting started",
+        link: "/guides/all/setup-slack-reminders",
     },
     {
         title: "IAM permission management",
@@ -98,14 +106,6 @@ export const availableGuides = [
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/service-lock-github-workflow",
-    },
-    {
-        title: "Slack reminders for scorecards",
-        description: "Send a Slack reminder for uncompleted scorecard rules using a self-service action",
-        tags: ["Engineering metrics", "Actions", "Scorecards"],
-        logos: ["Slack"],
-        // category: "Getting started",
-        link: "/guides/all/setup-slack-reminders",
     },
     {
         title: "Automate Slack alerts for Overdue PRs",
@@ -738,5 +738,13 @@ export const availableGuides = [
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/ingest-dependencies-from-package-json-to-service",
+    },
+    {
+        title: "Manage Kubernetes namespaces via a Port workflow",
+        description: "Chain actions and automations to automate the deletion of Kubernetes namespaces",
+        tags: ["K8s for devs", "Actions", "Automations", "GitLab"],
+        logos: ["Kubernetes", "GitLab"],
+        // category: "Getting started",
+        link: "/guides/all/manage-kubernetes-namespaces",
     }
 ]

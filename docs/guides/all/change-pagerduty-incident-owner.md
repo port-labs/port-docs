@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Effortlessly change the PagerDuty incident owner in Port, ensuring incidents are managed by the right team members.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 displayed_sidebar: null
+description: Learn how to manage EC2 instances in Port, ensuring optimal performance and efficient cloud resource management.
 ---
 
 # Manage An AWS EC2 Instance

@@ -2,6 +2,7 @@
 sidebar_position: 6
 title: Enrich services using Gitops
 displayed_sidebar: null
+description: Learn how developers can enrich services using GitOps in Port, enabling efficient and automated service management.
 ---
 
 import Tabs from "@theme/Tabs"
@@ -43,56 +44,50 @@ Let's start by adding two new properties to the `Service` <PortTooltip id="bluep
 
 2. The first property will be the service's type, chosen from a predefined list of options. Fill out the form like this, then click `Create`:
 
-<img src='/img/guides/gitopsServicePropType.png' width='50%' />
-
-<br/><br/>
+    <img src='/img/guides/gitopsServicePropType.png' width='50%' />
 
 3. The second property will be the lifecycle state of the service, also chosen from a predefined list of options. Fill out the form like this, then click `Create`:
 
-_Note the colors of the inputs, this will make it easier to see a service's lifecycle in your catalog_ 😎
+    _Note the colors of the inputs, this will make it easier to see a service's lifecycle in your catalog_ 😎
 
-<img src='/img/guides/gitopsServicePropLifecycle.png' width='50%' />
-
-<br/><br/>
+    <img src='/img/guides/gitopsServicePropLifecycle.png' width='50%' />
 
 ### Model domains for your services
 
 Services that share a business purpose (e.g. payments, shipping) are often grouped together using domains. Let's create a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain in Port:
 
-1. In your [Builder](https://app.getport.io/settings/data-model), click on the `Add` button in the top right corner, then choose `Custom blueprint`:
+1. In your [Builder](https://app.getport.io/settings/data-model), click on the `+ Blueprint` button:
 
-<img src='/img/quickstart/builderAddCustomBlueprint.png' width='30%' />
-
-<br/><br/>
+    <img src='/img/quickstart/builderAddCustomBlueprint.png' width='50%' border='1px' />
 
 2. Click on the `Edit JSON` button in the top right corner, replace the content with the following definition, then click `Create`:
 
-<details>
-<summary><b>Blueprint JSON (click to expand)</b></summary>
+    <details>
+    <summary><b>Blueprint JSON (click to expand)</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "domain",
-  "title": "Domain",
-  "icon": "TwoUsers",
-  "schema": {
-    "properties": {
-      "architecture": {
-        "title": "Architecture",
-        "type": "string",
-        "format": "url",
-        "spec": "embedded-url"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
+    ```json showLineNumbers
+    {
+      "identifier": "domain",
+      "title": "Domain",
+      "icon": "TwoUsers",
+      "schema": {
+        "properties": {
+          "architecture": {
+            "title": "Architecture",
+            "type": "string",
+            "format": "url",
+            "spec": "embedded-url"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "relations": {}
+    }
+    ```
 
-</details>
+    </details>
 
 <br/>
 
@@ -102,13 +97,11 @@ Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to repres
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Service` blueprint, and click on `New relation`:
 
-<img src='/img/guides/serviceCreateRelation.png' width='30%' />
-
-<br/><br/>
+    <img src='/img/guides/serviceCreateRelation.png' width='30%' />
 
 2. Fill out the form like this, then click `Create`:
 
-<img src='/img/guides/gitopsDomainRelationForm.png' width='50%' />
+    <img src='/img/guides/gitopsDomainRelationForm.png' width='50%' />
 
 <br/><br/>
 
@@ -118,29 +111,27 @@ Now that we have a `Domain` <PortTooltip id="blueprint">blueprint</PortTooltip>,
 
 1. In your `Port-actions` (or equivalent) Github repository, create a new file named `port.yml` in the root directory, and use the following snippet as its content:
 
-<details>
-<summary><b>port.yml (click to expand)</b></summary>
+    <details>
+    <summary><b>port.yml (click to expand)</b></summary>
 
-```yaml showLineNumbers
-- identifier: payment
-  title: Payment
-  blueprint: domain
-  properties:
-    architecture: https://lucid.app/documents/embedded/c3d64493-a5fe-4b18-98d5-66d355080de3
-- identifier: shipping
-  title: Shipping
-  blueprint: domain
-  properties:
-    architecture: https://lucid.app/documents/embedded/c3d64493-a5fe-4b18-98d5-66d355080de3
-```
+    ```yaml showLineNumbers
+    - identifier: payment
+      title: Payment
+      blueprint: domain
+      properties:
+        architecture: https://lucid.app/documents/embedded/c3d64493-a5fe-4b18-98d5-66d355080de3
+    - identifier: shipping
+      title: Shipping
+      blueprint: domain
+      properties:
+        architecture: https://lucid.app/documents/embedded/c3d64493-a5fe-4b18-98d5-66d355080de3
+    ```
 
-</details>
-
-<br/>
+    </details>
 
 2. Head back to your [software catalog](https://app.getport.io/domains), you will see that Port has created two new `domain` <PortTooltip id="entity">entities</PortTooltip>:
 
-<img src='/img/guides/gitopsDomainEntities.png' width='50%' />
+    <img src='/img/guides/gitopsDomainEntities.png' width='50%' />
 
 The `architecture` property is a URL to a Lucidchart diagram. This is a handy way to track a domain's architecture in your software catalog.
 
@@ -158,14 +149,20 @@ If you **skipped** the onboarding, follow the instructions listed [here](/quicks
 :::
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Enrich service` action, click the `...` button in the top right corner, and choose "Edit":
-    <img src='/img/guides/gitopsEditAction.png' width='40%' border='1px' />
+    <img src='/img/guides/gitopsEditAction.png' width='35%' border='1px' />
 
-2. Click on the `Backend` tab.
+2. Let's add a new user input for the domain. Click on the `User form` tab, then click `+ New input`.
+3. Fill out the form like this, then click `Create`:
+
+    <img src='/img/guides/gitopsDomainInput.png' width='50%' border='1px' />
+    **Note** the input type (`Entity selection`) allows the executing user to choose a `domain` entity from the catalog.
+
+4. When ready, click on the `Backend` tab and read below to proceed.
 
 
 #### Define backend type
 
-Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`, a `GitLab pipeline`, or a `Jenkins pipeline`(choose this option if you are using Bitbucket).
+Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`, a `GitLab pipeline`, or a `Jenkins pipeline` (choose this option if you are using Bitbucket).
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -307,11 +304,11 @@ Our action will create a pull-request in the service's repository, containing a 
 
 2. In your `Port-actions` (or equivalent) Github repository, create 3 new secrets under `Settings->Secrets and variables->Actions`:
 
-- `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
-- `PORT_CLIENT_ID` - the client ID you copied from your Port app.
-- `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
-
-<img src='/img/guides/repositorySecret.png' width='60%' />
+   - `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
+   - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
+   - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+<br/>
+   <img src='/img/guides/repositorySecret.png' width='60%' />
 
 </TabItem>
 
@@ -730,31 +727,27 @@ The action is ready to be executed 🚀
 
 2. Choose a service from the dropdown, a domain to assign it to, and any values for its type and lifecycle, then click `Execute`:
 
-<img src='/img/guides/gitopsEnrichActionExecute.png' width='50%' />
-
-<br/><br/>
+    <img src='/img/guides/gitopsEnrichActionExecute.png' width='50%' />
 
 3. A small popup will appear, click on `View details`:
 
-<img src='/img/guides/gitopsActionExecutePopup.png' width='40%' />
+    <img src='/img/guides/gitopsActionExecutePopup.png' width='40%' />
 
-<br/><br/>
+<br/>
 
 This page provides details about the action run. We can see that the backend returned `Success` and the pull-request was created successfully.
 
 4. Head over to your service's repository, you will see that a new pull-request was created:
 
-<img src='/img/guides/gitopsActionRepoPullRequest.png' width='70%' />
-
-<br/>
+    <img src='/img/guides/gitopsActionRepoPullRequest.png' width='70%' />
 
 5. Merge the pull-request, then head back to your [software catalog](https://app.getport.io/services).
 
 6. Find your service, and click on its identifier. This will take you to the service's catalog page, where you can see your new properties populated with data:
 
-<img src='/img/guides/gitopsServicePageAfterAction.png' width='80%' />
+    <img src='/img/guides/gitopsServicePageAfterAction.png' width='80%' />
 
-<br/><br/>
+<br/>
 
 All done! 💪🏽
 

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 displayed_sidebar: null
+description: Follow this guide to create a GitHub pull request in Port, ensuring seamless code review and collaboration.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
