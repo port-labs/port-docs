@@ -81,9 +81,9 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
     "required": []
   },
   "mirrorProperties": {
-    "leadTimeHours": {
-      "title": "Lead Time (Hours)",
-      "path": "pullRequest.leadTimeHours"
+    "leadTimeDays": {
+      "title": "Lead Time (Days)",
+      "path": "pullRequest.leadTimeDays"
     }
   },
   "calculationProperties": {},
@@ -105,6 +105,10 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
 }
 ```
 </details>
+
+:::note Missing Lead Time
+If you do not have the **lead time** configured, you can follow the [GitHub integration guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests) to add this property.
+:::
 
 :::tip Adding JSON Schema Using Port's UI
 1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
@@ -152,7 +156,7 @@ Here’s how you can implement this:
 ```yaml showLineNumbers
   - kind: pull-request
     selector:
-      query: .base.ref == 'main'  # Track PRs merged into the main branch
+       query: .base.ref == 'main' and .state == 'closed'  # Track PRs merged into the main branch
     port:
       entity:
         mappings:
@@ -712,22 +716,19 @@ Add the following properties to capture incident resolution time and recovery ti
 <details>
 <summary><b>Additional properties for PagerDuty Incident Blueprint (click to expand)</b></summary>
 
-```json
-{
-  "properties": {
-    "resolvedAt": {
-      "title": "Incident Resolution Time",
-      "type": "string",
-      "format": "date-time",
-      "description": "The timestamp when the incident was resolved"
-    },
-    "recoveryTime": {
-      "title": "Time to Recovery",
-      "type": "number",
-      "description": "The time (in minutes) between the incident being triggered and resolved"
-    }
-  }
-}
+```json showLineNumbers
+ "resolvedAt": {
+   "title": "Incident Resolution Time",
+   "type": "string",
+   "format": "date-time",
+   "description": "The timestamp when the incident was resolved"
+ },
+ "recoveryTime": {
+   "title": "Time to Recovery",
+   "type": "number",
+   "description": "The time (in minutes) between the incident being triggered and resolved"
+ }
+
 ```
 </details>
 
@@ -748,35 +749,51 @@ Add this relationship to the **Incident blueprint** to link incidents to GitHub 
 <summary><b>PagerDuty Incident Relations</b> (click to expand)</summary>
 
  ```json showLineNumbers
-  "relations": {
-    "gitHubRepository": {
-      "title": "Github Service",
-      "target": "service",
-      "required": false,
-      "many": false
-    }
-  }
+ "gitHubRepository": {
+   "title": "Github Service",
+   "target": "service",
+   "required": false,
+   "many": false
+ }
 
 ```
 </details>
 
-Add the mapping config to pagerduty incident [data source](https://app.getport.io/settings/data-sources):
+Update the mapping config to pagerduty incident [data source](https://app.getport.io/settings/data-sources):
 <details>
 <summary><b>Incident mapping config (click to expand)</b></summary>
 
 ```yaml showLineNumbers
-   gitHubRepository:
-   combinator: '"and"'
-   rules:
-     - property: '"$title"'
-       operator: '"="'
-       value: .summary
+   - kind: incidents
+     selector:
+        query: 'true'
+        ...: # Add other selectors as needed
+     port:
+        entity:
+           mappings:
+              identifier: .id | tostring
+              title: .title
+              blueprint: '"pagerdutyIncident"'
+              properties:
+                 status: .status
+                 url: .self
+                 ... # Add other properties as needed
+              relations:
+                 pagerdutyService: .service.id
+                 # Add this relation to map the incident to the correct service
+                 gitHubRepository:
+                    combinator: '"and"'
+                    rules:
+                       - property: '"$title"'
+                         operator: '"="'
+                         value: .service.summary
 ```
 </details>
 
+
 :::tip Mapping Incidents to Services
-we use the **search relation** entity to map the `pagerdutyIncident` blueprint to the correct service based on the service's `$title` and the pagerduty incident `summary`.
-We have assumed that the **service name/title** exists in the `summary` property of the incident, but you can modify this query to map based on other properties that better match your setup
+we use the **search relation** entity to map the `pagerdutyIncident` blueprint to the correct service based on the service's `$title` and the pagerduty incident `service.summary`.
+We have assumed that the **service name/title** exists in the `service.summary` property of the incident, but you can modify this query to map based on other properties that better match your setup
 To learn more about using search relations, see [our documentation on Mapping Relations
 Using Search Queries](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries). 
 :::
@@ -807,30 +824,30 @@ Add this aggregation property to calculate deployment frequency:
 <summary><b>Deployment Frequency (click to expand)</b></summary>
 
 ```json showLineNumbers
-{
-   "deployment_frequency": {
-      "title": "Monthly Deployment Frequency",
-      "icon": "DeploymentIcon",
-      "type": "number",
-      "target": "deployment",
-      "query": {
-         "combinator": "and",
-         "rules": [
-            {
-               "property": "deploymentStatus",
-               "operator": "=",
-               "value": "Success"
-            }
-         ]
-      },
-      "calculationSpec": {
-         "func": "average",
-         "averageOf": "month",
-         "measureTimeBy": "$createdAt",
-         "calculationBy": "entities"
-      }
+
+"deployment_frequency": {
+   "title": "Monthly Deployment Frequency",
+   "icon": "DeploymentIcon",
+   "type": "number",
+   "target": "deployment",
+   "query": {
+      "combinator": "and",
+      "rules": [
+         {
+            "property": "deploymentStatus",
+            "operator": "=",
+            "value": "Success"
+         }
+      ]
+   },
+   "calculationSpec": {
+      "func": "average",
+      "averageOf": "month",
+      "measureTimeBy": "$createdAt",
+      "calculationBy": "entities"
    }
 }
+
 ```
 </details>
 </TabItem>
@@ -841,31 +858,31 @@ Add this aggregation property to calculate the lead time for changes:
 <summary><b>Lead Time for Change (click to expand)</b></summary>
 
 ```json showLineNumbers
-{
-  "lead_time_for_change": {
-      "title": "Lead Time for Change",
-      "icon": "DefaultProperty",
-      "type": "number",
-      "target": "githubPullRequest",
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "status",
-            "operator": "=",
-            "value": "merged"
-          }
-        ]
-      },
-      "calculationSpec": {
-        "func": "average",
-        "averageOf": "total",
-        "property": "leadTimeDays",
-        "measureTimeBy": "$createdAt",
-        "calculationBy": "property"
-      }
-    }
-}
+
+"lead_time_for_change": {
+   "title": "Lead Time for Change",
+   "icon": "DefaultProperty",
+   "type": "number",
+   "target": "githubPullRequest",
+   "query": {
+     "combinator": "and",
+     "rules": [
+       {
+         "property": "status",
+         "operator": "=",
+         "value": "merged"
+       }
+     ]
+   },
+   "calculationSpec": {
+     "func": "average",
+     "averageOf": "total",
+     "property": "leadTimeDays",
+     "measureTimeBy": "$createdAt",
+     "calculationBy": "property"
+   }
+ }
+
 ```
 </details>
 </TabItem>
@@ -876,7 +893,7 @@ Add the following to the aggregated property in service:
 <summary><b>CFR aggregation property (click to expand)</b></summary>
 
 ```json showLineNumbers
-{
+
   "resolved_incidents": {
     "title": "Resolved Incidents",
     "type": "number",
@@ -924,7 +941,7 @@ Add the following to the aggregated property in service:
          "calculationBy": "entities"
       }
    }
-}
+
 ```
 </details>
 
@@ -933,13 +950,11 @@ Add this calculation property to calculate the cfr from the aggregated propertie
 <summary><b>CFR calculation property (click to expand)</b></summary>
     
 ```json showLineNumbers
-    {
       "changeFailureRate": {
         "title": "Change Failure Rate",
         "calculation": "(.properties.resolved_incidents / .properties.total_deployments) * 100",
         "type": "number"
       }
-    }
      
 ```
 </details>
@@ -953,7 +968,7 @@ Add this aggregation property to calculate the MTTR:
 <summary><b>Mean Time to Recovery (click to expand)</b></summary>
 
 ```json showLineNumbers
-{
+
    "mean_time_to_recovery": {
       "title": "Mean Time to Recovery",
       "icon": "DefaultProperty",
@@ -977,7 +992,7 @@ Add this aggregation property to calculate the MTTR:
          "calculationBy": "property"
       }
    }
-}
+
 ```
 
 </details>
@@ -986,271 +1001,6 @@ Add this aggregation property to calculate the MTTR:
 
 </Tabs>
 
-
-### Complete setup
-
-Here is the complete **Service Blueprint** with the aggregation properties defined for DORA metrics:
-<details>
-<summary><b>Complete service blueprint</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "service",
-  "title": "Service",
-  "icon": "Github",
-  "schema": {
-    "properties": {
-      "readme": {
-        "title": "README",
-        "type": "string",
-        "format": "markdown",
-        "icon": "Book"
-      },
-      "url": {
-        "title": "URL",
-        "format": "url",
-        "type": "string",
-        "icon": "Link"
-      },
-      "language": {
-        "icon": "Git",
-        "type": "string",
-        "title": "Language"
-      },
-      "slack": {
-        "icon": "Slack",
-        "type": "string",
-        "title": "Slack",
-        "format": "url"
-      },
-      "code_owners": {
-        "title": "Code owners",
-        "description": "This service's code owners",
-        "type": "string",
-        "icon": "TwoUsers"
-      },
-      "type": {
-        "title": "Type",
-        "description": "This service's type",
-        "type": "string",
-        "enum": [
-          "Backend",
-          "Frontend",
-          "Library"
-        ],
-        "enumColors": {
-          "Backend": "purple",
-          "Frontend": "pink",
-          "Library": "green"
-        },
-        "icon": "DefaultProperty"
-      },
-      "lifecycle": {
-        "title": "Lifecycle",
-        "type": "string",
-        "enum": [
-          "Production",
-          "Staging",
-          "Development"
-        ],
-        "enumColors": {
-          "Production": "green",
-          "Staging": "yellow",
-          "Development": "blue"
-        },
-        "icon": "DefaultProperty"
-      },
-      "locked_in_prod": {
-        "icon": "DefaultProperty",
-        "title": "Locked in Prod",
-        "type": "boolean",
-        "default": false
-      },
-      "locked_reason_prod": {
-        "icon": "DefaultProperty",
-        "title": "Locked Reason Prod",
-        "type": "string"
-      },
-      "locked_in_test": {
-        "icon": "DefaultProperty",
-        "title": "Locked in Test",
-        "type": "boolean",
-        "default": false
-      },
-      "locked_reason_test": {
-        "icon": "DefaultProperty",
-        "title": "Locked Reason Test",
-        "type": "string"
-      },
-      "trigger_type": {
-        "icon": "DefaultProperty",
-        "title": "Lock or Unlock",
-        "type": "string"
-      },
-      "triggered_environment": {
-        "icon": "DefaultProperty",
-        "title": "Triggered Environment",
-        "type": "string"
-      },
-      "slackChannel": {
-        "icon": "Slack",
-        "type": "string",
-        "title": "Slack Channel",
-        "description": "The Slack channel name where notifications will be sent."
-      },
-      "namespace": {
-        "title": "Namespace",
-        "type": "string"
-      },
-      "fullPath": {
-        "title": "Full Path",
-        "type": "string"
-      },
-      "defaultBranch": {
-        "title": "Default Branch",
-        "type": "string"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {
-    "changeFailureRate": {
-      "title": "Change Failure Rate",
-      "calculation": "(.properties.resolved_incidents / .properties.total_deployments) * 100",
-      "type": "number"
-    }
-  },
-   "aggregationProperties": {
-      "deployment_frequency": {
-         "title": "Monthly Deployment Frequency",
-         "icon": "DeploymentIcon",
-         "type": "number",
-         "target": "deployment",
-         "query": {
-            "combinator": "and",
-            "rules": [
-               {
-                  "property": "deploymentStatus",
-                  "operator": "=",
-                  "value": "Success"
-               }
-            ]
-         },
-         "calculationSpec": {
-            "func": "average",
-            "averageOf": "month",
-            "measureTimeBy": "$createdAt",
-            "calculationBy": "entities"
-         }
-      },
-      "lead_time_for_change": {
-         "title": "Lead Time for Change",
-         "icon": "DefaultProperty",
-         "type": "number",
-         "target": "githubPullRequest",
-         "query": {
-            "combinator": "and",
-            "rules": [
-               {
-                  "property": "status",
-                  "operator": "=",
-                  "value": "merged"
-               }
-            ]
-         },
-         "calculationSpec": {
-            "func": "average",
-            "averageOf": "total",
-            "property": "leadTimeDays",
-            "measureTimeBy": "$createdAt",
-            "calculationBy": "property"
-         }
-      },
-      "mean_time_to_recovery": {
-         "title": "Mean Time to Recovery",
-         "icon": "DefaultProperty",
-         "type": "number",
-         "target": "pagerdutyIncident",
-         "query": {
-            "combinator": "and",
-            "rules": [
-               {
-                  "property": "status",
-                  "operator": "=",
-                  "value": "resolved"
-               }
-            ]
-         },
-         "calculationSpec": {
-            "func": "average",
-            "averageOf": "month",
-            "property": "recoveryTime",
-            "measureTimeBy": "$createdAt",
-            "calculationBy": "property"
-         }
-      },
-      "resolved_incidents": {
-         "title": "Resolved Incidents",
-         "type": "number",
-         "target": "pagerdutyIncident",
-         "query": {
-            "combinator": "and",
-            "rules": [
-               {
-                  "property": "status",
-                  "operator": "=",
-                  "value": "resolved"
-               },
-               {
-                  "property": "incidentType",
-                  "operator": "=",
-                  "value": "Deployment"
-               }
-            ]
-         },
-         "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-         }
-      },
-      "total_deployments": {
-         "title": "Total Deployments",
-         "type": "number",
-         "target": "deployment",
-         "query": {
-            "combinator": "and",
-            "rules": [
-               {
-                  "property": "deploymentStatus",
-                  "operator": "=",
-                  "value": "Success"
-               }
-            ]
-         },
-         "calculationSpec": {
-            "func": "count",
-            "calculationBy": "entities"
-         }
-      }
-   },
-  "relations": {
-    "admins": {
-      "title": "Admins",
-      "target": "githubUser",
-      "required": false,
-      "many": true
-    },
-    "githubTeams": {
-      "title": "GitHub Teams",
-      "target": "githubTeam",
-      "required": false,
-      "many": true
-    }
-  }
-}
-```
-</details>
 
 
 ## Visualization
