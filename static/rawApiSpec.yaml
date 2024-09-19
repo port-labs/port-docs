@@ -25364,6 +25364,30 @@ paths:
           required: false
         - schema:
             type: string
+          in: query
+          name: relative_date
+          required: false
+        - schema:
+            type: number
+            default: 100
+            minimum: 0
+            maximum: 300
+            nullable: false
+          in: query
+          name: limit
+          required: false
+        - schema:
+            type: number
+          in: query
+          name: offset
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: direction
+          required: false
+        - schema:
+            type: string
           in: path
           name: identifier
           required: true
