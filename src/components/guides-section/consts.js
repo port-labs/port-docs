@@ -740,7 +740,7 @@ export const availableGuides = [
         link: "/guides/all/ingest-dependencies-from-package-json-to-service",
     },
     {
-        title: "Tracking DORA Metrics",
+        title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
         tags: ["Engineering metrics","GitHub","Dashboards"],
         logos: ["GitHub"],

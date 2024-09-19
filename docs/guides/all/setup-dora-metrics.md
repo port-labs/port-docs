@@ -7,31 +7,22 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# DORA metrics
+# Track DORA metrics
 
 This guide is designed
 to help you
-understand and implement [DevOps Research and Assessment (DORA) metrics](https://cloud.google.com/blog/products/devops-sre/using-the-four-keys-to-measure-your-devops-performance) within your organization in Port.
+implement and track [DevOps Research and Assessment (DORA) metrics](https://cloud.google.com/blog/products/devops-sre/using-the-four-keys-to-measure-your-devops-performance) within your organization in Port.  
 DORA Metrics are a set of key performance indicators
 that measure the effectiveness and efficiency of your software development and delivery process. 
 By tracking these metrics,
 you can identify areas for improvement and ensure that your team is delivering high-quality software efficiently.
-This guide will cover the four key metrics: Deployment Frequency, Lead Time, Change Failure Rate, and Mean Time to Recovery.
+This guide will cover the four key metrics: **deployment frequency**, **lead time**, **change failure rate**, and **mean time to recovery**.
 
-:::info Prerequisites
+### Prerequisites
 - Complete the [Port onboarding process](https://docs.getport.io/quickstart).
 - Access a GitHub repository (e.g., port-dora-metrics) to sync your pull requests or deployments. You can follow the [GitHub integration guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github) to ensure your deployments are tracked in Port.
 - Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD or GitHub Actions.
-:::
 
-:::tip Adding JSON Schema Using Port's UI
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"** to create a new blueprint.
-3. **Click on the `{...}` button** in the top right corner, and choose **"Edit JSON"**.
-4. **Add this JSON schema** to define the properties and relations needed for your blueprint.
-
-By following these steps, you can paste and manage the JSON schema required to track DORA metrics in Port.
-:::
 
 ## Tracking Deployment
 
@@ -115,6 +106,14 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
 ```
 </details>
 
+:::tip Adding JSON Schema Using Port's UI
+1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
+2. **Click on "+ Blueprint"** to create a new blueprint.
+3. **Click on the `{...}` button** in the top right corner, and choose **"Edit JSON"**.
+4. **Add this JSON schema** to define the properties and relations needed for your blueprint.
+
+By following these steps, you can paste and manage the JSON schema required to track DORA metrics in Port.
+:::
 
 
 ### Tracking Strategies
@@ -705,9 +704,10 @@ Incidents are essential for tracking key DORA metrics, including **Change Failur
 
 ### Data Model Setup
 
-Ensure that your **PagerDuty incident blueprint** is configured properly. You can follow the detailed steps in the [PagerDuty Incident Blueprint](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty).
+Ensure that your **PagerDuty incident blueprint** is properly configured to map incidents to the correct services(gitHub). 
+This includes defining the appropriate properties and relations for incidents.Follow this [PagerDuty Incident Blueprint Setup Link](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty#incident-blueprint-setup) to implement.
 
-- Add the following properties to capture incident resolution time and recovery time:
+Add the following properties to capture incident resolution time and recovery time:
 
 <details>
 <summary><b>Additional properties for PagerDuty Incident Blueprint (click to expand)</b></summary>
@@ -770,54 +770,17 @@ Add the mapping config to pagerduty incident [data source](https://app.getport.i
    rules:
      - property: '"$title"'
        operator: '"="'
-       value: .title
+       value: .summary
 ```
 </details>
 
 :::tip Mapping Incidents to Services
-we use the **search relation** entity to map the `pagerdutyIncident` blueprint to the correct service based on the service's `$title` and the pagerduty incident title.
+we use the **search relation** entity to map the `pagerdutyIncident` blueprint to the correct service based on the service's `$title` and the pagerduty incident `summary`.
+We have assumed that the **service name/title** exists in the `summary` property of the incident, but you can modify this query to map based on other properties that better match your setup
 To learn more about using search relations, see [our documentation on Mapping Relations
-Using Search Queries](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries). You can modify this query to map them based on properties of your choice
+Using Search Queries](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries). 
 :::
 
-### Aggregating Incident Data for MTTR
-
-Add the following **aggregation properties** to the **Incident blueprint**
-
-<details>
-<summary><b>Aggregation Property JSON (click to expand)</b></summary>
-
-```json showLineNumbers
-  "aggregationProperties": {
-    "meanTimeToResolve": {
-      "title": "Mean Time to Recovery",
-      "type": "number",
-      "target": "pagerdutyIncident",
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "status",
-            "operator": "=",
-            "value": "resolved"
-          }
-        ]
-      },
-      "calculationSpec": {
-        "calculationBy": "entities",
-        "func": "average",
-        "averageOf": "hour",
-        "field": "recoveryTime",
-        "measureTimeBy": "$createdAt"
-      }
-    }
-  }
-
-```
-</details>
-
-This aggregation setup will calculate the **MTTR** by considering incidents that have been resolved,
-giving a better picture of recovery performance across services.
 
 ## Metrics
 
@@ -828,6 +791,8 @@ If you want to track these metrics at higher levels, such as **team** or **domai
 :::
 
 ###  Aggregation
+
+The metrics in this guide are aggregated monthly. However, you can easily switch the timeframes to weekly, hourly, etc., based on your requirements.
 
 <Tabs groupId="metrics" defaultValue="df" values={[
 { label: 'Deployment Frequency', value: 'df' },
@@ -843,28 +808,28 @@ Add this aggregation property to calculate deployment frequency:
 
 ```json showLineNumbers
 {
-  "deployment_frequency": {
-    "title": "Monthly Deployment Frequency",
-    "icon": "DeploymentIcon",
-    "type": "number",
-    "target": "deployment",
-    "query": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "deploymentStatus",
-          "operator": "=",
-          "value": "Success"
-        }
-      ]
-    },
-    "calculationSpec": {
-      "func": "count",
-      "averageOf": "month",
-      "measureTimeBy": "$createdAt",
-      "calculationBy": "entities"
-    }
-  }
+   "deployment_frequency": {
+      "title": "Monthly Deployment Frequency",
+      "icon": "DeploymentIcon",
+      "type": "number",
+      "target": "deployment",
+      "query": {
+         "combinator": "and",
+         "rules": [
+            {
+               "property": "deploymentStatus",
+               "operator": "=",
+               "value": "Success"
+            }
+         ]
+      },
+      "calculationSpec": {
+         "func": "average",
+         "averageOf": "month",
+         "measureTimeBy": "$createdAt",
+         "calculationBy": "entities"
+      }
+   }
 }
 ```
 </details>
@@ -878,27 +843,28 @@ Add this aggregation property to calculate the lead time for changes:
 ```json showLineNumbers
 {
   "lead_time_for_change": {
-    "title": "Lead Time for Change",
-    "type": "number",
-    "target": "githubPullRequest",
-    "query": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "status",
-          "operator": "=",
-          "value": "merged"
-        }
-      ]
-    },
-    "calculationSpec": {
-      "func": "average",
-      "averageOf": "hour",
-      "property": "leadTimeHours",
-      "calculationBy": "property",
-      "measureTimeBy": "$createdAt"
+      "title": "Lead Time for Change",
+      "icon": "DefaultProperty",
+      "type": "number",
+      "target": "githubPullRequest",
+      "query": {
+        "combinator": "and",
+        "rules": [
+          {
+            "property": "status",
+            "operator": "=",
+            "value": "merged"
+          }
+        ]
+      },
+      "calculationSpec": {
+        "func": "average",
+        "averageOf": "total",
+        "property": "leadTimeDays",
+        "measureTimeBy": "$createdAt",
+        "calculationBy": "property"
+      }
     }
-  }
 }
 ```
 </details>
@@ -984,28 +950,29 @@ Add this aggregation property to calculate the MTTR:
 
 ```json showLineNumbers
 {
-  "mean_time_to_recovery": {
-    "title": "Mean Time to Recovery",
-    "type": "number",
-    "target": "pagerdutyIncident",
-    "query": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "status",
-          "operator": "=",
-          "value": "resolved"
-        }
-      ]
-    },
-    "calculationSpec": {
-      "func": "average",
-      "averageOf": "hour",
-      "property": "recoveryTime",
-      "calculationBy": "property",
-      "measureTimeBy": "$createdAt"
-    }
-  }
+   "mean_time_to_recovery": {
+      "title": "Mean Time to Recovery",
+      "icon": "DefaultProperty",
+      "type": "number",
+      "target": "pagerdutyIncident",
+      "query": {
+         "combinator": "and",
+         "rules": [
+            {
+               "property": "status",
+               "operator": "=",
+               "value": "resolved"
+            }
+         ]
+      },
+      "calculationSpec": {
+         "func": "average",
+         "averageOf": "month",
+         "property": "recoveryTime",
+         "measureTimeBy": "$createdAt",
+         "calculationBy": "property"
+      }
+   }
 }
 ```
 
@@ -1150,117 +1117,119 @@ Here is the complete **Service Blueprint** with the aggregation properties defin
       "type": "number"
     }
   },
-  "aggregationProperties": {
-    "deployment_frequency": {
-      "title": "Monthly Deployment Frequency",
-      "icon": "DeploymentIcon",
-      "type": "number",
-      "target": "deployment",
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "deploymentStatus",
-            "operator": "=",
-            "value": "Success"
-          }
-        ]
+   "aggregationProperties": {
+      "deployment_frequency": {
+         "title": "Monthly Deployment Frequency",
+         "icon": "DeploymentIcon",
+         "type": "number",
+         "target": "deployment",
+         "query": {
+            "combinator": "and",
+            "rules": [
+               {
+                  "property": "deploymentStatus",
+                  "operator": "=",
+                  "value": "Success"
+               }
+            ]
+         },
+         "calculationSpec": {
+            "func": "average",
+            "averageOf": "month",
+            "measureTimeBy": "$createdAt",
+            "calculationBy": "entities"
+         }
       },
-      "calculationSpec": {
-        "func": "count",
-        "averageOf": "month",
-        "measureTimeBy": "$createdAt",
-        "calculationBy": "entities"
-      }
-    },
-    "lead_time_for_change": {
-      "title": "Lead Time for Change",
-      "type": "number",
-      "target": "githubPullRequest",
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "status",
-            "operator": "=",
-            "value": "merged"
-          }
-        ]
+      "lead_time_for_change": {
+         "title": "Lead Time for Change",
+         "icon": "DefaultProperty",
+         "type": "number",
+         "target": "githubPullRequest",
+         "query": {
+            "combinator": "and",
+            "rules": [
+               {
+                  "property": "status",
+                  "operator": "=",
+                  "value": "merged"
+               }
+            ]
+         },
+         "calculationSpec": {
+            "func": "average",
+            "averageOf": "total",
+            "property": "leadTimeDays",
+            "measureTimeBy": "$createdAt",
+            "calculationBy": "property"
+         }
       },
-      "calculationSpec": {
-        "func": "average",
-        "averageOf": "hour",
-        "property": "leadTimeHours",
-        "calculationBy": "property",
-        "measureTimeBy": "$createdAt"
-      }
-    },
-    "mean_time_to_recovery": {
-      "title": "Mean Time to Recovery",
-      "type": "number",
-      "target": "pagerdutyIncident",
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "status",
-            "operator": "=",
-            "value": "resolved"
-          }
-        ]
+      "mean_time_to_recovery": {
+         "title": "Mean Time to Recovery",
+         "icon": "DefaultProperty",
+         "type": "number",
+         "target": "pagerdutyIncident",
+         "query": {
+            "combinator": "and",
+            "rules": [
+               {
+                  "property": "status",
+                  "operator": "=",
+                  "value": "resolved"
+               }
+            ]
+         },
+         "calculationSpec": {
+            "func": "average",
+            "averageOf": "month",
+            "property": "recoveryTime",
+            "measureTimeBy": "$createdAt",
+            "calculationBy": "property"
+         }
       },
-      "calculationSpec": {
-        "func": "average",
-        "averageOf": "hour",
-        "property": "recoveryTime",
-        "calculationBy": "property",
-        "measureTimeBy": "$createdAt"
-      }
-    },
-    "resolved_incidents": {
-      "title": "Resolved Incidents",
-      "type": "number",
-      "target": "pagerdutyIncident",
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "status",
-            "operator": "=",
-            "value": "resolved"
-          },
-          {
-            "property": "incidentType",
-            "operator": "=",
-            "value": "Deployment"
-          }
-        ]
+      "resolved_incidents": {
+         "title": "Resolved Incidents",
+         "type": "number",
+         "target": "pagerdutyIncident",
+         "query": {
+            "combinator": "and",
+            "rules": [
+               {
+                  "property": "status",
+                  "operator": "=",
+                  "value": "resolved"
+               },
+               {
+                  "property": "incidentType",
+                  "operator": "=",
+                  "value": "Deployment"
+               }
+            ]
+         },
+         "calculationSpec": {
+            "func": "count",
+            "calculationBy": "entities"
+         }
       },
-      "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
+      "total_deployments": {
+         "title": "Total Deployments",
+         "type": "number",
+         "target": "deployment",
+         "query": {
+            "combinator": "and",
+            "rules": [
+               {
+                  "property": "deploymentStatus",
+                  "operator": "=",
+                  "value": "Success"
+               }
+            ]
+         },
+         "calculationSpec": {
+            "func": "count",
+            "calculationBy": "entities"
+         }
       }
-    },
-    "total_deployments": {
-      "title": "Total Deployments",
-      "type": "number",
-      "target": "deployment",
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "deploymentStatus",
-            "operator": "=",
-            "value": "Success"
-          }
-        ]
-      },
-      "calculationSpec": {
-        "func": "count",
-        "calculationBy": "entities"
-      }
-    }
-  },
+   },
   "relations": {
     "admins": {
       "title": "Admins",
@@ -1284,10 +1253,10 @@ Here is the complete **Service Blueprint** with the aggregation properties defin
 By leveraging Port's Dashboards, you can create custom dashboards to track the metrics and monitor your team's performance over time.
 
 ### Dashboard Setup
-1. Go to **Catalog** in the navigation bar
-2. Click **new**
+1. Go to your [software catalog](https://app.getport.io/organization/catalog).
+2. Click on the `+ New` button in the left sidebar
 3. Select **New dashboard**
-4. Name the dashboard (e.g., DORA Metrics), choose an icon if desired, and click **Create**
+4. Name the dashboard (e.g., DORA Metrics), choose an icon if desired, and click `Create`
 
 This will create a new empty dashboard. Let's get ready-to-add widgets 
 
@@ -1296,28 +1265,28 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <details>
 <summary><b>Setup Deployment Frequency Widget</b></summary>
 
-1. Click **+ Widget** and select **Number Chart**
+1. Click `+ Widget` and select **Number Chart**
 2. Title: `Deployment Frequency - Monthly`, (add the rocket icon)
 3. Select `Display single property` and choose **Service** as the **Blueprint**
 4. Select an `Entity` and choose `Monthly Deployment Frequency` as the **Property**
 
    <img src="/img/guides/deploymentFrequencyChartDoraMetrics.png" width="50%"/>
    
-5. Click **Save**
+5. Click `Save`
 
 </details>
 
 <details>
 <summary><b>Setup MTTR Widget</b></summary>
 
-1. Click **+ Widget** and select **Number Chart**
+1. Click `+ Widget` and select **Number Chart**
 2. Title: `MTTR – Monthly Average (Seconds)`, (add the pagerduty icon)
 3. Select `Display single property` and choose **Service** as the **Blueprint**
 4. Select an `Entity` and choose `Mean Time to Recovery` as the **Property**
 
    <img src="/img/guides/mttrDoraMetricsChart.png" width="50%"/>
    
-5. Click **Save**
+5. Click `Save`
 
 </details>
 
@@ -1325,15 +1294,17 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <details>
 <summary><b>Setup Change Lead Time Widget</b></summary>
 
-1. Click **+ Widget** and select **Number Chart**
-2. Title: `Lead Time for Changes (Hours)`, (add LineChart icon)
-3. Select `Display single property` and choose **Service** as the **Blueprint**
-4. Select an `Entity` and choose `Lead Time for Change` as the **Property**
-5. Select the `Hour` time interval and preferred time range
+1. Click `+ Widget` and select **Number Chart**
+2. Title: `Lead Time for Changes (Monthly)`, (add LineChart icon)
+3. Select `Aggregate by property` and choose **Service** as the **Blueprint**
+4. Select `average` as the function and choose `Month` for **Average of** and `createdAt` as the **Measure Time By**
+5. Select an `Entity` and choose `Lead Time for Change` as the **Property**
+6. Select the `Month` time interval and preferred time range
+7. Add custom Unit for **Unit of Measurement** (e.g., days)
 
    <img src="/img/guides/leadTimeForChangesDoraMetrics.png"  width="50%"/>
    
-6. Click **Save**.
+8. Click `Save`.
 
 </details>
 
@@ -1341,15 +1312,15 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <details>
 <summary><b>Change Lead Time Over Time</b></summary>
 
-1. Click **+ Widget** and select **Line Chart**
+1. Click `+ Widget` and select **Line Chart**
 2. Title: `Change Lead Time Over Time`, (add the LineChart icon)
 3. Choose **Service** as the **Blueprint**
 4. Select an `Entity` and choose `Lead time for change` as the **Property**
-5. Select the preferred time interval
+5. Set **Time Interval** to `Month` and **Time Range** to `In the past 365 days`
 
    <img src="/img/guides/changeLeadTimeOverTimeDM.png"  width="50%"/>
 
-6. Click **Save**.
+6. Click `Save`.
 
 </details>
 
@@ -1357,7 +1328,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <details>
 <summary><b>Deployments Frequency Over Time</b></summary>
 
-1. Click **+ Widget** and select **Line Chart**
+1. Click `+ Widget` and select **Line Chart**
 2. Title: `Deployments Frequency Over Time` (add the rocket icon)
 3. Select **Service** as the **Blueprint**
 4. Select `Monthly Deployment Frequency` as the **Property**
@@ -1365,7 +1336,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 
    <img src="/img/guides/deploymentFrequencyOverTime.png" width="50%"/>
 
-6. Click **Save**.
+6. Click `Save`.
 </details>
 
 :::tip Metric widget groupings
@@ -1375,5 +1346,4 @@ You can replicate more examples by checking our dora metrics dashboard on the [d
 
 <img src="/img/guides/doraMetricsDBVisualization.png"/>
 
-By following these steps, you can create a custom dashboard to visualize the DORA metrics.
-Congrats 🎉 You've successfully setup DORA metrics in Port 🔥
+Congrats 🎉 You have successfully set up DORA metrics tracking in your portal 🔥
