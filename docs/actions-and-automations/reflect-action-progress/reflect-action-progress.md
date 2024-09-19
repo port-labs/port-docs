@@ -179,7 +179,7 @@ A log message with the `terminationStatus` key can only be sent once for an acti
 
 ## Tying Entities to an action run
 
-You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an entity (i.e. [`POST`](/api-reference/create-an-entity), [`PUT`]((/api-reference/change-an-entity)), [`PATCH`]((/api-reference/patch-an-entity)) and [`DELETE`]((/api-reference/delete-an-entity)) entity requests).  
+You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an entity (i.e. [`POST`](/api-reference/create-an-entity), [`PUT`](/api-reference/change-an-entity), [`PATCH`](/api-reference/patch-an-entity) and [`DELETE`](/api-reference/delete-an-entity) entity requests).  
 
 By adding the `run_id` parameter, you reflect the change made to the Entity as part of the set of steps the action run performed during its runtime.
 
