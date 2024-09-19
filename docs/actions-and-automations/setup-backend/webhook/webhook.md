@@ -1,3 +1,5 @@
+import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
+
 # Webhook
 
 ## Overview
@@ -92,6 +94,7 @@ The following example shows an automation definition that triggers this self-ser
 
 <details>
 <summary><b>Automation definition (click to expand)</b></summary>
+<PortApiRegion />
 ```yaml showLineNumbers
 {
   "identifier": "slack_notify_on_service_failure",

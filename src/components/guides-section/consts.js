@@ -740,6 +740,14 @@ export const availableGuides = [
         link: "/guides/all/ingest-dependencies-from-package-json-to-service",
     },
     {
+        title: "Manage Kubernetes namespaces via a Port workflow",
+        description: "Chain actions and automations to automate the deletion of Kubernetes namespaces",
+        tags: ["K8s for devs", "Actions", "Automations", "GitLab"],
+        logos: ["Kubernetes", "GitLab"],
+        // category: "Getting started",
+        link: "/guides/all/manage-kubernetes-namespaces",
+    },
+    {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
         tags: ["Engineering metrics","GitHub","Dashboards"],
