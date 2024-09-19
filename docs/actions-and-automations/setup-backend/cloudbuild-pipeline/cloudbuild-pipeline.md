@@ -1,5 +1,6 @@
 import Image from "@theme/IdealImage";
 import DefineVars from "/static/img/self-service-actions/setup-backend/jenkins-pipeline/define-variables.png";
+import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
 
 # Triggering Cloud Build using webhooks
 
@@ -303,6 +304,7 @@ options:
   substitution_option: ALLOW_LOOSE
   logging: CLOUD_LOGGING_ONLY
 ```
+<PortApiRegion />
 
 That's it! Anytime a user invokes an action in Port UI, a webhook trigger will be sent to Google Cloud Build to execute the pipeline.
 
