@@ -20,7 +20,7 @@ This guide will cover the four key metrics: **deployment frequency**, **lead tim
 
 ### Prerequisites
 - Complete the [Port onboarding process](https://docs.getport.io/quickstart).
-- Access a GitHub repository (e.g., port-dora-metrics) to sync your pull requests or deployments. You can follow the [GitHub integration guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github) to ensure your deployments are tracked in Port.
+- Access a GitHub repository (e.g., port-dora-metrics) to sync your pull requests or deployments. You can follow the [GitHub integration guide](/build-your-software-catalog/sync-data-to-catalog/git/github) to ensure your deployments are tracked in Port.
 - Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD or GitHub Actions.
 
 
@@ -107,7 +107,7 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
 </details>
 
 :::note Missing Lead Time
-If you do not have the **lead time** configured, you can follow the [GitHub integration guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests) to add this property.
+If you do not have the **lead time** configured, you can follow the [GitHub integration guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests) to add this property.
 :::
 
 :::tip Adding JSON Schema Using Port's UI
@@ -146,7 +146,7 @@ The lead time for these merges is calculated as the difference between when the 
 
 Here’s how you can implement this:
 
-1. **Add Pull Request blueprint, sample can be found [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**:
+1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**:
 
 2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration:
 
@@ -245,7 +245,7 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
    
    <TabItem value="jenkins" label="Jenkins">
     
-   Jenkins provides a robust way to track deployments by dynamically reporting build statuses to Port using Port's API. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/)
+   Jenkins provides a robust way to track deployments by dynamically reporting build statuses to Port using Port's API. [find more here](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/)
 
    Add this example to your Jenkins pipeline to report deployments to Port:
    <details>
@@ -323,7 +323,7 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
    <TabItem value="octopus-deploy" label="Octopus Deploy">
 
 
-   Octopus can be used to track deployments by reporting to Port using custom API calls after deployments are triggered. [Find more here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
+   Octopus can be used to track deployments by reporting to Port using custom API calls after deployments are triggered. [Find more here](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
    
    Add this example to your Octopus script to report deployments to Port:
    <details>
@@ -366,7 +366,7 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
 
    <TabItem value="circleci" label="CircleCI">
 
-   Track deployments in CircleCI by reporting pipeline runs to Port using a configuration similar to Jenkins. [Find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/)
+   Track deployments in CircleCI by reporting pipeline runs to Port using a configuration similar to Jenkins. [Find more here](/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/)
    
    Add this example to your CircleCI pipeline to report deployments to Port:
    <details>
@@ -413,7 +413,7 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
   
   <TabItem value="azure-pipelines" label="Azure Pipelines">
       
-    Azure Pipelines can track deployments by integrating with Port's API in a similar manner. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/azure-pipelines/)
+    Azure Pipelines can track deployments by integrating with Port's API in a similar manner. [find more here](/build-your-software-catalog/custom-integration/api/ci-cd/azure-pipelines/)
 
    Add this example to your Azure Pipelines script to report deployments to Port:
    <details>
@@ -460,7 +460,8 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
 
    
   <TabItem value="codefresh" label="Codefresh">
-  Track deployments in Codefresh by integrating Port's API with your pipeline configurations. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/codefresh-workflow-template/)
+
+  Track deployments in Codefresh by integrating Port's API with your pipeline configurations. [find more here](/build-your-software-catalog/custom-integration/api/ci-cd/codefresh-workflow-template/)
 
    Add this example to your Codefresh pipeline to report deployments to Port:
    <details>
@@ -504,7 +505,7 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
 
   <TabItem value="gitlab" label="Gitlab">
 
-   Track GitLab pipeline deployments using a similar approach to report data to Port. [find more here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/ci-cd/gitlab-pipelines/)
+   Track GitLab pipeline deployments using a similar approach to report data to Port. [find more here](/build-your-software-catalog/custom-integration/api/ci-cd/gitlab-pipelines/)
    
    Add this example to your GitLab pipeline to report deployments to Port:
    <details>
@@ -552,7 +553,7 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
 we use the **search relation** entity to map the deployment to the correct service based on the service's `$title`.
 To learn more about using search relations,
 see [our documentation on Mapping Relations
-Using Search Queries](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries).
+Using Search Queries](/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries).
 :::
 
 
@@ -596,7 +597,7 @@ Here’s how you can implement this:
 :::tip Mapping Repositories, Releases, and Tags
 This configuration maps the repository, release, and tag information to deployment entities in Port.
 You can find more details about setting up GitHub integrations for repositories, releases,
-and tags [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-repository-releases-and-tags).
+and tags [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-repository-releases-and-tags).
 :::
 
 </TabItem>
@@ -642,7 +643,7 @@ curl -X POST https://api.getport.io/v1/blueprints/deployment/entities?upsert=tru
 we use the **search relation** entity to map the deployment to the correct service based on the service's `$title`.
 To learn more about using search relations,
 see [our documentation on Mapping Relations
-Using Search Queries](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries).
+Using Search Queries](/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries).
 You can change the query to match the naming convention in your organization
 and remember to replace `$YOUR_PORT_API_TOKEN` with your actual API token from port
 :::
@@ -709,38 +710,54 @@ Incidents are essential for tracking key DORA metrics, including **Change Failur
 ### Data Model Setup
 
 Ensure that your **PagerDuty incident blueprint** is properly configured to map incidents to the correct services(gitHub). 
-This includes defining the appropriate properties and relations for incidents.Follow this [PagerDuty Incident Blueprint Setup Link](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty#incident-blueprint-setup) to implement.
+This includes defining the appropriate properties and relations for incidents.Follow this [PagerDuty Incident Blueprint Setup Link](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty#incident-blueprint-setup) to implement.
 
-Add the following properties to capture incident resolution time and recovery time:
+- Add the following properties to capture incident resolution time and recovery time:
 
-<details>
-<summary><b>Additional properties for PagerDuty Incident Blueprint (click to expand)</b></summary>
+   <details>
+   <summary><b>Additional properties for PagerDuty Incident Blueprint (click to expand)</b></summary>
+   
+   ```json showLineNumbers
+    "resolvedAt": {
+      "title": "Incident Resolution Time",
+      "type": "string",
+      "format": "date-time",
+      "description": "The timestamp when the incident was resolved"
+    },
+    "recoveryTime": {
+      "title": "Time to Recovery",
+      "type": "number",
+      "description": "The time (in minutes) between the incident being triggered and resolved"
+    }
+   
+   ```
+   </details>
 
-```json showLineNumbers
- "resolvedAt": {
-   "title": "Incident Resolution Time",
-   "type": "string",
-   "format": "date-time",
-   "description": "The timestamp when the incident was resolved"
- },
- "recoveryTime": {
-   "title": "Time to Recovery",
-   "type": "number",
-   "description": "The time (in minutes) between the incident being triggered and resolved"
- }
+- Add this mapping config to pagerduty incident [data source](https://app.getport.io/settings/data-sources):
 
-```
-</details>
+   <details>
+     <summary><b>Incident mapping config for resolvedAt and recoveryTime (click to expand)</b></summary>
+     
+   ```yaml showLineNumbers
+      resolvedAt: .resolved_at
+      recoveryTime: >-
+         (.created_at as $createdAt | .resolved_at as $resolvedAt |
+         if $resolvedAt == null then null else 
+         ( ($resolvedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) -
+           ($createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) ) / 60 end) # Time in minutes and divide by 3600 if you want it calculated in hours
+     ```
+   
+   </details>
 
 ### Syncing Incidents with PagerDuty and Other Tools
 
-To sync incidents from **PagerDuty**, follow the steps in the [PagerDuty guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty). The guide provides detailed steps for setting up integrations to track incidents related to deployments.
+To sync incidents from **PagerDuty**, follow the steps in the [PagerDuty guide](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty). The guide provides detailed steps for setting up integrations to track incidents related to deployments.
 
 For other incident management tools, follow these respective guides:
-- [OpsGenie](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie)
-- [FireHydrant](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant)
-- [ServiceNow](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
-- [Statuspage](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
+- [OpsGenie](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie)
+- [FireHydrant](/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant)
+- [ServiceNow](/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
+- [Statuspage](/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
 
 ### Relating Incident to services
 Add this relationship to the **Incident blueprint** to link incidents to GitHub repository (service):
@@ -777,6 +794,12 @@ Update the mapping config to pagerduty incident [data source](https://app.getpor
               properties:
                  status: .status
                  url: .self
+                 resolvedAt: .resolved_at
+                 recoveryTime: >-
+                    (.created_at as $createdAt | .resolved_at as $resolvedAt |
+                    if $resolvedAt == null then null else 
+                    ( ($resolvedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) -
+                      ($createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) ) / 60 end)
                  ... # Add other properties as needed
               relations:
                  pagerdutyService: .service.id
@@ -795,7 +818,7 @@ Update the mapping config to pagerduty incident [data source](https://app.getpor
 we use the **search relation** entity to map the `pagerdutyIncident` blueprint to the correct service based on the service's `$title` and the pagerduty incident `service.summary`.
 We have assumed that the **service name/title** exists in the `service.summary` property of the incident, but you can modify this query to map based on other properties that better match your setup
 To learn more about using search relations, see [our documentation on Mapping Relations
-Using Search Queries](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries). 
+Using Search Queries](/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries). 
 :::
 
 
@@ -877,7 +900,7 @@ Add this aggregation property to calculate the lead time for changes:
    "calculationSpec": {
      "func": "average",
      "averageOf": "total",
-     "property": "leadTimeDays",
+     "property": "leadTimeHours",
      "measureTimeBy": "$createdAt",
      "calculationBy": "property"
    }
@@ -1000,6 +1023,11 @@ Add this aggregation property to calculate the MTTR:
 </TabItem>
 
 </Tabs>
+
+:::note Aggregation Data Availability
+At this point, you can already visit each service to view the aggregated DORA metrics. However, note that the aggregation data will only be calculated based on newly ingested data moving forward.
+click [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) for more details on aggregation properties.
+:::
 
 
 
