@@ -1,5 +1,5 @@
 export const tagsCategoryMap = {
-    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics"],
+    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog"],
     "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
