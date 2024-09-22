@@ -5,6 +5,7 @@ tags:
   - Guide
   - GitHub Actions
 displayed_sidebar: null
+description: Learn how to push images to ECR in Port, ensuring efficient container management and streamlined deployments.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 displayed_sidebar: null
+description: Learn how to effectively manage pull requests in Port, streamlining code reviews and collaboration processes.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

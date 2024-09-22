@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 displayed_sidebar: null
+description: Learn how to manage S3 buckets using webhooks in Port, enabling automated and efficient cloud operations.
 ---
 
 # Create an S3 bucket using Self-Service Actions

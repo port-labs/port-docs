@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 displayed_sidebar: null
+description: Learn how to delete a repository in Port with this guide, ensuring secure and proper removal of unnecessary resources.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

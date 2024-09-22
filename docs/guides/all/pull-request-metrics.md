@@ -1,6 +1,7 @@
 ---
 sidebar_position: 10
 displayed_sidebar: null
+description: Learn how to track pull request metrics in Port, gaining insights into code quality and collaboration efficiency.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";

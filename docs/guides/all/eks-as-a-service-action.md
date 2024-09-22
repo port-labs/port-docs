@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to manage EKS as a service in Port, ensuring efficient orchestration and scalable Kubernetes deployments.
 ---
 
 # EKS as a service action (EKSaaS)

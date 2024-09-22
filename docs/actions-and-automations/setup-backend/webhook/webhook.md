@@ -1,3 +1,5 @@
+import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
+
 # Webhook
 
 ## Overview
@@ -47,6 +49,17 @@ An example flow would be:
 
 When using this backend, there are several configurations that you can customize:
 
+### Use Port secrets for sensitive data
+
+Sensitive data such as tokens and passwords can be stored using [Port secrets](/sso-rbac/port-secrets/).
+
+Sometimes your webhook URL might contain sensitive data, such as a token.  
+To use a secret in the URL, you can reference it using `{{ .secrets.secret_name }}`.
+
+```bash
+https://example.com?token={{ .secrets.secret_token_name }}
+```
+
 ### Use Port agent
 
 The [Port execution agent](/actions-and-automations/setup-backend/webhook/port-execution-agent/) provides you with a secure and convenient way to act upon webhook invocations of self-service actions and automations.  
@@ -81,6 +94,7 @@ The following example shows an automation definition that triggers this self-ser
 
 <details>
 <summary><b>Automation definition (click to expand)</b></summary>
+<PortApiRegion />
 ```yaml showLineNumbers
 {
   "identifier": "slack_notify_on_service_failure",
@@ -107,7 +121,7 @@ The following example shows an automation definition that triggers this self-ser
     "method": "POST",
     "body": {
       "properties": {
-        "message": "Service {{.diff.before.title}} has degraded from `Passed` to `Not passed`."
+        "message": "Service {{ .event.diff.before.title }} has degraded from `Passed` to `Not passed`."
       }
     }
   },

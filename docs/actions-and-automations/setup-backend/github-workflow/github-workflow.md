@@ -48,5 +48,3 @@ By default, this is set to `true`. To disable this option, set the `reportWorkfl
 ## Examples
 
 For complete examples of self-service actions using a GitHub workflow as the backend, check out the [guides section](/guides?tags=GitHub&tags=Actions). 
-
-Additional examples can be found in our [action examples Github repository](https://github.com/port-labs/self-service-actions-examples).
