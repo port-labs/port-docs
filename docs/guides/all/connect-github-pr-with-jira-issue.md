@@ -2,6 +2,7 @@
 sidebar_position: 10
 title: Connect GitHub Pull Request with Jira Issue
 displayed_sidebar: null
+description: Effortlessly connect GitHub PRs with Jira issues in Port, enhancing traceability and improving project workflows.
 ---
 
 import Tabs from "@theme/Tabs"

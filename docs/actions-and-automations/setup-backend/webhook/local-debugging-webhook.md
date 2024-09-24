@@ -2,6 +2,8 @@
 sidebar_position: 4
 ---
 
+import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
+
 # Debugging Webhooks locally
 
 In this guide, we will show you how to debug Webhook Self-Service Actions that are sent from Port locally.
@@ -78,7 +80,7 @@ Below you can see the `python` code to create this Blueprint (remember to insert
 
 <details>
 <summary>Click here to see the code</summary>
-
+<PortApiRegion />
 ```python showLineNumbers
 import requests
 
@@ -260,7 +262,7 @@ Note how the `vm` Blueprint identifier is used to add the action to the new Blue
 
 <details>
 <summary>Click here to see code</summary>
-
+<PortApiRegion />
 ```python showLineNumbers
 import requests
 

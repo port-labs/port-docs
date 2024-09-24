@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to create a new AWS account for GitLab in Port, ensuring seamless integration and cloud management.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"

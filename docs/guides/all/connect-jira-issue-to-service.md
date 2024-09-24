@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Effortlessly connect Jira issues to services in Port, ensuring streamlined issue tracking and resolution.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"

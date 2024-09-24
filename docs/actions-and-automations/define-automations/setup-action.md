@@ -14,6 +14,8 @@ The automation's backend is the logic that you want to execute when a trigger ev
 
 Port uses the same backend types for automations and for [self-service actions](/actions-and-automations/create-self-service-experiences/).
 
+## Backend JSON structure
+
 The backend is defined under the `invocationMethod` key in the automation's JSON structure:
 
 ```json showLineNumbers
@@ -273,52 +275,24 @@ Below is an example of trigger data for an automation that triggers whenever an 
         "updatedBy": "auth0|82zea497e300f09d7c1f41",
         "createdAt": "2024-08-15T12:29:45.817Z",
         "updatedAt": "2024-08-15T12:29:45.817Z"
-      },
-      // "affectedEntities" will contain up to 10 entities that were affected by the action run
-      "affectedEntities": [
-        {
-          "identifier": "event_jz7DoTdpdiWF5vqb",
-          "action": "CREATE",
-          "resourceType": "entity",
-          "trigger": {
-            "at": "2024-08-26T06:23:34.877Z",
-            "by": {
-              "orgId": "org_BneDtWovPqXaA2VZ",
-              "appId": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-              "runId": "r_YpBfKZThzML9t4hq"
-            },
-            "origin": "API"
-          },
-          "context": {
-            "blueprintId": "bp_YjBvtqItU5nYQwVU",
-            "blueprint": "exampleBlueprint",
-            "entityId": "e_2WL7eCG9bkZV5fzQ",
-            "entity": "e_2WL7eCG9bkZV5fzQ"
-          },
-          "diff": {
-            "before": null,
-            "after": {
-              "identifier": "e_2WL7eCG9bkZV5fzQ",
-              "title": "string",
-              "icon": null,
-              "blueprint": "exampleBlueprint",
-              "team": [],
-              "properties": {},
-              "relations": {},
-              "createdAt": "2024-08-26T06:23:34.877Z",
-              "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-              "updatedAt": "2024-08-26T06:23:34.877Z",
-              "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ"
-            }
-          },
-          "status": "SUCCESS"
-        }
-      ]
+      }
     },
     "diff": {
       "before": {
         "id": "r_Q0YotCZMKxDLdlaU",
         "status": "IN_PROGRESS",
+        // "blueprint" and "entity" will be available if the action is tied to a blueprint
+        // (meaning that the action run is tied to an entity)
+        "blueprint": {
+          "identifier": "blueprintIdentifier",
+          "title": "blueprintTitle",
+          "icon": "blueprintIcon"
+        },
+        "entity": {
+          "identifier": "entityIdentifier",
+          "title": "entityTitle",
+          "icon": "entityIcon",
+        },
         "action": {
           "identifier": "myActionId",
           "title": null,
@@ -352,6 +326,18 @@ Below is an example of trigger data for an automation that triggers whenever an 
       "after": {
         "id": "r_Q0YotCZMKxDLdlaU",
         "status": "IN_PROGRESS",
+        // "blueprint" and "entity" will be available if the action is tied to a blueprint
+        // (meaning that the action run is tied to an entity)
+        "blueprint": {
+          "identifier": "blueprintIdentifier",
+          "title": "blueprintTitle",
+          "icon": "blueprintIcon"
+        },
+        "entity": {
+          "identifier": "entityIdentifier",
+          "title": "entityTitle",
+          "icon": "entityIcon",
+        },
         "action": {
           "identifier": "myActionId",
           "title": null,
@@ -394,18 +380,13 @@ Below is an example of trigger data for an automation that triggers whenever an 
 }
 ```
 
-:::tip Affected entities
-The `affectedEntities` array will contain diffs of the entities that were affected by the action run. This can be used in the payload.  
-Note that the array will contain up to 10 items to avoid payload size issues.
-:::
-
 The example above is for an automation that uses the `RUN_UPDATED` trigger event. The `event.diff` object contains data from `before` and `after` the update.  
 
-<!-- The other trigger events have the same structure, with the following differences:
+The other trigger events have the same structure, with the following differences:
 
 - `RUN_CREATED` - In the `diff` object, `before` will be `null`, and `after` will contain the new action run data.
 
-- `ANY_RUN_CHANGE` - The `diff` object will contain `before` and/or `after` data according to the entity change. -->
+- `ANY_RUN_CHANGE` - The `diff` object will contain `before` and/or `after` data according to the entity change.
 
 </TabItem>
 </Tabs>

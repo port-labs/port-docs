@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to connect GitHub repositories with SonarQube projects in Port, enhancing code quality and oversight.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"

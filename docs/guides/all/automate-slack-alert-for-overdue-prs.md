@@ -1,6 +1,7 @@
 ---
 displayed_sidebar: null
 title:  Automate Slack Alert for Overdue PRs
+description: Set up automated Slack alerts for overdue PRs in Port, ensuring timely reviews and efficient project management.
 ---
 
 import Tabs from "@theme/Tabs"
@@ -89,7 +90,7 @@ Add the `slackChannel` property. If it does not exist, with the schema below:
 ```
 
 
-### Ingest GitHub PR Data:
+### Ingest GitHub PR Data
     - Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your GitHub integration:
 
       <img src='/img/guides/githubAppIntegration.png' border='1px' />

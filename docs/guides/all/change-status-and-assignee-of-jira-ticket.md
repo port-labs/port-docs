@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Quickly change the status and assignee of Jira tickets in Port, streamlining your project management process.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
