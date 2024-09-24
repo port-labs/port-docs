@@ -38,7 +38,7 @@ Check out the following examples for using Port's webhook integration to ingest 
   },
   {
     type: 'link',
-    href: '/build-your-software-catalog/sync-data-to-catalog/jenkins/#alternative-installation-via-webhook',
+    href: '/build-your-software-catalog/sync-data-to-catalog/cicd/jenkins/#alternative-installation-via-webhook',
     label: 'Jenkins',
     description: 'Ingest Jenkins build and job events',
   },
