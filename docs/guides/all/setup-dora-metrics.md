@@ -831,8 +831,19 @@ If you want to track these metrics at higher levels, such as **team** or **domai
 :::
 
 ###  Aggregation
-
 The metrics in this guide are aggregated monthly. However, you can easily switch the timeframes to weekly, hourly, etc., based on your requirements.
+
+:::tip Adding Aggregation to Blueprints
+
+Before proceeding, follow these steps to add the aggregation and calculation properties to the **Service Blueprint**:
+
+1. Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal
+2. Locate and select your **Service** blueprint.
+3. Click the `{...}` button in the top right corner, and choose **Edit JSON**
+4. Insert the respective **aggregation** or **calculation properties** under the `aggregationProperties` or `calculationProperties` section in the Service blueprint's JSON schema.
+5. Save your changes to apply the new aggregation configuration.
+:::
+
 
 <Tabs groupId="metrics" defaultValue="df" values={[
 { label: 'Deployment Frequency', value: 'df' },
@@ -1077,16 +1088,14 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <summary><b>Setup Change Lead Time Widget</b></summary>
 
 1. Click `+ Widget` and select **Number Chart**
-2. Title: `Lead Time for Changes (Monthly)`, (add LineChart icon)
+2. Title: `Lead Time for Changes (Hour)`, (add LineChart icon)
 3. Select `Aggregate by property` and choose **Service** as the **Blueprint**
-4. Select `average` as the function and choose `Month` for **Average of** and `createdAt` as the **Measure Time By**
-5. Select an `Entity` and choose `Lead Time for Change` as the **Property**
-6. Select the `Month` time interval and preferred time range
-7. Add custom Unit for **Unit of Measurement** (e.g., days)
+4. Select `average` as the function and choose `Hour` for **Average of** and `createdAt` as the **Measure Time By**
+5. Add custom Unit for **Unit of Measurement** (Hours)
 
    <img src="/img/guides/leadTimeForChangesDoraMetrics.png"  width="50%"/>
    
-8. Click `Save`.
+6. Click `Save`
 
 </details>
 
@@ -1102,7 +1111,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 
    <img src="/img/guides/changeLeadTimeOverTimeDM.png"  width="50%"/>
 
-6. Click `Save`.
+6. Click `Save`
 
 </details>
 
@@ -1118,7 +1127,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 
    <img src="/img/guides/deploymentFrequencyOverTime.png" width="50%"/>
 
-6. Click `Save`.
+6. Click `Save`
 </details>
 
 :::tip Metric widget groupings
