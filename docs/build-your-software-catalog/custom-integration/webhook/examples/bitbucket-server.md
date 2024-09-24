@@ -256,7 +256,9 @@ Here is an example of the payload structure sent to the webhook URL when a Bitbu
 
 </details>
 
-### Mapping Result
+
+<details>
+<summary> Mapping Result </summary>
 
 ```json showLineNumbers
 {
@@ -281,6 +283,7 @@ Here is an example of the payload structure sent to the webhook URL when a Bitbu
    "filter":true
 }
 ```
+</details>
 
 ## Import Bitbucket Historical Issues
 
@@ -299,6 +302,7 @@ In addition, provide the following environment variables:
 - `BITBUCKET_PASSWORD` - Bitbucket account password
 - `BITBUCKET_PROJECTS_FILTER` - An optional comma separated list of Bitbucket projects to filter. If not provided, all projects will be fetched.
 - `WEBHOOK_SECRET` - An optional secret to use when creating a webhook in Port. If not provided, `bitbucket_webhook_secret` will be used.
+- `PORT_API_URL` - An optional variable that defaults to the EU Port API `https://api.getport.io/v1`. For US organizations use `https://api.us.getport.io/v1` instead.
 
 :::tip Webhook Configuration
 This app will automatically set up a webhook that allows Bitbucket to send events to Port. To understand more about how Bitbucket sends event payloads via webhooks, you can refer to [this documentation](https://confluence.atlassian.com/bitbucketserver/event-payload-938025882.html).
