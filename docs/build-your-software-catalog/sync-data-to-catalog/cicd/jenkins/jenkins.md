@@ -844,23 +844,79 @@ resources:
 <details>
 <summary>Integration configuration</summary>
 
+:::note Control Stage Fetching
+To prevent overwhelming your Ocean instance with potentially thousands of stages from Jenkins, the integration requires you to specify a specific job. This ensures that Ocean only retrieves stages related to that job, keeping things focused and efficient.
+
+**Important**: The integration will also fetch stages from all nested jobs within the specified job.
+:::
+
 ```yaml showLineNumbers
 - kind: stage
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: '._links.self.href  | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-")'
-          title: .name
-          blueprint: '"jenkinsStage"'
-          properties:
-            status: .status
-            startTimeMillis: .startTimeMillis
-            durationMillis: .durationMillis
-            stageUrl: '.__fullUrl'
-          relations:
-            parentBuild: '._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$"; "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") | gsub("/"; "-")'
+  selector:
+    query: 'true'
+    jobUrl: http://localhost:8080/job/limbopay/job/Limbo%20Core/job/main
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          ._links.self.href  | sub("^.*?/"; "") | gsub("%20"; "-") |
+          gsub("%252F"; "-") | gsub("/"; "-")
+        title: .name
+        blueprint: '"jenkinsStage"'
+        properties:
+          status: .status
+          startTimeMillis: .startTimeMillis
+          durationMillis: .durationMillis
+          stageUrl: env.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST  + ._links.self.href
+        relations:
+          parentBuild: >-
+            ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
+            "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
+            gsub("/"; "-")
+- kind: stage
+  selector:
+    query: 'true'
+    jobUrl: http://localhost:8080/job/Phalbert/job/airframe-react
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          ._links.self.href  | sub("^.*?/"; "") | gsub("%20"; "-") |
+          gsub("%252F"; "-") | gsub("/"; "-")
+        title: .name
+        blueprint: '"jenkinsStage"'
+        properties:
+          status: .status
+          startTimeMillis: .startTimeMillis
+          durationMillis: .durationMillis
+          stageUrl: env.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST  + ._links.self.href
+        relations:
+          parentBuild: >-
+            ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
+            "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
+            gsub("/"; "-")
+- kind: stage
+  selector:
+    query: 'true'
+    jobUrl: http://localhost:8080/job/Phalbert/job/autoshop_api
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          ._links.self.href  | sub("^.*?/"; "") | gsub("%20"; "-") |
+          gsub("%252F"; "-") | gsub("/"; "-")
+        title: .name
+        blueprint: '"jenkinsStage"'
+        properties:
+          status: .status
+          startTimeMillis: .startTimeMillis
+          durationMillis: .durationMillis
+          stageUrl: env.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST  + ._links.self.href
+        relations:
+          parentBuild: >-
+            ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
+            "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
+            gsub("/"; "-")
 ```
 
 </details>
