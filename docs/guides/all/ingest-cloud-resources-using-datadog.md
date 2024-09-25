@@ -24,7 +24,7 @@ We will be making use of the `hosts` kind in Port's Datadog integration which pr
 1. Having installed the Datadog integration, create the `datadogCloudResource` blueprint in your Port environment using the blueprint below:
 
 <details>
-<summary><b>Datadog Cloud Resource Blueprint (Click to expand</b></summary>
+<summary><b>Datadog Cloud Resource Blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
