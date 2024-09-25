@@ -12,6 +12,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 This guide is designed
 to help you
 implement and track [DevOps Research and Assessment (DORA) metrics](https://cloud.google.com/blog/products/devops-sre/using-the-four-keys-to-measure-your-devops-performance) within your organization in Port.  
+
 DORA Metrics are a set of key performance indicators
 that measure the effectiveness and efficiency of your software development and delivery process. 
 By tracking these metrics,
@@ -20,7 +21,8 @@ This guide will cover the four key metrics: **deployment frequency**, **lead tim
 
 ### Prerequisites
 - Complete the [Port onboarding process](https://docs.getport.io/quickstart).
-- Access a GitHub repository (e.g., port-dora-metrics) to sync your pull requests or deployments. You can follow the [GitHub integration guide](/build-your-software-catalog/sync-data-to-catalog/git/github) to ensure your deployments are tracked in Port.
+- While this guide demonstrates an implementation using GitHub, other Git providers can be used as well.
+- Access to a GitHub repository that is connected to Port via the onboarding process.
 - Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD or GitHub Actions.
 
 
@@ -146,7 +148,7 @@ The lead time for these merges is calculated as the difference between when the 
 
 Here’s how you can implement this:
 
-1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**:
+1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**.
 
 2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration:
 
@@ -658,9 +660,7 @@ giving you full flexibility across all your deployment workflows.
 <br/>
 
 ### Monorepo Tracking
-
-Port does not offer a built-in solution specifically tailored for monorepos.
-However, by using **custom integrations**, you can track services or components within a monorepo effectively.
+By using **custom integrations**, you can effectively track services or components within a monorepo.
 
 Here’s how you can do this:
 
@@ -837,9 +837,9 @@ The metrics in this guide are aggregated monthly. However, you can easily switch
 
 Before proceeding, follow these steps to add the aggregation and calculation properties to the **Service Blueprint**:
 
-1. Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal
+1. Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
 2. Locate and select your **Service** blueprint.
-3. Click the `{...}` button in the top right corner, and choose **Edit JSON**
+3. Click the `{...}` button in the top right corner, and choose **Edit JSON**.
 4. Insert the respective **aggregation** or **calculation properties** under the `aggregationProperties` or `calculationProperties` section in the Service blueprint's JSON schema.
 5. Save your changes to apply the new aggregation configuration.
 :::
@@ -1031,9 +1031,9 @@ By leveraging Port's Dashboards, you can create custom dashboards to track the m
 
 ### Dashboard Setup
 1. Go to your [software catalog](https://app.getport.io/organization/catalog).
-2. Click on the `+ New` button in the left sidebar
-3. Select **New dashboard**
-4. Name the dashboard (e.g., DORA Metrics), choose an icon if desired, and click `Create`
+2. Click on the `+ New` button in the left sidebar.
+3. Select **New dashboard**.
+4. Name the dashboard (e.g., DORA Metrics), choose an icon if desired, and click `Create`.
 
 This will create a new empty dashboard. Let's get ready-to-add widgets 
 
@@ -1042,28 +1042,28 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <details>
 <summary><b>Setup Deployment Frequency Widget</b></summary>
 
-1. Click `+ Widget` and select **Number Chart**
-2. Title: `Deployment Frequency - Monthly`, (add the rocket icon)
-3. Select `Display single property` and choose **Service** as the **Blueprint**
-4. Select an `Entity` and choose `Monthly Deployment Frequency` as the **Property**
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `Deployment Frequency - Monthly`, (add the rocket icon).
+3. Select `Display single property` and choose **Service** as the **Blueprint**.
+4. Select an `Entity` and choose `Monthly Deployment Frequency` as the **Property**.
 
    <img src="/img/guides/deploymentFrequencyChartDoraMetrics.png" width="50%"/>
    
-5. Click `Save`
+5. Click `Save`.
 
 </details>
 
 <details>
 <summary><b>Setup MTTR Widget</b></summary>
 
-1. Click `+ Widget` and select **Number Chart**
-2. Title: `MTTR – Monthly Average (Seconds)`, (add the pagerduty icon)
-3. Select `Display single property` and choose **Service** as the **Blueprint**
-4. Select an `Entity` and choose `Mean Time to Recovery` as the **Property**
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `MTTR – Monthly Average (Seconds)`, (add the pagerduty icon).
+3. Select `Display single property` and choose **Service** as the **Blueprint**.
+4. Select an `Entity` and choose `Mean Time to Recovery` as the **Property**.
 
    <img src="/img/guides/mttrDoraMetricsChart.png" width="50%"/>
    
-5. Click `Save`
+5. Click `Save`.
 
 </details>
 
@@ -1071,15 +1071,15 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <details>
 <summary><b>Setup Change Lead Time Widget</b></summary>
 
-1. Click `+ Widget` and select **Number Chart**
-2. Title: `Lead Time for Changes (Hour)`, (add LineChart icon)
-3. Select `Aggregate by property` and choose **Service** as the **Blueprint**
-4. Select `average` as the function and choose `Hour` for **Average of** and `createdAt` as the **Measure Time By**
-5. Add custom Unit for **Unit of Measurement** (Hours)
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `Lead Time for Changes (Hour)`, (add LineChart icon).
+3. Select `Aggregate by property` and choose **Service** as the **Blueprint**.
+4. Select `average` as the function and choose `Hour` for **Average of** and `createdAt` as the **Measure Time By**.
+5. Add custom Unit for **Unit of Measurement** (Hours).
 
    <img src="/img/guides/leadTimeForChangesDoraMetrics.png"  width="50%"/>
    
-6. Click `Save`
+6. Click `Save`.
 
 </details>
 
@@ -1087,15 +1087,15 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <details>
 <summary><b>Change Lead Time Over Time</b></summary>
 
-1. Click `+ Widget` and select **Line Chart**
-2. Title: `Change Lead Time Over Time`, (add the LineChart icon)
-3. Choose **Service** as the **Blueprint**
-4. Select an `Entity` and choose `Lead time for change` as the **Property**
-5. Set **Time Interval** to `Month` and **Time Range** to `In the past 365 days`
+1. Click `+ Widget` and select **Line Chart**.
+2. Title: `Change Lead Time Over Time`, (add the LineChart icon).
+3. Choose **Service** as the **Blueprint**.
+4. Select an `Entity` and choose `Lead time for change` as the **Property**.
+5. Set **Time Interval** to `Month` and **Time Range** to `In the past 365 days`.
 
    <img src="/img/guides/changeLeadTimeOverTimeDM.png"  width="50%"/>
 
-6. Click `Save`
+6. Click `Save`.
 
 </details>
 
@@ -1103,15 +1103,15 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <details>
 <summary><b>Deployments Frequency Over Time</b></summary>
 
-1. Click `+ Widget` and select **Line Chart**
-2. Title: `Deployments Frequency Over Time` (add the rocket icon)
-3. Select **Service** as the **Blueprint**
-4. Select `Monthly Deployment Frequency` as the **Property**
-5. Set **Time Interval** to `Month` and **Time Range** to `In the past 365 days`
+1. Click `+ Widget` and select **Line Chart**.
+2. Title: `Deployments Frequency Over Time` (add the rocket icon).
+3. Select **Service** as the **Blueprint**.
+4. Select `Monthly Deployment Frequency` as the **Property**.
+5. Set **Time Interval** to `Month` and **Time Range** to `In the past 365 days`.
 
    <img src="/img/guides/deploymentFrequencyOverTime.png" width="50%"/>
 
-6. Click `Save`
+6. Click `Save`.
 </details>
 
 :::tip Metric widget groupings
