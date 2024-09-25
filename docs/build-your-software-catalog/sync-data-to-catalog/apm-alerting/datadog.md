@@ -14,7 +14,7 @@ import DatadogMicroserviceBlueprint from "./resources/datadog/\_example_datadog_
 
 # Datadog
 
-Our Datadog integration allows you to import `monitors` (also known as alerts), `services`, `slos`, `sloHistory`, and `serviceMetrics` from your Datadog account into Port, according to your mapping and definition.
+Port's Datadog integration allows you to import `monitors` (also known as alerts), `services`, `slos`, `sloHistory`, and `serviceMetrics` from your Datadog account into Port, according to your mapping and definition.
 
 ## Common use cases
 

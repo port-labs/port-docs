@@ -17,7 +17,7 @@ import JenkinsJobWebhookConfig from './\_example_jenkins_job_webhook_configurati
 
 # Jenkins
 
-Our Jenkins integration allows you to import `jobs`, `builds`, and `users` from your Jenkins environment into Port, according to your mapping and definitions.
+Port's Jenkins integration allows you to import `jobs`, `builds`, and `users` from your Jenkins environment into Port, according to your mapping and definitions.
 
 ## Common use cases
 
