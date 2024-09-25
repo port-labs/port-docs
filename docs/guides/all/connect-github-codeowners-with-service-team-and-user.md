@@ -305,7 +305,7 @@ resources:
         mappings:
           identifier: .item.component | gsub(" "; "_") | gsub("&"; "and") | gsub("-"; "")
           title: .item.component
-          blueprint: '"Component"'
+          blueprint: '"githubCodeowners"'
           properties:
             codeowners_file_patterns: .item.patterns
           relations:
