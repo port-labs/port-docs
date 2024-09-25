@@ -1,0 +1,65 @@
+<details>
+
+<summary>
+  Mapping Configuration for BigQuery Dataset, Table and Model
+</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: bigquery.googleapis.com/Dataset
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .datasetReference.datasetId
+          title: .datasetReference.datasetId
+          blueprint: '"gcpBigQueryDataset"'
+          properties:
+            location: .location
+            last_modified: >-
+              if .lastModifiedTime != null then (.lastModifiedTime | tonumber /
+              1000 | todate) else null end
+            createdTime: >-
+              if .creationTime != null then (.creationTime | tonumber / 1000 |
+              todate) else null end
+          relations:
+            project: .__project.name
+  - kind: bigquery.googleapis.com/Table
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .tableReference.tableId
+          blueprint: '"gcpBigQueryTable"'
+          properties:
+            location: .location
+            createdTime: >-
+              if .creationTime != null then (.creationTime | tonumber / 1000 |
+              todate) else null end
+          relations:
+            project: .__project.name
+            dataset: .tableReference.datasetId
+  - kind: bigquery.googleapis.com/Model
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .modelReference.modelId
+          title: .modelReference.modelId
+          blueprint: '"gcpBigQueryModel"'
+          properties:
+            location: .location
+            createdTime: >-
+              if .creationTime != null then (.creationTime | tonumber / 1000 |
+              todate) else null end
+            modelType: .modelType
+          relations:
+            project: .__project.name
+            dataset: .modelReference.datasetId
+```
+
+</details>
