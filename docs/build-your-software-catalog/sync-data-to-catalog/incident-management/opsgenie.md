@@ -15,7 +15,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Opsgenie
 
-Our Opsgenie integration allows you to import `alert`, `incident`, `service`, `team`, `schedule` and `schedule-oncall` from your Opsgenie account into Port, according to your mapping and definitions.
+Port's Opsgenie integration allows you to import `alert`, `incident`, `service`, `team`, `schedule` and `schedule-oncall` from your Opsgenie account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
