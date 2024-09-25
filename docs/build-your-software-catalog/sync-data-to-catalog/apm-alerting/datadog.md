@@ -1654,7 +1654,9 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ## Alternative installation via webhook
 
-We can create a webhook integration between [Datadog](https://www.datadoghq.com/) and Port, which will ingest alerts and monitor entities into Port and map them to your microservice entities.
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest alerts and monitor data from Datadog. If so, use the following instructions:
+
+**Note** that when using this method, data will be ingested into Port only when the webhook is triggered.
 
 <details>
 <summary><b>Webhook installation (click to expand)</b></summary>

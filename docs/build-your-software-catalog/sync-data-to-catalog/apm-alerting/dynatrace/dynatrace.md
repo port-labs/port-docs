@@ -9,7 +9,7 @@ import DynatraceMicroserviceBlueprint from "/docs/build-your-software-catalog/sy
 
 # Dynatrace
 
-Our Dynatrace integration allows you to import `problem`, `slo`
+Port's Dynatrace integration allows you to import `problem`, `slo`
 and `entity` resources from your Dynatrace instance into Port, according to your mapping and definition.
 
 ## Common use cases
@@ -1219,8 +1219,9 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 ## Alternative installation via webhook
-We can create a webhook integration between [Dynatrace](https://www.dynatrace.com/) and Port, which will ingest problem entities to Port and map them to your microservice entities.
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest problem from Dynatrace. If so, use the following instructions:
 
+**Note** that when using this method, data will be ingested into Port only when the webhook is triggered.
 <details>
 <summary><b>Webhook installation (click to expand)</b></summary>
 
