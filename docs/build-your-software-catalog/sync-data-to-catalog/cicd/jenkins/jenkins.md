@@ -769,7 +769,6 @@ resources:
           lastUpdateTime: if .lastChange then (.lastChange/1000) else now end | strftime("%Y-%m-%dT%H:%M:%SZ")
 
 ```
-
 </details>
 
 
@@ -854,7 +853,8 @@ To prevent overwhelming your Ocean instance with potentially thousands of stages
 - kind: stage
   selector:
     query: 'true'
-    jobUrl: http://localhost:8080/job/limbopay/job/Limbo%20Core/job/main
+    # Example jobUrl - replace with your own Jenkins job URL
+    jobUrl: http://your-jenkins-server/job/your-project/job/your-job
   port:
     entity:
       mappings:
@@ -873,10 +873,15 @@ To prevent overwhelming your Ocean instance with potentially thousands of stages
             ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
             "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
             gsub("/"; "-")
+
+# Additional stage configurations follow the same pattern.
+# Make sure to replace the jobUrl with your own Jenkins job URLs for each configuration.
+
 - kind: stage
   selector:
     query: 'true'
-    jobUrl: http://localhost:8080/job/Phalbert/job/airframe-react
+    # Example jobUrl - replace with your own Jenkins job URL
+    jobUrl: http://your-jenkins-server/job/your-project/job/another-job
   port:
     entity:
       mappings:
@@ -895,10 +900,12 @@ To prevent overwhelming your Ocean instance with potentially thousands of stages
             ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
             "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
             gsub("/"; "-")
+
 - kind: stage
   selector:
     query: 'true'
-    jobUrl: http://localhost:8080/job/Phalbert/job/autoshop_api
+    # Example jobUrl - replace with your own Jenkins job URL
+    jobUrl: http://your-jenkins-server/job/your-project/job/third-job
   port:
     entity:
       mappings:
