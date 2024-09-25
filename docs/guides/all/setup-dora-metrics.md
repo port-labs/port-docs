@@ -927,32 +927,16 @@ Add the following to the aggregated property in service:
 <summary><b>CFR aggregation property (click to expand)</b></summary>
 
 ```json showLineNumbers
-
-  "resolved_incidents": {
-    "title": "Resolved Incidents",
-    "type": "number",
-    "target": "pagerdutyIncident",
-    "query": {
-      "combinator": "and",
-      "rules": [
-        {
-          "property": "status",
-          "operator": "=",
-          "value": "resolved"
-        },
-        {
-          "property": "incidentType",
-          "operator": "=",
-          "value": "Deployment"
-        }
-      ]
-    },
-    "calculationSpec": {
-       "func": "average", 
-       "averageOf": "month",
-       "measureTimeBy": "$createdAt",
-       "calculationBy": "entities"
-    }
+  "total_incidents":{
+      "title": "Total Incidents",
+      "type": "number",
+      "target": "pagerdutyIncident",
+      "calculationSpec": {
+        "calculationBy": "entities",
+        "func": "count",
+        "averageOf": "month",
+        "measureTimeBy": "$createdAt"
+      }
   }, 
    "total_deployments": {
       "title": "Total Monthly Deployment Frequency",
@@ -986,7 +970,7 @@ Add this calculation property to calculate the cfr from the aggregated propertie
 ```json showLineNumbers
       "changeFailureRate": {
         "title": "Change Failure Rate",
-        "calculation": "(.properties.resolved_incidents / .properties.total_deployments) * 100",
+        "calculation": "(.properties.total_incidents / .properties.total_deployments) * 100",
         "type": "number"
       }
      
