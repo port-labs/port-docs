@@ -1,7 +1,7 @@
 ---
-description: Ingests Checkmarx KICS scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature.
+description: Ingest API paths from a `swagger.json` file in a GitHub repository into Port
 displayed_sidebar: null
-title: Ingest Swagger paths into your catalog
+title: Ingest Swagger paths from swagger.json file into your catalog
 ---
 
 import Tabs from "@theme/Tabs"
@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem"
 import SwaggerBlueprint from '../templates/swagger/\_example_swagger_blueprint.mdx'
 import SwaggerWebhookConfig from '../templates/swagger/\_example_swagger_webhook_config.mdx'
 
-# Swagger
+# Ingest Swagger paths from swagger.json file into your catalog
 The following example shows you how to create a `swaggerPath` blueprint that ingests all API paths in your `swagger.json` file using Port's GitHub file ingesting feature.
 
 To ingest the packages to Port, the GitHub integration is used.

@@ -10,7 +10,7 @@ import PythonScript from '../templates/trivy/\_example_python_script.mdx'
 import TrivyBlueprint from '../templates/trivy/\_example_trivy_blueprint.mdx'
 import TrivyWebhookConfig from '../templates/trivy/\_example_trivy_webhook_config.mdx'
 
-# Trivy
+# Ingest Trivy vulnerabilities into your catalog
 
 The following example shows you how to create a `trivyVulnerability` blueprint that ingests all vulnerabilities in your Trivy result file using Port's GitHub file ingesting feature.
 

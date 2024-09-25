@@ -10,7 +10,7 @@ import ServiceBlueprint from '../templates/service/\_example_global_service_blue
 import PackageBlueprint from '../templates/javascript/\_example_package_blueprint.mdx'
 import PackageWebhookConfig from '../templates/javascript/\_example_package_webhook_config.mdx'
 
-# JavaScript
+# Ingest Javascript packages into your catalog
 
 The following example shows you how to create a `package` blueprint that ingests all third party dependencies and libraries in your `package.json` file using Port's GitHub file ingesting feature. You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
 

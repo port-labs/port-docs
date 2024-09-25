@@ -10,7 +10,7 @@ import PythonScript from '../templates/checkmarx/\_example_python_script.mdx'
 import CheckmarxBlueprint from '../templates/checkmarx/\_example_checkmarx_blueprint.mdx'
 import CheckmarxWebhookConfig from '../templates/checkmarx/\_example_checkmarx_webhook_config.mdx'
 
-# Checkmarx KICS
+# Ingest Checkmarx KICS scan into your catalog
 
 The following example shows you how to create a `checkmarxScan` blueprint that ingests all scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature.
 
