@@ -117,130 +117,14 @@ Create an integration configuration for the resource. The integration configurat
 <StorageAppConfig/>
 
 
-## Integration configuration basics and the use of `useGetResourceAPI`
+## Configuration
 
-#### The integration configuration structure
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-- The `kind` field describes the AWS resource type to be ingested into Port.
-  The `kind` field should be set to the AWS resource type as it appears in the [supported resources guide](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html). e.g. The resource type for the `Lambda` is `AWS::Lambda::Function`
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-  ```yaml showLineNumbers
-  resources:
-  	# highlight-start
-  	- kind: AWS::Lambda::Function
-  		# highlight-end
-  		selector:
-  		...
-  ```
 
-- The `selector` field describes the AWS resource selection criteria.
-
-  ```yaml showLineNumbers
-  	resources:
-  		- kind: AWS::Lambda::Function
-  			# highlight-start
-  			selector:
-  				query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-  			# highlight-end
-  			port:
-  ```
-
-  - The `query` field is a [JQ boolean query](https://stedolan.github.io/jq/manual/#Basicfilters), if evaluated to `false` - the resource will be skipped. Example use case - skip syncing resources that are not in a specific region.
-    ```yaml showLineNumbers
-    query: .location == "global"
-    ```
-
-- The `port` field describes the Port entity to be created from the AWS resource.
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: AWS::Lambda::Function
-      selector:
-        query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
-      # highlight-start
-      port:
-        entity:
-          mappings: # Mappings between one AWS object to a Port entity. Each value is a JQ query.
-            identifier: '.Identifier'
-            title: '.Properties.FunctionName'
-            blueprint: 'lambda'
-            properties:
-              kind: '.__Kind'
-              region: '.__Region'
-              link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
-              description: '.Properties.Description'
-              memorySize: '.Properties.MemorySize'
-              ephemeralStorageSize: '.Properties.EphemeralStorage.Size'
-              timeout: '.Properties.Timeout'
-              runtime: '.Properties.Runtime'
-              packageType: '.Properties.PackageType'
-              environment: '.Properties.Environment'
-              architectures: '.Properties.Architectures'
-              layers: '.Properties.Layers'
-              tags: '.Properties.Tags'
-              iamRole: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Role"
-              arn: '.Properties.Arn'
-            relations:
-              account: '.__AccountId'
-    # highlight-end
-  ```
-
-  - The `entity` field describes the Port entity to be created from the AWS resource.
-
-        - The `mappings` field describes the mapping between the AWS resource and the Port entity.
-
-          - The `identifier` field describes the AWS resource identifier. This field is required for all resources.
-            ```yaml showLineNumbers
-            mappings:
-            	# highlight-start
-              identifier: '.Identifier'
-            	# highlight-end
-            ```
-          - The `title` field describes the AWS resource title. This field is required for all resources.
-            ```yaml showLineNumbers
-            mappings:
-            	# highlight-start
-              title:  '.Properties.FunctionName'
-            	# highlight-end
-            ```
-          - The `blueprint` field describes the Port blueprint to be used to create the Port entity. This field is required for all resources.
-
-            ```yaml showLineNumbers
-            mappings:
-            	# highlight-start
-              blueprint: '"lambda"'
-            	# highlight-end
-            ```
-
-          - The `properties` field describes the AWS resource properties to be mapped to the Port
-            ```yaml showLineNumbers
-            	mappings:
-                identifier: ".id"
-                  title:  ".name"
-                  blueprint: '"awsComputeInstance"'
-                  # highlight-start
-                  properties:
-                    kind: '.__Kind'
-                    region: '.__Region'
-                    link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
-                    description: '.Properties.Description'
-                    memorySize: '.Properties.MemorySize'
-                    ephemeralStorageSize: '.Properties.EphemeralStorage.Size'
-                    timeout: '.Properties.Timeout'
-                    runtime: '.Properties.Runtime'
-                    packageType: '.Properties.PackageType'
-                    environment: '.Properties.Environment'
-                    architectures: '.Properties.Architectures'
-                    layers: '.Properties.Layers'
-                    tags: '.Properties.Tags'
-                    iamRole: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Role"
-                    arn: '.Properties.Arn'
-                  relations:
-                    account: '.__AccountId'
-                  # highlight-end
-            ```
-
-#### `useGetResourceAPI` property
+### `useGetResourceAPI` property support
 
 - By default the integration uses the [`CloudControl:ListResources`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/list-resources.html) API to get the resources. The integration can also enrich each resource by running [`CloudControl:GetResource`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/get-resource.html) on each resource, you can use this by enabling `useGetResourceAPI` option.
 
