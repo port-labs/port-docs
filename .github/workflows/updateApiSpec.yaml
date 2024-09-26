@@ -16,7 +16,7 @@ jobs:
     steps:
     # Step 1: Checkout the repository
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0  # Fetch all history for accurate diff
 
@@ -51,7 +51,7 @@ jobs:
     # Step 6: Create a pull request with the changes using the hash as the branch name
     - name: Create Pull Request
       if: steps.diff_check.outputs.diff_found == 'true'
-      uses: peter-evans/create-pull-request@v5
+      uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: update-${{ steps.yaml_hash.outputs.yaml_hash }}

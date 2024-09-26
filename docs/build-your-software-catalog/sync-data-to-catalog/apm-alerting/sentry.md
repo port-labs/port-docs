@@ -13,7 +13,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Sentry
 
-Our Sentry integration allows you to import `projects`, `issues`, `project-tag` and `issue-tag` from your Sentry cloud account into Port, according to your mapping and definition.
+Port's Sentry integration allows you to import `projects`, `issues`, `project-tag` and `issue-tag` from your Sentry cloud account into Port, according to your mapping and definition.
 
 A `Project` is essentially a container for all the data and information related to a specific application or service that you want to monitor.
 
