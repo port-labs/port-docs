@@ -746,5 +746,12 @@ export const availableGuides = [
         logos: ["Kubernetes", "GitLab"],
         // category: "Getting started",
         link: "/guides/all/manage-kubernetes-namespaces",
+    },
+    {
+        title: "Sync Service Entities to Incident IO",
+        description: "Create a GitHub action that syncs service entities to Incident IO catalog",
+        tags: ["Incident management","GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/sync-service-entities-to-incident-io",
     }
 ]
