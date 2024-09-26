@@ -1,9 +1,10 @@
 import Image from "@theme/IdealImage";
 import DefineVars from "/static/img/self-service-actions/setup-backend/jenkins-pipeline/define-variables.png";
+import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
 
 # Triggering Cloud Build using webhooks
 
-In this guide, you will learn how to trigger your [Cloud Build](https://cloud.google.com/build) Pipelines from Port, using [Webhook Actions](../webhook/).
+In this guide, you will learn how to trigger your [Cloud Build](https://cloud.google.com/build) Pipelines from Port, using [Webhook Actions](/actions-and-automations/setup-backend/webhook/).
 
 ![Illustration](/img/self-service-actions/setup-backend/cloudbuild-pipeline/cloud-build-illustration.png)
 
@@ -182,7 +183,7 @@ Here is part of the JSON scheme of the Port action, which defines the user input
 
 ### Setting up the Port action
 
-To trigger the Cloud Build pipeline, you will setup a Port [Webhook Action](../webhook/).
+To trigger the Cloud Build pipeline, you will setup a Port [Webhook Action](/actions-and-automations/setup-backend/webhook/).
 
 Here is an example for an action that will trigger the webhook you just set up:
 
@@ -303,6 +304,7 @@ options:
   substitution_option: ALLOW_LOOSE
   logging: CLOUD_LOGGING_ONLY
 ```
+<PortApiRegion />
 
 That's it! Anytime a user invokes an action in Port UI, a webhook trigger will be sent to Google Cloud Build to execute the pipeline.
 

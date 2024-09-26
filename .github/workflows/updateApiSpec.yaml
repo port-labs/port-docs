@@ -1,0 +1,60 @@
+name: Check for YAML File Changes
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+  workflow_dispatch:       # Allows manual triggering
+
+permissions:
+  contents: write          # Grants write permissions for the GITHUB_TOKEN
+  pull-requests: write
+
+jobs:
+  check-diff:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for accurate diff
+
+    # Step 2: Download the YAML file from the URL
+    - name: Download YAML file
+      run: curl -sL https://api.getport.io/yaml -o newSpec.yaml
+
+    # Step 3: Generate a SHA256 hash of the downloaded YAML file
+    - name: Generate hash of YAML contents
+      id: yaml_hash
+      run: |
+        hash=$(sha256sum newSpec.yaml | cut -d ' ' -f 1)
+        echo "yaml_hash=$hash" >> $GITHUB_OUTPUT
+  
+    # Step 4: Check for differences between the new file and the existing file
+    - name: Check for differences
+      id: diff_check
+      run: |
+        if cmp -s newSpec.yaml static/rawApiSpec.yaml; then
+          echo "diff_found=false" >> $GITHUB_OUTPUT
+          echo "No changes detected."
+        else
+          echo "diff_found=true" >> $GITHUB_OUTPUT
+          echo "Differences detected!"
+        fi
+
+    # Step 5: Update the YAML file in the repository if differences are found
+    - name: Update YAML file
+      if: steps.diff_check.outputs.diff_found == 'true'
+      run: mv newSpec.yaml static/rawApiSpec.yaml
+
+    # Step 6: Create a pull request with the changes using the hash as the branch name
+    - name: Create Pull Request
+      if: steps.diff_check.outputs.diff_found == 'true'
+      uses: peter-evans/create-pull-request@v7
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        branch: update-${{ steps.yaml_hash.outputs.yaml_hash }}
+        commit-message: "Update YAML file (hash: ${{ steps.yaml_hash.outputs.yaml_hash }})"
+        title: "Update YAML file (hash: ${{ steps.yaml_hash.outputs.yaml_hash }})"
+        body: "This PR updates the YAML file to the latest version, based on the hash of the contents."

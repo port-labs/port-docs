@@ -98,7 +98,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ### Terraform Cloud
 
 - [Terraform cloud](/build-your-software-catalog/sync-data-to-catalog/terraform-cloud)
-- [Terraform cloud actions](/actions-and-automations/setup-backend/terraform-cloud)
+- [Terraform cloud actions](/actions-and-automations/setup-backend/webhook/terraform-cloud)
 
 ### Pulumi
 
@@ -135,7 +135,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 #### Google cloud build
 
-- [Cloud build self-service action](/actions-and-automations/setup-backend/cloudbuild-pipeline/cloudbuild-pipeline.md)
+- [Cloud build self-service action](/actions-and-automations/setup-backend/webhook/cloudbuild-pipeline/cloudbuild-pipeline.md)
 
 ## Cookiecutter
 
@@ -236,14 +236,11 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Dynatrace
 
 - [Dynatrace integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace)
-- [Dynatrace webhook](/build-your-software-catalog/custom-integration/webhook/examples/dynatrace.md)
 
 ## Datadog
 
 - [Datadog integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog)
 - [Embed dashboards from Datadog](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
-- [Datadog webhook](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md)
-- [Datadog service catalog](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md#ingest-service-catalog)
 - [Self-service action to trigger Datadog incident](/guides/all/trigger-datadog-incident)
 
 ## Prometheus
@@ -272,7 +269,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/cicd/jenkins)
 - [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
-- [Jenkins webhook integration with Port](/build-your-software-catalog/custom-integration/webhook/examples/jenkins.md)
 - [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
 - [GitHub scaffolder using Jenkins](/guides/all/scaffold-github-using-cookiecutter.md)
 - [Bitbucket scaffolder using Jenkins](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
@@ -289,7 +285,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## CircleCI
 
 - [Sync CircleCI workflows](/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/circleci-workflow.md)
-- [CircleCI actions](/actions-and-automations/setup-backend/circle-ci)
+- [CircleCI actions](/actions-and-automations/setup-backend/webhook/circle-ci)
 
 <!-- ## Backstage
 
