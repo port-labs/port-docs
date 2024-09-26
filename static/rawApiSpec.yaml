@@ -25364,6 +25364,30 @@ paths:
           required: false
         - schema:
             type: string
+          in: query
+          name: relative_date
+          required: false
+        - schema:
+            type: number
+            default: 100
+            minimum: 0
+            maximum: 300
+            nullable: false
+          in: query
+          name: limit
+          required: false
+        - schema:
+            type: number
+          in: query
+          name: offset
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: direction
+          required: false
+        - schema:
+            type: string
           in: path
           name: identifier
           required: true
@@ -26932,6 +26956,50 @@ paths:
                               property:
                                 type: string
                               operator:
+                                enum:
+                                  - between
+                                  - notBetween
+                                  - =
+                              value:
+                                type: object
+                                oneOf:
+                                  - type: object
+                                    properties:
+                                      from:
+                                        type: string
+                                        format: date-time
+                                      to:
+                                        type: string
+                                        format: date-time
+                                    required:
+                                      - from
+                                      - to
+                                  - type: object
+                                    properties:
+                                      preset:
+                                        type: string
+                                        enum:
+                                          - today
+                                          - tomorrow
+                                          - yesterday
+                                          - lastWeek
+                                          - last2Weeks
+                                          - lastMonth
+                                          - last3Months
+                                          - last6Months
+                                          - last12Months
+                                    required:
+                                      - preset
+                            required:
+                              - property
+                              - operator
+                              - value
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              property:
+                                type: string
+                              operator:
                                 type: string
                                 enum:
                                   - containsAny
@@ -27063,6 +27131,50 @@ paths:
                             minItems: 1
                             items:
                               anyOf:
+                                - type: object
+                                  properties:
+                                    property:
+                                      type: string
+                                    operator:
+                                      enum:
+                                        - between
+                                        - notBetween
+                                        - =
+                                    value:
+                                      type: object
+                                      oneOf:
+                                        - type: object
+                                          properties:
+                                            from:
+                                              type: string
+                                              format: date-time
+                                            to:
+                                              type: string
+                                              format: date-time
+                                          required:
+                                            - from
+                                            - to
+                                        - type: object
+                                          properties:
+                                            preset:
+                                              type: string
+                                              enum:
+                                                - today
+                                                - tomorrow
+                                                - yesterday
+                                                - lastWeek
+                                                - last2Weeks
+                                                - lastMonth
+                                                - last3Months
+                                                - last6Months
+                                                - last12Months
+                                          required:
+                                            - preset
+                                  required:
+                                    - property
+                                    - operator
+                                    - value
+                                  additionalProperties: false
                                 - type: object
                                   properties:
                                     property:
@@ -27244,6 +27356,50 @@ paths:
                                       property:
                                         type: string
                                       operator:
+                                        enum:
+                                          - between
+                                          - notBetween
+                                          - =
+                                      value:
+                                        type: object
+                                        oneOf:
+                                          - type: object
+                                            properties:
+                                              from:
+                                                type: string
+                                                format: date-time
+                                              to:
+                                                type: string
+                                                format: date-time
+                                            required:
+                                              - from
+                                              - to
+                                          - type: object
+                                            properties:
+                                              preset:
+                                                type: string
+                                                enum:
+                                                  - today
+                                                  - tomorrow
+                                                  - yesterday
+                                                  - lastWeek
+                                                  - last2Weeks
+                                                  - lastMonth
+                                                  - last3Months
+                                                  - last6Months
+                                                  - last12Months
+                                            required:
+                                              - preset
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
                                         type: string
                                         enum:
                                           - containsAny
@@ -27386,6 +27542,50 @@ paths:
                               minItems: 1
                               items:
                                 anyOf:
+                                  - type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        enum:
+                                          - between
+                                          - notBetween
+                                          - =
+                                      value:
+                                        type: object
+                                        oneOf:
+                                          - type: object
+                                            properties:
+                                              from:
+                                                type: string
+                                                format: date-time
+                                              to:
+                                                type: string
+                                                format: date-time
+                                            required:
+                                              - from
+                                              - to
+                                          - type: object
+                                            properties:
+                                              preset:
+                                                type: string
+                                                enum:
+                                                  - today
+                                                  - tomorrow
+                                                  - yesterday
+                                                  - lastWeek
+                                                  - last2Weeks
+                                                  - lastMonth
+                                                  - last3Months
+                                                  - last6Months
+                                                  - last12Months
+                                            required:
+                                              - preset
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
                                   - type: object
                                     properties:
                                       property:
@@ -27551,6 +27751,50 @@ paths:
                                 property:
                                   type: string
                                 operator:
+                                  enum:
+                                    - between
+                                    - notBetween
+                                    - =
+                                value:
+                                  type: object
+                                  oneOf:
+                                    - type: object
+                                      properties:
+                                        from:
+                                          type: string
+                                          format: date-time
+                                        to:
+                                          type: string
+                                          format: date-time
+                                      required:
+                                        - from
+                                        - to
+                                    - type: object
+                                      properties:
+                                        preset:
+                                          type: string
+                                          enum:
+                                            - today
+                                            - tomorrow
+                                            - yesterday
+                                            - lastWeek
+                                            - last2Weeks
+                                            - lastMonth
+                                            - last3Months
+                                            - last6Months
+                                            - last12Months
+                                      required:
+                                        - preset
+                              required:
+                                - property
+                                - operator
+                                - value
+                              additionalProperties: false
+                            - type: object
+                              properties:
+                                property:
+                                  type: string
+                                operator:
                                   type: string
                                   enum:
                                     - containsAny
@@ -27682,6 +27926,50 @@ paths:
                               minItems: 1
                               items:
                                 anyOf:
+                                  - type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        enum:
+                                          - between
+                                          - notBetween
+                                          - =
+                                      value:
+                                        type: object
+                                        oneOf:
+                                          - type: object
+                                            properties:
+                                              from:
+                                                type: string
+                                                format: date-time
+                                              to:
+                                                type: string
+                                                format: date-time
+                                            required:
+                                              - from
+                                              - to
+                                          - type: object
+                                            properties:
+                                              preset:
+                                                type: string
+                                                enum:
+                                                  - today
+                                                  - tomorrow
+                                                  - yesterday
+                                                  - lastWeek
+                                                  - last2Weeks
+                                                  - lastMonth
+                                                  - last3Months
+                                                  - last6Months
+                                                  - last12Months
+                                            required:
+                                              - preset
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
                                   - type: object
                                     properties:
                                       property:
@@ -27891,6 +28179,50 @@ paths:
                               property:
                                 type: string
                               operator:
+                                enum:
+                                  - between
+                                  - notBetween
+                                  - =
+                              value:
+                                type: object
+                                oneOf:
+                                  - type: object
+                                    properties:
+                                      from:
+                                        type: string
+                                        format: date-time
+                                      to:
+                                        type: string
+                                        format: date-time
+                                    required:
+                                      - from
+                                      - to
+                                  - type: object
+                                    properties:
+                                      preset:
+                                        type: string
+                                        enum:
+                                          - today
+                                          - tomorrow
+                                          - yesterday
+                                          - lastWeek
+                                          - last2Weeks
+                                          - lastMonth
+                                          - last3Months
+                                          - last6Months
+                                          - last12Months
+                                    required:
+                                      - preset
+                            required:
+                              - property
+                              - operator
+                              - value
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              property:
+                                type: string
+                              operator:
                                 type: string
                                 enum:
                                   - containsAny
@@ -28022,6 +28354,50 @@ paths:
                             minItems: 1
                             items:
                               anyOf:
+                                - type: object
+                                  properties:
+                                    property:
+                                      type: string
+                                    operator:
+                                      enum:
+                                        - between
+                                        - notBetween
+                                        - =
+                                    value:
+                                      type: object
+                                      oneOf:
+                                        - type: object
+                                          properties:
+                                            from:
+                                              type: string
+                                              format: date-time
+                                            to:
+                                              type: string
+                                              format: date-time
+                                          required:
+                                            - from
+                                            - to
+                                        - type: object
+                                          properties:
+                                            preset:
+                                              type: string
+                                              enum:
+                                                - today
+                                                - tomorrow
+                                                - yesterday
+                                                - lastWeek
+                                                - last2Weeks
+                                                - lastMonth
+                                                - last3Months
+                                                - last6Months
+                                                - last12Months
+                                          required:
+                                            - preset
+                                  required:
+                                    - property
+                                    - operator
+                                    - value
+                                  additionalProperties: false
                                 - type: object
                                   properties:
                                     property:
