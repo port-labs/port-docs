@@ -746,5 +746,13 @@ export const availableGuides = [
         logos: ["Kubernetes", "GitLab"],
         // category: "Getting started",
         link: "/guides/all/manage-kubernetes-namespaces",
+    },
+    {
+        title: "Track DORA Metrics",
+        description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
+        tags: ["Engineering metrics","GitHub","Dashboards"],
+        logos: ["GitHub"],
+        // category: "Getting started",
+        link: "/guides/all/setup-dora-metrics",
     }
 ]
