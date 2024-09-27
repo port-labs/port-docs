@@ -27,7 +27,12 @@
         "icon": "DefaultProperty",
         "title": "State",
         "type": "string",
-        "enum": ["OPEN", "MERGED", "DECLINED", "SUPERSEDED"],
+        "enum": [
+          "OPEN",
+          "MERGED",
+          "DECLINED",
+          "SUPERSEDED"
+        ],
         "enumColors": {
           "OPEN": "yellow",
           "MERGED": "green",
@@ -63,14 +68,6 @@
         "type": "array",
         "icon": "DefaultProperty"
       },
-      "participants": {
-        "items": {
-          "type": "string"
-        },
-        "title": "Participants",
-        "type": "array",
-        "icon": "DefaultProperty"
-      },
       "merge_commit": {
         "title": "Merge Commit",
         "type": "string",
@@ -81,10 +78,18 @@
   },
   "mirrorProperties": {},
   "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
+    "participants": {
+      "title": "Participants",
+      "description": "Users that contributed to the PR",
+      "target": "bitbucketUser",
+      "required": false,
+      "many": true
+    },
     "repository": {
       "title": "Repository",
-      "target": "service",
+      "target": "bitbucketRepository",
       "required": false,
       "many": false
     }
