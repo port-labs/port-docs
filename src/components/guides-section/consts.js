@@ -748,6 +748,14 @@ export const availableGuides = [
         link: "/guides/all/manage-kubernetes-namespaces",
     },
     {
+        title: "Track DORA Metrics",
+        description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
+        tags: ["Engineering metrics","GitHub","Dashboards"],
+        logos: ["GitHub"],
+        // category: "Getting started",
+        link: "/guides/all/setup-dora-metrics",
+    },
+    {
         title: "Ingest Swagger paths from swagger.json file into your catalog",
         description: "Ingest API paths from a `swagger.json` file in a GitHub repository into Port",
         tags: ["API catalog", "GitHub"],
