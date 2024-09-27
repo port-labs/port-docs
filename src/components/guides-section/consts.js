@@ -746,5 +746,12 @@ export const availableGuides = [
         logos: ["Kubernetes", "GitLab"],
         // category: "Getting started",
         link: "/guides/all/manage-kubernetes-namespaces",
-    }
+    },
+    {
+        title: "Ingest cloud resources with Datadog",
+        description: "Learn how to ingest cloud resources using Datadog in Port, enhancing visibility and performance monitoring",
+        tags: ["Datadog", "AWS", "Azure", "GCP"],
+        logos: ["Datadog"],
+        link: "/guides/all/ingest-cloud-resources-using-datadog",
+    },
 ]
