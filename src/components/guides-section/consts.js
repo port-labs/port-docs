@@ -752,7 +752,7 @@ export const availableGuides = [
         description: "Ingest API paths from a `swagger.json` file in a GitHub repository into Port",
         tags: ["API catalog", "GitHub"],
         logos: ["GitHub"],
-        link: "/guides/all/ingest-swagger-paths-from-swagger-json-file-into-your-catalog",
+        link: "/guides/all/ingest-swagger-paths-into-your-catalog",
     },
     {
         title: "Ingest Checkmarx KICS scan into your catalog",
