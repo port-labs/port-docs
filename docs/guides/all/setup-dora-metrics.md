@@ -576,27 +576,28 @@ Here’s how you can implement this:
 <summary><b>Releases and Tags config (click to expand)</b></summary>
 
 ```yaml showLineNumbers
-- kind: workflow-run
-   selector:
-   query: .head_branch == 'main'
-   port:
+               
+- kind: release
+    selector:
+      query: .target_commitish == 'main'
+    port:
       entity:
-         mappings:
-            identifier: .head_repository.name + '-' + (.run_number|tostring)
-            title: .head_repository.name + " Deployment on workflow"
-            blueprint: '"deployment"'
-            properties:
-               environment: '"Production"'
-               createdAt: .created_at
-               deploymentStatus: (.conclusion | ascii_upcase[0:1] + .[1:])
-            relations:
-               service: .head_repository.name
+        mappings:
+          identifier: .release.name + '-' + .release.tag_name
+          title: .release.name + " Deployment on release"
+          blueprint: '"deployment"'
+          properties:
+            environment: '"Production"'
+            createdAt: .release.created_at
+            deploymentStatus: '"Success"'
+          relations:
+            service: .repo.name
 
 ```
 
 </details>
 
-:::tip Mapping Repositories, Releases, and Tags
+:::tip Mapping Repositories, Releases and Tags
 This configuration maps the repository, release, and tag information to deployment entities in Port.
 You can find more details about setting up GitHub integrations for repositories, releases,
 and tags [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-repository-releases-and-tags).
