@@ -20,16 +20,26 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 Port's PagerDuty integration allows you to import `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` from your PagerDuty account into Port, according to your mapping and definitions.
 
-## Common use cases
+<Prerequisites />
+
+## Capabilities
 
 - Map `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` in your PagerDuty organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-## Prerequisites
 
-<Prerequisites />
+### Supported Resources
 
-## Installation
+The resources that can be ingested from PagerDuty into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Schedule`](https://developer.pagerduty.com/api-reference/846ecf84402bb-list-schedules)
+- [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
+- [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
+- [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
+- [`Escalation Policy`](https://developer.pagerduty.com/api-reference/51b21014a4f5a-list-escalation-policies)
+
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -41,7 +51,7 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -176,7 +186,7 @@ kubectl apply -f my-ocean-pagerduty-integration.yaml
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="One-time (CI)">
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
 This workflow will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
@@ -390,89 +400,14 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting PagerDuty objects
+## Configuration
 
-The PagerDuty integration uses a YAML configuration to describe the process of loading data into the developer portal. See [examples](#examples) below.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from PagerDuty's API events.
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-### Configuration structure
 
-The integration configuration determines which resources will be queried from PagerDuty, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from PagerDuty, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Schedule`](https://developer.pagerduty.com/api-reference/846ecf84402bb-list-schedules)
-- [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
-- [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
-- [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
-- [`Escalation Policy`](https://developer.pagerduty.com/api-reference/51b21014a4f5a-list-escalation-policies)
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: services
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a PagerDuty object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: services
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: services
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the PagerDuty object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: services
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one PagerDuty object to a Port entity. Each value is a JQ query.
-            identifier: .id
-            title: .name
-            blueprint: '"pagerdutyService"'
-            properties:
-              status: .status
-        # highlight-end
-    - kind: service # In this instance service is mapped again with a different filter
-      selector:
-        query: '.name == "MyProjectName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-### Ingest data into Port
+:::info Ingest data into Port
 
 To ingest PagerDuty objects using the [integration configuration](#configuration-structure), you can follow the steps below:
 
@@ -482,6 +417,7 @@ To ingest PagerDuty objects using the [integration configuration](#configuration
 4. Select PagerDuty under the Incident management category.
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Click `Resync`.
+:::
 
 ## Examples
 
@@ -1786,8 +1722,16 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
+
+## Relevant Guides
+
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=PagerDuty).
+
+
 ## Alternative installation via webhook
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from PagerDuty. If so, use the following instructions:
+
+**Note** that when using the webhook installation method, data will be ingested into Port only when the webhook is triggered.
 
 <details>
 
@@ -2063,11 +2007,3 @@ The script writes the JSON payload for each service and incident to a file named
 
 Done! you can now import historical data from PagerDuty into Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 </details>
-
-## More relevant guides and examples
-
-- [Ensure production readniness](https://docs.getport.io/guides/all/ensure-production-readiness)
-- [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
-- [Self-service action to trigger a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
-- [Self-service action to change a PagerDuty incident owner](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
-- [Self-service action to create a PagerDuty service from Port](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)
