@@ -294,8 +294,8 @@ export const availableGuides = [
     {
         title: "Nudge Pull Request Reviewers",
         description: "Create a self-service action that nudges reviewers of a pull request",
-        tags: ["GitHub", "Actions"],
-        logos: ["GitHub"],
+        tags: ["GitHub", "Actions", "Slack"],
+        logos: ["GitHub", "Slack"],
         // category: "Getting started",
         link: "/guides/all/nudge-pr-reviewers",
     },
