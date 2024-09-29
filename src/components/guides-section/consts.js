@@ -748,11 +748,18 @@ export const availableGuides = [
         link: "/guides/all/manage-kubernetes-namespaces",
     },
     {
+        title: "Ingest cloud resources with Datadog",
+        description: "Learn how to ingest cloud resources using Datadog in Port, enhancing visibility and performance monitoring",
+        tags: ["Cloud access management", "Datadog"],
+        logos: ["Datadog"],
+        link: "/guides/all/ingest-cloud-resources-using-datadog",
+    },
+    {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
         tags: ["Engineering metrics","GitHub","Dashboards"],
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/setup-dora-metrics",
-    }
+    },
 ]
