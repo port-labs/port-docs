@@ -278,19 +278,19 @@ After enabling this feature, some functionalities will be affected:
     }
   }
   ``` 
-<br/>
 
 ### Service Accounts
-Once you have the User blueprint you can use it to create service accounts. Service accounts are non-human users (bots) that can be used for integrating external tools and automating daily tasks using Port. <br/> For example - creating a Slack bot that can execute Port [self service actions](https://docs.getport.io/actions-and-automations/).
+Once you have the User blueprint you can use it to create service accounts. Service accounts are non-human users (bots) that can be used for integrating external tools and automating daily tasks using Port. <br/> For example - creating a Slack bot that can execute Port [self service actions](/actions-and-automations/create-self-service-experiences/).
 
-#### Creating Service Account
-:::info
+#### Create a service account
+:::info API-only
 Currently creating service accounts is only available using the API.
 :::
-For creating new service account all you need to do is to create new user entity using the [Create Entity API](http://localhost:4000/api-reference/create-an-entity) endpoint with the value of `Service Account` in the `port_type` property.<br/>
-The creation of a service account has two limitations:
-1. The new service account email domain must be `serviceaccounts.getport.io`. For example `my-new-service-account@serviceaccounts.getport.io`
-2. The `status` property of the new service account must be `Active`
+To create a new service account, all you need to do is create a new user entity using the [Create Entity API](/api-reference/create-an-entity) endpoint with the value of `Service Account` in the `port_type` property.<br/>
+Creating a service account has two limitations:
+1. The new service account email domain must be `serviceaccounts.getport.io`.
+For example `my-new-service-account@serviceaccounts.getport.io`
+2. The `status` property of the new service account must be `Active`.
 
 <details>
 <summary><b>Full example (click to expand)</b></summary>
@@ -315,12 +315,12 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
 </details>
 
 #### Using The Service Account
-When you create new service account entity you might notice in the response body a new section called `additional_data`. Inside this section you can find the new service account credentials you can use for authenticate Port API.
-:::warning
-This credentials will not appear anywhere else. Make sure you keep it in a secure place and share it only with people in your organization.
+When creating a new service account entity you might notice a new section in the response body named `additional_data`. Inside this section you can find the new service account credentials you can use to authenticate against Port's API.
+:::warning Sensitive credentials
+These credentials will not appear anywhere else. Make sure you keep it in a secure place and share them only with people in your organization.
 :::
-To use Port API with the new service account you can generate API access token with the credentials using the [Create Access Token API](https://docs.getport.io/api-reference/create-an-access-token) endpoint.
-With the generated token you can use any of the Port API endpoints as the new service account.
+To use Port's API with the new service account, you can generate an API access token with the credentials using the [Create Access Token API](/api-reference/create-an-access-token) endpoint.
+With the generated token you can use any of the API endpoints as the new service account.
 
 <details>
 <summary><b>Full response (click to expand)</b></summary>
@@ -355,7 +355,8 @@ With the generated token you can use any of the Port API endpoints as the new se
 </details>
 
 #### Service Accounts Permissions
-The main thing with Port service account is that they are treated like any other users and extend the same RBAC mechanism. That means you can define roles for them (Member, Admin...) or add them to teams and they will be granted with the matching permissions accordingly. 
+Port service accounts are treated like any other users and extend the same RBAC mechanism. This means that you can define roles for them (Member, Admin, etc.) or add them to teams and they will be granted the relevant permissions accordingly. 
 
 #### Disabling Service Account
-Service accounts can easily be disabled at any time. To Disable service account you will need to update it's `status` property to be `Disabled`. Disabled service account can no longer generating new API tokens or use existing once. Disabled service account can be re-enabled at any time by updating the `status` property back to `Active`.
+Service accounts can easily be disabled at any time. To Disable a service account you will need to update it's `status` property to `Disabled`.
+Disabled service account can no longer generating new API tokens or use existing once. Disabled service account can be re-enabled at any time by updating the `status` property back to `Active`.
