@@ -19,7 +19,7 @@ This guide assumes the following:
 
 
 ## Ingesting cloud resources into Port
-We will be making use of the `hosts` kind in Port's Datadog integration which provides information on hosts existing on the cloud providers we have configured. So far, we are only interested in hosts with `gcp`, `aws`, and `azure` in the `sources` property.
+We will be making use of the `hosts` kind in Port's Datadog integration which provides information on hosts existing on the cloud providers we have configured. For this example, we are only interested in hosts with `gcp`, `aws`, and `azure` in the `sources` property.
 
 1. Having installed the Datadog integration, create the `datadogCloudResource` blueprint in your Port environment using the blueprint below:
 
