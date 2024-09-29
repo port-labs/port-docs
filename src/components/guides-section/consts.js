@@ -1,5 +1,5 @@
 export const tagsCategoryMap = {
-    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics"],
+    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog"],
     "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
@@ -761,5 +761,40 @@ export const availableGuides = [
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/setup-dora-metrics",
+    },
+    {
+        title: "Ingest a swagger.json file into your catalog",
+        description: "Ingest API paths from a `swagger.json` file in a GitHub repository into Port",
+        tags: ["API catalog", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-swagger-paths-into-your-catalog",
+    },
+    {
+        title: "Ingest Checkmarx KICS scan results into your catalog",
+        description: "Ingests Checkmarx KICS scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature",
+        tags: ["AppSec", "Checkmarx", "GitHub"],
+        logos: ["Checkmarx", "GitHub"],
+        link: "/guides/all/ingest-checkmarx-kics-scan-into-your-catalog"
+    },
+    {
+        title: "Ingest Javascript packages into your catalog",
+        description: "Ingests all Javascript packages in `package.json` file using Port's GitHub file ingesting feature",
+        tags: ["Dependency management", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-javascript-packages-into-your-catalog"
+    },
+    {
+        title: "Ingest software bills of materials (SBOMs) into your catalog",
+        description: "Ingests software bill of material (SBOM) in your `SBOM.json` or `SBOM.xml` file using Port's GitHub file ingesting feature",
+        tags: ["AppSec", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-software-bill-of-materials-sbom-into-your-catalog"
+    },
+    {
+        title: "Ingest Trivy vulnerabilities into your catalog",
+        description: "Ingests Trivy vulnerabilities in your Trivy scan results file using Port's GitHub file ingesting feature",
+        tags: ["AppSec", "Trivy", "GitHub"],
+        logos: ["Trivy", "GitHub"],
+        link: "/guides/all/ingest-trivy-vulnerabilities-into-your-catalog"
     },
 ]
