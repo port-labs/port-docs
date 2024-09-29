@@ -294,8 +294,8 @@ export const availableGuides = [
     {
         title: "Nudge Pull Request Reviewers",
         description: "Create a self-service action that nudges reviewers of a pull request",
-        tags: ["GitHub", "Actions"],
-        logos: ["GitHub"],
+        tags: ["GitHub", "Actions", "Slack"],
+        logos: ["GitHub", "Slack"],
         // category: "Getting started",
         link: "/guides/all/nudge-pr-reviewers",
     },
@@ -750,8 +750,16 @@ export const availableGuides = [
     {
         title: "Ingest cloud resources with Datadog",
         description: "Learn how to ingest cloud resources using Datadog in Port, enhancing visibility and performance monitoring",
-        tags: ["Datadog", "AWS", "Azure", "GCP"],
+        tags: ["Cloud access management", "Datadog"],
         logos: ["Datadog"],
         link: "/guides/all/ingest-cloud-resources-using-datadog",
+    },
+    {
+        title: "Track DORA Metrics",
+        description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
+        tags: ["Engineering metrics","GitHub","Dashboards"],
+        logos: ["GitHub"],
+        // category: "Getting started",
+        link: "/guides/all/setup-dora-metrics",
     },
 ]
