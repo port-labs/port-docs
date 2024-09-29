@@ -142,6 +142,6 @@ By doing this, we are able to ingest all cloud resources from Datadog
 
 :::
 
-4. Next, click on resync and watch your cloud resources from Datadog being ingested:
+4. Finally, click `resync`. Your cloud resources from Datadog should now be ingested:
 
 <img src='/img/guides/datadogCloudResourcesSuccess.png' border='1px' />
