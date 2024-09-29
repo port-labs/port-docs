@@ -756,7 +756,7 @@ export const availableGuides = [
         link: "/guides/all/setup-dora-metrics",
     },
     {
-        title: "Ingest Swagger paths from swagger.json file into your catalog",
+        title: "Ingest a swagger.json file into your catalog",
         description: "Ingest API paths from a `swagger.json` file in a GitHub repository into Port",
         tags: ["API catalog", "GitHub"],
         logos: ["GitHub"],
