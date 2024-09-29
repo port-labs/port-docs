@@ -131,7 +131,7 @@ spec:
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
         - name: port.baseUrl
-          value: https://api.geport.io
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
