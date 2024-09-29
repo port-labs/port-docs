@@ -777,7 +777,7 @@ export const availableGuides = [
         link: "/guides/all/ingest-javascript-packages-into-your-catalog"
     },
     {
-        title: "Ingest software bill of material (SBOM) into your catalog",
+        title: "Ingest software bills of materials (SBOMs) into your catalog",
         description: "Ingests software bill of material (SBOM) in your `SBOM.json` or `SBOM.xml` file using Port's GitHub file ingesting feature",
         tags: ["AppSec", "GitHub"],
         logos: ["GitHub"],
