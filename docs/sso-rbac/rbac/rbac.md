@@ -295,21 +295,22 @@ The creation of a service account has two limitations:
 <details>
 <summary><b>Full example (click to expand)</b></summary>
 ```bash
-curl -L -X 'https://api.getport.io/v1/blueprints/_user/entities' \
--H 'content-type: application/json' \
--H 'Authorization: <YOUR_BEARER_TOKEN>'
--D '{
+curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
+-d '{
     "identifier": "my-new-service-account@serviceaccounts.getport.io",
     "title": "My New Service Account",
-    "blueprint": "_user"
+    "blueprint": "_user",
     "icon": "User",
     "properties": {
-        "port_type": "Machine",
+        "port_type": "Service Account",
         "port_role": "Member",
         "status": "Active"
     },
-    "relations": {},
-}'
+    "relations": {}
+}' \
+-H 'content-type: application/json' \
+-H 'Authorization: <YOUR API TOKEN>'
+
 ```
 </details>
 
@@ -318,7 +319,7 @@ When you create new service account entity you might notice in the response body
 :::warning
 This credentials will not appear anywhere else. Make sure you keep it in a secure place and share it only with people in your organization.
 :::
-To use Port API with the new service account you can generate API access token with the credentials using the [Create Access Token API](http://localhost:4000/api-reference/create-an-access-token) endpoint.
+To use Port API with the new service account you can generate API access token with the credentials using the [Create Access Token API](https://docs.getport.io/api-reference/create-an-access-token) endpoint.
 With the generated token you can use any of the Port API endpoints as the new service account.
 
 <details>
@@ -333,15 +334,15 @@ With the generated token you can use any of the Port API endpoints as the new se
         "blueprint": "_user",
         "team": [],
         "properties": {
-            "port_type": "Machine",
+            "port_type": "Service Account",
             "port_role": "Member",
             "status": "Active"
         },
         "relations": {},
         "createdAt": "2024-09-21T08:56:38.062Z",
-        "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+        "createdBy": "",
         "updatedAt": "2024-09-21T08:56:38.062Z",
-        "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ"
+        "updatedBy": ""
     },,
     "additionalData": {
         "credentials": {
