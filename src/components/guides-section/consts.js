@@ -763,7 +763,7 @@ export const availableGuides = [
         link: "/guides/all/ingest-swagger-paths-into-your-catalog",
     },
     {
-        title: "Ingest Checkmarx KICS scan into your catalog",
+        title: "Ingest Checkmarx KICS scan results into your catalog",
         description: "Ingests Checkmarx KICS scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature",
         tags: ["AppSec", "Checkmarx", "GitHub"],
         logos: ["Checkmarx", "GitHub"],
