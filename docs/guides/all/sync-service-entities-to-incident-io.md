@@ -287,6 +287,6 @@ With this integration in place, you’ll have real-time access to your Port serv
 ## Limitations
 
 While the guide enables you to sync service entities from Port to Incident IO, there are a few limitations to keep in mind:
-- Port properties such as aggregated and mirror properties cannot be directly synced to incident.io
+- Port property types such as aggregation and mirror properties cannot be directly synced to incident.io.
 - incident.io can currently ingest up to **50,000 catalog items**, so keep this limit in mind when scaling your service catalog.
 
