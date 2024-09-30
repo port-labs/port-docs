@@ -27,21 +27,18 @@ for example:
 
 ## 💡 Scorecard use cases
 
-Scorecards can be used to evaluate the maturity, production readiness and engineering quality of any entity in your
-software catalog, for example:
+Scorecards can be used to evaluate the maturity, production readiness and engineering quality of any entity in your software catalog, for example:
 
 - Does a service has an on-call defined?
 - Does a README.md file exist in the repository?
 - Is Grafana defined for the K8s cluster?
 - Is the relation of a certain entity empty?
 
-In this [live demo](https://demo.getport.io/serviceEntity?identifier=load-generator&activeTab=8) example, you can see
-the scorecards defined on a service and their evaluation. 🎬
+In this [live demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=1) example, you can see the scorecards defined on a service and their evaluation. 🎬
 
 ## Scorecard structure table
 
-A single scorecard defines a category to group different checks, validations and evaluations. Here is the structure of a
-single scorecard:
+A single scorecard defines a category to group different checks, validations and evaluations. Here is the structure of a single scorecard:
 
 | Field                        | Type     | Description                                                                                                                                         |
 |------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -51,9 +48,7 @@ single scorecard:
 | [`levels`](#levels)          | `Array`  | The levels that we define for the scorecard, for example `Basic`, `Bronze`, `Silver`, `Gold`                                                        |
 | [`rules`](#rule-elements)    | `Object` | The rules that we create for each scorecard to determine its level                                                                                  |
 
-A scorecard contains and groups multiple rules that are relevant to its specific category, for example a scorecard for
-_service maturity_ can contain 3 rules, while the _production readiness_ scorecard can contain 2 completely different
-rules.
+A scorecard contains and groups multiple rules that are relevant to its specific category, for example a scorecard for _service maturity_ can contain 3 rules, while the _production readiness_ scorecard can contain 2 completely different rules.
 
 ## Levels
 
@@ -188,8 +183,7 @@ If the entity didn't pass any rule, it will be at the `Basic` level, and thus ca
 
 Rules enable you to generate checks inside a scorecard only for entities and properties.
 
-A scorecard rule is a single evaluation consisting of multiple checks, each rule has a level which directly translates
-to how important it is for the check to pass (the more basic the check, the lower its level):
+A scorecard rule is a single evaluation consisting of multiple checks, each rule has a level which directly translates to how important it is for the check to pass (the more basic the check, the lower its level):
 
 | Field         | Type     | Description                                                                                                                                                   |
 |---------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -256,8 +250,7 @@ to how important it is for the check to pass (the more basic the check, the lowe
 
 ### Conditions
 
-Conditions are small boolean checks that help when determining the final status of a `query` according to the
-specified [`combinator`](#combinator):
+Conditions are small boolean checks that help when determining the final status of a `query` according to the specified [`combinator`](#combinator):
 
 | Field      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 |------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -314,8 +307,7 @@ Each scorecard has a set of levels, for example
 }
 ```
 
-An entity **always** starts at the **`Basic`** level of the scorecard, and it can progress to higher levels by passing the
-rules of each level.
+An entity **always** starts at the **`Basic`** level of the scorecard, and it can progress to higher levels by passing the rules of each level.
 
 Once an entity passes all the rules for a certain level, its level changes accordingly, for example:
 
@@ -338,8 +330,7 @@ Filters allow you to apply scorecard checks only for entities that meet certain 
 
 Filters follow the same querying structure as [rules](#rule-elements).
 
-A scorecard filter is used to make sure only relevant entities are evaluated, only entities that the filter evaluates
-to `true` on will have the specified rule checked:
+A scorecard filter is used to make sure only relevant entities are evaluated, only entities that the filter evaluates to `true` on will have the specified rule checked:
 
 | Field                       | Description                                               |
 |-----------------------------|-----------------------------------------------------------|
@@ -349,13 +340,11 @@ to `true` on will have the specified rule checked:
 ## Scorecard UI indications
 
 After configuring scorecards for the blueprint, each entity created from it will have a `Scorecards` tab in
-its [entity page](/customize-pages-dashboards-and-plugins/page/entity-page), detailing the different checks and their
-results:
+its [entity page](/customize-pages-dashboards-and-plugins/page/entity-page), detailing the different checks and their results:
 
 ![Developer Portal Scorecards Tab](../../static/img/software-catalog/scorecard/tutorial/ScorecardsTab.png)
 
-Additionally, the [catalog page](/customize-pages-dashboards-and-plugins/page/catalog-page) of each blueprint will
-automatically have a column for each scorecard rule.  
+Additionally, the [catalog page](/customize-pages-dashboards-and-plugins/page/catalog-page) of each blueprint will automatically have a column for each scorecard rule.  
 For example, this `service` blueprint has 4 rules configured, and we can see a column for each of them in the catalog:
 
 ![catalogPageScorecardColumns](../../static/img/software-catalog/scorecard/catalogPageScorecardColumns.png)
@@ -367,13 +356,11 @@ For example, here are the scores of all `Services` in an organization grouped by
 
 ![catalogViewScorecardsByTeam](../../static/img/software-catalog/scorecard/catalogViewScorecardsByTeam.png)
 
-Note that every coloumn (scorecard metric) in the table has an aggregation in the bottom, hover over it to see the
-compliance of this metric across all entities in the table.
+Note that every coloumn (scorecard metric) in the table has an aggregation in the bottom, hover over it to see the compliance of this metric across all entities in the table.
 
 ### Rule result summaries
 
-Scorecard rules are automatically added as columns in the relevant catalog page, and each such column is summarized on
-the bottom.  
+Scorecard rules are automatically added as columns in the relevant catalog page, and each such column is summarized on the bottom.  
 For example, these services have some rules defined in their scorecards, and we can see that:
 
 - 100% of `Team Batman's` services have an on-call defined, but only 67% of them have a PR cycle time shorter than 1500
