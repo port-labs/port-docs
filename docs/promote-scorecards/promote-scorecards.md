@@ -34,7 +34,7 @@ Scorecards can be used to evaluate the maturity, production readiness and engine
 - Is Grafana defined for the K8s cluster?
 - Is the relation of a certain entity empty?
 
-In this [live demo](https://demo.getport.io/serviceEntity?identifier=load-generator&activeTab=8) example, you can see the scorecards defined on a service and their evaluation. 🎬
+In this [live demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=1) example, you can see the scorecards defined on a service and their evaluation. 🎬
 
 ## Scorecard structure table
 
