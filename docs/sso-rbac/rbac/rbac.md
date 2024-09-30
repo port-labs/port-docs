@@ -362,6 +362,6 @@ With the generated token you can use any of the API endpoints as the new service
 ### Service Accounts Permissions
 Port service accounts are treated like any other users and extend the same RBAC mechanism. This means that you can define roles for them (Member, Admin, etc.) or add them to teams and they will be granted the relevant permissions accordingly. 
 
-### Disabling Service Account
+### Disabling Service Accounts
 Service accounts can easily be disabled at any time. To Disable a service account you will need to update it's `status` property to `Disabled`.
-Disabled service account can no longer generating new API tokens or use existing once. Disabled service account can be re-enabled at any time by updating the `status` property back to `Active`.
+Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`.
