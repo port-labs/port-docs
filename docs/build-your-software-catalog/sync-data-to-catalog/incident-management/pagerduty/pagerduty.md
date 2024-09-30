@@ -20,7 +20,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 Port's PagerDuty integration allows you to import `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` from your PagerDuty account into Port, according to your mapping and definitions.
 
-<Prerequisites />
+
 
 ## Capabilities
 
@@ -40,6 +40,7 @@ The resources that can be ingested from PagerDuty into Port are listed below. It
 
 
 ## Setup
+<Prerequisites />
 
 Choose one of the following installation methods:
 
