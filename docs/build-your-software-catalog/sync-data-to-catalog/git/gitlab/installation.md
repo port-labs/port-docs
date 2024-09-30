@@ -20,14 +20,13 @@ This page outlines the following steps:
 - How to [configure](#configure-the-gitlab-integration) and customize the integration before deploying it.
 - How to [deploy](#deploy-the-gitlab-integration) the integration in the configuration that fits your use case.
 
-:::note Prerequisites
+## Prerequisites
 
 - A GitLab account with admin privileges.
 - A GitLab group account with the `api` scope.
 - If you choose the real-time & always-on installation method, a Kubernetes cluster to install the integration on.
 - Your Port user role is set to `Admin`.
 
-:::
 
 ## Setup
 
