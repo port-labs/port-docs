@@ -33,6 +33,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Promote to production](/guides/all/promote-to-production)
 - [Self-service action to lock and unlock a service](/guides/all/lock-and-unlock-service-in-port)
 - [Connect GitHub Codeowners with Service, Team and User](/guides/all/connect-github-codeowners-with-service-team-and-user)
+- [Ingest Javascript packages into your catalog using GitHub file ingesting feature](/guides/all/ingest-javascript-packages-into-your-catalog)
 
 ### GitLab
 
@@ -69,6 +70,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/knative.md)
 - [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/openshift.md)
 - [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy.md)
+- [Ingest Trivy vulnerabilities into your catalog using GitHub file ingesting feature](/guides/all/ingest-trivy-vulnerabilities-into-your-catalog)
 - [Map Kyverno](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/kyverno.md)
 - [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/fluxcd.md)
 - [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
@@ -313,3 +315,12 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Google workspace SSO](/sso-rbac/sso-providers/saml/google-workspace.md)
 - [Azure Active Directory (AD) SSO OIDC](/sso-rbac/sso-providers/oidc/azure-ad.md)
 - [Azure Active Directory (AD) SSO SAML](/sso-rbac/sso-providers/saml/azure-ad.md)
+
+## Checkmarx
+- [Ingest Checkmarx KICS scan into your catalog](/guides/all/ingest-checkmarx-kics-scan-into-your-catalog)
+
+## SBOM
+- [Ingest software bill of material (SBOM) into your catalog](/guides/all/ingest-software-bill-of-materials-sbom-into-your-catalog)
+
+## Swagger
+- [Ingest Swagger paths into your catalog](/guides/all/ingest-swagger-paths-into-your-catalog)
