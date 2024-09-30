@@ -10,7 +10,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
 # Sync Port Services to incident.io
-This guide helps you set up a GitHub workflow that periodically syncs service entities from Port into incident.io's catalog, ensuring better visibility and context for your services during incident management.
+This guide demonstrates how to set up a GitHub workflow that periodically syncs service entities from Port into incident.io's catalog, ensuring better visibility and context for your services during incident management.
 
 
 ## Prerequisites
