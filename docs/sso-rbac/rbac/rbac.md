@@ -1,5 +1,6 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
+import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
 
 # Port Roles & User management
 
@@ -195,16 +196,19 @@ You can, however, create new properties and relations in them and edit/delete th
 
 To enable management of users and teams as blueprints, send a `POST` request to a designated endpoint:
 
-```bash
-curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
--H 'Authorization: <YOUR_BEARER_TOKEN>'
-```
-
 :::tip To obtain your bearer token:
 
 1. Go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`. 
 2. Click on the `Generate API token` button, and copy the generated token.
 :::
+
+```bash
+curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
+-H 'Authorization: <YOUR_BEARER_TOKEN>'
+```
+
+<PortApiRegion />
+
 
 #### Consequent changes
 

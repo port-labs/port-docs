@@ -17,13 +17,12 @@ Timer is a data type used to define an expiration date/lifespan of a specific en
 
 The timer property type can be used to store the future expiration date of catalog entities and properties, for example:
 
-- Temporary development environment;
-- Countdown to next healthcheck;
-- Temporary cloud resources;
-- Add temporary permissions to resource;
-- etc.
+- Temporary development environment.
+- Countdown to next healthcheck.
+- Temporary cloud resources.
+- Add temporary permissions to resource.
 
-In this [live demo](https://demo.getport.io/developerEnvs) example, we can see the `TTL` timer property. 🎬
+In this [live demo](https://demo.getport.io/developer_envs) example, we can see the `TTL` timer property. 🎬
 
 ## API definition
 
