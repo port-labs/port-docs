@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
 displayed_sidebar: null
-description: Learn how to sync your Port service entities into Incident IO catalog.
+description: Learn how to sync your Port service entities into incident.io catalog.
 ---
 
 import Tabs from "@theme/Tabs"
@@ -9,25 +9,28 @@ import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Sync Port Services to Incident IO
-This guide helps you set up a GitHub workflow that periodically syncs service entities from Port into Incident IO's catalog, ensuring better visibility and context for your services during incident management.
-
+# Sync Port Services to incident.io
+This guide helps you set up a GitHub workflow that periodically syncs service entities from Port into incident.io's catalog, ensuring better visibility and context for your services during incident management.
 
 
 ## Prerequisites
-:::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart)
-- You will need a GitHub repository in which you can trigger a workflow that we will use in this guide
-- An [Incident IO](https://app.incident.io/) account and an API key with permissions to create and read catalog items
+- You need a Port account and should have completed the [onboarding process](/quickstart)
+- A GitHub repository where you can trigger a workflow for this guide
+- An [incident.io](https://app.incident.io/) account and an API key
+
+## Set up required secrets and permissions
+
 - In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
   - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
   - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-  - `INCIDENT_IO_API_KEY` - [API key](https://app.incident.io/settings/api-keys) from your Incident IO dashboard with the following permissions: `Can manage catalog types and edit catalog data` and `Can view catalog types and entries`
-  - `INCIDENT_IO_CATALOG_TYPE_ID` - Incident IO catalog type ID. To be created in [this section](#create-a-catalog-item-in-incident-io)
-:::
+  - `INCIDENT_IO_API_KEY` - [API key](https://app.incident.io/settings/api-keys) from your incident.io dashboard with the following permissions: 
+    - `Can manage catalog types and edit catalog data`
+    - `Can view catalog types and entries`
+  - `INCIDENT_IO_CATALOG_TYPE_ID` - Incident.io catalog type ID. To be created in [this section](#create-a-catalog-item-in-incident-io)
 
-Below is the JSON for the `Service` blueprint that represents the service entities you will sync from Port to Incident IO:
+
+Below is the JSON for the `Service` blueprint that represents the service entities you will sync from Port to incident.io:
 
 <details>
 <summary><b>Service blueprint (click to expand)</b></summary>
@@ -110,11 +113,15 @@ Below is the JSON for the `Service` blueprint that represents the service entiti
 ```
 </details>
 
-## Create a Catalog Type in Incident IO
+:::note Adding More Blueprint Properties
+While this example shows a standard service schema, you can easily add new properties to the blueprint JSON schema to represent additional details about your services and sync them to incident.io.
+:::
 
-To sync your Port services into Incident IO, you first need to create a catalog type in Incident IO. Follow the steps below:
+## Create a catalog type in incident.io
 
-1. Login to your [Incident IO](https://app.incident.io/) account
+To sync your Port services into incident.io, you first need to create a catalog type in incident.io. Follow the steps below:
+
+1. Login to your [incident.io](https://app.incident.io/) account
 2. Click **Catalog** on the left navigation bar
 3. Click on **add a custom type**
 4. Fill in the following details:
@@ -133,7 +140,7 @@ To sync your Port services into Incident IO, you first need to create a catalog 
 
 ## Create GitHub workflow
 
-Let's go ahead and create a GitHub workflow file in a GitHub repository meant for the Incident IO integration:
+Let's go ahead and create a GitHub workflow file in a GitHub repository meant for the incident.io integration:
 
 - Create a GitHub repository (or use an existing one)
 - Create a `.github` directory and `workflows` sub directory
@@ -148,7 +155,7 @@ The default syncing interval is set to 2 hours. Adjust it to suit your use case
 :::
 
 ```yml showLineNumbers
-name: Sync Data to Incident IO
+name: Sync Data to incident.io
 on:
   schedule:
     - cron: "0 */2 * * *" # every two hours. Adjust this value
@@ -188,9 +195,8 @@ jobs:
           
           # Save response to file and environment variable
           echo "$response" > response.json
-          #echo "response=$(cat response.json)" >> $GITHUB_ENV
 
-      - name: Get Incident.io Schema
+      - name: Get incident.io Schema
         id: get_schema
         run: |
           schema_response=$(curl --location --request GET 'https://api.incident.io/v2/catalog_types/${{ secrets.INCIDENT_IO_CATALOG_TYPE_ID }}' \
@@ -198,17 +204,17 @@ jobs:
           -H "Content-Type: application/json")
           echo "$schema_response" > schema.json
           
-      - name: Map and Send Data to Incident IO
+      - name: Map and Send Data to incident.io
         run: |
           schema=$(jq '.catalog_type.schema.attributes' schema.json)
 
-          # Extract IDs of Incident IO catalog attributes
+          # Extract IDs of incident.io catalog attributes. Note that additional properties can be added if needed
+
           url_id=$(echo "$schema" | jq -r '.[] | select(.name == "url") | .id')
           readme_id=$(echo "$schema" | jq -r '.[] | select(.name == "readme") | .id')
           language_id=$(echo "$schema" | jq -r '.[] | select(.name == "language") | .id')
           lifecycle_id=$(echo "$schema" | jq -r '.[] | select(.name == "lifecycle") | .id')
           type_id=$(echo "$schema" | jq -r '.[] | select(.name == "type") | .id')
-
 
           # Read entities as a JSON array, and use `jq` to iterate correctly
           entities=$(jq -c '.entities[]' response.json)
@@ -264,11 +270,11 @@ jobs:
 </details>
 
 
-## See Results
+## Results
 
-Once the scheduled GitHub workflow is triggered, the service entities from Port will be automatically synced into your Incident IO catalog. To view the ingested catalog items:
+Once the scheduled GitHub workflow is triggered, the service entities from Port will be automatically synced into your incident.io catalog. To view the ingested catalog items:
 
-1. Log in to your Incident IO account.
+1. Log in to your incident.io account.
 2. Navigate to the **Catalog** section in the left navigation bar.
 3. Search for the `Port Services` catalog type or any custom name you provided.
 4. You should now see the synced service entities from Port listed under this catalog type, giving you improved visibility and context for managing incidents.
@@ -276,8 +282,11 @@ Once the scheduled GitHub workflow is triggered, the service entities from Port 
 <img src="/img/guides/IncidentioServiceCatalog.png" border="1px" />
 
 
-With this integration in place, you’ll have real-time access to your Port services within Incident IO, streamlining your incident response and management processes.
+With this integration in place, you’ll have real-time access to your Port services within incident.io, streamlining your incident response and management processes.
 
 ## Limitations
-Incident IO can ingest up to **50,000 catalog items**. If your Port service entities exceed this limit, you may need to ensure all necessary services are ingested properly without hitting the limit.
+
+While the guide enables you to sync service entities from Port to Incident IO, there are a few limitations to keep in mind:
+- Port properties such as aggregated and mirror properties cannot be directly synced to incident.io
+- Incident IO can currently ingest up to **50,000 catalog items**, so keep this limit in mind when scaling your service catalog.
 
