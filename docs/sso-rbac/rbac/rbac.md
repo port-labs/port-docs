@@ -283,10 +283,11 @@ After enabling this feature, some functionalities will be affected:
   }
   ``` 
 
-### Service Accounts
+## Service Accounts
+This feature requires enabling User and Team as blueprints.
 Once you have the User blueprint you can use it to create service accounts. Service accounts are non-human users (bots) that can be used for integrating external tools and automating daily tasks using Port. <br/> For example - creating a Slack bot that can execute Port [self service actions](/actions-and-automations/create-self-service-experiences/).
 
-#### Create a service account
+### Create a service account
 :::info API-only
 Currently creating service accounts is only available using the API.
 :::
@@ -318,7 +319,7 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
 ```
 </details>
 
-#### Using The Service Account
+### Using The Service Account
 When creating a new service account entity you might notice a new section in the response body named `additional_data`. Inside this section you can find the new service account credentials you can use to authenticate against Port's API.
 :::warning Sensitive credentials
 These credentials will not appear anywhere else. Make sure you keep it in a secure place and share them only with people in your organization.
@@ -358,9 +359,9 @@ With the generated token you can use any of the API endpoints as the new service
 ```
 </details>
 
-#### Service Accounts Permissions
+### Service Accounts Permissions
 Port service accounts are treated like any other users and extend the same RBAC mechanism. This means that you can define roles for them (Member, Admin, etc.) or add them to teams and they will be granted the relevant permissions accordingly. 
 
-#### Disabling Service Account
+### Disabling Service Account
 Service accounts can easily be disabled at any time. To Disable a service account you will need to update it's `status` property to `Disabled`.
 Disabled service account can no longer generating new API tokens or use existing once. Disabled service account can be re-enabled at any time by updating the `status` property back to `Active`.
