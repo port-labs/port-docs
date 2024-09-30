@@ -359,7 +359,7 @@ With the generated token you can use any of the API endpoints as the new service
 ```
 </details>
 
-### Service Accounts Permissions
+### Service account permissions
 Port service accounts are treated like any other users and extend the same RBAC mechanism. This means that you can define roles for them (Member, Admin, etc.) or add them to teams and they will be granted the relevant permissions accordingly. 
 
 ### Disabling Service Accounts
