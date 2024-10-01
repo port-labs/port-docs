@@ -1,11 +1,11 @@
 ---
-description: Ingest both historical and realtime alerts on vulnerabilites in Octa Security.
-title: Octa Security
+description: Ingest both historical and realtime alerts on vulnerabilites in Orca Security.
+title: Orca Security
 ---
 
 
-# Ingest historical and realtime vulnerability alerts in Octa Security
-This guide shows you how to ingest both historical and realtime alerts in Octa Security. To do this, you will use Port's webhook feature (for realtime alerts) and/or a Python script (for historical data).
+# Ingest historical and realtime vulnerability alerts in Orca Security
+This guide shows you how to ingest both historical and realtime alerts in Orca Security. To do this, you will use Port's webhook feature (for realtime alerts) and/or a Python script (for historical data).
 
 For either ingestion types, you will create the `orcaSecurityAlert` blueprint:
 
@@ -165,11 +165,11 @@ You should see the newly created alert entity in your Port catalog:
 
 
 ## Ingest historical vulnerability alerts using Python script
-In this example you are going to use the provided Python script to fetch data from the Octa Security REST API and ingest it to Port.
+In this example you are going to use the provided Python script to fetch data from the Orca Security REST API and ingest it to Port.
 
 ### Prerequisites
 
-This example utilizes the same [blueprint](#ingest-historical-and-realtime-vulnerability-alers-in-octa-security) definition from the previous section.
+This example utilizes the same [blueprint](#ingest-historical-and-realtime-vulnerability-alers-in-orca-security) definition from the previous section.
 
 In addition, you require the following environment variables:
 
@@ -180,10 +180,10 @@ In addition, you require the following environment variables:
   - Click on **Add API Token**
   - Fill in the details required and select **Shiftleft Alert Manager** for the role.
   - Click on save and copy the API token
-- `OCTA_SECURITY_API_URL` - The host URL of your Octa Security dashboard. See the below table for which URL to use depending on your region:
+- `OCTA_SECURITY_API_URL` - The host URL of your Orca Security dashboard. See the below table for which URL to use depending on your region:
 
 <details>
-<summary><b>Octa Security API URL list (Click to expand)</b></summary>
+<summary><b>Orca Security API URL list (Click to expand)</b></summary>
 
 
 | Region               | URL                                 |
@@ -211,10 +211,10 @@ pip3 install loguru requests httpx
 ```
 
 ### Python script
-Use the following Python script to ingest historical Octa Security Vulnerability alerts into port:
+Use the following Python script to ingest historical Orca Security Vulnerability alerts into port:
 
 <details>
-<summary><b>Octa Security Python script for historical vulnerability alerts (Click to expand)</b></summary>
+<summary><b>Orca Security Python script for historical vulnerability alerts (Click to expand)</b></summary>
 
 ```python showLineNumbers
 import asyncio

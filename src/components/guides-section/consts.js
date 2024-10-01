@@ -805,11 +805,11 @@ export const availableGuides = [
         link: "/guides/all/ingest-trivy-vulnerabilities-into-your-catalog"
     },
     {
-        title: "Ingest historical and realtime vulnerability alerts in Octa Security",
-        description: "Ingest both historical and realtime alerts on vulnerabilites in Octa Security.",
+        title: "Ingest historical and realtime vulnerability alerts in Orca Security",
+        description: "Ingest both historical and realtime alerts on vulnerabilites in Orca Security.",
         tags: ["AppSec"],
         logos: ["AppSec"],
-        link: "/build-your-software-catalog/custom-integration/webhook/examples/octa-security"
+        link: "/build-your-software-catalog/custom-integration/webhook/examples/orca-security"
     },
     
 ]
