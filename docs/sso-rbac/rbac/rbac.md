@@ -289,7 +289,7 @@ Service accounts are non-human users (bots) that can be used for integrating ext
 
 ### Create a service account
 :::info API-only and Users and Teams required 
-Creating service accounts requires enabling [User and Team as blueprints](https://docs.getport.io/sso-rbac/rbac/#users-and-teams-as-blueprints), and 
+Creating service accounts requires enabling [User and Team as blueprints](/sso-rbac/rbac/#users-and-teams-as-blueprints), and 
 is currently only available using the API.
 :::
 To create a new service account, all you need to do is create a new user entity using the [Create Entity API](/api-reference/create-an-entity) endpoint with the value of `Service Account` in the `port_type` property.<br/>
