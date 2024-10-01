@@ -223,6 +223,9 @@ This page contains a list of Port's available integrations, organized by the pla
 - [OpsGenie integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie.md)
 - [Self-service action to trigger an OpsGenie incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/Opsgenie/trigger-an-incident)
 
+## Incident IO
+- [Sync Port Services to Incident IO](/guides/all/sync-service-entities-to-incident-io)
+
 ## FireHydrant
 
 - [FireHydrant integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant.md)

@@ -26611,6 +26611,7 @@ paths:
                 - phoneNumber
                 - picture
                 - status
+                - type
                 - providers
                 - createdAt
                 - updatedAt
