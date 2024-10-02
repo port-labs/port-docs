@@ -26,7 +26,8 @@ export const tagsCategoryMap = {
         // "Snyk",
         "Datadog",
         "Dynatrace",
-        "Humanitec"
+        "Humanitec",
+        "New Relic",
     ]
 };
 
@@ -796,5 +797,13 @@ export const availableGuides = [
         tags: ["AppSec", "Trivy", "GitHub"],
         logos: ["Trivy", "GitHub"],
         link: "/guides/all/ingest-trivy-vulnerabilities-into-your-catalog"
+    },
+    {
+        title: "Ingest cloud resources using New Relic",
+        description: "Ingest any cloud resources from your New Relic environment into Port",
+        tags: ["Engineering metrics", "New Relic"],
+        logos: ["NewRelic"],
+        // category: "Getting started",
+        link: "/guides/all/ingest-cloud-resources-using-newrelic",
     },
 ]
