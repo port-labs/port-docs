@@ -20,14 +20,13 @@ This guide assumes the following:
 - You have [installed and set up Port's New Relic integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic).
 - You have entities from cloud providers configured in New Relic. See [New Relic's documentation](https://docs.newrelic.com/docs/infrastructure/) for details on setting up cloud integrations.
 
-## Ingesting Cloud Resources into Port
+## Ingesting cloud resources into Port
 
-We will utilize the `entity` kind in Port's New Relic integration, which provides information on entities monitored in New Relic. Entities are ingested based on their respective `infrastructureIntegrationType`.
-
-To ingest cloud resources, we need to specify entities of certain `infrastructureIntegrationType` values corresponding to your cloud resources.
+We will utilize the `entity` kind in Port's New Relic integration, which provides information on entities monitored in New Relic. 
+Entities are ingested based on their respective `infrastructureIntegrationType`.
 
 <details>
-<summary><b>Some cloud resources infrastructure integration types</b></summary>
+<summary><b>Examples of cloud resources infrastructure integration types</b></summary>
 
 - `AWS_EC2_INSTANCE`
 - `AWS_S3_BUCKET`
@@ -43,10 +42,10 @@ To ingest cloud resources, we need to specify entities of certain `infrastructur
 </details>
 
 
-## Data Model Setup
+## Data model setup
 Follow the steps below to set your data model up for ingesting cloud resources from New Relic:
 
-1. Creating the Blueprint Configuration
+1. Creating the blueprint configuration
 
 After installing the New Relic integration, create the following blueprint configuration in Port:
 
@@ -106,7 +105,7 @@ After installing the New Relic integration, create the following blueprint confi
 
 </details>
 
-2. Configuring the Integration Mapping
+2. Configuring the integration mapping
 
 Locate the New Relic integration in the [Data Sources page](https://app.getport.io/settings/data-sources) and add the following mapping for cloud resources:
 
