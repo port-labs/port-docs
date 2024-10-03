@@ -40,7 +40,6 @@ The resources that can be ingested from PagerDuty into Port are listed below. It
 
 
 ## Setup
-<Prerequisites />
 
 Choose one of the following installation methods:
 
@@ -53,6 +52,10 @@ Choose one of the following installation methods:
 </TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
+
+<h2> Prerequisites </h2>
+
+<Prerequisites />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
