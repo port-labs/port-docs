@@ -369,7 +369,9 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 
 ## Examples
 
-Examples of blueprints and the relevant integration configurations:
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
+
+Additional examples of blueprints and the relevant integration configurations:
 
 ### Project
 
