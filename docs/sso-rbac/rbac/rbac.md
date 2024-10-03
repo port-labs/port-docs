@@ -284,12 +284,13 @@ After enabling this feature, some functionalities will be affected:
   ``` 
 
 ## Service Accounts
-This feature requires enabling User and Team as blueprints.
-Once you have the User blueprint you can use it to create service accounts. Service accounts are non-human users (bots) that can be used for integrating external tools and automating daily tasks using Port. <br/> For example - creating a Slack bot that can execute Port [self service actions](/actions-and-automations/create-self-service-experiences/).
+
+Service accounts are non-human users (bots) that can be used for integrating external tools and automating daily tasks using Port. <br/> For example - creating a Slack bot that can execute Port [self service actions](/actions-and-automations/create-self-service-experiences/).
 
 ### Create a service account
-:::info API-only
-Currently creating service accounts is only available using the API.
+:::info API-only and Users and Teams required 
+Creating service accounts requires enabling [Users and Teams as blueprints](/sso-rbac/rbac/#users-and-teams-as-blueprints), and 
+is currently only available via Port's API.
 :::
 To create a new service account, all you need to do is create a new user entity using the [Create Entity API](/api-reference/create-an-entity) endpoint with the value of `Service Account` in the `port_type` property.<br/>
 Creating a service account has two limitations:
