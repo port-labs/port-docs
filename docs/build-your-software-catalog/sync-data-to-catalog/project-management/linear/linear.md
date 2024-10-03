@@ -15,17 +15,22 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 Our Linear integration allows you to import `issues`, `teams`, and `labels` from your Linear account into Port, according to your mapping and definition.
 
-## Common use cases
+## Capabilities
 
 - Map issues, teams and labels in your Linear workspace environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Linear objects using self-service actions.
 
-## Prerequisites
+### Supported Resources
 
-<Prerequisites />
+The resources that can be ingested from Linear into Port are listed below.  
+It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-## Installation
+- [Team](https://studio.apollographql.com/public/Linear-API/variant/current/schema/reference/objects/TeamConnection)
+- [Issue](https://studio.apollographql.com/public/Linear-API/variant/current/schema/reference/objects/IssueConnection)
+- [Label](https://studio.apollographql.com/public/Linear-API/variant/current/schema/reference/objects/IssueLabelConnection)
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -37,7 +42,11 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-Time (Self-hosted)">
+
+<h2> Prerequisites </h2>
+
+<Prerequisites />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -171,7 +180,7 @@ kubectl apply -f my-ocean-linear-integration.yaml
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="One-time (CI)">
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
@@ -395,126 +404,13 @@ ingest_data:
 
 
 
-## Ingesting Linear objects
+## Configuration
 
-The Linear integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-Here is an example snippet from the config which demonstrates the process for getting `team` data from Linear:
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: team
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"linearTeam"'
-          properties:
-            description: .description
-            workspaceName: .organization.name
-            url: "\"https://linear.app/\" + .organization.urlKey + \"/team/\" + .key"
-```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Linear's API events.
-
-:::info Additional parameters
-In the example above, two additional parameters are used:  
-`createMissingRelatedEntities` - used to enable the creation of missing related entities in Port. This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.
-
-`deleteDependentEntities` - used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this parameter is set to `false`. If set to `true`, the source entity will be deleted as well.
-:::
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Linear, and which entities and properties will be created in Port.
-
-:::tip Supported resources (`Kind`)
-The following resources can be used to map data from Linear, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Team`](https://studio.apollographql.com/public/Linear-API/variant/current/schema/reference/objects/TeamConnection)
-- [`Issue`](https://studio.apollographql.com/public/Linear-API/variant/current/schema/reference/objects/IssueConnection)
-- [`Label`](https://studio.apollographql.com/public/Linear-API/variant/current/schema/reference/objects/IssueLabelConnection)
-  :::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: team
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Linear object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: team
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: team
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Linear object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: team
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-        mappings: # Mappings between one Linear object to a Port entity. Each value is a JQ query.
-          identifier: .key
-          title: .name
-          blueprint: '"linearTeam"'
-          properties:
-            description: .description
-            workspaceName: .organization.name
-            url: "\"https://linear.app/\" + .organization.urlKey + \"/team/\" + .key"
-        # highlight-end
-    - kind: team # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyTeamName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-:::
-
-### Ingest data into Port
-
-To ingest Linear objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Linear.
-3. Choose the **Ingest Data** option from the menu.
-4. Click on `+ Data source` at the top right corner
-5. Select Linear under the Project management providers category.
-6. Modify the [configuration](#configuration-structure) according to your needs.
-7. Click `Resync`.
 
 ## Examples
 
@@ -759,219 +655,13 @@ resources:
 
 </details>
 
-## Let's Test It
 
-This section includes a sample response data from Linear. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
-
-### Payload
-
-Here is an example of the payload structure from Linear:
-
-<details>
-<summary> Team response data</summary>
-
-```json showLineNumbers
-{
-  "id": "92d25fa4-fb1c-449f-b314-47f82e8f280d",
-  "name": "Port",
-  "key": "POR",
-  "description": null,
-  "organization": {
-      "id": "36968e1b-496c-4610-8c25-641364da172e",
-      "name": "Getport",
-      "urlKey": "getport"
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Label response data</summary>
-
-```json showLineNumbers
-{
-  "id": "36f84d2c-7b7d-4a71-96f2-6ea4140004d5",
-  "createdAt": "2024-05-17T15:17:40.858Z",
-  "updatedAt": "2024-05-17T15:17:40.858Z",
-  "archivedAt": null,
-  "name": "New-sample-label",
-  "description": null,
-  "color": "#bec2c8",
-  "isGroup": true,
-  "parent": null,
-  "children": {
-      "edges": [
-          {
-              "node": {
-                  "id": "2e483c90-2aca-4db6-924d-b0571d49f691"
-              }
-          }
-      ]
-  }
-}
-```
-
-</details>
-
-
-<details>
-<summary> Issue response data</summary>
-
-```json showLineNumbers
-{
-  "id": "9b4745c2-a8e6-4432-9e56-0fa97b79ccbf",
-  "createdAt": "2024-05-16T21:52:00.299Z",
-  "updatedAt": "2024-05-17T09:27:40.077Z",
-  "archivedAt": null,
-  "number": 2,
-  "title": "sub issue with new title",
-  "priority": 3,
-  "estimate": null,
-  "sortOrder": -991,
-  "startedAt": null,
-  "completedAt": null,
-  "startedTriageAt": null,
-  "triagedAt": null,
-  "canceledAt": null,
-  "autoClosedAt": null,
-  "autoArchivedAt": null,
-  "dueDate": null,
-  "slaStartedAt": null,
-  "slaBreachesAt": null,
-  "trashed": null,
-  "snoozedUntilAt": null,
-  "labelIds": [
-      "402b218c-938c-4ddf-85db-0019bc632316"
-  ],
-  "previousIdentifiers": [],
-  "subIssueSortOrder": -56.17340471045278,
-  "priorityLabel": "Medium",
-  "integrationSourceType": null,
-  "identifier": "POR-2",
-  "url": "https://linear.app/getport/issue/POR-2/sub-issue-with-new-title",
-  "branchName": "mor/por-2-sub-issue-with-new-title",
-  "customerTicketCount": 0,
-  "description": "",
-  "descriptionState": "AQG/pOWPAgAHAQtwcm9zZW1pcnJvcgMJcGFyYWdyYXBoAA==",
-  "team": {
-      "id": "92d25fa4-fb1c-449f-b314-47f82e8f280d",
-      "name": "Port",
-      "key": "POR"
-  },
-  "state": {
-      "name": "Todo"
-  },
-  "creator": {
-      "name": "Mor Paz",
-      "email": "mor@getport.io"
-  },
-  "assignee": {
-      "name": "Dudi Elhadad",
-      "email": "dudi@getport.io"
-  },
-  "parent": {
-      "id": "5ddd8e85-ad89-4c96-b901-0b901b29100d",
-      "identifier": "POR-1"
-  }
-}
-              
-```
-
-</details>
-
-### Mapping Result
-
-The combination of the sample payload and the Ocean configuration generates the following Port entity:
-
-<details>
-<summary> Team entity in Port</summary>
-
-```json showLineNumbers
-{
-  "identifier": "POR",
-  "title": "Port",
-  "icon": null,
-  "blueprint": "linearTeam",
-  "team": [],
-  "properties": {
-      "url": "https://linear.app/getport/team/POR",
-      "workspaceName": "Getport"
-  },
-  "relations": {},
-  "createdAt": "2024-05-19T16:19:15.232Z",
-  "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE",
-  "updatedAt": "2024-05-19T16:19:15.232Z",
-  "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
-}
-```
-
-</details>
-
-<details>
-<summary>Label entity in Port</summary>
-
-```json showLineNumbers
-{
-  "identifier": "36f84d2c-7b7d-4a71-96f2-6ea4140004d5",
-  "title": "New-sample-label",
-  "icon": null,
-  "blueprint": "linearLabel",
-  "team": [],
-  "properties": {
-      "isGroup": false
-  },
-  "relations": {
-      "childLabels": [],
-      "parentLabel": null
-  },
-  "createdAt": "2024-05-19T16:19:17.747Z",
-  "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE",
-  "updatedAt": "2024-05-19T16:19:17.747Z",
-  "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
-}
-```
-
-</details>
-
-<details>
-<summary>Issue entity in Port</summary>
-
-```json showLineNumbers
-{
-  "identifier": "POR-2",
-  "title": "sub issue with new title",
-  "icon": null,
-  "blueprint": "linearIssue",
-  "team": [],
-  "properties": {
-      "status": "Todo",
-      "url": "https://linear.app/getport/issue/POR-2/sub-issue-with-new-title",
-      "created": "2024-05-16T21:52:00.299Z",
-      "priority": "Medium",
-      "assignee": "dudi@getport.io",
-      "updated": "2024-05-17T09:27:40.077Z",
-      "creator": "mor@getport.io"
-  },
-  "relations": {
-      "team": "POR",
-      "labels": [
-          "402b218c-938c-4ddf-85db-0019bc632316"
-      ],
-      "parentIssue": "POR-1"
-  },
-  "createdAt": "2024-05-19T16:19:21.143Z",
-  "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE",
-  "updatedAt": "2024-05-19T16:19:21.143Z",
-  "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
-}
-```
-
-</details>
 
 ## Alternative installation via webhook
 
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Linear. If so, use the following instructions:
+
+**Note** that when using the webhook installation method, data will be ingested into Port only when the webhook is triggered.
 
 <details>
 
