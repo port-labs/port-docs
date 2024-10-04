@@ -786,8 +786,8 @@ values={[
         "combinator": "and",
         "rules": [
           {
-            "blueprint": "Cluster",
             "operator": "relatedTo",
+            "blueprint": "Cluster",
             "value": {
               "jqQuery": ".form.Cluster.identifier"
             }
@@ -864,8 +864,8 @@ action = Action(
           "combinator": "and",
           "rules": [
             {
-              "blueprint": "Cluster",
               "operator": "relatedTo",
+              "blueprint": "Cluster",
               "value": {
                 "jq_query": ".form.Cluster.identifier"
               }
@@ -1289,8 +1289,8 @@ values={[
             "combinator": "and",
             "rules": [
               {
-                "blueprint": "Cluster",
                 "operator": "relatedTo",
+                "blueprint": "Cluster",
                 "value": {
                   "jqQuery": ".form.Cluster.identifier"
                 }
@@ -1436,8 +1436,8 @@ action = Action(
               "combinator": "and",
               "rules": [
                 {
-                  "blueprint": "Cluster",
                   "operator": "relatedTo",
+                  "blueprint": "Cluster",
                   "value": {
                     "jq_query": ".form.Cluster.identifier"
                   }
@@ -1506,8 +1506,8 @@ const entity = new Action("create-running-service", {
           "combinator": "and",
           "rules": [
             {
-              "blueprint": "Cluster",
               "operator": "relatedTo",
+              "blueprint": "Cluster",
               "value": {
                 "jqQuery": ".form.Cluster.identifier"
               }

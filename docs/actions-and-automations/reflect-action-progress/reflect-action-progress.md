@@ -1,3 +1,5 @@
+import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
+
 # Reflect action progress
 
 import Tabs from "@theme/Tabs"
@@ -9,17 +11,20 @@ This page will teach you how to use Port's API to obtain existing action runs an
 
 ## Where to find your action runs
 
-You can find your existing action runs using one of the following methods:
+You can find your existing/finished action runs using one of the following methods:
 
+- The dedicated `Runs history` table:
+  - **Self-service actions** - go to the [self-service page](https://app.getport.io/self-serve) of your portal, then click on the <img src="/img/self-service-actions/reflect-action-progress/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner.
+  - **Automations** - go to the [automations page](https://app.getport.io/settings/automations) of your portal, then click on the <img src="/img/self-service-actions/reflect-action-progress/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner.
 - Go to the [audit logs](https://app.getport.io/settings/AuditLog) page of your portal, then select the `Runs` tab.  
    This page will display all action runs that have been executed in your organization.
 
-- Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired Entity, then select the `Runs` tab.  
+- Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired entity, then select the `Runs` tab.  
    This page will display all action runs that have been executed for the selected Entity.
 
 - Once you have at least one `in-progress` action run, a panel will be displayed on the right side of the page, showing the  runs that are currently in progress.
 
-- After executing an action [from the UI](https://app.getport.io/self-serve), a toast will appear in the top of the page, with a link to the newly created action run.
+- After executing an action from the [self-service page](https://app.getport.io/self-serve), a toast will appear in the bottom-right of the page, with a link to the newly created action run.
 
 ## Interacting with action runs
 
@@ -64,7 +69,7 @@ The `runId` will be returned in the response body of the [action run request](/a
 
 ### Get a run's details
 
-You can obtain the details of an action run by making a `GET` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint, where `{run_id}` is the id of the action run.
+You can obtain the details of an action run by making a [`GET` request](/api-reference/get-an-action-runs-details) to Port's API with the relevant `{run_id}`.
 
 You will receive a response that looks like this:
 
@@ -112,7 +117,7 @@ When using a `Webhook` as the action backend, a [`Request type` option](/actions
 
 #### Run details
 
-By sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint, you can do the following:
+By sending a [`PATCH` request](/api-reference/patch-an-action-run) to Port's API, you can do the following:
 
 1. Update the run's status, by using the `status` key with one of these values: `SUCCESS`, `FAILURE`.  
    This will mark the run as completed and show a visual indicator, for example:
@@ -140,7 +145,7 @@ Note that every patch request will override the previous information that was av
 
 #### Run logs
 
-By sending a `POST` request to the `https://api.getport.io/v1/actions/runs/{run_id}/logs` endpoint, you can do the following:
+By sending a [`POST` request](/api-reference/add-a-log-to-an-action-run) to Port's API, you can do the following:
 
 1. Add log entries to the run's log, by using the `message` key.
 2. Update the run's status via the `terminationStatus` key with one of these values: `SUCCESS`, `FAILURE`.
@@ -174,7 +179,7 @@ A log message with the `terminationStatus` key can only be sent once for an acti
 
 ## Tying Entities to an action run
 
-You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an Entity (i.e. `POST`, `PUT`, `PATCH` and `DELETE` requests to the `https://api.getport.io/v1/blueprints/{blueprint_id}/entities/{entity_id}` route).  
+You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an entity (i.e. [`POST`](/api-reference/create-an-entity), [`PUT`](/api-reference/change-an-entity), [`PATCH`](/api-reference/patch-an-entity) and [`DELETE`](/api-reference/delete-an-entity) entity requests).  
 
 By adding the `run_id` parameter, you reflect the change made to the Entity as part of the set of steps the action run performed during its runtime.
 
@@ -207,6 +212,8 @@ def create_entity():
     pprint(entity_resp.json()['entity'])
     return entity_resp.json()['entity']['identifier']
 ```
+
+<PortApiRegion />
 
 </details>
 

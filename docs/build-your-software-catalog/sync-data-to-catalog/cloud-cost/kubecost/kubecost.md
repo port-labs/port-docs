@@ -386,6 +386,13 @@ To ingest Kubecost objects using the [integration configuration](#configuration-
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Click `Resync`.
 
+:::tip Supported resources
+The following resources can be used to map data from Kubecost, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+
+- [`kubesystem`](https://docs.kubecost.com/apis/monitoring-apis/api-allocation#allocation-api)
+- [`cloud`](https://docs.kubecost.com/apis/monitoring-apis/cloud-cost-api#cloud-cost-querying-api)
+
+:::
 ## Examples
 
 Examples of blueprints and the relevant integration configurations:

@@ -1,3 +1,15 @@
+#### Using secrets in the payload
+
+Sensitive data such as tokens and passwords can be stored using [Port secrets](/sso-rbac/port-secrets/).
+
+To use a secret in the payload, you can reference it using `{{ .secrets.<secret_name> }}`.  
+
+For example:
+
+```json
+"token": "{{ .secrets.token_name }}"
+```
+
 #### spreadValue() function
 
 You can use the `spreadValue()` function to add multiple keys to the root of the payload at once. This function will spread all of the keys under a given object.  

@@ -1,38 +1,38 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_azure_premise.mdx"
-import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
-import DockerParameters from "./\_jira_one_time_docker_parameters.mdx"
-import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
-import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
-import JiraProjectBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_project_blueprint.mdx";
-import JiraWebhookConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_webhook_configuration.mdx";
-import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
-import JiraServerConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_server_configuration_python.mdx";
-import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
+import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_azure_premise.mdx"
+import DockerParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/_jira_one_time_docker_parameters.mdx"
+import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import JiraIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_blueprint.mdx"
+import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
+import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
 
 # Jira
 
-Our Jira integration allows you to import `issues` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
+Port's Jira integration allows you to model Jira resources in Port and ingest data into them.
 
 :::info Jira cloud only
 This integration supports `Jira Cloud` at the moment. To integrate Port with `Jira Server`, use [Port's webhook integration](/build-your-software-catalog/custom-integration/webhook/examples/jira-server).
 :::
 
-## Common use cases
+## Capabilities
 
-- Map issues and projects in your Jira organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Create/delete Jira objects using self-service actions.
+- Watch for Jira object changes (create/update/delete) in real-time, and automatically apply them to your entities in Port.
+- Define self-service actions that can create/delete Jira objects or perform any other logic on Jira resources.
 
-## Prerequisites
+### Supported Resources
 
-<Prerequisites />
+The resources that can be ingested from Jira into Port are listed below.  
+It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-## Installation
+- [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
+- [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -44,7 +44,7 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -52,14 +52,14 @@ This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
 | Parameter                                | Description                                                                                                                                | Example                          | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅       |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
-| `integration.secrets.atlassianUserEmail` | The email of the user used to query Jira                                                                                                   | user@example.com                 | ✅       |
-| `integration.secrets.atlassianUserToken` | [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) generated by the user |                                  | ✅       |
-| `integration.config.jiraHost`            | The URL of your Jira                                                                                                                       | https://example.atlassian.net    | ✅       |
-| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jira                         | https://my-ocean-integration.com | ❌       |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | ------- |
+| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅      |
+| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅      |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅      |
+| `integration.secrets.atlassianUserEmail` | The email of the user used to query Jira                                                                                                   | user@example.com                 | ✅      |
+| `integration.secrets.atlassianUserToken` | [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) generated by the user |                                  | ✅      |
+| `integration.config.jiraHost`            | The URL of your Jira                                                                                                                       | https://example.atlassian.net    | ✅      |
+| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jira                         | https://my-ocean-integration.com | ✅       |
 
 <HelmParameters/>
 
@@ -186,7 +186,7 @@ kubectl apply -f my-ocean-jira-integration.yaml
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="One-time (CI)">
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
@@ -423,133 +423,74 @@ ingest_data:
 
 </Tabs>
 
+## Configuration
 
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-## Ingesting Jira objects
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-The Jira integration uses a YAML configuration to describe the process of loading data into the developer portal.
+### JQL support
 
-Here is an example snippet from the config which demonstrates the process for getting `project` data from Jira:
+The Ocean Jira integration supports querying objects from the `issue` kind using [JQL](https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/), making it possible to specifically filter the issues that are queried from Jira and ingested to Port.
+
+To use JQL filtering, add to the `selector` object a `jql` key with your desired JQL query as the value. For example:
 
 ```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
 resources:
-  - kind: project
+  # highlight-next-line
+  - kind: issue # JQL filtering can only be used with the "issue" kind
     selector:
-      query: "true"
+      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+      # highlight-next-line
+      jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
     port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"jiraProject"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
-            totalIssues: .insight.totalIssueCount
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Jira's API events.
+## Limitations
 
-:::info Additional parameters
-In the example above, two additional parameters are used:  
-`createMissingRelatedEntities` - used to enable the creation of missing related entities in Port. This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.
+### Getting user emails from Jira
 
-`deleteDependentEntities` - used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this parameter is set to `false`. If set to `true`, the source entity will be deleted as well.
+By default, Jira does not attach user emails to its API responses. For example, when making an API request to Jira to get an issue, fields such as `assignee`, `creator`, `reporter` and other user fields, will only include information such as the internal user ID and user display name, but not the user email.
+
+In order to display the user email in API responses (and also use that data in the mapping from Jira to Port), follow these steps:
+
+**Verify your domain in Jira:**
+
+- Go to the [Jira admin panel](https://admin.atlassian.com/).
+- Go to the **Settings** tab.
+- Select **Domains** in the sidebar on the left.
+- If your domain (for example - `acme.com`) does not appear in the list, click on **Add domain**.
+- Enter your domain name and click on **Next**.
+- Verify your domain ownership in whichever way is convenient for you.
+
+When you are done, you will see in the domain menu that your domain is listed, and its status is `VERIFIED` under the **Domain status** column.
+
+**Claim your Jira user accounts:**
+
+- Go to the [Jira admin panel](https://admin.atlassian.com/).
+- Go to the **Settings** tab.
+- Select **Domains** in the sidebar on the left.
+- Find your verified domain in the list whose accounts need to be claimed.
+- Click the 3 horizontal dots (`...`) under the **Actions** column.
+- Select **Claim accounts**.
+- You will receive an email from Jira when the claim process is complete.
+
+That's it! Now Jira API responses will include the `emailAddress` field when returning a user from Jira.
+
+:::tip Jira docs
+All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
 :::
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Jira, and which entities and properties will be created in Port.
-
-:::tip Supported resources (`Kind`)
-The following resources can be used to map data from Jira, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
-- [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
-  :::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: project
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Jira object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: project
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Jira object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Jira object to a Port entity. Each value is a JQ query.
-            identifier: .key
-            title: .name
-            blueprint: '"jiraProject"'
-            properties:
-              url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
-              totalIssues: .insight.totalIssueCount
-        # highlight-end
-    - kind: project # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyProjectName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-:::
-
-### Ingest data into Port
-
-To ingest Jira objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Jira.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Jira under the Project management providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
+
+To view and test the integration's mapping against examples of the third-party API responses, use the **jq playground** in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
 Examples of blueprints and the relevant integration configurations:
 
 ### Project
 
 <details>
-<summary><b>Project blueprint (Click to expand)</b></summary>
+<summary><b>Project blueprint</b></summary>
 
 ```json showLineNumbers
 {
@@ -766,327 +707,9 @@ resources:
 
 </details>
 
-## Let's Test It
+## Relevant Guides
 
-This section includes a sample response data from Jira. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
-
-### Payload
-
-Here is an example of the payload structure from Jira:
-
-<details>
-<summary><b>Project response data (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "expand": "description,lead,issueTypes,url,projectKeys,permissions,insight",
-  "self": "https://myaccount.atlassian.net/rest/api/3/project/10000",
-  "id": "10000",
-  "key": "PA",
-  "name": "Port-AI",
-  "avatarUrls": {
-    "48x48": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413",
-    "24x24": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=small",
-    "16x16": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=xsmall",
-    "32x32": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=medium"
-  },
-  "projectTypeKey": "software",
-  "simplified": true,
-  "style": "next-gen",
-  "isPrivate": false,
-  "properties": {},
-  "entityId": "7f4f8d6f-705b-4074-84be-46f0d012cd8e",
-  "uuid": "7f4f8d6f-705b-4074-84be-46f0d012cd8e"
-}
-```
-
-</details>
-
-<details>
-<summary><b>Issue response data (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "expand": "operations,versionedRepresentations,editmeta,changelog,customfield_10010.requestTypePractice,renderedFields",
-  "id": "10000",
-  "self": "https://myaccount.atlassian.net/rest/api/3/issue/10000",
-  "key": "PA-1",
-  "fields": {
-    "statuscategorychangedate": "2023-11-06T11:02:59.341+0000",
-    "issuetype": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/issuetype/10001",
-      "id": "10001",
-      "description": "Tasks track small, distinct pieces of work.",
-      "iconUrl": "https://myaccount.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
-      "name": "Task",
-      "subtask": false,
-      "avatarId": 10318,
-      "entityId": "a7309bf9-70c5-4237-bdaf-0261037b6ecc",
-      "hierarchyLevel": 0
-    },
-    "timespent": "None",
-    "customfield_10030": "None",
-    "project": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/project/10000",
-      "id": "10000",
-      "key": "PA",
-      "name": "Port-AI",
-      "projectTypeKey": "software",
-      "simplified": true,
-      "avatarUrls": {
-        "48x48": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413",
-        "24x24": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=small",
-        "16x16": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=xsmall",
-        "32x32": "https://myaccount.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10413?size=medium"
-      }
-    },
-    "customfield_10031": "None",
-    "customfield_10032": "None",
-    "fixVersions": [],
-    "aggregatetimespent": "None",
-    "resolution": "None",
-    "customfield_10027": "None",
-    "customfield_10028": "None",
-    "customfield_10029": "None",
-    "resolutiondate": "None",
-    "workratio": -1,
-    "watches": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/issue/PA-1/watchers",
-      "watchCount": 1,
-      "isWatching": true
-    },
-    "lastViewed": "None",
-    "created": "2023-11-06T11:02:59.000+0000",
-    "customfield_10020": "None",
-    "customfield_10021": "None",
-    "customfield_10022": "None",
-    "priority": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/priority/3",
-      "iconUrl": "https://myaccount.atlassian.net/images/icons/priorities/medium.svg",
-      "name": "Medium",
-      "id": "3"
-    },
-    "customfield_10023": "None",
-    "customfield_10024": "None",
-    "customfield_10025": "None",
-    "labels": ["infra"],
-    "customfield_10026": "None",
-    "customfield_10016": "None",
-    "customfield_10017": "None",
-    "customfield_10018": {
-      "hasEpicLinkFieldDependency": false,
-      "showField": false,
-      "nonEditableReason": {
-        "reason": "PLUGIN_LICENSE_ERROR",
-        "message": "The Parent Link is only available to Jira Premium users."
-      }
-    },
-    "customfield_10019": "0|hzzzzz:",
-    "timeestimate": "None",
-    "aggregatetimeoriginalestimate": "None",
-    "versions": [],
-    "issuelinks": [],
-    "assignee": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/user?accountId=712020%3A05acda87-42da-44d8-b21e-f71a508e5d11",
-      "accountId": "712020:05acda87-42da-44d8-b21e-f71a508e5d11",
-      "emailAddress": "username@example.com.io",
-      "avatarUrls": {
-        "48x48": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "24x24": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "16x16": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "32x32": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png"
-      },
-      "displayName": "User Name",
-      "active": true,
-      "timeZone": "UTC",
-      "accountType": "atlassian"
-    },
-    "updated": "2023-11-06T11:03:18.244+0000",
-    "status": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/status/10000",
-      "description": "",
-      "iconUrl": "https://myaccount.atlassian.net/",
-      "name": "To Do",
-      "id": "10000",
-      "statusCategory": {
-        "self": "https://myaccount.atlassian.net/rest/api/3/statuscategory/2",
-        "id": 2,
-        "key": "new",
-        "colorName": "blue-gray",
-        "name": "To Do"
-      }
-    },
-    "components": [],
-    "timeoriginalestimate": "None",
-    "description": "None",
-    "customfield_10010": "None",
-    "customfield_10014": "None",
-    "customfield_10015": "None",
-    "customfield_10005": "None",
-    "customfield_10006": "None",
-    "security": "None",
-    "customfield_10007": "None",
-    "customfield_10008": "None",
-    "aggregatetimeestimate": "None",
-    "customfield_10009": "None",
-    "summary": "Setup infra",
-    "creator": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/user?accountId=712020%3A05acda87-42da-44d8-b21e-f71a508e5d11",
-      "accountId": "712020:05acda87-42da-44d8-b21e-f71a508e5d11",
-      "emailAddress": "username@example.com.io",
-      "avatarUrls": {
-        "48x48": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "24x24": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "16x16": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "32x32": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png"
-      },
-      "displayName": "User Name",
-      "active": true,
-      "timeZone": "UTC",
-      "accountType": "atlassian"
-    },
-    "subtasks": [],
-    "reporter": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/user?accountId=712020%3A05acda87-42da-44d8-b21e-f71a508e5d11",
-      "accountId": "712020:05acda87-42da-44d8-b21e-f71a508e5d11",
-      "emailAddress": "username@example.com.io",
-      "avatarUrls": {
-        "48x48": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "24x24": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "16x16": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png",
-        "32x32": "https://secure.gravatar.com/avatar/0d5d34ceb820d324d69046a1b2f51dc0?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-3.png"
-      },
-      "displayName": "User Name",
-      "active": true,
-      "timeZone": "UTC",
-      "accountType": "atlassian"
-    },
-    "aggregateprogress": {
-      "progress": 0,
-      "total": 0
-    },
-    "customfield_10001": "None",
-    "customfield_10002": "None",
-    "customfield_10003": "None",
-    "customfield_10004": "None",
-    "environment": "None",
-    "duedate": "None",
-    "progress": {
-      "progress": 0,
-      "total": 0
-    },
-    "votes": {
-      "self": "https://myaccount.atlassian.net/rest/api/3/issue/PA-1/votes",
-      "votes": 0,
-      "hasVoted": false
-    }
-  }
-}
-```
-
-</details>
-
-### Mapping Result
-
-The combination of the sample payload and the Ocean configuration generates the following Port entity:
-
-<details>
-<summary><b>Project entity in Port (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "PA",
-  "title": "Port-AI",
-  "icon": null,
-  "blueprint": "jiraProject",
-  "team": [],
-  "properties": {
-    "url": "https://myaccount.atlassian.net/projects/PA",
-    "totalIssues": 100
-  },
-  "relations": {},
-  "createdAt": "2023-11-06T11:22:05.433Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2023-11-06T11:22:05.433Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
-}
-```
-
-</details>
-
-<details>
-<summary><b>Issue entity in Port (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "PA-1",
-  "title": "Setup infra",
-  "icon": null,
-  "blueprint": "jiraIssue",
-  "team": [],
-  "properties": {
-    "url": "https://myaccount.atlassian.net/browse/PA-1",
-    "status": "To Do",
-    "issueType": "Task",
-    "components": [],
-    "assignee": "username@example.com.io",
-    "reporter": "username@example.com.io",
-    "creator": "username@example.com.io",
-    "priority": "Medium",
-    "created": "2023-11-06T11:02:59.000+0000",
-    "updated": "2023-11-06T11:03:18.244+0000"
-  },
-  "relations": {
-    "parentIssue": null,
-    "project": "PA",
-    "subtasks": []
-  },
-  "createdAt": "2023-11-06T11:22:07.550Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2023-11-06T11:22:07.550Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
-}
-```
-
-</details>
-
-## Getting user emails from Jira
-
-By default, Jira does not attach user emails to its API responses. For example, when making an API request to Jira to get an issue, fields such as `assignee`, `creator`, `reporter` and other user fields, will only include information such as the internal user ID and user display name, but not the user email.
-
-In order to display the user email in API responses (and also use that data in the mapping from Jira to Port), please follow these steps:
-
-### Verify your domain in Jira
-
-To verify your domain in Jira:
-
-- Go to the [Jira admin panel](https://admin.atlassian.com/).
-- Go to the **Settings** tab.
-- Select **Domains** in the sidebar on the left.
-- If your domain (for example - `acme.com`) does not appear in the list, click on **Add domain**.
-- Enter your domain name and click on **Next**.
-- Verify your domain ownership in whichever way is convenient for you.
-
-When you are done, you will see in the domain menu that your domain is listed, and its status is `VERIFIED` under the **Domain status** column.
-
-### Claim your Jira users
-
-To claim your user accounts in Jira:
-
-- Go to the [Jira admin panel](https://admin.atlassian.com/).
-- Go to the **Settings** tab.
-- Select **Domains** in the sidebar on the left.
-- Find your verified domain in the list whose accounts need to be claimed.
-- Click the 3 horizontal dots (`...`) under the **Actions** column.
-- Select **Claim accounts**.
-- You will receive an email from Jira when the claim process is complete.
-
-That's it! Now Jira API responses will include the `emailAddress` field when returning a user from Jira.
-
-:::tip Jira docs
-All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
-:::
-
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Jira).
 
 ## Ingesting Sprint field for Issues
 By default, the Jira integration does not include information on the issues' sprint. To ingest sprint information, a custom field must be added to issues to display sprints. This custom field is then included in the Jira issues mapping configuration.

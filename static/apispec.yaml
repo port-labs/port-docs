@@ -2767,6 +2767,61 @@ components:
         - groups
         - displayMode
       title: /schemas/grouperWidget
+    def-3:
+      type: object
+      title: Search query
+      properties:
+        combinator:
+          enum:
+            - and
+            - or
+        rules:
+          type: array
+          description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
+          items:
+            anyOf:
+              - type: object
+                title: "`=` Rule"
+                properties:
+                  property:
+                    type: string
+                  operator:
+                    enum:
+                      - =
+                  value:
+                    anyOf:
+                      - type: string
+                        title: String
+                      - type: number
+                        title: Number
+                      - type: "null"
+                additionalProperties: false
+                required:
+                  - property
+                  - operator
+                  - value
+              - type: object
+                title: "`in` Rule"
+                properties:
+                  property:
+                    type: string
+                  operator:
+                    enum:
+                      - in
+                  value:
+                    type: array
+                    items:
+                      type: string
+                additionalProperties: false
+                required:
+                  - property
+                  - operator
+                  - value
+              - $ref: "#/components/schemas/def-3"
+      required:
+        - combinator
+        - rules
+      additionalProperties: false
 paths:
   '/v1/blueprints/{blueprint_identifier}/permissions':
     get:
@@ -2994,9 +3049,65 @@ paths:
               type: object
               properties:
                 identifier:
-                  type: string
-                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                  description: The identifier of the new entity.<br/>
+                  oneOf:
+                    - type: string
+                      pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                      title: String identifier
+                      description: The identifier of the new entity.<br/>
+                    - type: object
+                      title: Search query
+                      properties:
+                        combinator:
+                          enum:
+                            - and
+                            - or
+                        rules:
+                          description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
+                          type: array
+                          items:
+                            anyOf:
+                              - type: object
+                                title: "`=` rule"
+                                properties:
+                                  property:
+                                    type: string
+                                  operator:
+                                    enum:
+                                      - =
+                                  value:
+                                    anyOf:
+                                      - type: string
+                                        title: String
+                                      - type: number
+                                        title: Number
+                                      - type: "null"
+                                additionalProperties: false
+                                required:
+                                  - property
+                                  - operator
+                                  - value
+                              - type: object
+                                title: "`in` rule"
+                                properties:
+                                  property:
+                                    type: string
+                                  operator:
+                                    enum:
+                                      - in
+                                  value:
+                                    type: array
+                                    items:
+                                      type: string
+                                additionalProperties: false
+                                required:
+                                  - property
+                                  - operator
+                                  - value
+                              - $ref: "#/components/schemas/def-3"
+                      required:
+                        - combinator
+                        - rules
+                      additionalProperties: false
                 title:
                   type: string
                   description: The title of the new entity.<br/>
@@ -3501,9 +3612,63 @@ paths:
               type: object
               properties:
                 identifier:
-                  type: string
-                  pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
-                  description: The new identifier of the entity.<br/>
+                  oneOf:
+                    - type: string
+                      title: String identifier
+                      pattern: '^[A-Za-z0-9@_.:\\/=-]+$'
+                      description: The new identifier of the entity.<br/>
+                    - type: object
+                      title: Search query
+                      description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
+                      properties:
+                        combinator:
+                          enum:
+                            - and
+                            - or
+                        rules:
+                          description: One or more rules to define the entity's identifier based on a property of the entity.
+                          type: array
+                          items:
+                            anyOf:
+                              - type: object
+                                title: Equals rule
+                                properties:
+                                  property:
+                                    type: string
+                                  operator:
+                                    enum:
+                                      - =
+                                  value:
+                                    anyOf:
+                                      - type: string
+                                      - type: number
+                                      - type: "null"
+                                additionalProperties: false
+                                required:
+                                  - property
+                                  - operator
+                                  - value
+                              - type: object
+                                properties:
+                                  property:
+                                    type: string
+                                  operator:
+                                    enum:
+                                      - in
+                                  value:
+                                    type: array
+                                    items:
+                                      type: string
+                                additionalProperties: false
+                                required:
+                                  - property
+                                  - operator
+                                  - value
+                              - $ref: "#/components/schemas/def-3"
+                      required:
+                        - combinator
+                        - rules
+                      additionalProperties: false
                 title:
                   type: string
                   description: The new title of the entity.<br/>
@@ -9503,6 +9668,7 @@ paths:
                 - phoneNumber
                 - picture
                 - status
+                - type
                 - providers
                 - createdAt
                 - updatedAt
@@ -9833,6 +9999,70 @@ paths:
                       items:
                         anyOf:
                           - type: object
+                            title: Property between condition
+                            properties:
+                              property:
+                                type: string
+                              operator:
+                                enum:
+                                  - between
+                                  - notBetween
+                                  - =
+                              value:
+                                type: object
+                                oneOf:
+                                  - type: object
+                                    title: Date range
+                                    properties:
+                                      from:
+                                        type: string
+                                        format: date-time
+                                      to:
+                                        type: string
+                                        format: date-time
+                                    required:
+                                      - from
+                                      - to
+                                  - type: object
+                                    title: Date preset
+                                    properties:
+                                      preset:
+                                        type: string
+                                        enum:
+                                          - today
+                                          - tomorrow
+                                          - yesterday
+                                          - lastWeek
+                                          - last2Weeks
+                                          - lastMonth
+                                          - last3Months
+                                          - last6Months
+                                          - last12Months
+                                    required:
+                                      - preset
+                            required:
+                              - property
+                              - operator
+                              - value
+                            additionalProperties: false
+                          - type: object
+                            title: Property containsAny condition
+                            properties:
+                              property:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - containsAny
+                              value:
+                                type: array
+                                items:
+                                  type: string
+                            required:
+                              - property
+                              - operator
+                              - value
+                          - type: object
                             title: Property comparison
                             properties:
                               property:
@@ -9958,6 +10188,70 @@ paths:
                             items:
                               anyOf:
                                 - type: object
+                                  title: Property between condition
+                                  properties:
+                                    property:
+                                      type: string
+                                    operator:
+                                      enum:
+                                        - between
+                                        - notBetween
+                                        - =
+                                    value:
+                                      type: object
+                                      oneOf:
+                                        - type: object
+                                          title: Date range
+                                          properties:
+                                            from:
+                                              type: string
+                                              format: date-time
+                                            to:
+                                              type: string
+                                              format: date-time
+                                          required:
+                                            - from
+                                            - to
+                                        - type: object
+                                          title: Date preset
+                                          properties:
+                                            preset:
+                                              type: string
+                                              enum:
+                                                - today
+                                                - tomorrow
+                                                - yesterday
+                                                - lastWeek
+                                                - last2Weeks
+                                                - lastMonth
+                                                - last3Months
+                                                - last6Months
+                                                - last12Months
+                                          required:
+                                            - preset
+                                  required:
+                                    - property
+                                    - operator
+                                    - value
+                                  additionalProperties: false
+                                - type: object
+                                  title: Property containsAny condition
+                                  properties:
+                                    property:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - containsAny
+                                    value:
+                                      type: array
+                                      items:
+                                        type: string
+                                  required:
+                                    - property
+                                    - operator
+                                    - value
+                                - type: object
                                   title: Property comparison
                                   properties:
                                     property:
@@ -10049,6 +10343,419 @@ paths:
                       - title
                       - level
                       - query
+                levels:
+                  type: array
+                  description: The available levels of the new scorecard, each with its own name and color.<br/>
+                  items:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                        description: The name of the level.<br/>
+                      color:
+                        type: string
+                        description: The color associated with the level, for visualization in Port's UI.<br/>
+                        enum:
+                          - blue
+                          - turquoise
+                          - orange
+                          - purple
+                          - pink
+                          - yellow
+                          - green
+                          - red
+                          - gold
+                          - silver
+                          - paleBlue
+                          - darkGray
+                          - lightGray
+                          - bronze
+                    required:
+                      - title
+                      - color
+              if:
+                properties:
+                  levels:
+                    type: array
+                    minItems: 1
+              then:
+                properties:
+                  rules:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        identifier:
+                          type: string
+                          pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                          maxLength: 20
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        level:
+                          type: string
+                        query:
+                          type: object
+                          properties:
+                            combinator:
+                              type: string
+                              enum:
+                                - and
+                                - or
+                            conditions:
+                              type: array
+                              minItems: 1
+                              items:
+                                anyOf:
+                                  - type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        enum:
+                                          - between
+                                          - notBetween
+                                          - =
+                                      value:
+                                        type: object
+                                        oneOf:
+                                          - type: object
+                                            properties:
+                                              from:
+                                                type: string
+                                                format: date-time
+                                              to:
+                                                type: string
+                                                format: date-time
+                                            required:
+                                              - from
+                                              - to
+                                          - type: object
+                                            properties:
+                                              preset:
+                                                type: string
+                                                enum:
+                                                  - today
+                                                  - tomorrow
+                                                  - yesterday
+                                                  - lastWeek
+                                                  - last2Weeks
+                                                  - lastMonth
+                                                  - last3Months
+                                                  - last6Months
+                                                  - last12Months
+                                            required:
+                                              - preset
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - =
+                                          - "!="
+                                          - ">"
+                                          - <
+                                          - ">="
+                                          - <=
+                                          - contains
+                                          - doesNotContains
+                                          - beginsWith
+                                          - doesNotBeginsWith
+                                          - endsWith
+                                          - doesNotEndsWith
+                                      value:
+                                        oneOf:
+                                          - type: string
+                                          - type: number
+                                          - type: boolean
+                                          - type: array
+                                            items:
+                                              type: string
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - =
+                                          - "!="
+                                          - ">"
+                                          - <
+                                          - ">="
+                                          - <=
+                                          - contains
+                                          - doesNotContains
+                                          - beginsWith
+                                          - doesNotBeginsWith
+                                          - endsWith
+                                          - doesNotEndsWith
+                                      value:
+                                        oneOf:
+                                          - type: string
+                                          - type: number
+                                          - type: boolean
+                                          - type: array
+                                            items:
+                                              type: string
+                                    required:
+                                      - relation
+                                      - operator
+                                      - value
+                                  - type: object
+                                    properties:
+                                      not:
+                                        type: boolean
+                                      property:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - isEmpty
+                                          - isNotEmpty
+                                    required:
+                                      - property
+                                      - operator
+                                  - type: object
+                                    properties:
+                                      not:
+                                        type: boolean
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - isEmpty
+                                          - isNotEmpty
+                                    required:
+                                      - relation
+                                      - operator
+                          required:
+                            - combinator
+                            - conditions
+                      required:
+                        - identifier
+                        - title
+                        - query
+              else:
+                properties:
+                  rules:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        identifier:
+                          type: string
+                          pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                          maxLength: 20
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        level:
+                          type: string
+                          enum:
+                            - Gold
+                            - Silver
+                            - Bronze
+                        query:
+                          type: object
+                          properties:
+                            combinator:
+                              type: string
+                              enum:
+                                - and
+                                - or
+                            conditions:
+                              type: array
+                              minItems: 1
+                              items:
+                                anyOf:
+                                  - type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        enum:
+                                          - between
+                                          - notBetween
+                                          - =
+                                      value:
+                                        type: object
+                                        oneOf:
+                                          - type: object
+                                            properties:
+                                              from:
+                                                type: string
+                                                format: date-time
+                                              to:
+                                                type: string
+                                                format: date-time
+                                            required:
+                                              - from
+                                              - to
+                                          - type: object
+                                            properties:
+                                              preset:
+                                                type: string
+                                                enum:
+                                                  - today
+                                                  - tomorrow
+                                                  - yesterday
+                                                  - lastWeek
+                                                  - last2Weeks
+                                                  - lastMonth
+                                                  - last3Months
+                                                  - last6Months
+                                                  - last12Months
+                                            required:
+                                              - preset
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - =
+                                          - "!="
+                                          - ">"
+                                          - <
+                                          - ">="
+                                          - <=
+                                          - contains
+                                          - doesNotContains
+                                          - beginsWith
+                                          - doesNotBeginsWith
+                                          - endsWith
+                                          - doesNotEndsWith
+                                      value:
+                                        oneOf:
+                                          - type: string
+                                          - type: number
+                                          - type: boolean
+                                          - type: array
+                                            items:
+                                              type: string
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                  - type: object
+                                    properties:
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - =
+                                          - "!="
+                                          - ">"
+                                          - <
+                                          - ">="
+                                          - <=
+                                          - contains
+                                          - doesNotContains
+                                          - beginsWith
+                                          - doesNotBeginsWith
+                                          - endsWith
+                                          - doesNotEndsWith
+                                      value:
+                                        oneOf:
+                                          - type: string
+                                          - type: number
+                                          - type: boolean
+                                          - type: array
+                                            items:
+                                              type: string
+                                    required:
+                                      - relation
+                                      - operator
+                                      - value
+                                  - type: object
+                                    properties:
+                                      not:
+                                        type: boolean
+                                      property:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - isEmpty
+                                          - isNotEmpty
+                                    required:
+                                      - property
+                                      - operator
+                                  - type: object
+                                    properties:
+                                      not:
+                                        type: boolean
+                                      relation:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - isEmpty
+                                          - isNotEmpty
+                                    required:
+                                      - relation
+                                      - operator
+                          required:
+                            - combinator
+                            - conditions
+                      required:
+                        - identifier
+                        - title
+                        - query
               additionalProperties: false
               required:
                 - identifier
@@ -10108,6 +10815,70 @@ paths:
                         minItems: 1
                         items:
                           anyOf:
+                            - type: object
+                              title: Property between condition
+                              properties:
+                                property:
+                                  type: string
+                                operator:
+                                  enum:
+                                    - between
+                                    - notBetween
+                                    - =
+                                value:
+                                  type: object
+                                  oneOf:
+                                    - type: object
+                                      title: Date range
+                                      properties:
+                                        from:
+                                          type: string
+                                          format: date-time
+                                        to:
+                                          type: string
+                                          format: date-time
+                                      required:
+                                        - from
+                                        - to
+                                    - type: object
+                                      title: Date preset
+                                      properties:
+                                        preset:
+                                          type: string
+                                          enum:
+                                            - today
+                                            - tomorrow
+                                            - yesterday
+                                            - lastWeek
+                                            - last2Weeks
+                                            - lastMonth
+                                            - last3Months
+                                            - last6Months
+                                            - last12Months
+                                      required:
+                                        - preset
+                              required:
+                                - property
+                                - operator
+                                - value
+                              additionalProperties: false
+                            - type: object
+                              title: Property containsAny condition
+                              properties:
+                                property:
+                                  type: string
+                                operator:
+                                  type: string
+                                  enum:
+                                    - containsAny
+                                value:
+                                  type: array
+                                  items:
+                                    type: string
+                              required:
+                                - property
+                                - operator
+                                - value
                             - type: object
                               title: Property comparison
                               properties:
@@ -10228,6 +10999,70 @@ paths:
                               items:
                                 anyOf:
                                   - type: object
+                                    title: Property between condition
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        enum:
+                                          - between
+                                          - notBetween
+                                          - =
+                                      value:
+                                        type: object
+                                        oneOf:
+                                          - type: object
+                                            title: Date range
+                                            properties:
+                                              from:
+                                                type: string
+                                                format: date-time
+                                              to:
+                                                type: string
+                                                format: date-time
+                                            required:
+                                              - from
+                                              - to
+                                          - type: object
+                                            title: Date preset
+                                            properties:
+                                              preset:
+                                                type: string
+                                                enum:
+                                                  - today
+                                                  - tomorrow
+                                                  - yesterday
+                                                  - lastWeek
+                                                  - last2Weeks
+                                                  - lastMonth
+                                                  - last3Months
+                                                  - last6Months
+                                                  - last12Months
+                                            required:
+                                              - preset
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                    additionalProperties: false
+                                  - type: object
+                                    title: Property containsAny condition
+                                    properties:
+                                      property:
+                                        type: string
+                                      operator:
+                                        type: string
+                                        enum:
+                                          - containsAny
+                                      value:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - property
+                                      - operator
+                                      - value
+                                  - type: object
                                     title: Property comparison
                                     properties:
                                       property:
@@ -10325,9 +11160,420 @@ paths:
                         - title
                         - level
                         - query
-                  id:
-                    type: string
-                additionalProperties: false
+                  levels:
+                    type: array
+                    description: The available levels of the new scorecard, each with its own name and color.<br/>
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          description: The name of the level.<br/>
+                        color:
+                          type: string
+                          description: The color associated with the level, for visualization in Port's UI.<br/>
+                          enum:
+                            - blue
+                            - turquoise
+                            - orange
+                            - purple
+                            - pink
+                            - yellow
+                            - green
+                            - red
+                            - gold
+                            - silver
+                            - paleBlue
+                            - darkGray
+                            - lightGray
+                            - bronze
+                      required:
+                        - title
+                        - color
+                if:
+                  properties:
+                    levels:
+                      type: array
+                      minItems: 1
+                then:
+                  properties:
+                    rules:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                            maxLength: 20
+                          title:
+                            type: string
+                          description:
+                            type: string
+                          level:
+                            type: string
+                          query:
+                            type: object
+                            properties:
+                              combinator:
+                                type: string
+                                enum:
+                                  - and
+                                  - or
+                              conditions:
+                                type: array
+                                minItems: 1
+                                items:
+                                  anyOf:
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          enum:
+                                            - between
+                                            - notBetween
+                                            - =
+                                        value:
+                                          type: object
+                                          oneOf:
+                                            - type: object
+                                              properties:
+                                                from:
+                                                  type: string
+                                                  format: date-time
+                                                to:
+                                                  type: string
+                                                  format: date-time
+                                              required:
+                                                - from
+                                                - to
+                                            - type: object
+                                              properties:
+                                                preset:
+                                                  type: string
+                                                  enum:
+                                                    - today
+                                                    - tomorrow
+                                                    - yesterday
+                                                    - lastWeek
+                                                    - last2Weeks
+                                                    - lastMonth
+                                                    - last3Months
+                                                    - last6Months
+                                                    - last12Months
+                                              required:
+                                                - preset
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                      additionalProperties: false
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          type: string
+                                          enum:
+                                            - containsAny
+                                        value:
+                                          type: array
+                                          items:
+                                            type: string
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          type: string
+                                          enum:
+                                            - =
+                                            - "!="
+                                            - ">"
+                                            - <
+                                            - ">="
+                                            - <=
+                                            - contains
+                                            - doesNotContains
+                                            - beginsWith
+                                            - doesNotBeginsWith
+                                            - endsWith
+                                            - doesNotEndsWith
+                                        value:
+                                          oneOf:
+                                            - type: string
+                                            - type: number
+                                            - type: boolean
+                                            - type: array
+                                              items:
+                                                type: string
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                    - type: object
+                                      properties:
+                                        relation:
+                                          type: string
+                                        operator:
+                                          type: string
+                                          enum:
+                                            - =
+                                            - "!="
+                                            - ">"
+                                            - <
+                                            - ">="
+                                            - <=
+                                            - contains
+                                            - doesNotContains
+                                            - beginsWith
+                                            - doesNotBeginsWith
+                                            - endsWith
+                                            - doesNotEndsWith
+                                        value:
+                                          oneOf:
+                                            - type: string
+                                            - type: number
+                                            - type: boolean
+                                            - type: array
+                                              items:
+                                                type: string
+                                      required:
+                                        - relation
+                                        - operator
+                                        - value
+                                    - type: object
+                                      properties:
+                                        not:
+                                          type: boolean
+                                        property:
+                                          type: string
+                                        operator:
+                                          type: string
+                                          enum:
+                                            - isEmpty
+                                            - isNotEmpty
+                                      required:
+                                        - property
+                                        - operator
+                                    - type: object
+                                      properties:
+                                        not:
+                                          type: boolean
+                                        relation:
+                                          type: string
+                                        operator:
+                                          type: string
+                                          enum:
+                                            - isEmpty
+                                            - isNotEmpty
+                                      required:
+                                        - relation
+                                        - operator
+                            required:
+                              - combinator
+                              - conditions
+                        required:
+                          - identifier
+                          - title
+                          - query
+                else:
+                  properties:
+                    rules:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                            maxLength: 20
+                          title:
+                            type: string
+                          description:
+                            type: string
+                          level:
+                            type: string
+                            enum:
+                              - Gold
+                              - Silver
+                              - Bronze
+                          query:
+                            type: object
+                            properties:
+                              combinator:
+                                type: string
+                                enum:
+                                  - and
+                                  - or
+                              conditions:
+                                type: array
+                                minItems: 1
+                                items:
+                                  anyOf:
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          enum:
+                                            - between
+                                            - notBetween
+                                            - =
+                                        value:
+                                          type: object
+                                          oneOf:
+                                            - type: object
+                                              properties:
+                                                from:
+                                                  type: string
+                                                  format: date-time
+                                                to:
+                                                  type: string
+                                                  format: date-time
+                                              required:
+                                                - from
+                                                - to
+                                            - type: object
+                                              properties:
+                                                preset:
+                                                  type: string
+                                                  enum:
+                                                    - today
+                                                    - tomorrow
+                                                    - yesterday
+                                                    - lastWeek
+                                                    - last2Weeks
+                                                    - lastMonth
+                                                    - last3Months
+                                                    - last6Months
+                                                    - last12Months
+                                              required:
+                                                - preset
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                      additionalProperties: false
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          type: string
+                                          enum:
+                                            - containsAny
+                                        value:
+                                          type: array
+                                          items:
+                                            type: string
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          type: string
+                                          enum:
+                                            - =
+                                            - "!="
+                                            - ">"
+                                            - <
+                                            - ">="
+                                            - <=
+                                            - contains
+                                            - doesNotContains
+                                            - beginsWith
+                                            - doesNotBeginsWith
+                                            - endsWith
+                                            - doesNotEndsWith
+                                        value:
+                                          oneOf:
+                                            - type: string
+                                            - type: number
+                                            - type: boolean
+                                            - type: array
+                                              items:
+                                                type: string
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                    - type: object
+                                      properties:
+                                        relation:
+                                          type: string
+                                        operator:
+                                          type: string
+                                          enum:
+                                            - =
+                                            - "!="
+                                            - ">"
+                                            - <
+                                            - ">="
+                                            - <=
+                                            - contains
+                                            - doesNotContains
+                                            - beginsWith
+                                            - doesNotBeginsWith
+                                            - endsWith
+                                            - doesNotEndsWith
+                                        value:
+                                          oneOf:
+                                            - type: string
+                                            - type: number
+                                            - type: boolean
+                                            - type: array
+                                              items:
+                                                type: string
+                                      required:
+                                        - relation
+                                        - operator
+                                        - value
+                                    - type: object
+                                      properties:
+                                        not:
+                                          type: boolean
+                                        property:
+                                          type: string
+                                        operator:
+                                          type: string
+                                          enum:
+                                            - isEmpty
+                                            - isNotEmpty
+                                      required:
+                                        - property
+                                        - operator
+                                    - type: object
+                                      properties:
+                                        not:
+                                          type: boolean
+                                        relation:
+                                          type: string
+                                        operator:
+                                          type: string
+                                          enum:
+                                            - isEmpty
+                                            - isNotEmpty
+                                      required:
+                                        - relation
+                                        - operator
+                            required:
+                              - combinator
+                              - conditions
+                        required:
+                          - identifier
+                          - title
+                          - query
+                additionalProperties: false              
                 required:
                   - identifier
                   - title
@@ -10398,10 +11644,74 @@ paths:
                       items:
                         anyOf:
                           - type: object
+                            title: Property between condition
                             properties:
                               property:
                                 type: string
-                                title: Property comparison
+                              operator:
+                                enum:
+                                  - between
+                                  - notBetween
+                                  - =
+                              value:
+                                type: object
+                                oneOf:
+                                  - type: object
+                                    title: Date range
+                                    properties:
+                                      from:
+                                        type: string
+                                        format: date-time
+                                      to:
+                                        type: string
+                                        format: date-time
+                                    required:
+                                      - from
+                                      - to
+                                  - type: object
+                                    title: Preset date range
+                                    properties:
+                                      preset:
+                                        type: string
+                                        enum:
+                                          - today
+                                          - tomorrow
+                                          - yesterday
+                                          - lastWeek
+                                          - last2Weeks
+                                          - lastMonth
+                                          - last3Months
+                                          - last6Months
+                                          - last12Months
+                                    required:
+                                      - preset
+                            required:
+                              - property
+                              - operator
+                              - value
+                            additionalProperties: false
+                          - type: object
+                            title: Property containsAny condition
+                            properties:
+                              property:
+                                type: string
+                              operator:
+                                type: string
+                                enum:
+                                  - containsAny
+                              value:
+                                type: array
+                                items:
+                                  type: string
+                            required:
+                              - property
+                              - operator
+                              - value
+                          - type: object
+                            title: Property comparison
+                            properties:
+                              property:
+                                type: string
                               operator:
                                 type: string
                                 enum:
@@ -10527,6 +11837,70 @@ paths:
                             items:
                               anyOf:
                                 - type: object
+                                  title: Property between condition
+                                  properties:
+                                    property:
+                                      type: string
+                                    operator:
+                                      enum:
+                                        - between
+                                        - notBetween
+                                        - =
+                                    value:
+                                      type: object
+                                      oneOf:
+                                        - type: object
+                                          title: Date range
+                                          properties:
+                                            from:
+                                              type: string
+                                              format: date-time
+                                            to:
+                                              type: string
+                                              format: date-time
+                                          required:
+                                            - from
+                                            - to
+                                        - type: object
+                                          title: Preset date range
+                                          properties:
+                                            preset:
+                                              type: string
+                                              enum:
+                                                - today
+                                                - tomorrow
+                                                - yesterday
+                                                - lastWeek
+                                                - last2Weeks
+                                                - lastMonth
+                                                - last3Months
+                                                - last6Months
+                                                - last12Months
+                                          required:
+                                            - preset
+                                  required:
+                                    - property
+                                    - operator
+                                    - value
+                                  additionalProperties: false
+                                - type: object
+                                  title: Property containsAny condition
+                                  properties:
+                                    property:
+                                      type: string
+                                    operator:
+                                      type: string
+                                      enum:
+                                        - containsAny
+                                    value:
+                                      type: array
+                                      items:
+                                        type: string
+                                  required:
+                                    - property
+                                    - operator
+                                    - value
+                                - type: object
                                   title: Property comparison
                                   properties:
                                     property:
@@ -10624,6 +11998,36 @@ paths:
                       - title
                       - level
                       - query
+                levels:
+                  type: array
+                  description: The available levels of the new scorecard, each with its own name and color.<br/>
+                  items:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                        description: The name of the level.<br/>
+                      color:
+                        type: string
+                        description: The color associated with the level, for visualization in Port's UI.<br/>
+                        enum:
+                          - blue
+                          - turquoise
+                          - orange
+                          - purple
+                          - pink
+                          - yellow
+                          - green
+                          - red
+                          - gold
+                          - silver
+                          - paleBlue
+                          - darkGray
+                          - lightGray
+                          - bronze
+                    required:
+                      - title
+                      - color
               additionalProperties: false
               required:
                 - identifier
@@ -10821,34 +12225,34 @@ paths:
       parameters:
         - schema:
             type: number
-            default: 1
-            minimum: 1
-            nullable: false
-          in: query
-          name: page
-          description: The number of pages to fetch.<br/>
-          required: false
-        - schema:
-            type: number
             default: 100
             minimum: 0
             maximum: 300
             nullable: false
           in: query
-          name: per_page
+          name: limit
           description: The number of logs to fetch per page.<br/>
           required: false
         - schema:
             type: string
           in: query
-          name: start_date
-          description: The start date of the logs, in `ISO format IE 2022-04-23T18:25:43.511Z`.<br/>
+          name: timestamp
+          description: The date of time from which to fetch the logs, in `ISO format IE 2022-04-23T18:25:43.511Z`.<br/>
           required: false
         - schema:
             type: string
           in: query
-          name: end_date
-          description: The end date of the logs, in `ISO format IE 2022-04-23T18:25:43.511Z`.<br/>
+          name: log_id
+          description: The identifier of the log.<br/>
+          required: false
+        - schema:
+            type: string
+            enum:
+              - up
+              - down
+          in: query
+          name: direction
+          description: Determines whether to fetch logs before or after the specified timestamp.<br/>
           required: false
         - schema:
             type: string
@@ -11819,6 +13223,8 @@ paths:
           in: query
           name: status
           required: false
+          style: form
+          explode: true
         - schema:
             type: string
           in: query

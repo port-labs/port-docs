@@ -63,19 +63,19 @@ This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
 | Parameter                                | Description                                                                                                   | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                          | Your Port client id                                                                                           | ✅       |
-| `port.clientSecret`                      | Your Port client secret                                                                                       | ✅       |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                               | ✅       |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`                       | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
-| `integration.config.terraformCloudHost` | Your Terraform host. For example https://app.terraform.io  token                                                                           | ✅       |
-| `integration.config.terraformCloudToken` | The Terraform cloud API token                                                                           | ✅       |
-| `integration.config.appHost`             | Your application's host url. Required when installing Terraform Enterprise (self hosted)                                                                                   | ❌       |
-| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`                | When set to true the integration will create default blueprints and the port App config Mapping, defaults is true.  | ❌       |
-| `sendRawDataExamples`                | Enable sending raw data examples from the third party API to port for testing and managingthe integration mapping, default is true.  | ❌       |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------- |
+| `port.clientId`                          | Your Port client id                                                                                           | ✅      |
+| `port.clientSecret`                      | Your Port client secret                                                                                       | ✅      |
+| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                               | ✅      |
+| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅      |
+| `integration.type`                       | The integration type                                                                                          | ✅      |
+| `integration.eventListener.type`         | The event listener type                                                                                       | ✅      |
+| `integration.config.terraformCloudHost` | Your Terraform host. For example https://app.terraform.io  token                                                                           | ✅      |
+| `integration.config.terraformCloudToken` | The Terraform cloud API token                                                                           | ✅      |
+| `integration.config.appHost`             | Your application's host url. Required when installing Terraform Enterprise (self hosted)                                                                                   | ✅       |
+| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌      |
+| `initializePortResources`                | When set to true the integration will create default blueprints and the port App config Mapping, defaults is true.  | ❌      |
+| `sendRawDataExamples`                | Enable sending raw data examples from the third party API to port for testing and managingthe integration mapping, default is true.  | ❌      |
 
 <br/>
 <Tabs groupId="deploy" queryString="deploy">
@@ -392,8 +392,8 @@ The following resources can be used to map data from Terraform Cloud, it is poss
 
 - [`Organization`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/organizations)
 - [`Project`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/projects)
-- [`Workspace`](https://www.terraform.io/docs/cloud/api/workspaces.html)
-- [`Run`](https://www.terraform.io/docs/cloud/api/runs.html)
+- [`Workspace`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/workspaces)
+- [`Run`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run)
 - [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
 
 :::

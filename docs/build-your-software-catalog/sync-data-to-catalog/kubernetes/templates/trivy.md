@@ -344,5 +344,5 @@ Below are the mappings for the Trivy resources:
 ```
 </details>
 
-## Alternative integration using script
-While the Trivy Kubernetes exporter described above is the recommended installation method, you may prefer to use a webhook and a script to [ingest your Trivy scan results to Port](/build-your-software-catalog/custom-integration/webhook/examples/packages/trivy). 
+## Alternative integration using GitHub file ingestion
+While the Trivy Kubernetes exporter described above is the recommended installation method, you may prefer to use the GitHub file ingesting feature to [ingest your Trivy scan results to Port](/guides/all/ingest-trivy-vulnerabilities-into-your-catalog). 
