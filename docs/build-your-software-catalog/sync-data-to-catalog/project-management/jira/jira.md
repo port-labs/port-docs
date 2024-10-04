@@ -16,7 +16,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Jira
 
-Our Jira integration allows you to import `issues`, `sprints`, `boards` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
+Our Jira integration allows you to import `issues` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
 
 :::info Jira cloud only
 This integration supports `Jira Cloud` at the moment. To integrate Port with `Jira Server`, use [Port's webhook integration](/build-your-software-catalog/custom-integration/webhook/examples/jira-server).
@@ -24,8 +24,7 @@ This integration supports `Jira Cloud` at the moment. To integrate Port with `Ji
 
 ## Common use cases
 
-- Map issues, sprints and projects in your Jira organization environment.
-- View issues from active sprints in your Port environment
+- Map issues and projects in your Jira organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Create/delete Jira objects using self-service actions.
 
@@ -467,8 +466,6 @@ The integration configuration determines which resources will be queried from Ji
 The following resources can be used to map data from Jira, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
-- [`Sprint`](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-boardid-sprint-get)
-- [`Board`](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-get)
 - [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
   :::
 
@@ -607,109 +604,6 @@ resources:
 </details>
 
 
-### Sprint
-
-<details>
-<summary><b>Sprint blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "jiraSprint",
-  "title": "Jira Sprint",
-  "description": "This blueprint represents a Jira sprint",
-  "icon": "Jira",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "Sprint URL",
-        "type": "string",
-        "format": "url",
-        "description": "URL to the sprint in Jira"
-      },
-      "state": {
-        "title": "State",
-        "type": "string",
-        "description": "The state of the sprint",
-        "enum": ["active", "closed", "future"],
-        "enumColors": {
-          "active": "green",
-          "closed": "red",
-          "future": "blue"
-        }
-      },
-      "startDate": {
-        "title": "Start Date",
-        "type": "string",
-        "description": "The start date of the sprint",
-        "format": "date-time"
-      },
-      "endDate": {
-        "title": "End Date",
-        "type": "string",
-        "description": "The end date of the sprint",
-        "format": "date-time"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "board": {
-      "target": "jiraBoard",
-      "title": "Board",
-      "description": "The Jira board associated with this sprint",
-      "required": false,
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-:::tip Sprint states
-The Ocean Jira integration ingests active sprints by default, setting `state` to `"active"`. Other available values are `"future"` and `"closed"`. You can specify values as comma-separated strings such as `"active,closed"`. Note that this has no effect on the source of issues. If you want to customize issues source, do it with the `sprintSource` selector on the "issue" kind. Also, the `source` selector on the issue doesn't affect this kind.
-
-```yaml showLineNumbers
-resources:
-  # highlight-next-line
-  - kind: sprint # `state` is only available with the "sprint" kind
-    selector:
-      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-next-line
-      state: "active"
-    port:
-```
-:::
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: sprint
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .id | tostring
-          title: .name
-          blueprint: '"jiraSprint"'
-          properties:
-            url: .self
-            state: .state
-            startDate: .startDate
-            endDate: .endDate
-          relations:
-            board: .originBoardId | tostring
-```
-
-</details>
-
 ### Issue
 
 <details>
@@ -829,45 +723,6 @@ resources:
 
 :::
 
-:::tip Issues source
-By default, the Ocean Jira integration ingests all issues from the Jira organisation and this is specified by setting `source` to `"all"`. To ingest issues based on sprints, you can set the `source` selector to `"sprint"`. A greater level of customization can be achieved using two additional
-selectors apart from `jql` are available: `source`, `sprintState`. See the `Sprint states` tip next for more information.
-
-```yaml showLineNumbers
-resources:
-  # highlight-next-line
-  - kind: issue # `source` and `sprintState` are only available with the "issue" kind
-    selector:
-      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-start
-      source: "sprint" #  or "all" for ingesting all issues across all projects
-      sprintState: "active" # if `source` is specified as "sprint", this defines the state of the sprints where issues are sourced from. Other available values are "future" and "closed". You can specify values as comma-separated strings such as "active,closed".
-      # highlight-end
-    port:
-```
-
-:::
-
-:::tip Sprint states
-When the `source` selector is set to `"sprint"`, you can customize what type of sprints issues are sourced from. The Ocean Jira integration ingests active sprints by default, setting `source` to `"active"`. Other available values are "future" and "closed". You can specify values as comma-separated strings such as "active,closed".
-
-if `source` is set to `"sprint"` and `sprintState` is also set, it is redundant to have a JQL filter (using the `jql` selector) that does any filtering based on the state of the sprint since the `sprintState` will be applied before the `jql` filter is applied.
-
-If `sprintState` is not set, all issues from all sprints will be ingested. Again, this will not ingest all issues, but issues that are under a sprint.
-
-**Note:** `sprintState` under the issues kinds should not be mistaken for `state` under the `sprint` kind. While the former applies to the ingesting of issues, the latter applies to ingesting of the `sprint` kind only and neither affects the other.
-
-```yaml showLineNumbers
-resources:
-  # highlight-next-line
-  - kind: issue # `state` is only available with the "sprint" kind
-    selector:
-      query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-next-line
-      sprintState: "active"
-    port:
-```
-:::
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -936,47 +791,6 @@ Here is an example of the payload structure from Jira:
 }
 ```
 
-</details>
-
-<details>
-<summary><b>Board response data (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "id": 12,
-  "self": "https://myaccount.atlassian.net/rest/agile/1.0/board/12",
-  "name": "Task Force",
-  "type": "scrum",
-  "location": {
-      "projectId": 10000,
-      "displayName": "Port (PORT)",
-      "projectName": "Port",
-      "projectKey": "PORT",
-      "projectTypeKey": "software",
-      "avatarURI": "https://myaccount.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10560?size=small",
-      "name": "Port (PORT)"
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><b>Sprint response data (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-    "id": 26,
-    "self": "https://myaccount.atlassian.net/rest/agile/1.0/sprint/26",
-    "state": "active",
-    "name": "DEMO Sprint 1",
-    "startDate": "2024-01-30T07:51:18.262Z",
-    "endDate": "2027-02-28T22:00:00.000Z",
-    "createdDate": "2023-09-21T16:23:30.428Z",
-    "originBoardId": 2,
-    "goal": ""
-}
-```
 </details>
 
 <details>
@@ -1192,51 +1006,6 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary><b>Board entity in Port (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "12",
-  "title": "Task Force",
-  "team": [],
-  "properties": {
-    "url": "https://myaccount.atlassian.net/jira/software/c/projects/PORT/boards/12",
-    "type": "scrum"
-  },
-  "relations": {
-    "project": "10000"
-  },
-  "icon": "Jira"
-}
-```
-
-</details>
-
-
-<details>
-<summary><b>Sprint entity in Port (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "26",
-  "title": "DEMO Sprint 1",
-  "team": [],
-  "properties": {
-    "url": "https://myaccount.atlassian.net/rest/agile/1.0/sprint/26",
-    "state": "active",
-    "startDate": "2024-01-30T07:51:18.262Z",
-    "endDate": "2027-02-28T22:00:00.000Z"
-  },
-  "relations": {
-    "board": "2"
-  },
-  "icon": "Jira"
-}
-```
-
-</details>
-
-<details>
 <summary><b>Issue entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
@@ -1308,6 +1077,346 @@ That's it! Now Jira API responses will include the `emailAddress` field when ret
 :::tip Jira docs
 All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
 :::
+
+
+## Ingesting Sprint field for Issues
+By default, the Jira integration does not include information on the issues' sprint. To ingest sprint information, a custom field must be added to issues to display sprints. This custom field is then included in the Jira issues mapping configuration.
+
+Follow the steps below:
+
+1. Add Sprint as a custom field to Jira issue on your Jira dashboard. Take note of the custom field ID for the sprints field. This ID can be gotten by calling the [fields API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-fields/#api-rest-api-3-field-get) to first retreive the list of fields for issues which returns a payload like so:
+
+<details>
+<summary><b>Issues field API response (Click to expand)</b></summary>
+
+```json showLineNumbers
+[
+  {
+      "id": "thumbnail",
+      "key": "thumbnail",
+      "name": "Images",
+      "custom": false,
+      "orderable": false,
+      "navigable": true,
+      "searchable": false,
+      "clauseNames": []
+  },
+  {
+      "id": "created",
+      "key": "created",
+      "name": "Created",
+      "custom": false,
+      "orderable": false,
+      "navigable": true,
+      "searchable": true,
+      "clauseNames": [
+          "created",
+          "createdDate"
+      ],
+      "schema": {
+          "type": "datetime",
+          "system": "created"
+      }
+  },
+  // highlight-start
+  {
+      "id": "customfield_10020",
+      "key": "customfield_10020",
+      "name": "Sprint",
+      "untranslatedName": "Sprint",
+      "custom": true,
+      "orderable": true,
+      "navigable": true,
+      "searchable": true,
+      "clauseNames": [
+          "cf[10020]",
+          "Sprint"
+      ],
+      "schema": {
+          "type": "array",
+          "items": "json",
+          "custom": "com.pyxis.greenhopper.jira:gh-sprint",
+          "customId": 10020
+      }
+  }
+  // highlight-end
+]
+```
+
+</details>
+
+Locate the `Sprint` field and take note of the ID
+
+2. Extend the default blueprint to include a field for sprint
+
+```json showLineNumbers
+{
+  "identifier": "jiraIssue",
+  "title": "Jira Issue",
+  "icon": "Jira",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Issue URL",
+        "type": "string",
+        "format": "url",
+        "description": "URL to the issue in Jira"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "description": "The status of the issue"
+      },
+      "issueType": {
+        "title": "Type",
+        "type": "string",
+        "description": "The type of the issue"
+      },
+      "components": {
+        "title": "Components",
+        "type": "array",
+        "description": "The components related to this issue"
+      },
+      "assignee": {
+        "title": "Assignee",
+        "type": "string",
+        "format": "user",
+        "description": "The user assigned to the issue"
+      },
+      "reporter": {
+        "title": "Reporter",
+        "type": "string",
+        "description": "The user that reported to the issue",
+        "format": "user"
+      },
+      "creator": {
+        "title": "Creator",
+        "type": "string",
+        "description": "The user that created to the issue",
+        "format": "user"
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "string",
+        "description": "The priority of the issue"
+      },
+      // highlight-start
+      "sprint": {
+        "title": "Sprint",
+        "type": "string",
+        "description": "The last sprint this issue belongs to"
+      },
+      // highlight-end
+      "created": {
+        "title": "Created At",
+        "type": "string",
+        "description": "The created datetime of the issue",
+        "format": "date-time"
+      },
+      "updated": {
+        "title": "Updated At",
+        "type": "string",
+        "description": "The updated datetime of the issue",
+        "format": "date-time"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "project": {
+      "target": "jiraProject",
+      "title": "Project",
+      "description": "The Jira project that contains this issue",
+      "required": false,
+      "many": false
+    },
+    "parentIssue": {
+      "target": "jiraIssue",
+      "title": "Parent Issue",
+      "required": false,
+      "many": false
+    },
+    "subtasks": {
+      "target": "jiraIssue",
+      "title": "Subtasks",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+:::note Sprints field in issues payload response
+On the issue response returned by calling the Jira issues API, sprints is returned as an array of sprints:
+
+```json showLineNumbers
+{
+  . . .,
+  "customfield_10020": [
+      {
+          "id": 37,
+          "name": "Sprint 32",
+          "state": "closed",
+          "boardId": 1,
+          "goal": "",
+          "startDate": "2024-07-08T11:59:07.316Z",
+          "endDate": "2024-07-28T21:00:00.000Z",
+          "completeDate": "2024-07-29T14:04:34.397Z"
+      },
+      {
+          "id": 38,
+          "name": "Sprint 33",
+          "state": "closed",
+          "boardId": 1,
+          "goal": "",
+          "startDate": "2024-07-29T14:05:25.295Z",
+          "endDate": "2024-08-18T23:06:20.000Z",
+          "completeDate": "2024-08-20T09:19:48.396Z"
+      },
+      {
+          "id": 40,
+          "name": "Sprint 34",
+          "state": "closed",
+          "boardId": 1,
+          "goal": "",
+          "startDate": "2024-08-20T09:20:27.259Z",
+          "endDate": "2024-09-08T20:30:00.000Z",
+          "completeDate": "2024-09-10T13:50:01.871Z"
+      },
+      {
+          "id": 42,
+          "name": "Sprint 35",
+          "state": "active",
+          "boardId": 1,
+          "goal": "",
+          "startDate": "2024-09-10T13:51:44.000Z",
+          "endDate": "2024-10-15T01:01:00.000Z"
+      }
+  ],
+  . . .
+}
+```
+
+For the purpose of this guide, we are simply retrieving the ID of the latest sprint.
+
+:::
+
+
+
+3. Add the custom field to the `issue` kind mapping configuration selectors for additional fields to retrieve
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: issue
+    selector:
+      query: "true"
+      jql: "statusCategory != Done"
+      // highlight-start
+      additionalFields:
+        - customfield_10020
+      // highlight-end
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .fields.summary
+          blueprint: '"jiraIssue"'
+          properties:
+            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
+            status: .fields.status.name
+            issueType: .fields.issuetype.name
+            components: .fields.components
+            assignee: .fields.assignee.emailAddress
+            reporter: .fields.reporter.emailAddress
+            creator: .fields.creator.emailAddress
+            priority: .fields.priority.name
+            created: .fields.created
+            updated: .fields.updated
+          relations:
+            project: .fields.project.key
+            parentIssue: .fields.parent.key
+            subtasks: .fields.subtasks | map(.key)
+```
+
+4. Add the mapping configuration for the `sprint` field
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: issue
+    selector:
+      query: "true"
+      jql: "statusCategory != Done"
+      // highlight-start
+      additionalFields:
+        - customfield_10020
+      // highlight-end
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .fields.summary
+          blueprint: '"jiraIssue"'
+          properties:
+            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
+            status: .fields.status.name
+            issueType: .fields.issuetype.name
+            components: .fields.components
+            assignee: .fields.assignee.emailAddress
+            reporter: .fields.reporter.emailAddress
+            creator: .fields.creator.emailAddress
+            priority: .fields.priority.name
+            // highlight-next-line
+            sprint: .fields.customfield_10020[-1].name // ""
+            created: .fields.created
+            updated: .fields.updated
+          relations:
+            project: .fields.project.key
+            parentIssue: .fields.parent.key
+            subtasks: .fields.subtasks | map(.key)
+```
+
+The final mapping should look like so:
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: issue
+    selector:
+      query: "true"
+      jql: "statusCategory != Done"
+      additionalFields:
+        - customfield_10020
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .fields.summary
+          blueprint: '"jiraIssue"'
+          properties:
+            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
+            status: .fields.status.name
+            issueType: .fields.issuetype.name
+            components: .fields.components
+            assignee: .fields.assignee.emailAddress
+            reporter: .fields.reporter.emailAddress
+            creator: .fields.creator.emailAddress
+            priority: .fields.priority.name
+            sprint: .fields.customfield_10020[-1].name // ""
+            created: .fields.created
+            updated: .fields.updated
+          relations:
+            project: .fields.project.key
+            parentIssue: .fields.parent.key
+            subtasks: .fields.subtasks | map(.key)
+```
+
+5. Click on "Resync" and watch sprints information being pulled alongside issues data.
+
 
 
 ## Alternative installation via webhook
