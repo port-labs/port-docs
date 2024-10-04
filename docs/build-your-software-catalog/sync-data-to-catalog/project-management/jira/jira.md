@@ -724,6 +724,15 @@ resources:
 :::
 
 
+:::tip Fields support
+The Jira integration allows you to customize what fields are available for ingestion using the `fields` selector. The `fields` selector accepts a comma-separated string containing what fields are available. Possible values are `*all`, `*navigate`, `<field_name>` and `-<field_name>` (specifically for excluding fields).
+
+The default value is set to `*all` which makes all fields available by default.
+
+More details what values the `field` selector allows is available on [Jira's issue API documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get:~:text=string-,fields,array%3Cstring%3E,-expand).
+
+:::
+
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
@@ -1149,6 +1158,9 @@ Locate the `Sprint` field and take note of the ID
 
 2. Extend the default blueprint to include a field for sprint
 
+<details>
+<summary><b>Issue blueprint with `sprint` (Click to expand)</b></summary>
+
 ```json showLineNumbers
 {
   "identifier": "jiraIssue",
@@ -1246,13 +1258,18 @@ Locate the `Sprint` field and take note of the ID
 }
 ```
 
+</details>
+
 :::note Sprints field in issues payload response
 On the issue response returned by calling the Jira issues API, sprints is returned as an array of sprints:
+
+<details>
+<summary><b>Sprints field in Jira API response (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
   . . .,
-  "customfield_10020": [
+  "customfield_11111": [
       {
           "id": 37,
           "name": "Sprint 32",
@@ -1297,13 +1314,17 @@ On the issue response returned by calling the Jira issues API, sprints is return
 }
 ```
 
+</details>
+
 For the purpose of this guide, we are simply retrieving the ID of the latest sprint.
 
 :::
 
 
+3. Add the mapping configuration for the `sprint` field
 
-3. Add the custom field to the `issue` kind mapping configuration selectors for additional fields to retrieve
+<details>
+<summary><b>Issue with `sprint` field mapping configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -1313,10 +1334,6 @@ resources:
     selector:
       query: "true"
       jql: "statusCategory != Done"
-      // highlight-start
-      additionalFields:
-        - customfield_10020
-      // highlight-end
     port:
       entity:
         mappings:
@@ -1332,6 +1349,8 @@ resources:
             reporter: .fields.reporter.emailAddress
             creator: .fields.creator.emailAddress
             priority: .fields.priority.name
+            // highlight-next-line
+            sprint: .fields.customfield_11111[-1].name // ""
             created: .fields.created
             updated: .fields.updated
           relations:
@@ -1340,7 +1359,20 @@ resources:
             subtasks: .fields.subtasks | map(.key)
 ```
 
-4. Add the mapping configuration for the `sprint` field
+Where `customfield_11111` is your sprint field.
+
+</details>
+
+
+4. Click on "Resync" and watch sprints information being pulled alongside issues data.
+
+
+### Ingesting issues based on the current sprint
+
+Ingesting only issues from the current sprint can be done by combining the `sprint` property with selector magic:
+
+<details>
+<summary><b>Issue from current sprint (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -1348,12 +1380,9 @@ deleteDependentEntities: true
 resources:
   - kind: issue
     selector:
-      query: "true"
+      // highlight-next-line
+      query: .fields.customfield_11111[-1].name == "Sprint 35"
       jql: "statusCategory != Done"
-      // highlight-start
-      additionalFields:
-        - customfield_10020
-      // highlight-end
     port:
       entity:
         mappings:
@@ -1377,46 +1406,10 @@ resources:
             project: .fields.project.key
             parentIssue: .fields.parent.key
             subtasks: .fields.subtasks | map(.key)
+
 ```
 
-The final mapping should look like so:
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: issue
-    selector:
-      query: "true"
-      jql: "statusCategory != Done"
-      additionalFields:
-        - customfield_10020
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .fields.summary
-          blueprint: '"jiraIssue"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
-            status: .fields.status.name
-            issueType: .fields.issuetype.name
-            components: .fields.components
-            assignee: .fields.assignee.emailAddress
-            reporter: .fields.reporter.emailAddress
-            creator: .fields.creator.emailAddress
-            priority: .fields.priority.name
-            sprint: .fields.customfield_10020[-1].name // ""
-            created: .fields.created
-            updated: .fields.updated
-          relations:
-            project: .fields.project.key
-            parentIssue: .fields.parent.key
-            subtasks: .fields.subtasks | map(.key)
-```
-
-5. Click on "Resync" and watch sprints information being pulled alongside issues data.
-
+</details>
 
 
 ## Alternative installation via webhook
