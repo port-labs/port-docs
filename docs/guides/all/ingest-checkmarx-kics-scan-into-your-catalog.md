@@ -1,24 +1,21 @@
 ---
-sidebar_position: 10
-description: Ingest Trivy vulnerabilities into your catalog
+description: Ingests Checkmarx KICS scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature.
+displayed_sidebar: null
+title: Ingest Checkmarx KICS scan into your catalog
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import PythonScript from './resources/trivy/\_example_python_script.mdx'
-import TrivyBlueprint from './resources/trivy/\_example_trivy_blueprint.mdx'
-import TrivyWebhookConfig from './resources/trivy/\_example_trivy_webhook_config.mdx'
+import PythonScript from '../templates/checkmarx/\_example_python_script.mdx'
+import CheckmarxBlueprint from '../templates/checkmarx/\_example_checkmarx_blueprint.mdx'
+import CheckmarxWebhookConfig from '../templates/checkmarx/\_example_checkmarx_webhook_config.mdx'
 
-# Trivy
+# Ingest Checkmarx KICS scan into your catalog
 
-The following example shows you how to create a `trivyVulnerability` blueprint that ingests all vulnerabilities in your Trivy result file using Port's GitHub file ingesting feature.
+The following example shows you how to create a `checkmarxScan` blueprint that ingests all scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature.
+
 
 To ingest the packages to Port, a `port-app-config.yml` file in the needed repository or organisation is used.
-
-:::info Recommended installation option
-While the script provided in this example facilitates scheduled ingestion of Trivy scan results to Port, we highly recommend that you [use our Trivy Kubernetes exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy) to continuously scan your kubernetes cluster and ingest vulnerabilities to Port in real time. 
-:::
-
 
 ## Prerequisites
 This guide assumes:
@@ -77,37 +74,38 @@ When **using Port's UI**, the specified configuration will override any `port-ap
 
 ## Setting up the blueprint and mapping configuration
 
-Create the following blueprint definition and webhook configuration:
+Create the following blueprint and mapping configuration:
 
 <details>
-<summary><b>Trivy vulnerability blueprint (Click to expand)</b></summary>
-<TrivyBlueprint/>
+<summary><b>Checkmarx KICS blueprint (Click to expand)</b></summary>
+<CheckmarxBlueprint/>
 </details>
 
 <details>
-<summary><b>Trivy mapping configuration</b></summary>
+<summary><b>Checkmarx KICS mapping configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
-- kind: file
-  selector:
-    query: 'true'
-    files:
-      - path: '**/result.json' # path to results json file
-  port:
-    itemsToParse: '[.file.content[] | select(.Vulnerabilities != null) as $input | .Vulnerabilities[] | {VulnerabilityID, PkgName, InstalledVersion, FixedVersion, Title, Description, Severity, References, PrimaryURL, DataSource, Target: $input.Target}]'
-    entity:
-      mappings:
-        identifier: .item.VulnerabilityID
-        title: .item.Title
-        blueprint: '"trivyVulnerability"'
-        properties:
-          version: .item.InstalledVersion
-          package_name: .item.PkgName
-          primaryUrl: .item.PrimaryURL
-          description: .item.Description
-          target: .item.Target
-          severity: .item.Severity
-          data_source: .item.DataSource
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: '**/results.json'
+    port:
+      itemsToParse: '[.file.content[] | select(.Vulnerabilities != null) as $input | .Vulnerabilities[] | {VulnerabilityID, PkgName, InstalledVersion, FixedVersion, Title, Description, Severity, References, PrimaryURL, DataSource, Target: $input.Target}]'
+      entity:
+        mappings:
+          identifier: .item.VulnerabilityID
+          title: .item.Title
+          blueprint: '"trivyVulnerability"'
+          properties:
+            version: .item.InstalledVersion
+            package_name: .item.PkgName
+            primaryUrl: .item.PrimaryURL
+            description: .item.Description
+            target: .item.Target
+            severity: .item.Severity
+            data_source: .item.DataSource
 ```
 
 </details>

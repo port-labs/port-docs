@@ -11,7 +11,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # ArgoCD
 
-Our ArgoCD integration allows you to import `cluster`, `project`, `application`, `deployment-history`, `kubernetes-resource` and `managed-resource` from your ArgoCD instance into Port, according to your mapping and definition.
+Port's ArgoCD integration allows you to import `cluster`, `project`, `application`, `deployment-history`, `kubernetes-resource` and `managed-resource` from your ArgoCD instance into Port, according to your mapping and definition.
 
 ## Common use cases
 
@@ -131,7 +131,7 @@ spec:
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
         - name: port.baseUrl
-          value: https://api.geport.io
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main

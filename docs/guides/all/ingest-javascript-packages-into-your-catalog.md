@@ -1,18 +1,18 @@
 ---
-sidebar_position: 9
-description: Ingest Checkmarx KICS scan into your catalog
+description: Ingests all Javascript packages in `package.json` file using Port's GitHub file ingesting feature.
+displayed_sidebar: null
+title: Ingest Javascript packages into your catalog
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import PythonScript from './resources/checkmarx/\_example_python_script.mdx'
-import CheckmarxBlueprint from './resources/checkmarx/\_example_checkmarx_blueprint.mdx'
-import CheckmarxWebhookConfig from './resources/checkmarx/\_example_checkmarx_webhook_config.mdx'
+import ServiceBlueprint from '../templates/service/\_example_global_service_blueprint.mdx'
+import PackageBlueprint from '../templates/javascript/\_example_package_blueprint.mdx'
+import PackageWebhookConfig from '../templates/javascript/\_example_package_webhook_config.mdx'
 
-# Checkmarx KICS
+# Ingest Javascript packages into your catalog
 
-The following example shows you how to create a `checkmarxScan` blueprint that ingests all scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature.
-
+The following example shows you how to create a `package` blueprint that ingests all third party dependencies and libraries in your `package.json` file using Port's GitHub file ingesting feature. You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
 
 To ingest the packages to Port, a `port-app-config.yml` file in the needed repository or organisation is used.
 
@@ -73,15 +73,68 @@ When **using Port's UI**, the specified configuration will override any `port-ap
 
 ## Setting up the blueprint and mapping configuration
 
-Create the following blueprint and mapping configuration:
+Create the following blueprint definition and mapping configuration:
 
 <details>
-<summary><b>Checkmarx KICS blueprint (Click to expand)</b></summary>
-<CheckmarxBlueprint/>
+<summary><b>Service blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "service",
+  "title": "Service",
+  "icon": "Service",
+  "schema": {
+    "properties": {
+      "description": {
+        "title": "Description",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
+}
+```
+
 </details>
 
 <details>
-<summary><b>Checkmarx KICS mapping configuration (Click to expand)</b></summary>
+<summary><b>Package blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "package",
+  "description": "This blueprint represents a software package file in our catalog",
+  "title": "Package",
+  "icon": "Package",
+  "schema": {
+    "properties": {
+      "version": {
+        "type": "string",
+        "title": "Depedency Version"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "service": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Package mapping config (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 resources:
@@ -89,24 +142,27 @@ resources:
     selector:
       query: 'true'
       files:
-        - path: '**/results.json'
+        - path: '**/package.json'
     port:
-      itemsToParse: '[.file.content[] | select(.Vulnerabilities != null) as $input | .Vulnerabilities[] | {VulnerabilityID, PkgName, InstalledVersion, FixedVersion, Title, Description, Severity, References, PrimaryURL, DataSource, Target: $input.Target}]'
+      itemsToParse: .file.content.dependencies | to_entries
       entity:
         mappings:
-          identifier: .item.VulnerabilityID
-          title: .item.Title
-          blueprint: '"trivyVulnerability"'
+          # Since identifier cannot contain special characters, we are using jq to remove them
+          identifier: >-
+            .item.key + "_" + if (.item.value | startswith("^")) then
+            .item.value[1:] else .item.value end
+          title: .item.key + "@" + .item.value
+          blueprint: '"package"'
           properties:
-            version: .item.InstalledVersion
-            package_name: .item.PkgName
-            primaryUrl: .item.PrimaryURL
-            description: .item.Description
-            target: .item.Target
-            severity: .item.Severity
-            data_source: .item.DataSource
+            package: .item.key
+            version: .item.value
+          relations: {}
 ```
 
 </details>
 
 Then click on `Resync` and wait for the entities to be ingested in your Port environment
+
+For an example showing how to integrate the above with your existing Gitlab CI pipelines, visit:
+
+- [Package.json example](https://github.com/port-labs/package-json-webhook-example)

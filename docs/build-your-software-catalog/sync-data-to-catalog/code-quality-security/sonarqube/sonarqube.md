@@ -14,7 +14,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # SonarQube
 
-Our SonarQube integration (powered by [Ocean](https://ocean.getport.io)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into
+Port's SonarQube integration (powered by [Ocean](https://ocean.getport.io)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into
 Port, according to your mapping and definitions.
 
 ## Common use cases
