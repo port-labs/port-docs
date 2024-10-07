@@ -6914,13 +6914,47 @@ paths:
                                 - type: array
                                   items:
                                     type: string
-                            order:
-                              type: array
-                              items:
-                                type: string
-                          additionalProperties: false
                           required:
                             - properties
+                          oneOf:
+                            - propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                            - properties:
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                                  - order
+                              required:
+                                - order
+                            - properties:
+                                steps:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      title:
+                                        type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - title
+                                    additionalProperties: false
+                              propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                                  - steps
+                              required:
+                                - steps
                         condition:
                           type: object
                           additionalProperties: false
@@ -7422,13 +7456,47 @@ paths:
                                 - type: array
                                   items:
                                     type: string
-                            order:
-                              type: array
-                              items:
-                                type: string
-                          additionalProperties: false
                           required:
                             - properties
+                          oneOf:
+                            - propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                            - properties:
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                                  - order
+                              required:
+                                - order
+                            - properties:
+                                steps:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      title:
+                                        type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - title
+                                    additionalProperties: false
+                              propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                                  - steps
+                              required:
+                                - steps
                       required:
                         - type
                         - userInputs
@@ -8182,13 +8250,47 @@ paths:
                                 - type: array
                                   items:
                                     type: string
-                            order:
-                              type: array
-                              items:
-                                type: string
-                          additionalProperties: false
                           required:
                             - properties
+                          oneOf:
+                            - propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                            - properties:
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                                  - order
+                              required:
+                                - order
+                            - properties:
+                                steps:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      title:
+                                        type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - title
+                                    additionalProperties: false
+                              propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                                  - steps
+                              required:
+                                - steps
                         condition:
                           type: object
                           additionalProperties: false
@@ -8690,13 +8792,47 @@ paths:
                                 - type: array
                                   items:
                                     type: string
-                            order:
-                              type: array
-                              items:
-                                type: string
-                          additionalProperties: false
                           required:
                             - properties
+                          oneOf:
+                            - propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                            - properties:
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                                  - order
+                              required:
+                                - order
+                            - properties:
+                                steps:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      title:
+                                        type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - title
+                                    additionalProperties: false
+                              propertyNames:
+                                enum:
+                                  - properties
+                                  - required
+                                  - steps
+                              required:
+                                - steps
                       required:
                         - type
                         - userInputs
@@ -9514,13 +9650,47 @@ paths:
                         - type: array
                           items:
                             type: string
-                    order:
-                      type: array
-                      items:
-                        type: string
-                  additionalProperties: false
                   required:
                     - properties
+                  oneOf:
+                    - propertyNames:
+                        enum:
+                          - properties
+                          - required
+                    - properties:
+                        order:
+                          type: array
+                          items:
+                            type: string
+                      propertyNames:
+                        enum:
+                          - properties
+                          - required
+                          - order
+                      required:
+                        - order
+                    - properties:
+                        steps:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              title:
+                                type: string
+                              order:
+                                type: array
+                                items:
+                                  type: string
+                            required:
+                              - title
+                            additionalProperties: false
+                      propertyNames:
+                        enum:
+                          - properties
+                          - required
+                          - steps
+                      required:
+                        - steps
                 approvalNotification:
                   type: object
                   properties:
@@ -10010,13 +10180,47 @@ paths:
                           - type: array
                             items:
                               type: string
-                      order:
-                        type: array
-                        items:
-                          type: string
-                    additionalProperties: false
                     required:
                       - properties
+                    oneOf:
+                      - propertyNames:
+                          enum:
+                            - properties
+                            - required
+                      - properties:
+                          order:
+                            type: array
+                            items:
+                              type: string
+                        propertyNames:
+                          enum:
+                            - properties
+                            - required
+                            - order
+                        required:
+                          - order
+                      - properties:
+                          steps:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                title:
+                                  type: string
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              required:
+                                - title
+                              additionalProperties: false
+                        propertyNames:
+                          enum:
+                            - properties
+                            - required
+                            - steps
+                        required:
+                          - steps
                   approvalNotification:
                     type: object
                     properties:
@@ -10524,13 +10728,47 @@ paths:
                         - type: array
                           items:
                             type: string
-                    order:
-                      type: array
-                      items:
-                        type: string
-                  additionalProperties: false
                   required:
                     - properties
+                  oneOf:
+                    - propertyNames:
+                        enum:
+                          - properties
+                          - required
+                    - properties:
+                        order:
+                          type: array
+                          items:
+                            type: string
+                      propertyNames:
+                        enum:
+                          - properties
+                          - required
+                          - order
+                      required:
+                        - order
+                    - properties:
+                        steps:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              title:
+                                type: string
+                              order:
+                                type: array
+                                items:
+                                  type: string
+                            required:
+                              - title
+                            additionalProperties: false
+                      propertyNames:
+                        enum:
+                          - properties
+                          - required
+                          - steps
+                      required:
+                        - steps
                 approvalNotification:
                   type: object
                   properties:
