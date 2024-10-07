@@ -150,7 +150,7 @@ Locate the New Relic integration in the [Data Sources page](https://app.getport.
 
 After configuring the mapping, click on `Resync` to start ingesting your cloud resources from New Relic into Port.
 
-<img src="/img/guides/newRelicIngestedData.png" />
+<img src="/img/guides/newRelicIngestedData.png" border='1px' />
 
 
 ## More entity types
@@ -221,7 +221,7 @@ Based on New Relic's documentation and common integrations, here's a comprehensi
 
 </details>
 
-:::note Follow up to date
+:::note Latest information
 This list covers common integration types. For the most accurate and up-to-date information, refer to [New Relic's Integration Documentation](https://docs.newrelic.com/docs/infrastructure/integrations/).
 :::
 

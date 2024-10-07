@@ -807,9 +807,9 @@ export const availableGuides = [
     },
     {
         title: "Ingest cloud resources using New Relic",
-        description: "Ingest any cloud resources from your New Relic environment into Port",
+        description: "Ingest cloud resources from your New Relic environment into Port",
         tags: ["Engineering metrics", "New Relic"],
-        logos: ["NewRelic"],
+        logos: ["New Relic"],
         // category: "Getting started",
         link: "/guides/all/ingest-cloud-resources-using-newrelic",
     },
