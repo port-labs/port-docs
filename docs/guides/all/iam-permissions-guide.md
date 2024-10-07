@@ -295,7 +295,7 @@ jobs:
           echo "ROLE_ARN=$(aws iam create-role --role-name $POLICY_NAME --assume-role-policy-document file://temp_trust_policy.json --no-cli-pager | jq '.Role.Arn')" >> $GITHUB_OUTPUT
           # Attach policy to the role
           aws iam attach-role-policy --role-name $POLICY_NAME --policy-arn arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:policy/$POLICY_NAME
-      - name: Create varialbes
+      - name: Create variables
         id: create-variables
         run: |
           echo "POLICY=$(cat temp_policy_document.json | jq -c '.')" >> $GITHUB_OUTPUT
@@ -643,7 +643,7 @@ Start by creating new temporary permissions for our S3 bucket `my-s3-bucket`. Na
 
 1. Click the `...` at the top right of the entity screen. 
 2. Select `Request permissions`. 
-3. Coose the `s3:PutObject` permission. 
+3. Choose the `s3:PutObject` permission. 
 4. Click `Execute`.
 
 This will trigger a new action run which will appear in the action runs bar on the right. Click on the action run to navigate to the run page.
