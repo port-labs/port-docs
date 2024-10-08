@@ -21,7 +21,6 @@ This integration allows you to:
 
 - Map and organize your desired Linear resources and their metadata in Port (see supported resources below).
 - Watch for Linear object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
-- Create/delete Linear objects using self-service actions.
 
 ### Supported Resources
 
