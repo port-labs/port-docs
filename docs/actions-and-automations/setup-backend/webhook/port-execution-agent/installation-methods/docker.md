@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+import KafkaRegionTip from "/docs/actions-and-automations/templates/_kafka_brokers_region_tip.mdx"
+
 # Docker
 
 This page we will walk you through the installation of the Port execution agent using docker.
@@ -25,6 +27,8 @@ docker run \
   -e KAFKA_CONSUMER_AUTO_OFFSET_RESET=largest \
   ghcr.io/port-labs/port-agent:latest
 ```
+
+<KafkaRegionTip />
 
 ## Next Steps
 
