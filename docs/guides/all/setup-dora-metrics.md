@@ -113,7 +113,7 @@ If you do not have the **lead time** configured, you can follow the integration 
 
 - **GitHub**: [GitHub integration guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests)
 - **GitLab**: [GitLab integration guide](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)
-- **Azure Repos**: [Azure Repos integration guide](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples/resource-mapping-examples#map-repositories-and-pull-requests)
+- **Azure Repos**: [Azure Repos integration guide](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests) [//]: # todo-> add actual link after creating the lead time page
 
 :::
 
