@@ -1,10 +1,10 @@
 ---
-description: Ingest both historical and realtime alerts on vulnerabilites in Orca Security.
+description: Ingest vulnerability alerts from Orca Security using a custom webhook integration
 title: Orca Security
 ---
 
 
-# Ingest historical and realtime vulnerability alerts in Orca Security
+# Ingest vulnerability alerts from Orca Security
 This guide shows you how to ingest both historical and realtime alerts in Orca Security. To do this, you will use Port's webhook feature (for realtime alerts) and/or a Python script (for historical data).
 
 For either ingestion types, you will create the `orcaSecurityAlert` blueprint:
@@ -175,12 +175,12 @@ In addition, you require the following environment variables:
 
 - `PORT_CLIENT_ID` - Your Port client id
 - `PORT_CLIENT_SECRET` - Your Port client secret
-- `OCTA_SECURITY_API_TOKEN` - Get that by following the steps below
+- `ORCA_SECURITY_API_TOKEN` - Get that by following the steps below
   - Go to **Settings** -> **Users & Permissions** -> **API** -> **API Tokens**
   - Click on **Add API Token**
   - Fill in the details required and select **Shiftleft Alert Manager** for the role.
   - Click on save and copy the API token
-- `OCTA_SECURITY_API_URL` - The host URL of your Orca Security dashboard. See the below table for which URL to use depending on your region:
+- `ORCA_SECURITY_API_URL` - The host URL of your Orca Security dashboard. See the below table for which URL to use depending on your region:
 
 <details>
 <summary><b>Orca Security API URL list (Click to expand)</b></summary>
@@ -230,8 +230,8 @@ VULNERABILITY_ALERT_BLUEPRINT = "orcaSecurityAlert"
 PORT_API_URL = "https://api.getport.io/v1"
 PORT_CLIENT_SECRET = os.getenv("PORT_CLIENT_SECRET")
 PORT_CLIENT_ID = os.getenv("PORT_CLIENT_ID")
-OCTA_SECURITY_API_TOKEN = os.getenv("OCTA_SECURITY_API_TOKEN")
-OCTA_SECURITY_API_URL = os.getenv("OCTA_SECURITY_API_URL")
+ORCA_SECURITY_API_TOKEN = os.getenv("ORCA_SECURITY_API_TOKEN")
+ORCA_SECURITY_API_URL = os.getenv("ORCA_SECURITY_API_URL")
 
 
 ## Get Port Access Token
@@ -322,10 +322,10 @@ async def ingest_alert_as_entity(
 
 
 async def retrieve_alerts(client: httpx.AsyncClient):
-    authorization_header = {"Authorization": f"Token {OCTA_SECURITY_API_TOKEN}"}
+    authorization_header = {"Authorization": f"Token {ORCA_SECURITY_API_TOKEN}"}
 
     response = await client.get(
-        f"{OCTA_SECURITY_API_URL}alerts", headers=authorization_header
+        f"{ORCA_SECURITY_API_URL}alerts", headers=authorization_header
     )
 
     if response.is_error:

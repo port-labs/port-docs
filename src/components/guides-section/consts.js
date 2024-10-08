@@ -805,10 +805,10 @@ export const availableGuides = [
         link: "/guides/all/ingest-trivy-vulnerabilities-into-your-catalog"
     },
     {
-        title: "Ingest historical and realtime vulnerability alerts in Orca Security",
-        description: "Ingest both historical and realtime alerts on vulnerabilites in Orca Security.",
-        tags: ["AppSec"],
-        logos: ["AppSec"],
+        title: "Ingest vulnerability alerts from Orca Security",
+        description: "Ingest vulnerability alerts from Orca Security using a custom webhook integration",
+        tags: ["AppSec", "Webhook"],
+        logos: ["AppSec", "Webhook"],
         link: "/build-your-software-catalog/custom-integration/webhook/examples/orca-security"
     },
     
