@@ -21,9 +21,9 @@ This guide will cover the four key metrics: **deployment frequency**, **lead tim
 
 ### Prerequisites
 - Complete the [Port onboarding process](https://docs.getport.io/quickstart).
-- While this guide demonstrates an implementation using GitHub, other Git providers can be used as well.
-- Access to a GitHub repository that is connected to Port via the onboarding process.
-- Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD or GitHub Actions.
+- Access to a repository (GitHub, GitLab, or Azure Repos) that is connected to Port via the onboarding process.
+- While this guide demonstrates implementations using **GitHub**, **GitLab**, and **Azure Repos**, other Git providers can be used as well.
+- Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD integrations or your platform-specific tools.
 
 
 ## Tracking Deployment
@@ -109,7 +109,12 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
 </details>
 
 :::note Missing Lead Time
-If you do not have the **lead time** configured, you can follow the [GitHub integration guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests) to add this property.
+If you do not have the **lead time** configured, you can follow the integration guide for your Git provider to add this property:
+
+- **GitHub**: [GitHub integration guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests)
+- **GitLab**: [GitLab integration guide](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)
+- **Azure Repos**: [Azure Repos integration guide](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples/resource-mapping-examples#map-repositories-and-pull-requests)
+
 :::
 
 :::tip Adding JSON Schema Using Port's UI
@@ -126,20 +131,125 @@ By following these steps, you can paste and manage the JSON schema required to t
 Below are the main ways you can track deployments directly within Port:
 
 <Tabs groupId="deployment-strategies" queryString defaultValue="pr-merge" values={[
-{label: "PR Merge", value: "pr-merge"},
+{label: "PR/MR Merge", value: "pr-merge"},
 {label: "Workflow/Job", value: "workflow-job"},
 {label: "CI/CD Pipelines", value: "ci-cd-pipelines"},
-{label: "GitHub Deployment", value: "github-deployment"},
+{label: "Releases/Tags", value: "releases-tags"},
 {label: "Custom API", value: "custom-api"}
 ]}>
 
-<TabItem value="pr-merge" label="PR Merge">
+<TabItem value="pr-merge" label="PR/MR Merge">
 
-One of the ways to track deployments is by monitoring when pull requests (PRs) are merged into a branch,
+One of the ways to track deployments is by monitoring when pull requests (PRs)/ merge request (MRs) are merged into a branch,
 typically the **main**/**master** branch.
 This is the **recommended** approach for tracking deployments and calculating lead time.
 
-The lead time for these merges is calculated as the difference between when the PR was created and when it was merged.
+The lead time for these merges is calculated as the difference between when the PR/MR was created and when it was merged.
+
+  <Tabs groupId="pr-merge-strategies" defaultValue="github-pr-merge" values={[
+  {label: "GitHub", value: "github-pr-merge"},
+  {label: "GitLab", value: "gitlab-pr-merge"},
+  {label: "Azure Repos", value: "azure-repos-pr-merge"}
+  ]}>
+
+  <TabItem value="github-pr-merge" label="GitHub">
+
+  Below is how the deployment tracking can be done in GitHub using the PR merge strategy:
+
+  **Example**:
+
+  - When a PR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
+  - The **lead time** for that PR is calculated and added to the deployment as part of the blueprint.
+
+  Here’s how you can implement this:
+
+  1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**.
+
+  2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration:
+
+  <details>
+ <summary><b>Deployment config (click to expand)</b></summary>
+
+ ```yaml showLineNumbers
+  - kind: pull-request
+    selector:
+     query: .base.ref == 'main' and .state == 'closed'  # Track PRs merged into the main branch
+    port:
+      entity:
+        mappings:
+          identifier: .head.repo.name + '-' + (.id|tostring)
+          title: .head.repo.name + " Deployment"
+          blueprint: '"deployment"'
+          properties:
+           environment: '"Production"'  # Hardcoded value
+           createdAt: .merged_at
+           deploymentStatus: '"Success"' # Hardcoded value
+        relations:
+          pullRequest: .head.repo.name + (.id|tostring)
+          service: .head.repo.name
+ ```
+
+  </details>
+
+  </TabItem>
+
+  <TabItem value="gitlab-pr-merge" label="GitLab">
+
+  Below is how the deployment tracking can be done in GitLab using the MR merge strategy:
+
+  **Example**:
+
+  - When a MR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
+  - The **lead time** for that MR is calculated and added to the deployment as part of the blueprint.
+
+  Here’s how you can implement this:
+
+  1. **Add Merge Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)**.
+
+  2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitLab integration:
+
+  <details>
+ <summary><b>Deployment config (click to expand)</b></summary>
+
+ ```yaml showLineNumbers
+  - kind: merge-request
+    selector:
+      query: .target_branch == 'main' and .state == 'merged' # Track MRs merged into the main branch
+    port:
+      entity:
+        mappings:
+          identifier: .source_branch + '-' + (.id|tostring)
+          title: .source_branch + " Deployment"
+          blueprint: '"deployment"'
+          properties:
+            environment: '"Production"' # Hardcoded value
+            createdAt: .merged_at
+            deploymentStatus: '"Success"' # Hardcoded value
+          relations:
+            service: .references.full | gsub("!.+"; "")
+            mergeRequest: .id | tostring
+
+ ```
+
+  </details>
+
+:::info Add missing relationship
+if you don't have a merge request relationship with the **deployment blueprint** add this sample `json` in relations of the **deployment blueprint** to create that relationship
+```json showLineNumbers
+    "mergeRequest": {
+      "title": "Merge Request",
+      "target": "gitlabMergeRequest",
+      "required": false,
+      "many": false
+    }
+```
+:::
+
+  </TabItem>
+
+  <TabItem value="azure-repos-pr-merge" label="Azure Repos">
+
+Below is how the deployment tracking can be done in Azure Repos using the PR merge strategy.:
 
 **Example**:
 
@@ -148,33 +258,39 @@ The lead time for these merges is calculated as the difference between when the 
 
 Here’s how you can implement this:
 
-1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**.
+1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples#mapping-repositories-file-contents-repository-policies-and-pull-requests)**.
 
-2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration:
+2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your Azure Devops integration:
 
-<details>
-<summary><b>Deployment config (click to expand)</b></summary>
+  <details>
+ <summary><b>Deployment config (click to expand)</b></summary>
 
-```yaml showLineNumbers
+ ```yaml showLineNumbers
   - kind: pull-request
     selector:
-       query: .base.ref == 'main' and .state == 'closed'  # Track PRs merged into the main branch
+      query: .targetRefName == 'refs/heads/main' and .status == 'completed'  # Track PRs merged into the main branch
     port:
-      entity:
-        mappings:
-          identifier: .head.repo.name + '-' + (.id|tostring)
-          title: .head.repo.name + " Deployment"
-          blueprint: '"deployment"'
-          properties:
-            environment: '"Production"'  # Hard coded for now
-            createdAt: .merged_at
-            deploymentStatus: '"Success"'  # Hard coded for now
-          relations:
-            pullRequest: .head.repo.name + (.id|tostring)
-            service: .head.repo.name
-```
+    entity:
+      mappings:
+        identifier: .repository.name + '-' + (.pullRequestId|tostring)
+        title: .repository.name + " Deployment"
+        blueprint: '"deployment"'
+        properties:
+          environment: '"Production"'  # Hardcoded value
+          createdAt: .closedDate
+          deploymentStatus: '"Success"'  # Hardcoded value
+        relations:
+          pullRequest: .repository.name + '-' + (.pullRequestId|tostring)
+          service: .repository.name
 
-</details>
+ ```
+
+  </details>
+
+
+  </TabItem>
+
+  </Tabs>
 
 :::tip Hardcoded values
 The value for deploymentStatus is hardcoded to `Success` to treat all deployments as successful,
@@ -563,7 +679,7 @@ Using Search Queries](/build-your-software-catalog/customize-integrations/config
 
 </TabItem>
 
-<TabItem value="github-deployment" label="GitHub Deployment">
+<TabItem value="releases-tags" label="Release/Tags">
 
 GitHub deployments can be tracked by mapping repository releases and tags to deployment entities in Port.
 These repositories can hold critical information related to service versions, commits, and releases.
