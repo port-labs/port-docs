@@ -23,11 +23,12 @@ An `Environment` within a LaunchDarkly project is a logical separation of featur
 A `Flag Status` lets you know when a flag is active or inactive.
 
 
-## Capabilities
+## Overview
 
-- Entity Tracking - See all projects and their associated environments and feature flags.
-- Real time Synchronization of Infrastructure - Automatically synchronize projects, feature flags, and environments data from LaunchDarkly into Port for centralized tracking and management.
+This integration allows you to:
 
+- Map and organize your desired LaunchDarkly resources and their metadata in Port (see supported resources below).
+- Watch for LaunchDarkly object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
 ### Supported Resources
 
@@ -363,8 +364,6 @@ ingest_data:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
-
-
 
 
 ## Examples
