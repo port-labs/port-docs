@@ -15,10 +15,12 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 Our Linear integration allows you to import `issues`, `teams`, and `labels` from your Linear account into Port, according to your mapping and definition.
 
-## Capabilities
 
-- Map issues, teams and labels in your Linear workspace environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+## Overview
+This integration allows you to:
+
+- Map and organize your desired Linear resources and their metadata in Port (see supported resources below).
+- Watch for Linear object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Create/delete Linear objects using self-service actions.
 
 ### Supported Resources
