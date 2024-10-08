@@ -16,11 +16,12 @@ import DatadogMicroserviceBlueprint from "../resources/datadog/\_example_datadog
 
 Port's Datadog integration allows you to import `monitors` (also known as alerts), `services`, `slos`, `sloHistory`, and `serviceMetrics` from your Datadog account into Port, according to your mapping and definition.
 
-## Capabilities
+## Overview
 
-- Map monitors, services, slos, slo history, and service metrics in your Datadog workspace environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Create/delete Datadog objects using self-service actions.
+This integration allows you to:
+
+- Map and organize your desired Datadog resources and their metadata in Port (see supported resources below).
+- Watch for Datadog object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
 ### Supported Resources
 
