@@ -165,7 +165,7 @@ Team dropdown selector in the entity create/edit page:
 Okta and AzureAD integrations are only available after configuring SSO from the relevant identity provider, refer to the [Single Sign-On (SSO)](../sso-providers/) section for more details
 :::
 
-### Users and teams as blueprints
+## Users and teams as blueprints
 
 <BetaFeatureNotice />
 
@@ -282,3 +282,87 @@ After enabling this feature, some functionalities will be affected:
     }
   }
   ``` 
+
+## Service Accounts
+
+Service accounts are non-human users (bots) that can be used for integrating external tools and automating daily tasks using Port. <br/> For example - creating a Slack bot that can execute Port [self service actions](/actions-and-automations/create-self-service-experiences/).
+
+### Create a service account
+:::info API-only and Users and Teams required 
+Creating service accounts requires enabling [Users and Teams as blueprints](/sso-rbac/rbac/#users-and-teams-as-blueprints), and 
+is currently only available via Port's API.
+:::
+To create a new service account, all you need to do is create a new user entity using the [Create Entity API](/api-reference/create-an-entity) endpoint with the value of `Service Account` in the `port_type` property.<br/>
+Creating a service account has two limitations:
+1. The new service account email domain must be `serviceaccounts.getport.io`.
+For example `my-new-service-account@serviceaccounts.getport.io`
+2. The `status` property of the new service account must be `Active`.
+
+<details>
+<summary><b>Full example (click to expand)</b></summary>
+```bash
+curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
+-d '{
+    "identifier": "my-new-service-account@serviceaccounts.getport.io",
+    "title": "My New Service Account",
+    "blueprint": "_user",
+    "icon": "User",
+    "properties": {
+        "port_type": "Service Account",
+        "port_role": "Member",
+        "status": "Active"
+    },
+    "relations": {}
+}' \
+-H 'content-type: application/json' \
+-H 'Authorization: <YOUR API TOKEN>'
+
+```
+</details>
+
+### Using The Service Account
+When creating a new service account entity you might notice a new section in the response body named `additional_data`. Inside this section you can find the new service account credentials you can use to authenticate against Port's API.
+:::warning Sensitive credentials
+These credentials will not appear anywhere else. Make sure you keep it in a secure place and share them only with people in your organization.
+:::
+To use Port's API with the new service account, you can generate an API access token with the credentials using the [Create Access Token API](/api-reference/create-an-access-token) endpoint.
+With the generated token you can use any of the API endpoints as the new service account.
+
+<details>
+<summary><b>Full response (click to expand)</b></summary>
+```json
+{
+    "ok": true,
+    "entity": {
+        "identifier": "my-new-service-account@serviceaccounts.getport.io",
+        "title": "My New Service Account",
+        "icon": "User",
+        "blueprint": "_user",
+        "team": [],
+        "properties": {
+            "port_type": "Service Account",
+            "port_role": "Member",
+            "status": "Active"
+        },
+        "relations": {},
+        "createdAt": "2024-09-21T08:56:38.062Z",
+        "createdBy": "",
+        "updatedAt": "2024-09-21T08:56:38.062Z",
+        "updatedBy": ""
+    },,
+    "additionalData": {
+        "credentials": {
+            "clientId": "<YOUR SERVICE ACCOUNT CLIENT ID>",
+            "clientSecret": "<YOUR SERVICE ACCOUNT CLIENT SECRET>"
+        }
+    }
+}
+```
+</details>
+
+### Service account permissions
+Port service accounts are treated like any other users and extend the same RBAC mechanism. This means that you can define roles for them (Member, Admin, etc.) or add them to teams and they will be granted the relevant permissions accordingly. 
+
+### Disabling service accounts
+Service accounts can easily be disabled at any time. To disable a service account, update it's `status` property to `Disabled`.
+Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`.

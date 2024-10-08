@@ -1,15 +1,16 @@
 ---
-sidebar_position: 7
-description: Ingest software bill of material (SBOM) into your catalog
+description: Ingests software bill of material (SBOM) in your `SBOM.json` or `SBOM.xml` file using Port's GitHub file ingesting feature
+displayed_sidebar: null
+title: Ingest software bill of material (SBOM) into your catalog
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import ComponentBlueprint from './resources/sbom/\_example_sbom_component_blueprint.mdx'
-import VulnerabilityBlueprint from './resources/sbom/\_example_sbom_vulnerability_blueprint.mdx'
-import SbomWebhookConfig from './resources/sbom/\_example_sbom_webhook_config.mdx'
+import ComponentBlueprint from '../templates/sbom/\_example_sbom_component_blueprint.mdx'
+import VulnerabilityBlueprint from '../templates/sbom/\_example_sbom_vulnerability_blueprint.mdx'
+import SbomWebhookConfig from '../templates/sbom/\_example_sbom_webhook_config.mdx'
 
-# SBOM
+# Ingest software bill of material (SBOM) into your catalog
 
 The following example shows you how to create a `sbomComponent` blueprint that ingests all third party components in your `sbom.json` or `sbom.xml` file using both Port's GitHub file ingesting feature (for `sbom.json`) and a combination of Port's [API](/build-your-software-catalog/custom-integration/api) and [webhook functionality](/build-your-software-catalog/custom-integration/webhook) (for `sbom.xml`). You will then relate this blueprint to a `sbomVulnerability` blueprint, allowing you to map all the components affected by a security vulnerability.
 

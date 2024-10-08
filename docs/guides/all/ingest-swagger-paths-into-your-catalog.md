@@ -1,19 +1,19 @@
 ---
-sidebar_position: 1
-description: Ingest Javascript packages into your catalog
+description: Ingest API paths from a `swagger.json` file in a GitHub repository into Port
+displayed_sidebar: null
+title: Ingest Swagger paths from swagger.json file into your catalog
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import ServiceBlueprint from './resources/service/\_example_global_service_blueprint.mdx'
-import PackageBlueprint from './resources/javascript/\_example_package_blueprint.mdx'
-import PackageWebhookConfig from './resources/javascript/\_example_package_webhook_config.mdx'
+import SwaggerBlueprint from '../templates/swagger/\_example_swagger_blueprint.mdx'
+import SwaggerWebhookConfig from '../templates/swagger/\_example_swagger_webhook_config.mdx'
 
-# JavaScript
+# Ingest Swagger paths from swagger.json file into your catalog
+The following example shows you how to create a `swaggerPath` blueprint that ingests all API paths in your `swagger.json` file using Port's GitHub file ingesting feature.
 
-The following example shows you how to create a `package` blueprint that ingests all third party dependencies and libraries in your `package.json` file using Port's GitHub file ingesting feature. You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
+To ingest the packages to Port, the GitHub integration is used.
 
-To ingest the packages to Port, a `port-app-config.yml` file in the needed repository or organisation is used.
 
 ## Prerequisites
 This guide assumes:
@@ -75,17 +75,59 @@ When **using Port's UI**, the specified configuration will override any `port-ap
 Create the following blueprint definition and mapping configuration:
 
 <details>
-<summary><b>Service blueprint (Click to expand)</b></summary>
+<summary>Swagger path blueprint</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "service",
-  "title": "Service",
-  "icon": "Service",
+  "identifier": "swaggerPath",
+  "description": "This blueprint represents a Swagger path in our software catalog",
+  "title": "Swagger API Paths",
+  "icon": "Swagger",
   "schema": {
     "properties": {
+      "method": {
+        "type": "string",
+        "title": "Method",
+        "default": "get",
+        "enum": ["get", "post", "delete", "put", "patch"],
+        "enumColors": {
+          "get": "yellow",
+          "post": "green",
+          "delete": "red",
+          "put": "purple",
+          "patch": "purple"
+        }
+      },
+      "host": {
+        "type": "string",
+        "title": "API Base URL",
+        "format": "url"
+      },
+      "path": {
+        "title": "Path",
+        "type": "string"
+      },
+      "parameters": {
+        "items": {
+          "type": "object"
+        },
+        "title": "Parameters",
+        "type": "array"
+      },
+      "responses": {
+        "title": "Responses",
+        "type": "object"
+      },
       "description": {
         "title": "Description",
+        "type": "string"
+      },
+      "version": {
+        "title": "Version",
+        "type": "string"
+      },
+      "summary": {
+        "title": "Summary",
         "type": "string"
       }
     },
@@ -100,40 +142,7 @@ Create the following blueprint definition and mapping configuration:
 </details>
 
 <details>
-<summary><b>Package blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "package",
-  "description": "This blueprint represents a software package file in our catalog",
-  "title": "Package",
-  "icon": "Package",
-  "schema": {
-    "properties": {
-      "version": {
-        "type": "string",
-        "title": "Depedency Version"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "service": {
-      "title": "Service",
-      "target": "service",
-      "required": false,
-      "many": true
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><b>Package mapping config (Click to expand)</b></summary>
+<summary>Swagger path mapping configuration</summary>
 
 ```yaml showLineNumbers
 resources:
@@ -141,27 +150,26 @@ resources:
     selector:
       query: 'true'
       files:
-        - path: '**/package.json'
+        - path: '**/swagger.json' # or .yaml
+    
     port:
-      itemsToParse: .file.content.dependencies | to_entries
+      itemsToParse: '[. as $root | .paths | to_entries[] as $entries | {version: $root.info.version, host: $root.host, base_path: $root.basePath, title: $root.info.title, path: $entries.key, methods: ($entries.value | to_entries[] as $inner | {method: ($inner.key), rest: $inner.value, path: $entries.key})}][] | {id: .title + "-" + .path + .methods.method, path, method: .methods.method, summary: .methods.rest.summary, description: .methods.rest.description, parameters: .methods.rest.parameters, responses: .methods.rest.responses, project: .title, version, host: "https://" + .host + .base_path}'
       entity:
         mappings:
-          # Since identifier cannot contain special characters, we are using jq to remove them
-          identifier: >-
-            .item.key + "_" + if (.item.value | startswith("^")) then
-            .item.value[1:] else .item.value end
-          title: .item.key + "@" + .item.value
-          blueprint: '"package"'
+          identifier: '.item.id | sub("[^A-Za-z0-9@_.:/=-]"; "-"; "g")'
+          title: .item.method + .item.path
+          blueprint: '"swaggerPath"'
           properties:
-            package: .item.key
-            version: .item.value
+            method: .item.method
+            host: .item.host
+            path: .item.path
+            parameters: .item.parameters
+            responses: .item.responses
+            description: .item.description
+            version: .item.version
+            summary: .item.summary
           relations: {}
 ```
 
 </details>
-
-Then click on `Resync` and wait for the entities to be ingested in your Port environment
-
-For an example showing how to integrate the above with your existing Gitlab CI pipelines, visit:
-
-- [Package.json example](https://github.com/port-labs/package-json-webhook-example)
+Then click on `Resync` and wait for the entities to be ingested in your Port environment.

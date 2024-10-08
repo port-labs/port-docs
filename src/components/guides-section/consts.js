@@ -1,14 +1,14 @@
 export const tagsCategoryMap = {
-    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics"],
+    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog"],
     "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
         "GitLab",
         "BitBucket",
+        "AzureDevops",
         "Azure",
         "Webhook",
         "Kafka",
-        // "AzureDevops",
         "Jenkins",
         "Jira",
         "Kubernetes",
@@ -26,7 +26,8 @@ export const tagsCategoryMap = {
         // "Snyk",
         "Datadog",
         "Dynatrace",
-        "Humanitec"
+        "Humanitec",
+        "New Relic",
     ]
 };
 
@@ -718,16 +719,16 @@ export const availableGuides = [
     {
         title: "Scaffold Azure DevOps Repositories Using Cookiecutter",
         description: "Create a self-service action that scaffolds Azure DevOps repositories using a Cookiecutter template",
-        tags: ["SDLC", "Azure", "Actions"],
-        logos: ["Azure"],
+        tags: ["SDLC", "AzureDevops", "Actions"],
+        logos: ["AzureDevops"],
         // category: "Getting started",
         link: "/guides/all/scaffold-repositories-using-cookiecutter",
     },
     {
         title: "Create Azure Resource with Terraform",
         description: "Create a self-service action that creates a storage account in Azure using a Terraform template",
-        tags: ["IaC for devs", "Azure", "Terraform", "Actions"],
-        logos: ["Azure", "Terraform"],
+        tags: ["IaC for devs", "AzureDevops", "Terraform", "Actions"],
+        logos: ["AzureDevops", "Terraform"],
         // category: "Getting started",
         link: "/guides/all/create-azure-resource-ado",
     },
@@ -748,11 +749,68 @@ export const availableGuides = [
         link: "/guides/all/manage-kubernetes-namespaces",
     },
     {
+        title: "Sync Service Entities to incident.io",
+        description: "Create a GitHub action that syncs service entities to your incident.io catalog",
+        tags: ["Incident management","GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/sync-service-entities-to-incident-io",
+    },
+    {
+        title: "Ingest cloud resources with Datadog",
+        description: "Learn how to ingest cloud resources using Datadog in Port, enhancing visibility and performance monitoring",
+        tags: ["Cloud access management", "Datadog"],
+        logos: ["Datadog"],
+        link: "/guides/all/ingest-cloud-resources-using-datadog",
+    },
+    {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
         tags: ["Engineering metrics","GitHub","Dashboards"],
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/setup-dora-metrics",
-    }
+    },
+    {
+        title: "Ingest a swagger.json file into your catalog",
+        description: "Ingest API paths from a `swagger.json` file in a GitHub repository into Port",
+        tags: ["API catalog", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-swagger-paths-into-your-catalog",
+    },
+    {
+        title: "Ingest Checkmarx KICS scan results into your catalog",
+        description: "Ingests Checkmarx KICS scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature",
+        tags: ["AppSec", "Checkmarx", "GitHub"],
+        logos: ["Checkmarx", "GitHub"],
+        link: "/guides/all/ingest-checkmarx-kics-scan-into-your-catalog"
+    },
+    {
+        title: "Ingest Javascript packages into your catalog",
+        description: "Ingests all Javascript packages in `package.json` file using Port's GitHub file ingesting feature",
+        tags: ["Dependency management", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-javascript-packages-into-your-catalog"
+    },
+    {
+        title: "Ingest software bills of materials (SBOMs) into your catalog",
+        description: "Ingests software bill of material (SBOM) in your `SBOM.json` or `SBOM.xml` file using Port's GitHub file ingesting feature",
+        tags: ["AppSec", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-software-bill-of-materials-sbom-into-your-catalog"
+    },
+    {
+        title: "Ingest Trivy vulnerabilities into your catalog",
+        description: "Ingests Trivy vulnerabilities in your Trivy scan results file using Port's GitHub file ingesting feature",
+        tags: ["AppSec", "Trivy", "GitHub"],
+        logos: ["Trivy", "GitHub"],
+        link: "/guides/all/ingest-trivy-vulnerabilities-into-your-catalog"
+    },
+    {
+        title: "Ingest cloud resources using New Relic",
+        description: "Ingest cloud resources from your New Relic environment into Port",
+        tags: ["Engineering metrics", "New Relic"],
+        logos: ["New Relic"],
+        // category: "Getting started",
+        link: "/guides/all/ingest-cloud-resources-using-newrelic",
+    },
 ]
