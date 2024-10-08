@@ -113,7 +113,7 @@ The following security parameters can be modified to give the K8s exporter more 
 | `clusterRole.apiGroups` | The API groups that the K8s Exporter can access. Make sure to grant access to the relevant API groups, with respect to the resources that you've configured in the resource mapping | `{'*'}` |
 | `clusterRole.resources` | The resources that the K8s Exporter can access. Make sure to grant access to the relevant resources, with respect to the resources that you've configured in the resource mapping   | `{'*'}` |
 | `serviceAccount.create` | Whether to create the default ServiceAccount, ClusterRole and ClusterRoleBinding resources.                                                                                         | `true` |
-| `serviceAccount.name`   | The name of the custom ServiceAccount resource to use, relavent only in case when `serviceAccount.create` is set to `false`                                                          | |
+| `serviceAccount.name`   | The name of the custom ServiceAccount resource to use, relevant only when `serviceAccount.create` is set to `false`                                                          | |
 
 ## Overriding configurations
 
