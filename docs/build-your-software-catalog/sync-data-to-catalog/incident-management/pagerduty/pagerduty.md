@@ -22,10 +22,12 @@ Port's PagerDuty integration allows you to import `schedules`, `oncalls`, `servi
 
 
 
-## Capabilities
+## Overview
 
-- Map `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` in your PagerDuty organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+This integration allows you to:
+
+- Map and organize your desired PagerDuty resources and their metadata in Port (see supported resources below).
+- Watch for PagerDuty object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 
 ### Supported Resources
@@ -423,14 +425,9 @@ To ingest PagerDuty objects using the [integration configuration](#configuration
 6. Click `Resync`.
 :::
 
-## Examples
+## Capabilities
 
-To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
-
-Additional examples of blueprints and the relevant integration configurations can be found on the pagerduty [examples page](example.md)
-
-
-## Ingesting service analytics
+### Ingesting service analytics
 To enrich your PagerDuty service entities with analytics data, follow the steps below:
 
 1. Update the service blueprint to include analytics properties. You can add any property that is returned from the [PagerDuty aggregated service analytics API](https://developer.pagerduty.com/api-reference/694e92fe4f943-get-aggregated-service-data)
@@ -505,7 +502,7 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
 
 2. Add `serviceAnalytics` property to the integration `selector` key. When set to `true`, the integration will fetch data from the [PagerDuty aggregated service analytics API](https://developer.pagerduty.com/api-reference/694e92fe4f943-get-aggregated-service-data) and ingest it to Port. By default, this property is set to `true`.
 
-    Also, by default, the integration aggregates the analytics over a period of 3 months. Use the `analyticsMonthsPeriod` filter to override this date range. The accepted values are positive number between 1 to 12. In the provided example below, we aggregate the analytics over the past 6 months.
+   Also, by default, the integration aggregates the analytics over a period of 3 months. Use the `analyticsMonthsPeriod` filter to override this date range. The accepted values are positive number between 1 to 12. In the provided example below, we aggregate the analytics over the past 6 months.
 
     ```yaml showLineNumbers
     resources:
@@ -585,8 +582,7 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
     ```
     </details>
 
-
-## Ingesting incident analytics
+### Ingesting incident analytics
 To enrich your PagerDuty incident entities with analytics data, follow the steps below:
 
 1. Update the incident blueprint to include an `analytics` property.
@@ -790,6 +786,13 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
               pagerdutyService: .service.id
     ```
     </details>
+
+## Examples
+
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
+
+Additional examples of blueprints and the relevant integration configurations can be found on the pagerduty [examples page](example.md)
+
 
 
 
