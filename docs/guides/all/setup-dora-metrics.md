@@ -303,46 +303,110 @@ You can modify these values based on your requirements.
 <TabItem value="workflow-job" label="Workflow/Job">
 
 Track deployments by monitoring workflow runs in your pipeline.
-This setup captures all workflow runs from the main branch and maps them to deployment entities.
+This setup captures all workflow runs from the main branch and maps them to deployment entities. 
 The deployment status is set dynamically based on whether the workflow run concluded successfully or failed.
 
-Here’s how you can implement this:
-- **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration:
+Below is how you can implement this for different platforms:
 
-<details>
-<summary><b>Deployment via Workflow Runs (click to expand)</b></summary>
+  <Tabs groupId="workflow-job-strategies" defaultValue="github-workflow-job" values={[
+  {label: "GitHub", value: "github-workflow-job"},
+  {label: "GitLab", value: "gitlab-workflow-job"},
+  ]}>
 
-```yaml showLineNumber
+  <TabItem value="github-workflow-job" label="GitHub">
 
-- kind: workflow-run
-  selector:
-    query: .head_branch == 'main'
-  port:
-    entity:
-      mappings:
-        identifier: .head_repository.name + '-' + (.run_number|tostring)
-        title: .head_repository.name + " Deployment on workflow"
-        blueprint: '"deployment"'
-        properties:
-          environment: '"Production"'
-          createdAt: .created_at
-          deploymentStatus: (.conclusion | ascii_upcase[0:1] + .[1:])
-        relations:
-          service: .head_repository.name
-```
-</details>
+  Below is how the deployment tracking can be done in **GitHub** using workflow runs:
+
+  **Example**:
+
+  - When a GitHub Actions workflow runs on the main branch, a **deployment entity** is created in Port to represent the deployment.
+  - The **deployment status** is dynamically set based on the workflow run's conclusion.
+
+  Here’s how you can implement this:
+
+  1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitHub** integration:
+
+  <details>
+  <summary><b>Deployment via Workflow Runs (click to expand)</b></summary>
+
+  ```yaml showLineNumbers
+  - kind: workflow-run
+    selector:
+      query: .head_branch == 'main'
+    port:
+      entity:
+        mappings:
+          identifier: .head_repository.name + '-' + (.run_number|tostring)
+          title: .head_repository.name + " Deployment via workflow"
+          blueprint: '"deployment"'
+          properties:
+            environment: '"Production"'
+            createdAt: .created_at
+            deploymentStatus: (.conclusion | ascii_upcase[0:1] + .[1:])
+          relations:
+            service: .head_repository.name
+  ```
+
+  </details>
+
+  </TabItem>
+
+  <TabItem value="gitlab-workflow-job" label="GitLab">
+
+  Below is how the deployment tracking can be done in **GitLab** using pipeline jobs:
+
+  **Example**:
+
+  - When a GitLab CI/CD pipeline runs on the main branch, a **deployment entity** is created in Port.
+  - The **deployment status** is dynamically set based on the pipeline's status.
+
+  Here’s how you can implement this:
+
+  1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitLab** integration:
+
+  <details>
+  <summary><b>Deployment via Pipeline Runs (click to expand)</b></summary>
+
+  ```yaml showLineNumbers
+    - kind: pipeline
+      selector:
+        query: '.ref == "main"'
+      port:
+        entity:
+          mappings:
+            identifier: >-
+              "deployment-" + (.id | tostring)
+            title: .project.name + " Deployment via pipeline"
+            blueprint: '"deployment"'
+            properties:
+              environment: '"Production"'
+              createdAt: .created_at
+              deploymentStatus: (.status | ascii_upcase[0:1] + .[1:])
+            relations:
+              service: .__project.path_with_namespace | gsub(" "; "")
+
+  ```
+
+  </details>
+
+  </TabItem>
+
+
+
+  </Tabs>
 
 :::tip Using regex
-You can use regex to track only workflows related to deployments
-(e.g., workflows containing the word "deploy").
+You can use regex to track only workflows/pipeline related to deployments
+(e.g., workflows/pipeline containing the word "deploy").
 The environment is automatically determined based on the branch, where the main branch corresponds to Production.
 :::
 
-This approach can also be implemented for other CI/CD tools such as Jenkins, GitLab CI, CircleCI, or Azure DevOps. Each tool allows you to monitor workflows or pipeline runs and map them into Port as deployment entities, ensuring consistency across multiple platforms.
+This approach can also be implemented for other CI/CD tools such as Jenkins, CircleCI. Each tool allows you to monitor workflows or pipeline runs and map them into Port as deployment entities, ensuring consistency across multiple platforms.
 
 By following a similar pattern for other tools, you will be able to capture deployment metadata, dynamically set the deployment status, and represent all your deployment activities in a unified way in Port.
 
 </TabItem>
+
 
 <TabItem value="ci-cd-pipelines" label="CI/CD Pipelines">
 
@@ -719,6 +783,10 @@ You can find more details about setting up GitHub integrations for repositories,
 and tags [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-repository-releases-and-tags).
 :::
 
+:::note GitLab and Azure DevOps
+Unlike GitHub, **GitLab** and **Azure DevOps** do not support traditional releases and tags in the same way. In these platforms, deployments are better tracked through **CI/CD pipelines**.
+:::
+
 </TabItem>
 
 
@@ -877,21 +945,64 @@ For other incident management tools, follow these respective guides:
 - [Statuspage](/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
 
 ### Relating Incident to services
-Add this relationship to the **Incident blueprint** to link incidents to GitHub repository (service):
+Add this relationship to the **Incident blueprint** to link incidents to GitHub or Gitlab or Azure DevOps repository (service):
 
-<details> 
-<summary><b>PagerDuty Incident Relations</b> (click to expand)</summary>
+<Tabs groupId="incident-relation-strategies" defaultValue="github-relation" values={[
+{label: "GitHub", value: "github-relation"},
+{label: "GitLab", value: "gitlab-relation"},
+{label: "Azure DevOps", value: "azure-relation"}
+]}>
 
- ```json showLineNumbers
- "gitHubRepository": {
-   "title": "Github Service",
-   "target": "service",
-   "required": false,
-   "many": false
- }
+  <TabItem value="github-relation" label="GitHub">
+    This section covers how to map incidents to **GitHub repositories** using the `gitHubRepository` relation.
 
-```
-</details>
+    ```json showLineNumbers
+    {
+      "gitHubRepository": {
+        "title": "GitHub Service",
+        "target": "service",
+        "required": false,
+        "many": false
+      }
+    }
+    ```
+
+  </TabItem>
+
+  <TabItem value="gitlab-relation" label="GitLab">
+    This section covers how to map incidents to **GitLab repositories** using the `gitLabRepository` relation.
+
+    ```json showLineNumbers
+    {
+      "gitLabRepository": {
+        "title": "GitLab Service",
+        "target": "service",
+        "required": false,
+        "many": false
+      }
+    }
+    ```
+
+  </TabItem>
+
+  <TabItem value="azure-relation" label="Azure DevOps">
+    This section covers how to map incidents to **Azure DevOps repositories** using the `azureRepository` relation.
+
+    ```json showLineNumbers
+    {
+      "azureRepository": {
+        "title": "Azure DevOps Service",
+        "target": "service",
+        "required": false,
+        "many": false
+      }
+    }
+    ```
+
+  </TabItem>
+
+</Tabs>
+
 
 Update the mapping config to pagerduty incident [data source](https://app.getport.io/settings/data-sources):
 <details>
@@ -1036,6 +1147,11 @@ Add this aggregation property to calculate the lead time for changes:
 
 ```
 </details>
+
+:::info Correct target property
+Ensure that the target property is set to the correct Git provider (e.g., `githubPullRequest` for GitHub, `gitlabMergeRequest` for GitLab and `azureDevOpsPullRequest` for Azure DevOps).
+:::
+
 </TabItem>
 
 <TabItem value="cfr" label="Change Failure Rate">
