@@ -5,15 +5,23 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Integration Name
 
-Port's X integration allows you to model X resources in Port and ingest data into them.
+Port's X integration allows you to model X resources in your software catalog and ingest data into them.
 
-## Capabilities
+## Overview
 
-<!-- Make sure to elaborate on the integration capabilities -->
+This integration allows you to:
 
-<!-- - If real time is supported - Watch for X object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- If real time is not supported - Periodically ingest X resources into Port.
-- If there are any special capabilities of the integration such as gitops, multi-account support, etc. - Describe them here. -->
+- Map and organize your desired X resources and their metadata in Port (see supported resources below).
+<!--
+If real time is supported, add this to the list:
+- Watch for X object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
+
+If real time is not supported, add this to the list:
+- Periodically ingest X resources into Port.
+
+If there are any special capabilities of the integration such as gitops, multi-account support, etc., mention them in the list briefly. For example:
+- Manage Port entities using GitOps.
+-->
 
 ### Supported Resources
 
@@ -23,9 +31,10 @@ It is possible to reference any field that appears in the API responses linked b
 - [Resource 1](link-to-api-docs)
 - [Resource 2](link-to-api-docs)
 
-<!-- - List the resources that can be ingested using this integration, with links to the 3rd party API documentation.
-- If there are any limitations, describe them here.
-- If we support generic resources and its based on the third party api capabilities link to the docs and how to find it. e.g. like in aws.  -->
+<!--
+List the resources that can be ingested using this integration, with links to the 3rd party API documentation.
+If we support generic resources based on the third party api capabilities link to the docs and how to find it. e.g. like in aws.
+-->
 
 ## Setup
 
@@ -39,7 +48,7 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 <h2> Prerequisites </h2>
  
@@ -47,7 +56,7 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="One-time (CI)">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
 
 </TabItem>
 
@@ -59,6 +68,12 @@ Choose one of the following installation methods:
 Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+## Capabilities
+
+<!-- Add any unique capability here using a ### header. For example:
+### Ingest files from your repositories
+-->
 
 ## Limitations
 
