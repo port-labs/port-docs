@@ -13,7 +13,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Linear
 
-Our Linear integration allows you to import `issues`, `teams`, and `labels` from your Linear account into Port, according to your mapping and definition.
+Our Linear integration allows you to model Linear resources in your software catalog and ingest data into them.
 
 
 ## Overview
@@ -181,7 +181,7 @@ kubectl apply -f my-ocean-linear-integration.yaml
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="One-time (CI)">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
