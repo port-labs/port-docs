@@ -18,7 +18,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # PagerDuty
 
-Port's PagerDuty integration allows you to import `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` from your PagerDuty account into Port, according to your mapping and definitions.
+Port's PagerDuty integration allows you to model PagerDuty resources in your software catalog and ingest data into them.
 
 
 
@@ -192,7 +192,7 @@ kubectl apply -f my-ocean-pagerduty-integration.yaml
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="One-time (CI)">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
 This workflow will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
