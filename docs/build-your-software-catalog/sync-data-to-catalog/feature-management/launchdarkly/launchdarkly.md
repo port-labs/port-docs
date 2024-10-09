@@ -12,15 +12,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # LaunchDarkly
 
-Our LaunchDarkly integration allows you to import `projects`, `flags`, and `environments` from your LaunchDarkly account into Port, according to your mapping and definition.
-
-A `Project` in LaunchDarkly is a collection of feature flags, targeting rules, and environments that correspond to a specific application or service.
-
-A `Flag` in LaunchDarkly represents a feature flag or toggle, which is a central concept in LaunchDarkly. Flags are used to control the visibility and operational state of features in your software without deploying new code.
-
-An `Environment` within a LaunchDarkly project is a logical separation of feature flag states and configurations, typically corresponding to stages in your development lifecycle.
-
-A `Flag Status` lets you know when a flag is active or inactive.
+Our LaunchDarkly integration allows you to model LaunchDarkly resources in your software catalog and ingest data into them.
 
 
 ## Overview
@@ -197,7 +189,7 @@ The integration uses polling to pull the configuration from Port every minute an
 </TabItem>
 
 
-<TabItem value="one-time-ci" label="One-time (CI)">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
 
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
@@ -713,4 +705,4 @@ resources:
 
 ## Relevant Guides
 
-- For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Launchdarkly).
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Launchdarkly).
