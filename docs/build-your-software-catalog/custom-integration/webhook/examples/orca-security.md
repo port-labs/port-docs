@@ -12,6 +12,21 @@ For either ingestion types, you will create the `orcaSecurityAlert` blueprint:
 <details>
 <summary><b>Orca Security Alert blueprint (Click to expand)</b></summary>
 
+:::info Host URL
+
+Take note to change the value of `HOST_URL` to the host URL of your Orca Security installation. See the table below for all host values:
+
+| Region               | URL                                 |
+|----------------------|-------------------------------------|
+| US                   | https://app.orcasecurity.io    |
+| Europe               | https://app.eu.orcasecurity.io |
+| Australia            | https://app.au.orcasecurity.io |
+| India                | https://app.in.orcasecurity.io |
+| Israel               | https://app.il.orcasecurity.io |
+| Brazil               | https://app.sa.orcasecurity.io |
+
+:::
+
 ```json showLineNumbers
 {
   "identifier": "orcaSecurityAlert",
@@ -48,7 +63,21 @@ For either ingestion types, you will create the `orcaSecurityAlert` blueprint:
       "riskLevel": {
         "type": "string",
         "title": "Risk Level",
-        "description": "Level of risk exposed to by vulnerability"
+        "description": "Level of risk exposed to by vulnerability",
+        "enum": [
+          "critical",
+          "high",
+          "medium",
+          "low",
+          "informational"
+        ],
+        "enumColors": {
+          "critical": "red",
+          "high": "orange",
+          "medium": "yellow",
+          "low": "darkGray",
+          "informational": "lightGray"
+        }
       },
       "category": {
         "type": "string",
@@ -81,12 +110,24 @@ For either ingestion types, you will create the `orcaSecurityAlert` blueprint:
         "type": "string",
         "title": "Asset Name",
         "description": "Name of the asset affected by the alert"
+      },
+      "repository": {
+        "type": "string",
+        "title": "Repository"
       }
     },
     "required": []
   },
   "mirrorProperties": {},
-  "calculationProperties": {},
+  "calculationProperties": {
+    "url": {
+      "title": "Alert URL",
+      "icon": "Link",
+      "calculation": "\"<HOST_URL>/alerts/\" + .identifier",
+      "type": "string",
+      "format": "url"
+    }
+  },
   "aggregationProperties": {},
   "relations": {}
 }
@@ -130,14 +171,14 @@ For either ingestion types, you will create the `orcaSecurityAlert` blueprint:
         "status": ".body.state.status",
         "recommendation": ".body.recommendation",
         "severity": ".body.state.severity",
-        "riskLevel": ".body.state.risk_level",
-        "category": ".body.category",
+        "riskLevel": ".body.state.risk_level | tostring",
+        "category": ".body.category | tostring",
         "alertLabels": ".body.alert_labels",
         "createdAt": ".body.state.created_at",
         "lastUpdated": ".body.state.last_updated",
-        "lastSeen": ".body.state.last_seen"
-      },
-      "relations": {}
+        "lastSeen": ".body.state.last_seen",
+        "repository": ".body.asset_name | split(\"/\") | .[1] // .[0]"
+      }
     }
   }
 ]
@@ -161,7 +202,6 @@ Leave the **API Key** field blank. Click on "Save"
 You should see the newly created alert entity in your Port catalog:
 
 <img src='/img/guides/orcaSecurityVulnerabilityAlertsCatalog.png' border='1px' />
-
 
 
 ## Ingest historical vulnerability alerts using Python script
@@ -225,7 +265,7 @@ import httpx
 import requests
 from loguru import logger
 
-VULNERABILITY_ALERT_BLUEPRINT = "orcaSecurityAlert"
+ALERT_BLUEPRINT = "orcaSecurityAlert"
 
 PORT_API_URL = "https://api.getport.io/v1"
 PORT_CLIENT_SECRET = os.getenv("PORT_CLIENT_SECRET")
@@ -243,6 +283,8 @@ access_token = token_response.json()["accessToken"]
 
 # You can now use the value in access_token when making further requests
 headers = {"Authorization": f"Bearer {access_token}"}
+
+print(headers)
 
 
 async def add_entity_to_port(
@@ -269,13 +311,14 @@ async def add_entity_to_port(
     response = await client.post(
         (
             f"{PORT_API_URL}/blueprints/"
-            f"{blueprint_id}/entities?upsert=true&merge=true"
+            f"{blueprint_id}/entities?upsert=true&merge=true&create_missing_related_entities=true"
         ),
         json=entity_object,
         headers=headers,
     )
-    if response.status_code > 299:
-        logger.info("Ingesting {blueprint_id} entity to port failed, skipping...")
+    if response.is_error:
+        logger.info(f"Ingesting {blueprint_id} entity to port failed, skipping...")
+        return
     logger.info(f"Added entity to Port: {entity_object}")
 
 
@@ -315,10 +358,11 @@ async def ingest_alert_as_entity(
             "createdAt": alert["state"]["created_at"],
             "lastUpdated": alert["state"]["last_updated"],
             "lastSeen": alert["state"]["last_seen"],
-        },
+            "repository": alert["asset_name"].split("/")[-1]
+        }
     }
 
-    await add_entity_to_port(client, VULNERABILITY_ALERT_BLUEPRINT, data)
+    await add_entity_to_port(client, ALERT_BLUEPRINT, data)
 
 
 async def retrieve_alerts(client: httpx.AsyncClient):
@@ -340,7 +384,7 @@ async def retrieve_alerts(client: httpx.AsyncClient):
 
 async def main():
     logger.info("Starting Port integration")
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=httpx.Timeout(20)) as client:
         fetched_alerts = await retrieve_alerts(client)
 
         grouped_alerts = turn_sequence_to_chunks(fetched_alerts, 10)
@@ -368,3 +412,346 @@ After running the script, you can see the ingested alerts in your Port dashboard
 :::warning Orca Security API limits
 Due to limitations of the Orca Security Alerts API and unavailable pagination, only 1,000 alerts can be ingested by the Python script
 :::
+
+## Mapping Orca Security Alerts to Services
+Given the above setup, you can take things a step further by mapping `orcaSecurityAlert` to `service`. Below are specified blueprint, webhook configuration and Python script for this mapping:
+
+
+<details>
+<summary><b>Orca Security Alert blueprint with `service` relation (Click to expand)</b></summary>
+
+:::info Host URL
+
+Take note to change the value of `HOST_URL` to the host URL of your Orca Security installation. See the table below for all host values:
+
+| Region               | URL                                 |
+|----------------------|-------------------------------------|
+| US                   | https://app.orcasecurity.io    |
+| Europe               | https://app.eu.orcasecurity.io |
+| Australia            | https://app.au.orcasecurity.io |
+| India                | https://app.in.orcasecurity.io |
+| Israel               | https://app.il.orcasecurity.io |
+| Brazil               | https://app.sa.orcasecurity.io |
+
+:::
+
+```json showLineNumbers
+{
+  "identifier": "orcaSecurityAlert",
+  "description": "A representation of an Orca Security Alert",
+  "title": "Orca Security Alert",
+  "icon": "Alert",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "Description of alert"
+      },
+      "source": {
+        "type": "string",
+        "title": "Source",
+        "description": "The source of the alert"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "description": "Current status of the vulnerability on assets"
+      },
+      "recommendation": {
+        "type": "string",
+        "title": "Recommendation",
+        "description": "Steps to take to resolve the issue"
+      },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "description": "Severity of vulnerability on assets"
+      },
+      "riskLevel": {
+        "type": "string",
+        "title": "Risk Level",
+        "description": "Level of risk exposed to by vulnerability",
+        "enum": [
+          "critical",
+          "high",
+          "medium",
+          "low",
+          "informational"
+        ],
+        "enumColors": {
+          "critical": "red",
+          "high": "orange",
+          "medium": "yellow",
+          "low": "darkGray",
+          "informational": "lightGray"
+        }
+      },
+      "category": {
+        "type": "string",
+        "title": "Category",
+        "description": "Category of alert"
+      },
+      "alertLabels": {
+        "type": "array",
+        "title": "Alert Labels"
+      },
+      "createdAt": {
+        "type": "string",
+        "title": "Created At",
+        "description": "When the alert first appeared",
+        "format": "date-time"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "title": "Last Updated",
+        "description": "When the alert was last updated",
+        "format": "date-time"
+      },
+      "lastSeen": {
+        "type": "string",
+        "title": "Last Seen",
+        "description": "When the alert was last seen",
+        "format": "date-time"
+      },
+      "assetName": {
+        "type": "string",
+        "title": "Asset Name",
+        "description": "Name of the asset affected by the alert"
+      },
+      "repository": {
+        "type": "string",
+        "title": "Repository"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {
+    "url": {
+      "title": "Alert URL",
+      "icon": "Link",
+      "calculation": "\"<HOST_URL>/alerts/\" + .identifier",
+      "type": "string",
+      "format": "url"
+    }
+  },
+  "aggregationProperties": {},
+  "relations": {
+    "service": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+
+### Webhook configuration
+To map `orcaSecurityAlert` to a `service` for webhooks, you can use the webhook configuration below:
+
+<details>
+<summary><b> Orca Security Alert mapping to `service` webhook blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+
+[
+  {
+    "blueprint": "orcaSecurityAlert",
+    "filter": "true",
+    "entity": {
+      "identifier": ".body.state.alert_id",
+      "title": ".body.state.alert_id + '-' + .body.type_string",
+      "properties": {
+        "description": ".body.description",
+        "assetName": ".body.asset_name",
+        "source": ".body.source",
+        "status": ".body.state.status",
+        "recommendation": ".body.recommendation",
+        "severity": ".body.state.severity",
+        "riskLevel": ".body.state.risk_level | tostring",
+        "category": ".body.category | tostring",
+        "alertLabels": ".body.alert_labels",
+        "createdAt": ".body.state.created_at",
+        "lastUpdated": ".body.state.last_updated",
+        "lastSeen": ".body.state.last_seen",
+        "repository": ".body.asset_name | split(\"/\") | .[1] // .[0]"
+      },
+      "relations": {
+        "service": ".body.asset_name | split(\"/\") | .[1] // .[0]"
+      }
+    }
+  }
+]
+
+```
+
+</details>
+
+Triggering the webhook will cause alerts to be ingested with specified service like so:
+
+<img src='/img/guides/orcaSecurityVulnerabilityAlertsCatalogService.png' border='1px' />
+
+### Python script
+Run the Python script below using the same environment variables as specified in the [past section](#prerequisites):
+
+<details>
+<summary><b>Orca Security Python script with `service` relation for historical vulnerability alerts (Click to expand)</b></summary>
+
+```python showLineNumbers
+import asyncio
+import os
+from typing import Any, Generator
+
+import httpx
+import requests
+from loguru import logger
+
+ALERT_BLUEPRINT = "orcaSecurityAlert"
+
+PORT_API_URL = "https://api.getport.io/v1"
+PORT_CLIENT_SECRET = os.getenv("PORT_CLIENT_SECRET")
+PORT_CLIENT_ID = os.getenv("PORT_CLIENT_ID")
+ORCA_SECURITY_API_TOKEN = os.getenv("ORCA_SECURITY_API_TOKEN")
+ORCA_SECURITY_API_URL = os.getenv("ORCA_SECURITY_API_URL")
+
+
+## Get Port Access Token
+credentials = {"clientId": PORT_CLIENT_ID, "clientSecret": PORT_CLIENT_SECRET}
+
+token_response = requests.post(f"{PORT_API_URL}/auth/access_token", json=credentials)
+token_response.raise_for_status()
+access_token = token_response.json()["accessToken"]
+
+# You can now use the value in access_token when making further requests
+headers = {"Authorization": f"Bearer {access_token}"}
+
+print(headers)
+
+
+async def add_entity_to_port(
+    client: httpx.AsyncClient, blueprint_id: str, entity_object: dict[str, Any]
+):
+    """A function to create the passed entity in Port
+
+    Params
+    --------------
+    client: httpx.AsyncClient
+        The httpx client object
+
+    blueprint_id: str
+        The blueprint id to create the entity in Port
+
+    entity_object: dict
+        The entity to add in your Port catalog
+
+    Returns
+    --------------
+    None
+    """
+    logger.info(f"Adding entity to Port: {entity_object}")
+    response = await client.post(
+        (
+            f"{PORT_API_URL}/blueprints/"
+            f"{blueprint_id}/entities?upsert=true&merge=true&create_missing_related_entities=true"
+        ),
+        json=entity_object,
+        headers=headers,
+    )
+    if response.is_error:
+        logger.info(f"Ingesting {blueprint_id} entity to port failed, skipping...")
+        return
+    logger.info(f"Added entity to Port: {entity_object}")
+
+
+def turn_sequence_to_chunks(
+    sequence: list[str], chunk_size: int
+) -> Generator[list[str], None, None]:
+    if chunk_size >= len(sequence):
+        yield sequence
+        return
+    start, end = 0, chunk_size
+
+    while start <= len(sequence) and sequence[start:end]:
+        yield sequence[start:end]
+        start += chunk_size
+        end += chunk_size
+
+    return
+
+
+async def ingest_alert_as_entity(
+    client: httpx.AsyncClient, alert: dict[str, Any]
+) -> dict[str, Any]:
+    logger.info(f"create alert entity: {alert['state']['alert_id']}")
+    data = {
+        "identifier": alert["state"]["alert_id"],
+        "title": alert["state"]["alert_id"] + "-" + alert["type_string"],
+        "properties": {
+            "description": alert["description"],
+            "assetName": alert["asset_name"],
+            "source": alert["source"],
+            "status": alert["state"]["status"],
+            "recommendation": alert["recommendation"],
+            "severity": alert["state"]["severity"],
+            "riskLevel": alert["state"]["risk_level"],
+            "category": alert["category"],
+            "alertLabels": alert["alert_labels"],
+            "createdAt": alert["state"]["created_at"],
+            "lastUpdated": alert["state"]["last_updated"],
+            "lastSeen": alert["state"]["last_seen"],
+            "repository": alert["asset_name"].split("/")[-1]
+        },
+        "relations": {
+            "service": alert["asset_name"].split("/")[-1]
+        }
+    }
+
+    await add_entity_to_port(client, ALERT_BLUEPRINT, data)
+
+
+async def retrieve_alerts(client: httpx.AsyncClient):
+    authorization_header = {"Authorization": f"Token {ORCA_SECURITY_API_TOKEN}"}
+
+    response = await client.get(
+        f"{ORCA_SECURITY_API_URL}alerts", headers=authorization_header
+    )
+
+    if response.is_error:
+        logger.error(
+            "Something went wrong while trying to"
+            " retrieve alerts from Orca Security servers"
+        )
+        logger.error(response.json())
+
+    return response.json()["data"]
+
+
+async def main():
+    logger.info("Starting Port integration")
+    async with httpx.AsyncClient(timeout=httpx.Timeout(20)) as client:
+        fetched_alerts = await retrieve_alerts(client)
+
+        grouped_alerts = turn_sequence_to_chunks(fetched_alerts, 10)
+
+        for alerts in grouped_alerts:
+            await asyncio.gather(
+                *[ingest_alert_as_entity(client, alert) for alert in alerts]
+            )
+    logger.info("Finished Port integration")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+
+```
+
+</details>
+
+After running the script, you can see the ingested alerts with a service relation in your Port dashboard:
+
+<img src='/img/guides/orcaAlertsIngestedService.png' border='1px' />
