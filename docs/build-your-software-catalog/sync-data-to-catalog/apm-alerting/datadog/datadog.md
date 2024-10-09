@@ -14,7 +14,7 @@ import DatadogMicroserviceBlueprint from "../resources/datadog/\_example_datadog
 
 # Datadog
 
-Port's Datadog integration allows you to import `monitors` (also known as alerts), `services`, `slos`, `sloHistory`, and `serviceMetrics` from your Datadog account into Port, according to your mapping and definition.
+Port's Datadog integration allows you to model Datadog resources in Port and ingest data into them.
 
 ## Overview
 
@@ -188,7 +188,7 @@ kubectl apply -f my-ocean-datadog-integration.yaml
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="One-time (CI)">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
@@ -435,7 +435,7 @@ Additional examples of blueprints and the relevant integration configurations ca
 
 ## Relevant Guides
 
-- For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Datadog).
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Datadog).
 
 
 ## Alternative installation via webhook
