@@ -12,7 +12,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # LaunchDarkly
 
-Our LaunchDarkly integration allows you to model LaunchDarkly resources in your software catalog and ingest data into them.
+Port's LaunchDarkly integration allows you to model LaunchDarkly resources in your software catalog and ingest data into them.
 
 
 ## Overview
