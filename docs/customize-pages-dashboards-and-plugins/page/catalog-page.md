@@ -274,18 +274,19 @@ We highly recommend hiding irrelevant data from users, to provide them with a cl
 You can add, edit, or delete a blueprint's properties directly from the table by using the `Manage properties` button.  
 See the [Configure properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#from-the-software-catalog) section for more details.
 
-### Group By
+### Group by
 
-You can group by entities by using the following menu:
+You can group table entities by a specific property using the following menu:
 
-![Table group by menu marked](/img/software-catalog/pages/TableGroupByMenu.png)
+<img src="/img/software-catalog/pages/TableGroupByMenu.png" width="80%" border="1px" />
+<br/><br/>
 
-You can group results according to any field in the table.
+You can group entities by any **non-array** property.
 
-:::tip
-Group by is recommended when you want to create custom views for users, such as "microservices by owners".
+:::tip Use-case
+The `group-by` option is useful when you want to create custom views for users, such as "microservices by owners".
 
-Just create your `group by` setting, add additional viewing settings if needed, and [save a new page](#saving-new-pages) from the custom view.
+Just create your `group-by` view (and any other table customizations you desire), and [save as a new page](#save-a-view).
 :::
 
 ### Search
