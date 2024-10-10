@@ -69,6 +69,14 @@ resources:
             status: .status
             reviewers: '[.reviewers[].uniqueName]'
             createdAt: .creationDate
+            leadTimeHours: >-
+              (.creationDate as $createdAt | .status as $status | .closedDate as $closedAt |
+              ($createdAt | sub("\\..*Z$"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) as $createdTimestamp |
+              ($closedAt | if . == null then null else sub("\\..*Z$"; "Z") |
+              strptime("%Y-%m-%dT%H:%M:%SZ") | mktime end) as $closedTimestamp |
+              if $status == "completed" and $closedTimestamp != null then
+              (((($closedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100)
+              else null end)
           relations:
             repository: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
 ```
