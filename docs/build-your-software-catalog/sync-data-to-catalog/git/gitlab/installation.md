@@ -100,7 +100,7 @@ Example:
 :::info Helm installation parameter
 When using the `tokenMapping` parameter in the integration's [Helm installation](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation?deploy=helm&installation-methods=real-time-always-on#deploying-the-gitlab-integration), make sure to escape the necessary characters, for example:
 ```text
---set integration.secrets.tokenMapping=“\{\“glpat-oh1YXc54pR4eofx6hYy5\“: [\“**\“]\}”
+--set integration.secrets.tokenMapping="\{\"glpat-oh1YXc54pR4eofx6hYy5\": [\"**\"]\}"
 ```
 :::
 
