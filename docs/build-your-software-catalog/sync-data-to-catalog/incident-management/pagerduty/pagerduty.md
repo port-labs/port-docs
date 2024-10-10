@@ -413,18 +413,6 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
 
-:::info Ingest data into Port
-
-To ingest PagerDuty objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using PagerDuty.
-3. Choose the **Ingest Data** option from the menu.
-4. Select PagerDuty under the Incident management category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
-:::
-
 ## Capabilities
 
 ### Ingesting service analytics
@@ -792,8 +780,6 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
 To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
 Additional examples of blueprints and the relevant integration configurations can be found on the pagerduty [examples page](example.md)
-
-
 
 
 ## Relevant Guides
