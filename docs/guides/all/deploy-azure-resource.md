@@ -172,7 +172,7 @@ Follow these steps to get started:
 4. Create the following Terraform templates in a `terraform` folder at the root of your GitHub repository:
     1. `main.tf` - This file will contain the resource blocks which define the Storage Account to be created in the Azure cloud and the entity to be created in Port.
     2. `variables.tf` – This file will contain the variable declarations that will be used in the resource blocks e.g. the Port credentials and Port run id.
-    3. `output.tf` – This file will contain the URL of the Storage Account that needs to be generated on successful completion of an “apply” operation. This URL will be used in the `endpoint` property when creating the Port entity.
+    3. `output.tf` – This file will contain the URL of the Storage Account that needs to be generated on successful completion of an "apply" operation. This URL will be used in the `endpoint` property when creating the Port entity.
 
 <details>
   <summary>Terraform `main.tf` template</summary>
