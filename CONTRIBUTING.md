@@ -23,22 +23,22 @@ Contributions are very welcome. If you need help planning your contribution, fee
 **General docs**
 
 - Avoid using gender-specific language.
-- When addressing the reader, use second-person pronouns (you, your). For example “You can achieve this by…”.
-- Don’t use commanding language such as “You will now create a blueprint…” or “In this guide you will create...”.
-Instead use “We will now create a blueprint…” or “Let’s create…”
+- When addressing the reader, use second-person pronouns (you, your). For example "You can achieve this by…".
+- Don’t use commanding language such as "You will now create a blueprint…" or "In this guide you will create...".
+Instead use "We will now create a blueprint…" or "Let’s create…"
 - Use emojis 🥸 when you see fit. It can lighten a complex topic, and generally convey a friendly experience. Be careful not to overuse.
 - Be search-oriented, ensure the proper keywords that users will likely search for in the page are present.
 
 **Guides & examples**
 
 When writing guides and guide-like content:
-- Use “We” language to convey to the readers that we are guiding them along and not just telling them what to do.
+- Use "We" language to convey to the readers that we are guiding them along and not just telling them what to do.
 - Include screenshots and/or GIFs to improve clarity.
 
 ### Tabs
 
 - General rule - add `queryString` to <Tabs> component to ensure each tab can be accessed directly from their URL. Example:
-`<Tabs groupId=”example” queryString>`
+`<Tabs groupId="example" queryString>`
 - General rule - don’t use `#` headers inside tabs since they are rendered in the table of contents on the right side of the page, but can’t be accessed unless the tab they’re in is selected.
 If you want to use headers inside tabs, use `<h>` , for example `<h2>Header text</h2>`.
 
