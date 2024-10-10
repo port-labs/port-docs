@@ -816,8 +816,8 @@ export const availableGuides = [
     {
         title: "Ingest vulnerability alerts from Orca Security",
         description: "Ingest vulnerability alerts from Orca Security using a custom webhook integration",
-        tags: ["AppSec", "Webhook"],
-        logos: ["AppSec", "Webhook"],
+        tags: ["Webhook"],
+        logos: ["Webhook"],
         link: "/build-your-software-catalog/custom-integration/webhook/examples/orca-security"
     },
     

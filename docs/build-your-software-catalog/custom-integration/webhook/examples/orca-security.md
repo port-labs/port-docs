@@ -5,7 +5,7 @@ title: Orca Security
 
 
 # Ingest vulnerability alerts from Orca Security
-This guide shows you how to ingest both historical and realtime alerts in Orca Security. To do this, you will use Port's webhook feature (for realtime alerts) and/or a Python script (for historical data).
+This guide demonstrates how to ingest both historical and realtime alerts from Orca Security into Port.
 
 For either ingestion types, you will create the `orcaSecurityAlert` blueprint:
 
@@ -187,7 +187,7 @@ Take note to change the value of `HOST_URL` to the host URL of your Orca Securit
 
 </details>
 
-6. Click on "Save"
+6. Click on "Save".
 
 7. Go to your Orca Security dashboard and click on **Settings** at the bottom right corner. Under **Connections**, select **Integrations** then scroll to the **Webhooks** item in the grid.
 
