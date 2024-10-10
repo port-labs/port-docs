@@ -26,7 +26,7 @@ This guide will cover the four key metrics: **deployment frequency**, **lead tim
 - Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD integrations or your platform-specific tools.
 
 
-## Tracking Deployment
+## Tracking deployments
 
 In this section, we will cover how to track your team's deployments. Deployments refer to releasing new or updated code into various environments, such as **Production**, **Staging**, or **Testing**. Tracking deployments helps you understand how efficiently your team ships features and monitors release stability.
 
@@ -127,7 +127,7 @@ By following these steps, you can paste and manage the JSON schema required to t
 :::
 
 
-### Tracking Strategies
+### Tracking strategies
 Below are the main ways you can track deployments directly within Port:
 
 <Tabs groupId="deployment-strategies" queryString defaultValue="pr-merge" values={[
@@ -154,7 +154,7 @@ The lead time for these merges is calculated as the difference between when the 
 
   <TabItem value="github-pr-merge" label="GitHub">
 
-  Below is how the deployment tracking can be done in GitHub using the PR merge strategy:
+  Below is a demonstration of how deployment tracking can be implemented using the PR merge strategy.
 
   **Example**:
 
@@ -195,7 +195,7 @@ The lead time for these merges is calculated as the difference between when the 
 
   <TabItem value="gitlab-pr-merge" label="GitLab">
 
-  Below is how the deployment tracking can be done in GitLab using the MR merge strategy:
+  Below is a demonstration of how deployment tracking can be implemented using the MR merge strategy:
 
   **Example**:
 
@@ -249,7 +249,8 @@ if you don't have a merge request relationship with the **deployment blueprint**
 
   <TabItem value="azure-repos-pr-merge" label="Azure Repos">
 
-Below is how the deployment tracking can be done in Azure Repos using the PR merge strategy.:
+Below is a demonstration of how deployment tracking can be implemented using the Azure DevOps PR merge strategy:
+
 
 **Example**:
 
@@ -306,7 +307,7 @@ Track deployments by monitoring workflow runs in your pipeline.
 This setup captures all workflow runs from the main branch and maps them to deployment entities. 
 The deployment status is set dynamically based on whether the workflow run concluded successfully or failed.
 
-Below is how you can implement this for different platforms:
+Below is a demonstration of how deployment tracking can be implemented using workflow/job.
 
   <Tabs groupId="workflow-job-strategies" defaultValue="github-workflow-job" values={[
   {label: "GitHub", value: "github-workflow-job"},
@@ -884,7 +885,7 @@ Custom integrations provide flexibility in mapping and tracking each service or 
 :::
 
 
-## Tracking Incidents
+## Tracking incidents
 
 Incidents are essential for tracking key DORA metrics, including **Change Failure Rate (CFR)** and **Mean Time to Recovery (MTTR)**. Effective incident tracking reveals insights into how frequently deployments fail and how quickly teams can resolve issues. This section outlines how to:
 
@@ -892,7 +893,7 @@ Incidents are essential for tracking key DORA metrics, including **Change Failur
 - Link incidents to services to track the impact of failures.
 - Aggregate metrics across incidents for better monitoring.
 
-### Data Model Setup
+### Data model setup
 
 Ensure that your **PagerDuty incident blueprint** is properly configured to map incidents to the correct services(gitHub). 
 This includes defining the appropriate properties and relations for incidents.Follow this [PagerDuty Incident Blueprint Setup Link](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty#incident-blueprint-setup) to implement.
@@ -934,7 +935,7 @@ This includes defining the appropriate properties and relations for incidents.Fo
    
    </details>
 
-### Syncing Incidents with PagerDuty and Other Tools
+### Syncing incidents with PagerDuty and other tools
 
 To sync incidents from **PagerDuty**, follow the steps in the [PagerDuty guide](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty). The guide provides detailed steps for setting up integrations to track incidents related to deployments.
 
@@ -1262,7 +1263,7 @@ click [here](/build-your-software-catalog/customize-integrations/configure-data-
 ## Visualization
 By leveraging Port's Dashboards, you can create custom dashboards to track the metrics and monitor your team's performance over time.
 
-### Dashboard Setup
+### Dashboard setup
 1. Go to your [software catalog](https://app.getport.io/organization/catalog).
 2. Click on the `+ New` button in the left sidebar.
 3. Select **New dashboard**.
@@ -1270,7 +1271,7 @@ By leveraging Port's Dashboards, you can create custom dashboards to track the m
 
 This will create a new empty dashboard. Let's get ready-to-add widgets 
 
-### Adding Widgets
+### Adding widgets
 
 <details>
 <summary><b>Setup Deployment Frequency Widget</b></summary>
