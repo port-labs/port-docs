@@ -29,7 +29,7 @@ To configure who can see which pages, refer to the [Page Permissions](/customize
 
 ### Configuring team ownership
 
-Port offers various features to provide personalized views such as “**show me my team’s services**” or “**my pull requests**”.  
+Port offers various features to provide personalized views such as "**show me my team’s services**" or "**my pull requests**".  
 
 #### team meta property
 
@@ -60,7 +60,7 @@ For more details, see the [Team Inheritance](/build-your-software-catalog/set-ca
 
 ### Dynamic team filtering
 
-Once the team ownership is properly configured we can create dynamic filtering, and show users personalized views such as “`my open Pull Requests`” or “`my team’s services`”. We can also lock views to prevent a user from seeing services that are outside of his/her team’s scope. 
+Once the team ownership is properly configured we can create dynamic filtering, and show users personalized views such as "`my open Pull Requests`" or "`my team’s services`". We can also lock views to prevent a user from seeing services that are outside of his/her team’s scope. 
 
 #### My Team filter & Lock page view
 
@@ -69,7 +69,7 @@ By using the `My Teams filter` you will only see entities that belong to one of 
 <img src='/img/software-catalog/role-based-access-control/overview/myteamfilter.png' width='100%' border='1px' /> 
 <br/><br/>
 
-You may “Save this view” to permanently keep the filters.  
+You may "Save this view" to permanently keep the filters.  
 For more details about view customization, see the [customization documentation](/customize-pages-dashboards-and-plugins/page/catalog-page/#my-teams-filter).
 
 #### Initial filters to filter out teams or advanced queries
