@@ -813,4 +813,12 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/ingest-cloud-resources-using-newrelic",
     },
+    {
+        title: "Ingest vulnerability alerts from Orca Security",
+        description: "Ingest vulnerability alerts from Orca Security using a custom webhook integration",
+        tags: ["AppSec", "Webhook"],
+        logos: ["Webhook"],
+        link: "/guides/all/ingest-vulnerability-alerts-from-orca-security-using-a-custom-webhook-integration"
+    },
+    
 ]
