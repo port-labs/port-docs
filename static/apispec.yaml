@@ -12615,7 +12615,11 @@ paths:
           description: Default Response
     patch:
       summary: Patch an integration
-      description: This route allows you to modify an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      description: |
+        This route allows you to modify an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).<br/>
+        :::tip Simple resync
+        To trigger a resync of an integration without changing its mapping, simply provide its identifier and leave the body empty.
+        :::
       tags:
         - Integrations
       requestBody:

@@ -161,6 +161,16 @@ Click on the `Add kind` button to add an example:
 
 After adding your example, click on the `Test mapping` button in the bottom-right panel to test your mapping against the example data.
 
+### Edit an integration's mapping
+
+Once you have configured an integration's mapping to your liking, click the `Resync` button in the bottom-right to save your changes.
+
+To edit an integration's mapping using Port's API, you can use the [Patch integration](/api-reference/patch-an-integration/) route.  
+
+:::tip Resync via the API
+To perform a simple resync of an integration via the API without changing its mapping, use the same `Patch integration` route with the integration identifier and an empty body.
+:::
+
 ## Mapping relations
 
 <center>
