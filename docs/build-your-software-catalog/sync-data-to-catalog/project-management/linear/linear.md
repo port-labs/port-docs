@@ -13,7 +13,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Linear
 
-Our Linear integration allows you to model Linear resources in your software catalog and ingest data into them.
+Port's Linear integration allows you to model Linear resources in your software catalog and ingest data into them.
 
 
 ## Overview
