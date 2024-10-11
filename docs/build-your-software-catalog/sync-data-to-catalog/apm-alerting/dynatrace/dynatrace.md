@@ -528,6 +528,403 @@ The following resources can be used to map data from Dynatrace, it is possible t
   Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
   :::
 
+
+### Congiguring entities ingestion using `entityTypes` selector
+The entity kind by default ingests only entities of the type `APPLICATION` and `SERVICE` due to large number of entity types available. However you can configure the `entity` kind mapping to ingest entities of other types such as seen in the [Dynatrace Cloud Resources guide](/guides/all/ingest-cloud-resources-using-dynatrace.md).
+
+To do this, use the `entityTypes` selector in the entity mapping like so:
+
+<details>
+<summary><b>Configuring entity types for `entity` kind (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: entity
+    selector:
+      query: "true"
+      # highlight-next-line
+      entityTypes: ["APPLICATION", "SERVICE"]
+    port:
+      entity:
+        mappings:
+          identifier: .entityId
+          title: .displayName
+          blueprint: '"dynatraceEntity"'
+          properties:
+            firstSeen: ".firstSeenTms / 1000 | todate"
+            lastSeen: ".lastSeenTms / 1000 | todate"
+            type: .type
+            tags: .tags[].stringRepresentation
+            managementZones: .managementZones[].name
+            properties: .properties
+            fromRelationships: .fromRelationships
+            toRelationships: .toRelationships
+```
+
+</details>
+
+#### List of entity types
+You can retrieve a list of all entity types by using the [Dynatrace Entity Types API](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entity-type#definition--EntityType). However, below is a list of entity types retrieved from the API so far:
+
+<details>
+<summary><b>Dynatrace entity types (Click to expand)</b></summary>
+
+- `APM_SECURITY_GATEWAY`
+- `APPLICATION`
+- `APPLICATION_METHOD`
+- `APPLICATION_METHOD_GROUP`
+- `APPMON_SERVER`
+- `APPMON_SYSTEM_PROFILE`
+- `AUTO_SCALING_GROUP`
+- `AWS_APPLICATION_LOAD_BALANCER`
+- `AWS_AVAILABILITY_ZONE`
+- `AWS_CREDENTIALS`
+- `AWS_LAMBDA_FUNCTION`
+- `AWS_NETWORK_LOAD_BALANCER`
+- `AZURE_API_MANAGEMENT_SERVICE`
+- `AZURE_APPLICATION_GATEWAY`
+- `AZURE_APP_SERVICE_PLAN`
+- `AZURE_COSMOS_DB`
+- `AZURE_CREDENTIALS`
+- `AZURE_EVENT_HUB`
+- `AZURE_EVENT_HUB_NAMESPACE`
+- `AZURE_FUNCTION_APP`
+- `AZURE_IOT_HUB`
+- `AZURE_LOAD_BALANCER`
+- `AZURE_MGMT_GROUP`
+- `AZURE_REDIS_CACHE`
+- `AZURE_REGION`
+- `AZURE_SERVICE_BUS_NAMESPACE`
+- `AZURE_SERVICE_BUS_QUEUE`
+- `AZURE_SERVICE_BUS_TOPIC`
+- `AZURE_SQL_DATABASE`
+- `AZURE_SQL_ELASTIC_POOL`
+- `AZURE_SQL_SERVER`
+- `AZURE_STORAGE_ACCOUNT`
+- `AZURE_SUBSCRIPTION`
+- `AZURE_TENANT`
+- `AZURE_VM`
+- `AZURE_VM_SCALE_SET`
+- `AZURE_WEB_APP`
+- `BOSH_DEPLOYMENT`
+- `BROWSER`
+- `CF_FOUNDATION`
+- `CINDER_VOLUME`
+- `CLOUD_APPLICATION`
+- `CLOUD_APPLICATION_INSTANCE`
+- `CLOUD_APPLICATION_NAMESPACE`
+- `CONTAINER_GROUP`
+- `CONTAINER_GROUP_INSTANCE`
+- `CUSTOM_APPLICATION`
+- `CUSTOM_DEVICE`
+- `CUSTOM_DEVICE_GROUP`
+- `DATASTORE`
+- `DCRUM_APPLICATION`
+- `DCRUM_SERVICE`
+- `DCRUM_SERVICE_INSTANCE`
+- `DEVICE_APPLICATION_METHOD`
+- `DEVICE_APPLICATION_METHOD_GROUP`
+- `DISK`
+- `DOCKER_CONTAINER_GROUP`
+- `DOCKER_CONTAINER_GROUP_INSTANCE`
+- `DYNAMO_DB_TABLE`
+- `EBS_VOLUME`
+- `EC2_INSTANCE`
+- `ELASTIC_LOAD_BALANCER`
+- `ENVIRONMENT`
+- `EXTERNAL_SYNTHETIC_TEST`
+- `EXTERNAL_SYNTHETIC_TEST_STEP`
+- `GCP_ZONE`
+- `GEOLOCATION`
+- `GEOLOC_SITE`
+- `GOOGLE_COMPUTE_ENGINE`
+- `HOST`
+- `HOST_GROUP`
+- `HTTP_CHECK`
+- `HTTP_CHECK_STEP`
+- `HYPERVISOR`
+- `HYPERVISOR_CLUSTER`
+- `HYPERVISOR_DISK`
+- `KUBERNETES_CLUSTER`
+- `KUBERNETES_NODE`
+- `KUBERNETES_SERVICE`
+- `MOBILE_APPLICATION`
+- `MULTIPROTOCOL_MONITOR`
+- `NETWORK_INTERFACE`
+- `NEUTRON_SUBNET`
+- `OPENSTACK_AVAILABILITY_ZONE`
+- `OPENSTACK_COMPUTE_NODE`
+- `OPENSTACK_PROJECT`
+- `OPENSTACK_REGION`
+- `OPENSTACK_VM`
+- `OS`
+- `PROCESS_GROUP`
+- `PROCESS_GROUP_INSTANCE`
+- `QUEUE`
+- `QUEUE_INSTANCE`
+- `RELATIONAL_DATABASE_SERVICE`
+- `RUNTIME_COMPONENT`
+- `S3BUCKET`
+- `SERVICE`
+- `SERVICE_INSTANCE`
+- `SERVICE_METHOD`
+- `SERVICE_METHOD_GROUP`
+- `SOFTWARE_COMPONENT`
+- `SWIFT_CONTAINER`
+- `SYNTHETIC_LOCATION`
+- `SYNTHETIC_TEST`
+- `SYNTHETIC_TEST_STEP`
+- `VCENTER`
+- `VIRTUALMACHINE`
+- `VMWARE_DATACENTER`
+- `cloud:aws:acmprivateca`
+- `cloud:aws:api_gateway`
+- `cloud:aws:app_runner`
+- `cloud:aws:appstream`
+- `cloud:aws:appsync`
+- `cloud:aws:athena`
+- `cloud:aws:aurora`
+- `cloud:aws:autoscaling`
+- `cloud:aws:billing`
+- `cloud:aws:cassandra`
+- `cloud:aws:chatbot`
+- `cloud:aws:cloud_front`
+- `cloud:aws:cloudhsm`
+- `cloud:aws:cloudsearch`
+- `cloud:aws:codebuild`
+- `cloud:aws:cognito`
+- `cloud:aws:connect`
+- `cloud:aws:datasync`
+- `cloud:aws:dax`
+- `cloud:aws:dms`
+- `cloud:aws:documentdb`
+- `cloud:aws:dxcon`
+- `cloud:aws:dynamodb`
+- `cloud:aws:ebs`
+- `cloud:aws:ec2_spot`
+- `cloud:aws:ec2api`
+- `cloud:aws:ecs`
+- `cloud:aws:ecs:cluster`
+- `cloud:aws:efs`
+- `cloud:aws:eks:cluster`
+- `cloud:aws:elasticache`
+- `cloud:aws:elasticbeanstalk`
+- `cloud:aws:elasticinference`
+- `cloud:aws:elastictranscoder`
+- `cloud:aws:emr`
+- `cloud:aws:es`
+- `cloud:aws:events`
+- `cloud:aws:fsx`
+- `cloud:aws:gamelift`
+- `cloud:aws:glue`
+- `cloud:aws:inspector`
+- `cloud:aws:iot`
+- `cloud:aws:iot_things_graph`
+- `cloud:aws:iotanalytics`
+- `cloud:aws:kafka`
+- `cloud:aws:kinesis:data_analytics`
+- `cloud:aws:kinesis:data_firehose`
+- `cloud:aws:kinesis:data_stream`
+- `cloud:aws:kinesis:video_stream`
+- `cloud:aws:lambda`
+- `cloud:aws:lex`
+- `cloud:aws:logs`
+- `cloud:aws:media_tailor`
+- `cloud:aws:mediaconnect`
+- `cloud:aws:mediaconvert`
+- `cloud:aws:mediapackagelive`
+- `cloud:aws:mediapackagevod`
+- `cloud:aws:mq`
+- `cloud:aws:nat_gateway`
+- `cloud:aws:neptune`
+- `cloud:aws:opsworks`
+- `cloud:aws:polly`
+- `cloud:aws:qldb`
+- `cloud:aws:rds`
+- `cloud:aws:redshift`
+- `cloud:aws:rekognition`
+- `cloud:aws:robomaker`
+- `cloud:aws:route53`
+- `cloud:aws:route53resolver`
+- `cloud:aws:s3`
+- `cloud:aws:sage_maker:batch_transform_job`
+- `cloud:aws:sage_maker:endpoint`
+- `cloud:aws:sage_maker:endpoint_instance`
+- `cloud:aws:sage_maker:ground_truth`
+- `cloud:aws:sage_maker:processing_job`
+- `cloud:aws:sage_maker:training_job`
+- `cloud:aws:servicecatalog`
+- `cloud:aws:ses`
+- `cloud:aws:sns`
+- `cloud:aws:sqs`
+- `cloud:aws:ssm-runcommand`
+- `cloud:aws:states`
+- `cloud:aws:storagegateway`
+- `cloud:aws:swf`
+- `cloud:aws:textract`
+- `cloud:aws:transfer`
+- `cloud:aws:transitgateway`
+- `cloud:aws:translate`
+- `cloud:aws:trustedadvisor`
+- `cloud:aws:usage`
+- `cloud:aws:vpn`
+- `cloud:aws:waf`
+- `cloud:aws:wafv2`
+- `cloud:aws:workmail`
+- `cloud:aws:workspaces`
+- `cloud:azure:apimanagement:service`
+- `cloud:azure:app:containerapps`
+- `cloud:azure:app:managedenvironments`
+- `cloud:azure:appconfiguration:configurationstores`
+- `cloud:azure:appplatform:spring`
+- `cloud:azure:automation:automationaccounts`
+- `cloud:azure:batch:account`
+- `cloud:azure:blockchain:blockchainmembers`
+- `cloud:azure:cache:redis`
+- `cloud:azure:cdn:cdnwebapplicationfirewallpolicies`
+- `cloud:azure:cdn:profiles`
+- `cloud:azure:classic_storage_account`
+- `cloud:azure:classic_storage_account:blob`
+- `cloud:azure:classic_storage_account:file`
+- `cloud:azure:classic_storage_account:queue`
+- `cloud:azure:classic_storage_account:table`
+- `cloud:azure:classic_virtual_machine`
+- `cloud:azure:cognitiveservices:allinone`
+- `cloud:azure:cognitiveservices:anomalydetector`
+- `cloud:azure:cognitiveservices:bingautosuggest`
+- `cloud:azure:cognitiveservices:bingcustomsearch`
+- `cloud:azure:cognitiveservices:bingentitysearch`
+- `cloud:azure:cognitiveservices:bingsearch`
+- `cloud:azure:cognitiveservices:bingspellcheck`
+- `cloud:azure:cognitiveservices:computervision`
+- `cloud:azure:cognitiveservices:contentmoderator`
+- `cloud:azure:cognitiveservices:customvisionprediction`
+- `cloud:azure:cognitiveservices:customvisiontraining`
+- `cloud:azure:cognitiveservices:face`
+- `cloud:azure:cognitiveservices:immersivereader`
+- `cloud:azure:cognitiveservices:inkrecognizer`
+- `cloud:azure:cognitiveservices:luis`
+- `cloud:azure:cognitiveservices:luisauthoring`
+- `cloud:azure:cognitiveservices:openai`
+- `cloud:azure:cognitiveservices:personalizer`
+- `cloud:azure:cognitiveservices:qnamaker`
+- `cloud:azure:cognitiveservices:speech`
+- `cloud:azure:cognitiveservices:textanalytics`
+- `cloud:azure:cognitiveservices:translator`
+- `cloud:azure:containerinstance:containergroup`
+- `cloud:azure:containerregistry:registries`
+- `cloud:azure:containerservice:managedcluster`
+- `cloud:azure:datafactory:v1`
+- `cloud:azure:datafactory:v2`
+- `cloud:azure:datalakeanalytics:accounts`
+- `cloud:azure:datalakestore:accounts`
+- `cloud:azure:datashare:accounts`
+- `cloud:azure:devices:iothubs`
+- `cloud:azure:devices:provisioningservices`
+- `cloud:azure:documentdb:databaseaccounts:global`
+- `cloud:azure:documentdb:databaseaccounts:mongo`
+- `cloud:azure:eventgrid:domains`
+- `cloud:azure:eventgrid:systemtopics`
+- `cloud:azure:eventgrid:topics`
+- `cloud:azure:eventhub:clusters`
+- `cloud:azure:frontdoor`
+- `cloud:azure:hdinsight:cluster`
+- `cloud:azure:hybridcompute:machines`
+- `cloud:azure:insights:components`
+- `cloud:azure:iotcentral:iotapps`
+- `cloud:azure:keyvault:vaults`
+- `cloud:azure:kusto:clusters`
+- `cloud:azure:logic:integrationserviceenvironments`
+- `cloud:azure:logic:workflows`
+- `cloud:azure:machinelearningservices:workspaces`
+- `cloud:azure:maps:accounts`
+- `cloud:azure:mariadb:server`
+- `cloud:azure:media:mediaservices`
+- `cloud:azure:media:mediaservices:streamingendpoints`
+- `cloud:azure:mysql:flexibleservers`
+- `cloud:azure:mysql:server`
+- `cloud:azure:netapp:netappaccounts:capacitypools`
+- `cloud:azure:netapp:netappaccounts:capacitypools:volumes`
+- `cloud:azure:network:applicationgateways`
+- `cloud:azure:network:azurefirewalls`
+- `cloud:azure:network:dnszones`
+- `cloud:azure:network:expressroutecircuits`
+- `cloud:azure:network:loadbalancers:basic`
+- `cloud:azure:network:loadbalancers:gateway`
+- `cloud:azure:network:loadbalancers:standard`
+- `cloud:azure:network:networkinterfaces`
+- `cloud:azure:network:networkwatchers:connectionmonitors`
+- `cloud:azure:network:networkwatchers:connectionmonitors:previe`
+- `cloud:azure:network:privatednszones`
+- `cloud:azure:network:publicipaddresses`
+- `cloud:azure:notificationhubs:namespaces:notificationhubs`
+- `cloud:azure:postgresql:flexibleservers`
+- `cloud:azure:postgresql:server`
+- `cloud:azure:postgresql:serverv2`
+- `cloud:azure:powerbidedicated:capacities`
+- `cloud:azure:recoveryservices:vaults`
+- `cloud:azure:relay:namespaces`
+- `cloud:azure:search:searchservices`
+- `cloud:azure:servicefabricmesh:applications`
+- `cloud:azure:signalrservice:signalr`
+- `cloud:azure:sql:managed`
+- `cloud:azure:sql:servers`
+- `cloud:azure:sql:servers:databases:datawarehouse`
+- `cloud:azure:sql:servers:databases:dtu`
+- `cloud:azure:sql:servers:databases:hyperscale`
+- `cloud:azure:sql:servers:databases:vcore`
+- `cloud:azure:sql:servers:elasticpools:dtu`
+- `cloud:azure:sql:servers:elasticpools:vcore`
+- `cloud:azure:storage:storageaccounts`
+- `cloud:azure:storage:storageaccounts:blob`
+- `cloud:azure:storage:storageaccounts:file`
+- `cloud:azure:storage:storageaccounts:queue`
+- `cloud:azure:storage:storageaccounts:table`
+- `cloud:azure:storagesync:storagesyncservices`
+- `cloud:azure:streamanalytics:streamingjobs`
+- `cloud:azure:synapse:workspaces`
+- `cloud:azure:synapse:workspaces:bigdatapools`
+- `cloud:azure:synapse:workspaces:sqlpools`
+- `cloud:azure:timeseriesinsights:environments`
+- `cloud:azure:timeseriesinsights:eventsources`
+- `cloud:azure:traffic_manager_profile`
+- `cloud:azure:virtual_network_gateway`
+- `cloud:azure:web:appslots`
+- `cloud:azure:web:functionslots`
+- `cloud:azure:web:hostingenvironments:v2`
+- `cloud:azure:web:serverfarms`
+- `cloud:gcp:autoscaler`
+- `cloud:gcp:bigquery_biengine_model`
+- `cloud:gcp:cloud_function`
+- `cloud:gcp:cloud_run_revision`
+- `cloud:gcp:cloudsql_database`
+- `cloud:gcp:filestore_instance`
+- `cloud:gcp:gae_app`
+- `cloud:gcp:gce_instance`
+- `cloud:gcp:gcs_bucket`
+- `cloud:gcp:https_lb`
+- `cloud:gcp:instance_group`
+- `cloud:gcp:internal_http_lb_rule`
+- `cloud:gcp:internal_network_lb_rule`
+- `cloud:gcp:k8s_cluster`
+- `cloud:gcp:k8s_container`
+- `cloud:gcp:k8s_node`
+- `cloud:gcp:k8s_pod`
+- `cloud:gcp:network_lb_rule`
+- `cloud:gcp:project`
+- `cloud:gcp:pubsub_snapshot`
+- `cloud:gcp:pubsub_subscription`
+- `cloud:gcp:pubsub_topic`
+- `cloud:gcp:pubsublite_subscription_partition`
+- `cloud:gcp:pubsublite_topic_partition`
+- `cloud:gcp:tcp_ssl_proxy_rule`
+- `cloud:gcp:tpu_worker`
+- `os:service`
+</details>
+
+
 ## Configuring real-time updates
 
 Currently, the Dynatrace API lacks support for programmatic webhook creation. To set up a webhook configuration in Dynatrace for sending alert notifications to the Ocean integration, follow these steps:
