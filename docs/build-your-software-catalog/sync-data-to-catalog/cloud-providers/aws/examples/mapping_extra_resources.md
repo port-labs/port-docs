@@ -128,7 +128,7 @@ Create an integration configuration for the resource. The integration configurat
 
 <ComputeAppConfig/>
 
-### Developer tools  blueprint and configuration example
+### Developer tools blueprint and configuration example
 
 <AmplifyBlueprint/>
 
