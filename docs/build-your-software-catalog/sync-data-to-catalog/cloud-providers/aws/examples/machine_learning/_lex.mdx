@@ -1,0 +1,68 @@
+<details>
+<summary>Lex Bot Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "lexBot",
+  "description": "This blueprint represents an AWS Lex Bot in our software catalog",
+  "title": "Lex Bot",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "role": {
+        "type": "string",
+        "title": "Role ARN"
+      },
+      "name": {
+        "type": "string",
+        "title": "Name"
+      },
+      "idleSessionTTLInSeconds": {
+        "type": "number",
+        "title": "Idle Session TTL In Seconds"
+      },
+      "dataPrivacy": {
+        "type": "object",
+        "title": "Data Privacy",
+        "properties": {
+          "childDirected": {
+            "type": "boolean",
+            "title": "Child Directed"
+          }
+        }
+      },
+      "kind": {
+        "type": "string",
+        "title": "Kind"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

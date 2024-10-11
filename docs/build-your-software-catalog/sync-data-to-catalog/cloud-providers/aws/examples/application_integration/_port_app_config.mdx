@@ -1,0 +1,48 @@
+<details>
+<summary>Mapping Configuration for Kinesis Stream and SNS Topic</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::Kinesis::Stream
+    selector:
+      query: 'true'
+      useGetResourceAPI: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.Name
+          blueprint: '"kinesisStream"'
+          properties:
+            link: >-
+               'https://console.aws.amazon.com/go/view?arn=' +
+               .Properties.Arn
+            streamMode: .Properties.StreamModeDetails.StreamMode
+            shardCount: .Properties.ShardCount
+            retentionPeriodHours: .Properties.RetentionPeriodHours
+            shardLevelMetrics: .Properties.DesiredShardLevelMetrics
+            arn: .Properties.Arn
+          relations:
+            account: .__AccountId
+  - kind: AWS::SNS::Topic
+    selector:
+      query: 'true'
+      useGetResourceAPI: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.TopicName
+          blueprint: '"snsTopic"'
+          properties:
+            link: >-
+               'https://console.aws.amazon.com/go/view?arn=' +
+                .Properties.TopicArn
+            arn: .Properties.TopicArn
+            kind: .__Kind
+            region: .__Region
+          relations:
+            account: .__AccountId
+```
+
+</details>
