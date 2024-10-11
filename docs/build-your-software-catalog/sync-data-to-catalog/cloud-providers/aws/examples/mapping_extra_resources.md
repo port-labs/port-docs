@@ -46,6 +46,67 @@ The AWS Integration is relying on AWS's Cloud Control API. That means:
 In Cloud Control, some resources require an input in order to be queried. Currently, the integration does not support passing these inputs, which means those resources are currently not supported.
 :::
 
+## Configuration
+
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
+
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+
+### `useGetResourceAPI` property support
+
+- By default the integration uses the [`CloudControl:ListResources`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/list-resources.html) API to get the resources. The integration can also enrich each resource by running [`CloudControl:GetResource`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/get-resource.html) on each resource, you can use this by enabling `useGetResourceAPI` option.
+
+  The `useGetResourceAPI` option is only available for resources that support the `CloudControl:GetResource` API.
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::Lambda::Function
+    selector:
+      query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
+      # highlight-start
+      useGetResourceAPI: 'true'
+      # highlight-end
+    port:
+      entity:
+        mappings: # Mappings between one AWS object to a Port entity. Each value is a JQ query.
+          identifier: '.Identifier'
+          title: '.Properties.FunctionName'
+          blueprint: 'lambda'
+          properties:
+            kind: '.__Kind'
+            region: '.__Region'
+            link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
+            description: '.Properties.Description'
+            memorySize: '.Properties.MemorySize'
+            ephemeralStorageSize: '.Properties.EphemeralStorage.Size'
+            timeout: '.Properties.Timeout'
+            runtime: '.Properties.Runtime'
+            packageType: '.Properties.PackageType'
+            environment: '.Properties.Environment'
+            architectures: '.Properties.Architectures'
+            layers: '.Properties.Layers'
+            tags: '.Properties.Tags'
+            iamRole: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Role"
+            arn: '.Properties.Arn'
+          relations:
+            account: '.__AccountId'
+```
+
+**Note: Using the `useGetResourceAPI` option will make each resync run slower and use a lot more memory and cpu so you might want to add memory and cpu limits.**
+
+:::tip Get an example of the AWS resource properties
+To get an example of the AWS resource properties, you can use the [AWS Cloud Control API](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html) to get the resource properties.
+
+For example for the `AWS::Lambda::Function` resource, you can use the following command to get the resource properties:
+
+```bash
+aws cloudcontrol list-resources --type-name AWS::Lambda::Function --max-items 1 | jq .ResourceDescriptions
+```
+
+:::
+
+
 ## Mapping the resource to Port
 
 After you've found the resource in the [AWS Cloud Control API Docs](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html), you can map it to Port by following these steps:
@@ -116,63 +177,3 @@ Create an integration configuration for the resource. The integration configurat
 
 <StorageAppConfig/>
 
-
-## Configuration
-
-Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
-
-The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
-
-
-### `useGetResourceAPI` property support
-
-- By default the integration uses the [`CloudControl:ListResources`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/list-resources.html) API to get the resources. The integration can also enrich each resource by running [`CloudControl:GetResource`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/get-resource.html) on each resource, you can use this by enabling `useGetResourceAPI` option.
-
-  The `useGetResourceAPI` option is only available for resources that support the `CloudControl:GetResource` API.
-
-```yaml showLineNumbers
-resources:
-  - kind: AWS::Lambda::Function
-    selector:
-      query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
-      # highlight-start
-      useGetResourceAPI: 'true'
-      # highlight-end
-    port:
-      entity:
-        mappings: # Mappings between one AWS object to a Port entity. Each value is a JQ query.
-          identifier: '.Identifier'
-          title: '.Properties.FunctionName'
-          blueprint: 'lambda'
-          properties:
-            kind: '.__Kind'
-            region: '.__Region'
-            link: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Arn"
-            description: '.Properties.Description'
-            memorySize: '.Properties.MemorySize'
-            ephemeralStorageSize: '.Properties.EphemeralStorage.Size'
-            timeout: '.Properties.Timeout'
-            runtime: '.Properties.Runtime'
-            packageType: '.Properties.PackageType'
-            environment: '.Properties.Environment'
-            architectures: '.Properties.Architectures'
-            layers: '.Properties.Layers'
-            tags: '.Properties.Tags'
-            iamRole: "'https://console.aws.amazon.com/go/view?arn=' + .Properties.Role"
-            arn: '.Properties.Arn'
-          relations:
-            account: '.__AccountId'
-```
-
-**Note: Using the `useGetResourceAPI` option will make each resync run slower and use a lot more memory and cpu so you might want to add memory and cpu limits.**
-
-:::tip Get an example of the AWS resource properties
-To get an example of the AWS resource properties, you can use the [AWS Cloud Control API](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html) to get the resource properties.
-
-For example for the `AWS::Lambda::Function` resource, you can use the following command to get the resource properties:
-
-```bash
-aws cloudcontrol list-resources --type-name AWS::Lambda::Function --max-items 1 | jq .ResourceDescriptions
-```
-
-:::
