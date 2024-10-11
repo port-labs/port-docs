@@ -114,4 +114,10 @@ Check out the following examples for using Port's webhook integration to ingest 
     label: 'Code packages & libraries',
     description: 'Ingest software packages and libraries',
   },
+  {
+    type: 'link',
+    href: '/guides/all/ingest-vulnerability-alerts-from-orca-security-using-a-custom-webhook-integration',
+    label: 'OrcaSecurity',
+    description: 'Ingest vulnerability alerts from Orca Security using a custom webhook integration',
+  },
   ]} />

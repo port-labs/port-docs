@@ -4,10 +4,10 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_pagerduty_docker_params.mdx"
-import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '../../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 import PagerDutyServiceBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_service.mdx"
 import PagerDutyIncidentBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_incident.mdx"
 import PagerDutyWebhookConfig from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_config.mdx"
@@ -18,18 +18,30 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # PagerDuty
 
-Port's PagerDuty integration allows you to import `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` from your PagerDuty account into Port, according to your mapping and definitions.
+Port's PagerDuty integration allows you to model PagerDuty resources in your software catalog and ingest data into them.
 
-## Common use cases
 
-- Map `schedules`, `oncalls`, `services`, `incidents` and `escalation_policies` in your PagerDuty organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-## Prerequisites
+## Overview
 
-<Prerequisites />
+This integration allows you to:
 
-## Installation
+- Map and organize your desired PagerDuty resources and their metadata in Port (see supported resources below).
+- Watch for PagerDuty object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+
+
+### Supported Resources
+
+The resources that can be ingested from PagerDuty into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Schedule`](https://developer.pagerduty.com/api-reference/846ecf84402bb-list-schedules)
+- [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
+- [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
+- [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
+- [`Escalation Policy`](https://developer.pagerduty.com/api-reference/51b21014a4f5a-list-escalation-policies)
+
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -41,7 +53,11 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
+
+<h2> Prerequisites </h2>
+
+<Prerequisites />
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -176,7 +192,7 @@ kubectl apply -f my-ocean-pagerduty-integration.yaml
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
 This workflow will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
@@ -390,580 +406,16 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting PagerDuty objects
+## Configuration
 
-The PagerDuty integration uses a YAML configuration to describe the process of loading data into the developer portal. See [examples](#examples) below.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from PagerDuty's API events.
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-### Configuration structure
 
-The integration configuration determines which resources will be queried from PagerDuty, and which entities and properties will be created in Port.
+## Capabilities
 
-:::tip Supported resources
-The following resources can be used to map data from PagerDuty, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Schedule`](https://developer.pagerduty.com/api-reference/846ecf84402bb-list-schedules)
-- [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
-- [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
-- [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
-- [`Escalation Policy`](https://developer.pagerduty.com/api-reference/51b21014a4f5a-list-escalation-policies)
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: services
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a PagerDuty object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: services
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: services
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the PagerDuty object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: services
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one PagerDuty object to a Port entity. Each value is a JQ query.
-            identifier: .id
-            title: .name
-            blueprint: '"pagerdutyService"'
-            properties:
-              status: .status
-        # highlight-end
-    - kind: service # In this instance service is mapped again with a different filter
-      selector:
-        query: '.name == "MyProjectName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-### Ingest data into Port
-
-To ingest PagerDuty objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using PagerDuty.
-3. Choose the **Ingest Data** option from the menu.
-4. Select PagerDuty under the Incident management category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
-
-## Examples
-
-Examples of blueprints and the relevant integration configurations:
-
-### Schedule
-
-<details>
-<summary>Schedule blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "pagerdutySchedule",
-  "description": "This blueprint represents a PagerDuty schedule in our software catalog",
-  "title": "PagerDuty Schedule",
-  "icon": "pagerduty",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "Schedule URL",
-        "type": "string",
-        "format": "url"
-      },
-      "timezone": {
-        "title": "Timezone",
-        "type": "string"
-      },
-      "description": {
-        "title": "Description",
-        "type": "string"
-      },
-      "users": {
-        "title": "Users",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "format": "user"
-        }
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: schedules
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .name
-          blueprint: '"pagerdutySchedule"'
-          properties:
-            url: .html_url
-            timezone: .time_zone
-            description: .description
-            users: '[.users[] | select(has("__email")) | .__email]'
-```
-
-</details>
-
-### Oncall
-
-<details>
-<summary>Oncall blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "pagerdutyOncall",
-  "description": "This blueprint represents a PagerDuty oncall schedule in our software catalog",
-  "title": "PagerDuty Oncall Schedule",
-  "icon": "pagerduty",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "Oncall Schedule URL",
-        "type": "string",
-        "format": "url"
-      },
-      "user": {
-        "title": "User",
-        "type": "string",
-        "format": "user"
-      },
-      "startDate": {
-        "title": "Start Date",
-        "type": "string",
-        "format": "date-time"
-      },
-      "endDate": {
-        "title": "End Date",
-        "type": "string",
-        "format": "date-time"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "pagerdutySchedule": {
-      "title": "PagerDuty Schedule",
-      "target": "pagerdutySchedule",
-      "required": false,
-      "many": true
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: oncalls
-    selector:
-      query: 'true'
-      apiQueryParams:
-        include: ['users']
-    port:
-      entity:
-        mappings:
-          identifier: .user.id + "-" + .schedule.id + "-" + .start
-          title: .user.name
-          blueprint: '"pagerdutyOncall"'
-          properties:
-            user: .user.email
-            startDate: .start
-            endDate: .end
-            url: .schedule.html_url
-          relations:
-            pagerdutySchedule: .schedule.id
-```
-</details>
-
-### Service
-
-<details>
-<summary>Service blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "pagerdutyService",
-  "description": "This blueprint represents a PagerDuty service in our software catalog",
-  "title": "PagerDuty Service",
-  "icon": "pagerduty",
-  "schema": {
-    "properties": {
-      "status": {
-        "title": "Status",
-        "type": "string",
-        "enum": [
-          "active",
-          "warning",
-          "critical",
-          "maintenance",
-          "disabled"
-        ],
-        "enumColors": {
-          "active": "green",
-          "warning": "yellow",
-          "critical": "red",
-          "maintenance": "lightGray",
-          "disabled": "darkGray"
-        }
-      },
-      "url": {
-        "title": "URL",
-        "type": "string",
-        "format": "url"
-      },
-      "oncall": {
-        "title": "On Call",
-        "type": "string",
-        "format": "user"
-      },
-      "secondaryOncall": {
-        "title": "Secondary On Call",
-        "type": "string",
-        "format": "user"
-      },
-      "escalationLevels": {
-        "title": "Escalation Levels",
-        "type": "number"
-      },
-      "meanSecondsToResolve": {
-        "title": "Mean Seconds to Resolve",
-        "type": "number"
-      },
-      "meanSecondsToFirstAck": {
-        "title": "Mean Seconds to First Acknowledge",
-        "type": "number"
-      },
-      "meanSecondsToEngage": {
-        "title": "Mean Seconds to Engage",
-        "type": "number"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: services
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .name
-          blueprint: '"pagerdutyService"'
-          properties:
-            status: .status
-            url: .html_url
-            oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
-            secondaryOncall: .__oncall_user | sort_by(.escalation_level) | .[1].user.email
-            escalationLevels: .__oncall_user | map(.escalation_level) | unique | length
-            meanSecondsToResolve: .__analytics.mean_seconds_to_resolve
-            meanSecondsToFirstAck: .__analytics.mean_seconds_to_first_ack
-            meanSecondsToEngage: .__analytics.mean_seconds_to_engage
-```
-
-</details>
-
-### Incident
-
-<details>
-<summary>Incident blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "pagerdutyIncident",
-  "description": "This blueprint represents a PagerDuty incident in our software catalog",
-  "title": "PagerDuty Incident",
-  "icon": "pagerduty",
-  "schema": {
-    "properties": {
-      "status": {
-        "type": "string",
-        "title": "Incident Status",
-        "enum": [
-          "triggered",
-          "annotated",
-          "acknowledged",
-          "reassigned",
-          "escalated",
-          "reopened",
-          "resolved"
-        ],
-        "enumColors": {
-          "triggered": "red",
-          "annotated": "blue",
-          "acknowledged": "yellow",
-          "reassigned": "blue",
-          "escalated": "yellow",
-          "reopened": "red",
-          "resolved": "green"
-        }
-      },
-      "url": {
-        "type": "string",
-        "format": "url",
-        "title": "Incident URL"
-      },
-      "urgency": {
-        "title": "Incident Urgency",
-        "type": "string",
-        "enum": [
-          "high",
-          "low"
-        ],
-        "enumColors": {
-          "high": "red",
-          "low": "green"
-        }
-      },
-      "priority": {
-        "type": "string",
-        "title": "Priority",
-        "enum": [
-          "P1",
-          "P2",
-          "P3",
-          "P4",
-          "P5"
-        ],
-        "enumColors": {
-          "P1": "red",
-          "P2": "yellow",
-          "P3": "blue",
-          "P4": "lightGray",
-          "P5": "darkGray"
-        }
-      },
-      "description": {
-        "type": "string",
-        "title": "Description"
-      },
-      "assignees": {
-        "title": "Assignees",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "format": "user"
-        }
-      },
-      "escalation_policy": {
-        "type": "string",
-        "title": "Escalation Policy"
-      },
-      "created_at": {
-        "title": "Create At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "updated_at": {
-        "title": "Updated At",
-        "type": "string",
-        "format": "date-time"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "pagerdutyService": {
-      "title": "PagerDuty Service",
-      "target": "pagerdutyService",
-      "required": false,
-      "many": true
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-    - kind: incidents
-      selector:
-        query: 'true'
-        include: ['assignees']
-      port:
-        entity:
-          mappings:
-            identifier: .id | tostring
-            title: .title
-            blueprint: '"pagerdutyIncident"'
-            properties:
-              status: .status
-              url: .self
-              urgency: .urgency
-              assignees: .assignments | map(.assignee.email)
-              escalation_policy: .escalation_policy.summary
-              created_at: .created_at
-              updated_at: .updated_at
-              priority: if .priority != null then .priority.summary else null end
-              description: .description
-            relations:
-              pagerdutyService: .service.id
-```
-
-</details>
-
-### Escalation Policy
-
-<details>
-<summary>Escalation Policy blueprint</summary>
-
-```json showLineNumbers
-{
-   "identifier": "pagerdutyEscalationPolicy",
-   "description": "This blueprint represents a PagerDuty escalation policy in our software catalog",
-   "title": "PagerDuty Escalation Policy",
-   "icon": "pagerduty",
-   "schema": {
-      "properties": {
-         "url": {
-            "title": "URL",
-            "type": "string",
-            "format": "url"
-         },
-         "summary": {
-            "title": "Summary",
-            "type": "string"
-         },
-         "primaryOncall": {
-            "title": "Primary Oncall",
-            "type": "string",
-            "format": "user"
-         },
-         "escalationRules": {
-            "title": "Escalation Rules",
-            "type": "array",
-            "items": {
-               "type": "object"
-            }
-         }
-      },
-      "required": []
-   },
-   "mirrorProperties": {},
-   "calculationProperties": {},
-   "aggregationProperties": {},
-   "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-   - kind: escalation_policies
-     selector:
-       query: 'true'
-       attachOncallUsers: 'true'
-     port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .name
-          blueprint: '"pagerdutyEscalationPolicy"'
-          properties:
-            url: .html_url
-            description: .summary
-            primaryOncall: .__oncall_users | sort_by(.escalation_level) | .[0].user.email
-            escalationRules: .escalation_rules
-```
- 
-:::tip Attach oncall users
-When `attachOncallUsers` is set to `true`, it fetches the oncall data per escalation policy. To disable this feature, set the value to `false`.
-:::
-
-</details>
-
-## Ingesting service analytics
+### Ingesting service analytics
 To enrich your PagerDuty service entities with analytics data, follow the steps below:
 
 1. Update the service blueprint to include analytics properties. You can add any property that is returned from the [PagerDuty aggregated service analytics API](https://developer.pagerduty.com/api-reference/694e92fe4f943-get-aggregated-service-data)
@@ -1038,7 +490,7 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
 
 2. Add `serviceAnalytics` property to the integration `selector` key. When set to `true`, the integration will fetch data from the [PagerDuty aggregated service analytics API](https://developer.pagerduty.com/api-reference/694e92fe4f943-get-aggregated-service-data) and ingest it to Port. By default, this property is set to `true`.
 
-    Also, by default, the integration aggregates the analytics over a period of 3 months. Use the `analyticsMonthsPeriod` filter to override this date range. The accepted values are positive number between 1 to 12. In the provided example below, we aggregate the analytics over the past 6 months.
+   Also, by default, the integration aggregates the analytics over a period of 3 months. Use the `analyticsMonthsPeriod` filter to override this date range. The accepted values are positive number between 1 to 12. In the provided example below, we aggregate the analytics over the past 6 months.
 
     ```yaml showLineNumbers
     resources:
@@ -1118,8 +570,7 @@ To enrich your PagerDuty service entities with analytics data, follow the steps 
     ```
     </details>
 
-
-## Ingesting incident analytics
+### Ingesting incident analytics
 To enrich your PagerDuty incident entities with analytics data, follow the steps below:
 
 1. Update the incident blueprint to include an `analytics` property.
@@ -1324,470 +775,22 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
     ```
     </details>
 
-## Let's Test It
+## Examples
 
-This section includes a sample response data from Pagerduty. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
-### Payload
+Additional examples of blueprints and the relevant integration configurations can be found on the pagerduty [examples page](example.md)
 
-Here is an example of the payload structure from Pagerduty:
 
-<details>
-<summary> Schedule response data</summary>
+## Relevant Guides
 
-```json showLineNumbers
-{
-  "id": "PWAXLIH",
-  "type": "schedule",
-  "summary": "Port Test Service - Weekly Rotation",
-  "self": "https://api.pagerduty.com/schedules/PWAXLIH",
-  "html_url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
-  "name": "Port Test Service - Weekly Rotation",
-  "time_zone": "Asia/Jerusalem",
-  "description": "This is the weekly on call schedule for Port Test Service associated with your first escalation policy.",
-  "users": [
-    {
-      "id": "PJCRRLH",
-      "type": "user_reference",
-      "summary": "Adam",
-      "self": "https://api.pagerduty.com/users/PJCRRLH",
-      "html_url": "https://getport-io.pagerduty.com/users/PJCRRLH"
-    },
-    {
-      "id": "P4K4DLP",
-      "type": "user_reference",
-      "summary": "Alice",
-      "self": "https://api.pagerduty.com/users/P4K4DLP",
-      "html_url": "https://getport-io.pagerduty.com/users/P4K4DLP"
-    },
-    {
-      "id": "HDW63E2",
-      "type": "user_reference",
-      "summary": "Doe",
-      "self": "https://api.pagerduty.com/users/HDW63E2",
-      "html_url": "https://getport-io.pagerduty.com/users/HDW63E2"
-    },
-    {
-      "id": "PRGAUI4",
-      "type": "user_reference",
-      "summary": "Pages",
-      "self": null,
-      "html_url": "https://getport-io.pagerduty.com/users/PRGAUI4",
-      "deleted_at": "2023-10-17T18:58:07+03:00"
-    },
-    {
-      "id": "PYIEKLY",
-      "type": "user_reference",
-      "summary": "Demo",
-      "self": "https://api.pagerduty.com/users/PYIEKLY",
-      "html_url": "https://getport-io.pagerduty.com/users/PYIEKLY"
-    }
-  ],
-  "escalation_policies": [
-    {
-      "id": "P7LVMYP",
-      "type": "escalation_policy_reference",
-      "summary": "Test Escalation Policy",
-      "self": "https://api.pagerduty.com/escalation_policies/P7LVMYP",
-      "html_url": "https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
-    }
-  ],
-  "teams": []
-}
-```
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=PagerDuty).
 
-</details>
-
-<details>
-<summary> Oncall response data</summary>
-
-```json showLineNumbers
-{
-   "escalation_policy":{
-      "id":"P7LVMYP",
-      "type":"escalation_policy_reference",
-      "summary":"Test Escalation Policy",
-      "self":"https://api.pagerduty.com/escalation_policies/P7LVMYP",
-      "html_url":"https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
-   },
-   "escalation_level":1,
-   "schedule":{
-      "id":"PWAXLIH",
-      "type":"schedule_reference",
-      "summary":"Port Test Service - Weekly Rotation",
-      "self":"https://api.pagerduty.com/schedules/PWAXLIH",
-      "html_url":"https://getport-io.pagerduty.com/schedules/PWAXLIH"
-   },
-   "user":{
-      "name":"John Doe",
-      "email":"johndoe@domain.io",
-      "time_zone":"Asia/Jerusalem",
-      "color":"red",
-      "avatar_url":"https://secure.gravatar.com/avatar/149cf38119ee25af9b8b3a68d06f39e3.png?d=mm&r=PG",
-      "billed":true,
-      "role":"user",
-      "description":null,
-      "invitation_sent":false,
-      "job_title":null,
-      "teams":[
-         
-      ],
-      "contact_methods":[
-         {
-            "id":"PK3SHEX",
-            "type":"email_contact_method_reference",
-            "summary":"Default",
-            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/PK3SHEX",
-            "html_url":null
-         },
-         {
-            "id":"PO3TNV8",
-            "type":"phone_contact_method_reference",
-            "summary":"Other",
-            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/PO3TNV8",
-            "html_url":null
-         },
-         {
-            "id":"P7U59FI",
-            "type":"sms_contact_method_reference",
-            "summary":"Other",
-            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/P7U59FI",
-            "html_url":null
-         }
-      ],
-      "notification_rules":[
-         {
-            "id":"PMTOCX1",
-            "type":"assignment_notification_rule_reference",
-            "summary":"0 minutes: channel PK3SHEX",
-            "self":"https://api.pagerduty.com/users/HDW63E2/notification_rules/PMTOCX1",
-            "html_url":null
-         },
-         {
-            "id":"P3HAND3",
-            "type":"assignment_notification_rule_reference",
-            "summary":"0 minutes: channel P7U59FI",
-            "self":"https://api.pagerduty.com/users/HDW63E2/notification_rules/P3HAND3",
-            "html_url":null
-         }
-      ],
-      "id":"HDW63E2",
-      "type":"user",
-      "summary":"John Doe",
-      "self":"https://api.pagerduty.com/users/HDW63E2",
-      "html_url":"https://getport-io.pagerduty.com/users/HDW63E2"
-   },
-   "start":"2024-02-25T00:00:00Z",
-   "end":"2024-04-14T11:10:48Z"
-}
-```
-
-</details>
-
-<details>
-<summary> Service response data</summary>
-
-```json showLineNumbers
-{
-  "id": "PGAAJBE",
-  "name": "My Test Service",
-  "description": "For testing",
-  "created_at": "2023-08-03T16:53:48+03:00",
-  "updated_at": "2023-08-03T16:53:48+03:00",
-  "status": "active",
-  "teams": [],
-  "alert_creation": "create_alerts_and_incidents",
-  "addons": [],
-  "scheduled_actions": [],
-  "support_hours": "None",
-  "last_incident_timestamp": "None",
-  "escalation_policy": {
-    "id": "P7LVMYP",
-    "type": "escalation_policy_reference",
-    "summary": "Test Escalation Policy",
-    "self": "https://api.pagerduty.com/escalation_policies/P7LVMYP",
-    "html_url": "https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
-  },
-  "incident_urgency_rule": {
-    "type": "constant",
-    "urgency": "high"
-  },
-  "acknowledgement_timeout": "None",
-  "auto_resolve_timeout": "None",
-  "integrations": [],
-  "type": "service",
-  "summary": "My Test Service",
-  "self": "https://api.pagerduty.com/services/PGAAJBE",
-  "html_url": "https://getport-io.pagerduty.com/service-directory/PGAAJBE",
-  "__oncall_user": [
-    {
-      "escalation_policy": {
-        "id": "P7LVMYP",
-        "type": "escalation_policy_reference",
-        "summary": "Test Escalation Policy",
-        "self": "https://api.pagerduty.com/escalation_policies/P7LVMYP",
-        "html_url": "https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
-      },
-      "escalation_level": 1,
-      "schedule": {
-        "id": "PWAXLIH",
-        "type": "schedule_reference",
-        "summary": "Port Test Service - Weekly Rotation",
-        "self": "https://api.pagerduty.com/schedules/PWAXLIH",
-        "html_url": "https://getport-io.pagerduty.com/schedules/PWAXLIH"
-      },
-      "user": {
-        "name": "demo",
-        "email": "devops-port@pager-demo.com",
-        "time_zone": "Asia/Jerusalem",
-        "color": "teal",
-        "avatar_url": "https://secure.gravatar.com/avatar/5cc831a4e778f54460efc4cd20d13acd.png?d=mm&r=PG",
-        "billed": true,
-        "role": "admin",
-        "description": "None",
-        "invitation_sent": true,
-        "job_title": "None",
-        "teams": [],
-        "contact_methods": [
-          {
-            "id": "POKPUFD",
-            "type": "email_contact_method_reference",
-            "summary": "Default",
-            "self": "https://api.pagerduty.com/users/PYIEKLY/contact_methods/POKPUFD",
-            "html_url": "None"
-          }
-        ],
-        "notification_rules": [
-          {
-            "id": "P9NWEKF",
-            "type": "assignment_notification_rule_reference",
-            "summary": "0 minutes: channel POKPUFD",
-            "self": "https://api.pagerduty.com/users/PYIEKLY/notification_rules/P9NWEKF",
-            "html_url": "None"
-          },
-          {
-            "id": "PPJHFA5",
-            "type": "assignment_notification_rule_reference",
-            "summary": "0 minutes: channel POKPUFD",
-            "self": "https://api.pagerduty.com/users/PYIEKLY/notification_rules/PPJHFA5",
-            "html_url": "None"
-          }
-        ],
-        "id": "PYIEKLY",
-        "type": "user",
-        "summary": "demo",
-        "self": "https://api.pagerduty.com/users/PYIEKLY",
-        "html_url": "https://getport-io.pagerduty.com/users/PYIEKLY"
-      },
-      "start": "2023-10-17T15:57:50Z",
-      "end": "2024-02-13T22:16:48Z"
-    }
-  ]
-}
-```
-
-</details>
-
-<details>
-<summary> Incident response data</summary>
-
-```json showLineNumbers
-{
-  "incident_number": 2,
-  "title": "Example Incident",
-  "description": "Example Incident",
-  "created_at": "2023-05-15T13:59:45Z",
-  "updated_at": "2023-05-15T13:59:45Z",
-  "status": "triggered",
-  "incident_key": "89809d37f4344d36a90c0a192c20c617",
-  "service": {
-    "id": "PWJAGSD",
-    "type": "service_reference",
-    "summary": "Port Test Service",
-    "self": "https://api.pagerduty.com/services/PWJAGSD",
-    "html_url": "https://getport-io.pagerduty.com/service-directory/PWJAGSD"
-  },
-  "assignments": [
-    {
-      "at": "2023-05-15T13:59:45Z",
-      "assignee": {
-        "id": "PJCRRLH",
-        "type": "user_reference",
-        "summary": "Username",
-        "self": "https://api.pagerduty.com/users/PJCRRLH",
-        "html_url": "https://getport-io.pagerduty.com/users/PJCRRLH"
-      }
-    }
-  ],
-  "assigned_via": "escalation_policy",
-  "last_status_change_at": "2023-05-15T13:59:45Z",
-  "resolved_at": null,
-  "first_trigger_log_entry": {
-    "id": "R5S5T07QR1SZRQFYB7SXEO2EKZ",
-    "type": "trigger_log_entry_reference",
-    "summary": "Triggered through the website.",
-    "self": "https://api.pagerduty.com/log_entries/R5S5T07QR1SZRQFYB7SXEO2EKZ",
-    "html_url": "https://getport-io.pagerduty.com/incidents/Q1P3AHC3KLGVAS/log_entries/R5S5T07QR1SZRQFYB7SXEO2EKZ"
-  },
-  "alert_counts": {
-    "all": 0,
-    "triggered": 0,
-    "resolved": 0
-  },
-  "is_mergeable": true,
-  "escalation_policy": {
-    "id": "P7LVMYP",
-    "type": "escalation_policy_reference",
-    "summary": "Test Escalation Policy",
-    "self": "https://api.pagerduty.com/escalation_policies/P7LVMYP",
-    "html_url": "https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
-  },
-  "teams": [],
-  "pending_actions": [],
-  "acknowledgements": [],
-  "basic_alert_grouping": null,
-  "alert_grouping": null,
-  "last_status_change_by": {
-    "id": "PWJAGSD",
-    "type": "service_reference",
-    "summary": "Port Test Service",
-    "self": "https://api.pagerduty.com/services/PWJAGSD",
-    "html_url": "https://getport-io.pagerduty.com/service-directory/PWJAGSD"
-  },
-  "urgency": "high",
-  "id": "Q1P3AHC3KLGVAS",
-  "type": "incident",
-  "summary": "[#2] Example Incident",
-  "self": "https://api.pagerduty.com/incidents/Q1P3AHC3KLGVAS",
-  "html_url": "https://getport-io.pagerduty.com/incidents/Q1P3AHC3KLGVAS"
-}
-```
-
-</details>
-
-### Mapping Result
-
-The combination of the sample payload and the Ocean configuration generates the following Port entity:
-
-<details>
-<summary> Schedule entity in Port</summary>
-
-```json showLineNumbers
-{
-  "identifier": "PWAXLIH",
-  "title": "Port Test Service - Weekly Rotation",
-  "icon": null,
-  "blueprint": "pagerdutySchedule",
-  "team": [],
-  "properties": {
-    "url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
-    "timezone": "Asia/Jerusalem",
-    "description": "Asia/Jerusalem",
-    "users": ["adam@getport-io.com", "alice@getport-io.com", "doe@getport-io.com", "demo@getport-io.com", "pages@getport-io.com"]
-  },
-  "relations": {},
-  "createdAt": "2023-12-01T13:18:02.215Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2023-12-01T13:18:02.215Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
-}
-```
-
-</details>
-
-<details>
-<summary> Oncall entity in Port</summary>
-
-```json showLineNumbers
-{
-  "identifier": "HDW63E2-PWAXLIH-2024-06-03T13:00:00Z",
-  "title": "John Doe",
-  "blueprint": "pagerdutyOncall",
-  "team": [],
-  "properties": {
-    "url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
-    "timezone": null,
-    "user": "johndoe@domain.io",
-    "startDate": "2024-06-03T13:00:00Z",
-    "endDate": "2024-06-17T13:00:00Z"
-  },
-  "relations": {
-    "pagerdutySchedule": "PWAXLIH"
-  },
-  "createdAt": "2024-03-08T15:52:35.807Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2024-03-08T15:52:35.807Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
-}
-```
-
-</details>
-
-<details>
-<summary> Service entity in Port</summary>
-
-```json showLineNumbers
-{
-  "identifier": "PGAAJBE",
-  "title": "My Test Service",
-  "icon": null,
-  "blueprint": "pagerdutyService",
-  "team": [],
-  "properties": {
-    "status": "active",
-    "url": "https://getport-io.pagerduty.com/service-directory/PGAAJBE",
-    "oncall": "devops-port@pager-demo.com",
-    "secondaryOncall": null,
-    "escalationLevels": 1,
-    "meanSecondsToResolve": 0,
-    "meanSecondsToFirstAck": 0,
-    "meanSecondsToEngage": 0,
-  },
-  "relations": {},
-  "createdAt": "2023-11-01T13:18:02.215Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2023-11-01T13:18:02.215Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
-}
-```
-
-</details>
-
-<details>
-<summary> Incident entity in Port</summary>
-
-```json showLineNumbers
-{
-  "identifier": "Q1P3AHC3KLGVAS",
-  "title": "Example Incident",
-  "icon": null,
-  "blueprint": "pagerdutyIncident",
-  "team": [],
-  "properties": {
-    "status": "triggered",
-    "url": "https://api.pagerduty.com/incidents/Q1P3AHC3KLGVAS",
-    "urgency": "high",
-    "responder": "Username",
-    "escalation_policy": "Test Escalation Policy",
-    "created_at": "2023-07-30T11:29:21.000Z",
-    "updated_at": "2023-07-30T11:29:21.000Z",
-    "priority": null,
-    "description": "Example Incident",
-  },
-  "relations": {
-    "pagerdutyService": "PWJAGSD"
-  },
-  "createdAt": "2023-08-07T07:56:04.384Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2023-08-07T07:56:04.384Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
-}
-```
-
-</details>
 
 ## Alternative installation via webhook
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from PagerDuty. If so, use the following instructions:
+
+**Note** that when using the webhook installation method, data will be ingested into Port only when the webhook is triggered.
 
 <details>
 
@@ -2063,11 +1066,3 @@ The script writes the JSON payload for each service and incident to a file named
 
 Done! you can now import historical data from PagerDuty into Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 </details>
-
-## More relevant guides and examples
-
-- [Ensure production readniness](https://docs.getport.io/guides/all/ensure-production-readiness)
-- [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
-- [Self-service action to trigger a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
-- [Self-service action to change a PagerDuty incident owner](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
-- [Self-service action to create a PagerDuty service from Port](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)
