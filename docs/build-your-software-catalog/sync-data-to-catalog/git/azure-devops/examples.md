@@ -19,6 +19,10 @@ import ProjectBlueprint from './example-project/\_azuredevops_exporter_example_p
 import WorkItemBlueprint from './example-project/\_azuredevops_exporter_example_work_item_blueprint.mdx'
 import PortWorkItemAppConfig from './example-project/\_azuredevops_exporter_example_work_item_port_app_config.mdx'
 
+import BoardBlueprint from './example-board/\_azuredevops_exporter_example_board_blueprint.mdx'
+import PortBoardAppConfig from './example-board/\_azuredevops_exporter_example_board_port_app_config.mdx'
+
+
 # Examples
 
 ## Mapping projects
@@ -117,8 +121,28 @@ In the following example you will ingest your Azure Devops work items to Port, y
 
 - Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/work-items/list?view=azure-devops-rest-7.1&tabs=HTTP#get-list-of-work-items) for the Azure Devops work item object structure.
 - Click [Here](https://learn.microsoft.com/en-us/azure/devops/boards/queries/wiql-syntax?view=azure-devops#example-clauses) for WIQL clauses
-
 :::
+
+
+## Mapping boards
+
+In the following example, you'll learn how to ingest Azure DevOps Boards into Port.  you may use the following Port blueprint definitions and integration configuration: 
+
+<ProjectBlueprint/>
+
+<BoardBlueprint/>
+
+<PortBoardAppConfig/>
+
+
+:::tip To Learn More
+- Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure DevOps objects to Port entities.
+- Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/work/boards/list?view=azure-devops-rest-7.1) for the Azure DevOps board object structure.
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your Azure DevOps boards.
+
 
 ## Mapping supported resources
 
