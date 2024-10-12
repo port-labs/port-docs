@@ -27,7 +27,6 @@ resources:
   - kind: AWS::EC2::Instance
     selector:
       query: 'true'
-      useGetResourceAPI: 'true'
     port:
       entity:
         mappings:
@@ -38,10 +37,12 @@ resources:
             kind: .__Kind
             region: .__Region
             tags: .Properties.Tags
-            arn: .Properties.Arn
+            arn: >-
+               'arn:aws:ec2:' +
+               .__Region + ':' + .__AccountId + ':instance/' + .Properties.InstanceId
             link: >-
-              .Properties | select(.Arn != null) |
-              "https://console.aws.amazon.com/go/view?arn=" + .Arn
+              'https://console.aws.amazon.com/ec2/home?region=' +
+              .__Region + InstanceDetails:instanceId=' + Properties.InstanceId
           relations:
             account: .__AccountId
   - kind: AWS::ECS::Cluster

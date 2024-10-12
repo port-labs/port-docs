@@ -1,0 +1,70 @@
+<details>
+<summary>Amplify App Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "amplifyApp",
+  "description": "This blueprint represents an AWS Amplify App in our software catalog",
+  "title": "Amplify App",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "appId": {
+        "type": "string",
+        "title": "App ID"
+      },
+      "repository": {
+        "type": "string",
+        "title": "Repository"
+      },
+      "platform": {
+        "type": "string",
+        "title": "Platform"
+      },
+      "defaultDomain": {
+        "type": "string",
+        "title": "Default Domain"
+      },
+      "customHeaders": {
+        "type": "string",
+        "title": "Custom Headers"
+      },
+      "appName": {
+        "type": "string",
+        "title": "App Name"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "kind": {
+        "type": "string",
+        "title": "Kind"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
