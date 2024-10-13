@@ -10,8 +10,12 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import JiraIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_blueprint.mdx"
 import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
 import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
+import OceanSailExample from "/src/components/OceanSailExample/oceanSailExample.jsx"
 
 # Jira
+
+
+<OceanSailExample />
 
 Port's Jira integration allows you to model Jira resources in your software catalog and ingest data into them.
 
@@ -228,14 +232,15 @@ Here is an example for `jira-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Jira Exporter Workflow
 
-# This workflow responsible for running Jira exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
