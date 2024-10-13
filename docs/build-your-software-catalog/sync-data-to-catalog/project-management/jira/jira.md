@@ -10,12 +10,8 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import JiraIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_blueprint.mdx"
 import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
 import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
-import OceanSailExample from "/src/components/OceanSailExample/oceanSailExample.jsx"
 
 # Jira
-
-
-<OceanSailExample />
 
 Port's Jira integration allows you to model Jira resources in your software catalog and ingest data into them.
 
