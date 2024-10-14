@@ -228,14 +228,15 @@ Here is an example for `jira-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Jira Exporter Workflow
 
-# This workflow responsible for running Jira exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
