@@ -126,7 +126,8 @@ In the following example you will ingest your Azure Devops work items to Port, y
 
 ## Mapping boards
 
-In the following example, you'll learn how to ingest Azure DevOps Boards into Port.  You may use the following Port blueprint definitions and integration configuration: 
+The example below shows how to ingest Azure DevOps Boards into Port.  
+You can use the following Port blueprint definitions and integration configuration: 
 
 
 <BoardBlueprint/>
