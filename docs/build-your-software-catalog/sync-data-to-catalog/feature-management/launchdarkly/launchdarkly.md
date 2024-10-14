@@ -12,31 +12,28 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # LaunchDarkly
 
-Our LaunchDarkly integration allows you to import `projects`, `flags`, and `environments` from your LaunchDarkly account into Port, according to your mapping and definition.
-
-A `Project` in LaunchDarkly is a collection of feature flags, targeting rules, and environments that correspond to a specific application or service.
-
-A `Flag` in LaunchDarkly represents a feature flag or toggle, which is a central concept in LaunchDarkly. Flags are used to control the visibility and operational state of features in your software without deploying new code.
-
-An `Environment` within a LaunchDarkly project is a logical separation of feature flag states and configurations, typically corresponding to stages in your development lifecycle.
-
-A `Flag Status` lets you know when a flag is active or inactive.
+Port's LaunchDarkly integration allows you to model LaunchDarkly resources in your software catalog and ingest data into them.
 
 
-### Common use cases
+## Overview
 
-- Entity Tracking - See all projects and their associated environments and feature flags.
+This integration allows you to:
 
-- Real time Synchronization of Infrastructure - Automatically synchronize projects, feature flags, and environments data from LaunchDarkly into Port for centralized tracking and management.
+- Map and organize your desired LaunchDarkly resources and their metadata in Port (see supported resources below).
+- Watch for LaunchDarkly object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
+
+### Supported Resources
+
+The resources that can be ingested from LaunchDarkly into Port are listed below.  
+It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+- [`Project`](https://apidocs.launchdarkly.com/tag/Projects)
+- [`Flag`](https://apidocs.launchdarkly.com/tag/Feature-flags)
+- [`Environment`](https://apidocs.launchdarkly.com/tag/Environments)
+- [`Flag Status`](https://apidocs.launchdarkly.com/tag/Feature-flags#operation/getFeatureFlagStatusAcrossEnvironments)
 
 
-## Prerequisites
 
-To install the integration, you need a Kubernetes cluster that the integration's container chart will be deployed to.
-
-Please make sure that you have [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl) and [`helm`](https://helm.sh/) installed on your machine, and that your `kubectl` CLI is connected to the Kubernetes cluster where you plan to install the integration.
-
-## Installation
+## Setup
 
 Choose one of the following installation methods:
 
@@ -48,7 +45,14 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
+
+<h2> Prerequisites </h2>
+
+To install the integration, you need a Kubernetes cluster that the integration's container chart will be deployed to.
+
+Please make sure that you have [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl) and [`helm`](https://helm.sh/) installed on your machine, and that your `kubectl` CLI is connected to the Kubernetes cluster where you plan to install the integration.
+
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -184,7 +188,8 @@ The integration uses polling to pull the configuration from Port every minute an
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+
+<TabItem value="one-time-ci" label="Scheduled (CI)">
 
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
@@ -207,10 +212,13 @@ name: LaunchDarkly Exporter Workflow
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
@@ -346,97 +354,18 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting LaunchDarkly objects
+## Configuration
 
-The LaunchDarkly integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-Here is an example snippet from the config which demonstrates the process for getting `Projects` from LaunchDarkly:
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-```yaml showLineNumbers
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"launchDarklyProject"'
-          properties:
-            tags: .tags
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from LaunchDarkly's API events.
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from LaunchDarkly, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from LaunchDarkly, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Project`](https://apidocs.launchdarkly.com/tag/Projects)
-- [`Flag`](https://apidocs.launchdarkly.com/tag/Feature-flags)
-- [`Environment`](https://apidocs.launchdarkly.com/tag/Environments)
-- [`Flag Status`](https://apidocs.launchdarkly.com/tag/Feature-flags#operation/getFeatureFlagStatusAcrossEnvironments)
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: project
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a LaunchDarkly object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: project
-        selector:
-        ...
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the LaunchDarkly object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-```yaml showLineNumbers
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"launchDarklyProject"'
-          properties:
-            tags: .tags
-```
-
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-:::
-
-### Ingest data into Port
-
-To ingest LaunchDarkly objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using LaunchDarkly.
-3. Choose the **Ingest Data** option from the menu.
-4. Select LaunchDarkly under the Feature Management category.
-5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
-6. Click `Resync`.
 
 ## Examples
 
-Examples of blueprints and the relevant integration configurations:
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
+
+Additional examples of blueprints and the relevant integration configurations:
 
 ### Project
 
@@ -775,580 +704,8 @@ resources:
 ```
 
 </details>
-## Let's Test It
-
-This section includes a sample response data from LaunchDarkly. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
-
-### Payload
-
-Here is an example of the payload structure from LaunchDarkly:
-
-<details>
-<summary> Project response data</summary>
-
-```json showLineNumbers
-{
-  "_links": {
-    "environments": {
-      "href": "/api/v2/projects/fourth-project/environments",
-      "type": "application/json"
-    },
-    "flagDefaults": {
-      "href": "/api/v2/projects/fourth-project/flag-defaults",
-      "type": "application/json"
-    },
-    "self": {
-      "href": "/api/v2/projects/fourth-project",
-      "type": "application/json"
-    }
-  },
-  "_id": "666b298cc671e81012b578c6",
-  "key": "fourth-project",
-  "includeInSnippetByDefault": false,
-  "defaultClientSideAvailability": {
-    "usingMobileKey": false,
-    "usingEnvironmentId": false
-  },
-  "name": "Fourth Project",
-  "tags": []
-}
-```
-</details>
 
 
-<details>
-<summary> Feature Flag response data</summary>
+## Relevant Guides
 
-```json showLineNumbers
-{
-  "_links": {
-    "parent": {
-      "href": "/api/v2/flags/fourth-project",
-      "type": "application/json"
-    },
-    "self": {
-      "href": "/api/v2/flags/fourth-project/randomflag",
-      "type": "application/json"
-    }
-  },
-  "_maintainer": {
-    "_id": "6669b0f34162860fefd6d724",
-    "_links": {
-      "self": {
-        "href": "/api/v2/members/6669b0f34162860fefd6d724",
-        "type": "application/json"
-      }
-    },
-    "email": "example@gmail.com",
-    "firstName": "John",
-    "lastName": "Doe",
-    "role": "owner"
-  },
-  "_version": 1,
-  "archived": false,
-  "clientSideAvailability": {
-    "usingEnvironmentId": false,
-    "usingMobileKey": false
-  },
-  "creationDate": 1718299647527,
-  "customProperties": {},
-  "defaults": {
-    "offVariation": 1,
-    "onVariation": 0
-  },
-  "deprecated": false,
-  "description": "",
-  "environments": {
-    "fourth-env": {
-      "_environmentName": "fourth-env",
-      "_site": {
-        "href": "/fourth-project/fourth-env/features/randomflag",
-        "type": "text/html"
-      },
-      "_summary": {
-        "prerequisites": 0,
-        "variations": {
-          "0": {
-            "contextTargets": 0,
-            "isFallthrough": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          },
-          "1": {
-            "contextTargets": 0,
-            "isOff": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          }
-        }
-      },
-      "archived": false,
-      "lastModified": 1718299647539,
-      "on": false,
-      "salt": "c713989066a446febf07a42d488221e8",
-      "sel": "6d7c3692dd9d4ffa8eee8e2d96b6fd2c",
-      "trackEvents": false,
-      "trackEventsFallthrough": false,
-      "version": 1
-    },
-    "new-env": {
-      "_environmentName": "new env",
-      "_site": {
-        "href": "/fourth-project/new-env/features/randomflag",
-        "type": "text/html"
-      },
-      "_summary": {
-        "prerequisites": 0,
-        "variations": {
-          "0": {
-            "contextTargets": 0,
-            "isFallthrough": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          },
-          "1": {
-            "contextTargets": 0,
-            "isOff": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          }
-        }
-      },
-      "archived": false,
-      "lastModified": 1718299647539,
-      "on": false,
-      "salt": "caa436a38411406491f0da9230349bb3",
-      "sel": "8bcf1667ab2f4f628fc26ad31966f045",
-      "trackEvents": false,
-      "trackEventsFallthrough": false,
-      "version": 1
-    },
-    "new-project": {
-      "_environmentName": "new_project",
-      "_site": {
-        "href": "/fourth-project/new-project/features/randomflag",
-        "type": "text/html"
-      },
-      "_summary": {
-        "prerequisites": 0,
-        "variations": {
-          "0": {
-            "contextTargets": 0,
-            "isFallthrough": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          },
-          "1": {
-            "contextTargets": 0,
-            "isOff": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          }
-        }
-      },
-      "archived": false,
-      "lastModified": 1718299647539,
-      "on": false,
-      "salt": "f79c8849d22d497d8a519fbb6263aeda",
-      "sel": "257f0acaf18f4252b40258f8aa93b966",
-      "trackEvents": false,
-      "trackEventsFallthrough": false,
-      "version": 1
-    },
-    "production": {
-      "_environmentName": "Production",
-      "_site": {
-        "href": "/fourth-project/production/features/randomflag",
-        "type": "text/html"
-      },
-      "_summary": {
-        "prerequisites": 0,
-        "variations": {
-          "0": {
-            "contextTargets": 0,
-            "isFallthrough": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          },
-          "1": {
-            "contextTargets": 0,
-            "isOff": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          }
-        }
-      },
-      "archived": false,
-      "lastModified": 1718299647539,
-      "on": false,
-      "salt": "28c5efba5fd445d5896a8b9f7f8fbff6",
-      "sel": "28a317cdf3aa4d40b8a0b1c6f56be4c9",
-      "trackEvents": false,
-      "trackEventsFallthrough": false,
-      "version": 1
-    },
-    "shadow": {
-      "_environmentName": "shadow",
-      "_site": {
-        "href": "/fourth-project/shadow/features/randomflag",
-        "type": "text/html"
-      },
-      "_summary": {
-        "prerequisites": 0,
-        "variations": {
-          "0": {
-            "contextTargets": 0,
-            "isFallthrough": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          },
-          "1": {
-            "contextTargets": 0,
-            "isOff": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          }
-        }
-      },
-      "archived": false,
-      "lastModified": 1718311480830,
-      "on": false,
-      "salt": "cb214aeac84f48d08ff136514c589b11",
-      "sel": "00b5f9ae56a547db9c4e5e619bdb39f3",
-      "trackEvents": false,
-      "trackEventsFallthrough": false,
-      "version": 1
-    },
-    "some-random-env": {
-      "_environmentName": "some-random-env",
-      "_site": {
-        "href": "/fourth-project/some-random-env/features/randomflag",
-        "type": "text/html"
-      },
-      "_summary": {
-        "prerequisites": 0,
-        "variations": {
-          "0": {
-            "contextTargets": 0,
-            "isFallthrough": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          },
-          "1": {
-            "contextTargets": 0,
-            "isOff": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          }
-        }
-      },
-      "archived": false,
-      "lastModified": 1718300514123,
-      "on": false,
-      "salt": "0618861de85c48a5a77c360db7a8847b",
-      "sel": "5ae511fe5630469084453c2c4d45f719",
-      "trackEvents": false,
-      "trackEventsFallthrough": false,
-      "version": 1
-    },
-    "staging": {
-      "_environmentName": "staging",
-      "_site": {
-        "href": "/fourth-project/staging/features/randomflag",
-        "type": "text/html"
-      },
-      "_summary": {
-        "prerequisites": 0,
-        "variations": {
-          "0": {
-            "contextTargets": 0,
-            "isFallthrough": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          },
-          "1": {
-            "contextTargets": 0,
-            "isOff": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          }
-        }
-      },
-      "archived": false,
-      "lastModified": 1718300902420,
-      "on": false,
-      "salt": "bc27ddc205984379a4863f5f1323bdb0",
-      "sel": "2762811a62734de79277544ff4362f8c",
-      "trackEvents": false,
-      "trackEventsFallthrough": false,
-      "version": 1
-    },
-    "test": {
-      "_environmentName": "Test",
-      "_site": {
-        "href": "/fourth-project/test/features/randomflag",
-        "type": "text/html"
-      },
-      "_summary": {
-        "prerequisites": 0,
-        "variations": {
-          "0": {
-            "contextTargets": 0,
-            "isFallthrough": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          },
-          "1": {
-            "contextTargets": 0,
-            "isOff": true,
-            "nullRules": 0,
-            "rules": 0,
-            "targets": 0
-          }
-        }
-      },
-      "archived": false,
-      "lastModified": 1718299647539,
-      "on": false,
-      "salt": "fac0fe470f844433986166f3d570415d",
-      "sel": "8e8ae9542dc94f35b1ac64c845277d8a",
-      "trackEvents": false,
-      "trackEventsFallthrough": false,
-      "version": 1
-    }
-  },
-  "experiments": {
-    "baselineIdx": 0,
-    "items": []
-  },
-  "goalIds": [],
-  "includeInSnippet": false,
-  "key": "randomflag",
-  "kind": "boolean",
-  "maintainerId": "6669b0f34162860fefd6d724",
-  "name": "randomflag",
-  "tags": [],
-  "temporary": true,
-  "variationJsonSchema": null,
-  "variations": [
-    {
-      "_id": "8868f0d9-8b1d-4575-9436-827188276792",
-      "value": true
-    },
-    {
-      "_id": "8929317b-d2aa-479c-9249-e6c0ec5dc415",
-      "value": false
-    }
-  ],
-  "__projectKey": "fourth-project"
-}
-```
-
-</details>
-
-<details>
-<summary> Environment response data</summary>
-
-```json showLineNumbers
-{
-  "_links": {
-    "analytics": {
-      "href": "https://app.launchdarkly.com/snippet/events/v1/666b2a74cbdbfb108f3fc911.js",
-      "type": "text/html"
-    },
-    "apiKey": {
-      "href": "/api/v2/projects/fourth-project/environments/fourth-env/apiKey",
-      "type": "application/json"
-    },
-    "mobileKey": {
-      "href": "/api/v2/projects/fourth-project/environments/fourth-env/mobileKey",
-      "type": "application/json"
-    },
-    "self": {
-      "href": "/api/v2/projects/fourth-project/environments/fourth-env",
-      "type": "application/json"
-    },
-    "snippet": {
-      "href": "https://app.launchdarkly.com/snippet/features/666b2a74cbdbfb108f3fc911.js",
-      "type": "text/html"
-    }
-  },
-  "_id": "666b2a74cbdbfb108f3fc911",
-  "_pubnub": {
-    "channel": "b4f644c56dbbfe88a4028cb2d2142c258926f9b7a9add263d105202f0cd6599c",
-    "cipherKey": "9571e2de187881614fe9b6b94d13a99fbdb056e508c9226e6c6bb7d0be117725"
-  },
-  "key": "fourth-env",
-  "name": "fourth-env",
-  "apiKey": "sdk-1b3cf928-acae-4553-aab3-c956b7f04219",
-  "mobileKey": "mob-87679d8a-698d-4c5f-9ec1-05e368975afe",
-  "color": "e2e6ff",
-  "defaultTtl": 0,
-  "secureMode": false,
-  "defaultTrackEvents": false,
-  "requireComments": false,
-  "confirmChanges": false,
-  "tags": [],
-  "approvalSettings": {
-    "required": false,
-    "bypassApprovalsForPendingChanges": false,
-    "minNumApprovals": 1,
-    "canReviewOwnRequest": false,
-    "canApplyDeclinedChanges": true,
-    "serviceKind": "launchdarkly",
-    "serviceConfig": {},
-    "requiredApprovalTags": []
-  },
-  "critical": false,
-  "__projectKey": "fourth-project"
-}
-```
-
-</details>
-
-
-<details>
-<summary> Feature Flag In Environment response data</summary>
-
-```json showLineNumbers
-{
-  "_links": {
-    "parent": {
-      "href": "/api/v2/flags/fourth-project/olulufe",
-      "type": "application/json"
-    },
-    "self": {
-      "href": "/api/v2/flag-statuses/fourth-project/shadow/olulufe",
-      "type": "application/json"
-    }
-  },
-  "name": "new",
-  "lastRequested": null,
-  "__environmentKey": "shadow",
-  "__projectKey": "fourth-project"
-}
-```
-
-</details>
-
-### Mapping Result
-
-The combination of the sample payload and the Ocean configuration generates the following Port entity:
-
-<details>
-<summary> Project entity in Port</summary>
-
-```json showLineNumbers
-{
-  "identifier": "fourth-project",
-  "title": "Fourth Project",
-  "blueprint": "launchDarklyProject",
-  "properties": {
-    "tags": []
-  },
-  "relation": {
-    "service": "fourth-project"
-  }
-}
-```
-</details>
-
-<details>
-<summary> Feature Flag entity in Port</summary>
-
-```json showLineNumbers
-{
-  "identifier": "randomflag-fourth-project",
-  "title": "randomflag",
-  "blueprint": "launchDarklyFeatureFlag",
-  "properties": {
-    "kind": "boolean",
-    "description": "",
-    "creationDate": "2024-06-13T17:27:27Z",
-    "clientSideAvailability": {
-      "usingEnvironmentId": false,
-      "usingMobileKey": false
-    },
-    "temporary": true,
-    "tags": [],
-    "maintainer": "example@gmail.com",
-    "deprecated": false,
-    "variations": [
-      {
-        "_id": "8868f0d9-8b1d-4575-9436-827188276792",
-        "value": true
-      },
-      {
-        "_id": "8929317b-d2aa-479c-9249-e6c0ec5dc415",
-        "value": false
-      }
-    ],
-    "customProperties": {},
-    "archived": false
-  },
-  "relations": {
-    "project": "fourth-project"
-  }
-}
-```
-
-</details>
-
-<details>
-<summary> Environment entity in Port</summary>
-
-```json showLineNumbers
-{
-    "identifier": "fourth-env-fourth-project",
-    "title": "fourth-env",
-    "blueprint": "launchDarklyEnvironment",
-    "properties": {
-      "defaultTtl": 0,
-      "secureMode": false,
-      "defaultTrackEvents": false,
-      "requireComments": false,
-      "confirmChanges": false,
-      "tags": [],
-      "critical": false
-    },
-    "relations": {
-      "project": "fourth-project"
-    }
-  }
-```
-
-</details>
-
-<details>
-<summary> Feature Flag In Environment entity in Port</summary>
-
-```json showLineNumbers
-{
-    "identifier": "olulufe-shadow",
-    "title": "olulufe-shadow",
-    "blueprint": "launchDarklyFFInEnvironment",
-    "properties": {
-      "status": "new"
-    },
-    "relations": {
-      "environment": "shadow-fourth-project",
-      "featureFlag": "olulufe-fourth-project"
-    }
-  }
-```
-</details>
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Launchdarkly).

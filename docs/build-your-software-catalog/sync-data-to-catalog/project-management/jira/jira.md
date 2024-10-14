@@ -13,15 +13,17 @@ import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/cust
 
 # Jira
 
-Port's Jira integration allows you to model Jira resources in Port and ingest data into them.
+Port's Jira integration allows you to model Jira resources in your software catalog and ingest data into them.
 
 :::info Jira cloud only
 This integration supports `Jira Cloud` at the moment. To integrate Port with `Jira Server`, use [Port's webhook integration](/build-your-software-catalog/custom-integration/webhook/examples/jira-server).
 :::
 
-## Capabilities
+## Overview
 
-- Watch for Jira object changes (create/update/delete) in real-time, and automatically apply them to your entities in Port.
+This integration allows you to:
+
+- Watch for Jira object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Define self-service actions that can create/delete Jira objects or perform any other logic on Jira resources.
 
 ### Supported Resources
@@ -44,7 +46,7 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -186,7 +188,7 @@ kubectl apply -f my-ocean-jira-integration.yaml
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="One-time (CI)">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
@@ -226,14 +228,15 @@ Here is an example for `jira-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Jira Exporter Workflow
 
-# This workflow responsible for running Jira exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1

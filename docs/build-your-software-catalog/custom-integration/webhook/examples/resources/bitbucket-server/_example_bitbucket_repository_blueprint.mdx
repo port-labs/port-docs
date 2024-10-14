@@ -1,6 +1,6 @@
 ```json showLineNumbers
 {
-  "identifier": "service",
+  "identifier": "bitbucketRepository",
   "description": "A software catalog to represent Bitbucket repositories",
   "title": "Bitbucket Repository",
   "icon": "BitBucket",
@@ -30,13 +30,34 @@
         "title": "Link",
         "icon": "DefaultProperty",
         "type": "string"
+      },
+      "documentation": {
+        "icon": "DefaultProperty",
+        "title": "Documentation",
+        "type": "string",
+        "format": "markdown"
+      },
+      "swagger_url": {
+        "title": "Swagger URL",
+        "type": "string",
+        "format": "url",
+        "spec": "async-api",
+        "icon": "DefaultProperty"
       }
     },
     "required": []
   },
   "mirrorProperties": {},
   "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
+    "latestCommitAuthor": {
+      "title": "Latest Commit By",
+      "description": "The user that made the most recent commit to the base branch",
+      "target": "bitbucketUser",
+      "required": false,
+      "many": false
+    },
     "project": {
       "title": "Project",
       "target": "bitbucketProject",

@@ -9,7 +9,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Snyk
 
-Our Snyk integration allows you to import `organizations`, `targets`, `projects` and `issues` from your Snyk account into Port, according to your mapping and definitions.
+Port's Snyk integration allows you to import `organizations`, `targets`, `projects` and `issues` from your Snyk account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
@@ -272,14 +272,15 @@ Here is an example for `snyk-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Snyk Exporter Workflow
 
-# This workflow responsible for running Snyk exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1

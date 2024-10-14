@@ -10,14 +10,18 @@ import DockerParameters from "./\_jenkins-docker-parameters.mdx"
 import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import JenkinsBuildBlueprint from './\_example_jenkins_build_blueprint.mdx'
+import JenkinsBuildWebhookConfig from './\_example_jenkins_build_webhook_configuration.mdx'
+import JenkinsJobBlueprint from './\_example_jenkins_job_blueprint.mdx'
+import JenkinsJobWebhookConfig from './\_example_jenkins_job_webhook_configuration.mdx'
 
 # Jenkins
 
-Our Jenkins integration allows you to import `jobs`, `builds`, and `users` from your Jenkins environment into Port, according to your mapping and definitions.
+Port's Jenkins integration allows you to import `jobs`, `builds`, `stages`, and `users` from your Jenkins environment into Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `jobs`, `builds`, and `users` in your Jenkins environment.
+- Map `jobs`, `builds`, `stages`, and `users` in your Jenkins environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ## Prerequisites
@@ -33,12 +37,19 @@ To generate a token for authenticating the Jenkins API calls:
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' border='1px' />
 
-:::info Install the People View Plugin
-Recent Jenkins versions ([2.452 and above](https://issues.jenkins.io/browse/JENKINS-18884)) no longer include the "People" view by default.  This view is essential for providing the user information API that will be queried by the integration.
 
-**To install the plugin:**
-- In Jenkins, navigate to **Manage Jenkins** -> **Plugins**.
-- Search for and install the [**"People View"** plugin](https://plugins.jenkins.io/people-view/).
+:::info Install Required Plugins
+To ensure full functionality of the Jenkins integration, please install the following plugins:
+
+1. **People View Plugin**: Required for user information API (for Jenkins versions 2.452 and above)
+   - Navigate to **Manage Jenkins** -> **Plugins**
+   - Search for and install the [**"People View"** plugin](https://plugins.jenkins.io/people-view/)
+
+2. **Pipeline: Stage View Plugin**: Required for fetching stages data
+   - Navigate to **Manage Jenkins** -> **Plugins**
+   - Search for and install the [**"Pipeline: Stage View"** plugin](https://plugins.jenkins.io/pipeline-stage-view/)
+
+These plugins are essential for the integration to access user information and pipeline stage data.
 :::
 
 ## Installation
@@ -214,14 +225,15 @@ Here is an example for `jenkins-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Jenkins Exporter Workflow
 
-# This workflow responsible for running Jenkins exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
@@ -774,6 +786,159 @@ resources:
 
 </details>
 
+### Stage
+
+<details>
+<summary>Stage blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "jenkinsStage",
+  "description": "This blueprint represents a stage in a Jenkins build",
+  "title": "Jenkins Stage",
+  "icon": "Jenkins",
+  "schema": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "title": "Stage Status",
+        "enum": [
+          "SUCCESS",
+          "FAILURE",
+          "UNSTABLE",
+          "ABORTED",
+          "IN_PROGRESS",
+          "NOT_BUILT",
+          "PAUSED_PENDING_INPUT"
+        ],
+        "enumColors": {
+          "SUCCESS": "green",
+          "FAILURE": "red",
+          "UNSTABLE": "yellow",
+          "ABORTED": "darkGray",
+          "IN_PROGRESS": "blue",
+          "NOT_BUILT": "lightGray",
+          "PAUSED_PENDING_INPUT": "orange"
+        }
+      },
+      "startTimeMillis": {
+        "type": "number",
+        "title": "Start Time (ms)",
+        "description": "Timestamp in milliseconds when the stage started"
+      },
+      "durationMillis": {
+        "type": "number",
+        "title": "Duration (ms)",
+        "description": "Duration of the stage in milliseconds"
+      },
+      "stageUrl": {
+        "type": "string",
+        "title": "Stage URL",
+        "description": "URL to the stage"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "parentBuild": {
+      "title": "Jenkins Build",
+      "target": "jenkinsBuild",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+:::note Control Stage Fetching
+To prevent overwhelming your Ocean instance with potentially thousands of stages from Jenkins, the integration requires you to specify a specific job. This ensures that Ocean only retrieves stages related to that job, keeping things focused and efficient.
+
+**Important**: The integration will also fetch stages from all nested jobs within the specified job.
+:::
+
+```yaml showLineNumbers
+- kind: stage
+  selector:
+    query: 'true'
+    # Example jobUrl - replace with your own Jenkins job URL
+    jobUrl: http://your-jenkins-server/job/your-project/job/your-job
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          ._links.self.href  | sub("^.*?/"; "") | gsub("%20"; "-") |
+          gsub("%252F"; "-") | gsub("/"; "-")
+        title: .name
+        blueprint: '"jenkinsStage"'
+        properties:
+          status: .status
+          startTimeMillis: .startTimeMillis
+          durationMillis: .durationMillis
+          stageUrl: env.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST  + ._links.self.href
+        relations:
+          parentBuild: >-
+            ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
+            "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
+            gsub("/"; "-")
+# Additional stage configurations follow the same pattern.
+# Make sure to replace the jobUrl with your own Jenkins job URLs for each configuration.
+- kind: stage
+  selector:
+    query: 'true'
+    # Example jobUrl - replace with your own Jenkins job URL
+    jobUrl: http://your-jenkins-server/job/your-project/job/another-job
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          ._links.self.href  | sub("^.*?/"; "") | gsub("%20"; "-") |
+          gsub("%252F"; "-") | gsub("/"; "-")
+        title: .name
+        blueprint: '"jenkinsStage"'
+        properties:
+          status: .status
+          startTimeMillis: .startTimeMillis
+          durationMillis: .durationMillis
+          stageUrl: env.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST  + ._links.self.href
+        relations:
+          parentBuild: >-
+            ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
+            "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
+            gsub("/"; "-")
+- kind: stage
+  selector:
+    query: 'true'
+    # Example jobUrl - replace with your own Jenkins job URL
+    jobUrl: http://your-jenkins-server/job/your-project/job/third-job
+  port:
+    entity:
+      mappings:
+        identifier: >-
+          ._links.self.href  | sub("^.*?/"; "") | gsub("%20"; "-") |
+          gsub("%252F"; "-") | gsub("/"; "-")
+        title: .name
+        blueprint: '"jenkinsStage"'
+        properties:
+          status: .status
+          startTimeMillis: .startTimeMillis
+          durationMillis: .durationMillis
+          stageUrl: env.OCEAN__INTEGRATION__CONFIG__JENKINS_HOST  + ._links.self.href
+        relations:
+          parentBuild: >-
+            ._links.self.href | sub("/execution/node/[0-9]+/wfapi/describe$";
+            "") | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("%252F"; "-") |
+            gsub("/"; "-")
+```
+
+</details>
+
 ## Let's Test It
 
 This section includes a sample response data from Jenkins. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
@@ -859,6 +1024,28 @@ Here is an example of the payload structure from Jenkins:
 
 </details>
 
+<details>
+<summary>Stage response data</summary>
+
+```json showLineNumbers
+{
+  "_links": {
+    "self": {
+      "href": "/job/Phalbert/job/salesdash/job/master/227/execution/node/17/wfapi/describe"
+    }
+  },
+  "id": "17",
+  "name": "Declarative: Post Actions",
+  "execNode": "",
+  "status": "SUCCESS",
+  "startTimeMillis": 1717073271079,
+  "durationMillis": 51,
+  "pauseDurationMillis": 0
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -934,3 +1121,218 @@ The combination of the sample payload and the Ocean configuration generates the 
 ```
 
 </details>
+
+<details>
+<summary>Stage entity</summary>
+
+```json showLineNumbers
+{
+  "identifier": "job-Phalbert-job-salesdash-job-master-229-execution-node-17-wfapi-describe",
+  "title": "Declarative: Post Actions",
+  "icon": null,
+  "blueprint": "jenkinsStage",
+  "team": [],
+  "properties": {
+    "status": "SUCCESS",
+    "startTimeMillis": 1717073272012,
+    "durationMillis": 26,
+    "stageUrl": "http://localhost:8080/job/Phalbert/job/salesdash/job/master/229/execution/node/17/wfapi/describe"
+  },
+  "relations": {
+    "parentBuild": "job-Phalbert-job-salesdash-job-master-229"
+  },
+  "createdAt": "2024-08-28T10:27:33.549Z",
+  "createdBy": "<port-client-id>",
+  "updatedAt": "2024-08-28T10:27:30.274Z",
+  "updatedBy": "<port-client-id>"
+}
+```
+
+</details>
+
+
+## Alternative installation via webhook
+
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest job and build entities from Jenkins. If so, use the following instructions:
+
+**Note** that when using this method, data will be ingested into Port only when the webhook is triggered.
+
+<details>
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+<h2>Port configuration</h2>
+
+Create the following blueprint definitions:
+
+<details>
+<summary>Jenkins job blueprint</summary>
+
+<JenkinsJobBlueprint/>
+
+</details>
+
+<details>
+<summary>Jenkins build blueprint (including the Jenkins job relation)</summary>
+
+<JenkinsBuildBlueprint/>
+
+</details>
+
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints):
+
+<details>
+<summary>Jenkins job and build webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `Jenkins Mapper`;
+   2. Identifier : `jenkins_mapper`;
+   3. Description : `A webhook configuration to map Jenkins builds and jobs to Port`;
+   4. Icon : `Jenkins`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <JenkinsBuildWebhookConfig/>
+
+3. Click **Save** at the bottom of the page.
+
+</details>
+
+<h2>Create a webhook in Jenkins</h2>
+
+1. Go to your Jenkins dashboard.
+2. At the sidebar on the left side of the page, select **Manage Jenkins** and click on **Manage Plugins**.
+3. Navigate to the **Available Plugins** tab and search for **Generic Event** in the search bar. Install the [Generic Event](https://plugins.jenkins.io/generic-event/) or a suitable plugin that can notify some endpoints about all events that happen in Jenkins.
+4. Go back to your Jenkins dashboard and click on **Manage Jenkins** at the left side menu.
+5. Click on the **Configure System** tab and scroll down to the **Event Dispatcher** section.
+6. Enter the value of the `url` key you received after creating the webhook configuration in the textbox.
+7. Click on **Save** at the bottom of the page.
+
+:::tip
+In order to view the different payloads and events available in Jenkins webhooks, [click here](https://plugins.jenkins.io/generic-event/).
+:::
+
+Done! Any changes to a job or build process (queued, started, completed, finalized, etc.) will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+<h2>Let's Test It</h2>
+
+This section includes a sample response data from Jenkins. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+<h3>Payload</h3>
+
+Here is an example of the payload structure from Jenkins:
+
+<details>
+<summary>Job response data</summary>
+
+```json showLineNumbers
+{
+  "_class" : "hudson.model.FreeStyleProject",
+  "displayName" : "Hello Job",
+  "fullName" : "Hello Job",
+  "name" : "Hello Job",
+  "url" : "http://localhost:8080/job/Hello%20Job/",
+  "buildable" : true,
+  "builds" : [
+    {
+      "_class" : "hudson.model.FreeStyleBuild",
+      "displayName" : "#2",
+      "duration" : 221,
+      "fullDisplayName" : "Hello Job #2",
+      "id" : "2",
+      "number" : 2,
+      "result" : "SUCCESS",
+      "timestamp" : 1700569094576,
+      "url" : "http://localhost:8080/job/Hello%20Job/2/"
+    },
+    {
+      "_class" : "hudson.model.FreeStyleBuild",
+      "displayName" : "#1",
+      "duration" : 2214,
+      "fullDisplayName" : "Hello Job #1",
+      "id" : "1",
+      "number" : 1,
+      "result" : "SUCCESS",
+      "timestamp" : 1700567994163,
+      "url" : "http://localhost:8080/job/Hello%20Job/1/"
+    }
+  ],
+  "color" : "blue"
+}
+```
+
+</details>
+
+<details>
+<summary>Build response data</summary>
+
+```json showLineNumbers
+{
+  "_class" : "hudson.model.FreeStyleBuild",
+  "displayName" : "#2",
+  "duration" : 221,
+  "fullDisplayName" : "Hello Job #2",
+  "id" : "2",
+  "number" : 2,
+  "result" : "SUCCESS",
+  "timestamp" : 1700569094576,
+  "url" : "http://localhost:8080/job/Hello%20Job/2/"
+}
+```
+
+</details>
+
+<h3>Mapping Result</h3>
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary>Job entity</summary>
+
+```json showLineNumbers
+{
+  "identifier": "hello-job",
+  "title": "Hello Job",
+  "blueprint": "jenkinsJob",
+  "properties": {
+    "jobName": "Hello Job",
+    "url": "http://localhost:8080/job/Hello%20Job/",
+    "jobStatus": "passing",
+    "timestamp": "2023-09-08T14:58:14Z"
+  },
+  "relations": {},
+  "createdAt": "2023-12-18T08:37:21.637Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-18T08:37:21.637Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary>Build entity</summary>
+
+```json showLineNumbers
+{
+  "identifier": "hello-job-2",
+  "title": "Hello Job #2",
+  "blueprint": "jenkinsBuild",
+  "properties": {
+    "buildStatus": "SUCCESS",
+    "buildUrl": "http://localhost:8080/job/Hello%20Job/2/",
+    "buildDuration": 221,
+    "timestamp": "2023-09-08T14:58:14Z"
+  },
+  "relations": {
+    "parentJob": "hello-job"
+  },
+  "createdAt": "2023-12-18T08:37:21.637Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-18T08:37:21.637Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+</details>
+
+</details>
+
+

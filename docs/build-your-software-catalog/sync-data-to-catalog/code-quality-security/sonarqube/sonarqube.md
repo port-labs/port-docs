@@ -14,7 +14,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # SonarQube
 
-Our SonarQube integration (powered by [Ocean](https://ocean.getport.io)) allows you to import `projects`, `issues`, `analyses` and `portfolios` from your SonarQube account into
+Port's SonarQube integration (powered by [Ocean](https://ocean.getport.io)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into
 Port, according to your mapping and definitions.
 
 ## Common use cases
@@ -200,14 +200,15 @@ Here is an example for `sonarqube-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: SonarQube Exporter Workflow
 
-# This workflow responsible for running SonarQube exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1

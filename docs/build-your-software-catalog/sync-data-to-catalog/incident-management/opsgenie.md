@@ -15,7 +15,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Opsgenie
 
-Our Opsgenie integration allows you to import `alert`, `incident`, `service`, `team`, `schedule` and `schedule-oncall` from your Opsgenie account into Port, according to your mapping and definitions.
+Port's Opsgenie integration allows you to import `alert`, `incident`, `service`, `team`, `schedule` and `schedule-oncall` from your Opsgenie account into Port, according to your mapping and definitions.
 
 ## Common use cases
 
@@ -195,14 +195,15 @@ Here is an example for `opsgenie-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Opsgenie Exporter Workflow
 
-# This workflow responsible for running Opsgenie exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1

@@ -3,10 +3,14 @@ import TabItem from "@theme/TabItem"
 import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import DynatraceProblemBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/apm-alerting/resources/dynatrace/\_example_dynatrace_problem_blueprint.mdx";
+import DynatraceProblemConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/apm-alerting/resources/dynatrace/\_example_dynatrace_problem_webhook_configuration.mdx"
+import DynatraceMicroserviceBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/apm-alerting/resources/dynatrace/\_example_dynatrace_microservice_blueprint.mdx"
 
 # Dynatrace
 
-Our Dyantrace integration allows you to import `problem`, `slo`, and `entity` resources from your Dynatrace instance into Port, according to your mapping and definition.
+Port's Dynatrace integration allows you to import `problem`, `slo`
+and `entity` resources from your Dynatrace instance into Port, according to your mapping and definition.
 
 ## Common use cases
 
@@ -186,14 +190,15 @@ Here is an example for `dynatrace-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Dynatrace Exporter Workflow
 
-# This workflow responsible for running Dynatrace exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
@@ -1211,4 +1216,270 @@ The combination of the sample payload and the Ocean configuration generates the 
   },
 }
 ```
+</details>
+
+
+## Alternative installation via webhook
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest problem from Dynatrace. If so, use the following instructions:
+
+**Note** that when using this method, data will be ingested into Port only when the webhook is triggered.
+<details>
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+<h2>Port configuration</h2>
+
+Create the following blueprint definitions:
+
+<details>
+<summary>Dynatrace microservice blueprint</summary>
+<DynatraceMicroserviceBlueprint/>
+</details>
+
+<details>
+<summary>Dynatrace problem blueprint</summary>
+<DynatraceProblemBlueprint/>
+</details>
+
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints):
+
+<details>
+<summary>Dynatrace problem webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+
+    1. Title : `Dynatrace Problem Mapper`;
+    2. Identifier : `dynatrace_problem_mapper`;
+    3. Description : `A webhook configuration for problem events from Dynatrace`;
+    4. Icon : `Dynatrace`;
+
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <DynatraceProblemConfiguration/>
+
+3. Click **Save** at the bottom of the page.
+
+</details>
+
+:::note
+The webhook configuration's relation mapping will function properly only when the identifiers of the Port microservice entities match the names of the entities in your Dynatrace.
+
+If there is a mismatch, you can utilize [Dynatrace Tags](https://www.dynatrace.com/support/help/manage/tags-and-metadata) to align the actual identifier in Port.
+
+To do this, create a tag with the key `proj` and value `microservice_identifier`.
+
+Then, update the relation JQ syntax to establish a connection between the Dynatrace problem and the Port microservice. Here is the updated JQ Mappings:
+
+```json showLineNumbers
+{
+    "blueprint": "dynatraceProblem",
+    "entity": {
+     ...Properties mappings,
+      "relations": {
+         "microservice": ".body.ProblemTags | split(\", \") | map(select(test(\"proj:\")) | sub(\"proj:\";\"\"))"
+      }
+    }
+}
+```
+
+<details>
+<summary>JQ expression explained</summary>
+The above JQ expression will split the tags by comma and space, then filter the tags that start with `proj:` and remove the `proj:` prefix from the tag value.
+</details>
+:::
+
+<h2>Create a webhook in Dynatrace</h2>
+
+1. Log in to Dynatrace with your credentials.
+2. Click on **Settings** at the left sidebar of the page.
+3. Choose **Integration** and click on **Problem notifications**.
+4. Select **Add notification**.
+5. Select **Custom integration** from the available integration types.
+6. Input the following details:
+    1. `Display name` - use a meaningful name such as Port Webhook.
+    2. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration.
+    3. `Overview` - you can add an optional HTTP header to your webhook request.
+    4. `Custom payload` - When a problem is detected or resolved on your entity, this payload will be sent to the webhook URL. You can enter this JSON placeholder in the textbox:
+
+       ```json showLineNumbers
+       {
+          "State":"{State}",
+          "PID":"{PID}",
+          "ProblemTitle":"{ProblemTitle}",
+          "ImpactedEntity": "{ImpactedEntity}",
+          "ProblemDetailsText": "{ProblemDetailsText}",
+          "ProblemImpact": "{ProblemImpact}",
+          "ProblemSeverity": "{ProblemSeverity}",
+          "ProblemURL": "{ProblemURL}",
+          "ProblemTags": "{ProblemTags}",
+          "ImpactedEntities": {ImpactedEntities}
+       }
+       ```
+
+    5. `Alerting profile` - configure your preferred alerting rule or use the default one.
+7. Click **Save changes** at the bottom of the page.
+
+:::tip
+ To view the different payloads and events available in Dynatrace webhooks, [look here](https://www.dynatrace.com/support/help/observe-and-explore/notifications-and-alerting/problem-notifications/webhook-integration).
+:::
+
+Done! Any problem detected on your Dynatrace entity will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+<h2>Let's Test It</h2>
+
+This section includes a sample response data from Dynatrace. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+<h3>Payload</h3>
+
+Here is an example of the payload structure from Dynatrace:
+
+<details>
+<summary>Problem response data</summary>
+
+```json showLineNumbers
+{
+  "affectedEntities": [
+    {
+      "entityId": {
+        "id": "string",
+        "type": "string"
+      },
+      "name": "string"
+    }
+  ],
+  "displayId": "string",
+  "endTime": 1574697669865,
+  "entityTags": [
+    {
+      "context": "CONTEXTLESS",
+      "key": "architecture",
+      "stringRepresentation": "architecture:x86",
+      "value": "x86"
+    },
+    {
+      "context": "ENVIRONMENT",
+      "key": "Infrastructure",
+      "stringRepresentation": "[ENVIRONMENT]Infrastructure:Linux",
+      "value": "Linux"
+    }
+  ],
+  "evidenceDetails": {
+    "details": [
+      {
+        "displayName": "Availability evidence",
+        "entity": {},
+        "evidenceType": "AVAILABILITY_EVIDENCE",
+        "groupingEntity": {},
+        "rootCauseRelevant": true,
+        "startTime": 1
+      },
+      {
+        "displayName": "User action evidence",
+        "entity": {},
+        "evidenceType": "USER_ACTION_EVIDENCE",
+        "groupingEntity": {},
+        "rootCauseRelevant": true,
+        "startTime": 1
+      }
+    ],
+    "totalCount": 1
+  },
+  "impactAnalysis": {
+    "impacts": [
+      {
+        "estimatedAffectedUsers": 1,
+        "impactType": "APPLICATION",
+        "impactedEntity": {}
+      }
+    ]
+  },
+  "impactLevel": "APPLICATION",
+  "impactedEntities": [{}],
+  "linkedProblemInfo": {
+    "displayId": "string",
+    "problemId": "string"
+  },
+  "managementZones": [
+    {
+      "id": "string",
+      "name": "HOST"
+    }
+  ],
+  "problemFilters": [
+    {
+      "id": "E2A930951",
+      "name": "BASELINE"
+    }
+  ],
+  "problemId": "06F288EE2A930951",
+  "recentComments": {
+    "comments": [
+      {
+        "authorName": "string",
+        "content": "string",
+        "context": "string",
+        "createdAtTimestamp": 1,
+        "id": "string"
+      }
+    ],
+    "nextPageKey": "AQAAABQBAAAABQ==",
+    "pageSize": 1,
+    "totalCount": 1
+  },
+  "rootCauseEntity": {},
+  "severityLevel": "AVAILABILITY",
+  "startTime": 1574697667547,
+  "status": "CLOSED",
+  "title": "title"
+}
+```
+
+</details>
+
+<h3>Mapping Result</h3>
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary>Problem entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "06F288EE2A930951",
+  "title": "title",
+  "blueprint": "dynatraceProblem",
+  "team": [],
+  "icon": "Dynatrace",
+  "properties": {
+    "entityTags": ["architecture:x86", "[ENVIRONMENT]Infrastructure:Linux"],
+    "evidenceDetails": ["Availability evidence", "User action evidence"],
+    "managementZones": ["HOST"],
+    "problemFilters": ["BASELINE"],
+    "severityLevel": "AVAILABILITY",
+    "status": "CLOSED",
+    "startTime": "2019-11-25T14:14:27Z",
+    "endTime": "2020-04-30T14:52:41Z"
+  },
+  "relations": {
+    "impactedEntities": ["HOST-06F288EE2A930951"],
+    "linkedProblemInfo": "06F288EE2A930951",
+    "rootCauseEntity": "HOST-06F288EE2A930951"
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+  
+}
+```
+
+</details>
+
+<h2>Ingest Dynatrace Entities</h2>
+
+In this example,
+you will create a `dynatrace_entity` blueprint that ingests monitored entities from your Dynatrace account.
+You will then add a Python script to make API calls to Dynatrace REST API and fetch data for your account.
+
+- [Code Repository Example](https://github.com/port-labs/example-dynatrace-entities)
+
 </details>

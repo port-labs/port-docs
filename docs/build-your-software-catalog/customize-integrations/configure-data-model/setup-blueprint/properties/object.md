@@ -17,13 +17,12 @@ Object is a data type used to save object definitions in JSON.
 
 The object property type can be used to store any key/value based data, for example:
 
-- Configurations;
-- Tags;
-- HTTP responses;
-- Dictionaries/Hash maps;
-- etc.
+- Configurations.
+- Tags.
+- HTTP responses.
+- Dictionaries/Hash maps.
 
-In this [live demo](https://demo.getport.io/cloudResources) example, we can see the `Tags` object property. 🎬
+In this [live demo](https://demo.getport.io/cloud_resources) example, we can see the `Tags` object property. 🎬
 
 ## API definition
 
