@@ -529,13 +529,13 @@ The following resources can be used to map data from Dynatrace, it is possible t
   :::
 
 
-### Congiguring entities ingestion using `entityTypes` selector
-The entity kind by default ingests only entities of the type `APPLICATION` and `SERVICE` due to large number of entity types available. However you can configure the `entity` kind mapping to ingest entities of other types such as seen in the [Dynatrace Cloud Resources guide](/guides/all/ingest-cloud-resources-using-dynatrace.md).
+### Ingest additional resource types
+By default, the `entity` kind ingests only entities of type `APPLICATION` and `SERVICE` due to the large number of available resources. However, you can configure the `entity` kind mapping to ingest entities of other types.
 
 To do this, use the `entityTypes` selector in the entity mapping like so:
 
 <details>
-<summary><b>Configuring entity types for `entity` kind (Click to expand)</b></summary>
+<summary><b>Mapping configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -565,8 +565,8 @@ resources:
 
 </details>
 
-#### List of entity types
-You can retrieve a list of all entity types by using the [Dynatrace Entity Types API](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entity-type#definition--EntityType). However, below is a list of entity types retrieved from the API so far:
+#### Available resource types
+You can retrieve a list of available resource types by using the [Dynatrace Entity Types API](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entity-type#definition--EntityType).   Below is a list of resource types retrieved from the API:
 
 <details>
 <summary><b>Dynatrace entity types (Click to expand)</b></summary>
