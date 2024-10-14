@@ -630,9 +630,9 @@ After creating and configuring your custom webhook, go to your 3rd party provide
 
 <PortApiRegionTip/>
 
-## Limitations
-The webhook api has the following limitations:
-1. Webhook payload max size - 512KiB. Reaching this limit will throw a `413 Request Entity Too Large` http error.
+:::warning Payload size limitation
+**Note**: The maximum size of the webhook payload is 512KiB. Reaching this limit will throw a `413 Request Entity Too Large` http error.
+:::
 
 ## Examples
 
