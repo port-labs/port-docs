@@ -1,0 +1,92 @@
+<details>
+<summary>CloudFront Distribution Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "cloudFrontDistribution",
+  "description": "This blueprint represents an AWS CloudFront Distribution in our software catalog",
+  "title": "CloudFront Distribution",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status"
+      },
+      "domainName": {
+        "type": "string",
+        "title": "Domain Name"
+      },
+      "lastModifiedTime": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Last Modified Time"
+      },
+      "allowedMethods": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Allowed Methods"
+      },
+      "originDomainNames": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Origin Domain Names"
+      },
+      "originIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Origin IDs"
+      },
+      "enabled": {
+        "type": "boolean",
+        "title": "Enabled"
+      },
+      "isIpv6Enabled": {
+        "type": "boolean",
+        "title": "IPv6 Enabled"
+      },
+      "httpVersion": {
+        "type": "string",
+        "title": "HTTP Version"
+      },
+      "isStaging": {
+        "type": "boolean",
+        "title": "Is Staging"
+      },
+      "kind": {
+        "type": "string",
+        "title": "Kind"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

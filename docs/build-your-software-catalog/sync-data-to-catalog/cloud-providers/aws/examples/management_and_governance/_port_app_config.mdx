@@ -1,0 +1,52 @@
+<details>
+<summary>Mapping Configuration for CloudFormation Stack and Auto Scaling Group</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::CloudFormation::Stack
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.StackId | split("/")[1]
+          blueprint: '"cloudformationStack"'
+          properties:
+            link: >-
+                'https://console.aws.amazon.com/go/view?arn=' +
+                .Properties.StackId
+            arn: .Properties.StackId
+            kind: .__Kind
+            region: .__Region
+          relations:
+            account: .__AccountId
+  - kind: AWS::AutoScaling::AutoScalingGroup
+    selector:
+      query: 'true'
+      useGetResourceAPI: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.AutoScalingGroupName
+          blueprint: '"autoScalingGroup"'
+          properties:
+            link: >-
+                'https://console.aws.amazon.com/ec2/home?region=' +
+                .__Region + '#AutoScalingGroupDetails:id=' +
+                .Properties.AutoScalingGroupName + ';view=details'
+            desiredCapacity: .Properties.DesiredCapacity
+            minSize: .Properties.MinSize
+            maxSize: .Properties.MaxSize
+            arn: .Properties.AutoScalingGroupARN
+            role: >-
+                'https://console.aws.amazon.com/go/view?arn=' +
+                .Properties.ServiceLinkedRoleARN
+            kind: .__Kind
+            region: .__Region
+          relations:
+            account: .__AccountId
+```
+
+</details>
