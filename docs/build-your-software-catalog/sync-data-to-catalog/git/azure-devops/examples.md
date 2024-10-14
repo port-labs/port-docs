@@ -128,7 +128,6 @@ In the following example you will ingest your Azure Devops work items to Port, y
 
 In the following example, you'll learn how to ingest Azure DevOps Boards into Port.  you may use the following Port blueprint definitions and integration configuration: 
 
-<ProjectBlueprint/>
 
 <BoardBlueprint/>
 
@@ -136,8 +135,6 @@ In the following example, you'll learn how to ingest Azure DevOps Boards into Po
 
 
 :::tip To Learn More
-- Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure DevOps objects to Port entities.
 - Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/work/boards/list?view=azure-devops-rest-7.1) for the Azure DevOps board object structure.
 :::
 
