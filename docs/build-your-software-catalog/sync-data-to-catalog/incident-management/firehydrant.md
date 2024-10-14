@@ -192,14 +192,15 @@ Here is an example for `firehydrant-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: FireHydrant Exporter Workflow
 
-# This workflow responsible for running FireHydrant exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
