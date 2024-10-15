@@ -575,7 +575,9 @@ To delete an existing webhook, make an HTTP DELETE request to `https://api.getpo
 
 </TabItem>
 </Tabs>
+
 <PortApiRegionTip/>
+
 </TabItem>
 <TabItem label="Using Port UI" value="ui">
 <Tabs>
@@ -631,7 +633,7 @@ After creating and configuring your custom webhook, go to your 3rd party provide
 
 :::warning Payload size limitation
 The maximum size of the webhook payload is **512KiB**.  
-Reaching this limit will throw a `413 Request Entity Too Large` http error.
+Reaching this limit will throw a `413 Request Entity Too Large` HTTP error.
 :::
 
 ## Examples
