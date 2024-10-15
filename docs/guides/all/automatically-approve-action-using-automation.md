@@ -20,8 +20,8 @@ Before we begin, make sure you have:
 
 Let's start by creating a self service action for requesting permissions:
 
-1. Navigate to the **Self-Service** section in your Port dashboard.
-2. Click on "+ Action" to create a new SSA.
+1. Navigate to the **Self-service** section in your Port dashboard.
+2. Click on "+ Action" to create a new self service action.
 3. Use the following example JSON structure for your action:
 
 ```json
@@ -75,7 +75,7 @@ Let's start by creating a self service action for requesting permissions:
 ```
 
 
-This SSA configuration does the following:
+This self service configuration does the following:
 
 - Defines an action with the identifier "request_permissions"
 - Sets up user inputs for selecting permission types (ReadOnly or ReadWrite)
@@ -85,7 +85,7 @@ This SSA configuration does the following:
 
 ## Setting up the automation
 
-Now that we have our SSA, let's create an automation to automatically approve certain requests:
+Now that we have our self service action, let's create an automation to automatically approve certain requests:
 
 1. In the Port builder, click on **+ Automation**.
 2. Use the following JSON structure for your automation:
