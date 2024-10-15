@@ -244,7 +244,7 @@ If you haven't added the `prDescription` property, and it's relative mapping con
 
 </details>
 
-<h4> Property Addition </h4>
+<h4> Property </h4>
 
 Add the `reviewers` property to the **pull request** blueprint if it doesn't exist:
 
@@ -312,7 +312,7 @@ Map the list of reviewers from your data source to the `reviewers` property:
 
 </details>
 
-<h4> Property Addition </h4>
+<h4> Property </h4>
 
 <details>
   <summary>Click to view the property addition</summary>
@@ -439,7 +439,7 @@ You can adjust the value based on your team's requirements.
 
 </details>
 
-<h4> Property Addition</h4>
+<h4> Property </h4>
 Add the `changedFiles` property to the **pull request** blueprint:
 
 <details>
@@ -512,7 +512,7 @@ Map the number of `changed_files` from the data source to the `changedFiles` pro
 
 </details>
 
-<h4> Property Addition </h4>
+<h4> Property </h4>
 Add a calculation property `days_old` to compute how many days the PR has been open:
 
 <details>
@@ -625,7 +625,7 @@ This agreement has levels based on the batch size.
 
 
 
-<h4> Property Addition </h4>
+<h4> Property </h4>
 Add a property `batchSize` to categorize the PR's batch size:
 
 <details>
