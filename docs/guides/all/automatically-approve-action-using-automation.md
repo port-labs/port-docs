@@ -24,6 +24,8 @@ Let's start by creating a self service action for requesting permissions:
 2. Click on "+ Action" to create a new self service action.
 3. Use the following example JSON structure for your action:
 
+<details>
+<summary> Request Database Access (click to expand) </summary>
 ```json
 {
   "identifier": "request_permissions",
@@ -73,6 +75,7 @@ Let's start by creating a self service action for requesting permissions:
   }
 }
 ```
+</details>
 
 
 This self service configuration does the following:
@@ -90,6 +93,8 @@ Now that we have our self service action, let's create an automation to automati
 1. In the Port builder, click on **+ Automation**.
 2. Use the following JSON structure for your automation:
 
+<details>
+<summary> Automation definition auto approve cloud resources (click to expand) </summary>
 ```json
 {
   "identifier": "auto-approve",
@@ -124,6 +129,7 @@ Now that we have our self service action, let's create an automation to automati
   "publish": true
 }
 ```
+</details>
 
 
 This automation configuration:
