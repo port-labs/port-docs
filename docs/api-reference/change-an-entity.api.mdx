@@ -679,16 +679,6 @@ This route allows you to edit a specific entity in your software catalog and upd
           schema={{"type":"object","description":"An object containing the relations of the new entity, in `\"key\":\"value\"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier."}}
         >
           
-        </SchemaItem><SchemaItem
-          name={"property name*"}
-          required={false}
-          schemaName={"any"}
-          qualifierMessage={undefined}
-          schema={{"type":"object","properties":{"identifier":{"oneOf":[{"type":"string","title":"String identifier","pattern":"^[A-Za-z0-9@_.:\\\\/=-]+$","description":"The new identifier of the entity.<br/>"},{"type":"object","title":"Search query","description":"A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).","required":["combinator","rules"],"additionalProperties":false}]},"title":{"type":"string","description":"The new title of the entity.<br/>"},"icon":{"type":"string","description":"The new icon of the entity.<br/>"},"team":{"type":"string, string[]","description":"The Port team/s to which the entity will belong.<br/>"},"properties":{"type":"object","description":"An object containing the properties of the entity, in `\"key\":\"value\"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>"},"relations":{"type":"object","description":"An object containing the relations of the new entity, in `\"key\":\"value\"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier."}},"additionalProperties":true}}
-          collapsible={false}
-          discriminator={false}
-        >
-          
         </SchemaItem>
       </ul>
     </details>
