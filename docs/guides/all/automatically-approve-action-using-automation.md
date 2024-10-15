@@ -62,8 +62,8 @@ Let's start by creating a self service action for requesting permissions:
     "method": "POST",
     "headers": {},
     "body": {
-      "text": "\nHello from Port :slightly_smiling_face:\n\n:white_circle:   Read more about Slack wehooks <https://api.slack.com/messaging/webhooks%7Chere.>\n\n:white_circle:   Read more about formating your message <https://api.slack.com/reference/surfaces/formatting%7Chere.>\n\nThis message was triggered by {{ .trigger.by.user.email }}"
-    }
+      "text": "hello from Port :slightly_smiling_face:, a {user} from your organization has requested for access to a database. the reason{reason}"
+      }
   },
   "requiredApproval": {
     "type": "ANY"
