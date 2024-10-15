@@ -6,7 +6,7 @@ description: Learn how to set up automated approvals for Self-Service Actions, i
 
 # Automating Self Service Action Approvals
 
-In this guide, we'll walk you through the process of setting up an automated approval system for Self-Service Actions (SSAs). We'll use a specific example of a permissions request system that you can easily adapt to your needs.
+In this guide, we will walk you through the process of setting up an automated approval system for Self-Service Actions (SSAs). We will use a specific example of a developer requesting a cloud resource, such as a database, with a certain level of permissions.
 
 ## Prerequisites
 
