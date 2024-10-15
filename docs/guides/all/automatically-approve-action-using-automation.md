@@ -62,7 +62,7 @@ Let's start by creating a self service action for requesting permissions:
     "method": "POST",
     "headers": {},
     "body": {
-      "text": "hello from Port :slightly_smiling_face:, {.trigger.by.user.email} from your organization has requested for access to a database. The reason{.payload.properties.reason}"
+      "text": "hello from Port :slightly_smiling_face:, {.trigger.by.user.email} from your organization has requested for access to a database. The reason {.payload.properties.reason}"
       }
   },
   "requiredApproval": {
