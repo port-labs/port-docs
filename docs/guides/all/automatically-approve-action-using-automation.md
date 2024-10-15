@@ -166,6 +166,6 @@ Remember to regularly review and update your automation rules as your processes 
 
 ## Conclusion
 
-By leveraging Port's automation capabilities, we've created an efficient, secure workflow that reduces manual overhead for permission requests. This system streamlines the approval process for **ReadOnly** permissions while ensuring that **ReadWrite** requests still go through manual review.
+By leveraging Port's automation capabilities, we have created an efficient, secure workflow that reduces manual overhead for permission requests. This system streamlines the approval process for **ReadOnly** permissions while ensuring that **ReadWrite** requests still go through manual review.
 
 We're excited to see how you'll use this feature to improve your team's productivity and streamline your permission management processes!
