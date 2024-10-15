@@ -34,6 +34,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"post"}
   path={"/v1/blueprints/{blueprint_identifier}/entities"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -68,7 +69,7 @@ This route allows you to create an entity in your software catalog based on an e
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint you want to create an entity from.<br/>"}}
+        param={{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint you want to create an entity from.<br/>","enumDescriptions":[]}}
       >
         
       </ParamsItem>
@@ -92,27 +93,27 @@ This route allows you to create an entity in your software catalog based on an e
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"upsert","required":false,"description":"If `true`, this call will override the entire entity if it already exists.<br/>"}}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"upsert","required":false,"description":"If `true`, this call will override the entire entity if it already exists.<br/>","enumDescriptions":[]}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"merge","required":false,"description":"If `true` and `upsert` is also `true`, this call will update the entity if it already exists.<br/>"}}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"merge","required":false,"description":"If `true` and `upsert` is also `true`, this call will update the entity if it already exists.<br/>","enumDescriptions":[]}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"validation_only","required":false,"description":"If `true`, this call will only validate the entity and return the validation errors.<br/>"}}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"validation_only","required":false,"description":"If `true`, this call will only validate the entity and return the validation errors.<br/>","enumDescriptions":[]}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"create_missing_related_entities","required":false,"description":"If `true`, this call will also create missing related entities.<br/>This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.<br/>"}}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"create_missing_related_entities","required":false,"description":"If `true`, this call will also create missing related entities.<br/>This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.<br/>","enumDescriptions":[]}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"query","name":"run_id","required":false,"description":"You can provide a `run_id` to associate the created entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>"}}
+        param={{"schema":{"type":"string"},"in":"query","name":"run_id","required":false,"description":"You can provide a `run_id` to associate the created entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>","enumDescriptions":[]}}
       >
         
       </ParamsItem>
