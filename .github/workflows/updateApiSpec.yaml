@@ -22,7 +22,7 @@ jobs:
 
     # Step 2: Download the YAML file from the URL
     - name: Download YAML file
-      run: curl -sL https://api.getport.io/yaml -o newSpec.yaml
+      run: curl -sL https://api.getport.io/swagger/yaml -o newSpec.yaml
 
     # Step 3: Generate a SHA256 hash of the downloaded YAML file
     - name: Generate hash of YAML contents
