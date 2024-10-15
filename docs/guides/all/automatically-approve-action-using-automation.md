@@ -1,7 +1,7 @@
 ---
 displayed_sidebar: null
 title: Automating Self Service Action Approval
-description: Learn how to set up automated approvals for Self-Service Actions, improving efficiency and reducing manual overhead.
+description: Learn how to set up automated approvals for self service actions, improving efficiency and reducing manual overhead.
 ---
 
 # Automating Self Service Action Approvals
@@ -13,7 +13,7 @@ In this guide, we will walk you through the process of setting up an automated a
 Before we begin, make sure you have:
 
 - Access to your Port account
-- Permissions to create and edit Self-Service Actions and Automations
+- Permissions to create and edit self service actions and automations
 - A basic understanding of JSON and JQ expressions
 
 ## Creating the Self-Service Action
@@ -27,7 +27,7 @@ Let's start by creating a Self-Service Action for requesting permissions:
 ```json
 {
   "identifier": "request_permissions",
-  "title": "Self Service - Request Permissions",
+  "title": "Request Database Access",
   "trigger": {
     "type": "self-service",
     "operation": "CREATE",
@@ -44,7 +44,11 @@ Let's start by creating a Self-Service Action for requesting permissions:
             "ReadOnly": "lightGray",
             "ReadWrite": "lightGray"
           }
-        }
+        },
+        "reason": {
+          "type": "string",
+          "title" : "Reason for Requesting Permission"
+          }
       },
       "required": [],
       "order": []
@@ -52,7 +56,7 @@ Let's start by creating a Self-Service Action for requesting permissions:
   },
   "invocationMethod": {
     "type": "SLACK",
-    "url": "https://hooks.slack.com/services/xyz",
+    "url": "https://hooks.slack.com/services/xyz", //Replace this with your slack webhook url
     "agent": false,
     "synchronized": true,
     "method": "POST",
@@ -89,7 +93,7 @@ Now that we have our SSA, let's create an automation to automatically approve ce
 ```json
 {
   "identifier": "auto-approve",
-  "title": "Auto Approve",
+  "title": "Auto Approve Cloud Resource Access",
   "description": "Auto Approve",
   "trigger": {
     "type": "automation",
@@ -150,22 +154,7 @@ You can customize the automation to fit your specific needs:
 - **Customize the approval message**: Modify the description in the webhook body to provide more context.
 
 
-## Best Practices
-
-To ensure your automated approval system works smoothly and securely:
-
-- **Match identifiers**: Ensure the `actionIdentifier` in the automation matches the identifier of your SSA (in this case, "request_permissions").
-- **Thorough testing**: Test the automation with various inputs to ensure it only auto-approves intended requests.
-- **Regular monitoring**: Set up alerts or periodic checks to ensure the system functions as expected.
-- **Security measures**: Implement additional checks for sensitive operations, such as user role verification.
-- **Documentation**: Keep your team informed about which actions are auto-approved and under what conditions.
-
-:::tip
-Remember to regularly review and update your automation rules as your processes evolve. This ensures your automated system remains efficient and secure.
-:::
 
 ## Conclusion
 
 By leveraging Port's automation capabilities, we have created an efficient, secure workflow that reduces manual overhead for permission requests. This system streamlines the approval process for **ReadOnly** permissions while ensuring that **ReadWrite** requests still go through manual review.
-
-We're excited to see how you'll use this feature to improve your team's productivity and streamline your permission management processes!
