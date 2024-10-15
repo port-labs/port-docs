@@ -1,12 +1,12 @@
 ---
 displayed_sidebar: null
-title: Automating Self Service Action Approval
+title: Automating self service action approval
 description: Learn how to set up automated approvals for self service actions, improving efficiency and reducing manual overhead.
 ---
 
-# Automating Self Service Action Approvals
+# Automating self service action approvals
 
-In this guide, we will walk you through the process of setting up an automated approval system for Self-Service Actions (SSAs). We will use a specific example of a developer requesting a cloud resource, such as a database, with a certain level of permissions.
+In this guide, we will walk you through the process of setting up an automated approval system for self service actions. We will use a specific example of a developer requesting a cloud resource, such as a database, with a certain level of permissions.
 
 ## Prerequisites
 
@@ -16,9 +16,9 @@ Before we begin, make sure you have:
 - Permissions to create and edit self service actions and automations
 - A basic understanding of JSON and JQ expressions
 
-## Creating the Self-Service Action
+## Creating the self service action
 
-Let's start by creating a Self-Service Action for requesting permissions:
+Let's start by creating a self service action for requesting permissions:
 
 1. Navigate to the **Self-Service** section in your Port dashboard.
 2. Click on "+ Action" to create a new SSA.
@@ -83,7 +83,7 @@ This SSA configuration does the following:
 - Specifies that approval is required
 - Sets up email notifications for approvals
 
-## Setting Up the Automation
+## Setting up the automation
 
 Now that we have our SSA, let's create an automation to automatically approve certain requests:
 
@@ -145,7 +145,7 @@ The automation uses a JQ expression to check the permission type:
 
 When the condition is met, it sends a PATCH request to Port's API to approve the action run.
 
-## Customizing the Automation
+## Customizing the automation
 
 You can customize the automation to fit your specific needs:
 
