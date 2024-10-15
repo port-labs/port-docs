@@ -21,8 +21,8 @@ Before we begin, make sure you have:
 Let's start by creating a Self-Service Action for requesting permissions:
 
 1. Navigate to the **Self-Service** section in your Port dashboard.
-2. Click on "New Action" to create a new SSA.
-3. Use the following JSON structure for your action:
+2. Click on "+ Action" to create a new SSA.
+3. Use the following example JSON structure for your action:
 
 ```json
 {
@@ -83,7 +83,7 @@ This SSA configuration does the following:
 
 Now that we have our SSA, let's create an automation to automatically approve certain requests:
 
-1. In the Port builder, click on **Create Automation**.
+1. In the Port builder, click on **+ Automation**.
 2. Use the following JSON structure for your automation:
 
 ```json
@@ -167,7 +167,5 @@ Remember to regularly review and update your automation rules as your processes 
 ## Conclusion
 
 By leveraging Port's automation capabilities, we've created an efficient, secure workflow that reduces manual overhead for permission requests. This system streamlines the approval process for **ReadOnly** permissions while ensuring that **ReadWrite** requests still go through manual review.
-
-As you implement this in your own environment, consider starting with simple, low-risk automations like this one, and gradually expanding to more complex scenarios as you become more comfortable with the system.
 
 We're excited to see how you'll use this feature to improve your team's productivity and streamline your permission management processes!
