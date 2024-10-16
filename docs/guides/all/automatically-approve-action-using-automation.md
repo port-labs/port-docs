@@ -87,7 +87,7 @@ This self service configuration does the following:
 
 ## Set up the automation
 
-Now that we have our self service action, let's create an automation to automatically approve certain requests:
+Now that we have our self service action, let's create an automation that will approve certain requests:
 
 1. In the Port builder, click on **+ Automation**.
 2. Use the following JSON structure for your automation:
