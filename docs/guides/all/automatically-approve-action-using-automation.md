@@ -15,7 +15,7 @@ Before we begin, make sure you have:
 - Access to your Port account.
 - Permissions to create and edit self service actions and automations.
 
-## Creating the self service action
+## Create the self-service action
 
 Let's start by creating a self service action for requesting permissions:
 
