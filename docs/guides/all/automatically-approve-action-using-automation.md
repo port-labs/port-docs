@@ -89,7 +89,7 @@ This self service configuration does the following:
 
 Now that we have our self service action, let's create an automation that will approve certain requests:
 
-1. In the [Automations page](https://app.getport.io/settings/automations), click on **+ Automation**.
+1. In the [Automations page](https://app.getport.io/settings/automations), click on `+ Automation`.
 2. Use the following JSON structure for your automation:
 
 <details>
