@@ -19,7 +19,7 @@ Before we begin, make sure you have:
 
 Let's start by creating a self service action for requesting permissions:
 
-1. Navigate to the [Self-service](https://app.getport.io/self-serve) section in your Port dashboard.
+1. Navigate to the [Self-service](https://app.getport.io/self-serve) page in your portal.
 2. Click on "+ Action" to create a new self service action.
 3. Use the following JSON structure for your action:
 
