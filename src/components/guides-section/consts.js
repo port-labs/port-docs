@@ -823,7 +823,7 @@ export const availableGuides = [
     {
         title: "Automatically approve actions using an automation",
         description: "Set up automated approvals for self service actions",
-        tags: ["Automations", "Actions"],
+        tags: ["Cloud access management", "Actions", "Automations"],
         logos: ["Actions", "Automations"],
         link: "/guides/all/automatically-approve-action-using-automation"
     },
