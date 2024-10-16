@@ -93,7 +93,7 @@ Now that we have our self service action, let's create an automation to automati
 2. Use the following JSON structure for your automation:
 
 <details>
-<summary> Automation definition auto approve cloud resources (click to expand) </summary>
+<summary> Automation definition - auto approve cloud resources (click to expand) </summary>
 ```json
 {
   "identifier": "auto-approve",
