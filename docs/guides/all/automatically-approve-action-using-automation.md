@@ -21,7 +21,7 @@ Let's start by creating a self service action for requesting permissions:
 
 1. Navigate to the **Self-service** section in your Port dashboard.
 2. Click on "+ Action" to create a new self service action.
-3. Use the following example JSON structure for your action:
+3. Use the following JSON structure for your action:
 
 <details>
 <summary> Request Database Access (click to expand) </summary>
