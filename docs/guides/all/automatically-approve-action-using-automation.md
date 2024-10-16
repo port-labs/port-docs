@@ -12,7 +12,7 @@ In this guide, we will walk you through the process of setting up an automated a
 
 Before we begin, make sure you have:
 
-- Access to your Port account
+- Access to your Port account.
 - Permissions to create and edit self service actions and automations
 - A basic understanding of JSON and JQ expressions
 
