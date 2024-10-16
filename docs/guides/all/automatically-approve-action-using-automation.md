@@ -19,7 +19,7 @@ Before we begin, make sure you have:
 
 Let's start by creating a self service action for requesting permissions:
 
-1. Navigate to the **Self-service** section in your Port dashboard.
+1. Navigate to the [Self-service](https://app.getport.io/self-serve) section in your Port dashboard.
 2. Click on "+ Action" to create a new self service action.
 3. Use the following JSON structure for your action:
 
@@ -79,17 +79,17 @@ Let's start by creating a self service action for requesting permissions:
 
 This self service configuration does the following:
 
-- Defines an action with the identifier "request_permissions"
-- Sets up user inputs for selecting permission types (ReadOnly or ReadWrite)
-- Configures a Slack webhook invocation method to notify about new requests
-- Specifies that approval is required
-- Sets up email notifications for approvals
+- Defines an action with the identifier "request_permissions".
+- Sets up user inputs for selecting permission types (ReadOnly or ReadWrite).
+- Configures a Slack webhook invocation method to notify about new requests.
+- Specifies that approval is required.
+- Sets up email notifications for approvals.
 
 ## Set up the automation
 
 Now that we have our self service action, let's create an automation that will approve certain requests:
 
-1. In the Port builder, click on **+ Automation**.
+1. In the [Automations page](https://app.getport.io/settings/automations), click on **+ Automation**.
 2. Use the following JSON structure for your automation:
 
 <details>
@@ -133,9 +133,9 @@ Now that we have our self service action, let's create an automation that will a
 
 This automation configuration:
 
-- Triggers when a new run of the "request_permissions" action is created
-- Checks if the requested permission type is "ReadOnly"
-- If the condition is met, it automatically approves the request via Port's API
+- Triggers when a new run of the "request_permissions" action is created.
+- Checks if the requested permission type is "ReadOnly".
+- If the condition is met, it automatically approves the request via Port's API.
 
 ## How It Works
 
