@@ -11,6 +11,10 @@ Here you will find more Port-related content that can help you get the most out 
 
 ## Tools
 
+#### JQ playground
+
+Test JSON snippets against jq expressions with real-time filters and AI-powered assistance, using Port's [JQ playground](https://jq.getport.io/).
+
 #### Port highlight search - chrome extension
 
 This handy [chrome extension](https://chromewebstore.google.com/detail/highlight-search-in-port/ekbladoiehfohpcppcclfkcnnlchejnb?hl=en-US&utm_source=ext_sidebar) allows you to highlight text in any webpage and quickly search for it in your developer portal.
