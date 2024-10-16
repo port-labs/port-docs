@@ -4,7 +4,7 @@ title: Automating self service action approval
 description: Learn how to set up automated approvals for self service actions, improving efficiency and reducing manual overhead.
 ---
 
-# Automating self service action approvals
+# Automate self-service action approvals
 
 In this guide, we will walk you through the process of setting up an automated approval system for self service actions. We will use a specific example of a developer requesting a cloud resource, such as a database, with a certain level of permissions.
 
