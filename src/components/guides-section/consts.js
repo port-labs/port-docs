@@ -826,6 +826,14 @@ export const availableGuides = [
         tags: ["Engineering metrics", "SDLC", "GitHub"],
         logos: ["GitHub"],
         link: "/guides/all/working_agreements_and_measuring_pr_standards"
+       
+    },
+    {
+        title: "Automatically approve actions using an automation",
+        description: "Set up automated approvals for self service actions",
+        tags: ["Cloud access management", "Actions", "Automations"],
+        logos: ["Slack"],
+        link: "/guides/all/automatically-approve-action-using-automation"
     },
     
 ]

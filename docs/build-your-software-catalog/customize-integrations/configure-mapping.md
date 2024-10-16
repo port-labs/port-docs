@@ -161,6 +161,10 @@ Click on the `Add kind` button to add an example:
 
 After adding your example, click on the `Test mapping` button in the bottom-right panel to test your mapping against the example data.
 
+:::tip Port's JQ playground
+In addition to the aforementioned JQ playground, Port provides a general [JQ playground](https://jq.getport.io/) where you can test any JSON snippet against JQ expressions with real-time filters and AI-powered assistance.
+:::
+
 ### Edit an integration's mapping
 
 Once you have configured an integration's mapping to your liking, click the `Resync` button in the bottom-right to save your changes.
