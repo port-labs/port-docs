@@ -150,7 +150,7 @@ The automation uses a JQ expression to check the permission type:
 
 When the condition is met, it sends a PATCH request to Port's API to approve the action run.
 
-## Customizing the automation
+## Customize the automation
 
 You can customize the automation to fit your specific needs:
 
