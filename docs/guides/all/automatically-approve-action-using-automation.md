@@ -85,7 +85,7 @@ This self service configuration does the following:
 - Specifies that approval is required
 - Sets up email notifications for approvals
 
-## Setting up the automation
+## Set up the automation
 
 Now that we have our self service action, let's create an automation to automatically approve certain requests:
 
