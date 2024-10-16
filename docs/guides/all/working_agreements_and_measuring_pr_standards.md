@@ -3,6 +3,10 @@ sidebar_position: 1
 displayed_sidebar: null
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx";
+
 # Implement working agreements and measure pull request standards 
 
 ## Overview
@@ -686,4 +690,199 @@ You can adjust the thresholds based on your team's requirements.
 
 
 
+## Pull request metrics aggregation
 
+To measure PR standards effectively, add aggregation properties on the **service** and **organization** blueprints.
+This will allow us to capture important metrics such as:
+
+- PR Average Duration (Service Level)
+- PRs Opened (Service & Organization Level)
+- PRs Merged (Service & Organization Level)
+- Average Commits per PR (Service & Organization Level)
+- Average Lines of Code (LOC) Changed (Service & Organization Level)
+
+::::info Aggregation on organization level
+To aggregate on an organization level, apply the same settings to a higher hierarchy.
+::::
+
+<Tabs
+  defaultValue="averagePrDuration"
+  values={[
+    {label: 'Average PR Duration', value: 'averagePrDuration'},
+    {label: 'PRs Opened', value: 'prsOpened'},
+    {label: 'PRs Merged', value: 'prsMerged'},
+    {label: 'Average Commits per PR', value: 'averageCommitsPerPr'},
+    {label: 'Average LOC Changed', value: 'averageLocChanged'},
+  ]}>
+
+<TabItem value="averagePrDuration">
+
+Add the following aggregation property to the **service** blueprint:
+
+<details>
+  <summary>Click to view the aggregation property</summary>
+
+```json
+"averagePrDuration": {
+  "title": "Average PR Duration",
+  "type": "number",
+  "target": "githubPullRequest",
+  "calculationSpec": {
+    "func": "average",
+    "averageOf": "week",
+    "calculationBy": "property",
+    "property": "days_old"
+  },
+  "query": {
+    "combinator": "and",
+    "rules": [
+      {
+        "property": "mergedAt",
+        "operator": "isNotEmpty"
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+</TabItem>
+
+<TabItem value="prsOpened">
+
+Add the following aggregation property to the **service** and **organization** blueprint:
+
+<details>
+  <summary>Click to view the aggregation property</summary>
+
+```json
+"openPrs": {
+  "title": "Open PRs",
+  "type": "number",
+  "target": "githubPullRequest",
+  "calculationSpec": {
+    "func": "count",
+    "calculationBy": "entities"
+  },
+  "query": {
+    "combinator": "and",
+    "rules": [
+      {
+        "property": "status",
+        "operator": "=",
+        "value": "open"
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+</TabItem>
+
+<TabItem value="prsMerged">
+
+Add the following aggregation property to the **service** blueprint:
+
+<details>
+  <summary>Click to view the aggregation property</summary>
+
+```json
+"mergedPrs": {
+  "title": "Merged PRs",
+  "type": "number",
+  "target": "githubPullRequest",
+  "calculationSpec": {
+    "func": "count",
+    "calculationBy": "entities"
+  },
+  "query": {
+    "combinator": "and",
+    "rules": [
+      {
+        "property": "status",
+        "operator": "=",
+        "value": "merged"
+      }
+    ]
+  }
+}
+```
+
+</details>
+
+</TabItem>
+
+<TabItem value="averageCommitsPerPr">
+
+Add the following aggregation property to the **service** blueprint:
+
+<details>
+  <summary>Click to view the aggregation property</summary>
+
+```json
+"averageCommitsPerPr": {
+  "title": "Average Commits per PR",
+  "type": "number",
+  "target": "githubPullRequest",
+  "calculationSpec": {
+    "averageOf": "week",
+    "func": "average",
+    "calculationBy": "property",
+    "property": "commits",
+    "measureTimeBy": "$createdAt"
+  }
+}
+```
+
+</details>
+
+</TabItem>
+
+<TabItem value="averageLocChanged">
+
+
+
+First, ensure you have a calculation property `totalLocChanged` on the **pull request** blueprint:
+
+<details>
+  <summary>Click to view the calculation property</summary>
+
+```json
+"totalLocChanged": {
+  "title": "Total LOC Changed",
+  "type": "number",
+  "calculation": ".properties.additions + .properties.deletions"
+}
+```
+
+</details>
+
+Add the following aggregation property to the **service** and **organization** blueprints:
+
+<details>
+  <summary>Click to view the aggregation property</summary>
+
+```json
+"averagePrLinesOfCode": {
+  "title": "Average PR Lines of Code",
+  "type": "number",
+  "target": "githubPullRequest",
+  "calculationSpec": {
+    "func": "average",
+    "averageOf": "week",
+    "calculationBy": "property",
+    "property": "totalLocChanged"
+  }
+}
+```
+
+</details>
+
+</TabItem>
+
+</Tabs>
+
+By implementing these aggregation properties, you can effectively measure and monitor PR standards at both the service and organization levels.
