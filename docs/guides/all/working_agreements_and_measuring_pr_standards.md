@@ -886,3 +886,49 @@ Add the following aggregation property to the **service** and **organization** b
 </Tabs>
 
 By implementing these aggregation properties, you can effectively measure and monitor PR standards at both the service and organization levels.
+
+
+##  Notification automation
+Add this automation feature to notify a Slack channel when a scorecard value changes
+
+<details>
+<summary>Automation for sending Slack notifications on scorecard value change (click to expand)</summary>
+
+```json  
+{
+   "identifier": "scorecardValueChanged",
+   "title": "Notify Slack on Scorecard Value Change",
+   "icon": "Slack",
+   "description": "Sends a Slack message when the scorecard value changes.",
+   "trigger": {
+      "type": "automation",
+      "event": {
+         "type": "PROPERTY_CHANGED",
+         "blueprintIdentifier": "githubPullRequest",
+         "propertyIdentifier": "scorecard"
+      },
+      "condition": {
+         "type": "JQ",
+         "expressions": [
+            ".diff.after.properties.scorecard != .diff.before.properties.scorecard"
+         ],
+         "combinator": "and"
+      }
+   },
+   "invocationMethod": {
+      "type": "WEBHOOK",
+      "url": "{{ .event.diff.after.properties.serviceSlackUrl }}",
+      "agent": false,
+      "synchronized": true,
+      "body": {
+         "channel": "{{ .event.diff.after.properties.serviceSlackChannel }}",
+         "text": "*Scorecard value changed for PR <{{ .event.diff.after.properties.link }}| {{ .event.diff.after.title }}>*\n\n *Title:* {{ .event.diff.after.title }}\n\n *New Scorecard Value:* {{ .event.diff.after.properties.scorecard }}\n\n *Link:* <{{ .event.diff.after.properties.link }}|View PR>\n\n *Creator:* {{ .event.diff.after.properties.creator }}\n\n *Assignees:* {{ .event.diff.after.properties.assignees }}\n\n *Reviewers:* {{ .event.diff.after.properties.reviewers }}\n\n"
+      }
+   },
+   "publish": true
+}
+```
+</details>
+::::tip Adding Automations
+To add new automations, follow the steps outlined in the [Automation Setup](/actions-and-automations/define-automations/setup-action) section of this guide.
+::::
