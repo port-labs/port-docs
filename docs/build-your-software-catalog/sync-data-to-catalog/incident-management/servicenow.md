@@ -411,6 +411,7 @@ Our ServiceNow integration currently supports the below resources for the mappin
 - Service Catalog
 - Incident
 
+For a list of CMDB tables, see the [ServiceNow Docs](https://docs.servicenow.com/bundle/xanadu-servicenow-platform/page/product/configuration-management/reference/cmdb-tables-details.html)
 :::
 
 - The root key of the integration configuration is the `resources` key:
