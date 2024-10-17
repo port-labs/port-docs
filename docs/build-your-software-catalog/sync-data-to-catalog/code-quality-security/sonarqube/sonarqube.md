@@ -19,7 +19,7 @@ Port, according to your mapping and definitions.
 
 ## Common use cases
 
-- Map `projects`, `issues` and `analyses` in your SonarQube organization environment.
+- Map `projects`, `issues`, `analyses` and `portfolios` in your SonarQube organization environment.
 - Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in
   Port.
 - Create/delete SonarQube objects using self-service actions.
@@ -121,7 +121,7 @@ Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readth
 :::
 
 <details>
-  <summary>ArgoCD Application</summary>
+  <summary><b>ArgoCD Application (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 apiVersion: argoproj.io/v1alpha1
@@ -492,7 +492,7 @@ Examples of blueprints and the relevant integration configurations:
 ### Project
 
 <details>
-<summary>Projects blueprint</summary>
+<summary><b>Projects blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -563,7 +563,7 @@ Examples of blueprints and the relevant integration configurations:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 :::tip filter projects
 The integration provides an option to filter the data that is retrieved from the SonarQube API using the following attributes:
@@ -630,7 +630,7 @@ resources:
 ### Issue
 
 <details>
-<summary>Issue blueprint</summary>
+<summary><b>Issue blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -699,7 +699,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 :::tip filter issues
 The integration provides an option to filter the data that is retrieved from the SonarQube API using the following attributes:
@@ -759,7 +759,7 @@ resources:
 ### Saas Analysis
 
 <details>
-<summary>Saas analysis blueprint</summary>
+<summary><b>Saas analysis blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -812,7 +812,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -843,7 +843,7 @@ resources:
 ### On-Premise Analysis
 
 <details>
-<summary>On-premise analysis blueprint</summary>
+<summary><b>On-premise analysis blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -896,7 +896,7 @@ resources:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -923,6 +923,105 @@ resources:
 
 </details>
 
+### Portfolio
+
+<details>
+<summary><b>Portfolio blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "sonarQubePortfolio",
+  "title": "SonarQube Portfolio",
+  "icon": "sonarqube",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "visibility": {
+        "type": "string",
+        "title": "Visibility",
+        "enum": [
+          "PUBLIC",
+          "PRIVATE"
+        ],
+        "enumColors": {
+          "PUBLIC": "green",
+          "PRIVATE": "lightGray"
+        }
+      },
+      "selectionMode": {
+        "type": "string",
+        "title": "Selection Mode",
+        "enum": [
+          "AUTO",
+          "MANUAL",
+          "NONE"
+        ],
+        "enumColors": {
+          "AUTO": "blue",
+          "MANUAL": "green",
+          "NONE": "lightGray"
+        }
+      },
+      "disabled": {
+        "type": "boolean",
+        "title": "Disabled"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "referencedBy": {
+      "title": "Referenced By",
+      "target": "sonarQubePortfolio",
+      "required": false,
+      "many": true
+    },
+    "subPortfolios": {
+      "title": "Sub Portfolios",
+      "target": "sonarQubePortfolio",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>Integration configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+resources:
+  - kind: portfolios
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .name
+          blueprint: '"sonarQubePortfolio"'
+          properties:
+            description: .description
+            visibility: if .visibility then .visibility | ascii_upcase else null end
+            selectionMode: if .selectionMode then .selectionMode | ascii_upcase else null end
+            disabled: .disabled
+          relations:
+            subPortfolios: .subViews | map(select((.qualifier | IN("VW", "SVW"))) | .key)
+            referencedBy: .referencedBy | map(select((.qualifier | IN("VW", "SVW"))) | .key)
+```
+
+</details>
+
 ## Let's Test It
 
 This section includes a sample response data from SonarQube when a code repository is scanned for quality assurance. In
@@ -934,7 +1033,7 @@ section.
 Here is an example of the payload structure from SonarQube:
 
 <details>
-<summary> Project response data</summary>
+<summary><b>Project response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1004,7 +1103,7 @@ Here is an example of the payload structure from SonarQube:
 </details>
 
 <details>
-<summary> Issue response data</summary>
+<summary><b>Issue response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1048,7 +1147,7 @@ Here is an example of the payload structure from SonarQube:
 </details>
 
 <details>
-<summary> Analysis response data</summary>
+<summary><b>Analysis response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1098,12 +1197,113 @@ Here is an example of the payload structure from SonarQube:
 
 </details>
 
+<details>
+<summary><b>Portfolio response data (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "key": "GetPort_SelfService",
+  "name": "GetPort SelfService",
+  "desc": "Test",
+  "qualifier": "VW",
+  "visibility": "public",
+  "selectionMode": "NONE",
+  "subViews": [
+    {
+      "key": "GetPort_SelfService_Second",
+      "name": "GetPort SelfService Second",
+      "qualifier": "SVW",
+      "selectionMode": "NONE",
+      "subViews": [
+        {
+          "key": "GetPort_SelfService_Third",
+          "name": "GetPort SelfService Third",
+          "qualifier": "SVW",
+          "selectionMode": "NONE",
+          "subViews": [],
+          "referencedBy": []
+        },
+        {
+          "key": "Port_Test",
+          "name": "Port Test",
+          "qualifier": "SVW",
+          "selectionMode": "NONE",
+          "subViews": [],
+          "referencedBy": []
+        }
+      ],
+      "referencedBy": []
+    },
+    {
+      "key": "Python",
+      "name": "Python",
+      "qualifier": "SVW",
+      "selectionMode": "NONE",
+      "subViews": [
+        {
+          "key": "Time",
+          "name": "Time",
+          "qualifier": "SVW",
+          "selectionMode": "NONE",
+          "subViews": [
+            {
+              "key": "port_ayodeji",
+              "name": "port-ayodeji",
+              "qualifier": "SVW",
+              "selectionMode": "NONE",
+              "subViews": [
+                {
+                  "key": "port_ayodeji:REferenced",
+                  "name": "REferenced",
+                  "qualifier": "VW",
+                  "visibility": "public",
+                  "originalKey": "REferenced"
+                }
+              ],
+              "referencedBy": []
+            }
+          ],
+          "referencedBy": []
+        }
+      ],
+      "referencedBy": []
+    },
+    {
+      "key": "GetPort_SelfService:Authentication_Application",
+      "name": "Authentication Application",
+      "desc": "For auth services",
+      "qualifier": "APP",
+      "visibility": "private",
+      "selectedBranches": [
+        "main"
+      ],
+      "originalKey": "Authentication_Application"
+    }
+  ],
+  "referencedBy": [
+    {
+      "key": "GetPort_SelfService:Authentication_Application",
+      "name": "Authentication Application",
+      "desc": "For auth services",
+      "qualifier": "VW",
+      "visibility": "private",
+      "selectedBranches": [
+        "main"
+      ],
+      "originalKey": "Authentication_Application"
+    }
+  ]
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Project entity in Port</summary>
+<summary><b>Project entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1131,7 +1331,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Issue entity in Port</summary>
+<summary><b>Issue entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1158,7 +1358,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Analysis entity in Port</summary>
+<summary><b>Analysis entity in Port (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1183,13 +1383,41 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
+<details>
+<summary><b>Portfolio entity in Port (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "GetPort_SelfService",
+  "title": "GetPort SelfService",
+  "blueprint": "sonarQubePortfolio",
+  "properties": {
+    "description": null,
+    "visibility": "PUBLIC",
+    "selectionMode": "NONE",
+    "disabled": null
+  },
+  "relations": {
+    "subPortfolios": [
+      "GetPort_SelfService_Second",
+      "Python"
+    ],
+    "referencedBy": [
+      "GetPort_SelfService:Authentication_Application"
+    ]
+  }
+}
+```
+
+</details>
+
 ## Alternative installation via webhook
 
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from SonarQube. If so, use the following instructions:
 
 <details>
 
-<summary><b>Webhook installation (click to expand)</b></summary>
+<summary><b><b>Webhook installation (click to expand)</b> (Click to expand)</b></summary>
 
 In this example you are going to create a webhook integration between [SonarQube's SonarCloud](https://www.sonarsource.com/products/sonarcloud/) and Port, which will ingest SonarQube code quality `analysis` entities.
 
@@ -1198,7 +1426,7 @@ In this example you are going to create a webhook integration between [SonarQube
 Create the following blueprint definition:
 
 <details>
-<summary>SonarQube analysis blueprint</summary>
+<summary><b>SonarQube analysis blueprint (Click to expand)</b></summary>
 
 <SonarcloudAnalysisBlueprint/>
 
@@ -1207,7 +1435,7 @@ Create the following blueprint definition:
 Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints):
 
 <details>
-<summary>SonarQube analysis webhook configuration</summary>
+<summary><b>SonarQube analysis webhook configuration (Click to expand)</b></summary>
 
 1. **Basic details** tab - fill the following details:
 
@@ -1257,7 +1485,7 @@ This section includes a sample webhook event sent from SonarQube when a code rep
 Here is an example of the payload structure sent to the webhook URL when a SonarQube repository is scanned:
 
 <details>
-<summary> Webhook event payload</summary>
+<summary><b>Webhook event payload (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
