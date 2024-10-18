@@ -888,15 +888,27 @@ Add the following aggregation property to the **service** and **organization** b
 By implementing these aggregation properties, you can effectively measure and monitor PR standards at both the service and organization levels.
 
 
+
 ## Aggregation on team level
 
 To measure PR standards at the team level, add the following aggregation properties to the **team** [blueprint](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-teams):
 
+<Tabs
+  defaultValue="totalAverageCommitsPerPr"
+  values={[
+    {label: 'Total Average Commits Per PR', value: 'totalAverageCommitsPerPr'},
+    {label: 'Monthly Average PR LOC', value: 'monthlyAveragePrLoc'},
+    {label: 'Average Time to Merge', value: 'averageTimeToMerge'}
+  ]}>
+
+<TabItem value="totalAverageCommitsPerPr">
+
+Add the following aggregation property to calculate the total average commits per PR:
+
 <details>
-    <summary>Click to view the aggregation properties</summary>
+  <summary>Click to view the aggregation property</summary>
 
 ```json showLineNumbers
- {
   "total_average_commits_per_pr": {
     "title": "Total Average Commits Per PR",
     "type": "number",
@@ -908,7 +920,22 @@ To measure PR standards at the team level, add the following aggregation propert
       "calculationBy": "property",
       "measureTimeBy": "$createdAt"
     }
-  },
+  }
+
+```
+</details>
+
+</TabItem>
+
+<TabItem value="monthlyAveragePrLoc">
+
+
+Add the following aggregation property to calculate the monthly average PR lines of code:
+
+<details>
+  <summary>Click to view the aggregation property</summary>
+
+```json showLineNumbers
   "monthly_average_pr_loc": {
     "title": "Monthly Average PR LOC",
     "type": "number",
@@ -920,20 +947,43 @@ To measure PR standards at the team level, add the following aggregation propert
       "measureTimeBy": "$createdAt",
       "calculationBy": "property"
     }
-  },
-  "median_merged_prs": {
-    "title": "Median merged prs",
-    "type": "number",
-    "target": "service",
-    "calculationSpec": {
-      "func": "median",
-      "property": "mergedPrs",
-      "calculationBy": "property"
-    }
   }
-}
+
 ```
 </details>
+
+</TabItem>
+
+<TabItem value="averageTimeToMerge">
+
+
+Add the following aggregation property to calculate the average time to merged PRs:
+
+<details>
+  <summary>Click to view the aggregation property</summary>
+
+```json showLineNumbers
+"average_time_to_merge": {
+  "title": "Average Time to Merge",
+  "icon": "DefaultProperty",
+  "type": "number",
+  "target": "githubPullRequest",
+  "calculationSpec": {
+    "func": "average",
+    "averageOf": "day",
+    "property": "days_old",
+    "measureTimeBy": "mergedAt",
+    "calculationBy": "property"
+  }
+}
+
+```
+</details>
+
+</TabItem>
+
+</Tabs>
+
 
 ## Visualization
 By leveraging Port's Dashboards, you can create custom dashboards to track the pr metrics and monitor your team's performance over time.
@@ -982,6 +1032,20 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
    <img src="/img/guides/totalPrsMerged.png" width="50%"/>
 
 6. Click `Save`.
+
+</details>
+
+<details>
+<summary><b> Mean Time to Merge (Days) </b></summary>
+
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `Mean Time to Merge (Days)`, (add the `Merge` icon).
+3. Select `Display single property` and choose **Service** the **Entity**.
+4. Choose `Averge Time to Merge` as the **Property**.
+
+   <img src="/img/guides/meanTimeToMergePr.png" width="50%"/>
+
+5. Click `Save`.
 
 </details>
 
