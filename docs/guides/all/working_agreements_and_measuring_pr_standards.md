@@ -888,6 +888,123 @@ Add the following aggregation property to the **service** and **organization** b
 By implementing these aggregation properties, you can effectively measure and monitor PR standards at both the service and organization levels.
 
 
+## Aggregation on team level
+
+To measure PR standards at the team level, add the following aggregation properties to the **team** [blueprint](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-teams):
+
+<details>
+    <summary>Click to view the aggregation properties</summary>
+
+```json showLineNumbers
+ {
+  "total_average_commits_per_pr": {
+    "title": "Total Average Commits Per PR",
+    "type": "number",
+    "target": "service",
+    "calculationSpec": {
+      "func": "average",
+      "averageOf": "total",
+      "property": "averageCommitsPerPr",
+      "calculationBy": "property",
+      "measureTimeBy": "$createdAt"
+    }
+  },
+  "monthly_average_pr_loc": {
+    "title": "Monthly Average PR LOC",
+    "type": "number",
+    "target": "service",
+    "calculationSpec": {
+      "func": "average",
+      "averageOf": "month",
+      "property": "averagePrLinesOfCode",
+      "measureTimeBy": "$createdAt",
+      "calculationBy": "property"
+    }
+  },
+  "median_merged_prs": {
+    "title": "Median merged prs",
+    "type": "number",
+    "target": "service",
+    "calculationSpec": {
+      "func": "median",
+      "property": "mergedPrs",
+      "calculationBy": "property"
+    }
+  }
+}
+```
+</details>
+
+## Visualization
+By leveraging Port's Dashboards, you can create custom dashboards to track the pr metrics and monitor your team's performance over time.
+
+### Dashboard setup
+
+<img src="/img/guides/prMetricsDashboardComp.png" />
+
+1. Go to your [software catalog](https://app.getport.io/organization/catalog).
+2. Click on the `+ New` button in the left sidebar.
+3. Select **New dashboard**.
+4. Name the dashboard (PR Metrics), choose an icon if desired, and click `Create`.
+
+This will create a new empty dashboard. Let's get ready-to-add widgets
+
+### Adding widgets
+
+<details>
+<summary><b> Average Pr Merged per month </b></summary>
+
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `Average Pr's Merged per month`, (add the `GitPullRequest` icon).
+3. Select `Aggregate by property` and choose **Service** as the **Blueprint**.
+4. Choose `Merged PRs` as the **Property**.
+5. Select `average` for the **Function** and choose `month` for **Average of**.
+6. Select `Created At` for **Measure time by**.
+7. Select `custom` as the **Unit** and input `Pull Request merged per month` as the **Custom unit**.
+
+   <img src="/img/guides/averagePRMergedPerMonth.png" width="50%"/>
+
+8. Click `Save`.
+
+</details>
+
+
+
+<details>
+<summary><b> Total Pr's Merged  </b></summary>
+
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `Total Pr's Merged `, (add the `GitPullRequest` icon).
+3. Select `Aggregate by property` and choose **Service** as the **Blueprint**.
+4. Choose `Merged PRs` as the **Property**.
+5. Select `sum` for the **Function**.
+
+   <img src="/img/guides/totalPrsMerged.png" width="50%"/>
+
+6. Click `Save`.
+
+</details>
+
+
+<details>
+<summary><b> Total Weekly  Pr commits </b></summary>
+
+1. Click `+ Widget` and select **Number Chart**.
+2. Title: `Total Weekly  Pr commits`, (add the `GitPullRequest` icon).
+3. Select `Aggregate by property` and choose **Service** as the **Blueprint**.
+4. Choose `Averge Commits per PRs` as the **Property**.
+5. Select `average` for the **Function** and choose `week` for **Average of**.
+6. Select `Created At` for **Measure time by**.
+7. Select `custom` as the **Unit** and input `Weekly` as the **Custom unit**.
+
+   <img src="/img/guides/totalWeeklyPrCommits.png" width="50%"/>
+
+8. Click `Save`.
+
+</details>
+
+
+
 ##  Notification automation
 Add this automation feature to notify a Slack channel when a scorecard value changes
 
