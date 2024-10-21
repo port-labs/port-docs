@@ -11,11 +11,9 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 ## Overview
 
-Creating high-performing engineering teams requires not just technical expertise but also effective collaboration and clear expectations.
-**working agreements** help teams establish shared understandings of processes and standards, enhancing collaboration, promoting accountability, 
-facilitating onboarding, and improving efficiency.**pull requests (PRs)** are a critical part of the workflow. Measuring PR standards is essential for assessing code quality,
-review processes, and team efficiency. By integrating **working agreements** and **measurable PR metrics**, 
-teams can monitor adherence to best practices and continuously improve their workflows.
+Effective collaboration and clear expectations are crucial for high-performing engineering teams. **Working agreements** establish shared processes and standards, enhancing teamwork.
+Measuring **Pull request (PR)** standards is essential for assessing code quality, review processes, and team efficiency. 
+By integrating working agreements with measurable PR metrics, teams can monitor adherence to best practices and continuously improve workflows. 
 We will discuss how to implement working agreements and measure PR standards using Port.
 
 :::info Metrics
@@ -33,7 +31,7 @@ please refer to our [DORA Metrics guide](/guides/all/setup-dora-metrics).
 
 ## Working agreements
 
-The following working agreements and pr checks have been implemented in our [demo environment](https://demo.getport.io/settings/data-model) on the `pull request` blueprint:
+The following working agreements and PR checks have been implemented in our [demo environment](https://demo.getport.io/settings/data-model) on the `pull request` blueprint:
 
 - [**PR Description Cannot be Empty**](#pr-description-cannot-be-empty): Ensures that every PR has a description.
 - [**PR Has Linked Issue**](#pr-has-linked-issue): Verifies that each PR is linked to an issue.
@@ -692,7 +690,7 @@ You can adjust the thresholds based on your team's requirements.
 
 ## Pull request metrics aggregation
 
-To measure PR standards effectively, add aggregation properties on the **service** and **organization** blueprints.
+To measure PR standards effectively, add aggregation properties on the **service**  blueprint.
 This will allow us to capture important metrics such as:
 
 - PR Average Duration (Service Level)
@@ -894,14 +892,14 @@ By implementing these aggregation properties, you can effectively measure and mo
 To measure PR standards at the team level, add the following aggregation properties to the **team** [blueprint](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-teams):
 
 <Tabs
-  defaultValue="totalAverageCommitsPerPr"
+  defaultValue="averageCommitsPerPr"
   values={[
-    {label: 'Total Average Commits Per PR', value: 'totalAverageCommitsPerPr'},
+    {label: 'Monthly Average Commits Per PR', value: 'averageCommitsPerPr'},
     {label: 'Monthly Average PR LOC', value: 'monthlyAveragePrLoc'},
     {label: 'Average Time to Merge', value: 'averageTimeToMerge'}
   ]}>
 
-<TabItem value="totalAverageCommitsPerPr">
+<TabItem value="averageCommitsPerPr">
 
 Add the following aggregation property to calculate the total average commits per PR:
 
