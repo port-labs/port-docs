@@ -820,5 +820,12 @@ export const availableGuides = [
         logos: ["Webhook"],
         link: "/guides/all/ingest-vulnerability-alerts-from-orca-security-using-a-custom-webhook-integration"
     },
+    {
+        title: "Automatically approve actions using an automation",
+        description: "Set up automated approvals for self service actions",
+        tags: ["Cloud access management", "Actions", "Automations"],
+        logos: ["Slack"],
+        link: "/guides/all/automatically-approve-action-using-automation"
+    },
     
 ]
