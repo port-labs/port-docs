@@ -209,6 +209,28 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
 
 <PortApiRegion />
 
+#### Blueprints Structure
+The new <ins>User</ins> blueprint structure:
+- Identifier - the user email. Will be synced with the Port user email.
+- Title - the user name. This will be synced with the Port user first name and last name.
+- Status - the status of the user.
+  - Active - the user has logged in into Port .
+  - Invited - the user was invited to Port with an invitation email.
+  - Disabled - the user is disabled and can not user Port (relevant only for [service accounts](/sso-rbac/rbac/#service-accounts)).
+- Port Role - the user internal role in Port. This property affects the permissions this user will be granted. [More about roles](/sso-rbac/rbac/#roles).
+  - Admin
+  - Moderator
+  - Member
+- Moderated Blueprints - the blueprints that can be moderated by the user. Only relevant for Moderator users.
+- Port type - the user internal type in Port.
+  - Standard - person users
+  - [Service Account](/sso-rbac/rbac/#service-accounts)
+
+The new <ins>Team</ins> blueprint structure:
+- Identifier - the team entity identifier.
+- Title - the team name. This will be synced with the Port team name.
+- Description - the description of the team. This will be synced with the Port team description.
+- Size - how many users there are in this team.
 
 #### Consequent changes
 
