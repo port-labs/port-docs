@@ -3251,6 +3251,20 @@ paths:
               <td>The provided `identifier` already exists, identifiers must be unique</td>
             </tr>
             </table>
+        '413':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`bad_request`</td>
+              <td>Request body is too large (limit is 1MiB)</td>
+            </tr>
+            </table>
         '422':
           description: |
             One of the following errors occurred:
@@ -3781,6 +3795,20 @@ paths:
             <tr>
               <td>`identifier_taken`</td>
               <td>The provided `identifier` already exists, identifiers must be unique</td>
+            </tr>
+            </table>
+        '413':
+          description: |
+            One of the following errors occurred:
+
+            <table>
+            <tr>
+              <th>Error</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>`bad_request`</td>
+              <td>Request body is too large (limit is 1MiB)</td>
             </tr>
             </table>
         '422':
