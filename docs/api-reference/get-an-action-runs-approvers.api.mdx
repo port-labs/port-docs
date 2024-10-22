@@ -1,0 +1,125 @@
+---
+id: get-an-action-runs-approvers
+title: "Get an action run's approvers"
+description: "This route allows you to fetch the approvers of a specific action run.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions)."
+sidebar_label: "Get an action run's approvers"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVMFu3EYM/ZUBe2gCaFd2j0IRwECLIOglcN2TsXC4I2o18OyMwuGssxX07wUlrVdO1g1QtLdeJEFDDvn4Hl8PNSXLrhMXA1Rw17pkOGYhg97Hp2SOMRuJpiGxrZGWDHYdxwNxMrExaFJH1jXOGrR6h+Ec1j9vuXw3Pu6i8YQczD4yGdzGLGaPIaOf70FvmshzciqMbck+Gg3TWvd1tHlPQVCPN29akS5VZVlHm9Y7ki6yrF0sLRMKrRL5ZpWID87Sir50xI6CpVQmkpeHc70Vb9GWP9gYGrfLTKupt9Wpt1UT+RT7dg0FCO4SVPdwM4G9zSHBpoAOGfckxHrYQ7It7RGqHuTYEVSwjdETBiigpgazF6ga9ImGApyO/XMmPkIBAfca7oL1uaaHjkLtwu7heeTjBUu+PjTmk3CmT8U4r4m5J+e9QZ+iYZLMYTzKSSl7aqNp8UAmRDFHkhOb9UTtVxRCAUyfs2OqodIyQ3EBXBJ2YQcnLB1Ke4bCOTy4+pu+71oyrqYgrnHEqqSX9UfZPWGQs/bOumsiv9bfpoBENrOT48jElpCJlTEmrCse+dIoptTFkCgpkJ+urvT1ssVfJqbM7RwJw1DAnqSNNVSwI4FiwlpBebguZ5WUWqLsJ9hDuWROtXdSSGYPFZzkjJ1bqBl0yt8G5PQiZoH0d2VkQnLC+0wOdu43WkjrJksb2f05LhTMlLWENfEI0IUmjulOvMZ/jCzm5uMHKECbn0Zzvb5SuruYZI9Bw+fb36uiwoLHH5N5Vbw92BiEgvzvO9/3nYlNoS9Sdh5d0PmPGulnEd7D4RoKmJN0M/L4qp438EzEpoA2JtGkvt9ioj/YD4P+noxIFVq7hFuvizU61d9w9+Z23sG35j+3o4tzeKTjd0zzgD5r3rg2B2Sn0P45zH/NvS7COW1uOC47P8Gc6Rw2Szd6/+udEpxVCMvVfxxXf/5QuBfv/toTpkL6VCe6mNL3k7EMw3P8dPRqxuwxZ7YUwjD8BaQP+1k=
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an action run's approvers"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions/runs/{run_id}/approvers"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch the approvers of a specific action run.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Path Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"string"},"in":"path","name":"run_id","description":"The identifier of the action run you want to fetch approvers for.<br/>","required":true,"enumDescriptions":[]}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><details
+  style={{"marginBottom":"1rem"}}
+  className={"openapi-markdown__details"}
+  data-collapsed={false}
+  open={true}
+>
+  <summary
+    style={{}}
+  >
+    <h3
+      className={"openapi-markdown__details-summary-header-params"}
+    >
+      Query Parameters
+    </h3>
+  </summary><div>
+    <ul>
+      <ParamsItem
+        className={"paramsItem"}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"include_pending_approvers","description":"If `true`, the route will also return the users who have not yet approved the action run.<br/>","required":true,"enumDescriptions":[]}}
+      >
+        
+      </ParamsItem>
+    </ul>
+  </div>
+</details><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Default Response
+          
+          
+        </div><div>
+          
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
