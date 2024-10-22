@@ -366,7 +366,7 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 
 ### notIn
 
-The `notIn` operator checks if a `string` property **is not** equal to all of the specified `string` values
+The `notIn` operator checks if a `string` property is **not equal** to all of the specified `string` values
 
 ```json showLineNumbers
 {
