@@ -1,6 +1,8 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
 import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Port Roles & User management
 
@@ -210,7 +212,13 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
 <PortApiRegion />
 
 #### Blueprints Structure
-The new <ins>User</ins> blueprint structure:
+This new created blueprints structure and properties meaning:
+<Tabs groupId="user-and-team-blueprint-structure" queryString values={[
+{label: "User", value: "user"},
+{label: "Team", value: "team"},
+]}>
+
+<TabItem value="user">
 - Identifier - the user email. Will be synced with the Port user email.
 - Title - the user name. This will be synced with the Port user first name and last name.
 - Status - the status of the user.
@@ -225,12 +233,15 @@ The new <ins>User</ins> blueprint structure:
 - Port type - the user internal type in Port.
   - Standard - person users
   - [Service Account](/sso-rbac/rbac/#service-accounts)
+</TabItem>
 
-The new <ins>Team</ins> blueprint structure:
+<TabItem value="team">
 - Identifier - the team entity identifier.
 - Title - the team name. This will be synced with the Port team name.
 - Description - the description of the team. This will be synced with the Port team description.
 - Size - how many users there are in this team.
+</TabItem>
+</Tabs>
 
 #### Consequent changes
 
