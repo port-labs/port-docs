@@ -1,5 +1,5 @@
 ---
-title: Ingest security issues from `.sarif` files to services
+title: Ingest security issues from `.sarif` files
 displayed_sidebar: null
 ---
 
@@ -13,7 +13,7 @@ This guide will demonstrate how to ingest security issues from `.sarif` files an
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.getport.io/quickstart).
 - The `Service` blueprint should be created during the onboarding process.
-- Ensure you have [GitHub installed and configured](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) in your environment.
+- Ensure you have [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) or [Gitlab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation) installed and configured in your environment.
 
 :::
 
@@ -69,47 +69,6 @@ Add the `Security Issue` blueprint:
 </details>
 
 <br/>
-
-### How to Relate the Security Issues to the Service
-
-Once the security issues have been ingested, the next step is to establish relationships between these `security_issue` entities and the corresponding `service` entities.
-
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal, select the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation` to create a relation between the `service` and `security_issue` blueprints.
-
-2. **Add this JSON to establish the relationship**:
-
-```json
-{
-  "security_issues": {
-    "title": "Security Issues",
-    "target": "security_issue",
-    "required": false,
-    "many": true
-  }
-}
-```
-
-3. Head back to the [data sources page](https://app.getport.io/settings/data-sources) and ensure that the `relations` section in your mapping includes the relationship to the service:
-
-<details>
-<summary><b>Relation Mapping (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-relations:
-  issue_service: .repo.name
-```
-
-</details>
-
-:::info Mapping Details
-
-This establishes a relation between the `security_issue` and `service` entities based on the repository name (`.repo.name`). Ensure that the `identifier` for the `service` blueprint matches the `.repo.name` value.
-
-:::
-
-<br/>
-
-[//]: # (<img src='/img/guides/serviceSecurityIssues.png' width='100%' border='1px' />)
 
 ### How to Ingest Security Issues from `.sarif` Files
 
@@ -167,6 +126,48 @@ To ingest security issues listed in `.sarif` files, follow these steps:
 - **`relations:`** establishes a relation between the security issue and the corresponding service.
 
 :::
+
+### How to Relate the Security Issues to the Service
+
+Once the security issues have been ingested, the next step is to establish relationships between these `security_issue` entities and the corresponding `service` entities.
+
+1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal, select the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation` to create a relation between the `service` and `security_issue` blueprints.
+
+2. **Add this JSON to establish the relationship**:
+
+```json showLineNumbers
+ "security_issues": {
+    "title": "Security Issues",
+    "target": "security_issue",
+    "required": false,
+    "many": true
+  }
+
+```
+
+3. Head back to the [data sources page](https://app.getport.io/settings/data-sources) and ensure that the `relations` section in your mapping includes the relationship to the service:
+
+<details>
+<summary><b>Relation Mapping (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+relations:
+  issue_service: .repo.name
+```
+
+</details>
+
+:::info Mapping Details
+
+This establishes a relation between the `security_issue` and `service` entities based on the repository name (`.repo.name`). Ensure that the `identifier` for the `service` blueprint matches the `.repo.name` value.
+
+:::
+
+<br/>
+
+[//]: # (<img src='/img/guides/serviceSecurityIssues.png' width='100%' border='1px' />)
+
+
 
 
 
