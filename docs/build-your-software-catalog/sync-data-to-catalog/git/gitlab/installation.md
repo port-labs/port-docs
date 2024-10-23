@@ -27,7 +27,6 @@ This page outlines the following steps:
 - If you choose the real-time & always-on installation method, a Kubernetes cluster to install the integration on.
 - Your Port user role is set to `Admin`.
 
-
 ## Setup
 
 ### Create a GitLab group access token
@@ -495,3 +494,20 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+### FAQ
+
+#### Do I need to commit to a new repository for it to appear in Port when using GitLab?
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+Yes, a commit is necessary for a new repository to appear in Port when using GitLab. Here's why:
+
+- **Webhook Limitations**: GitLab does not support `project_create` events for system hooks. This means that simply creating a new repository will not trigger a webhook event to update Port.
+- **Initial Commit Requirement**: To have the repository appear in Port, you need to make an initial commit. This action will trigger a webhook event (if configured) and update Port in real-time.
+- **Scheduled Resync**: If a repository is created without an initial commit, it will be picked up during the next scheduled resync.
+
+This behavior is due to the current capabilities of GitLab's webhook system. For more information on available webhook events in GitLab, see the [official GitLab documentation on webhook events](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html).
+
+</details>
