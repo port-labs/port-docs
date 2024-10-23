@@ -18,6 +18,7 @@ Remember to replace the placeholders for `<PORT_CLIENT_ID>`, `<PORT_CLIENT_SECRE
 docker run \
   -e PORT_CLIENT_ID=<PORT_CLIENT_ID> \
   -e PORT_CLIENT_SECRET=<PORT_CLIENT_SECRET> \
+  -e PORT_API_BASE_URL="https://api.getport.io" \
   -e PORT_ORG_ID=<PORT_ORG_ID> \
   -e KAFKA_CONSUMER_GROUP_ID=<PORT_ORG_ID>-<INSTALLATION_NAME> \
   -e STREAMER_NAME=KAFKA \
