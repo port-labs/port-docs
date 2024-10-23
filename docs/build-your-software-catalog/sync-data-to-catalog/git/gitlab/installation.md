@@ -27,7 +27,6 @@ This page outlines the following steps:
 - If you choose the real-time & always-on installation method, a Kubernetes cluster to install the integration on.
 - Your Port user role is set to `Admin`.
 
-
 ## Setup
 
 ### Create a GitLab group access token
@@ -162,20 +161,23 @@ By default, if `appHost` is provided, the integration will create group webhooks
 
 #### System Webhooks
 
-To create a system hook there are two options:
+To create a system hook in GitLab, you must set `useSystemHook: true` and choose one of these setup methods:
 
-:::note
-In both options you'll need to provide the `useSystemHook` parameter with the value `true`.
+1. **Automatic Setup** - Provide a token with admin privileges using the `tokenMapping` parameter
+2. **Manual Setup** - Create the system hook yourself in GitLab:
+   - Follow GitLab's [system hook setup guide](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook)
+   - Set the URL to `{appHost}/integration/system/hook` (e.g., `https://my-gitlab-integration.com/integration/system/hook`)
+   - Enable the supported triggers: `push` and `merge_request`
+
+:::info Repository Setup and Initial Commit
+Due to GitLab webhook limitations, new repositories require special handling:
+
+- A repository will only appear in Port after its first commit
+- This is because GitLab webhooks don't support `project_create` events
+- Empty repositories (no commits) will only appear after the next scheduled resync
+
+For more details, see GitLab's [webhook events documentation](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html).
 :::
-
-1. Provide a token with admin privileges in GitLab using the `tokenMapping` parameter.
-   - When choosing this option, the integration will create the system hook in your GitLab account automatically.
-2. Create the system hook manually
-   - Follow the instructions for creating a system hook in GitLab [here](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook).
-   - In the `URL` field, provide the `appHost` parameter value with the path `/integration/system/hook`. e.g. `https://my-gitlab-integration.com/integration/system/hook`.
-   - From the `Triggers` section, the GitLab integration currently supports the following events:
-      - `push`
-      - `merge_request`
 
 ![GitLab System Hook](/img/integrations/gitlab/GitLabSystemHook.png)
 
@@ -495,3 +497,6 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+
+
