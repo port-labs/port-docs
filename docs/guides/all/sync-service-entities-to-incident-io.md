@@ -286,6 +286,4 @@ With this integration in place, you’ll have real-time access to your Port serv
 
 ## Limitations
 
-While the guide enables you to sync service entities from Port to Incident IO, there are a few limitations to keep in mind:
-- incident.io can currently ingest up to **50,000 catalog items**, so keep this limit in mind when scaling your service catalog.
-
+While the guide enables you to sync service entities from Port to Incident IO, it is important to note that incident.io can currently ingest up to **50,000 catalog items**, so keep this limit in mind when scaling your service catalog.
