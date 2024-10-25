@@ -502,7 +502,7 @@ Examples of blueprints and the relevant integration configurations:
 {
   "identifier": "servicenowGroup",
   "title": "Servicenow Group",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "description": {
@@ -568,7 +568,7 @@ resources:
 {
   "identifier": "servicenowCatalog",
   "title": "Servicenow Catalog",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "description": {
@@ -634,7 +634,7 @@ resources:
 {
   "identifier": "servicenowIncident",
   "title": "Servicenow Incident",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "category": {
