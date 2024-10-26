@@ -411,6 +411,7 @@ Our ServiceNow integration currently supports the below resources for the mappin
 - Service Catalog
 - Incident
 
+For a list of CMDB tables, see the [ServiceNow Docs](https://docs.servicenow.com/bundle/xanadu-servicenow-platform/page/product/configuration-management/reference/cmdb-tables-details.html)
 :::
 
 - The root key of the integration configuration is the `resources` key:
@@ -501,7 +502,7 @@ Examples of blueprints and the relevant integration configurations:
 {
   "identifier": "servicenowGroup",
   "title": "Servicenow Group",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "description": {
@@ -567,7 +568,7 @@ resources:
 {
   "identifier": "servicenowCatalog",
   "title": "Servicenow Catalog",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "description": {
@@ -633,7 +634,7 @@ resources:
 {
   "identifier": "servicenowIncident",
   "title": "Servicenow Incident",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "category": {
