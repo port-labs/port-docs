@@ -1,0 +1,12 @@
+This installation method will run the integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+The integration will run as a workflow in your CI/CD pipeline.  
+
+1. Go to the <a href={`https://app.getport.io/settings/data-sources?section=EXPORTERS&provider=${props.integration}`}>{props.integration} data source page</a> in your portal.
+
+2. Select the `Scheduled` method using your preferred CI/CD tool.
+    <img src="/img/sync-data-to-catalog/scheduledCiMethod.png" width="40%" border='1px' />
+
+3. Copy the workflow contents into a new workflow in your CI/CD tool. Make sure to:
+    - Create the necessary secrets in your CI/CD tool.
+    - Replace the placeholders in the workflow with your own values.
