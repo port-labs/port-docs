@@ -240,7 +240,7 @@ The new blueprints have the following structure:
 - Identifier - the team's identifier.
 - Title - the team's name. This will be synced with the Port team name.
 - Description - the team's description. This will be synced with the Port team description.
-- Size - how many users there are in this team.
+- Size - the number of users in the team.
 </TabItem>
 </Tabs>
 
