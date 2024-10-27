@@ -223,7 +223,7 @@ The new blueprints have the following structure:
 - Identifier - the user's email. Will be synced with the Port user's email.
 - Title - the user's name. This will be synced with the Port user's first and last name.
 - Status - the user's status, which can be one of the following:
-  - Active - the user has logged in into Port .
+  - Active - the user has logged into Port .
   - Invited - the user was invited to Port with an invitation email.
   - Disabled - the user is disabled and can not user Port (relevant only for [service accounts](/sso-rbac/rbac/#service-accounts)).
 - Port Role - the user internal role in Port. This property affects the permissions this user will be granted. [More about roles](/sso-rbac/rbac/#roles).
