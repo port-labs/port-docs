@@ -226,7 +226,7 @@ The new blueprints have the following structure:
   - Active - the user has logged into Port .
   - Invited - the user was invited to Port via an invitation email.
   - Disabled - the user is disabled and cannot use Port (relevant only for [service accounts](/sso-rbac/rbac/#service-accounts)).
-- Port Role - the user internal role in Port. This property affects the permissions this user will be granted. [More about roles](/sso-rbac/rbac/#roles).
+- Port Role - the user's internal [role in Port](/sso-rbac/rbac/#roles). This property affects the permissions granted to this user.
   - Admin
   - Moderator
   - Member
