@@ -212,7 +212,8 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
 <PortApiRegion />
 
 #### Blueprints Structure
-This new created blueprints structure and properties meaning:
+
+The new blueprints have the following structure:
 <Tabs groupId="user-and-team-blueprint-structure" queryString values={[
 {label: "User", value: "user"},
 {label: "Team", value: "team"},
