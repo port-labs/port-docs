@@ -232,7 +232,7 @@ The new blueprints have the following structure:
   - Member
 - Moderated Blueprints - the blueprints that can be moderated by the user. Only relevant for `moderator` users.
 - Port type - the type of the user, can be one of the following:
-  - Standard - person users
+  - Standard - human users.
   - [Service Account](/sso-rbac/rbac/#service-accounts).
 </TabItem>
 
