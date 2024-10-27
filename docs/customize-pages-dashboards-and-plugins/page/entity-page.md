@@ -22,7 +22,15 @@ Here you will find the entity's properties and their values, its scorecards and 
 
 ### Related entities
 
-By default, all directly-related entities in the same direction will automatically appear in this widget. This is true for both forward-related and backward-related entities. Indirectly-related entities will not appear.
+By default, all directly-related entities in the same direction will automatically appear in this table. This is true for both forward-related and backward-related entities. Indirectly-related entities will not appear.
+
+:::info Default table columns
+By default, the `related entities` table will display the following columns for each entity:  
+`Title`, `Last update time`, and `Creation time`.  
+Other properties will be hidden by default.  
+
+You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
+:::
 
 For example:
 
