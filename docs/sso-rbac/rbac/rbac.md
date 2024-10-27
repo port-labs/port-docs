@@ -233,7 +233,7 @@ The new blueprints have the following structure:
 - Moderated Blueprints - the blueprints that can be moderated by the user. Only relevant for Moderator users.
 - Port type - the user internal type in Port.
   - Standard - person users
-  - [Service Account](/sso-rbac/rbac/#service-accounts)
+  - [Service Account](/sso-rbac/rbac/#service-accounts).
 </TabItem>
 
 <TabItem value="team">
