@@ -238,7 +238,7 @@ The new blueprints have the following structure:
 
 <TabItem value="team">
 - Identifier - the team's identifier.
-- Title - the team name. This will be synced with the Port team name.
+- Title - the team's name. This will be synced with the Port team name.
 - Description - the description of the team. This will be synced with the Port team description.
 - Size - how many users there are in this team.
 </TabItem>
