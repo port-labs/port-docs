@@ -220,7 +220,7 @@ The new blueprints have the following structure:
 ]}>
 
 <TabItem value="user">
-- Identifier - the user email. Will be synced with the Port user email.
+- Identifier - the user's email. Will be synced with the Port user's email.
 - Title - the user name. This will be synced with the Port user first name and last name.
 - Status - the status of the user.
   - Active - the user has logged in into Port .
