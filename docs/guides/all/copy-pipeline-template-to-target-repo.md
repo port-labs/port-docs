@@ -421,7 +421,7 @@ stages:
               curl -X PATCH \
                 -H 'Content-Type: application/json' \
                 -H 'Authorization: Bearer $(accessToken)' \
-                -d '{"status":"SUCCESS","statusLabel":"Successfully copied file","message": {"run_status": "Copying finished successfully!\\n " }}' \
+                -d '{"status":"SUCCESS","statusLabel":"Successfully copied file","message": {"run_status": "Copying finished successfully!" }}' \
                 "https://api.getport.io/v1/actions/runs/${{ variables.RUN_ID }}"
             displayName: "Update Port with Success Status"
 
