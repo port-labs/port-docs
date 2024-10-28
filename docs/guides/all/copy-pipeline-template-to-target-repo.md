@@ -150,7 +150,6 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
       "target_repo_branch": "{{ .inputs.target_repo.properties.defaultBranch }}",
       "azure_organization": "<AZURE_DEVOPS_ORGANIZATION_NAME>",
       "pipeline_file_name": "pipeline.yaml",
-      ""
       "port_context": {
         "runId": "{{ .run.id }}"
       }
