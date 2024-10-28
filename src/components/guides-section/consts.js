@@ -827,5 +827,13 @@ export const availableGuides = [
         logos: ["Slack"],
         link: "/guides/all/automatically-approve-action-using-automation"
     },
+    {
+        title: "Copy Pipeline Template to Target Repository",
+        description: "Create a self-service action that copies a pipeline template from a source repository to a target repository",
+        tags: ["SDLC", "AzureDevops", "Actions"],
+        logos: ["AzureDevops"],
+        // category: "Getting started",
+        link: "/guides/all/copy-pipeline-template-to-target-repo",
+    },
     
 ]
