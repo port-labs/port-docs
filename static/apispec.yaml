@@ -15521,10 +15521,6 @@ paths:
                   <td>boolean</td>
               </tr>
               <tr>
-                  <td>`config.resources`</td>
-                  <td>Array<{ kind: string; selector: { query: string; }; port: { entity: { mappings: MappingSchema | MappingSchema[]; }; }; }></td>
-              </tr>
-              <tr>
                   <td>`changelogDestination.type`</td>
                   <td>'WEBHOOK' | 'KAFKA'</td>
               </tr>
@@ -15629,7 +15625,282 @@ paths:
             - 'read:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+              "ok": true,
+              "integrations": [
+                {
+                  "installationId": "my-aws-integration",
+                  "installationAppType": "aws",
+                  "version": "0.2.51",
+                  "changelogDestination": {},
+                  "config": {
+                    "deleteDependentEntities": true,
+                    "createMissingRelatedEntities": true,
+                    "enableMergeEntity": true,
+                    "resources": [
+                      {
+                        "kind": "AWS::Organizations::Account",
+                        "selector": {
+                          "query": "true"
+                        },
+                        "port": {
+                          "entity": {
+                            "mappings": {
+                              "identifier": ".Id",
+                              "title": ".Name",
+                              "blueprint": "\"awsAccount\"",
+                              "properties": {
+                                "arn": ".Arn",
+                                "email": ".Email",
+                                "status": ".Status",
+                                "joined_method": ".JoinedMethod",
+                                "joined_timestamp": ".JoinedTimestamp"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "kind": "AWS::S3::Bucket",
+                        "selector": {
+                          "query": "true",
+                          "useGetResourceAPI": true
+                        },
+                        "port": {
+                          "entity": {
+                            "mappings": {
+                              "identifier": ".Identifier",
+                              "title": ".Identifier",
+                              "blueprint": "\"cloudResource\"",
+                              "properties": {
+                                "kind": ".__Kind",
+                                "region": ".Properties.RegionalDomainName | capture(\".*\\\\.(?<region>[^\\\\.]+)\\\\.amazonaws\\\\.com\") | .region",
+                                "tags": ".Properties.Tags",
+                                "arn": ".Properties.Arn",
+                                "link": ".Properties | select(.Arn != null) | \"https://console.aws.amazon.com/go/view?arn=\" + .Arn"
+                              },
+                              "relations": {
+                                "account": ".__AccountId"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "kind": "AWS::EC2::Instance",
+                        "selector": {
+                          "query": "true"
+                        },
+                        "port": {
+                          "entity": {
+                            "mappings": {
+                              "identifier": ".Identifier",
+                              "title": ".Identifier",
+                              "blueprint": "\"cloudResource\"",
+                              "properties": {
+                                "kind": ".__Kind",
+                                "region": ".__Region",
+                                "tags": ".Properties.Tags",
+                                "arn": ".Properties.Arn",
+                                "link": ".Properties | select(.Arn != null) | \"https://console.aws.amazon.com/go/view?arn=\" + .Arn"
+                              },
+                              "relations": {
+                                "account": ".__AccountId"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "kind": "AWS::ECS::Cluster",
+                        "selector": {
+                          "query": "true",
+                          "useGetResourceAPI": true
+                        },
+                        "port": {
+                          "entity": {
+                            "mappings": {
+                              "identifier": ".Properties.Arn",
+                              "title": ".Identifier",
+                              "blueprint": "\"cloudResource\"",
+                              "properties": {
+                                "kind": ".__Kind",
+                                "region": ".__Region",
+                                "tags": ".Properties.Tags",
+                                "arn": ".Properties.Arn",
+                                "link": ".Properties | select(.Arn != null) | \"https://console.aws.amazon.com/go/view?arn=\" + .Arn"
+                              },
+                              "relations": {
+                                "account": ".__AccountId"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "installationType": "OnPrem",
+                  "_orgId": "org_BneDtWovPqXaA2VZ",
+                  "_id": "integration_wJZgALgT6Ui5ixT8",
+                  "identifier": "my-aws-integration",
+                  "integrationType": "aws",
+                  "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+                  "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+                  "createdAt": "2024-10-30T18:31:49.640Z",
+                  "updatedAt": "2024-10-30T18:31:50.118Z",
+                  "clientId": "",
+                  "logAttributes": {
+                    "ingestId": "xDb6lcT8uspGgBwm",
+                    "ingestUrl": "http://localhost:3011/v1/logs/xDb6lcT8uspGgBwm"
+                  },
+                  "resyncState": {
+                    "status": "running",
+                    "lastResyncEnd": null,
+                    "lastResyncStart": "2024-10-30T18:31:50.115099+00:00",
+                    "nextResync": "2024-10-31T18:31:48.758465+00:00",
+                    "intervalInMinuets": 1440,
+                    "updatedAt": "2024-10-30T18:31:50.118Z"
+                  }
+                }
+              ]
+            }
+            ```
+
+            <table>
+              <tr>
+                  <th>Key</th>
+                  <th>Type</th>
+              </tr>
+              <tr>
+                  <td>`installationId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`title`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`installationType`</td>
+                  <td>InstallationType</td>
+              </tr>
+              <tr>
+                  <td>`installationAppType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`version`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.deleteDependentEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.createMissingRelatedEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.resources`</td>
+                  <td>Array<{ kind: string; selector: { query: string; }; port: { entity: { mappings: MappingSchema | MappingSchema[]; }; }; }></td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.type`</td>
+                  <td>'WEBHOOK' | 'KAFKA'</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.agent`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.url`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`clientId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`integrationType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestUrl`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.status`</td>
+                  <td>'running' | 'completed' | 'failed'</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncStart`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncEnd`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.intervalInMinutes`</td>
+                  <td>number | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.nextResync`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.updatedAt`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`_id`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`_orgId`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.integrationSpec`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.scheduledResyncInterval`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.sendRawDataExamples`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.status`</td>
+                  <td>'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted'</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.lastSyncedAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.message`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.createdAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.updatedAt`</td>
+                  <td>string | null</td>
+              </tr>
+            </table>
     post:
       summary: Create an integration
       description: This route allows you to create an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
