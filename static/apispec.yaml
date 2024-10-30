@@ -16284,7 +16284,173 @@ paths:
             - 'read:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+              "ok": true,
+              "integration": {
+                "installationId": "my-aws-integration",
+                "installationAppType": "aws",
+                "version": "0.2.51",
+                "changelogDestination": {},
+                "config": {
+                  "additionalProp1": {}
+                },
+                "installationType": "OnPrem",
+                "_orgId": "org_BneDtWovPqXaA2VZ",
+                "_id": "integration_wJZgALgT6Ui5ixT8",
+                "identifier": "my-aws-integration",
+                "integrationType": "aws",
+                "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+                "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+                "createdAt": "2024-10-30T18:31:49.640Z",
+                "updatedAt": "2024-10-30T18:37:48.884Z",
+                "clientId": "",
+                "logAttributes": {
+                  "ingestId": "xDb6lcT8uspGgBwm",
+                  "ingestUrl": "http://localhost:3011/v1/logs/xDb6lcT8uspGgBwm"
+                },
+                "resyncState": {
+                  "status": "completed",
+                  "lastResyncEnd": "2024-10-30T18:37:48.879132+00:00",
+                  "lastResyncStart": "2024-10-30T18:37:47.798319+00:00",
+                  "nextResync": "2024-10-31T18:31:48.758465+00:00",
+                  "intervalInMinuets": 1440,
+                  "updatedAt": "2024-10-30T18:37:48.884Z"
+                }
+              }
+            }
+            ```
+
+            <table>
+              <tr>
+                  <th>Key</th>
+                  <th>Type</th>
+              </tr>
+              <tr>
+                  <td>`installationId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`title`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`installationType`</td>
+                  <td>InstallationType</td>
+              </tr>
+              <tr>
+                  <td>`installationAppType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`version`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.deleteDependentEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.createMissingRelatedEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.type`</td>
+                  <td>'WEBHOOK' | 'KAFKA'</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.agent`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.url`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`clientId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`integrationType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestUrl`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.status`</td>
+                  <td>'running' | 'completed' | 'failed'</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncStart`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncEnd`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.intervalInMinutes`</td>
+                  <td>number | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.nextResync`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.updatedAt`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`_id`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`_orgId`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.integrationSpec`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.scheduledResyncInterval`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.sendRawDataExamples`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.status`</td>
+                  <td>'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted'</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.lastSyncedAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.message`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.createdAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.updatedAt`</td>
+                  <td>string | null</td>
+              </tr>
+            </table>
     patch:
       summary: Patch an integration
       description: |
