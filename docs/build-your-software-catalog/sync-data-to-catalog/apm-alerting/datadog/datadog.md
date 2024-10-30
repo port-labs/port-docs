@@ -47,11 +47,11 @@ Choose one of the following installation methods:
 
 <TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
 
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
 <h2> Prerequisites </h2>
 
 <Prerequisites />
-
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
 This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:

@@ -19,6 +19,15 @@ This widget allows you to create tables displaying all entities based on a selec
 Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
 
 <img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
+<br/><br/>
+
+:::info Default table columns
+By default, a new table will display the following columns for each entity:  
+`Title`, `Last update time`, and `Creation time`.  
+Other properties will be hidden by default.  
+
+You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
+:::
 
 #### Save table view
 

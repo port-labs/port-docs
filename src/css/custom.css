@@ -170,6 +170,19 @@ html[data-theme="dark"] details details  {
   font-size: 90%;
 }
 
+:not(.theme-api-markdown *) > .tabs-container {
+  border: 1px solid #ccc; 
+  padding: 1rem;         
+  border-radius: 16px;   
+  margin-bottom: 1.5rem;
+}
+
+:not(.theme-api-markdown *) > .tabs-container .tabs-container {
+  border: 1px solid #ccc; 
+  padding: 1rem;         
+  border-radius: 8px;   
+}
+
 .api-method > .menu__link {
   align-items: center;
   justify-content: start;
