@@ -344,7 +344,6 @@ A calculation property that links to the slack channel of the squad can be:
 
 :::warning Calculation on calculation is not supported
 Calculation properties can <b>not</b> be used as template values for other calculation properties.
-
 :::
 
 ## Colorized calculation properties
