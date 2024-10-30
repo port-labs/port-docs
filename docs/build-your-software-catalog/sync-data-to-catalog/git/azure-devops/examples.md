@@ -22,6 +22,9 @@ import PortWorkItemAppConfig from './example-project/\_azuredevops_exporter_exam
 import BoardBlueprint from './example-board/\_azuredevops_exporter_example_board_blueprint.mdx'
 import PortBoardAppConfig from './example-board/\_azuredevops_exporter_example_board_port_app_config.mdx'
 
+import ReleaseBlueprint from './example-release/\_azuredevops_exporter_example_release_blueprint.mdx'
+import PortReleaseAppConfig from './example-release/\_azuredevops_exporter_example_release_port_app_config.mdx'
+
 
 # Examples
 
@@ -141,6 +144,24 @@ You can use the following Port blueprint definitions and integration configurati
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your Azure DevOps boards.
 
+
+## Mapping releases
+
+The example below shows how to ingest Azure DevOps Releases into Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+
+<ReleaseBlueprint/>
+
+<PortReleaseAppConfig/>
+
+
+:::tip To Learn more
+- Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/release/releases/list?view=azure-devops-rest-7.1&tabs=HTTP) for the Azure DevOps release object structure.
+:::
+
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your releases.
 
 ## Mapping supported resources
 
