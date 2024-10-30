@@ -15272,7 +15272,58 @@ paths:
             - 'read:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+              "ok": true,
+              "count": 1,
+              "data": [
+                    {
+                      "message": "Parsing 1 raw results into entities",
+                      "level": "INFO",
+                      "timestamp": "2024-10-30T13:12:15.302Z",
+                      "extra": {
+                        "event_kind": "resync",
+                        "event_trigger_type": "machine",
+                        "event_id": "9a9a5f41-6c64-4073-9b79-491d7d8a9dca",
+                        "kind": "AWS::Organizations::Account",
+                        "resource_kind": "AWS::Organizations::Account"
+                      },
+                      "id": "672230bd3805557b8ece3097"
+                    }
+                  ]
+            }
+            ```
+
+            <table>
+            <tr>
+              <th>Key</th>
+              <th>Type</th>
+            </tr>
+            <tr>
+              <td>`message`</td>
+              <td>string</td>
+            </tr>
+            <tr>
+              <td>`level`</td>
+              <td>'INFO' | 'ERROR' | 'WARNING' | 'DEBUG' | 'FATAL'</td>
+            </tr>
+            <tr>
+              <td>`timestamp`</td>
+              <td>string</td>
+            </tr>
+            <tr>
+              <td>`extra`</td>
+              <td>object</td>
+            </tr>
+            <tr>
+              <td>`id`</td>
+              <td>string</td>
+            </tr>
+            </table>
   '/v1/integration/{identifier}/config':
     patch:
       summary: Patch an integration's config
