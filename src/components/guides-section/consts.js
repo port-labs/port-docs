@@ -827,5 +827,12 @@ export const availableGuides = [
         logos: ["Slack"],
         link: "/guides/all/automatically-approve-action-using-automation"
     },
+    {
+        title: "Track SLOs and SLIs for services",
+        description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
+        tags: ["Engineering metrics", "Dashboards"],
+        logos: ["New Relic"],
+        link: "/guides/all/track-slos-and-slis-for-services"
+    },
     
 ]
