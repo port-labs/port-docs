@@ -16080,7 +16080,182 @@ paths:
             - 'create:integrations'
       responses:
         '200':
-          description: Default Response
+          description:  |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+                "ok": true,
+                "integration": {
+                    "installationId": "gitlab",
+                    "installationAppType": "gitlab",
+                    "version": "0.1.127",
+                    "installationType": "Saas",
+                    "config": {},
+                    "_orgId": "org_BneDtWovPqXaA2VZ",
+                    "_id": "integration_ZdsSHyzxSGLaGNUT",
+                    "identifier": "gitlab",
+                    "integrationType": "gitlab",
+                    "changelogDestination": {},
+                    "createdBy": "auth0|62ceaaa497ea00f09d7c4f41",
+                    "updatedBy": "auth0|62ceaaa497ea00f09d7c4f41",
+                    "createdAt": "2024-10-30T19:14:03.796Z",
+                    "updatedAt": "2024-10-30T19:14:03.796Z",
+                    "clientId": "",
+                    "logAttributes": {
+                        "ingestId": "wCnsemM3Pg5WZSA5",
+                        "ingestUrl": "http://localhost:3011/v1/logs/wCnsemM3Pg5WZSA5"
+                    },
+                    "spec": {
+                        "integrationSpec": {
+                            "gitlabHost": "https://gitlab.com",
+                            "useSystemHook": false,
+                            "tokenMapping": "_GITLAB_TOKEN_MAPPING",
+                            "tokenGroupHooksOverrideMapping": "_GITLAB_TOKEN_GROUP_HOOKS_OVERRIDE_MAPPING"
+                        },
+                        "appSpec": {
+                            "scheduledResyncInterval": "1h",
+                            "sendRawDataExamples": true
+                        }
+                    },
+                    "statusInfo": {
+                        "integrationStatus": {
+                            "status": "Creating"
+                        },
+                        "createdAt": "2024-10-30T19:14:04.160Z",
+                        "updatedAt": "2024-10-30T19:14:04.160Z"
+                    }
+                }
+            }
+            ```
+
+            <table>
+              <tr>
+                  <th>Key</th>
+                  <th>Type</th>
+              </tr>
+              <tr>
+                  <td>`installationId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`title`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`installationType`</td>
+                  <td>InstallationType</td>
+              </tr>
+              <tr>
+                  <td>`installationAppType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`version`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.deleteDependentEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.createMissingRelatedEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.type`</td>
+                  <td>'WEBHOOK' | 'KAFKA'</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.agent`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.url`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`clientId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`integrationType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestUrl`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.status`</td>
+                  <td>'running' | 'completed' | 'failed'</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncStart`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncEnd`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.intervalInMinutes`</td>
+                  <td>number | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.nextResync`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.updatedAt`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`_id`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`_orgId`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.integrationSpec`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.scheduledResyncInterval`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.sendRawDataExamples`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.status`</td>
+                  <td>'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted'</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.lastSyncedAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.message`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.createdAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.updatedAt`</td>
+                  <td>string | null</td>
+              </tr>
+            </table>
   '/v1/integration/{identifier}':
     get:
       summary: Get an integration
