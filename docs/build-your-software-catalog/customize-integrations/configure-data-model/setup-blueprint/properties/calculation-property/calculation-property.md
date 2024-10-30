@@ -342,6 +342,11 @@ A calculation property that links to the slack channel of the squad can be:
 }
 ```
 
+:::warning Calculation on calculation is not supported
+Currently calculation properties can <b>not</b> be used as template values for other calculation properties 
+
+:::
+
 ## Colorized calculation properties
 
 You can colorize calculation properties according to their value, by adding a `colorized` key with the value `true` to the calculation property object. You can also add a `colors` key to specify the colors of the different values, otherwise, the colors will be chosen automatically for you.
