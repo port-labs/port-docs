@@ -1065,6 +1065,26 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 
 </details>
 
+<details>
+<summary><b>Service Scorecard Performance by Team</b></summary>
+
+1. Click **`+ Widget`** and select **Table**.
+2. Title the widget **Team Service Scorecard Performance**.
+3. Choose the **Service** blueprint.
+
+   <img src="/img/guides/teamScorecardTable.png" width="50%" />
+
+4. Click **Save** to add the widget to the dashboard.
+5. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
+6. In the top right corner of the table, click on `Manage Properties` and add the following properties:
+    - **Service Name**: The name of each service.
+    - **Team Name**: The team associated with each service.
+    - **Average Scorecard Score**: The calculated average scorecard score for each service.
+
+7. Click on the **save icon** in the top right corner of the widget to save the customized table.
+
+</details>
+
 
 
 ##  Notification automation
