@@ -4,25 +4,42 @@ displayed_sidebar: null
 description: Learn how to copy pipeline template from one repository to another using Port Actions.
 ---
 
-# Copy Pipeline Template to Target Repository
+# Copy Pipeline Template to Target Repo
 
 This guide demonstrates how to copy a `pipeline.yaml` template from a base Azure DevOps repository to a target repository using a Port action and an Azure DevOps pipeline.
 
 ## Prerequisites
+
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.getport.io/quickstart).
-- The `Azure DevOps Repository` blueprint should be created during the [azure devops installation](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/#installation) process
+- You can either:
+    - Install the [Azure DevOps integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/#installation) to create the blueprint and mappings automatically, or
+    - Alternatively, create only the `Azure DevOps Repository` blueprint and ingest repositories directly using [Port’s APIs](https://docs.getport.io/api-reference/create-an-entity)
 
-## Implementation - copy pipeline.yaml template from one repository to another
 
-Follow these steps to get started :
-1. Create an Azure DevOps Repository called `pipeline_copier` in your Azure Devops Organization/Project and [configure a service connection](/actions-and-automations/setup-backend/azure-pipeline#define-incoming-webhook-in-azure).
+## Copy pipeline template from a repo to another
 
-:::note
+1. Create an Azure DevOps repository called `pipeline_copier` in your Azure DevOps Organization/Project and [configure a service connection](/actions-and-automations/setup-backend/azure-pipeline#define-incoming-webhook-in-azure).
+
+:::note Port trigger
 Use `port_trigger` for both `WebHook Name` and `Service connection name` when configuring your [Service Connection](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
 :::
+
+:::info Option to use an existing repository
+You may use an existing repository instead of creating a new one. Just ensure that you add the `azure-pipelines.yaml` file in **Step 4**  to the repository's root.
+:::
+
 <br/>
 
-2. Update the `azureDevopsRepository` blueprint and port's  mapping config with the `defaultBranch` property:
+2. Update the `azureDevopsRepository` blueprint and mapping configuration with the `defaultBranch` property, depending on how your setup was created:
+
+    - **If you installed the Azure DevOps integration**, update the `defaultBranch` property in the mapping config file.
+    - **If you created the blueprint manually** (without the integration), add the JSON blueprint below and use Port's API to ingest the repository data.
+
+:::info Using Port's API 
+If you’re not using the Azure DevOps integration, you will need to use Port's API to ingest repository data based on the blueprint you created.
+:::
+
+Here’s the blueprint JSON configuration to use for manual creation:
 <details>
   <summary>Azure DevOps repository blueprint</summary>
 
@@ -96,8 +113,9 @@ Use `port_trigger` for both `WebHook Name` and `Service connection name` when co
 
 3. Create Port action using the following JSON definition:
 
-:::note
-Make sure to replace the placeholder for AZURE_DEVOPS_ORGANIZATION_NAME to where your `pipeline_copier`  repository resides.
+:::tip Organization and repository placeholders
+Make sure to replace the placeholder for AZURE_DEVOPS_ORGANIZATION_NAME to where your source repository resides.
+ie is the organization in Azure DevOps where the `pipeline-copier` is located in the case of this example.
 Also validate that `invocationMethod.webhook` equals `port_trigger`.
 :::
 
@@ -149,7 +167,7 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
       "base_repo_branch": "{{ .inputs.base_repo.properties.defaultBranch }}",
       "target_repo_branch": "{{ .inputs.target_repo.properties.defaultBranch }}",
       "azure_organization": "<AZURE_DEVOPS_ORGANIZATION_NAME>",
-      "pipeline_file_name": "pipeline.yaml",
+      "pipeline_file_name": "pipeline.yaml", # Update this if your pipeline file name is different
       "port_context": {
         "runId": "{{ .run.id }}"
       }
@@ -162,9 +180,6 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
 
 </details>
 
-:::note Organization and pipeline name
-Replace `<AZURE_DEVOPS_ORGANIZATION_NAME>` with your Azure DevOps organization name. and `pipeline.yaml` with the name of the pipeline file you want to copy.
-:::
 
 <br/>
 
@@ -448,18 +463,20 @@ stages:
 </details>
 <br/>
 
-5. To configure the Pipeline in your project go to Pipelines -> Create Pipeline -> Azure Repos Git and choose `pipeline_copier` and click Save(in "Run" dropdown menu).
-   <br/>
+5. To configure the Pipeline in your project go to Pipelines -> Create Pipeline -> Azure Repos Git and choose `pipeline_copier` and click Save (in "Run" dropdown menu). 
+
+<br/>
 
 6. Create the following variables as [Secret Variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash):
 
-    1. `PERSONAL_ACCESS_TOKEN` - a base64-encoded [Personal Access Token](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with the following scopes:
+    1. `PERSONAL_ACCESS_TOKEN` - a [Personal Access Token](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with the following scopes:
         - Code: Full.
-        - Release: Read, write & execute.
+        - Build: Read, Read & execute.
+        - Project and Team: Read, Write.
 
     2. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
     3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
 
 <br/>
 
-7. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.
+7. Trigger the action from the [Self-service](https://app.getport.io/self-serve) page of your Port application.
