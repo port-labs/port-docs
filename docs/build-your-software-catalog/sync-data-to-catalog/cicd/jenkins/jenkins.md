@@ -628,6 +628,10 @@ resources:
 
 ### Build
 
+:::note Build Limit
+The integration fetches up to 100 builds per Jenkins job, allowing you to view the 100 latest builds in Port for each job.
+:::
+
 <details>
 <summary>Build blueprint</summary>
 

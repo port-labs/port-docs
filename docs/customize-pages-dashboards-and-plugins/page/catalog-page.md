@@ -9,9 +9,9 @@ import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/template
 # Catalog page
 
 A catalog page displays a table of all existing [entities](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
-In this example we can see all of the cluster entities we created from the `K8s Cluster` blueprint:
+In this example we can see all of the microservice entities we created from the `microservice` blueprint:
 
-![Microservice blueprint page](/img/software-catalog/pages/catalogPage.png)
+<img src='/img/software-catalog/pages/catalogPage.png' width='80%' border='1px' />
 
 ## Page creation
 
@@ -155,6 +155,14 @@ const catalogPage = new port.Page(
 
 </Tabs>
 
+:::info Default table columns
+By default, the table in a catalog page will display the following columns for each entity:  
+`Identifier`, `Last update time`, and `Creation time`.  
+Other properties will be hidden by default.  
+
+You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
+:::
+
 ### Description
 
 You can provide additional context to your developers by using the `Description` field when creating a catalog page.  
@@ -199,8 +207,6 @@ Another way to reduce loading times is to exclude undesired properties from an e
 To do this, use the `Excluded properties` field when creating a page:
 
 <img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%' />
-
-
 
 ## Customization
 
@@ -257,13 +263,14 @@ You can sort by one or more fields of any kind.
 To sort a specific column, click on the column title.
 :::
 
-### Hide
+### Hide/show columns
 
-You can hide table columns by using the following menu:
+You can show/hide properties by using the `Manage Properties` option in the top-right corner of the table:
 
-![Table hide menu marked](/img/software-catalog/pages/TableHideMenu.png)
+<img src='/img/software-catalog/pages/TableHideMenu.png' width='30%' border='1px' />
+<br/><br/>
 
-You can decide whether each field is viewable to users or not.
+You can also drag and drop the properties in this view to reorder them in the table.
 
 :::tip
 We highly recommend hiding irrelevant data from users, to provide them with a clean work environment, relieving them from any distractions.

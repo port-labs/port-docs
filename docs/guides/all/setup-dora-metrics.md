@@ -333,7 +333,9 @@ Below is a demonstration of how deployment tracking can be implemented using wor
   ```yaml showLineNumbers
   - kind: workflow-run
     selector:
-      query: .head_branch == 'main'
+      query: >
+        (.head_branch == "main") and 
+        (.name | test("deploy|CD"; "i"))   # Track workflows with deploy or CD in the name
     port:
       entity:
         mappings:
@@ -371,7 +373,7 @@ Below is a demonstration of how deployment tracking can be implemented using wor
   ```yaml showLineNumbers
     - kind: pipeline
       selector:
-        query: '.ref == "main"'
+        query: '(.ref == "main") and (.name | test("deploy|CD"; "i"))' # Track pipelines with deploy or CD in the name
       port:
         entity:
           mappings:
@@ -398,7 +400,7 @@ Below is a demonstration of how deployment tracking can be implemented using wor
 
 :::tip Using regex
 You can use regex to track only workflows/pipeline related to deployments
-(e.g., workflows/pipeline containing the word "deploy").
+(e.g., workflows/pipeline containing the word "deploy" or "CD").
 The environment is automatically determined based on the branch, where the main branch corresponds to Production.
 :::
 
@@ -760,7 +762,7 @@ Here’s how you can implement this:
                
 - kind: release
     selector:
-      query: .target_commitish == 'main'
+      query: (.target_commitish == "main") and (.name | test("Production"; "i"))  # Checking if the name contains "Production" (case-insensitive)
     port:
       entity:
         mappings:
@@ -782,6 +784,7 @@ Here’s how you can implement this:
 This configuration maps the repository, release, and tag information to deployment entities in Port.
 You can find more details about setting up GitHub integrations for repositories, releases,
 and tags [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-repository-releases-and-tags).
+You can modify the query to match your naming conventions and requirements. this example tracks release with **Production** in the name.
 :::
 
 :::note GitLab and Azure DevOps

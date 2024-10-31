@@ -1,6 +1,8 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
 import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Port Roles & User management
 
@@ -209,6 +211,35 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
 
 <PortApiRegion />
 
+#### Blueprints Structure
+
+The new blueprints have the following structure:
+<Tabs groupId="user-and-team-blueprint-structure" queryString values={[
+{label: "User", value: "user"},
+{label: "Team", value: "team"},
+]}>
+
+<TabItem value="user">
+- Identifier - the user's email. Will be synced with the Port user's email.
+- Title - the user's name. This will be synced with the Port user's first and last name.
+- Status - the user's status, which can be one of the following:
+  - Active - the user has logged into Port .
+  - Invited - the user was invited to Port via an invitation email.
+  - Disabled - the user is disabled and cannot use Port (relevant only for [service accounts](/sso-rbac/rbac/#service-accounts)).
+- Port Role - the user's internal [role in Port](/sso-rbac/rbac/#roles). This property affects the permissions granted to this user.
+- Moderated Blueprints - the blueprints that can be moderated by the user. Only relevant for `moderator` users.
+- Port type - the type of the user, can be one of the following:
+  - Standard - human users.
+  - [Service Account](/sso-rbac/rbac/#service-accounts).
+</TabItem>
+
+<TabItem value="team">
+- Identifier - the team's identifier.
+- Title - the team's name. This will be synced with the Port team name.
+- Description - the team's description. This will be synced with the Port team description.
+- Size - the number of users in the team.
+</TabItem>
+</Tabs>
 
 #### Consequent changes
 
