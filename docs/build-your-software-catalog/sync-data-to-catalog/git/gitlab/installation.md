@@ -161,19 +161,18 @@ By default, if `appHost` is provided, the integration will create group webhooks
 
 #### System Webhooks
 
-To create a system hook in GitLab, you must set `useSystemHook: true` and choose one of these setup methods:
+To create a system hook in GitLab, you must set `useSystemHook: true` and choose one of the following setup methods:
 
-1. **Automatic Setup** - Provide a token with admin privileges using the `tokenMapping` parameter
+1. **Automatic Setup** - Provide a token with admin privileges using the `tokenMapping` parameter.
 2. **Manual Setup** - Create the system hook yourself in GitLab:
-   - Follow GitLab's [system hook setup guide](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook)
-   - Set the URL to `{appHost}/integration/system/hook` (e.g., `https://my-gitlab-integration.com/integration/system/hook`)
-   - Enable the supported triggers: `push` and `merge_request`
+   - Follow GitLab's [system hook setup guide](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook).
+   - Set the URL to `{appHost}/integration/system/hook` (e.g., `https://my-gitlab-integration.com/integration/system/hook`).
+   - Enable the supported triggers: `push` and `merge_request`.
 
 :::info Repository Setup and Initial Commit
 Due to GitLab webhook limitations, new repositories require special handling:
 
-- A repository will only appear in Port after its first commit
-- This is because GitLab webhooks don't support `project_create` events
+- A repository will only appear in Port after its first commit (GitLab webhooks don't support `project_create` events)
 - Empty repositories (no commits) will only appear after the next scheduled resync
 
 For more details, see GitLab's [webhook events documentation](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html).
