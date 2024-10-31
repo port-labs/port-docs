@@ -507,17 +507,31 @@ components:
                                   - order
                           additionalProperties: false
                         propertiesSettings:
-                          type: object
-                          properties:
-                            hidden:
-                              type: array
-                              items:
-                                type: string
-                            order:
-                              type: array
-                              items:
-                                type: string
-                          additionalProperties: false
+                          oneOf:
+                            - type: object
+                              properties:
+                                hidden:
+                                  type: array
+                                  items:
+                                    type: string
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              additionalProperties: false
+                            - type: object
+                              properties:
+                                shown:
+                                  type: array
+                                  items:
+                                    type: string
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              required:
+                                - shown
+                              additionalProperties: false
                         tabIndex:
                           type: number
                         hidden:
@@ -594,17 +608,31 @@ components:
                                   - order
                           additionalProperties: false
                         propertiesSettings:
-                          type: object
-                          properties:
-                            hidden:
-                              type: array
-                              items:
-                                type: string
-                            order:
-                              type: array
-                              items:
-                                type: string
-                          additionalProperties: false
+                          oneOf:
+                            - type: object
+                              properties:
+                                hidden:
+                                  type: array
+                                  items:
+                                    type: string
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              additionalProperties: false
+                            - type: object
+                              properties:
+                                shown:
+                                  type: array
+                                  items:
+                                    type: string
+                                order:
+                                  type: array
+                                  items:
+                                    type: string
+                              required:
+                                - shown
+                              additionalProperties: false
                         tabIndex:
                           type: number
                         hidden:
@@ -2008,17 +2036,31 @@ components:
                                         - order
                                 additionalProperties: false
                               propertiesSettings:
-                                type: object
-                                properties:
-                                  hidden:
-                                    type: array
-                                    items:
-                                      type: string
-                                  order:
-                                    type: array
-                                    items:
-                                      type: string
-                                additionalProperties: false
+                                oneOf:
+                                  - type: object
+                                    properties:
+                                      hidden:
+                                        type: array
+                                        items:
+                                          type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    additionalProperties: false
+                                  - type: object
+                                    properties:
+                                      shown:
+                                        type: array
+                                        items:
+                                          type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - shown
+                                    additionalProperties: false
                               tabIndex:
                                 type: number
                               hidden:
@@ -2095,17 +2137,31 @@ components:
                                         - order
                                 additionalProperties: false
                               propertiesSettings:
-                                type: object
-                                properties:
-                                  hidden:
-                                    type: array
-                                    items:
-                                      type: string
-                                  order:
-                                    type: array
-                                    items:
-                                      type: string
-                                additionalProperties: false
+                                oneOf:
+                                  - type: object
+                                    properties:
+                                      hidden:
+                                        type: array
+                                        items:
+                                          type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    additionalProperties: false
+                                  - type: object
+                                    properties:
+                                      shown:
+                                        type: array
+                                        items:
+                                          type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - shown
+                                    additionalProperties: false
                               tabIndex:
                                 type: number
                               hidden:
@@ -15569,17 +15625,31 @@ paths:
                                           - order
                                   additionalProperties: false
                                 propertiesSettings:
-                                  type: object
-                                  properties:
-                                    hidden:
-                                      type: array
-                                      items:
-                                        type: string
-                                    order:
-                                      type: array
-                                      items:
-                                        type: string
-                                  additionalProperties: false
+                                  oneOf:
+                                    - type: object
+                                      properties:
+                                        hidden:
+                                          type: array
+                                          items:
+                                            type: string
+                                        order:
+                                          type: array
+                                          items:
+                                            type: string
+                                      additionalProperties: false
+                                    - type: object
+                                      properties:
+                                        shown:
+                                          type: array
+                                          items:
+                                            type: string
+                                        order:
+                                          type: array
+                                          items:
+                                            type: string
+                                      required:
+                                        - shown
+                                      additionalProperties: false
                                 tabIndex:
                                   type: number
                                 hidden:
@@ -15656,17 +15726,31 @@ paths:
                                           - order
                                   additionalProperties: false
                                 propertiesSettings:
-                                  type: object
-                                  properties:
-                                    hidden:
-                                      type: array
-                                      items:
-                                        type: string
-                                    order:
-                                      type: array
-                                      items:
-                                        type: string
-                                  additionalProperties: false
+                                  oneOf:
+                                    - type: object
+                                      properties:
+                                        hidden:
+                                          type: array
+                                          items:
+                                            type: string
+                                        order:
+                                          type: array
+                                          items:
+                                            type: string
+                                      additionalProperties: false
+                                    - type: object
+                                      properties:
+                                        shown:
+                                          type: array
+                                          items:
+                                            type: string
+                                        order:
+                                          type: array
+                                          items:
+                                            type: string
+                                      required:
+                                        - shown
+                                      additionalProperties: false
                                 tabIndex:
                                   type: number
                                 hidden:
@@ -17063,17 +17147,31 @@ paths:
                                                           - order
                                                   additionalProperties: false
                                                 propertiesSettings:
-                                                  type: object
-                                                  properties:
-                                                    hidden:
-                                                      type: array
-                                                      items:
-                                                        type: string
-                                                    order:
-                                                      type: array
-                                                      items:
-                                                        type: string
-                                                  additionalProperties: false
+                                                  oneOf:
+                                                    - type: object
+                                                      properties:
+                                                        hidden:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                        order:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                      additionalProperties: false
+                                                    - type: object
+                                                      properties:
+                                                        shown:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                        order:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                      required:
+                                                        - shown
+                                                      additionalProperties: false
                                                 tabIndex:
                                                   type: number
                                                 hidden:
@@ -17150,17 +17248,31 @@ paths:
                                                           - order
                                                   additionalProperties: false
                                                 propertiesSettings:
-                                                  type: object
-                                                  properties:
-                                                    hidden:
-                                                      type: array
-                                                      items:
-                                                        type: string
-                                                    order:
-                                                      type: array
-                                                      items:
-                                                        type: string
-                                                  additionalProperties: false
+                                                  oneOf:
+                                                    - type: object
+                                                      properties:
+                                                        hidden:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                        order:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                      additionalProperties: false
+                                                    - type: object
+                                                      properties:
+                                                        shown:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                        order:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                      required:
+                                                        - shown
+                                                      additionalProperties: false
                                                 tabIndex:
                                                   type: number
                                                 hidden:
@@ -18569,17 +18681,31 @@ paths:
                                                     - order
                                             additionalProperties: false
                                           propertiesSettings:
-                                            type: object
-                                            properties:
-                                              hidden:
-                                                type: array
-                                                items:
-                                                  type: string
-                                              order:
-                                                type: array
-                                                items:
-                                                  type: string
-                                            additionalProperties: false
+                                            oneOf:
+                                              - type: object
+                                                properties:
+                                                  hidden:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                  order:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                additionalProperties: false
+                                              - type: object
+                                                properties:
+                                                  shown:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                  order:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                required:
+                                                  - shown
+                                                additionalProperties: false
                                           tabIndex:
                                             type: number
                                           hidden:
@@ -18656,17 +18782,31 @@ paths:
                                                     - order
                                             additionalProperties: false
                                           propertiesSettings:
-                                            type: object
-                                            properties:
-                                              hidden:
-                                                type: array
-                                                items:
-                                                  type: string
-                                              order:
-                                                type: array
-                                                items:
-                                                  type: string
-                                            additionalProperties: false
+                                            oneOf:
+                                              - type: object
+                                                properties:
+                                                  hidden:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                  order:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                additionalProperties: false
+                                              - type: object
+                                                properties:
+                                                  shown:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                  order:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                required:
+                                                  - shown
+                                                additionalProperties: false
                                           tabIndex:
                                             type: number
                                           hidden:
@@ -20107,17 +20247,31 @@ paths:
                                           - order
                                   additionalProperties: false
                                 propertiesSettings:
-                                  type: object
-                                  properties:
-                                    hidden:
-                                      type: array
-                                      items:
-                                        type: string
-                                    order:
-                                      type: array
-                                      items:
-                                        type: string
-                                  additionalProperties: false
+                                  oneOf:
+                                    - type: object
+                                      properties:
+                                        hidden:
+                                          type: array
+                                          items:
+                                            type: string
+                                        order:
+                                          type: array
+                                          items:
+                                            type: string
+                                      additionalProperties: false
+                                    - type: object
+                                      properties:
+                                        shown:
+                                          type: array
+                                          items:
+                                            type: string
+                                        order:
+                                          type: array
+                                          items:
+                                            type: string
+                                      required:
+                                        - shown
+                                      additionalProperties: false
                                 tabIndex:
                                   type: number
                                 hidden:
@@ -20194,17 +20348,31 @@ paths:
                                           - order
                                   additionalProperties: false
                                 propertiesSettings:
-                                  type: object
-                                  properties:
-                                    hidden:
-                                      type: array
-                                      items:
-                                        type: string
-                                    order:
-                                      type: array
-                                      items:
-                                        type: string
-                                  additionalProperties: false
+                                  oneOf:
+                                    - type: object
+                                      properties:
+                                        hidden:
+                                          type: array
+                                          items:
+                                            type: string
+                                        order:
+                                          type: array
+                                          items:
+                                            type: string
+                                      additionalProperties: false
+                                    - type: object
+                                      properties:
+                                        shown:
+                                          type: array
+                                          items:
+                                            type: string
+                                        order:
+                                          type: array
+                                          items:
+                                            type: string
+                                      required:
+                                        - shown
+                                      additionalProperties: false
                                 tabIndex:
                                   type: number
                                 hidden:
@@ -21601,17 +21769,31 @@ paths:
                                                           - order
                                                   additionalProperties: false
                                                 propertiesSettings:
-                                                  type: object
-                                                  properties:
-                                                    hidden:
-                                                      type: array
-                                                      items:
-                                                        type: string
-                                                    order:
-                                                      type: array
-                                                      items:
-                                                        type: string
-                                                  additionalProperties: false
+                                                  oneOf:
+                                                    - type: object
+                                                      properties:
+                                                        hidden:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                        order:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                      additionalProperties: false
+                                                    - type: object
+                                                      properties:
+                                                        shown:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                        order:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                      required:
+                                                        - shown
+                                                      additionalProperties: false
                                                 tabIndex:
                                                   type: number
                                                 hidden:
@@ -21688,17 +21870,31 @@ paths:
                                                           - order
                                                   additionalProperties: false
                                                 propertiesSettings:
-                                                  type: object
-                                                  properties:
-                                                    hidden:
-                                                      type: array
-                                                      items:
-                                                        type: string
-                                                    order:
-                                                      type: array
-                                                      items:
-                                                        type: string
-                                                  additionalProperties: false
+                                                  oneOf:
+                                                    - type: object
+                                                      properties:
+                                                        hidden:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                        order:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                      additionalProperties: false
+                                                    - type: object
+                                                      properties:
+                                                        shown:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                        order:
+                                                          type: array
+                                                          items:
+                                                            type: string
+                                                      required:
+                                                        - shown
+                                                      additionalProperties: false
                                                 tabIndex:
                                                   type: number
                                                 hidden:
@@ -23107,17 +23303,31 @@ paths:
                                                     - order
                                             additionalProperties: false
                                           propertiesSettings:
-                                            type: object
-                                            properties:
-                                              hidden:
-                                                type: array
-                                                items:
-                                                  type: string
-                                              order:
-                                                type: array
-                                                items:
-                                                  type: string
-                                            additionalProperties: false
+                                            oneOf:
+                                              - type: object
+                                                properties:
+                                                  hidden:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                  order:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                additionalProperties: false
+                                              - type: object
+                                                properties:
+                                                  shown:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                  order:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                required:
+                                                  - shown
+                                                additionalProperties: false
                                           tabIndex:
                                             type: number
                                           hidden:
@@ -23194,17 +23404,31 @@ paths:
                                                     - order
                                             additionalProperties: false
                                           propertiesSettings:
-                                            type: object
-                                            properties:
-                                              hidden:
-                                                type: array
-                                                items:
-                                                  type: string
-                                              order:
-                                                type: array
-                                                items:
-                                                  type: string
-                                            additionalProperties: false
+                                            oneOf:
+                                              - type: object
+                                                properties:
+                                                  hidden:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                  order:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                additionalProperties: false
+                                              - type: object
+                                                properties:
+                                                  shown:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                  order:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                required:
+                                                  - shown
+                                                additionalProperties: false
                                           tabIndex:
                                             type: number
                                           hidden:
@@ -24642,17 +24866,31 @@ paths:
                                         - order
                                 additionalProperties: false
                               propertiesSettings:
-                                type: object
-                                properties:
-                                  hidden:
-                                    type: array
-                                    items:
-                                      type: string
-                                  order:
-                                    type: array
-                                    items:
-                                      type: string
-                                additionalProperties: false
+                                oneOf:
+                                  - type: object
+                                    properties:
+                                      hidden:
+                                        type: array
+                                        items:
+                                          type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    additionalProperties: false
+                                  - type: object
+                                    properties:
+                                      shown:
+                                        type: array
+                                        items:
+                                          type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - shown
+                                    additionalProperties: false
                               tabIndex:
                                 type: number
                               hidden:
@@ -24729,17 +24967,31 @@ paths:
                                         - order
                                 additionalProperties: false
                               propertiesSettings:
-                                type: object
-                                properties:
-                                  hidden:
-                                    type: array
-                                    items:
-                                      type: string
-                                  order:
-                                    type: array
-                                    items:
-                                      type: string
-                                additionalProperties: false
+                                oneOf:
+                                  - type: object
+                                    properties:
+                                      hidden:
+                                        type: array
+                                        items:
+                                          type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    additionalProperties: false
+                                  - type: object
+                                    properties:
+                                      shown:
+                                        type: array
+                                        items:
+                                          type: string
+                                      order:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                      - shown
+                                    additionalProperties: false
                               tabIndex:
                                 type: number
                               hidden:
@@ -26136,17 +26388,31 @@ paths:
                                                         - order
                                                 additionalProperties: false
                                               propertiesSettings:
-                                                type: object
-                                                properties:
-                                                  hidden:
-                                                    type: array
-                                                    items:
-                                                      type: string
-                                                  order:
-                                                    type: array
-                                                    items:
-                                                      type: string
-                                                additionalProperties: false
+                                                oneOf:
+                                                  - type: object
+                                                    properties:
+                                                      hidden:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                      order:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                    additionalProperties: false
+                                                  - type: object
+                                                    properties:
+                                                      shown:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                      order:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                    required:
+                                                      - shown
+                                                    additionalProperties: false
                                               tabIndex:
                                                 type: number
                                               hidden:
@@ -26223,17 +26489,31 @@ paths:
                                                         - order
                                                 additionalProperties: false
                                               propertiesSettings:
-                                                type: object
-                                                properties:
-                                                  hidden:
-                                                    type: array
-                                                    items:
-                                                      type: string
-                                                  order:
-                                                    type: array
-                                                    items:
-                                                      type: string
-                                                additionalProperties: false
+                                                oneOf:
+                                                  - type: object
+                                                    properties:
+                                                      hidden:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                      order:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                    additionalProperties: false
+                                                  - type: object
+                                                    properties:
+                                                      shown:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                      order:
+                                                        type: array
+                                                        items:
+                                                          type: string
+                                                    required:
+                                                      - shown
+                                                    additionalProperties: false
                                               tabIndex:
                                                 type: number
                                               hidden:
@@ -27642,17 +27922,31 @@ paths:
                                                   - order
                                           additionalProperties: false
                                         propertiesSettings:
-                                          type: object
-                                          properties:
-                                            hidden:
-                                              type: array
-                                              items:
-                                                type: string
-                                            order:
-                                              type: array
-                                              items:
-                                                type: string
-                                          additionalProperties: false
+                                          oneOf:
+                                            - type: object
+                                              properties:
+                                                hidden:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                                order:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                              additionalProperties: false
+                                            - type: object
+                                              properties:
+                                                shown:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                                order:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                              required:
+                                                - shown
+                                              additionalProperties: false
                                         tabIndex:
                                           type: number
                                         hidden:
@@ -27729,17 +28023,31 @@ paths:
                                                   - order
                                           additionalProperties: false
                                         propertiesSettings:
-                                          type: object
-                                          properties:
-                                            hidden:
-                                              type: array
-                                              items:
-                                                type: string
-                                            order:
-                                              type: array
-                                              items:
-                                                type: string
-                                          additionalProperties: false
+                                          oneOf:
+                                            - type: object
+                                              properties:
+                                                hidden:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                                order:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                              additionalProperties: false
+                                            - type: object
+                                              properties:
+                                                shown:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                                order:
+                                                  type: array
+                                                  items:
+                                                    type: string
+                                              required:
+                                                - shown
+                                              additionalProperties: false
                                         tabIndex:
                                           type: number
                                         hidden:
@@ -30815,7 +31123,6 @@ paths:
                 - email
                 - firstName
                 - lastName
-                - phoneNumber
                 - picture
                 - status
                 - type
