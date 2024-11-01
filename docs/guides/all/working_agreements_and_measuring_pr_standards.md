@@ -736,9 +736,9 @@ This will allow us to capture important metrics such as:
 :::tip Adding Aggregation to Blueprints
 To add aggregation properties to your blueprints, follow these steps:
 1. Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
-2. Locate and select your **Service** blueprint.
+2. Locate and select your **blueprint**.
 3. Click the `{...}` button in the top right corner, and choose **Edit JSON**.
-4. Insert the respective **aggregation** or **calculation properties** under the `aggregationProperties` or `calculationProperties` section in the Service blueprint's JSON schema.
+4. Insert the respective **aggregation** or **calculation properties** under the `aggregationProperties` or `calculationProperties` section in the blueprint's JSON schema.
 5. Save your changes to apply the new aggregation configuration.
  :::
 
