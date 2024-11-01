@@ -36,7 +36,7 @@ please refer to our [DORA Metrics guide](/guides/all/setup-dora-metrics).
 
 ## Working agreements
 
-The following working agreements and PR checks have been implemented in our [demo environment](https://demo.getport.io/settings/data-model) on the `pull request` blueprint:
+The following working agreements and PR checks have been implemented in our [demo environment](https://demo.getport.io/engineering_overview) all the way down for similar examples:
 
 - [**PR Description Cannot be Empty**](#pr-description-cannot-be-empty): Ensures that every PR has a description.
 - [**PR Has Linked Issue**](#pr-has-linked-issue): Verifies that each PR is linked to an issue.
@@ -728,8 +728,9 @@ This will allow us to capture important metrics such as:
 - Average Commits per PR (Service & Organization Level)
 - Average Lines of Code (LOC) Changed (Service & Organization Level)
 
-::::info Aggregation on organization level
-To aggregate on an organization level, apply the same settings to a higher hierarchy.
+::::info Aggregation on higher hierarchy
+- To aggregate on an organization level, apply the same settings to a higher hierarchy.
+- If you want to see it on a team level, you need to make sure services are related to teams and add the same aggregations to team
 ::::
 
 :::tip Adding Aggregation to Blueprints
@@ -906,103 +907,6 @@ Add the following aggregation property to the **service** and **organization** b
 </Tabs>
 
 By implementing these aggregation properties, you can effectively measure and monitor PR standards at both the service and organization levels.
-
-
-
-## Aggregation on team level
-
-To measure PR standards at the team level, add the following aggregation properties to the **team** [blueprint](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-teams):
-
-<Tabs
-  defaultValue="averageCommitsPerPr"
-  values={[
-    {label: 'Monthly Average Commits Per PR', value: 'averageCommitsPerPr'},
-    {label: 'Monthly Average PR LOC', value: 'monthlyAveragePrLoc'},
-    {label: 'Average Time to Merge', value: 'averageTimeToMerge'}
-  ]}>
-
-<TabItem value="averageCommitsPerPr">
-
-Add the following aggregation property to calculate the  average commits per PR:
-
-<details>
-  <summary>Click to view the aggregation property</summary>
-
-```json showLineNumbers
-  "average_commits_per_pr": {
-    "title": "Average Commits Per PR",
-    "type": "number",
-    "target": "service",
-    "calculationSpec": {
-      "func": "average",
-      "averageOf": "total",
-      "property": "averageCommitsPerPr",
-      "calculationBy": "property",
-      "measureTimeBy": "$createdAt"
-    }
-  }
-
-```
-</details>
-
-</TabItem>
-
-<TabItem value="monthlyAveragePrLoc">
-
-
-Add the following aggregation property to calculate the monthly average PR lines of code:
-
-<details>
-  <summary>Click to view the aggregation property</summary>
-
-```json showLineNumbers
-  "monthly_average_pr_loc": {
-    "title": "Monthly Average PR LOC",
-    "type": "number",
-    "target": "service",
-    "calculationSpec": {
-      "func": "average",
-      "averageOf": "month",
-      "property": "averagePrLinesOfCode",
-      "measureTimeBy": "$createdAt",
-      "calculationBy": "property"
-    }
-  }
-
-```
-</details>
-
-</TabItem>
-
-<TabItem value="averageTimeToMerge">
-
-
-Add the following aggregation property to calculate the average time to merged PRs:
-
-<details>
-  <summary>Click to view the aggregation property</summary>
-
-```json showLineNumbers
-"average_time_to_merge": {
-  "title": "Average Time to Merge",
-  "icon": "DefaultProperty",
-  "type": "number",
-  "target": "githubPullRequest",
-  "calculationSpec": {
-    "func": "average",
-    "averageOf": "day",
-    "property": "days_old",
-    "measureTimeBy": "mergedAt",
-    "calculationBy": "property"
-  }
-}
-
-```
-</details>
-
-</TabItem>
-
-</Tabs>
 
 
 ## Visualization
