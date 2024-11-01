@@ -454,7 +454,7 @@ export const availableGuides = [
     },
     {
         title: "Deploy Azure Resource using Terraform",
-        description: "Create a self-service action that deployes a storage account in Azure using Terraform",
+        description: "Create a self-service action that deploys a storage account in Azure using Terraform",
         tags: ["IaC for devs", "Azure", "Terraform", "Actions"],
         logos: ["Azure", "Terraform"],
         // category: "Getting started",
