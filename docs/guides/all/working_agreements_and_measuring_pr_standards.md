@@ -8,6 +8,11 @@ import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Implement working agreements and measure pull request standards 
+This guide is aimed at helping engineering teams implement working agreements and measure pull request (PR) standards using Port.
+We will implement working agreements using Port's scorecards and measure PR standards using aggregation properties.
+
+<img src='/img/guides/scorecardOverview.png' border='1px' />
+
 
 ## Overview
 
@@ -46,7 +51,32 @@ These checks are implemented using Port's [scorecards](/#scorecards) on the `pul
 
 
 ## Implementation 
-Here are the implementation details for each working agreement and PR check:
+This section will guide you through implementing the working agreements and PR checks in your Port environment.
+Follow the steps below to  implement this :
+1. Add the properties to the `pull request` blueprint.
+   - Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
+   -  Select the `pull request` blueprint.
+   -  Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+   - Add the properties and mapping configurations as described below.
+     <img src='/img/guides/prBPPropertyAdd.png'  width='80%' />
+   - Save the changes.
+
+2. Add the **mapping configuration** to the data source.
+   - Go to the [Data Sources](https://app.getport.io/settings/data-sources) in your Port portal.
+   - Select the data source connected to your GitHub repository
+   - Add the mapping configurations as described below.
+     <img src='/img/guides/addMappingConfigDS.png'  />
+   - Save the changes.
+
+3. Add the **scorecard** definitions to the `pull request` blueprint.
+   - Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
+   - Select the `pull request` blueprint.
+   - Click on  the **Scorecard**
+   - Click on the `+ New Scorecard` button.
+   <img src='/img/guides/scorecardOnPRAdd.png' />
+   - Paste the scorecard definitions as described below.
+   - Save the changes.
+
 
 ### PR Description Cannot be Empty
 
@@ -112,8 +142,6 @@ Map the PR's `body` field from your data source to the `prDescription` property:
 ```
 
 </details>
-
-
 
 ### PR Has Linked Issue
 
@@ -181,8 +209,6 @@ Map the issue URL from your data source to the `issueurl` property:
 
 </details>
 
-
-
 ### PR Has No Unchecked Checkboxes
 
 <h4> Scorecard Definition </h4>
@@ -215,9 +241,6 @@ Map the issue URL from your data source to the `issueurl` property:
 If you haven't added the `prDescription` property, and it's relative mapping config
  please refer to the [PR Description Cannot be Empty](#pr-description-cannot-be-empty) section.
 :::
-
-
-
 
 ### PR Requires Reviewers
 
@@ -284,8 +307,6 @@ Map the list of reviewers from your data source to the `reviewers` property:
 ```
 
 </details>
-
-
 
 ### PR Is Linked to a Milestone
 
@@ -354,9 +375,6 @@ Map the milestone information from your data source to the `milestone` property.
 ```
 
 </details>
-
-
-
 
 ### PR Changed X Files or Less
 
@@ -479,7 +497,6 @@ Map the number of `changed_files` from the data source to the `changedFiles` pro
 
 </details>
 
-
 ### PR Has Been Open for X Days
 
 
@@ -534,8 +551,6 @@ Add a calculation property `days_old` to compute how many days the PR has been o
 :::note Required properties
 Ensure that `createdAt` and `mergedAt` properties are correctly mapped from your data source.
 :::
-
-
 
 ### PR Batch Size Calculation
 
@@ -686,6 +701,20 @@ You can adjust the thresholds based on your team's requirements.
 :::
 
 
+### Add total LOC changed property
+Add the **calculation property** `totalLocChanged` on the **pull request** blueprint:
+
+<details>
+  <summary>Click to view the calculation property</summary>
+
+```json showLineNumbers
+"totalLocChanged": {
+  "title": "Total LOC Changed",
+  "type": "number",
+  "calculation": ".properties.additions + .properties.deletions"
+}
+```
+</details>
 
 
 ## Pull request metrics aggregation
@@ -702,6 +731,15 @@ This will allow us to capture important metrics such as:
 ::::info Aggregation on organization level
 To aggregate on an organization level, apply the same settings to a higher hierarchy.
 ::::
+
+:::tip Adding Aggregation to Blueprints
+To add aggregation properties to your blueprints, follow these steps:
+1. Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
+2. Locate and select your **Service** blueprint.
+3. Click the `{...}` button in the top right corner, and choose **Edit JSON**.
+4. Insert the respective **aggregation** or **calculation properties** under the `aggregationProperties` or `calculationProperties` section in the Service blueprint's JSON schema.
+5. Save your changes to apply the new aggregation configuration.
+ :::
 
 <Tabs
   defaultValue="averagePrDuration"
@@ -749,7 +787,7 @@ Add the following aggregation property to the **service** blueprint:
 
 <TabItem value="prsOpened">
 
-Add the following aggregation property to the **service** and **organization** blueprint:
+Add the following aggregation property to the **service** blueprint:
 
 <details>
   <summary>Click to view the aggregation property</summary>
@@ -842,22 +880,6 @@ Add the following aggregation property to the **service** blueprint:
 <TabItem value="averageLocChanged">
 
 
-
-First, ensure you have a calculation property `totalLocChanged` on the **pull request** blueprint:
-
-<details>
-  <summary>Click to view the calculation property</summary>
-
-```json
-"totalLocChanged": {
-  "title": "Total LOC Changed",
-  "type": "number",
-  "calculation": ".properties.additions + .properties.deletions"
-}
-```
-
-</details>
-
 Add the following aggregation property to the **service** and **organization** blueprints:
 
 <details>
@@ -901,14 +923,14 @@ To measure PR standards at the team level, add the following aggregation propert
 
 <TabItem value="averageCommitsPerPr">
 
-Add the following aggregation property to calculate the total average commits per PR:
+Add the following aggregation property to calculate the  average commits per PR:
 
 <details>
   <summary>Click to view the aggregation property</summary>
 
 ```json showLineNumbers
-  "total_average_commits_per_pr": {
-    "title": "Total Average Commits Per PR",
+  "average_commits_per_pr": {
+    "title": "Average Commits Per PR",
     "type": "number",
     "target": "service",
     "calculationSpec": {
@@ -985,6 +1007,8 @@ Add the following aggregation property to calculate the average time to merged P
 
 ## Visualization
 By leveraging Port's Dashboards, you can create custom dashboards to track the pr metrics and monitor your team's performance over time.
+
+<img src='/img/guides/scorecardsOverview.png' border='1px' />
 
 ### Dashboard setup
 
