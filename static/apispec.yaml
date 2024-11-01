@@ -12672,7 +12672,6 @@ paths:
                 - email
                 - firstName
                 - lastName
-                - phoneNumber
                 - picture
                 - status
                 - type
