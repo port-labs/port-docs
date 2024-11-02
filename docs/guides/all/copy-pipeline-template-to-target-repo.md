@@ -184,7 +184,6 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
 <br/>
 
 4. In your `pipeline_copier` Azure DevOps Repository, create an Azure Pipeline file under `azure-pipelines.yml` in the root of the repo's main branch with the following content:
-
 <details>
 <summary>Azure DevOps Pipeline Script</summary>
 
@@ -252,8 +251,9 @@ stages:
                 TARGET_REPO_BRANCH_REF="refs/heads/main"
               fi
 
-              # Extract project name from the URL
-              PROJECT_NAME=$(echo "$BASE_REPO_URL" | awk -F'/' '{print $5}')
+              # Extract project names from URLs
+              BASE_PROJECT_NAME=$(echo "$BASE_REPO_URL" | awk -F'/' '{print $5}')
+              TARGET_PROJECT_NAME=$(echo "$TARGET_REPO_URL" | awk -F'/' '{print $5}')
 
               # Extract repository names from URLs
               BASE_REPO_NAME=$(basename "$BASE_REPO_URL")
@@ -264,14 +264,14 @@ stages:
               TARGET_REPO_BRANCH=${TARGET_REPO_BRANCH_REF##*/}
 
               # Validate extracted values
-              if [ -z "$PROJECT_NAME" ] || [ -z "$BASE_REPO_NAME" ] || [ -z "$TARGET_REPO_NAME" ] || [ -z "$BASE_REPO_BRANCH" ] || [ -z "$TARGET_REPO_BRANCH" ] || [ -z "$PIPELINE_FILE_NAME" ]; then
+              if [ -z "$BASE_PROJECT_NAME" ] || [ -z "$TARGET_PROJECT_NAME" ] || [ -z "$BASE_REPO_NAME" ] || [ -z "$TARGET_REPO_NAME" ] || [ -z "$BASE_REPO_BRANCH" ] || [ -z "$TARGET_REPO_BRANCH" ] || [ -z "$PIPELINE_FILE_NAME" ]; then
                 echo "Error: One or more required variables are empty."
                 exit 1
               fi
 
               # Construct API URLs
-              BASE_REPO_API_URL="https://dev.azure.com/${AZURE_ORGANIZATION}/${PROJECT_NAME}/_apis/git/repositories/${BASE_REPO_NAME}"
-              TARGET_REPO_API_URL="https://dev.azure.com/${AZURE_ORGANIZATION}/${PROJECT_NAME}/_apis/git/repositories/${TARGET_REPO_NAME}"
+              BASE_REPO_API_URL="https://dev.azure.com/${AZURE_ORGANIZATION}/${BASE_PROJECT_NAME}/_apis/git/repositories/${BASE_REPO_NAME}"
+              TARGET_REPO_API_URL="https://dev.azure.com/${AZURE_ORGANIZATION}/${TARGET_PROJECT_NAME}/_apis/git/repositories/${TARGET_REPO_NAME}"
 
               # Fetch pipeline file content from base_repo at specified branch
               HTTP_RESPONSE=$(curl -s -w "HTTPSTATUS:%{http_code}" -u :$PERSONAL_ACCESS_TOKEN \
@@ -382,7 +382,7 @@ stages:
 
               # Check if the pipeline already exists
               EXISTING_PIPELINE_RESPONSE=$(curl -s -u :$PERSONAL_ACCESS_TOKEN \
-                "https://dev.azure.com/${AZURE_ORGANIZATION}/${PROJECT_NAME}/_apis/pipelines?api-version=6.0-preview.1")
+                "https://dev.azure.com/${AZURE_ORGANIZATION}/${TARGET_PROJECT_NAME}/_apis/pipelines?api-version=6.0-preview.1")
 
               PIPELINE_NAME="Pipeline for ${TARGET_REPO_NAME}"
               EXISTING_PIPELINE_ID=$(echo "$EXISTING_PIPELINE_RESPONSE" | jq -r --arg PIPELINE_NAME "$PIPELINE_NAME" '.value[] | select(.name==$PIPELINE_NAME) | .id')
@@ -406,7 +406,7 @@ stages:
                           }
                         }
                       }" \
-                  "https://dev.azure.com/${AZURE_ORGANIZATION}/${PROJECT_NAME}/_apis/pipelines?api-version=7.1-preview.1")
+                  "https://dev.azure.com/${AZURE_ORGANIZATION}/${TARGET_PROJECT_NAME}/_apis/pipelines?api-version=7.1-preview.1")
 
                 PIPELINE_ID=$(echo "$CREATE_PIPELINE_RESPONSE" | jq -r '.id')
 
@@ -453,10 +453,9 @@ stages:
               curl -X PATCH \
                 -H 'Content-Type: application/json' \
                 -H 'Authorization: Bearer $(accessToken)' \
-                -d '{"status":"FAILURE","statusLabel":"Failed to copy file","message": {"run_status": "Copying pipeline failed, check the logs in the pipeline" }}' \
+                -d '{"status":"FAILURE","statusLabel":"Failed to copy file","message": {"run_status": "Copying pipeline failed" }}' \
                 "https://api.getport.io/v1/actions/runs/${{ variables.RUN_ID }}"
             displayName: "Update Port with Failure Status"
-
 
 ```
 
