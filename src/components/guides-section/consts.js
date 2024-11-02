@@ -829,10 +829,9 @@ export const availableGuides = [
     },
     {
         title: "Ingest security issues from .sarif files to services",
-        description: "Ingest .sarif file and relate them to the corresponding service entities",
-        tags: ["SDLC","GitHub","AppSec"],
+        description: "Ingest .sarif files and relate them to the corresponding service entities",
+        tags: ["AppSec", "GitHub"],
         logos: ["GitHub"],
-        // category: "Getting started",
         link: "/guides/all/ingest-security-issues-from-sarif-files-to-services",
     },
     

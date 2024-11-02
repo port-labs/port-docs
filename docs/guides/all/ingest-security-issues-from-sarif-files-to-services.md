@@ -9,13 +9,12 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide will demonstrate how to ingest security issues from `.sarif` files and relate them to the corresponding service entities in Port.
 
-:::info Prerequisites
+## Prerequisites
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.getport.io/quickstart).
 - The `Service` blueprint should be created during the onboarding process.
 - Ensure you have [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) or [Gitlab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation) installed and configured in your environment.
 
-:::
 
 <br/>
 
@@ -134,7 +133,7 @@ To ingest security issues listed in `.sarif` files, follow these steps:
 
 </details>
 
-:::info Configuration Details
+### Configuration details
 
 - **`kind: file`** specifies that the source is a file, in this case, `.sarif` files.
 - **`files:`** defines the path pattern to locate `.sarif` files within your repositories.
@@ -143,7 +142,6 @@ To ingest security issues listed in `.sarif` files, follow these steps:
 - **`properties:`** captures essential details like rule name, description, location, and message.
 - **`relations:`** establishes a relation between the security issue and the corresponding service.
 
-:::
 
 <br/>
 
@@ -153,7 +151,7 @@ Once you have configured the data source and mappings, the extracted security is
 Here’s an example SARIF file structure that you can copy and replicate for testing purposes:
 
 
-<img src='/img/guides/exampleExtractedIssues.png' width='100%' />
+<img src='/img/guides/exampleExtractedIssues.png' border="1px" width='100%' />
 
 <details>
 <summary><b>Example SARIF File (Click to expand)</b></summary>
@@ -232,7 +230,8 @@ Here’s an example SARIF file structure that you can copy and replicate for tes
 
 </details>
 
-<img src='/img/guides/exampleSingleExtractedIssues.png' width='100%' />
+<img src='/img/guides/exampleSingleExtractedIssues.png' border="1px" width='100%' />
+<br/><br/>
 
 :::info File format
 
@@ -242,8 +241,7 @@ For example:
 - The mapping configuration can be customized to accommodate new properties, making this approach flexible for various use cases.
   :::
 
+## Conclusion
 By following these steps, you can effectively ingest security issues from `.sarif` files and relate them to the corresponding service entities in Port 🎉.
 
-## Relevant Guides
 
-- For more guides and examples, see the [guides section](https://docs.getport.io/guides?tags=AppSec).
