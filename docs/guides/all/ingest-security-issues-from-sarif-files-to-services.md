@@ -241,7 +241,6 @@ For example:
 - The mapping configuration can be customized to accommodate new properties, making this approach flexible for various use cases.
   :::
 
-## Conclusion
 By following these steps, you can effectively ingest security issues from `.sarif` files and relate them to the corresponding service entities in Port 🎉.
 
 
