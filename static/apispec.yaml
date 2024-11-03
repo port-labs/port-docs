@@ -17154,8 +17154,60 @@ paths:
                     <td>string | null</td>
                 </tr>
                 <tr>
-                    <td>`mappings`</td>
-                    <td>IntegrationMapping[] | null</td>
+                    <td>`mappings.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation`</td>
+                    <td>'create' | 'delete'</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.type`</td>
+                    <td>'create' | 'delete' | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.filter`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.itemsToParse`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier`</td>
+                    <td>string | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.combinator`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.rules`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.team`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.relations`</td>
+                    <td>object[]</td>
                 </tr>
                 <tr>
                     <td>`enabled`</td>
@@ -17317,7 +17369,7 @@ paths:
                 ]
               }
             ```
-
+            
             <table>
                 <tr>
                     <th>Key</th>
@@ -17340,8 +17392,60 @@ paths:
                     <td>string | null</td>
                 </tr>
                 <tr>
-                    <td>`mappings`</td>
-                    <td>IntegrationMapping[] | null</td>
+                    <td>`mappings.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation`</td>
+                    <td>'create' | 'delete'</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.type`</td>
+                    <td>'create' | 'delete' | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.filter`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.itemsToParse`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier`</td>
+                    <td>string | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.combinator`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.rules`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.team`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.relations`</td>
+                    <td>object[]</td>
                 </tr>
                 <tr>
                     <td>`enabled`</td>
@@ -17607,7 +17711,7 @@ paths:
                 }
               }
             ```
-
+            
             <table>
                 <tr>
                     <th>Key</th>
@@ -17630,8 +17734,60 @@ paths:
                     <td>string | null</td>
                 </tr>
                 <tr>
-                    <td>`mappings`</td>
-                    <td>IntegrationMapping[] | null</td>
+                    <td>`mappings.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation`</td>
+                    <td>'create' | 'delete'</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.type`</td>
+                    <td>'create' | 'delete' | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.filter`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.itemsToParse`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier`</td>
+                    <td>string | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.combinator`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.rules`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.team`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.relations`</td>
+                    <td>object[]</td>
                 </tr>
                 <tr>
                     <td>`enabled`</td>
@@ -17923,8 +18079,60 @@ paths:
                     <td>string | null</td>
                 </tr>
                 <tr>
-                    <td>`mappings`</td>
-                    <td>IntegrationMapping[] | null</td>
+                    <td>`mappings.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation`</td>
+                    <td>'create' | 'delete'</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.type`</td>
+                    <td>'create' | 'delete' | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.filter`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.itemsToParse`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier`</td>
+                    <td>string | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.combinator`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.rules`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.team`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.relations`</td>
+                    <td>object[]</td>
                 </tr>
                 <tr>
                     <td>`enabled`</td>
@@ -18064,7 +18272,232 @@ paths:
             - 'read:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+              {
+                "ok": true,
+                "integration": {
+                  "_id": "67228916fd43f40783d855ed",
+                  "webhookKey": "ROabu3sT0tz2PbkP",
+                  "identifier": "asdasdasd",
+                  "title": "asdasdasd",
+                  "icon": "Airflow",
+                  "description": "asdasdasd",
+                  "enabled": true,
+                  "security": {},
+                  "createdBy": "auth0|62ceaaa497ea00f09d7c4f41",
+                  "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
+                  "updatedAt": "2024-10-30T21:07:07.640Z",
+                  "integrationType": "custom",
+                  "mappings": [],
+                  "createdAt": "2024-10-30T19:29:26.046Z",
+                  "url": "http://localhost:3007/v1/trigger/ROabu3sT0tz2PbkP",
+                  "events": []
+                }
+              }
+              ```
+
+            <table>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                </tr>
+                <tr>
+                    <td>`identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`title`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`description`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation`</td>
+                    <td>'create' | 'delete'</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.type`</td>
+                    <td>'create' | 'delete' | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.filter`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.itemsToParse`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier`</td>
+                    <td>string | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.combinator`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.rules`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.team`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.relations`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`enabled`</td>
+                    <td>boolean</td>
+                </tr>
+                <tr>
+                    <td>`integrationType`</td>
+                    <td>'custom' | 'template' | null</td>
+                </tr>
+                <tr>
+                    <td>`createdBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`createdAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureHeaderName`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureAlgorithm`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signaturePrefix`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.requestIdentifierPath`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.webhookKey`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.integrationId`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.timestamp`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.status`</td>
+                    <td>'Success' | 'Failure'</td>
+                </tr>
+                <tr>
+                    <td>`events.reason`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.idempotencyKey`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.body`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.headers`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.queryParams`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.identifier`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.team`</td>
+                    <td>string[] | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`events.result.relations`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation`</td>
+                    <td>'create' | { type: 'create' } | 'delete' | { type: 'delete'; deleteDependents?: boolean }</td>
+                </tr>
+                <tr>
+                    <td>`url`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`_id`</td>
+                    <td>string</td>
+                </tr>
+            </table>
     delete:
       summary: Delete a webhook
       description: This route allows you to delete a webhook in your Port organization. You can also delete it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
