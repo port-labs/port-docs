@@ -827,5 +827,12 @@ export const availableGuides = [
         logos: ["Slack"],
         link: "/guides/all/automatically-approve-action-using-automation"
     },
+    {
+        title: "Ingest security issues from .sarif files to services",
+        description: "Ingest .sarif files and relate them to the corresponding service entities",
+        tags: ["AppSec", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-security-issues-from-sarif-files-to-services",
+    },
     
 ]
