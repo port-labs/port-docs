@@ -15476,30 +15476,30 @@ paths:
                   "ingestUrl": string,
                   "ingestId": string
                 },
-                "resyncState":  | null{
+                "resyncState": {
                   "status": 'running' | 'completed' | 'failed',
                   "lastResyncStart": string,
                   "lastResyncEnd": string | null,
                   "intervalInMinutes": number | null,
                   "nextResync": string | null,
                   "updatedAt": string
-                },
+                } | null,
                 "_id": string | null,
                 "_orgId": string | null,
 
-                "spec":  | null{
+                "spec": {
                   "integrationSpec": Record<string, unknown>,
-                  "appSpec":  | null{
+                  "appSpec": {
                     "scheduledResyncInterval": string | null,
                     "sendRawDataExamples": boolean | null,
-                  },
-                },
-                "statusInfo":  | null{
+                  } | null,
+                } | null,
+                "statusInfo": {
                   "integrationStatus": {
                     "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
                     "lastSyncedAt": string | null,
                     "message": string | null,
-                  },
+                  } | null,
                   "createdAt": string | null,
                   "updatedAt": string | null,
                 }
@@ -16121,30 +16121,30 @@ paths:
                   "ingestUrl": string,
                   "ingestId": string
                 },
-                "resyncState":  | null{
+                "resyncState": {
                   "status": 'running' | 'completed' | 'failed',
                   "lastResyncStart": string,
                   "lastResyncEnd": string | null,
                   "intervalInMinutes": number | null,
                   "nextResync": string | null,
                   "updatedAt": string
-                },
+                } | null,
                 "_id": string | null,
                 "_orgId": string | null,
 
-                "spec":  | null{
+                "spec": {
                   "integrationSpec": Record<string, unknown>,
-                  "appSpec":  | null{
+                  "appSpec": {
                     "scheduledResyncInterval": string | null,
                     "sendRawDataExamples": boolean | null,
-                  },
-                },
-                "statusInfo":  | null{
+                  } | null,
+                } | null,
+                "statusInfo": {
                   "integrationStatus": {
                     "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
                     "lastSyncedAt": string | null,
                     "message": string | null,
-                  },
+                  } | null,
                   "createdAt": string | null,
                   "updatedAt": string | null,
                 }
@@ -16376,30 +16376,30 @@ paths:
                   "ingestUrl": string,
                   "ingestId": string
                 },
-                "resyncState":  | null{
+                "resyncState": {
                   "status": 'running' | 'completed' | 'failed',
                   "lastResyncStart": string,
                   "lastResyncEnd": string | null,
                   "intervalInMinutes": number | null,
                   "nextResync": string | null,
                   "updatedAt": string
-                },
+                } | null,
                 "_id": string | null,
                 "_orgId": string | null,
 
-                "spec":  | null{
+                "spec": {
                   "integrationSpec": Record<string, unknown>,
-                  "appSpec":  | null{
+                  "appSpec": {
                     "scheduledResyncInterval": string | null,
                     "sendRawDataExamples": boolean | null,
-                  },
-                },
-                "statusInfo":  | null{
+                  } | null,
+                } | null,
+                "statusInfo": {
                   "integrationStatus": {
                     "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
                     "lastSyncedAt": string | null,
                     "message": string | null,
-                  },
+                  } | null,
                   "createdAt": string | null,
                   "updatedAt": string | null,
                 }
@@ -16777,30 +16777,30 @@ paths:
                   "ingestUrl": string,
                   "ingestId": string
                 },
-                "resyncState":  | null{
+                "resyncState": {
                   "status": 'running' | 'completed' | 'failed',
                   "lastResyncStart": string,
                   "lastResyncEnd": string | null,
                   "intervalInMinutes": number | null,
                   "nextResync": string | null,
                   "updatedAt": string
-                },
+                } | null,
                 "_id": string | null,
                 "_orgId": string | null,
 
-                "spec":  | null{
+                "spec": {
                   "integrationSpec": Record<string, unknown>,
-                  "appSpec":  | null{
+                  "appSpec": {
                     "scheduledResyncInterval": string | null,
                     "sendRawDataExamples": boolean | null,
-                  },
-                },
-                "statusInfo":  | null{
+                  } | null,
+                } | null,
+                "statusInfo": {
                   "integrationStatus": {
                     "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
                     "lastSyncedAt": string | null,
                     "message": string | null,
-                  },
+                  } | null,
                   "createdAt": string | null,
                   "updatedAt": string | null,
                 }
@@ -17328,7 +17328,15 @@ paths:
                 </tr>
                 <tr>
                     <td>`events.result.operation`</td>
-                    <td>'create' | { type: 'create' } | 'delete' | { type: 'delete'; deleteDependents?: boolean }</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation.type`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operatio.deleteDependents`</td>
+                    <td>boolean | null</td>
                 </tr>
                 <tr>
                     <td>`url`</td>
@@ -17570,7 +17578,15 @@ paths:
                 </tr>
                 <tr>
                     <td>`events.result.operation`</td>
-                    <td>'create' | { type: 'create' } | 'delete' | { type: 'delete'; deleteDependents?: boolean }</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation.type`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operatio.deleteDependents`</td>
+                    <td>boolean | null</td>
                 </tr>
                 <tr>
                     <td>`url`</td>
@@ -17916,7 +17932,15 @@ paths:
                 </tr>
                 <tr>
                     <td>`events.result.operation`</td>
-                    <td>'create' | { type: 'create' } | 'delete' | { type: 'delete'; deleteDependents?: boolean }</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation.type`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operatio.deleteDependents`</td>
+                    <td>boolean | null</td>
                 </tr>
                 <tr>
                     <td>`url`</td>
@@ -18265,7 +18289,15 @@ paths:
                 </tr>
                 <tr>
                     <td>`events.result.operation`</td>
-                    <td>'create' | { type: 'create' } | 'delete' | { type: 'delete'; deleteDependents?: boolean }</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation.type`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operatio.deleteDependents`</td>
+                    <td>boolean | null</td>
                 </tr>
                 <tr>
                     <td>`url`</td>
@@ -18512,7 +18544,15 @@ paths:
                 </tr>
                 <tr>
                     <td>`events.result.operation`</td>
-                    <td>'create' | { type: 'create' } | 'delete' | { type: 'delete'; deleteDependents?: boolean }</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation.type`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operatio.deleteDependents`</td>
+                    <td>boolean | null</td>
                 </tr>
                 <tr>
                     <td>`url`</td>
