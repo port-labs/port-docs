@@ -17112,22 +17112,26 @@ paths:
             {
                 "ok": true,
                 "integration": {
-                    "webhookKey": "ROabu3sT0tz2PbkP",
-                    "identifier": "asdasdasd",
-                    "title": "asdasdasd",
-                    "icon": "Airflow",
-                    "description": "asdasdasd",
-                    "enabled": true,
-                    "security": {},
-                    "createdBy": "auth0|62ceaaa497ea00f09d7c4f41",
-                    "updatedBy": "auth0|62ceaaa497ea00f09d7c4f41",
-                    "updatedAt": "2024-10-30T19:29:26.025Z",
-                    "integrationType": "custom",
-                    "_id": "67228916fd43f40783d855ed",
-                    "mappings": [],
-                    "createdAt": "2024-10-30T19:29:26.046Z",
-                    "url": "http://localhost:3007/v1/trigger/ROabu3sT0tz2PbkP",
-                    "events": []
+                  "identifier": string,
+                  "title": string,
+                  "icon": string | null,
+                  "description": string | null,
+                  "mappings": object[] | null,
+                  "enabled": boolean,
+                  "integrationType": 'custom' | 'template' | null,
+                  "createdBy": string,
+                  "updatedBy": string,
+                  "createdAt": string,
+                  "updatedAt": string,
+                  "security": {
+                    "signatureHeaderName": string | null,
+                    "signatureAlgorithm": string | null,
+                    "signaturePrefix": string | null,
+                    "requestIdentifierPath": string | null
+                  },
+                  "events": object[],
+                  "url": string,
+                  "_id": string
                 }
             }
             ```
@@ -17349,22 +17353,26 @@ paths:
                 "ok": true,
                 "integrations": [
                   {
-                    "_id": "67228916fd43f40783d855ed",
-                    "webhookKey": "ROabu3sT0tz2PbkP",
-                    "orgId": "org_BneDtWovPqXaA2VZ",
-                    "identifier": "asdasdasd",
-                    "title": "asdasdasd",
-                    "icon": "Airflow",
-                    "description": "asdasdasd",
-                    "enabled": true,
-                    "security": {},
-                    "createdBy": "auth0|62ceaaa497ea00f09d7c4f41",
-                    "updatedBy": "auth0|62ceaaa497ea00f09d7c4f41",
-                    "updatedAt": "2024-10-30T19:29:26.025Z",
-                    "integrationType": "custom",
-                    "mappings": [],
-                    "createdAt": "2024-10-30T19:29:26.046Z",
-                    "url": "http://localhost:3007/v1/trigger/ROabu3sT0tz2PbkP"
+                    "identifier": string,
+                    "title": string,
+                    "icon": string | null,
+                    "description": string | null,
+                    "mappings": object[] | null,
+                    "enabled": boolean,
+                    "integrationType": 'custom' | 'template' | null,
+                    "createdBy": string,
+                    "updatedBy": string,
+                    "createdAt": string,
+                    "updatedAt": string,
+                    "security": {
+                      "signatureHeaderName": string | null,
+                      "signatureAlgorithm": string | null,
+                      "signaturePrefix": string | null,
+                      "requestIdentifierPath": string | null
+                    },
+                    "events": object[],
+                    "url": string,
+                    "_id": string
                   }
                 ]
               }
@@ -17692,22 +17700,26 @@ paths:
               {
                 "ok": true,
                 "integration": {
-                  "_id": "67228916fd43f40783d855ed",
-                  "webhookKey": "ROabu3sT0tz2PbkP",
-                  "identifier": "asdasdasd",
-                  "title": "asdasdasd",
-                  "icon": "Airflow",
-                  "description": "asdasdasd",
-                  "enabled": true,
-                  "security": {},
-                  "createdBy": "auth0|62ceaaa497ea00f09d7c4f41",
-                  "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-                  "updatedAt": "2024-10-30T21:04:24.202Z",
-                  "integrationType": "custom",
-                  "mappings": [],
-                  "createdAt": "2024-10-30T19:29:26.046Z",
-                  "url": "http://localhost:3007/v1/trigger/ROabu3sT0tz2PbkP",
-                  "events": []
+                  "identifier": string,
+                  "title": string,
+                  "icon": string | null,
+                  "description": string | null,
+                  "mappings": object[] | null,
+                  "enabled": boolean,
+                  "integrationType": 'custom' | 'template' | null,
+                  "createdBy": string,
+                  "updatedBy": string,
+                  "createdAt": string,
+                  "updatedAt": string,
+                  "security": {
+                    "signatureHeaderName": string | null,
+                    "signatureAlgorithm": string | null,
+                    "signaturePrefix": string | null,
+                    "requestIdentifierPath": string | null
+                  },
+                  "events": object[],
+                  "url": string,
+                  "_id": string
                 }
               }
             ```
@@ -18037,22 +18049,26 @@ paths:
               {
                 "ok": true,
                 "integration": {
-                  "_id": "67228916fd43f40783d855ed",
-                  "webhookKey": "ROabu3sT0tz2PbkP",
-                  "identifier": "asdasdasd",
-                  "title": "asdasdasd",
-                  "icon": "Airflow",
-                  "description": "asdasdasd",
-                  "enabled": true,
-                  "security": {},
-                  "createdBy": "auth0|62ceaaa497ea00f09d7c4f41",
-                  "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-                  "updatedAt": "2024-10-30T21:07:07.640Z",
-                  "integrationType": "custom",
-                  "mappings": [],
-                  "createdAt": "2024-10-30T19:29:26.046Z",
-                  "url": "http://localhost:3007/v1/trigger/ROabu3sT0tz2PbkP",
-                  "events": []
+                  "identifier": string,
+                  "title": string,
+                  "icon": string | null,
+                  "description": string | null,
+                  "mappings": object[] | null,
+                  "enabled": boolean,
+                  "integrationType": 'custom' | 'template' | null,
+                  "createdBy": string,
+                  "updatedBy": string,
+                  "createdAt": string,
+                  "updatedAt": string,
+                  "security": {
+                    "signatureHeaderName": string | null,
+                    "signatureAlgorithm": string | null,
+                    "signaturePrefix": string | null,
+                    "requestIdentifierPath": string | null
+                  },
+                  "events": object[],
+                  "url": string,
+                  "_id": string
                 }
               }
               ```
@@ -18280,22 +18296,26 @@ paths:
               {
                 "ok": true,
                 "integration": {
-                  "_id": "67228916fd43f40783d855ed",
-                  "webhookKey": "ROabu3sT0tz2PbkP",
-                  "identifier": "asdasdasd",
-                  "title": "asdasdasd",
-                  "icon": "Airflow",
-                  "description": "asdasdasd",
-                  "enabled": true,
-                  "security": {},
-                  "createdBy": "auth0|62ceaaa497ea00f09d7c4f41",
-                  "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-                  "updatedAt": "2024-10-30T21:07:07.640Z",
-                  "integrationType": "custom",
-                  "mappings": [],
-                  "createdAt": "2024-10-30T19:29:26.046Z",
-                  "url": "http://localhost:3007/v1/trigger/ROabu3sT0tz2PbkP",
-                  "events": []
+                  "identifier": string,
+                  "title": string,
+                  "icon": string | null,
+                  "description": string | null,
+                  "mappings": object[] | null,
+                  "enabled": boolean,
+                  "integrationType": 'custom' | 'template' | null,
+                  "createdBy": string,
+                  "updatedBy": string,
+                  "createdAt": string,
+                  "updatedAt": string,
+                  "security": {
+                    "signatureHeaderName": string | null,
+                    "signatureAlgorithm": string | null,
+                    "signaturePrefix": string | null,
+                    "requestIdentifierPath": string | null
+                  },
+                  "events": object[],
+                  "url": string,
+                  "_id": string
                 }
               }
               ```
