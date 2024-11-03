@@ -15450,59 +15450,60 @@ paths:
             ```json
             {
               "ok": true,
-              "integration":  {
-                  "installationId": string,
-                  "title"?: string | null,
-                  "installationType": 'Saas' | 'OnPrem',
-                  "installationAppType": string,
-                  "version": string,
-                  "config": {
-                    "deleteDependentEntities": boolean,
-                    "createMissingRelatedEntities": boolean,
-                    "resources": object[] | null,
-                  "changelogDestination": 
-                    | {
-                        "type": 'WEBHOOK',
-                        "agent"?: boolean,
-                        "url": string,
-                      }
-                    | {
-                        "type": 'KAFKA',
-                      },
-                  "clientId": string,
-                  "integrationType": string,
-                  "logAttributes": {
-                    "ingestUrl": string,
-                    "ingestId": string,
-                  },
-                  "resyncState"?: {
-                    "status": 'running' | 'completed' | 'failed',
-                    "lastResyncStart": string,
-                    "lastResyncEnd": string | null,
-                    "intervalInMinutes": number | null,
-                    "nextResync": string | null,
-                    "updatedAt": string,
-                  },
-                  "_id"?: string,
-                  "_orgId"?: string,
+              "integration": {
+                "installationId": string,
+                "title": string | null,
+                "installationType": 'Saas' | 'OnPrem',
+                "installationAppType": string,
+                "version": string,
+                "config": {
+                  "deleteDependentEntities": boolean,
+                  "createMissingRelatedEntities": boolean,
+                  "resources": object[] | null,
+                },
+                "changelogDestination": 
+                  | {
+                      "type": 'WEBHOOK',
+                      "agent": boolean | null,
+                      "url": string
+                    }
+                  | {
+                      "type": 'KAFKA'
+                    },
+                "clientId": string,
+                "integrationType": string,
+                "logAttributes": {
+                  "ingestUrl": string,
+                  "ingestId": string
+                },
+                "resyncState":  | null{
+                  "status": 'running' | 'completed' | 'failed',
+                  "lastResyncStart": string,
+                  "lastResyncEnd": string | null,
+                  "intervalInMinutes": number | null,
+                  "nextResync": string | null,
+                  "updatedAt": string
+                },
+                "_id": string | null,
+                "_orgId": string | null,
 
-                  "spec"?: {
-                    "integrationSpec": Record<string, unknown>,
-                    "appSpec"?: {
-                      "scheduledResyncInterval"?: string,
-                      "sendRawDataExamples"?: boolean,
-                    },
+                "spec":  | null{
+                  "integrationSpec": Record<string, unknown>,
+                  "appSpec":  | null{
+                    "scheduledResyncInterval": string | null,
+                    "sendRawDataExamples": boolean | null,
                   },
-                  "statusInfo"?: {
-                    "integrationStatus": {
-                      "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
-                      "lastSyncedAt"?: string,
-                      "message"?: string,
-                    },
-                    "createdAt"?: string,
-                    "updatedAt"?: string,
+                },
+                "statusInfo":  | null{
+                  "integrationStatus": {
+                    "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                    "lastSyncedAt": string | null,
+                    "message": string | null,
                   },
+                  "createdAt": string | null,
+                  "updatedAt": string | null,
                 }
+              }
             }
             ```
 
@@ -15688,9 +15689,9 @@ paths:
             {
               "ok": true,
               "integrations": [
-                {
+                 {
                   "installationId": string,
-                  "title"?: string | null,
+                  "title": string | null,
                   "installationType": 'Saas' | 'OnPrem',
                   "installationAppType": string,
                   "version": string,
@@ -15698,48 +15699,49 @@ paths:
                     "deleteDependentEntities": boolean,
                     "createMissingRelatedEntities": boolean,
                     "resources": object[] | null,
+                  },
                   "changelogDestination": 
                     | {
                         "type": 'WEBHOOK',
-                        "agent"?: boolean,
-                        "url": string,
+                        "agent": boolean | null,
+                        "url": string
                       }
                     | {
-                        "type": 'KAFKA',
+                        "type": 'KAFKA'
                       },
                   "clientId": string,
                   "integrationType": string,
                   "logAttributes": {
                     "ingestUrl": string,
-                    "ingestId": string,
+                    "ingestId": string
                   },
-                  "resyncState"?: {
+                  "resyncState":  | null{
                     "status": 'running' | 'completed' | 'failed',
                     "lastResyncStart": string,
                     "lastResyncEnd": string | null,
                     "intervalInMinutes": number | null,
                     "nextResync": string | null,
-                    "updatedAt": string,
+                    "updatedAt": string
                   },
-                  "_id"?: string,
-                  "_orgId"?: string,
+                  "_id": string | null,
+                  "_orgId": string | null,
 
-                  "spec"?: {
+                  "spec":  | null{
                     "integrationSpec": Record<string, unknown>,
-                    "appSpec"?: {
-                      "scheduledResyncInterval"?: string,
-                      "sendRawDataExamples"?: boolean,
+                    "appSpec":  | null{
+                      "scheduledResyncInterval": string | null,
+                      "sendRawDataExamples": boolean | null,
                     },
                   },
-                  "statusInfo"?: {
+                  "statusInfo":  | null{
                     "integrationStatus": {
                       "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
-                      "lastSyncedAt"?: string,
-                      "message"?: string,
+                      "lastSyncedAt": string | null,
+                      "message": string | null,
                     },
-                    "createdAt"?: string,
-                    "updatedAt"?: string,
-                  },
+                    "createdAt": string | null,
+                    "updatedAt": string | null,
+                  }
                 }
               ]
             }
@@ -16094,58 +16096,59 @@ paths:
             {
                 "ok": true,
                 "integration": {
-                  "installationId": string,
-                  "title"?: string | null,
-                  "installationType": 'Saas' | 'OnPrem',
-                  "installationAppType": string,
-                  "version": string,
-                  "config": {
-                    "deleteDependentEntities": boolean,
-                    "createMissingRelatedEntities": boolean,
-                    "resources": object[] | null,
-                  "changelogDestination": 
-                    | {
-                        "type": 'WEBHOOK',
-                        "agent"?: boolean,
-                        "url": string,
-                      }
-                    | {
-                        "type": 'KAFKA',
-                      },
-                  "clientId": string,
-                  "integrationType": string,
-                  "logAttributes": {
-                    "ingestUrl": string,
-                    "ingestId": string,
-                  },
-                  "resyncState"?: {
-                    "status": 'running' | 'completed' | 'failed',
-                    "lastResyncStart": string,
-                    "lastResyncEnd": string | null,
-                    "intervalInMinutes": number | null,
-                    "nextResync": string | null,
-                    "updatedAt": string,
-                  },
-                  "_id"?: string,
-                  "_orgId"?: string,
+                "installationId": string,
+                "title": string | null,
+                "installationType": 'Saas' | 'OnPrem',
+                "installationAppType": string,
+                "version": string,
+                "config": {
+                  "deleteDependentEntities": boolean,
+                  "createMissingRelatedEntities": boolean,
+                  "resources": object[] | null,
+                },
+                "changelogDestination": 
+                  | {
+                      "type": 'WEBHOOK',
+                      "agent": boolean | null,
+                      "url": string
+                    }
+                  | {
+                      "type": 'KAFKA'
+                    },
+                "clientId": string,
+                "integrationType": string,
+                "logAttributes": {
+                  "ingestUrl": string,
+                  "ingestId": string
+                },
+                "resyncState":  | null{
+                  "status": 'running' | 'completed' | 'failed',
+                  "lastResyncStart": string,
+                  "lastResyncEnd": string | null,
+                  "intervalInMinutes": number | null,
+                  "nextResync": string | null,
+                  "updatedAt": string
+                },
+                "_id": string | null,
+                "_orgId": string | null,
 
-                  "spec"?: {
-                    "integrationSpec": Record<string, unknown>,
-                    "appSpec"?: {
-                      "scheduledResyncInterval"?: string,
-                      "sendRawDataExamples"?: boolean,
-                    },
+                "spec":  | null{
+                  "integrationSpec": Record<string, unknown>,
+                  "appSpec":  | null{
+                    "scheduledResyncInterval": string | null,
+                    "sendRawDataExamples": boolean | null,
                   },
-                  "statusInfo"?: {
-                    "integrationStatus": {
-                      "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
-                      "lastSyncedAt"?: string,
-                      "message"?: string,
-                    },
-                    "createdAt"?: string,
-                    "updatedAt"?: string,
+                },
+                "statusInfo":  | null{
+                  "integrationStatus": {
+                    "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                    "lastSyncedAt": string | null,
+                    "message": string | null,
                   },
+                  "createdAt": string | null,
+                  "updatedAt": string | null,
                 }
+              }
             }
             ```
 
@@ -16348,58 +16351,59 @@ paths:
             {
               "ok": true,
               "integration": {
-                  "installationId": string,
-                  "title"?: string | null,
-                  "installationType": 'Saas' | 'OnPrem',
-                  "installationAppType": string,
-                  "version": string,
-                  "config": {
-                    "deleteDependentEntities": boolean,
-                    "createMissingRelatedEntities": boolean,
-                    "resources": object[] | null,
-                  "changelogDestination": 
-                    | {
-                        "type": 'WEBHOOK',
-                        "agent"?: boolean,
-                        "url": string,
-                      }
-                    | {
-                        "type": 'KAFKA',
-                      },
-                  "clientId": string,
-                  "integrationType": string,
-                  "logAttributes": {
-                    "ingestUrl": string,
-                    "ingestId": string,
-                  },
-                  "resyncState"?: {
-                    "status": 'running' | 'completed' | 'failed',
-                    "lastResyncStart": string,
-                    "lastResyncEnd": string | null,
-                    "intervalInMinutes": number | null,
-                    "nextResync": string | null,
-                    "updatedAt": string,
-                  },
-                  "_id"?: string,
-                  "_orgId"?: string,
+                "installationId": string,
+                "title": string | null,
+                "installationType": 'Saas' | 'OnPrem',
+                "installationAppType": string,
+                "version": string,
+                "config": {
+                  "deleteDependentEntities": boolean,
+                  "createMissingRelatedEntities": boolean,
+                  "resources": object[] | null,
+                },
+                "changelogDestination": 
+                  | {
+                      "type": 'WEBHOOK',
+                      "agent": boolean | null,
+                      "url": string
+                    }
+                  | {
+                      "type": 'KAFKA'
+                    },
+                "clientId": string,
+                "integrationType": string,
+                "logAttributes": {
+                  "ingestUrl": string,
+                  "ingestId": string
+                },
+                "resyncState":  | null{
+                  "status": 'running' | 'completed' | 'failed',
+                  "lastResyncStart": string,
+                  "lastResyncEnd": string | null,
+                  "intervalInMinutes": number | null,
+                  "nextResync": string | null,
+                  "updatedAt": string
+                },
+                "_id": string | null,
+                "_orgId": string | null,
 
-                  "spec"?: {
-                    "integrationSpec": Record<string, unknown>,
-                    "appSpec"?: {
-                      "scheduledResyncInterval"?: string,
-                      "sendRawDataExamples"?: boolean,
-                    },
+                "spec":  | null{
+                  "integrationSpec": Record<string, unknown>,
+                  "appSpec":  | null{
+                    "scheduledResyncInterval": string | null,
+                    "sendRawDataExamples": boolean | null,
                   },
-                  "statusInfo"?: {
-                    "integrationStatus": {
-                      "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
-                      "lastSyncedAt"?: string,
-                      "message"?: string,
-                    },
-                    "createdAt"?: string,
-                    "updatedAt"?: string,
+                },
+                "statusInfo":  | null{
+                  "integrationStatus": {
+                    "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                    "lastSyncedAt": string | null,
+                    "message": string | null,
                   },
+                  "createdAt": string | null,
+                  "updatedAt": string | null,
                 }
+              }
             }
             ```
 
@@ -16748,58 +16752,59 @@ paths:
             {
               "ok": true,
               "integration": {
-                  "installationId": string,
-                  "title"?: string | null,
-                  "installationType": 'Saas' | 'OnPrem',
-                  "installationAppType": string,
-                  "version": string,
-                  "config": {
-                    "deleteDependentEntities": boolean,
-                    "createMissingRelatedEntities": boolean,
-                    "resources": object[] | null,
-                  "changelogDestination": 
-                    | {
-                        "type": 'WEBHOOK',
-                        "agent"?: boolean,
-                        "url": string,
-                      }
-                    | {
-                        "type": 'KAFKA',
-                      },
-                  "clientId": string,
-                  "integrationType": string,
-                  "logAttributes": {
-                    "ingestUrl": string,
-                    "ingestId": string,
-                  },
-                  "resyncState"?: {
-                    "status": 'running' | 'completed' | 'failed',
-                    "lastResyncStart": string,
-                    "lastResyncEnd": string | null,
-                    "intervalInMinutes": number | null,
-                    "nextResync": string | null,
-                    "updatedAt": string,
-                  },
-                  "_id"?: string,
-                  "_orgId"?: string,
+                "installationId": string,
+                "title": string | null,
+                "installationType": 'Saas' | 'OnPrem',
+                "installationAppType": string,
+                "version": string,
+                "config": {
+                  "deleteDependentEntities": boolean,
+                  "createMissingRelatedEntities": boolean,
+                  "resources": object[] | null,
+                },
+                "changelogDestination": 
+                  | {
+                      "type": 'WEBHOOK',
+                      "agent": boolean | null,
+                      "url": string
+                    }
+                  | {
+                      "type": 'KAFKA'
+                    },
+                "clientId": string,
+                "integrationType": string,
+                "logAttributes": {
+                  "ingestUrl": string,
+                  "ingestId": string
+                },
+                "resyncState":  | null{
+                  "status": 'running' | 'completed' | 'failed',
+                  "lastResyncStart": string,
+                  "lastResyncEnd": string | null,
+                  "intervalInMinutes": number | null,
+                  "nextResync": string | null,
+                  "updatedAt": string
+                },
+                "_id": string | null,
+                "_orgId": string | null,
 
-                  "spec"?: {
-                    "integrationSpec": Record<string, unknown>,
-                    "appSpec"?: {
-                      "scheduledResyncInterval"?: string,
-                      "sendRawDataExamples"?: boolean,
-                    },
+                "spec":  | null{
+                  "integrationSpec": Record<string, unknown>,
+                  "appSpec":  | null{
+                    "scheduledResyncInterval": string | null,
+                    "sendRawDataExamples": boolean | null,
                   },
-                  "statusInfo"?: {
-                    "integrationStatus": {
-                      "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
-                      "lastSyncedAt"?: string,
-                      "message"?: string,
-                    },
-                    "createdAt"?: string,
-                    "updatedAt"?: string,
+                },
+                "statusInfo":  | null{
+                  "integrationStatus": {
+                    "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                    "lastSyncedAt": string | null,
+                    "message": string | null,
                   },
+                  "createdAt": string | null,
+                  "updatedAt": string | null,
                 }
+              }
             }
             ```
 
