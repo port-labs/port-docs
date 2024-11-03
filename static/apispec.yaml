@@ -15521,6 +15521,42 @@ paths:
                   <td>boolean</td>
               </tr>
               <tr>
+                  <td>`config.resources.kind`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.selector.query`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier`</td>
+                  <td>string | object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.combinator`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.rules`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.title`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.blueprint`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.properties`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.relations`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
                   <td>`changelogDestination.type`</td>
                   <td>'WEBHOOK' | 'KAFKA'</td>
               </tr>
@@ -15805,8 +15841,40 @@ paths:
                   <td>boolean</td>
               </tr>
               <tr>
-                  <td>`config.resources`</td>
-                  <td>Array<{ kind: string; selector: { query: string; }; port: { entity: { mappings: MappingSchema | MappingSchema[]; }; }; }></td>
+                  <td>`config.resources.kind`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.selector.query`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier`</td>
+                  <td>string | object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.combinator`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.rules`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.title`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.blueprint`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.properties`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.relations`</td>
+                  <td>object</td>
               </tr>
               <tr>
                   <td>`changelogDestination.type`</td>
@@ -16164,6 +16232,42 @@ paths:
                   <td>boolean</td>
               </tr>
               <tr>
+                  <td>`config.resources.kind`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.selector.query`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier`</td>
+                  <td>string | object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.combinator`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.rules`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.title`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.blueprint`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.properties`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.relations`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
                   <td>`changelogDestination.type`</td>
                   <td>'WEBHOOK' | 'KAFKA'</td>
               </tr>
@@ -16256,6 +16360,7 @@ paths:
                   <td>string | null</td>
               </tr>
             </table>
+
   '/v1/integration/{identifier}':
     get:
       summary: Get an integration
@@ -16357,6 +16462,42 @@ paths:
               <tr>
                   <td>`config.createMissingRelatedEntities`</td>
                   <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.kind`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.selector.query`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier`</td>
+                  <td>string | object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.combinator`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.rules`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.title`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.blueprint`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.properties`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.relations`</td>
+                  <td>object</td>
               </tr>
               <tr>
                   <td>`changelogDestination.type`</td>
@@ -16699,6 +16840,42 @@ paths:
               <tr>
                   <td>`config.createMissingRelatedEntities`</td>
                   <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.kind`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.selector.query`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier`</td>
+                  <td>string | object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.combinator`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.rules`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.title`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.blueprint`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.properties`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.relations`</td>
+                  <td>object</td>
               </tr>
               <tr>
                   <td>`changelogDestination.type`</td>
