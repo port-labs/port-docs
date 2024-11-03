@@ -15272,52 +15272,29 @@ paths:
             - 'read:integrations'
       responses:
         '200':
-          description: |
-            Successfully changed the entity.  
-            The response will have the following structure:
-              
-            ```json
-            {
-              "ok": true,
-              "count": 1,
-              "data": [
-                    {
-                      "message": string,
-                      "level": 'INFO' | 'ERROR' | 'WARNING' | 'DEBUG' | 'FATAL',
-                      "timestamp": string,
-                      "extra": object,
-                      "id": string
-                    }
-                  ]
-            }
-            ```
-
-            <table>
-            <tr>
-              <th>Key</th>
-              <th>Type</th>
-            </tr>
-            <tr>
-              <td>`message`</td>
-              <td>string</td>
-            </tr>
-            <tr>
-              <td>`level`</td>
-              <td>'INFO' | 'ERROR' | 'WARNING' | 'DEBUG' | 'FATAL'</td>
-            </tr>
-            <tr>
-              <td>`timestamp`</td>
-              <td>string</td>
-            </tr>
-            <tr>
-              <td>`extra`</td>
-              <td>object</td>
-            </tr>
-            <tr>
-              <td>`id`</td>
-              <td>string</td>
-            </tr>
-            </table>
+          description: 
+          content:
+            text/plain:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  level:
+                    type: string
+                    enum: ["INFO", "ERROR", "WARNING", "DEBUG", "FATAL"]
+                  timestamp:
+                    type: string
+                  extra:
+                    type: object
+                    additionalProperties: true
+                  id:
+                    type: string
+                required:
+                  - message
+                  - level
+                  - timestamp
+                  - id
   '/v1/integration/{identifier}/config':
     patch:
       summary: Patch an integration's config
