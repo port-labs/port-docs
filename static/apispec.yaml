@@ -15282,17 +15282,11 @@ paths:
               "count": 1,
               "data": [
                     {
-                      "message": "Parsing 1 raw results into entities",
-                      "level": "INFO",
-                      "timestamp": "2024-10-30T13:12:15.302Z",
-                      "extra": {
-                        "event_kind": "resync",
-                        "event_trigger_type": "machine",
-                        "event_id": "9a9a5f41-6c64-4073-9b79-491d7d8a9dca",
-                        "kind": "AWS::Organizations::Account",
-                        "resource_kind": "AWS::Organizations::Account"
-                      },
-                      "id": "672230bd3805557b8ece3097"
+                      "message": string,
+                      "level": 'INFO' | 'ERROR' | 'WARNING' | 'DEBUG' | 'FATAL',
+                      "timestamp": string,
+                      "extra": object,
+                      "id": string
                     }
                   ]
             }
@@ -15456,34 +15450,59 @@ paths:
             ```json
             {
               "ok": true,
-              "integration": {
-                "installationId": "my-aws-integration",
-                "installationAppType": "aws",
-                "version": "0.2.51",
-                "changelogDestination": {},
-                "installationType": "OnPrem",
-                "_orgId": "org_BneDtWovPqXaA2VZ",
-                "_id": "integration_I6ja4Ja7bTvLqT8p",
-                "identifier": "my-aws-integration",
-                "integrationType": "aws",
-                "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-                "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-                "createdAt": "2024-10-30T13:12:05.632Z",
-                "updatedAt": "2024-10-30T14:14:23.476Z",
-                "clientId": "",
-                "logAttributes": {
-                  "ingestId": "GEmBvfdIAwBtmZfH",
-                  "ingestUrl": "http://localhost:3011/v1/logs/GEmBvfdIAwBtmZfH"
-                },
-                "resyncState": {
-                  "status": "completed",
-                  "lastResyncEnd": "2024-10-30T13:13:03.489204+00:00",
-                  "lastResyncStart": "2024-10-30T13:12:06.413819+00:00",
-                  "nextResync": "2024-10-31T13:12:04.824611+00:00",
-                  "intervalInMinuets": 1440,
-                  "updatedAt": "2024-10-30T13:13:03.496Z"
+              "integration":  {
+                  "installationId": string,
+                  "title"?: string | null,
+                  "installationType": 'Saas' | 'OnPrem',
+                  "installationAppType": string,
+                  "version": string,
+                  "config": {
+                    "deleteDependentEntities": boolean,
+                    "createMissingRelatedEntities": boolean,
+                    "resources": object[] | null,
+                  "changelogDestination": 
+                    | {
+                        "type": 'WEBHOOK',
+                        "agent"?: boolean,
+                        "url": string,
+                      }
+                    | {
+                        "type": 'KAFKA',
+                      },
+                  "clientId": string,
+                  "integrationType": string,
+                  "logAttributes": {
+                    "ingestUrl": string,
+                    "ingestId": string,
+                  },
+                  "resyncState"?: {
+                    "status": 'running' | 'completed' | 'failed',
+                    "lastResyncStart": string,
+                    "lastResyncEnd": string | null,
+                    "intervalInMinutes": number | null,
+                    "nextResync": string | null,
+                    "updatedAt": string,
+                  },
+                  "_id"?: string,
+                  "_orgId"?: string,
+
+                  "spec"?: {
+                    "integrationSpec": Record<string, unknown>,
+                    "appSpec"?: {
+                      "scheduledResyncInterval"?: string,
+                      "sendRawDataExamples"?: boolean,
+                    },
+                  },
+                  "statusInfo"?: {
+                    "integrationStatus": {
+                      "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                      "lastSyncedAt"?: string,
+                      "message"?: string,
+                    },
+                    "createdAt"?: string,
+                    "updatedAt"?: string,
+                  },
                 }
-              }
             }
             ```
 
@@ -15670,138 +15689,57 @@ paths:
               "ok": true,
               "integrations": [
                 {
-                  "installationId": "my-aws-integration",
-                  "installationAppType": "aws",
-                  "version": "0.2.51",
-                  "changelogDestination": {},
+                  "installationId": string,
+                  "title"?: string | null,
+                  "installationType": 'Saas' | 'OnPrem',
+                  "installationAppType": string,
+                  "version": string,
                   "config": {
-                    "deleteDependentEntities": true,
-                    "createMissingRelatedEntities": true,
-                    "enableMergeEntity": true,
-                    "resources": [
-                      {
-                        "kind": "AWS::Organizations::Account",
-                        "selector": {
-                          "query": "true"
-                        },
-                        "port": {
-                          "entity": {
-                            "mappings": {
-                              "identifier": ".Id",
-                              "title": ".Name",
-                              "blueprint": "\"awsAccount\"",
-                              "properties": {
-                                "arn": ".Arn",
-                                "email": ".Email",
-                                "status": ".Status",
-                                "joined_method": ".JoinedMethod",
-                                "joined_timestamp": ".JoinedTimestamp"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
-                        "kind": "AWS::S3::Bucket",
-                        "selector": {
-                          "query": "true",
-                          "useGetResourceAPI": true
-                        },
-                        "port": {
-                          "entity": {
-                            "mappings": {
-                              "identifier": ".Identifier",
-                              "title": ".Identifier",
-                              "blueprint": "\"cloudResource\"",
-                              "properties": {
-                                "kind": ".__Kind",
-                                "region": ".Properties.RegionalDomainName | capture(\".*\\\\.(?<region>[^\\\\.]+)\\\\.amazonaws\\\\.com\") | .region",
-                                "tags": ".Properties.Tags",
-                                "arn": ".Properties.Arn",
-                                "link": ".Properties | select(.Arn != null) | \"https://console.aws.amazon.com/go/view?arn=\" + .Arn"
-                              },
-                              "relations": {
-                                "account": ".__AccountId"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
-                        "kind": "AWS::EC2::Instance",
-                        "selector": {
-                          "query": "true"
-                        },
-                        "port": {
-                          "entity": {
-                            "mappings": {
-                              "identifier": ".Identifier",
-                              "title": ".Identifier",
-                              "blueprint": "\"cloudResource\"",
-                              "properties": {
-                                "kind": ".__Kind",
-                                "region": ".__Region",
-                                "tags": ".Properties.Tags",
-                                "arn": ".Properties.Arn",
-                                "link": ".Properties | select(.Arn != null) | \"https://console.aws.amazon.com/go/view?arn=\" + .Arn"
-                              },
-                              "relations": {
-                                "account": ".__AccountId"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
-                        "kind": "AWS::ECS::Cluster",
-                        "selector": {
-                          "query": "true",
-                          "useGetResourceAPI": true
-                        },
-                        "port": {
-                          "entity": {
-                            "mappings": {
-                              "identifier": ".Properties.Arn",
-                              "title": ".Identifier",
-                              "blueprint": "\"cloudResource\"",
-                              "properties": {
-                                "kind": ".__Kind",
-                                "region": ".__Region",
-                                "tags": ".Properties.Tags",
-                                "arn": ".Properties.Arn",
-                                "link": ".Properties | select(.Arn != null) | \"https://console.aws.amazon.com/go/view?arn=\" + .Arn"
-                              },
-                              "relations": {
-                                "account": ".__AccountId"
-                              }
-                            }
-                          }
-                        }
+                    "deleteDependentEntities": boolean,
+                    "createMissingRelatedEntities": boolean,
+                    "resources": object[] | null,
+                  "changelogDestination": 
+                    | {
+                        "type": 'WEBHOOK',
+                        "agent"?: boolean,
+                        "url": string,
                       }
-                    ]
-                  },
-                  "installationType": "OnPrem",
-                  "_orgId": "org_BneDtWovPqXaA2VZ",
-                  "_id": "integration_wJZgALgT6Ui5ixT8",
-                  "identifier": "my-aws-integration",
-                  "integrationType": "aws",
-                  "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-                  "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-                  "createdAt": "2024-10-30T18:31:49.640Z",
-                  "updatedAt": "2024-10-30T18:31:50.118Z",
-                  "clientId": "",
+                    | {
+                        "type": 'KAFKA',
+                      },
+                  "clientId": string,
+                  "integrationType": string,
                   "logAttributes": {
-                    "ingestId": "xDb6lcT8uspGgBwm",
-                    "ingestUrl": "http://localhost:3011/v1/logs/xDb6lcT8uspGgBwm"
+                    "ingestUrl": string,
+                    "ingestId": string,
                   },
-                  "resyncState": {
-                    "status": "running",
-                    "lastResyncEnd": null,
-                    "lastResyncStart": "2024-10-30T18:31:50.115099+00:00",
-                    "nextResync": "2024-10-31T18:31:48.758465+00:00",
-                    "intervalInMinuets": 1440,
-                    "updatedAt": "2024-10-30T18:31:50.118Z"
-                  }
+                  "resyncState"?: {
+                    "status": 'running' | 'completed' | 'failed',
+                    "lastResyncStart": string,
+                    "lastResyncEnd": string | null,
+                    "intervalInMinutes": number | null,
+                    "nextResync": string | null,
+                    "updatedAt": string,
+                  },
+                  "_id"?: string,
+                  "_orgId"?: string,
+
+                  "spec"?: {
+                    "integrationSpec": Record<string, unknown>,
+                    "appSpec"?: {
+                      "scheduledResyncInterval"?: string,
+                      "sendRawDataExamples"?: boolean,
+                    },
+                  },
+                  "statusInfo"?: {
+                    "integrationStatus": {
+                      "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                      "lastSyncedAt"?: string,
+                      "message"?: string,
+                    },
+                    "createdAt"?: string,
+                    "updatedAt"?: string,
+                  },
                 }
               ]
             }
@@ -16156,44 +16094,57 @@ paths:
             {
                 "ok": true,
                 "integration": {
-                    "installationId": "gitlab",
-                    "installationAppType": "gitlab",
-                    "version": "0.1.127",
-                    "installationType": "Saas",
-                    "config": {},
-                    "_orgId": "org_BneDtWovPqXaA2VZ",
-                    "_id": "integration_ZdsSHyzxSGLaGNUT",
-                    "identifier": "gitlab",
-                    "integrationType": "gitlab",
-                    "changelogDestination": {},
-                    "createdBy": "auth0|62ceaaa497ea00f09d7c4f41",
-                    "updatedBy": "auth0|62ceaaa497ea00f09d7c4f41",
-                    "createdAt": "2024-10-30T19:14:03.796Z",
-                    "updatedAt": "2024-10-30T19:14:03.796Z",
-                    "clientId": "",
-                    "logAttributes": {
-                        "ingestId": "wCnsemM3Pg5WZSA5",
-                        "ingestUrl": "http://localhost:3011/v1/logs/wCnsemM3Pg5WZSA5"
+                  "installationId": string,
+                  "title"?: string | null,
+                  "installationType": 'Saas' | 'OnPrem',
+                  "installationAppType": string,
+                  "version": string,
+                  "config": {
+                    "deleteDependentEntities": boolean,
+                    "createMissingRelatedEntities": boolean,
+                    "resources": object[] | null,
+                  "changelogDestination": 
+                    | {
+                        "type": 'WEBHOOK',
+                        "agent"?: boolean,
+                        "url": string,
+                      }
+                    | {
+                        "type": 'KAFKA',
+                      },
+                  "clientId": string,
+                  "integrationType": string,
+                  "logAttributes": {
+                    "ingestUrl": string,
+                    "ingestId": string,
+                  },
+                  "resyncState"?: {
+                    "status": 'running' | 'completed' | 'failed',
+                    "lastResyncStart": string,
+                    "lastResyncEnd": string | null,
+                    "intervalInMinutes": number | null,
+                    "nextResync": string | null,
+                    "updatedAt": string,
+                  },
+                  "_id"?: string,
+                  "_orgId"?: string,
+
+                  "spec"?: {
+                    "integrationSpec": Record<string, unknown>,
+                    "appSpec"?: {
+                      "scheduledResyncInterval"?: string,
+                      "sendRawDataExamples"?: boolean,
                     },
-                    "spec": {
-                        "integrationSpec": {
-                            "gitlabHost": "https://gitlab.com",
-                            "useSystemHook": false,
-                            "tokenMapping": "_GITLAB_TOKEN_MAPPING",
-                            "tokenGroupHooksOverrideMapping": "_GITLAB_TOKEN_GROUP_HOOKS_OVERRIDE_MAPPING"
-                        },
-                        "appSpec": {
-                            "scheduledResyncInterval": "1h",
-                            "sendRawDataExamples": true
-                        }
+                  },
+                  "statusInfo"?: {
+                    "integrationStatus": {
+                      "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                      "lastSyncedAt"?: string,
+                      "message"?: string,
                     },
-                    "statusInfo": {
-                        "integrationStatus": {
-                            "status": "Creating"
-                        },
-                        "createdAt": "2024-10-30T19:14:04.160Z",
-                        "updatedAt": "2024-10-30T19:14:04.160Z"
-                    }
+                    "createdAt"?: string,
+                    "updatedAt"?: string,
+                  },
                 }
             }
             ```
@@ -16397,36 +16348,58 @@ paths:
             {
               "ok": true,
               "integration": {
-                "installationId": "my-aws-integration",
-                "installationAppType": "aws",
-                "version": "0.2.51",
-                "changelogDestination": {},
-                "config": {
-                  "additionalProp1": {}
-                },
-                "installationType": "OnPrem",
-                "_orgId": "org_BneDtWovPqXaA2VZ",
-                "_id": "integration_wJZgALgT6Ui5ixT8",
-                "identifier": "my-aws-integration",
-                "integrationType": "aws",
-                "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-                "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-                "createdAt": "2024-10-30T18:31:49.640Z",
-                "updatedAt": "2024-10-30T18:37:48.884Z",
-                "clientId": "",
-                "logAttributes": {
-                  "ingestId": "xDb6lcT8uspGgBwm",
-                  "ingestUrl": "http://localhost:3011/v1/logs/xDb6lcT8uspGgBwm"
-                },
-                "resyncState": {
-                  "status": "completed",
-                  "lastResyncEnd": "2024-10-30T18:37:48.879132+00:00",
-                  "lastResyncStart": "2024-10-30T18:37:47.798319+00:00",
-                  "nextResync": "2024-10-31T18:31:48.758465+00:00",
-                  "intervalInMinuets": 1440,
-                  "updatedAt": "2024-10-30T18:37:48.884Z"
+                  "installationId": string,
+                  "title"?: string | null,
+                  "installationType": 'Saas' | 'OnPrem',
+                  "installationAppType": string,
+                  "version": string,
+                  "config": {
+                    "deleteDependentEntities": boolean,
+                    "createMissingRelatedEntities": boolean,
+                    "resources": object[] | null,
+                  "changelogDestination": 
+                    | {
+                        "type": 'WEBHOOK',
+                        "agent"?: boolean,
+                        "url": string,
+                      }
+                    | {
+                        "type": 'KAFKA',
+                      },
+                  "clientId": string,
+                  "integrationType": string,
+                  "logAttributes": {
+                    "ingestUrl": string,
+                    "ingestId": string,
+                  },
+                  "resyncState"?: {
+                    "status": 'running' | 'completed' | 'failed',
+                    "lastResyncStart": string,
+                    "lastResyncEnd": string | null,
+                    "intervalInMinutes": number | null,
+                    "nextResync": string | null,
+                    "updatedAt": string,
+                  },
+                  "_id"?: string,
+                  "_orgId"?: string,
+
+                  "spec"?: {
+                    "integrationSpec": Record<string, unknown>,
+                    "appSpec"?: {
+                      "scheduledResyncInterval"?: string,
+                      "sendRawDataExamples"?: boolean,
+                    },
+                  },
+                  "statusInfo"?: {
+                    "integrationStatus": {
+                      "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                      "lastSyncedAt"?: string,
+                      "message"?: string,
+                    },
+                    "createdAt"?: string,
+                    "updatedAt"?: string,
+                  },
                 }
-              }
             }
             ```
 
@@ -16775,36 +16748,58 @@ paths:
             {
               "ok": true,
               "integration": {
-                "installationId": "my-aws-integration",
-                "installationAppType": "aws",
-                "version": "0.2.51",
-                "changelogDestination": {},
-                "config": {
-                  "additionalProp1": {}
-                },
-                "installationType": "OnPrem",
-                "_orgId": "org_BneDtWovPqXaA2VZ",
-                "_id": "integration_wJZgALgT6Ui5ixT8",
-                "identifier": "my-aws-integration",
-                "integrationType": "aws",
-                "createdBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-                "updatedBy": "60EsooJtOqimlekxrNh7nfr2iOgTcyLZ",
-                "createdAt": "2024-10-30T18:31:49.640Z",
-                "updatedAt": "2024-10-30T18:37:48.884Z",
-                "clientId": "",
-                "logAttributes": {
-                  "ingestId": "xDb6lcT8uspGgBwm",
-                  "ingestUrl": "http://localhost:3011/v1/logs/xDb6lcT8uspGgBwm"
-                },
-                "resyncState": {
-                  "status": "completed",
-                  "lastResyncEnd": "2024-10-30T18:37:48.879132+00:00",
-                  "lastResyncStart": "2024-10-30T18:37:47.798319+00:00",
-                  "nextResync": "2024-10-31T18:31:48.758465+00:00",
-                  "intervalInMinuets": 1440,
-                  "updatedAt": "2024-10-30T18:37:48.884Z"
+                  "installationId": string,
+                  "title"?: string | null,
+                  "installationType": 'Saas' | 'OnPrem',
+                  "installationAppType": string,
+                  "version": string,
+                  "config": {
+                    "deleteDependentEntities": boolean,
+                    "createMissingRelatedEntities": boolean,
+                    "resources": object[] | null,
+                  "changelogDestination": 
+                    | {
+                        "type": 'WEBHOOK',
+                        "agent"?: boolean,
+                        "url": string,
+                      }
+                    | {
+                        "type": 'KAFKA',
+                      },
+                  "clientId": string,
+                  "integrationType": string,
+                  "logAttributes": {
+                    "ingestUrl": string,
+                    "ingestId": string,
+                  },
+                  "resyncState"?: {
+                    "status": 'running' | 'completed' | 'failed',
+                    "lastResyncStart": string,
+                    "lastResyncEnd": string | null,
+                    "intervalInMinutes": number | null,
+                    "nextResync": string | null,
+                    "updatedAt": string,
+                  },
+                  "_id"?: string,
+                  "_orgId"?: string,
+
+                  "spec"?: {
+                    "integrationSpec": Record<string, unknown>,
+                    "appSpec"?: {
+                      "scheduledResyncInterval"?: string,
+                      "sendRawDataExamples"?: boolean,
+                    },
+                  },
+                  "statusInfo"?: {
+                    "integrationStatus": {
+                      "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                      "lastSyncedAt"?: string,
+                      "message"?: string,
+                    },
+                    "createdAt"?: string,
+                    "updatedAt"?: string,
+                  },
                 }
-              }
             }
             ```
 
