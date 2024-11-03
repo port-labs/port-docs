@@ -14,6 +14,10 @@
 - Use folders in the software catalog to organize resources by type, team, or any other relevant criteria.
 - Create additional catalog/dashboard pages for different personas in your organization.
 - Show/hide columns in catalog pages to reduce visual clutter and make it easier for users to focus on the information they need.
+- Organize specific entity pages:
+  - Show/hide properties.
+  - Show/hide related entities.
+  - Create dashboards for specific entities.
 
 ### 3. Enable user feedback
 

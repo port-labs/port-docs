@@ -6,7 +6,6 @@
 
 - Invite relevant initial users to Port
 - Configure SSO
-- (Optional) Install Port execution agent
 
 ### 2. Install and Enrich Pre-built Integrations
 
@@ -43,18 +42,18 @@
   - A dashboard for R&D managers to track the performance of APIs and services.
   - A dashboard for security teams to track access control and security policies.
 
-### 8. Set up automations
+### 8. Set up Self-service Actions
 
-- Automations can be used to trigger actions based on events in your portal.  
-  Some initial automations can be helpful for monitoring and managing the entities you created when installing integrations. For example:
-  - Send notifications to relevant users when a new service is created/updated.
-  - Trigger an incident when a service degrades.
-
-### 9. Set up Self-service Actions
-
+- (Optional) Install Port execution agent
 - Create self-service actions for common tasks that users can perform on their own.  
   For example:
   - Scaffolding a new service.
   - Requesting a cloud resource.
   - Reporting an incident.
 
+### 9. Set up automations
+
+- Automations can be used to trigger actions based on events in your portal.  
+  Some initial automations can be helpful for monitoring and managing the entities you created when installing integrations. For example:
+  - Send notifications to relevant users when a new service is created/updated.
+  - Trigger an incident when a service degrades.
