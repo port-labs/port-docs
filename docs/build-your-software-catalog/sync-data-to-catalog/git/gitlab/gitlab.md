@@ -48,8 +48,8 @@ This is done using the `file` kind in your GitLab mapping configuration.
 
 For example, say you want to manage your `package.json` files in Port. One option is to create a `manifest` blueprint, with each of its entities representing a `package.json` file.
 
-:::info Note  
-The `file` kind adheres strictly to [GitLab's Advanced Search type](https://docs.gitlab.com/ee/user/search/advanced_search.html#:~:text=Advanced%20search%20is%20based%20on,Projects/), so results will match its specific format and limitations.  
+:::info Search Type  
+The `file` kind follows  [GitLab's Advanced Search type](https://docs.gitlab.com/ee/user/search/advanced_search.html#:~:text=Advanced%20search%20is%20based%20on,Projects/) with strict adherence to its syntax, limitations, and capabilities.
 :::
 
 The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
