@@ -28,6 +28,8 @@ Determine what your portal will need to enable users to do. Some common use-case
 
 There are **many** other use-cases that you can implement in your developer portal, depending on your organization's needs. The key is to define these use-cases early on so that you can build your portal to support them.
 
+For this step, we recommend to use Port's [roadmap planner](https://www.getport.io/roadmap-planner) to set and prioritize your user-stories.
+
 ### 4. Plan for Integration and Customization
 
 1. List the tools and platforms in your tech stack that you want to ingest into your developer portal.  

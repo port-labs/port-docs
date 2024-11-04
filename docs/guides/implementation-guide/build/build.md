@@ -41,6 +41,11 @@
   - A dashboard for developers to track the health of their services.
   - A dashboard for R&D managers to track the performance of APIs and services.
   - A dashboard for security teams to track access control and security policies.
+- Dashboards can be created/modified in 3 locations:
+  - Homepage
+  - Catalog - dashboard page
+  - Specific entity page
+- Use dynamic filters to display data relevant to the logged-in user, or to filter data based on specific criteria.
 
 ### 8. Set up Self-service Actions
 
