@@ -43,8 +43,8 @@ Port offers a wide range of pre-built integrations for popular tools, but you ca
  
 3. For Port's pre-built integrations, decide how you want to install them (hosted by Port/self-hosted/scheduled via CI).
 
-### 5. Define Roles and Permissions
+<!-- ### 5. Define Roles and Permissions
 
 - Decide which permissions and privileges each member in your organization will have, thus assigning him/her a user role (admin/moderator/member).
 - Define teams and their users.
-- Define owners for different blueprints.
+- Define owners for different blueprints. -->
