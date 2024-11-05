@@ -27,6 +27,7 @@ import DynamoDBBlueprint from './storage/\_dynamodb.mdx'
 import ElasticacheBlueprint from './storage/\_elasticache.mdx'
 import RDSBlueprint from './storage/\_rds.mdx'
 import StorageAppConfig from './storage/\_port_app_config.mdx'
+import RegionPolicyEvaluator from  './src/components/RegionPolicyEvaluator'
 
 # Mapping Extra Resources
 
@@ -106,6 +107,55 @@ aws cloudcontrol list-resources --type-name AWS::Lambda::Function --max-items 1 
 
 :::
 
+
+### Querying resources from specific regions
+
+The `regionPolicy` option allows users to define a policy for querying resources in specific AWS regions. This feature enables finer control over which AWS regions are included or excluded when fetching resources. The `regionPolicy` option works with `allow` and `deny` lists to specify allowed or restricted regions.
+
+- **allow**: A list of regions explicitly permitted for querying.
+- **deny**: A list of regions explicitly restricted from querying.
+
+#### How `regionPolicy` Works
+
+1. **If both lists are empty**: All regions are allowed.
+2. **If the region is in `deny`**: It is excluded unless explicitly allowed.
+3. **If the region is in `allow`**: It is included for querying.
+4. **If a region appears in both lists**: It is excluded.
+5. **If only `deny` is specified**: Only regions in the `deny` list are excluded.
+6. **If only `allow` is specified**: Only regions in the `allow` list are included.
+
+#### Example Configuration
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::Lambda::Function
+    selector:
+      query: 'true'
+      useGetResourceAPI: 'true'
+      regionPolicy:
+        allow: ["us-east-1", "eu-west-1"]
+        deny: ["us-west-2"]
+    port:
+      entity:
+        mappings:
+          identifier: '.Identifier'
+          title: '.Properties.FunctionName'
+          blueprint: 'lambda'
+          properties:
+            region: '.__Region'
+            description: '.Properties.Description'
+            arn: '.Properties.Arn'
+          relations:
+            account: '.__AccountId'
+```
+
+In this example, resources in the `us-east-1` and `eu-west-1` regions are allowed, while `us-west-2` is denied.
+
+### Interactive Region Policy Evaluation Tool
+
+Use the tool below to test your `regionPolicy` configurations by specifying a region and providing `allow` and `deny` lists. This will help you determine if a region is allowed or denied based on your settings.
+
+<RegionPolicyEvaluator />
 
 ## Mapping the resource to Port
 
