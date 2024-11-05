@@ -5218,6 +5218,22 @@ paths:
                         type: boolean
                       colors:
                         type: object
+                        additionalProperties:
+                          enum:
+                            - blue
+                            - turquoise
+                            - orange
+                            - purple
+                            - pink
+                            - yellow
+                            - green
+                            - red
+                            - gold
+                            - silver
+                            - paleBlue
+                            - darkGray
+                            - lightGray
+                            - bronze
                       items:
                         type: object
                         properties:
@@ -5306,6 +5322,22 @@ paths:
                           type: boolean
                         colors:
                           type: object
+                          additionalProperties:
+                            enum:
+                              - blue
+                              - turquoise
+                              - orange
+                              - purple
+                              - pink
+                              - yellow
+                              - green
+                              - red
+                              - gold
+                              - silver
+                              - paleBlue
+                              - darkGray
+                              - lightGray
+                              - bronze
                         items:
                           type: object
                           properties:
@@ -5735,6 +5767,22 @@ paths:
                         type: boolean
                       colors:
                         type: object
+                        additionalProperties:
+                          enum:
+                            - blue
+                            - turquoise
+                            - orange
+                            - purple
+                            - pink
+                            - yellow
+                            - green
+                            - red
+                            - gold
+                            - silver
+                            - paleBlue
+                            - darkGray
+                            - lightGray
+                            - bronze
                       items:
                         type: object
                         properties:
@@ -5823,6 +5871,22 @@ paths:
                           type: boolean
                         colors:
                           type: object
+                          additionalProperties:
+                            enum:
+                              - blue
+                              - turquoise
+                              - orange
+                              - purple
+                              - pink
+                              - yellow
+                              - green
+                              - red
+                              - gold
+                              - silver
+                              - paleBlue
+                              - darkGray
+                              - lightGray
+                              - bronze
                         items:
                           type: object
                           properties:
@@ -6167,6 +6231,22 @@ paths:
                         type: boolean
                       colors:
                         type: object
+                        additionalProperties:
+                          enum:
+                            - blue
+                            - turquoise
+                            - orange
+                            - purple
+                            - pink
+                            - yellow
+                            - green
+                            - red
+                            - gold
+                            - silver
+                            - paleBlue
+                            - darkGray
+                            - lightGray
+                            - bronze
                       items:
                         type: object
                         properties:
@@ -6255,6 +6335,22 @@ paths:
                           type: boolean
                         colors:
                           type: object
+                          additionalProperties:
+                            enum:
+                              - blue
+                              - turquoise
+                              - orange
+                              - purple
+                              - pink
+                              - yellow
+                              - green
+                              - red
+                              - gold
+                              - silver
+                              - paleBlue
+                              - darkGray
+                              - lightGray
+                              - bronze
                         items:
                           type: object
                           properties:
