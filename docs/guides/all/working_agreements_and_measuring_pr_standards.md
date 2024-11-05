@@ -37,7 +37,7 @@ please refer to our [DORA Metrics guide](/guides/all/setup-dora-metrics).
 
 ## Working agreements
 
-The following working agreements and PR checks have been implemented in our [demo environment](https://demo.getport.io/scorecard_overview) all the way down for similar examples:
+The following working agreements and PR checks have been implemented in our [demo environment](https://demo.getport.io/scorecard_overviewl):
 
 - [**PR Description Cannot be Empty**](#pr-description-cannot-be-empty): Ensures that every PR has a description.
 - [**PR Has Linked Issue**](#pr-has-linked-issue): Verifies that each PR is linked to an issue.
@@ -48,7 +48,7 @@ The following working agreements and PR checks have been implemented in our [dem
 - [**PR Has Been Open for X Days**](#pr-has-been-open-for-x-days): Monitors how long a PR has been open.
 - [**PR Batch Size Calculation**](#pr-batch-size-calculation): Calculates the batch size of the PR.
 
-These checks are implemented using Port's [scorecards](/#scorecards) on the `pull request` blueprint.
+These checks are implemented using Port's [scorecards](/#scorecards).
 
 
 ## Implementation 
@@ -348,8 +348,8 @@ Add the `milestone` property to the **pull request** blueprint:
 
 ```json showLineNumbers
 "milestone": {
-"title": "Milestone",
-"type": "object"
+  "title": "Milestone",
+  "type": "object"
 }
 
 ```
