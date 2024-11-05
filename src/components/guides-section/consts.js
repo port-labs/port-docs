@@ -821,9 +821,9 @@ export const availableGuides = [
         link: "/guides/all/ingest-vulnerability-alerts-from-orca-security-using-a-custom-webhook-integration"
     },
     {
-        title: "Implement Working Agreements and Measure PR Standards",
+        title: "Measure pull request standards",
         description: "Implement working agreements and measure pr standards",
-        tags: ["Engineering metrics", "SDLC", "GitHub"],
+        tags: ["Engineering metrics", "SDLC", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/working_agreements_and_measuring_pr_standards"
        

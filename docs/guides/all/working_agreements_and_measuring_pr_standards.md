@@ -7,11 +7,12 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Implement working agreements and measure pull request standards 
+# Measuring pull request standards
 This guide is aimed at helping engineering teams implement working agreements and measure pull request (PR) standards using Port.
 We will implement working agreements using Port's scorecards and measure PR standards using aggregation properties.
+by the end of this guide you'll be able to track teams performance based on pull requests metrics as shown in this screenshot
 
-<img src='/img/guides/scorecardOverview.png' border='1px' />
+<img src='/img/guides/teamPRMetricTable.png' border='1px' />
 
 
 ## Overview
@@ -36,7 +37,7 @@ please refer to our [DORA Metrics guide](/guides/all/setup-dora-metrics).
 
 ## Working agreements
 
-The following working agreements and PR checks have been implemented in our [demo environment](https://demo.getport.io/engineering_overview) all the way down for similar examples:
+The following working agreements and PR checks have been implemented in our [demo environment](https://demo.getport.io/scorecard_overview) all the way down for similar examples:
 
 - [**PR Description Cannot be Empty**](#pr-description-cannot-be-empty): Ensures that every PR has a description.
 - [**PR Has Linked Issue**](#pr-has-linked-issue): Verifies that each PR is linked to an issue.
@@ -58,14 +59,17 @@ Follow the steps below to  implement this :
    -  Select the `pull request` blueprint.
    -  Click on the `{...}` button in the top right corner, and choose "Edit JSON".
    - Add the properties and mapping configurations as described below.
-     <img src='/img/guides/prBPPropertyAdd.png'  width='80%' />
    - Save the changes.
+   :::tip Aftermath
+     After implementing all the checks in the next section, it will look something like this
+     <img src='/img/guides/prBPPropertyAdd.png'  width='80%' border="1px" />
+   :::
 
 2. Add the **mapping configuration** to the data source.
    - Go to the [Data Sources](https://app.getport.io/settings/data-sources) in your Port portal.
    - Select the data source connected to your GitHub repository
    - Add the mapping configurations as described below.
-     <img src='/img/guides/addMappingConfigDS.png'  />
+     <img src='/img/guides/addMappingConfigDS.png' border="1px"  />
    - Save the changes.
 
 3. Add the **scorecard** definitions to the `pull request` blueprint.
@@ -73,7 +77,7 @@ Follow the steps below to  implement this :
    - Select the `pull request` blueprint.
    - Click on  the **Scorecard**
    - Click on the `+ New Scorecard` button.
-   <img src='/img/guides/scorecardOnPRAdd.png' />
+   <img src='/img/guides/scorecardOnPRAdd.png' border="1px" />
    - Paste the scorecard definitions as described below.
    - Save the changes.
 
@@ -277,9 +281,9 @@ Add the `reviewers` property to the **pull request** blueprint if it doesn't exi
   <summary>Click to view the property addition</summary>
 
 ```json showLineNumbers
- "reviewers": {
-"title": "Reviewers",
-"type": "array"
+"reviewers": {
+  "title": "Reviewers",
+  "type": "array"
 }
 ```
 
@@ -916,7 +920,7 @@ By leveraging Port's Dashboards, you can create custom dashboards to track the p
 
 ### Dashboard setup
 
-<img src="/img/guides/prMetricsDashboardComp.png" />
+<img src="/img/guides/prMetricsDashboardComp.png" border="1px" />
 
 1. Go to your [software catalog](https://app.getport.io/organization/catalog).
 2. Click on the `+ New` button in the left sidebar.
@@ -1005,11 +1009,12 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 4. Click **Save** to add the widget to the dashboard.
 5. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
 6. In the top right corner of the table, click on `Manage Properties` and add the following properties:
-    - **Service Name**: The name of each service.
-    - **Team Name**: The team associated with each service.
-    - **Average Scorecard Score**: The calculated average scorecard score for each service.
-
-7. Click on the **save icon** in the top right corner of the widget to save the customized table.
+    - **Title**: The name of each service.
+    - **PR Metrics**: PR Metrics scorecard aggregation on service.
+    - **Owning Team**: The team that owns the service.
+7. Click on the `Group by any Column` on the top right conner and select **Owning Team**.
+   <img src="/img/guides/groupByAnyColumn.png" width="50%" />
+8. Click on the **save icon** in the top right corner of the widget to save the customized table.
 
 </details>
 
