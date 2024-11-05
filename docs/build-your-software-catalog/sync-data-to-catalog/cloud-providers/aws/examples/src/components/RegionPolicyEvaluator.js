@@ -16,8 +16,22 @@ export default function RegionPolicyEvaluator() {
   const [result, setResult] = useState(null);
 
   const handleEvaluate = () => {
-    const isAllowed = isRegionAllowed(region, allow, deny);
+    // If allow and deny contain only empty strings, reset to empty arrays
+    const trimmedAllow = allow.filter((item) => item.trim() !== '');
+    const trimmedDeny = deny.filter((item) => item.trim() !== '');
+
+    const isAllowed = isRegionAllowed(region, trimmedAllow, trimmedDeny);
     setResult(isAllowed ? "Allowed" : "Denied");
+  };
+
+  const handleAllowChange = (e) => {
+    const values = e.target.value ? e.target.value.split(',') : [];
+    setAllow(values);
+  };
+
+  const handleDenyChange = (e) => {
+    const values = e.target.value ? e.target.value.split(',') : [];
+    setDeny(values);
   };
 
   return (
@@ -37,7 +51,9 @@ export default function RegionPolicyEvaluator() {
         <label style={styles.label}>Allowed Regions (comma-separated):</label>
         <input
           type="text"
-          onChange={(e) => setAllow(e.target.value.split(','))}
+          value={allow.join(',')}
+          onChange={handleAllowChange}
+          onBlur={() => !allow.length && setAllow([])}
           placeholder="e.g., us-east-1,eu-west-1"
           style={styles.input}
         />
@@ -46,7 +62,9 @@ export default function RegionPolicyEvaluator() {
         <label style={styles.label}>Denied Regions (comma-separated):</label>
         <input
           type="text"
-          onChange={(e) => setDeny(e.target.value.split(','))}
+          value={deny.join(',')}
+          onChange={handleDenyChange}
+          onBlur={() => !deny.length && setDeny([])}
           placeholder="e.g., us-west-2"
           style={styles.input}
         />
@@ -97,9 +115,6 @@ const styles = {
     borderRadius: '4px',
     cursor: 'pointer',
     fontSize: '16px',
-  },
-  buttonHover: {
-    backgroundColor: '#005bb5',
   },
   result: {
     marginTop: '15px',
