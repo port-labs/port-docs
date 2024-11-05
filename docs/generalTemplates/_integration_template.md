@@ -54,6 +54,13 @@ Choose one of the following installation methods:
  
 <Prerequisites/>
 
+<!-- The INTEGRATION-NAME should be the same as its called in the Data Sources modal in the app -->
+<OceanRealtimeInstallation integration="INTEGRATION-NAME" />
+
+This table summarizes the parameters used for the installation.
+Note the parameters specific to this integration, they are last in the table.
+<!-- Add a table of the available params for installation. The params that are specific for the integration should be last -->
+
 </TabItem>
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
