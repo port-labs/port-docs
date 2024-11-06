@@ -10,24 +10,31 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 # Measuring pull request standards
 This guide is aimed at helping engineering teams implement working agreements and measure pull request (PR) standards using Port.
 We will implement working agreements using Port's scorecards and measure PR standards using aggregation properties.
-by the end of this guide you'll be able to track teams performance based on pull requests metrics as shown in this screenshot
+by the end of this guide you will be able to track teams' performance based on pull requests metrics as shown here:
 
 <img src='/img/guides/teamPRMetricTable.png' border='1px' />
 
 
 ## Overview
+Effective collaboration and clear expectations are crucial for high-performing engineering teams.  
+**Working agreements** establish shared processes and standards, enhancing teamwork.
 
-Effective collaboration and clear expectations are crucial for high-performing engineering teams. **Working agreements** establish shared processes and standards, enhancing teamwork.
-Measuring **Pull request (PR)** standards is essential for assessing code quality, review processes, and team efficiency. 
-By integrating working agreements with measurable PR metrics, teams can monitor adherence to best practices and continuously improve workflows. 
+Measuring **Pull request (PR)** standards is essential for assessing code quality, review processes, and team efficiency.
+
+By integrating working agreements with measurable PR metrics, teams can monitor adherence to best practices and continuously improve workflows.
+
 We will discuss how to implement working agreements and measure PR standards using Port.
 
+
+
 :::info Metrics
-Metrics are essential for assessing how well teams adhere to their working agreements. 
-They enable teams to track compliance, identify bottlenecks, and drive continuous improvement. 
-For detailed insights into key metrics like `deployment frequency`, `lead time for changes`, and `change failure rate`,
+Metrics are essential for assessing how well teams adhere to their working agreements.  
+They enable teams to track compliance, identify bottlenecks, and drive continuous improvement.
+
+For detailed insights into key metrics like `deployment frequency`, `lead time for changes`, and `change failure rate`,  
 please refer to our [DORA Metrics guide](/guides/all/setup-dora-metrics).
 :::
+
 
 ## Prerequisites
 - Complete the [Port onboarding process](https://docs.getport.io/quickstart).
@@ -48,23 +55,26 @@ The following working agreements and PR checks have been implemented in our [dem
 - [**PR Has Been Open for X Days**](#pr-has-been-open-for-x-days): Monitors how long a PR has been open.
 - [**PR Batch Size Calculation**](#pr-batch-size-calculation): Calculates the batch size of the PR.
 
-These checks are implemented using Port's [scorecards](/#scorecards).
+These checks are implemented using Port's [scorecards](/promote-scorecards/).
 
 
 ## Implementation 
 This section will guide you through implementing the working agreements and PR checks in your Port environment.
-Follow the steps below to  implement this :
+Follow the steps below:
 1. Add the properties to the `pull request` blueprint.
    - Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
    -  Select the `pull request` blueprint.
-   -  Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+   -  Click on the `...` button in the top right corner, and choose "Edit JSON".
    - Add the properties and mapping configurations as described below.
    - Save the changes.
-   :::tip Aftermath
-     After implementing all the checks in the next section, it will look something like this
+   
+   <br/>
+   
+   :::tip Expected JSON  
+     This is the expected JSON definition after adding the properties.
      <img src='/img/guides/prBPPropertyAdd.png'  width='80%' border="1px" />
    :::
-
+<br/>
 2. Add the **mapping configuration** to the data source.
    - Go to the [Data Sources](https://app.getport.io/settings/data-sources) in your Port portal.
    - Select the data source connected to your GitHub repository
@@ -87,7 +97,7 @@ Follow the steps below to  implement this :
 <h4> Scorecard Definition </h4>
 
 <details>
-  <summary>Click to view the scorecard definition</summary>
+  <summary><b>Scorecard definition (click to expand)</b></summary>
 
 ```json
 {
@@ -113,7 +123,7 @@ Follow the steps below to  implement this :
 Add the `prDescription` property to the **pull request** blueprint:
 
 <details>
-  <summary>Click to view the property</summary>
+  <summary><b>Add property (click to expand)</b></summary>
 
 
 ```json showLineNumbers
@@ -128,7 +138,7 @@ Add the `prDescription` property to the **pull request** blueprint:
 Map the PR's `body` field from your data source to the `prDescription` property:
 
 <details>
-  <summary>Click to view the mapping configuration</summary>
+  <summary><b>Mapping config (click to expand)</b></summary>
 
 ```yaml showLineNumbers
   - kind: pull-request
@@ -152,7 +162,7 @@ Map the PR's `body` field from your data source to the `prDescription` property:
 <h4> Scorecard Definition </h4>
 
 <details>
-  <summary>Click to view the scorecard definition</summary>
+  <summary><b>Scorecard definition (click to expand)</b></summary>
 
 ```json
 {
@@ -178,7 +188,7 @@ Map the PR's `body` field from your data source to the `prDescription` property:
 Add the `issueUrl` property to the **pull request** blueprint:
 
 <details>
-  <summary>Click to view the property </summary>
+  <summary><b>Add property (click to expand)</b></summary>
 
 ```json showLineNumbers
 "issueUrl": {
@@ -194,7 +204,7 @@ Add the `issueUrl` property to the **pull request** blueprint:
 Map the issue URL from your data source to the `issueurl` property:
 
 <details>
-  <summary>Click to view the mapping configuration</summary>
+  <summary><b>Mapping config (click to expand)</b></summary>
 
 ```yaml showLineNumbers
   - kind: pull-request
@@ -218,7 +228,7 @@ Map the issue URL from your data source to the `issueurl` property:
 <h4> Scorecard Definition </h4>
 
 <details>
-  <summary>Click to view the scorecard definition</summary>
+  <summary><b>Scorecard definition (click to expand)</b></summary>
 
 ```json
 {
@@ -251,7 +261,7 @@ If you haven't added the `prDescription` property, and it's relative mapping con
 <h4> Scorecard Definition </h4>
 
 <details>
-  <summary>Click to view the scorecard definition</summary>
+  <summary><b>Scorecard definition (click to expand)</b></summary>
 
 ```json
 {
@@ -278,7 +288,7 @@ If you haven't added the `prDescription` property, and it's relative mapping con
 Add the `reviewers` property to the **pull request** blueprint if it doesn't exist:
 
 <details>
-  <summary>Click to view the property addition</summary>
+  <summary><b>Add property (click to expand)</b></summary>
 
 ```json showLineNumbers
 "reviewers": {
@@ -293,7 +303,7 @@ Add the `reviewers` property to the **pull request** blueprint if it doesn't exi
 Map the list of reviewers from your data source to the `reviewers` property:
 
 <details>
-  <summary>Click to view the mapping configuration</summary>
+  <summary><b>Mapping config (click to expand)</b></summary>
 
 ```yaml showLineNumbers
   - kind: pull-request
@@ -317,7 +327,7 @@ Map the list of reviewers from your data source to the `reviewers` property:
 <h4> Scorecard Definition </h4>
 
 <details>
-  <summary>Click to view the scorecard definition</summary>
+  <summary><b>Scorecard definition (click to expand)</b></summary>
 
 ```json
 {
@@ -342,7 +352,7 @@ Map the list of reviewers from your data source to the `reviewers` property:
 <h4> Property </h4>
 
 <details>
-  <summary>Click to view the property addition</summary>
+  <summary><b>Add property (click to expand)</b></summary>
 
 Add the `milestone` property to the **pull request** blueprint:
 
@@ -359,7 +369,7 @@ Add the `milestone` property to the **pull request** blueprint:
 <h4> Mapping Configuration </h4>
 
 <details>
-  <summary>Click to view the mapping configuration</summary>
+  <summary><b>Mapping config (click to expand)</b></summary>
 
 Map the milestone information from your data source to the `milestone` property.
 
@@ -386,9 +396,9 @@ Map the milestone information from your data source to the `milestone` property.
 
 This agreement has multiple levels based on the number of files changed.
 <details>
-  <summary>Click to view the scorecard definitions</summary>
+  <summary><b>Scorecard definition (click to expand)</b></summary>
     <details>
-     <summary>Click to view the Bronze level scorecard definition</summary>
+     <summary><b>Bronze level scorecard definition (click to expand)</b> </summary>
 
 ```json
 {
@@ -411,7 +421,7 @@ This agreement has multiple levels based on the number of files changed.
 
 </details>
     <details>
-  <summary>Click to view the Silver level scorecard definition</summary>
+  <summary> <b> Silver level scorecard definition (click to expand)</b> </summary>
 
 ```json
 {
@@ -434,7 +444,7 @@ This agreement has multiple levels based on the number of files changed.
 
 </details>
     <details>
-  <summary>Click to view the Gold level scorecard definition</summary>
+  <summary><b> Gold level scorecard definition (click to expand)</b></summary>
 
 ```json
 {
@@ -467,7 +477,7 @@ You can adjust the value based on your team's requirements.
 Add the `changedFiles` property to the **pull request** blueprint:
 
 <details>
-  <summary>Click to view the property</summary>
+  <summary><b>Add property (click to expand)</b></summary>
 
 ```json showLineNumbers
     "changedFiles": {
@@ -482,7 +492,7 @@ Add the `changedFiles` property to the **pull request** blueprint:
 Map the number of `changed_files` from the data source to the `changedFiles` property:
 
 <details>
-  <summary>Click to view the mapping configuration</summary>
+  <summary><b>Mapping config (click to expand)</b></summary>
 
 ```yaml showLineNumbers
   - kind: pull-request
@@ -507,7 +517,7 @@ Map the number of `changed_files` from the data source to the `changedFiles` pro
 <h4> Scorecard Definition </h4>
 
 <details>
-  <summary>Click to view the scorecard definition</summary>
+  <summary><b>Scorecard definition (click to expand)</b></summary>
 
 ```json
 {
@@ -539,7 +549,7 @@ Map the number of `changed_files` from the data source to the `changedFiles` pro
 Add a calculation property `days_old` to compute how many days the PR has been open:
 
 <details>
-  <summary>Click to view the calculation property addition</summary>
+  <summary><b>Add property (click to expand)</b></summary>
 
 ```json showLineNumbers
 "days_old": {
@@ -563,9 +573,9 @@ Ensure that `createdAt` and `mergedAt` properties are correctly mapped from your
 This agreement has levels based on the batch size.
 
 <details>
-<summary>Click to view the scorecard definition</summary>
+<summary><b>Scorecard definition (click to expand)</b></summary>
 <details>
-  <summary>Click to view the Bronze level scorecard definition</summary>
+  <summary><b> Bronze level scorecard definition (click to expand)</b>n</summary>
 
 ```json
 {
@@ -594,7 +604,7 @@ This agreement has levels based on the batch size.
 </details>
 
 <details>
-  <summary>Click to view the Silver level scorecard definition</summary>
+  <summary><b>Silver level scorecard definition (click to expand) </b></summary>
 
 ```json
 {
@@ -618,7 +628,7 @@ This agreement has levels based on the batch size.
 </details>
 
 <details>
-  <summary>Click to view the Gold level scorecard definition</summary>
+  <summary><b>Gold level scorecard definition (click to expand) </b></summary>
 
 ```json
 {
@@ -650,7 +660,7 @@ This agreement has levels based on the batch size.
 Add a property `batchSize` to categorize the PR's batch size:
 
 <details>
-  <summary>Click to view the calculation property addition</summary>
+  <summary><b>Add property (click to expand)</b></summary>
 
 ```json showLineNumbers
 "batchSize": {
@@ -677,7 +687,7 @@ Add a property `batchSize` to categorize the PR's batch size:
 Map the PR's `additions`, `deletions`, and `changedFiles` properties to the `batchSize` property:
 
 <details>
-  <summary>Click to view the mapping configuration</summary>
+  <summary><b>Mapping config (click to expand)</b></summary>
 
 ```yaml showLineNumbers
     - kind: pull-request
@@ -709,7 +719,7 @@ You can adjust the thresholds based on your team's requirements.
 Add the **calculation property** `totalLocChanged` on the **pull request** blueprint:
 
 <details>
-  <summary>Click to view the calculation property</summary>
+  <summary><b>Calculation property (click to expand)</b> </summary>
 
 ```json showLineNumbers
 "totalLocChanged": {
@@ -731,11 +741,12 @@ This will allow us to capture important metrics such as:
 - PRs Merged (Service & Organization Level)
 - Average Commits per PR (Service & Organization Level)
 - Average Lines of Code (LOC) Changed (Service & Organization Level)
-
+<br/>
 ::::info Aggregation on higher hierarchy
 - To aggregate on an organization level, apply the same settings to a higher hierarchy.
 - If you want to see it on a team level, you need to make sure services are related to teams and add the same aggregations to team
 ::::
+
 
 :::tip Adding Aggregation to Blueprints
 To add aggregation properties to your blueprints, follow these steps:
@@ -745,6 +756,7 @@ To add aggregation properties to your blueprints, follow these steps:
 4. Insert the respective **aggregation** or **calculation properties** under the `aggregationProperties` or `calculationProperties` section in the blueprint's JSON schema.
 5. Save your changes to apply the new aggregation configuration.
  :::
+<br/>
 
 <Tabs
   defaultValue="averagePrDuration"
@@ -761,7 +773,7 @@ To add aggregation properties to your blueprints, follow these steps:
 Add the following aggregation property to the **service** blueprint:
 
 <details>
-  <summary>Click to view the aggregation property</summary>
+  <summary><b>Aggregation property (click to expand)</b></summary>
 
 ```json
 "averagePrDuration": {
@@ -795,7 +807,7 @@ Add the following aggregation property to the **service** blueprint:
 Add the following aggregation property to the **service** blueprint:
 
 <details>
-  <summary>Click to view the aggregation property</summary>
+  <summary><b>Aggregation property (click to expand)</b></summary>
 
 ```json
 "openPrs": {
@@ -828,7 +840,7 @@ Add the following aggregation property to the **service** blueprint:
 Add the following aggregation property to the **service** blueprint:
 
 <details>
-  <summary>Click to view the aggregation property</summary>
+  <summary><b>Aggregation property (click to expand)</b></summary>
 
 ```json
 "mergedPrs": {
@@ -861,7 +873,7 @@ Add the following aggregation property to the **service** blueprint:
 Add the following aggregation property to the **service** blueprint:
 
 <details>
-  <summary>Click to view the aggregation property</summary>
+  <summary><b>Aggregation property (click to expand)</b></summary>
 
 ```json
 "averageCommitsPerPr": {
@@ -888,7 +900,7 @@ Add the following aggregation property to the **service** blueprint:
 Add the following aggregation property to the **service** and **organization** blueprints:
 
 <details>
-  <summary>Click to view the aggregation property</summary>
+  <summary><b>Aggregation property (click to expand)</b></summary>
 
 ```json
 "averagePrLinesOfCode": {
@@ -909,6 +921,7 @@ Add the following aggregation property to the **service** and **organization** b
 </TabItem>
 
 </Tabs>
+
 
 By implementing these aggregation properties, you can effectively measure and monitor PR standards at both the service and organization levels.
 
@@ -932,7 +945,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 ### Adding widgets
 
 <details>
-<summary><b> Average Pr Merged per month </b></summary>
+<summary><b> Average Pr Merged per month (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Number Chart**.
 2. Title: `Average Pr's Merged per month`, (add the `GitPullRequest` icon).
@@ -951,7 +964,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 
 
 <details>
-<summary><b> Total Pr's Merged  </b></summary>
+<summary><b> Total Pr's Merged  (click to expand) </b></summary>
 
 1. Click `+ Widget` and select **Number Chart**.
 2. Title: `Total Pr's Merged `, (add the `GitPullRequest` icon).
@@ -966,7 +979,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 </details>
 
 <details>
-<summary><b> Mean Time to Merge (Days) </b></summary>
+<summary><b> Mean Time to Merge (Days) (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Number Chart**.
 2. Title: `Mean Time to Merge (Days)`, (add the `Merge` icon).
@@ -981,7 +994,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 
 
 <details>
-<summary><b> Total Weekly  Pr commits </b></summary>
+<summary><b> Total Weekly  Pr commits (click to expand)</b></summary>
 
 1. Click `+ Widget` and select **Number Chart**.
 2. Title: `Total Weekly  Pr commits`, (add the `GitPullRequest` icon).
@@ -998,7 +1011,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 </details>
 
 <details>
-<summary><b>Service Scorecard Performance by Team</b></summary>
+<summary><b>Service Scorecard Performance by Team (click to expand)</b></summary>
 
 1. Click **`+ Widget`** and select **Table**.
 2. Title the widget **Team Service Scorecard Performance**.
@@ -1060,7 +1073,8 @@ Add this automation feature to notify a Slack channel when a scorecard value cha
 }
 ```
 </details>
+<br/>
 ::::tip Adding Automations
-To add new automations, follow the steps outlined in the [Automation Setup](/actions-and-automations/define-automations/setup-action) section of this guide.
+To add new automations, follow the steps outlined in the [Automation Setup](/actions-and-automations/define-automations/setup-action) section of this guide.  
 and remember to set the `serviceSlackUrl` and `serviceSlackChannel` properties on the **service** blueprint.
 ::::

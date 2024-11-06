@@ -823,7 +823,7 @@ export const availableGuides = [
     {
         title: "Measure pull request standards",
         description: "Implement working agreements and measure pr standards",
-        tags: ["Engineering metrics", "SDLC", "GitHub", "Dashboards"],
+        tags: ["Engineering metrics", "GitHub", "Dashboards"],
         logos: ["GitHub"],
         link: "/guides/all/working_agreements_and_measuring_pr_standards"
        
