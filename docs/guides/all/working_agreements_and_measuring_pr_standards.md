@@ -8,9 +8,10 @@ import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Measuring pull request standards
-This guide is aimed at helping engineering teams implement working agreements and measure pull request (PR) standards using Port.
-We will implement working agreements using Port's scorecards and measure PR standards using aggregation properties.
-by the end of this guide you will be able to track teams' performance based on pull requests metrics as shown here:
+This guide is aimed at helping engineering teams implement working agreements and measure pull request (PR) standards.  
+We will implement working agreements using Port's scorecards and measure PR standards using aggregation properties.  
+By the end of this guide, you will be able to track teams' performance based on pull requests metrics as shown here:
+
 
 <img src='/img/guides/teamPRMetricTable.png' border='1px' />
 
