@@ -16,7 +16,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate the power of sel
 :::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- You will need a Git repository (GitHub, GitLab,Bitbucket or Azure DevOps) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
+- You will need a Git repository (GitHub, GitLab, Bitbucket or Azure DevOps) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 
 :::
 
@@ -36,6 +36,13 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Setup the action's frontend
 
+<Tabs groupId="git-provider" queryString defaultValue="github-gitlab-bitbucket" values={[
+{label: "GitHub, GitLab, Bitbucket", value: "github-gitlab-bitbucket"},
+{label: "Azure DevOps", value: "azure-devops"}
+]}>
+
+<TabItem value="github-gitlab-bitbucket">
+
 :::tip Onboarding
 
 As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service page](https://app.getport.io/self-serve).  
@@ -50,6 +57,38 @@ If you **skipped** the onboarding, follow the instructions listed [here](/quicks
 2. The action's basic details should look like the image below. You can click on the `User Form` tab to see the user inputs created for the action. When ready, click on the `Backend` tab to proceed.
 
     <img src='/img/guides/scaffoldActionDetails.png' width='70%' border='1px' />
+
+</TabItem>
+
+<TabItem value="azure-devops">
+ :::info Integration installation
+Ensure that you have Port's Azure DevOps integration installed and that the Project and Repository blueprints already exist in your Port application.
+
+If you don't have the integration installed, follow the instructions listed [here](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/installation).
+::::
+
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button, and choose "Edit":
+
+    <img src='/img/guides/scaffoldEditAction.png' width='35%' border='1px' />
+
+2. The action's basic details should look like the image below. select the `Repository` from the Azure DevOp in the blueprint dropdown. 
+
+    <img src='/img/guides/scaffoldActionADODetails.png' width='70%' border='1px' />
+
+3. Click on the `User Form` tab to see the user inputs created for the action. add the `azure_organization` , `azure_project` and `description` inputs. it should look like the image below. When ready, click on the `Backend` tab to proceed.
+
+     <img src='/img/guides/scaffoldActionInputsDetails.png' width='70%' border='1px' />
+
+ :::tip Data type for inputs
+The `azure_organization` and `description` inputs should be of type `string` and 
+ the `azure_project`  should be of type `Entity Selection` and select `Project` as the blueprint
+
+Addition to this,  you should make the `azure_organization` and `azure_project` inputs required.
+::::
+
+</TabItem>
+
+</Tabs>
 
 #### Define backend type
 
@@ -176,24 +215,23 @@ Then, fill out your workflow details:
 First, choose `Run Azure Pipeline` as the invocation type. Then fill out the form:
 
 - Replace `Incoming Webhook`with the name of your webhook trigger.
-- Replace`Organization` with your Azure DevOps organization name.
+- Replace `Organization` with your Azure DevOps organization name.
 - Under `Payload`, we will define the data sent to the backend. Copy the following JSON snippet and paste it in the `Payload` code box:
 
-  ```json showLineNumbers
-  {
+```json showLineNumbers
+{
     "properties": {
-      "service_name": "{{.inputs.\"service_name\"}}",
-      "azure_organization": "{{.inputs.\"azure_organization\"}}",
-      "azure_project": "{{.inputs.\"azure_project\"}}",
-      "description": "{{.inputs.\"description\"}}"
+        "service_name": "{{.inputs.\"service_name\"}}",
+        "azure_organization": "{{.inputs.\"azure_organization\"}}",
+        "description": "{{.inputs.\"description\"}}",
+        "azure_project": "{{.inputs.\"azure_project\"}}"
     },
     "port_context": {
-      "entity": "{{.entity}}",
-      "blueprint": "{{.action.blueprint}}",
-      "runId": "{{.run.id}}",
-      "trigger": "{{ .trigger }}"
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
     }
-  }
+}
   ```
   <img src='/img/guides/scaffoldAdoBackendForm.png' width='80%' border='1px' />
 
@@ -223,12 +261,12 @@ Now we want to write the logic that our action will trigger.
 <TabItem value="github">
 
 :::info Important
-If the Github organization which will house your workflow is not the same as the one you'll create the new repository in, install Port's [Github app](https://github.com/apps/getport-io) in the other organization as well.
+If the GitHub organization which will house your workflow is not the same as the one you'll create the new repository in, install Port's [Github app](https://github.com/apps/getport-io) in the other organization as well.
 :::
 
 1. First, let's create the necessary token and secrets:
 
-- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token (classic) with `repo`, `admin:repo_hook` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
+- Go to your [GitHub tokens page](https://github.com/settings/tokens), create a personal access token (classic) with `repo`, `admin:repo_hook` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
 
   <img src='/img/guides/personalAccessToken.png' width='80%' />
 
@@ -792,52 +830,17 @@ default_context:
 
 <TabItem value="azure-devops">
 
-- Create an Azure DevOps repository called `scaffolder` in your Azure DevOps Organization/Project.
-- Configure Service Connection and Webhook
+- Create an Azure DevOps repository called `Port-actions` in your Azure DevOps Organization/Project.
+- Configure Service Connection and Webhook:
   - Go to your Azure DevOps project.
   - Navigate to `Project Settings` > `Service connections`.
   - Click on `New service connection`.
   - Select `Incoming Webhook`.
   - Use the same name for both `Webhook Name` and `Service connection name`.
+  
+- Create Azure Pipeline in `Port-actions` Repository
 
-   :::note
-   Ensure that `invocationMethod.webhook` equals the name you used when configuring your [Service Connection](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml).
-   :::
-
-- Create a Port blueprint with the following JSON definition:
-<details>
-  <summary>Port Microservice Blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "microservice",
-  "title": "Microservice",
-  "icon": "Microservice",
-  "schema": {
-    "properties": {
-      "description": {
-        "title": "Description",
-        "type": "string"
-      },
-      "url": {
-        "title": "URL",
-        "format": "url",
-        "type": "string"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-- Create Azure Pipeline in `scaffolder` Repository
-
-In your `scaffolder` Azure DevOps repository, create an Azure Pipeline file named `azure-pipelines.yml` in the root of the repo's main branch with the following content:
+In your `Port-actions` Azure DevOps repository, create an Azure Pipeline file named `azure-pipelines.yml` in the root of the repo's main branch with the following content:
 
 <details>
 <summary>Azure DevOps Pipeline Script</summary>
@@ -854,8 +857,9 @@ variables:
   SERVICE_NAME: "${{ parameters.SERVICE_CONNECTION_NAME.properties.service_name }}"
   DESCRIPTION: "${{ parameters.SERVICE_CONNECTION_NAME.properties.description }}"
   AZURE_ORGANIZATION: "${{ parameters.SERVICE_CONNECTION_NAME.properties.azure_organization }}"
-  AZURE_PROJECT: "${{ parameters.SERVICE_CONNECTION_NAME.properties.azure_project }}"
-  # PERSONAL_ACCESS_TOKEN: $(PERSONAL_ACCESS_TOKEN) // set up PERSONAL_ACCESS_TOKEN as a sercet variable
+  AZURE_PROJECT: "${{ parameters.SERVICE_CONNECTION_NAME.properties.azure_project.title }}"
+  PROJECT_ID: "${{ parameters.SERVICE_CONNECTION_NAME.properties.azure_project.identifier }}"
+  # Ensure that PERSONAL_ACCESS_TOKEN is set as a secret variable in your pipeline settings
 
 resources:
   webhooks:
@@ -879,6 +883,7 @@ stages:
             displayName: Fetch Access Token and Run ID
             name: getToken
 
+
   - stage: scaffold
     dependsOn:
       - fetch_port_access_token
@@ -892,28 +897,34 @@ stages:
               sudo apt-get install -y jq
               sudo pip install cookiecutter -q
           - script: |
-              # Create the repository
-              PROJECT_ID=$(curl -X GET "https://dev.azure.com/${{ variables.AZURE_ORGANIZATION }}/_apis/projects/${{ variables.AZURE_PROJECT }}?api-version=7.0" \
-              -H "Authorization: Basic $(PERSONAL_ACCESS_TOKEN)" \
-              -H "Content-Type: application/json" \
-              -H "Content-Length: 0" | jq .id)
+              # Use shell variable syntax for accessing variables
+              PAYLOAD="{\"name\":\"$SERVICE_NAME\",\"project\":{\"id\":\"$PROJECT_ID\"}}"
 
-              if [[ -z "$PROJECT_ID" ]]; then
-                echo "Failed to fetch Azure Devops Project ID."
+              echo "SERVICE_NAME: $SERVICE_NAME"
+              echo "AZURE_ORGANIZATION: $AZURE_ORGANIZATION"
+              echo "PROJECT_ID: $PROJECT_ID"
+              echo "PAYLOAD: $PAYLOAD"
+
+              if [[ -z \"$PERSONAL_ACCESS_TOKEN\" ]]; then
+                echo "PERSONAL_ACCESS_TOKEN is not set or is empty."
                 exit 1
+              else
+                echo "PERSONAL_ACCESS_TOKEN is set."
               fi
 
-              PAYLOAD='{"name":"${{ variables.SERVICE_NAME }}","project":{"id":'$PROJECT_ID'}}'
+              # Create the repository
+              CREATE_REPO_RESPONSE=$(curl -s -u :$PERSONAL_ACCESS_TOKEN \
+                -X POST "https://dev.azure.com/$AZURE_ORGANIZATION/$PROJECT_ID/_apis/git/repositories?api-version=7.0" \
+                -H "Content-Type: application/json" \
+                -d "$PAYLOAD")
 
-              CREATE_REPO_RESPONSE=$(curl -X POST "https://dev.azure.com/${{ variables.AZURE_ORGANIZATION }}/_apis/git/repositories?api-version=7.0" \
-              -H "Authorization: Basic $(PERSONAL_ACCESS_TOKEN)" \
-              -H "Content-Type: application/json" \
-              -d $PAYLOAD)
+              # Output the response for debugging
+              echo "CREATE_REPO_RESPONSE: $CREATE_REPO_RESPONSE"
 
               PROJECT_URL=$(echo $CREATE_REPO_RESPONSE | jq -r .webUrl)
 
-              if [[ -z "$PROJECT_URL" ]]; then
-                echo "Failed to create Azure Devops repository."
+              if [[ -z "$PROJECT_URL" ]] || [[ "$PROJECT_URL" == "null" ]]; then
+                echo "Failed to create Azure DevOps repository."
                 exit 1
               fi
 
@@ -921,7 +932,7 @@ stages:
 
               cat <<EOF > cookiecutter.yaml
               default_context:
-                site_name: "${{ variables.SERVICE_NAME }}"
+                site_name: "$SERVICE_NAME"
                 python_version: "3.6.0"
               EOF
               cookiecutter $COOKIECUTTER_TEMPLATE_URL --no-input --config-file cookiecutter.yaml --output-dir scaffold_out
@@ -931,13 +942,31 @@ stages:
               git config --global user.name "Mighty Scaffolder"
               git config --global init.defaultBranch "main"
 
-              cd "scaffold_out/${{ variables.SERVICE_NAME }}"
+              cd "scaffold_out/$SERVICE_NAME"
               git init
               git add .
               git commit -m "Initial commit"
-              decoded_pat=$(echo $(PERSONAL_ACCESS_TOKEN) | base64 -d)
-              git remote add origin https://$decoded_pat@dev.azure.com/${{ variables.AZURE_ORGANIZATION }}/${{ variables.AZURE_PROJECT }}/_git/${{ variables.SERVICE_NAME }}
+
+             
+              # Extract the remoteUrl from the response
+              GIT_REPO_URL=$(echo $CREATE_REPO_RESPONSE | jq -r .remoteUrl)
+
+              # Check if GIT_REPO_URL is valid
+              if [[ -z "$GIT_REPO_URL" ]] || [[ "$GIT_REPO_URL" == "null" ]]; then
+                echo "Failed to retrieve the remote URL from the repository creation response."
+                exit 1
+              fi
+
+              # Configure Git to use the PAT for authentication
+              git remote add origin "$GIT_REPO_URL"
+              git config http.https://dev.azure.com/.extraheader "AUTHORIZATION: Basic $(echo -n :$PERSONAL_ACCESS_TOKEN | base64)"
+
+              # Push code to the repository
               git push -u origin --all
+
+            env:
+              PERSONAL_ACCESS_TOKEN: $(PERSONAL_ACCESS_TOKEN)
+            displayName: "Create Repository in Azure DevOps"
             name: scaffold
 
   - stage: upsert_entity
@@ -961,9 +990,12 @@ stages:
                     "identifier": "${{ variables.SERVICE_NAME }}",
                     "title": "${{ variables.SERVICE_NAME }}",
                     "properties": {"description":"${{ variables.DESCRIPTION }}","url":"$(PROJECT_URL)" },
-                    "relations": {}
+                    "relations": {
+                      "project":"${{ variables.PROJECT_ID }}"
+                    }
                   }' \
                 "https://api.getport.io/v1/blueprints/${{ variables.BLUEPRINT_ID }}/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"
+
 
   - stage: update_run_status
     dependsOn:
@@ -1000,9 +1032,10 @@ stages:
           - script: |
               curl -X PATCH \
                 -H 'Content-Type: application/json' \
-                -H 'Authorization: Bearer $(accessToken)' \
-                -d '{"status":"FAILURE", "message": {"run_status": "Scaffold ${{ variables.SERVICE_NAME }} failed" }}' \
-                "https://api.getport.io/v1/actions/runs/${{ variables.RUN_ID }}"
+                -H "Authorization: Bearer $accessToken" \
+                -d '{"status":"FAILURE", "message": {"run_status": "Scaffold '"$SERVICE_NAME"' failed" }}' \
+                "https://api.getport.io/v1/actions/runs/$RUN_ID"
+
 ```
 </details>
 
@@ -1011,21 +1044,21 @@ Replace `<SERVICE_CONNECTION_NAME>` with the name of the service connection you 
 and `<WEBHOOK NAME>` with the name of the webhook you created in Azure DevOps which should be the same as the service connection name.
 :::
 
-- Configure the Pipeline 
+- Configure the Pipeline:
   - In your Azure DevOps project, navigate to **`Pipelines`** > **`Create Pipeline`**.
-  - Select **`Azure Repos Git`** and choose the `scaffolder` repository.
+  - Select **`Azure Repos Git`** and choose the `Port-actions` repository.
   - Click **`Save`** (in the "Run" dropdown menu).
 
 - Create the necessary tokens and secrets:
     - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 - Configure the following as Variables for the `azure-pipelines.yml`:
-  - Go to pipelines and select the `scaffolder` pipeline.
+  - Go to pipelines and select the `Port-actions` pipeline.
   - Click on `Edit` and then `Variables`.
   - Add the following variables:
     - `PORT_CLIENT_ID` - Your Port `client ID`.
     - `PORT_CLIENT_SECRET` - Your Port `client secret`.
-    - `PERSONAL_ACCESS_TOKEN` - Your Azure DevOps base64 encoded personal access token.
+    - `PERSONAL_ACCESS_TOKEN` - Your Azure DevOps personal access token.
     <br/>
     <img src='/img/guides/azureDevOpsPipelineVariables.png' width='45%' border='1px' />
 
