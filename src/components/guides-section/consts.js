@@ -454,7 +454,7 @@ export const availableGuides = [
     },
     {
         title: "Deploy Azure Resource using Terraform",
-        description: "Create a self-service action that deployes a storage account in Azure using Terraform",
+        description: "Create a self-service action that deploys a storage account in Azure using Terraform",
         tags: ["IaC for devs", "Azure", "Terraform", "Actions"],
         logos: ["Azure", "Terraform"],
         // category: "Getting started",
@@ -826,6 +826,13 @@ export const availableGuides = [
         tags: ["Cloud access management", "Actions", "Automations"],
         logos: ["Slack"],
         link: "/guides/all/automatically-approve-action-using-automation"
+    },
+    {
+        title: "Ingest security issues from .sarif files to services",
+        description: "Ingest .sarif files and relate them to the corresponding service entities",
+        tags: ["AppSec", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-security-issues-from-sarif-files-to-services",
     },
     
 ]

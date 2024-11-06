@@ -513,6 +513,10 @@ components:
                               type: array
                               items:
                                 type: string
+                            shown:
+                              type: array
+                              items:
+                                type: string
                             order:
                               type: array
                               items:
@@ -597,6 +601,10 @@ components:
                           type: object
                           properties:
                             hidden:
+                              type: array
+                              items:
+                                type: string
+                            shown:
                               type: array
                               items:
                                 type: string
@@ -2014,6 +2022,10 @@ components:
                                     type: array
                                     items:
                                       type: string
+                                  shown:
+                                    type: array
+                                    items:
+                                      type: string
                                   order:
                                     type: array
                                     items:
@@ -2098,6 +2110,10 @@ components:
                                 type: object
                                 properties:
                                   hidden:
+                                    type: array
+                                    items:
+                                      type: string
+                                  shown:
                                     type: array
                                     items:
                                       type: string
@@ -15575,6 +15591,10 @@ paths:
                                       type: array
                                       items:
                                         type: string
+                                    shown:
+                                      type: array
+                                      items:
+                                        type: string
                                     order:
                                       type: array
                                       items:
@@ -15659,6 +15679,10 @@ paths:
                                   type: object
                                   properties:
                                     hidden:
+                                      type: array
+                                      items:
+                                        type: string
+                                    shown:
                                       type: array
                                       items:
                                         type: string
@@ -17069,6 +17093,10 @@ paths:
                                                       type: array
                                                       items:
                                                         type: string
+                                                    shown:
+                                                      type: array
+                                                      items:
+                                                        type: string
                                                     order:
                                                       type: array
                                                       items:
@@ -17153,6 +17181,10 @@ paths:
                                                   type: object
                                                   properties:
                                                     hidden:
+                                                      type: array
+                                                      items:
+                                                        type: string
+                                                    shown:
                                                       type: array
                                                       items:
                                                         type: string
@@ -18575,6 +18607,10 @@ paths:
                                                 type: array
                                                 items:
                                                   type: string
+                                              shown:
+                                                type: array
+                                                items:
+                                                  type: string
                                               order:
                                                 type: array
                                                 items:
@@ -18659,6 +18695,10 @@ paths:
                                             type: object
                                             properties:
                                               hidden:
+                                                type: array
+                                                items:
+                                                  type: string
+                                              shown:
                                                 type: array
                                                 items:
                                                   type: string
@@ -20113,6 +20153,10 @@ paths:
                                       type: array
                                       items:
                                         type: string
+                                    shown:
+                                      type: array
+                                      items:
+                                        type: string
                                     order:
                                       type: array
                                       items:
@@ -20197,6 +20241,10 @@ paths:
                                   type: object
                                   properties:
                                     hidden:
+                                      type: array
+                                      items:
+                                        type: string
+                                    shown:
                                       type: array
                                       items:
                                         type: string
@@ -21607,6 +21655,10 @@ paths:
                                                       type: array
                                                       items:
                                                         type: string
+                                                    shown:
+                                                      type: array
+                                                      items:
+                                                        type: string
                                                     order:
                                                       type: array
                                                       items:
@@ -21691,6 +21743,10 @@ paths:
                                                   type: object
                                                   properties:
                                                     hidden:
+                                                      type: array
+                                                      items:
+                                                        type: string
+                                                    shown:
                                                       type: array
                                                       items:
                                                         type: string
@@ -23113,6 +23169,10 @@ paths:
                                                 type: array
                                                 items:
                                                   type: string
+                                              shown:
+                                                type: array
+                                                items:
+                                                  type: string
                                               order:
                                                 type: array
                                                 items:
@@ -23197,6 +23257,10 @@ paths:
                                             type: object
                                             properties:
                                               hidden:
+                                                type: array
+                                                items:
+                                                  type: string
+                                              shown:
                                                 type: array
                                                 items:
                                                   type: string
@@ -24648,6 +24712,10 @@ paths:
                                     type: array
                                     items:
                                       type: string
+                                  shown:
+                                    type: array
+                                    items:
+                                      type: string
                                   order:
                                     type: array
                                     items:
@@ -24732,6 +24800,10 @@ paths:
                                 type: object
                                 properties:
                                   hidden:
+                                    type: array
+                                    items:
+                                      type: string
+                                  shown:
                                     type: array
                                     items:
                                       type: string
@@ -26142,6 +26214,10 @@ paths:
                                                     type: array
                                                     items:
                                                       type: string
+                                                  shown:
+                                                    type: array
+                                                    items:
+                                                      type: string
                                                   order:
                                                     type: array
                                                     items:
@@ -26226,6 +26302,10 @@ paths:
                                                 type: object
                                                 properties:
                                                   hidden:
+                                                    type: array
+                                                    items:
+                                                      type: string
+                                                  shown:
                                                     type: array
                                                     items:
                                                       type: string
@@ -27648,6 +27728,10 @@ paths:
                                               type: array
                                               items:
                                                 type: string
+                                            shown:
+                                              type: array
+                                              items:
+                                                type: string
                                             order:
                                               type: array
                                               items:
@@ -27732,6 +27816,10 @@ paths:
                                           type: object
                                           properties:
                                             hidden:
+                                              type: array
+                                              items:
+                                                type: string
+                                            shown:
                                               type: array
                                               items:
                                                 type: string
@@ -30815,7 +30903,6 @@ paths:
                 - email
                 - firstName
                 - lastName
-                - phoneNumber
                 - picture
                 - status
                 - type
