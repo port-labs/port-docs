@@ -253,7 +253,7 @@ Map the issue URL from your data source to the `issueurl` property:
 </details>
 
 :::tip Property addition
-If you haven't added the `prDescription` property, and it's relative mapping config
+If you haven't added the `prDescription` property and its relative mapping config,
  please refer to the [PR Description Cannot be Empty](#pr-description-cannot-be-empty) section.
 :::
 
