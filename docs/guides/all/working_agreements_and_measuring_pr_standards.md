@@ -88,7 +88,7 @@ Follow the steps below:
    - Select the `pull request` blueprint.
    - Click on  the **Scorecard**
    - Click on the `+ New Scorecard` button.
-     <img src='/img/guides/scorecardOnPRAdd.png' border="1px" />
+   <img src='/img/guides/scorecardOnPRAdd.png' border="1px" />
    - Paste the scorecard definitions as described below.
    - Save the changes.
 
