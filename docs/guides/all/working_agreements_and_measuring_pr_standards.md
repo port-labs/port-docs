@@ -576,7 +576,7 @@ This agreement has levels based on the batch size.
 <details>
 <summary><b>Scorecard definition (click to expand)</b></summary>
 <details>
-  <summary><b> Bronze level scorecard definition (click to expand)</b>n</summary>
+  <summary><b> Bronze level scorecard definition (click to expand)</b></summary>
 
 ```json
 {
