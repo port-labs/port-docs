@@ -454,7 +454,7 @@ export const availableGuides = [
     },
     {
         title: "Deploy Azure Resource using Terraform",
-        description: "Create a self-service action that deployes a storage account in Azure using Terraform",
+        description: "Create a self-service action that deploys a storage account in Azure using Terraform",
         tags: ["IaC for devs", "Azure", "Terraform", "Actions"],
         logos: ["Azure", "Terraform"],
         // category: "Getting started",
@@ -828,11 +828,20 @@ export const availableGuides = [
         link: "/guides/all/automatically-approve-action-using-automation"
     },
     {
+
         title: "Copy ADO Pipeline Template to Target Repo",
         description: "Create a self-service action that copies an AzureDevops pipeline template to a target repository",
         tags: ["SDLC", "AzureDevops", "Actions"],
         logos: ["AzureDevops"],
         link: "/guides/all/copy-pipeline-template-to-target-repo",
+
     },
+  {
+   title: "Ingest security issues from .sarif files to services",
+        description: "Ingest .sarif files and relate them to the corresponding service entities",
+        tags: ["AppSec", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-security-issues-from-sarif-files-to-services",
+  }
     
 ]
