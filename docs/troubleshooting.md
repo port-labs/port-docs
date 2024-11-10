@@ -18,7 +18,7 @@ This page contains answers to common questions and issues that users encounter w
 
 Port was designed to let you set up a developer portal in minutes, quickly defining your data model and then ingesting data about software and resources into it.
 
-We believe in “bring your own data model” since each organization differs in how it wants to set up Port and model its software. Our documentation and [other resources](/resources) can help you get started. 
+We believe in "bring your own data model" since each organization differs in how it wants to set up Port and model its software. Our documentation and [other resources](/resources) can help you get started. 
 
 If you're trying to find out if Port is right for you, you can reach out to us by scheduling an [in-person demo](https://www.getport.io/demo-request), and we’ll be happy to escort you through the process of building a portal that's right for you.
 

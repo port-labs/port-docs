@@ -1,0 +1,109 @@
+<details>
+<summary>ElastiCache Serverless Cache Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "elasticacheServerless",
+  "description": "This blueprint represents an AWS ElastiCache Serverless Cache in our software catalog",
+  "title": "ElastiCache Serverless Cache",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "engine": {
+        "type": "string",
+        "title": "Engine"
+      },
+      "engineVersion": {
+        "type": "string",
+        "title": "Full Engine Version"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "createTime": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Create Time"
+      },
+      "securityGroupIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Security Group IDs"
+      },
+      "subnetIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Subnet IDs"
+      },
+      "endpoint": {
+        "type": "string",
+        "title": "Endpoint"
+      },
+      "port": {
+        "type": "number",
+        "title": "Port"
+      },
+      "readerEndpoint": {
+        "type": "string",
+        "title": "Reader Endpoint"
+      },
+      "readerPort": {
+        "type": "number",
+        "title": "Reader Port"
+      },
+      "dailySnapshotTime": {
+        "type": "string",
+        "title": "Daily Snapshot Time"
+      },
+      "snapshotRetentionLimit": {
+        "type": "number",
+        "title": "Snapshot Retention Limit"
+      },
+      "serverlessCacheName": {
+        "type": "string",
+        "title": "Serverless Cache Name"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "kind": {
+        "type": "string",
+        "title": "Kind"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

@@ -38,13 +38,13 @@ Check out the following examples for using Port's webhook integration to ingest 
   },
   {
     type: 'link',
-    href: '/build-your-software-catalog/custom-integration/webhook/examples/jenkins',
+    href: '/build-your-software-catalog/sync-data-to-catalog/cicd/jenkins/#alternative-installation-via-webhook',
     label: 'Jenkins',
     description: 'Ingest Jenkins build and job events',
   },
   {
     type: 'link',
-    href: '/build-your-software-catalog/custom-integration/webhook/examples/dynatrace',
+    href: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace/#alternative-installation-via-webhook',
     label: 'Dynatrace',
     description: 'Ingest Dynatrace problems',
   },
@@ -56,7 +56,7 @@ Check out the following examples for using Port's webhook integration to ingest 
   },
   {
     type: 'link',
-    href: '/build-your-software-catalog/custom-integration/webhook/examples/datadog',
+    href: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/#alternative-installation-via-webhook',
     label: 'Datadog',
     description: 'Ingest Datadog alerts/monitors',
   },
@@ -113,5 +113,11 @@ Check out the following examples for using Port's webhook integration to ingest 
     href: '/build-your-software-catalog/custom-integration/webhook/examples/packages',
     label: 'Code packages & libraries',
     description: 'Ingest software packages and libraries',
+  },
+  {
+    type: 'link',
+    href: '/guides/all/ingest-vulnerability-alerts-from-orca-security-using-a-custom-webhook-integration',
+    label: 'OrcaSecurity',
+    description: 'Ingest vulnerability alerts from Orca Security using a custom webhook integration',
   },
   ]} />

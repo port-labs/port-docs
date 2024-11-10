@@ -16,20 +16,21 @@ This page will help you install Port's GitLab integration (powered by the Ocean 
 
 This page outlines the following steps:
 
-- How to [create](#creating-a-gitlab-group-access-token) a GitLab group access token to give the integration permissions to query your GitLab account.
-- How to [configure](#configuring-the-gitlab-integration) and customize the integration before deploying it.
-- How to [deploy](#deploying-the-gitlab-integration) the integration in the configuration that fits your use case.
+- How to [create](#create-a-gitlab-group-access-token) a GitLab group access token to give the integration permissions to query your GitLab account.
+- How to [configure](#configure-the-gitlab-integration) and customize the integration before deploying it.
+- How to [deploy](#deploy-the-gitlab-integration) the integration in the configuration that fits your use case.
 
-:::note Prerequisites
+## Prerequisites
 
-- A gitlab account with admin privileges.
-- A gitlab group account with the `api` scope.
-- If you choose the real time & always on installation method - a kubernetes cluster to install the integration on.
+- A GitLab account with admin privileges.
+- A GitLab group account with the `api` scope.
+- If you choose the real-time & always-on installation method, a Kubernetes cluster to install the integration on.
 - Your Port user role is set to `Admin`.
 
-:::
 
-## Create a GitLab group access token
+## Setup
+
+### Create a GitLab group access token
 
 A group access token can be used for the group it was generated at, as well as for all sub-groups underneath it.
 
@@ -77,7 +78,7 @@ The following steps will guide you how to create a GitLab group access token.
 3. Click "Create group access token".
 4. Copy the generated token and use it when deploying the integration in the following steps.
 
-## Configure the GitLab integration
+### Configure the GitLab integration 
 
 ### `tokenMapping`
 
@@ -99,7 +100,7 @@ Example:
 :::info Helm installation parameter
 When using the `tokenMapping` parameter in the integration's [Helm installation](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation?deploy=helm&installation-methods=real-time-always-on#deploying-the-gitlab-integration), make sure to escape the necessary characters, for example:
 ```text
---set integration.secrets.tokenMapping=“\{\“glpat-oh1YXc54pR4eofx6hYy5\“: [\“**\“]\}”
+--set integration.secrets.tokenMapping="\{\"glpat-oh1YXc54pR4eofx6hYy5\": [\"**\"]\}"
 ```
 :::
 
@@ -110,8 +111,6 @@ Multiple GitLab group access tokens example:
 ```
 
 ### Configure Realtime webhook events
-#### Expose Endpoint for events
-##### App Host
 
 :::tip
 The `appHost` parameter is used specifically to enable the real-time functionality of the integration.
@@ -202,7 +201,7 @@ You can configure multiple tokens, and multiple groups per token (the token shou
 - The group path is the full path in gitlab. If a group path is incorrect, the webhook will not be created.
 - The events for each group must match the supported event types mentioned below. if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
 
-## Deploy the GitLab integration
+### Deploy the GitLab integration
 
 Choose one of the following installation methods:
 
@@ -214,7 +213,7 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
@@ -222,14 +221,14 @@ This table summarizes the available parameters for the installation.
 Set them as you wish in the script below, then copy it and run it in your terminal:
 
 | Parameter                          | Description                                                                                                                         | Example                          | Required |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------- |
-| `port.clientId`                    | Your Port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅       |
-| `port.clientSecret`                | Your Port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) |                                  | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
-| `integration.secrets.tokenMapping` | The [token mapping](#tokenmapping) configuration used to query GitLab                                                               |                                  | ✅       |
-| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in GitLab                | https://my-ocean-integration.com | ❌       |
-| `integration.config.gitlabHost`    | (for self-hosted GitLab) the URL of your GitLab instance                                                                            | https://my-gitlab.com            | ❌       |
-| `integration.secrets.tokenGroupHooksOverrideMapping`    | The [token group hooks override mapping](#tokengrouphooksoverridemapping) configuration used to create custom webhooks on groups                                                                            |             | ❌       |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------- |
+| `port.clientId`                    | Your Port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅      |
+| `port.clientSecret`                | Your Port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) |                                  | ✅      |
+| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅      |
+| `integration.secrets.tokenMapping` | The [token mapping](#tokenmapping) configuration used to query GitLab                                                               |                                  | ✅      |
+| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in GitLab                | https://my-ocean-integration.com | ✅       |
+| `integration.config.gitlabHost`    | (for self-hosted GitLab) the URL of your GitLab instance                                                                            | https://my-gitlab.com            | ❌      |
+| `integration.secrets.tokenGroupHooksOverrideMapping`    | The [token group hooks override mapping](#tokengrouphooksoverridemapping) configuration used to create custom webhooks on groups                                                                            |             | ❌      |
 
 <HelmParameters/>
 
@@ -359,10 +358,10 @@ kubectl apply -f my-ocean-gitlab-integration.yaml
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="One-time (CI)">
 
-<Tabs groupId="cicd-method" queryString="cicd-method">
-<TabItem value="gitlab" label="GitLab">
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="gitlab" label="GitLab">
 
 This workflow will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
 

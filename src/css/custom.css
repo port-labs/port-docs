@@ -170,6 +170,19 @@ html[data-theme="dark"] details details  {
   font-size: 90%;
 }
 
+:not(.theme-api-markdown *) > .tabs-container {
+  border: 1px solid #ccc; 
+  padding: 1rem;         
+  border-radius: 16px;   
+  margin-bottom: 1.5rem;
+}
+
+:not(.theme-api-markdown *) > .tabs-container .tabs-container {
+  border: 1px solid #ccc; 
+  padding: 1rem;         
+  border-radius: 8px;   
+}
+
 .api-method > .menu__link {
   align-items: center;
   justify-content: start;
@@ -397,6 +410,15 @@ html[data-theme="dark"] details details  {
 }
 
 .header-api-link:hover:not(.header-api-link--active) {
+  opacity: 0.8;
+}
+
+.header-guides-link:hover {
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-menu-color-background-active);
+}
+
+.header-guides-link:hover:not(.header-guides-link--active) {
   opacity: 0.8;
 }
 

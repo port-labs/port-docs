@@ -28,7 +28,7 @@ If you chose to **skip** the onboarding process, you can still have these compon
 <br/>
 <center>
 
-<iframe width="60%" height="400" src="https://www.youtube.com/embed/ggXL2ZsPVQM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/ggXL2ZsPVQM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 <br/>
@@ -144,7 +144,7 @@ This dashboard also visualizes data about your services, but this time the focus
 Now that you have a basic understanding of Port's main pillars, you can start customizing your portal to suit your needs. Here are some great ways to begin:
 
 &nbsp;&nbsp;&nbsp; ❇️ Finish setting up your [self-service actions](#self-service-actions) and take them for a spin.  
-&nbsp;&nbsp;&nbsp; ❇️ Complete one of our [guides](/guides-and-tutorials) to learn how to use Port to address real use-cases.  
+&nbsp;&nbsp;&nbsp; ❇️ Complete one of our [guides](/guides) to learn how to use Port to address real use-cases.  
 &nbsp;&nbsp;&nbsp; ❇️ Check out our [resources](/resources) for more content that can help you get the most out of your developer portal.  
 &nbsp;&nbsp;&nbsp; ❇️ Join our [community Slack](https://www.getport.io/community) to ask questions and share your experience with Port.  
 &nbsp;&nbsp;&nbsp; ❇️ Working with **monorepos**? See our [quick guide](/build-your-software-catalog/sync-data-to-catalog/git/working-with-monorepos) on how to adjust your configuration.

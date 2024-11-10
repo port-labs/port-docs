@@ -1,0 +1,23 @@
+<details>
+
+<summary>Ocean integration configuration</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: board
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id | gsub(" "; "")
+          title: .name
+          blueprint: '"board"'
+          properties:
+            link: .url
+          relations:
+            project: .__project.id | gsub(" "; "")
+
+```
+
+</details>

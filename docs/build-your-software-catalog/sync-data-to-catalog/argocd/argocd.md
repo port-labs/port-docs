@@ -11,7 +11,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # ArgoCD
 
-Our ArgoCD integration allows you to import `cluster`, `project`, `application`, `deployment-history`, `kubernetes-resource` and `managed-resource` from your ArgoCD instance into Port, according to your mapping and definition.
+Port's ArgoCD integration allows you to import `cluster`, `project`, `application`, `deployment-history`, `kubernetes-resource` and `managed-resource` from your ArgoCD instance into Port, according to your mapping and definition.
 
 ## Common use cases
 
@@ -41,6 +41,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.eventListener.type` | The event listener type                                                                                       | ✅       |
 | `integration.secrets.token`      | The ArgoCD API token                                                                                          | ✅       |
 | `integration.config.serverUrl`   | The ArgoCD server url                                                                                         | ✅       |
+| `integration.config.ignoreServerError`   | Whether to ignore server errors when fetching data from ArgoCD. The default value is `false` meaning the integration will raise exceptions and fail the resync event                            | ❌    |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 | `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌       |
@@ -131,7 +132,7 @@ spec:
         - name: port.clientSecret
           value: YOUR_PORT_CLIENT_SECRET
         - name: port.baseUrl
-          value: https://api.geport.io
+          value: https://api.getport.io
   - repoURL: YOUR_GIT_REPO_URL
   // highlight-end
     targetRevision: main
@@ -173,6 +174,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`      | The ArgoCD API token                                                                                               | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__SERVER_URL` | The ArgoCD server URL                                                                                              | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__IGNORE_SERVER_ERROR` |  Whether to ignore server errors when fetching data from ArgoCD. The default value is `false` meaning the integration will raise exceptions and fail the resync event    | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`       | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`         | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__PORT__CLIENT_ID`                 | Your port client id                                                                                                | ✅       |
@@ -187,14 +189,15 @@ Here is an example for `argocd-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: ArgoCD Exporter Workflow
 
-# This workflow responsible for running ArgoCD exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
@@ -206,6 +209,7 @@ jobs:
           config: |
             token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__TOKEN }}
             server_url: ${{ OCEAN__INTEGRATION__CONFIG__SERVER_URL }}
+            ignore_server_error: false
 ```
 
   </TabItem>
@@ -227,6 +231,7 @@ of `Secret Text` type:
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`      | The ArgoCD API token                                                                                               | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__SERVER_URL` | The ArgoCD server URL                                                                                              | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__IGNORE_SERVER_ERROR` |  Whether to ignore server errors when fetching data from ArgoCD. The default value is `false` meaning the integration will raise exceptions and fail the resync event    | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`       | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`         | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
 | `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                   | ❌       |
@@ -263,6 +268,7 @@ pipeline {
                                 -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
                                 -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
                                 -e OCEAN__INTEGRATION__CONFIG__SERVER_URL=$OCEAN__INTEGRATION__CONFIG__SERVER_URL \
+                                -e OCEAN__INTEGRATION__CONFIG__IGNORE_SERVER_ERROR=false \
                                 -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
                                 -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
                                 -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -293,6 +299,7 @@ Make sure to [configure the following GitLab variables](https://docs.gitlab.com/
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | `OCEAN__INTEGRATION__CONFIG__TOKEN`      | The ArgoCD API token                                                                                               | ✅       |
 | `OCEAN__INTEGRATION__CONFIG__SERVER_URL` | The ArgoCD server URL                                                                                              | ✅       |
+| `OCEAN__INTEGRATION__CONFIG__IGNORE_SERVER_ERROR` |  Whether to ignore server errors when fetching data from ArgoCD. The default value is `false` meaning the integration will raise exceptions and fail the resync event    | ❌       |
 | `OCEAN__INITIALIZE_PORT_RESOURCES`       | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
 | `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true     | ❌       |
 | `OCEAN__INTEGRATION__IDENTIFIER`         | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
@@ -332,6 +339,7 @@ ingest_data:
         -e OCEAN__SEND_RAW_DATA_EXAMPLES=true \
         -e OCEAN__INTEGRATION__CONFIG__TOKEN=$OCEAN__INTEGRATION__CONFIG__TOKEN \
         -e OCEAN__INTEGRATION__CONFIG__SERVER_URL=$OCEAN__INTEGRATION__CONFIG__SERVER_URL \
+        -e OCEAN__INTEGRATION__CONFIG__IGNORE_SERVER_ERROR=false \
         -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
         -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
         -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
@@ -1475,5 +1483,5 @@ Done! any change that happens to your applications in ArgoCD will trigger a webh
 
 More relevant guides and examples:
 
-- [Rollback ArgoCD deployment](/actions-and-automations/setup-backend/github-workflow/examples/argocd/rollback-argocd-deployment)
-- [Self-service action to synchronize ArgoCD application](/actions-and-automations/setup-backend/github-workflow/examples/argocd/sync-argocd-app)
+- [Rollback ArgoCD deployment](/guides/all/rollback-argocd-deployment)
+- [Self-service action to synchronize ArgoCD application](/guides/all/sync-argocd-app)

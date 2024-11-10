@@ -230,12 +230,6 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/approve-an-action-run",
-          label: "Approve an action's run",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
           id: "api-reference/get-all-action-runs",
           label: "Get all action runs",
           className: "api-method get",
@@ -250,6 +244,18 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api-reference/get-an-actions-run-logs",
           label: "Get an action's run logs",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/approve-an-action-run",
+          label: "Approve an action run",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-action-runs-approvers",
+          label: "Get an action run's approvers",
           className: "api-method get",
         },
       ],
@@ -584,6 +590,11 @@ const sidebar: SidebarsConfig = {
         },
       ],
     },
+    {
+      type: "doc",
+      id: "api-reference/pages",
+      label: "Pages",
+    }
   ],
 };
 

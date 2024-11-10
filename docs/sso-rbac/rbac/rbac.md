@@ -1,5 +1,8 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
+import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Port Roles & User management
 
@@ -156,7 +159,7 @@ Team dropdown selector in the entity create/edit page:
 | ----- | ---- | ------------------------------------------------------ | ------------ |
 | team  | List | System field that defines the team that owns an Entity | `"team": []` |
 
-- We support the manual creation of teams on Port, as well as integrating with identity providers, such as [Okta](/sso-rbac/sso-providers/oidc/okta.md) and [AzureAD](/sso-rbac/sso-providers/azure-ad.md), to import existing teams.
+- We support the manual creation of teams on Port, as well as integrating with identity providers, such as [Okta](/sso-rbac/sso-providers/oidc/okta.md) and [AzureAD](/sso-rbac/sso-providers/oidc/azure-ad.md), to import existing teams.
 - When users log in to Port, their groups will be pulled automatically from their identity provider, and the allowed team values will be updated accordingly.
 - It is also possible to configure [team inheritance](/build-your-software-catalog/set-catalog-rbac/examples.md#team-inheritance) and utilize relations to auto-populate the `team` key of entities.
 
@@ -164,7 +167,7 @@ Team dropdown selector in the entity create/edit page:
 Okta and AzureAD integrations are only available after configuring SSO from the relevant identity provider, refer to the [Single Sign-On (SSO)](../sso-providers/) section for more details
 :::
 
-### Users and teams as blueprints
+## Users and teams as blueprints
 
 <BetaFeatureNotice />
 
@@ -195,16 +198,48 @@ You can, however, create new properties and relations in them and edit/delete th
 
 To enable management of users and teams as blueprints, send a `POST` request to a designated endpoint:
 
-```bash
-curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
--H 'Authorization: <YOUR_BEARER_TOKEN>'
-```
-
 :::tip To obtain your bearer token:
 
 1. Go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`. 
 2. Click on the `Generate API token` button, and copy the generated token.
 :::
+
+```bash
+curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
+-H 'Authorization: <YOUR_BEARER_TOKEN>'
+```
+
+<PortApiRegion />
+
+#### Blueprints Structure
+
+The new blueprints have the following structure:
+<Tabs groupId="user-and-team-blueprint-structure" queryString values={[
+{label: "User", value: "user"},
+{label: "Team", value: "team"},
+]}>
+
+<TabItem value="user">
+- Identifier - the user's email. Will be synced with the Port user's email.
+- Title - the user's name. This will be synced with the Port user's first and last name.
+- Status - the user's status, which can be one of the following:
+  - Active - the user has logged into Port .
+  - Invited - the user was invited to Port via an invitation email.
+  - Disabled - the user is disabled and cannot use Port (relevant only for [service accounts](/sso-rbac/rbac/#service-accounts)).
+- Port Role - the user's internal [role in Port](/sso-rbac/rbac/#roles). This property affects the permissions granted to this user.
+- Moderated Blueprints - the blueprints that can be moderated by the user. Only relevant for `moderator` users.
+- Port type - the type of the user, can be one of the following:
+  - Standard - human users.
+  - [Service Account](/sso-rbac/rbac/#service-accounts).
+</TabItem>
+
+<TabItem value="team">
+- Identifier - the team's identifier.
+- Title - the team's name. This will be synced with the Port team name.
+- Description - the team's description. This will be synced with the Port team description.
+- Size - the number of users in the team.
+</TabItem>
+</Tabs>
 
 #### Consequent changes
 
@@ -223,8 +258,9 @@ After enabling this feature, some functionalities will be affected:
   **Note** that the [getUserTeams()](/search-and-query/#dynamic-properties) function will automatically return the team's `identifier`, so it can be used as is.
 
 - In [Advanced input configurations](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations) of self-service actions, when using a [jqQuery](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations#filter-the-dropdowns-available-options-based-on-properties-of-the-user-that-executes-the-action), team identifiers should be used instead of team names.  
+  Also, when using `.user` in the jqQuery, you have access any of the user's properties and/or relations.  
   For example:
-  ```json
+  ```json showLineNumbers
   {
     "properties": {
       "namespace": {
@@ -238,7 +274,7 @@ After enabling this feature, some functionalities will be affected:
               "property": "$team",
               "operator": "containsAny",
               "value": {
-                "jqQuery": "[.user.teamsIdentifiers[]]" // instead of [.user.teams[].name]
+                "jqQuery": "[.user.relations.teams[].identifier]" // instead of [.user.teams[].name]
               }
             }
           ]
@@ -247,3 +283,117 @@ After enabling this feature, some functionalities will be affected:
     }
   }
   ```
+
+- In [dynamic permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions) of self-service actions, under the `rules` and/or `conditions` keys, you can access the entire user object, including its properties and relations.  
+  For example:
+  ```json showLineNumbers
+  {
+    "policy": {
+      "queries": {
+        "search_entity": {
+          "rules": [
+            {
+              "value": "service",
+              "operator": "=",
+              "property": "$blueprint"
+            },
+            {
+              "value": "{{ .inputs.name }}",
+              "operator": "=",
+              "property": "$identifier"
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "conditions": [
+        // highlight-next-line
+        ".user.properties.role == \"Manager\""
+      ]
+    }
+  }
+  ``` 
+
+## Service Accounts
+
+Service accounts are non-human users (bots) that can be used for integrating external tools and automating daily tasks using Port. <br/> For example - creating a Slack bot that can execute Port [self service actions](/actions-and-automations/create-self-service-experiences/).
+
+### Create a service account
+:::info API-only and Users and Teams required 
+Creating service accounts requires enabling [Users and Teams as blueprints](/sso-rbac/rbac/#users-and-teams-as-blueprints), and 
+is currently only available via Port's API.
+:::
+To create a new service account, all you need to do is create a new user entity using the [Create Entity API](/api-reference/create-an-entity) endpoint with the value of `Service Account` in the `port_type` property.<br/>
+Creating a service account has two limitations:
+1. The new service account email domain must be `serviceaccounts.getport.io`.
+For example `my-new-service-account@serviceaccounts.getport.io`
+2. The `status` property of the new service account must be `Active`.
+
+<details>
+<summary><b>Full example (click to expand)</b></summary>
+```bash
+curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
+-d '{
+    "identifier": "my-new-service-account@serviceaccounts.getport.io",
+    "title": "My New Service Account",
+    "blueprint": "_user",
+    "icon": "User",
+    "properties": {
+        "port_type": "Service Account",
+        "port_role": "Member",
+        "status": "Active"
+    },
+    "relations": {}
+}' \
+-H 'content-type: application/json' \
+-H 'Authorization: <YOUR API TOKEN>'
+
+```
+</details>
+
+### Using The Service Account
+When creating a new service account entity you might notice a new section in the response body named `additional_data`. Inside this section you can find the new service account credentials you can use to authenticate against Port's API.
+:::warning Sensitive credentials
+These credentials will not appear anywhere else. Make sure you keep it in a secure place and share them only with people in your organization.
+:::
+To use Port's API with the new service account, you can generate an API access token with the credentials using the [Create Access Token API](/api-reference/create-an-access-token) endpoint.
+With the generated token you can use any of the API endpoints as the new service account.
+
+<details>
+<summary><b>Full response (click to expand)</b></summary>
+```json
+{
+    "ok": true,
+    "entity": {
+        "identifier": "my-new-service-account@serviceaccounts.getport.io",
+        "title": "My New Service Account",
+        "icon": "User",
+        "blueprint": "_user",
+        "team": [],
+        "properties": {
+            "port_type": "Service Account",
+            "port_role": "Member",
+            "status": "Active"
+        },
+        "relations": {},
+        "createdAt": "2024-09-21T08:56:38.062Z",
+        "createdBy": "",
+        "updatedAt": "2024-09-21T08:56:38.062Z",
+        "updatedBy": ""
+    },,
+    "additionalData": {
+        "credentials": {
+            "clientId": "<YOUR SERVICE ACCOUNT CLIENT ID>",
+            "clientSecret": "<YOUR SERVICE ACCOUNT CLIENT SECRET>"
+        }
+    }
+}
+```
+</details>
+
+### Service account permissions
+Port service accounts are treated like any other users and extend the same RBAC mechanism. This means that you can define roles for them (Member, Admin, etc.) or add them to teams and they will be granted the relevant permissions accordingly. 
+
+### Disabling service accounts
+Service accounts can easily be disabled at any time. To disable a service account, update it's `status` property to `Disabled`.
+Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`.

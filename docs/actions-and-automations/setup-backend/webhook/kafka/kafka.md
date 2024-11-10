@@ -47,8 +47,6 @@ An example flow would be:
 4. The Lambda function deploys a new version of the service;
 5. When the Lambda is done, it reports back to Port about the new Microservice `Deployment`.
 
-## Next steps
+## Examples
 
-To get started with webhook Self-Service Actions, please check the sources below:
-
-- [Setting up a basic execution runner using AWS Lambda](./examples/execution-basic-runner-using-aws-lambda.md)
+For guides and examples of self-service actions using Kafka as the backend, check out the [**guides section**](/guides?tags=Kafka).
