@@ -13,7 +13,7 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 
 # Sentry
 
-Our Sentry integration allows you to import `projects`, `issues`, `project-tag` and `issue-tag` from your Sentry cloud account into Port, according to your mapping and definition.
+Port's Sentry integration allows you to import `projects`, `issues`, `project-tag` and `issue-tag` from your Sentry cloud account into Port, according to your mapping and definition.
 
 A `Project` is essentially a container for all the data and information related to a specific application or service that you want to monitor.
 
@@ -201,14 +201,15 @@ Here is an example for `sentry-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Sentry Exporter Workflow
 
-# This workflow responsible for running Sentry exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1

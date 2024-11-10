@@ -1,0 +1,63 @@
+<details>
+<summary>Auto Scaling Group Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "autoScalingGroup",
+  "description": "This blueprint represents an AWS Auto Scaling Group in our software catalog",
+  "title": "Auto Scaling Group",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "desiredCapacity": {
+        "type": "number",
+        "title": "Desired Capacity"
+      },
+      "minSize": {
+        "type": "number",
+        "title": "Minimum Size"
+      },
+      "maxSize": {
+        "type": "number",
+        "title": "Maximum Size"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "role": {
+        "type": "string",
+        "format": "url",
+        "title": "Service Linked Role ARN"
+      },
+      "kind": {
+        "type": "string",
+        "title": "Kind"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

@@ -67,8 +67,7 @@ resources:
             url: .url
             description: .description
           relations:
-            project: .__repository.project.id | gsub(" "; "")
-            repository: .__repository.project.name + "/" + .__repository.name | gsub(" "; "")
+            project: .projectId | gsub(" "; "")
   - kind: member
     selector:
       query: 'true'

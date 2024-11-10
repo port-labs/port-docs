@@ -28,7 +28,7 @@ Self-service actions RBAC allows admins to finely control which users can execut
 You can trigger an action on behalf of another user within your organization using an API request. This can be accomplished by including the query parameter `run_as=<user_email>` in your API request.
 
 :::info
-This feature is accessible only using organizational token and currently only available from our [Api](https://api.getport.io/static/index.html)
+This feature is accessible only using an organizational token, and is currently only available from [Port's API](/api-reference/port-api).
 :::
 
 ## Configure permissions for actions

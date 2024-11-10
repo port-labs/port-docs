@@ -196,14 +196,15 @@ Here is an example for `servicenow-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: ServiceNow Exporter Workflow
 
-# This workflow responsible for running ServiceNow exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
@@ -410,6 +411,7 @@ Our ServiceNow integration currently supports the below resources for the mappin
 - Service Catalog
 - Incident
 
+For a list of CMDB tables, see the [ServiceNow Docs](https://docs.servicenow.com/bundle/xanadu-servicenow-platform/page/product/configuration-management/reference/cmdb-tables-details.html)
 :::
 
 - The root key of the integration configuration is the `resources` key:
@@ -500,7 +502,7 @@ Examples of blueprints and the relevant integration configurations:
 {
   "identifier": "servicenowGroup",
   "title": "Servicenow Group",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "description": {
@@ -566,7 +568,7 @@ resources:
 {
   "identifier": "servicenowCatalog",
   "title": "Servicenow Catalog",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "description": {
@@ -632,7 +634,7 @@ resources:
 {
   "identifier": "servicenowIncident",
   "title": "Servicenow Incident",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "category": {

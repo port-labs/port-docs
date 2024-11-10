@@ -11,6 +11,10 @@ Here you will find more Port-related content that can help you get the most out 
 
 ## Tools
 
+#### JQ playground
+
+Test JSON snippets against jq expressions with real-time filters and AI-powered assistance, using Port's [JQ playground](https://jq.getport.io/).
+
 #### Port highlight search - chrome extension
 
 This handy [chrome extension](https://chromewebstore.google.com/detail/highlight-search-in-port/ekbladoiehfohpcppcclfkcnnlchejnb?hl=en-US&utm_source=ext_sidebar) allows you to highlight text in any webpage and quickly search for it in your developer portal.
@@ -47,6 +51,16 @@ The 3rd and final video in this series. This video demonstrates how to integrate
 <center>
 
 <iframe width="568" height="320" src="https://www.youtube.com/embed/XQ6GlcpNJ4c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
+#### Secure Secrets Management in IDPs - @[TeKanAid](https://www.youtube.com/@TeKanAid)
+
+This video demonstrates how to build a simple yet effective platform to create and manage an S3 bucket, using **Akeyless** for secrets management, **Port** as the front-end portal, **GitHub Actions** for CI/CD, and **Terraform** for infrastructure as code.
+
+<center>
+
+<iframe width="568" height="320" src="https://www.youtube.com/embed/QO45jaeAA2o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 

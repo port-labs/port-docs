@@ -1,0 +1,98 @@
+<details>
+<summary>Mapping Configuration for RDS Instance, ElastiCache, DynamoDB Table</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::RDS::DBInstance
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.DBInstanceIdentifier
+          blueprint: '"rdsInstance"'
+          properties:
+            link: >-
+               'https://console.aws.amazon.com/go/view?arn=' +
+               .Properties.DBInstanceArn
+            dbInstanceClass: .Properties.DBInstanceClass
+            dbInstanceStatus: .Properties.DBInstanceStatus
+            engine: .Properties.Engine
+            storageType: .Properties.StorageType
+            engineVersion: .Properties.EngineVersion
+            port: .Properties.Endpoint.Port
+            allocatedStorage: .Properties.AllocatedStorage
+            endpoint: .Properties.Endpoint.Address
+            multiAZ: .Properties.MultiAZ
+            deletionProtection: .Properties.DeletionProtection
+            availabilityZone: .Properties.AvailabilityZone
+            masterUsername: .Properties.MasterUsername
+            publicAccess: .Properties.PubliclyAccessible
+            vpcSecurityGroups: .Properties.VpcSecurityGroups
+            arn: .Properties.DBInstanceArn
+          relations:
+            account: .__AccountId
+  - kind: AWS::DynamoDB::Table
+    selector:
+      query: 'true'
+      useGetResourceAPI: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.TableName
+          blueprint: '"dynamoDBTable"'
+          properties:
+            link: >-
+                'https://console.aws.amazon.com/go/view?arn=' +
+                .Properties.Arn
+            tableStatus: .Properties.TableStatus
+            itemCount: .Properties.ItemCount
+            creationDateTime: .Properties.CreationDateTime
+            billingMode: .Properties.BillingMode
+            writeCapacityUnits: .Properties.ProvisionedThroughput.WriteCapacityUnits
+            readCapacityUnits: .Properties.ProvisionedThroughput.ReadCapacityUnits
+            timeToLive: .Properties.TimeToLiveSpecification.Enabled
+            pointInTimeRecovery: .Properties.PointInTimeRecoverySpecification.PointInTimeRecoveryEnabled
+            deletionProtection: .Properties.DeletionProtectionEnabled
+            arn: .Properties.Arn
+            kind: .__Kind
+            region: .__Region
+          relations:
+            account: .__AccountId
+  - kind: AWS::ElastiCache::ServerlessCache
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.ServerlessCacheName
+          blueprint: '"elasticacheServerless"'
+          properties:
+            link: >-
+                'https://console.aws.amazon.com/go/view?arn=' +
+                .Properties.ARN
+            engine: .Properties.Engine
+            engineVersion: .Properties.FullEngineVersion
+            status: .Properties.Status
+            description: .Properties.Description
+            createTime: .Properties.CreateTime
+            securityGroupIds: .Properties.SecurityGroupIds
+            subnetIds: .Properties.SubnetIds
+            endpoint: .Properties.Endpoint.Address
+            port: .Properties.Endpoint.Port
+            readerEndpoint: .Properties.ReaderEndpoint.Address
+            readerPort: .Properties.ReaderEndpoint.Port
+            dailySnapshotTime: .Properties.DailySnapshotTime
+            snapshotRetentionLimit: .Properties.SnapshotRetentionLimit
+            serverlessCacheName: .Properties.ServerlessCacheName
+            arn: .Properties.ARN
+            kind: .__Kind
+            region: .__Region
+          relations:
+            account: .__AccountId
+```
+
+</details>

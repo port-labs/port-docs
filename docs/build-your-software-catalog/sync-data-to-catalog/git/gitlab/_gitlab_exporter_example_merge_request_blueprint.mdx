@@ -15,7 +15,12 @@
       "status": {
         "title": "Status",
         "type": "string",
-        "enum": ["opened", "closed", "merged", "locked"],
+        "enum": [
+          "opened",
+          "closed",
+          "merged",
+          "locked"
+        ],
         "enumColors": {
           "opened": "yellow",
           "closed": "red",
@@ -24,7 +29,7 @@
         }
       },
       "createdAt": {
-        "title": "Create At",
+        "title": "Created At",
         "type": "string",
         "format": "date-time"
       },
@@ -33,10 +38,19 @@
         "type": "string",
         "format": "date-time"
       },
+      "mergedAt": {
+        "title": "Merged At",
+        "type": "string",
+        "format": "date-time"
+      },
       "link": {
         "title": "Link",
         "format": "url",
         "type": "string"
+      },
+      "leadTimeHours": {
+        "title": "Lead Time in hours",
+        "type": "number"
       },
       "reviewers": {
         "title": "Reviewers",
@@ -45,17 +59,20 @@
           "type": "string"
         }
       }
-    }
+    },
+    "required": []
   },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
   "relations": {
     "service": {
+      "title": "Service",
       "target": "service",
       "required": false,
       "many": false
     }
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {}
+  }
 }
 ```
 

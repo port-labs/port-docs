@@ -188,14 +188,15 @@ Here is an example for `kubecost-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Kubecost Exporter Workflow
 
-# This workflow responsible for running Kubecost exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
@@ -386,6 +387,13 @@ To ingest Kubecost objects using the [integration configuration](#configuration-
 5. Modify the [configuration](#configuration-structure) according to your needs.
 6. Click `Resync`.
 
+:::tip Supported resources
+The following resources can be used to map data from Kubecost, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+
+- [`kubesystem`](https://docs.kubecost.com/apis/monitoring-apis/api-allocation#allocation-api)
+- [`cloud`](https://docs.kubecost.com/apis/monitoring-apis/cloud-cost-api#cloud-cost-querying-api)
+
+:::
 ## Examples
 
 Examples of blueprints and the relevant integration configurations:

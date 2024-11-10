@@ -1,3 +1,6 @@
+import ChartFilters from "/docs/customize-pages-dashboards-and-plugins/templates/_chart_filters.md"
+import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/templates/_save_table_view.md"
+
 # Dashboard widgets
 
 Port supports various visualizations in the form of widgets, allowing you to display data from your software catalog using graphic elements, making it easier to make sense of large datasets.
@@ -9,6 +12,33 @@ Dashboards are available in the following locations:
 3. The [software catalog](https://app.getport.io/services) allows you to create customizable [dashboard pages](/customize-pages-dashboards-and-plugins/page/dashboard-page).
 
 ## Widget types
+
+### Table
+
+This widget allows you to create tables displaying all entities based on a selected blueprint.  
+Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
+
+<img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
+<br/><br/>
+
+:::info Default table columns
+By default, a new table will display the following columns for each entity:  
+`Title`, `Last update time`, and `Creation time`.  
+Other properties will be hidden by default.  
+
+You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
+:::
+
+#### Save table view
+
+<SaveTableView />
+
+#### Customization
+
+Just like catalog pages, tables support the following customization options:
+
+- [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
+- [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
 ### Pie chart
 
@@ -138,7 +168,7 @@ We can create an aggregation property on the `cluster` blueprint, which sums the
 Then, we can create a line chart displaying the `cost` property of the `cluster` entity over time, showing the total cost of the cluster.
 
 :::info Available historical data
-The line chart will display data starting from the time the property was created.  
+The line chart will display data starting from the time the property was created on the blueprint.  
 Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
 :::
 
@@ -147,6 +177,71 @@ Note that for aggregation (and calculation) properties, the data will be availab
 This widget allows you to display any markdown content you wish in formatted form:
 
 <img src='/img/software-catalog/widgets/markdownWidget.png' width='500rem' />
+<br/><br/>
+
+The widget also supports a wide variety of HTML tags, allowing you to create rich content:
+<details>
+<summary>**Supported HTML tags (click to expand)**</summary>
+```bash
+'iframe',
+'a',
+'style',
+'h1',
+'h2',
+'h3',
+'h4',
+'h5',
+'h6',
+'nav',
+'blockquote',
+'dd',
+'div',
+'pre',
+'dl',
+'hr',
+'li',
+'menu',
+'ol',
+'p',
+'ul',
+'b',
+'br',
+'cite',
+'code',
+'em',
+'i',
+'mark',
+'q',
+'s',
+'samp',
+'small',
+'span',
+'strong',
+'sub',
+'sup',
+'time',
+'u',
+'var',
+'wbr',
+'img',
+'video',
+'svg',
+'caption',
+'col',
+'colgroup',
+'table',
+'tbody',
+'td',
+'tfoot',
+'th',
+'thead',
+'tr'
+```
+</details>
+
+:::tip Practical example
+A practical example of using HTML in a markdown widget can be found in Port's [live demo](https://demo.getport.io/organization/home), in the `Catalog quick access` widget. 
+:::
 
 #### Markdown widget properties
 
@@ -178,20 +273,6 @@ The entity identifier will be concatenated under the `entity` query param and th
 | `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
 | `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
 
-### Table
-
-This widget allows you to create tables displaying all entities based on a selected blueprint.  
-Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
-
-<img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
-
-#### Customization
-
-Just like catalog pages, tables support the following customization options:
-
-- [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
-- [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
-
 ### Action card
 
 This widget allows you to execute [self-service actions](/actions-and-automations/create-self-service-experiences) directly from any dashboard (including your homepage).
@@ -218,11 +299,81 @@ The table will automatically display data about each run, including status, inpu
 
 <img src='/img/software-catalog/widgets/actionRunsTableExample.png' width='100%' />
 
+### Entity information
+
+This widget displays information about a specific entity, including its properties and scorecard compliance.
+
+Simply choose a blueprint and a specific entity, and the widget will display information similar to that found on the entity's page.
+
+<img src='/img/software-catalog/widgets/entityInformationExample.png' width='100%' border='1px' />
+
 ## Chart filters
 
-[Pie charts](#pie-chart), [number charts](#number-chart) and [tables](#table) support filters, which allow you to include or exclude specific data from them. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules), and are set when creating the widget:
+<ChartFilters />
 
-<img src='/img/software-catalog/widgets/widgetFilterForm.png' width='400rem' />
+Once you select the blueprint you want to visualize, default filters will appear in the `filters` field, for example:
+
+<img src='/img/software-catalog/widgets/defaultInternalChartFilters.png' width='35%' border='1px' />
+<br/><br/>
+
+These are used internally in Port and cannot be modified/removed.
+You can add additional filters as you wish, by adding new objects to the `rules` array, for example:
+
+<details>
+<summary><b>Filter with additional rule example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "operator": "=",
+      "value": "someValue",
+      "property": "someProp"
+    }
+  ]
+}
+```
+</details>
+
+If you want to add additional rules with a different combinator, you can nest them inside a new object, for example:
+
+<details>
+<summary><b>Filter with nested rules example (click to expand)</b></summary>
+
+```json
+{
+  "combinator": "and",
+  "rules": [
+    {
+      "operator": "=",
+      "value": "service",
+      "property": "$blueprint"
+    },
+    {
+      "combinator": "or",
+      "rules": [
+        {
+          "operator": "=",
+          "value": "someValue",
+          "property": "someProp"
+        },
+        {
+          "operator": "=",
+          "value": "anotherValue",
+          "property": "anotherProp"
+        }
+      ]
+    }
+  ]
+}
+```
+</details>
 
 ### Filter example: only deployment entities from the last week
 

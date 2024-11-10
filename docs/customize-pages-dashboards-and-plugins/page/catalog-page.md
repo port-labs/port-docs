@@ -4,13 +4,14 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/templates/_save_table_view.md"
 
 # Catalog page
 
 A catalog page displays a table of all existing [entities](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
-In this example we can see all of the cluster entities we created from the `K8s Cluster` blueprint:
+In this example we can see all of the microservice entities we created from the `microservice` blueprint:
 
-![Microservice blueprint page](/img/software-catalog/pages/catalogPage.png)
+<img src='/img/software-catalog/pages/catalogPage.png' width='80%' border='1px' />
 
 ## Page creation
 
@@ -154,6 +155,14 @@ const catalogPage = new port.Page(
 
 </Tabs>
 
+:::info Default table columns
+By default, the table in a catalog page will display the following columns for each entity:  
+`Identifier`, `Last update time`, and `Creation time`.  
+Other properties will be hidden by default.  
+
+You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
+:::
+
 ### Description
 
 You can provide additional context to your developers by using the `Description` field when creating a catalog page.  
@@ -198,8 +207,6 @@ Another way to reduce loading times is to exclude undesired properties from an e
 To do this, use the `Excluded properties` field when creating a page:
 
 <img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%' />
-
-
 
 ## Customization
 
@@ -256,13 +263,14 @@ You can sort by one or more fields of any kind.
 To sort a specific column, click on the column title.
 :::
 
-### Hide
+### Hide/show columns
 
-You can hide table columns by using the following menu:
+You can show/hide properties by using the `Manage Properties` option in the top-right corner of the table:
 
-![Table hide menu marked](/img/software-catalog/pages/TableHideMenu.png)
+<img src='/img/software-catalog/pages/TableHideMenu.png' width='30%' border='1px' />
+<br/><br/>
 
-You can decide whether each field is viewable to users or not.
+You can also drag and drop the properties in this view to reorder them in the table.
 
 :::tip
 We highly recommend hiding irrelevant data from users, to provide them with a clean work environment, relieving them from any distractions.
@@ -273,18 +281,19 @@ We highly recommend hiding irrelevant data from users, to provide them with a cl
 You can add, edit, or delete a blueprint's properties directly from the table by using the `Manage properties` button.  
 See the [Configure properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#from-the-software-catalog) section for more details.
 
-### Group By
+### Group by
 
-You can group by entities by using the following menu:
+You can group table entities by a specific property using the following menu:
 
-![Table group by menu marked](/img/software-catalog/pages/TableGroupByMenu.png)
+<img src="/img/software-catalog/pages/TableGroupByMenu.png" width="80%" border="1px" />
+<br/><br/>
 
-You can group results according to any field in the table.
+You can group entities by any **non-array** property.
 
-:::tip
-Group by is recommended when you want to create custom views for users, such as "microservices by owners".
+:::tip Use-case
+The `group-by` option is useful when you want to create custom views for users, such as "microservices by owners".
 
-Just create your `group by` setting, add additional viewing settings if needed, and [save a new page](#saving-new-pages) from the custom view.
+Just create your `group-by` view (and any other table customizations you desire), and [save as a new page](#save-a-view).
 :::
 
 ### Search
@@ -310,38 +319,13 @@ It's possible to filter, sort, group by, and use the table widget controls to ch
 
 ### Save a view
 
-Every change made on a specific page, such as filtering or sorting, enables the `Save this view` button.  
-Clicking on it will save the new view for all users.
+Since the main component of a catalog page is a table, the same rules apply to it.
 
-![Page operations marked](/img/software-catalog/pages/PageOperationsMarked.png)
+<SaveTableView />
 
-:::note
-The ability to save a view for all users is available only for the [Admin role](/sso-rbac/rbac/rbac.md#roles)
-:::
+To save the view for all users as a new page, click the small arrow on the right side of the button:
 
-### Save a new page
-
-Each time a change is made on a page, and the `Save this view` becomes enabled, you can press the small arrow on its right side to open a dropdown menu:
-
-<center>
-
-![Save view menu button marked](/img/software-catalog/pages/SaveViewDropMenuButton.png)
-
-</center>
-
-After clicking the `Save as a new page` button, a window will pop up:
-
-![Save as a new page popup](/img/software-catalog/pages/SaveAPageForm.png)
-
-#### Choose page icon
-
-When saving a new page or editing an existing one, a set of icons is available to you:
-
-<center>
-
-![Page Icons dropdown menu](/img/software-catalog/pages/PageIcons.png)
-
-</center>
+<img src='/img/software-catalog/pages/catalogPageSaveView.png' width='70%' border='1px' />
 
 ### Edit, lock or delete a page
 

@@ -230,12 +230,6 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "api-reference/approve-an-action-run",
-          label: "Approve an action's run",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
           id: "api-reference/get-all-action-runs",
           label: "Get all action runs",
           className: "api-method get",
@@ -250,6 +244,18 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api-reference/get-an-actions-run-logs",
           label: "Get an action's run logs",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/approve-an-action-run",
+          label: "Approve an action run",
+          className: "api-method patch",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-action-runs-approvers",
+          label: "Get an action run's approvers",
           className: "api-method get",
         },
       ],
@@ -547,6 +553,47 @@ const sidebar: SidebarsConfig = {
           className: "api-method delete",
         },
       ],
+    },
+    {
+      type: "category",
+      label: "Apps",
+      items: [
+        {
+          type: "doc",
+          id: "api-reference/get-all-credentials",
+          label: "Get all credentials",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/create-credentials",
+          label: "Create credentials",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/rotate-secret",
+          label: "Rotate secret",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/delete-credentials",
+          label: "Delete credentials",
+          className: "api-method delete",
+        },
+        {
+          type: "doc",
+          id: "api-reference/update-credentials",
+          label: "Update credentials",
+          className: "api-method put",
+        },
+      ],
+    },
+    {
+      type: "doc",
+      id: "api-reference/pages",
+      label: "Pages",
     }
   ],
 };

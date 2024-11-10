@@ -126,6 +126,24 @@ Some of the keys use [JQ queries](https://jqlang.github.io/jq/manual/) to filter
           mappings: ...
   ```
 
+### Additional options
+
+Several more advanced options are available in the mapping configuration:
+
+- `createMissingRelatedEntities` - used to enable the creation of missing related entities in Port. This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.
+
+- `deleteDependentEntities` - used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this parameter is set to `false`. If set to `true`, the source entity will be deleted as well.
+
+To use these options, add them to the root of the mapping configuration:
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: repository
+    ...
+```
+
 ### Test your mapping - JQ playground
 
 The mapping configuration window contains a JQ playground that allows you to test your JQ queries against example responses from the API of the integrated tool. This is useful for validating your queries and ensuring they return the expected results.
@@ -142,6 +160,20 @@ Click on the `Add kind` button to add an example:
 <img src='/img/software-catalog/customize-integrations/addTestExample.png' width='100%' border='1px' />
 
 After adding your example, click on the `Test mapping` button in the bottom-right panel to test your mapping against the example data.
+
+:::tip Port's JQ playground
+In addition to the aforementioned JQ playground, Port provides a general [JQ playground](https://jq.getport.io/) where you can test any JSON snippet against JQ expressions with real-time filters and AI-powered assistance.
+:::
+
+### Edit an integration's mapping
+
+Once you have configured an integration's mapping to your liking, click the `Resync` button in the bottom-right to save your changes.
+
+To edit an integration's mapping using Port's API, you can use the [Patch integration](/api-reference/patch-an-integration/) route.  
+
+:::tip Resync via the API
+To perform a simple resync of an integration via the API without changing its mapping, use the same `Patch integration` route with the integration identifier and an empty body.
+:::
 
 ## Mapping relations
 
@@ -239,7 +271,54 @@ When using a search query rule to map a relation, Port will query all entities o
   - A ["many type" relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#-many) expects an array of entities to be returned.
 - The maximum number of entities returned by the search query rule is 100.
 - Mirror and calculation properties are currently not supported.
-- Only the `=` operator is supported for the search query rule.
+- Only the `=` and `in` operators are supported for the search query rule.
+
+## Map by property
+
+In some cases, we may not know the identifier of the entity we want to map to. If that entity has a property that we do know, we can use it to map the data.  
+This is especially useful when patching entities whose identifiers are not known in advance. Take the following example:  
+
+- Say we installed Port's PagerDuty integration, and we want to connect each `service` (Git repository) to the relevant `PagerDuty service`.  
+- We can create a property in our `service` blueprint named `pagerduty_service_id`, containing the identifier of the relevant PagerDuty service.  
+- Then, in the `PagerDuty` integration mapping, we can use this property to map each `PagerDuty service` to the relevant `service`.  
+- This way, we would not need to have a separate blueprint for `PagerDuty services`, since the integration maps directly to the `service` blueprint.
+
+Mapping by property is done using a [search query rule](/search-and-query/#rules) in the following format:
+
+```yaml showLineNumbers
+resources:
+  - kind: services
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          # highlight-start
+          identifier:
+            combinator: '"and"'
+            rules:
+              - operator: '"="'
+                property: '"pagerduty_service_id"'
+                value: .id
+          # highlight-end
+          blueprint: '"service"'
+          properties:
+            oncall: .__oncall_user | sort_by(.escalation_level) | .[0].user.email
+            ... # Any other properties you want to map
+```
+
+In the example above, we search for a `service` entity whose `pagerduty_service_id` property is equal to the `id` of the PagerDuty service, and map data from the PagerDuty service to it.
+
+:::tip API usage
+Searching by property can also be used when using Port's API to [create an entity](/api-reference/create-an-entity/).
+:::
+
+### Limitations
+
+- The search query must return exactly one entity (else the entire request will fail).
+- The query will be executed on the same blueprint from the request’s url.
+- Only the `=` and `in` operators is supported for the search query rule.
+- `Calculation` and `mirror` properties are not supported.
 
 ## Create multiple entities from an array API object
 

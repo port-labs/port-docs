@@ -96,7 +96,7 @@ The `verbosity` parameter is used to control the verbosity level of info logs in
 
 The `crdsToDiscover` parameter is used to specify a filter for the CRDs that the K8s exporter should discover and export to Port, without the need to create a mapping and the blueprint manually.
 
-For more information how to use the `crdsToDiscover` parameter, please refer to the [K8S API extension guide](/guides-and-tutorials/manage-resources-using-k8s-crds.md)
+For more information how to use the `crdsToDiscover` parameter, please refer to the [K8S API extension guide](/guides/all/manage-resources-using-k8s-crds.md)
 
 - Default: `""` (no filter)
 
@@ -108,10 +108,12 @@ For more information how to use the `crdsToDiscover` parameter, please refer to 
 
 The following security parameters can be modified to give the K8s exporter more granular access to your cluster:
 
-| Parameter               | Description                                                                                                                                                                             | Default |
-| ----------------------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------- |
-| `clusterRole.apiGroups` | The API groups that the K8s Exporter can access. Make sure to grant access to the relevant API groups, with respect to the resources that you've configured in the resource mapping     | `{'*'}` |
-| `clusterRole.resources` | The resources that the K8s Exporter can access. Make sure to grant access to the relevant resources, with respect to the resources that you've configured in the resource mapping | `{'*'}` |
+| Parameter               | Description                                                                                                                                                                         | Default |
+|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----|
+| `clusterRole.apiGroups` | The API groups that the K8s Exporter can access. Make sure to grant access to the relevant API groups, with respect to the resources that you've configured in the resource mapping | `{'*'}` |
+| `clusterRole.resources` | The resources that the K8s Exporter can access. Make sure to grant access to the relevant resources, with respect to the resources that you've configured in the resource mapping   | `{'*'}` |
+| `serviceAccount.create` | Whether to create the default ServiceAccount, ClusterRole and ClusterRoleBinding resources.                                                                                         | `true` |
+| `serviceAccount.name`   | The name of the custom ServiceAccount resource to use, relevant only when `serviceAccount.create` is set to `false`                                                          | |
 
 ## Overriding configurations
 
