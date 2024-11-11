@@ -43,48 +43,52 @@ After completing it, you will get a sense of how it can benefit different person
 
 <TabItem value="github-gitlab-bitbucket">
 
-:::tip Onboarding
 
-As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service page](https://app.getport.io/self-serve).  
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. 
+2. Click on the `+ Action` button on the top left conner :
 
-If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
-:::
+    <img src='/img/guides/scaffoldAddAction.png' width='35%' border='1px' />
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button, and choose "Edit":
-
-    <img src='/img/guides/scaffoldEditAction.png' width='35%' border='1px' />
-
-2. The action's basic details should look like the image below. You can click on the `User Form` tab to see the user inputs created for the action. When ready, click on the `Backend` tab to proceed.
+3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively. 
 
     <img src='/img/guides/scaffoldActionDetails.png' width='70%' border='1px' />
+    <br/>
+4. Click on the `User Form` tab and click on `+ Input`. 
+5. Enter `Service name` as the **Title**, select `Text` for the **Type**, set **Required** to `True`, and click on the `Create` button.
+
+    <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
+    <br/>
+   
+6. Click on the `Next` to configure the **Backend**.
 
 </TabItem>
 
 <TabItem value="azure-devops">
- :::info Integration installation
-Ensure that you have Port's Azure DevOps integration installed and that the Project and Repository blueprints already exist in your Port application.
 
-If you don't have the integration installed, follow the instructions listed [here](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/installation).
-::::
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
+2. Click on the `+ Action` button on the top left conner :
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button, and choose "Edit":
+    <img src='/img/guides/scaffoldAddAction.png' width='35%' border='1px' />
 
-    <img src='/img/guides/scaffoldEditAction.png' width='35%' border='1px' />
-
-2. The action's basic details should look like the image below. select the `Repository` from the Azure DevOp in the blueprint dropdown. 
+3. Fill the basic form with the **Title** and **Description** and select `Create` and `Repository` for the **Operation** and **Blueprint** respectively.
 
     <img src='/img/guides/scaffoldActionADODetails.png' width='70%' border='1px' />
+    <br/>
 
-3. Click on the `User Form` tab to see the user inputs created for the action. add the `azure_organization` , `azure_project` and `description` inputs. it should look like the image below. When ready, click on the `Backend` tab to proceed.
+3. Click on the `User Form` and add the `Service Name`, `Azure Organization`, `Azure Project` and `Description` inputs. it should look like the image below.
 
      <img src='/img/guides/scaffoldActionInputsDetails.png' width='70%' border='1px' />
 
- :::tip Data type for inputs
-The `azure_organization` and `description` inputs should be of type `string` and 
- the `azure_project`  should be of type `Entity Selection` and select `Project` as the blueprint
+:::tip Data type for inputs
+The `Service Name`, `Azure Organization` and `Description` inputs should be of type `string` and 
+ the `Azure Project`  should be of type `Entity Selection` and select `Project` as the blueprint
 
-Addition to this,  you should make the `azure_organization` and `azure_project` inputs required.
+Addition to this,  you should make the `Service Name`, `Azure Organization` and `Azure Project` inputs required.
 ::::
+<br/>
+
+4. Click on `Next` to configure the **Backend**.
+
 
 </TabItem>
 
