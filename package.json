@@ -20,7 +20,7 @@
     "@docusaurus/core": "^3.6.0",
     "@docusaurus/plugin-client-redirects": "^3.6.0",
     "@docusaurus/plugin-google-tag-manager": "^3.6.0",
-    "@docusaurus/plugin-ideal-image": "^3.6.0",
+    "@docusaurus/plugin-ideal-image": "^3.6.1",
     "@docusaurus/preset-classic": "^3.6.0",
     "@docusaurus/theme-live-codeblock": "^3.6.0",
     "@easyops-cn/docusaurus-search-local": "^0.45.0",
