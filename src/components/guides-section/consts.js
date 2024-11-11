@@ -836,6 +836,13 @@ export const availableGuides = [
         link: "/guides/all/automatically-approve-action-using-automation"
     },
     {
+        title: "Track SLOs and SLIs for services",
+        description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
+        tags: ["Engineering metrics", "New Relic", "Dashboards"],
+        logos: ["New Relic"],
+        link: "/guides/all/track-slos-and-slis-for-services"
+    },
+    {
         title: "Ingest security issues from .sarif files to services",
         description: "Ingest .sarif files and relate them to the corresponding service entities",
         tags: ["AppSec", "GitHub"],
