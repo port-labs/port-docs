@@ -18,23 +18,22 @@ This guide helps you set up a monitoring solution to track **Service Level Indic
 This guide assumes the following:
 - You have a Port account and have completed the [onboarding process](https://docs.getport.io/quickstart).
 - You have [installed and set up Port's New Relic integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic).
-- You have the `New Relic Service Level` blueprint configured in your Port environment.
 
 
 
-## Data Model Setup
+## Set up data model
 
-In this setup, we will add or update the `New Relic Service Level` blueprint.   
+In this setup, we will create or update the `New Relic Service Level` blueprint.      
 **Skip** to [update blueprint](#update-the-blueprint) if you already have the blueprint.
 
 
-### Add the blueprint
-Follow the steps below to **add** the `New Relic Service Level` blueprint:
+### Create the blueprint
+Follow the steps below to **create** the `New Relic Service Level` blueprint:
 
-1. **Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.**
-2. **Click on "+ Blueprint".**
-3. **Click on the `{...}` button in the top right corner, and choose "Edit JSON".**
-4. **Add this JSON schema:**
+1. Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
+2. Click on "+ Blueprint".
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+4. Add this JSON schema:
 
    <details>
    <summary><b>New Relic Service Level blueprint (Click to expand)</b></summary>
@@ -118,14 +117,14 @@ Follow the steps below to **add** the `New Relic Service Level` blueprint:
 
    </details>
 
-5. **Click "Save" to create the blueprint.**
+5. Click "Save" to create the blueprint.
 
 ### Update the blueprint
 Follow the steps below to **update** the `New Relic Service Level` blueprint:
 
-1. **Navigate to the `New Relic Service Level` blueprint in your Port [Builder](https://app.getport.io/settings/data-model).**
-2. **Hover over it, click on the `...` button on the right, and select "Edit JSON".**
-3. **Add the calculation property:**
+1. Navigate to the `New Relic Service Level` blueprint in your Port [Builder](https://app.getport.io/settings/data-model).
+2. Hover over it, click on the `...` button on the right, and select "Edit JSON".
+3. Add the calculation property:
 
    <details>
    <summary><b>Calculation property (Click to expand)</b></summary>
@@ -145,7 +144,7 @@ Follow the steps below to **update** the `New Relic Service Level` blueprint:
 
    </details>
 
-4. **Add these mirror properties:**
+4. Add these mirror properties:
 
    <details>
    <summary><b>Mirror properties (Click to expand)</b></summary>
@@ -166,11 +165,11 @@ Follow the steps below to **update** the `New Relic Service Level` blueprint:
 
 
 
-## Building Dashboards
+## Visualize metrics
 
 In this section, you'll learn how to create dashboards that visualize key service metrics using SLIs and SLOs for production and engineering teams.
 
-### Dashboard Setup 
+### Create a dashboard
 
 1. Navigate to your [software catalog](https://app.getport.io/organization/catalog).
 2. Click on the **`+ New`** button in the left sidebar.
@@ -180,7 +179,7 @@ In this section, you'll learn how to create dashboards that visualize key servic
 
 You now have a blank dashboard where you can start adding widgets to visualize your SLIs and SLOs.
 
-### Adding Widgets
+### Add widgets
 
 <details>
 <summary><b>Production Deployment Overview - SLI vs SLO Table</b></summary>
@@ -220,7 +219,7 @@ This table gives you a high-level overview of how your services are performing a
 
 
 
-## Visualizing SLI Trends
+### Visualize SLI trends
 
 Tracking weekly performance trends for key services is crucial to identifying patterns and making data-driven decisions.
 
@@ -263,7 +262,7 @@ Tracking weekly performance trends for key services is crucial to identifying pa
 
 
 
-### Team-Level and Organization-Level Dashboards
+#### Team-Level and Organization-Level Dashboards
 
 You can also create dashboards specific to teams or organization-wide, depending on the scope of monitoring.
 
@@ -315,7 +314,7 @@ You can also create dashboards specific to teams or organization-wide, depending
 
 
 
-### SLO Tables and Charts
+#### SLO Tables and Charts
 
 <details>
 <summary><b>All SLOs Table</b></summary>
@@ -324,7 +323,7 @@ You can also create dashboards specific to teams or organization-wide, depending
 2. Title the widget **All SLOs**.
 3. Select the **New Relic Service Level** blueprint.
 4. 
-   <img src="/img/guides/allSloTable.png" width="50%" />
+   <img src="/img/guides/allSloTable.png" width="50%" border="1px" />
 
 4.Click **Save**.
 
@@ -338,7 +337,7 @@ You can also create dashboards specific to teams or organization-wide, depending
 3. Choose the **New Relic Service Level** blueprint.
 4. Select the **SLO Status** property as `Breakdown by Property` value
 
-   <img src="/img/guides/sloStatusPieChart.png" width="50%" />
+   <img src="/img/guides/sloStatusPieChart.png" width="50%" border="1px" />
 
 5. Click **Save**.
 
@@ -352,7 +351,7 @@ You can also create dashboards specific to teams or organization-wide, depending
 3. Choose the **New Relic Service** blueprint.
 4. Select the **Has SLO** property as `Breakdown by Property` for ser
 
-   <img src="/img/guides/hasSloPieChart.png" width="50%" />
+   <img src="/img/guides/hasSloPieChart.png" width="50%" border="1px" />
 
 5. Click **Save**.
 
@@ -368,7 +367,7 @@ You can also create dashboards specific to teams or organization-wide, depending
 5. Select the **SLI** and **Target Threshold** as `Properties`.
 6. Set the time interval to **Day** and the time range to **in the past 90 days**.
 
-   <img src="/img/guides/latencySliChart.png" width="50%" />
+   <img src="/img/guides/latencySliChart.png" width="50%" border="1px" />
 
 7. Click **Save**.
 
@@ -384,7 +383,7 @@ You can also create dashboards specific to teams or organization-wide, depending
 5. Select the **SLI** and **Target Threshold** as `Properties`.
 6. Set the time interval to **Day** and the time range to **in the past 90 days**.
 
-   <img src="/img/guides/successSliChart.png" width="50%" />
+   <img src="/img/guides/successSliChart.png" width="50%" border="1px" />
    
 7. Click **Save**.
 
@@ -394,7 +393,10 @@ You can also create dashboards specific to teams or organization-wide, depending
 You can use the above steps for both team and an organization level dashboard.
 :::
 
-<img src="/img/guides/sloDBVisualization.png"/>
+<img src="/img/guides/sloDBVisualization.png" border="1px"/>
+
+<br/><br/>
+
 
 By following this guide, you have successfully set up dashboards to track your services' SLIs and SLOs. These visualizations provide real-time insights into service performance and compliance, allowing your teams to quickly identify and address underperforming services.
 
