@@ -3,12 +3,12 @@ displayed_sidebar: null
 description: Learn how to track SLOs and SLIs for your services using Port
 ---
 
-# Track SLOs and SLIs for Your Services
+# Track SLOs and SLIs for your services
 
 This guide helps you set up a monitoring solution to track **Service Level Indicators (SLIs)** and compare them against **Service Level Objectives (SLOs)** using Port's integration with **New Relic**. 
 
 
-## Common Use Cases
+## Common use cases
 
 - Model and visualize service **SLIs** and compare them against **SLOs**.
 - Create dashboards and reports to monitor SLOs over time.
@@ -262,7 +262,7 @@ Tracking weekly performance trends for key services is crucial to identifying pa
 
 
 
-#### Team-Level and Organization-Level Dashboards
+#### Team-Level and Organization-Level dashboards
 
 You can also create dashboards specific to teams or organization-wide, depending on the scope of monitoring.
 
@@ -314,7 +314,7 @@ You can also create dashboards specific to teams or organization-wide, depending
 
 
 
-#### SLO Tables and Charts
+#### SLO tables and charts
 
 <details>
 <summary><b>All SLOs Table</b></summary>
