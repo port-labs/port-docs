@@ -836,7 +836,6 @@ export const availableGuides = [
         link: "/guides/all/automatically-approve-action-using-automation"
     },
     {
-
         title: "Copy ADO Pipeline Template to Target Repo",
         description: "Create a self-service action that copies an AzureDevops pipeline template to a target repository",
         tags: ["SDLC", "AzureDevops", "Actions"],
@@ -844,12 +843,20 @@ export const availableGuides = [
         link: "/guides/all/copy-pipeline-template-to-target-repo",
 
     },
-  {
-   title: "Ingest security issues from .sarif files to services",
+    {
+
+        title: "Track SLOs and SLIs for services",
+        description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
+        tags: ["Engineering metrics", "New Relic", "Dashboards"],
+        logos: ["New Relic"],
+        link: "/guides/all/track-slos-and-slis-for-services"
+    },
+    {
+        title: "Ingest security issues from .sarif files to services",
         description: "Ingest .sarif files and relate them to the corresponding service entities",
         tags: ["AppSec", "GitHub"],
         logos: ["GitHub"],
         link: "/guides/all/ingest-security-issues-from-sarif-files-to-services",
-  }
+    }
     
 ]
