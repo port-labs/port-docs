@@ -821,11 +821,26 @@ export const availableGuides = [
         link: "/guides/all/ingest-vulnerability-alerts-from-orca-security-using-a-custom-webhook-integration"
     },
     {
+        title: "Measure pull request standards",
+        description: "Implement working agreements and measure pr standards",
+        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/working_agreements_and_measuring_pr_standards"
+       
+    },
+    {
         title: "Automatically approve actions using an automation",
         description: "Set up automated approvals for self service actions",
         tags: ["Cloud access management", "Actions", "Automations"],
         logos: ["Slack"],
         link: "/guides/all/automatically-approve-action-using-automation"
+    },
+    {
+        title: "Track SLOs and SLIs for services",
+        description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
+        tags: ["Engineering metrics", "New Relic", "Dashboards"],
+        logos: ["New Relic"],
+        link: "/guides/all/track-slos-and-slis-for-services"
     },
     {
         title: "Ingest security issues from .sarif files to services",
