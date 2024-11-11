@@ -10,9 +10,8 @@ This guide helps you set up a monitoring solution to track **Service Level Indic
 
 ## Common Use Cases
 
-In this guide, you'll:
 - Model and visualize service **SLIs** and compare them against **SLOs**.
-- Create dashboards and reports to monitor SLO's over time.
+- Create dashboards and reports to monitor SLOs over time.
 
 ## Prerequisites
 
@@ -25,132 +24,144 @@ This guide assumes the following:
 
 ## Data Model Setup
 
-<h2> Blueprint setup </h2>
+In this setup, we will add or update the `New Relic Service Level` blueprint.   
+**Skip** to [update blueprint](#update-the-blueprint) if you already have the blueprint.
 
-In this setup we will add or update the `New Relic Service Level` blueprint. skip to option 2 if you already have the blueprint.
 
-1. Follow the steps below to add the `New Relic Service Level` blueprint:
-   1. Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
-   2. Click on "+ Blueprint".
-   3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
-   4. Add this JSON schema:
-<details>
-<summary><b> New Relic Service Level blueprint (Click to expand)</b></summary>
+### Add the blueprint
+Follow the steps below to **add** the `New Relic Service Level` blueprint:
 
- ```json showLineNumbers
-        {
-          "identifier": "newRelicServiceLevel",
-          "description": "This blueprint represents a New Relic Service Level",
-          "title": "New Relic Service Level",
-          "icon": "NewRelic",
-          "schema": {
-            "properties": {
-              "description": {
-                "title": "Description",
-                "type": "string"
-              },
-              "targetThreshold": {
-                "icon": "DefaultProperty",
-                "title": "Target Threshold",
-                "type": "number"
-              },
-              "createdAt": {
-                "title": "Created At",
-                "type": "string",
-                "format": "date-time"
-              },
-              "updatedAt": {
-                "title": "Updated At",
-                "type": "string",
-                "format": "date-time"
-              },
-              "createdBy": {
-                "title": "Creator",
-                "type": "string",
-                "format": "user"
-              },
-              "sli": {
-                "type": "number",
-                "title": "SLI"
-              },
-              "tags": {
-                "type": "object",
-                "title": "Tags"
-              }
-            },
-            "required": []
-          },
-          "mirrorProperties": {
-            "running_service_identifier": {
-              "title": "runningServiceIdentifier",
-              "path": "newRelicService.$identifier"
-            },
-            "domain": {
-              "title": "Domain",
-              "path": "newRelicService.domain"
-            }
-          },
-          "calculationProperties": {
-            "sloStatus": {
-              "title": "SLO Status",
-              "calculation": "if .properties.sli >= .properties.targetThreshold then \"Passed\" else \"Failed\" end",
-              "type": "string",
-              "colorized": true,
-              "colors": {
-                "Passed": "green",
-                "Failed": "red"
-              }
-            }
-          },
-          "aggregationProperties": {},
-          "relations": {
-            "newRelicService": {
-              "title": "New Relic service",
-              "target": "newRelicService",
-              "required": false,
-              "many": false
-            }
-          }
-        }
-```
-</details>
-   5. Click "Save" to create the blueprint.
+1. **Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.**
+2. **Click on "+ Blueprint".**
+3. **Click on the `{...}` button in the top right corner, and choose "Edit JSON".**
+4. **Add this JSON schema:**
 
-1. Follow the steps below to update the `New Relic Service Level` blueprint
-   1. Navigate to the `New Relic Service Level` blueprint in your Port [Builder](https://app.getport.io/settings/data-model).
-   2. Hover over it, click on the `...` button on the right, and select `Edit JSON`.
-   3. Add the calculation property:
-<details>
-<summary><b> Calculation property (Click to expand)</b></summary>
+   <details>
+   <summary><b>New Relic Service Level blueprint (Click to expand)</b></summary>
 
-```json showLineNumbers
-    "sloStatus": {
-      "title": "SLO Status",
-      "calculation": "if .properties.sli >= .properties.targetThreshold then \"Passed\" else \"Failed\" end",
-      "type": "string",
-      "colorized": true,
-      "colors": {
-        "Passed": "green",
-        "Failed": "red"
-      }
-    }
-```
-</details>
-   4. Add these mirror properties:
-<details>
-<summary><b> Mirror properties (Click to expand)</b></summary>
+   ```json showLineNumbers
+   {
+     "identifier": "newRelicServiceLevel",
+     "description": "This blueprint represents a New Relic Service Level",
+     "title": "New Relic Service Level",
+     "icon": "NewRelic",
+     "schema": {
+       "properties": {
+         "description": {
+           "title": "Description",
+           "type": "string"
+         },
+         "targetThreshold": {
+           "icon": "DefaultProperty",
+           "title": "Target Threshold",
+           "type": "number"
+         },
+         "createdAt": {
+           "title": "Created At",
+           "type": "string",
+           "format": "date-time"
+         },
+         "updatedAt": {
+           "title": "Updated At",
+           "type": "string",
+           "format": "date-time"
+         },
+         "createdBy": {
+           "title": "Creator",
+           "type": "string",
+           "format": "user"
+         },
+         "sli": {
+           "type": "number",
+           "title": "SLI"
+         },
+         "tags": {
+           "type": "object",
+           "title": "Tags"
+         }
+       },
+       "required": []
+     },
+     "mirrorProperties": {
+       "running_service_identifier": {
+         "title": "runningServiceIdentifier",
+         "path": "newRelicService.$identifier"
+       },
+       "domain": {
+         "title": "Domain",
+         "path": "newRelicService.domain"
+       }
+     },
+     "calculationProperties": {
+       "sloStatus": {
+         "title": "SLO Status",
+         "calculation": "if .properties.sli >= .properties.targetThreshold then \"Passed\" else \"Failed\" end",
+         "type": "string",
+         "colorized": true,
+         "colors": {
+           "Passed": "green",
+           "Failed": "red"
+         }
+       }
+     },
+     "aggregationProperties": {},
+     "relations": {
+       "newRelicService": {
+         "title": "New Relic service",
+         "target": "newRelicService",
+         "required": false,
+         "many": false
+       }
+     }
+   }
+   ```
 
-```json showLineNumbers
+   </details>
+
+5. **Click "Save" to create the blueprint.**
+
+### Update the blueprint
+Follow the steps below to **update** the `New Relic Service Level` blueprint:
+
+1. **Navigate to the `New Relic Service Level` blueprint in your Port [Builder](https://app.getport.io/settings/data-model).**
+2. **Hover over it, click on the `...` button on the right, and select "Edit JSON".**
+3. **Add the calculation property:**
+
+   <details>
+   <summary><b>Calculation property (Click to expand)</b></summary>
+
+   ```json showLineNumbers
+   "sloStatus": {
+     "title": "SLO Status",
+     "calculation": "if .properties.sli >= .properties.targetThreshold then \"Passed\" else \"Failed\" end",
+     "type": "string",
+     "colorized": true,
+     "colors": {
+       "Passed": "green",
+       "Failed": "red"
+     }
+   }
+   ```
+
+   </details>
+
+4. **Add these mirror properties:**
+
+   <details>
+   <summary><b>Mirror properties (Click to expand)</b></summary>
+
+   ```json showLineNumbers
    "running_service_identifier": {
-      "title": "runningServiceIdentifier",
-      "path": "newRelicService.$identifier"
+     "title": "runningServiceIdentifier",
+     "path": "newRelicService.$identifier"
    },
    "domain": {
-      "title": "Domain",
-      "path": "newRelicService.domain"
+     "title": "Domain",
+     "path": "newRelicService.domain"
    }
-```
-</details>
+   ```
+
+   </details>
 
 
 
@@ -159,7 +170,7 @@ In this setup we will add or update the `New Relic Service Level` blueprint. ski
 
 In this section, you'll learn how to create dashboards that visualize key service metrics using SLIs and SLOs for production and engineering teams.
 
-<h2> **Dashboard Setup** </h2>
+### Dashboard Setup 
 
 1. Navigate to your [software catalog](https://app.getport.io/organization/catalog).
 2. Click on the **`+ New`** button in the left sidebar.
@@ -169,7 +180,7 @@ In this section, you'll learn how to create dashboards that visualize key servic
 
 You now have a blank dashboard where you can start adding widgets to visualize your SLIs and SLOs.
 
-<h2> **Adding Widgets** </h2>
+### Adding Widgets
 
 <details>
 <summary><b>Production Deployment Overview - SLI vs SLO Table</b></summary>
@@ -252,7 +263,7 @@ Tracking weekly performance trends for key services is crucial to identifying pa
 
 
 
-<h2> **Team-Level and Organization-Level Dashboards** </h2>
+### Team-Level and Organization-Level Dashboards
 
 You can also create dashboards specific to teams or organization-wide, depending on the scope of monitoring.
 
@@ -304,7 +315,7 @@ You can also create dashboards specific to teams or organization-wide, depending
 
 
 
-<h2> **SLO Tables and Charts** </h2>
+### SLO Tables and Charts
 
 <details>
 <summary><b>All SLOs Table</b></summary>

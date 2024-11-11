@@ -838,7 +838,7 @@ export const availableGuides = [
     {
         title: "Track SLOs and SLIs for services",
         description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
-        tags: ["Engineering metrics", "Dashboards"],
+        tags: ["Engineering metrics", "New Relic", "Dashboards"],
         logos: ["New Relic"],
         link: "/guides/all/track-slos-and-slis-for-services"
     },
