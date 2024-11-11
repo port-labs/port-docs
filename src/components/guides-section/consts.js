@@ -821,6 +821,14 @@ export const availableGuides = [
         link: "/guides/all/ingest-vulnerability-alerts-from-orca-security-using-a-custom-webhook-integration"
     },
     {
+        title: "Measure pull request standards",
+        description: "Implement working agreements and measure pr standards",
+        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/working_agreements_and_measuring_pr_standards"
+       
+    },
+    {
         title: "Automatically approve actions using an automation",
         description: "Set up automated approvals for self service actions",
         tags: ["Cloud access management", "Actions", "Automations"],
