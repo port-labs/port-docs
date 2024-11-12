@@ -72,17 +72,33 @@ If you **skipped** the onboarding, follow the instructions listed [here](/quicks
     <img src='/img/guides/scaffoldActionADODetails.png' width='70%' border='1px' />
     <br/>
 
-4. Click on the `User Form` and add the `Service Name`, `Azure Organization`, `Azure Project` and `Description` inputs. it should look like the image below.
+4. Click on `Next`, and add the following inputs: `Service Name`, `Azure Organization`, `Azure Project`, and `Description`.
 
-     <img src='/img/guides/scaffoldActionInputsDetails.png' width='70%' border='1px' />
+   To create each input field:
 
-:::tip Data type for inputs
-The `Service Name`, `Azure Organization` and `Description` inputs should be of type `string` and 
- the `Azure Project`  should be of type `Entity Selection` and select `Project` as the blueprint
+  - Click on `+ Input`.
+  - Enter the **Title** (e.g., `Service Name`).
+  - Select the appropriate **Type**.
+  - Set **Required** to `True` if the input is mandatory.
+  - Click on the `Create` button.
 
-Addition to this,  you should make the `Service Name`, `Azure Organization` and `Azure Project` inputs required.
-::::
-<br/>
+   <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
+
+   **Input Details:**
+
+   | Input Name          | Type              | Required | Additional Information                    |
+      |---------------------|-------------------|----------|--------------------------------------------|
+   | Service Name        | Text              | Yes      |                                            |
+   | Azure Organization  | String            | Yes      |                                            |
+   | Azure Project       | Entity Selection  | Yes      | Select `Project` as the blueprint          |
+   | Description         | String            | No       |                                            |
+
+   :::tip Data type and required fields
+  - Ensure that the `Azure Organization` and `Description` inputs are of type **String**.
+  - For the `Azure Project` input, select **Entity Selection** as the type and choose `Project` as the blueprint.
+  - Make sure the `Service Name`, `Azure Organization`, and `Azure Project` inputs are marked as required.
+    :::
+   <br/>
 
 5. Click on `Next` to configure the **Backend**.
 
@@ -1082,7 +1098,8 @@ Head back to the [Self-service page](https://app.getport.io/self-serve) of your 
 
 1. Click on `Create` to begin executing the action.
 
-2. Enter a **name** for your new repository. For some of the available Git providers, additional inputs are required when executing the action.
+2. Enter a **name** for your new repository.  
+For some of the available Git providers, additional inputs are required when executing the action.
 
 <Tabs groupId="git-provider" queryString defaultValue="bitbucket" values={[
 
