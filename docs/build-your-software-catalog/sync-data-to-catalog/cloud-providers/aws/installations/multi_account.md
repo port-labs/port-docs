@@ -205,9 +205,7 @@ The name of this role (not the ARN) is referenced as `organizationRoleArn` in th
 
 ## Minimum Permissions
 
-When setting up the permissions, the minimum permission required for the integration is described below.
-This is a good practice to ensure that the integration is secure and that you're not giving more permissions than necessary.
-To set up the minimum permissions, you can use the following permissions:
+To implement the minimum permissions needed for the integration while maintaining security best practices, use this configuration. It ensures that the integration functions effectively without granting excessive access, adhering to the principle of least privilege for enhanced security and control.
 
 ### Integration Account
 
