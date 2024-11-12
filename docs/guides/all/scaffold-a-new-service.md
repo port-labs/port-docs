@@ -43,23 +43,20 @@ After completing it, you will get a sense of how it can benefit different person
 
 <TabItem value="github-gitlab-bitbucket">
 
+:::tip Onboarding
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. 
-2. Click on the `+ Action` button on the top left conner :
+As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service page](https://app.getport.io/self-serve).
 
-    <img src='/img/guides/scaffoldAddAction.png' width='35%' border='1px' />
+If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
+:::
 
-3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively. 
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button, and choose "Edit":
 
-    <img src='/img/guides/scaffoldActionDetails.png' width='70%' border='1px' />
-    <br/>
-4. Click on the `User Form` tab and click on `+ Input`. 
-5. Enter `Service name` as the **Title**, select `Text` for the **Type**, set **Required** to `True`, and click on the `Create` button.
+    <img src='/img/guides/scaffoldEditAction.png' width='35%' border='1px' />
 
-    <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
-    <br/>
-   
-6. Click on the `Next` to configure the **Backend**.
+2. The action's basic details should look like the image below. You can click on the `User Form` tab to see the user inputs created for the action. When ready, click on the `Backend` tab to proceed.
+
+    <img src='/img/guides/scaffoldEditActionDetails.png' width='70%' border='1px' />
 
 </TabItem>
 
@@ -75,7 +72,7 @@ After completing it, you will get a sense of how it can benefit different person
     <img src='/img/guides/scaffoldActionADODetails.png' width='70%' border='1px' />
     <br/>
 
-3. Click on the `User Form` and add the `Service Name`, `Azure Organization`, `Azure Project` and `Description` inputs. it should look like the image below.
+4. Click on the `User Form` and add the `Service Name`, `Azure Organization`, `Azure Project` and `Description` inputs. it should look like the image below.
 
      <img src='/img/guides/scaffoldActionInputsDetails.png' width='70%' border='1px' />
 
@@ -87,7 +84,7 @@ Addition to this,  you should make the `Service Name`, `Azure Organization` and 
 ::::
 <br/>
 
-4. Click on `Next` to configure the **Backend**.
+5. Click on `Next` to configure the **Backend**.
 
 
 </TabItem>
@@ -96,7 +93,7 @@ Addition to this,  you should make the `Service Name`, `Azure Organization` and 
 
 #### Define backend type
 
-Now we'll define the backend of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
+Now we'll define the backend of the action. Port supports multiple invocation types, depending on the Git provider you are using.
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
@@ -1085,23 +1082,43 @@ Head back to the [Self-service page](https://app.getport.io/self-serve) of your 
 
 1. Click on `Create` to begin executing the action.
 
-2. Enter a name for your new repository, then click `Execute`. A small popup will appear, click on `View details`:
+2. Enter a **name** for your new repository. For some of the available Git providers, additional inputs are required when executing the action.
+
+<Tabs groupId="git-provider" queryString defaultValue="bitbucket" values={[
+
+{label: "Bitbucket (Jenkins)", value: "bitbucket"},
+{label: "Azure DevOps", value: "azure-devops"}
+]}>
+
+<TabItem value="bitbucket">
+
+When executing the Bitbucket scaffolder, you will need to provide two additional inputs:
+
+- `Bitbucket Workspace Name` - the name of the workspace to create the new repository in.
+- `Bitbucket Project Key` - the key of the Bitbucket project to create the new repository in.
+  - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table.
+
+</TabItem>
+
+<TabItem value="azure-devops" >
+
+When executing the Azure DevOps scaffolder, you will need to provide the following additional inputs:
+
+- `Azure Organization` - the name of the Azure DevOps organization.
+- `Azure Project` - select the Azure DevOps project you want the repo to be created in.
+- `Description` - a brief description of the repository. (Optional)
+
+</TabItem>
+
+</Tabs>  
+
+3. Click `Execute`. A small popup will appear, click on `View details`:
 
 <img src='/img/guides/executionDetails.png' width='45%' />
 
 <br/><br/>
 
-:::tip Bitbucket only - additional inputs
-
-When executing the Bitbucket scaffolder, you will need to provide two additional inputs:
-- `Bitbucket Workspace Name` - the name of the workspace to create the new repository in
-- `Bitbucket Project Key` - the key of the Bitbucket project to create the new repository in.
-  - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table
-:::
-
-<br/>
-
-3. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
+4. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
 
 <img src='/img/guides/runStatusScaffolding.png' width='90%' />
 
