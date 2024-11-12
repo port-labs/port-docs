@@ -88,6 +88,138 @@ AWS::ReadOnlyAccess
 
 ```json
 {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRole",
+            "Resource": "arn:aws:iam::<root_account>:role/<RootRole>"
+        }
+    ]
+}
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRole",
+            "Resource": "arn:aws:iam::<member_account>:role/<accountReadRoleName>"
+        }
+    ]
+}
+{
+    "Statement": [
+        {
+            "Action": "account:ListRegions",
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ],
+    "Version": "2012-10-17"
+}
+```
+</details>
+
+### Member account
+
+:::tip
+The name of this role (not the ARN) is referenced as `accountReadRoleName` in this doc.
+:::
+
+<details>
+<summary>Permissions</summary>
+```
+AWS::ReadOnlyAccess
+```
+</details>
+
+<details>
+<summary>Trust relationships</summary>
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "sts:AssumeRole",
+            "Resource": "arn:aws:iam::<integration_account>:role/<IntegrationRole>"
+        }
+    ]
+}
+```
+</details>
+
+### Root Account
+
+:::tip
+The name of this role (not the ARN) is referenced as `organizationRoleArn` in this doc.
+:::
+
+<details>
+<summary>Permissions</summary>
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "organizations:Describe*",
+                "organizations:List*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "account:GetAlternateContact",
+                "account:GetContactInformation",
+                "account:ListRegions",
+                "account:GetRegionOptStatus",
+                "account:GetPrimaryEmail"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Trust relationships</summary>
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<integration_account>:role/<IntegrationRole>"
+            },
+            "Action": "sts:AssumeRole",
+        }
+    ]
+}
+```
+</details>
+
+## Minimum Permissions
+
+When setting up the permissions, the minimum permission required for the integration below is described below.
+This is a good practice to ensure that the integration is secure and that you're not giving more permissions than necessary.
+To set up the minimum permissions, you can use the following permissions:
+
+### Integration Account
+
+
+<details>
+<summary>Permissions</summary>
+```
+AWS::ReadOnlyAccess
+```
+
+```json
+{
     "Statement": [
         {
             "Sid": "AssumeRolePermissions",
@@ -139,9 +271,6 @@ AWS::ReadOnlyAccess
 
 ### Member account
 
-:::tip
-The name of this role (not the ARN) is referenced as `accountReadRoleName` in this doc.
-:::
 
 <details>
 <summary>Permissions</summary>
@@ -199,9 +328,6 @@ The name of this role (not the ARN) is referenced as `accountReadRoleName` in th
 
 ### Root Account
 
-:::tip
-The name of this role (not the ARN) is referenced as `organizationRoleArn` in this doc.
-:::
 
 <details>
 <summary>Permissions</summary>
@@ -243,12 +369,13 @@ The name of this role (not the ARN) is referenced as `organizationRoleArn` in th
 </details>
 
 
+
 ### Expanding to multiple accounts
 
 In order to keep adding accounts to the integration's scope, permissions must be delivered for and from each of the accounts.
 For each account you want to have, you should make sure the following applies:
 
-In each non-root account (target member account), The Role `accountReadRoleName` must exist with the necessary permissions to access S3 resources, list regions, interact with CloudFormation resources, and include `accountReadRoleName` from the `integration account` in its trust policy. See [reference](#member-account)
+In each non-root account (target member account), the role `accountReadRoleName` must exist (with the same name and permissions), with `accountReadRoleName` from the integration account in it's trust policy. See [reference](#member-account)
 
 ### Running the integration
 
