@@ -70,7 +70,7 @@ After completing it, you will get a sense of how it can benefit different person
 
     <img src='/img/guides/scaffoldAddAction.png' width='35%' border='1px' />
 
-3. Fill the basic form with the **Title** and **Description** and select `Create` and `Repository` for the **Operation** and **Blueprint** respectively.
+3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
 
     <img src='/img/guides/scaffoldActionADODetails.png' width='70%' border='1px' />
     <br/>
