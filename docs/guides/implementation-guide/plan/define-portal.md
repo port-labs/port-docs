@@ -12,8 +12,10 @@ Define the groups of people who will use your portal. Common audience categories
 
 ### Define goals & use-cases
 
-Define initial goals, MVP user stories, and KPIs for your developer portal.  
+Define goals, user stories, and KPIs for your developer portal.  
 Think about the problems you want to solve and the value you want to deliver to your users.
+
+In this context, a user story is a goal or outcome that we want our end users to achieve.
 
 Some common **goals** include:
 - Increase developer productivity.
