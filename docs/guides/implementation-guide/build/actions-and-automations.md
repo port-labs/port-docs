@@ -29,4 +29,4 @@ For example:
 
 Now that the significant components in your portal have been created, you are ready to launch your portal.  
 
-Before announcing the launch, there are several steps we recommend you take to ensure a successful and effective launch, proceed to the [Launch phase](/guides/implementation-guide/launch/launch-portal) for more information.
+Before announcing the launch, there are several steps we recommend you take to ensure a successful and effective launch, proceed to the [Launch phase](/guides/implementation-guide/launch/) for more information.
