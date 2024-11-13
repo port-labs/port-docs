@@ -15,4 +15,4 @@ Before proceeding to the implementation guide, there a few initial steps to comp
 3. Join the [Port community Slack channel](https://www.getport.io/community) to connect with other Port users and ask for support. 
 
 
-Once you're ready, proceed to [Plan](/guides/implementation-guide/plan/) part of the implementation guide to begin your implementation process.
+Once you're ready, proceed to [Plan](/guides/implementation-guide/plan/define-portal) part of the implementation guide to begin your implementation process.
