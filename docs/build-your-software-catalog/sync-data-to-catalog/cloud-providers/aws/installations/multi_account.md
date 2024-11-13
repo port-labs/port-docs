@@ -189,8 +189,10 @@ The name of this role (not the ARN) is referenced as `accountReadRoleName` in th
     "Statement": [
         {
             "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<integration_account>:role/<IntegrationRole>"
+            },
             "Action": "sts:AssumeRole",
-            "Resource": "arn:aws:iam::<integration_account>:role/<IntegrationRole>"
         }
     ]
 }
