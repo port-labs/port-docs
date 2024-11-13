@@ -74,31 +74,32 @@ If you **skipped** the onboarding, follow the instructions listed [here](/quicks
 
 4. Click on `Next`, and add the following inputs: `Service Name`, `Azure Organization`, `Azure Project`, and `Description`.
 
-   To create each input field:
+    To create each input field:
 
-  - Click on `+ Input`.
-  - Enter the **Title** (e.g., `Service Name`).
-  - Select the appropriate **Type**.
-  - Set **Required** to `True` if the input is mandatory.
-  - Click on the `Create` button.
+      - Click on `+ Input`.
+      - Enter the **Title** (e.g., `Service Name`).
+      - Select the appropriate **Type**.
+      - Set **Required** to `True` if the input is mandatory.
+      - Click on the `Create` button.  
+      <br/>
+   
+      <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
 
-   <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
+      **Input Details:**
 
-   **Input Details:**
+      | Input Name         | Type             | Required | Additional Information            |
+      |--------------------|------------------|----------|-----------------------------------|
+      | Service Name       | Text             | Yes      |                                   |
+      | Azure Organization | String           | Yes      |                                   |
+      | Azure Project      | Entity Selection | Yes      | Select `Project` as the blueprint |
+      | Description        | String           | No       |                                   |
 
-   | Input Name          | Type              | Required | Additional Information                    |
-      |---------------------|-------------------|----------|--------------------------------------------|
-   | Service Name        | Text              | Yes      |                                            |
-   | Azure Organization  | String            | Yes      |                                            |
-   | Azure Project       | Entity Selection  | Yes      | Select `Project` as the blueprint          |
-   | Description         | String            | No       |                                            |
-
-   :::tip Data type and required fields
-  - Ensure that the `Azure Organization` and `Description` inputs are of type **String**.
-  - For the `Azure Project` input, select **Entity Selection** as the type and choose `Project` as the blueprint.
-  - Make sure the `Service Name`, `Azure Organization`, and `Azure Project` inputs are marked as required.
-    :::
-   <br/>
+      :::tip Data type and required fields
+      - Ensure that the `Azure Organization` and `Description` inputs are of type **String**.
+      - For the `Azure Project` input, select **Entity Selection** as the type and choose `Project` as the blueprint.
+      - Make sure the `Service Name`, `Azure Organization`, and `Azure Project` inputs are marked as required.
+      :::
+      <br/>
 
 5. Click on `Next` to configure the **Backend**.
 
