@@ -1156,6 +1156,20 @@ Add this aggregation property to calculate the lead time for changes:
 Ensure that the target property is set to the correct Git provider (e.g., `githubPullRequest` for GitHub, `gitlabMergeRequest` for GitLab and `azureDevOpsPullRequest` for Azure DevOps).
 :::
 
+:::tip Filtering by timeframe
+You can add additional rules to the query to filter for the last month, last week, or other timeframes as needed.  
+To filter for data from the last month, use this JSON snippet:
+```json showLineNumber
+{
+    "operator": "between",
+    "property": "resolvedAt",
+    "value": {
+      "preset": "lastMonth"
+    }
+}
+```
+:::
+
 </TabItem>
 
 <TabItem value="cfr" label="Change Failure Rate">
@@ -1229,28 +1243,32 @@ Add this aggregation property to calculate the MTTR:
       "icon": "DefaultProperty",
       "type": "number",
       "target": "pagerdutyIncident",
-      "query": {
-         "combinator": "and",
-         "rules": [
-            {
-               "property": "status",
-               "operator": "=",
-               "value": "resolved"
-            }
-         ]
-      },
       "calculationSpec": {
-         "func": "average",
-         "averageOf": "month",
-         "property": "recoveryTime",
-         "measureTimeBy": "$createdAt",
-         "calculationBy": "property"
+        "func": "average",
+        "averageOf": "total",
+        "property": "recoveryTime",
+        "measureTimeBy": "resolvedAt",
+        "calculationBy": "property"
       }
-   }
+    }
 
 ```
 
 </details>
+
+:::tip Filtering by timeframe
+You can add additional rules to the query to filter for the last month, last week, or other timeframes as needed.  
+To filter for data from the last month, use this JSON snippet:
+```json showLineNumber
+{
+    "operator": "between",
+    "property": "resolvedAt",
+    "value": {
+      "preset": "lastMonth"
+    }
+}
+```
+:::
 
 </TabItem>
 
