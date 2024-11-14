@@ -31,6 +31,11 @@ In order to complete the process you will need to contact us to receive the info
     * Reply URL (Assertion Consumer Service URL): `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
     * Logout URL (This is optional): `https://auth.getport.io/logout`
 
+:::info
+The details listed are for organizations hosted in EU.
+
+For US, you will need to use `https://auth.us.getport.io/login/callback?connection={CONNECTION_NAME}` and `https://auth.us.getport.io/logout`.
+:::
 
 6. Under `SAML certificates` (step 3), Click the Edit button to expand the certificates section. Click the 3 dot icon next to the Active certificate, and choose `PEM certificate download`.
 
