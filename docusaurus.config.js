@@ -111,6 +111,12 @@ const config = {
             activeBasePath: "guides",
           },
           {
+            to: "https://app.getport.io",
+            position: "right",
+            target: "_blank",
+            className: "header-signup-link",
+          },
+          {
             to: "https://demo.getport.io",
             position: "right",
             target: "_blank",

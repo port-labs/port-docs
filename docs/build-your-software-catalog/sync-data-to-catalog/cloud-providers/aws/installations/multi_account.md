@@ -321,8 +321,10 @@ The permissions outlined for S3 in this section are provided as an example. It i
     "Statement": [
         {
             "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<integration_account>:role/<IntegrationRole>"
+            },
             "Action": "sts:AssumeRole",
-            "Resource": "arn:aws:iam::<integration_account>:role/<IntegrationRole>"
         }
     ]
 }
