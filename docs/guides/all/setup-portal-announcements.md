@@ -157,27 +157,15 @@ This action will be used by users to mark an announcement as read after they hav
 
     ```json showLineNumbers
     {
-      "identifier": "announce_message",
-      "title": "Announce message",
-      "description": "Announce a message to users of your portal",
+      "identifier": "read_announcement",
+      "title": "Mark as read",
       "trigger": {
         "type": "self-service",
-        "operation": "CREATE",
+        "operation": "DAY-2",
         "userInputs": {
-          "properties": {
-            "message": {
-              "type": "string",
-              "title": "Message",
-              "default": "---\ntitle: \"Announcement Title Here\"\ndate: \"Date Here\"\n---\n\n# Important Update\n\nHello everyone,\n\nWe're excited to share that **[topic or key update]** will be happening on **[specific date]**. Here’s what you need to know:\n\n- **Detail 1:** Brief explanation or impact of the update.\n- **Detail 2:** Any necessary steps or actions users need to take.\n- **Detail 3:** Additional resources or contact info for further questions.\n\nPlease ensure you read and understand the changes. If you have any questions, feel free to reach out or comment below.\n\nThank you,\n**[Your Team or Name]**\n",
-              "format": "markdown"
-            },
-            "title_of_message": {
-              "type": "string",
-              "title": "Title of message",
-              "description": "The title users will see before reading the message itself"
-            }
-          },
-          "required": []
+          "properties": {},
+          "required": [],
+          "order": []
         },
         "blueprintIdentifier": "announcement"
       },
@@ -185,11 +173,9 @@ This action will be used by users to mark an announcement as read after they hav
         "type": "UPSERT_ENTITY",
         "blueprintIdentifier": "announcement",
         "mapping": {
-          "title": "{{.inputs.title_of_message}}",
-          "icon": "DefaultBlueprint",
+          "identifier": "{{.entity.identifier}}",
           "properties": {
-            "message": "{{.inputs.message}}",
-            "read_users": []
+            "read_users": "{{.entity.properties.read_users + [.trigger.by.user.email]}}"
           }
         }
       },
