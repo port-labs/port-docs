@@ -207,14 +207,19 @@ The name of this role (not the ARN) is referenced as `organizationRoleArn` in th
 
 To implement the minimum permissions needed for the integration while maintaining security best practices, use this configuration. It ensures that the integration functions effectively without granting excessive access, adhering to the principle of least privilege for enhanced security and control.
 
+:::caution
+This section is designed for users who wish to manage permissions manually to maintain tighter security. It is not intended for users opting for the default integration setup.
+:::
+
+:::tip
+The permissions outlined for S3 in this section are provided as an example. It is important to note that when using the CloudControl API, additional underlying permissions for each resource type are necessary to ensure successful integration. This guide uses S3 bucket permissions as a sample, but users should customize their permissions based on the specific resources they plan to import.
+:::
+
 ### Integration Account
 
 
 <details>
 <summary>Permissions</summary>
-```
-AWS::ReadOnlyAccess
-```
 
 ```json
 {
@@ -232,7 +237,7 @@ AWS::ReadOnlyAccess
             "Sid": "AccountPermissions",
             "Action": "account:ListRegions",
             "Effect": "Allow",
-            "Resource": ""
+            "Resource": "*"
         },
         {
             "Sid": "STSPermissions",
@@ -240,7 +245,7 @@ AWS::ReadOnlyAccess
             "Action": [
                 "sts:GetCallerIdentity"
             ],
-            "Resource": ""
+            "Resource": "*"
         },
         {
             "Sid": "S3Permissions",
@@ -250,7 +255,7 @@ AWS::ReadOnlyAccess
                 "s3:List*",
                 "s3:Get*"
             ],
-            "Resource": ""
+            "Resource": "*"
         },
         {
             "Sid": "CloudControlAPIPermissions",
@@ -259,7 +264,7 @@ AWS::ReadOnlyAccess
                 "cloudformation:GetResource",
                 "cloudformation:ListResources"
             ],
-            "Resource": ""
+            "Resource": "*"
         }
     ],
     "Version": "2012-10-17"
@@ -272,7 +277,7 @@ AWS::ReadOnlyAccess
 
 <details>
 <summary>Permissions</summary>
-```
+```json
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -284,7 +289,7 @@ AWS::ReadOnlyAccess
                 "s3:List*",
                 "s3:Get*"
             ],
-            "Resource": ""
+            "Resource": "*"
         },
         {
             "Sid": "AccountPermissions",
@@ -292,7 +297,7 @@ AWS::ReadOnlyAccess
             "Action": [
                 "account:ListRegions"
             ],
-            "Resource": ""
+            "Resource": "*"
         },
         {
             "Sid": "CloudControlAPIPermissions",
