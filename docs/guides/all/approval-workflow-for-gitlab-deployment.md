@@ -6,7 +6,7 @@ description: Learn how to chain self service actions and automations to manage d
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Approval Workflows for GitLab and ServiceNow 
+# Approval Workflows for Service Deployment
 
 This guide demonstrates the power and flexibility of chaining self-service actions and automations in Port to deploy a service. The deployment process is integrated with GitLab pipelines and ServiceNow for handling approval workflows when tests fail.
 
