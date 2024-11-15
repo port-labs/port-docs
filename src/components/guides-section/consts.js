@@ -849,5 +849,11 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/ingest-security-issues-from-sarif-files-to-services",
     },
-    
+    {
+        title: "Set up announcements in your portal",
+        description: "Create components to send announcements to members in your portal",
+        tags: ["Actions", "Dashboards"],
+        logos: ["Actions"],
+        link: "/guides/all/setup-portal-announcements",
+    },
 ]
