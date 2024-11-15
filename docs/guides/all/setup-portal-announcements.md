@@ -134,6 +134,8 @@ This action will allow users to send announcements to all members in the portal.
     }
     ```
    </details>
+
+    **Note** the `message` input field in the action form is pre-filled with a default value for the announcement content. You can customize this template as needed.
   
   5. Click "Save" to create the action.
 
@@ -232,8 +234,16 @@ All done! Now that you have set up your announcements mechanism, you can test it
 
 1. Go to the [self-service actions](https://app.getport.io/self-serve) page of your portal.
 2. Execute the `Announce message` action, and give it a title and message.
-3. Go back to the homepage, you should see the new announcement displayed in the table widget.
-4. To mark the announcement as read, click on the `⚡` icon in the announcement's table row, then select `Mark as read`:
+3. Go back to the homepage, you should see the new announcement displayed in the table widget. Click on the title to view the content.
+4. To mark the announcement as read, click on the ⚡ icon in the announcement's table row, then select `Mark as read`:
     
     <img src="/img/guides/announcementsTableMarkAsRead.png" width="100%" border='1px' />
 
+## Possible enhancements
+
+This guide provides a basic setup for announcements in your portal.  
+You can further enhance the announcements mechanism by customizing the actions and widgets, for example:
+- **Customize the announcement template**: You can customize the default message template in the `Announce message` action to include your own message format.
+- **Add more properties to the announcement blueprint**: You can add more properties to the announcement blueprint to include additional information, such as the author of the announcement or a link to more details.
+- **Send announcements to specific users**: You can modify the `Announce message` action to allow users to select specific users or teams to send the announcement to.
+- **Send announcements to additional channels**: You can modify the `Announce message` action to send announcements via email, Slack, or other channels in addition to the portal homepage.
