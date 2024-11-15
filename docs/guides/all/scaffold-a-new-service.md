@@ -46,7 +46,7 @@ After completing it, you will get a sense of how it can benefit different person
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `+ Action` button on the top left conner :
 
-    <img src='/img/guides/scaffoldAddAction.png' width='35%' border='1px' />
+    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
 3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
 
@@ -67,7 +67,7 @@ After completing it, you will get a sense of how it can benefit different person
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `+ Action` button on the top left conner :
 
-    <img src='/img/guides/scaffoldAddAction.png' width='35%' border='1px' />
+    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
 3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
 

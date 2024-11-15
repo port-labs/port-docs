@@ -48,19 +48,57 @@ This property is empty for now in all services, we will fill it as part of the a
 
 ### Setup the action's frontend
 
-1. Head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application. Since you completed the [onboarding process](/quickstart), you should already have an action named `Create s3 bucket`. Hover over the action, click the `...` button in the top right corner, and choose "Edit":
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
+2. Click on the `+ Action` button on the top left conner :
 
-    <img src='/img/guides/iacEditAction.png' width='30%' border='1px' />
+    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
-2. The action's basic details should look like the image below. When ready, click on the `User Form` tab to proceed.
+3. Fill the basic form with the  following:
+    - **Title**: Type `Create s3 bucket`
+    - **Identifier** Toggle the switch icon off and  type a  `create_s3_bucket`
+    - **Description**:  Type the description (e.g., Create an s3 bucket )
+    - **Icon**: Type s3 and choose the  Icon (optional)
+    - **Operation**:  Choose `Day2`  from the dropdown
+    - **Blueprint**:  Choose `Service` from the dropdown
+      
+      <img src='/img/guides/iacActionDetails.png' width='70%' border='1px' />
+     <br/>
 
-    <img src='/img/guides/iacActionDetails.png' width='50%' />
+4. Click on `Next`, and add the following inputs: `Name` and `Visibility`.
 
-3. The action's user form should look like the image below. When ready, click on the `Backend` tab to proceed.
+    To create the `Name` input field:
 
-    <img src='/img/guides/iacActionUserForm.png' width='70%' border='1px' />
+      - Click on `+ Input`.
+      - Enter the **Title** `Name`.
+      - Select the **Type** `Text`.
+      - Add the **Description** (optional).
+      - Set **Required** to `True`.
+      - Click on the `Create` button.  
+      <br/>
 
-4. Now we'll define the backend type of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
+        <img src='/img/guides/iacActionInputName.png' width='70%' border='1px' />
+     <br/>
+
+   To create the `Name` input field:
+
+      - Click on `+ Input`.
+      - Enter the **Title**  `Visibility`.
+      - Choose  the **Type** `Select`.
+      - Set **Required** to `True`.
+      - Configure Additional Information:
+          - **Item Type**: `String`.
+          - **Limit**: `1 option`.
+          - **Add Options**:
+              - **Option 1**: `public` (choose a color).
+              - **Option 2**: `private` (choose a color).
+      - Click on the `Create` button.  
+      <br/>
+      <img src='/img/guides/iacActionInputVisibility.png' width='70%' border='1px' />
+      <br/>
+
+5. Click on `Next` to configure the **Backend**.
+
+6. Now we'll define the backend type of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
