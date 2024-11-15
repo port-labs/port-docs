@@ -1152,9 +1152,8 @@ Add this aggregation property to calculate the lead time for changes:
 ```
 </details>
 
-:::info Correct target property
 Ensure that the target property is set to the correct Git provider (e.g., `githubPullRequest` for GitHub, `gitlabMergeRequest` for GitLab and `azureDevOpsPullRequest` for Azure DevOps).
-:::
+
 
 :::tip Filtering by timeframe
 You can add additional rules to the query to filter for the last month, last week, or other timeframes as needed.  
