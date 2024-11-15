@@ -9,7 +9,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Add Tags to Azure Resource
 
-In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](https://docs.getport.io//actions-and-automations/setup-backend/github-workflow) to add tags to a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview).
+In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow) to add tags to a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview).
 
 :::tip Use-cases
 Organize and manage your Azure resources effectively by adding tags directly through Port.
