@@ -54,11 +54,11 @@ This property is empty for now in all services, we will fill it as part of the a
     <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
 3. Fill the basic form with the  following:
-    - **Title**: Type `Create s3 bucket`
+    - **Title**: Enter `Create s3 bucket`
     - **Identifier** Toggle the switch icon off and  type a  `create_s3_bucket`
-    - **Description**:  Type the description (e.g., Create an s3 bucket )
+    - **Description**:  Enter the description (e.g., Create an s3 bucket )
     - **Icon**: Type s3 and choose the  Icon (optional)
-    - **Operation**:  Choose `Day2`  from the dropdown
+    - **Operation**:  Choose `Day-2`  from the dropdown
     - **Blueprint**:  Choose `Service` from the dropdown
       
       <img src='/img/guides/iacActionDetails.png' width='70%' border='1px' />

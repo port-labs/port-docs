@@ -141,23 +141,38 @@ The `architecture` property is a URL to a Lucidchart diagram. This is a handy wa
 
 As platform engineers, we want to enable our developers to perform certain actions on their own. Let's create an action that developers can use to add data to a service, and allocate it to a domain.
 
-:::tip Onboarding
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
+2. Click on the `+ Action` button on the top left conner :
 
-As part of the onboarding process, you should already have an action named `Enrich service` in your [self-service tab](https://app.getport.io/self-serve).  
+    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
-If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
-:::
+3. Fill the basic form with the  following:
+    - **Title**: Enter `Enrich service`
+    - **Identifier** Toggle the switch icon off and  type a  `service_enrich_service`
+    - **Description**:  Enter the description (e.g., Enrich service with data )
+    - **Icon**: Type Git and choose the  Icon (optional)
+    - **Operation**:  Choose `Day-2`  from the dropdown
+    - **Blueprint**:  Choose `Service` from the dropdown
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Enrich service` action, click the `...` button in the top right corner, and choose "Edit":
-    <img src='/img/guides/gitopsEditAction.png' width='35%' border='1px' />
+      <img src='/img/guides/enrichActionDetails.png' width='70%' border='1px' />
+     <br/>
 
-2. Let's add a new user input for the domain. Click on the `User form` tab, then click `+ New input`.
-3. Fill out the form like this, then click `Create`:
+4. Click on `Next`, and add the `Domain`  input:
+      - Click on `+ Input`.
+      - Enter the **Title** `Domain`.
+      - Select the **Type** `Entity selection`.
+      - Add the **Description** (optional).
+      - Set **Required** to `True`.
+      - Select `Domain` as the **Blueprint**
+      - Click on the `Create` button.  
+      <br/>
+      <img src='/img/guides/gitopsDomainInput.png' width='50%' border='1px' />
+    
+      :::note Input type 
+          (`Entity selection`) allows the executing user to choose a `domain` entity from the catalog.
+       :::
 
-    <img src='/img/guides/gitopsDomainInput.png' width='50%' border='1px' />
-    **Note** the input type (`Entity selection`) allows the executing user to choose a `domain` entity from the catalog.
-
-4. When ready, click on the `Backend` tab and read below to proceed.
+5. Click on `Next` to configure the **Backend**.
 
 
 #### Define backend type
