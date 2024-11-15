@@ -220,8 +220,3 @@ Based on New Relic's documentation and common integrations, here's a comprehensi
   - `KUBERNETES_CLUSTER`
 
 </details>
-
-:::note Latest information
-This list covers common integration types. For the most accurate and up-to-date information, refer to [New Relic's Integration Documentation](https://docs.newrelic.com/docs/infrastructure/integrations/).
-:::
-
