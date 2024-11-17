@@ -494,14 +494,26 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
+          id: "api-reference/create-a-migration",
+          label: "Create a migration",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
           id: "api-reference/get-all-migrations",
           label: "Get all migrations",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api-reference/create-a-migration",
-          label: "Create a migration",
+          id: "api-reference/get-a-migration",
+          label: "Get a migration",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/cancel-a-migration",
+          label: "Cancel a migration",
           className: "api-method post",
         },
       ],
