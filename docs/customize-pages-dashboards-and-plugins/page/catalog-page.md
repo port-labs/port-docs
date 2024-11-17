@@ -33,7 +33,7 @@ To create a new catalog page, go to your [Software Catalog](https://app.getport.
 <TabItem value="api">
 
 :::tip API options
-See all the available API fields [here](https://api.getport.io/static/index.html#/Pages/post_v1_pages).
+See all the available API fields [here](https://api.getport.io/swagger/static/index.html#/Pages/post_v1_pages).
 :::
 
 ```json showLineNumbers

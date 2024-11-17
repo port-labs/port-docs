@@ -150,33 +150,33 @@ For this installation you will need Helm and a running K8s cluster (see [prerequ
 
 1. Install Port's SonarQube integration using Helm, by running the command below in your terminal.
 
-- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
+   - Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 
-- Replace `sonarApiToken` with your SonarQube token. To obtain it, [follow this documentation](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)
+   - Replace `sonarApiToken` with your SonarQube token. To obtain it, [follow this documentation](https://docs.sonarsource.com/sonarqube/9.6/user-guide/user-account/generating-and-using-tokens/#generating-a-token).
 
-- Replace `sonarOrganizationId` with your SonarQube organization ID. To obtain it, [follow this documentation](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys). Note that the SonarQube organization ID is not required when using on-prem sonarqube instance.
+   - Replace `sonarOrganizationId` with your SonarQube organization ID. To obtain it, [follow this documentation](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys). Note that the SonarQube organization ID is not required when using on-prem sonarqube instance.
 
-<details>
-<summary>Installation command (click to expand)</summary>
+   <details>
+   <summary>Installation command (click to expand)</summary>
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \  # REPLACE VALUE
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \  # REPLACE VALUE
-	--set initializePortResources=true  \
-	--set integration.identifier="my-sonarqube-integration"  \
-	--set integration.type="sonarqube"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.sonarApiToken="MY_API_TOKEN"  \  # REPLACE VALUE
-	--set integration.config.sonarOrganizationId="MY_ORG_KEY"  # REPLACE VALUE
-```
-</details>
+   ```bash showLineNumbers
+   helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+   helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
+   	--set port.clientId="PORT_CLIENT_ID"  \  # REPLACE VALUE
+   	--set port.clientSecret="PORT_CLIENT_SECRET"  \  # REPLACE VALUE
+   	--set initializePortResources=true  \
+   	--set integration.identifier="my-sonarqube-integration"  \
+   	--set integration.type="sonarqube"  \
+   	--set integration.eventListener.type="POLLING"  \
+   	--set integration.secrets.sonarApiToken="MY_API_TOKEN"  \  # REPLACE VALUE
+   	--set integration.config.sonarOrganizationId="MY_ORG_KEY"  # REPLACE VALUE
+   ```
+   </details>
 
 2. Great! Now that the integration is installed, we should see some new components in Port:
 
-- Go to your [Builder](https://app.getport.io/settings/data-model), you should now see three new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `SonarQube Project`, `SonarQube Issue` and `SonarQube Analysis`.
-- Go to your [Software catalog](https://app.getport.io/services), click on `SonarQube Analysis` in the sidebar, you should now see new <PortTooltip id="entity">entities</PortTooltip> created for all your SonarQube analysis.
+   - Go to your [Builder](https://app.getport.io/settings/data-model), you should now see three new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `SonarQube Project`, `SonarQube Issue` and `SonarQube Analysis`.
+   - Go to your [Software catalog](https://app.getport.io/services), click on `SonarQube Analysis` in the sidebar, you should now see new <PortTooltip id="entity">entities</PortTooltip> created for all your SonarQube analysis.
 
 
 ## Create the Sonar analysis relation
@@ -263,7 +263,7 @@ This configuration uses the `title` and `branch` properties to establish a relat
 
 The second way is to use the `commitSha` property that is common to both the pull request and SonarQube analysis:
    
-- Go to the [data model](https://github.com/port-labs/port-docs/pull/link-to-data-model) page of your portal
+- Go to the [data model](https://app.getport.io/settings/data-model) page of your portal
 - Go to the `SonarQube` <PortTooltip id="blueprint">blueprint</PortTooltip>.
 - Hover over it, click on the `...` button on the right, and select `Edit JSON`.
 <br></br>
