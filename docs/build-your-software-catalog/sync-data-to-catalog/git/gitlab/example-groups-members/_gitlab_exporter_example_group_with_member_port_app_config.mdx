@@ -3,26 +3,28 @@
 <summary> Ocean integration configuration </summary>
 
 ```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
 resources:
-  - kind: member
+  - kind: group-with-members
     selector:
       query: 'true'
+      includeBotMembers: 'true'
+      includeInheritedMembers: true
     port:
+      itemsToParse: .__members
       entity:
         mappings:
-          identifier: .username
-          title: .name
-          blueprint: '"gitlabGroupMember"'
+          identifier: .item.username
+          title: .item.name
+          blueprint: '"gitlabMember"'
           properties:
-            state: .state
-            locked: .locked
-            link: .web_url
-            email: .email
-  - kind: group
+            link: .item.web_url
+            state: .item.state
+            email: .item.email
+            locked: .item.locked
+  - kind: group-with-members
     selector:
       query: 'true'
+      includeBotMembers: 'true'
     port:
       entity:
         mappings:
@@ -34,6 +36,6 @@ resources:
             visibility: .visibility
             description: .description
           relations:
-            members: '[.__members[].username]'
+            gitlabMembers: .__members | map(.username)
 ```
 </details>
