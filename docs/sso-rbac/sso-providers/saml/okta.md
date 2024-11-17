@@ -30,8 +30,10 @@ The Port team will provide you with your `CONNECTION_NAME`, which will be used i
 6. On the `Configure SAML` page, under `SAML Settings`, you’ll need to fill in some details:
     - **Single sign on URL**: `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
     - **Audience URI (SP Entity ID)**: `urn:auth0:port-prod:{CONNECTION_NAME}`
-7. Scroll down to the `Attribute Statements (Optional)` section:
-    - Add an attribute statement for `email`, with the `Value` set to `user.email`.
+7. Scroll down to the `Attribute Statements (Optional)` section, and add the following:
+    - `email`, with the `Value` set to `user.email`
+    - `given_name`, with the `Value` set to `user.firstName`
+    - `family_name`, with the `Value` set to `user.lastName`
 8. Click `Next` and then `Finish` to create the application.
 
 ## Generate a Certificate and Send to Port
