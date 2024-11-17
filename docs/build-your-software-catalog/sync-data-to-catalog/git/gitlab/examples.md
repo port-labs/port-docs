@@ -213,7 +213,7 @@ In the following example you will ingest your GitLab members to Port, you may us
 
 GitLab allows the creation of tokens (bots) for automated tasks, which can be associated with groups or projects via access tokens.
 The `includeBotMembers` parameter is used to filter out bot members from the actual gitlab members.
-By default this parameter is set to false, as a result the integration will sync all members including bot members.
+By default, this parameter is set to `true`, which means the integration will sync actual and bot members.
 
 ```yaml
   - kind: group-with-members
@@ -233,7 +233,7 @@ By default this parameter is set to false, as a result the integration will sync
 :::
 
 :::tip Include Inherited and Invited Members
-You can also specify a `includeInheritedMembers` flag to control the inclusion of inherited members in the member data.
+You can also specify the `includeInheritedMembers` flag to control the inclusion of inherited members in the member data.
 By default, this parameter is set to `false`, and the integration will sync only direct members without inherited members.
 
 ```yaml
