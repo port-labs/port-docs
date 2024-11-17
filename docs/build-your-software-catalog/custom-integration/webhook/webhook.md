@@ -31,7 +31,7 @@ Port provides you with custom webhook endpoints, which you can use as the target
 
 Each webhook endpoint can receive a [custom mapping](#mapping-configuration), making it easy to turn the payload of events from your 3rd-party services into entities inside your software catalog.
 
-The custom mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the webhook payload.
+The custom mapping uses the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the webhook payload.
 
 By using the webhook mapping you can:
 - **Create/update** a complete entity.
@@ -123,9 +123,9 @@ Here is an example metadata configuration:
 
 The mapping configuration of the webhook defines how the webhook event payload is mapped to one (or more) Port entities.
 
-The mapping configuration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to extract information from the event payload into Port entity properties.
+The mapping configuration uses the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to extract information from the event payload and map it to Port entity properties.
 
-Here is an example mapping configuration:
+Below is an example of a mapping configuration:
 
 <Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},

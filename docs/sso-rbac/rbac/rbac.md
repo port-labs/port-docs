@@ -129,7 +129,7 @@ You can browse the `team` schema [here](https://registry.terraform.io/providers/
 
 ### Port API
 
-The API allows you to manage [teams](https://api.getport.io/static/index.html#/Teams) and [users](https://api.getport.io/static/index.html#/Users).
+The API allows you to manage [teams](https://api.getport.io/swagger/static/index.html#/Teams) and [users](https://api.getport.io/swagger/static/index.html#/Users).
 
 ### `Team` meta property
 
