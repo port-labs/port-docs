@@ -636,10 +636,6 @@ The maximum size of the webhook payload is **512KiB**.
 Reaching this limit will throw a `413 Request Entity Too Large` HTTP error.
 :::
 
-## Limitations
-The webhook api has the following limitations:
-1. Webhook payload max size - 512KiB. Reaching this limit will throw a `413 Request Entity Too Large` http error.
-
 ## Examples
 
 Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
