@@ -172,7 +172,7 @@ Okta and AzureAD integrations are only available after configuring SSO from the 
 <BetaFeatureNotice />
 
 Port allows you to manage users and teams as <PortTooltip id="blueprint">blueprints</PortTooltip>.  
-This option is disabled by default, and can be [enabled via Port's API](/sso-rbac/rbac/#enable-the-feature). 
+This option is disabled by default, and can be [enabled via Port's API](/sso-rbac/rbac/#enable-option). 
 
 After enabling this option, two new blueprints will be created in your [data model](https://app.getport.io/settings/data-model) - `User` and `Team`.  
 These blueprints represent Port users and teams, and their data will be synced accordingly:
