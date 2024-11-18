@@ -71,7 +71,26 @@ Port allows you to create a wizard-like experience for your developers by utiliz
 
 See the [user inputs](./user-inputs/user-inputs.md) page for more details about the available input types.
 
-You can even define more advanced forms with dynamic fields that change according to your data or other inputs in the form. See [advanced input configurations](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations) for more information and examples.
+### Steps
+
+In cases where an action contains a large number of inputs, you may want to break the form into multiple steps. Users executing the action will see and fill each step at a time, which can help guide them through the process and make the action easier to understand.  
+
+In the UI, after creating at least one input, a `+ Step` button will appear:
+
+<img src='/img/self-service-actions/setup-frontend/actionFormSteps.png' width='80%' border='1px' />
+<br/><br/>
+
+Each step can contain multiple inputs, and you can define as many steps as you need.
+
+When a user executes the action, he/she will see the steps and their inputs in the order they were defined:
+
+<img src='/img/self-service-actions/setup-frontend/actionFormStepsExecution.png' width='50%' border='1px' />
+*After clicking `Next`, the form will move to step 2, requiring the user to fill the inputs defined in that step*
+
+### Advanced configurations
+
+You can define more advanced forms with dynamic fields that change according to your data or other inputs in the form.  
+See [advanced input configurations](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations) for more information and examples.
 
 ## Next step
 

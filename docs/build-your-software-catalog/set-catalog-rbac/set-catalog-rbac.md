@@ -16,7 +16,7 @@ import TabItem from "@theme/TabItem";
 </center>
 <br/>
 
-Port provides granular control to ensure that every user only sees the parts of the catalog that are relevant for them.
+Port provides granular control to ensure that every user only sees the parts of the catalog that are relevant to them.
 
 Port's catalog RBAC capabilities are enabled by utilizing [permissions controls](/sso-rbac/rbac/rbac.md).
 

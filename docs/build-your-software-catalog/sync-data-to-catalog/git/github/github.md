@@ -494,6 +494,14 @@ You can use one of these methods to ingest multi-document YAML files:
 1. Use the `itemsToParse` key to create multiple entities from such a file (see example above). 
 2. Map the result to an `array` property.
 
+:::tip Mixed YAML types
+If you have both single-document and multi-document YAML files in your repositories, you can use the `itemsToParse` key like this to handle both cases:
+
+```yaml
+itemsToParse: .file.content | if type== "object" then [.] else . end
+```
+:::
+
 #### Limitations
 
 - Currently only files up to 512KB in size are supported.
@@ -563,4 +571,4 @@ Port's GitHub app also supports a self-hosted installation, refer to the [self-h
 
 ## Additional resources
 
-- [Connect GitHub PR with Jira issue](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/guides/connect-github-pr-with-jira-issue.md)
+- [Connect GitHub PR with Jira issue](/guides/all/connect-github-pr-with-jira-issue)

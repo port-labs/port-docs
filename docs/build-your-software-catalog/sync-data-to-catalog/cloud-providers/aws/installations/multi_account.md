@@ -36,11 +36,12 @@ And the final flow that allows data to be read is where the `integration account
 
 <CenterRoundedImage imgSrc='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-single-step-2.jpg' />
 
-First, we will create a role with permissions (If you're running the terraform installation, this will be done for you). We'll call this role `ReadOnlyPermissionsOceanRole`, with `I can read resources in this account` policy.
+First, we will create a role with necessary permissions (if you're running the terraform installation, this will be done for you). We'll call this role `ReadOnlyPermissionsOceanRole`, with `I can read resources in this account` policy.
+
 
 <CenterRoundedImage imgSrc='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-role-step-1.jpg' />
 
-Then we'll go to the root account, and give it permissions to view some metadata about other accounts. We'll call this role `OrganizationalOceanRole`, and give it `I can view metadata about accounts`.
+Then we'll go to the root account and assign permissions to view metadata about other accounts. We'll call this role `OrganizationalOceanRole`, and grant it `permissions to list accounts within the organization`.
 
 <CenterRoundedImage imgSrc='/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-role-step-2.jpg' />
 
@@ -75,10 +76,16 @@ Together with the permissions and trust policies:
 
 :::tip
 The name of this role (not the ARN) is referenced as `integration_account` in this doc.
+
+If you need to read from the `integration account`, you'll need to add CloudControl (cloudformation) and the resources permissions. In this example, we refer to the S3 bucket permissions
 :::
 
 <details>
 <summary>Permissions</summary>
+```
+AWS::ReadOnlyAccess
+```
+
 ```json
 {
     "Version": "2012-10-17",
@@ -196,13 +203,184 @@ The name of this role (not the ARN) is referenced as `organizationRoleArn` in th
 ```
 </details>
 
+## Minimum Permissions
+
+To implement the minimum permissions needed for the integration while maintaining security best practices, use this configuration. It ensures that the integration functions effectively without granting excessive access, adhering to the principle of least privilege for enhanced security and control.
+
+:::caution
+This section is designed for users who wish to manage permissions manually to maintain tighter security. It is not intended for users opting for the default integration setup.
+:::
+
+:::tip
+The permissions outlined for S3 in this section are provided as an example. It is important to note that when using the CloudControl API, additional underlying permissions for each resource type are necessary to ensure successful integration. This guide uses S3 bucket permissions as a sample, but users should customize their permissions based on the specific resources they plan to import.
+:::
+
+### Integration Account
+
+
+<details>
+<summary>Permissions</summary>
+
+```json
+{
+    "Statement": [
+        {
+            "Sid": "AssumeRolePermissions",
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:iam::<member_account_id>:role/<role_name>",
+                "arn:aws:iam::<root_account_id>:role/<root_account_role_name>"
+            ]
+        },
+        {
+            "Sid": "AccountPermissions",
+            "Action": "account:ListRegions",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Sid": "STSPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "sts:GetCallerIdentity"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "S3Permissions",
+            "Effect": "Allow",
+            "Action": [
+                "s3:Describe*",
+                "s3:List*",
+                "s3:Get*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "CloudControlAPIPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:GetResource",
+                "cloudformation:ListResources"
+            ],
+            "Resource": "*"
+        }
+    ],
+    "Version": "2012-10-17"
+}
+```
+</details>
+
+### Member account
+
+
+<details>
+<summary>Permissions</summary>
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "S3Permissions",
+            "Effect": "Allow",
+            "Action": [
+                "s3:Describe*",
+                "s3:List*",
+                "s3:Get*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AccountPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "account:ListRegions"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "CloudControlAPIPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:GetResource",
+                "cloudformation:ListResources"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Trust relationships</summary>
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<integration_account>:role/<IntegrationRole>"
+            },
+            "Action": "sts:AssumeRole",
+        }
+    ]
+}
+```
+</details>
+
+### Root Account
+
+
+<details>
+<summary>Permissions</summary>
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ListAccountPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "organizations:ListAccounts"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Trust relationships</summary>
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<integration_account>:role/<IntegrationRole>"
+            },
+            "Action": "sts:AssumeRole",
+        }
+    ]
+}
+```
+</details>
+
+
 
 ### Expanding to multiple accounts
 
 In order to keep adding accounts to the integration's scope, permissions must be delivered for and from each of the accounts.
 For each account you want to have, you should make sure the following applies:
 
-In each non-root account (target member account), The Role `accountReadRoleName` must exist (with the same name and permissions), with `accountReadRoleName` from the integration account in it's trust policy. See [reference](#member-account)
+In each non-root account (target member account), the role `accountReadRoleName` must exist (with the same name and permissions), with `accountReadRoleName` from the integration account in it's trust policy. See [reference](#member-account)
 
 ### Running the integration
 

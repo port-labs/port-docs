@@ -77,7 +77,7 @@ The `>=` operator checks values larger than or equal to the specified value:
 }
 ```
 
-### > (Less Than)
+### < (Less Than)
 
 The `<` operator checks values less than the specified value:
 
@@ -318,7 +318,7 @@ The `doesNotEndsWith` operator checks if the specified property **does not** end
 
 ### in
 
-The `in` operator checks if a `string` property is equal to one or more specified `string` values:
+The `in` operator checks if a `string` property is equal to one or more specified `string` values
 
 <Tabs values={[
 {label: "Standard", value: "array"},
@@ -363,3 +363,15 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 </TabItem>
 
 </Tabs>
+
+### notIn
+
+The `notIn` operator checks if a `string` property is **not equal** to all of the specified `string` values
+
+```json showLineNumbers
+{
+  "property": "myStringProperty",
+  "operator": "notIn",
+  "value": ["Value1", "Value2"]
+}
+```

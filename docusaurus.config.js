@@ -92,14 +92,29 @@ const config = {
           {
             to: "/",
             label: "Home",
+            position: "left",
             className: "header-home-link",
-            activeBaseRegex: "^((?!api-reference).)*$",
+            activeBaseRegex: "^((?!api-reference|guides).)*$",
           },
           {
             to: "/api-reference/port-api",
             label: "API Reference",
+            position: "left",
             className: "header-api-link",
             activeBasePath: "api-reference",
+          },
+          {
+            to: "/guides",
+            label: "Guides",
+            position: "left",
+            className: "header-guides-link",
+            activeBasePath: "guides",
+          },
+          {
+            to: "https://app.getport.io",
+            position: "right",
+            target: "_blank",
+            className: "header-signup-link",
           },
           {
             to: "https://demo.getport.io",
@@ -253,11 +268,12 @@ const config = {
         respectPrefersColorScheme: true,
       },
       zoom: {
-        selector: ".markdown img",
+        selector: ".markdown img:not(.not-zoom)",
         background: {
           light: "rgb(255, 255, 255)",
           dark: "rgb(50, 50, 50)",
         },
+        
       },
       prism: {
         theme: lightCodeTheme,
@@ -295,7 +311,7 @@ const config = {
       // },
     }),
   themes: [
-    "@port-labs/docusaurus-theme-openapi-docs",
+    "docusaurus-theme-openapi-docs",
     
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
@@ -327,7 +343,7 @@ const config = {
       },
     ],
     [
-      "@port-labs/docusaurus-plugin-openapi-docs",
+      "docusaurus-plugin-openapi-docs",
       {
         id: "api", // plugin id
         docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs

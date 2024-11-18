@@ -174,14 +174,15 @@ Here is an example for `opencost-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Opencost Exporter Workflow
 
-# This workflow responsible for running Opencost exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
@@ -415,7 +416,8 @@ The integration configuration determines which resources will be queried from Op
 :::tip Supported resources
 The following resources can be used to map data from OpenCost, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
-- [`Cost`](https://www.opencost.io/docs/integrations/api-examples)
+- [`Cost`](https://www.opencost.io/docs/integrations/api-examples#allocation-examples)
+- [`Cloudcost`](https://www.opencost.io/docs/integrations/api-examples#cloudcost-examples)
 
 :::
 

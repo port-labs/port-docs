@@ -1,0 +1,44 @@
+<details>
+<summary> BigQuery Table Blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "gcpBigQueryTable",
+  "description": "This blueprint represents a GCP BigQuery table in our software catalog",
+  "title": "BigQuery Table",
+  "icon": "GoogleCloud",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string"
+      },
+      "createdTime": {
+        "type": "string",
+        "title": "Created Time",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "gcpProject",
+      "required": false,
+      "many": false
+    },
+    "dataset": {
+      "title": "Dataset",
+      "target": "gcpBigQueryDataset",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

@@ -18,7 +18,7 @@ This page contains answers to common questions and issues that users encounter w
 
 Port was designed to let you set up a developer portal in minutes, quickly defining your data model and then ingesting data about software and resources into it.
 
-We believe in “bring your own data model” since each organization differs in how it wants to set up Port and model its software. Our documentation and [other resources](/resources) can help you get started. 
+We believe in "bring your own data model" since each organization differs in how it wants to set up Port and model its software. Our documentation and [other resources](/resources) can help you get started. 
 
 If you're trying to find out if Port is right for you, you can reach out to us by scheduling an [in-person demo](https://www.getport.io/demo-request), and we’ll be happy to escort you through the process of building a portal that's right for you.
 
@@ -142,7 +142,7 @@ If you are still facing issues, reach out to us via [Slack](https://www.getport.
 Please make sure that:
 
 1. The action backend is set up correctly. This includes the Organization/Group name, repository and workflow file name.
-2. For Gitlab, make sure the [Port execution agent](https://docs.getport.io/actions-and-automations/setup-backend/gitlab-pipeline/Installation#installing-the-agent) is installed properly. When triggering the action, you can view the logs of the agent to see what URL was triggered. 
+2. For Gitlab, make sure the [Port execution agent](https://docs.getport.io/actions-and-automations/setup-backend/gitlab-pipeline/self-hosted#installing-the-agent) is installed properly. When triggering the action, you can view the logs of the agent to see what URL was triggered. 
 
 </details>
 

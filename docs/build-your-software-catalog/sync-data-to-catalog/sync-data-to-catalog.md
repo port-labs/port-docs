@@ -1,11 +1,6 @@
----
-title: Integrate Port with any tool
-sidebar_label: Integrate Port with any tool
----
-
 import DocCardList from '@theme/DocCardList';
 
-# Integrate Port with any tool
+# Install an integration
 
 Port is designed to be flexible. It can be integrated with any tool, and can be used to build a software catalog that reflects your exact data model.
 
@@ -20,13 +15,13 @@ We provide you with the required tools to model your data and ingest it with eas
 
 ## Integration process
 
-Generally, integrating a platform/tool with Port consists of 3 steps:
+Generally, integrating a platform/tool with Port consists of 3 steps, as shown in the diagram below. 
+ 
+**The available integrations below take care of all of these steps for you, and can be customized after installation.**
 
 <img src='/img/software-catalog/integration-process.png' width='85%' />
 
 <br/><br/>
-
-**The available integrations below take care of all of these steps for you, and can be customized after installation.**
 
 ## Available plug & play integrations
 

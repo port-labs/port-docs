@@ -32,7 +32,7 @@ When an event occurs in your software catalog, Port will automatically trigger t
 
 By default, automations are disabled and can be used as drafts until ready to be activated. You can enable them by setting the `publish` field to `true` in their JSON definition.
 
-## JSON structure
+## Automation JSON structure
 
 Automations are defined in JSON format. The JSON structure looks like this:
 

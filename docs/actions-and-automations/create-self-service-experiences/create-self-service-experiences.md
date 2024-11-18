@@ -3,12 +3,13 @@ sidebar_label: Create self-service actions
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import ExecuteActionLocations from '/docs/actions-and-automations/create-self-service-experiences/templates/_execute_action_locations.mdx'
 
 # Self-service actions
 
 <center>
 
-<iframe width="568" height="320" src="https://www.youtube.com/embed/KHuGBQlErWo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+<iframe width="568" height="320" src="https://www.youtube.com/embed/PAqwCJ44ql8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 <br/>
@@ -88,6 +89,10 @@ Port supports a variety of ways to add manual approvals, policies, and TTL to ac
 
 See [Set actions RBAC](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) for instructions and examples.
 
+### Execute the action
+
+<ExecuteActionLocations />
+
 ### Reflect action progress
 
 After executing an action, Port allows you update its state and progress, using a `success/in-progress/failure` status, live logs, ChatOps notifications, friendly and indicative error messages, and more.
@@ -155,5 +160,4 @@ The basic structure of a self-service action looks like this (see key descriptio
 
 ## Examples
 
-For complete examples of self-service actions, choose your desired backend type under the [backend types](/actions-and-automations/setup-backend) section.  
-For instance, examples using GitHub as the backend can be found [here](/actions-and-automations/setup-backend/github-workflow/examples/).
+For complete examples of self-service actions using GitHub as the backend, check out the [guides section](/guides?tags=GitHub&tags=Actions).
