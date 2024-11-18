@@ -101,6 +101,47 @@ Under `General` tab:
 
 ---
 
+## SCIM Configuration (beta)
+
+In order to integrate Okta OIDC application with Port using SCIM, you will need to generate an additional Okta application.
+
+1. Create a new SSO application, of type SWA, and fill the form as below:
+
+   ![Application Setup](/img/sso/okta/Okta_OIDC_SCIM.png)
+      * Who sets the credentials - Administrator sets username, password is the same as user's Okta password
+      * Application username - Okta username
+      * Update application username on - Create and update
+
+2. Edit the App Settings, and enable `Enable SCIM provisioning`
+![Second Step](/img/sso/okta/OktaSCIMSecond.png)
+
+After setting up, reach out to Port's team. You will be provided with:
+
+- An SCIM `endpoint`
+- An SCIM `token`
+
+The `endpoint` and `token` will be used to complete the new SWA application.
+
+
+   3. Open the Provisioning tab in your application, and under `Integration` fill the following:
+   * SCIM connector base URL: The `endpoint` you received from Port.
+   * Unique identifier field for users: `userName`.
+   * Supported provisioning actions: `Push New Users`, `Push Profile Updates`, `Push Groups`.
+   * Authentication Mode: `HTTP Header`.
+   * Authorization: The `token` you received from Port.
+
+![SCIM Configuration](/img/sso/okta/OktaSCIMConfiguration.png)
+
+After configuration, press the `Test Connector Configuration` and confirm the integration was configured correctly.
+
+
+4. Go to the newly created `To App` settings, and enable the following:
+   * Create Users
+   * Update User Attributes
+   * Deactivate Users
+
+![To App Configuration](/img/sso/okta/OktaSCIMapp.png)
+
 ## How to allow pulling Okta groups to Port
 
 :::note
