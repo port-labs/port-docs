@@ -266,6 +266,22 @@ Port needs the following information for this process:
    Users can also manually access Port by going to the App Homepage URL: `https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io`
    :::
 
+## SCIM Configuration (beta)
+
+AzureAD SAML applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
+
+To set up SCIM for AzureAD OIDC based applications, contact Port's support team.
+
+You will be provided with:
+
+- An SCIM `endpoint`
+- An SCIM `token`
+
+ The `endpoint` and `token` will be used to set up the SCIM integration in your identity provider.
+
+After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-new-azure-ad-connections#configure-scim-in-azure-ad-for-oidc-apps) to enable SCIM.
+
+
 ---
 
 ## Permissions required to pull AzureAD groups to Port
