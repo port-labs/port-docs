@@ -268,9 +268,9 @@ Port needs the following information for this process:
 
 ## SCIM Configuration (beta)
 
-AzureAD SAML applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
+Entra ID (AzureAD) OIDC applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
 
-To set up SCIM for AzureAD OIDC based applications, contact Port's support team.
+To set up SCIM for Entra ID OIDC based applications, contact Port's support team.
 
 You will be provided with:
 
