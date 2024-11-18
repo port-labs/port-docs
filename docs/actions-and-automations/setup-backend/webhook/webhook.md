@@ -82,7 +82,7 @@ You can change the request to any of the supported types: `POST`, `PUT`, `DELETE
 
 ## Trigger Port API
 
-You can use this backend type to trigger [Port's API](http://localhost:4001/api-reference/port-api), allowing you to execute any route you wish with automatic authentication.  
+You can use this backend type to trigger [Port's API](https://docs.getport.io/api-reference/port-api), allowing you to execute any route you wish with automatic authentication.  
 Port will automatically use the organization's API key to authenticate the request.
 
 This can be useful when you want to perform an operation in Port, such as creating a new user or executing a self-service action, especially if you want to trigger logic that you have already defined.
