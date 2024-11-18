@@ -40,22 +40,22 @@ After completing it, you will get a sense of how it can benefit different person
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `+ Action` button on the top left conner :
 
-    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
+  <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
 3. Fill in the action's details as shown below:
 
-- **Title** and **Description**
-- **Operation**: `Create`
-- **Blueprint**: `Service`
-- **icon**: `Slack`
+  - **Title** and **Description**
+  - **Operation**: `Create`
+  - **Blueprint**: `Service`
+  - **icon**: `Slack`
 
-This Self-service has  no user inputs, click on the `Next` button twice  to proceed to the `Backend` tab.
+This Self-service has no user inputs, click on the `Next` button twice  to proceed to the `Backend` tab.
 
 <img src='/img/guides/slackActionDetails.png' width='60%' border='1px' />
 
 #### Define backend type
 
-Now we'll define the backend type of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
+Now we'll define the backend of the action. Port supports multiple invocation types, depending on the Git provider you are using.
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},

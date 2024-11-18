@@ -44,7 +44,7 @@ After completing it, you will get a sense of how it can benefit different person
 <TabItem value="github-gitlab-bitbucket">
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
-2. Click on the `+ Action` button on the top left conner :
+2. Click on the `+ Action` button in the top-right corner:
 
     <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
@@ -65,7 +65,7 @@ After completing it, you will get a sense of how it can benefit different person
 <TabItem value="azure-devops">
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
-2. Click on the `+ Action` button on the top left conner :
+2. Click on the `+ Action` button in the top-right corner:
 
     <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 

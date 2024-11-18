@@ -142,7 +142,7 @@ The `architecture` property is a URL to a Lucidchart diagram. This is a handy wa
 As platform engineers, we want to enable our developers to perform certain actions on their own. Let's create an action that developers can use to add data to a service, and allocate it to a domain.
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
-2. Click on the `+ Action` button on the top left conner :
+2. Click on the `+ Action` button in the top-right corner :
 
     <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
@@ -164,13 +164,15 @@ As platform engineers, we want to enable our developers to perform certain actio
       - Add the **Description** (optional).
       - Set **Required** to `True`.
       - Select `Domain` as the **Blueprint**
-      - Click on the `Create` button.  
-      <br/>
-      <img src='/img/guides/gitopsDomainInput.png' width='50%' border='1px' />
+      - Click on the `Create` button. 
+   
+        <br/>
+          <img src='/img/guides/gitopsDomainInput.png' width='50%' border='1px' />
     
-      :::note Input type 
-          (`Entity selection`) allows the executing user to choose a `domain` entity from the catalog.
-       :::
+    
+        :::tip Entity selection input type 
+            The `Entity selection` type allows the executing user to choose an entity directly from the catalog.
+         :::
 
 5. Click on `Next` to configure the **Backend**.
 
