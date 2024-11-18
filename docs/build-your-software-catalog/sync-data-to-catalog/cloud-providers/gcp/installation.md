@@ -38,9 +38,21 @@ It is saved locally, and is NOT sent to Port at any time.
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
 
-   ```bash
-   cat <new-configuration-file> | base64 | pbcopy
-   ```
+  Linux/Mac (Bash/Zsh):
+
+    ```bash
+    cat <new-configuration-file> | base64 | pbcopy
+    ```
+
+  PowerShell:
+    ```powershell
+    [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("<new-configuration-file>")) | Set-Clipboard
+    ```
+  
+  Windows Command Prompt (creates a file : new-configuration-file.b64):
+    ```cmd
+    certutil -encode <new-configuration-file> new-configuration-file.b64 && type new-configuration-file.b64 | clip
+    ``` 
 
 2. Run the following command:
 
@@ -87,9 +99,22 @@ It is saved locally, and is NOT sent to Port at any time.
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
 
-   ```bash
-   cat <new-configuration-file> | base64 | pbcopy
-   ```
+  Linux/Mac (Bash/Zsh):
+
+    ```bash
+    cat <new-configuration-file> | base64 | pbcopy
+    ```
+
+  PowerShell:
+    ```powershell
+    [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("<new-configuration-file>")) | Set-Clipboard
+    ```
+  
+  Windows Command Prompt (creates a file : new-configuration-file.b64):
+    ```cmd
+    certutil -encode <new-configuration-file> new-configuration-file.b64 && type new-configuration-file.b64 | clip
+    ``` 
+
    
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -148,9 +173,21 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
 
-   ```bash
-   cat <new-configuration-file> | base64 | pbcopy
-   ```
+  Linux/Mac (Bash/Zsh):
+
+    ```bash
+    cat <new-configuration-file> | base64 | pbcopy
+    ```
+
+  PowerShell:
+    ```powershell
+    [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("<new-configuration-file>")) | Set-Clipboard
+    ```
+  
+  Windows Command Prompt (creates a file : new-configuration-file.b64):
+    ```cmd
+    certutil -encode <new-configuration-file> new-configuration-file.b64 && type new-configuration-file.b64 | clip
+    ``` 
 
 2. Run the following command:
 
