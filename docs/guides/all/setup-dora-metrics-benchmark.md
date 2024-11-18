@@ -9,7 +9,10 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # DORA metrics benchmark
 
-In this guide, we will extend the work from the [DORA Metrics guide](/guides/all/setup-dora-metrics) by implementing scorecards to benchmark your services against the industry-standard DORA metrics.
+In this guide,
+we will extend the work from the [DORA Metrics guide](/guides/all/setup-dora-metrics)
+by implementing scorecards to benchmark your services against the industry-standard DORA metrics,
+as detailed in the [official DORA report (2024)](https://dora.dev/research/2024/).  
 This allows you to evaluate your services' performance levels and identify areas for improvement.
 
 DORA metrics are essential for measuring the efficiency and effectiveness of your software delivery performance.   
@@ -62,10 +65,10 @@ Short lead times suggest efficient processes and quick delivery of value to cust
 **Change Failure Rate** is the percentage of deployments causing a failure in production that requires immediate remediation (e.g., service degradation or outage).   
 Lower rates indicate more stable releases and better quality control.
 
-- Elite: 0-5%
-- High: 6-15%
-- Medium: 16-30%
-- Low: More than 30%
+- Elite: Less than 5%
+- High: Between 5% and 10%
+- Medium: Between 10% and 20%
+- Low: More than 20%
 
 </TabItem>
 <TabItem value="mean-time-to-recovery" label="Mean Time to Recovery (MTTR)">
@@ -75,7 +78,7 @@ Faster recovery times show effective incident response and resilience.
 
 - Elite: Less than one hour.
 - High: Less than one day.
-- Medium: Between one day and one week.
+- Medium: Less than one week.
 - Low: More than one week.
 
 </TabItem>
@@ -84,8 +87,9 @@ Faster recovery times show effective incident response and resilience.
 
 By understanding these benchmarks, you can effectively assess your services' current performance levels and identify specific areas for improvement.
 
-:::tip Adjust Thresholds
-You can adjust the thresholds based on your organization's specific needs.
+:::tip Adjust thresholds
+These benchmarks are consistent with the [DORA report for 2024](https://dora.dev/research/2024/),
+but you can always adjust them based on your organization's specific needs.
 :::
 
 ## Set up scorecard
@@ -274,14 +278,14 @@ We will create a scorecard that assesses each service against the DORA benchmark
       {
         "identifier": "cfr_elite",
         "title": "Change Failure Rate - Elite",
-        "description": "Failure rate is 0-5%.",
+        "description": "Failure rate is less than 5%.",
         "level": "Elite",
         "query": {
           "combinator": "and",
           "conditions": [
             {
               "property": "changeFailureRate",
-              "operator": "<=",
+              "operator": "<",
               "value": 5
             }
           ]
@@ -290,20 +294,20 @@ We will create a scorecard that assesses each service against the DORA benchmark
       {
         "identifier": "cfr_high",
         "title": "Change Failure Rate - High",
-        "description": "Failure rate is 6-15%.",
+        "description": "Failure rate is between 5% and 10%.",
         "level": "High",
         "query": {
           "combinator": "and",
           "conditions": [
             {
               "property": "changeFailureRate",
-              "operator": ">",
+              "operator": ">=",
               "value": 5
             },
             {
               "property": "changeFailureRate",
-              "operator": "<=",
-              "value": 15
+              "operator": "<",
+              "value": 10
             }
           ]
         }
@@ -311,20 +315,20 @@ We will create a scorecard that assesses each service against the DORA benchmark
       {
         "identifier": "cfr_medium",
         "title": "Change Failure Rate - Medium",
-        "description": "Failure rate is 16-30%.",
+        "description": "Failure rate is between 10% and 20%.",
         "level": "Medium",
         "query": {
           "combinator": "and",
           "conditions": [
             {
               "property": "changeFailureRate",
-              "operator": ">",
-              "value": 15
+              "operator": ">=",
+              "value": 10
             },
             {
               "property": "changeFailureRate",
               "operator": "<=",
-              "value": 30
+              "value": 20
             }
           ]
         }
@@ -332,7 +336,7 @@ We will create a scorecard that assesses each service against the DORA benchmark
       {
         "identifier": "cfr_low",
         "title": "Change Failure Rate - Low",
-        "description": "Failure rate is more than 30%.",
+        "description": "Failure rate is more than 20%.",
         "level": "Low",
         "query": {
           "combinator": "and",
@@ -340,7 +344,7 @@ We will create a scorecard that assesses each service against the DORA benchmark
             {
               "property": "changeFailureRate",
               "operator": ">",
-              "value": 30
+              "value": 20
             }
           ]
         }
@@ -440,12 +444,13 @@ If you haven't set up a dashboard for visualizing the DORA metrics, [set it up h
 
 ### Add scorecard widget
 <details>
-<summary><b>Team service scorecard performance (click to expand)</b></summary>
+<summary><b>Dora by team (click to expand)</b></summary>
 
 1. Click **`+ Widget`** and select **Table**.
-2. Title the widget **Team Service Scorecard Performance**.
+2. Title the widget **DORA by team**.
 3. Choose the **Service** blueprint.
-    <img src="/img/guides/teamScorecardTable.png" width="50%" />
+
+    <img src="/img/guides/teamDoraScorecardTable.png" width="50%" border="1px" />
 
 4. Click **Save** to add the widget to the dashboard.
 5. Click on the **`...`** button in the top right corner of the table and select **Customize table**.
@@ -457,10 +462,14 @@ If you haven't set up a dashboard for visualizing the DORA metrics, [set it up h
 
 7. Click on the **`Group by any Column`** option in the top right corner and select **Owning Team**.
 
-   <img src="/img/guides/groupByAnyColumn.png" width="50%" />
+   <img src="/img/guides/groupByAnyColumn.png" width="50%" border="1px" />
 
 8. Click on the **save icon** in the top right corner of the widget to save the customized table.
 
 </details>
+
+The table widget should look like this:
+
+<img src="/img/guides/doraMetricsTeamScorecard.png" border="1px" />
 
 Congratulations! 🎉 You have successfully created a DORA Metrics Benchmark scorecard in Port. 
