@@ -856,4 +856,11 @@ export const availableGuides = [
         logos: ["Actions"],
         link: "/guides/all/setup-portal-announcements",
     },
+    {
+        title: "Set up DORA Metrics benchmark",
+        description: "Setup DORA metrics benchmark within your organization in PORT",
+        tags: ["Engineering metrics","Scorecards","Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/setup-dora-metrics-benchmark"
+    },
 ]
