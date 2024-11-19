@@ -4,6 +4,8 @@ sidebar_position: 1
 description: Integrate AzureAD with Port
 ---
 
+import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
+
 # How to configure AzureAD
 
 Follow this step-by-step guide to configure the integration between Port and Azure Active Directory.
@@ -266,9 +268,19 @@ Port needs the following information for this process:
    Users can also manually access Port by going to the App Homepage URL: `https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io`
    :::
 
+## Permissions required to pull AzureAD groups to Port
+
+Port can query the group membership of users who log in through the AzureAD SSO, and add their teams as team entities inside Port. This allows the platform engineers to take advantage of both existing groups from AzureAD and teams created manually inside Port to manage permissions and access to resources inside Port's catalog.
+
+**Important:** In order to import Azure AD groups into Port, Port will require the connection app to approve the `Directory.Read.All` permission
+
 ## SCIM Configuration (beta)
 
-Entra ID (AzureAD) OIDC applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
+Entra ID (AzureAD) OIDC applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim).
+
+<ScimFunctionality/>
+
+### Setup SCIM
 
 To set up SCIM for Entra ID OIDC based applications, contact Port's support team.
 
@@ -280,12 +292,3 @@ You will be provided with:
  The `endpoint` and `token` will be used to set up the SCIM integration in your identity provider.
 
 After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-new-azure-ad-connections#configure-scim-in-azure-ad-for-oidc-apps) to enable SCIM.
-
-
----
-
-## Permissions required to pull AzureAD groups to Port
-
-Port can query the group membership of users who log in through the AzureAD SSO, and add their teams as team entities inside Port. This allows the platform engineers to take advantage of both existing groups from AzureAD and teams created manually inside Port to manage permissions and access to resources inside Port's catalog.
-
-**Important:** In order to import Azure AD groups into Port, Port will require the connection app to approve the `Directory.Read.All` permission
