@@ -106,15 +106,18 @@ Under `General` tab:
 To use [SCIM](https://auth0.com/docs/authenticate/protocols/scim) with your Okta OIDC SSO setup, you will need to create an additional Okta application according to the following instructions:
 
 1. Create a new SSO application, of type SWA, and fill the form as below:
-   ![SCIM Configuration](/img/sso/okta/OktaSWA.png)
-
-   ![Application Setup](/img/sso/okta/Okta_OIDC_SCIM.png)
+   <img src="/img/sso/okta/OktaSWA.png" width="80%" border="1px" />
+   <br/><br/>
+   <img src="/img/sso/okta/Okta_OIDC_SCIM.png" width="80%" border="1px" />
+      * App's login page URL: Organizations hosted in EU: https://app.getport.io, Organizations hosted in US: https://app.us.getport.io
       * Who sets the credentials - Administrator sets username, password is the same as user's Okta password
       * Application username - Okta username
       * Update application username on - Create and update
 
 2. Edit the App Settings, and enable `Enable SCIM provisioning`
-![Second Step](/img/sso/okta/OktaSCIMSecond.png)
+
+   <img src="/img/sso/okta/OktaSCIMSecond.png" width="80%" border="1px" />
+
 
 After setting up, reach out to Port's team. You will be provided with:
 
@@ -122,26 +125,23 @@ After setting up, reach out to Port's team. You will be provided with:
 - An SCIM `token`
 
 The `endpoint` and `token` will be used to complete the setup of the new SWA application.
-
-
    3. Open the Provisioning tab in your application, and under `Integration` fill the following:
-   * SCIM connector base URL: The `endpoint` you received from Port.
-   * Unique identifier field for users: `userName`.
-   * Supported provisioning actions: `Push New Users`, `Push Profile Updates`, `Push Groups`.
-   * Authentication Mode: `HTTP Header`.
-   * Authorization: The `token` you received from Port.
+      * SCIM connector base URL: The `endpoint` you received from Port.
+      * Unique identifier field for users: `userName`.
+      * Supported provisioning actions: `Push New Users`, `Push Profile Updates`, `Push Groups`.
+      * Authentication Mode: `HTTP Header`.
+      * Authorization: The `token` you received from Port.
+         <br/><br/>
+         <img src="/img/sso/okta/OktaSCIMConfiguration.png" width="80%" border="1px" />
 
-![SCIM Configuration](/img/sso/okta/OktaSCIMConfiguration.png)
-
-After configuration, press the `Test Connector Configuration` and confirm the integration was configured correctly.
-
+      After configuration, press the `Test Connector Configuration` and confirm the integration was configured correctly.
 
 4. Go to the newly created `To App` settings, and enable the following:
    * Create Users
    * Update User Attributes
    * Deactivate Users
-
-![To App Configuration](/img/sso/okta/OktaSCIMapp.png)
+   <br/>
+   <img src="/img/sso/okta/OktaSCIMapp.png" width="80%" />
 
 ## How to allow pulling Okta groups to Port
 
