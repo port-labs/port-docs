@@ -62,12 +62,13 @@ Short lead times suggest efficient processes and quick delivery of value to cust
 </TabItem>
 <TabItem value="change-failure-rate" label="Change Failure Rate">
 
-**Change Failure Rate** is the percentage of deployments causing a failure in production that requires immediate remediation (e.g., service degradation or outage).   
-Lower rates indicate more stable releases and better quality control.
+**Change Failure Rate** is the percentage of deployments causing a failure in production that requires immediate remediation (e.g., service degradation or outage).
+Lower rates indicate more stable releases and better quality control.  
+Teams with a higher deployment frequency may also have a higher error rate.
 
 - Elite: Less than 5%
+- Medium: Less than 10%
 - High: Between 5% and 10%
-- Medium: Between 10% and 20%
 - Low: More than 20%
 
 </TabItem>
@@ -78,7 +79,7 @@ Faster recovery times show effective incident response and resilience.
 
 - Elite: Less than one hour.
 - High: Less than one day.
-- Medium: Less than one week.
+- Medium: Less than one day.
 - Low: More than one week.
 
 </TabItem>
@@ -101,333 +102,269 @@ We will create a scorecard that assesses each service against the DORA benchmark
 3. Click on the `Scorecards` tab.
 4. Click on `+ New Scorecard` to create a new scorecard.
 5. Configure the scorecard with the following details:
-  <details>
-  <summary><b>Scorecard (click to expand)</b></summary>
+<details>
+<summary><b>Scorecard (click to expand)</b></summary>
 
   ```json showLineNumbers
-  {
-    "identifier": "dora_metrics_bnhmrk",
-    "title": "DORA Metrics",
-    "levels": [
+{
+   "identifier": "dora_metrics_bnhmrk",
+   "title": "DORA Metrics",
+   "levels": [
       {
-        "title": "Low",
-        "color": "blue"
+         "color": "blue",
+         "title": "Low"
       },
       {
-        "title": "Medium",
-        "color": "purple"
+         "color": "purple",
+         "title": "Medium"
       },
       {
-        "title": "High",
-        "color": "turquoise"
+         "color": "turquoise",
+         "title": "High"
       },
       {
-        "title": "Elite",
-        "color": "paleBlue"
+         "color": "paleBlue",
+         "title": "Elite"
       }
-    ],
-    "rules": [
+   ],
+   "rules": [
       {
-        "identifier": "deploy_freq_elite",
-        "title": "Deployment Frequency - Elite",
-        "description": "Service deploys multiple times per day.",
-        "level": "Elite",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "deployment_frequency",
-              "operator": ">=",
-              "value": 7
-            }
-          ]
-        }
+         "identifier": "deploy_freq_elite",
+         "title": "Deployment Frequency - Elite",
+         "description": "Service deploys multiple times per day.",
+         "level": "Elite",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "property": "deployment_frequency",
+                  "operator": ">=",
+                  "value": 7
+               }
+            ]
+         }
       },
       {
-        "identifier": "deploy_freq_high",
-        "title": "Deployment Frequency - High",
-        "description": "Service deploys between once per day and once per week.",
-        "level": "High",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "deployment_frequency",
-              "operator": ">=",
-              "value": 1
-            },
-            {
-              "property": "deployment_frequency",
-              "operator": "<",
-              "value": 7
-            }
-          ]
-        }
+         "identifier": "deploy_freq_high",
+         "title": "Deployment Frequency - High",
+         "description": "Service deploys between once per day and once per week.",
+         "level": "High",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "operator": ">=",
+                  "property": "deployment_frequency",
+                  "value": 1
+               },
+               {
+                  "property": "deployment_frequency",
+                  "operator": "<",
+                  "value": 7
+               }
+            ]
+         }
       },
       {
-        "identifier": "deploy_freq_medium",
-        "title": "Deployment Frequency - Medium",
-        "description": "Service deploys between once per week and once per month.",
-        "level": "Medium",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "deployment_frequency",
-              "operator": ">=",
-              "value": 0.25
-            },
-            {
-              "property": "deployment_frequency",
-              "operator": "<",
-              "value": 1
-            }
-          ]
-        }
+         "identifier": "deploy_freq_medium",
+         "title": "Deployment Frequency - Medium",
+         "description": "Service deploys between once per week and once per month.",
+         "level": "Medium",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "operator": ">=",
+                  "property": "deployment_frequency",
+                  "value": 0.25
+               },
+               {
+                  "property": "deployment_frequency",
+                  "operator": "<",
+                  "value": 1
+               }
+            ]
+         }
       },
       {
-        "identifier": "deploy_freq_low",
-        "title": "Deployment Frequency - Low",
-        "description": "Service deploys less than once per month.",
-        "level": "Low",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "deployment_frequency",
-              "operator": "<",
-              "value": 0.25
-            }
-          ]
-        }
+         "identifier": "lead_time_elite",
+         "title": "Lead Time - Elite",
+         "description": "Lead time is less than one day.",
+         "level": "Elite",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "property": "lead_time_for_change",
+                  "operator": "<",
+                  "value": 24
+               }
+            ]
+         }
       },
       {
-        "identifier": "lead_time_elite",
-        "title": "Lead Time - Elite",
-        "description": "Lead time is less than one day.",
-        "level": "Elite",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "lead_time_for_change",
-              "operator": "<",
-              "value": 24
-            }
-          ]
-        }
+         "identifier": "lead_time_high",
+         "title": "Lead Time - High",
+         "description": "Lead time is between one day and one week.",
+         "level": "High",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "property": "lead_time_for_change",
+                  "operator": ">=",
+                  "value": 24
+               },
+               {
+                  "property": "lead_time_for_change",
+                  "operator": "<",
+                  "value": 168
+               }
+            ]
+         }
       },
       {
-        "identifier": "lead_time_high",
-        "title": "Lead Time - High",
-        "description": "Lead time is between one day and one week.",
-        "level": "High",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "lead_time_for_change",
-              "operator": ">=",
-              "value": 24
-            },
-            {
-              "property": "lead_time_for_change",
-              "operator": "<",
-              "value": 168
-            }
-          ]
-        }
+         "identifier": "lead_time_medium",
+         "title": "Lead Time - Medium",
+         "description": "Lead time is between one week and one month.",
+         "level": "Medium",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "property": "lead_time_for_change",
+                  "operator": ">=",
+                  "value": 168
+               },
+               {
+                  "property": "lead_time_for_change",
+                  "operator": "<",
+                  "value": 720
+               }
+            ]
+         }
       },
       {
-        "identifier": "lead_time_medium",
-        "title": "Lead Time - Medium",
-        "description": "Lead time is between one week and one month.",
-        "level": "Medium",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "lead_time_for_change",
-              "operator": ">=",
-              "value": 168
-            },
-            {
-              "property": "lead_time_for_change",
-              "operator": "<",
-              "value": 720
-            }
-          ]
-        }
+         "identifier": "cfr_elite",
+         "title": "Change Failure Rate - Elite",
+         "description": "Failure rate is less than 5%.",
+         "level": "Elite",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "property": "changeFailureRate",
+                  "operator": "<",
+                  "value": 5
+               }
+            ]
+         }
       },
       {
-        "identifier": "lead_time_low",
-        "title": "Lead Time - Low",
-        "description": "Lead time is more than one month.",
-        "level": "Low",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "lead_time_for_change",
-              "operator": ">=",
-              "value": 720
-            }
-          ]
-        }
+         "identifier": "cfr_medium",
+         "title": "Change Failure Rate - Medium",
+         "description": "Failure rate is less than 10%.",
+         "level": "Medium",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "property": "changeFailureRate",
+                  "operator": ">=",
+                  "value": 5
+               },
+               {
+                  "property": "changeFailureRate",
+                  "operator": "<",
+                  "value": 10
+               }
+            ]
+         }
       },
       {
-        "identifier": "cfr_elite",
-        "title": "Change Failure Rate - Elite",
-        "description": "Failure rate is less than 5%.",
-        "level": "Elite",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "changeFailureRate",
-              "operator": "<",
-              "value": 5
-            }
-          ]
-        }
+         "identifier": "cfr_high",
+         "title": "Change Failure Rate - High",
+         "description": "Failure rate is less than 20%.",
+         "level": "High",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "property": "changeFailureRate",
+                  "operator": ">=",
+                  "value": 10
+               },
+               {
+                  "property": "changeFailureRate",
+                  "operator": "<",
+                  "value": 20
+               }
+            ]
+         }
       },
       {
-        "identifier": "cfr_high",
-        "title": "Change Failure Rate - High",
-        "description": "Failure rate is between 5% and 10%.",
-        "level": "High",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "changeFailureRate",
-              "operator": ">=",
-              "value": 5
-            },
-            {
-              "property": "changeFailureRate",
-              "operator": "<",
-              "value": 10
-            }
-          ]
-        }
+         "identifier": "mttr_elite",
+         "title": "MTTR - Elite",
+         "description": "Recovery time is less than one hour.",
+         "level": "Elite",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "property": "mean_time_to_recovery",
+                  "operator": "<",
+                  "value": 60
+               }
+            ]
+         }
       },
       {
-        "identifier": "cfr_medium",
-        "title": "Change Failure Rate - Medium",
-        "description": "Failure rate is between 10% and 20%.",
-        "level": "Medium",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "changeFailureRate",
-              "operator": ">=",
-              "value": 10
-            },
-            {
-              "property": "changeFailureRate",
-              "operator": "<=",
-              "value": 20
-            }
-          ]
-        }
+         "identifier": "mttr_high",
+         "title": "MTTR - High",
+         "description": "Recovery time is less than one day.",
+         "level": "High",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "property": "mean_time_to_recovery",
+                  "operator": ">=",
+                  "value": 60
+               },
+               {
+                  "property": "mean_time_to_recovery",
+                  "operator": "<",
+                  "value": 1440
+               }
+            ]
+         }
       },
       {
-        "identifier": "cfr_low",
-        "title": "Change Failure Rate - Low",
-        "description": "Failure rate is more than 20%.",
-        "level": "Low",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "changeFailureRate",
-              "operator": ">",
-              "value": 20
-            }
-          ]
-        }
-      },
-      {
-        "identifier": "mttr_elite",
-        "title": "MTTR - Elite",
-        "description": "Recovery time is less than one hour.",
-        "level": "Elite",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "mean_time_to_recovery",
-              "operator": "<",
-              "value": 60
-            }
-          ]
-        }
-      },
-      {
-        "identifier": "mttr_high",
-        "title": "MTTR - High",
-        "description": "Recovery time is less than one day.",
-        "level": "High",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-             "property": "mean_time_to_recovery",
-              "operator": ">=",
-              "value": 60
-            },
-            {
-              "property": "mean_time_to_recovery",
-              "operator": "<",
-              "value": 1440
-            }
-          ]
-        }
-      },
-      {
-        "identifier": "mttr_medium",
-        "title": "MTTR - Medium",
-        "description": "Recovery time is between one day and one week.",
-        "level": "Medium",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "mean_time_to_recovery",
-              "operator": ">=",
-              "value": 1440
-            },
-            {
-              "property": "mean_time_to_recovery",
-              "operator": "<=",
-              "value": 10080
-            }
-          ]
-        }
-      },
-      {
-        "identifier": "mttr_low",
-        "title": "MTTR - Low",
-        "description": "Recovery time is more than one week.",
-        "level": "Low",
-        "query": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "property": "mean_time_to_recovery",
-              "operator": ">",
-              "value": 10080
-            }
-          ]
-        }
+         "identifier": "mttr_medium",
+         "title": "MTTR - Medium",
+         "description": "Recovery time is less than one day.",
+         "level": "Medium",
+         "query": {
+            "combinator": "and",
+            "conditions": [
+               {
+                  "property": "mean_time_to_recovery",
+                  "operator": ">=",
+                  "value": 60
+               },
+               {
+                  "property": "mean_time_to_recovery",
+                  "operator": "<",
+                  "value": 1440
+               }
+            ]
+         }
       }
-    ]
-  }
+   ]
+}
   ```
+</details>
 
-  </details>
 6. Click on `Save` to create the scorecard.
 
 After setting up the benchmark on a service, it should look like this:
