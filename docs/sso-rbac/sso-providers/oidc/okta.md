@@ -106,6 +106,7 @@ Under `General` tab:
 To use [SCIM](https://auth0.com/docs/authenticate/protocols/scim) with your Okta OIDC SSO setup, you will need to create an additional Okta application according to the following instructions:
 
 1. Create a new SSO application, of type SWA, and fill the form as below:
+   ![SCIM Configuration](/img/sso/okta/OktaSWA.png)
 
    ![Application Setup](/img/sso/okta/Okta_OIDC_SCIM.png)
       * Who sets the credentials - Administrator sets username, password is the same as user's Okta password
