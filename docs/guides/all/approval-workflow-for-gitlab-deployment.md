@@ -8,7 +8,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Approval Workflows for Service Deployment
 
-This guide demonstrates the power and flexibility of chaining self-service actions and automations in Port to deploy a service. The deployment process is integrated with GitLab pipelines and ServiceNow for handling approval workflows when tests fail.
+This guide demonstrates the power and flexibility of chaining self-service actions and automations in Port to deploy a service. The deployment process is integrated with GitLab pipelines and ServiceNow for handling approval workflows when threasholds are violated.
 
 ## **Overview of Use Case**
 
@@ -16,8 +16,9 @@ In this workflow, a **developer** initiates a deployment request from **Port** u
 
 ## Prerequisites
 
-- **Port account**: If you don't have a Port account, you will need to [create one](https://app.getport.io/signup).
-- This guide includes the creation of actions and automations that use a GitLab pipeline as their backend. While the logic of the backend can be implemented using other Git providers or CI/CD tools, the examples in this guide are specific to GitLab.
+- **Port account**: If you don't have a Port account, you will need to [create one](https://app.getport.io/signup)
+- **GitLab environment**: This guide includes the creation of actions and automations that use a GitLab pipeline as their backend
+- Access to a ServiceNow instance
 
 ## Data Model
 
@@ -33,6 +34,10 @@ Define a new <PortTooltip id="blueprint">blueprint</PortTooltip> in Port for the
   "icon": "Servicenow",
   "schema": {
     "properties": {
+      "number": {
+        "title": "Change Number",
+        "type": "string"
+      },
       "description": {
         "title": "Description",
         "type": "string"
@@ -84,13 +89,9 @@ Define a new <PortTooltip id="blueprint">blueprint</PortTooltip> in Port for the
           "rejected": "pink"
         }
       },
-      "tags": {
+      "externalTags": {
         "type": "string",
-        "title": "Tags"
-      },
-      "system_id": {
-        "type": "string",
-        "title": "System ID"
+        "title": "External Tags"
       }
     },
     "required": []
@@ -103,24 +104,25 @@ Define a new <PortTooltip id="blueprint">blueprint</PortTooltip> in Port for the
 ```
 </details>
 
+:::note Add a New Column to the Change Request Table  
+Add a new column named `external_tags` to your `change_request` table in ServiceNow to associate deployment requests with their corresponding Port context.  
+Follow the [ServiceNow documentation](https://developer.servicenow.com/dev.do#!/learn/learning-plans/xanadu/new_to_servicenow/app_store_learnv2_buildneedit_xanadu_adding_fields_to_a_table) to complete this step.  
+:::  
+
 
 ## Actions & automations
 
-This workflow uses three self-service actions and two automations to manage the deployment of service and approval of change request.  
-Just like blueprints, actions and automations can also be defined using JSON.
+This workflow uses three self-service actions and two automations to manage the deployment of service and approval of change request.
 
 ### Self-service actions
 
-To create a self-service action, go to the [self-service page](https://app.getport.io/self-serve) of your portal, click on the `+ Action` button, then click on the `Edit JSON` button to define the action using JSON instead of the UI.
-
-Create the following actions using the JSON definitions below:
-
-#### Request deployment of a service
+Go to the [self-service page](https://app.getport.io/self-serve) of your portal and create the following actions using the JSON definitions below:
 
 This action can be executed by a developer to request the deployment of a service.
-- Action definition:
   <details>
   <summary><b>Request deployment of service (click to expand)</b></summary>
+
+  This action uses the `WEBHOOK` backend type, which directly invokes the `pre_deployment_check` action to trigger the GitLab pipeline. It passes a required `deploy_run_id` param to the request object for the purpose of streaming logs between the two actions.
 
   ```json showLineNumbers
     {
@@ -179,18 +181,13 @@ This action can be executed by a developer to request the deployment of a servic
   ```
   </details>
 
-- Action backend:  
-  This action uses the `WEBHOOK` backend type, which directly invokes the `pre_deployment_check` action to trigger the GitLab pipeline.
+This action triggers the GitLab pipeline which contains the deployment logic and streams log back to the `deploy_service_to_cluster` action in Port.
 
-#### Pre deployment checks
-
-This action is chained to the `deploy_service_to_cluster` action. It triggers the GitLab pipeline which contains the deployment logic and streams log back to the `deploy_service_to_cluster` action in Port.
-
-- Action definition:  
-  Remember to replace the `GITLAB_PROJECT_ID` and `GITLAB_TRIGGER_TOKEN` placeholders with your values.  
-  To learn how to obtain these values, see the [GitLab backend documentation](/actions-and-automations/setup-backend/gitlab-pipeline/saas#create-the-webhook-url).
   <details>
   <summary><b>Pre deployment checks (click to expand)</b></summary>
+
+  Remember to replace the `GITLAB_PROJECT_ID` and `GITLAB_TRIGGER_TOKEN` placeholders with your values.  
+  To learn how to obtain these values, see the [GitLab backend documentation](/actions-and-automations/setup-backend/gitlab-pipeline/saas#create-the-webhook-url).
 
   ```json showLineNumbers
     {
@@ -234,17 +231,13 @@ This action is chained to the `deploy_service_to_cluster` action. It triggers th
   ```
   </details>
 
-- Action backend:  
-  This action uses the `WEBHOOK` backend type, which triggers a GitLab pipeline to initiate the service deployment
-
-#### Approve change request
 
 This action can be executed by an admin to approve the change request. It triggers the GitLab pipeline and updates the status of the `servicenowChangeRequest` entity in ServiceNow to *"approved/rejected"*.
-- Action definition:  
-  Remember to replace the `GITLAB_PROJECT_ID` and `GITLAB_TRIGGER_TOKEN` placeholders with your values.  
-  To learn how to obtain these values, see the [GitLab backend documentation](/actions-and-automations/setup-backend/gitlab-pipeline/saas#create-the-webhook-url).
   <details>
   <summary><b>Approve change request (click to expand)</b></summary>
+
+  Remember to replace the `GITLAB_PROJECT_ID` and `GITLAB_TRIGGER_TOKEN` placeholders with your values.  
+  To learn how to obtain these values, see the [GitLab backend documentation](/actions-and-automations/setup-backend/gitlab-pipeline/saas#create-the-webhook-url).
 
   ```json showLineNumbers
     {
@@ -307,10 +300,100 @@ This action can be executed by an admin to approve the change request. It trigge
   ```
   </details>
 
-- Action backend:  
-  This action uses the `WEBHOOK` backend type, which triggers a webhook to a specified URL. In this case, the webhook triggers a GitLab pipeline to check the namespace:
+### Automations
 
-#### GitLab pipeline
+Go to the [automations page](https://app.getport.io/settings/automations) of your portal, then create the following automations using the JSON definitions below:
+
+
+This automation is triggered when a run of type `approve_and_deploy_service` action is created. It's purpose is to patch the approval field in ServiceNow to `approved` or `rejected`.
+
+  <details>
+  <summary><b>Update change request in ServiceNow (click to expand)</b></summary>
+
+  Remember to replace the `BASE_64_ENCODED_API_TOKEN` and `SERVICENOW_INSTANCE` placeholders with your values.
+
+  ```json showLineNumbers
+    {
+    "identifier": "updateChangeRequestInSnow",
+    "title": "Approve ServiceNow Change Request",
+    "description": "A description of what this automation does",
+    "trigger": {
+        "type": "automation",
+        "event": {
+        "type": "RUN_CREATED",
+        "actionIdentifier": "approve_and_deploy_service"
+        }
+    },
+    "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://{SERVICENOW_INSTANCE}/api/now/table/change_request/{{ .event.diff.after.entity.identifier }}",
+        "agent": false,
+        "synchronized": true,
+        "method": "PATCH",
+        "headers": {
+        "Authorization": "Basic BASE_64_ENCODED_API_TOKEN"
+        },
+        "body": {
+        "approval": "{{ .event.diff.after.properties.approval_status  }}"
+        }
+    },
+    "publish": true
+    }
+  ```
+  </details>
+
+
+This automation is triggered when a `servicenowChangeRequest` is updated to *"approved"* or *"rejected"*.
+
+  <details>
+  <summary><b>Deploy service from webhook listener (click to expand)</b></summary>
+
+  Remember to replace the GITLAB_PROJECT_ID and GITLAB_TRIGGER_TOKEN placeholders with your values
+
+  ```json showLineNumbers
+    {
+    "identifier": "approveSnowPipeline",
+    "title": "Approve or Deny GitLab Pipeline from SNOW",
+    "trigger": {
+        "type": "automation",
+        "event": {
+        "type": "ENTITY_UPDATED",
+        "blueprintIdentifier": "servicenowChangeRequest"
+        },
+        "condition": {
+        "type": "JQ",
+        "expressions": [
+            ".diff.after.properties.approval == \"approved\"",
+            ".diff.after.properties.approval == \"rejected\""
+        ],
+        "combinator": "or"
+        }
+    },
+    "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}",
+        "agent": false,
+        "synchronized": false,
+        "method": "POST",
+        "headers": {
+        "RUN_ID": "{{ .run.id }}"
+        },
+        "body": {
+        "port_context": {
+            "runId": "{{ .run.id }}"
+        },
+        "approval_status": "{{ .event.diff.after.properties.approval  }}",
+        "system_id": "{{ .event.diff.after.identifier  }}",
+        "deploy_run_id": "{{ .event.diff.after.properties.tags }}"
+        }
+    },
+    "publish": true
+    }
+  ```
+  </details>
+
+
+### GitLab pipeline script
 This pipeline contains the logic for service deployment. The pipeline consists of three stages: **build**, **test** and **deploy**
 
 <details>
@@ -569,109 +652,6 @@ deploy-to-cloud:
       fi
 ```
 </details>
-
-### Automations
-
-To create an automation, go to the [automations page](https://app.getport.io/settings/automations) of your portal, then click on the `+ Automation` button.
-
-Create the following automations using the JSON definitions below:
-
-#### Update change request in ServiceNow
-
-This automation is triggered when a run of type `approve_and_deploy_service` action is created. It's purpose is to change the  status of the change request in ServiceNow using a PATCH API call.
-
-- Automation definition:  
-  Remember to replace the `BASE_64_ENCODED_API_TOKEN` and `SERVICENOW_INSTANCE` placeholders with your values.
-  <details>
-  <summary><b>Update change request in ServiceNow (click to expand)</b></summary>
-
-  ```json showLineNumbers
-    {
-    "identifier": "updateChangeRequestInSnow",
-    "title": "Approve ServiceNow Change Request",
-    "description": "A description of what this automation does",
-    "trigger": {
-        "type": "automation",
-        "event": {
-        "type": "RUN_CREATED",
-        "actionIdentifier": "approve_and_deploy_service"
-        }
-    },
-    "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://{SERVICENOW_INSTANCE}/api/now/table/change_request/{{ .event.diff.after.entity.identifier }}",
-        "agent": false,
-        "synchronized": true,
-        "method": "PATCH",
-        "headers": {
-        "Authorization": "Basic BASE_64_ENCODED_API_TOKEN"
-        },
-        "body": {
-        "approval": "{{ .event.diff.after.properties.approval_status  }}"
-        }
-    },
-    "publish": true
-    }
-  ```
-  </details>
-
-- Automation backend:  
-  This automation triggers a ServiceNow API to patch the approval field to `approved` or `rejected`.
-
-#### Deploy service from webhook listener
-
-This automation is triggered when the status of an entity of type `servicenowChangeRequest` is updated to *"approved"* or *"rejected"*.
-
-- Automation definition:
-    Remember to replace the GITLAB_PROJECT_ID and GITLAB_TRIGGER_TOKEN placeholders with your values
-  <details>
-  <summary><b>Deploy service from webhook listener (click to expand)</b></summary>
-
-  ```json showLineNumbers
-    {
-    "identifier": "approveSnowPipeline",
-    "title": "Approve or Deny GitLab Pipeline from SNOW",
-    "trigger": {
-        "type": "automation",
-        "event": {
-        "type": "ENTITY_UPDATED",
-        "blueprintIdentifier": "servicenowChangeRequest"
-        },
-        "condition": {
-        "type": "JQ",
-        "expressions": [
-            ".diff.after.properties.approval == \"approved\"",
-            ".diff.after.properties.approval == \"rejected\""
-        ],
-        "combinator": "or"
-        }
-    },
-    "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}",
-        "agent": false,
-        "synchronized": false,
-        "method": "POST",
-        "headers": {
-        "RUN_ID": "{{ .run.id }}"
-        },
-        "body": {
-        "port_context": {
-            "runId": "{{ .run.id }}"
-        },
-        "approval_status": "{{ .event.diff.after.properties.approval  }}",
-        "system_id": "{{ .event.diff.after.identifier  }}",
-        "deploy_run_id": "{{ .event.diff.after.properties.tags }}"
-        }
-    },
-    "publish": true
-    }
-  ```
-  </details>
-
-- Automation backend:  
-  It triggers the same GitLab pipeline to deploy the service.
-
 
 ## Conclusion
 
