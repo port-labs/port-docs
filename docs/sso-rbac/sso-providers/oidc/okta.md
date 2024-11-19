@@ -103,7 +103,7 @@ Under `General` tab:
 
 ## SCIM Configuration (beta)
 
-In order to integrate Okta OIDC application with Port using SCIM, you will need to generate an additional Okta application.
+To use [SCIM](https://auth0.com/docs/authenticate/protocols/scim) with your Okta OIDC SSO setup, you will need to create an additional Okta application according to the following instructions:
 
 1. Create a new SSO application, of type SWA, and fill the form as below:
 
@@ -120,7 +120,7 @@ After setting up, reach out to Port's team. You will be provided with:
 - An SCIM `endpoint`
 - An SCIM `token`
 
-The `endpoint` and `token` will be used to complete the new SWA application.
+The `endpoint` and `token` will be used to complete the setup of the new SWA application.
 
 
    3. Open the Provisioning tab in your application, and under `Integration` fill the following:
