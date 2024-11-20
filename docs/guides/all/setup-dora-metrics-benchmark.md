@@ -67,8 +67,8 @@ Lower rates indicate more stable releases and better quality control.
 Teams with a higher deployment frequency may also have a higher error rate.
 
 - Elite: Less than 5%
-- Medium: Less than 10%
 - High: Less than 20%
+- Medium: Less than 10%
 - Low: More than 20%
 
 </TabItem>
