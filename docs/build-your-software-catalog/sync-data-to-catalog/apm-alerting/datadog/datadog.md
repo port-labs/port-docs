@@ -11,6 +11,8 @@ import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-t
 import DatadogBlueprint from "../resources/datadog/\_example_datadog_alert_blueprint.mdx";
 import DatadogConfiguration from "../resources/datadog/\_example_datadog_webhook_configuration.mdx"
 import DatadogMicroserviceBlueprint from "../resources/datadog/\_example_datadog_microservice.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Datadog
 
@@ -45,57 +47,26 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
-
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 <h2> Prerequisites </h2>
 
 <Prerequisites />
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
 
-| Parameter                                | Description                                                                                                                                | Example                          | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | ------- |
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅      |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅      |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅      |
-| `integration.secrets.datadogApiKey`       | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)     |         | ✅      |
-| `integration.secrets.datadogApplicationKey`         | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)     |                  | ✅      |
-| `integration.config.datadogBaseUrl` | The base Datadog host. Defaults to https://api.datadoghq.com. If in EU, use https://api.datadoghq.eu |    | ✅      |
-| `integration.secrets.datadogWebhookToken`  | Datadog webhook token. Learn [more](https://docs.datadoghq.com/integrations/webhooks/#setup)    |      | ❌      |
-| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                         | https://my-ocean-integration.com | ✅       |
+For details about the available parameters for the installation, see the table below.
 
-<HelmParameters/>
-
-<br/>
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-datadog-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set scheduledResyncInterval=60 \
-  --set integration.identifier="my-datadog-integration"  \
-  --set integration.type="datadog"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.config.datadogBaseUrl="https://api.datadoghq.com"  \
-  --set integration.secrets.datadogApiKey="<your-datadog-api-key>"  \
-  --set integration.secrets.datadogApplicationKey="<your-datadog-application-key>" 
-```
+<OceanRealtimeInstallation integration="datadog" />
 
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-datadog-integration` in your git repository with the content:
 
@@ -183,6 +154,23 @@ kubectl apply -f my-ocean-datadog-integration.yaml
 
 </TabItem>
 </Tabs>
+
+This table summarizes the available parameters for the installation.
+
+| Parameter                                   | Description                                                                                                                           | Example                          | Required |
+|---------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
+| `port.clientId`                             | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)         |                                  | ✅        |
+| `port.clientSecret`                         | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅        |
+| `port.baseUrl`                              | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                               |                                  | ✅        |
+| `integration.secrets.datadogApiKey`         | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token) |                                  | ✅        |
+| `integration.secrets.datadogApplicationKey` | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)   |                                  | ✅        |
+| `integration.config.datadogBaseUrl`         | The base Datadog host. Defaults to https://api.datadoghq.com. If in EU, use https://api.datadoghq.eu                                  |                                  | ✅        |
+| `integration.secrets.datadogWebhookToken`   | Datadog webhook token. Learn [more](https://docs.datadoghq.com/integrations/webhooks/#setup)                                          |                                  | ❌        |
+| `integration.config.appHost`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                 | https://my-ocean-integration.com | ✅        |
+
+<HelmParameters/>
+
+<br/>
 
 <AdvancedConfig/>
 
@@ -432,6 +420,532 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
 Additional examples of blueprints and the relevant integration configurations can be found on the datadog [examples page](example.md)
+
+## Let's Test It
+
+This section includes a sample response data from Datadog. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Datadog:
+
+<details>
+<summary> Monitor response data</summary>
+
+```json showLineNumbers
+{
+  "id":15173866,
+  "org_id":1000147697,
+  "type":"query alert",
+  "name":"A change @webhook-PORT",
+  "message":"A change has happened",
+  "tags":[
+    "app:webserver"
+  ],
+  "query":"change(avg(last_5m),last_1h):avg:datadog.agent.running{local} by {version,host} > 40",
+  "options":{
+    "thresholds":{
+        "critical":40.0,
+        "warning":30.0
+    },
+    "notify_audit":false,
+    "include_tags":true,
+    "new_group_delay":60,
+    "notify_no_data":false,
+    "timeout_h":0,
+    "silenced":{
+    }
+  },
+  "multi":true,
+  "created_at":1706707941000,
+  "created":"2024-01-31T13:32:21.270116+00:00",
+  "modified":"2024-02-02T16:31:40.516062+00:00",
+  "deleted":"None"[
+    "REDACTED"
+  ],
+  "restricted_roles":"None"[
+    "REDACTED"
+  ],
+  "priority":5,
+  "overall_state_modified":"2024-03-08T20:52:46+00:00",
+  "overall_state":"No Data",
+  "creator":{
+    "name":"John Doe",
+    "email":"john.doe@gmail.com",
+    "handle":"john.doe@gmail.com",
+    "id":1001199545
+  },
+  "matching_downtimes":[
+  ]
+}
+```
+
+</details>
+
+<details>
+<summary>Service response data</summary>
+
+```json showLineNumbers
+{
+   "type":"service-definition",
+   "id":"04fbab48-a233-4592-8c53-d1bfe282e6c3",
+   "attributes":{
+      "meta":{
+         "last-modified-time":"2024-05-29T10:31:06.833444245Z",
+         "github-html-url":"",
+         "ingestion-source":"api",
+         "origin":"unknown",
+         "origin-detail":"",
+         "warnings":[
+            {
+               "keyword-location":"/properties/integrations/properties/opsgenie/properties/service-url/pattern",
+               "instance-location":"/integrations/opsgenie/service-url",
+               "message":"does not match pattern '^(https?://)?[a-zA-Z\\\\d_\\\\-.]+\\\\.opsgenie\\\\.com/service/([a-zA-Z\\\\d_\\\\-]+)/?$'"
+            },
+            {
+               "keyword-location":"/properties/integrations/properties/pagerduty/properties/service-url/pattern",
+               "instance-location":"/integrations/pagerduty/service-url",
+               "message":"does not match pattern '^(https?://)?[a-zA-Z\\\\d_\\\\-.]+\\\\.pagerduty\\\\.com/service-directory/(P[a-zA-Z\\\\d_\\\\-]+)/?$'"
+            }
+         ],
+         "ingested-schema-version":"v2.1"
+      },
+      "schema":{
+         "schema-version":"v2.2",
+         "dd-service":"inventory-management",
+         "team":"Inventory Management Team",
+         "application":"Inventory System",
+         "tier":"Tier 1",
+         "description":"Service for managing product inventory and stock levels.",
+         "lifecycle":"production",
+         "contacts":[
+            {
+               "name":"Inventory Team",
+               "type":"email",
+               "contact":"inventory-team@example.com"
+            },
+            {
+               "name":"Warehouse Support",
+               "type":"email",
+               "contact":"warehouse-support@example.com"
+            }
+         ],
+         "links":[
+            {
+               "name":"Repository",
+               "type":"repo",
+               "provider":"GitHub",
+               "url":"https://github.com/example/inventory-service"
+            },
+            {
+               "name":"Runbook",
+               "type":"runbook",
+               "provider":"Confluence",
+               "url":"https://wiki.example.com/runbooks/inventory-service"
+            }
+         ],
+         "tags":[
+            "inventory",
+            "stock"
+         ],
+         "integrations":{
+            "pagerduty":{
+               "service-url":"https://pagerduty.com/services/inventory"
+            },
+            "opsgenie":{
+               "service-url":"https://opsgenie.com/services/inventory",
+               "region":"US"
+            }
+         },
+         "extensions":{
+            "qui_6":{
+               
+            }
+         }
+      }
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> SLO response data</summary>
+
+```json showLineNumbers
+{
+   "id":"b6869ae6189d59baa421feb8b437fe9e",
+   "name":"Availability SLO for shopping-cart service",
+   "tags":[
+      "service:shopping-cart",
+      "env:none"
+   ],
+   "monitor_tags":[
+      
+   ],
+   "thresholds":[
+      {
+         "timeframe":"7d",
+         "target":99.9,
+         "target_display":"99.9"
+      }
+   ],
+   "type":"monitor",
+   "type_id":0,
+   "description":"This SLO tracks the availability of the shopping-cart service. Availability is measured as the number of successful requests divided by the number of total requests for the service",
+   "timeframe":"7d",
+   "target_threshold":99.9,
+   "monitor_ids":[
+      15173866,
+      15216083,
+      15254771
+   ],
+   "creator":{
+      "name":"John Doe",
+      "handle":"john.doe@gmail.com",
+      "email":"john.doe@gmail.com"
+   },
+   "created_at":1707215619,
+   "modified_at":1707215619
+}           
+```
+
+</details>
+
+<details>
+
+<summary> SLO history response data</summary>
+
+```json showLineNumbers
+{
+  "thresholds": {
+    "7d": {
+      "timeframe": "7d",
+      "target": 99,
+      "target_display": "99."
+    }
+  },
+  "from_ts": 1719254776,
+  "to_ts": 1719859576,
+  "type": "monitor",
+  "type_id": 0,
+  "slo": {
+    "id": "5ec82408e83c54b4b5b2574ee428a26c",
+    "name": "Host {{host.name}} with IP {{host.ip}} is not having enough memory",
+    "tags": [
+      "p69hx03",
+      "pages-laptop"
+    ],
+    "monitor_tags": [],
+    "thresholds": [
+      {
+        "timeframe": "7d",
+        "target": 99,
+        "target_display": "99."
+      }
+    ],
+    "type": "monitor",
+    "type_id": 0,
+    "description": "Testing SLOs from DataDog",
+    "timeframe": "7d",
+    "target_threshold": 99,
+    "monitor_ids": [
+      147793
+    ],
+    "creator": {
+      "name": "John Doe",
+      "handle": "janesmith@gmail.com",
+      "email": "janesmith@gmail.com"
+    },
+    "created_at": 1683878238,
+    "modified_at": 1684773765
+  },
+  "overall": {
+    "name": "Host {{host.name}} with IP {{host.ip}} is not having enough memory",
+    "preview": false,
+    "monitor_type": "query alert",
+    "monitor_modified": 1683815332,
+    "errors": null,
+    "span_precision": 2,
+    "history": [
+      [
+        1714596313,
+        1
+      ]
+    ],
+    "uptime": 3,
+    "sli_value": 10,
+    "precision": {
+      "custom": 2,
+      "7d": 2
+    },
+    "corrections": [],
+    "state": "breached"
+  }
+}
+```
+
+</details>
+
+<details>
+
+<summary> Service metric response data</summary>
+
+:::tip Response Enrichment
+The Datadog response is enriched with a variety of metadata fields, including:
+
+- `__service`: The name or identifier of the service generating the data.
+- `__query_id`: A unique identifier for the query that generated the data.
+- `__query`: The original query used to retrieve the data.
+- `__env`: The environment associated with the data (e.g., production, staging).
+
+This enrichment significantly enhances the usability of the Datadog response by providing valuable context and facilitating easier analysis and troubleshooting.
+:::
+
+```json showLineNumbers
+{
+  "status": "ok",
+  "res_type": "time_series",
+  "resp_version": 1,
+  "query": "avg:system.mem.used{service:inventory-management,env:staging}",
+  "from_date": 1723796537000,
+  "to_date": 1723797137000,
+  "series": [
+    {
+      "unit": [
+        {
+          "family": "bytes",
+          "id": 2,
+          "name": "byte",
+          "short_name": "B",
+          "plural": "bytes",
+          "scale_factor": 1.0
+        }
+      ],
+      "query_index": 0,
+      "aggr": "avg",
+      "metric": "system.mem.used",
+      "tag_set": [],
+      "expression": "avg:system.mem.used{env:staging,service:inventory-management}",
+      "scope": "env:staging,service:inventory-management",
+      "interval": 2,
+      "length": 39,
+      "start": 1723796546000,
+      "end": 1723797117000,
+      "pointlist": [
+        [1723796546000.0, 528986112.0],
+        [1723796562000.0, 531886080.0],
+        [1723796576000.0, 528867328.0],
+        [1723796592000.0, 522272768.0],
+        [1723796606000.0, 533704704.0],
+        [1723796846000.0, 533028864.0],
+        [1723796862000.0, 527417344.0],
+        [1723796876000.0, 531513344.0],
+        [1723796892000.0, 533577728.0],
+        [1723796906000.0, 533471232.0],
+        [1723796922000.0, 528125952.0],
+        [1723796936000.0, 530542592.0],
+        [1723796952000.0, 530767872.0],
+        [1723796966000.0, 526966784.0],
+        [1723796982000.0, 528560128.0],
+        [1723796996000.0, 530792448.0],
+        [1723797012000.0, 527384576.0],
+        [1723797026000.0, 529534976.0],
+        [1723797042000.0, 521650176.0],
+        [1723797056000.0, 531001344.0],
+        [1723797072000.0, 525955072.0],
+        [1723797086000.0, 529469440.0],
+        [1723797102000.0, 532279296.0],
+        [1723797116000.0, 526979072.0]
+      ],
+      "display_name": "system.mem.used",
+      "attributes": {}
+    }
+  ],
+  "values": [],
+  "times": [],
+  "message": "",
+  "group_by": [],
+  // highlight-start
+  "__service": "inventory-management",
+  "__query_id": "avg:system.mem.used/service:inventory-management/env:staging",
+  "__query": "avg:system.mem.used",
+  "__env": "staging"
+  // highlight-end
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Monitor entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "15173866",
+  "title": "A change @webhook-PORT",
+  "icon": "Datadog",
+  "blueprint": "datadogMonitor",
+  "team": [],
+  "properties": {
+    "tags": [
+      "app:webserver"
+    ],
+    "overallState": "No Data",
+    "priority": "5",
+    "createdAt": "2024-01-31T13:32:21.270116+00:00",
+    "updatedAt": "2024-02-02T16:31:40.516062+00:00",
+    "createdBy": "john.doe@gmail.com",
+    "monitorType": "query alert"
+  },
+  "relations": {},
+  "createdAt": "2024-05-29T09:43:34.750Z",
+  "createdBy": "<port-client-id>",
+  "updatedAt": "2024-05-29T09:43:34.750Z",
+  "updatedBy": "<port-client-id>"
+}
+```
+
+</details>
+
+<details>
+<summary>Service entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "inventory-management",
+  "title": "inventory-management",
+  "icon": "Datadog",
+  "blueprint": "datadogService",
+  "team": [],
+  "properties": {
+    "owners": [
+      "inventory-team@example.com",
+      "warehouse-support@example.com"
+    ],
+    "links": [
+      "https://github.com/example/inventory-service",
+      "https://wiki.example.com/runbooks/inventory-service"
+    ],
+    "description": "Service for managing product inventory and stock levels.",
+    "tags": [
+      "inventory",
+      "stock"
+    ],
+    "application": "Inventory System"
+  },
+  "relations": {},
+  "createdAt": "2024-05-29T10:31:44.283Z",
+  "createdBy": "<port-client-id>",
+  "updatedAt": "2024-05-29T10:31:44.283Z",
+  "updatedBy": "<port-client-id>"
+}
+```
+
+</details>
+
+<details>
+<summary>SLO entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "b6869ae6189d59baa421feb8b437fe9e",
+  "title": "Availability SLO for shopping-cart service",
+  "icon": "Datadog",
+  "blueprint": "datadogSlo",
+  "team": [],
+  "properties": {
+    "description": "This SLO tracks the availability of the shopping-cart service. Availability is measured as the number of successful requests divided by the number of total requests for the service",
+    "updatedAt": "2024-02-06T10:33:39Z",
+    "createdBy": "ahosea15@gmail.com",
+    "sloType": "monitor",
+    "targetThreshold": "99.9",
+    "tags": [
+      "service:shopping-cart",
+      "env:none"
+    ],
+    "createdAt": "2024-02-06T10:33:39Z"
+  },
+  "relations": {
+    "monitors": [
+      "15173866",
+      "15216083",
+      "15254771"
+    ],
+    "services": [
+      "shopping-cart"
+    ]
+  },
+  "createdAt": "2024-05-29T09:43:51.946Z",
+  "createdBy": "<port-client-id>",
+  "updatedAt": "2024-05-29T12:02:01.559Z",
+  "updatedBy": "<port-client-id>"
+}
+```
+
+</details>
+
+<details>
+<summary>SLO history entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "5ec82408e83c54b4b5b2574ee428a26c",
+  "title": "Host {{host.name}} with IP {{host.ip}} is not having enough memory",
+  "icon": "Datadog",
+  "blueprint": "datadogSloHistory",
+  "team": [],
+  "properties": {
+    "sampling_end_date": "2024-07-01T18:46:16Z",
+    "sliValue": 10,
+    "sampling_start_date": "2024-06-24T18:46:16Z"
+  },
+  "relations": {
+    "slo": "5ec82408e83c54b4b5b2574ee428a26c"
+  },
+  "createdAt": "2024-07-01T09:43:51.946Z",
+  "createdBy": "<port-client-id>",
+  "updatedAt": "2024-07-01T12:02:01.559Z",
+  "updatedBy": "<port-client-id>"
+}
+```
+
+</details>
+
+<details>
+<summary>Service metric entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "avg:system.disk.used/service:inventory-management/env:prod",
+  "title": "avg:system.disk.used{service:inventory-management,env:prod}",
+  "icon": null,
+  "blueprint": "datadogServiceMetric",
+  "team": [],
+  "properties": {
+    "query": "avg:system.disk.used",
+    "series": [],
+    "res_type": "time_series",
+    "from_date": "2024-08-16T07:32:00Z",
+    "to_date": "2024-08-16T08:02:00Z",
+    "env": "prod"
+  },
+  "relations": {
+    "service": "inventory-management"
+  },
+  "createdAt": "2024-08-15T15:54:36.638Z",
+  "createdBy": "<port-client-id>",
+  "updatedAt": "2024-08-16T08:02:02.399Z",
+  "updatedBy": "<port-client-id>"
+}
+```
+
+</details>
 
 
 ## Relevant Guides
