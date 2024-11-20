@@ -295,4 +295,4 @@ You will be provided with:
 
  The `endpoint` and `token` will be used to set up the SCIM integration in your identity provider.
 
-After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-new-azure-ad-connections#configure-scim-in-azure-ad-for-oidc-apps) to enable SCIM. Begin in step 3, in registering a new application.
+After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-new-azure-ad-connections#configure-scim-in-azure-ad-for-oidc-apps) to enable SCIM. Begin in step 3, by registering a new application.
