@@ -276,6 +276,10 @@ Port can query the group membership of users who log in through the AzureAD SSO,
 
 ## SCIM Configuration (beta)
 
+:::info
+Due to technical limitations, OIDC integrations does not directly support SCIM. You will be required to set up another application, which will be responsible for provisioning based on SCIM protocol. In order to grant the user access to Port, you will also need to assign the user to the application created in the guide above.
+:::
+
 Entra ID (AzureAD) OIDC applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim).
 
 <ScimFunctionality/>
@@ -291,4 +295,4 @@ You will be provided with:
 
  The `endpoint` and `token` will be used to set up the SCIM integration in your identity provider.
 
-After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-new-azure-ad-connections#configure-scim-in-azure-ad-for-oidc-apps) to enable SCIM.
+After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-new-azure-ad-connections#configure-scim-in-azure-ad-for-oidc-apps) to enable SCIM. Begin in step 3, in registering a new application.

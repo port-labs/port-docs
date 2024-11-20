@@ -137,6 +137,10 @@ To allow automatic Okta group support in Port, please follow these steps:
 
 ## SCIM Configuration (beta)
 
+:::info
+Due to technical limitations, OIDC integrations does not directly support SCIM. You will be required to set up another application, which will be responsible for provisioning based on SCIM protocol. In order to grant the user access to Port, you will also need to assign the user to the application created in the guide above.
+:::
+
 Okta OIDC applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim).
 
 <ScimFunctionality/>
