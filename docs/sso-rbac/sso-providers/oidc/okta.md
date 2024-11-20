@@ -178,7 +178,7 @@ The `endpoint` and `token` will be used to complete the setup of the new SWA app
    - Authentication Mode: `HTTP Header`.
    - Authorization: The `token` you received from Port.
        <br/><br/>
-      <img src="/img/sso/okta/OktaSCIMConf.png" width="80%" border="1px" />
+      <img src="/img/sso/okta/OKTASCIMconf.png" width="80%" border="1px" />
 
     After configuration, press the `Test Connector Configuration` and confirm the integration was configured correctly.
 
