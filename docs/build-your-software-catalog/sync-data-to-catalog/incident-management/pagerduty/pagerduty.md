@@ -159,6 +159,8 @@ kubectl apply -f my-ocean-pagerduty-integration.yaml
 
 </Tabs>
 
+<h2> Available Parameters </h2>
+
 This table summarizes the available parameters for the installation.
 
 | Parameter                        | Description                                                                                                                         | Required |
