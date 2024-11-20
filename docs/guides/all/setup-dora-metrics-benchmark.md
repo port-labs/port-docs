@@ -68,7 +68,7 @@ Teams with a higher deployment frequency may also have a higher error rate.
 
 - Elite: Less than 5%
 - Medium: Less than 10%
-- High: Between 5% and 10%
+- High: Less than 20%
 - Low: More than 20%
 
 </TabItem>
