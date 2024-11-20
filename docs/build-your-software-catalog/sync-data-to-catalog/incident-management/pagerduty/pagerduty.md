@@ -159,8 +159,6 @@ kubectl apply -f my-ocean-pagerduty-integration.yaml
 
 </Tabs>
 
-<h2> Available Parameters </h2>
-
 This table summarizes the available parameters for the installation.
 
 | Parameter                        | Description                                                                                                                         | Required |
@@ -171,7 +169,7 @@ This table summarizes the available parameters for the installation.
 | `integration.identifier`         | Change the identifier to describe your integration                                                                                  | ✅        |
 | `integration.type`               | The integration type                                                                                                                | ✅        |
 | `integration.eventListener.type` | The event listener type                                                                                                             | ✅        |
-| `integration.secrets.token`      | PagerDuty API token                                                                                                                 | ✅        |
+| `integration.secrets.token`      | PagerDuty API token, docs can be found [here](https://developer.pagerduty.com/docs/ZG9jOjExMDI5NTUx-authentication)                 | ✅        |
 | `integration.config.apiUrl`      | Pagerduty api url. If not specified, the default will be https://api.pagerduty.com                                                  | ✅        |
 | `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in PagerDuty             | ✅        |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
