@@ -93,30 +93,19 @@ AWS::ReadOnlyAccess
         {
             "Effect": "Allow",
             "Action": "sts:AssumeRole",
-            "Resource": "arn:aws:iam::<root_account>:role/<RootRole>"
-        }
-    ]
-}
-{
-    "Version": "2012-10-17",
-    "Statement": [
+            "Resource": [
+                "arn:aws:iam::<root_account>:role/<RootRole>",
+                "arn:aws:iam::<member_account>:role/<accountReadRoleName>"
+            ]
+        },
         {
             "Effect": "Allow",
-            "Action": "sts:AssumeRole",
-            "Resource": "arn:aws:iam::<member_account>:role/<accountReadRoleName>"
-        }
-    ]
-}
-{
-    "Statement": [
-        {
             "Action": "account:ListRegions",
-            "Effect": "Allow",
             "Resource": "*"
         }
-    ],
-    "Version": "2012-10-17"
+    ]
 }
+
 ```
 </details>
 
