@@ -1,6 +1,6 @@
 ---
 title: "Okta (SAML)"
-sidebar_position: 4
+sidebar_position: 2
 description: Integrate Okta with Port using SAML
 ---
 
@@ -69,6 +69,8 @@ These groups will be ingested into Port as teams, enabling you to manage user pe
 Okta supports [SCIM](https://auth0.com/docs/authenticate/protocols/scim) for SAML applications.
 
 <ScimFunctionality/>
+
+### Setup SCIM
 
 To set up SCIM for AzureAD SAML based applications, contact Port's support team.
 

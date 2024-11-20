@@ -63,6 +63,8 @@ AzureAD SAML applications support [SCIM](https://auth0.com/docs/authenticate/pro
 
 <ScimFunctionality/>
 
+### Setup SCIM
+
 To set up SCIM for AzureAD SAML based applications, contact Port's support team.
 
 You will be provided with:
