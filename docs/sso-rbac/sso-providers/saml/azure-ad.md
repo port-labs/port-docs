@@ -4,6 +4,8 @@ sidebar_position: 1
 description: Integrate Azure AD with Port using SAML
 ---
 
+import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
+
 # How to configure Azure AD
 
 Follow this step-by-step guide to configure the integration between Port and Azure AD using a SAML application
@@ -58,6 +60,8 @@ In order to expose your Azure groups to Port via the application, do the followi
 ## SCIM Configuration (beta)
 
 AzureAD SAML applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim). 
+
+<ScimFunctionality/>
 
 To set up SCIM for AzureAD SAML based applications, contact Port's support team.
 

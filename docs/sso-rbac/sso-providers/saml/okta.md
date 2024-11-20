@@ -4,6 +4,8 @@ sidebar_position: 4
 description: Integrate Okta with Port using SAML
 ---
 
+import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
+
 # How to configure Okta
 
 Follow this step-by-step guide to configure the integration between Port and Okta using a SAML application.
@@ -65,6 +67,8 @@ These groups will be ingested into Port as teams, enabling you to manage user pe
  ## SCIM Configuration (beta)
 
 Okta supports [SCIM](https://auth0.com/docs/authenticate/protocols/scim) for SAML applications.
+
+<ScimFunctionality/>
 
 To set up SCIM for AzureAD SAML based applications, contact Port's support team.
 
