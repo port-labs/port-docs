@@ -1,10 +1,11 @@
 ---
 title: "Okta (OIDC)"
-sidebar_position: 1
+sidebar_position: 2
 description: Integrate Okta with Port
 ---
 
 import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
+import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/_scim_oidc_limitation.mdx"
 
 # How to configure Okta
 
@@ -136,6 +137,8 @@ To allow automatic Okta group support in Port, please follow these steps:
 
 
 ## SCIM Configuration (beta)
+
+<ScimLimitation/>
 
 Okta OIDC applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim).
 
