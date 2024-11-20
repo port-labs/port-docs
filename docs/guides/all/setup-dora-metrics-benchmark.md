@@ -153,14 +153,9 @@ We will create a scorecard that assesses each service against the DORA benchmark
             "combinator": "and",
             "conditions": [
                {
+                  "property": "deployment_frequency",
                   "operator": ">=",
-                  "property": "deployment_frequency",
                   "value": 1
-               },
-               {
-                  "property": "deployment_frequency",
-                  "operator": "<",
-                  "value": 7
                }
             ]
          }
@@ -174,14 +169,9 @@ We will create a scorecard that assesses each service against the DORA benchmark
             "combinator": "and",
             "conditions": [
                {
+                  "property": "deployment_frequency",
                   "operator": ">=",
-                  "property": "deployment_frequency",
                   "value": 0.25
-               },
-               {
-                  "property": "deployment_frequency",
-                  "operator": "<",
-                  "value": 1
                }
             ]
          }
@@ -205,16 +195,11 @@ We will create a scorecard that assesses each service against the DORA benchmark
       {
          "identifier": "lead_time_high",
          "title": "Lead Time - High",
-         "description": "Lead time is between one day and one week.",
+         "description": "Lead time is less than one week.",
          "level": "High",
          "query": {
             "combinator": "and",
             "conditions": [
-               {
-                  "property": "lead_time_for_change",
-                  "operator": ">=",
-                  "value": 24
-               },
                {
                   "property": "lead_time_for_change",
                   "operator": "<",
@@ -226,16 +211,11 @@ We will create a scorecard that assesses each service against the DORA benchmark
       {
          "identifier": "lead_time_medium",
          "title": "Lead Time - Medium",
-         "description": "Lead time is between one week and one month.",
+         "description": "Lead time is less than one month.",
          "level": "Medium",
          "query": {
             "combinator": "and",
             "conditions": [
-               {
-                  "property": "lead_time_for_change",
-                  "operator": ">=",
-                  "value": 168
-               },
                {
                   "property": "lead_time_for_change",
                   "operator": "<",
@@ -270,11 +250,6 @@ We will create a scorecard that assesses each service against the DORA benchmark
             "conditions": [
                {
                   "property": "changeFailureRate",
-                  "operator": ">=",
-                  "value": 5
-               },
-               {
-                  "property": "changeFailureRate",
                   "operator": "<",
                   "value": 10
                }
@@ -289,11 +264,6 @@ We will create a scorecard that assesses each service against the DORA benchmark
          "query": {
             "combinator": "and",
             "conditions": [
-               {
-                  "property": "changeFailureRate",
-                  "operator": ">=",
-                  "value": 10
-               },
                {
                   "property": "changeFailureRate",
                   "operator": "<",
@@ -328,11 +298,6 @@ We will create a scorecard that assesses each service against the DORA benchmark
             "conditions": [
                {
                   "property": "mean_time_to_recovery",
-                  "operator": ">=",
-                  "value": 60
-               },
-               {
-                  "property": "mean_time_to_recovery",
                   "operator": "<",
                   "value": 1440
                }
@@ -342,20 +307,15 @@ We will create a scorecard that assesses each service against the DORA benchmark
       {
          "identifier": "mttr_medium",
          "title": "MTTR - Medium",
-         "description": "Recovery time is less than one day.",
+         "description": "Recovery time is less than one week.",
          "level": "Medium",
          "query": {
             "combinator": "and",
             "conditions": [
                {
                   "property": "mean_time_to_recovery",
-                  "operator": ">=",
-                  "value": 60
-               },
-               {
-                  "property": "mean_time_to_recovery",
                   "operator": "<",
-                  "value": 1440
+                  "value": 10080
                }
             ]
          }
