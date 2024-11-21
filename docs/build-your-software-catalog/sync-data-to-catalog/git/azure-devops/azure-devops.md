@@ -2,180 +2,44 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import AzureDevopsResources from './\_azuredevops_exporter_supported_resources.mdx'
 
+
 # Azure DevOps
 
-Our integration with Azure DevOps allows you to export objects to Port as entities of existing blueprints. The integration supports real-time event processing so Port always provides an accurate real-time representation of your Azure DevOps resources.
+Port's Azure DevOps integration allows you to model Azure DevOps resources in your software catalog and ingest data into them.
 
-## Common use cases
+## Overview
 
-Our Azure DevOps integration makes it easy to fill the software catalog with data directly from your organization, for example:
+This integration allows you to:
 
-- Map most of the resources in the organization, including **projects**, **repositories**, **pipelines**, **pull requests**, **teams** and **members**.
+- Map and orgaize your desired Azure DevOps resources and their metadata in Port (see supported resources below).
 - Watch for Azure DevOps object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Manage Port entities using GitOps.
 
-## Installation
 
-To install Port's Azure DevOps integration, follow the [installation](./installation.md) guide.
+### Supported Resources
 
-## Ingesting Git objects
-
-This integration allows you to ingest a variety of objects resources provided by the Azure DevOps API. It allows you to perform ETL operations on data from the Azure DevOps API into the desired data model.
-
-This integration uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
-
-Here is an example snippet from the config which demonstrates the ETL process for getting `pull-request` data from Azure DevOps into the software catalog:
-
-```yaml showLineNumbers
-resources:
-  # Extract
-  # highlight-start
-  - kind: pull-request
-    selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-    # highlight-end
-    port:
-      entity:
-        mappings:
-          # Transform & Load
-          # highlight-start
-          identifier: >-
-            .repository.project.name + "/" + .repository.name + (.pullRequestId
-            | tostring) | gsub(" "; "")
-          blueprint: '"azureDevopsPullRequest"'
-          properties:
-            creator: .createdBy.uniqueName
-            status: .status
-            reviewers: '[.reviewers[].uniqueName]'
-            createdAt: .creationDate
-          relations:
-            repository: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
-        # highlight-end
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the different Azure DevOps API routes.
-
-### Integration configuration
-
-The integration's configuration is how you specify the exact resources you want to query from your organization, and which entities and properties you want to fill with the received data.
-
-Here is an example for the integration configuration block:
-
-```yaml showLineNumbers
-resources:
-  - kind: repository
-    selector:
-      query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
-    port:
-      entity:
-        mappings:
-          identifier: .project.name + "/" + .name # The Entity identifier will be the repository name.
-          title: .name
-          blueprint: '"azureDevopsRepository"'
-          properties:
-            url: .url
-            readme: file://README.md
-```
-
-### Configuration structure
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: repository
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for an object from the Azure DevOps API:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: repository
-        selector:
-        ...
-  ```
+The resources that can be ingested from Azure DevOps into Port are listed below.
 
   <AzureDevopsResources/>
 
-#### Filtering unwanted objects
 
-The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog:
+## Setup
 
-  ```yaml showLineNumbers
-  resources:
-    - kind: repository
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-      # highlight-end
-      port:
-  ```
+To install Port's Azure DevOps integration, follow the [installation](./installation.md) guide.
 
-For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
+## Configuration
 
-```yaml showLineNumbers
-query: .name | startswith("service")
-```
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-<br/>
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-:::tip WIQL Support
-The Ocean Azure DevOps integration supports querying objects from the `work-item` kind using [WIQL](https://learn.microsoft.com/en-us/azure/devops/boards/queries/wiql-syntax?view=azure-devops), providing fine-grained control over which work items are ingested into Port.
-
-To leverage WIQL filtering, add a `wiql` key with your WIQL query as the value within the `selector` object. For example:
-
-```yaml showLineNumbers
-resources:
-  - kind: work-item  # WIQL filtering can only be used with the "work-item" kind
-    selector:
-      query: "true" 
-      wiql: "[System.WorkItemType] = 'Task' AND [System.State] = 'Active'"  # WIQL query, will only ingest work items of type "Task" whose state is "Active"
-    port:
-```
-
-:::
-
-The `port`, `entity` and the `mappings` keys open the section used to map the Azure DevOps API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: repository
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Azure DevOps API object to a Port entity. Each value is a JQ query.
-            identifier: '.project.name + "/" + .name | gsub(" "; "")'
-            title: .name
-            blueprint: '"azureDevopsRepository"'
-            properties:
-              url: .url
-              readme: file://README.md
-        # highlight-end
-    - kind: repository # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyRepositoryName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip
-  Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-## Permissions
-
-Port's Azure DevOps integration requires a personal access token, follow the instructions in the [installation](./installation.md#create-a-personal-access-token) guide.
 
 ## Examples
 
 Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+
+## Relevant Guides
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=AzureDevops).
 
 ## GitOps
 
