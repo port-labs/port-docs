@@ -27,7 +27,6 @@ import DynamoDBBlueprint from './storage/\_dynamodb.mdx'
 import ElasticacheBlueprint from './storage/\_elasticache.mdx'
 import RDSBlueprint from './storage/\_rds.mdx'
 import StorageAppConfig from './storage/\_port_app_config.mdx'
-import RegionPolicyEvaluator from  './src/components/RegionPolicyEvaluator'
 
 # Mapping Extra Resources
 
@@ -150,12 +149,6 @@ resources:
 ```
 
 In this example, resources in the `us-east-1` and `eu-west-1` regions are allowed, while `us-west-2` is denied.
-
-### Interactive Region Policy Evaluation Tool
-
-Use the tool below to test your `regionPolicy` configurations by specifying a region and providing `allow` and `deny` lists. This will help you determine if a region is allowed or denied based on your settings.
-
-<RegionPolicyEvaluator />
 
 ## Mapping the resource to Port
 
