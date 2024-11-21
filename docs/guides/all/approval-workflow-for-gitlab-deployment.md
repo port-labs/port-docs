@@ -18,7 +18,7 @@ In this workflow, a **developer** initiates a deployment request from **Port** u
 
 - **Port account**: If you don't have a Port account, you will need to [create one](https://app.getport.io/signup).
 - **GitLab environment**: This guide includes the creation of actions and automations that use a GitLab pipeline as their backend.
-- Access to a ServiceNow instance
+- Access to a ServiceNow instance.
 
 ## Data Model
 
