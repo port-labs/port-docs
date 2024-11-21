@@ -765,9 +765,8 @@ export const availableGuides = [
     {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","Dashboards"],
-        logos: ["GitHub"],
-        // category: "Getting started",
+        tags: ["Engineering metrics","GitHub","GitLab","Azure DevOps","Dashboards"],
+        logos: ["Git"],
         link: "/guides/all/setup-dora-metrics",
     },
     {
@@ -855,5 +854,12 @@ export const availableGuides = [
         tags: ["Actions", "Dashboards"],
         logos: ["Actions"],
         link: "/guides/all/setup-portal-announcements",
+    },
+    {
+        title: "Set up DORA Metrics benchmark",
+        description: "Track and improve engineering performance by setting up DORA metrics benchmark",
+        tags: ["Engineering metrics","Scorecards","Dashboards"],
+        logos: ["Git"],
+        link: "/guides/all/setup-dora-metrics-benchmark"
     },
 ]
