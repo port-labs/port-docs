@@ -368,6 +368,6 @@ The table widget should look like this:
     
   <img src="/img/guides/doraMetricsTeamScorecard.png" border="1px" />  
 
-<br></br>  
+<br/><br/>  
 
 Congratulations! 🎉 You have successfully created a DORA Metrics Benchmark scorecard in Port. 
