@@ -12,19 +12,26 @@ This guide demonstrates the power and flexibility of chaining self-service actio
 
 ## Use-case
 
-In this workflow, a **developer** initiates a deployment request from **Port** using a **Self-Service Action (SSA)**, which is linked to a **GitLab pipeline**. The pipeline progresses through **build**, **test**, and **deploy stages**. If code coverage passes a set threshold, the deployment proceeds. If coverage is insufficient, a **ServiceNow Change Request** (CR) is created in Port. A **Platform Engineer** can then approve or decline this CR, triggering subsequent actions in GitLab and ServiceNow based on their decision. 
+- A **developer** initiates a deployment via **Port's SSA**, triggering a **GitLab pipeline**.  
+- Pipeline stages: **build**, **test**, and **deploy**.  
+- If **code coverage** in **test** stage meets the threshold, deployment proceeds.  
+- If coverage fails, a **ServiceNow Change Request (CR)** is created.  
+- A **Platform Engineer** can **approve** or **decline** the CR in **Port**.
+- CR decisions in **ServiceNow UI** trigger **Port automation** to update the pipeline.  
+
 
 ## Prerequisites
 
-<<<<<<< HEAD
-- **Port account**: If you don't have a Port account, you will need to [create one](https://app.getport.io/signup)
-- **GitLab environment**: This guide includes the creation of actions and automations that use a GitLab pipeline as their backend
-- **ServiceNow instance access**: You need admin or developer-level access.
-=======
 - **Port account**: If you don't have a Port account, you will need to [create one](https://app.getport.io/signup).
 - **GitLab environment**: This guide includes the creation of actions and automations that use a GitLab pipeline as their backend.
-- Access to a ServiceNow instance.
->>>>>>> f250289715329abb5a237b5f10ad8ece310a015d
+- **ServiceNow instance access**: You need admin or developer-level access.
+- Create the following GitLab secrets:
+  - PORT_CLIENT_ID - Your port client id.
+  - PORT_CLIENT_SECRET - Your port client secret.
+  - SERVICENOW_INSTANCE_URL - The ServiceNow instance URL. For example https://example-id.service-now.com.
+  - SERVICENOW_API_TOKEN - A base64 encoded string of your servicenow credentials generated as `<username>:<password>`.
+  - Create a secret in Port named `servicenow-api-token` with the base64 token content
+
 
 ## Data Model
 
@@ -349,7 +356,7 @@ This automation is triggered when a run of type `approve_and_deploy_service` act
   </details>
 
 
-This automation is triggered when a `servicenowChangeRequest` is updated to *"approved"* or *"rejected"*.
+This automation is triggered when a `servicenowChangeRequest` is updated to *"approved"* or *"rejected"*
 
   <details>
   <summary><b>Deploy service from webhook listener (click to expand)</b></summary>
@@ -398,6 +405,9 @@ This automation is triggered when a `servicenowChangeRequest` is updated to *"ap
   ```
   </details>
 
+:::tip configure webhooks in ServiceNow
+Follow our documentation to [learn how to configure webhooks in ServiceNow](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow#alternative-installation-via-webhook)
+:::
 
 ### GitLab pipeline script
 This pipeline contains the logic for service deployment. The pipeline consists of three stages: **build**, **test** and **deploy**
@@ -664,3 +674,16 @@ deploy-to-cloud:
 Once all of the above components are created, you will have a the necessary setup to run the workflow described in the [scenario overview](#overview-of-use-case).
 
 You can use this chaining mechanism to create complex workflows for many use-cases, that involve multiple actions and automations, enabling you to streamline your DevOps processes. 
+
+## Let's test it!
+
+1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+2. Click on the `Deploy Service to Cluster` action
+3. Choose the service you want to deploy and select your environment
+  <img src='/img/guides/deployToClusterAction.png' width='40%' border='1px' />
+4. Select the new status
+5. Enter the name of the assignee or their email address
+6. Click on `Execute`
+7. Done! wait for the ticket's status and assignee to be changed in Jira
+
+Congrats 🎉 You've changed a ticket status and its assignee in Port 🔥
