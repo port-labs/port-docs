@@ -5,10 +5,13 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
+import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
 import DockerParameters from "./\_gitlab_one_time_docker_parameters.mdx"
 import AdvancedConfig from '/docs/generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Installation
 
@@ -213,67 +216,25 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+<h2> Prerequisites </h2>
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<Prerequisites />
 
-| Parameter                          | Description                                                                                                                         | Example                          | Required |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------- |
-| `port.clientId`                    | Your Port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅      |
-| `port.clientSecret`                | Your Port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) |                                  | ✅      |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅      |
-| `integration.secrets.tokenMapping` | The [token mapping](#tokenmapping) configuration used to query GitLab                                                               |                                  | ✅      |
-| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in GitLab                | https://my-ocean-integration.com | ✅       |
-| `integration.config.gitlabHost`    | (for self-hosted GitLab) the URL of your GitLab instance                                                                            | https://my-gitlab.com            | ❌      |
-| `integration.secrets.tokenGroupHooksOverrideMapping`    | The [token group hooks override mapping](#tokengrouphooksoverridemapping) configuration used to create custom webhooks on groups                                                                            |             | ❌      |
+For details about the available parameters for the installation, see the table below.
 
-<HelmParameters/>
-
-<br/>
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-gitlab-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true \
-  --set scheduledResyncInterval=120 \
-  --set integration.identifier="my-gitlab-integration"  \
-  --set integration.type="gitlab"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.tokenMapping="\{\"TOKEN\": [\"GROUP_NAME/**\"]\}"
-```
+<OceanRealtimeInstallation integration="gitlab" />
 
 <PortApiRegionTip/>
 
-It is also possible to get Port's UI to generate your installation command for you, Port will inject values such as your Port client ID and client secret directly into the command, making it easier to get started.
-
-Follow these steps to setup the integration through Port's UI:
-
-1. Click the ingest button in Port Builder Page for the blueprint you want to ingest using GitLab:
-
-   ![DevPortal Builder ingest button](/img/integrations/gitlab/DevPortalBuilderIngestButton.png)
-
-2. Select GitLab under the Git providers category:
-
-   ![DevPortal Builder GitLab option](/img/integrations/gitlab/DevPortalBuilderGitLabOption.png)
-
-3. Copy the helm installation command and set the [required configuration](#configuring-the-gitlab-integration);
-
-4. Run the helm command with the updated parameters to install the integration in your Kubernetes cluster.
-
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-gitlab-integration` in your git repository with the content:
 
@@ -354,11 +315,28 @@ kubectl apply -f my-ocean-gitlab-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.  
+Note the parameters specific to this integration, they are last in the table.
+
+| Parameter                                            | Description                                                                                                                       | Example                          | Required |
+|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
+| `port.clientId`                                      | Your Port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅        |
+| `port.clientSecret`                                  | Your Port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) |                                  | ✅        |
+| `port.baseUrl`                                       | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                           |                                  | ✅        |
+| `integration.secrets.tokenMapping`                   | The [token mapping](#tokenmapping) configuration used to query GitLab                                                             |                                  | ✅        |
+| `integration.config.appHost`                         | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in GitLab              | https://my-ocean-integration.com | ✅        |
+| `integration.config.gitlabHost`                      | (for self-hosted GitLab) the URL of your GitLab instance                                                                          | https://my-gitlab.com            | ❌        |
+| `integration.secrets.tokenGroupHooksOverrideMapping` | The [token group hooks override mapping](#tokengrouphooksoverridemapping) configuration used to create custom webhooks on groups  |                                  | ❌        |
+
+<HelmParameters/>
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="One-time (CI)">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="gitlab" label="GitLab">
