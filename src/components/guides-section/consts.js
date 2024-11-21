@@ -850,7 +850,7 @@ export const availableGuides = [
         link: "/guides/all/ingest-security-issues-from-sarif-files-to-services",
     },
     {
-        title: "Manage service deployment using GitLab and ServiceNow", 
+        title: "Manage service deployments using GitLab and ServiceNow", 
         description: "Create a chain of self-service actions that deploys a service using GitLab and ServiceNow",
         tags: ["Incident management", "GitLab", "Actions", "Automations"],
         logos: ["Servicenow", "GitLab"],
