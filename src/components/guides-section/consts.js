@@ -852,8 +852,8 @@ export const availableGuides = [
     {
         title: "Manage service deployment using GitLab and ServiceNow", 
         description: "Create a chain of self-service actions that deploys a service using GitLab and ServiceNow",
-        tags: ["Servicenow", "Actions", "Automations", "GitLab"],
-        logos: ["Servicenow", "GitLab"],
+        tags: ["ServiceNow", "Actions", "Automations", "GitLab"],
+        logos: ["ServiceNow", "GitLab"],
         link: "/guides/all/approval-workflow-for-gitlab-deployment",
     },
     
