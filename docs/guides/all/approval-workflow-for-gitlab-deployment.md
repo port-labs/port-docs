@@ -10,7 +10,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 This guide demonstrates the power and flexibility of chaining self-service actions and automations in Port to deploy a service. The deployment process is integrated with GitLab pipelines and ServiceNow for handling approval workflows when threasholds are violated.
 
-## **Overview of Use Case**
+## Use-case
 
 In this workflow, a **developer** initiates a deployment request from **Port** using a **Self-Service Action (SSA)**, which is linked to a **GitLab pipeline**. The pipeline progresses through **build**, **test**, and **deploy stages**. If code coverage passes a set threshold, the deployment proceeds. If coverage is insufficient, a **ServiceNow Change Request** (CR) is created in Port. A **Platform Engineer** can then approve or decline this CR, triggering subsequent actions in GitLab and ServiceNow based on their decision. 
 
