@@ -10,15 +10,21 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 This guide demonstrates the power and flexibility of chaining self-service actions and automations in Port to deploy a service. The deployment process is integrated with GitLab pipelines and ServiceNow for handling approval workflows when threasholds are violated.
 
-## **Overview of Use Case**
+## Use-case
 
 In this workflow, a **developer** initiates a deployment request from **Port** using a **Self-Service Action (SSA)**, which is linked to a **GitLab pipeline**. The pipeline progresses through **build**, **test**, and **deploy stages**. If code coverage passes a set threshold, the deployment proceeds. If coverage is insufficient, a **ServiceNow Change Request** (CR) is created in Port. A **Platform Engineer** can then approve or decline this CR, triggering subsequent actions in GitLab and ServiceNow based on their decision. 
 
 ## Prerequisites
 
+<<<<<<< HEAD
 - **Port account**: If you don't have a Port account, you will need to [create one](https://app.getport.io/signup)
 - **GitLab environment**: This guide includes the creation of actions and automations that use a GitLab pipeline as their backend
 - **ServiceNow instance access**: You need admin or developer-level access.
+=======
+- **Port account**: If you don't have a Port account, you will need to [create one](https://app.getport.io/signup).
+- **GitLab environment**: This guide includes the creation of actions and automations that use a GitLab pipeline as their backend.
+- Access to a ServiceNow instance.
+>>>>>>> f250289715329abb5a237b5f10ad8ece310a015d
 
 ## Data Model
 
@@ -104,7 +110,7 @@ Define a new <PortTooltip id="blueprint">blueprint</PortTooltip> in Port for the
 ```
 </details>
 
-:::note Add a New Column to the Change Request Table  
+:::tip Add a New Column to the Change Request Table  
 Add a new column named `external_tags` to your `change_request` table in ServiceNow to associate deployment requests with their corresponding Port context.  
 Follow the [ServiceNow documentation](https://developer.servicenow.com/dev.do#!/learn/learning-plans/xanadu/new_to_servicenow/app_store_learnv2_buildneedit_xanadu_adding_fields_to_a_table) to complete this step.  
 :::  
