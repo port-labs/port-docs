@@ -104,7 +104,7 @@ Define a new <PortTooltip id="blueprint">blueprint</PortTooltip> in Port for the
 ```
 </details>
 
-:::note Add a New Column to the Change Request Table  
+:::tip Add a New Column to the Change Request Table  
 Add a new column named `external_tags` to your `change_request` table in ServiceNow to associate deployment requests with their corresponding Port context.  
 Follow the [ServiceNow documentation](https://developer.servicenow.com/dev.do#!/learn/learning-plans/xanadu/new_to_servicenow/app_store_learnv2_buildneedit_xanadu_adding_fields_to_a_table) to complete this step.  
 :::  
