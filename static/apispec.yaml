@@ -16317,6 +16317,53 @@ paths:
       responses:
         '200':
           description: Default Response
+  "/v1/migrations/{migration_id}":
+    get:
+      summary: Get a migration
+      description: This route allows you to fetch a specific migration in your Port organization.
+      tags:
+        - Migrations
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: migration_id
+          description: The identifier of the migration you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - read:blueprints
+      responses:
+        "200":
+          description: Default Response
+  "/v1/migrations/{migration_id}/cancel":
+    post:
+      summary: Cancel a migration
+      description: This route allows you to cancel a running migration in your Port organization.
+      tags:
+        - Migrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: The reason for cancelling the migration.<br/>
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: migration_id
+          description: The identifier of the migration you want to cancel.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        "200":
+          description: Default Response
   '/v1/organization/secrets':
     get:
       description: This route allows you to retrieve all of the secrets in your organization.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).

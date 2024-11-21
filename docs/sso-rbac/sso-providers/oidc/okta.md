@@ -1,8 +1,11 @@
 ---
 title: "Okta (OIDC)"
-sidebar_position: 1
+sidebar_position: 2
 description: Integrate Okta with Port
 ---
+
+import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
+import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/_scim_oidc_limitation.mdx"
 
 # How to configure Okta
 
@@ -99,8 +102,6 @@ Under `General` tab:
 
    ![Okta dashboard with Port app](/img/sso/okta/OktaDashboard.png)
 
----
-
 ## How to allow pulling Okta groups to Port
 
 :::note
@@ -133,3 +134,57 @@ To allow automatic Okta group support in Port, please follow these steps:
    ![Okta application set group claims](/img/sso/okta/OktaAppSetGroupClaims.png)
 
    3.3 Click `Save`.
+
+
+## SCIM Configuration (beta)
+
+<ScimLimitation/>
+
+Okta OIDC applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim).
+
+<ScimFunctionality/>
+
+### Setup SCIM
+
+To use [SCIM](https://auth0.com/docs/authenticate/protocols/scim) with your Okta OIDC SSO setup, you will need to create an additional Okta application according to the following instructions:
+
+1. Create a new SSO application, of type SWA, and fill the form as below:
+   <img src="/img/sso/okta/OktaSWA.png" width="80%" border="1px" />
+   <br/><br/>
+   <img src="/img/sso/okta/Okta_OIDC_SCIM.png" width="80%" border="1px" />
+      - `App's login page URL`
+        - Organizations hosted in the EU: `https://app.getport.io`
+        - Organizations hosted in the US: `https://app.us.getport.io`
+      - `Who sets the credentials` - Administrator sets username, password is the same as user's Okta password
+      - `Application username` - Okta username
+      - `Update application username on` - Create and update
+
+2. Edit the App Settings, and enable `Enable SCIM provisioning`
+
+   <img src="/img/sso/okta/OktaSCIMSecond.png" width="80%" border="1px" />
+
+
+After completing these steps, reach out to Port's team. You will be provided with:
+
+- An SCIM `endpoint`
+- An SCIM `token`
+
+The `endpoint` and `token` will be used to complete the setup of the new SWA application.
+
+3. Open the Provisioning tab in your application, and under `Integration` fill the following:
+   - SCIM connector base URL: The `endpoint` you received from Port.
+   - Unique identifier field for users: `userName`.
+   - Supported provisioning actions: `Push New Users`, `Push Profile Updates`.
+   - Authentication Mode: `HTTP Header`.
+   - Authorization: The `token` you received from Port.
+       <br/><br/>
+      <img src="/img/sso/okta/OKTASCIMconf.png" width="80%" border="1px" />
+
+    After configuration, press the `Test Connector Configuration` and confirm the integration was configured correctly.
+
+4. Go to the newly created `To App` settings, and enable the following:
+   - Create Users
+   - Update User Attributes
+   - Deactivate Users
+   <br/>
+   <img src="/img/sso/okta/OktaSCIMapp.png" width="80%" />
