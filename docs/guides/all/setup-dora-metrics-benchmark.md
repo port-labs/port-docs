@@ -27,7 +27,7 @@ This guide will walk you through creating a [scorecard](#scorecard) to benchmark
 
 ## Prerequisites
 
-- Complete the [DORA Metrics guide](/guides/all/setup-dora-metrics): Ensure you have set up the necessary blueprints, properties, and data ingestion.
+- Complete the [DORA Metrics guide](/guides/all/setup-dora-metrics), ensuring you have set up the necessary blueprints, properties, and data ingestion.
 
 
 ## Benchmarks
@@ -340,8 +340,7 @@ If you haven't set up a dashboard for visualizing the DORA metrics, [set it up h
 
 
 ### Add scorecard widget
-<details>
-<summary><b>Dora by team (click to expand)</b></summary>
+To add the scorecard to your dashboard:
 
 1. Click **`+ Widget`** and select **Table**.
 2. Title the widget **DORA by team**.
@@ -363,10 +362,12 @@ If you haven't set up a dashboard for visualizing the DORA metrics, [set it up h
 
 8. Click on the **save icon** in the top right corner of the widget to save the customized table.
 
-</details>
+
 
 The table widget should look like this:
+    
+  <img src="/img/guides/doraMetricsTeamScorecard.png" border="1px" />  
 
-<img src="/img/guides/doraMetricsTeamScorecard.png" border="1px" />
+<br></br>  
 
 Congratulations! 🎉 You have successfully created a DORA Metrics Benchmark scorecard in Port. 
