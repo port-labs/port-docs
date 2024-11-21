@@ -30,7 +30,7 @@ This guide demonstrates the power and flexibility of chaining self-service actio
   - PORT_CLIENT_SECRET - Your port client secret.
   - SERVICENOW_INSTANCE_URL - The ServiceNow instance URL. For example https://example-id.service-now.com.
   - SERVICENOW_API_TOKEN - A base64 encoded string of your servicenow credentials generated as `<username>:<password>`.
-  - Create a secret in Port named `servicenow-api-token` with the base64 token content
+  - Create a secret in Port named `SERVICENOW_API_TOKEN` with the base64 token content
 
 
 ## Data Model
@@ -321,15 +321,15 @@ Go to the [automations page](https://app.getport.io/settings/automations) of you
 This automation is triggered when a run of type `approve_and_deploy_service` action is created. It's purpose is to patch the approval field in ServiceNow to `approved` or `rejected`.
 
   <details>
-  <summary><b>Update change request in ServiceNow (click to expand)</b></summary>
+  <summary><b>Patch change request in ServiceNow (click to expand)</b></summary>
 
-  Remember to replace the `BASE_64_ENCODED_API_TOKEN` and `SERVICENOW_INSTANCE` placeholders with your values.
+  Remember to replace the `SERVICENOW_INSTANCE` placeholders with your values.
 
   ```json showLineNumbers
     {
     "identifier": "updateChangeRequestInSnow",
-    "title": "Approve ServiceNow Change Request",
-    "description": "A description of what this automation does",
+    "title": "Patch Change Request in ServiceNow",
+    "description": "Sends a PATCH request to serviceNow when the admin approves or declines the change request",
     "trigger": {
         "type": "automation",
         "event": {
@@ -344,7 +344,7 @@ This automation is triggered when a run of type `approve_and_deploy_service` act
         "synchronized": true,
         "method": "PATCH",
         "headers": {
-        "Authorization": "Basic BASE_64_ENCODED_API_TOKEN"
+        "Authorization": "Basic {{ .secrets.SERVICENOW_API_TOKEN }}"
         },
         "body": {
         "approval": "{{ .event.diff.after.properties.approval_status  }}"
@@ -359,7 +359,7 @@ This automation is triggered when a run of type `approve_and_deploy_service` act
 This automation is triggered when a `servicenowChangeRequest` is updated to *"approved"* or *"rejected"*
 
   <details>
-  <summary><b>Deploy service from webhook listener (click to expand)</b></summary>
+  <summary><b>Trigger Gitlab pipeline from webhook listener (click to expand)</b></summary>
 
   Remember to replace the GITLAB_PROJECT_ID and GITLAB_TRIGGER_TOKEN placeholders with your values
 
@@ -429,7 +429,7 @@ variables:
   PORT_API_URL: "${PORT_API_URL}"
   SERVICENOW_INSTANCE_URL: ${SERVICENOW_INSTANCE_URL}
   SERVICENOW_API_TOKEN: ${SERVICENOW_API_TOKEN} # Base64 encoded version of SNOW username:password
-  APPROVAL_STATUS: "pending"
+  APPROVAL_STATUS: "pending" # Default status for all pipelines
 
 
 initialize-build:
@@ -503,6 +503,8 @@ initialize-build:
           -H "Authorization: Bearer $accessToken" \
           -d '{"message":"🔄 Deployment preparation underway, validating resources and configurations"}' \
           "${PORT_API_URL}/actions/runs/$deployActionRunId/logs"
+
+        # HERE IS WHERE YOU CAN ADD YOU BUILD SCRIPTS
       fi
   artifacts:
     reports:
@@ -568,7 +570,7 @@ run-tests:
           changeService=$(echo "$changeRequestResponse" | jq -r '.result.business_service.value')
 
           echo "Change Request Created Successfully: Number: $changeNumber, Sys ID: $changeSysId, State: $changeState"
-          logMessage="⚠️ Pipeline did not meet the deployment checks, so a ServiceNow change request has been created. Change Request Number $changeNumber and system ID $changeSysId. An admin will need to review and approve this request before the deployment can proceed."
+          logMessage="⚠️ Pipeline did not meet the deployment checks, so a ServiceNow Change Request with Number $changeNumber and system ID $changeSysId has been created. An admin will need to review and approve this request before the deployment can proceed."
 
           runId=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.runId')
           
@@ -591,7 +593,9 @@ run-tests:
             \"title\": \"$changeDescription\",
             \"icon\": \"Servicenow\",
             \"properties\": {
+              \"number\": \"$changeNumber\",
               \"createdBy\": \"$changeCreatedBy\",
+              \"createdOn\": \"$changeCreatedOn\",
               \"state\": \"$changeState\",
               \"category\": \"$changeCategory\",
               \"priority\": \"$changePriority\",
@@ -646,7 +650,7 @@ deploy-to-cloud:
       # Check if APPROVAL_STATUS or COVERAGE_MET is true
       if [ "$APPROVAL_STATUS" = "approved" ] || [ "$COVERAGE_MET" = "true" ]; then
         echo "Conditions met, deploying service to the cluster..."
-        # Your deployment script here
+        # HERE IS WHERE YOU CAN ADD YOUR DEPLOYMENT SCRIPT
 
         # Update port run status and logs
         runId=$(cat $TRIGGER_PAYLOAD | jq -r '.port_context.runId')
@@ -680,10 +684,20 @@ You can use this chaining mechanism to create complex workflows for many use-cas
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 2. Click on the `Deploy Service to Cluster` action
 3. Choose the service you want to deploy and select your environment
-  <img src='/img/guides/deployToClusterAction.png' width='40%' border='1px' />
-4. Select the new status
-5. Enter the name of the assignee or their email address
-6. Click on `Execute`
-7. Done! wait for the ticket's status and assignee to be changed in Jira
+    <img src='/img/guides/gitlabSnowGuide/deployToClusterAction.png' width='50%' border='1px' />
+4. A GitLab pipeline will be triggered but will fail on the **test** stage due to not meeting coverage threshold
+    <img src='/img/guides/gitlabSnowGuide/gitlabPipelineFailure.png' width='50%' border='1px' />
+5. The developer can see the logs on the runs page
+    <img src='/img/guides/gitlabSnowGuide/coverageFailureLogInPort.png' width='50%' border='1px' />
+6. The platform engineer can see the `servicenowChangeRequest` entity displayed in Port
+    <img src='/img/guides/gitlabSnowGuide/changeRequestEntity.png' width='50%' border='1px' />
 
-Congrats 🎉 You've changed a ticket status and its assignee in Port 🔥
+7. Once the change request is either approved or declined, the GitLab pipeline will be re-triggered and the log stream will be shared with the developer
+    <img src='/img/guides/gitlabSnowGuide/approveChangeRequest.png' width='50%' border='1px' />
+    <img src='/img/guides/gitlabSnowGuide/notifyDeveloperOfApproval.png' width='50%' border='1px' />
+
+8. The GitLab pipeline will be retriggered and Port context variable will be passed to instruct the pipeline script to deploy the service
+    <img src='/img/guides/gitlabSnowGuide/successGitlabPipelineDeployment.png' width='50%' border='1px' />
+
+
+Congrats 🎉 You've managed your GitLab service deployment in Port 🔥
