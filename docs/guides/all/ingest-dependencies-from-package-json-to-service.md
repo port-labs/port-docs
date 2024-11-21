@@ -13,7 +13,7 @@ This guide will demonstrate how to ingest dependencies from a `package.json` fil
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.getport.io/quickstart).
 - The `Service` blueprint should be created during the onboarding process.
-- Ensure you have [GitHub installed and configured](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) in your environment.
+- Ensure you have [GitHub installed and configured](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation) in your environment.
 
 :::
 

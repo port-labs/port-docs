@@ -765,9 +765,8 @@ export const availableGuides = [
     {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","Dashboards"],
-        logos: ["GitHub"],
-        // category: "Getting started",
+        tags: ["Engineering metrics","GitHub","GitLab","Azure DevOps","Dashboards"],
+        logos: ["Git"],
         link: "/guides/all/setup-dora-metrics",
     },
     {
@@ -850,10 +849,24 @@ export const availableGuides = [
         link: "/guides/all/ingest-security-issues-from-sarif-files-to-services",
     },
     {
+        title: "Set up announcements in your portal",
+        description: "Create components to send announcements to members in your portal",
+        tags: ["Actions", "Dashboards"],
+        logos: ["Actions"],
+        link: "/guides/all/setup-portal-announcements",
+    },
+    {
+        title: "Set up DORA Metrics benchmark",
+        description: "Track and improve engineering performance by setting up DORA metrics benchmark",
+        tags: ["Engineering metrics","Scorecards","Dashboards"],
+        logos: ["Git"],
+        link: "/guides/all/setup-dora-metrics-benchmark"
+    },
+    {
         title: "Manage service deployments using GitLab and ServiceNow", 
         description: "Create a chain of self-service actions that deploy a service using GitLab and ServiceNow",
         tags: ["Incident management", "GitLab", "Actions", "Automations"],
-        logos: ["Servicenow", "GitLab"],
-        link: "/guides/all/approval-workflow-for-gitlab-deployment",
-    },
+        logos: ["ServiceNow", "GitLab"],
+        link: "/guides/all/approval-workflow-for-gitlab-deployment"
+    }
 ]
