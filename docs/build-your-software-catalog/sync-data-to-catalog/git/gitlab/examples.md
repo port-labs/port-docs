@@ -281,7 +281,7 @@ In the following example you will ingest your GitLab projects and their members 
 <ProjectWithMemberRelationBlueprint/>
 <ProjectMemberPortAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
