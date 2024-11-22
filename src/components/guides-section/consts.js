@@ -862,4 +862,11 @@ export const availableGuides = [
         logos: ["Git"],
         link: "/guides/all/setup-dora-metrics-benchmark"
     },
+    {
+        title: "Manage service deployments using GitLab and ServiceNow", 
+        description: "Create a chain of self-service actions that deploy a service using GitLab and ServiceNow",
+        tags: ["Incident management", "GitLab", "Actions", "Automations"],
+        logos: ["ServiceNow", "GitLab"],
+        link: "/guides/all/approval-workflow-for-gitlab-deployment"
+    }
 ]
