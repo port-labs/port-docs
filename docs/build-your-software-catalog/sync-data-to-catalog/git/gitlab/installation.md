@@ -145,6 +145,9 @@ As part of the installation process, the integration will create a webhook in yo
     - `tag_push_events`
     - `subgroup_events`
     - `confidential_issues_events`
+    - `user_remove_from_group`
+    - `user_update_for_group`
+    - `user_add_to_group`
 
   - System Hooks supported event types:
 
