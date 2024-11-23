@@ -1,40 +1,44 @@
 # Define your portal
 
-This page will guide you through defining the audience, goals, and use-cases for your developer portal.
+The implementation process begins with defining the user-stories and MVP of your developer portal.
 
-### Define your audience
+## Define user-stories
 
-Define the groups of people who will use your portal. Common audience categories include:
+A **user story** is a concise, simple description of a feature or functionality from the perspective of the end user.  
+It is written in plain language to articulate what the user wants to achieve and why, providing context for development teams to create value-driven features.
 
-- **Developers**: for routine tasks, collaboration, documentation, and sharing resources.
-- **R&D managers**: for monitoring and tracking the performance and metrics of APIs and services.
-- **Platform engineers**: for managing access control and creating experiences for developers.
+Defining user stories should be your first step in building your portal, as they will help you understand the needs of your users, prioritize features accordingly, and get the most value out of your portal as fast as possible.
 
-### Define goals & use-cases
+### Create a prioritized list of user stories
 
-Define goals, user stories, and KPIs for your developer portal.  
-Think about the problems you want to solve and the value you want to deliver to your users.
+Port's [**roadmap planner**](https://www.getport.io/roadmap-planner) is a useful tool that helps you define and prioritize your user stories.
 
-In this context, a user story is a goal or outcome that we want our end users to achieve.
+This process includes the following steps:
 
-Some common **goals** include:
-- Increase developer productivity.
-- Gain visibility into the health and performance of APIs and services.
-- Improve collaboration between developers and R&D managers.
-- Automate routine tasks and reduce manual work.
+1. Define the personas who will use the portal (we recommend to start with **developers**, followed by **engineering managers**).
 
-Some common **use-cases** include:
+2. For each persona, define user stories based on the following method:
+   - **Step 1:** Fill in the blank - "Developers will be able to...".  
+    *For example* - "Developers will be able to track the health of their services".
+        :::tip User-story examples
+        Feel free to use the examples provided in the roadmap planner and Port's [live demo](https://demo.getport.io) for inspiration.
+        :::
+   
+   - **Step 2:** Think how it is done today - use the available options in the roadmap planner, or add a custom one.
+  
+   - **Step 3:** For each user story, define its priority by answering the four questions in the roadmap planner.  
+    Priority is calculated based on the following factors:
+     - The **precentage of users** who will use the feature.
+     - The **frequency** of use.
+     - The features **importance** to the users (nice to have vs. essential).
+     - The **time effort** required to build the feature.
 
-- SDLC management: For tracking the development lifecycle of services.
-- Incident management: For tracking and resolving issues with services.
-- API catalog: For monitoring the health and availability of an organization's APIs.
-- Onboarding and tutorials: Step-by-step guides to help users get started quickly.
-- Application security: For managing access control and security policies.
+## Define MVP scope
 
-There are **many** other use-cases that you can implement in your developer portal, depending on your organization's needs.  
-The key is to define these use-cases early on so that you can build your portal to support them.
+We recommend to take the top 3 user stories from your prioritized list and define them as the MVP (minimum viable product) of your portal.  
 
-:::tip Useful tools
-- Use Port's [live demo](https://demo.getport.io) to get inspired and identify use-cases and quick wins.
-- Port's [roadmap planner](https://www.getport.io/roadmap-planner) is great for this early stage, it can help you set and prioritize your user-stories.
-:::
+Developer portals are living products that should be continuously improved, so it is important to start with a small scope that delivers value quickly, while still allowing room for easy expansion.  
+
+## Next step - prepare for building
+
+Once you have defined your user stories and MVP scope, proceed to the [next step](/guides/implementation-guide/plan/prepare-for-building).

@@ -2,11 +2,9 @@
 sidebar_position: 3
 ---
 
-# Set up metrics & visualizations
+# Set up scorecards & dashboards
 
-
-
-### Define scorecards
+## Define scorecards
 
 Define metrics and standards you wish to track for the blueprints in your portal.  
 Some examples include:
@@ -18,7 +16,7 @@ Some examples include:
 
 [Create scorecards](/promote-scorecards/) for the relevant blueprints in your portal.
 
-### Create dashboards
+## Create dashboards
 
 Dashboards are a great way to visualize and track data from your software catalog.  
 A dashboard can contain any number of widgets that display data relevant to your users.
@@ -42,3 +40,7 @@ When creating certain widgets, you can define [**static filters**](/customize-pa
 
 You can also define [**dynamic filters**](/search-and-query/#dynamic-properties) to display data relevant to the logged-in user.
 :::
+
+## Next step - create actions & automations
+
+Once you have set up scorecards and dashboards, proceed to the [next step](/guides/implementation-guide/build/actions-and-automations) to define scorecards and create dashboards in your portal.

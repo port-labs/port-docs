@@ -1,11 +1,14 @@
+---
+sidebar_position: 1
+sidebar_label: Start here
+---
 
 # Implementation guide
 
 This guide provides a structured approach to designing and implementing Port in your organization. It will help you understand the steps involved in setting up Port, integrating it with your existing tools, and preparing it for your organization's use.
 
-## Start here
 
-Before proceeding to the implementation guide, there a few initial steps to complete:
+Before proceeding to the guide, there a few initial steps to complete:
 
 1. [Sign up to Port](http://app.getport.io) to create an initial developer portal for your organization.  
    Optionally, create an additional account for development/testing purposes (using a different email address).

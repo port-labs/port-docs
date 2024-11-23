@@ -2,9 +2,9 @@
 
 This page will guide you through some initial steps to prepare for building your portal.
 
-### Plan for integration and customization
+## Plan for integration and customization
 
-List the tools and platforms in your tech stack that you want to ingest into your developer portal.
+According to your prioritized user-stories, list the tools and platforms in your tech stack with which you want to integrate your portal.
 
 Port offers a wide range of [pre-built integrations](/build-your-software-catalog/sync-data-to-catalog/) for popular tools, but you can also create custom integrations for any other tool using Port's API.
 
@@ -14,7 +14,7 @@ The installation method mainly depends on your infrastructure and processes.
 You can can consider defining this now, or later during the implementation phase.
 :::
 
-### Invite relevant initial users to Port
+## Invite relevant initial users to Port
 
 Invite users to your Port account who will be responsible for the initial setup and configuration of the portal, and assign them the appropriate roles.  
 Port offers three user roles:
@@ -24,6 +24,10 @@ Port offers three user roles:
 
 Read more about roles and permissions [here](https://docs.getport.io/sso-rbac/rbac/).
 
-### Next step - build
+## Configure SSO
+
+Select the relevant [SSO provider](/sso-rbac/sso-providers/) and follow the instructions to set it up.
+
+## Next step - build
 
 Once you have completed the planning phase, proceed to the [Build phase](/guides/implementation-guide/build/install-integrations) to start building components in your portal.
