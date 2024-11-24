@@ -28,6 +28,7 @@ export const tagsCategoryMap = {
         "Dynatrace",
         "Humanitec",
         "New Relic",
+        "ServiceNow",
     ]
 };
 
@@ -592,7 +593,7 @@ export const availableGuides = [
         title: "Trigger a ServiceNow Incident",
         description: "Create a self-service action that triggers a ServiceNow incident",
         tags: ["Incident management", "GitHub", "Actions"],
-        logos: ["GitHub"],
+        logos: ["ServiceNow", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/trigger-servicenow-incident",
     },
@@ -765,7 +766,7 @@ export const availableGuides = [
     {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","GitLab","Azure DevOps","Dashboards"],
+        tags: ["Engineering metrics","GitHub","GitLab","AzureDevOps","Dashboards"],
         logos: ["Git"],
         link: "/guides/all/setup-dora-metrics",
     },
