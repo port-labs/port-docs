@@ -10,7 +10,7 @@ Using your prioritized list of tools and platforms required to implement your MV
 
 ## Install pre-built integrations
 
-If Port offers a [pre-built integration]((/build-your-software-catalog/sync-data-to-catalog/)) for your desired tool, install it to quickly start ingesting data.  
+If Port offers a [pre-built integration](/build-your-software-catalog/sync-data-to-catalog/) for your desired tool, install it to quickly start ingesting data.  
 
 Some components will be automatically created in your portal:
 
