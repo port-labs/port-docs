@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
 import ProjecttBlueprint from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_project_blueprint.mdx'
 import ApplicationBlueprint from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_application_blueprint.mdx'
 import EventBlueprint from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_event_blueprint.mdx'
@@ -8,66 +9,59 @@ import ArgoCDWebhookConfig from '/docs/build-your-software-catalog/custom-integr
 import ArgoCDEventWebhookConfig from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_events_webhook_config.mdx'
 import ArgoCDEventManifest from '/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/argocd/\_example_events_manifest.mdx'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # ArgoCD
 
-Port's ArgoCD integration allows you to import `cluster`, `project`, `application`, `deployment-history`, `kubernetes-resource` and `managed-resource` from your ArgoCD instance into Port, according to your mapping and definition.
+Port's ArgoCD integration allows you to model ArgoCD resources in your software catalog and ingest data into them.
 
-## Common use cases
 
-- Map your monitored Kubernetes resources in ArgoCD.
-- Watch for object changes (create/update) in real-time, and automatically apply the changes to your entities in Port.
+## Overview
 
-## Installation
+This integration allows you to:
+
+- Map and organize your desired ArgoCD resources and their metadata in Port (see supported resources below).
+- Watch for X object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
+
+### Supported Resources
+
+The resources that can be ingested from ArgoCD into Port are listed below.
+It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`cluster`](https://cd.apps.argoproj.io/swagger-ui#operation/ClusterService_List)
+- [`project`](https://cd.apps.argoproj.io/swagger-ui#operation/ProjectService_List)
+- [`application`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
+- [`deployment-history`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List) 
+- [`kubernetes-resource`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
+- [`managed-resource`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_ManagedResources)
+
+:::info Valid properties
+- You can reference any valid property from the `.status.history` object of the ArgoCD application for [deployment-history](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List) resource.
+- You can reference any valid property from the `.status.resources` object of the ArgoCD application for [kubernetes-resource](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List) resource.
+:::
+
+
+## Setup
 
 Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+<h2> Prerequisites </h2>
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<Prerequisites/>
 
-| Parameter                        | Description                                                                                                   | Required |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                  | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`              | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                           | ✅       |
-| `integration.identifier`         | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`               | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type` | The event listener type                                                                                       | ✅       |
-| `integration.secrets.token`      | The ArgoCD API token                                                                                          | ✅       |
-| `integration.config.serverUrl`   | The ArgoCD server url                                                                                         | ✅       |
-| `integration.config.ignoreServerError`   | Whether to ignore server errors when fetching data from ArgoCD. The default value is `false` meaning the integration will raise exceptions and fail the resync event                            | ❌    |
-| `scheduledResyncInterval`        | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
-| `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌       |
 
-<br/>
+For details about the available parameters for the installation, see the table below.
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-argocd-integration port-labs/port-ocean \
-  --set port.clientId="CLIENT_ID"  \
-  --set port.clientSecret="CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \  
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true \
-  --set scheduledResyncInterval=60  \
-  --set integration.identifier="my-argocd-integration"  \
-  --set integration.type="argocd"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.token="<your-token>"  \
-  --set integration.config.serverUrl="<your-server-url>"
-```
+<OceanRealtimeInstallation integration="argocd" />
 
 <PortApiRegionTip/>
 </TabItem>
@@ -157,9 +151,28 @@ kubectl apply -f my-ocean-argocd-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+Note the parameters specific to this integration, they are last in the table.
+
+| Parameter                              | Description                                                                                                                                                          | Required |
+|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                        | Your port client id                                                                                                                                                  | ✅        |
+| `port.clientSecret`                    | Your port client secret                                                                                                                                              | ✅        |
+| `port.baseUrl`                         | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                              | ✅        |
+| `initializePortResources`              | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                                        | ❌        |
+| `sendRawDataExamples`                  | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                  | ❌        |
+| `integration.identifier`               | Change the identifier to describe your integration                                                                                                                   | ✅        |
+| `integration.type`                     | The integration type                                                                                                                                                 | ✅        |
+| `integration.eventListener.type`       | The event listener type                                                                                                                                              | ✅        |
+| `integration.secrets.token`            | The ArgoCD API token, docs can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd_account_generate-token/)                          | ✅        |
+| `integration.config.serverUrl`         | The ArgoCD server url                                                                                                                                                | ✅        |
+| `integration.config.ignoreServerError` | Whether to ignore server errors when fetching data from ArgoCD. The default value is `false` meaning the integration will raise exceptions and fail the resync event | ❌        |
+| `scheduledResyncInterval`              | The number of minutes between each resync                                                                                                                            | ❌        |
+
+
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
 This workflow will run the ArgoCD integration once and then exit, this is useful for **scheduled** ingestion of data.
@@ -170,17 +183,17 @@ If you want the integration to update Port in real time using webhooks you shoul
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                                | Description                                                                                                        | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__TOKEN`      | The ArgoCD API token                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__SERVER_URL` | The ArgoCD server URL                                                                                              | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__IGNORE_SERVER_ERROR` |  Whether to ignore server errors when fetching data from ArgoCD. The default value is `false` meaning the integration will raise exceptions and fail the resync event    | ❌       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`       | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`         | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                 | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`             | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        | ✅       |
-| `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                |  ❌       |
+| Parameter                                         | Description                                                                                                                                                          | Required |
+|---------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `OCEAN__INTEGRATION__CONFIG__TOKEN`               | The ArgoCD API token                                                                                                                                                 | ✅        |
+| `OCEAN__INTEGRATION__CONFIG__SERVER_URL`          | The ArgoCD server URL                                                                                                                                                | ✅        |
+| `OCEAN__INTEGRATION__CONFIG__IGNORE_SERVER_ERROR` | Whether to ignore server errors when fetching data from ArgoCD. The default value is `false` meaning the integration will raise exceptions and fail the resync event | ❌        |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`                | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                                   | ❌        |
+| `OCEAN__INTEGRATION__IDENTIFIER`                  | Change the identifier to describe your integration, if not set will use the default one                                                                              | ❌        |
+| `OCEAN__PORT__CLIENT_ID`                          | Your port client id                                                                                                                                                  | ✅        |
+| `OCEAN__PORT__CLIENT_SECRET`                      | Your port client secret                                                                                                                                              | ✅        |
+| `OCEAN__PORT__BASE_URL`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                              | ✅        |
+| `OCEAN__SEND_RAW_DATA_EXAMPLES`                   | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                  | ❌        |
 
 <br/>
 
@@ -358,6 +371,13 @@ ingest_data:
 
 </Tabs>
 
+## Configuration
+
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
+
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
+
+
 ### Generating ArgoCD token
 
 1. Navigate to `<serverURL>/settings/accounts/<user>`. For example, if you access your ArgoCD at `https://localhost:8080`, you should navigate to `https://localhost:8080/settings/accounts/<user>`
@@ -433,134 +453,9 @@ argocd account generate-token --account <username>
 ```
 :::
 
-## Ingesting ArgoCD objects
-
-The ArgoCD integration uses a YAML configuration to describe the process of loading data into the developer portal.
-
-Here is an example snippet from the config which demonstrates the process for getting `application` data from ArgoCD:
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: application
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .metadata.uid
-          title: .metadata.name
-          blueprint: '"argocdApplication"'
-          properties:
-            gitRepo: .spec.source.repoURL
-            gitPath: .spec.source.path
-            destinationServer: .spec.destination.server
-            namespace: .metadata.namespace
-            syncStatus: .status.sync.status
-            healthStatus: .status.health.status
-            createdAt: .metadata.creationTimestamp
-          relations:
-            project: .spec.project
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from ArgoCD's API events.
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from ArgoCD, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from ArgoCD, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`cluster`](https://cd.apps.argoproj.io/swagger-ui#operation/ClusterService_List)
-- [`project`](https://cd.apps.argoproj.io/swagger-ui#operation/ProjectService_List)
-- [`application`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
-- [`deployment-history`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List) - You can reference any valid property from the `.status.history` object of the ArgoCD application
-- [`kubernetes-resource`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List) - You can reference any valid property from the `.status.resources` object of the ArgoCD application
-- [`managed-resource`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_ManagedResources)
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: application
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for an ArgoCD object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: application
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: application
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the ArgoCD object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: application
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one ArgoCD object to a Port entity. Each value is a JQ query.
-            identifier: .metadata.uid
-            title: .metadata.name
-            blueprint: '"argocdApplication"'
-            properties:
-              gitRepo: .spec.source.repoURL
-              gitPath: .spec.source.path
-              destinationServer: .spec.destination.server
-              namespace: .metadata.namespace
-              syncStatus: .status.sync.status
-              healthStatus: .status.health.status
-              createdAt: .metadata.creationTimestamp
-            relations:
-              project: .spec.project
-        # highlight-end
-    - kind: application # In this instance application is mapped again with a different filter
-      selector:
-        query: '.metadata.name == "MyApplicationName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-## Configuring real-time updates
+### Configuring real-time updates
 
 Currently, the ArgoCD REST API lacks support for programmatic webhook creation. To set up a webhook configuration in ArgoCD for sending notifications to the Ocean integration, follow these steps:
-
-### Prerequisite
-
-1. You have access to a Kubernetes cluster where ArgoCD is deployed.
-2. You have `kubectl` installed and configured to access your cluster.
-
-### Steps
 
 1. Install ArgoCD notifications manifest;
 
@@ -654,576 +549,12 @@ kubectl apply -n <your-namespace> -f <path-to-yaml-file>
 
 This command deploys the webhook notification configuration to your ArgoCD notification configmap (`argocd-notifications-cm`), allowing Ocean to receive real-time events.
 
-### Ingest data into Port
-
-To ingest ArgoCD objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using ArgoCD.
-3. Choose the **Ingest Data** option from the menu.
-4. Select ArgoCD under the Kubernetes Stack providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
 
-Examples of blueprints and the relevant integration configurations:
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
-### Cluster
-
-<details>
-<summary>Cluster blueprint</summary>
-
-```json showLineNumbers
-  {
-    "identifier": "argocdCluster",
-    "description": "This blueprint represents an ArgoCD cluster",
-    "title": "ArgoCD Cluster",
-    "icon": "Argo",
-    "schema": {
-      "properties": {
-        "applicationsCount": {
-          "title": "Applications Count",
-          "type": "number",
-          "description": "The number of applications managed by Argo CD on the cluster",
-          "icon": "DefaultProperty"
-        },
-        "serverVersion": {
-          "title": "Server Version",
-          "type": "string",
-          "description": "Contains information about the Kubernetes version of the cluster",
-          "icon": "DefaultProperty"
-        },
-        "labels": {
-          "title": "Labels",
-          "type": "object",
-          "description": "Contains information about cluster metadata",
-          "icon": "DefaultProperty"
-        },
-        "updatedAt": {
-          "icon": "DefaultProperty",
-          "title": "Updated At",
-          "type": "string",
-          "format": "date-time"
-        },
-        "server": {
-          "title": "Server",
-          "description": "The API server URL of the Kubernetes cluster",
-          "type": "string",
-          "icon": "DefaultProperty"
-        }
-      },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "relations": {}
-  }
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: cluster
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .name
-          title: .name
-          blueprint: '"argocdCluster"'
-          properties:
-            applicationsCount: .info.applicationsCount
-            serverVersion: .serverVersion
-            labels: .labels
-            updatedAt: .connectionState.attemptedAt
-            server: .server
-```
-
-</details>
-
-### Namespace
-
-<details>
-<summary>Namespace blueprint</summary>
-
-```json showLineNumbers
-  {
-    "identifier": "argocdNamespace",
-    "description": "This blueprint represents an ArgoCD namespace",
-    "title": "ArgoCD Namespace",
-    "icon": "Argo",
-    "schema": {
-      "properties": {},
-      "required": []
-    },
-    "aggregationProperties": {},
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "relations": {
-      "cluster": {
-        "title": "ArgoCD Cluster",
-        "target": "argocdCluster",
-        "required": false,
-        "many": false
-      }
-    }
-  }
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: cluster
-    selector:
-      query: "true"
-    port:
-      itemsToParse: .namespaces
-      entity:
-        mappings:
-          identifier: .name + "-" + .item | tostring
-          title: .name + "-" + .item
-          blueprint: '"argocdNamespace"'
-          properties: {}
-          relations:
-            cluster: .name
-```
-
-</details>
-
-### Project
-
-<details>
-<summary> Project blueprint</summary>
-
-```json showlineNumbers
-  {
-    "identifier": "argocdProject",
-    "description": "This blueprint represents an ArgoCD Project",
-    "title": "ArgoCD Project",
-    "icon": "Argo",
-    "schema": {
-      "properties": {
-        "createdAt": {
-          "title": "Created At",
-          "type": "string",
-          "format": "date-time",
-          "icon": "DefaultProperty"
-        },
-        "description": {
-          "title": "Description",
-          "description": "Project description",
-          "type": "string",
-          "icon": "DefaultProperty"
-        }
-      },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "relations": {}
-  }
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .metadata.name
-          title: .metadata.name
-          blueprint: '"argocdProject"'
-          properties:
-            createdAt: .metadata.creationTimestamp
-            description: .spec.description
-```
-
-</details>
-
-### Application
-
-<details>
-<summary> Application blueprint</summary>
-
-```json showlineNumbers
-  {
-    "identifier": "argocdApplication",
-    "description": "This blueprint represents an ArgoCD Application",
-    "title": "Running Service",
-    "icon": "Argo",
-    "schema": {
-      "properties": {
-        "gitRepo": {
-          "type": "string",
-          "icon": "Git",
-          "title": "Repository URL",
-          "description": "The URL of the Git repository containing the application source code"
-        },
-        "gitPath": {
-          "type": "string",
-          "title": "Path",
-          "description": "The path within the Git repository where the application manifests are located"
-        },
-        "destinationServer": {
-          "type": "string",
-          "title": "Destination Server",
-          "description": "The URL of the target cluster's Kubernetes control plane API"
-        },
-        "revision": {
-          "type": "string",
-          "title": "Revision",
-          "description": "Revision contains information about the revision the comparison has been performed to"
-        },
-        "targetRevision": {
-          "type": "string",
-          "title": "Target Revision",
-          "description": "Target Revision defines the revision of the source to sync the application to. In case of Git, this can be commit, tag, or branch"
-        },
-        "syncStatus": {
-          "type": "string",
-          "title": "Sync Status",
-          "enum": [
-            "Synced",
-            "OutOfSync",
-            "Unknown"
-          ],
-          "enumColors": {
-            "Synced": "green",
-            "OutOfSync": "red",
-            "Unknown": "lightGray"
-          },
-          "description": "Status is the sync state of the comparison"
-        },
-        "healthStatus": {
-          "type": "string",
-          "title": "Health Status",
-          "enum": [
-            "Healthy",
-            "Missing",
-            "Suspended",
-            "Degraded",
-            "Progressing",
-            "Unknown"
-          ],
-          "enumColors": {
-            "Healthy": "green",
-            "Missing": "yellow",
-            "Suspended": "purple",
-            "Degraded": "red",
-            "Progressing": "blue",
-            "Unknown": "lightGray"
-          },
-          "description": "Status holds the status code of the application or resource"
-        },
-        "createdAt": {
-          "title": "Created At",
-          "type": "string",
-          "format": "date-time",
-          "description": "The created timestamp of the application"
-        },
-        "labels": {
-          "type": "object",
-          "title": "Labels",
-          "description": "Map of string keys and values that can be used to organize and categorize object"
-        },
-        "annotations": {
-          "type": "object",
-          "title": "Annotations",
-          "description": "Annotations are unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata"
-        }
-      },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "relations": {
-      "project": {
-        "title": "ArgoCD Project",
-        "target": "argocdProject",
-        "required": false,
-        "many": false
-      },
-      "cluster": {
-        "title": "ArgoCD Cluster",
-        "target": "argocdCluster",
-        "required": false,
-        "many": false
-      },
-      "namespace": {
-        "title": "ArgoCD Namespace",
-        "target": "argocdNamespace",
-        "required": false,
-        "many": false
-      }
-    }
-  }
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: application
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .metadata.uid
-          title: .metadata.name
-          blueprint: '"argocdApplication"'
-          properties:
-            gitRepo: .spec.source.repoURL
-            gitPath: .spec.source.path
-            destinationServer: .spec.destination.server
-            revision: .status.sync.revision
-            targetRevision: .spec.source.targetRevision
-            syncStatus: .status.sync.status
-            healthStatus: .status.health.status
-            createdAt: .metadata.creationTimestamp
-            labels: .metadata.labels
-            annotations: .metadata.annotations
-          relations:
-            project: .spec.project
-            namespace: .metadata.namespace
-            cluster: .spec.destination.name
-```
-
-</details>
-
-### Deployment history
-
-<details>
-<summary> Deployment history blueprint</summary>
-
-```json showlineNumbers
-  {
-    "identifier": "argocdDeploymentHistory",
-    "description": "This blueprint represents an ArgoCD deployment history",
-    "title": "ArgoCD Deployment History",
-    "icon": "Argo",
-    "schema": {
-      "properties": {
-        "deployedAt": {
-          "title": "Deployed At",
-          "type": "string",
-          "format": "date-time"
-        },
-        "deployStartedAt": {
-          "title": "Deploy Started At",
-          "type": "string",
-          "format": "date-time"
-        },
-        "revision": {
-          "title": "Revision",
-          "type": "string"
-        },
-        "initiatedBy": {
-          "title": "Initiated By",
-          "type": "string"
-        },
-        "repoURL": {
-          "title": "Repository URL",
-          "type": "string"
-        },
-        "sourcePath": {
-          "title": "Source Path",
-          "type": "string"
-        }
-      },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {
-      "application": {
-        "title": "Application",
-        "target": "argocdApplication",
-        "required": false,
-        "many": false
-      }
-    }
-  }
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: application
-    selector:
-      query: "true"
-    port:
-      itemsToParse: .status.history
-      entity:
-        mappings:
-          identifier: .metadata.uid + "-" + (.item.id | tostring)
-          title: .metadata.name + "-" + (.item.id | tostring)
-          blueprint: '"argocdDeploymentHistory"'
-          properties:
-            deployedAt: .item.deployedAt
-            deployStartedAt: .item.deployStartedAt
-            revision: .item.source.repoURL + "/commit/" + .item.revision
-            initiatedBy: .item.initiatedBy.username
-            repoURL: .item.source.repoURL
-            sourcePath: .item.source.path
-          relations:
-            application: .metadata.uid
-```
-
-</details>
-
-### Kubernetes Resource
-
-<details>
-<summary> Images blueprint</summary>
-
-```json showlineNumbers
- {
-    "identifier": "image",
-    "description": "This blueprint represents an image",
-    "title": "Image",
-    "icon": "AWS",
-    "schema": {
-      "properties": {},
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {}
-  }
-```
-
-</details>
-
-<details>
-<summary> Kubernetes resource blueprint</summary>
-
-```json showlineNumbers
-  {
-    "identifier": "argocdKubernetesResource",
-    "description": "This blueprint represents an ArgoCD kubernetes resource",
-    "title": "Kubernetes Resource",
-    "icon": "Argo",
-    "schema": {
-      "properties": {
-        "kind": {
-          "title": "Kind",
-          "type": "string"
-        },
-        "version": {
-          "title": "Version",
-          "type": "string"
-        },
-        "namespace": {
-          "title": "Namespace",
-          "type": "string"
-        },
-        "labels": {
-          "type": "object",
-          "title": "Labels"
-        },
-        "annotations": {
-          "type": "object",
-          "title": "Annotations"
-        }
-      },
-      "required": []
-    },
-    "mirrorProperties": {
-      "healthStatus": {
-        "title": "Health Status",
-        "path": "application.healthStatus"
-      },
-      "syncStatus": {
-        "title": "Sync Status",
-        "path": "application.syncStatus"
-      }
-    },
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {
-      "application": {
-        "title": "Application",
-        "target": "argocdApplication",
-        "required": false,
-        "many": false
-      },
-      "image": {
-        "title": "Image",
-        "target": "image",
-        "required": false,
-        "many": false
-      }
-    }
-  }
-```
-
-</details>
-
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: managed-resource
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .__application.metadata.uid + "-" + .kind + "-" + .name
-          title: .__application.metadata.name + "-" + .kind + "-" + .name
-          blueprint: '"argocdKubernetesResource"'
-          properties:
-            kind: .kind
-            namespace: .namespace
-            version: .resourceVersion
-            annotations: .liveState | fromjson | .metadata.annotations
-            labels: .liveState | fromjson | .metadata.labels
-          relations:
-            application: .__application.metadata.uid
-            image: 'if .kind == "Deployment" then .liveState | fromjson | .spec.template.spec.containers[0].image else null end'
-```
-</details>
+Examples of blueprints and the relevant integration configurations can be found on the argocd [examples page](example.md)
 
 
 ## Alternative installation via webhook
