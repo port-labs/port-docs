@@ -10,8 +10,7 @@ This guide provides a structured approach to designing and implementing Port in 
 
 Before proceeding to the guide, there a few initial steps to complete:
 
-1. [Sign up to Port](http://app.getport.io) to create an initial developer portal for your organization.  
-   Optionally, create an additional account for development/testing purposes (using a different email address).
+1. [Sign up to Port](http://app.getport.io) to create an initial developer portal for your organization.
 
 2. Complete Port's quick [onboarding process](/quickstart) to ensure you have all the necessary information and resources to get started.
 

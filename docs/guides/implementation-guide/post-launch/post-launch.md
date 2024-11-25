@@ -5,7 +5,7 @@ Congratulations on launching your new developer portal! 🎉
 
 Portals are dynamic and need to evolve to meet the changing needs of your users and your organization.  
 
-<img src="/img/guides/implementation-guide/growth-cycle.png" width="80%" border="1px" />
+<img src="/img/guides/implementation-guide/growth-cycle.png" width="90%" border="1px" />
 <br/><br/>
 
 Repeating this cycle of **"plan, build, launch"** is essential to ensure that your portal continues to be a valuable resource for your users.
