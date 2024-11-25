@@ -52,4 +52,4 @@ You can also define [**dynamic filters**](/search-and-query/#dynamic-properties)
 
 ## Next step - create actions & automations
 
-Once you have set up scorecards and dashboards, proceed to the [next step](/guides/implementation-guide/build/actions-and-automations) to define scorecards and create dashboards in your portal.
+Once you have set up scorecards and dashboards, proceed to the [next step](/guides/implementation-guide/build/actions-and-automations) to create self-service actions and automations in your portal.

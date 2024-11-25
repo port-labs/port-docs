@@ -12,4 +12,4 @@ Repeating this cycle of **"plan, build, launch"** is essential to ensure that yo
 
 - Schedule regular reviews with relevant stakeholders to assess the portal's performance and usage.
 - Habitually collect feedback from your users and incorporate it into your plans.
-- Maintain a prioritized list of user stories and build your work plan based on them.
+- Maintain a prioritized list of user stories and build your work plan based on them. 
