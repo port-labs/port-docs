@@ -8,7 +8,7 @@ Now that you have set up your software catalog, it's time to create self-service
 
 ## Set up self-service actions
 
-[Self-service actions]((/actions-and-automations/create-self-service-experiences/)) enable users to perform routine tasks in a safe, repeatable, and auditable way.  
+[Self-service actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/) enable users to perform routine tasks in a safe, repeatable, and auditable way.  
 
 Actions are made up of two parts:
 - **Frontend**: The UI that users interact with to execute the action. This includes the form inputs and any additional information needed to execute the action.
