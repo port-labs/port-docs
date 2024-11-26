@@ -320,6 +320,7 @@ gcp_ocean_integration_image = "<your_artifact_registry_/_dockerhub>/port-ocean-g
 gcp_organization = "<your_gcp_organization>" 
 gcp_ocean_setup_project = "<your_gcp_project>" 
 gcp_included_projects = ["<your_gcp_project>"] # The Project list that the integration digests resources from.
+gcp_project_filter = "<filter>" # The filter string used to retrieve GCP projects, allowing complex filtering by combining multiple conditions with logical operators (AND | OR).
 integration_identifier = "gcp"
 scheduled_resync_interval = 1440
 event_listener = {
@@ -346,6 +347,7 @@ The Port GCP integration's Terraform module offers a set of configurations:
 | `integration_identifier` |  | True | The Integration's identifier in Port  |
 | `port_base_url` | 'https://api.getport.io' | False | The Port Base url.  |
 | `gcp_included_projects` | [] | False | The Projects list you want the integration to collect from. If left empty, It will collect *All* projects in the organization.  |
+| `gcp_project_filter` |  | False | The filter string used to retrieve GCP projects, allowing complex filtering by combining multiple conditions with logical operators. Follows GCP's [filter expressions syntax](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/projects#filter-1). Example `parent.id:184606565139 labels.environment:production AND labels.team:devops OR labels priority:high` |
 | `gcp_excluded_projects` | [] | False | The Projects list you want the integration NOT to collect from. This will be overriden by any value in gcp_included_projects besides []. |
 | `assets_types_for_monitoring` | ["cloudresourcemanager.googleapis.com/Organization", "cloudresourcemanager.googleapis.com/Project", "storage.googleapis.com/Bucket", "cloudfunctions.googleapis.com/Function", "pubsub.googleapis.com/Subscription", "pubsub.googleapis.com/Topic"] | False | The list of asset types the integration will digest real-time events for.  |
 | `ocean_integration_service_account_permissions` | ["cloudasset.assets.exportResource", "cloudasset.assets.listCloudAssetFeeds", "cloudasset.assets.listResource", "cloudasset.assets.searchAllResources", "cloudasset.feeds.create", "cloudasset.feeds.list", "pubsub.topics.list", "pubsub.topics.get", "pubsub.subscriptions.list", "pubsub.subscriptions.get", "resourcemanager.projects.get", "resourcemanager.projects.list", "resourcemanager.folders.get", "resourcemanager.folders.list", "resourcemanager.organizations.get", "cloudquotas.quotas.get", "run.routes.invoke", "run.jobs.run"] | False | The permissions granted to the integration's service_account. We recommend not changing it to prevent unexpected errors.  |
@@ -361,6 +363,19 @@ The Port GCP integration's Terraform module offers a set of configurations:
 | `integration_type` | "gcp" | False | The type of the integration.  |
 | `scheduled_resync_interval` | 1440 | False | The interval to resync the integration (in minutes).  |
 | `ocean_service_account_custom_roles` | [] | False | A list of custom roles you want to grant the Integration's Service account. The module will grant these permissions to every available project and to the setup project `gcp_ocean_setup_project`. Example value: ["organizations/1234567890/roles/MyCustomRole", "organizations/1234567890/roles/MyOtherCustomRole"]  |
+
+<h2>Optional - Project Filtering</h2>
+
+:::warning Deprecation Notice
+The variables `gcp_included_projects` and `gcp_excluded_projects` are deprecated and will be removed in future releases. Please use `gcp_project_filter` for project filtering.
+:::
+
+The existing variables `gcp_included_projects` and `gcp_excluded_projects` are still supported for backward compatibility. However, these will be deprecated in future releases as the `gcp_project_filter` can achieve the same functionality and more. You can use all three filtering strategies, but note the following priority conditions:
+
+1. When `gcp_included_projects` is specified, only those projects are included.
+2. All exclusions, including `gcp_excluded_projects` and any filters, are ignored.
+3. If neither `gcp_included_projects` nor `gcp_excluded_projects` are specified, all projects in your organization are included by default.
+4. If a `gcp_project_filter` is provided, only projects matching the filter are included.
 
 <h2> Optional - Scaling the permissions </h2>
 
