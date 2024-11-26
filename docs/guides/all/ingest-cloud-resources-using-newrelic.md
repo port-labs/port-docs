@@ -50,7 +50,7 @@ Follow the steps below to set your data model up for ingesting cloud resources f
 After installing the New Relic integration, create the following blueprint configuration in Port:
 
 <details>
-<summary><b>New Relic `newRelicEntityCloudResource` blueprint configuration</b></summary>
+<summary><b>New Relic entity cloud resource blueprint (click to expand)</b></summary>
 
 ```json
 {
@@ -110,30 +110,37 @@ After installing the New Relic integration, create the following blueprint confi
 Locate the New Relic integration in the [Data Sources page](https://app.getport.io/settings/data-sources) and add the following mapping for cloud resources:
 
 <details>
-<summary><b>New Relic `entity` mapping configuration</b></summary>
+<summary><b>New Relic Service (Entity) mapping configuration (click to expand)</b></summary>
 
 ```yaml
-  - kind: entity
+  - kind: newRelicService
     selector:
       query: 'true'
-      infrastructureIntegrationTypes:
-        - AWS_EC2_INSTANCE
-        - AWS_S3_BUCKET
-        - AWS_RDS_DB_INSTANCE
-        - AWS_LAMBDA_FUNCTION
-        - AWS_ELB_LOAD_BALANCER
-        - AZURE_VIRTUAL_MACHINE
-        - AZURE_SQL_DATABASE
-        - GCP_COMPUTE_INSTANCE
-        - GCP_STORAGE_BUCKET
-        - GCP_SQL_DATABASE_INSTANCE
-        # Add more infrastructure integration types as needed
+      newRelicTypes: ["HOST"]
+      entityQueryFilter: |
+        infrastructureIntegrationType IN (
+          'AWS_EC2_INSTANCE',
+          'AWS_S3_BUCKET',
+          'AWS_RDS_DB_INSTANCE',
+          'AWS_LAMBDA_FUNCTION',
+          'AWS_ELB_LOAD_BALANCER',
+          'AZURE_VIRTUAL_MACHINE',
+          'AZURE_SQL_DATABASE',
+          'GCP_COMPUTE_INSTANCE',
+          'GCP_STORAGE_BUCKET',
+          'GCP_SQL_DATABASE_INSTANCE'
+        )
+      entityExtraPropertiesQuery: |
+        ... on InfraHostEntityOutline {
+          infrastructureIntegrationType
+          # Include additional properties if needed
+        }
     port:
       entity:
         mappings:
+          blueprint: '"newRelicEntityCloudResource"'
           identifier: .guid
           title: .name
-          blueprint: '"newRelicEntityCloudResource"'
           properties:
             accountId: .accountId
             domain: .domain
@@ -141,7 +148,7 @@ Locate the New Relic integration in the [Data Sources page](https://app.getport.
             infrastructureIntegrationType: .infrastructureIntegrationType
             reporting: .reporting
             link: .permalink
-            tags: .tag
+            tags: .tags
 ```
 
 </details>
