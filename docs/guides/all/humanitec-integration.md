@@ -41,9 +41,9 @@ Create the following blueprint definitions in port:
 
 <HumanitecWorkloadBlueprint/>
 
-<HumanitecResourceBlueprint/>
-
 <HumanitecResourceGraphBlueprint/>
+
+<HumanitecResourceBlueprint/>
 
 :::tip Blueprint Properties
 You may select the blueprints depending on what you want to track in your Humanitec account.
