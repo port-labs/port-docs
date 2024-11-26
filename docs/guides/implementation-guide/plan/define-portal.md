@@ -2,6 +2,8 @@
 
 The implementation process begins with defining the user-stories and MVP of your developer portal.
 
+<img src="/img/guides/implementation-guide/mvp-cycle.svg" width="50%" border="1px" />
+
 ## Define user-stories
 
 A **user story** is a concise, simple description of a feature or functionality from the perspective of the end user.  

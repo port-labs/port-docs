@@ -18,7 +18,7 @@ Some components will be automatically created in your portal:
 - Default [mapping](/build-your-software-catalog/customize-integrations/configure-mapping) will be defined to map the incoming data to the blueprint's properties.
 
 :::tip Default components
-All default components created by pre-built integrations can be easily customized to better fit your needs.
+All default components created by pre-built integrations can be fully customized to better fit your needs.
 :::
 
 <br/>

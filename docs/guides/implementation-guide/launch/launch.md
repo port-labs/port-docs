@@ -11,7 +11,7 @@ This page will help you prepare for a successful launch by organizing your porta
 - Add a detailed homepage to your portal with a [readme](https://docs.getport.io/customize-pages-dashboards-and-plugins/dashboards/#markdown) that explains the purpose of the portal, the available self-service actions, and how to use them.
 - Use the homepage to communicate announcements, updates, initiatives, and other important information to your users.
   This can also be done using a [markdown widget](https://docs.getport.io/customize-pages-dashboards-and-plugins/dashboards/#markdown).
-- Create useful visualizations that display data relevant for the logged-in user.
+- Create useful visualizations that display data [relevant for the logged-in user](https://docs.getport.io/customize-pages-dashboards-and-plugins/dashboards/#dynamic-filters).
 - Create a quick-access widget for links to useful pages, like the one in Port's [live demo](https://demo.getport.io): 
   <br/><br/><img src="/img/guides/implementation-guide/quick-access-widget.png" width="55%" border="1px" />
 
