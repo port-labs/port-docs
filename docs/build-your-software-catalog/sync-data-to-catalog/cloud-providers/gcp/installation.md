@@ -38,9 +38,21 @@ It is saved locally, and is NOT sent to Port at any time.
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
 
-   ```bash
-   cat <new-configuration-file> | base64 | pbcopy
-   ```
+  Linux/Mac (Bash/Zsh):
+
+    ```bash
+    cat <new-configuration-file> | base64 | pbcopy
+    ```
+
+  PowerShell:
+    ```powershell
+    [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("<new-configuration-file>")) | Set-Clipboard
+    ```
+  
+  Windows Command Prompt (creates a file : new-configuration-file.b64):
+    ```cmd
+    certutil -encode <new-configuration-file> new-configuration-file.b64 && type new-configuration-file.b64 | clip
+    ``` 
 
 2. Run the following command:
 
@@ -87,9 +99,22 @@ It is saved locally, and is NOT sent to Port at any time.
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
 
-   ```bash
-   cat <new-configuration-file> | base64 | pbcopy
-   ```
+  Linux/Mac (Bash/Zsh):
+
+    ```bash
+    cat <new-configuration-file> | base64 | pbcopy
+    ```
+
+  PowerShell:
+    ```powershell
+    [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("<new-configuration-file>")) | Set-Clipboard
+    ```
+  
+  Windows Command Prompt (creates a file : new-configuration-file.b64):
+    ```cmd
+    certutil -encode <new-configuration-file> new-configuration-file.b64 && type new-configuration-file.b64 | clip
+    ``` 
+
    
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -148,9 +173,21 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
 
-   ```bash
-   cat <new-configuration-file> | base64 | pbcopy
-   ```
+  Linux/Mac (Bash/Zsh):
+
+    ```bash
+    cat <new-configuration-file> | base64 | pbcopy
+    ```
+
+  PowerShell:
+    ```powershell
+    [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("<new-configuration-file>")) | Set-Clipboard
+    ```
+  
+  Windows Command Prompt (creates a file : new-configuration-file.b64):
+    ```cmd
+    certutil -encode <new-configuration-file> new-configuration-file.b64 && type new-configuration-file.b64 | clip
+    ``` 
 
 2. Run the following command:
 
@@ -310,7 +347,7 @@ The Port GCP integration's Terraform module offers a set of configurations:
 | `port_base_url` | 'https://api.getport.io' | False | The Port Base url.  |
 | `gcp_included_projects` | [] | False | The Projects list you want the integration to collect from. If left empty, It will collect *All* projects in the organization.  |
 | `gcp_excluded_projects` | [] | False | The Projects list you want the integration NOT to collect from. This will be overriden by any value in gcp_included_projects besides []. |
-| `assets_types_for_monitoring` | ["cloudresourcemanager.googleapis.com/Organization", "cloudresourcemanager.googleapis.com/Project", "storage.googleapis.com/Bucket", "cloudfunctions.googleapis.com/CloudFunction", "pubsub.googleapis.com/Subscription", "pubsub.googleapis.com/Topic"] | False | The list of asset types the integration will digest real-time events for.  |
+| `assets_types_for_monitoring` | ["cloudresourcemanager.googleapis.com/Organization", "cloudresourcemanager.googleapis.com/Project", "storage.googleapis.com/Bucket", "cloudfunctions.googleapis.com/Function", "pubsub.googleapis.com/Subscription", "pubsub.googleapis.com/Topic"] | False | The list of asset types the integration will digest real-time events for.  |
 | `ocean_integration_service_account_permissions` | ["cloudasset.assets.exportResource", "cloudasset.assets.listCloudAssetFeeds", "cloudasset.assets.listResource", "cloudasset.assets.searchAllResources", "cloudasset.feeds.create", "cloudasset.feeds.list", "pubsub.topics.list", "pubsub.topics.get", "pubsub.subscriptions.list", "pubsub.subscriptions.get", "resourcemanager.projects.get", "resourcemanager.projects.list", "resourcemanager.folders.get", "resourcemanager.folders.list", "resourcemanager.organizations.get", "cloudquotas.quotas.get", "run.routes.invoke", "run.jobs.run"] | False | The permissions granted to the integration's service_account. We recommend not changing it to prevent unexpected errors.  |
 | `assets_feed_topic_id` | "ocean-integration-topic" | False | The name of the topic created to recieve real time events.  |
 | `assets_feed_id` | "ocean-gcp-integration-assets-feed" | False | The ID for the Ocean GCP Integration feed.  |
