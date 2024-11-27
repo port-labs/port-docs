@@ -636,6 +636,14 @@ The maximum size of the webhook payload is **512KiB**.
 Reaching this limit will throw a `413 Request Entity Too Large` HTTP error.
 :::
 
+### Custom webhook HTTP response
+
+Custom webhooks provided by Port perform their processing in an asynchronous manner. 
+
+Most 3rd party providers expect the webhook endpoint to provide a correct response after a short period of time.
+
+In order to comply with the expectation from webhook endpoints, when making a request to your custom webhook, you will see a **`202 ACCEPTED`** status code returned in the response. This is the expected behavior and it means that the payload sent to your custom webhook has been received and will undergo processing in the background, after which it will appear in your catalog as determined by your mapping configuration.
+
 ## Examples
 
 Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
