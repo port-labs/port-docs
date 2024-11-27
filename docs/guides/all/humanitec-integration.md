@@ -146,4 +146,5 @@ jobs:
 </details>
 
 
-Done! any change that happens to your application, environment, workloads or resources in Humanitec will be synced to port on the schedule interval defined in the github workflow.
+Done! Any change that happens to your application, environment, workloads or resources in Humanitec will be synced to Port on the schedule interval defined in the GitHub workflow.
+
