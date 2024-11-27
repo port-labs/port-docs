@@ -36,82 +36,90 @@ It is possible to reference any field that appears in the API responses linked b
 - [`kubernetes-resource`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
 - [`managed-resource`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_ManagedResources)
 
-## Prerequisite
+## Prerequisites
 
-### Generating ArgoCD token
+### Generate an ArgoCD token
 
-1. Navigate to `<serverURL>/settings/accounts/<user>`. For example, if you access your ArgoCD at `https://localhost:8080`, you should navigate to `https://localhost:8080/settings/accounts/<user>`
+1. Navigate to `<serverURL>/settings/accounts/<user>`. For example, if you access your ArgoCD at `https://localhost:8080`, you should navigate to `https://localhost:8080/settings/accounts/<user>`  
+
 2. The user should have `apiKey` capabilities to allow generating authentication tokens for API access. If you don't have a user created yet, follow the guide on [how to create a new ArgoCD user](https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#create-new-user)
-3. Newly created users may have limited scope to resources by default. For that reason, You will need to configure RBAC policy for the new user by following [this guide](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/)
+
+3. Newly created users may have limited scope to resources by default. For that reason, You will need to configure the RBAC policy for the new user by following [this guide](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/)
+
 4. Ensure that the policy definition grants enough permission to `read` resources such as `applications`, `clusters`, `projects`, `repositories` etc.
+
 5. Under **Tokens** on your ArgoCD UI, Click **Generate New** to create a new token for the user or use the CLI:
 
-```bash
-argocd account generate-token --account <username>
-```
+   ```bash
+   argocd account generate-token --account <username>
+   ```
 
-:::tip Creating ArgoCD user with readonly permissions
+6. Create an ArgoCD user with readonly permissions
 
-1. Create an `argocd-user.yaml` file with the below manifest to create a new user `port-ocean-user`
+    1. Create an `argocd-user.yaml` file with the below manifest to create a new user `port-ocean-user`
 
-<details>
-<summary><b> Create user manifest (click to expand) </b></summary>
+     <details>
+   <summary><b> Create user manifest (click to expand) </b></summary>
+   
+   ```yaml showLineNumbers
+   apiVersion: v1
+   kind: ConfigMap
+   metadata:
+     name: argocd-cm
+     namespace: argocd
+     labels:
+       app.kubernetes.io/name: argocd-cm
+       app.kubernetes.io/part-of: argocd
+   data:
+     # add an additional local user with apiKey and login capabilities
+     #   apiKey - allows generating API keys
+     #   login - allows to login using UI
+     accounts.port-ocean-user: apiKey, login
+     accounts.port-ocean-user.enabled: "true"
+   ```
+   </details>
 
-```yaml showLineNumbers
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: argocd-cm
-  namespace: argocd
-  labels:
-    app.kubernetes.io/name: argocd-cm
-    app.kubernetes.io/part-of: argocd
-data:
-  # add an additional local user with apiKey and login capabilities
-  #   apiKey - allows generating API keys
-  #   login - allows to login using UI
-  accounts.port-ocean-user: apiKey, login
-  accounts.port-ocean-user.enabled: "true"
-```
-</details>
+    2. Apply the manifest with `kubectl` to create the user:
 
-2. Apply the manifest with `kubectl` to create the user:
-```bash
-kubectl apply -f argocd-user.yaml
-```
-3. Grant read only RBAC policy to the new user using the below manifest file (`argocd-rbac-cm.yaml`)
-<details>
-<summary><b> RBAC policy to grant readonly role to the new user (click to expand) </b></summary>
+     ```bash
+     kubectl apply -f argocd-user.yaml
+     ```
 
-```yaml showLineNumbers
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: argocd-rbac-cm
-  namespace: argocd
-data:
-  policy.default: role:readonly
-  policy.csv: |
-    p, role:read-only-role, applications, *, */*, allow
-    p, role:read-only-role, clusters, get, *, allow
-    p, role:read-only-role, repositories, get, *, allow
-    p, role:read-only-role, projects, get, *, allow
-    p, role:read-only-role, logs, get, *, allow
+    3. Grant read only RBAC policy to the new user using the below manifest file (`argocd-rbac-cm.yaml`)
 
-    g, port-ocean-user, role:read-only-role
-```
-</details>
+     <details>
+   <summary><b> RBAC policy to grant readonly role to the new user (click to expand) </b></summary>
+   
+   ```yaml showLineNumbers
+   apiVersion: v1
+   kind: ConfigMap
+   metadata:
+     name: argocd-rbac-cm
+     namespace: argocd
+   data:
+     policy.default: role:readonly
+     policy.csv: |
+       p, role:read-only-role, applications, *, */*, allow
+       p, role:read-only-role, clusters, get, *, allow
+       p, role:read-only-role, repositories, get, *, allow
+       p, role:read-only-role, projects, get, *, allow
+       p, role:read-only-role, logs, get, *, allow
+   
+       g, port-ocean-user, role:read-only-role
+   ```
+   </details>
 
-4. Apply the `argocd-rbac-cm.yaml` manifest with `kubectl`:
-```bash
-kubectl apply -f argocd-rbac-cm.yaml
-```
+    4. Apply the `argocd-rbac-cm.yaml` manifest with `kubectl`:
 
-5. Go to your ArgoCD UI to generate a new token for the user or use the CLI
-```bash
-argocd account generate-token --account <username>
-```
-:::
+     ```bash
+     kubectl apply -f argocd-rbac-cm.yaml
+     ```
+
+    5. Go to your ArgoCD UI to generate a new token for the user or use the CLI
+     ```bash
+     argocd account generate-token --account <username>
+     ```
+
 
 ## Setup
 
@@ -120,6 +128,8 @@ Choose one of the following installation methods:
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)" default>
+
+Using this installation method means that the integration will be able to update Port in real time using webhooks.
 
 <h2> Prerequisites </h2>
 
@@ -451,31 +461,30 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 
 ## Capabilities
 
-### Configuring real-time updates
-
+### Configure real-time updates
 Currently, the ArgoCD REST API lacks support for programmatic webhook creation. To set up a webhook configuration in ArgoCD for sending notifications to the Ocean integration, follow these steps:
 
 1. Install ArgoCD notifications manifest;
 
-```bash showLineNumbers
+```bash 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
 ```
 
 2. Install ArgoCD triggers and templates manifest;
 
-```bash showLineNumbers
+```bash 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
 ```
 
 3. Use `kubectl` to connect to the Kubernetes cluster where your ArgoCD instance is deployed;
 
-```bash showLineNumbers
+```bash 
 kubectl config use-context <your-cluster-context>
 ```
 
 4. Set the current namespace to your ArgoCD namespace, use the following command;
 
-```bash showLineNumbers
+```bash 
 kubectl config set-context --current --namespace=<your-namespace>
 ```
 
@@ -554,6 +563,11 @@ To view and test the integration's mapping against examples of the third-party A
 
 Examples of blueprints and the relevant integration configurations can be found on the argocd [examples page](example.md)
 
+## Relevant Guides
+
+- For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=ArgoCD).
+
+
 
 ## Alternative installation via webhook
 
@@ -614,25 +628,25 @@ To set up a webhook configuration in ArgoCD for sending notifications to Port, f
 
 1. Install ArgoCD notifications manifest;
 
-```bash showLineNumbers
+```bash 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
 ```
 
 2. Install ArgoCD triggers and templates manifest;
 
-```bash showLineNumbers
+```bash 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
 ```
 
 3. Use `kubectl` to connect to the Kubernetes cluster where your ArgoCD instance is deployed;
 
-```bash showLineNumbers
+```bash 
 kubectl config use-context <your-cluster-context>
 ```
 
 4. Set the current namespace to your ArgoCD namespace, use the following command;
 
-```bash showLineNumbers
+```bash 
 kubectl config set-context --current --namespace=<your-namespace>
 ```
 
@@ -760,25 +774,25 @@ To set up a webhook configuration in ArgoCD for sending notifications to Port, f
 
 1. Install ArgoCD notifications manifest;
 
-```bash showLineNumbers
+```bash 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
 ```
 
 2. Install ArgoCD triggers and templates manifest;
 
-```bash showLineNumbers
+```bash 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
 ```
 
 3. Use `kubectl` to connect to the Kubernetes cluster where your ArgoCD instance is deployed;
 
-```bash showLineNumbers
+```bash 
 kubectl config use-context <your-cluster-context>
 ```
 
 4. Set the current namespace to your ArgoCD namespace, use the following command;
 
-```bash showLineNumbers
+```bash 
 kubectl config set-context --current --namespace=<your-namespace>
 ```
 
@@ -810,7 +824,3 @@ Done! any change that happens to your applications in ArgoCD will trigger a webh
 
 </details>
 
-More relevant guides and examples:
-
-- [Rollback ArgoCD deployment](/guides/all/rollback-argocd-deployment)
-- [Self-service action to synchronize ArgoCD application](/guides/all/sync-argocd-app)
