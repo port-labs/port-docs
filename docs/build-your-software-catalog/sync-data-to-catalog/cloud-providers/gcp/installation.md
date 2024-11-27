@@ -366,16 +366,38 @@ The Port GCP integration's Terraform module offers a set of configurations:
 
 <h2>Optional - Project Filtering</h2>
 
+You have the option to specify which projects are included or excluded in the integration. This can be particularly useful when you have a large number of projects and want to target specific ones based on certain criteria.
+
 :::warning Deprecation Notice
-The variables `gcp_included_projects` and `gcp_excluded_projects` are deprecated and will be removed in future releases. Please use `gcp_project_filter` for project filtering.
+The variables `gcp_included_projects` and `gcp_excluded_projects` are deprecated and will be removed in future releases. We recommend using the gcp_project_filter variable for project filtering moving forward.
 :::
 
-The existing variables `gcp_included_projects` and `gcp_excluded_projects` are still supported for backward compatibility. However, these will be deprecated in future releases as the `gcp_project_filter` can achieve the same functionality and more. You can use all three filtering strategies, but note the following priority conditions:
+You can use the following three filtering strategies together:
 
-1. When `gcp_included_projects` is specified, only those projects are included.
-2. All exclusions, including `gcp_excluded_projects` and any filters, are ignored.
-3. If neither `gcp_included_projects` nor `gcp_excluded_projects` are specified, all projects in your organization are included by default.
-4. If a `gcp_project_filter` is provided, only projects matching the filter are included.
+- `gcp_excluded_projects`
+- `gcp_included_projects`
+- `gcp_project_filter`
+
+However, please note the priority conditions when using them simultaneously.
+
+<h2>Priority Conditions</h2>
+You can use all three filtering strategies together, but it's important to understand how they interact. The following priority conditions apply:
+
+- **gcp_included_projects (Highest Priority):**
+  - When specified, only the projects listed in `gcp_included_projects` are included.
+  - All other filters (`gcp_excluded_projects` and `gcp_project_filter`) are ignored.
+  - Use this when you have a specific list of projects to include, regardless of other criteria.
+
+- **gcp_excluded_projects:**
+  - If `gcp_included_projects` is not specified but `gcp_excluded_projects` is provided, all projects are included except those listed.
+  - The `gcp_project_filter` is still applied, further refining the included projects.
+
+- **gcp_project_filter:**
+  - If neither `gcp_included_projects` nor `gcp_excluded_projects` are specified, and `gcp_project_filter` is provided, only projects matching the filter criteria are included.
+  - This allows for flexible and complex filtering using GCP's native filtering syntax.
+
+- **Default Behavior (Lowest Priority):**
+  - If none of the above variables are specified, all projects in your GCP organization are included by default.
 
 <h2> Optional - Scaling the permissions </h2>
 
