@@ -22,7 +22,7 @@ Port's ArgoCD integration allows you to model ArgoCD resources in your software 
 This integration allows you to:
 
 - Map and organize your desired ArgoCD resources and their metadata in Port (see supported resources below).
-- Watch for X object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
+- Watch for ArgoCD object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
 ### Supported Resources
 
@@ -389,17 +389,17 @@ If you want the integration to update Port in real time using webhooks you shoul
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
 
-| Parameter                                | Description                                                                                                        | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__TOKEN`      | The ArgoCD API token                                                                                               | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__SERVER_URL` | The ArgoCD server URL                                                                                              | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__IGNORE_SERVER_ERROR` |  Whether to ignore server errors when fetching data from ArgoCD. The default value is `false` meaning the integration will raise exceptions and fail the resync event    | ❌       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`       | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__SEND_RAW_DATA_EXAMPLES`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true     | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`         | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                 | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`             | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                         | ✅       |
+| Parameter                                         | Description                                                                                                                                                          | Required |
+|---------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `OCEAN__INTEGRATION__CONFIG__TOKEN`               | The ArgoCD API token                                                                                                                                                 | ✅        |
+| `OCEAN__INTEGRATION__CONFIG__SERVER_URL`          | The ArgoCD server URL                                                                                                                                                | ✅        |
+| `OCEAN__INTEGRATION__CONFIG__IGNORE_SERVER_ERROR` | Whether to ignore server errors when fetching data from ArgoCD. The default value is `false` meaning the integration will raise exceptions and fail the resync event | ❌        |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`                | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                                   | ❌        |
+| `OCEAN__SEND_RAW_DATA_EXAMPLES`                   | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                  | ❌        |
+| `OCEAN__INTEGRATION__IDENTIFIER`                  | Change the identifier to describe your integration, if not set will use the default one                                                                              | ❌        |
+| `OCEAN__PORT__CLIENT_ID`                          | Your port client id                                                                                                                                                  | ✅        |
+| `OCEAN__PORT__CLIENT_SECRET`                      | Your port client secret                                                                                                                                              | ✅        |
+| `OCEAN__PORT__BASE_URL`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                              | ✅        |
 
 <br/>
 
