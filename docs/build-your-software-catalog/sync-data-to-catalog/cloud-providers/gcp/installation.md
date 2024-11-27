@@ -366,7 +366,7 @@ The Port GCP integration's Terraform module offers a set of configurations:
 
 <h2>Optional - Project Filtering</h2>
 
-You have the option to specify which projects are included or excluded in the integration. This can be particularly useful when you have a large number of projects and want to target specific ones based on certain criteria.
+You have the option to specify which projects are included or excluded for real-time events. This can be particularly useful when you have a large number of projects and want to target specific ones based on certain criteria.
 
 :::warning Deprecation Notice
 The variables `gcp_included_projects` and `gcp_excluded_projects` are deprecated and will be removed in future releases. We recommend using the gcp_project_filter variable for project filtering moving forward.
