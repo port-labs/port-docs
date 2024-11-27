@@ -4,32 +4,43 @@ sidebar_position: 2
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_opsgenie_docker_params.mdx"
-import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import OpsGenieAlertBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/opsgenie/\_example_opsgenie_alert_blueprint.mdx";
 import OpsGenieAlertConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/opsgenie/\_example_opsgenie_alert_configuration.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Opsgenie
 
-Port's Opsgenie integration allows you to import `alert`, `incident`, `service`, `team`, `schedule` and `schedule-oncall` from your Opsgenie account into Port, according to your mapping and definitions.
+Port's Opsgenie integration allows you to model Opsgenie resources in your software catalog and ingest data into them.
 
-## Common use cases
+## Overview
 
-- Map `alert`, `incident`, `service`, `team`, `schedule`, and `schedule-oncall` in your Opsgenie account.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+This integration allows you to:
 
-## Prerequisites
-:::info API Token
-An OpsGenie API token with the `read` and `configuration access` scopes is required. Port requires the `read` permission to allow the integration to access incidents and alerts. Port also needs the `configuraton access` permission to allow the integration to access service, teams, and schedules. See [here](https://support.atlassian.com/opsgenie/docs/api-key-management/) for more information on OpsGenie API key management.
-:::
+- Map and organize your desired Opsgenie resources and their metadata in Port (see supported resources below).
+- Watch for Opsgenie object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-<Prerequisites />
 
-## Installation
+### Supported Resources
+
+The resources that can be ingested from Opsgenie into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Alert`](https://docs.opsgenie.com/docs/alert-api#list-alerts)
+- [`Incident`](https://docs.opsgenie.com/docs/incident-api#list-incidents)
+- [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
+- [`Team`](https://docs.opsgenie.com/docs/team-api#list-teams)
+- [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
+- [`Schedule`](https://docs.opsgenie.com/docs/schedule-api#list-schedules)
+- [`Schedule-Oncall`](https://docs.opsgenie.com/docs/who-is-on-call-api#get-on-calls)
+
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -41,53 +52,29 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+<h2> Prerequisites </h2>
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+:::info API Token
+An OpsGenie API token with the `read` and `configuration access` scopes is required. Port requires the `read` permission to allow the integration to access incidents and alerts. Port also needs the `configuraton access` permission to allow the integration to access service, teams, and schedules. See [here](https://support.atlassian.com/opsgenie/docs/api-key-management/) for more information on OpsGenie API key management.
+:::
 
-| Parameter                        | Description                                                                                                   | Required |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                  | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`              | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                       | ✅       |
-| `integration.identifier`         | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`               | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type` | The event listener type                                                                                       | ✅       |
-| `integration.secrets.apiToken`   | The Opsgenie API token                                                                                        | ✅       |
-| `integration.config.apiUrl`      | The Opsgenie API URL. If not specified, the default will be https://api.opsgenie.com                          | ✅       |
-| `scheduledResyncInterval`        | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
-| `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true  | ❌       |
+<Prerequisites />
 
-<br/>
+For details about the available parameters for the installation, see the table below.
+
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-opsgenie-integration port-labs/port-ocean \
-  --set port.clientId="CLIENT_ID"  \
-  --set port.clientSecret="CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set integration.identifier="my-opsgenie-integration"  \
-  --set integration.type="opsgenie"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.apiToken="API_TOKEN"  \
-  --set integration.config.apiUrl="https://api.opsgenie.com"
-```
+<OceanRealtimeInstallation integration="opsgenie" />
 
 <PortApiRegionTip/>
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-opsgenie-integration` in your git repository with the content:
 
@@ -171,11 +158,30 @@ kubectl apply -f my-ocean-opsgenie-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation. The parameters specific to this integration are last in the table.
+
+| Parameter                        | Description                                                                                                                         | Required |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                  | Your port client id                                                                                                                 | ✅        |
+| `port.clientSecret`              | Your port client secret                                                                                                             | ✅        |
+| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                             | ✅        |
+| `integration.identifier`         | Change the identifier to describe your integration                                                                                  | ✅        |
+| `integration.type`               | The integration type                                                                                                                | ✅        |
+| `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
+| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
+| `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
+| `integration.eventListener.type` | The event listener type                                                                                                             | ✅        |
+| `integration.secrets.apiToken`   | The Opsgenie API token, docs can be found [here](https://support.atlassian.com/opsgenie/docs/api-key-management/)                   | ✅        |
+| `integration.config.apiUrl`      | The Opsgenie API URL. If not specified, the default will be https://api.opsgenie.com                                                | ✅        |
+
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
 This workflow will run the Opsgenie integration once and then exit, this is useful for **scheduled** ingestion of data.
@@ -388,99 +394,25 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting Opsgenie objects
 
-The Opsgenie integration uses a YAML configuration to describe the process of loading data into the developer portal. See [examples](#examples) below.
+## Configuration
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Opsgenie's API events.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-### Configuration structure
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-The integration configuration determines which resources will be queried from Opsgenie, and which entities and properties will be created in Port.
 
-:::tip Supported resources
-The following resources can be used to map data from Opsgenie, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+## Capabilities
 
-- [`Alert`](https://docs.opsgenie.com/docs/alert-api#list-alerts)
-- [`Incident`](https://docs.opsgenie.com/docs/incident-api#list-incidents)
-- [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
-- [`Team`](https://docs.opsgenie.com/docs/team-api#list-teams)
-- [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
-- [`Schedule`](https://docs.opsgenie.com/docs/schedule-api#list-schedules)
-- [`Schedule-Oncall`](https://docs.opsgenie.com/docs/who-is-on-call-api#get-on-calls)
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: service
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Opsgenie object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: service
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: service
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Opsgenie object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: service
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Opsgenie object to a Port entity. Each value is a JQ query.
-            identifier: .id
-            title: .name
-            blueprint: '"opsGenieService"'
-            properties:
-              description: .description
-        # highlight-end
-    - kind: service # In this instance service is mapped again with a different filter
-      selector:
-        query: '.name == "MyServiceName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-## Configuring real-time updates
+### Configuring real-time updates
 
 Currently, the OpsGenie API lacks support for programmatic webhook creation. To set up a webhook configuration in OpsGenie for sending alert notifications to the Ocean integration, follow these steps:
 
-### Prerequisite
+#### Prerequisite
 
 Prepare a webhook `URL` using this format: `{app_host}/integration/webhook`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the OpsGenie Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/webhook`.
 
-### Create a webhook in OpsGenie
+#### Create a webhook in OpsGenie
 
 1. Go to OpsGenie;
 2. Select **Settings**;
@@ -504,581 +436,13 @@ Prepare a webhook `URL` using this format: `{app_host}/integration/webhook`. The
    6. `Webhook URL` - enter the value of the `URL` you created above.
 7. Click **Save integration**
 
-### Ingest data into Port
 
-To ingest Opsgenie objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Opsgenie.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Opsgenie under the Incident management category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
 
-Examples of blueprints and the relevant integration configurations:
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
-### Team
-
-<details>
-<summary>Team blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "opsGenieTeam",
-  "description": "This blueprint represents an OpsGenie team in our software catalog",
-  "title": "OpsGenie Team",
-  "icon": "OpsGenie",
-  "schema": {
-    "properties": {
-      "description": {
-        "type": "string",
-        "title": "Description",
-        "icon": "DefaultProperty"
-      },
-      "url": {
-        "title": "URL",
-        "type": "string",
-        "description": "URL to the service",
-        "format": "url",
-        "icon": "DefaultProperty"
-      },
-      "oncallUsers": {
-        "type": "array",
-        "title": "Current Oncalls",
-        "items": {
-          "type": "string",
-          "format": "user"
-        }
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: team
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .name
-          blueprint: '"opsGenieTeam"'
-          properties:
-            description: .description
-            url: .links.web
-```
-
-</details>
-
-
-### Schedule
-
-<details>
-<summary>Schedule blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "opsGenieSchedule",
-  "description": "This blueprint represents a OpsGenie schedule in our software catalog",
-  "title": "OpsGenie Schedule",
-  "icon": "OpsGenie",
-  "schema": {
-    "properties": {
-      "timezone": {
-        "title": "Timezone",
-        "type": "string"
-      },
-      "description": {
-        "title": "Description",
-        "type": "string"
-      },
-      "users": {
-        "title": "Users",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "format": "user"
-        }
-      },
-      "startDate": {
-        "title": "Start Date",
-        "type": "string",
-        "format": "date-time"
-      },
-      "endDate": {
-        "title": "End Date",
-        "type": "string",
-        "format": "date-time"
-      },
-      "rotationType": {
-        "type": "string",
-        "title": "Rotation Type"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "ownerTeam": {
-      "title": "Owner Team",
-      "target": "opsGenieTeam",
-      "required": false,
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: schedule
-    selector:
-      query: 'true'
-      apiQueryParams:
-        expand: rotation
-    port:
-      itemsToParse: .rotations
-      entity:
-        mappings:
-          identifier: .id + "_" + .item.id
-          title: .name + "_" + .item.name
-          blueprint: '"opsGenieSchedule"'
-          properties:
-            timezone: .timezone
-            description: .description
-            startDate: .item.startDate
-            endDate: .item.endDate
-            rotationType: .item.type
-            users: '[.item.participants[] | select(has("username")) | .username]'
-          relations:
-            ownerTeam: .ownerTeam.id
-```
-
-</details>
-
-
-### Service
-
-<details>
-<summary>Service blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "opsGenieService",
-  "description": "This blueprint represents an OpsGenie service in our software catalog",
-  "title": "OpsGenie Service",
-  "icon": "OpsGenie",
-  "schema": {
-    "properties": {
-      "description": {
-        "type": "string",
-        "title": "Description",
-        "icon": "DefaultProperty"
-      },
-      "url": {
-        "title": "URL",
-        "type": "string",
-        "description": "URL to the service",
-        "format": "url",
-        "icon": "DefaultProperty"
-      },
-      "tags": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "title": "Tags",
-        "icon": "DefaultProperty"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {
-    "oncallUsers": {
-      "title": "Current Oncalls",
-      "path": "ownerTeam.oncallUsers"
-    }
-  },
-  "calculationProperties": {
-  },
-  "aggregationProperties": {
-    "numberOfOpenIncidents": {
-      "title": "Number of open incidents",
-      "type": "number",
-      "target": "opsGenieIncident",
-      "query": {
-        "combinator": "and",
-        "rules": [
-          {
-            "property": "status",
-            "operator": "=",
-            "value": "open"
-          }
-        ]
-      },
-      "calculationSpec": {
-        "calculationBy": "entities",
-        "func": "count"
-      }
-    }
-  },
-  "relations": {
-    "ownerTeam": {
-      "title": "Owner Team",
-      "target": "opsGenieTeam",
-      "required": false,
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: service
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .name
-          blueprint: '"opsGenieService"'
-          properties:
-            description: .description
-            url: .links.web
-            tags: .tags
-          relations:
-            ownerTeam: .teamId
-```
-
-</details>
-
-### Incident
-
-<details>
-<summary>Incident blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "opsGenieIncident",
-  "description": "This blueprint represents an OpsGenie incident in our software catalog",
-  "title": "OpsGenie Incident",
-  "icon": "OpsGenie",
-  "schema": {
-    "properties": {
-      "description": {
-        "title": "Description",
-        "type": "string"
-      },
-      "status": {
-        "type": "string",
-        "title": "Status",
-        "enum": [
-          "closed",
-          "open",
-          "resolved"
-        ],
-        "enumColors": {
-          "closed": "blue",
-          "open": "red",
-          "resolved": "green"
-        },
-        "description": "The status of the incident"
-      },
-      "url": {
-        "type": "string",
-        "format": "url",
-        "title": "URL"
-      },
-      "tags": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "title": "Tags"
-      },
-      "responders": {
-        "type": "array",
-        "title": "Responders",
-        "description": "Responders to the alert"
-      },
-      "priority": {
-        "type": "string",
-        "title": "Priority"
-      },
-      "createdAt": {
-        "title": "Create At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "updatedAt": {
-        "title": "Updated At",
-        "type": "string",
-        "format": "date-time"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "services": {
-      "title": "Impacted Services",
-      "target": "opsGenieService",
-      "many": true,
-      "required": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: incident
-    selector:
-      query: 'true'
-      apiQueryParams:
-        status: open
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .message
-          blueprint: '"opsGenieIncident"'
-          properties:
-            status: .status
-            responders: .responders
-            priority: .priority
-            tags: .tags
-            url: .links.web
-            createdAt: .createdAt
-            updatedAt: .updatedAt
-            description: .description
-          relations:
-            services: .impactedServices
-```
-
-</details>
-
-### Alert
-
-<details>
-<summary>Alert blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "opsGenieAlert",
-  "description": "This blueprint represents an OpsGenie alert in our software catalog",
-  "title": "OpsGenie Alert",
-  "icon": "OpsGenie",
-  "schema": {
-    "properties": {
-      "description": {
-        "title": "Description",
-        "type": "string"
-      },
-      "status": {
-        "type": "string",
-        "title": "Status",
-        "enum": [
-          "closed",
-          "open"
-        ],
-        "enumColors": {
-          "closed": "green",
-          "open": "red"
-        },
-        "description": "The status of the alert"
-      },
-      "acknowledged": {
-        "type": "boolean",
-        "title": "Acknowledged"
-      },
-      "tags": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "title": "Tags"
-      },
-      "responders": {
-        "type": "array",
-        "title": "Responders",
-        "description": "Responders to the alert"
-      },
-      "integration": {
-        "type": "string",
-        "title": "Integration",
-        "description": "The name of the Integration"
-      },
-      "priority": {
-        "type": "string",
-        "title": "Priority"
-      },
-      "sourceName": {
-        "type": "string",
-        "title": "Source Name",
-        "description": "Alert source name"
-      },
-      "createdBy": {
-        "title": "Created By",
-        "type": "string",
-        "format": "user"
-      },
-      "createdAt": {
-        "title": "Create At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "updatedAt": {
-        "title": "Updated At",
-        "type": "string",
-        "format": "date-time"
-      },
-      "count": {
-        "title": "Count",
-        "type": "number"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "relatedIncident": {
-      "title": "Related Incident",
-      "target": "opsGenieIncident",
-      "required": false,
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: alert
-    selector:
-      query: 'true'
-      apiQueryParams:
-        status: open
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .message
-          blueprint: '"opsGenieAlert"'
-          properties:
-            status: .status
-            acknowledged: .acknowledged
-            responders: .responders
-            priority: .priority
-            sourceName: .source
-            tags: .tags
-            count: .count
-            createdBy: .owner
-            createdAt: .createdAt
-            updatedAt: .updatedAt
-            description: .description
-            integration: .integration.name
-          relations:
-            relatedIncident: 'if (.alias | contains("_")) then (.alias | split("_")[0]) else null end'
-```
-
-</details>
-
-:::tip filter alerts and incidents
-The integration provides an option to filter the data that is retrieved from the OpsGenie API using the following attributes:
-
-1. `createdAt`: The date and time the alert or incident was created
-2. `lastOccurredAt`: The date and time the alert or incident was last occurred
-3. `snoozedUntil`: The date and time the alert or incident was snoozed until
-4. `priority`: The priority of the alert or incident. Accepts values such as `P1`, `P2`, `P3`, `P4` and `P5`
-5. `status`: The status of the alert or incident. Accepts values such as `open`, `closed` and `resolved`
-6. `isSeen`: Whether the alert or incident has been seen. Accepts a boolean `true` or `false`
-7. `acknowledged`: Whether the alert or incident has been acknowledged. Accepts a boolean `true` or `false`
-8. `snoozed`: Whether the alert or incident has been snoozed. Accepts a boolean `true` or `false`
-9. `owner`: The owner of the alert or incident. Accepts an OpsGenie username
-10. `teams`: The teams associated with the alert or incident
-11. `acknowledgedBy`: The user who acknowledged the alert or incident
-12. `closedBy`: The user who closed the alert or incident
-13. `message`: The message of the alert or incident
-
-These attributes can be enabled using the path: `selector.apiQueryParams`. By default, the integration fetches `open` alerts and incidents.
-:::
-
-### Current On-call
-To bring the current on-call users, update your configuration mapping to populate the `OpsGenieTeam` blueprint with team and on-call data. This will enable you to view on-call information at the service level:
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: schedule-oncall
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .ownerTeam.id
-          title: .ownerTeam.name
-          blueprint: '"opsGenieTeam"'
-          properties:
-            oncallUsers: .__currentOncalls.onCallRecipients
-```
-
-</details>
+Examples of blueprints and the relevant integration configurations can be found on the opsgenie [examples page](example.md)
 
 
 ## Let's Test It
