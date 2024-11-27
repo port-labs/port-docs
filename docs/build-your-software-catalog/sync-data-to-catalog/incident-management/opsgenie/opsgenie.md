@@ -442,7 +442,7 @@ Prepare a webhook `URL` using this format: `{app_host}/integration/webhook`. The
 
 To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
-Examples of blueprints and the relevant integration configurations can be found on the opsgenie [examples page](example.md)
+Examples of blueprints and the relevant integration configurations can be found on the opsgenie [examples page](examples.md)
 
 
 ## Let's Test It
