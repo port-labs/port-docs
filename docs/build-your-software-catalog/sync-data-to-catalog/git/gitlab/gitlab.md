@@ -24,6 +24,8 @@ It is possible to reference any field that appears in the API responses linked b
 - [`pipeline`](https://docs.gitlab.com/ee/api/pipelines.html#get-a-single-pipeline)
 - [`group`](https://docs.gitlab.com/ee/api/groups.html#details-of-a-group)
 - [`file`](https://docs.gitlab.com/ee/api/repository_files.html#get-file-from-repository)
+- [`members`](https://docs.gitlab.com/ee/api/members.html#list-all-members-of-a-group-or-project)
+
 
 ## Setup
 
