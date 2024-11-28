@@ -940,6 +940,10 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
+## Relevant Guides
+
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=ServiceNow).
+
 ## Alternative installation via webhook
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from ServiceNow. If so, use the following instructions:
 
