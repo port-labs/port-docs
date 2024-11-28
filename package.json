@@ -27,7 +27,7 @@
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@mdx-js/react": "^3.1.0",
-    "@mui/material": "^6.1.8",
+    "@mui/material": "^6.1.9",
     "docusaurus-plugin-openapi-docs": "^4.0.1",
     "docusaurus-theme-openapi-docs": "^4.0.1",
     "@stackql/docusaurus-plugin-hubspot": "^1.0.1",
