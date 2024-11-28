@@ -50,13 +50,19 @@ Choose one of the following installation methods:
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
+<h2> Prerequisites </h2>
+
+<Prerequisites />
+
 For details about the available parameters for the installation, see the table below.
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="jira" />
+<OceanRealtimeInstallation integration="Jira" />
 
 <PortApiRegionTip/>
 
