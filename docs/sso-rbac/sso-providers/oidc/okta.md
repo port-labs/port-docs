@@ -174,11 +174,11 @@ The `endpoint` and `token` will be used to complete the setup of the new SWA app
 3. Open the Provisioning tab in your application, and under `Integration` fill the following:
    - SCIM connector base URL: The `endpoint` you received from Port.
    - Unique identifier field for users: `userName`.
-   - Supported provisioning actions: `Push New Users`, `Push Profile Updates`, `Push Groups`.
+   - Supported provisioning actions: `Push New Users`, `Push Profile Updates`.
    - Authentication Mode: `HTTP Header`.
    - Authorization: The `token` you received from Port.
        <br/><br/>
-       <img src="/img/sso/okta/OktaSCIMConfiguration.png" width="80%" border="1px" />
+      <img src="/img/sso/okta/OKTASCIMconf.png" width="80%" border="1px" />
 
     After configuration, press the `Test Connector Configuration` and confirm the integration was configured correctly.
 
