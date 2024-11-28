@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Terraform 
+title: Terraform
 description: Terraform integration in Port
 ---
 
