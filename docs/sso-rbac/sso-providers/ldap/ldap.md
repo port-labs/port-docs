@@ -17,6 +17,8 @@ Port's login provider (Auth0) integrates with Active Directory using [Auth0's AD
 
 To deploy Auth0's LDAP connector, follow Auth0's [connector installation guide](https://auth0.com/docs/authenticate/identity-providers/enterprise-identity-providers/active-directory-ldap/ad-ldap-connector/install-configure-ad-ldap-connector).
 
+When required to insert the `TICKET URL`, use the `TICKET_URL` provided by the Port support team.
+
 ### Enabling client SSL certificate authentication
 In some environments, accessing internal AD servers require custom SSL certificate authentication. If your AD environment requires client certificates:
 1. Contact Port's support team to request enabling client SSL certificates on your connection.
