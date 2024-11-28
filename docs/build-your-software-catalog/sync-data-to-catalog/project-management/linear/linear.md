@@ -46,6 +46,8 @@ Choose one of the following installation methods:
 
 <TabItem value="real-time-self-hosted" label="Real-Time (self-hosted)">
 
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
 <h2> Prerequisites </h2>
 
 <Prerequisites />
@@ -56,7 +58,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="linear" />
+<OceanRealtimeInstallation integration="Linear" />
 
 <PortApiRegionTip/>
 
@@ -152,13 +154,13 @@ kubectl apply -f my-ocean-linear-integration.yaml
 
 This table summarizes the available parameters for the installation.
 
-| Parameter                                | Description                                                                                                                                | Example                          | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | ------- |
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅      |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅      |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅      |
-| `integration.secrets.linearApiKey` | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                   |                  | ✅      |
-| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear                         | https://my-ocean-integration.com | ✅       |
+| Parameter                          | Description                                                                                                                                      | Example                          | Required |
+|------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
+| `port.clientId`                    | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                    |                                  | ✅        |
+| `port.clientSecret`                | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                |                                  | ✅        |
+| `port.baseUrl`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                          |                                  | ✅        |
+| `integration.secrets.linearApiKey` | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API |                                  | ✅        |
+| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear                             | https://my-ocean-integration.com | ✅        |
 
 <HelmParameters/>
 <br/>
@@ -169,26 +171,27 @@ This table summarizes the available parameters for the installation.
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
-This workflow will run the Linear integration once and then exit, this is useful for **scheduled** ingestion of data.
+This workflow/pipeline will run the Linear integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Realtime updates in Port
+:::warning Real-time updates
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
+
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                        | Description                                                                                                                                                                                                                                                                              | Example                       | Required |
-|----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|----------|
-| `port_client_id`                 | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |                               | ✅        |
-| `port_client_secret`             | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |                               | ✅        |
-| `port_base_url`             | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                               | ✅        |
-| `config -> linear_api_key` | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                                                                                                                                                                 |               | ✅        |
-| `initialize_port_resources`      | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |                               | ❌        |
-| `identifier`                     | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |                               | ❌        |
-| `version`                        | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest                        | ❌        |`
-| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                       |   true    |                   | ❌       |
+| Parameter                   | Description                                                                                                                                                                                                                                                                              | Example | Required |
+|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|----------|
+| `port_client_id`            | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |         | ✅        |
+| `port_client_secret`        | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |         | ✅        |
+| `port_base_url`             | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |         | ✅        |
+| `config -> linear_api_key`  | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                                                         |         | ✅        |
+| `initialize_port_resources` | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |         | ❌        |
+| `identifier`                | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌        |
+| `version`                   | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest  | ❌        |`
+| `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      | true    |          | ❌       |
 <br/>
 
 :::tip Ocean Sail Github Action
@@ -226,15 +229,11 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Linear integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip Tip for Jenkins agent
 Your Jenkins agent should be able to run docker commands.
 :::
 
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
 
@@ -283,9 +282,8 @@ pipeline {
 ```
 
   </TabItem>
-
   <TabItem value="azure" label="Azure Devops">
-<AzurePremise name="Linear" />
+<AzurePremise />
 
 <DockerParameters />
 
@@ -326,13 +324,7 @@ steps:
 ```
 
   </TabItem>
-
   <TabItem value="gitlab" label="GitLab">
-This workflow will run the Linear integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
