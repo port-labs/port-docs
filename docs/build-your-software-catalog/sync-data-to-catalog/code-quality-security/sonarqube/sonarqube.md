@@ -41,7 +41,7 @@ The resources that can be ingested from SonarQube into Port are listed below. It
   for fetching analysis and latest activity in on-premise installations,
   Port's integration provides an alternative solution for on-premise installation.  
 By utilizing the [pull requests](https://next.sonarqube.com/sonarqube/web_api/api/project_pull_requests) and [measures](https://next.sonarqube.com/sonarqube/web_api/api/measures) APIs,
-  users can now visualize the results of scan analyses for each pull request.
+  you can now visualize the results of scan analyses for each pull request.
 
 
 ## Setup
