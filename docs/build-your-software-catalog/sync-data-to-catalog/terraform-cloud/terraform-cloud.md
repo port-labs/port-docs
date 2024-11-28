@@ -10,6 +10,8 @@ import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+
 
 
 # Terraform Cloud and Terraform Enterprise
@@ -19,23 +21,30 @@ Port's Terraform Cloud integration allows you to model Terraform Cloud resources
 
 ## Overview
 
-- Synchronization of Infrastructure Management: Automatically synchronize workspace, run and state version data from Terraform Cloud into Port for centralized tracking and management.
-- Monitoring Run Statuses: Keep track of run outcomes (success, failure, etc.) and durations, providing insights into the health and performance of your infrastructure management processes.
-- Identify drifts between your Terraform configuration and what's effectively deployed in your Cloud.
+This integration allows you to:
 
-## Terraform Enterprise (Self Hosted)
+- Map and organize your desired Terraform Cloud resources and their metadata in Port (see supported resources below).
+- Watch for Terraform Cloud object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+- Automatically synchronize workspace, run and state version data from Terraform Cloud into Port for centralized tracking and management.
+
+:::info Terraform enterprise (self hosted)
 
 Port supports both Terraform Cloud and Terraform Enterprise versions (self hosted). The following data model and use cases are common for both integrations. 
 If installing Port exporter for Terraform Enterprise, you will be required to specify your Terraform 's host URL by passing the following parameter to the installer: `integration.config.appHost` 
+:::
+
+### Supported Resources
+
+The resources that can be ingested from Terraform Cloud into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Organization`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/organizations)
+- [`Project`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/projects)
+- [`Workspace`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/workspaces)
+- [`Run`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run)
+- [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
 
 
-## Prerequisites
-
-To install the integration, you need a Kubernetes cluster that the integration's container chart will be deployed to.
-
-Please make sure that you have [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl) and [`helm`](https://helm.sh/) installed on your machine, and that your `kubectl` CLI is connected to the Kubernetes cluster where you plan to install the integration.
-
-## Installation
+## Setup
 
 Choose one of the following installation methods:
 
@@ -47,29 +56,16 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                                | Description                                                                                                   | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------- |
-| `port.clientId`                          | Your Port client id                                                                                           | ✅      |
-| `port.clientSecret`                      | Your Port client secret                                                                                       | ✅      |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                               | ✅      |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅      |
-| `integration.type`                       | The integration type                                                                                          | ✅      |
-| `integration.eventListener.type`         | The event listener type                                                                                       | ✅      |
-| `integration.config.terraformCloudHost` | Your Terraform host. For example https://app.terraform.io  token                                                                           | ✅      |
-| `integration.config.terraformCloudToken` | The Terraform cloud API token                                                                           | ✅      |
-| `integration.config.appHost`             | Your application's host url. Required when installing Terraform Enterprise (self hosted)                                                                                   | ✅       |
-| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌      |
-| `initializePortResources`                | When set to true the integration will create default blueprints and the port App config Mapping, defaults is true.  | ❌      |
-| `sendRawDataExamples`                | Enable sending raw data examples from the third party API to port for testing and managingthe integration mapping, default is true.  | ❌      |
+<Prerequisites />
 
-<br/>
+For details about the available parameters for the installation, see the table below.
+
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm">
@@ -175,6 +171,25 @@ kubectl apply -f my-ocean-terraform-cloud-integration.yaml
 ```
 </TabItem>
 </Tabs>
+
+This table summarizes the available parameters for the installation.
+
+| Parameter                                | Description                                                                                                                         | Required |
+|------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                          | Your Port client id                                                                                                                 | ✅        |
+| `port.clientSecret`                      | Your Port client secret                                                                                                             | ✅        |
+| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                             | ✅        |
+| `integration.identifier`                 | Change the identifier to describe your integration                                                                                  | ✅        |
+| `integration.type`                       | The integration type                                                                                                                | ✅        |
+| `integration.eventListener.type`         | The event listener type                                                                                                             | ✅        |
+| `integration.config.terraformCloudHost`  | Your Terraform host. For example https://app.terraform.io  token                                                                    | ✅        |
+| `integration.config.terraformCloudToken` | The Terraform cloud API token                                                                                                       | ✅        |
+| `integration.config.appHost`             | Your application's host url. Required when installing Terraform Enterprise (self hosted)                                            | ✅        |
+| `scheduledResyncInterval`                | The number of minutes between each resync                                                                                           | ❌        |
+| `initializePortResources`                | When set to true the integration will create default blueprints and the port App config Mapping, defaults is true.                  | ❌        |
+| `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managingthe integration mapping, default is true. | ❌        |
+
+<br/>
 
 <h3>Event listener</h3>
 
@@ -385,11 +400,7 @@ The integration configuration determines which resources will be queried from Te
 :::tip Supported resources
 The following resources can be used to map data from Terraform Cloud, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
 
-- [`Organization`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/organizations)
-- [`Project`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/projects)
-- [`Workspace`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/workspaces)
-- [`Run`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run)
-- [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
+
 
 :::
 
