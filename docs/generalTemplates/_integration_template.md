@@ -67,6 +67,12 @@ Note the parameters specific to this integration, they are last in the table.
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
+This workflow/pipeline will run the X integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
 </TabItem>
 
 </Tabs>
