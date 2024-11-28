@@ -88,52 +88,24 @@ AWS::ReadOnlyAccess
 
 ```json
 {
+    "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "AssumeRolePermissions",
-            "Action": "sts:AssumeRole",
             "Effect": "Allow",
+            "Action": "sts:AssumeRole",
             "Resource": [
-                "arn:aws:iam::<member_account_id>:role/<role_name>",
-                "arn:aws:iam::<root_account_id>:role/<root_account_role_name>"
+                "arn:aws:iam::<root_account>:role/<RootRole>",
+                "arn:aws:iam::<member_account>:role/<accountReadRoleName>"
             ]
         },
         {
-            "Sid": "AccountPermissions",
+            "Effect": "Allow",
             "Action": "account:ListRegions",
-            "Effect": "Allow",
-            "Resource": ""
-        },
-        {
-            "Sid": "STSPermissions",
-            "Effect": "Allow",
-            "Action": [
-                "sts:GetCallerIdentity"
-            ],
-            "Resource": ""
-        },
-        {
-            "Sid": "S3Permissions",
-            "Effect": "Allow",
-            "Action": [
-                "s3:Describe*",
-                "s3:List*",
-                "s3:Get*"
-            ],
-            "Resource": ""
-        },
-        {
-            "Sid": "CloudControlAPIPermissions",
-            "Effect": "Allow",
-            "Action": [
-                "cloudformation:GetResource",
-                "cloudformation:ListResources"
-            ],
-            "Resource": ""
+            "Resource": "*"
         }
-    ],
-    "Version": "2012-10-17"
+    ]
 }
+
 ```
 </details>
 
@@ -146,38 +118,7 @@ The name of this role (not the ARN) is referenced as `accountReadRoleName` in th
 <details>
 <summary>Permissions</summary>
 ```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "S3Permissions",
-            "Effect": "Allow",
-            "Action": [
-                "s3:Describe*",
-                "s3:List*",
-                "s3:Get*"
-            ],
-            "Resource": ""
-        },
-        {
-            "Sid": "AccountPermissions",
-            "Effect": "Allow",
-            "Action": [
-                "account:ListRegions"
-            ],
-            "Resource": ""
-        },
-        {
-            "Sid": "CloudControlAPIPermissions",
-            "Effect": "Allow",
-            "Action": [
-                "cloudformation:GetResource",
-                "cloudformation:ListResources"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
+AWS::ReadOnlyAccess
 ```
 </details>
 
@@ -202,6 +143,185 @@ The name of this role (not the ARN) is referenced as `accountReadRoleName` in th
 :::tip
 The name of this role (not the ARN) is referenced as `organizationRoleArn` in this doc.
 :::
+
+<details>
+<summary>Permissions</summary>
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "organizations:Describe*",
+                "organizations:List*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "account:GetAlternateContact",
+                "account:GetContactInformation",
+                "account:ListRegions",
+                "account:GetRegionOptStatus",
+                "account:GetPrimaryEmail"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Trust relationships</summary>
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<integration_account>:role/<IntegrationRole>"
+            },
+            "Action": "sts:AssumeRole",
+        }
+    ]
+}
+```
+</details>
+
+## Minimum Permissions
+
+To implement the minimum permissions needed for the integration while maintaining security best practices, use this configuration. It ensures that the integration functions effectively without granting excessive access, adhering to the principle of least privilege for enhanced security and control.
+
+:::caution
+This section is designed for users who wish to manage permissions manually to maintain tighter security. It is not intended for users opting for the default integration setup.
+:::
+
+:::tip
+The permissions outlined for S3 in this section are provided as an example. It is important to note that when using the CloudControl API, additional underlying permissions for each resource type are necessary to ensure successful integration. This guide uses S3 bucket permissions as a sample, but users should customize their permissions based on the specific resources they plan to import.
+:::
+
+### Integration Account
+
+
+<details>
+<summary>Permissions</summary>
+
+```json
+{
+    "Statement": [
+        {
+            "Sid": "AssumeRolePermissions",
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:iam::<member_account_id>:role/<role_name>",
+                "arn:aws:iam::<root_account_id>:role/<root_account_role_name>"
+            ]
+        },
+        {
+            "Sid": "AccountPermissions",
+            "Action": "account:ListRegions",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Sid": "STSPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "sts:GetCallerIdentity"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "S3Permissions",
+            "Effect": "Allow",
+            "Action": [
+                "s3:Describe*",
+                "s3:List*",
+                "s3:Get*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "CloudControlAPIPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:GetResource",
+                "cloudformation:ListResources"
+            ],
+            "Resource": "*"
+        }
+    ],
+    "Version": "2012-10-17"
+}
+```
+</details>
+
+### Member account
+
+
+<details>
+<summary>Permissions</summary>
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "S3Permissions",
+            "Effect": "Allow",
+            "Action": [
+                "s3:Describe*",
+                "s3:List*",
+                "s3:Get*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AccountPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "account:ListRegions"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "CloudControlAPIPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:GetResource",
+                "cloudformation:ListResources"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Trust relationships</summary>
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<integration_account>:role/<IntegrationRole>"
+            },
+            "Action": "sts:AssumeRole",
+        }
+    ]
+}
+```
+</details>
+
+### Root Account
+
 
 <details>
 <summary>Permissions</summary>
@@ -243,12 +363,13 @@ The name of this role (not the ARN) is referenced as `organizationRoleArn` in th
 </details>
 
 
+
 ### Expanding to multiple accounts
 
 In order to keep adding accounts to the integration's scope, permissions must be delivered for and from each of the accounts.
 For each account you want to have, you should make sure the following applies:
 
-In each non-root account (target member account), The Role `accountReadRoleName` must exist with the necessary permissions to access S3 resources, list regions, interact with CloudFormation resources, and include `accountReadRoleName` from the `integration account` in its trust policy. See [reference](#member-account)
+In each non-root account (target member account), the role `accountReadRoleName` must exist (with the same name and permissions), with `accountReadRoleName` from the integration account in it's trust policy. See [reference](#member-account)
 
 ### Running the integration
 

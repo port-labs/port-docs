@@ -3731,7 +3731,56 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Successfully changed the entity
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+              "ok": true,
+              "entity": {
+                "identifier": "new-microservice",
+                "title": "MyNewMicroservice",
+                "icon": "Microservice",
+                "team": [],
+                "properties": {
+                  "content": "my content"
+                },
+                "relations": {}
+              }
+            }
+            ```
+
+            <table>
+            <tr>
+              <th>Key</th>
+              <th>Type</th>
+            </tr>
+            <tr>
+              <td>`identifier`</td>
+              <td>string</td>
+            </tr>
+            <tr>
+              <td>`title`</td>
+              <td>string</td>
+            </tr>
+            <tr>
+              <td>`icon`</td>
+              <td>string</td>
+            </tr>
+            <tr>
+              <td>`team`</td>
+              <td>string[]</td>
+            </tr>
+            <tr>
+              <td>`properties`</td>
+              <td>object</td>
+            </tr>
+            <tr>
+              <td>`relations`</td>
+              <td>object</td>
+            </tr>
+            </table>
         '400':
           description: |
             One of the following errors occurred:
@@ -12140,6 +12189,32 @@ paths:
               <td>An internal error occurred</td>
             </tr>
             </table>
+  "/v1/actions/runs/{run_id}/approvers":
+    get:
+      summary: Get an action run's approvers
+      description: This route allows you to fetch the approvers of a specific action run.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
+      tags:
+        - Action Runs
+      parameters:
+        - schema:
+            type: boolean
+            default: false
+          in: query
+          name: include_pending_approvers
+          description: If `true`, the route will also return the users who have not yet approved the action run.<br/>
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: run_id
+          description: The identifier of the action run you want to fetch approvers for.<br/>
+          required: true
+      security:
+        - bearer:
+            - read:runs
+      responses:
+        "200":
+          description: Default Response
   /v1/actions/runs:
     get:
       summary: Get all action runs
@@ -12597,7 +12672,6 @@ paths:
                 - email
                 - firstName
                 - lastName
-                - phoneNumber
                 - picture
                 - status
                 - type
@@ -16242,6 +16316,53 @@ paths:
         - bearer: []
       responses:
         '200':
+          description: Default Response
+  "/v1/migrations/{migration_id}":
+    get:
+      summary: Get a migration
+      description: This route allows you to fetch a specific migration in your Port organization.
+      tags:
+        - Migrations
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: migration_id
+          description: The identifier of the migration you want to fetch.<br/>
+          required: true
+      security:
+        - bearer:
+            - read:blueprints
+      responses:
+        "200":
+          description: Default Response
+  "/v1/migrations/{migration_id}/cancel":
+    post:
+      summary: Cancel a migration
+      description: This route allows you to cancel a running migration in your Port organization.
+      tags:
+        - Migrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: The reason for cancelling the migration.<br/>
+              additionalProperties: false
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: migration_id
+          description: The identifier of the migration you want to cancel.<br/>
+          required: true
+      security:
+        - bearer: []
+      responses:
+        "200":
           description: Default Response
   '/v1/organization/secrets':
     get:

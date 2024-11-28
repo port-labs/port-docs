@@ -48,19 +48,58 @@ This property is empty for now in all services, we will fill it as part of the a
 
 ### Setup the action's frontend
 
-1. Head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application. Since you completed the [onboarding process](/quickstart), you should already have an action named `Create s3 bucket`. Hover over the action, click the `...` button in the top right corner, and choose "Edit":
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
+2. Click on the `+ Action` button in the top-right corner :
 
-    <img src='/img/guides/iacEditAction.png' width='30%' border='1px' />
+    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
-2. The action's basic details should look like the image below. When ready, click on the `User Form` tab to proceed.
+3. Fill the basic form with the  following:
+    - **Title**: Enter `Create s3 bucket`
+    - **Identifier** Toggle the switch icon off and  type a  `create_s3_bucket`
+    - **Description**:  Enter the description (e.g., Create an s3 bucket)
+    - **Icon**: Type s3 and choose the  Icon (optional)
+    - **Operation**:  Choose `Day-2`  from the dropdown
+    - **Blueprint**:  Choose `Service` from the dropdown
+      
+      <img src='/img/guides/iacActionDetails.png' width='50%' border='1px' />
+     <br/>
 
-    <img src='/img/guides/iacActionDetails.png' width='50%' />
+4. Click on `Next`, and add the following inputs: `Name` and `Visibility`.
 
-3. The action's user form should look like the image below. When ready, click on the `Backend` tab to proceed.
+    To create the `Name` input field:
 
-    <img src='/img/guides/iacActionUserForm.png' width='70%' border='1px' />
+      - Click on `+ Input`.
+      - Enter the **Title** `Name`.
+      - Select the **Type** `Text`.
+      - Add the **Description** (optional).
+      - Set **Required** to `True`.
+      - Click on the `Create` button.  
+        <br/>
+   
+           <img src='/img/guides/iacActionInputName.png' width='50%' border='1px' />
+        <br/>
 
-4. Now we'll define the backend type of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
+   To create the `Name` input field:
+
+      - Click on `+ Input`.
+      - Enter the **Title**  `Visibility`.
+      - Choose the **Type** `Select`.
+      - Set **Required** to `True`.
+      - Configure Additional Information:
+          - **Item Type**: `String`.
+          - **Limit**: `1 option`.
+          - **Add Options**:
+              - **Option 1**: `public` (choose a color).
+              - **Option 2**: `private` (choose a color).
+      - Click on the `Create` button.  
+        <br/>
+
+           <img src='/img/guides/iacActionInputVisibility.png' width='50%' border='1px' />
+        <br/>
+
+5. Click on `Next` to configure the **Backend**.
+
+Now we'll define the backend of the action. Port supports multiple invocation types, depending on the Git provider you are using.
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
@@ -195,29 +234,30 @@ Now we want to write the logic that our action will trigger.
 ]}>
 
 <TabItem value="github">
+
 1. First, let's create the necessary token and secrets. If you've already completed the [scaffold a new service guide](/guides/all/scaffold-a-new-service), you should already have these configured and you can skip this step.
 
-- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our workflow).
+  - Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our workflow).
 
-  <img src='/img/guides/personalAccessToken.png' width='80%' />
+    <img src='/img/guides/personalAccessToken.png' width='80%' />
 
   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 2. In the repository where your workflow will reside, create 3 new secrets under `Settings->Secrets and variables->Actions`:
 
-- `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
-- `PORT_CLIENT_ID` - the client ID you copied from your Port app.
-- `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+  - `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
+  - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
+  - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
 
-<img src='/img/guides/repositorySecret.png' width='60%' />
+    <img src='/img/guides/repositorySecret.png' width='60%' />
 
-<br/><br/>
+    <br/><br/>
 
 3. Now let's create the workflow file that contains our logic. Our workflow will consist of 3 steps:
 
-- Creating a copy of the template file in the selected service's repository and replacing its variables with the data from the action's input.
-- Creating a pull request in the selected service's repository to add the new resource.
-- Reporting & logging the action result back to Port, and updating the relevant service's `Resource definitions` property with the URL of the service's resources directory.
+  - Creating a copy of the template file in the selected service's repository and replacing its variables with the data from the action's input.
+  - Creating a pull request in the selected service's repository to add the new resource.
+  - Reporting & logging the action result back to Port, and updating the relevant service's `Resource definitions` property with the URL of the service's resources directory.
 
 Under `.github/workflows/`, create a new file named `port-create-bucket.yml` and use the following snippet as its content:
 
@@ -715,7 +755,9 @@ pipeline {
 
 <PortApiRegionTip/>
 
-1. We will now create a simple `.tf` file that will serve as a template for our new resource:
+<br/>
+
+We will now create a simple `.tf` file that will serve as a template for our new resource:
 
 - In your source repository (`port-actions` for example), create a file named `cloudResource.tf` under `/templates/` (it's path should be `/templates/cloudResource.tf`).
 - Copy the following snippet and paste it in the file's contents:
@@ -780,4 +822,4 @@ With Port, platform engineers can design precise and flexible self-service actio
 More relevant guides and examples:
 
 - [Deploy AWS resources using AWS CloudFormation](https://docs.getport.io/guides/all/deploy-cloudformation-template)
-- [Create an S3 bucket using Self-Service Actions](https://docs.getport.io/actions-and-automations/setup-backend/webhook/examples/s3-using-webhook/)
+- [Create an S3 bucket using Self-Service Actions](https://docs.getport.io/guides/all/s3-using-webhook)

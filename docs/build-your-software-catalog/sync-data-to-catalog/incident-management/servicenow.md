@@ -12,6 +12,9 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
+import ServiceNowChangeRequestBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/servicenow/\_example_servicenow_change_request.mdx"
+import ServiceNowWebhookConfig from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/servicenow/\_example_servicenow_webhook_config.mdx"
+
 # ServiceNow
 
 Our ServiceNow integration allows you to import `sys_user_group`, `sc_catalog`, and `incident` from your ServiceNow instance into Port, according to your mapping and definitions.
@@ -502,7 +505,7 @@ Examples of blueprints and the relevant integration configurations:
 {
   "identifier": "servicenowGroup",
   "title": "Servicenow Group",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "description": {
@@ -568,7 +571,7 @@ resources:
 {
   "identifier": "servicenowCatalog",
   "title": "Servicenow Catalog",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "description": {
@@ -634,7 +637,7 @@ resources:
 {
   "identifier": "servicenowIncident",
   "title": "Servicenow Incident",
-  "icon": "Service",
+  "icon": "Servicenow",
   "schema": {
     "properties": {
       "category": {
@@ -1019,4 +1022,196 @@ The combination of the sample payload and the Ocean configuration generates the 
 }
 ```
 
+</details>
+
+## Alternative installation via webhook
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from ServiceNow. If so, use the following instructions:
+
+**Note** that when using the webhook installation method, data will be ingested into Port only when the webhook is triggered.
+
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+In this example you are going to create a webhook integration between [ServiceNow](https://www.servicenow.com/) and Port, which will ingest ServiceNow change requests into Port. This integration will involve setting up a webhook to receive notifications from Servicenow whenever a change request is created or updated.
+
+<h2>Import ServiceNow change request</h2>
+
+<h3>Port configuration</h3>
+
+Create the blueprint definition:
+
+<details>
+<summary>Servicenow change request blueprint</summary>
+
+<ServiceNowChangeRequestBlueprint/>
+
+</details>
+
+
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
+
+<details>
+<summary>Servicenow webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `Servicenow Mapper`;
+   2. Identifier : `servicenow_mapper`;
+   3. Description : `A webhook configuration to map Servicenow change requests to Port`;
+   4. Icon : `Servicenow`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <ServiceNowWebhookConfig/>
+
+3. Scroll down to **Advanced settings**, leave the form blank and click **Save** at the bottom of the page
+
+</details>
+
+<h3>Create a webhook in ServiceNow</h3>
+
+1. Log in to your [ServiceNow](https://www.servicenow.com/) instance
+2. Go to **System Definition** > **Business Rules**.
+3. Click **New** to create a business rule:
+   - **Name**: `Change Request Webhook`
+   - **Table**: `Change Request [change_request]`
+   - **Is Active**, **Advanced**: Check both
+4. In the **When to run** tab, provide the following details:
+   - **Insert**, **Update**: Check both
+   - **When**: `Async`
+   - **Order**: leave the default value of `100`
+5. In the **Advanced** tab, add the following script:
+
+<details>
+<summary>ServiceNow configuration code (click to expand)</summary>
+
+```javascript
+(function executeRule(current, previous /*null when async*/) {
+
+    gs.info('Triggering outbound REST API call for Change Request ID: ' + current.number);
+
+    if (current == null){
+        gs.error('Current record is null. Exiting the Business Rule.');
+        return;
+    }
+
+    // Prepare the REST message
+    var restMessage = new sn_ws.RESTMessageV2();
+    restMessage.setHttpMethod('POST');
+    restMessage.setEndpoint('https://ingest.getport.io/<WEBHOOK_KEY>');
+    restMessage.setRequestHeader('Content-Type', 'application/json');
+
+    // Construct the payload with additional fields
+    var payload = {
+        "sys_id": current.sys_id.toString(),
+        "number": current.number.toString(),
+        "state": current.state.toString(),
+        "short_description": current.short_description.toString(),
+        "description": current.description.toString(),
+        "sys_updated_by": current.sys_updated_by.toString(),
+        "sys_updated_on": current.sys_updated_on.toString(),
+        "approval": current.approval.toString(),
+        
+        "priority": current.priority ? current.priority.toString() : '',
+        "phase": current.phase ? current.phase.toString() : '',
+        "business_service": current.business_service ? current.business_service.toString() : '',
+        "phase_state": current.phase_state ? current.phase_state.toString() : '',
+        "category": current.category ? current.category.toString() : '',
+        "tags": current.u_external_tag ? current.sys_tags.toString() : '',
+        
+        "impact": current.impact ? current.impact.toString() : '',
+        "urgency": current.urgency ? current.urgency.toString() : '',
+        "risk": current.risk ? current.risk.toString() : '',
+        "assignment_group": current.assignment_group ? current.assignment_group.toString() : '',
+        "opened_by": current.opened_by ? current.opened_by.toString() : '',
+        "sys_domain": current.sys_domain ? current.sys_domain.toString() : ''
+    };
+
+    // Set the request body with the payload
+    restMessage.setRequestBody(JSON.stringify(payload));
+
+    // Execute the outbound REST call
+    try {
+        var response = restMessage.execute();  // Use async to avoid blocking
+        gs.info('Business Rule executed for Change Request: ' + current.number.toString());
+        gs.info('Response Status Code: ' + response.getStatusCode());
+        gs.info('Response Body: ' + response.getBody());
+    } catch (error) {
+        gs.error('Error in outbound REST call: ' + error.message);
+    }
+
+})(current, previous);
+```
+</details>
+
+6. Save and activate the Business Rule.
+
+
+Done! any change that happens to your change requests in ServiceNow will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+<h2>Let's Test It</h2>
+
+This section includes a sample webhook event sent from ServiceNow when a change request is created or updated. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+
+<h3>Payload</h3>
+
+Here is an example of the payload structure sent to the webhook URL when a ServiceNow change request is created or updated:
+
+<details>
+<summary>Webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "body": {
+    "sys_id": "8a76536683f5de104665c730ceaad3bd",
+    "number": "CHG0030040",
+    "state": "3",
+    "short_description": "Automated change request from GitLab CI/CD",
+    "description": "needs approval",
+    "sys_updated_by": "admin",
+    "sys_updated_on": "2024-11-14 10:57:08",
+    "approval": "approved",
+    "priority": "2",
+    "phase": "requested",
+    "business_service": "getport-labs/awesome-projec",
+    "phase_state": "open",
+    "category": "Network",
+    "tags": "r_QWB886MmmkIBRGD5",
+    "impact": "3",
+    "urgency": "3",
+    "risk": "3",
+    "assignment_group": "287ebd7da9fe198100f92cc8d1d2154e",
+    "opened_by": "6816f79cc0a8016401c5a33be04be441",
+    "sys_domain": "global"
+  },
+  "queryParams": {}
+}
+```
+
+</details>
+
+<h3>Mapping Result</h3>
+
+The combination of the sample payload and the webhook configuration generates the following Port entity:
+
+```json showLineNumbers
+{
+    "identifier": "8a76536683f5de104665c730ceaad3bd",
+    "title": "Automated change request from GitLab CI/CD",
+    "blueprint": "servicenowChangeRequest",
+    "properties": {
+      "number": "CHG0030040",
+      "state": "open",
+      "approval": "approved",
+      "category": "Network",
+      "priority": "2",
+      "description": "needs approval",
+      "service": "getport-labs/awesome-projec",
+      "tags": "r_QWB886MmmkIBRGD5",
+      "createdOn": "2024-11-14 10:57:08",
+      "createdBy": "6816f79cc0a8016401c5a33be04be441"
+    },
+    "relations": {},
+    "filter": true
+  }
+```
 </details>

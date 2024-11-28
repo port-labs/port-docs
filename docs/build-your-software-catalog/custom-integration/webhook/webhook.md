@@ -31,7 +31,7 @@ Port provides you with custom webhook endpoints, which you can use as the target
 
 Each webhook endpoint can receive a [custom mapping](#mapping-configuration), making it easy to turn the payload of events from your 3rd-party services into entities inside your software catalog.
 
-The custom mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the webhook payload.
+The custom mapping uses the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the webhook payload.
 
 By using the webhook mapping you can:
 - **Create/update** a complete entity.
@@ -123,9 +123,9 @@ Here is an example metadata configuration:
 
 The mapping configuration of the webhook defines how the webhook event payload is mapped to one (or more) Port entities.
 
-The mapping configuration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to extract information from the event payload into Port entity properties.
+The mapping configuration uses the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to extract information from the event payload and map it to Port entity properties.
 
-Here is an example mapping configuration:
+Below is an example of a mapping configuration:
 
 <Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -635,6 +635,14 @@ After creating and configuring your custom webhook, go to your 3rd party provide
 The maximum size of the webhook payload is **512KiB**.  
 Reaching this limit will throw a `413 Request Entity Too Large` HTTP error.
 :::
+
+### Custom webhook HTTP response
+
+Custom webhook endpoints provided by Port perform their processing in an asynchronous manner. 
+
+Most 3rd party providers expect a webhook endpoint to provide a correct response after a short period of time.
+
+In order to comply with the expectation from custom webhook endpoints, when you or your 3rd party provider makes a request to your custom webhook, you will see a **`202 ACCEPTED`** status code returned in the response. This is the expected behavior and it means that the payload sent to your custom webhook has been received and will undergo processing in the background, after which it will appear in your catalog as determined by your mapping configuration.
 
 ## Examples
 

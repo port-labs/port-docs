@@ -19,6 +19,15 @@ This widget allows you to create tables displaying all entities based on a selec
 Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
 
 <img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
+<br/><br/>
+
+:::info Default table columns
+By default, a new table will display the following columns for each entity:  
+`Title`, `Last update time`, and `Creation time`.  
+Other properties will be hidden by default.  
+
+You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
+:::
 
 #### Save table view
 
@@ -168,6 +177,71 @@ Note that for aggregation (and calculation) properties, the data will be availab
 This widget allows you to display any markdown content you wish in formatted form:
 
 <img src='/img/software-catalog/widgets/markdownWidget.png' width='500rem' />
+<br/><br/>
+
+The widget also supports a wide variety of HTML tags, allowing you to create rich content:
+<details>
+<summary>**Supported HTML tags (click to expand)**</summary>
+```bash
+'iframe',
+'a',
+'style',
+'h1',
+'h2',
+'h3',
+'h4',
+'h5',
+'h6',
+'nav',
+'blockquote',
+'dd',
+'div',
+'pre',
+'dl',
+'hr',
+'li',
+'menu',
+'ol',
+'p',
+'ul',
+'b',
+'br',
+'cite',
+'code',
+'em',
+'i',
+'mark',
+'q',
+'s',
+'samp',
+'small',
+'span',
+'strong',
+'sub',
+'sup',
+'time',
+'u',
+'var',
+'wbr',
+'img',
+'video',
+'svg',
+'caption',
+'col',
+'colgroup',
+'table',
+'tbody',
+'td',
+'tfoot',
+'th',
+'thead',
+'tr'
+```
+</details>
+
+:::tip Practical example
+A practical example of using HTML in a markdown widget can be found in Port's [live demo](https://demo.getport.io/organization/home), in the `Catalog quick access` widget. 
+:::
 
 #### Markdown widget properties
 

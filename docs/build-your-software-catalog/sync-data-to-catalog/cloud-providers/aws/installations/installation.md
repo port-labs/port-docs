@@ -52,7 +52,8 @@ helm upgrade --install aws port-labs/port-ocean \
   --set integration.type="aws"  \
   --set integration.eventListener.type="POLLING"  \
   --set integration.config.awsAccessKeyId="$AWS_ACCESS_KEY_ID" \
-  --set integration.config.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY"
+  --set integration.config.awsSecretAccessKey="$AWS_SECRET_ACCESS_KEY"  \
+  --set integration.config.maximumConcurrentAccounts=50
 ```
 
 ### IRSA
@@ -79,6 +80,7 @@ helm upgrade --install aws port-labs/port-ocean \
   --set integration.identifier="my-aws"  \
   --set integration.type="aws"  \
   --set integration.eventListener.type="POLLING"  \
+  --set integration.maximumConcurrentAccounts=50  \
   --set podServiceAccount.name="$SERVICE_ACCOUNT"
 ```
 
@@ -106,7 +108,8 @@ helm upgrade --install aws port-labs/port-ocean \
   --set integration.eventListener.type="POLLING"  \
   --set podServiceAccount.name="$SERVICE_ACCOUNT"  \ 
   --set integration.config.accountReadRoleName="$YOUR_ACCOUNT_READ_ROLE_NAME"  \ 
-  --set integration.config.organizationRoleArn="$YOUR_ORGANIZATION_ROLE_ARN"
+  --set integration.config.organizationRoleArn="$YOUR_ORGANIZATION_ROLE_ARN"  \
+  --set integration.config.maximumConcurrentAccounts=50
 ```
 
   </TabItem>
@@ -172,6 +175,7 @@ The env variables referring to the live events (such as `LIVE_EVENTS_API_KEY`) a
 | integration.config.live_events_api_key | A user-defined API key for authenticating with the live events API, for example "my-secret".  |
 | integration.config.organization_role_arn (optional) | ARN of the role used to assume the organization role.  |
 | integration.config.account_read_role_name (optional) | Name of the role used to assume the read role in the account.  |
+| integration.config.maximum_concurrent_accounts (optional) | Maximum number of accounts to sync concurrently. |
 | cluster_name (optional) | Name of the ECS cluster.  |
 | vpc_id | VPC ID where the cluster will be created.  |
 | initialize_port_resources | Boolean to initialize Port resources.  |
@@ -225,6 +229,7 @@ The AWS integration uses the following AWS infrastructure:
 | `OCEAN__INTEGRATION__CONFIG__LIVE_EVENTS_API_KEY`    | (Optional) AWS API Key for live events, used to validate the event source for real-time event, it's value is completely up to you                                                                                                                                    |
 | `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ROLE_ARN`  | [(Optional) AWS Organization Role ARN, in case the account the integration is installed on is not the root account, used to read organization accounts for multi-account access](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html). |
 | `OCEAN__INTEGRATION__CONFIG__ACCOUNT_READ_ROLE_NAME` | [(Optional) AWS Account Read Role Name, the role name used to read the account in which the integration is not installed on, used for multi-account access.](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html).                                        |
+| `OCEAN__INTEGRATION__CONFIG__MAXIMUM_CONCURRENT_ACCOUNTS` | (Optional) `Maximum Concurrent Account` controls the maximum number of accounts synced concurrently.                                       |
 | `OCEAN__EVENT_LISTENER`                              | [The event listener object](https://ocean.getport.io/framework/features/event-listener/).                                                                                                                                                                            |
 | `OCEAN__INTEGRATION__IDENTIFIER`                     | The identifier of the integration.                                                                                                                                                                                                                                   |
 | `OCEAN__INTEGRATION__TYPE`                           | should be set to `aws`.                                                                                                                                                                                                                                              |
@@ -243,6 +248,7 @@ docker run -i --rm --platform=linux/amd64 \
   -e OCEAN__EVENT_LISTENER='{"type": "ONCE"}' \
   -e OCEAN__INTEGRATION__CONFIG__AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
   -e OCEAN__INTEGRATION__CONFIG__AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+  -e OCEAN__INTEGRATION__CONFIG__MAXIMUM_CONCURRENT_ACCOUNTS=50
 ghcr.io/port-labs/port-ocean-aws:latest
 ```
 

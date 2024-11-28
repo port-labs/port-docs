@@ -41,9 +41,9 @@ Create the following blueprint definitions in port:
 
 <HumanitecWorkloadBlueprint/>
 
-<HumanitecResourceBlueprint/>
-
 <HumanitecResourceGraphBlueprint/>
+
+<HumanitecResourceBlueprint/>
 
 :::tip Blueprint Properties
 You may select the blueprints depending on what you want to track in your Humanitec account.
@@ -72,7 +72,7 @@ Fork our [humanitec integration repository](https://github.com/port-labs/humanit
 
 </details>
 
-2. Create the following Python files in a folder named `client` at the base directory of the `integration` folder:
+2. Create the following Python files in a folder named `clients` at the base directory of the `integration` folder:
     1. `port_client.py` – Manages authentication and API requests to Port, facilitating the creation and updating of entities within Port's system.
     2. `humanitec_client.py` – Handles API interactions with Humanitec, including retrieving data with caching mechanisms to optimize performance.
     3. `cache.py` - Provides an in-memory caching mechanism with thread-safe operations for setting, retrieving, and deleting cache entries asynchronously.
@@ -146,4 +146,5 @@ jobs:
 </details>
 
 
-Done! any change that happens to your application, environment, workloads or resources in Humanitec will be synced to port on the schedule interval defined in the github workflow.
+Done! Any change that happens to your application, environment, workloads or resources in Humanitec will be synced to Port on the schedule interval defined in the GitHub workflow.
+
