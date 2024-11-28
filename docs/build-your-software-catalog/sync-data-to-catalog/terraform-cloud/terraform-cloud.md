@@ -9,23 +9,15 @@ import TabItem from "@theme/TabItem"
 import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Terraform Cloud and Terraform Enterprise
 
-The Terraform Cloud Integration for Port enables seamless import and synchronization of `organizations`, `projects`, `workspaces`, `runs`, and `state versions` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
-
-An `Organization` is a shared space for one or more teams to collaborate on workspaces.
-
-A `Project` in Terraform Cloud is a collection of infrastructure configurations, often corresponding to a code repository. It serves as the primary organizational unit, grouping related `workspaces`, `runs`, and `state versions` to manage and structure Terraform code for efficient deployment and collaboration.
-
-A `Workspace` represents a workspace in Terraform cloud. A workspace is a logical environment where Terraform manages infrastructure, such as a set of cloud resources.
-
-A `Run` represents an instance of Terraform operations (plan, apply, or destroy) executed within a workspace. Each run holds information about the operation status, duration, and other relevant metadata.
-
-A `State Version` represents a versioned state file in Terraform. Each state version is immutable and represents the state of your managed infrastructure at a particular point in time. State versions are used to track the changes in your infrastructure and help with auditing, rollbacks, and historical analysis.
+Port's Terraform Cloud integration allows you to model Terraform Cloud resources in your software catalog and ingest data into them.
 
 
-## Common use cases
+## Overview
 
 - Synchronization of Infrastructure Management: Automatically synchronize workspace, run and state version data from Terraform Cloud into Port for centralized tracking and management.
 - Monitoring Run Statuses: Keep track of run outcomes (success, failure, etc.) and durations, providing insights into the health and performance of your infrastructure management processes.
