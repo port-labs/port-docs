@@ -221,7 +221,6 @@ In the following example you will ingest your GitLab members to Port, you may us
 :::
 
 :::caution GitLab free plan limitation
-<b> Offering: GitLab Free Plan </b>
 Primary email addresses are not available for GitLab "Free plan" users.
 :::
 
