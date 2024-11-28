@@ -6,22 +6,30 @@ import SnykBlueprint from "/docs/build-your-software-catalog/custom-integration/
 import SnykConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/snyk/\_example_snyk_vulnerability_webhook_configuration.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Snyk
 
-Port's Snyk integration allows you to import `organizations`, `targets`, `projects` and `issues` from your Snyk account into Port, according to your mapping and definitions.
+Port's Snyk integration allows you to model Snyk resources in your software catalog and ingest data into them.
 
-## Common use cases
+## Overview
 
-- Map `organizations`, `targets`, `projects` and `issues` in your Snyk environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Create/delete Snyk objects using self-service actions.
+This integration allows you to:
 
-## Prerequisites
+- Map and organize your desired Snyk resources and their metadata in Port (see supported resources below).
+- Watch for Snyk object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-<Prerequisites />
+### Supported Resources
 
-## Installation
+The resources that can be ingested from Snyk into Port are listed below. it is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Organization`](https://snyk.docs.apiary.io/#reference/organizations/the-snyk-organization-for-a-request/list-all-the-organizations-a-user-belongs-to)
+- [`Target`](https://apidocs.snyk.io/?version=2023-08-21%7Ebeta#get-/orgs/-org_id-/targets)
+- [`Project`](https://apidocs.snyk.io/?version=2023-08-21#get-/orgs/-org_id-/projects)
+- [`Issue`](https://snyk.docs.apiary.io/#reference/projects/aggregated-project-issues/list-all-aggregated-issues)
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -33,34 +41,15 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2>Prerequisites</h2>
 
+<Prerequisites />
 
-| Parameter                           | Description                                                                                                        | Required |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
-| `port.clientId`                     | Your Port client id                                                                                                | ✅      |
-| `port.clientSecret`                 | Your Port client secret                                                                                            | ✅      |
-| `port.baseUrl`                      | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                            | ✅      |
-| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅      |
-| `integration.type`                  | The integration type                                                                                               | ✅      |
-| `integration.eventListener.type`    | The event listener type                                                                                            | ✅      |
-| `integration.secrets.token`         | The Snyk API token                                                                                                 | ✅      |
-| `integration.config.organizationId` | The Snyk organization ID. Fetches data for this organization when provided                                                                     |❌       |
-| `integration.config.groups` | A comma-separated list of Snyk group ids to filter data for. Fetches data for organizations within the specified groups                                                          |❌       |
-| `integration.config.apiUrl`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                        | ❌      |
-| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Snyk | ✅       |
-| `integration.secret.webhookSecret`  | This is a password you create, that Snyk uses to sign webhook events to Port                                       | ❌      |
-| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌      |
-| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌      |
-| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌      |
-
-
-<br/>
+For details about the available parameters for the installation, see the table below.
 
 <Tabs groupId="deploy" queryString="deploy">
 
@@ -76,27 +65,14 @@ By default, the integration fetches all organizations associated with the provid
 If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
 :::
 
-To install the integration using Helm, run the following command:
+<OceanRealtimeInstallation integration="snyk" />
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-snyk-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set scheduledResyncInterval=120 \
-  --set integration.identifier="my-snyk-integration"  \
-  --set integration.type="snyk"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.token="SNYK_TOKEN"
-```
+
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-snyk-integration` in your git repository with the content:
 
@@ -226,11 +202,35 @@ kubectl apply -f my-ocean-snyk-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+
+| Parameter                           | Description                                                                                                                         | Required |
+|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                     | Your Port client id                                                                                                                 | ✅        |
+| `port.clientSecret`                 | Your Port client secret                                                                                                             | ✅        |
+| `port.baseUrl`                      | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                             | ✅        |
+| `integration.identifier`            | Change the identifier to describe your integration                                                                                  | ✅        |
+| `integration.type`                  | The integration type                                                                                                                | ✅        |
+| `integration.eventListener.type`    | The event listener type                                                                                                             | ✅        |
+| `integration.secrets.token`         | The Snyk API token                                                                                                                  | ✅        |
+| `integration.config.organizationId` | The Snyk organization ID. Fetches data for this organization when provided                                                          | ❌        |
+| `integration.config.groups`         | A comma-separated list of Snyk group ids to filter data for. Fetches data for organizations within the specified groups             | ❌        |
+| `integration.config.apiUrl`         | The Snyk API URL. If not specified, the default will be https://api.snyk.io                                                         | ❌        |
+| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Snyk                  | ✅        |
+| `integration.secret.webhookSecret`  | This is a password you create, that Snyk uses to sign webhook events to Port                                                        | ❌        |
+| `scheduledResyncInterval`           | The number of minutes between each resync                                                                                           | ❌        |
+| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
+| `sendRawDataExamples`               | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
+
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
 
   By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
 
@@ -505,141 +505,12 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting Snyk objects
+## Configuration
 
-The Snyk integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-Here is an example snippet from the config which demonstrates the process for getting `project` data from Snyk:
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .attributes.name
-          blueprint: '"snykProject"'
-          properties:
-            url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-            owner: .__owner.email
-            businessCriticality: .attributes.business_criticality
-            environment: .attributes.environment
-            lifeCycle: .attributes.lifecycle
-            highOpenVulnerabilities: .meta.latest_issue_counts.high
-            mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
-            lowOpenVulnerabilities: .meta.latest_issue_counts.low
-            criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-            importedBy: .__importer.email
-            tags: .attributes.tags
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Snyk's API events.
-
-:::note
-In a case where an api request to Snyk's api will receive error code `SNYK-9999` which means that Snyk experienced an internal error, the resync will continue to export and log that error.  This might result in some data missing from the portal. In such cases head to the Event Log inside the integration section and look for that error it will have all the information required to contact snyk to investigate that error
-:::
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Snyk, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from Snyk, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Organization`](https://snyk.docs.apiary.io/#reference/organizations/the-snyk-organization-for-a-request/list-all-the-organizations-a-user-belongs-to)
-- [`Target`](https://apidocs.snyk.io/?version=2023-08-21%7Ebeta#get-/orgs/-org_id-/targets)
-- [`Project`](https://apidocs.snyk.io/?version=2023-08-21#get-/orgs/-org_id-/projects)
-- [`Issue`](https://snyk.docs.apiary.io/#reference/projects/aggregated-project-issues/list-all-aggregated-issues)
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: project
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Snyk object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: project
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Snyk object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Snyk object to a Port entity. Each value is a JQ query.
-            identifier: .id
-            title: .attributes.name
-            blueprint: '"snykProject"'
-            properties:
-              url: ("https://app.snyk.io/org/" + .relationships.organization.data.id + "/project/" + .id | tostring)
-              businessCriticality: .attributes.business_criticality
-              environment: .attributes.environment
-              lifeCycle: .attributes.lifecycle
-              highOpenVulnerabilities: .meta.latest_issue_counts.high
-              mediumOpenVulnerabilities: .meta.latest_issue_counts.medium
-              lowOpenVulnerabilities: .meta.latest_issue_counts.low
-              criticalOpenVulnerabilities: .meta.latest_issue_counts.critical
-              tags: .attributes.tags
-              targetOrigin: .origin
-            relations:
-              snyk_target: '.relationships.target.data.id'
-        # highlight-end
-    - kind: project # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyProjectName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-### Ingest data into Port
-
-To ingest Snyk objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Snyk.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Snyk under the Code quality & security providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
 
@@ -700,7 +571,6 @@ resources:
             url: ("https://app.snyk.io/org/" + .slug | tostring)
 ```
 </details>
-
 
 ### Target
 
