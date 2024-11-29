@@ -51,6 +51,8 @@ Choose one of the following installation methods:
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
 <h2> Prerequisites </h2>
 
 <Prerequisites />
@@ -61,7 +63,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm">
 
-<OceanRealtimeInstallation integration="launchdarkly" />
+<OceanRealtimeInstallation integration="Launchdarkly" />
 
 <PortApiRegionTip/>
 
@@ -176,13 +178,14 @@ The integration uses polling to pull the configuration from Port every minute an
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
+This workflow/pipeline will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
+
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -219,13 +222,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [LaunchDarkly Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
@@ -278,11 +277,6 @@ pipeline {
 
   </TabItem>
     <TabItem value="gitlab" label="GitLab">
-This workflow will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -331,7 +325,6 @@ ingest_data:
 ```
 
 </TabItem>
-
   </Tabs>
 
 <PortApiRegionTip/>
