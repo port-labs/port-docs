@@ -28,6 +28,7 @@ export const tagsCategoryMap = {
         "Dynatrace",
         "Humanitec",
         "New Relic",
+        "ServiceNow",
     ]
 };
 
@@ -592,7 +593,7 @@ export const availableGuides = [
         title: "Trigger a ServiceNow Incident",
         description: "Create a self-service action that triggers a ServiceNow incident",
         tags: ["Incident management", "GitHub", "Actions"],
-        logos: ["GitHub"],
+        logos: ["ServiceNow", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/trigger-servicenow-incident",
     },
@@ -765,7 +766,7 @@ export const availableGuides = [
     {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","GitLab","Azure DevOps","Dashboards"],
+        tags: ["Engineering metrics","GitHub","GitLab","AzureDevOps","Dashboards"],
         logos: ["Git"],
         link: "/guides/all/setup-dora-metrics",
     },
@@ -862,4 +863,11 @@ export const availableGuides = [
         logos: ["Git"],
         link: "/guides/all/setup-dora-metrics-benchmark"
     },
+    {
+        title: "Manage service deployments using GitLab and ServiceNow", 
+        description: "Create a chain of self-service actions that deploy a service using GitLab and ServiceNow",
+        tags: ["Incident management", "GitLab", "Actions", "Automations"],
+        logos: ["ServiceNow", "GitLab"],
+        link: "/guides/all/approval-workflow-for-gitlab-deployment"
+    }
 ]
