@@ -410,6 +410,12 @@ Based on the [best practices for tagging infrastructure](https://www.datadoghq.c
 <details>
 <summary>Integration configuration</summary>
 
+:::tip Configuration Options
+The SLO history selector supports two time-related configurations:
+- `timeframe`: How many days to look back for each SLO history data point. Must be greater than 0 (default: 7 days)
+- `periodOfTimeInMonths`: How far back in time to fetch SLO history. Must be between 1-12 months (default: 6 months)
+:::
+
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
@@ -417,7 +423,8 @@ resources:
   - kind: sloHistory
     selector:
       query: 'true'
-      sampleIntervalPeriodInDays: 7
+      timeframe: 7
+      periodOfTimeInMonths: 6
     port:
       entity:
         mappings:
@@ -432,10 +439,6 @@ resources:
           relations:
             slo: .slo.id
 ```
-
-:::tip Service Relation
-Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default JQ maps SLOs to services using tags that starts with the `service` keyword
-:::
 
 </details>
 
