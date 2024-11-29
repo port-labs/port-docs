@@ -49,6 +49,8 @@ Choose one of the following installation methods:
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
 <h2> Prerequisites </h2>
 
 <Prerequisites />
@@ -178,28 +180,29 @@ This table summarizes the available parameters for the installation.
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
-This workflow will run the Datadog integration once and then exit, this is useful for **scheduled** ingestion of data.
+This workflow/pipeline will run the Datadog integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Realtime updates in Port
+:::warning Real-time updates
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
+
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                        | Description                                                                                                                                                                                                                                                                              | Example                       | Required |
-|----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|----------|
-| `port_client_id`                 | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |                               | ✅        |
-| `port_client_secret`             | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |                               | ✅        |
-| `port_base_url`             | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                               | ✅        |
-| `config -> datadog_base_url` | US: https://api.datadoghq.com EU: https://api.datadoghq.eu   |               | ✅        |
-| `config -> datadog_api_key` | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)  |               | ✅        |
-| `config -> datadog_application_key` | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)    |               | ✅        |
-| `config -> datadog_webhook_token` | Datadog webhook token. Learn [more](https://docs.datadoghq.com/integrations/webhooks/#setup)    |      | ❌       |
-| `initialize_port_resources`      | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |                               | ❌        |
-| `identifier`                     | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |                               | ❌        |
-| `version`                        | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest                        | ❌        |`
+| Parameter                           | Description                                                                                                                                                                                                                                                                              | Example | Required |
+|-------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|----------|
+| `port_client_id`                    | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |         | ✅        |
+| `port_client_secret`                | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |         | ✅        |
+| `port_base_url`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |         | ✅        |
+| `config -> datadog_base_url`        | US: https://api.datadoghq.com EU: https://api.datadoghq.eu                                                                                                                                                                                                                               |         | ✅        |
+| `config -> datadog_api_key`         | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)                                                                                                                                                    |         | ✅        |
+| `config -> datadog_application_key` | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)                                                                                                                                                      |         | ✅        |
+| `config -> datadog_webhook_token`   | Datadog webhook token. Learn [more](https://docs.datadoghq.com/integrations/webhooks/#setup)                                                                                                                                                                                             |         | ❌        |
+| `initialize_port_resources`         | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |         | ❌        |
+| `identifier`                        | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌        |
+| `version`                           | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest  | ❌        |`
 
 <br/>
 
@@ -240,15 +243,10 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Datadog integration once and then exit, this is useful for **scheduled** ingestion of data.
-
 :::tip Tip for Jenkins agent
 Your Jenkins agent should be able to run docker commands.
 :::
 
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
 
@@ -300,10 +298,9 @@ pipeline {
 ```
 
   </TabItem>
-
   <TabItem value="azure" label="Azure Devops">
 
-<AzurePremise name="Datadog" />
+<AzurePremise />
 
 <DockerParameters />
 
@@ -345,13 +342,7 @@ steps:
 ```
 
   </TabItem>
-
   <TabItem value="gitlab" label="GitLab">
-This workflow will run the Datadog integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -419,7 +410,7 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 
 To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
-Additional examples of blueprints and the relevant integration configurations can be found on the datadog [examples page](example.md)
+Examples of blueprints and the relevant integration configurations can be found on the datadog [examples page](examples.md)
 
 ## Let's Test It
 
