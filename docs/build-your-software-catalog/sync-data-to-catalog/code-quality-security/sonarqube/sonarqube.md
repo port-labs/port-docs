@@ -810,7 +810,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
-## Migration from SonarQube integration version <= 0.1.114
+## Migration from SonarQube integration version `<=0.1.114`
 Versions prior to `v0.1.115` used SonarQube's internal API for components to retrieve projects. However, this API apart from being internal and subject to change without notification by SonarQube is also inconsistent and will intermittently return an empty response causing previously ingested entities to be deleted. This deletion is because Ocean and therefore Port assumes these entities no longer exist.
 
 To remedy this, we have switched to the globally available API for projects instead for new users of the SonarQube integration. This comes with a few changes below

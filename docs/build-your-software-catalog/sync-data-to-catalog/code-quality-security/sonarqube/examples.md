@@ -156,7 +156,7 @@ To view and test the integration's mapping against examples of the third-party A
 :::tip filter projects
 The integration provides an option to filter the data that is retrieved from the SonarQube API depending on the integration version based on the following attributes:
 
-<h3>SonarQube integration version <\= 0.1.114</h3>
+<h3>SonarQube integration version `<=0.1.114`</h3>
 
 1. `query`: Limits the search to component names that contain the supplied string
 2. `alertStatus`: To filter a project's quality gate status. Accepts a list of values such as `OK`, `ERROR` and `WARN`
@@ -166,7 +166,7 @@ The integration provides an option to filter the data that is retrieved from the
 
 These attributes can be enabled using the path: `selector.apiFilters.filter`. By default, the integration fetches only SonarQube projects using the `qualifier` attribute.
 
-<h3>SonarQube integration version <\= 0.1.114</h3>
+<h3>SonarQube integration version `>=0.1.114`</h3>
 1. `analyzed_before`: To retrieve projects analyzed before the given date. Accepts date format like so `2017-10-19` or `2017-10-19T13:00:00+0200`
 
 2. `on_provisioned_only`: To retrieve projects on provisioned only. Accepts boolean `true` or `false`.
@@ -186,7 +186,7 @@ Besides filtering the API data, the integration provides a mechanism to allow us
 Please note that the API filters are supported on on-premise Sonar environments (SonarQube) only, and will not work on SonarCloud.
 :::
 
-<h3>Project mapping for integration version `<= 0.1.114`</h3>
+<h3>Project mapping for integration version `<=0.1.114`</h3>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
