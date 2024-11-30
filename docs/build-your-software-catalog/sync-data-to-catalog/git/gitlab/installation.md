@@ -66,7 +66,7 @@ In this example:
 
 </details>
 
-See the [token mapping](#tokenmapping) section for more information.
+See the [Token Mapping](#token-mapping) section for more information.
 
 The following steps will guide you how to create a GitLab group access token.
 
@@ -81,9 +81,7 @@ The following steps will guide you how to create a GitLab group access token.
 3. Click "Create group access token".
 4. Copy the generated token and use it when deploying the integration in the following steps.
 
-### Configure the GitLab integration 
-
-### `tokenMapping`
+### Token Mapping
 
 The GitLab integration supports fetching data related to specific paths in your GitLab groups. The integration is also able to fetch data from different GitLab parent groups by providing additional group tokens. In order to do so, you need to map the desired paths to the relevant access tokens.
 The `tokenMapping` parameter supports specifying the paths that the integration will search for files and information in, using [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns).
@@ -185,7 +183,7 @@ In both options you'll need to provide the `useSystemHook` parameter with the va
 
 ![GitLab System Hook](/img/integrations/gitlab/GitLabSystemHook.png)
 
-### `tokenGroupHooksOverrideMapping`
+### Listen to specified groups
 
 the integration can support listening to webhooks on specified groups, by configuring the `tokenGroupHooksOverrideMapping` parameter. this parameter is not required, and when you don't use it, the integration will listen to all of the root groups (if not using `useSystemHooks=true`)
 
@@ -207,7 +205,7 @@ You can configure multiple tokens, and multiple groups per token (the token shou
 - The group path is the full path in gitlab. If a group path is incorrect, the webhook will not be created.
 - The events for each group must match the supported event types mentioned below. if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
 
-### Deploy the GitLab integration
+## Deploy the GitLab integration
 
 Choose one of the following installation methods:
 
