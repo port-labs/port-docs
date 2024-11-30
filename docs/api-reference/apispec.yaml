@@ -16364,7 +16364,7 @@ paths:
       responses:
         "200":
           description: Default Response
-  '/v1/organization/secrets':
+  /v1/organization/secrets:
     get:
       description: This route allows you to retrieve all of the secrets in your organization.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).
       summary: Get all organization secrets
@@ -16372,9 +16372,9 @@ paths:
         - Organization
       security:
         - bearer:
-            - 'read:blueprints'
+            - read:secrets
       responses:
-        '200':
+        "200":
           description: Default Response
     post:
       summary: Create an organization secret
@@ -16387,23 +16387,41 @@ paths:
             schema:
               type: object
               properties:
-                secret_name:
+                secretName:
                   type: string
                   description: The name of the new secret.<br/>
-                secret_value:
+                  maxLength: 50
+                  minLength: 1
+                  pattern: ^[A-Za-z0-9-_]*$
+                secretValue:
                   type: string
                   description: The value of the new secret.<br/>
                 description:
                   type: string
                   description: An optional description of the new secret.<br/>
+                  maxLength: 200
+              additionalProperties: false
               required:
-                - secret_name
-                - secret_value
+                - secretName
+                - secretValue
         required: true
       security:
-        - bearer: [ ]
+        - bearer:
+            - create:secrets
       responses:
-        '200':
+        "200":
+          description: Default Response
+  "/v1/organization/secrets/{secret_name}":
+    get:
+      summary: Get an organization secret
+      description: This route allows you to retrieve a specific secret in your organization.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).
+      tags:
+        - Organization
+      security:
+        - bearer:
+            - read:secrets
+      responses:
+        "200":
           description: Default Response
     patch:
       summary: Patch an organization secret
@@ -16421,8 +16439,10 @@ paths:
                   description: The new value of the secret.<br/>
                 description:
                   type: string
+                  maxLength: 200
                   description: The new description of the secret.<br/>
               additionalProperties: false
+              required: []
       parameters:
         - schema:
             type: string
@@ -16431,9 +16451,10 @@ paths:
           required: true
           description: The name of the secret you want to patch.<br/>
       security:
-        - bearer: []
+        - bearer:
+            - update:secrets
       responses:
-        '200':
+        "200":
           description: Default Response
     delete:
       summary: Delete an organization secret
@@ -16448,9 +16469,10 @@ paths:
           required: true
           description: The name of the secret you want to delete.<br/>
       security:
-        - bearer: [ ]
+        - bearer:
+            - delete:secrets
       responses:
-        '200':
+        "200":
           description: Default Response
   /v1/apps:
     get:
