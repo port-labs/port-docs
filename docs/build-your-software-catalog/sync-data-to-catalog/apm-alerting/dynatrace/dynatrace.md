@@ -13,7 +13,6 @@ import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalo
 
 Port's Dynatrace integration allows you to model Dynatrace resources in your software catalog and ingest data into them.
 
-
 ## Overview
 
 This integration allows you to:
@@ -42,7 +41,6 @@ The resources that can be ingested from Dynatrace into Port are listed below. It
 Your Dynatrace host URL should be `https://<environment-id>.live.dynatrace.com`. Note that there is a difference between the instance URL and the API host URL. The former contains `apps` while the latter (as shown prior) uses `live`. This means if your environment ID is `npm82883`, your API host URL should be `https://npm82883.live.dynatrace.com`.
 
 
-
 ## Setup
 
 Choose one of the following installation methods:
@@ -55,7 +53,9 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real Time (self-hosted)">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
 <h2> Prerequisites </h2>
 
@@ -68,7 +68,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="dynatrace" />
+<OceanRealtimeInstallation integration="Dynatrace" />
 
 <PortApiRegionTip/>
 
@@ -178,13 +178,15 @@ This table summarizes the available parameters for the installation.
 </TabItem>
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
-This workflow will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
+This workflow/pipeline will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
 If you want the integration to update Port in real time using webhooks, use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
+
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -230,14 +232,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
@@ -298,19 +295,18 @@ pipeline {
 ```
 
   </TabItem>
-
-<TabItem value="azure" label="Azure Devops">
-<AzurePremise name="Dynatrace" />
+  <TabItem value="azure" label="Azure Devops">
+<AzurePremise />
 
 | Parameter                                        | Description                                                                                                        | Required |
-| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_API_KEY`  | The Dynatrace API key                                                                                              | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL` | The Dynatrace API host URL                                                                                             | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`               | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
+|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|----------|
+| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_API_KEY`  | The Dynatrace API key                                                                                              | ✅        |
+| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL` | The Dynatrace API host URL                                                                                         | ✅        |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`               | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌        |
+| `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌        |
+| `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅        |
+| `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅        |
+| `OCEAN__PORT__BASE_URL`                          | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                            | ✅        |
 
 
 <br/>
@@ -352,13 +348,7 @@ steps:
 ```
 
   </TabItem>
-
-     <TabItem value="gitlab" label="GitLab">
-This workflow will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+  <TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
