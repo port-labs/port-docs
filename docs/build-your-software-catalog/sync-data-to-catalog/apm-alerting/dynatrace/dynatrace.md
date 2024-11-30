@@ -819,7 +819,7 @@ You can retrieve a list of available resource types by using the [Dynatrace Enti
 
 ## Capabilities
 
-### Configuring real-time updates
+### Configure real-time updates
 
 Currently, the Dynatrace API lacks support for programmatic webhook creation.
 To set up a webhook configuration in Dynatrace for sending alert notifications to the Ocean integration,
