@@ -25,7 +25,7 @@ The resources that can be ingested from Azure DevOps into Port are listed below.
 
 ## Setup
 
-To install Port's Azure DevOps integration, follow the [installation](./installation.md) guide.
+To install Port's Azure DevOps integration, see the [installation](./installation.md#setup) page.
 
 ## Configuration
 
