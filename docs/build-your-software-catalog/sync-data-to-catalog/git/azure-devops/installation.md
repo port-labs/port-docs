@@ -37,7 +37,6 @@ You can create one by following [these steps](https://learn.microsoft.com/en-us/
 
 The token should either have `admin` permissions, or `read` permissions for each of the supported resources you want to ingest into Port.
 
-### Configure the integration
 
 ### AppHost & listening to hooks
 
