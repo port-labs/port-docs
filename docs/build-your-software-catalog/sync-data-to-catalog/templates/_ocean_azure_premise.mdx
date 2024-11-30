@@ -1,27 +1,18 @@
-This pipeline will run the {props.name} integration once and then exit, this is useful for **scheduled** ingestion of data.
-
 :::tip
 Your Azure Devops agent should be able to run docker commands. Learn more about agents [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops&tabs=yaml%2Cbrowser).
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
-
 <br />
 
-:::tip Configure the variables in a variable group
 Variable groups store values and secrets you'll use in your pipelines across your project. [Learn more](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml)
 
 **Setting Up Your Credentials**
-1. Create a Variable Group: Name it **port-ocean-credentials**. Store the required variables from the table.
-2. Authorize Your Pipeline:
+1. Create a Variable Group: Name it **port-ocean-credentials**.
+2. Store the required variables (see the table below).
+3. Authorize Your Pipeline:
     - Go to **"Library" -> "Variable groups."**
     - Find **port-ocean-credentials** and click on it.
     - Select "Pipeline Permissions" and add your pipeline to the authorized list.
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/azureVarGroups.png' width='85%' border="1px" />
-
-:::
 
 <br />
