@@ -221,6 +221,8 @@ Choose one of the following installation methods:
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
 <h2> Prerequisites </h2>
 
 <Prerequisites />
@@ -231,7 +233,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="gitlab" />
+<OceanRealtimeInstallation integration="Gitlab" />
 
 <PortApiRegionTip/>
 
@@ -341,14 +343,14 @@ Note the parameters specific to this integration, they are last in the table.
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="gitlab" label="GitLab">
+This pipeline will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-This workflow will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
+:::warning Real-time updates
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
+
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="gitlab" label="GitLab">
 
 Make sure to configure the following [GitLab Variables](https://docs.gitlab.com/ee/ci/variables/):
 
@@ -411,15 +413,11 @@ Also make sure to keep the double-quotes (`"`) when passing the `OCEAN__INTEGRAT
 
 </TabItem>
 <TabItem value="jenkins" label="Jenkins">
-  
-This pipeline will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
 
