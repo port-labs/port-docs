@@ -142,13 +142,13 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="argocd" />
+<OceanRealtimeInstallation integration="Argocd" />
 
 <PortApiRegionTip/>
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-argocd-integration` in your git repository with the content:
 
@@ -254,13 +254,15 @@ Note the parameters specific to this integration, they are last in the table.
 </TabItem>
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
-This workflow will run the ArgoCD integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
+This workflow/pipeline will run the ArgoCD integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
 :::
+
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -308,14 +310,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the ArgoCD integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
@@ -380,11 +377,6 @@ pipeline {
 
   </TabItem>
 <TabItem value="gitlab" label="GitLab">
-This pipeline will run the ArgoCD integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -565,8 +557,7 @@ Examples of blueprints and the relevant integration configurations can be found 
 
 ## Relevant Guides
 
-- For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=ArgoCD).
-
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=ArgoCD).
 
 
 ## Alternative installation via webhook
