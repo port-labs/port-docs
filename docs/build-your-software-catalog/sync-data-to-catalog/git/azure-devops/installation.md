@@ -62,7 +62,9 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time (self hosted)">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
 <h2> Prerequisites </h2>
 
@@ -75,7 +77,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="azure-devops" />
+<OceanRealtimeInstallation integration="Azure-devops" />
 
 <PortApiRegionTip/>
 
@@ -185,6 +187,12 @@ This table summarizes the available parameters for the installation.
 </TabItem>
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This pipeline will run the Azure DevOps integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::
 
 <Tabs groupId="cicd-method" queryString="cicd-method">
 
