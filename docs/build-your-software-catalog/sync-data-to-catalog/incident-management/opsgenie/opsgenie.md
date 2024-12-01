@@ -230,7 +230,7 @@ jobs:
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
 
-:::tip Jenkins Agent
+:::tip
 Your Jenkins agent should be able to run docker commands.
 :::
 
