@@ -37,6 +37,8 @@ resources:
             cveID: .security_advisory.cve_id
             url: .html_url
             references: "[.security_advisory.references[].url]"
+            alertCreatedAt: .created_at
+            alertUpdatedAt: .updated_at
           relations:
             service: .repo.name
   - kind: code-scanning-alerts
