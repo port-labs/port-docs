@@ -62,7 +62,7 @@ This table summarizes the available parameters for the installation.
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="firehydrant" />
+<OceanRealtimeInstallation integration="Firehydrant" />
 
 <PortApiRegionTip/>
 
@@ -176,14 +176,16 @@ This table summarizes the available parameters for the installation.
 </TabItem>
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
 
-This workflow will run the FireHydrant integration once and then exit, this is useful for **scheduled** ingestion of data.
+This workflow/pipeline will run the FireHydrant integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
+:::warning Real-time updates
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
 :::
+
+
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -219,14 +221,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the FireHydrant integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
@@ -277,10 +274,8 @@ pipeline {
 ```
 
   </TabItem>
-
-    
-<TabItem value="azure" label="Azure Devops">
-<AzurePremise name="FireHydrant" />
+  <TabItem value="azure" label="Azure Devops">
+<AzurePremise />
 
 <DockerParameters />
 
@@ -323,13 +318,7 @@ steps:
 ```
 
   </TabItem>
-
-<TabItem value="gitlab" label="GitLab">
-This workflow will run the FireHydrant integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+  <TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -377,7 +366,6 @@ ingest_data:
 ```
 
 </TabItem>
-
   </Tabs>
 
 <PortApiRegionTip/>
