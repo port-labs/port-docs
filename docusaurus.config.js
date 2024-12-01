@@ -134,6 +134,12 @@ const config = {
             target: "_blank",
             className: "header-slack-link",
           },
+          {
+            to: "https://www.youtube.com/@getport",
+            position: "right",
+            target: "_blank",
+            className: "header-youtube-link",
+          },
         ],
       },
       hotjar: {
