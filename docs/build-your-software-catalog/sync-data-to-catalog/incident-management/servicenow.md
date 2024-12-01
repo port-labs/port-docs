@@ -66,7 +66,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="servicenow" />
+<OceanRealtimeInstallation integration="Servicenow" />
 
 
 <PortApiRegionTip/>
@@ -161,17 +161,21 @@ kubectl apply -f my-ocean-servicenow-integration.yaml
 
 This table summarizes the available parameters for the installation.
 
-| Parameter                                | Description                                                                                                                                                    | Required |
-|------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| `port.clientId`                          | Your Port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅        |
-| `port.clientSecret`                      | Your Port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅        |
-| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                        | ✅        |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                                                                             | ✅        |
-| `integration.config.servicenowUsername`  | The ServiceNow account username                                                                                                                                | ✅        |
-| `integration.secrets.servicenowPassword` | The ServiceNow account password                                                                                                                                | ✅        |
-| `integration.config.servicenowUrl`       | The ServiceNow instance URL. For example https://example-id.service-now.com                                                                                    | ✅        |
+| Parameter                                | Description                                                                                                                                                                                                                                                                                    | Required |
+|------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                          | Your Port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                     | ✅        |
+| `port.clientSecret`                      | Your Port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                 | ✅        |
+| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        | ✅        |
+| `integration.identifier`                 | Change the identifier to describe your integration                                                                                                                                                                                                                                             | ✅        |
+| `integration.config.servicenowUsername`  | The ServiceNow account username                                                                                                                                                                                                                                                                | ✅        |
+| `integration.secrets.servicenowPassword` | The ServiceNow account password                                                                                                                                                                                                                                                                | ✅        |
+| `integration.config.servicenowUrl`       | The ServiceNow instance URL. For example https://example-id.service-now.com                                                                                                                                                                                                                    | ✅        |
+| `integration.eventListener.type`         | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |          | ✅        |
+| `integration.type`                       | The integration to be installed                                                                                                                                                                                                                                                                |          | ✅        |
+| `scheduledResyncInterval`                | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |          | ❌        |
+| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |          | ❌        |
+| `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |          | ❌        |
 
-<HelmParameters />
 
 <br/>
 
@@ -180,14 +184,16 @@ This table summarizes the available parameters for the installation.
 </TabItem>
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
 
-This workflow will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
+This workflow/pipeline will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates 
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
 :::
+
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -225,15 +231,11 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
@@ -287,9 +289,8 @@ pipeline {
 ```
 
   </TabItem>
-
   <TabItem value="azure" label="Azure Devops">
-<AzurePremise name="ServiceNow" />
+<AzurePremise />
 
 <DockerParameters />
 
@@ -334,13 +335,7 @@ steps:
 ```
 
   </TabItem>
-<TabItem value="gitlab" label="GitLab">
-This workflow will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
-
+ <TabItem value="gitlab" label="GitLab">
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
 <DockerParameters/>
