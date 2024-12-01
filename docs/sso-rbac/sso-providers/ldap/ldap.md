@@ -41,6 +41,7 @@ To pass the `User Principal Name` (UPN) value in the `email` field in the login 
    // profile['organizationUnits'] = raw_data['organizationUnits'];
    
    // Port custom mapping
+   //highlight-next-line
    profile['email'] = raw_data['userPrincipalName'];
 
 ```
@@ -49,16 +50,16 @@ You can optionally map the user's `given name` and `surname` by adding the follo
 
 ```js showLineNumbers
    // By default, the user's given name is under the `givenName`.
-   // Replace incase your mapping is different.
+   // Replace in case your mapping is different.
    profile['given_name'] = raw_data['givenName'];
    // By default, the user's surname name is under the `sn`.
-   // Replace incase your mapping is different.
+   // Replace in case your mapping is different.
    profile['family_name'] = raw_data['sn'];
 
 ```
 
 ### 3. Update LDAP user query
-By default, the AD connector uses `(sAMAccountName={0})` as the default LDAP query to search for to user which is attempting to login.
+By default, the AD connector uses `(sAMAccountName={0})` as the default LDAP query to search for the user which is attempting to login.
 
 The query needs to be updated to search the AD server using the user's `UPN` instead. To do this, add the following to the `config.js` file:
 
