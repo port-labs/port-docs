@@ -65,7 +65,7 @@ By default, the integration fetches all organizations associated with the provid
 If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
 :::
 
-<OceanRealtimeInstallation integration="snyk" />
+<OceanRealtimeInstallation integration="Snyk" />
 
 
 <PortApiRegionTip/>
@@ -232,6 +232,12 @@ This table summarizes the available parameters for the installation.
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
+This workflow/pipeline will run the Snyk integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::
+
   By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
 
   `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: Use this parameter to restrict access to a specific organization. If specified, the integration will fetch data only for the provided organization.
@@ -243,12 +249,7 @@ This table summarizes the available parameters for the installation.
   :::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
-This workflow will run the Snyk integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
+   <TabItem value="github" label="GitHub">
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -294,16 +295,12 @@ jobs:
 ```
 
 </TabItem>
-  <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Snyk integration once and then exit, this is useful for **scheduled** ingestion of data.
+   <TabItem value="jenkins" label="Jenkins">
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
@@ -364,17 +361,12 @@ pipeline {
 ```
 
   </TabItem>
-
-  <TabItem value="azure" label="Azure Devops">
-This pipeline will run the Snyk integration once and then exit, this is useful for **scheduled** ingestion of data.
+   <TabItem value="azure" label="Azure Devops">
 
 :::tip
 Your Azure Devops agent should be able to run docker commands.
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+
 
 Make sure to configure the following variables using [Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add them into in a variable group named `port-ocean-credentials`:
 
@@ -431,12 +423,7 @@ steps:
 ```
 
   </TabItem>
-<TabItem value="gitlab" label="GitLab">
-This pipeline will run the Synk integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+  <TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
