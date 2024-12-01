@@ -62,7 +62,7 @@ For details about the available parameters for the installation, see the table b
 
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="statuspage" />
+<OceanRealtimeInstallation integration="Statuspage" />
 
 <PortApiRegionTip/>
 
@@ -151,17 +151,20 @@ kubectl apply -f my-ocean-statuspage-integration.yaml
 
 This table summarizes the available parameters for the installation.
 
-| Parameter                              | Description                                                                                                                                                    | Required |
-|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| `port.clientId`                        | Your Port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅        |
-| `port.clientSecret`                    | Your Port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅        |
-| `port.baseUrl`                         | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                        | ✅        |
-| `integration.identifier`               | Change the identifier to describe your integration                                                                                                             | ✅        |
-| `integration.secrets.statuspageApiKey` | API key used to query the Statuspage.io API. [Get your Statuspage API Key](https://support.atlassian.com/statuspage/docs/create-and-manage-api-keys/)          | ✅        |
-| `integration.config.statuspageIds`     | Comma-separated list of Statuspage.io page IDs to query e.g. `'["statuspage-id-1","statuspage-id-2"]'`. If not specified, all pages will be queried            | ❌        |
-| `integration.config.statuspageHost`    | The host of the Statuspage.io API. Defaults to https://api.statuspage.io                                                                                       | ❌        |
-
-<HelmParameters />
+| Parameter                              | Description                                                                                                                                                                                                                                                                                    | Required |
+|----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                        | Your Port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                     | ✅        |
+| `port.clientSecret`                    | Your Port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                 | ✅        |
+| `port.baseUrl`                         | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        | ✅        |
+| `integration.identifier`               | Change the identifier to describe your integration                                                                                                                                                                                                                                             | ✅        |
+| `integration.secrets.statuspageApiKey` | API key used to query the Statuspage.io API. [Get your Statuspage API Key](https://support.atlassian.com/statuspage/docs/create-and-manage-api-keys/)                                                                                                                                          | ✅        |
+| `integration.config.statuspageIds`     | Comma-separated list of Statuspage.io page IDs to query e.g. `'["statuspage-id-1","statuspage-id-2"]'`. If not specified, all pages will be queried                                                                                                                                            | ❌        |
+| `integration.config.statuspageHost`    | The host of the Statuspage.io API. Defaults to https://api.statuspage.io                                                                                                                                                                                                                       | ❌        |
+| `integration.eventListener.type`       | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | ✅        |
+| `integration.type`                     | The integration to be installed                                                                                                                                                                                                                                                                | ✅        |
+| `scheduledResyncInterval`              | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) | ❌        |
+| `initializePortResources`              | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       | ❌        |
+| `sendRawDataExamples`                  | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            | ❌        |
 
 <br/>
 
@@ -170,14 +173,15 @@ This table summarizes the available parameters for the installation.
 </TabItem>
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
 
-This workflow will run the Statuspage integration once and then exit, this is useful for **scheduled** ingestion of data.
+This workflow/pipeline will run the Statuspage integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Real Time Updates in Port
+:::warning Real-time updates
 If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
 :::
+
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -213,14 +217,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Statuspage integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip Jenkins Agent capabilities
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning Real Time Updates in Port
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
@@ -270,9 +269,8 @@ pipeline {
 ```
 
   </TabItem>
-
-  <TabItem value="azure" label="Azure Devops">
-<AzurePremise name="Statuspage" />
+   <TabItem value="azure" label="Azure Devops">
+<AzurePremise  />
 
 <DockerParameters />
 
@@ -314,12 +312,7 @@ steps:
 ```
 
   </TabItem>
-<TabItem value="gitlab" label="GitLab">
-This workflow will run the Statuspage integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+ <TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
