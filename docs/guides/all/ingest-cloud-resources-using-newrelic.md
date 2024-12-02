@@ -23,21 +23,21 @@ This guide assumes the following:
 ## Ingesting cloud resources into Port
 
 We will utilize the `entity` kind in Port's New Relic integration, which provides information on entities monitored in New Relic. 
-Entities are ingested based on their respective `infrastructureIntegrationType`.
+Entities are ingested based on their respective infrastructure integration `type`.
 
 <details>
 <summary><b>Examples of cloud resources infrastructure integration types</b></summary>
 
-- `AWS_EC2_INSTANCE`
-- `AWS_S3_BUCKET`
-- `AWS_RDS_DB_INSTANCE`
-- `AWS_LAMBDA_FUNCTION`
-- `AWS_ELB_LOAD_BALANCER`
-- `AZURE_VIRTUAL_MACHINE`
-- `AZURE_SQL_DATABASE`
-- `GCP_COMPUTE_INSTANCE`
-- `GCP_STORAGE_BUCKET`
-- `GCP_SQL_DATABASE_INSTANCE`
+- `AWSEC2INSTANCE`
+- `AWSS3BUCKET`
+- `AWSRDSDBINSTANCE`
+- `AWSLAMBDAFUNCTION`
+- `AWSELBLOADBALANCER`
+- `AZUREVIRTUALMACHINE`
+- `AZURESQLDATABASE`
+- `GCPCOMPUTEINSTANCE`
+- `GCPSTORAGEBUCKET`
+- `GCPSQLDATABASEINSTANCE`
 
 </details>
 
@@ -110,28 +110,27 @@ After installing the New Relic integration, create the following blueprint confi
 Locate the New Relic integration in the [Data Sources page](https://app.getport.io/settings/data-sources) and add the following mapping for cloud resources:
 
 <details>
-<summary><b>New Relic Service (Entity) mapping configuration (click to expand)</b></summary>
+<summary><b>New Relic Cloud Resource (Entity) mapping configuration (click to expand)</b></summary>
 
 ```yaml
-  - kind: newRelicService
+  - kind: entity
     selector:
       query: 'true'
-      newRelicTypes: ["HOST"]
-      entityQueryFilter: |
-        infrastructureIntegrationType IN (
-          'AWS_EC2_INSTANCE',
-          'AWS_S3_BUCKET',
-          'AWS_RDS_DB_INSTANCE',
-          'AWS_LAMBDA_FUNCTION',
-          'AWS_ELB_LOAD_BALANCER',
-          'AZURE_VIRTUAL_MACHINE',
-          'AZURE_SQL_DATABASE',
-          'GCP_COMPUTE_INSTANCE',
-          'GCP_STORAGE_BUCKET',
-          'GCP_SQL_DATABASE_INSTANCE'
+      entityQueryFilter: >-
+        type IN (
+          'AWSEC2INSTANCE',
+          'AWSS3BUCKET',
+          'AWSRDSDBINSTANCE',
+          'AWSLAMBDAFUNCTION',
+          'AWSELBLOADBALANCER',
+          'AZUREVIRTUALMACHINE',
+          'AZURESQLDATABASE',
+          'GCPCOMPUTEINSTANCE',
+          'GCPSTORAGEBUCKET',
+          'GCPSQLDATABASEINSTANCE'
         )
       entityExtraPropertiesQuery: |
-        ... on InfraHostEntityOutline {
+        ... on InfrastructureHostEntityOutline {
           infrastructureIntegrationType
           # Include additional properties if needed
         }
@@ -144,8 +143,8 @@ Locate the New Relic integration in the [Data Sources page](https://app.getport.
           properties:
             accountId: .accountId
             domain: .domain
-            type: .type
-            infrastructureIntegrationType: .infrastructureIntegrationType
+            type: .entityType
+            infrastructureIntegrationType: .type
             reporting: .reporting
             link: .permalink
             tags: .tags
@@ -168,62 +167,62 @@ Based on New Relic's documentation and common integrations, here's a comprehensi
 
 - **AWS Integration Types**
 
-  - `AWS_EC2_INSTANCE`
-  - `AWS_EBS_VOLUME`
-  - `AWS_S3_BUCKET`
-  - `AWS_RDS_DB_INSTANCE`
-  - `AWS_LAMBDA_FUNCTION`
-  - `AWS_ELB_LOAD_BALANCER`
-  - `AWS_DYNAMODB_TABLE`
-  - `AWS_ELASTICACHE_NODE`
-  - `AWS_REDSHIFT_CLUSTER`
-  - `AWS_KINESIS_STREAM`
-  - `AWS_SNS_TOPIC`
-  - `AWS_SQS_QUEUE`
-  - `AWS_ELASTIC_BEANSTALK`
-  - `AWS_AUTOSCALING_GROUP`
-  - `AWS_CLOUDFRONT_DISTRIBUTION`
-  - `AWS_API_GATEWAY`
-  - `AWS_ECS_CLUSTER`
-  - `AWS_EKS_CLUSTER`
+  - `AWSEC2INSTANCE`
+  - `AWSEBSVOLUME`
+  - `AWSS3BUCKET`
+  - `AWSRDSDBINSTANCE`
+  - `AWSLAMBDAFUNCTION`
+  - `AWSELBLOADBALANCER`
+  - `AWSDYNAMODBTABLE`
+  - `AWSELASTICACHENODE`
+  - `AWSREDSHIFTCLUSTER`
+  - `AWSKINESISSTREAM`
+  - `AWSSNSTOPIC`
+  - `AWSSQSQUEUE`  
+  - `AWSELASTICBEANSTALK`
+  - `AWSAUTOSCALINGGROUP`
+  - `AWSCLOUDFRONTDISTRIBUTION`
+  - `AWSAPIGATEWAY`
+  - `AWSECSCLUSTER`
+  - `AWSEKSCLUSTER`
 
 - **Azure Integration Types**
 
-  - `AZURE_VIRTUAL_MACHINE`
-  - `AZURE_VM_SCALE_SET`
-  - `AZURE_APP_SERVICE`
-  - `AZURE_FUNCTION_APP`
-  - `AZURE_SQL_DATABASE`
-  - `AZURE_STORAGE_ACCOUNT`
-  - `AZURE_COSMOS_DB`
-  - `AZURE_REDIS_CACHE`
-  - `AZURE_SERVICE_BUS_NAMESPACE`
-  - `AZURE_EVENT_HUB_NAMESPACE`
-  - `AZURE_LOAD_BALANCER`
-  - `AZURE_APPLICATION_GATEWAY`
-  - `AZURE_CONTAINER_INSTANCE`
-  - `AZURE_KUBERNETES_SERVICE`
+  - `AZUREVIRTUALMACHINE`
+  - `AZUREVMSCALESET`
+  - `AZUREAPPSERVICE`
+  - `AZUREFUNCTIONAPP`
+  - `AZURESQLDATABASE`
+  - `AZURESTORAGEACCOUNT`
+  - `AZURECOSMOSDB`
+  - `AZUREREDISCACHE`
+  - `AZURESERVICEBUSNAMESPACE`
+  - `AZUREEVENTHUBNAMESPACE`
+  - `AZURELOADBALANCER`
+  - `AZUREAPPLICATIONGATEWAY`
+  - `AZURECONTAINERINSTANCE`
+  - `AZUREKUBERNETESSERVICE`
 
 -  **GCP Integration Types**
 
-    - `GCP_COMPUTE_INSTANCE`
-    - `GCP_STORAGE_BUCKET`
-    - `GCP_CLOUD_SQL_DATABASE`
-    - `GCP_FUNCTION`
-    - `GCP_PUBSUB_TOPIC`
-    - `GCP_BIGQUERY_DATASET`
-    - `GCP_CLOUD_SPANNER_INSTANCE`
-    - `GCP_KUBERNETES_CLUSTER`
-    - `GCP_CLOUD_RUN_SERVICE`
+  - `GCPCOMPUTEINSTANCE`
+  - `GCPSTORAGEBUCKET`
+  - `GCPCLOUDSQLDATABASE`
+  - `GCPFUNCTION`
+  - `GCPPUBSUBTOPIC`
+  - `GCPBIGQUERYDATASET`
+  - `GCPCLOUDSPANNERINSTANCE`
+  - `GCPKUBERNETESCLUSTER`
+  - `GCPCLOUDRUNSERVICE`
 
 - **Other Integration Types**
 
-  - `APACHE_HTTPD_SERVER`
-  - `NGINX_SERVER`
-  - `MYSQL_DATABASE`
-  - `POSTGRESQL_DATABASE`
-  - `REDIS_INSTANCE`
-  - `DOCKER_CONTAINER`
-  - `KUBERNETES_CLUSTER`
+  - `APACHEHTTPDSERVER`
+  - `NGINXSERVER`
+  - `MYSQLDATABASE`
+  - `POSTGRESQLDATABASE`
+  - `REDISINSTANCE`
+  - `DOCKERCONTAINER`
+  - `KUBERNETESCLUSTER`
 
 </details>
