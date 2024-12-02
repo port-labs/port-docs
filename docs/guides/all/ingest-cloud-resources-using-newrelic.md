@@ -120,7 +120,8 @@ Locate the New Relic integration in the [Data Sources page](https://app.getport.
     selector:
       query: 'true'
       entityQueryFilter:
-        type IN (
+        type IN (  
+              # Add the infrastructure integration types you want to ingest
           'AWSEC2INSTANCE',
           'AWSS3BUCKET',
           'AWSRDSDBINSTANCE',
