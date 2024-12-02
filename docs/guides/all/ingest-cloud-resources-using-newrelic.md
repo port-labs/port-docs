@@ -99,7 +99,10 @@ After installing the New Relic integration, create the following blueprint confi
     },
     "required": []
   },
-  "relations": {}
+  "relations": {},
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {}
 }
 ```
 
