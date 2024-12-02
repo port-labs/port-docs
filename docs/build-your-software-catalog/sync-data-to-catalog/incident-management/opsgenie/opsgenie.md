@@ -397,37 +397,39 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 
 ## Capabilities
 
-### Configuring real-time updates
+### Configure real-time updates
 
 Currently, the OpsGenie API lacks support for programmatic webhook creation. To set up a webhook configuration in OpsGenie for sending alert notifications to the Ocean integration, follow these steps:
 
-#### Prerequisite
+#### Prerequisites
 
-Prepare a webhook `URL` using this format: `{app_host}/integration/webhook`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the OpsGenie Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/webhook`.
+Prepare a webhook `URL` using this format: `{app_host}/integration/webhook`.  
+The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed.  
+For example, if your ingress or load balancer exposes the OpsGenie Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/webhook`.
 
 #### Create a webhook in OpsGenie
 
-1. Go to OpsGenie;
-2. Select **Settings**;
-3. Click on **Integrations** under the **Integrations** section of the sidebar;
-4. Click on **Add integration**;
-5. In the search box, type _Webhook_ and select the webhook option;
+1. Go to OpsGenie.
+2. Select **Settings**.
+3. Click on **Integrations** under the **Integrations** section of the sidebar.
+4. Click on **Add integration**.
+5. In the search box, type _Webhook_ and select the webhook option.
 6. Input the following details:
-   1. `Name` - use a meaningful name such as Port Ocean Webhook;
-   2. Be sure to keep the "Enabled" checkbox checked;
-   3. Check the "Add Alert Description to Payload" checkbox;
-   4. Check the "Add Alert Details to Payload" checkbox;
+   1. `Name` - use a meaningful name such as Port Ocean Webhook.
+   2. Be sure to keep the "Enabled" checkbox checked.
+   3. Check the "Add Alert Description to Payload" checkbox.
+   4. Check the "Add Alert Details to Payload" checkbox.
    5. Add the following action triggers to the webhook by clicking on **Add new action**:
-      1. If _alert is snoozed_ in Opsgenie, _post to url_ in Webhook;
-      2. If _alert's description is updated_ in Opsgenie, _post to url_ in Webhook;
-      3. If _alert's message is updated_ in Opsgenie, _post to url_ in Webhook;
-      4. If _alert's priority is updated_ in Opsgenie, _post to url_ in Webhook;
-      5. If _a responder is added to the alert_ in Opsgenie, _post to url_ in Webhook;
-      6. if _a user executes "Assign Ownership_ in Opsgenie, _post to url_ in Webhook;
-      7. if _a tag is added to the alert_ in Opsgenie, _post to url_ in Webhook;
-      8. .if _a tag is removed from the alert_ in Opsgenie, _post to url_ in Webhook;
+      1. If _alert is snoozed_ in Opsgenie, _post to url_ in Webhook.
+      2. If _alert's description is updated_ in Opsgenie, _post to url_ in Webhook.
+      3. If _alert's message is updated_ in Opsgenie, _post to url_ in Webhook.
+      4. If _alert's priority is updated_ in Opsgenie, _post to url_ in Webhook.
+      5. If _a responder is added to the alert_ in Opsgenie, _post to url_ in Webhook.
+      6. if _a user executes "Assign Ownership_ in Opsgenie, _post to url_ in Webhook.
+      7. if _a tag is added to the alert_ in Opsgenie, _post to url_ in Webhook.
+      8. .if _a tag is removed from the alert_ in Opsgenie, _post to url_ in Webhook.
    6. `Webhook URL` - enter the value of the `URL` you created above.
-7. Click **Save integration**
+7. Click **Save integration**.
 
 
 
@@ -1017,8 +1019,6 @@ The examples below pull data from the OpsGenie REST Api, in a defined scheduled 
 ## Migration Guide to Version 0.2.0
 This guide outlines how to update your existing OpsGenie integration configuration to take advantage of the performance improvements and breaking changes introduced in version 0.2.0.
 
-Below is an overview of changes in version 0.2.0
-
 ### Key Improvements
 
 - **New Blueprints and Kinds**: Added new kinds for team, schedule, and schedule-oncall.
@@ -1033,7 +1033,8 @@ Below is an overview of changes in version 0.2.0
 
 ### Migration Steps
 
-#### Step 1: Understand Existing Configuration
+<h4>Step 1: Understand Existing Configuration</h4>
+
 In versions prior to 0.2.0, your Port app's configuration may have used a mapping like the one below:
 
 <details>
@@ -1106,7 +1107,8 @@ resources:
 ```
 </details>
 
-#### Step 2: Update to New Configuration
+<h4>Step 2: Update to New Configuration</h4>
+
 To adapt to version 0.2.0, you will need to update your configuration as follows:
 
 <details>
@@ -1181,7 +1183,7 @@ resources:
 
 In the updated configuration, the `opsGenieService` blueprint no longer includes properties like `oncallTeam`, `teamMembers`, and `oncallUsers`. These properties are now part of the new `OpsGenieTeam` blueprint. If you need to track on-call teams and users for each service, follow the steps below.
 
-#### Step 3: Create the OpsGenieTeam Blueprint
+<h4>Step 3: Create the OpsGenieTeam Blueprint</h4>
 
 To manage team-related data, create a new `OpsGenieTeam` blueprint in Port using the following schema: 
 
@@ -1227,7 +1229,7 @@ To manage team-related data, create a new `OpsGenieTeam` blueprint in Port using
 ```
 </details>
 
-#### Step 4: Update the OpsGenieService Blueprint
+<h4>Step 4: Update the OpsGenieService Blueprint</h4>
 
 Next, update the `opsGenieService` blueprint to reference the `OpsGenieTeam` blueprint by establishing a relation and mirroring relevant properties:
 
@@ -1306,7 +1308,7 @@ Next, update the `opsGenieService` blueprint to reference the `OpsGenieTeam` blu
 ```
 </details>
 
-#### Step 5: Update the Mapping Configuration
+<h4>Step 5: Update the Mapping Configuration</h4>
 
 Update your configuration mapping to correctly populate the `OpsGenieTeam` blueprint with team and on-call data. This will enable you to view on-call team information at the service level:
 
@@ -1358,7 +1360,7 @@ resources:
 ```
 </details>
 
-#### Final Step: Full Configuration Example
+<h4>Final Step: Full Configuration Example</h4>
 
 After completing these changes, your configuration should look like this, incorporating blueprints for `team`, `service`, `alert` and `incident`:
 <details>
