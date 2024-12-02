@@ -110,7 +110,7 @@ After installing the New Relic integration, create the following blueprint confi
 Locate the New Relic integration in the [Data Sources page](https://app.getport.io/settings/data-sources) and add the following mapping for cloud resources:
 
 <details>
-<summary><b>New Relic Cloud Resource (Entity) mapping configuration (click to expand)</b></summary>
+<summary><b>New Relic `entity` mapping configuration</b></summary>
 
 ```yaml
   - kind: entity
@@ -203,17 +203,17 @@ Based on New Relic's documentation and common integrations, here's a comprehensi
   - `AZURECONTAINERINSTANCE`
   - `AZUREKUBERNETESSERVICE`
 
--  **GCP Integration Types**
+- **GCP Integration Types**
 
-  - `GCPCOMPUTEINSTANCE`
-  - `GCPSTORAGEBUCKET`
-  - `GCPCLOUDSQLDATABASE`
-  - `GCPFUNCTION`
-  - `GCPPUBSUBTOPIC`
-  - `GCPBIGQUERYDATASET`
-  - `GCPCLOUDSPANNERINSTANCE`
-  - `GCPKUBERNETESCLUSTER`
-  - `GCPCLOUDRUNSERVICE`
+    - `GCPCOMPUTEINSTANCE`
+    - `GCPSTORAGEBUCKET`
+    - `GCPCLOUDSQLDATABASE`
+    - `GCPFUNCTION`
+    - `GCPPUBSUBTOPIC`
+    - `GCPBIGQUERYDATASET`
+    - `GCPCLOUDSPANNERINSTANCE`
+    - `GCPKUBERNETESCLUSTER`
+    - `GCPCLOUDRUNSERVICE`
 
 - **Other Integration Types**
 
