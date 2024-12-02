@@ -220,6 +220,11 @@ In the following example you will ingest your GitLab members to Port, you may us
 
 :::
 
+:::caution GitLab free plan limitation
+Primary email addresses are not available for GitLab "Free plan" users.
+:::
+
+
 <MemberBlueprint/>
 <MemberPortAppConfig/>
 
@@ -278,6 +283,10 @@ In the following example you will ingest your GitLab groups and their members to
 
 In the following example you will ingest your GitLab projects and their members to Port, you may use the following Port blueprint definitions and integration configuration:
 
+:::caution Limitation
+Real time webhook events are not supported for the `project-with-members` kind.
+:::
+
 <ProjectWithMemberRelationBlueprint/>
 <ProjectMemberPortAppConfig/>
 
@@ -285,8 +294,7 @@ In the following example you will ingest your GitLab projects and their members 
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
-- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/issues.html#list-project-issues) for the GitLab issue object structure.
+- Click [Here](https://docs.gitlab.com/ee/api/members.html#list-all-members-of-a-group-or-project) for the GitLab project or group member object structure.
 
 :::
 
