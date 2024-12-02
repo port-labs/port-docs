@@ -116,7 +116,7 @@ Locate the New Relic integration in the [Data Sources page](https://app.getport.
   - kind: entity
     selector:
       query: 'true'
-      entityQueryFilter: >-
+      entityQueryFilter:
         type IN (
           'AWSEC2INSTANCE',
           'AWSS3BUCKET',
