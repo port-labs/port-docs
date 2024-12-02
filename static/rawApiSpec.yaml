@@ -29129,12 +29129,53 @@ paths:
       responses:
         "200":
           description: Default Response
+  /v1/organization/secrets:
+    get:
+      tags:
+        - Organization
+      security:
+        - bearer:
+            - read:secrets
+      responses:
+        "200":
+          description: Default Response
+    post:
+      tags:
+        - Organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                secretName:
+                  type: string
+                  maxLength: 50
+                  minLength: 1
+                  pattern: ^[A-Za-z0-9-_]*$
+                secretValue:
+                  type: string
+                description:
+                  type: string
+                  maxLength: 200
+              additionalProperties: false
+              required:
+                - secretName
+                - secretValue
+        required: true
+      security:
+        - bearer:
+            - create:secrets
+      responses:
+        "200":
+          description: Default Response
   "/v1/organization/secrets/{secret_name}":
     get:
       tags:
         - Organization
       security:
-        - bearer: []
+        - bearer:
+            - read:secrets
       responses:
         "200":
           description: Default Response
@@ -29161,7 +29202,8 @@ paths:
           name: secret_name
           required: true
       security:
-        - bearer: []
+        - bearer:
+            - update:secrets
       responses:
         "200":
           description: Default Response
@@ -29175,37 +29217,8 @@ paths:
           name: secret_name
           required: true
       security:
-        - bearer: []
-      responses:
-        "200":
-          description: Default Response
-  /v1/organization/secrets:
-    post:
-      tags:
-        - Organization
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                secretName:
-                  type: string
-                  maxLength: 50
-                  minLength: 1
-                  pattern: ^[A-Za-z0-9-_]*$
-                secretValue:
-                  type: string
-                description:
-                  type: string
-                  maxLength: 200
-              additionalProperties: false
-              required:
-                - secretName
-                - secretValue
-        required: true
-      security:
-        - bearer: []
+        - bearer:
+            - delete:secrets
       responses:
         "200":
           description: Default Response
