@@ -32,9 +32,9 @@ This integration allows you to:
 
 The resources that can be ingested from ServiceNow into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-- `User Groups`
-- `Service Catalog`
-- `Incident`
+- `User` - (`<your-servicenow-url>/api/now/table/sys_user_group`)
+- `Service Catalog` - (`<your-servicenow-url>/api/now/table/sc_catalog`)
+- `Incident` - (`<your-servicenow-url>/api/now/table/incident`)
 
 
 
