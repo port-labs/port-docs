@@ -30,7 +30,7 @@ This integration allows you to:
 
 ### Supported Resources
 
-The resources that can be ingested from ServiceNow into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+The resources that can be ingested from ServiceNow into Port are listed below. 
 
 - `User` - (`<your-servicenow-url>/api/now/table/sys_user_group`)
 - `Service Catalog` - (`<your-servicenow-url>/api/now/table/sc_catalog`)
