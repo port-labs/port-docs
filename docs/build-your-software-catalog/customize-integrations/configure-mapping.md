@@ -316,6 +316,7 @@ Searching by property can also be used when using Port's API to [create an entit
 ### Limitations
 
 - The search query must return exactly one entity (else the entire request will fail).
+- If the search query returns no entities, a new entity **will not** be created.
 - The query will be executed on the same blueprint from the request’s url.
 - Only the `=` and `in` operators is supported for the search query rule.
 - `Calculation` and `mirror` properties are not supported.
