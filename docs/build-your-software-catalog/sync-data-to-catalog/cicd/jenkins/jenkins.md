@@ -50,7 +50,8 @@ To generate a token for authenticating the Jenkins API calls:
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' border='1px' />
 
 
-:::info Install Required Plugins
+### Install Required Plugins
+
 To ensure full functionality of the Jenkins integration, please install the following plugins:
 
 1. **People View Plugin**: Required for user information API (for Jenkins versions 2.452 and above)
@@ -62,7 +63,7 @@ To ensure full functionality of the Jenkins integration, please install the foll
    - Search for and install the [**"Pipeline: Stage View"** plugin](https://plugins.jenkins.io/pipeline-stage-view/)
 
 These plugins are essential for the integration to access user information and pipeline stage data.
-:::
+
 
 ## Setup
 
@@ -214,7 +215,7 @@ Note the parameters specific to this integration, they are last in the table.
 This workflow/pipeline will run the Jenkins integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
 :::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
