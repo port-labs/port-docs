@@ -180,7 +180,7 @@ This table summarizes the available parameters for the installation.
 This workflow/pipeline will run the FireHydrant integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
 :::
 
 

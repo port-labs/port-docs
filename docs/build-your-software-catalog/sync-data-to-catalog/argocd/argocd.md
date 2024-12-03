@@ -258,7 +258,7 @@ Note the parameters specific to this integration, they are last in the table.
 This workflow/pipeline will run the ArgoCD integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::warning Real-time updates
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
 :::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
