@@ -33,7 +33,7 @@ The resources that can be ingested from Backstage into Port are listed below. It
 
 ## Prerequisites
 
-### Create a Backstage Token
+### Create a Backstage token
 
 Port will authenticate to Backstage via [static tokens](https://backstage.io/docs/auth/service-to-service-auth/#static-tokens).  
 Configure a token for Port using the following Backstage configuration:
