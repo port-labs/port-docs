@@ -64,6 +64,26 @@ This video demonstrates how to build a simple yet effective platform to create a
 
 </center>
 
+#### End-to-end Secure GitOps: Akeyless, ArgoCD, & Port - @[TeKanAid](https://www.youtube.com/@TeKanAid)
+
+This video showcases a complete GitOps setup using **Port**, **GitHub Actions**, **ArgoCD**, **Kubernetes**, and **Akeyless** for end-to-end secret management.
+
+<center>
+
+<iframe width="568" height="320" src="https://www.youtube.com/embed/sBTYmqyMzzg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
+#### Implementing A GUI Based Internal Developer Platform (IDP) - @[TeKanAid](https://www.youtube.com/@TeKanAid)
+
+This video demonstrates how to set up a GUI-based IDP to ensure that the internal engineers and developers you're building the platform for have a proper way to interact with it.
+
+<center>
+
+<iframe width="568" height="320" src="https://www.youtube.com/embed/JcSvHziIKUs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
 ---
 
 ## Links 
