@@ -252,7 +252,7 @@ resources:
     port:
       entity:
         mappings:
-          blueprint: '"sonarQubeGAProject"'
+          blueprint: '"sonarQubeProject"'
           identifier: .key
           title: .name
           properties:
