@@ -1102,7 +1102,12 @@ Head back to the [Self-service page](https://app.getport.io/self-serve) of your 
 1. Click on `Create` to begin executing the action.
 
 2. Enter a **name** for your new repository.  
-For some of the available Git providers, additional inputs are required when executing the action.
+   :::info Repository name restrictions
+   Some Git providers (for example, GitHub) do not allow spaces in repository names.  
+   We recommend using underscores or hyphens instead of spaces.
+   :::
+
+3. For some of the available Git providers, additional inputs are required when executing the action.
 
 <Tabs groupId="git-provider" queryString defaultValue="bitbucket" values={[
 
