@@ -317,8 +317,7 @@ const config = {
       // },
     }),
   themes: [
-    "docusaurus-theme-openapi-docs",
-    
+    "docusaurus-theme-openapi-docs", 
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
@@ -377,6 +376,22 @@ const config = {
       },
     ],
     "./src/plugins/intercom.js",
+  ],
+
+  scripts: [
+    {
+      src: "https://widget.kapa.ai/kapa-widget.bundle.js",
+      "data-website-id": "1aefba51-348e-4747-9a4c-93306459542d",
+      "data-project-name": "Port-documentation",
+      "data-project-color": "#FFFFFF",
+      "data-project-logo": "https://raw.githubusercontent.com/port-labs/port-docs/refs/heads/main/static/img/logos/port-logo.svg",
+      "data-button-hide": "true",
+      "data-modal-override-open-class": "ask-kapa-button",
+      "data-modal-title": "Port AI assistant",
+      "data-modal-ask-ai-input-placeholder": "Ask me anything about Port...",
+      "data-submit-query-button-bg-color": "#000000",
+      async: true,
+    },
   ],
 };
 

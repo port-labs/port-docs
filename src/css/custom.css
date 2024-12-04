@@ -680,3 +680,26 @@ html[data-theme="dark"] .openapi-schema__list-item {
   border: 1px solid var(--openapi-tree-line-color) !important;
 }
 
+/* Kapa modal */
+
+.ask-kapa-button {
+  border-radius: 16px;
+  border: 0px ;
+  height: 2rem;
+  width: 6rem;
+  background-color: #1B737B;
+}
+
+.ask-kapa-button:hover {
+  opacity: 0.8;
+  color: var(--ifm-color-primary-contrast-foreground);
+  cursor: pointer;
+}
+
+.custom-search-bar {
+  margin-left: 0 !important;
+  display: inline-flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
