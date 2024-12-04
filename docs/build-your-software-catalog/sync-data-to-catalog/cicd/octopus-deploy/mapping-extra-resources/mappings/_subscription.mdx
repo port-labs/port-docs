@@ -1,0 +1,30 @@
+<details>
+
+<summary>Mapping configuration for Subscription</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: subscription
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .Id
+          title: .Name
+          blueprint: '"octopusSubscription"'
+          properties:
+            name: .Name
+            type: .Type
+            isDisabled: .IsDisabled
+            emailFrequencyPeriod: .EventNotificationSubscription.EmailFrequencyPeriod
+            emailPriority: .EventNotificationSubscription.EmailPriority
+            webhookURI: .EventNotificationSubscription.WebhookURI
+            webhookTimeout: .EventNotificationSubscription.WebhookTimeout
+            lastModifiedBy: .LastModifiedBy
+            lastModifiedOn: .LastModifiedOn
+```
+
+</details>

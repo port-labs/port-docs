@@ -1,0 +1,26 @@
+<details>
+
+<summary>Mapping configuration for Team</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: worker
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .Id
+          title: .Name
+          blueprint: '"octopusWorker"'
+          properties:
+            name: .Name
+            operatingSystem: .OperatingSystem
+            healthStatus: .HealthStatus
+            isDisabled: .IsDisabled
+            architecture: .Architecture
+```
+
+</details>

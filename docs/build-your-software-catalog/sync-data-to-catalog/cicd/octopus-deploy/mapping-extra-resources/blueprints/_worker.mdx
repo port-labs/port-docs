@@ -1,0 +1,46 @@
+<details>
+
+<summary>Worker Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "octopusWorker",
+  "title": "Octopus Worker",
+  "icon": "Octopus",
+  "description": "A worker in Octopus Deploy",
+  "schema": {
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name",
+        "description": "The name of the worker"
+      },
+      "operatingSystem": {
+        "type": "string",
+        "title": "Operating System",
+        "description": "The operating system of the worker"
+      },
+      "healthStatus": {
+        "type": "string",
+        "title": "Health Status",
+        "description": "The health status of the worker"
+      },
+      "isDisabled": {
+        "type": "boolean",
+        "title": "Is Disabled",
+        "description": "Indicates if the worker is disabled"
+      },
+      "architecture": {
+        "type": "string",
+        "title": "Architecture",
+        "description": "The architecture of the worker"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {}
+}
+
+```
+
+</details>

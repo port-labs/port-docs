@@ -1,0 +1,28 @@
+<details>
+
+<summary>Mapping configuration for Account</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: account
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .Id
+          title: .Name
+          blueprint: '"octopusAccount"'
+          properties:
+            name: .Name
+            accountType: .AccountType
+            description: .Description
+            environmentIds: .EnvironmentIds
+            tenantedDeploymentParticipation: .TenantedDeploymentParticipation
+            tenantIds: .TenantIds
+            tenantTags: .TenantTags
+```
+
+</details>
