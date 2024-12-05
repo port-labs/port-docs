@@ -24,7 +24,7 @@ import SubscriptionMapping from './mappings/\_subscription.mdx'
 
 # Mapping Extra Resources for Octopus Deploy Integration
 
-As you've probably looked at some examples on [Octopus Deploy](../octopus-deploy.md) page, you've noticed that the Octopus Deploy Integration supports several resources, but there are many more resources that are not documented on the page.
+As you've probably looked at some examples on [Octopus Deploy](../octopus-deploy.md) page, you've noticed that the Octopus Deploy integration supports several resources, but there are more resources that are not documented on the page.
 
 This page will help you understand what kind of Octopus Deploy resources are supported by the integration and how to map them into Port.
 
