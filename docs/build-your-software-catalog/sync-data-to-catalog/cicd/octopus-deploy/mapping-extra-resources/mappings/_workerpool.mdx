@@ -16,9 +16,10 @@ resources:
           title: .Name
           blueprint: '"octopusWorkerPool"'
           properties:
-            name: .Name
             workerPoolType: .WorkerPoolType
             isDefault: .IsDefault
+          relations:
+            space: .SpaceId
 ```
 
 </details>

@@ -16,11 +16,12 @@ resources:
           title: .Name
           blueprint: '"octopusWorker"'
           properties:
-            name: .Name
             operatingSystem: .OperatingSystem
             healthStatus: .HealthStatus
             isDisabled: .IsDisabled
             architecture: .Architecture
+          relations:
+            space: .SpaceId
 ```
 
 </details>

@@ -16,10 +16,11 @@ resources:
           title: .Name
           blueprint: '"octopusEnvironment"'
           properties:
-            name: .Name
             description: .Description
             allowDynamicInfrastructure: .AllowDynamicInfrastructure
             useGuidedFailure: .UseGuidedFailure
+          relations:
+            space: .SpaceId
 ```
 
 </details>

@@ -16,7 +16,6 @@ resources:
           title: .Name
           blueprint: '"octopusSubscription"'
           properties:
-            name: .Name
             type: .Type
             isDisabled: .IsDisabled
             emailFrequencyPeriod: .EventNotificationSubscription.EmailFrequencyPeriod
@@ -25,6 +24,8 @@ resources:
             webhookTimeout: .EventNotificationSubscription.WebhookTimeout
             lastModifiedBy: .LastModifiedBy
             lastModifiedOn: .LastModifiedOn
+          relations:
+            space: .SpaceId
 ```
 
 </details>

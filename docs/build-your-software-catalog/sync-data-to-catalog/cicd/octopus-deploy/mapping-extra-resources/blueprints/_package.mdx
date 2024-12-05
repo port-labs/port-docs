@@ -10,11 +10,6 @@
   "description": "A package stored in Octopus Deploy",
   "schema": {
     "properties": {
-      "title": {
-        "type": "string",
-        "title": "Title",
-        "description": "The title of the package"
-      },
       "description": {
         "type": "string",
         "title": "Description",
@@ -29,11 +24,6 @@
         "type": "string",
         "title": "File Extension",
         "description": "The file extension of the package"
-      },
-      "packageId": {
-        "type": "string",
-        "title": "Package ID",
-        "description": "The ID of the package"
       },
       "version": {
         "type": "string",
@@ -69,7 +59,15 @@
     }
   },
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 

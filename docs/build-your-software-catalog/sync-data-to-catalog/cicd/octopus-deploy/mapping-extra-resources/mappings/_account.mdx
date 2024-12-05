@@ -16,13 +16,14 @@ resources:
           title: .Name
           blueprint: '"octopusAccount"'
           properties:
-            name: .Name
             accountType: .AccountType
             description: .Description
             environmentIds: .EnvironmentIds
             tenantedDeploymentParticipation: .TenantedDeploymentParticipation
             tenantIds: .TenantIds
             tenantTags: .TenantTags
+          relations:
+            space: .SpaceId
 ```
 
 </details>

@@ -16,7 +16,6 @@ resources:
           title: .Name
           blueprint: '"octopusTask"'
           properties:
-            name: .Name
             description: .Description
             state: .State
             isCompleted: .IsCompleted
@@ -26,8 +25,8 @@ resources:
             duration: .Duration
             queueTime: .QueueTime
             startTime: .StartTime
-            projectId: .ProjectId
-            spaceId: .SpaceId
+          relations:
+            space: .SpaceId
 ```
 
 </details>

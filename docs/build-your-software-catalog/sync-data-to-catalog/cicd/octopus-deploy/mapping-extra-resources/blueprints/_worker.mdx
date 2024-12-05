@@ -10,11 +10,6 @@
   "description": "A worker in Octopus Deploy",
   "schema": {
     "properties": {
-      "name": {
-        "type": "string",
-        "title": "Name",
-        "description": "The name of the worker"
-      },
       "operatingSystem": {
         "type": "string",
         "title": "Operating System",
@@ -38,7 +33,15 @@
     }
   },
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
 }
 
 ```

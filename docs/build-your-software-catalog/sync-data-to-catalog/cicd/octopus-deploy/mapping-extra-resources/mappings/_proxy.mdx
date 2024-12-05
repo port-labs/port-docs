@@ -18,11 +18,12 @@ resources:
           title: .Name
           blueprint: '"octopusProxy"'
           properties:
-            name: .Name
             host: .Host
             port: .Port
             username: .Username
             proxyType: .ProxyType
+          relations:
+            space: .SpaceId
 ```
 
 </details>

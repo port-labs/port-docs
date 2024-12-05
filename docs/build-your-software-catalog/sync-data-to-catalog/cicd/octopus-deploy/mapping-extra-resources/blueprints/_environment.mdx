@@ -10,11 +10,6 @@
   "description": "An environment in Octopus Deploy",
   "schema": {
     "properties": {
-      "name": {
-        "type": "string",
-        "title": "Name",
-        "description": "The name of the environment"
-      },
       "description": {
         "type": "string",
         "title": "Description",
@@ -33,7 +28,15 @@
     }
   },
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 
