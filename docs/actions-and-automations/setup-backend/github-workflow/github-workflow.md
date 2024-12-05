@@ -43,7 +43,7 @@ The workflow must reside in the repository's `.github/workflows/` directory.
 
 By default, the integration will look for the workflow in the `main` branch of the repository.  
 
-To use a different branch, simply pass the `ref` key in the [action payload](/actions-and-automations/create-self-service-experiences/setup-the-backend/#define-the-actions-payload) with the desired branch name as the value:
+To use a different branch, simply pass the `ref` key inside the `workflowInputs` object with the desired branch name as the value:
 
 ```json
 {
