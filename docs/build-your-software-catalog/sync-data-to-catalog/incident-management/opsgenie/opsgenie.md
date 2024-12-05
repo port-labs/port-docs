@@ -34,6 +34,7 @@ The resources that can be ingested from Opsgenie into Port are listed below. It 
 - [`Alert`](https://docs.opsgenie.com/docs/alert-api#list-alerts)
 - [`Incident`](https://docs.opsgenie.com/docs/incident-api#list-incidents)
 - [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
+- [`User`](https://docs.opsgenie.com/docs/user-api#list-user)
 - [`Team`](https://docs.opsgenie.com/docs/team-api#list-teams)
 - [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
 - [`Schedule`](https://docs.opsgenie.com/docs/schedule-api#list-schedules)
@@ -449,6 +450,35 @@ This section includes a sample response data from Opsgenie. In addition, it incl
 Here is an example of the payload structure from Opsgenie:
 
 <details>
+<summary> User response data</summary>
+
+```json showLineNumbers
+{
+  "blocked": false,
+  "verified": true,
+  "id": "45d6-b25e-6a7aae22423b-3e28d924-840d",
+  "username": "jane.doe@gmail.com",
+  "fullName": "Jane Doe",
+  "role": {
+    "id": "Admin",
+    "name": "Admin"
+  },
+  "timeZone": "Asia/Jerusalem",
+  "locale": "en_US",
+  "userAddress": {
+    "country": "",
+    "state": "",
+    "city": "",
+    "line": "",
+    "zipCode": ""
+  },
+  "createdAt": "2023-09-26T07:57:24.246Z"
+}
+```
+
+</details>
+
+<details>
 <summary> Team response data</summary>
 
 ```json showLineNumbers
@@ -672,6 +702,42 @@ Here is an example of the payload structure from Opsgenie:
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> User entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "45d6-b25e-6a7aae22423b-3e28d924-840d",
+  "title": "Jane Doe",
+  "icon": "OpsGenie",
+  "blueprint": "opsGenieUser",
+  "team": [],
+  "properties": {
+    "email": "jane.doe@gmail.com",
+    "role": "Admin",
+    "timeZone": "Asia/Jerusalem",
+    "isVerified": true,
+    "isBlocked": false,
+    "address": {
+      "country": "",
+      "state": "",
+      "city": "",
+      "line": "",
+      "zipCode": ""
+    },
+    "createdAt": "2023-09-26T07:57:24.246Z"
+  },
+  "relations": {},
+  "createdAt": "2024-10-02T21:01:40.937Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-10-02T21:01:40.937Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+  }
+```
+
+</details>
+
 
 <details>
 <summary> Team entity in Port</summary>
