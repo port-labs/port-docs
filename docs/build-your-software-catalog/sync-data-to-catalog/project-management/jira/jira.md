@@ -11,6 +11,13 @@ import JiraIssueBlueprint from "/docs/build-your-software-catalog/custom-integra
 import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
 import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import JiraUserBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_exporter_example_user_blueprint.mdx"
+import JiraUserConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_exporter_example_user_configuration.mdx"
+import JiraUserExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_user_example_response.mdx"
+import JiraUserEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_user_example_entity.mdx"
+import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_issue_example_entity.mdx"
+import JiraIssueExampleBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_example_issue_blueprint.mdx"
+import JiraIssueExampleConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_example_issue_configuration.mdx"
 
 
 # Jira
@@ -34,7 +41,9 @@ The resources that can be ingested from Jira into Port are listed below.
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
 - [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
+- [`User`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-users/#api-group-users)
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
+
 
 ## Setup
 
@@ -534,136 +543,35 @@ resources:
 
 </details>
 
-### Issue
+### User
 
 <details>
-<summary><b>Issue blueprint</b></summary>
+<summary><b>User blueprint</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "jiraIssue",
-  "title": "Jira Issue",
-  "icon": "Jira",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "Issue URL",
-        "type": "string",
-        "format": "url",
-        "description": "URL to the issue in Jira"
-      },
-      "status": {
-        "title": "Status",
-        "type": "string",
-        "description": "The status of the issue"
-      },
-      "issueType": {
-        "title": "Type",
-        "type": "string",
-        "description": "The type of the issue"
-      },
-      "components": {
-        "title": "Components",
-        "type": "array",
-        "description": "The components related to this issue"
-      },
-      "assignee": {
-        "title": "Assignee",
-        "type": "string",
-        "format": "user",
-        "description": "The user assigned to the issue"
-      },
-      "reporter": {
-        "title": "Reporter",
-        "type": "string",
-        "description": "The user that reported to the issue",
-        "format": "user"
-      },
-      "creator": {
-        "title": "Creator",
-        "type": "string",
-        "description": "The user that created to the issue",
-        "format": "user"
-      },
-      "priority": {
-        "title": "Priority",
-        "type": "string",
-        "description": "The priority of the issue"
-      },
-      "created": {
-        "title": "Created At",
-        "type": "string",
-        "description": "The created datetime of the issue",
-        "format": "date-time"
-      },
-      "updated": {
-        "title": "Updated At",
-        "type": "string",
-        "description": "The updated datetime of the issue",
-        "format": "date-time"
-      }
-    }
-  },
-  "calculationProperties": {},
-  "relations": {
-    "project": {
-      "target": "jiraProject",
-      "title": "Project",
-      "description": "The Jira project that contains this issue",
-      "required": false,
-      "many": false
-    },
-    "parentIssue": {
-      "target": "jiraIssue",
-      "title": "Parent Issue",
-      "required": false,
-      "many": false
-    },
-    "subtasks": {
-      "target": "jiraIssue",
-      "title": "Subtasks",
-      "required": false,
-      "many": true
-    }
-  }
-}
-```
+<JiraUserBlueprint/>
 
 </details>
 
 <details>
 <summary><b>Integration configuration</b></summary>
 
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: issue
-    selector:
-      query: "true"
-      jql: "statusCategory != Done"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .fields.summary
-          blueprint: '"jiraIssue"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
-            status: .fields.status.name
-            issueType: .fields.issuetype.name
-            components: .fields.components
-            assignee: .fields.assignee.emailAddress
-            reporter: .fields.reporter.emailAddress
-            creator: .fields.creator.emailAddress
-            priority: .fields.priority.id
-            created: .fields.created
-            updated: .fields.updated
-          relations:
-            project: .fields.project.key
-            parentIssue: .fields.parent.key
-            subtasks: .fields.subtasks | map(.key)
-```
+<JiraUserConfiguration/>
+
+</details>
+
+### Issue
+
+<details>
+<summary><b>Issue blueprint</b></summary>
+
+<JiraIssueExampleBlueprint/>
+
+</details>
+
+<details>
+<summary><b>Integration configuration</b></summary>
+
+<JiraIssueExampleConfiguration/>
 
 </details>
 
@@ -701,6 +609,13 @@ Here is an example of the payload structure from Jira:
   "uuid": "7f4f8d6f-705b-4074-84be-46f0d012cd8e"
 }
 ```
+
+</details>
+
+<details>
+<summary> User response data</summary>
+
+<JiraUserExampleResponse/>
 
 </details>
 
@@ -917,38 +832,16 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
+<summary> User entity in Port</summary>
+
+<JiraUserEntity/>
+
+</details>
+
+<details>
 <summary> Issue entity in Port</summary>
 
-```json showLineNumbers
-{
-  "identifier": "PA-1",
-  "title": "Setup infra",
-  "icon": null,
-  "blueprint": "jiraIssue",
-  "team": [],
-  "properties": {
-    "url": "https://myaccount.atlassian.net/browse/PA-1",
-    "status": "To Do",
-    "issueType": "Task",
-    "components": [],
-    "assignee": "username@example.com.io",
-    "reporter": "username@example.com.io",
-    "creator": "username@example.com.io",
-    "priority": "3",
-    "created": "2023-11-06T11:02:59.000+0000",
-    "updated": "2023-11-06T11:03:18.244+0000"
-  },
-  "relations": {
-    "parentIssue": null,
-    "project": "PA",
-    "subtasks": []
-  },
-  "createdAt": "2023-11-06T11:22:07.550Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2023-11-06T11:22:07.550Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
-}
-```
+<JiraIssueEntity/>
 
 </details>
 
