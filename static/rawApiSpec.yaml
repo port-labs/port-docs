@@ -28943,6 +28943,8 @@ paths:
           description: Created successfully
   "/v1/pages/{page_identifier}/widgets/{widget_id}":
     patch:
+      summary: "Warning: This API is currently in Beta and may undergo significant
+        changes."
       tags:
         - Pages
       parameters:
@@ -30762,7 +30764,54 @@ paths:
             - read:teams
       responses:
         "200":
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  teams:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        provider:
+                          type: string
+                        description:
+                          type: string
+                        users:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              email:
+                                type: string
+                              firstName:
+                                type: string
+                              lastName:
+                                type: string
+                              picture:
+                                type: string
+                              status:
+                                type: string
+                required:
+                  - teams
+                  - ok
+                additionalProperties: false
     post:
       tags:
         - Teams
@@ -30789,7 +30838,52 @@ paths:
             - create:teams
       responses:
         "200":
-          description: Default Response
+          description: Created successfully.
+          content:
+            application/json:
+              schema:
+                description: Created successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  team:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      provider:
+                        type: string
+                      description:
+                        type: string
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                            firstName:
+                              type: string
+                            lastName:
+                              type: string
+                            picture:
+                              type: string
+                            status:
+                              type: string
+                required:
+                  - team
+                  - ok
+                additionalProperties: false
   "/v1/teams/{name}":
     get:
       tags:
@@ -30823,7 +30917,37 @@ paths:
             - read:teams
       responses:
         "200":
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  team:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      provider:
+                        type: string
+                      description:
+                        type: string
+                required:
+                  - team
+                  - ok
+                additionalProperties: false
     patch:
       tags:
         - Teams
@@ -30854,7 +30978,52 @@ paths:
             - update:teams
       responses:
         "200":
-          description: Default Response
+          description: Updated successfully.
+          content:
+            application/json:
+              schema:
+                description: Updated successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  team:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      provider:
+                        type: string
+                      description:
+                        type: string
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                            firstName:
+                              type: string
+                            lastName:
+                              type: string
+                            picture:
+                              type: string
+                            status:
+                              type: string
+                required:
+                  - team
+                  - ok
+                additionalProperties: false
     put:
       tags:
         - Teams
@@ -30886,7 +31055,52 @@ paths:
             - update:teams
       responses:
         "200":
-          description: Default Response
+          description: Updated successfully.
+          content:
+            application/json:
+              schema:
+                description: Updated successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  team:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      provider:
+                        type: string
+                      description:
+                        type: string
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                            firstName:
+                              type: string
+                            lastName:
+                              type: string
+                            picture:
+                              type: string
+                            status:
+                              type: string
+                required:
+                  - team
+                  - ok
+                additionalProperties: false
     delete:
       tags:
         - Teams
@@ -30901,7 +31115,18 @@ paths:
             - delete:teams
       responses:
         "200":
-          description: Default Response
+          description: Deleted successfully.
+          content:
+            application/json:
+              schema:
+                description: Deleted successfully.
+                properties:
+                  ok:
+                    enum:
+                      - true
+                required:
+                  - ok
+                additionalProperties: false
   /v1/users:
     get:
       tags:
@@ -30940,7 +31165,70 @@ paths:
             - read:users
       responses:
         "200":
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  users:
+                    type: array
+                    items:
+                      properties:
+                        email:
+                          type: string
+                        firstName:
+                          type: string
+                        lastName:
+                          type: string
+                        picture:
+                          type: string
+                        status:
+                          type: string
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        providers:
+                          type: array
+                          items:
+                            type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        orgs:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                            required:
+                              - id
+                        teams:
+                          type: array
+                          items:
+                            type: string
+                        roles:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                            required:
+                              - name
+                required:
+                  - users
+                  - ok
+                additionalProperties: false
   /v1/users/invite:
     post:
       tags:
@@ -30983,7 +31271,18 @@ paths:
             - create:users
       responses:
         "200":
-          description: Default Response
+          description: Created successfully.
+          content:
+            application/json:
+              schema:
+                description: Created successfully.
+                properties:
+                  ok:
+                    enum:
+                      - true
+                required:
+                  - ok
+                additionalProperties: false
   "/v1/users/{user_email}":
     get:
       tags:
@@ -30999,7 +31298,70 @@ paths:
             - read:users
       responses:
         "200":
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  user:
+                    properties:
+                      email:
+                        type: string
+                      firstName:
+                        type: string
+                      lastName:
+                        type: string
+                      picture:
+                        type: string
+                      status:
+                        type: string
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      providers:
+                        type: array
+                        items:
+                          type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      orgs:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                          required:
+                            - id
+                      teams:
+                        type: array
+                        items:
+                          type: string
+                      roles:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                          required:
+                            - name
+                      teamsIdentifiers:
+                        type: array
+                        items:
+                          type: string
+                required:
+                  - ok
+                additionalProperties: false
     patch:
       tags:
         - Users
@@ -31030,7 +31392,64 @@ paths:
             - update:users
       responses:
         "200":
-          description: Default Response
+          description: Updated successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  email:
+                    type: string
+                  firstName:
+                    type: string
+                  lastName:
+                    type: string
+                  picture:
+                    type: string
+                  status:
+                    type: string
+                  id:
+                    type: string
+                  type:
+                    type: string
+                  providers:
+                    type: array
+                    items:
+                      type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  orgs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                      required:
+                        - id
+                  teams:
+                    type: array
+                    items:
+                      type: string
+                  roles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                      required:
+                        - name
+                description: Updated successfully.
+                required:
+                  - ok
+                additionalProperties: false
     delete:
       tags:
         - Users
@@ -31045,7 +31464,18 @@ paths:
             - delete:users
       responses:
         "200":
-          description: Default Response
+          description: Deleted successfully.
+          content:
+            application/json:
+              schema:
+                description: Deleted successfully.
+                properties:
+                  ok:
+                    enum:
+                      - true
+                required:
+                  - ok
+                additionalProperties: false
   /v1/profile:
     patch:
       tags:
@@ -31069,7 +31499,64 @@ paths:
         - bearer: []
       responses:
         "200":
-          description: Default Response
+          description: Updated successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  email:
+                    type: string
+                  firstName:
+                    type: string
+                  lastName:
+                    type: string
+                  picture:
+                    type: string
+                  status:
+                    type: string
+                  id:
+                    type: string
+                  type:
+                    type: string
+                  providers:
+                    type: array
+                    items:
+                      type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  orgs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                      required:
+                        - id
+                  teams:
+                    type: array
+                    items:
+                      type: string
+                  roles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                      required:
+                        - name
+                description: Updated successfully.
+                required:
+                  - ok
+                additionalProperties: false
     get:
       tags:
         - Users
@@ -31077,7 +31564,70 @@ paths:
         - bearer: []
       responses:
         "200":
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  user:
+                    properties:
+                      email:
+                        type: string
+                      firstName:
+                        type: string
+                      lastName:
+                        type: string
+                      picture:
+                        type: string
+                      status:
+                        type: string
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      providers:
+                        type: array
+                        items:
+                          type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      orgs:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                          required:
+                            - id
+                      teams:
+                        type: array
+                        items:
+                          type: string
+                      roles:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                          required:
+                            - name
+                      teamsIdentifiers:
+                        type: array
+                        items:
+                          type: string
+                required:
+                  - ok
+                additionalProperties: false
   /v1/apps:
     get:
       tags:
@@ -31102,7 +31652,37 @@ paths:
             - read:apps
       responses:
         "200":
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  apps:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        enabled:
+                          type: boolean
+                        id:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        secret:
+                          type: string
+                required:
+                  - ok
+                additionalProperties: false
+                description: Retrieved successfully.
     post:
       tags:
         - Apps
@@ -31123,7 +31703,35 @@ paths:
             - update:apps
       responses:
         "200":
-          description: Default Response
+          description: Created successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  app:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      enabled:
+                        type: boolean
+                      id:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      secret:
+                        type: string
+                required:
+                  - ok
+                additionalProperties: false
+                description: Created successfully.
   "/v1/apps/{id}/rotate-secret":
     post:
       tags:
@@ -31139,7 +31747,35 @@ paths:
             - update:apps
       responses:
         "200":
-          description: Default Response
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  app:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      enabled:
+                        type: boolean
+                      id:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      secret:
+                        type: string
+                required:
+                  - ok
+                additionalProperties: false
+                description: OK
   "/v1/apps/{id}":
     delete:
       tags:
@@ -31155,7 +31791,18 @@ paths:
             - update:apps
       responses:
         "200":
-          description: Default Response
+          description: Deleted successfully.
+          content:
+            application/json:
+              schema:
+                description: Deleted successfully.
+                properties:
+                  ok:
+                    enum:
+                      - true
+                required:
+                  - ok
+                additionalProperties: false
     put:
       tags:
         - Apps
@@ -31182,7 +31829,35 @@ paths:
             - update:apps
       responses:
         "200":
-          description: Default Response
+          description: Updated successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  app:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      enabled:
+                        type: boolean
+                      id:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      secret:
+                        type: string
+                required:
+                  - ok
+                additionalProperties: false
+                description: Updated successfully.
   /v1/roles:
     get:
       tags:
@@ -33170,22 +33845,9 @@ paths:
           description: Default Response
   "/v1/blueprints/{blueprint_identifier}/actions/{action_identifier}/permissions":
     get:
-      summary: To be deprecated - the route will be removed on November 20th
+      summary: This route is deprecated since November 20th 2024
       tags:
         - Actions
-      parameters:
-        - schema:
-            type: string
-            minLength: 1
-          in: path
-          name: action_identifier
-          required: true
-        - schema:
-            type: string
-            minLength: 1
-          in: path
-          name: blueprint_identifier
-          required: true
       deprecated: true
       security:
         - bearer:
@@ -33194,7 +33856,7 @@ paths:
         "200":
           description: Default Response
     patch:
-      summary: To be deprecated - the route will be removed on November 20th
+      summary: This route is deprecated since November 20th 2024
       tags:
         - Actions
       requestBody:
@@ -33202,95 +33864,7 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                execute:
-                  type: object
-                  properties:
-                    users:
-                      type: array
-                      items:
-                        type: string
-                    roles:
-                      type: array
-                      items:
-                        type: string
-                    teams:
-                      type: array
-                      items:
-                        type: string
-                    ownedByTeam:
-                      type: boolean
-                    policy:
-                      type:
-                        - object
-                        - "null"
-                      properties:
-                        queries:
-                          type: object
-                          minProperties: 1
-                          additionalProperties:
-                            $ref: "#/components/schemas/def-0"
-                        conditions:
-                          type: array
-                          items:
-                            type: string
-                            minLength: 1
-                          minItems: 1
-                      required:
-                        - queries
-                        - conditions
-                      additionalProperties: false
-                  additionalProperties: false
-                approve:
-                  type: object
-                  properties:
-                    users:
-                      type: array
-                      items:
-                        type: string
-                    roles:
-                      type: array
-                      items:
-                        type: string
-                    teams:
-                      type: array
-                      items:
-                        type: string
-                    policy:
-                      type:
-                        - object
-                        - "null"
-                      properties:
-                        queries:
-                          type: object
-                          minProperties: 1
-                          additionalProperties:
-                            $ref: "#/components/schemas/def-0"
-                        conditions:
-                          type: array
-                          items:
-                            type: string
-                            minLength: 1
-                          minItems: 1
-                      required:
-                        - queries
-                        - conditions
-                      additionalProperties: false
-                  additionalProperties: false
-              additionalProperties: false
-      parameters:
-        - schema:
-            type: string
-            minLength: 1
-          in: path
-          name: action_identifier
-          required: true
-        - schema:
-            type: string
-            minLength: 1
-          in: path
-          name: blueprint_identifier
-          required: true
+              properties: {}
       deprecated: true
       security:
         - bearer: []

@@ -12492,7 +12492,55 @@ paths:
             - 'read:teams'
       responses:
         '200':
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                type: object
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  teams:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        provider:
+                          type: string
+                        description:
+                          type: string
+                        users:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              email:
+                                type: string
+                              firstName:
+                                type: string
+                              lastName:
+                                type: string
+                              picture:
+                                type: string
+                              status:
+                                type: string
+                required:
+                  - teams
+                  - ok
+                additionalProperties: false
     post:
       summary: Create a team
       description: This route allows you to create a new team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
@@ -12524,7 +12572,53 @@ paths:
             - 'create:teams'
       responses:
         '200':
-          description: Default Response
+          description: Created successfully.
+          content:
+            application/json:
+              schema:
+                description: Created successfully.
+                type: object
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  team:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      provider:
+                        type: string
+                      description:
+                        type: string
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                            firstName:
+                              type: string
+                            lastName:
+                              type: string
+                            picture:
+                              type: string
+                            status:
+                              type: string
+                required:
+                  - team
+                  - ok
+                additionalProperties: false
   '/v1/teams/{name}':
     get:
       summary: Get a team
@@ -12562,7 +12656,38 @@ paths:
             - 'read:teams'
       responses:
         '200':
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                type: object
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  team:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      provider:
+                        type: string
+                      description:
+                        type: string
+                required:
+                  - team
+                  - ok
+                additionalProperties: false
     patch:
       summary: Patch a team
       description: This route allows you to patch a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
@@ -12599,7 +12724,53 @@ paths:
             - 'update:teams'
       responses:
         '200':
-          description: Default Response
+          description: Updated successfully.
+          content:
+            application/json:
+              schema:
+                description: Updated successfully.
+                type: object
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  team:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      provider:
+                        type: string
+                      description:
+                        type: string
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                            firstName:
+                              type: string
+                            lastName:
+                              type: string
+                            picture:
+                              type: string
+                            status:
+                              type: string
+                required:
+                  - team
+                  - ok
+                additionalProperties: false
     put:
       summary: Change a team
       description: This route allows you to change a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
@@ -12637,7 +12808,53 @@ paths:
             - 'update:teams'
       responses:
         '200':
-          description: Default Response
+          description: Updated successfully.
+          content:
+            application/json:
+              schema:
+                description: Updated successfully.
+                type: object
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  team:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      provider:
+                        type: string
+                      description:
+                        type: string
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                            firstName:
+                              type: string
+                            lastName:
+                              type: string
+                            picture:
+                              type: string
+                            status:
+                              type: string
+                required:
+                  - team
+                  - ok
+                additionalProperties: false
     delete:
       summary: Delete a team
       description: This route allows you to delete a team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
@@ -12655,7 +12872,19 @@ paths:
             - 'delete:teams'
       responses:
         '200':
-          description: Default Response
+          description: Deleted successfully.
+          content:
+            application/json:
+              schema:
+                description: Deleted successfully.
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                required:
+                  - ok
+                additionalProperties: false
   /v1/users:
     get:
       summary: Get all users in your organization
@@ -12697,7 +12926,72 @@ paths:
             - 'read:users'
       responses:
         '200':
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                type: object
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                        firstName:
+                          type: string
+                        lastName:
+                          type: string
+                        picture:
+                          type: string
+                        status:
+                          type: string
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        providers:
+                          type: array
+                          items:
+                            type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        orgs:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                            required:
+                              - id
+                        teams:
+                          type: array
+                          items:
+                            type: string
+                        roles:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                            required:
+                              - name
+                required:
+                  - users
+                  - ok
+                additionalProperties: false
   /v1/users/invite:
     post:
       summary: Invite a user to your organization
@@ -12747,7 +13041,19 @@ paths:
             - 'create:users'
       responses:
         '200':
-          description: Default Response
+          description: Invited successfully.
+          content:
+            application/json:
+              schema:
+                description: Created successfully.
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                required:
+                  - ok
+                additionalProperties: false
   '/v1/users/{user_email}':
     get:
       summary: Get a user
@@ -12766,7 +13072,71 @@ paths:
             - 'read:users'
       responses:
         '200':
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  user:
+                    properties:
+                      email:
+                        type: string
+                      firstName:
+                        type: string
+                      lastName:
+                        type: string
+                      picture:
+                        type: string
+                      status:
+                        type: string
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      providers:
+                        type: array
+                        items:
+                          type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      orgs:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                          required:
+                            - id
+                      teams:
+                        type: array
+                        items:
+                          type: string
+                      roles:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                          required:
+                            - name
+                      teamsIdentifiers:
+                        type: array
+                        items:
+                          type: string
+                required:
+                  - ok
+                additionalProperties: false
     patch:
       summary: Patch a user
       description: This route allows you to patch a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
@@ -12802,7 +13172,65 @@ paths:
             - 'update:users'
       responses:
         '200':
-          description: Default Response
+          description: Updated successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  email:
+                    type: string
+                  firstName:
+                    type: string
+                  lastName:
+                    type: string
+                  picture:
+                    type: string
+                  status:
+                    type: string
+                  id:
+                    type: string
+                  type:
+                    type: string
+                  providers:
+                    type: array
+                    items:
+                      type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  orgs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                      required:
+                        - id
+                  teams:
+                    type: array
+                    items:
+                      type: string
+                  roles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                      required:
+                        - name
+                description: Updated successfully.
+                required:
+                  - ok
+                additionalProperties: false
     delete:
       summary: Delete a user
       description: This route allows you to delete a user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
@@ -12820,7 +13248,19 @@ paths:
             - 'delete:users'
       responses:
         '200':
-          description: Default Response
+          description: Deleted successfully.
+          content:
+            application/json:
+              schema:
+                description: Deleted successfully.
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                required:
+                  - ok
+                additionalProperties: false
   /v1/audit-log:
     get:
       summary: Get audit logs
@@ -16501,7 +16941,38 @@ paths:
             - read:apps
       responses:
         "200":
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  apps:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        enabled:
+                          type: boolean
+                        id:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                        secret:
+                          type: string
+                required:
+                  - ok
+                additionalProperties: false
+                description: Retrieved successfully.
     post:
       summary: Create credentials
       description: This route allows you to create a set of credentials in your Port organization, containing a `client ID` and `client secret`.<br/>
@@ -16525,7 +16996,36 @@ paths:
             - update:apps
       responses:
         "200":
-          description: Default Response
+          description: Created successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  app:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      enabled:
+                        type: boolean
+                      id:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      secret:
+                        type: string
+                required:
+                  - ok
+                additionalProperties: false
+                description: Created successfully.
   "/v1/apps/{id}/rotate-secret":
     post:
       summary: Rotate secret
@@ -16544,7 +17044,36 @@ paths:
             - update:apps
       responses:
         "200":
-          description: Default Response
+          description: Secret rotated successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  app:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      enabled:
+                        type: boolean
+                      id:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      secret:
+                        type: string
+                required:
+                  - ok
+                additionalProperties: false
+                description: OK
   "/v1/apps/{id}":
     delete:
       summary: Delete credentials
@@ -16563,7 +17092,19 @@ paths:
             - update:apps
       responses:
         "200":
-          description: Default Response
+          description: Deleted successfully.
+          content:
+            application/json:
+              schema:
+                description: Deleted successfully.
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                required:
+                  - ok
+                additionalProperties: false
     put:
       summary: Update credentials
       description: This route allows you to update the name of a set of credentials in your Port organization.<br/>
@@ -16594,4 +17135,33 @@ paths:
             - update:apps
       responses:
         "200":
-          description: Default Response
+          description: Updated successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  app:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      enabled:
+                        type: boolean
+                      id:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                      secret:
+                        type: string
+                required:
+                  - ok
+                additionalProperties: false
+                description: Updated successfully.
