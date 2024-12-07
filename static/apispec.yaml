@@ -12127,8 +12127,176 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
-          description: Success
+        "201":
+          description: Approved/declined successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  run:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      blueprint:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      entity:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      action:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      properties:
+                        type: object
+                      endedAt:
+                        type: string
+                        format: date-time
+                      source:
+                        type:
+                          - string
+                          - object
+                      requiredApproval:
+                        type:
+                          - boolean
+                          - object
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                              - ALL
+                              - ANY
+                        required:
+                          - type
+                      status:
+                        type: string
+                      statusLabel:
+                        type:
+                          - string
+                          - "null"
+                      link:
+                        type:
+                          - array
+                          - string
+                        items:
+                          type: string
+                      summary:
+                        type: string
+                      approval:
+                        type:
+                          - object
+                          - "null"
+                        properties:
+                          description:
+                            type: string
+                          userId:
+                            type:
+                              - string
+                              - "null"
+                          state:
+                            type: string
+                      payload:
+                        type:
+                          - object
+                          - "null"
+                        properties:
+                          type:
+                            type: string
+                          url:
+                            type: string
+                            format: uri
+                          agent:
+                            type: boolean
+                          synchronized:
+                            type: boolean
+                          method:
+                            type: string
+                          headers:
+                            type: object
+                            properties:
+                              RUN_ID:
+                                type: string
+                          body:
+                            type: object
+                            properties:
+                              port_context:
+                                type: object
+                                properties:
+                                  runId:
+                                    type: string
+                      response:
+                        type:
+                          - string
+                          - array
+                          - object
+                        items: {}
+                      createdBy:
+                        type: string
+                      updatedBy:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                    required:
+                      - id
+                      - action
+                      - properties
+                      - requiredApproval
+                      - source
+                      - status
+                required:
+                  - ok
+                additionalProperties: false
+                description: OK
         '403':
           description: |
             One of the following errors occurred:
@@ -12214,7 +12382,34 @@ paths:
             - read:runs
       responses:
         "200":
-          description: Default Response
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  approvers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        userId:
+                          type: string
+                        state:
+                          type: string
+                        description:
+                          type: string
+                          nullable: true
+                      required:
+                        - userId
+                        - state
+                required:
+                  - ok
+                additionalProperties: false
+                description: Retrieved successfully.
   /v1/actions/runs:
     get:
       summary: Get all action runs
@@ -12273,7 +12468,177 @@ paths:
             - 'read:runs'
       responses:
         '200':
-          description: Success
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  runs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        blueprint:
+                          type: object
+                          properties:
+                            identifier:
+                              type: string
+                            title:
+                              type:
+                                - string
+                                - "null"
+                            icon:
+                              type:
+                                - string
+                                - "null"
+                            deleted:
+                              type: boolean
+                          required:
+                            - identifier
+                        entity:
+                          type: object
+                          properties:
+                            identifier:
+                              type: string
+                            title:
+                              type:
+                                - string
+                                - "null"
+                            icon:
+                              type:
+                                - string
+                                - "null"
+                            deleted:
+                              type: boolean
+                          required:
+                            - identifier
+                        action:
+                          type: object
+                          properties:
+                            identifier:
+                              type: string
+                            title:
+                              type:
+                                - string
+                                - "null"
+                            icon:
+                              type:
+                                - string
+                                - "null"
+                            deleted:
+                              type: boolean
+                          required:
+                            - identifier
+                        properties:
+                          type: object
+                        endedAt:
+                          type: string
+                          format: date-time
+                        source:
+                          type:
+                            - string
+                            - object
+                        requiredApproval:
+                          type:
+                            - boolean
+                            - object
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                                - ALL
+                                - ANY
+                          required:
+                            - type
+                        status:
+                          type: string
+                        statusLabel:
+                          type:
+                            - string
+                            - "null"
+                        link:
+                          type:
+                            - array
+                            - string
+                          items:
+                            type: string
+                        summary:
+                          type: string
+                        approval:
+                          type:
+                            - object
+                            - "null"
+                          properties:
+                            description:
+                              type: string
+                            userId:
+                              type:
+                                - string
+                                - "null"
+                            state:
+                              type: string
+                        payload:
+                          type:
+                            - object
+                            - "null"
+                          properties:
+                            type:
+                              type: string
+                            url:
+                              type: string
+                              format: uri
+                            agent:
+                              type: boolean
+                            synchronized:
+                              type: boolean
+                            method:
+                              type: string
+                            headers:
+                              type: object
+                              properties:
+                                RUN_ID:
+                                  type: string
+                            body:
+                              type: object
+                              properties:
+                                port_context:
+                                  type: object
+                                  properties:
+                                    runId:
+                                      type: string
+                        response:
+                          type:
+                            - string
+                            - array
+                            - object
+                          items: {}
+                        createdBy:
+                          type: string
+                        updatedBy:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+                      required:
+                        - id
+                        - action
+                        - properties
+                        - requiredApproval
+                        - source
+                        - status
+                required:
+                  - ok
+                additionalProperties: false
+                description: Retrieved successfully.
         '422':
           description: |
             One of the following errors occurred:
@@ -12339,8 +12704,40 @@ paths:
       security:
         - bearer: []
       responses:
-        '200':
-          description: Success
+        "201":
+          description: Added successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  runLog:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      runId:
+                        type: string
+                      message:
+                        type: string
+                      createdBy:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                    required:
+                      - id
+                      - runId
+                      - message
+                      - createdBy
+                      - createdAt
+                required:
+                  - ok
+                additionalProperties: false
+                description: OK
         '404':
           description: |
             One of the following errors occurred:
@@ -12417,7 +12814,41 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Success
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  runLogs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        runId:
+                          type: string
+                        message:
+                          type: string
+                        createdBy:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                      required:
+                        - id
+                        - runId
+                        - message
+                        - createdBy
+                        - createdAt
+                required:
+                  - ok
+                additionalProperties: false
+                description: Retrieved successfully.
         '404':
           description: |
             One of the following errors occurred:
