@@ -390,6 +390,8 @@ const config = {
       "data-modal-disclaimer": "This AI assistant has full access to Port's documentation and API references.\nPlease note that answers may not be fully accurate.\n\nWe would appreciate your feedback (👍🏽/👎🏽) on answers you receive in order to improve the results 🙏🏽",
       "data-modal-example-questions-title": "Example Questions",
       "data-modal-example-questions-col-span": "12",
+      "data-modal-disclaimer-font-size": "0.85rem", // default is 0.75rem
+      "data-example-question-button-font-size": "0.85rem", // default is not set
       // "data-search-mode-enabled": "true",
       // "data-modal-search-input-placeholder": "What are you looking for?",
       // "data-modal-title-search": "Search Port's documentation",
