@@ -36,7 +36,7 @@ variable, you can fetch a pre-defined `blueprints.json` to create your blueprint
 use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kyverno-blueprints.json) to
 define your blueprints. Do this by running:
 
-```bash showLineNumbers
+```bash
 export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kyverno-blueprints.json"
 ```
 
@@ -180,7 +180,7 @@ Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping 
 
 In this use-case you will be using the **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/kyverno-kubernetes_v1_config.yaml)**. To achieve this, run:
 
-```bash showLineNumbers
+```bash
 export CONFIG_YAML_URL="https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/kyverno-kubernetes_v1_config.yaml"
 ```
 
@@ -188,8 +188,11 @@ Below is the mapping for the Kyverno resources:
 
 <details>
 <summary> <b>Kyverno policy mapping (click to expand)</b> </summary>
+
 ```yaml showLineNumbers
 - kind: kyverno.io/v1/policies
+  selector:
+    query: 'true'
   port:
     entity:
       mappings:
@@ -206,6 +209,8 @@ Below is the mapping for the Kyverno resources:
             namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
 
 - kind: kyverno.io/v1/clusterpolicies
+  selector:
+    query: 'true'
   port:
     entity:
       mappings:
@@ -223,40 +228,45 @@ Below is the mapping for the Kyverno resources:
 
 <details>
 <summary> <b>Kyverno policy report mapping (click to expand)</b> </summary>
-```yaml showLineNumbers
-  - kind: wgpolicyk8s.io/v1alpha2/policyreports
-    port:
-      entity:
-        mappings:
-          - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
-            title: .scope.name
-            icon: '"Cluster"'
-            blueprint: '"kyvernoPolicyReport"'
-            properties:
-              pass: .summary.pass
-              fail: .summary.fail
-              warn: .summary.warn
-              error: .summary.error
-              skip: .summary.skip
-              createdAt: .metadata.creationTimestamp
-            relations:
-              namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
 
-  - kind: wgpolicyk8s.io/v1alpha2/clusterpolicyreports
-    port:
-      entity:
-        mappings:
-          - identifier: .metadata.name + "-" + env.CLUSTER_NAME
-            title: .scope.name
-            icon: '"Cluster"'
-            blueprint: '"kyvernoPolicyReport"'
-            properties:
-              pass: .summary.pass
-              fail: .summary.fail
-              warn: .summary.warn
-              error: .summary.error
-              skip: .summary.skip
-              createdAt: .metadata.creationTimestamp
+```yaml showLineNumbers
+- kind: wgpolicyk8s.io/v1alpha2/policyreports
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.name + "-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          title: .scope.name
+          icon: '"Cluster"'
+          blueprint: '"kyvernoPolicyReport"'
+          properties:
+            pass: .summary.pass
+            fail: .summary.fail
+            warn: .summary.warn
+            error: .summary.error
+            skip: .summary.skip
+            createdAt: .metadata.creationTimestamp
+          relations:
+            namespace: .metadata.namespace + "-" + env.CLUSTER_NAME
+
+- kind: wgpolicyk8s.io/v1alpha2/clusterpolicyreports
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.name + "-" + env.CLUSTER_NAME
+          title: .scope.name
+          icon: '"Cluster"'
+          blueprint: '"kyvernoPolicyReport"'
+          properties:
+            pass: .summary.pass
+            fail: .summary.fail
+            warn: .summary.warn
+            error: .summary.error
+            skip: .summary.skip
+            createdAt: .metadata.creationTimestamp
 ```
 </details>
 
