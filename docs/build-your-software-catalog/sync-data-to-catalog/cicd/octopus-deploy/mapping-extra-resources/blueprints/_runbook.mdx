@@ -1,0 +1,52 @@
+<details>
+
+<summary>Runbook Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "octopusRunbook",
+  "title": "Octopus Runbook",
+  "icon": "Octopus",
+  "description": "A runbook in Octopus Deploy",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "The description of the runbook"
+      },
+      "lastModifiedOn": {
+        "type": "string",
+        "title": "Last Modified On",
+        "format": "date-time",
+        "description": "The date and time when the runbook was last modified"
+      },
+      "environmentScope": {
+        "type": "string",
+        "title": "Environment Scope",
+        "description": "The scope of environments for the runbook"
+      },
+      "environments": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Environments",
+        "description": "The environments associated with the runbook"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
+},
+```
+
+</details>

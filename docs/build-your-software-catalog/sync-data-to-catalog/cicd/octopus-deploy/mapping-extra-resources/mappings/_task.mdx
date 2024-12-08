@@ -1,0 +1,32 @@
+<details>
+
+<summary>Mapping configuration for Task</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: task
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .Id
+          title: .Name
+          blueprint: '"octopusTask"'
+          properties:
+            description: .Description
+            state: .State
+            isCompleted: .IsCompleted
+            completedTime: .CompletedTime
+            hasWarningsOrErrors: .HasWarningsOrErrors
+            finishedSuccessfully: .FinishedSuccessfully
+            duration: .Duration
+            queueTime: .QueueTime
+            startTime: .StartTime
+          relations:
+            space: .SpaceId
+```
+
+</details>

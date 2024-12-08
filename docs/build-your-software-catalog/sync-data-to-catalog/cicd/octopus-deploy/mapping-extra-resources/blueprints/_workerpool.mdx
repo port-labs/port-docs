@@ -1,0 +1,39 @@
+<details>
+
+<summary>WorkerPool Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "octopusWorkerPool",
+  "title": "Octopus Worker Pool",
+  "icon": "Octopus",
+  "description": "A worker pool in Octopus Deploy",
+  "schema": {
+    "properties": {
+      "workerPoolType": {
+        "type": "string",
+        "title": "Worker Pool Type",
+        "description": "The type of the worker pool (e.g., StaticWorkerPool)"
+      },
+      "isDefault": {
+        "type": "boolean",
+        "title": "Is Default",
+        "description": "Indicates if the worker pool is the default"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
+}
+
+```
+
+</details>
