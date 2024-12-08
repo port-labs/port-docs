@@ -6,6 +6,90 @@ sidebar_position: 2
 To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
 
+## User
+
+<details>
+<summary>User blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "opsGenieUser",
+  "description": "This blueprint represents an OpsGenie user in our software catalog",
+  "title": "OpsGenie User",
+  "icon": "OpsGenie",
+  "schema": {
+    "properties": {
+      "role": {
+        "title": "Role",
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "title": "Email",
+        "format": "user"
+      },
+      "address": {
+        "type": "object",
+        "title": "Address"
+      },
+      "timeZone": {
+        "type": "string",
+        "title": "Time Zone"
+      },
+      "isVerified": {
+        "type": "boolean",
+        "title": "Is Verified"
+      },
+      "isBlocked": {
+        "type": "boolean",
+        "title": "Is Blocked"
+      },
+      "createdAt": {
+        "type": "string",
+        "title": "Created At",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: user
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .fullName
+          blueprint: '"opsGenieUser"'
+          properties:
+            email: .username
+            role: .role.name
+            timeZone: .timeZone
+            isVerified: .verified
+            isBlocked: .blocked
+            address: .userAddress
+            createdAt: .createdAt
+```
+
+</details>
+
+
 ## Team
 
 <details>
@@ -45,7 +129,14 @@ To view and test the integration's mapping against examples of the third-party A
   "mirrorProperties": {},
   "calculationProperties": {},
   "aggregationProperties": {},
-  "relations": {}
+  "relations": {
+    "members": {
+      "title": "Members",
+      "target": "opsGenieUser",
+      "required": false,
+      "many": true
+    }
+  }
 }
 ```
 
@@ -61,6 +152,7 @@ resources:
   - kind: team
     selector:
       query: 'true'
+      includeMembers: true
     port:
       entity:
         mappings:
@@ -70,6 +162,8 @@ resources:
           properties:
             description: .description
             url: .links.web
+          relations:
+            members: if .__members != null then .__members | map(.user.id) else [] end
 ```
 
 </details>
@@ -318,11 +412,6 @@ resources:
         },
         "title": "Tags"
       },
-      "responders": {
-        "type": "array",
-        "title": "Responders",
-        "description": "Responders to the alert"
-      },
       "priority": {
         "type": "string",
         "title": "Priority"
@@ -348,6 +437,12 @@ resources:
       "target": "opsGenieService",
       "many": true,
       "required": false
+    },
+    "respondingTeam": {
+      "title": "Responding Team",
+      "target": "opsGenieTeam",
+      "required": false,
+      "many": true
     }
   }
 }
@@ -384,6 +479,7 @@ resources:
             description: .description
           relations:
             services: .impactedServices
+            respondingTeam: .responders | [.[] | select(.type == "team") | .id]
 ```
 
 </details>
@@ -429,11 +525,6 @@ resources:
         },
         "title": "Tags"
       },
-      "responders": {
-        "type": "array",
-        "title": "Responders",
-        "description": "Responders to the alert"
-      },
       "integration": {
         "type": "string",
         "title": "Integration",
@@ -478,6 +569,12 @@ resources:
       "target": "opsGenieIncident",
       "required": false,
       "many": false
+    },
+    "respondingTeam": {
+      "title": "Responding Team",
+      "target": "opsGenieTeam",
+      "required": false,
+      "many": true
     }
   }
 }
@@ -518,6 +615,7 @@ resources:
             integration: .integration.name
           relations:
             relatedIncident: 'if (.alias | contains("_")) then (.alias | split("_")[0]) else null end'
+            respondingTeam: .responders | [.[] | select(.type == "team") | .id]
 ```
 
 </details>
