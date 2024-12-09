@@ -28,10 +28,25 @@ It is possible to reference any field that appears in the API responses linked b
 
 ## Setup
 
-To install Port's GitHub app, see the [installation](./installation.md) page.
+To install Port's GitHub app, follow these steps:
+
+1. Go to the [GitHub App page](https://github.com/apps/getport-io).
+
+2. Choose the organization you want the app to be installed for.
+
+3. Choose the repositories you want the app to be installed for. 
+
+4. Click on the `Install` button.
+
+5. You'll be redirected to Port, please **log in**.
 
 
 ## Configuration
+
+
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
+
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
 To ingest GitHub objects, use one of the following methods:
 
@@ -80,10 +95,6 @@ When using global configuration **using GitHub**, the configuration specified in
 :::info Important
 When **using Port's UI**, the specified configuration will override any `port-app-config.yml` file in your GitHub repository/ies.
 :::
-
-Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
-
-The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
 ## Capabilities
 
@@ -429,10 +440,11 @@ Port's GitHub integration requires the following permissions:
   - Membership
   - Release
 
-:::note
+:::info Default permissions
 You will be prompted to confirm these permissions when first installing the App.
 
-Permissions can be given to select repositories in your organization, or to all repositories. You can reconfigure the app at any time, giving it access to new repositories, or removing access.
+Permissions can be given to selected repositories in your organization, or to all repositories.   
+You can reconfigure the app at any time, giving it access to new repositories, or removing access.
 
 :::
 
