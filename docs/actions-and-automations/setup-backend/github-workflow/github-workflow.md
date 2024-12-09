@@ -1,6 +1,6 @@
 # GitHub workflow
 
-The GitHub backend allows you to trigger GitHub workflows for your self-service actions and automations, using [Port's GitHub application](/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md).  
+The GitHub backend allows you to trigger GitHub workflows for your self-service actions and automations, using [Port's GitHub application](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup).  
 
 :::tip GitHub app types
 The GitHub backend is available for both the standard Port [GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md), and the [self-hosted version](/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation.md).

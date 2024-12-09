@@ -13,7 +13,7 @@ This guide shows you how to map CODEOWNERS file patterns in GitHub repositories 
 ## Prerequisites
 This guide assumes:
 - You have a Port account
-- You have installed [Port's GitHub app](docs/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) in your organisation or in repositories you are interested in.
+- You have installed [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) in your organisation or in repositories you are interested in.
 
 ## GitHub configuration
 
