@@ -32,13 +32,19 @@ To install Port's GitHub app, follow these steps:
 
 1. Go to the [GitHub App page](https://github.com/apps/getport-io).
 
-2. Choose the organization you want the app to be installed for.
+2. Click on the `Configure` button.
 
-3. Choose the repositories you want the app to be installed for. 
+3. Choose the organization you want the app to be installed for.
 
-4. Click on the `Install` button.
+4. Choose the repositories you want the app to be installed for. 
 
-5. You'll be redirected to Port, please **log in**.
+    :::tip Installing for all repositories
+     We recommend to install for all repositories to ensure that all data is ingested.
+    :::
+
+5. Click on the `Install` button.
+
+6. Once the installation has finished, you will be redirected to Port.
 
 
 ## Configuration
@@ -441,7 +447,7 @@ Port's GitHub integration requires the following permissions:
   - Release
 
 :::info Default permissions
-You will be prompted to confirm these permissions when first installing the App.
+You will be prompted to confirm the above listed permissions when first installing the App.
 
 Permissions can be given to selected repositories in your organization, or to all repositories.   
 You can reconfigure the app at any time, giving it access to new repositories, or removing access.
