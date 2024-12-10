@@ -38,9 +38,6 @@ To install Port's GitHub app, follow these steps:
 
 4. Within the selected organization, choose the repositories in which to install the app.
 
-    :::tip Installing for all repositories
-     We recommend to install for all repositories to ensure that all data is ingested.
-    :::
 
 5. Click on the `Install` button.
 
