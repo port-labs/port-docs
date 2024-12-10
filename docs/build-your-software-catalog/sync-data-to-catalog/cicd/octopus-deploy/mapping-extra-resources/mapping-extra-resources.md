@@ -52,7 +52,7 @@ After determining that the resource is supported by the API, you can map it to P
 - **Define the blueprint**: The blueprint is the name of the Port entity blueprint that you want to use for the resource.
 - **Define the relations**: You can define `relations` between the resource and other resources in Port by mapping the related fields.
 
-## Example Configuration for Additional Resources
+## Example configurations
 
 Here are some examples of how to expand the integration to include additional resources
 
