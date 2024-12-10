@@ -28,7 +28,7 @@ In addition to the supported resources listed in the [integration page](/build-y
 
 This page will help you understand what kind of Octopus Deploy resources are supported by the integration and how to map them into Port.
 
-## Is the Resource Supported by the Octopus Deploy Integration?
+## Check if a resource is supported
 
 The Octopus Deploy integration relies on Octopus' API-first architecture, which maintains a consistent pattern for most resources. This means that you can bring virtually any resource into Port, as long as it follows the standard API structure. Here’s how to determine if a resource is supported:
 
