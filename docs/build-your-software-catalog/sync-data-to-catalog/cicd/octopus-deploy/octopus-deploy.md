@@ -26,13 +26,16 @@ This integration allows you to:
 
 ### Supported Resources
 
-The resources that can be ingested from Octopus Deploy into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+Some of the resources that can be ingested from Octopus Deploy into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
 - [`Space`](https://octopus.com/docs/octopus-rest-api/examples/spaces)
 - [`Project`](https://octopus.com/docs/octopus-rest-api/examples/projects)
 - [`Release`](https://octopus.com/docs/octopus-rest-api/examples/releases)
 - [`Deployment`](https://octopus.com/docs/octopus-rest-api/examples/deployments)
 
+:::tip Ingesting Additional Resources
+The integration supports additional resources, see the [ingest additional resources](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy/mapping-extra-resources) page for more information
+:::
 
 ## Setup
 

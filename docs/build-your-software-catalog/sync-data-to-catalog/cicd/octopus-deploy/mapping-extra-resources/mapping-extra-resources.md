@@ -22,9 +22,9 @@ import PackageMapping from './mappings/\_package.mdx'
 import SubscriptionBlueprint from './blueprints/\_subscription.mdx'
 import SubscriptionMapping from './mappings/\_subscription.mdx'
 
-# Mapping Extra Resources for Octopus Deploy Integration
+# Ingesting Additional Resources for Octopus Deploy Integration
 
-In addition to the supported resources listed in the [integration page](../octopus-deploy.md), other resources can be ingested, as described on this page.
+In addition to the supported resources listed in the [integration page](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy), other resources can be ingested, as described on this page.
 
 This page will help you understand what kind of Octopus Deploy resources are supported by the integration and how to map them into Port.
 
@@ -35,7 +35,7 @@ The Octopus Deploy integration relies on Octopus' API-first architecture, which 
 1. Visit the [Octopus Deploy API Swagger documentation](https://demo.octopus.com/swaggerui/index.html) to see the available resources and their API structure.
 2. **Check the resource path**: Determine if the API of the resource you want to integrate follows the standard pattern **`GET /{spaceId}/{resources}`**
    - **If the resource follows this pattern**: Great! It can be integrated.
-   - **If not**: Please contact us or contribute by [adding support](https://ocean.getport.io/develop-an-integration/) to [the integration](https://github.com/port-labs/ocean/tree/main/integrations/aws) yourself.
+   - **If not**: Please contact us or contribute by [adding support](https://ocean.getport.io/develop-an-integration/) to [the integration](https://github.com/port-labs/ocean/tree/main/integrations/octopus) yourself.
 
 ## Configuration
 
