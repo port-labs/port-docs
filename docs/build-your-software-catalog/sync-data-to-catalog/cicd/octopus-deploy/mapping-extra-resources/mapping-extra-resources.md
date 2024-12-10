@@ -22,7 +22,7 @@ import PackageMapping from './mappings/\_package.mdx'
 import SubscriptionBlueprint from './blueprints/\_subscription.mdx'
 import SubscriptionMapping from './mappings/\_subscription.mdx'
 
-# Ingesting Additional Resources for Octopus Deploy Integration
+# Ingest additional resources
 
 In addition to the supported resources listed in the [integration page](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy), other resources can be ingested, as described on this page.
 
