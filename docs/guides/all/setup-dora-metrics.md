@@ -410,7 +410,6 @@ By following a similar pattern for other tools, you will be able to capture depl
 
 </TabItem>
 
-
 <TabItem value="ci-cd-pipelines" label="CI/CD Pipelines">
 
 CI/CD pipelines, such as those run by Jenkins, provide a robust way to track deployments. Jenkins, in particular, allows you to create and update entities in Port dynamically using Port's API as part of the pipeline execution.
@@ -793,7 +792,6 @@ Unlike GitHub, **GitLab** and **Azure DevOps** do not support traditional releas
 
 </TabItem>
 
-
 <TabItem value="custom-api" label="Custom API">
 If your tool or workflow is not natively supported, you can create custom integrations by directly interacting with Port’s API. This method allows you to track deployments from any system that can make HTTP API calls.
 
@@ -847,6 +845,8 @@ giving you full flexibility across all your deployment workflows.
 </Tabs>
 
 <br/>
+
+
 
 ### Monorepo Tracking
 By using **custom integrations**, you can effectively track services or components within a monorepo.
