@@ -455,6 +455,10 @@ You can reconfigure the app at any time, giving it access to new repositories, o
 
 Refer to the [examples](./examples/resource-mapping-examples.md) page for practical configurations and their corresponding blueprint definitions.
 
+## Relevant Guides
+
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=GitHub).
+
 ## GitOps
 
 Port's GitHub app also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
