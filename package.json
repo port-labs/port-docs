@@ -24,7 +24,7 @@
     "@docusaurus/preset-classic": "^3.6.3",
     "@docusaurus/theme-live-codeblock": "^3.6.3",
     "@easyops-cn/docusaurus-search-local": "^0.46.1",
-    "@emotion/react": "^11.13.5",
+    "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.13.5",
     "@mdx-js/react": "^3.1.0",
     "@mui/material": "^6.1.10",
