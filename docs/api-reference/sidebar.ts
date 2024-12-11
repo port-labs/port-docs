@@ -554,6 +554,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api-reference/get-an-organization-secret",
+          label: "Get an organization secret",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
           id: "api-reference/patch-an-organization-secret",
           label: "Patch an organization secret",
           className: "api-method patch",

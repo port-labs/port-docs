@@ -1,6 +1,6 @@
 # GitHub workflow
 
-The GitHub backend allows you to trigger GitHub workflows for your self-service actions and automations, using [Port's GitHub application](/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md).  
+The GitHub backend allows you to trigger GitHub workflows for your self-service actions and automations, using [Port's GitHub application](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup).  
 
 :::tip GitHub app types
 The GitHub backend is available for both the standard Port [GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md), and the [self-hosted version](/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation.md).
@@ -38,6 +38,18 @@ A workflow triggered using the `workflow_dispatch` trigger is self-contained. Th
 
 When using this backend, you need to provide the GitHub organization and repository where the workflow is located, as well as the workflow name.  
 The workflow must reside in the repository's `.github/workflows/` directory.
+
+### Specify a branch
+
+By default, the integration will look for the workflow in the `main` branch of the repository.  
+
+To use a different branch, simply pass the `ref` key in the `Configure the invocation payload` section (or `workflowInputs` in the JSON object) with the desired branch name as the value:
+
+```json
+{
+  "ref": "my-branch-name"
+}
+```
 
 ### Automatic workflow status update
 
