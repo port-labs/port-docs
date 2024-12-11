@@ -32,7 +32,7 @@ To install Port's Bitbucket app, follow these steps:
 
 2. Click `Get it now`.
 
-3. Select the workspace/org and click on Grant access
+3. Select the workspace and click on `Grant access`
 
 4. Once the installation has finished, you will be redirected to Port.
 
@@ -92,7 +92,7 @@ When **using Port's UI**, the specified configuration will override any `port-ap
 :::
 
 
-## Capability
+## Capabilities
 
 ### Ingesting Git objects
 
