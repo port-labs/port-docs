@@ -28,7 +28,7 @@ It is possible to reference any field that appears in the API responses linked b
 
 To install Port's Bitbucket app, follow these steps:
 
-1. Go to [Bitbucket app installation page](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview)
+1. Go to the [Bitbucket app installation page](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview).
 
 2. Click `Get it now`.
 
