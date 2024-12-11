@@ -24,6 +24,7 @@ This guide will cover the four key metrics: **deployment frequency**, **lead tim
 - Access to a repository (GitHub, GitLab, or Azure Repos) that is connected to Port via the onboarding process.
 - While this guide demonstrates implementations using **GitHub**, **GitLab**, and **Azure Repos**, other Git providers can be used as well.
 - Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD integrations or your platform-specific tools.
+- Optional for alternate tracking strategies: Install the [Port Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira) to track deployments, lead time and change failure rate using Jira.
 
 
 ## Tracking deployments
@@ -129,6 +130,13 @@ By following these steps, you can paste and manage the JSON schema required to t
 
 ### Tracking strategies
 Below are the main ways you can track deployments directly within Port:
+
+<Tabs groupId="tracking-strategies" queryString defaultValue="pr-merge-and-ci" values={[
+{label: "PR/MR Merge and CI/CD Pipelines", value: "pr-merge-and-ci"},
+{label: "Alternate tracking strategies", value: "alternate-strategies"}
+]}>
+
+<TabItem value="pr-merge-and-ci" label="PR/MR Merge and CI/CD Pipelines">
 
 <Tabs groupId="deployment-strategies" queryString defaultValue="pr-merge" values={[
 {label: "PR/MR Merge", value: "pr-merge"},
@@ -844,8 +852,182 @@ giving you full flexibility across all your deployment workflows.
 
 </Tabs>
 
-<br/>
+</TabItem>
 
+<TabItem value="alternate-strategies" label="Alternate tracking strategies">
+
+Although PR merge is the recommended way of tracking deployments, besides the CI methods described above,
+you can also track and measure DORA metrics using other approaches that may align better with your team's workflow.
+
+<Tabs groupId="alternate-methods" defaultValue="jira-done" values={[
+{label: "Deployment (Jira Tickets)", value: "jira-done"},
+{label: "Lead Time (Jira Tickets)", value: "jira-inprogress-done"},
+{label: "Failures (High-Priority Bugs)", value: "jira-bugs"},
+{label: "Failures (Hotfix)", value: "hotfix-deployments"}
+]}>
+
+<TabItem value="jira-done">
+
+Instead of relying solely on PR merges or pipeline runs, you can treat a Jira ticket moving to the "Done" status as an indicator that code has effectively been deployed.
+
+<details>
+<summary><b>Track deployments based on Jira ticket status (click to expand)</b></summary>
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    # Use a JQL or a query that filters for issues with status = Done
+    jql: 'status = Done'
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .fields.summary
+        blueprint: '"deployment"'
+        properties:
+          # Using the issue's creation time as the deployment time
+          createdAt: .fields.created
+          # Marking all completed issues as successful deployments
+          deploymentStatus: '"Success"'
+```
+
+</details>
+
+</TabItem>
+
+<TabItem value="jira-inprogress-done">
+
+Calculate lead time based on how long it takes a Jira ticket to move from “In Progress” to “Done.”   
+This approach focuses on a more business-oriented measure of lead time, tying it directly to ticket lifecycle rather than just code merges.
+
+<details>
+<summary><b>Calculate lead time on Jira ticket status (click to expand)</b></summary>
+
+```yaml showLineNumbers
+</details>
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    jql: 'status in ("In Progress", "Done")'
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .fields.summary
+        blueprint: '"jiraIssue"'
+        properties:
+          # Calculate lead time in hours from created to resolutionDate
+          leadTimeHours: >
+            (.fields.created as $created | .fields.resolutiondate as $resolved |
+            if $resolved == null then null else
+            ((($resolved | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) -
+              ($created | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime)) / 3600) end)
+```
+
+</details>
+
+</TabItem>
+
+<TabItem value="jira-bugs">
+
+Count the number of urgent Jira bugs that appear after deployments to gauge the change failure rate. 
+This method aligns failure rate with customer-impacting issues tracked in your ticketing system.
+
+To implement this follow the steps below:
+
+1. Add an aggregation property to the Jira `project` blueprint to count high-priority issues on a project:
+
+<details>
+<summary><b>Aggregation property for high-priority issues (click to expand)</b></summary>
+
+```json showLineNumbers
+"highestPriorityIssueCount": {
+"title": "Highest Priority Issue Count",
+"target": "jiraIssue",
+"calculationSpec": {
+  "calculationBy": "entities",
+  "func": "count"
+},
+"query": {
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "priority",
+      "operator": "=",
+      "value": "Highest"
+    }
+  ]
+}
+}
+
+```
+</details>
+
+  :::tip Project relationship with issues
+    
+  Ensure that your Jira project blueprint has a relationship with the Jira issue blueprint
+  
+  ```yaml showLineNumbers
+    relations:
+    project: .fields.project.key
+  ```
+  :::
+
+2. Navigate to the service blueprint and add this mirror property:
+
+<details>
+<summary><b> Highest priority issues count as CFR (click to expand)</b></summary>
+
+```json showLineNumbers
+  "changeFailureRate": {
+    "title": "Change Failure Rate Jira",
+    "path": "jiraProject.highestPriorityIssueCount"
+  }
+```
+</details>
+
+</TabItem>
+
+<TabItem value="hotfix-deployments">
+
+The “hotfix” approach interprets any pull request labeled as “hotfix” as representing a deployment that had to be rapidly fixed after release, effectively signaling a failed change.
+
+You can add this mapping to the service configuration to track hotfix deployments:
+
+<details>
+<summary><b>Hotfix Deployment Mapping (click to expand)</b></summary>
+
+```yaml showLineNumbers
+- kind: pull-request
+  selector:
+    query: '.labels | map(select(.name == "hotfix")) | length > 0'
+  port:
+    entity:
+      mappings:
+        identifier: .head.repo.name + '-' + (.id|tostring)
+        title: .head.repo.name + " Hotfix Deployment"
+        blueprint: '"deployment"'
+        properties:
+          createdAt: .merged_at
+          deploymentStatus: '"Failed"'
+
+```
+</details>
+
+</TabItem>
+
+  
+  
+
+  </Tabs>
+
+
+</TabItem>
+
+</Tabs>
+
+<br/>
 
 
 ### Monorepo Tracking
@@ -1052,7 +1234,6 @@ We have assumed that the **service name/title** exists in the `service.summary` 
 To learn more about using search relations, see [our documentation on Mapping Relations
 Using Search Queries](/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries). 
 :::
-
 
 ## Metrics
 
@@ -1277,8 +1458,6 @@ To filter for data from the last month, use this JSON snippet:
 At this point, you can already visit each service to view the aggregated DORA metrics. However, note that the aggregation data will only be calculated based on newly ingested data moving forward.
 click [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) for more details on aggregation properties.
 :::
-
-
 
 ## Visualization
 By leveraging Port's Dashboards, you can create custom dashboards to track the metrics and monitor your team's performance over time.
