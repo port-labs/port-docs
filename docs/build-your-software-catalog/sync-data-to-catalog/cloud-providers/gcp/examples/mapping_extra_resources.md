@@ -148,3 +148,32 @@ Create an integration configuration for the resource. The integration configurat
               machineType: ".machineType"
         		# highlight-end
         ```
+
+
+
+### Case Style Preservation
+
+For kinds returned by non-cloud asset APIs, such as `pubsub.googleapis.com/Subscription` and `pubsub.googleapis.com/Topic`, you can preserve the original API response case style by setting `preserveApiResponseCaseStyle: 'true'` in the selector configuration. For example:
+
+```yaml	
+- kind: pubsub.googleapis.com/Subscription
+    selector:
+      query: 'true'
+      preserveApiResponseCaseStyle: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name
+
+ - kind: pubsub.googleapis.com/Topic
+    selector:
+      query: 'true'
+      preserveApiResponseCaseStyle: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name | split("/") | last
+```
+
+This ensures that properties maintain their original camelCase format from the GCP API response.
