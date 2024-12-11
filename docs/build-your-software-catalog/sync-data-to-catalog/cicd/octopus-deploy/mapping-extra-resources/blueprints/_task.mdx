@@ -1,0 +1,76 @@
+<details>
+
+<summary>Task Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "octopusTask",
+  "title": "Octopus Task",
+  "icon": "Octopus",
+  "description": "A task in Octopus Deploy",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "The description of the task"
+      },
+      "state": {
+        "type": "string",
+        "title": "State",
+        "description": "The current state of the task"
+      },
+      "isCompleted": {
+        "type": "boolean",
+        "title": "Is Completed",
+        "description": "Indicates if the task is completed"
+      },
+      "completedTime": {
+        "type": "string",
+        "title": "Completed Time",
+        "format": "date-time",
+        "description": "The time when the task was completed"
+      },
+      "hasWarningsOrErrors": {
+        "type": "boolean",
+        "title": "Has Warnings or Errors",
+        "description": "Indicates if the task encountered warnings or errors"
+      },
+      "finishedSuccessfully": {
+        "type": "boolean",
+        "title": "Finished Successfully",
+        "description": "Indicates if the task finished successfully"
+      },
+      "duration": {
+        "type": "string",
+        "title": "Duration",
+        "description": "The duration of the task"
+      },
+      "queueTime": {
+        "type": "string",
+        "title": "Queue Time",
+        "format": "date-time",
+        "description": "The time when the task was queued"
+      },
+      "startTime": {
+        "type": "string",
+        "title": "Start Time",
+        "format": "date-time",
+        "description": "The time when the task started"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
