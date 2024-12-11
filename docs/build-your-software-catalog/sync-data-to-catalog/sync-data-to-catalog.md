@@ -11,10 +11,13 @@ Once installed, you can customize and extend these integrations to fit your exac
 
 :::info custom integrations
 Don't see the tool you wish to integrate with Port in the available integrations below?  
-We provide you with the required tools to model your data and ingest it with ease, see [`Create a custom integration`](/build-your-software-catalog/custom-integration).
+Port provides you with the required tools to model your data and ingest it with ease, see [`Create a custom integration`](/build-your-software-catalog/custom-integration).
 :::
 
 ## Integration process
+
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/integration_diagram.png' width='100%' border='1px' style={{ "borderRadius": "12px" }} />
+<br/><br/>
 
 Generally, installing an available integration results in the following:
 
