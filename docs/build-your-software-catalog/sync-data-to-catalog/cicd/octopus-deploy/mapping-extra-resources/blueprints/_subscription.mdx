@@ -1,0 +1,74 @@
+<details>
+
+<summary>Subscription Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "octopusSubscription",
+  "title": "Octopus Subscription",
+  "icon": "Octopus",
+  "description": "An event notification subscription in Octopus Deploy",
+  "schema": {
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name",
+        "description": "The name of the subscription"
+      },
+      "type": {
+        "type": "string",
+        "title": "Type",
+        "description": "The type of the subscription"
+      },
+      "isDisabled": {
+        "type": "boolean",
+        "title": "Is Disabled",
+        "description": "Indicates if the subscription is disabled"
+      },
+      "emailFrequencyPeriod": {
+        "type": "string",
+        "title": "Email Frequency Period",
+        "description": "The frequency at which email notifications are sent"
+      },
+      "emailPriority": {
+        "type": "string",
+        "title": "Email Priority",
+        "description": "The priority of email notifications"
+      },
+      "webhookURI": {
+        "type": "string",
+        "title": "Webhook URI",
+        "description": "The URI for the webhook"
+      },
+      "webhookTimeout": {
+        "type": "string",
+        "title": "Webhook Timeout",
+        "description": "The timeout setting for the webhook"
+      },
+      "lastModifiedBy": {
+        "type": "string",
+        "title": "Last Modified By",
+        "description": "The user who last modified the subscription"
+      },
+      "lastModifiedOn": {
+        "type": "string",
+        "title": "Last Modified On",
+        "format": "date-time",
+        "description": "The date and time when the subscription was last modified"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

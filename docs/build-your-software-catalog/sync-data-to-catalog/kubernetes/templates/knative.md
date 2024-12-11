@@ -30,7 +30,7 @@ installation script. You can read more about the installation script [here](#how
 
 The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_knative_usecase.json) to define your blueprints. Do this by running:
 
-```bash showLineNumbers
+```bash
 export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/kubernetes_knative_usecase.json"
 ```
 
@@ -341,7 +341,7 @@ Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping 
 
 In this use-case you will be using **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/kubernetes_kantive_usecase.yaml)**. To achieve this, run:
 
-```bash showLineNumbers
+```bash
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/kubernetes_kantive_usecase.yaml"
 ```
 
