@@ -153,7 +153,7 @@ Create an integration configuration for the resource. The integration configurat
 
 ### Case Style Preservation
 
-Certain APIs return properties in specific case styles (e.g., snake_case). By default, the GCP integration will convert these properties to camelCase. However, you can preserve the original API response case style for the following APIs:
+Certain APIs return properties in specific case styles (e.g., `camelCase`). By default, the GCP integration will convert them to `snake_case` format. However, you can preserve the original case style for the following APIs:
 
 - Projects (`cloudresourcemanager.googleapis.com/Project`)
 - Organizations (`cloudresourcemanager.googleapis.com/Organization`)
@@ -161,11 +161,11 @@ Certain APIs return properties in specific case styles (e.g., snake_case). By de
 - Topics (`pubsub.googleapis.com/Topic`)
 - Subscriptions (`pubsub.googleapis.com/Subscription`)
 
-This feature is particularly useful for ensuring compatibility with downstream systems or processes that depend on the original case style from the API response.
+This feature is particularly useful for ensuring compatibility with downstream systems or processes that require `camelCase` formatting.
 
-#### How to Enable Case Style Preservation
+#### How to Enable Case Style Conversion
 
-To preserve the case style, set `preserveApiResponseCaseStyle: true` in the selector configuration for the relevant API. For example:
+To convert the case style to camelCase, set `preserveApiResponseCaseStyle: true` in the selector configuration for the relevant API. For example:
 
 ```yaml
 - kind: pubsub.googleapis.com/Subscription
@@ -188,4 +188,4 @@ To preserve the case style, set `preserveApiResponseCaseStyle: true` in the sele
           title: .name | split("/") | last
 ```
 
-When `preserveApiResponseCaseStyle` is not set or set to `false` (default behavior), all property names will be converted to camelCase format regardless of their original case style in the API response.
+When `preserveApiResponseCaseStyle` is not set or set to `false` (default behavior), all property names will converted to snake_case format regardless of their original case style in the API response.
