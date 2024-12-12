@@ -153,9 +153,21 @@ Create an integration configuration for the resource. The integration configurat
 
 ### Case Style Preservation
 
-For kinds returned by non-cloud asset APIs, such as `pubsub.googleapis.com/Subscription` and `pubsub.googleapis.com/Topic`, you can preserve the original API response case style by setting `preserveApiResponseCaseStyle: 'true'` in the selector configuration. For example:
+Certain APIs return properties in specific case styles (e.g., snake_case). By default, the GCP integration will convert these properties to camelCase. However, you can preserve the original API response case style for the following APIs:
 
-```yaml	
+- Projects (`cloudresourcemanager.googleapis.com/Project`)
+- Organizations (`cloudresourcemanager.googleapis.com/Organization`)
+- Folders (`cloudresourcemanager.googleapis.com/Folder`)
+- Topics (`pubsub.googleapis.com/Topic`)
+- Subscriptions (`pubsub.googleapis.com/Subscription`)
+
+This feature is particularly useful for ensuring compatibility with downstream systems or processes that depend on the original case style from the API response.
+
+#### How to Enable Case Style Preservation
+
+To preserve the case style, set `preserveApiResponseCaseStyle: true` in the selector configuration for the relevant API. For example:
+
+```yaml
 - kind: pubsub.googleapis.com/Subscription
     selector:
       query: 'true'
@@ -176,4 +188,4 @@ For kinds returned by non-cloud asset APIs, such as `pubsub.googleapis.com/Subsc
           title: .name | split("/") | last
 ```
 
-This ensures that properties maintain their original camelCase format from the GCP API response.
+When `preserveApiResponseCaseStyle` is not set or set to `false` (default behavior), all property names will be converted to camelCase format regardless of their original case style in the API response.
