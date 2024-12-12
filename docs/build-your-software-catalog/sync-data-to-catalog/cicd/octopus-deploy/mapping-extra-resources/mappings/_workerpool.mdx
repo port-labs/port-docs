@@ -1,0 +1,25 @@
+<details>
+
+<summary>Mapping configuration for WorkerPool</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: workerpool
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .Id
+          title: .Name
+          blueprint: '"octopusWorkerPool"'
+          properties:
+            workerPoolType: .WorkerPoolType
+            isDefault: .IsDefault
+          relations:
+            space: .SpaceId
+```
+
+</details>
