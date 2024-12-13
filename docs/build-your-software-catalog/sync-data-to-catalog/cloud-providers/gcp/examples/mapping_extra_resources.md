@@ -153,7 +153,9 @@ Create an integration configuration for the resource. The integration configurat
 
 ### Case Style Preservation
 
-Certain APIs return properties in specific case styles (e.g., `camelCase`). By default, the GCP integration will convert them to `snake_case` format. However, you can preserve the original case style for the following APIs:
+For resources listed below, the GCP Integration provides flexibility to either transform the properties to snake_case or preserve the original case style (e.g., camelCase) returned by the API for consistency with other resources.
+
+This feature applies to the following kinds:
 
 - Projects (`cloudresourcemanager.googleapis.com/Project`)
 - Organizations (`cloudresourcemanager.googleapis.com/Organization`)
