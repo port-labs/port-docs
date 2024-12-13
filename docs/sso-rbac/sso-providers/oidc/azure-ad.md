@@ -268,7 +268,7 @@ Port needs the following information for this process:
    :::
 
 :::warning Multiple Azure AD SSO connections
-In case you have multiple Port environments, it is possible to setup an Azure AD SSO connection for each of those environments.
+In case you have multiple Port environments, it is possible to setup an OIDC Azure AD SSO connection for each of those environments.
 
 However, note that in this instance you **will not** be able to use Port's main login page to reliably sign in to a specific environment, when you enter your email address to login, it will take you to one of your Port environments but it is not guaranteed to take you to the same Port environment every time.
 
