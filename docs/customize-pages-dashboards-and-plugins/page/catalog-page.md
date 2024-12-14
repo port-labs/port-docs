@@ -26,7 +26,7 @@ You can also manually create additional catalog pages for any existing blueprint
 
 <TabItem value="ui">
 
-To create a new catalog page, go to the [Catalog](https://app.getport.io/services) page, click the `+ New` button in the top left corner, and select `New catalog page`.
+To create a new catalog page, go to the [Catalog](https://app.getport.io/organization/catalog) page, click the `+ New` button in the top left corner, and select `New catalog page`.
 
 </TabItem>
 
