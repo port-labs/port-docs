@@ -339,7 +339,7 @@ You can edit, lock or delete a page by clicking the `...` button in the top righ
 
 #### Editing pages
 
-Editing a page allows you to change its name and/or icon and other information:
+Editing a page allows you to change various properties:
 
 ![Edit Page popup window](/img/software-catalog/pages/EditPageForm.png)
 
