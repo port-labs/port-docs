@@ -153,7 +153,7 @@ Create an integration configuration for the resource. The integration configurat
 
 ### Case Style Preservation
 
-For resources listed below, the GCP Integration provides flexibility to either transform the properties to snake_case or preserve the original case style (e.g., camelCase) returned by the API for consistency with other resources.
+For the resources listed below, this integration provides flexibility to either transform the properties to `snake_case` or preserve the original case style (e.g., `camelCase`) returned by the API for consistency with other resources.
 
 This feature applies to the following kinds:
 
