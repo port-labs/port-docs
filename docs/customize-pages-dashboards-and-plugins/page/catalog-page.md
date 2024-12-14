@@ -272,7 +272,7 @@ You can show/hide properties by using the `Manage Properties` option in the top-
 
 You can also drag and drop the properties in this view to reorder them in the table.
 
-:::tip Hiding irrelevant data
+:::tip Hide irrelevant data
 We highly recommend hiding irrelevant data from users, to provide them with a clean work environment, relieving them from any distractions.
 :::
 
