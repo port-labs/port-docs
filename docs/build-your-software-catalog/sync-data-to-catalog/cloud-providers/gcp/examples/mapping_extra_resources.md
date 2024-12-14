@@ -155,7 +155,7 @@ Create an integration configuration for the resource. The integration configurat
 
 For the resources listed below, this integration provides flexibility to either transform the properties to `snake_case` or preserve the original case style (e.g., `camelCase`) returned by the API for consistency with other resources.
 
-This feature applies to the following kinds:
+This applies to the following kinds:
 
 - Projects (`cloudresourcemanager.googleapis.com/Project`)
 - Organizations (`cloudresourcemanager.googleapis.com/Organization`)
