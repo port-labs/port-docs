@@ -1,6 +1,8 @@
 import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import OceanSaasDefaultSettings from "/src/components/ocean-saas-specifics/default-settings.jsx";
+import OceanSaasIntegrationSettings from "/src/components/ocean-saas-specifics/integration-settings.jsx";
 
 Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
 
@@ -16,15 +18,16 @@ Support for live events is WIP and will be supported in the near future.
 
 To install, follow these steps:
 
-1. Go to the [Data sources](https://app.getport.io/settings/data-sources) page of your portal.
+1. Go to the <a target="_blank" rel="noopener noreferrer" href={`https://app.getport.io/settings/data-sources?section=EXPORTERS&provider=${props.integration}`}>{props.integration} data source page</a> in your portal.
 
-2. Click on the `+ Data source` button in the top-right corner.
+2. Under `Select your installation method`, choose `Hosted by Port`.
 
-3. Click on the relevant integration in the list.
+3. To install the integration using **OAuth with default settings**, click `Connect`.  
+   This will prompt you to authorize Port and install the integration with the following default settings:
+    <OceanSaasDefaultSettings id={props.integration} />
+    
+4. Alternatively, toggle on `Manual installation` to configure the `integration settings` and `application settings` yourself (see below for details).
 
-4. Under `Select your installation method`, choose `Hosted by Port`.
-
-5. Configure the `integration settings` and `application settings` as you wish (see below for details).
 
 <h3>Application settings</h3>
 
@@ -36,8 +39,11 @@ Every integration hosted by Port has the following customizable application sett
 
 <h3>Integration settings</h3>
 
-Every integration has its own tool-specific settings, under the `Integration settings` section.  
-Each of these settings has an ⓘ icon next to it, which you can hover over to see a description of the setting.
+Every integration has its own tool-specific settings, under the `Integration settings` section:  
+<OceanSaasIntegrationSettings id={props.integration} />
+
+You can also hover over the ⓘ icon next each setting to see a description.
+
 
 <h4>Port secrets</h4>
 
