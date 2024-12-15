@@ -450,6 +450,10 @@ html[data-theme="dark"] details details  {
 
 /* OpenAPI spec */
 
+.openapi-security__details {
+  display: none;
+}
+
 .openapi-params__list-item:not(.anything) {
   padding: 1rem;
   margin: 0 0 1rem 0 !important;

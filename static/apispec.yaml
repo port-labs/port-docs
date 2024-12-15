@@ -3197,11 +3197,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`bad_request`</td>
+              <td><b>bad_request</b></td>
               <td>The json provided does not match the route's schema</td>
             </tr>
             <tr>
-              <td>`run_exhausted`</td>
+              <td><b>run_exhausted</b></td>
               <td>The action run with the provided `runId` has already finished execution</td>
             </tr>
             </table>
@@ -3215,11 +3215,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`required_relation`</td>
-              <td>Relation cannot be deleted because it is a `required relation`</td>
+              <td><b>required_relation</b></td>
+              <td>Relation cannot be deleted because it is a <b>required relation</b></td>
             </tr>
             <tr>
-              <td>`missing_permissions`</td>
+              <td><b>missing_permissions</b></td>
               <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>
             </tr>
             </table>
@@ -3233,7 +3233,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>A resource with the provided `identifier` was not found</td>
             </tr>
             </table>
@@ -3247,7 +3247,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`identifier_taken`</td>
+              <td><b>identifier_taken</b></td>
               <td>The provided `identifier` already exists, identifiers must be unique</td>
             </tr>
             </table>
@@ -3261,7 +3261,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`bad_request`</td>
+              <td><b>bad_request</b></td>
               <td>Request body is too large (limit is 1MiB)</td>
             </tr>
             </table>
@@ -3275,19 +3275,19 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`team_inheritance_enabled`</td>
+              <td><b>team_inheritance_enabled</b></td>
               <td>The blueprint's entities inherite their team from other entities through an existing relation</td>
             </tr>
             <tr>
-              <td>`blueprint_schema_mismatch`</td>
+              <td><b>blueprint_schema_mismatch</b></td>
               <td>The provided entity does not match the blueprint's schema</td>
             </tr>
             <tr>
-              <td>`required_relation`</td>
+              <td><b>required_relation</b></td>
               <td>A relation is required</td>
             </tr>
             <tr>
-              <td>`relation_many_violation`</td>
+              <td><b>relation_many_violation</b></td>
               <td>A provided relation cannot contain more than one entity</td>
             </tr>
             </table>
@@ -3301,7 +3301,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred </td>
             </tr>
             </table>
@@ -3357,7 +3357,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>A blueprint with the provided `identifier` was not found</td>
             </tr>
             </table>
@@ -3371,7 +3371,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The provided data does not match the route schema</td>
             </tr>
             </table>
@@ -3385,7 +3385,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -3515,7 +3515,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`run_exhausted`</td>
+              <td><b>run_exhausted</b></td>
               <td>Action run has already finished execution</td>
             </tr>
 
@@ -3530,11 +3530,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`required_relation`</td>
-              <td>Relation cannot be deleted because it is a `required relation`</td>
+              <td><b>required_relation</b></td>
+              <td>Relation cannot be deleted because it is a <b>required relation</b></td>
             </tr>
             <tr>
-              <td>`missing_permissions`</td>
+              <td><b>missing_permissions</b></td>
               <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>
             </tr>
             </table>
@@ -3548,11 +3548,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>A blueprint with the provided `identifier` was not found</td>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>An entity with the provided `identifier` was not found</td>
             </tr>
             </table>
@@ -3566,7 +3566,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`identifier_taken`</td>
+              <td><b>identifier_taken</b></td>
               <td>The provided `identifier` already exists, identifiers must be unique</td>
             </tr>
             </table>
@@ -3580,23 +3580,23 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The provided data does not match the route schema</td>
             </tr>
             <tr>
-              <td>`team_inheritance_enabled`</td>
+              <td><b>team_inheritance_enabled</b></td>
               <td>The blueprint's entities inherite their team from other entities through an existing relation</td>
             </tr>
             <tr>
-              <td>`blueprint_schema_mismatch`</td>
+              <td><b>blueprint_schema_mismatch</b></td>
               <td>The provided entity does not match the blueprint's schema</td>
             </tr>
             <tr>
-              <td>`required_relation`</td>
+              <td><b>required_relation</b></td>
               <td>A relation is required</td>
             </tr>
             <tr>
-              <td>`relation_many_violation`</td>
+              <td><b>relation_many_violation</b></td>
               <td>A provided relation cannot contain more than one entity</td>
             </tr>
             </table>
@@ -3610,7 +3610,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -3757,27 +3757,27 @@ paths:
               <th>Type</th>
             </tr>
             <tr>
-              <td>`identifier`</td>
+              <td><b>identifier</b></td>
               <td>string</td>
             </tr>
             <tr>
-              <td>`title`</td>
+              <td><b>title</b></td>
               <td>string</td>
             </tr>
             <tr>
-              <td>`icon`</td>
+              <td><b>icon</b></td>
               <td>string</td>
             </tr>
             <tr>
-              <td>`team`</td>
+              <td><b>team</b></td>
               <td>string[]</td>
             </tr>
             <tr>
-              <td>`properties`</td>
+              <td><b>properties</b></td>
               <td>object</td>
             </tr>
             <tr>
-              <td>`relations`</td>
+              <td><b>relations</b></td>
               <td>object</td>
             </tr>
             </table>
@@ -3791,7 +3791,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`run_exhausted`</td>
+              <td><b>run_exhausted</b></td>
               <td>Action run has already finished execution</td>
             </tr>
 
@@ -3806,11 +3806,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`required_relation`</td>
-              <td>Relation cannot be deleted because it is a `required relation`</td>
+              <td><b>required_relation</b></td>
+              <td>Relation cannot be deleted because it is a <b>required relation</b></td>
             </tr>
             <tr>
-              <td>`missing_permissions`</td>
+              <td><b>missing_permissions</b></td>
               <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>
             </tr>
             </table>
@@ -3824,11 +3824,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>A blueprint with the provided `identifier` was not found</td>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>An entity with the provided `identifier` was not found</td>
             </tr>
             </table>
@@ -3842,7 +3842,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`identifier_taken`</td>
+              <td><b>identifier_taken</b></td>
               <td>The provided `identifier` already exists, identifiers must be unique</td>
             </tr>
             </table>
@@ -3856,7 +3856,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`bad_request`</td>
+              <td><b>bad_request</b></td>
               <td>Request body is too large (limit is 1MiB)</td>
             </tr>
             </table>
@@ -3870,23 +3870,23 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The provided data does not match the route schema</td>
             </tr>
             <tr>
-              <td>`team_inheritance_enabled`</td>
+              <td><b>team_inheritance_enabled</b></td>
               <td>The blueprint's entities inherite their team from other entities through an existing relation</td>
             </tr>
             <tr>
-              <td>`blueprint_schema_mismatch`</td>
+              <td><b>blueprint_schema_mismatch</b></td>
               <td>The provided entity does not match the blueprint's schema</td>
             </tr>
             <tr>
-              <td>`required_relation`</td>
+              <td><b>required_relation</b></td>
               <td>A relation is required</td>
             </tr>
             <tr>
-              <td>`relation_many_violation`</td>
+              <td><b>relation_many_violation</b></td>
               <td>A provided relation cannot contain more than one entity</td>
             </tr>
             </table>
@@ -3900,7 +3900,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -3974,11 +3974,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>An entity with the provided `identifier` was not found</td>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>A blueprint with the provided `identifier` was not found</td>
             </tr>
             </table>
@@ -3992,7 +3992,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The provided data does not match the route schema</td>
             </tr>
             </table>
@@ -4006,7 +4006,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -4070,11 +4070,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`missing_permissions`</td>
+              <td><b>missing_permissions</b></td>
               <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>
             </tr>
             <tr>
-              <td>`has_dependents`</td>
+              <td><b>has_dependents</b></td>
               <td>The entity has dependent entities that must be deleted along with it. To do that, use "delete_dependents=true"</td>
             </tr>
             </table>
@@ -4088,11 +4088,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>An entity with the provided `identifier` was not found</td>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>A blueprint with the provided `identifier` was not found</td>
             </tr>
             </table>
@@ -4106,7 +4106,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The provided data does not match the route schema</td>
             </tr>
             </table>
@@ -4120,7 +4120,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -4153,7 +4153,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>A blueprint with the provided `identifier` was not found</td>
             </tr>
             </table>
@@ -4167,7 +4167,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The provided data does not match the route schema</td>
             </tr>
             </table>
@@ -4181,7 +4181,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -4226,11 +4226,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`missing_permissions`</td>
+              <td><b>missing_permissions</b></td>
               <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>
             </tr>
             <tr>
-              <td>`has_dependents`</td>
+              <td><b>has_dependents</b></td>
               <td>The entity has dependent entities that must be deleted along with it. To do that, use "delete_dependents=true"</td>
             </tr>
             </table>
@@ -4244,7 +4244,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>A blueprint with the provided `identifier` was not found</td>
             </tr>
             </table>
@@ -4258,7 +4258,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The provided data does not match the route schema</td>
             </tr>
             </table>
@@ -4272,7 +4272,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -4522,7 +4522,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The provided data does not match the route schema</td>
             </tr>
             </table>
@@ -4536,7 +4536,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -8524,7 +8524,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`identifier_taken`</td>
+              <td><b>identifier_taken</b></td>
               <td>An action/automation with the same identifier already exists</td>
             </tr>
             </table>
@@ -8538,11 +8538,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             <tr>
-              <td>`user_inputs_schema_invalid`</td>
+              <td><b>user_inputs_schema_invalid</b></td>
               <td>The provided user inputs are invalid</td>
             </tr>
             </table>
@@ -8556,7 +8556,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -8646,7 +8646,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             </table>
@@ -8660,7 +8660,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -11390,7 +11390,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The action/automation with the provided identifier was not found</td>
             </tr>
             </table>
@@ -11404,7 +11404,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`identifier_taken`</td>
+              <td><b>identifier_taken</b></td>
               <td>An action/automation with the same identifier already exists</td>
             </tr>
             </table>
@@ -11418,7 +11418,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             </table>
@@ -11432,7 +11432,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -11465,7 +11465,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The action/automation with the provided identifier was not found</td>
             </tr>
             </table>
@@ -11479,7 +11479,7 @@ paths:
                 <th>Description</th>
               </tr>
               <tr>
-                <td>`invalid_request`</td>
+                <td><b>invalid_request</b></td>
                 <td>The data provided does not match the route schema</td>
               </tr>
               </table>
@@ -11493,7 +11493,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -11526,7 +11526,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The action/automation with the provided identifier was not found</td>
             </tr>
             </table>
@@ -11540,7 +11540,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             </table>
@@ -11554,7 +11554,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -11587,7 +11587,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The action with the provided identifier was not found</td>
             </tr>
             </table>
@@ -11601,7 +11601,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             </table>
@@ -11615,7 +11615,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -11744,7 +11744,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The action with the provided identifier was not found</td>
             </tr>
             </table>
@@ -11758,7 +11758,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             </table>
@@ -11772,7 +11772,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -11816,8 +11816,176 @@ paths:
       security:
         - bearer: []
       responses:
-        "200":
-          description: Success
+        "202":
+          description: Executed successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  run:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      blueprint:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      entity:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      action:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      properties:
+                        type: object
+                      endedAt:
+                        type: string
+                        format: date-time
+                      source:
+                        type:
+                          - string
+                          - object
+                      requiredApproval:
+                        type:
+                          - boolean
+                          - object
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                              - ALL
+                              - ANY
+                        required:
+                          - type
+                      status:
+                        type: string
+                      statusLabel:
+                        type:
+                          - string
+                          - "null"
+                      link:
+                        type:
+                          - array
+                          - string
+                        items:
+                          type: string
+                      summary:
+                        type: string
+                      approval:
+                        type:
+                          - object
+                          - "null"
+                        properties:
+                          description:
+                            type: string
+                          userId:
+                            type:
+                              - string
+                              - "null"
+                          state:
+                            type: string
+                      payload:
+                        type:
+                          - object
+                          - "null"
+                        properties:
+                          type:
+                            type: string
+                          url:
+                            type: string
+                            format: uri
+                          agent:
+                            type: boolean
+                          synchronized:
+                            type: boolean
+                          method:
+                            type: string
+                          headers:
+                            type: object
+                            properties:
+                              RUN_ID:
+                                type: string
+                          body:
+                            type: object
+                            properties:
+                              port_context:
+                                type: object
+                                properties:
+                                  runId:
+                                    type: string
+                      response:
+                        type:
+                          - string
+                          - array
+                          - object
+                        items: {}
+                      createdBy:
+                        type: string
+                      updatedBy:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                    required:
+                      - id
+                      - action
+                      - properties
+                      - requiredApproval
+                      - source
+                      - status
+                required:
+                  - ok
+                additionalProperties: false
+                description: OK
         "403":
           description: |
             One of the following errors occurred:
@@ -11828,15 +11996,15 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`missing_permissions`</td>
+              <td><b>missing_permissions</b></td>
               <td>You are not permitted to execute this action. For further details, please contact your admin</td>
             </tr>
             <tr>
-              <td>`not_resolvable_destination`</td>
+              <td><b>not_resolvable_destination</b></td>
               <td>The Endpoint URL provided is not publicly available. Please choose another URL</td>
             </tr>
             <tr>
-              <td>`private_destination`</td>
+              <td><b>private_destination</b></td>
               <td>Destination is a private IP</td>
             </tr>
             </table>
@@ -11850,11 +12018,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The action with the provided identifier was not found</td>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The entity with the provided identifier was not found</td>
             </tr>
             </table>
@@ -11868,31 +12036,31 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             <tr>
-              <td>`run_non_self_service_error`</td>
+              <td><b>run_non_self_service_error</b></td>
               <td>Cannot create run manually for non self service action</td>
             </tr>
             <tr>
-              <td>`missing_self_service_action_entity`</td>
+              <td><b>missing_self_service_action_entity</b></td>
               <td>The desired action requires a specified entity</td>
             </tr>
             <tr>
-              <td>`entity_does_not_pass_condition`</td>
+              <td><b>entity_does_not_pass_condition</b></td>
               <td>The specified entity does not pass the condition defined in the action</td>
             </tr>
             <tr>
-              <td>`user_inputs_schema_invalid`</td>
+              <td><b>user_inputs_schema_invalid</b></td>
               <td>The provided user inputs do not match the action's schema</td>
             </tr>
             <tr>
-              <td>`invalid_evaluated_invocation_method`</td>
+              <td><b>invalid_evaluated_invocation_method</b></td>
               <td>Failed to validate evaluated invocation method</td>
             </tr>
             <tr>
-              <td>`evaluate_invocation_method_error`</td>
+              <td><b>evaluate_invocation_method_error</b></td>
               <td>Failed to evaluate invocation method</td>
             </tr>
             </table>
@@ -11906,7 +12074,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -11970,7 +12138,175 @@ paths:
         - bearer: []
       responses:
         '200':
-          description: Success
+          description: Patched successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  run:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      blueprint:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      entity:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      action:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      properties:
+                        type: object
+                      endedAt:
+                        type: string
+                        format: date-time
+                      source:
+                        type:
+                          - string
+                          - object
+                      requiredApproval:
+                        type:
+                          - boolean
+                          - object
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                              - ALL
+                              - ANY
+                        required:
+                          - type
+                      status:
+                        type: string
+                      statusLabel:
+                        type:
+                          - string
+                          - "null"
+                      link:
+                        type:
+                          - array
+                          - string
+                        items:
+                          type: string
+                      summary:
+                        type: string
+                      approval:
+                        type:
+                          - object
+                          - "null"
+                        properties:
+                          description:
+                            type: string
+                          userId:
+                            type:
+                              - string
+                              - "null"
+                          state:
+                            type: string
+                      payload:
+                        type:
+                          - object
+                          - "null"
+                        properties:
+                          type:
+                            type: string
+                          url:
+                            type: string
+                            format: uri
+                          agent:
+                            type: boolean
+                          synchronized:
+                            type: boolean
+                          method:
+                            type: string
+                          headers:
+                            type: object
+                            properties:
+                              RUN_ID:
+                                type: string
+                          body:
+                            type: object
+                            properties:
+                              port_context:
+                                type: object
+                                properties:
+                                  runId:
+                                    type: string
+                      response:
+                        type:
+                          - string
+                          - array
+                          - object
+                        items: {}
+                      createdBy:
+                        type: string
+                      updatedBy:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                    required:
+                      - id
+                      - action
+                      - properties
+                      - requiredApproval
+                      - source
+                      - status
+                required:
+                  - ok
+                additionalProperties: false
+                description: OK
         '404':
           description: |
             One of the following errors occurred:
@@ -11981,7 +12317,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The action run with the provided identifier was not found</td>
             </tr>
             </table>
@@ -11995,11 +12331,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             <tr>
-              <td>`run_synchronized_error`</td>
+              <td><b>run_synchronized_error</b></td>
               <td>Cannot manually change status of a synchronized action run</td>
             </tr>
             </table>
@@ -12013,7 +12349,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -12042,7 +12378,175 @@ paths:
             - 'read:runs'
       responses:
         '200':
-          description: Success
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: any
+                    enum:
+                      - true
+                  run:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      blueprint:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      entity:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      action:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                          title:
+                            type:
+                              - string
+                              - "null"
+                          icon:
+                            type:
+                              - string
+                              - "null"
+                          deleted:
+                            type: boolean
+                        required:
+                          - identifier
+                      properties:
+                        type: object
+                      endedAt:
+                        type: string
+                        format: date-time
+                      source:
+                        type:
+                          - string
+                          - object
+                      requiredApproval:
+                        type:
+                          - boolean
+                          - object
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                              - ALL
+                              - ANY
+                        required:
+                          - type
+                      status:
+                        type: string
+                      statusLabel:
+                        type:
+                          - string
+                          - "null"
+                      link:
+                        type:
+                          - array
+                          - string
+                        items:
+                          type: string
+                      summary:
+                        type: string
+                      approval:
+                        type:
+                          - object
+                          - "null"
+                        properties:
+                          description:
+                            type: string
+                          userId:
+                            type:
+                              - string
+                              - "null"
+                          state:
+                            type: string
+                      payload:
+                        type:
+                          - object
+                          - "null"
+                        properties:
+                          type:
+                            type: string
+                          url:
+                            type: string
+                            format: uri
+                          agent:
+                            type: boolean
+                          synchronized:
+                            type: boolean
+                          method:
+                            type: string
+                          headers:
+                            type: object
+                            properties:
+                              RUN_ID:
+                                type: string
+                          body:
+                            type: object
+                            properties:
+                              port_context:
+                                type: object
+                                properties:
+                                  runId:
+                                    type: string
+                      response:
+                        type:
+                          - string
+                          - array
+                          - object
+                        items: {}
+                      createdBy:
+                        type: string
+                      updatedBy:
+                        type: string
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                    required:
+                      - id
+                      - action
+                      - properties
+                      - requiredApproval
+                      - source
+                      - status
+                required:
+                  - ok
+                additionalProperties: false
+                description: OK
         '404':
           description: |
             One of the following errors occurred:
@@ -12053,7 +12557,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The action run with the provided identifier was not found</td>
             </tr>
             </table>
@@ -12067,7 +12571,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             </table>
@@ -12081,7 +12585,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -12307,7 +12811,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`missing_permissions`</td>
+              <td><b>missing_permissions</b></td>
               <td>You are not permitted to approve this action. For further details, please contact your admin</td>
             </tr>
             </table>
@@ -12321,7 +12825,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The action run with the provided identifier was not found</td>
             </tr>
             </table>
@@ -12335,11 +12839,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             <tr>
-              <td>`run_not_waiting_for_approval`</td>
+              <td><b>run_not_waiting_for_approval</b></td>
               <td>Action run is not waiting for approval</td>
             </tr>
             </table>
@@ -12353,7 +12857,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -12649,7 +13153,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             </table>
@@ -12663,7 +13167,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -12748,7 +13252,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The action run with the provided identifier was not found</td>
             </tr>
             </table>
@@ -12762,11 +13266,11 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             <tr>
-              <td>`run_exhausted`</td>
+              <td><b>run_exhausted</b></td>
               <td>Action run already finished execution</td>
             </tr>
             </table>
@@ -12780,7 +13284,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
@@ -12859,7 +13363,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`not_found`</td>
+              <td><b>not_found</b></td>
               <td>The action run with the provided identifier was not found</td>
             </tr>
             </table>
@@ -12873,7 +13377,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`invalid_request`</td>
+              <td><b>invalid_request</b></td>
               <td>The data provided does not match the route schema</td>
             </tr>
             </table>
@@ -12887,7 +13391,7 @@ paths:
               <th>Description</th>
             </tr>
             <tr>
-              <td>`internal_error`</td>
+              <td><b>internal_error</b></td>
               <td>An internal error occurred</td>
             </tr>
             </table>
