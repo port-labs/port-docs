@@ -11,6 +11,7 @@
 
 // @ts-check
 
+import { ClassNames } from '@emotion/react';
 import apiSidebar from './docs/api-reference/sidebar.ts';
 import guidessidebar from './docs/guides/sidebar.ts';
 

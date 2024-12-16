@@ -14,27 +14,26 @@ Port's Backstage integration allows you to model Backstage resources in your sof
 This integration allows you to:
 
 - Map and organize your desired Backstage resources and their metadata in Port (see supported resources below).
-- Periodically ingest Backstage resources into Port.
+- Watch for Backstage object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
 ### Supported Resources
 
-The resources that can be ingested from Backstage into Port are listed below.  
-It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+The resources that can be ingested from Backstage into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-- [Entities API](https://backstage.io/docs/features/software-catalog/software-catalog-api/#get-entitiesby-query)
-- [Component](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-component)
-- [Template](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template)
-- [API](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-api)
-- [Group](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-group)
-- [User](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user)
-- [Resource](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-resource)
-- [System](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-system)
-- [Domain](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-domain)
+- [`Entities API`](https://backstage.io/docs/features/software-catalog/software-catalog-api/#get-entitiesby-query)
+- [`Component`](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-component)
+- [`Template`](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template)
+- [`API`](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-api)
+- [`Group`](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-group)
+- [`User`](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user)
+- [`Resource`](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-resource)
+- [`System`](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-system)
+- [`Domain`](https://backstage.io/docs/features/software-catalog/descriptor-format#kind-domain)
 
 
-## Setup
+## Prerequisites
 
-### Create a Backstage Token
+### Create a Backstage token
 
 Port will authenticate to Backstage via [static tokens](https://backstage.io/docs/auth/service-to-service-auth/#static-tokens).  
 Configure a token for Port using the following Backstage configuration:
@@ -55,7 +54,7 @@ To create a token, Backstage recommends to use the following command:
 node -p 'require("crypto").randomBytes(24).toString("base64")'
 ```
 
-### Installation
+## Setup
 
 Choose one of the following installation methods:
 
@@ -71,21 +70,23 @@ Using this installation method means that the integration will be able to update
 
 <OceanRealtimeInstallation integration="Backstage" />
 
+For details about the available parameters for the installation, see the table below.
+
 This table summarizes the parameters used for the installation.  
 Note the parameters specific to this integration, they are last in the table. 
 
-| Parameter | Description | Required |
-| --------- | ----------- | -------- |
-| `port.clientId` | Your Port client id, used to identify your account | ✅ |
-| `port.clientSecret` | Your Port client secret, used to identify your account | ✅ |
-| `port.baseUrl` | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US | ✅ |
-| `initializePortResources` | Default: `true`. When `true`, the integration will create default blueprints and configuration mapping | ❌ |
-| `sendRawDataExamples` | Default: `true`. Enable sending raw data examples from the third party API to Port for testing and managing the integration mapping | ❌ |
-| `integration.identifier` | The integration's identifier, used to reference the integration when using Port's API | ✅ |
-| `integration.type` | The integration type, used to denote the integrated tool/platform | ✅ |
-| `integration.eventListener.type` | The method used to listen to events from the 3rd party tool (`POLLING` or `KAFKA`) | ✅ |
-| **`integration.secrets.backstageToken`** | The Backstage token used to authenticate Port to Backstage | ✅ |
-| **`integration.config.backstageUrl`** | The URL of the Backstage instance, including the port of the Backend API (usually 7007) | ✅ |
+| Parameter                                | Description                                                                                                                         | Required |
+|------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                          | Your Port client id, used to identify your account                                                                                  | ✅        |
+| `port.clientSecret`                      | Your Port client secret, used to identify your account                                                                              | ✅        |
+| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                             | ✅        |
+| `initializePortResources`                | Default: `true`. When `true`, the integration will create default blueprints and configuration mapping                              | ❌        |
+| `sendRawDataExamples`                    | Default: `true`. Enable sending raw data examples from the third party API to Port for testing and managing the integration mapping | ❌        |
+| `integration.identifier`                 | The integration's identifier, used to reference the integration when using Port's API                                               | ✅        |
+| `integration.type`                       | The integration type, used to denote the integrated tool/platform                                                                   | ✅        |
+| `integration.eventListener.type`         | The method used to listen to events from the 3rd party tool (`POLLING` or `KAFKA`)                                                  | ✅        |
+| **`integration.secrets.backstageToken`** | The Backstage token used to authenticate Port to Backstage                                                                          | ✅        |
+| **`integration.config.backstageUrl`**    | The URL of the Backstage instance, including the port of the Backend API (usually 7007)                                             | ✅        |
 
 </TabItem>
 

@@ -8,6 +8,8 @@ import PortYmlStructure from '../../\_port_yml_gitops_structure_template.md'
 import BasicFileProperties from '../../\_basic_file_properties_template.md'
 import RelativeFileProperties from '../../\_relative_file_properties_template.md'
 import GitOpsPushEvent from '../../\_git_gitops_push_events_explanation.mdx'
+import PortYmlNullProperties from '../../\_port_yml_null_properties.md'
+
 
 # GitOps
 
@@ -28,7 +30,7 @@ Note that the `port.yml` file is not the same as the [`port-app-config.yml` file
 The `port.yml` file can specify one or more Port entities that will be ingested to Port, and any change made to the `port.yml` file will also be reflected inside Port.
 
 :::tip Github app
-To manage entities using GitOps and the `port.yml` file, Port's [Github app](/build-your-software-catalog/sync-data-to-catalog/git/github/installation/) must be installed, as it listens to `push` events sent from Github.
+To manage entities using GitOps and the `port.yml` file, Port's [Github app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) must be installed, as it listens to `push` events sent from Github.
 
 This means that if the `port.yml` file exists in the repository before installing the app, it will not be picked up automatically. You will need to make some update to the `port.yml` file and push it to the repository in order for the Git app to properly track and ingest the entity information.
 :::
@@ -93,6 +95,8 @@ Since both of the valid `port.yml` formats follow the same structure, the follow
 ### `port.yml` structure
 
 <PortYmlStructure/>
+
+<PortYmlNullProperties/>
 
 ### Ingesting repository file contents
 
