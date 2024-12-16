@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Follow this guide to report a bug in GitLab via Port, ensuring effective issue tracking and timely resolution.
 ---
 
 # Create a Jira Issue

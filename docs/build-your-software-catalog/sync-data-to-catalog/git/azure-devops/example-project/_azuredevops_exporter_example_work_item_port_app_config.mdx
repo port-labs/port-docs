@@ -23,10 +23,11 @@ resources:
             reason: .fields."System.Reason"
             createdBy: .fields."System.CreatedBy".displayName
             changedBy: .fields."System.ChangedBy".displayName
+            assignedTo: .fields."System.AssignedTo".displayName
             createdDate: .fields."System.CreatedDate"
             changedDate: .fields."System.ChangedDate"
           relations:
-            project: .fields."System.TeamProject" | gsub(" "; "")
+            project: .__projectId | gsub(" "; "")
 
 ```
 

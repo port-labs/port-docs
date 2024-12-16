@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to connect LaunchDarkly flags to services in Port, enabling precise feature management and control.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"

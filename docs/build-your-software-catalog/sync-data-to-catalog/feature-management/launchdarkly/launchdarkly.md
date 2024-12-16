@@ -9,34 +9,35 @@ import TabItem from "@theme/TabItem"
 import DockerParameters from "./\_launchdarkly_one_time_docker_parameters.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
+
+
 
 # LaunchDarkly
 
-Our LaunchDarkly integration allows you to import `projects`, `flags`, and `environments` from your LaunchDarkly account into Port, according to your mapping and definition.
-
-A `Project` in LaunchDarkly is a collection of feature flags, targeting rules, and environments that correspond to a specific application or service.
-
-A `Flag` in LaunchDarkly represents a feature flag or toggle, which is a central concept in LaunchDarkly. Flags are used to control the visibility and operational state of features in your software without deploying new code.
-
-An `Environment` within a LaunchDarkly project is a logical separation of feature flag states and configurations, typically corresponding to stages in your development lifecycle.
-
-A `Flag Status` lets you know when a flag is active or inactive.
+Port's LaunchDarkly integration allows you to model LaunchDarkly resources in your software catalog and ingest data into them.
 
 
-### Common use cases
+## Overview
 
-- Entity Tracking - See all projects and their associated environments and feature flags.
+This integration allows you to:
 
-- Real time Synchronization of Infrastructure - Automatically synchronize projects, feature flags, and environments data from LaunchDarkly into Port for centralized tracking and management.
+- Map and organize your desired LaunchDarkly resources and their metadata in Port (see supported resources below).
+- Watch for LaunchDarkly object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
+
+### Supported Resources
+
+The resources that can be ingested from LaunchDarkly into Port are listed below.  
+It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+- [`Project`](https://apidocs.launchdarkly.com/tag/Projects)
+- [`Flag`](https://apidocs.launchdarkly.com/tag/Feature-flags)
+- [`Environment`](https://apidocs.launchdarkly.com/tag/Environments)
+- [`Flag Status`](https://apidocs.launchdarkly.com/tag/Feature-flags#operation/getFeatureFlagStatusAcrossEnvironments)
 
 
-## Prerequisites
 
-To install the integration, you need a Kubernetes cluster that the integration's container chart will be deployed to.
-
-Please make sure that you have [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl) and [`helm`](https://helm.sh/) installed on your machine, and that your `kubectl` CLI is connected to the Kubernetes cluster where you plan to install the integration.
-
-## Installation
+## Setup
 
 Choose one of the following installation methods:
 
@@ -48,54 +49,27 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                                | Description                                                                                                   | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------- |
-| `port.clientId`                          | Your Port client id                                                                                           | ✅      |
-| `port.clientSecret`                      | Your Port client secret                                                                                       | ✅      |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US | ✅      |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅      |
-| `integration.type`                       | The integration type                                                                                          | ✅      |
-| `integration.eventListener.type`         | The event listener type                                                                                       | ✅      |
-| `integration.config.launchdarklyHost` | Your LaunchDarkly host. For example https://app.launchdarkly.com for the default endpoint                                                                        | ✅      |
-| `integration.config.launchdarklyToken` | The LaunchDarkly API token                                                                           | ✅      |
-| `integration.config.appHost`             | Your application's host url                                                                                   | ✅       |
-| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌      |
-| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌      |
-| `sendRawDataExamples` | Default, true, Enable sending raw data examples from the third part API to port for testing and managing the integration mapping |  ❌   | 
+<Prerequisites />
 
-<br/>
+For details about the available parameters for the installation, see the table below.
+
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm">
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install launchdarkly port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true \
-  --set integration.identifier="my-launchdarkly-integration"  \
-  --set integration.type="launchdarkly"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.launchdarklyHost="string" \
-  --set integration.secrets.launchdarklyToken="string" \
-```
+<OceanRealtimeInstallation integration="Launchdarkly" />
 
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-launchdarkly-integration` in your git repository with the content:
 
@@ -178,21 +152,40 @@ kubectl apply -f my-ocean-launchdarkly-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                              | Description                                                                                                                      | Required |
+|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                        | Your Port client id                                                                                                              | ✅        |
+| `port.clientSecret`                    | Your Port client secret                                                                                                          | ✅        |
+| `port.baseUrl`                         | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                          | ✅        |
+| `integration.identifier`               | Change the identifier to describe your integration                                                                               | ✅        |
+| `integration.type`                     | The integration type                                                                                                             | ✅        |
+| `integration.eventListener.type`       | The event listener type                                                                                                          | ✅        |
+| `integration.config.launchdarklyHost`  | Your LaunchDarkly host. For example https://app.launchdarkly.com for the default endpoint                                        | ✅        |
+| `integration.config.launchdarklyToken` | The LaunchDarkly API token, docs can be found [here](https://docs.launchdarkly.com/home/account/api-create)                      | ✅        |
+| `integration.config.appHost`           | Your application's host url                                                                                                      | ✅        |
+| `scheduledResyncInterval`              | The number of minutes between each resync                                                                                        | ❌        |
+| `initializePortResources`              | Default true, When set to true the integration will create default blueprints and the port App config Mapping                    | ❌        |
+| `sendRawDataExamples`                  | Default, true, Enable sending raw data examples from the third part API to port for testing and managing the integration mapping | ❌        | 
+
 <h3>Event listener</h3>
 
 The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
 
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -207,10 +200,13 @@ name: LaunchDarkly Exporter Workflow
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
@@ -226,13 +222,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [LaunchDarkly Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
@@ -285,11 +277,6 @@ pipeline {
 
   </TabItem>
     <TabItem value="gitlab" label="GitLab">
-This workflow will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -338,7 +325,6 @@ ingest_data:
 ```
 
 </TabItem>
-
   </Tabs>
 
 <PortApiRegionTip/>
@@ -346,97 +332,18 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting LaunchDarkly objects
+## Configuration
 
-The LaunchDarkly integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-Here is an example snippet from the config which demonstrates the process for getting `Projects` from LaunchDarkly:
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-```yaml showLineNumbers
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"launchDarklyProject"'
-          properties:
-            tags: .tags
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from LaunchDarkly's API events.
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from LaunchDarkly, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from LaunchDarkly, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Project`](https://apidocs.launchdarkly.com/tag/Projects)
-- [`Flag`](https://apidocs.launchdarkly.com/tag/Feature-flags)
-- [`Environment`](https://apidocs.launchdarkly.com/tag/Environments)
-- [`Flag Status`](https://apidocs.launchdarkly.com/tag/Feature-flags#operation/getFeatureFlagStatusAcrossEnvironments)
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: project
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a LaunchDarkly object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: project
-        selector:
-        ...
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the LaunchDarkly object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-```yaml showLineNumbers
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"launchDarklyProject"'
-          properties:
-            tags: .tags
-```
-
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-:::
-
-### Ingest data into Port
-
-To ingest LaunchDarkly objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using LaunchDarkly.
-3. Choose the **Ingest Data** option from the menu.
-4. Select LaunchDarkly under the Feature Management category.
-5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
-6. Click `Resync`.
 
 ## Examples
 
-Examples of blueprints and the relevant integration configurations:
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
+
+Additional examples of blueprints and the relevant integration configurations:
 
 ### Project
 
@@ -775,9 +682,12 @@ resources:
 ```
 
 </details>
+
+
+
 ## Let's Test It
 
-This section includes a sample response data from LaunchDarkly. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+This section includes sample response data from LaunchDarkly. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
 
 ### Payload
 
@@ -1352,3 +1262,9 @@ The combination of the sample payload and the Ocean configuration generates the 
   }
 ```
 </details>
+
+
+
+## Relevant Guides
+
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Launchdarkly).

@@ -33,6 +33,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Promote to production](/guides/all/promote-to-production)
 - [Self-service action to lock and unlock a service](/guides/all/lock-and-unlock-service-in-port)
 - [Connect GitHub Codeowners with Service, Team and User](/guides/all/connect-github-codeowners-with-service-team-and-user)
+- [Ingest Javascript packages into your catalog using GitHub file ingesting feature](/guides/all/ingest-javascript-packages-into-your-catalog)
 
 ### GitLab
 
@@ -69,6 +70,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Map Knative](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/knative.md)
 - [Map Red Hat Openshift](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/openshift.md)
 - [Map Trivy](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/trivy.md)
+- [Ingest Trivy vulnerabilities into your catalog using GitHub file ingesting feature](/guides/all/ingest-trivy-vulnerabilities-into-your-catalog)
 - [Map Kyverno](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/kyverno.md)
 - [Map FluxCD](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/fluxcd.md)
 - [Map CRDs](/build-your-software-catalog/sync-data-to-catalog/kubernetes/custom-crds.md)
@@ -98,7 +100,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ### Terraform Cloud
 
 - [Terraform cloud](/build-your-software-catalog/sync-data-to-catalog/terraform-cloud)
-- [Terraform cloud actions](/actions-and-automations/setup-backend/terraform-cloud)
+- [Terraform cloud actions](/actions-and-automations/setup-backend/webhook/terraform-cloud)
 
 ### Pulumi
 
@@ -135,7 +137,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 #### Google cloud build
 
-- [Cloud build self-service action](/actions-and-automations/setup-backend/cloudbuild-pipeline/cloudbuild-pipeline.md)
+- [Cloud build self-service action](/actions-and-automations/setup-backend/webhook/cloudbuild-pipeline/cloudbuild-pipeline.md)
 
 ## Cookiecutter
 
@@ -179,7 +181,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## PagerDuty
 
-- [PagerDuty integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md)
+- [PagerDuty integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/pagerduty.md)
 - [Ensure production readiness](/guides/all/ensure-production-readiness.md)
 - [Self service for a new PagerDuty incident using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/pagerduty)
 - [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
@@ -191,7 +193,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Self-service action to resolve a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident)
 - PagerDuty Incident Management
     - [Automation to handle PagerDuty incidents](https://docs.getport.io/guides/all/create-slack-channel-for-reported-incident)
-    - [Self-service action to resolve Pagerduty incidents](https://docs.getport.io/guides-and-tutorials/resolve-pagerduty-incidents) - including Slack channel notification and closing GitHub issue.
+    - [Self-service action to resolve Pagerduty incidents](https://docs.getport.io/guides-and-tutorials/resolve-pagerduty-incident) - including Slack channel notification and closing GitHub issue.
 
 ## Jira
 
@@ -218,8 +220,11 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## OpsGenie
 
-- [OpsGenie integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie.md)
-- [Self-service action to trigger an OpsGenie incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/Opsgenie/trigger-an-incident)
+- [OpsGenie integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie/opsgenie.md)
+- [Self-service action to trigger an OpsGenie incident](https://docs.getport.io/guides/all/create-an-opsgenie-incident)
+
+## Incident IO
+- [Sync Port Services to Incident IO](/guides/all/sync-service-entities-to-incident-io)
 
 ## FireHydrant
 
@@ -240,14 +245,11 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Dynatrace
 
 - [Dynatrace integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace)
-- [Dynatrace webhook](/build-your-software-catalog/custom-integration/webhook/examples/dynatrace.md)
 
 ## Datadog
 
 - [Datadog integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog)
 - [Embed dashboards from Datadog](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/#datadog-dashboard)
-- [Datadog webhook](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md)
-- [Datadog service catalog](/build-your-software-catalog/custom-integration/webhook/examples/datadog.md#ingest-service-catalog)
 - [Self-service action to trigger Datadog incident](/guides/all/trigger-datadog-incident)
 
 ## Prometheus
@@ -276,7 +278,6 @@ This page contains a list of Port's available integrations, organized by the pla
 
 - [Jenkins Integration](/build-your-software-catalog/sync-data-to-catalog/cicd/jenkins)
 - [Sync Jenkins pipelines via API](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/jenkins-deployment.md)
-- [Jenkins webhook integration with Port](/build-your-software-catalog/custom-integration/webhook/examples/jenkins.md)
 - [Jenkins pipeline self-service actions](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md)
 - [GitHub scaffolder using Jenkins](/guides/all/scaffold-github-using-cookiecutter.md)
 - [Bitbucket scaffolder using Jenkins](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
@@ -293,7 +294,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## CircleCI
 
 - [Sync CircleCI workflows](/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/circleci-workflow.md)
-- [CircleCI actions](/actions-and-automations/setup-backend/circle-ci)
+- [CircleCI actions](/actions-and-automations/setup-backend/webhook/circle-ci)
 
 <!-- ## Backstage
 
@@ -321,3 +322,12 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Google workspace SSO](/sso-rbac/sso-providers/saml/google-workspace.md)
 - [Azure Active Directory (AD) SSO OIDC](/sso-rbac/sso-providers/oidc/azure-ad.md)
 - [Azure Active Directory (AD) SSO SAML](/sso-rbac/sso-providers/saml/azure-ad.md)
+
+## Checkmarx
+- [Ingest Checkmarx KICS scan into your catalog](/guides/all/ingest-checkmarx-kics-scan-into-your-catalog)
+
+## SBOM
+- [Ingest software bill of material (SBOM) into your catalog](/guides/all/ingest-software-bill-of-materials-sbom-into-your-catalog)
+
+## Swagger
+- [Ingest Swagger paths into your catalog](/guides/all/ingest-swagger-paths-into-your-catalog)

@@ -9,9 +9,9 @@ import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/template
 # Catalog page
 
 A catalog page displays a table of all existing [entities](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
-In this example we can see all of the cluster entities we created from the `K8s Cluster` blueprint:
+In this example we can see all of the microservice entities we created from the `microservice` blueprint:
 
-![Microservice blueprint page](/img/software-catalog/pages/catalogPage.png)
+<img src='/img/software-catalog/pages/catalogPage.png' width='80%' border='1px' />
 
 ## Page creation
 
@@ -26,14 +26,14 @@ You can also manually create additional catalog pages for any existing blueprint
 
 <TabItem value="ui">
 
-To create a new catalog page, go to your [Software Catalog](https://app.getport.io/services), click the `+ New` button in the top left corner, and select `New catalog page`.
+To create a new catalog page, go to the [Catalog](https://app.getport.io/organization/catalog) page, click the `+ New` button in the top left corner, and select `New catalog page`.
 
 </TabItem>
 
 <TabItem value="api">
 
 :::tip API options
-See all the available API fields [here](https://api.getport.io/static/index.html#/Pages/post_v1_pages).
+See all the available API fields [here](https://api.getport.io/swagger/static/index.html#/Pages/post_v1_pages).
 :::
 
 ```json showLineNumbers
@@ -155,6 +155,14 @@ const catalogPage = new port.Page(
 
 </Tabs>
 
+:::info Default table columns
+By default, the table in a catalog page will display the following columns for each entity:  
+`Identifier`, `Last update time`, and `Creation time`.  
+Other properties will be hidden by default.  
+
+You can always customize the table to [hide/show columns](/customize-pages-dashboards-and-plugins/page/catalog-page?create-page=ui#hideshow-columns).
+:::
+
 ### Description
 
 You can provide additional context to your developers by using the `Description` field when creating a catalog page.  
@@ -173,7 +181,7 @@ The description will be displayed at the top of the page, under the page title:
 In some cases, an entities table may be very large, resulting in long loading times. To prevent this, you can define filters that resolve when Port queries the data (rather than after querying).  
 To define such a filter, use the `Initial filters` field when creating a page:
 
-<img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' />
+<img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' border='1px' />
 
 <br/><br/>
 
@@ -198,15 +206,13 @@ You can use [dynamic properties](/search-and-query/#dynamic-properties) of the l
 Another way to reduce loading times is to exclude undesired properties from an entities table when querying the data. When using this option, the new table will not contain columns for the excluded properties.  
 To do this, use the `Excluded properties` field when creating a page:
 
-<img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%' />
-
-
+<img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%'  border='1px' />
 
 ## Customization
 
 The entities table can be customized, which will define the users' view of the Port platform.
 
-:::tip
+:::tip Recommended customizations
 
 We highly recommend using these customizations to provide a clean and accurate view of the platform for your developers.
 
@@ -253,19 +259,20 @@ You can sort the table by using the following menu:
 
 You can sort by one or more fields of any kind.
 
-:::tip
+:::tip Column sorting
 To sort a specific column, click on the column title.
 :::
 
-### Hide
+### Hide/show columns
 
-You can hide table columns by using the following menu:
+You can show/hide properties by using the `Manage Properties` option in the top-right corner of the table:
 
-![Table hide menu marked](/img/software-catalog/pages/TableHideMenu.png)
+<img src='/img/software-catalog/pages/TableHideMenu.png' width='30%' border='1px' />
+<br/><br/>
 
-You can decide whether each field is viewable to users or not.
+You can also drag and drop the properties in this view to reorder them in the table.
 
-:::tip
+:::tip Hide irrelevant data
 We highly recommend hiding irrelevant data from users, to provide them with a clean work environment, relieving them from any distractions.
 :::
 
@@ -274,18 +281,19 @@ We highly recommend hiding irrelevant data from users, to provide them with a cl
 You can add, edit, or delete a blueprint's properties directly from the table by using the `Manage properties` button.  
 See the [Configure properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#from-the-software-catalog) section for more details.
 
-### Group By
+### Group by
 
-You can group by entities by using the following menu:
+You can group table entities by a specific property using the following menu:
 
-![Table group by menu marked](/img/software-catalog/pages/TableGroupByMenu.png)
+<img src="/img/software-catalog/pages/TableGroupByMenu.png" width="80%" border="1px" />
+<br/><br/>
 
-You can group results according to any field in the table.
+You can group entities by any **non-array** property.
 
-:::tip
-Group by is recommended when you want to create custom views for users, such as "microservices by owners".
+:::tip Use-case
+The `group-by` option is useful when you want to create custom views for users, such as "microservices by owners".
 
-Just create your `group by` setting, add additional viewing settings if needed, and [save a new page](#saving-new-pages) from the custom view.
+Just create your `group-by` view (and any other table customizations you desire), and [save as a new page](#save-a-view).
 :::
 
 ### Search
@@ -331,7 +339,7 @@ You can edit, lock or delete a page by clicking the `...` button in the top righ
 
 #### Editing pages
 
-Editing a page allows you to change its name and/or icon:
+Editing a page allows you to change various properties:
 
 ![Edit Page popup window](/img/software-catalog/pages/EditPageForm.png)
 

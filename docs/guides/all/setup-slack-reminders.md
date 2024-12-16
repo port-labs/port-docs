@@ -2,6 +2,7 @@
 sidebar_position: 8
 title: Send Slack reminders for scorecards
 displayed_sidebar: null
+description: Learn how to set up Slack reminders in Port, ensuring timely notifications and improved team productivity.
 ---
 
 import Tabs from "@theme/Tabs"
@@ -36,24 +37,25 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Setup the action's frontend
 
-:::tip Onboarding
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
+2. Click on the `+ Action` button on the top left conner :
 
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
+  <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
-If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
-:::
+3. Fill in the action's details as shown below:
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Send scorecard reminder` action, click the `...` button in the top right corner, and choose "Edit":
+  - **Title** and **Description**
+  - **Operation**: `Create`
+  - **Blueprint**: `Service`
+  - **icon**: `Slack`
 
-    <img src='/img/guides/slackEditAction.png' width='45%' border='1px' />
+This Self-service has no user inputs, click on the `Next` button twice  to proceed to the `Backend` tab.
 
-2. The action's basic details should look like the image below. This action has no user inputs, so when ready, click on the `Backend` tab to proceed.
-
-    <img src='/img/guides/slackActionDetails.png' width='60%' border='1px' />
+<img src='/img/guides/slackActionDetails.png' width='60%' border='1px' />
 
 #### Define backend type
 
-Now we'll define the backend type of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
+Now we'll define the backend of the action. Port supports multiple invocation types, depending on the Git provider you are using.
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},

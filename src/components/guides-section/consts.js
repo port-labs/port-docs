@@ -1,14 +1,14 @@
 export const tagsCategoryMap = {
-    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics"],
+    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog"],
     "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
         "GitLab",
         "BitBucket",
+        "AzureDevops",
         "Azure",
         "Webhook",
         "Kafka",
-        // "AzureDevops",
         "Jenkins",
         "Jira",
         "Kubernetes",
@@ -26,7 +26,9 @@ export const tagsCategoryMap = {
         // "Snyk",
         "Datadog",
         "Dynatrace",
-        "Humanitec"
+        "Humanitec",
+        "New Relic",
+        "ServiceNow",
     ]
 };
 
@@ -37,7 +39,7 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/scaffold-a-new-service",
     },
     {
@@ -46,7 +48,7 @@ export const availableGuides = [
         tags: ["SDLC", "Scorecards", "PagerDuty"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["PagerDuty", "Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/ensure-production-readiness",
     },
     {
@@ -55,7 +57,7 @@ export const availableGuides = [
         tags: ["IaC for devs", "AWS", "Actions", "Cloud access management"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["AWS", "Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/create-cloud-resource-using-iac",
     },
     {
@@ -63,7 +65,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime",
         tags: ["K8s for devs", "Actions", "Dashboards", "Scorecards"],
         logos: ["Kubernetes" ],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/visualize-service-k8s-runtime",
     },
     {
@@ -71,7 +73,7 @@ export const availableGuides = [
         description: "Create views to track the health, status, and other standards of your services' k8s runtime using ArgoCD",
         tags: ["K8s for devs", "ArgoCD", "Actions", "Dashboards", "Scorecards"],
         logos: ["ArgoCD", "Kubernetes"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/visualize-service-argocd-runtime",
     },
     {
@@ -80,8 +82,16 @@ export const availableGuides = [
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
-        // category: "Getting started",
+        category: "Getting started",
         link: "/guides/all/let-developers-enrich-services-using-gitops",
+    },
+    {
+        title: "Slack reminders for scorecards",
+        description: "Send a Slack reminder for uncompleted scorecard rules using a self-service action",
+        tags: ["Engineering metrics", "Actions", "Scorecards"],
+        logos: ["Slack"],
+        category: "Getting started",
+        link: "/guides/all/setup-slack-reminders",
     },
     {
         title: "IAM permission management",
@@ -98,14 +108,6 @@ export const availableGuides = [
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/service-lock-github-workflow",
-    },
-    {
-        title: "Slack reminders for scorecards",
-        description: "Send a Slack reminder for uncompleted scorecard rules using a self-service action",
-        tags: ["Engineering metrics", "Actions", "Scorecards"],
-        logos: ["Slack"],
-        // category: "Getting started",
-        link: "/guides/all/setup-slack-reminders",
     },
     {
         title: "Automate Slack alerts for Overdue PRs",
@@ -294,8 +296,8 @@ export const availableGuides = [
     {
         title: "Nudge Pull Request Reviewers",
         description: "Create a self-service action that nudges reviewers of a pull request",
-        tags: ["GitHub", "Actions"],
-        logos: ["GitHub"],
+        tags: ["GitHub", "Actions", "Slack"],
+        logos: ["GitHub", "Slack"],
         // category: "Getting started",
         link: "/guides/all/nudge-pr-reviewers",
     },
@@ -453,7 +455,7 @@ export const availableGuides = [
     },
     {
         title: "Deploy Azure Resource using Terraform",
-        description: "Create a self-service action that deployes a storage account in Azure using Terraform",
+        description: "Create a self-service action that deploys a storage account in Azure using Terraform",
         tags: ["IaC for devs", "Azure", "Terraform", "Actions"],
         logos: ["Azure", "Terraform"],
         // category: "Getting started",
@@ -591,7 +593,7 @@ export const availableGuides = [
         title: "Trigger a ServiceNow Incident",
         description: "Create a self-service action that triggers a ServiceNow incident",
         tags: ["Incident management", "GitHub", "Actions"],
-        logos: ["GitHub"],
+        logos: ["ServiceNow", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/trigger-servicenow-incident",
     },
@@ -718,16 +720,16 @@ export const availableGuides = [
     {
         title: "Scaffold Azure DevOps Repositories Using Cookiecutter",
         description: "Create a self-service action that scaffolds Azure DevOps repositories using a Cookiecutter template",
-        tags: ["SDLC", "Azure", "Actions"],
-        logos: ["Azure"],
+        tags: ["SDLC", "AzureDevops", "Actions"],
+        logos: ["AzureDevops"],
         // category: "Getting started",
         link: "/guides/all/scaffold-repositories-using-cookiecutter",
     },
     {
         title: "Create Azure Resource with Terraform",
         description: "Create a self-service action that creates a storage account in Azure using a Terraform template",
-        tags: ["IaC for devs", "Azure", "Terraform", "Actions"],
-        logos: ["Azure", "Terraform"],
+        tags: ["IaC for devs", "AzureDevops", "Terraform", "Actions"],
+        logos: ["AzureDevops", "Terraform"],
         // category: "Getting started",
         link: "/guides/all/create-azure-resource-ado",
     },
@@ -738,5 +740,134 @@ export const availableGuides = [
         logos: ["GitHub"],
         // category: "Getting started",
         link: "/guides/all/ingest-dependencies-from-package-json-to-service",
+    },
+    {
+        title: "Manage Kubernetes namespaces via a Port workflow",
+        description: "Chain actions and automations to automate the deletion of Kubernetes namespaces",
+        tags: ["K8s for devs", "Actions", "Automations", "GitLab"],
+        logos: ["Kubernetes", "GitLab"],
+        // category: "Getting started",
+        link: "/guides/all/manage-kubernetes-namespaces",
+    },
+    {
+        title: "Sync Service Entities to incident.io",
+        description: "Create a GitHub action that syncs service entities to your incident.io catalog",
+        tags: ["Incident management","GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/sync-service-entities-to-incident-io",
+    },
+    {
+        title: "Ingest cloud resources with Datadog",
+        description: "Learn how to ingest cloud resources using Datadog in Port, enhancing visibility and performance monitoring",
+        tags: ["Cloud access management", "Datadog"],
+        logos: ["Datadog"],
+        link: "/guides/all/ingest-cloud-resources-using-datadog",
+    },
+    {
+        title: "Track DORA Metrics",
+        description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
+        tags: ["Engineering metrics","GitHub","GitLab","AzureDevOps","Dashboards"],
+        logos: ["Git"],
+        link: "/guides/all/setup-dora-metrics",
+    },
+    {
+        title: "Ingest a swagger.json file into your catalog",
+        description: "Ingest API paths from a `swagger.json` file in a GitHub repository into Port",
+        tags: ["API catalog", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-swagger-paths-into-your-catalog",
+    },
+    {
+        title: "Ingest Checkmarx KICS scan results into your catalog",
+        description: "Ingests Checkmarx KICS scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature",
+        tags: ["AppSec", "Checkmarx", "GitHub"],
+        logos: ["Checkmarx", "GitHub"],
+        link: "/guides/all/ingest-checkmarx-kics-scan-into-your-catalog"
+    },
+    {
+        title: "Ingest Javascript packages into your catalog",
+        description: "Ingests all Javascript packages in `package.json` file using Port's GitHub file ingesting feature",
+        tags: ["Dependency management", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-javascript-packages-into-your-catalog"
+    },
+    {
+        title: "Ingest software bills of materials (SBOMs) into your catalog",
+        description: "Ingests software bill of material (SBOM) in your `SBOM.json` or `SBOM.xml` file using Port's GitHub file ingesting feature",
+        tags: ["AppSec", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-software-bill-of-materials-sbom-into-your-catalog"
+    },
+    {
+        title: "Ingest Trivy vulnerabilities into your catalog",
+        description: "Ingests Trivy vulnerabilities in your Trivy scan results file using Port's GitHub file ingesting feature",
+        tags: ["AppSec", "Trivy", "GitHub"],
+        logos: ["Trivy", "GitHub"],
+        link: "/guides/all/ingest-trivy-vulnerabilities-into-your-catalog"
+    },
+    {
+        title: "Ingest cloud resources using New Relic",
+        description: "Ingest cloud resources from your New Relic environment into Port",
+        tags: ["Engineering metrics", "New Relic"],
+        logos: ["New Relic"],
+        // category: "Getting started",
+        link: "/guides/all/ingest-cloud-resources-using-newrelic",
+    },
+    {
+        title: "Ingest vulnerability alerts from Orca Security",
+        description: "Ingest vulnerability alerts from Orca Security using a custom webhook integration",
+        tags: ["AppSec", "Webhook"],
+        logos: ["Webhook"],
+        link: "/guides/all/ingest-vulnerability-alerts-from-orca-security-using-a-custom-webhook-integration"
+    },
+    {
+        title: "Measure pull request standards",
+        description: "Implement working agreements and measure pr standards",
+        tags: ["Engineering metrics", "GitHub", "Dashboards"],
+        logos: ["GitHub"],
+        link: "/guides/all/working_agreements_and_measuring_pr_standards"
+       
+    },
+    {
+        title: "Automatically approve actions using an automation",
+        description: "Set up automated approvals for self service actions",
+        tags: ["Cloud access management", "Actions", "Automations"],
+        logos: ["Slack"],
+        link: "/guides/all/automatically-approve-action-using-automation"
+    },
+    {
+        title: "Track SLOs and SLIs for services",
+        description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
+        tags: ["Engineering metrics", "New Relic", "Dashboards"],
+        logos: ["New Relic"],
+        link: "/guides/all/track-slos-and-slis-for-services"
+    },
+    {
+        title: "Ingest security issues from .sarif files to services",
+        description: "Ingest .sarif files and relate them to the corresponding service entities",
+        tags: ["AppSec", "GitHub"],
+        logos: ["GitHub"],
+        link: "/guides/all/ingest-security-issues-from-sarif-files-to-services",
+    },
+    {
+        title: "Set up announcements in your portal",
+        description: "Create components to send announcements to members in your portal",
+        tags: ["Actions", "Dashboards"],
+        logos: ["Actions"],
+        link: "/guides/all/setup-portal-announcements",
+    },
+    {
+        title: "Set up DORA Metrics benchmark",
+        description: "Track and improve engineering performance by setting up DORA metrics benchmark",
+        tags: ["Engineering metrics","Scorecards","Dashboards"],
+        logos: ["Git"],
+        link: "/guides/all/setup-dora-metrics-benchmark"
+    },
+    {
+        title: "Manage service deployments using GitLab and ServiceNow", 
+        description: "Create a chain of self-service actions that deploy a service using GitLab and ServiceNow",
+        tags: ["Incident management", "GitLab", "Actions", "Automations"],
+        logos: ["ServiceNow", "GitLab"],
+        link: "/guides/all/approval-workflow-for-gitlab-deployment"
     }
 ]

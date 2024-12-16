@@ -10,26 +10,32 @@ import SentryIssuesBluePrint from "/docs/build-your-software-catalog/custom-inte
 import SentryIssuesConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_issue_event_webhook_configuration.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Sentry
 
-Our Sentry integration allows you to import `projects`, `issues`, `project-tag` and `issue-tag` from your Sentry cloud account into Port, according to your mapping and definition.
+Port's Sentry integration allows you to model Sentry resources in your software catalog and ingest data into them.
 
-A `Project` is essentially a container for all the data and information related to a specific application or service that you want to monitor.
 
-An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
+## Overview
 
-A `Tag` is a key/value pair used to attach additional metadata to objects. This metadata can include information such as the environment, runtime, log level, and more.
+This integration allows you to:
 
-## Common use cases
+- Map and organize your desired Sentry resources and their metadata in Port (see supported resources below).
+- Watch for Sentry object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-- Map your monitored projects and issues into Port.
+### Supported Resources
 
-## Prerequisites
+The resources that can be ingested from Sentry into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-<Prerequisites />
+- [`Project`](https://docs.sentry.io/api/projects/list-your-projects/)
+- [`Issue`](https://docs.sentry.io/api/events/list-a-projects-issues/)
+- [`Project Tag`](https://docs.sentry.io/api/projects/list-a-tags-values/)
+- [`Issue Tag`](https://docs.sentry.io/api/events/list-a-tags-values-related-to-an-issue/)
 
-## Installation
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -41,53 +47,29 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
 
-| Parameter                               | Description                                                                                                   | Required |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                         | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`                     | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
-| `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`                      | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type`        | The event listener type                                                                                       | ✅       |
-| `integration.secrets.sentryToken`       | The Sentry API [token](https://docs.sentry.io/api/guides/create-auth-token/). The token requires `read` permissions for `Projects` and `Issue & Event`                                                                                     | ✅       |
-| `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                | ✅       |
-| `integration.config.sentryOrganization` | The Sentry organization slug. For example `acme` from `https://acme.sentry.io`                                                                                 | ✅       |
-| `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+<h2> Prerequisites </h2>
 
-<br/>
+<Prerequisites />
+
+For details about the available parameters for the installation, see the table below.
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-sentry-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set integration.identifier="my-sentry-integration"  \
-  --set integration.type="sentry"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.config.sentryHost="https://sentry.io"  \
-  --set integration.secrets.sentryToken="string"  \
-  --set integration.config.sentryOrganization="string"
-```
+<OceanRealtimeInstallation integration="Sentry" />
+
 <PortApiRegionTip/>
 
 </TabItem>
+
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-sentry-integration` in your git repository with the content:
 
@@ -173,6 +155,26 @@ kubectl apply -f my-ocean-sentry-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+Note the parameters specific to this integration, they are last in the table.
+
+| Parameter                               | Description                                                                                                                                            | Required |
+|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                         | Your port client id                                                                                                                                    | ✅        |
+| `port.clientSecret`                     | Your port client secret                                                                                                                                | ✅        |
+| `port.baseUrl`                          | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                | ✅        |
+| `integration.identifier`                | Change the identifier to describe your integration                                                                                                     | ✅        |
+| `integration.type`                      | The integration type                                                                                                                                   | ✅        |
+| `integration.eventListener.type`        | The event listener type                                                                                                                                | ✅        |
+| `scheduledResyncInterval`               | The number of minutes between each resync                                                                                                              | ❌        |
+| `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                          | ❌        |
+| `integration.secrets.sentryToken`       | The Sentry API [token](https://docs.sentry.io/api/guides/create-auth-token/). The token requires `read` permissions for `Projects` and `Issue & Event` | ✅        |
+| `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                                                         | ✅        |
+| `integration.config.sentryOrganization` | The Sentry organization slug. For example `acme` from `https://acme.sentry.io`                                                                         | ✅        |
+
+
+<br/>
+
 <AdvancedConfig/>
 
 <h3>Event listener</h3>
@@ -181,14 +183,16 @@ The integration uses polling to pull the configuration from Port every minute an
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates 
+If you want the integration to update Port in real time you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
+:::
+
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -201,14 +205,15 @@ Here is an example for `sentry-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Sentry Exporter Workflow
 
-# This workflow responsible for running Sentry exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
@@ -225,13 +230,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
@@ -284,10 +285,9 @@ pipeline {
 ```
 
   </TabItem>
-
   <TabItem value="azure" label="Azure Devops">
   
-  <AzurePremise name="Sentry" />
+  <AzurePremise  />
 
 <DockerParameters /> 
 
@@ -331,13 +331,8 @@ steps:
 ```
 
   </TabItem>
+  <TabItem value="gitlab" label="GitLab">
 
-<TabItem value="gitlab" label="GitLab">
-This workflow will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -395,104 +390,13 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting Sentry objects
 
-The Sentry integration uses a YAML configuration to describe the process of loading data into the developer portal.
+## Configuration
 
-Here is an example snippet from the config which demonstrates the process for getting `Issue` data from Sentry:
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-```yaml showLineNumbers
-resources:
-  - kind: issue
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: ".id"
-          title: ".title"
-          blueprint: '"sentryIssue"'
-          properties:
-            link: ".permalink"
-            status: ".status"
-            isUnhandled: ".isUnhandled"
-          relations:
-            project: ".project.slug"
-```
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Sentry's API events.
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Sentry, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from Sentry, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Project`](https://docs.sentry.io/api/projects/list-your-projects/)
-- [`Issue`](https://docs.sentry.io/api/events/list-a-projects-issues/)
-- [`Project Tag`](https://docs.sentry.io/api/projects/list-a-tags-values/)
-- [`Issue Tag`](https://docs.sentry.io/api/events/list-a-tags-values-related-to-an-issue/)
-
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: project
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Sentry object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: project
-        selector:
-        ...
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Sentry object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings:
-            identifier: .slug
-            title: .name
-            blueprint: '"sentryProject"'
-            properties:
-              dateCreated: .dateCreated
-              platform: .platform
-              status: .status
-              link: .organization.links.organizationUrl + "/projects/" + .name
-          # highlight-end
-  ```
-
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-:::
-
-### Ingest data into Port
-
-To ingest Sentry objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Sentry.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Sentry under the APM & alerting category.
-5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
-6. Click `Resync`.
 
 ## Examples
 
@@ -658,7 +562,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "sentryProject",
+  "identifier": "sentryProjectEnvironment",
   "title": "Sentry Project Environment",
   "icon": "Sentry",
   "schema": {
@@ -718,7 +622,7 @@ resources:
         mappings:
           identifier: .slug + "-" + .__tags.name
           title: .name + "-" + .__tags.name
-          blueprint: '"sentryProject"'
+          blueprint: '"sentryProjectEnvironment"'
           properties:
             dateCreated: .dateCreated
             platform: .platform
@@ -1036,7 +940,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "python-fastapi-production",
   "title": "python-fastapi-production",
   "icon": null,
-  "blueprint": "sentryProject",
+  "blueprint": "sentryProjectEnvironment",
   "team": [],
   "properties": {
     "dateCreated": "2023-03-31T06:18:37.290732Z",

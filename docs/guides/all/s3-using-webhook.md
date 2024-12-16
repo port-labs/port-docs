@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 displayed_sidebar: null
+description: Learn how to manage S3 buckets using webhooks in Port, enabling automated and efficient cloud operations.
 ---
 
 # Create an S3 bucket using Self-Service Actions
@@ -45,8 +46,7 @@ In this example, you were introduced to a few alternatives for creating an S3 bu
 
 Needless to say, you can use webhooks to perform any action, and create any resource you require. For instance:
 
-- Create EC2;
-- Provision K8s cluster;
-- Deploy new microservice version;
-- Invalidate Cloudfront Cache;
-- etc.
+- Create EC2.
+- Provision K8s cluster.
+- Deploy new microservice version.
+- Invalidate Cloudfront Cache.

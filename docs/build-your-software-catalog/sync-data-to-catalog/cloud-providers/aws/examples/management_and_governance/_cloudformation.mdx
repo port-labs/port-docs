@@ -1,0 +1,46 @@
+<details>
+<summary>CloudFormation Stack Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "cloudformationStack",
+  "description": "This blueprint represents an AWS CloudFormation Stack in our software catalog",
+  "title": "CloudFormation Stack",
+  "icon": "AWS",
+  "schema": {
+    "properties": {
+      "link": {
+        "type": "string",
+        "format": "url",
+        "title": "Link"
+      },
+      "arn": {
+        "type": "string",
+        "title": "ARN"
+      },
+      "kind": {
+        "type": "string",
+        "title": "Kind"
+      },
+      "region": {
+        "type": "string",
+        "title": "Region"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "account": {
+      "title": "Account",
+      "target": "awsAccount",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

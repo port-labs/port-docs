@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to manage EKS as a service in Port, ensuring efficient orchestration and scalable Kubernetes deployments.
 ---
 
 # EKS as a service action (EKSaaS)
@@ -32,7 +33,7 @@ Before following the guide, you will need to set up an Upbound organization, ini
 
 <h3>Git repository</h3>
 
-The actions backend, and the state of the different control planes will be handled in a GitHub repository. For Port to interact with the new GitHub repo, you will need Port's GitHub app to be installed ([install Port's GitHub app](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation)).
+The actions backend, and the state of the different control planes will be handled in a GitHub repository. For Port to interact with the new GitHub repo, you will need Port's GitHub app to be installed ([install Port's GitHub app](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)).
 
 Create a new git repository, and make sure that Port's GitHub app is installed on it either by:
 - Installing Port's GitHub app on all the repositories in the used GitHub organization;

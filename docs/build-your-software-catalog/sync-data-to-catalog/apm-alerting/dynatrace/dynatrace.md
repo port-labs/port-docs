@@ -3,17 +3,45 @@ import TabItem from "@theme/TabItem"
 import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import DynatraceProblemBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/apm-alerting/resources/dynatrace/\_example_dynatrace_problem_blueprint.mdx";
+import DynatraceProblemConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/apm-alerting/resources/dynatrace/\_example_dynatrace_problem_webhook_configuration.mdx"
+import DynatraceMicroserviceBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/apm-alerting/resources/dynatrace/\_example_dynatrace_microservice_blueprint.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_helm_prerequisites_block.mdx"
 
 # Dynatrace
 
-Our Dyantrace integration allows you to import `problem`, `slo`, and `entity` resources from your Dynatrace instance into Port, according to your mapping and definition.
+Port's Dynatrace integration allows you to model Dynatrace resources in your software catalog and ingest data into them.
 
-## Common use cases
+## Overview
 
-- Map your monitored entities, problems and SLOs in Dynatrace.
-- Watch for object changes (create/update) in real-time, and automatically apply the changes to your entities in Port.
+This integration allows you to:
 
-## Installation
+- Map and organize your desired Dynatrace resources and their metadata in Port (see supported resources below).
+- Watch for Dynatrace object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
+
+### Supported Resources
+
+The resources that can be ingested from Dynatrace into Port are listed below. It is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+
+- [`problem`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/problems-v2/problems/get-problems-list#definition--Problem)
+- [`entity`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entities-list#definition--Entity)
+- [`slo`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/service-level-objectives/get-all#definition--SLO)
+- [`entity types`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entity-type#definition--EntityType) for selectors in the `entity` resource.
+
+
+## Prerequisites
+
+### Generate a Dynatrace API key
+
+1. Navigate to `<instanceURL>/ui/apps/dynatrace.classic.tokens/ui/access-tokens`. For example, if you access your Dynatrace instance at `https://npm82883.apps.dynatrace.com`, you should navigate to `https://npm82883.apps.dynatrace.com/ui/apps/dynatrace.classic.tokens/ui/access-tokens`.
+2. Click **Generate new token** to create a new token. Ensure the permissions: `DataExport`, `Read entities`, `Read problems` and `Read SLO` are assigned to the token. The `DataExport` permission allows Dynatrace to perform healthchecks before ingestion starts.
+
+### Construct your Dynatrace Host URL
+Your Dynatrace host URL should be `https://<environment-id>.live.dynatrace.com`. Note that there is a difference between the instance URL and the API host URL. The former contains `apps` while the latter (as shown prior) uses `live`. This means if your environment ID is `npm82883`, your API host URL should be `https://npm82883.live.dynatrace.com`.
+
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -25,52 +53,28 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                             | Description                                                                                                                         | Required |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                       | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     | ✅       |
-| `port.clientSecret`                   | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                   | ✅       |
-| `integration.identifier`              | Change the identifier to describe your integration                                                                                  | ✅       |
-| `integration.type`                    | The integration type                                                                                                                | ✅       |
-| `integration.eventListener.type`      | The event listener type                                                                                                             | ✅       |
-| `integration.secrets.dynatraceApiKey` | API Key for Dynatrace instance                                                                                                      | ✅       |
-| `integration.config.dynatraceHostUrl` | The API URL of the Dynatrace instance                                                                                                   | ✅       |
-| `scheduledResyncInterval`             | The number of minutes between each resync                                                                                           | ❌       |
-| `initializePortResources`             | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌       |
+<Prerequisites />
 
-<br/>
+
+For details about the available parameters for the installation, see the table below.
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-dynatrace-integration port-labs/port-ocean \
-  --set port.clientId="CLIENT_ID"  \
-  --set port.clientSecret="CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set scheduledResyncInterval=60  \
-  --set integration.identifier="my-dynatrace-integration"  \
-  --set integration.type="dynatrace"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.dynatraceApiKey="<your-api-key>"  \
-  --set integration.config.dynatraceHostUrl="<your-instance-url>"
-```
+<OceanRealtimeInstallation integration="Dynatrace" />
 
 <PortApiRegionTip/>
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-dynatrace-integration` in your git repository with the content:
 
@@ -155,28 +159,46 @@ kubectl apply -f my-ocean-dynatrace-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                             | Description                                                                                                                                                               | Required |
+|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                       | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                             | ✅        |
+| `port.clientSecret`                   | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                         | ✅        |
+| `port.baseUrl`                        | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                   | ✅        |
+| `integration.identifier`              | Change the identifier to describe your integration                                                                                                                        | ✅        |
+| `integration.type`                    | The integration type                                                                                                                                                      | ✅        |
+| `integration.eventListener.type`      | The event listener type                                                                                                                                                   | ✅        |
+| `integration.secrets.dynatraceApiKey` | API Key for Dynatrace instance, docs can be found [here](https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/dynatrace-api-authentication) | ✅        |
+| `integration.config.dynatraceHostUrl` | The API URL of the Dynatrace instance                                                                                                                                     | ✅        |
+| `scheduledResyncInterval`             | The number of minutes between each resync                                                                                                                                 | ❌        |
+| `initializePortResources`             | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                                             | ❌        |
+
+
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks, use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
+
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks, use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                                        | Description                                                                                                        | Required |
-| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_API_KEY`  | The Dynatrace API key                                                                                              | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL` | The Dynatrace API host URL                                                                                             | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`               | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
+| Parameter                                        | Description                                                                                                                                                       | Required |
+|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_API_KEY`  | The Dynatrace API key , docs can be found [here](https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/basics/dynatrace-api-authentication) | ✅        |
+| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL` | The Dynatrace API host URL                                                                                                                                        | ✅        |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`               | Default true, When set to false the integration will not create default blueprints and the port App config Mapping                                                | ❌        |
+| `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                                                                           | ❌        |
+| `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                                                               | ✅        |
+| `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                                                                           | ✅        |
+| `OCEAN__PORT__BASE_URL`                          | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                           | ✅        |
 
 
 <br/>
@@ -186,14 +208,15 @@ Here is an example for `dynatrace-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Dynatrace Exporter Workflow
 
-# This workflow responsible for running Dynatrace exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
@@ -209,14 +232,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
@@ -277,19 +295,18 @@ pipeline {
 ```
 
   </TabItem>
-
-<TabItem value="azure" label="Azure Devops">
-<AzurePremise name="Dynatrace" />
+  <TabItem value="azure" label="Azure Devops">
+<AzurePremise />
 
 | Parameter                                        | Description                                                                                                        | Required |
-| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_API_KEY`  | The Dynatrace API key                                                                                              | ✅       |
-| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL` | The Dynatrace API host URL                                                                                             | ✅       |
-| `OCEAN__INITIALIZE_PORT_RESOURCES`               | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌       |
-| `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌       |
-| `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅       |
-| `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
-| `OCEAN__PORT__BASE_URL`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
+|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|----------|
+| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_API_KEY`  | The Dynatrace API key                                                                                              | ✅        |
+| `OCEAN__INTEGRATION__CONFIG__DYNATRACE_HOST_URL` | The Dynatrace API host URL                                                                                         | ✅        |
+| `OCEAN__INITIALIZE_PORT_RESOURCES`               | Default true, When set to false the integration will not create default blueprints and the port App config Mapping | ❌        |
+| `OCEAN__INTEGRATION__IDENTIFIER`                 | Change the identifier to describe your integration, if not set will use the default one                            | ❌        |
+| `OCEAN__PORT__CLIENT_ID`                         | Your port client id                                                                                                | ✅        |
+| `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅        |
+| `OCEAN__PORT__BASE_URL`                          | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                            | ✅        |
 
 
 <br/>
@@ -331,13 +348,7 @@ steps:
 ```
 
   </TabItem>
-
-     <TabItem value="gitlab" label="GitLab">
-This workflow will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+  <TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -402,20 +413,20 @@ ingest_data:
 
 </Tabs>
 
-### Generating Dynatrace API key
 
-1. Navigate to `<instanceURL>/ui/apps/dynatrace.classic.tokens/ui/access-tokens`. For example, if you access your Dynatrace instance at `https://npm82883.apps.dynatrace.com`, you should navigate to `https://npm82883.apps.dynatrace.com/ui/apps/dynatrace.classic.tokens/ui/access-tokens`.
-2. Click **Generate new token** to create a new token. Ensure the permissions: `DataExport`, `Read entities`, `Read problems` and `Read SLO` are assigned to the token. The `DataExport` permission allows Dynatrace to perform healthchecks before ingestion starts.
+## Configuration
 
-### Constructing Dynatrace Host URL
-Your Dynatrace host URL should be `https://<environment-id>.live.dynatrace.com`. Note that there is a difference between the instance URL and the API host URL. The former contains `apps` while the latter (as shown prior) uses `live`. This means if your environment ID is `npm82883`, your API host URL should be `https://npm82883.live.dynatrace.com`.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-## Ingesting Dynatrace objects
+### Ingest additional resource types
+By default, the `entity` kind ingests only entities of type `APPLICATION` and `SERVICE` due to the large number of available resources. However, you can configure the `entity` kind mapping to ingest entities of other types.
 
-The Dynatrace integration uses a YAML configuration to describe the process of loading data into the developer portal.
+To do this, use the `entityTypes` selector in the entity mapping like so:
 
-Here is an example snippet from the config which demonstrates the process for getting `entity` data from Dynatrace:
+<details>
+<summary><b>Mapping configuration (Click to expand)</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -424,6 +435,8 @@ resources:
   - kind: entity
     selector:
       query: "true"
+      # highlight-next-line
+      entityTypes: ["APPLICATION", "SERVICE"]
     port:
       entity:
         mappings:
@@ -435,137 +448,412 @@ resources:
             lastSeen: ".lastSeenTms / 1000 | todate"
             type: .type
             tags: .tags[].stringRepresentation
+            managementZones: .managementZones[].name
+            properties: .properties
+            fromRelationships: .fromRelationships
+            toRelationships: .toRelationships
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Dynatrace's API events.
+</details>
 
-### Configuration structure
+#### Available resource types
+You can retrieve a list of available resource types by using the [Dynatrace Entity Types API](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entity-type#definition--EntityType).   Below is a list of resource types retrieved from the API:
 
-The integration configuration determines which resources will be queried from Dynatrace, and which entities and properties will be created in Port.
+<details>
+<summary><b>Dynatrace entity types (Click to expand)</b></summary>
 
-:::tip Supported resources
-The following resources can be used to map data from Dynatrace, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+- `APM_SECURITY_GATEWAY`
+- `APPLICATION`
+- `APPLICATION_METHOD`
+- `APPLICATION_METHOD_GROUP`
+- `APPMON_SERVER`
+- `APPMON_SYSTEM_PROFILE`
+- `AUTO_SCALING_GROUP`
+- `AWS_APPLICATION_LOAD_BALANCER`
+- `AWS_AVAILABILITY_ZONE`
+- `AWS_CREDENTIALS`
+- `AWS_LAMBDA_FUNCTION`
+- `AWS_NETWORK_LOAD_BALANCER`
+- `AZURE_API_MANAGEMENT_SERVICE`
+- `AZURE_APPLICATION_GATEWAY`
+- `AZURE_APP_SERVICE_PLAN`
+- `AZURE_COSMOS_DB`
+- `AZURE_CREDENTIALS`
+- `AZURE_EVENT_HUB`
+- `AZURE_EVENT_HUB_NAMESPACE`
+- `AZURE_FUNCTION_APP`
+- `AZURE_IOT_HUB`
+- `AZURE_LOAD_BALANCER`
+- `AZURE_MGMT_GROUP`
+- `AZURE_REDIS_CACHE`
+- `AZURE_REGION`
+- `AZURE_SERVICE_BUS_NAMESPACE`
+- `AZURE_SERVICE_BUS_QUEUE`
+- `AZURE_SERVICE_BUS_TOPIC`
+- `AZURE_SQL_DATABASE`
+- `AZURE_SQL_ELASTIC_POOL`
+- `AZURE_SQL_SERVER`
+- `AZURE_STORAGE_ACCOUNT`
+- `AZURE_SUBSCRIPTION`
+- `AZURE_TENANT`
+- `AZURE_VM`
+- `AZURE_VM_SCALE_SET`
+- `AZURE_WEB_APP`
+- `BOSH_DEPLOYMENT`
+- `BROWSER`
+- `CF_FOUNDATION`
+- `CINDER_VOLUME`
+- `CLOUD_APPLICATION`
+- `CLOUD_APPLICATION_INSTANCE`
+- `CLOUD_APPLICATION_NAMESPACE`
+- `CONTAINER_GROUP`
+- `CONTAINER_GROUP_INSTANCE`
+- `CUSTOM_APPLICATION`
+- `CUSTOM_DEVICE`
+- `CUSTOM_DEVICE_GROUP`
+- `DATASTORE`
+- `DCRUM_APPLICATION`
+- `DCRUM_SERVICE`
+- `DCRUM_SERVICE_INSTANCE`
+- `DEVICE_APPLICATION_METHOD`
+- `DEVICE_APPLICATION_METHOD_GROUP`
+- `DISK`
+- `DOCKER_CONTAINER_GROUP`
+- `DOCKER_CONTAINER_GROUP_INSTANCE`
+- `DYNAMO_DB_TABLE`
+- `EBS_VOLUME`
+- `EC2_INSTANCE`
+- `ELASTIC_LOAD_BALANCER`
+- `ENVIRONMENT`
+- `EXTERNAL_SYNTHETIC_TEST`
+- `EXTERNAL_SYNTHETIC_TEST_STEP`
+- `GCP_ZONE`
+- `GEOLOCATION`
+- `GEOLOC_SITE`
+- `GOOGLE_COMPUTE_ENGINE`
+- `HOST`
+- `HOST_GROUP`
+- `HTTP_CHECK`
+- `HTTP_CHECK_STEP`
+- `HYPERVISOR`
+- `HYPERVISOR_CLUSTER`
+- `HYPERVISOR_DISK`
+- `KUBERNETES_CLUSTER`
+- `KUBERNETES_NODE`
+- `KUBERNETES_SERVICE`
+- `MOBILE_APPLICATION`
+- `MULTIPROTOCOL_MONITOR`
+- `NETWORK_INTERFACE`
+- `NEUTRON_SUBNET`
+- `OPENSTACK_AVAILABILITY_ZONE`
+- `OPENSTACK_COMPUTE_NODE`
+- `OPENSTACK_PROJECT`
+- `OPENSTACK_REGION`
+- `OPENSTACK_VM`
+- `OS`
+- `PROCESS_GROUP`
+- `PROCESS_GROUP_INSTANCE`
+- `QUEUE`
+- `QUEUE_INSTANCE`
+- `RELATIONAL_DATABASE_SERVICE`
+- `RUNTIME_COMPONENT`
+- `S3BUCKET`
+- `SERVICE`
+- `SERVICE_INSTANCE`
+- `SERVICE_METHOD`
+- `SERVICE_METHOD_GROUP`
+- `SOFTWARE_COMPONENT`
+- `SWIFT_CONTAINER`
+- `SYNTHETIC_LOCATION`
+- `SYNTHETIC_TEST`
+- `SYNTHETIC_TEST_STEP`
+- `VCENTER`
+- `VIRTUALMACHINE`
+- `VMWARE_DATACENTER`
+- `cloud:aws:acmprivateca`
+- `cloud:aws:api_gateway`
+- `cloud:aws:app_runner`
+- `cloud:aws:appstream`
+- `cloud:aws:appsync`
+- `cloud:aws:athena`
+- `cloud:aws:aurora`
+- `cloud:aws:autoscaling`
+- `cloud:aws:billing`
+- `cloud:aws:cassandra`
+- `cloud:aws:chatbot`
+- `cloud:aws:cloud_front`
+- `cloud:aws:cloudhsm`
+- `cloud:aws:cloudsearch`
+- `cloud:aws:codebuild`
+- `cloud:aws:cognito`
+- `cloud:aws:connect`
+- `cloud:aws:datasync`
+- `cloud:aws:dax`
+- `cloud:aws:dms`
+- `cloud:aws:documentdb`
+- `cloud:aws:dxcon`
+- `cloud:aws:dynamodb`
+- `cloud:aws:ebs`
+- `cloud:aws:ec2_spot`
+- `cloud:aws:ec2api`
+- `cloud:aws:ecs`
+- `cloud:aws:ecs:cluster`
+- `cloud:aws:efs`
+- `cloud:aws:eks:cluster`
+- `cloud:aws:elasticache`
+- `cloud:aws:elasticbeanstalk`
+- `cloud:aws:elasticinference`
+- `cloud:aws:elastictranscoder`
+- `cloud:aws:emr`
+- `cloud:aws:es`
+- `cloud:aws:events`
+- `cloud:aws:fsx`
+- `cloud:aws:gamelift`
+- `cloud:aws:glue`
+- `cloud:aws:inspector`
+- `cloud:aws:iot`
+- `cloud:aws:iot_things_graph`
+- `cloud:aws:iotanalytics`
+- `cloud:aws:kafka`
+- `cloud:aws:kinesis:data_analytics`
+- `cloud:aws:kinesis:data_firehose`
+- `cloud:aws:kinesis:data_stream`
+- `cloud:aws:kinesis:video_stream`
+- `cloud:aws:lambda`
+- `cloud:aws:lex`
+- `cloud:aws:logs`
+- `cloud:aws:media_tailor`
+- `cloud:aws:mediaconnect`
+- `cloud:aws:mediaconvert`
+- `cloud:aws:mediapackagelive`
+- `cloud:aws:mediapackagevod`
+- `cloud:aws:mq`
+- `cloud:aws:nat_gateway`
+- `cloud:aws:neptune`
+- `cloud:aws:opsworks`
+- `cloud:aws:polly`
+- `cloud:aws:qldb`
+- `cloud:aws:rds`
+- `cloud:aws:redshift`
+- `cloud:aws:rekognition`
+- `cloud:aws:robomaker`
+- `cloud:aws:route53`
+- `cloud:aws:route53resolver`
+- `cloud:aws:s3`
+- `cloud:aws:sage_maker:batch_transform_job`
+- `cloud:aws:sage_maker:endpoint`
+- `cloud:aws:sage_maker:endpoint_instance`
+- `cloud:aws:sage_maker:ground_truth`
+- `cloud:aws:sage_maker:processing_job`
+- `cloud:aws:sage_maker:training_job`
+- `cloud:aws:servicecatalog`
+- `cloud:aws:ses`
+- `cloud:aws:sns`
+- `cloud:aws:sqs`
+- `cloud:aws:ssm-runcommand`
+- `cloud:aws:states`
+- `cloud:aws:storagegateway`
+- `cloud:aws:swf`
+- `cloud:aws:textract`
+- `cloud:aws:transfer`
+- `cloud:aws:transitgateway`
+- `cloud:aws:translate`
+- `cloud:aws:trustedadvisor`
+- `cloud:aws:usage`
+- `cloud:aws:vpn`
+- `cloud:aws:waf`
+- `cloud:aws:wafv2`
+- `cloud:aws:workmail`
+- `cloud:aws:workspaces`
+- `cloud:azure:apimanagement:service`
+- `cloud:azure:app:containerapps`
+- `cloud:azure:app:managedenvironments`
+- `cloud:azure:appconfiguration:configurationstores`
+- `cloud:azure:appplatform:spring`
+- `cloud:azure:automation:automationaccounts`
+- `cloud:azure:batch:account`
+- `cloud:azure:blockchain:blockchainmembers`
+- `cloud:azure:cache:redis`
+- `cloud:azure:cdn:cdnwebapplicationfirewallpolicies`
+- `cloud:azure:cdn:profiles`
+- `cloud:azure:classic_storage_account`
+- `cloud:azure:classic_storage_account:blob`
+- `cloud:azure:classic_storage_account:file`
+- `cloud:azure:classic_storage_account:queue`
+- `cloud:azure:classic_storage_account:table`
+- `cloud:azure:classic_virtual_machine`
+- `cloud:azure:cognitiveservices:allinone`
+- `cloud:azure:cognitiveservices:anomalydetector`
+- `cloud:azure:cognitiveservices:bingautosuggest`
+- `cloud:azure:cognitiveservices:bingcustomsearch`
+- `cloud:azure:cognitiveservices:bingentitysearch`
+- `cloud:azure:cognitiveservices:bingsearch`
+- `cloud:azure:cognitiveservices:bingspellcheck`
+- `cloud:azure:cognitiveservices:computervision`
+- `cloud:azure:cognitiveservices:contentmoderator`
+- `cloud:azure:cognitiveservices:customvisionprediction`
+- `cloud:azure:cognitiveservices:customvisiontraining`
+- `cloud:azure:cognitiveservices:face`
+- `cloud:azure:cognitiveservices:immersivereader`
+- `cloud:azure:cognitiveservices:inkrecognizer`
+- `cloud:azure:cognitiveservices:luis`
+- `cloud:azure:cognitiveservices:luisauthoring`
+- `cloud:azure:cognitiveservices:openai`
+- `cloud:azure:cognitiveservices:personalizer`
+- `cloud:azure:cognitiveservices:qnamaker`
+- `cloud:azure:cognitiveservices:speech`
+- `cloud:azure:cognitiveservices:textanalytics`
+- `cloud:azure:cognitiveservices:translator`
+- `cloud:azure:containerinstance:containergroup`
+- `cloud:azure:containerregistry:registries`
+- `cloud:azure:containerservice:managedcluster`
+- `cloud:azure:datafactory:v1`
+- `cloud:azure:datafactory:v2`
+- `cloud:azure:datalakeanalytics:accounts`
+- `cloud:azure:datalakestore:accounts`
+- `cloud:azure:datashare:accounts`
+- `cloud:azure:devices:iothubs`
+- `cloud:azure:devices:provisioningservices`
+- `cloud:azure:documentdb:databaseaccounts:global`
+- `cloud:azure:documentdb:databaseaccounts:mongo`
+- `cloud:azure:eventgrid:domains`
+- `cloud:azure:eventgrid:systemtopics`
+- `cloud:azure:eventgrid:topics`
+- `cloud:azure:eventhub:clusters`
+- `cloud:azure:frontdoor`
+- `cloud:azure:hdinsight:cluster`
+- `cloud:azure:hybridcompute:machines`
+- `cloud:azure:insights:components`
+- `cloud:azure:iotcentral:iotapps`
+- `cloud:azure:keyvault:vaults`
+- `cloud:azure:kusto:clusters`
+- `cloud:azure:logic:integrationserviceenvironments`
+- `cloud:azure:logic:workflows`
+- `cloud:azure:machinelearningservices:workspaces`
+- `cloud:azure:maps:accounts`
+- `cloud:azure:mariadb:server`
+- `cloud:azure:media:mediaservices`
+- `cloud:azure:media:mediaservices:streamingendpoints`
+- `cloud:azure:mysql:flexibleservers`
+- `cloud:azure:mysql:server`
+- `cloud:azure:netapp:netappaccounts:capacitypools`
+- `cloud:azure:netapp:netappaccounts:capacitypools:volumes`
+- `cloud:azure:network:applicationgateways`
+- `cloud:azure:network:azurefirewalls`
+- `cloud:azure:network:dnszones`
+- `cloud:azure:network:expressroutecircuits`
+- `cloud:azure:network:loadbalancers:basic`
+- `cloud:azure:network:loadbalancers:gateway`
+- `cloud:azure:network:loadbalancers:standard`
+- `cloud:azure:network:networkinterfaces`
+- `cloud:azure:network:networkwatchers:connectionmonitors`
+- `cloud:azure:network:networkwatchers:connectionmonitors:previe`
+- `cloud:azure:network:privatednszones`
+- `cloud:azure:network:publicipaddresses`
+- `cloud:azure:notificationhubs:namespaces:notificationhubs`
+- `cloud:azure:postgresql:flexibleservers`
+- `cloud:azure:postgresql:server`
+- `cloud:azure:postgresql:serverv2`
+- `cloud:azure:powerbidedicated:capacities`
+- `cloud:azure:recoveryservices:vaults`
+- `cloud:azure:relay:namespaces`
+- `cloud:azure:search:searchservices`
+- `cloud:azure:servicefabricmesh:applications`
+- `cloud:azure:signalrservice:signalr`
+- `cloud:azure:sql:managed`
+- `cloud:azure:sql:servers`
+- `cloud:azure:sql:servers:databases:datawarehouse`
+- `cloud:azure:sql:servers:databases:dtu`
+- `cloud:azure:sql:servers:databases:hyperscale`
+- `cloud:azure:sql:servers:databases:vcore`
+- `cloud:azure:sql:servers:elasticpools:dtu`
+- `cloud:azure:sql:servers:elasticpools:vcore`
+- `cloud:azure:storage:storageaccounts`
+- `cloud:azure:storage:storageaccounts:blob`
+- `cloud:azure:storage:storageaccounts:file`
+- `cloud:azure:storage:storageaccounts:queue`
+- `cloud:azure:storage:storageaccounts:table`
+- `cloud:azure:storagesync:storagesyncservices`
+- `cloud:azure:streamanalytics:streamingjobs`
+- `cloud:azure:synapse:workspaces`
+- `cloud:azure:synapse:workspaces:bigdatapools`
+- `cloud:azure:synapse:workspaces:sqlpools`
+- `cloud:azure:timeseriesinsights:environments`
+- `cloud:azure:timeseriesinsights:eventsources`
+- `cloud:azure:traffic_manager_profile`
+- `cloud:azure:virtual_network_gateway`
+- `cloud:azure:web:appslots`
+- `cloud:azure:web:functionslots`
+- `cloud:azure:web:hostingenvironments:v2`
+- `cloud:azure:web:serverfarms`
+- `cloud:gcp:autoscaler`
+- `cloud:gcp:bigquery_biengine_model`
+- `cloud:gcp:cloud_function`
+- `cloud:gcp:cloud_run_revision`
+- `cloud:gcp:cloudsql_database`
+- `cloud:gcp:filestore_instance`
+- `cloud:gcp:gae_app`
+- `cloud:gcp:gce_instance`
+- `cloud:gcp:gcs_bucket`
+- `cloud:gcp:https_lb`
+- `cloud:gcp:instance_group`
+- `cloud:gcp:internal_http_lb_rule`
+- `cloud:gcp:internal_network_lb_rule`
+- `cloud:gcp:k8s_cluster`
+- `cloud:gcp:k8s_container`
+- `cloud:gcp:k8s_node`
+- `cloud:gcp:k8s_pod`
+- `cloud:gcp:network_lb_rule`
+- `cloud:gcp:project`
+- `cloud:gcp:pubsub_snapshot`
+- `cloud:gcp:pubsub_subscription`
+- `cloud:gcp:pubsub_topic`
+- `cloud:gcp:pubsublite_subscription_partition`
+- `cloud:gcp:pubsublite_topic_partition`
+- `cloud:gcp:tcp_ssl_proxy_rule`
+- `cloud:gcp:tpu_worker`
+- `os:service`
+</details>
 
-- [`problem`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/problems-v2/problems/get-problems-list#definition--Problem)
-- [`entity`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entities-list#definition--Entity)
-- [`slo`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/service-level-objectives/get-all#definition--SLO)
-- [`entity types`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entity-type#definition--EntityType) for selectors in the `entity` resource.
 
+
+## Capabilities
+
+### Configure real-time updates
+
+Currently, the Dynatrace API lacks support for programmatic webhook creation.
+To set up a webhook configuration in Dynatrace for sending alert notifications to the Ocean integration,
+follow these steps:
+
+:::info Webhook configuration
+Prepare a webhook `URL` using this format: `{app_host}/integration/webhook/problem`.  
+The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed.  
+For example, if your ingress or load balancer exposes the Dynatrace Ocean integration at `https://myservice.domain.com`,
+your webhook `URL` should be `https://myservice.domain.com/integration/webhook/problem`.
 :::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: entity
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for an Dynatrace object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: entity
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: entity
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-        entityTypes: ["APPLICATION", "SERVICE"] # An optional list of entity types to filter by. If not specified, defaults to ["APPLICATION", "SERVICE"].
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Dynatrace object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: entity
-      selector:
-        query: "true"
-        entityTypes: ["APPLICATION", "SERVICE"]
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Dynatrace object to a Port entity. Each value is a JQ query.
-            identifier: .entityId
-            title: .displayName
-            blueprint: '"dynatraceEntity"'
-            properties:
-              firstSeen: ".firstSeenTms / 1000 | todate"
-              lastSeen: ".lastSeenTms / 1000 | todate"
-              type: .type
-              tags: .tags[].stringRepresentation
-              managementZones: .managementZones[].name
-              properties: .properties
-              fromRelationships: .fromRelationships
-              toRelationships: .toRelationships
-        # highlight-end
-    - kind: entity # In this instance entity is mapped again with a different filter
-      selector:
-        query: '.displayName == "MyEntityName"'
-        entityTypes: ["APPLICATION", "SERVICE"]
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-## Configuring real-time updates
-
-Currently, the Dynatrace API lacks support for programmatic webhook creation. To set up a webhook configuration in Dynatrace for sending alert notifications to the Ocean integration, follow these steps:
-
-### Prerequisite
-
-Prepare a webhook `URL` using this format: `{app_host}/integration/webhook/problem`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the Dynatrace Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/webhook/problem`.
-
-### Create a webhook in Dynatrace
 
 1. Go to Dynatrace.
 2. Go to **Settings** > **Integration** > **Problem notifications**.
 3. Select **Add notification**.
 4. Select **Custom integration** from the available notification types.
 5. Configure the notification using the following details.
-   1. `Enabled` - ensure the notification is enabled.
-   2. `Display name` - use a meaningful name such as Port Ocean Webhook.
-   3. `Webhook URL` - enter the value of the `URL` you created above.
-   4. Enable **Call webhook is new events merge into existing problems**.
-   5. `Custom payload` - paste the following configuration:
-   ```
-   {
-       "State":"{State}",
-       "ProblemID":"{ProblemID}",
-       "ProblemTitle":"{ProblemTitle}"
-   }
-   ```
-   You can customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it.
-   6. `Alerting profile` - select the corresponding alerting profile.
-   7. Leave the rest of the fields as is.
+    1. `Enabled` - ensure the notification is enabled.
+    2. `Display name` - use a meaningful name such as Port Ocean Webhook.
+    3. `Webhook URL` - enter the value of the `URL` you created above.
+    4. Enable **Call webhook is new events merge into existing problems**.
+    5. `Custom payload` - paste the following configuration:
+        ```
+        {
+            "State":"{State}",
+            "ProblemID":"{ProblemID}",
+            "ProblemTitle":"{ProblemTitle}"
+        }
+        ```
+       You can customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it.
+    6. `Alerting profile` - select the corresponding alerting profile.
+    7. Leave the rest of the fields as is.
 6. Click **Save changes**.
 
-### Ingest data into Port
-
-To ingest Dynatrace objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Dynatrace.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Dynatrace under the Incident Management category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
 
@@ -1211,4 +1499,270 @@ The combination of the sample payload and the Ocean configuration generates the 
   },
 }
 ```
+</details>
+
+
+## Alternative installation via webhook
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest problem from Dynatrace. If so, use the following instructions:
+
+**Note** that when using this method, data will be ingested into Port only when the webhook is triggered.
+<details>
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+<h2>Port configuration</h2>
+
+Create the following blueprint definitions:
+
+<details>
+<summary>Dynatrace microservice blueprint</summary>
+<DynatraceMicroserviceBlueprint/>
+</details>
+
+<details>
+<summary>Dynatrace problem blueprint</summary>
+<DynatraceProblemBlueprint/>
+</details>
+
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints):
+
+<details>
+<summary>Dynatrace problem webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+
+    1. Title : `Dynatrace Problem Mapper`;
+    2. Identifier : `dynatrace_problem_mapper`;
+    3. Description : `A webhook configuration for problem events from Dynatrace`;
+    4. Icon : `Dynatrace`;
+
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <DynatraceProblemConfiguration/>
+
+3. Click **Save** at the bottom of the page.
+
+</details>
+
+:::note
+The webhook configuration's relation mapping will function properly only when the identifiers of the Port microservice entities match the names of the entities in your Dynatrace.
+
+If there is a mismatch, you can utilize [Dynatrace Tags](https://www.dynatrace.com/support/help/manage/tags-and-metadata) to align the actual identifier in Port.
+
+To do this, create a tag with the key `proj` and value `microservice_identifier`.
+
+Then, update the relation JQ syntax to establish a connection between the Dynatrace problem and the Port microservice. Here is the updated JQ Mappings:
+
+```json showLineNumbers
+{
+    "blueprint": "dynatraceProblem",
+    "entity": {
+     ...Properties mappings,
+      "relations": {
+         "microservice": ".body.ProblemTags | split(\", \") | map(select(test(\"proj:\")) | sub(\"proj:\";\"\"))"
+      }
+    }
+}
+```
+
+<details>
+<summary>JQ expression explained</summary>
+The above JQ expression will split the tags by comma and space, then filter the tags that start with `proj:` and remove the `proj:` prefix from the tag value.
+</details>
+:::
+
+<h2>Create a webhook in Dynatrace</h2>
+
+1. Log in to Dynatrace with your credentials.
+2. Click on **Settings** at the left sidebar of the page.
+3. Choose **Integration** and click on **Problem notifications**.
+4. Select **Add notification**.
+5. Select **Custom integration** from the available integration types.
+6. Input the following details:
+    1. `Display name` - use a meaningful name such as Port Webhook.
+    2. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration.
+    3. `Overview` - you can add an optional HTTP header to your webhook request.
+    4. `Custom payload` - When a problem is detected or resolved on your entity, this payload will be sent to the webhook URL. You can enter this JSON placeholder in the textbox:
+
+       ```json showLineNumbers
+       {
+          "State":"{State}",
+          "PID":"{PID}",
+          "ProblemTitle":"{ProblemTitle}",
+          "ImpactedEntity": "{ImpactedEntity}",
+          "ProblemDetailsText": "{ProblemDetailsText}",
+          "ProblemImpact": "{ProblemImpact}",
+          "ProblemSeverity": "{ProblemSeverity}",
+          "ProblemURL": "{ProblemURL}",
+          "ProblemTags": "{ProblemTags}",
+          "ImpactedEntities": {ImpactedEntities}
+       }
+       ```
+
+    5. `Alerting profile` - configure your preferred alerting rule or use the default one.
+7. Click **Save changes** at the bottom of the page.
+
+:::tip
+ To view the different payloads and events available in Dynatrace webhooks, [look here](https://www.dynatrace.com/support/help/observe-and-explore/notifications-and-alerting/problem-notifications/webhook-integration).
+:::
+
+Done! Any problem detected on your Dynatrace entity will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+<h2>Let's Test It</h2>
+
+This section includes a sample response data from Dynatrace. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+<h3>Payload</h3>
+
+Here is an example of the payload structure from Dynatrace:
+
+<details>
+<summary>Problem response data</summary>
+
+```json showLineNumbers
+{
+  "affectedEntities": [
+    {
+      "entityId": {
+        "id": "string",
+        "type": "string"
+      },
+      "name": "string"
+    }
+  ],
+  "displayId": "string",
+  "endTime": 1574697669865,
+  "entityTags": [
+    {
+      "context": "CONTEXTLESS",
+      "key": "architecture",
+      "stringRepresentation": "architecture:x86",
+      "value": "x86"
+    },
+    {
+      "context": "ENVIRONMENT",
+      "key": "Infrastructure",
+      "stringRepresentation": "[ENVIRONMENT]Infrastructure:Linux",
+      "value": "Linux"
+    }
+  ],
+  "evidenceDetails": {
+    "details": [
+      {
+        "displayName": "Availability evidence",
+        "entity": {},
+        "evidenceType": "AVAILABILITY_EVIDENCE",
+        "groupingEntity": {},
+        "rootCauseRelevant": true,
+        "startTime": 1
+      },
+      {
+        "displayName": "User action evidence",
+        "entity": {},
+        "evidenceType": "USER_ACTION_EVIDENCE",
+        "groupingEntity": {},
+        "rootCauseRelevant": true,
+        "startTime": 1
+      }
+    ],
+    "totalCount": 1
+  },
+  "impactAnalysis": {
+    "impacts": [
+      {
+        "estimatedAffectedUsers": 1,
+        "impactType": "APPLICATION",
+        "impactedEntity": {}
+      }
+    ]
+  },
+  "impactLevel": "APPLICATION",
+  "impactedEntities": [{}],
+  "linkedProblemInfo": {
+    "displayId": "string",
+    "problemId": "string"
+  },
+  "managementZones": [
+    {
+      "id": "string",
+      "name": "HOST"
+    }
+  ],
+  "problemFilters": [
+    {
+      "id": "E2A930951",
+      "name": "BASELINE"
+    }
+  ],
+  "problemId": "06F288EE2A930951",
+  "recentComments": {
+    "comments": [
+      {
+        "authorName": "string",
+        "content": "string",
+        "context": "string",
+        "createdAtTimestamp": 1,
+        "id": "string"
+      }
+    ],
+    "nextPageKey": "AQAAABQBAAAABQ==",
+    "pageSize": 1,
+    "totalCount": 1
+  },
+  "rootCauseEntity": {},
+  "severityLevel": "AVAILABILITY",
+  "startTime": 1574697667547,
+  "status": "CLOSED",
+  "title": "title"
+}
+```
+
+</details>
+
+<h3>Mapping Result</h3>
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary>Problem entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "06F288EE2A930951",
+  "title": "title",
+  "blueprint": "dynatraceProblem",
+  "team": [],
+  "icon": "Dynatrace",
+  "properties": {
+    "entityTags": ["architecture:x86", "[ENVIRONMENT]Infrastructure:Linux"],
+    "evidenceDetails": ["Availability evidence", "User action evidence"],
+    "managementZones": ["HOST"],
+    "problemFilters": ["BASELINE"],
+    "severityLevel": "AVAILABILITY",
+    "status": "CLOSED",
+    "startTime": "2019-11-25T14:14:27Z",
+    "endTime": "2020-04-30T14:52:41Z"
+  },
+  "relations": {
+    "impactedEntities": ["HOST-06F288EE2A930951"],
+    "linkedProblemInfo": "06F288EE2A930951",
+    "rootCauseEntity": "HOST-06F288EE2A930951"
+  },
+  "createdAt": "2024-2-6T09:30:57.924Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-2-6T11:49:20.881Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+  
+}
+```
+
+</details>
+
+<h2>Ingest Dynatrace Entities</h2>
+
+In this example,
+you will create a `dynatrace_entity` blueprint that ingests monitored entities from your Dynatrace account.
+You will then add a Python script to make API calls to Dynatrace REST API and fetch data for your account.
+
+- [Code Repository Example](https://github.com/port-labs/example-dynatrace-entities)
+
 </details>

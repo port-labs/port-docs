@@ -9,11 +9,11 @@ In this section we'll show you a few examples of ways to use catalog permissions
 
 The following configurations, among others, are available when using catalog permissions management:
 
-1. Entities can be made immutable/partially immutable (can only create/delete/modify) for specific users/roles. For example:
+1. Entities can be made immutable/partially immutable (can only read/create/delete/modify) for specific users/roles. For example:
    1. `Deployment` entities are immutable for all roles, and `Cluster` entities are editable only by the blueprint **Moderators**.
    2. **Members** can create a new `Microservice` entity, but are not permitted to delete a `Microservice` entity.
-2. Each entity property/relation can be immutable separately for specific users/roles. For example, the `repository_link` property can be immutable for all roles (except **Admin**).
-3. Allow specific users/roles to modify only entities [owned by their team](#setting-permissions-by-team-ownership). For example, **Members** can edit only `Microservices` that belong to their team.
+2. Each entity property/relation can be **readable** or **immutable** separately for specific users/roles. For example, the `repository_link` property can be immutable for all roles (except **Admin**).
+3. Allow specific users/roles to **read** or **modify** only entities [owned by their team](#setting-permissions-by-team-ownership). For example, **Members** can edit only `Microservices` that belong to their team.
 4. Action execution permissions can be given to specific users or roles. For example, you can allow every **Member** to create a new `Deployment` entity, however only `Deployment` **Moderators** can perform a day-2 action of "adding resources".
 
 ## Setting blueprint permissions

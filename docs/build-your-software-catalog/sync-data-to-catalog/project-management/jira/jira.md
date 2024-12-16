@@ -1,39 +1,51 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_azure_premise.mdx"
-import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
-import DockerParameters from "./\_jira_one_time_docker_parameters.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
+import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_azure_premise.mdx"
+import DockerParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/_jira_one_time_docker_parameters.mdx"
+import HelmParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean-advanced-parameters-helm.mdx"
+import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import JiraIssueBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_blueprint.mdx"
 import JiraIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration.mdx"
-import JiraProjectBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_project_blueprint.mdx";
-import JiraWebhookConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_webhook_configuration.mdx";
 import JiraIssueConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira/\_example_jira_issue_configuration_python.mdx"
-import JiraServerConfigurationPython from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/jira-server/\_example_jira_server_configuration_python.mdx";
-import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import JiraUserBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_exporter_example_user_blueprint.mdx"
+import JiraUserConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_exporter_example_user_configuration.mdx"
+import JiraUserExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_user_example_response.mdx"
+import JiraUserEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_user_example_entity.mdx"
+import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_issue_example_entity.mdx"
+import JiraIssueExampleBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_example_issue_blueprint.mdx"
+import JiraIssueExampleConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_example_issue_configuration.mdx"
+
 
 # Jira
 
-Our Jira integration allows you to import `issues` and `projects` from your Jira cloud account into Port, according to your mapping and definition.
+Port's Jira integration allows you to model Jira resources in your software catalog and ingest data into them.
 
 :::info Jira cloud only
 This integration supports `Jira Cloud` at the moment. To integrate Port with `Jira Server`, use [Port's webhook integration](/build-your-software-catalog/custom-integration/webhook/examples/jira-server).
 :::
 
-## Common use cases
+## Overview
 
-- Map issues and projects in your Jira organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Create/delete Jira objects using self-service actions.
+This integration allows you to:
 
-## Prerequisites
+- Watch for Jira object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
+- Define self-service actions that can create/delete Jira objects or perform any other logic on Jira resources.
 
-<Prerequisites />
+### Supported Resources
 
-## Installation
+The resources that can be ingested from Jira into Port are listed below.  
+It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
+- [`User`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-users/#api-group-users)
+- [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
+
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -45,53 +57,27 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                                | Description                                                                                                                                | Example                          | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | ------- |
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅      |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅      |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅      |
-| `integration.secrets.atlassianUserEmail` | The email of the user used to query Jira                                                                                                   | user@example.com                 | ✅      |
-| `integration.secrets.atlassianUserToken` | [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) generated by the user |                                  | ✅      |
-| `integration.config.jiraHost`            | The URL of your Jira                                                                                                                       | https://example.atlassian.net    | ✅      |
-| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jira                         | https://my-ocean-integration.com | ✅       |
+<Prerequisites />
 
-<HelmParameters/>
+For details about the available parameters for the installation, see the table below.
 
-<br/>
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-jira-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set scheduledResyncInterval=120 \
-  --set integration.identifier="my-jira-integration"  \
-  --set integration.type="jira"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.config.jiraHost="string"  \
-  --set integration.secrets.atlassianUserEmail="string"  \
-  --set integration.secrets.atlassianUserToken="string"
-```
+<OceanRealtimeInstallation integration="Jira" />
 
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-jira-integration` in your git repository with the content:
 
@@ -183,19 +169,38 @@ kubectl apply -f my-ocean-jira-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                                | Description                                                                                                                                                                                                                                                                                    | Example                          | Required |
+|------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
+| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
+| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
+| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
+| `integration.secrets.atlassianUserEmail` | The email of the user used to query Jira                                                                                                                                                                                                                                                       | user@example.com                 | ✅        |
+| `integration.secrets.atlassianUserToken` | [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) generated by the user                                                                                                                                                     |                                  | ✅        |
+| `integration.config.jiraHost`            | The URL of your Jira                                                                                                                                                                                                                                                                           | https://example.atlassian.net    | ✅        |
+| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jira                                                                                                                                                                             | https://my-ocean-integration.com | ✅        |
+| `integration.eventListener.type`         | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
+| `integration.type`                       | The integration to be installed                                                                                                                                                                                                                                                                |                                  | ✅        |
+| `scheduledResyncInterval`                | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |                                  | ❌        |
+| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |                                  | ❌        |
+| `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |                                  | ❌        |
+
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the Jira integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Realtime updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Jira integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -203,15 +208,14 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 |----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|----------|
 | `port_client_id`                 | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |                               | ✅        |
 | `port_client_secret`             | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |                               | ✅        |
-| `port_base_url`             | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                               | ✅        |
+| `port_base_url`                  | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |                               | ✅        |
 | `config -> jira_host`            | The URL of your Jira                                                                                                                                                                                                                                                                     | https://example.atlassian.net | ✅        |
 | `config -> atlassian_user_email` | The email of the user used to query Jira                                                                                                                                                                                                                                                 | user@example.com              | ✅        |
 | `config -> atlassian_user_token` | [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) generated by the user                                                                                                                                               |                               | ✅        |
 | `initialize_port_resources`      | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |                               | ❌        |
-| `send_raw_data_examples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       |            | ❌       |
-
+| `send_raw_data_examples`         | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      |                               | ❌        |
 | `identifier`                     | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |                               | ❌        |
-| `version`                        | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest                        | ❌        |`
+| `version`                        | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest                        | ❌        |
 
 <br/>
 
@@ -227,14 +231,15 @@ Here is an example for `jira-integration.yml` workflow file:
 ```yaml showLineNumbers
 name: Jira Exporter Workflow
 
-# This workflow responsible for running Jira exporter.
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
 
 jobs:
   run-integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
 
     steps:
       - uses: port-labs/ocean-sail@v1
@@ -251,15 +256,11 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Jira integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip Tip for Jenkins agent
 Your Jenkins agent should be able to run docker commands.
 :::
 
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
 
@@ -314,7 +315,7 @@ pipeline {
   </TabItem>
 
   <TabItem value="azure" label="Azure Devops">
-<AzurePremise name="Jira" />
+<AzurePremise />
 
 <DockerParameters />
 
@@ -359,11 +360,8 @@ steps:
   </TabItem>
 
 <TabItem value="gitlab" label="GitLab">
-This workflow will run the Jira integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -424,85 +422,14 @@ ingest_data:
 
 </Tabs>
 
+## Configuration
 
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-## Ingesting Jira objects
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-The Jira integration uses a YAML configuration to describe the process of loading data into the developer portal.
+### JQL support
 
-Here is an example snippet from the config which demonstrates the process for getting `project` data from Jira:
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: project
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"jiraProject"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
-            totalIssues: .insight.totalIssueCount
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Jira's API events.
-
-:::info Additional parameters
-In the example above, two additional parameters are used:  
-`createMissingRelatedEntities` - used to enable the creation of missing related entities in Port. This is useful when you want to create an entity and its related entities in one call, or if you want to create an entity whose related entity does not exist yet.
-
-`deleteDependentEntities` - used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this parameter is set to `false`. If set to `true`, the source entity will be deleted as well.
-:::
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Jira, and which entities and properties will be created in Port.
-
-:::tip Supported resources (`Kind`)
-The following resources can be used to map data from Jira, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
-- [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
-  :::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: project
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Jira object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: project
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-:::tip JQL Support
 The Ocean Jira integration supports querying objects from the `issue` kind using [JQL](https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/), making it possible to specifically filter the issues that are queried from Jira and ingested to Port.
 
 To use JQL filtering, add to the `selector` object a `jql` key with your desired JQL query as the value. For example:
@@ -518,57 +445,51 @@ resources:
     port:
 ```
 
+## Limitations
+
+### Getting user emails from Jira
+
+By default, Jira does not attach user emails to its API responses. For example, when making an API request to Jira to get an issue, fields such as `assignee`, `creator`, `reporter` and other user fields, will only include information such as the internal user ID and user display name, but not the user email.
+
+In order to display the user email in API responses (and also use that data in the mapping from Jira to Port), follow these steps:
+
+**Verify your domain in Jira:**
+
+- Go to the [Jira admin panel](https://admin.atlassian.com/).
+- Go to the **Settings** tab.
+- Select **Domains** in the sidebar on the left.
+- If your domain (for example - `acme.com`) does not appear in the list, click on **Add domain**.
+- Enter your domain name and click on **Next**.
+- Verify your domain ownership in whichever way is convenient for you.
+
+When you are done, you will see in the domain menu that your domain is listed, and its status is `VERIFIED` under the **Domain status** column.
+
+**Claim your Jira user accounts:**
+
+- Go to the [Jira admin panel](https://admin.atlassian.com/).
+- Go to the **Settings** tab.
+- Select **Domains** in the sidebar on the left.
+- Find your verified domain in the list whose accounts need to be claimed.
+- Click the 3 horizontal dots (`...`) under the **Actions** column.
+- Select **Claim accounts**.
+- You will receive an email from Jira when the claim process is complete.
+
+That's it! Now Jira API responses will include the `emailAddress` field when returning a user from Jira.
+
+:::tip Jira docs
+All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
 :::
-
-- The `port`, `entity` and the `mappings` keys are used to map the Jira object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Jira object to a Port entity. Each value is a JQ query.
-            identifier: .key
-            title: .name
-            blueprint: '"jiraProject"'
-            properties:
-              url: (.self | split("/") | .[:3] | join("/")) + "/projects/" + .key
-              totalIssues: .insight.totalIssueCount
-        # highlight-end
-    - kind: project # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyProjectName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-:::
-
-### Ingest data into Port
-
-To ingest Jira objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Jira.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Jira under the Project management providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
+
+To view and test the integration's mapping against examples of the third-party API responses, use the **jq playground** in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
 Examples of blueprints and the relevant integration configurations:
 
 ### Project
 
 <details>
-<summary>Project blueprint</summary>
+<summary><b>Project blueprint</b></summary>
 
 ```json showLineNumbers
 {
@@ -600,7 +521,7 @@ Examples of blueprints and the relevant integration configurations:
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration</b></summary>
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -622,138 +543,38 @@ resources:
 
 </details>
 
+### User
+
+<details>
+<summary><b>User blueprint</b></summary>
+
+<JiraUserBlueprint/>
+
+</details>
+
+<details>
+<summary><b>Integration configuration</b></summary>
+
+<JiraUserConfiguration/>
+
+</details>
+
 ### Issue
 
 <details>
-<summary>Issue blueprint</summary>
+<summary><b>Issue blueprint</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "jiraIssue",
-  "title": "Jira Issue",
-  "icon": "Jira",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "Issue URL",
-        "type": "string",
-        "format": "url",
-        "description": "URL to the issue in Jira"
-      },
-      "status": {
-        "title": "Status",
-        "type": "string",
-        "description": "The status of the issue"
-      },
-      "issueType": {
-        "title": "Type",
-        "type": "string",
-        "description": "The type of the issue"
-      },
-      "components": {
-        "title": "Components",
-        "type": "array",
-        "description": "The components related to this issue"
-      },
-      "assignee": {
-        "title": "Assignee",
-        "type": "string",
-        "format": "user",
-        "description": "The user assigned to the issue"
-      },
-      "reporter": {
-        "title": "Reporter",
-        "type": "string",
-        "description": "The user that reported to the issue",
-        "format": "user"
-      },
-      "creator": {
-        "title": "Creator",
-        "type": "string",
-        "description": "The user that created to the issue",
-        "format": "user"
-      },
-      "priority": {
-        "title": "Priority",
-        "type": "string",
-        "description": "The priority of the issue"
-      },
-      "created": {
-        "title": "Created At",
-        "type": "string",
-        "description": "The created datetime of the issue",
-        "format": "date-time"
-      },
-      "updated": {
-        "title": "Updated At",
-        "type": "string",
-        "description": "The updated datetime of the issue",
-        "format": "date-time"
-      }
-    }
-  },
-  "calculationProperties": {},
-  "relations": {
-    "project": {
-      "target": "jiraProject",
-      "title": "Project",
-      "description": "The Jira project that contains this issue",
-      "required": false,
-      "many": false
-    },
-    "parentIssue": {
-      "target": "jiraIssue",
-      "title": "Parent Issue",
-      "required": false,
-      "many": false
-    },
-    "subtasks": {
-      "target": "jiraIssue",
-      "title": "Subtasks",
-      "required": false,
-      "many": true
-    }
-  }
-}
-```
+<JiraIssueExampleBlueprint/>
 
 </details>
 
 <details>
-<summary>Integration configuration</summary>
+<summary><b>Integration configuration</b></summary>
 
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: issue
-    selector:
-      query: "true"
-      jql: "statusCategory != Done"
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .fields.summary
-          blueprint: '"jiraIssue"'
-          properties:
-            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
-            status: .fields.status.name
-            issueType: .fields.issuetype.name
-            components: .fields.components
-            assignee: .fields.assignee.emailAddress
-            reporter: .fields.reporter.emailAddress
-            creator: .fields.creator.emailAddress
-            priority: .fields.priority.id
-            created: .fields.created
-            updated: .fields.updated
-          relations:
-            project: .fields.project.key
-            parentIssue: .fields.parent.key
-            subtasks: .fields.subtasks | map(.key)
-```
+<JiraIssueExampleConfiguration/>
 
 </details>
+
 
 ## Let's Test It
 
@@ -788,6 +609,13 @@ Here is an example of the payload structure from Jira:
   "uuid": "7f4f8d6f-705b-4074-84be-46f0d012cd8e"
 }
 ```
+
+</details>
+
+<details>
+<summary> User response data</summary>
+
+<JiraUserExampleResponse/>
 
 </details>
 
@@ -1004,82 +832,29 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Issue entity in Port</summary>
+<summary> User entity in Port</summary>
 
-```json showLineNumbers
-{
-  "identifier": "PA-1",
-  "title": "Setup infra",
-  "icon": null,
-  "blueprint": "jiraIssue",
-  "team": [],
-  "properties": {
-    "url": "https://myaccount.atlassian.net/browse/PA-1",
-    "status": "To Do",
-    "issueType": "Task",
-    "components": [],
-    "assignee": "username@example.com.io",
-    "reporter": "username@example.com.io",
-    "creator": "username@example.com.io",
-    "priority": "3",
-    "created": "2023-11-06T11:02:59.000+0000",
-    "updated": "2023-11-06T11:03:18.244+0000"
-  },
-  "relations": {
-    "parentIssue": null,
-    "project": "PA",
-    "subtasks": []
-  },
-  "createdAt": "2023-11-06T11:22:07.550Z",
-  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
-  "updatedAt": "2023-11-06T11:22:07.550Z",
-  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
-}
-```
+<JiraUserEntity/>
 
 </details>
 
-## Getting user emails from Jira
+<details>
+<summary> Issue entity in Port</summary>
 
-By default, Jira does not attach user emails to its API responses. For example, when making an API request to Jira to get an issue, fields such as `assignee`, `creator`, `reporter` and other user fields, will only include information such as the internal user ID and user display name, but not the user email.
+<JiraIssueEntity/>
 
-In order to display the user email in API responses (and also use that data in the mapping from Jira to Port), please follow these steps:
+</details>
 
-### Verify your domain in Jira
 
-To verify your domain in Jira:
+## Relevant Guides
 
-- Go to the [Jira admin panel](https://admin.atlassian.com/).
-- Go to the **Settings** tab.
-- Select **Domains** in the sidebar on the left.
-- If your domain (for example - `acme.com`) does not appear in the list, click on **Add domain**.
-- Enter your domain name and click on **Next**.
-- Verify your domain ownership in whichever way is convenient for you.
-
-When you are done, you will see in the domain menu that your domain is listed, and its status is `VERIFIED` under the **Domain status** column.
-
-### Claim your Jira users
-
-To claim your user accounts in Jira:
-
-- Go to the [Jira admin panel](https://admin.atlassian.com/).
-- Go to the **Settings** tab.
-- Select **Domains** in the sidebar on the left.
-- Find your verified domain in the list whose accounts need to be claimed.
-- Click the 3 horizontal dots (`...`) under the **Actions** column.
-- Select **Claim accounts**.
-- You will receive an email from Jira when the claim process is complete.
-
-That's it! Now Jira API responses will include the `emailAddress` field when returning a user from Jira.
-
-:::tip Jira docs
-All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
-:::
-
+For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Jira).
 
 ## Alternative installation via webhook
 
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Jira. If so, use the following instructions:
+
+**Note** that when using this method, data will be ingested into Port only when the webhook is triggered.
 
 <details>
 

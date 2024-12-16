@@ -1,6 +1,6 @@
 <details>
 
-<summary>Mapping Configuration for ECS Service, AppRunner, Lambda, SQS</summary>
+<summary>Mapping Configuration for Lambda, ECS Service, SQS, Lightsail, ElasticBeanstalk</summary>
 
 ```yaml showLineNumbers
 resources:
@@ -76,6 +76,56 @@ resources:
             link: .Properties.QueueUrl
           relations:
             account: .__AccountId
+  - kind: AWS::Lightsail::Instance
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.InstanceName
+          blueprint: '"lightsailInstance"'
+          properties:
+            link: >-
+                'https://console.aws.amazon.com/go/view?arn=' +
+                .Properties.InstanceArn
+            state: .Properties.State.Name
+            blueprintId: .Properties.BlueprintId
+            bundleId: .Properties.BundleId
+            arn: .Properties.InstanceArn
+            privateIpAddress: .Properties.PrivateIpAddress
+            publicIpAddress: .Properties.PublicIpAddress
+            cpuCount: .Properties.Hardware.CpuCount
+            ramSize: .Properties.Hardware.RamSizeInGb
+            regionName: Properties.RegionName
+            availabilityZone: .Properties.AvailabilityZone
+            monthlyTransfer: .Properties.MonthlyTransfer.GbPerMonthAllocated
+            ports: .Properties.Networking.Ports[](.FromPort | tostring + ' - ' + .ToPort | tostring + ' - ' + .AccessDirection)
+            username: .Properties.UserName
+            tags: .Properties.Tags
+          relations:
+            account: .__AccountId
+  - kind: AWS::ElasticBeanstalk::Application
+    selector:
+      query: 'true'
+      useGetResourceAPI: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.ApplicationName
+          blueprint: '"elasticBeanstalkApplication"'
+          properties:
+            link: >-
+                'https://console.aws.amazon.com/elasticbeanstalk/home?region=' +
+                .__Region +
+                '/application/overview?applicationName=' + .Properties.ApplicationName
+            applicationName: .Properties.ApplicationName
+            maxAgeInDays: .Properties.ResourceLifecycleConfig.VersionLifecycleConfig.MaxAgeRule.MaxAgeInDays
+            maxCount: .Properties.ResourceLifecycleConfig.VersionLifecycleConfig.MaxCountRule.MaxCount
+            kind: .__Kind
+            region: .__Region
+          relations:
+            account: .__AccountId
 ```
-
 </details>

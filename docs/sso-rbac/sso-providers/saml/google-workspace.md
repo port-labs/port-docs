@@ -1,6 +1,6 @@
 ---
 title: "Google Workspace"
-sidebar_position: 2
+sidebar_position: 4
 description: Integrate Google Workspace with Port using SAML
 ---
 

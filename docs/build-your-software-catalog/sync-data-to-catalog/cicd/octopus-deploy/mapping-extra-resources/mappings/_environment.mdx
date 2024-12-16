@@ -1,0 +1,26 @@
+<details>
+
+<summary>Mapping configuration for Environment</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: environment
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .Id
+          title: .Name
+          blueprint: '"octopusEnvironment"'
+          properties:
+            description: .Description
+            allowDynamicInfrastructure: .AllowDynamicInfrastructure
+            useGuidedFailure: .UseGuidedFailure
+          relations:
+            space: .SpaceId
+```
+
+</details>

@@ -11,6 +11,10 @@ Here you will find more Port-related content that can help you get the most out 
 
 ## Tools
 
+#### JQ playground
+
+Test JSON snippets against jq expressions with real-time filters and AI-powered assistance, using Port's [JQ playground](https://jq.getport.io/).
+
 #### Port highlight search - chrome extension
 
 This handy [chrome extension](https://chromewebstore.google.com/detail/highlight-search-in-port/ekbladoiehfohpcppcclfkcnnlchejnb?hl=en-US&utm_source=ext_sidebar) allows you to highlight text in any webpage and quickly search for it in your developer portal.
@@ -57,6 +61,26 @@ This video demonstrates how to build a simple yet effective platform to create a
 <center>
 
 <iframe width="568" height="320" src="https://www.youtube.com/embed/QO45jaeAA2o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
+#### End-to-end Secure GitOps: Akeyless, ArgoCD, & Port - @[TeKanAid](https://www.youtube.com/@TeKanAid)
+
+This video showcases a complete GitOps setup using **Port**, **GitHub Actions**, **ArgoCD**, **Kubernetes**, and **Akeyless** for end-to-end secret management.
+
+<center>
+
+<iframe width="568" height="320" src="https://www.youtube.com/embed/sBTYmqyMzzg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+
+#### Implementing A GUI Based Internal Developer Platform (IDP) - @[TeKanAid](https://www.youtube.com/@TeKanAid)
+
+This video demonstrates how to set up a GUI-based IDP to ensure that the internal engineers and developers you're building the platform for have a proper way to interact with it.
+
+<center>
+
+<iframe width="568" height="320" src="https://www.youtube.com/embed/JcSvHziIKUs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 

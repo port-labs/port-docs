@@ -1,0 +1,37 @@
+<details>
+<summary>Mapping Configuration for CloudFront Distribution</summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::CloudFront::Distribution
+    selector:
+      query: 'true'
+      useGetResourceAPI: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .Identifier
+          title: .Properties.DomainName
+          blueprint: '"cloudFrontDistribution"'
+          properties:
+            link: >-
+                'https://console.aws.amazon.com/cloudfront/home?region=' +
+                .__Region + '#/distribution/' +
+                .Properties.Id
+            status: .Properties.Status
+            domainName: .Properties.DomainName
+            lastModifiedTime: .Properties.LastModifiedTime
+            allowedMethods: .Properties.DefaultCacheBehavior.AllowedMethods
+            originDomainNames: .Properties.Origins[].DomainName
+            originIds: .Properties.Origins[].Id
+            enabled: .Properties.Enabled
+            isIpv6Enabled: .Properties.IPV6Enabled
+            httpVersion: .Properties.HttpVersion
+            isStaging: .Properties.Staging
+            kind: .__Kind
+            region: .__Region
+          relations:
+            account: .__AccountId
+```
+
+</details>

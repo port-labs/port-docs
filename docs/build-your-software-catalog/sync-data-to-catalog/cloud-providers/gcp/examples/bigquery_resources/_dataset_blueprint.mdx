@@ -1,0 +1,43 @@
+<details>
+<summary> BigQuery Dataset Blueprint </summary>
+
+```json showLineNumbers
+{
+  "identifier": "gcpBigQueryDataset",
+  "description": "This blueprint represents a GCP BigQuery dataset in our software catalog",
+  "title": "BigQuery Dataset",
+  "icon": "GoogleCloud",
+  "schema": {
+    "properties": {
+      "location": {
+        "title": "Location",
+        "type": "string"
+      },
+      "lastModified": {
+        "type": "string",
+        "title": "Last Modified",
+        "format": "date-time"
+      },
+      "createdTime": {
+        "type": "string",
+        "title": "Create Time",
+        "format": "date-time"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "gcpProject",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

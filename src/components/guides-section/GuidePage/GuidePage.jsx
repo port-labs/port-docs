@@ -42,7 +42,7 @@ function GuidePage() {
       <div className="guide-tags-and-search-container">
         <div className="guide-tags-and-search-title-container">
           <Typography className="guide-tags-and-search-title">Filters</Typography>
-          <div className="guide-tags-reset-button" onClick={() => { setSelectedTags([]); setSearchText(''); }}>
+          <div className="guide-tags-reset-button" onClick={() => { setSelectedTags([]); setSearchText(''); history.replace({ search: "" })}}>
             <ResetIcon className="reset-icon" />
             <Typography className="guide-tags-reset-button-text">Clear filters</Typography>
           </div>

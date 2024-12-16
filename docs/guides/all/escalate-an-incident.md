@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Learn how to escalate an incident in Port, ensuring timely resolution and effective incident management.
 ---
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'

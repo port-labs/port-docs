@@ -1,7 +1,10 @@
 ---
 sidebar_position: 2
 displayed_sidebar: null
+description: Learn how to execute a basic runner using AWS Lambda in Port, enabling scalable and efficient task automation.
 ---
+
+import KafkaRegionTip from "/docs/actions-and-automations/templates/_kafka_brokers_region_tip.mdx"
 
 # Setting up a basic execution runner using AWS Lambda
 
@@ -26,6 +29,8 @@ KAFKA_USERNAME=YOUR_KAFKA_USERNAME
 KAFKA_PASSWORD=YOUR_KAFKA_PASSWORD
 KAFKA_CONSUMER_GROUP_NAME=YOUR_KAFKA_CONSUMER_GROUP
 ```
+
+<KafkaRegionTip />
 
 To get yourself started quickly, you can always take a look at the [code repository](https://github.com/port-labs/port-serverless-examples) for examples.
 
@@ -735,6 +740,8 @@ aws lambda create-event-source-mapping --topics YOUR_ORG_ID.runs --source-access
           --self-managed-kafka-event-source-config '{"ConsumerGroupId":"YOUR_KAFKA_CONSUMER_GROUP"}' \
           --self-managed-event-source '{"Endpoints":{"KAFKA_BOOTSTRAP_SERVERS":["b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196", "b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196", "b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196"]}}'
 ```
+
+<KafkaRegionTip />
 
 ## Triggering the action
 

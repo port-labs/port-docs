@@ -7,6 +7,7 @@ tags:
   - Incident
   - GitHub
 displayed_sidebar: null
+description: Learn how to create a Slack channel for reported incidents in Port, enhancing team communication and incident response.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
@@ -26,7 +27,7 @@ In this guide, we will be using Port's [Automations](/actions-and-automations/de
 ## Prerequisites
 
 - Install Port's [GitHub app](https://github.com/apps/getport-io) in your GitHub organization.
-- Install Port's [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty.md) for real-time incident ingestion to Port. This integration will in turn trigger our automation when a new incident is created in PagerDuty.
+- Install Port's [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/pagerduty.md) for real-time incident ingestion to Port. This integration will in turn trigger our automation when a new incident is created in PagerDuty.
 - [Ingest GitHub issues](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-issues) using Port's GitHub app.
 - Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 - Prepare a GitHub repository for maintaining your GitHub workflows, and other dependency files. In this guide we will be using `port-actions` as the repository name. 

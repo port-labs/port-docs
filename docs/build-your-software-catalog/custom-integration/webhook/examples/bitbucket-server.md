@@ -4,6 +4,7 @@ description: Ingest Bitbucket Server projects, repositories and pull requests in
 ---
 
 import BitbucketProjectBlueprint from "./resources/bitbucket-server/\_example_bitbucket_project_blueprint.mdx";
+import BitbucketUserBlueprint from "./resources/bitbucket-server/\_example_bitbucket_user_blueprint.mdx";
 import BitbucketPullrequestBlueprint from "./resources/bitbucket-server/\_example_bitbucket_pull_request_blueprint.mdx";
 import BitbucketRepositoryBlueprint from "./resources/bitbucket-server/\_example_bitbucket_repository_blueprint.mdx";
 import BitbucketWebhookConfiguration from "./resources/bitbucket-server/\_example_bitbucket_webhook_config.mdx";
@@ -11,7 +12,7 @@ import BitbucketServerPythonScript from "./resources/bitbucket-server/\_example_
 
 # Bitbucket (Self-Hosted)
 
-In this example you are going to create a webhook integration between your Bitbucket Server and Port. The integration will facilitate the ingestion of Bitbucket project, repository and pull request entities into Port.
+In this example you are going to create a webhook integration between your Bitbucket Server and Port. The integration will facilitate the ingestion of Bitbucket user, project, repository and pull request entities into Port.
 
 ## Port configuration
 
@@ -21,6 +22,13 @@ Create the following blueprint definitions:
 <summary>Bitbucket project blueprint</summary>
 
 <BitbucketProjectBlueprint/>
+
+</details>
+
+<details>
+<summary>Bitbucket user blueprint</summary>
+
+<BitbucketUserBlueprint/>
 
 </details>
 
@@ -41,48 +49,6 @@ Create the following blueprint definitions:
 :::tip Blueprint Properties
 You may modify the properties in your blueprints depending on what you want to track in your Bitbucket account.
 :::
-
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
-
-<details>
-<summary>Bitbucket webhook configuration</summary>
-
-1. **Basic details** tab - fill the following details:
-   1. Title : `Bitbucket Server Mapper`;
-   2. Identifier : `bitbucket_server_mapper`;
-   3. Description : `A webhook configuration to map Bitbucket projects, repositories and pull requests to Port`;
-   4. Icon : `BitBucket`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
-   <BitbucketWebhookConfiguration/>
-    :::note
-    Take note of, and copy the Webhook URL that is provided in this tab
-    :::
-
-3. Click **Save** at the bottom of the page.
-
-</details>
-
-## Create a webhook in Bitbucket
-1. From your Bitbucket account, open the project where you want to add the webhook;
-2. Click **Project settings** or the gear icon on the left sidebar;
-3. On the Workflow section, select **Webhooks** on the left sidebar;
-4. Click the **Add webhook** button to create a webhook for the repository; 
-5. Input the following details:
-    1. `Title` - use a meaningful name such as Port Webhook;
-    2. `URL` - enter the value of the webhook `URL` you received after creating the webhook configuration in Port;
-    3. `Secret` - enter the value of the secret you provided when configuring the webhook in Port;
-    4.  `Triggers` - 
-        1. Under **Project** select `modified`;
-        2. Under **Repository** select `modified`;
-        3. Under **Pull request** select any event based on your use case.
-6. Click **Save** to save the webhook;
-
-:::tip
-Follow [this documentation](https://confluence.atlassian.com/bitbucketserver/event-payload-938025882.html) to learn more about webhook events payload in Bitbucket.
-:::
-
-Done! any change that happens to your project, repository or pull requests in Bitbucket will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
 ## Let's Test It
 
@@ -290,7 +256,9 @@ Here is an example of the payload structure sent to the webhook URL when a Bitbu
 
 </details>
 
-### Mapping Result
+
+<details>
+<summary> Mapping Result </summary>
 
 ```json showLineNumbers
 {
@@ -315,14 +283,15 @@ Here is an example of the payload structure sent to the webhook URL when a Bitbu
    "filter":true
 }
 ```
+</details>
 
 ## Import Bitbucket Historical Issues
 
-In this example you are going to use the provided Python script to fetch data from the Bitbucket Server API and ingest it to Port.
+In this example you are going to use the provided Python script to set up webhooks and fetch data from the Bitbucket Server API and ingest it to Port.
 
 ### Prerequisites
 
-This example utilizes the same [blueprint and webhook](#port-configuration) definition from the previous section.
+This example utilizes the [blueprint](#port-configuration) definition from the previous section.
 
 In addition, provide the following environment variables:
 
@@ -331,18 +300,41 @@ In addition, provide the following environment variables:
 - `BITBUCKET_HOST` - Bitbucket server host such as `http://localhost:7990`
 - `BITBUCKET_USERNAME` - Bitbucket username to use when accessing the Bitbucket resources
 - `BITBUCKET_PASSWORD` - Bitbucket account password
+- `BITBUCKET_PROJECTS_FILTER` - An optional comma separated list of Bitbucket projects to filter. If not provided, all projects will be fetched.
+- `WEBHOOK_SECRET` - An optional secret to use when creating a webhook in Port. If not provided, `bitbucket_webhook_secret` will be used.
+- `PORT_API_URL` - An optional variable that defaults to the EU Port API `https://api.getport.io/v1`. For US organizations use `https://api.us.getport.io/v1` instead.
+- `IS_VERSION_8_7_OR_OLDER` - An optional variable that specifies whether the Bitbucket version is older than 8.7. This setting determines if webhooks should be created at the repository level (for older versions `<=8.7`) or at the project level (for newer versions `>=8.8`).
+- `PULL_REQUEST_STATE` - An optional variable to specify the state of Bitbucket pull requests to be ingested. Accepted values are `"ALL"`, `"OPEN"`, `"MERGED"`, or `"DECLINED"`. If not specified, the default value is `OPEN`.
+
+:::tip Webhook Configuration
+This app will automatically set up a webhook that allows Bitbucket to send events to Port. To understand more about how Bitbucket sends event payloads via webhooks, you can refer to [this documentation](https://confluence.atlassian.com/bitbucketserver/event-payload-938025882.html).
+
+Ensure that the Bitbucket credentials you use have `PROJECT_ADMIN` permissions to successfully configure the webhook. For more details on the necessary permissions and setup, see the [official Bitbucket documentation](https://developer.atlassian.com/server/bitbucket/rest/v910/api-group-project/#api-api-latest-projects-projectkey-webhooks-post).
+:::
+
 
 :::info
 Find your Port credentials using this [guide](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 :::
 
-Use the following Python script to ingest historical Bitbucket projects, repositories and pull requests into port:
+Use the following Python script to set up webhook and ingest historical Bitbucket users, projects, repositories and pull requests into port:
 
 <details>
 <summary>Bitbucket Python script</summary>
+
+:::tip Latest Version
+You can pull the latest version of this code by cloning this [repository](https://github.com/port-labs/bitbucket-workspace-data/)
+:::
 
 <BitbucketServerPythonScript/>
 
 </details>
 
-Done! you are now able to import historical projects, repositories and pull requests from Bitbucket server into Port. Port will parse the objects according to the mapping and update the catalog entities accordingly.
+<details>
+<summary>Bitbucket webhook configuration</summary>
+
+<BitbucketWebhookConfiguration/>
+
+</details>
+
+Done! you are now able to import historical users, projects, repositories and pull requests from Bitbucket into Port and any change that happens to your project, repository or pull requests in Bitbucket will trigger a webhook event to the webhook URL provided by Port. Port will parse the events and objects according to the mapping and update the catalog entities accordingly.

@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+description: Seamlessly connect your GitHub repository with a LaunchDarkly project in Port for efficient feature management.
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
@@ -12,7 +13,7 @@ This guide aims to demonstrate how to connect a GitHub repository (referred to a
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
 - Ensure you have [Launchdarkly installed and configured](/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly/launchdarkly.md#installation) in your environment.
-- Ensure you have [GitHub installed and configured](docs/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md)
+- Ensure you have [GitHub installed and configured](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
 
 :::
 

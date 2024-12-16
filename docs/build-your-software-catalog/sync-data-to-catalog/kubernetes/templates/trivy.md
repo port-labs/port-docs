@@ -36,7 +36,7 @@ variable, you can fetch a pre-defined `blueprints.json` to create your blueprint
 use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/trivy-blueprints.json) to
 define your blueprints. Do this by running:
 
-```bash showLineNumbers
+```bash
 export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/trivy-blueprints.json"
 ```
 
@@ -259,7 +259,7 @@ Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping 
 
 In this use-case you will be using the **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/trivy-kubernetes_v1_config.yaml)**. To achieve this, run:
 
-```bash showLineNumbers
+```bash
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/trivy-kubernetes_v1_config.yaml"
 ```
 Below are the mappings for the Trivy resources:
@@ -344,5 +344,5 @@ Below are the mappings for the Trivy resources:
 ```
 </details>
 
-## Alternative integration using script
-While the Trivy Kubernetes exporter described above is the recommended installation method, you may prefer to use a webhook and a script to [ingest your Trivy scan results to Port](/build-your-software-catalog/custom-integration/webhook/examples/packages/trivy). 
+## Alternative integration using GitHub file ingestion
+While the Trivy Kubernetes exporter described above is the recommended installation method, you may prefer to use the GitHub file ingesting feature to [ingest your Trivy scan results to Port](/guides/all/ingest-trivy-vulnerabilities-into-your-catalog). 

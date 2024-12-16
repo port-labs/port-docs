@@ -26,7 +26,7 @@ Welcome to Port! :wave:
 Port is an internal developer portal solution, allowing you to create compelling developer experiences using the building blocks you need, according to your stack, developer personas and culture.
 
 <center>
-<img src="/img/port-overview/port-stack.png" width="80%" border='1px' />
+<img src="/img/port-overview/port-stack.png" width="80%" style={{borderRadius:'8px'}} />
 </center>
 
 ### Port product pillars
@@ -37,17 +37,17 @@ Give developers a holistic understanding of your development lifecycle and under
 
 [Software Catalog live demo](https://demo.getport.io/service_catalog) 🎬
 
+#### Scorecards
+
+Port scorecards let you define and track standards and KPIs for quality, production readiness, productivity, and more. Drive visibility and a culture of software quality.
+
+[Scorecards Live Demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=1) 🎬
+
 #### Self-Service
 
 Drive developer productivity by allowing developers to run free and use self-service actions like scaffolding a service or provisioning a cloud resource.
 
 [Self Service live demo](https://demo.getport.io/self-serve) 🎬
-
-#### Software maturity
-
-Port scorecards let you define and track standards and KPIs for quality, production readiness, productivity, and more. Drive visibility and a culture of software quality.
-
-[Software Maturity Live Demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=1) 🎬
 
 #### Workflow automation
 
@@ -57,7 +57,7 @@ With Port, you can set up automations to automatically respond to events from yo
 
 #### R&D Insights & Reports
 
-R&D Insights & Reports is a pillar of port that provides data-driven insights and analytical reports on the development process. It allows teams, developers, and management to make informed decisions based on metrics, trends, and usage patterns to improve the development process, optimize performance, and reduce cost.
+R&D Insights & Reports is a pillar of Port that provides data-driven insights and analytical reports on the development process. It allows teams, developers, and management to make informed decisions based on metrics, trends, and usage patterns to improve the development process, optimize performance, and reduce cost.
 
 [Insights & Reports live demo](https://demo.getport.io/engineering_overview) 🎬
 
