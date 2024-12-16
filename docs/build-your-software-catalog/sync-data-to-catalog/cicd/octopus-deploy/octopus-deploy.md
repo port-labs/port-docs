@@ -9,7 +9,7 @@ import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_octopus-deploy-docker-parameters.mdx"
 import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
-import OceanSaasInstallation from "./\_octopus_deploy_ocean_saas_installation.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 
 
@@ -26,13 +26,16 @@ This integration allows you to:
 
 ### Supported Resources
 
-The resources that can be ingested from Octopus Deploy into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+Some of the resources that can be ingested from Octopus Deploy into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
 - [`Space`](https://octopus.com/docs/octopus-rest-api/examples/spaces)
 - [`Project`](https://octopus.com/docs/octopus-rest-api/examples/projects)
 - [`Release`](https://octopus.com/docs/octopus-rest-api/examples/releases)
 - [`Deployment`](https://octopus.com/docs/octopus-rest-api/examples/deployments)
 
+:::tip Ingesting Additional Resources
+The integration supports additional resources, see the [ingest additional resources](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy/mapping-extra-resources) page for more information
+:::
 
 ## Setup
 
