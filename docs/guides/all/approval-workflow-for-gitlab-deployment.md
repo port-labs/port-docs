@@ -304,8 +304,8 @@ This action can be executed by an admin to approve the change request. It trigge
         "port_context": {
             "runId": "{{ .run.id }}"
         },
-        "deploy_run_id": "{{ .entity.properties.tags }}",
-        "system_id": "{{ .entity.properties.system_id }}"
+        "deploy_run_id": "{{ .entity.properties.externalTags }}",
+        "system_id": "{{ .entity.identifier }}"
         }
     },
     "requiredApproval": false
@@ -397,7 +397,7 @@ This automation is triggered when a `servicenowChangeRequest` is updated to *"ap
         },
         "approval_status": "{{ .event.diff.after.properties.approval  }}",
         "system_id": "{{ .event.diff.after.identifier  }}",
-        "deploy_run_id": "{{ .event.diff.after.properties.tags }}"
+        "deploy_run_id": "{{ .event.diff.after.properties.externalTags }}"
         }
     },
     "publish": true
@@ -566,7 +566,7 @@ run-tests:
           changePriority=$(echo "$changeRequestResponse" | jq -r '.result.priority')
           changeDescription=$(echo "$changeRequestResponse" | jq -r '.result.short_description')
           changeApproval=$(echo "$changeRequestResponse" | jq -r '.result.approval')
-          changeTags=$(echo "$changeRequestResponse" | jq -r '.result.u_external_tag')
+          changeTags=$(echo "$changeRequestResponse" | jq -r '.result.external_tags')
           changeService=$(echo "$changeRequestResponse" | jq -r '.result.business_service.value')
 
           echo "Change Request Created Successfully: Number: $changeNumber, Sys ID: $changeSysId, State: $changeState"
@@ -601,7 +601,7 @@ run-tests:
               \"priority\": \"$changePriority\",
               \"description\": \"$changeDescription\",
               \"approval\": \"$changeApproval\",
-              \"tags\": \"$changeTags\",
+              \"externalTags\": \"$changeTags\",
               \"service\": \"$changeService\"
             },
             \"relations\": {}
