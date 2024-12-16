@@ -481,6 +481,10 @@ That's it! Now Jira API responses will include the `emailAddress` field when ret
 All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
 :::
 
+### OAuth account password change
+
+If the password of the account used to authenticate with Jira changes, the integration will need to be **reinstalled**. This is because the Jira API requires the use of an API token for authentication, and the token is generated using the account's password.
+
 ## Examples
 
 To view and test the integration's mapping against examples of the third-party API responses, use the **jq playground** in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
