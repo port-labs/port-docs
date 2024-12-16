@@ -236,7 +236,7 @@ resources:
 createMissingRelatedEntities: true
 deleteDependentEntities: true
 resources:
-  - kind: ga_projects
+  - kind: projects_ga
     selector:
       query: 'true'
       metrics:
