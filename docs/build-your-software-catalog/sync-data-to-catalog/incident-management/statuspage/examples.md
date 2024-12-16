@@ -548,11 +548,11 @@ resources:
     "category": {
       "title": "Category",
       "description": "Category of Incident",
-      "calculation": ".properties | .status as $status | if ($status | IN(\"scheduled\", \"in_progress\", \"verifying\", \"completed\")) then \"maintainance\" else \"incident\" end",
+      "calculation": ".properties | .status as $status | if ($status | IN(\"scheduled\", \"in_progress\", \"verifying\", \"completed\")) then \"maintenance\" else \"incident\" end",
       "type": "string",
       "colorized": true,
       "colors": {
-        "maintainance": "bronze",
+        "maintenance": "bronze",
         "incident": "red"
       }
     }
@@ -705,11 +705,11 @@ resources:
     "category": {
       "title": "Category",
       "description": "Category of Incident",
-      "calculation": ".properties | .status as $status | if ($status | IN(\"scheduled\", \"in_progress\", \"verifying\", \"completed\")) then \"maintainance\" else \"incident\" end",
+      "calculation": ".properties | .status as $status | if ($status | IN(\"scheduled\", \"in_progress\", \"verifying\", \"completed\")) then \"maintenance\" else \"incident\" end",
       "type": "string",
       "colorized": true,
       "colors": {
-        "maintainance": "bronze",
+        "maintenance": "bronze",
         "incident": "red"
       }
     }

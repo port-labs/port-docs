@@ -148,7 +148,7 @@ This option is way easier but if you do not want this, you can simply type in re
           "title": "Repository",
           "type": "string",
           "blueprint": "ecrRepository",
-          "description": "Use if respository has been ingested into Port. If both Repository and Repository Name are specified, Repository takes precedence.",
+          "description": "Use if repository has been ingested into Port. If both Repository and Repository Name are specified, Repository takes precedence.",
           "format": "entity"
         },
         "tags": {

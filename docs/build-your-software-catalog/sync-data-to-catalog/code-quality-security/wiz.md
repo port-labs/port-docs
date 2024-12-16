@@ -65,7 +65,7 @@ Learn more [here](https://win.wiz.io/reference/quickstart#generate-a-bearer-toke
     - Click the **User Profile** icon available at the top right of the screen and click the **User Settings** option.
     - Click the **Tenant** option from the left options menu.
     - The system displays the **API Endpoint URL**.
-    - Copy and save the **API URL** to use while configuring the Wiz intergration.
+    - Copy and save the **API URL** to use while configuring the Wiz integration.
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizApiUrl.png' width='85%' border='1px' />
 
