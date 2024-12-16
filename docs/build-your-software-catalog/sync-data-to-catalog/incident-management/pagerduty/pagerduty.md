@@ -36,11 +36,17 @@ This integration allows you to:
 
 The resources that can be ingested from PagerDuty into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
+- [`User`](https://developer.pagerduty.com/api-reference/c96e889522dd6-list-users)
 - [`Schedule`](https://developer.pagerduty.com/api-reference/846ecf84402bb-list-schedules)
 - [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
 - [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
 - [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
 - [`Escalation Policy`](https://developer.pagerduty.com/api-reference/51b21014a4f5a-list-escalation-policies)
+
+:::tip Ingesting Additional Resources
+The resources listed above are just a subset of what the PagerDuty integration supports. You can ingest additional PagerDuty resources if they have a `GET List <resource name>` endpoint in the [PagerDuty API documentation](https://developer.pagerduty.com/api-reference/e65c5833eeb07-pager-duty-api). This means, resources such as teams, audit records, business services, extensions, incident workflows, status dashboards, vendor etc can be ingested into Port.
+:::
+
 
 
 ## Setup

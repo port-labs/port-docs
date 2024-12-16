@@ -562,7 +562,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "sentryProject",
+  "identifier": "sentryProjectEnvironment",
   "title": "Sentry Project Environment",
   "icon": "Sentry",
   "schema": {
@@ -622,7 +622,7 @@ resources:
         mappings:
           identifier: .slug + "-" + .__tags.name
           title: .name + "-" + .__tags.name
-          blueprint: '"sentryProject"'
+          blueprint: '"sentryProjectEnvironment"'
           properties:
             dateCreated: .dateCreated
             platform: .platform
@@ -940,7 +940,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "python-fastapi-production",
   "title": "python-fastapi-production",
   "icon": null,
-  "blueprint": "sentryProject",
+  "blueprint": "sentryProjectEnvironment",
   "team": [],
   "properties": {
     "dateCreated": "2023-03-31T06:18:37.290732Z",
