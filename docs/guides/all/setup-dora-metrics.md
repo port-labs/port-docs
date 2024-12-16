@@ -934,7 +934,7 @@ To implement this, add this to your Jira data source configuration:
 
 :::tip Install jira integration
 You need to make sure that you have a Jira integration set up in Port with the Issue blueprint to track Jira tickets.
-If you don't have this set up, follow the [Jira integration guide](/build-your-software-catalog/sync-data-to-catalog/issue-tracking/jira) to configure it.
+If you don't have this set up, follow the [Jira integration guide](/build-your-software-catalog/sync-data-to-catalog/project-management/jira) to configure it.
 :::
 
 Add this mapping config to the Jira [data source](https://app.getport.io/settings/data-sources?filter=Jira)
