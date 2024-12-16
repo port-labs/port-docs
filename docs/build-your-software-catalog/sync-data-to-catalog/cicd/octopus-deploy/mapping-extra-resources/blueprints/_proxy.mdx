@@ -1,0 +1,48 @@
+<details>
+
+<summary>Proxy Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "octopusProxy",
+  "title": "Octopus Proxy",
+  "icon": "Octopus",
+  "description": "A proxy configuration in Octopus Deploy",
+  "schema": {
+    "properties": {
+      "host": {
+        "type": "string",
+        "title": "Host",
+        "description": "The hostname of the proxy"
+      },
+      "port": {
+        "type": "integer",
+        "title": "Port",
+        "description": "The port used by the proxy"
+      },
+      "username": {
+        "type": "string",
+        "title": "Username",
+        "description": "The username for authentication with the proxy"
+      },
+      "proxyType": {
+        "type": "string",
+        "title": "Proxy Type",
+        "description": "The type of the proxy"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
