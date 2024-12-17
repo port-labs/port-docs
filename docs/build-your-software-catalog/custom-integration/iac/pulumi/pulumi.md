@@ -1831,7 +1831,7 @@ The following parameters are **required**:
 
 ## Ingest data using the Pulumi provider
 
-To ingest data to the software catalog using the Pulumi provider, you will create an instance of `port.Entity` resource in your preferred langauge:
+To ingest data to the software catalog using the Pulumi provider, you will create an instance of `port.Entity` resource in your preferred language:
 
 <Tabs groupId="sync-data" queryString="current-scenario" defaultValue="create" values={[
 {label: "Create", value: "create"},
@@ -1841,7 +1841,7 @@ To ingest data to the software catalog using the Pulumi provider, you will creat
 
 <TabItem value="create">
 
-To create an entity using Pulumi, create a file in your prefered languague from and insert the following:
+To create an entity using Pulumi, create a file in your preferred language from and insert the following:
 
 <Tabs groupId="create-resource-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
