@@ -174,7 +174,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
-            Starting a GitHub worklfow to tag the AWS resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
+            Starting a GitHub workflow to tag the AWS resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

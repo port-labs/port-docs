@@ -55,7 +55,7 @@ This guide walks you through creating custom pages using our [Pulumi provider](h
 
 1. Basic Port Concepts: Familiarity with <PortTooltip id="blueprint">blueprints</PortTooltip>, <PortTooltip id="entity">entities</PortTooltip>, and <PortTooltip id="dataset">datasets</PortTooltip> in your Port system is helpful.
 2. You will also need your [Port credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
-3. This guide also assumes that you have installed Pulumi, and [the Port provider's SDK](https://www.pulumi.com/registry/packages/port/installation-configuration/) in your chosen lanaguage.
+3. This guide also assumes that you have installed Pulumi, and [the Port provider's SDK](https://www.pulumi.com/registry/packages/port/installation-configuration/) in your chosen language.
 
 <Tabs groupId="pulumi-create-dashboard" queryString values={[
 {label: "Python", value: "python"},
@@ -362,7 +362,7 @@ dashboard_layout = {
     "id": "myDashboardWidget",  # This is optional, as Port can auto-generate IDs
     "type": "dashboard-widget",
     "layout": [
-        # previous configuration: markdown and qoute widgets,
+        # previous configuration: markdown and quote widgets,
         {
             "height": 400,
             "columns": [
