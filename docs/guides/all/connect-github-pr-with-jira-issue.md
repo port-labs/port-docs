@@ -103,7 +103,7 @@ For the GitHub app installation you will need to have a registered organization 
 
 </details>
 
-3. Install Port's GitHub app by following the [installation guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation)
+3. Install Port's GitHub app by following the [installation guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
 
 4. Now that the integration is installed successfully, we need to ingest `githubPullRequest` data from the GitHub organization into the software catalog. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your GitHub integration:
 

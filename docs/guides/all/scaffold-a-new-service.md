@@ -43,29 +43,31 @@ After completing it, you will get a sense of how it can benefit different person
 
 <TabItem value="github-gitlab-bitbucket">
 
-:::tip Onboarding
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
+2. Click on the `+ Action` button in the top-right corner:
 
-As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service page](https://app.getport.io/self-serve).
+    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
-If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
-:::
+3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Scaffold a new service` action, click the `...` button, and choose "Edit":
+    <img src='/img/guides/scaffoldActionDetails.png' width='70%' border='1px' />
+    <br/>
+4. Click on the `Next` to proceed to the `User Form` tab and click on `+ Input`.
+5. Enter `Service name` as the **Title**, select `Text` for the **Type**, set **Required** to `True`, and click on the `Create` button.
 
-    <img src='/img/guides/scaffoldEditAction.png' width='35%' border='1px' />
+    <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
+    <br/>
 
-2. The action's basic details should look like the image below. You can click on the `User Form` tab to see the user inputs created for the action. When ready, click on the `Backend` tab to proceed.
-
-    <img src='/img/guides/scaffoldEditActionDetails.png' width='70%' border='1px' />
+6. Click on the `Next` to configure the **Backend**.
 
 </TabItem>
 
 <TabItem value="azure-devops">
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
-2. Click on the `+ Action` button on the top left conner :
+2. Click on the `+ Action` button in the top-right corner:
 
-    <img src='/img/guides/scaffoldAddAction.png' width='35%' border='1px' />
+    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
 3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
 
@@ -1100,7 +1102,12 @@ Head back to the [Self-service page](https://app.getport.io/self-serve) of your 
 1. Click on `Create` to begin executing the action.
 
 2. Enter a **name** for your new repository.  
-For some of the available Git providers, additional inputs are required when executing the action.
+   :::info Repository name restrictions
+   Some Git providers (for example, GitHub) do not allow spaces in repository names.  
+   We recommend using underscores or hyphens instead of spaces.
+   :::
+
+3. For some of the available Git providers, additional inputs are required when executing the action.
 
 <Tabs groupId="git-provider" queryString defaultValue="bitbucket" values={[
 

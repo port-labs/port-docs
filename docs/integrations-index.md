@@ -193,7 +193,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Self-service action to resolve a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident)
 - PagerDuty Incident Management
     - [Automation to handle PagerDuty incidents](https://docs.getport.io/guides/all/create-slack-channel-for-reported-incident)
-    - [Self-service action to resolve Pagerduty incidents](https://docs.getport.io/guides-and-tutorials/resolve-pagerduty-incidents) - including Slack channel notification and closing GitHub issue.
+    - [Self-service action to resolve Pagerduty incidents](https://docs.getport.io/guides-and-tutorials/resolve-pagerduty-incident) - including Slack channel notification and closing GitHub issue.
 
 ## Jira
 
@@ -220,8 +220,8 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## OpsGenie
 
-- [OpsGenie integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie.md)
-- [Self-service action to trigger an OpsGenie incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/Opsgenie/trigger-an-incident)
+- [OpsGenie integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie/opsgenie.md)
+- [Self-service action to trigger an OpsGenie incident](https://docs.getport.io/guides/all/create-an-opsgenie-incident)
 
 ## Incident IO
 - [Sync Port Services to Incident IO](/guides/all/sync-service-entities-to-incident-io)

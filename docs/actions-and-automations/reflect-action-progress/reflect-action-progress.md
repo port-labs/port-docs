@@ -11,7 +11,22 @@ This page will teach you how to use Port's API to obtain existing action runs an
 
 ## Where to find your action runs
 
-You can find your existing/finished action runs using one of the following methods:
+### Non-admin roles
+
+`Members` and `moderators` can find their existing/finished action runs using one of the following methods:
+
+- The `My latest runs` list - click on the <img src="/img/self-service-actions/reflect-action-progress/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner of the page.  
+  
+  This will display the latest action runs that have been executed by the logged-in user:  
+  <img src='/img/self-service-actions/reflect-action-progress/myLatestRuns.png' width='35%' border='1px' />
+
+  You can also click on the `My run history` button to see a table with all of the user's previous action runs.
+
+- After executing an action from the [self-service page](https://app.getport.io/self-serve), the `My latest runs` list will open automatically, showing the newly created action run.
+
+### Admin role
+
+In addition to the methods mentioned above, `admins` can find action runs using one of the following methods:
 
 - The dedicated `Runs history` table:
   - **Self-service actions** - go to the [self-service page](https://app.getport.io/self-serve) of your portal, then click on the <img src="/img/self-service-actions/reflect-action-progress/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button in the top-right corner.
@@ -21,10 +36,6 @@ You can find your existing/finished action runs using one of the following metho
 
 - Go the [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) of your desired entity, then select the `Runs` tab.  
    This page will display all action runs that have been executed for the selected Entity.
-
-- Once you have at least one `in-progress` action run, a panel will be displayed on the right side of the page, showing the  runs that are currently in progress.
-
-- After executing an action from the [self-service page](https://app.getport.io/self-serve), a toast will appear in the bottom-right of the page, with a link to the newly created action run.
 
 ## Interacting with action runs
 
