@@ -30,7 +30,7 @@ This process includes the following steps:
   
    - **Step 3:** For each user story, define its priority by answering the four questions in the roadmap planner.  
     Priority is calculated based on the following factors:
-     - The **precentage of users** who will use the feature.
+     - The **percentage of users** who will use the feature.
      - The **frequency** of use.
      - The features **importance** to the users (nice to have vs. essential).
      - The **time effort** required to build the feature.

@@ -141,7 +141,7 @@ For organizations with stringent security standards, there is an option to liste
 
 Aside from those, Port also supports other backends such as webhooks which make it possible for Port to directly make a request to your environment and trigger your backend, should you choose to do so.
 
-No matter what backend you choose to trigger self-service actions or autoamtions, Port attaches security headers to each trigger request, making it easy to validate Port's identity and ensure that the request originated from Port.
+No matter what backend you choose to trigger self-service actions or automations, Port attaches security headers to each trigger request, making it easy to validate Port's identity and ensure that the request originated from Port.
 
 ## Applications and integrations
 

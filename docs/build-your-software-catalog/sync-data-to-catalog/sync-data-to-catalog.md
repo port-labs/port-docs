@@ -26,7 +26,7 @@ Generally, installing an available integration results in the following:
    2. Default [mapping](/build-your-software-catalog/customize-integrations/configure-mapping) will be defined in the integration's [data source](https://app.getport.io/settings/data-sources) page.
 
 2. Data from the integrated tool is ingested into Port.  
-   The sync mechanism and frequency depend on the intallation method.
+   The sync mechanism and frequency depend on the installation method.
 
 After the installation, you can customize the blueprints and/or mapping to ingest more/less data (see below).
 

@@ -260,7 +260,7 @@ update-run-status:
 ```json showLineNumbers
 {
   "identifier": "namespace",
-  "description": "Kubernetes Namepace",
+  "description": "Kubernetes Namespace",
   "title": "Namespace",
   "icon": "AmazonEKS",
   "schema": {

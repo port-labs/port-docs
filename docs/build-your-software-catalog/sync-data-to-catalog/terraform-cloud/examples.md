@@ -114,7 +114,7 @@ To view and test the integration's mapping against examples of the third-party A
         "permissions": {
           "type": "object",
           "title": "Permissions",
-          "description": "The permisssions on the project"
+          "description": "The permissions on the project"
         }
       }
     },

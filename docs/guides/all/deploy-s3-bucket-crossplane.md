@@ -472,7 +472,7 @@ This example focuses on creating either Merge Requests in GitLab or Pull Request
 :::
 
 7. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.<br/>
-   You will notice a new Pull Request / Merge Request was created, commiting the S3 Bucket manifest.
+   You will notice a new Pull Request / Merge Request was created, committing the S3 Bucket manifest.
 
 ## Next steps
 
