@@ -239,6 +239,9 @@ resources:
   - kind: projects_ga
     selector:
       query: 'true'
+      apiFilters:
+        qualifiers:
+          - TRK
       metrics:
         - code_smells
         - coverage
