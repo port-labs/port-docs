@@ -349,7 +349,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 Congratulations! You can now send Slack reminders easily from Port 💪🏽
 
 ### Conclusion
-Creating scorecards is the first step in setting standards in our development lifecycle. However, to ensure these standards are met, we need to turn rule violations into action items. By automating Slack reminders and the creation of Jira tasks, we can drive change across the entire organization using familiar tools to combine it natively within our delievery lifecycle.
+Creating scorecards is the first step in setting standards in our development lifecycle. However, to ensure these standards are met, we need to turn rule violations into action items. By automating Slack reminders and the creation of Jira tasks, we can drive change across the entire organization using familiar tools to combine it natively within our delivery lifecycle.
 
 ### More Examples
 - [Open/Close JIRA issues based on scorecards](/promote-scorecards/manage-using-3rd-party-apps/jira)

@@ -176,7 +176,7 @@ Now, if our `service` identifier is equal to the Pagerduty service's name, the `
 
 ### Display each service's code owners
 
-Git providers allow you to add a `CODEOWNERS` file to a repository specifiying its owner/s. See the relevant documentation for details and examples:
+Git providers allow you to add a `CODEOWNERS` file to a repository specifying its owner/s. See the relevant documentation for details and examples:
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},

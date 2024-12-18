@@ -272,7 +272,7 @@ resource "port_entity" "myEntity" {
 # highlight-start
   relations = {
     single_relations = {
-    "mySingleRelation" = "myTargetEntityIdentifier"
+      "mySingleRelation" = "myTargetEntityIdentifier"
     }
   }
 
@@ -358,7 +358,7 @@ resource "port_entity" "myEntity" {
       "myObjectProp" = jsonencode({ "my" : "object" })
     }
     "array_props" = {
-    "string_props" = {
+      "string_props" = {
         "myArrayProp" = ["a", "b", "c"]
       }
     }
@@ -427,13 +427,10 @@ To delete an entity using Terraform, simply remove the `port_entity` resource de
 To import an existing blueprint to the Terraform state, add a `port_blueprint` resource to your `.tf` definition file:
 
 ```hcl showLineNumbers
-
 # highlight-start
-
 resource "port_blueprint" "myBlueprint" {
   ...
 }
-
 # highlight-end
 ```
 
@@ -450,21 +447,16 @@ terraform import port_blueprint.myBlueprint "{blueprintIdentifier}"
 To import an existing entity to the Terraform state, add a `port_entity` resource to your `.tf` definition file:
 
 ```hcl showLineNumbers
-
 # highlight-start
-
 resource "port_entity" "myEntity" {
   ...
 }
-
-
 # highlight-end
 ```
 
 Then run the following command to import the entity to the Terraform state:
 
 ```shell showLineNumbers
-
 terraform import port_entity.myEntity "{blueprintIdentifier}:{entityIdentifier}"
 ```
 
@@ -478,8 +470,5 @@ Before using `terraform import` to bring data from your Port account into your T
 
 :::note Advanced Example
 See [this](/guides/all/import-and-manage-integration) guide which explains more in depth of how you can use import state to manage Port integrations using Terraform
-
-
 :::
-
 

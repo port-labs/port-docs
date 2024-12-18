@@ -12,7 +12,7 @@ import CombinatorIntro from "./\_combinator_intro.md"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used accross the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list. 
+Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used across the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list. 
 
 ## Common queries usage
 

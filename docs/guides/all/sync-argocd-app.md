@@ -208,7 +208,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_context).run_id}}
-          logMessage: "Successfully synced Argo CD Aplication ✅"
+          logMessage: "Successfully synced Argo CD Application ✅"
 ```
 </details>
 

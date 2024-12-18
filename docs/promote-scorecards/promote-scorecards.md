@@ -356,7 +356,7 @@ For example, here are the scores of all `Services` in an organization grouped by
 
 ![catalogViewScorecardsByTeam](../../static/img/software-catalog/scorecard/catalogViewScorecardsByTeam.png)
 
-Note that every coloumn (scorecard metric) in the table has an aggregation in the bottom, hover over it to see the compliance of this metric across all entities in the table.
+Note that every column (scorecard metric) in the table has an aggregation in the bottom, hover over it to see the compliance of this metric across all entities in the table.
 
 ### Rule result summaries
 

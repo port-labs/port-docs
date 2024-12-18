@@ -70,7 +70,7 @@ This `blueprints.json` file defines the following blueprints:
   - StatefulSet
   - DaemonSet
 
-- `Openshift Route` is one of the most important Openshift resources, giving developers the capability to connect to their services, while the entire network layer is managed by the Openshift API, and providing a simple DNS record for accessability.
+- `Openshift Route` is one of the most important Openshift resources, giving developers the capability to connect to their services, while the entire network layer is managed by the Openshift API, and providing a simple DNS record for accessibility.
 
 :::
 
@@ -82,7 +82,7 @@ Below are the Openshift blueprint schemas used in the exporter:
 ```json showLineNumbers
 {
   "identifier": "k8sService",
-  "title": "K8s Serivce",
+  "title": "K8s Service",
   "description": "This blueprint represents a k8s Service",
   "icon": "Microservice",
   "schema": {
