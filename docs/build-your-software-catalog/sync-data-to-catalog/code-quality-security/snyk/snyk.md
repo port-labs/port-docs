@@ -630,7 +630,7 @@ resources:
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {
-    "synk_organization": {
+    "snyk_organization": {
       "title": "Snyk Organization",
       "target": "snykOrganization",
       "required": false,
@@ -665,7 +665,7 @@ resources:
             lowOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.low] | add'
             criticalOpenVulnerabilities: '[.__projects[].meta.latest_issue_counts.critical] | add'
           relations:
-            synk_organization: '.relationships.organization.data.id'
+            snyk_organization: '.relationships.organization.data.id'
 ```
 
 </details>
