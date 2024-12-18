@@ -925,7 +925,7 @@ By this method, individual services within a monorepo are mapped to Port bluepri
 Custom integrations provide flexibility in mapping and tracking each service or microservice within a monorepo. With Port’s API, you can track deployments and updates for each component separately, giving you granular control over monitoring and managing services in a monorepo.
 :::
 
-### Tracking deployment via Jira Tickets (Alternative)
+### Tracking deployment via Jira tickets (Alternative)
 
 Instead of relying solely on PR merges or pipeline runs,
 you can treat a Jira ticket moving to the "Done" status as indicating that code has been deployed. 
