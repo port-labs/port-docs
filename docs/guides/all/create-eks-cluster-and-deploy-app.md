@@ -833,7 +833,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ env.PORT_RUN_ID }}
-          logMessage: "Commiting new app files: ${{ github.event.inputs.project_name }}"
+          logMessage: "Committing new app files: ${{ github.event.inputs.project_name }}"
 
       - name: Commit files
         working-directory: ./tmp/${{ github.event.inputs.repo_name }}
