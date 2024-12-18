@@ -413,7 +413,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
-            Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
+            Starting a GitHub workflow to tag the Azure resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
 
   
       - uses: azure/login@v1

@@ -303,7 +303,7 @@ Take note of, and copy the Webhook URL that is provided in this tab
 
 ## Create a webhook in JFrog
 
-1. Log in to JFrog as a user with admin priviledges
+1. Log in to JFrog as a user with admin privileges
 2. Click the gear icon at the top right corner at the left side of the user icon;
 3. Choose **Platform Management**;
 4. At the bottom of the sidebar on the left, just below **General**, choose **Webhooks**;

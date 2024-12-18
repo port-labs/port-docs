@@ -92,7 +92,7 @@ Pass these to Port. <br/>
 
 Press `Continue`.
 
-5. Configure your new application as shown bellow:
+5. Configure your new application as shown below:
 
 - `ACS URL` - `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
 - `Entity ID` - `urn:auth0:port-prod:{CONNECTION_NAME}`
