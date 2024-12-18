@@ -49,11 +49,12 @@ It is possible to reference any field that appears in the API responses linked b
 
 Choose one of the following installation methods:
 
+
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation />
 
 </TabItem>
 
@@ -479,6 +480,10 @@ That's it! Now Jira API responses will include the `emailAddress` field when ret
 :::tip Jira docs
 All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
 :::
+
+<!-- ### OAuth account password change
+
+If the password of the account used to authenticate with Jira changes, the integration will need to be **reinstalled**. This is because the Jira API requires the use of an API token for authentication, and the token is generated using the account's password. -->
 
 ## Examples
 
