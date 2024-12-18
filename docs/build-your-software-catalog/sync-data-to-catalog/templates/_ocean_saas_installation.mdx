@@ -9,6 +9,10 @@ Using this installation option means that the integration will be hosted by Port
 Currently, live events are not supported for integrations hosted by Port.  
 Resyncs will be performed **periodically** (with a configurable interval), or **manually** triggered by you via Port's UI.
 
+:::tip Real-time updates
+You can use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) method if you want live events to be ingested into Port immediately.
+:::
+
 Therefore, real-time events (including GitOps) will not be ingested into Port immediately.  
 Support for live events is WIP and will be supported in the near future.
 
@@ -70,9 +74,4 @@ You may need to add these addresses to your allowlist, in order to allow Port to
 ```
 </TabItem>
 </Tabs>
-
-:::tip Real-time updates
-If the "Hosted by Port" integration doesn't automatically perform real-time updates you can manually configure webhooks to trigger immediate data ingestion.
-[Learn more about manually creating webhooks for real-time updates](#alternative-installation-via-webhook).
-:::
 
