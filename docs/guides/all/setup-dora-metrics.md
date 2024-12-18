@@ -122,7 +122,8 @@ If you do not have the **lead time** configured, you can follow the integration 
 ### Tracking lead time with Jira tickets
 
 The **recommended** approach in tracking the lead time is using measuring the time that a pr was opened to the time it was merged.
-However, you can also track lead time by measuring the time that a Jira ticket moves from **In Progress** to **Done**.  
+An **alternate** approach is to track lead time using Jira tickets from their **creation** until **resolution**.  
+This approach focuses on the entire lifecycle of a task rather than just code merges.
 
 Add this mapping config to the Jira [data source](https://app.getport.io/settings/data-sources?filter=Jira):
 
@@ -149,7 +150,11 @@ Add this mapping config to the Jira [data source](https://app.getport.io/setting
 ```
 </details>
 
-This approach focuses on the entire lifecycle of a task rather than just code merges.
+If you want to measure lead time from the moment a ticket moves **In Progress** rather than from creation, set up an automation to update a custom field in Port when the status changes to In Progress, 
+and then use a calculation property in Port to measure the time between this custom field’s timestamp and the resolved date.  
+Read more about setting automations [here](/actions-and-automations/define-automations/).
+
+
 
 :::tip Adding JSON Schema Using Port's UI
 1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
@@ -920,13 +925,7 @@ By this method, individual services within a monorepo are mapped to Port bluepri
 Custom integrations provide flexibility in mapping and tracking each service or microservice within a monorepo. With Port’s API, you can track deployments and updates for each component separately, giving you granular control over monitoring and managing services in a monorepo.
 :::
 
-## Alternative tracking strategies
-
-Although PR merge is the recommended way of tracking deployments, besides the CI methods described above,
-you can also track and measure DORA metrics using other approaches that may align better with your team's workflow.
-
-
-### Deployment via Jira Tickets
+### Tracking deployment via Jira Tickets (Alternative)
 
 Instead of relying solely on PR merges or pipeline runs,
 you can treat a Jira ticket moving to the "Done" status as indicating that code has been deployed. 
@@ -968,7 +967,20 @@ Effective incident tracking reveals insights into how frequently deployments fai
 - Link incidents to services to track the impact of failures.
 - Aggregate metrics across incidents for better monitoring.
 
-### Data model setup
+Track incident by following the ways below:
+
+<Tabs groupId="tracking-strategies" defaultValue="recommended" values={[
+{ label: "Recommended", value: "recommended" },
+{ label: "Alternative", value: "alternative" }
+]}>
+
+<TabItem value="recommended" label="Recommended">
+
+We recommend using a dedicated incident management tool, like PagerDuty, to streamline this process. 
+
+Below is an example of how to do this
+
+<h3> Data model setup </h3>
 
 Ensure that your **PagerDuty incident blueprint** is properly configured to map incidents to the correct services(gitHub).
 This includes defining the appropriate properties and relations for incidents.Follow this [PagerDuty Incident Blueprint Setup Link](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty#incident-blueprint-setup) to implement.
@@ -1010,7 +1022,7 @@ This includes defining the appropriate properties and relations for incidents.Fo
 
    </details>
 
-### Syncing incidents with PagerDuty and other tools
+<h3> Syncing incidents with PagerDuty and other tools </h3>
 
 To sync incidents from **PagerDuty**, follow the steps in the [PagerDuty guide](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty). The guide provides detailed steps for setting up integrations to track incidents related to deployments.
 
@@ -1020,7 +1032,8 @@ For other incident management tools, follow these respective guides:
 - [ServiceNow](/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
 - [Statuspage](/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
 
-### Relating Incident to services
+<h3> Relating Incident to services </h3>
+
 Add this relationship to the **Incident blueprint** to link incidents to GitHub or Gitlab or Azure DevOps repository (service):
 
 <Tabs groupId="incident-relation-strategies" defaultValue="github-relation" values={[
@@ -1126,9 +1139,23 @@ Using Search Queries](/build-your-software-catalog/customize-integrations/config
 :::
 
 Note that the above implementation of tracking incidents using an incident manager tool like Pagerduty and others is the **recommended** approach.
+  
+</TabItem>
 
+  
+<TabItem value="alternative" label="Alternative">
 
-### Tracking CFR with Jira bugs (alternative)
+There are different ways to track incidents depending on your tools and needs. Below are a couple of alternate
+strategies that can complement the recommended methods:
+
+<Tabs groupId="tracking-cfr-strategies" defaultValue="hotfix" values={[
+{ label: "Tracking CFR with Jira bugs", value: "jira-cfr" },
+{ label: "Tracking hotfix deployments", value: "hotfix" }
+]}>
+
+<TabItem value="jira-cfr" label="Tracking CFR with Jira bugs">
+
+<h2> Tracking CFR with Jira bugs </h2>
 
 Count the number of urgent Jira bugs that appear after deployments to gauge the change failure rate.
 This method aligns failure rate with customer-impacting issues tracked in your ticketing system.
@@ -1184,10 +1211,13 @@ Ensure that your Jira project blueprint has a relationship with the Jira issue b
     "path": "jiraProject.highestPriorityIssueCount"
   }
 ```
-</details>
+</details></TabItem>
 
-### Tracking hotfix deployments (alternative)
-An Alternate way of tracking incidents is to use the hotfix approach.
+<TabItem value="hotfix" label="Tracking hotfix deployments">
+
+<h2> Tracking hotfix deployments </h2>
+
+Another way of tracking incidents is to use the hotfix approach.
 The “hotfix” approach interprets any pull request labeled as “hotfix”
 as representing a deployment that had to be rapidly fixed after release, effectively signaling a failed change.
 
@@ -1212,6 +1242,13 @@ Add this mapping to the service configuration to track hotfix deployments:
 
 ```
 </details>
+  </TabItem>
+
+</Tabs>
+</TabItem>
+
+</Tabs>
+
 
 ## Metrics
 
