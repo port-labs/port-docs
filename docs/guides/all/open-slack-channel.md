@@ -217,7 +217,7 @@ Streamline incident response with this self-service action. It automatically cre
       },
       "last_contributer": {
         "icon": "TwoUsers",
-        "title": "Last contributer",
+        "title": "Last contributor",
         "type": "string",
         "format": "user"
       },
@@ -677,7 +677,7 @@ Now you should see the `Open Slack Channel` action in the self-service page. ðŸŽ
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 2. Click on the `Open Slack Channel` action
-3. Enter your prefered details for `channel_name` and optionally add `members`. You can toggle the `is_private` flag to make the channel private.
+3. Enter your preferred details for `channel_name` and optionally add `members`. You can toggle the `is_private` flag to make the channel private.
 6. Click on `Execute`
 7. Done! wait for the channel to be created in slack.
 

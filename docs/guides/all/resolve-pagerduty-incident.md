@@ -77,7 +77,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ env.PORT_RUN_ID }}
-          logMessage: "Resloving PagerDuty incident '${{ env.PD_INCIDENT_ID }}'..."
+          logMessage: "Resolving PagerDuty incident '${{ env.PD_INCIDENT_ID }}'..."
 
       - name: Request to Resolve Incident
         id: resolve_incident

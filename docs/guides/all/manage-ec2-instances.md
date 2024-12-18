@@ -35,7 +35,7 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
         * AWS Cloud credentials:
             - `AWS_ACCESS_KEY_ID`: Your AWS access key.
             - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
-            - `AWS_REGION` - the aws region which constains your ec2 instances.
+            - `AWS_REGION` - the aws region which contains your ec2 instances.
 
 ## Terminating an Instance
 

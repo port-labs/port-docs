@@ -263,7 +263,7 @@ jobs:
           clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
-          logMessage: "Applied cluster to Upbound successfuly✅"        
+          logMessage: "Applied cluster to Upbound successfully✅"        
 ```
 
 </details>
@@ -335,7 +335,7 @@ jobs:
           runId: ${{ fromJson(inputs.port_context).runId }}
           icon: GithubActions
           logMessage: |
-            ❌ Deleteing CRDs from Upbound + claim files from the repository for:
+            ❌ Deleting CRDs from Upbound + claim files from the repository for:
               Control plane: ${{ fromJson(inputs.port_context).entity.relations.upbound_control_plane }}
               Cluster: ${{ fromJson(inputs.port_context).entity }} ❌
 
@@ -507,7 +507,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           icon: GithubActions
-          logMessage: "Initiating EKS clutser request job 🏗️"  
+          logMessage: "Initiating EKS cluster request job 🏗️"  
 
       - uses: actions/checkout@v4
         with:
