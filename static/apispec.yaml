@@ -16646,7 +16646,29 @@ paths:
             - 'read:integrations'
       responses:
         '200':
-          description: Default Response
+          description: 
+          content:
+            text/plain:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  level:
+                    type: string
+                    enum: ["INFO", "ERROR", "WARNING", "DEBUG", "FATAL"]
+                  timestamp:
+                    type: string
+                  extra:
+                    type: object
+                    additionalProperties: true
+                  id:
+                    type: string
+                required:
+                  - message
+                  - level
+                  - timestamp
+                  - id
   '/v1/integration/{identifier}/config':
     patch:
       summary: Patch an integration's config
@@ -16772,7 +16794,233 @@ paths:
             - 'update:integrations'
       responses:
         '200':
-          description: Default Response
+          description:  |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+              "ok": true,
+              "integration": {
+                "installationId": string,
+                "title": string | null,
+                "installationType": 'Saas' | 'OnPrem',
+                "installationAppType": string,
+                "version": string,
+                "config": {
+                  "deleteDependentEntities": boolean,
+                  "createMissingRelatedEntities": boolean,
+                  "resources": object[] | null,
+                },
+                "changelogDestination": 
+                  | {
+                      "type": 'WEBHOOK',
+                      "agent": boolean | null,
+                      "url": string
+                    }
+                  | {
+                      "type": 'KAFKA'
+                    },
+                "clientId": string,
+                "integrationType": string,
+                "logAttributes": {
+                  "ingestUrl": string,
+                  "ingestId": string
+                },
+                "resyncState": {
+                  "status": 'running' | 'completed' | 'failed',
+                  "lastResyncStart": string,
+                  "lastResyncEnd": string | null,
+                  "intervalInMinutes": number | null,
+                  "nextResync": string | null,
+                  "updatedAt": string
+                } | null,
+                "_id": string | null,
+                "_orgId": string | null,
+
+                "spec": {
+                  "integrationSpec": Record<string, unknown>,
+                  "appSpec": {
+                    "scheduledResyncInterval": string | null,
+                    "sendRawDataExamples": boolean | null,
+                  } | null,
+                } | null,
+                "statusInfo": {
+                  "integrationStatus": {
+                    "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                    "lastSyncedAt": string | null,
+                    "message": string | null,
+                  } | null,
+                  "createdAt": string | null,
+                  "updatedAt": string | null,
+                }
+              }
+            }
+            ```
+
+            <table>
+              <tr>
+                  <th>Key</th>
+                  <th>Type</th>
+              </tr>
+              <tr>
+                  <td>`installationId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`title`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`installationType`</td>
+                  <td>InstallationType</td>
+              </tr>
+              <tr>
+                  <td>`installationAppType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`version`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.deleteDependentEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.createMissingRelatedEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.kind`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.selector.query`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier`</td>
+                  <td>string | object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.combinator`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.rules`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.title`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.blueprint`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.properties`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.relations`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.type`</td>
+                  <td>'WEBHOOK' | 'KAFKA'</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.agent`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.url`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`clientId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`integrationType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestUrl`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.status`</td>
+                  <td>'running' | 'completed' | 'failed'</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncStart`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncEnd`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.intervalInMinutes`</td>
+                  <td>number | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.nextResync`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.updatedAt`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`_id`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`_orgId`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.integrationSpec`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.scheduledResyncInterval`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.sendRawDataExamples`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.status`</td>
+                  <td>'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted'</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.lastSyncedAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.message`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.createdAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.updatedAt`</td>
+                  <td>string | null</td>
+              </tr>
+            </table>
+
   /v1/integration:
     get:
       summary: Get all integrations
@@ -16784,7 +17032,234 @@ paths:
             - 'read:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+              "ok": true,
+              "integrations": [
+                 {
+                  "installationId": string,
+                  "title": string | null,
+                  "installationType": 'Saas' | 'OnPrem',
+                  "installationAppType": string,
+                  "version": string,
+                  "config": {
+                    "deleteDependentEntities": boolean,
+                    "createMissingRelatedEntities": boolean,
+                    "resources": object[] | null,
+                  },
+                  "changelogDestination": 
+                    | {
+                        "type": 'WEBHOOK',
+                        "agent": boolean | null,
+                        "url": string
+                      }
+                    | {
+                        "type": 'KAFKA'
+                      },
+                  "clientId": string,
+                  "integrationType": string,
+                  "logAttributes": {
+                    "ingestUrl": string,
+                    "ingestId": string
+                  },
+                  "resyncState":  | null{
+                    "status": 'running' | 'completed' | 'failed',
+                    "lastResyncStart": string,
+                    "lastResyncEnd": string | null,
+                    "intervalInMinutes": number | null,
+                    "nextResync": string | null,
+                    "updatedAt": string
+                  },
+                  "_id": string | null,
+                  "_orgId": string | null,
+
+                  "spec":  | null{
+                    "integrationSpec": Record<string, unknown>,
+                    "appSpec":  | null{
+                      "scheduledResyncInterval": string | null,
+                      "sendRawDataExamples": boolean | null,
+                    },
+                  },
+                  "statusInfo":  | null{
+                    "integrationStatus": {
+                      "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                      "lastSyncedAt": string | null,
+                      "message": string | null,
+                    },
+                    "createdAt": string | null,
+                    "updatedAt": string | null,
+                  }
+                }
+              ]
+            }
+            ```
+
+            <table>
+              <tr>
+                  <th>Key</th>
+                  <th>Type</th>
+              </tr>
+              <tr>
+                  <td>`installationId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`title`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`installationType`</td>
+                  <td>InstallationType</td>
+              </tr>
+              <tr>
+                  <td>`installationAppType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`version`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.deleteDependentEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.createMissingRelatedEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.kind`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.selector.query`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier`</td>
+                  <td>string | object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.combinator`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.rules`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.title`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.blueprint`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.properties`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.relations`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.type`</td>
+                  <td>'WEBHOOK' | 'KAFKA'</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.agent`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.url`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`clientId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`integrationType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestUrl`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.status`</td>
+                  <td>'running' | 'completed' | 'failed'</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncStart`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncEnd`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.intervalInMinutes`</td>
+                  <td>number | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.nextResync`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.updatedAt`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`_id`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`_orgId`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.integrationSpec`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.scheduledResyncInterval`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.sendRawDataExamples`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.status`</td>
+                  <td>'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted'</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.lastSyncedAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.message`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.createdAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.updatedAt`</td>
+                  <td>string | null</td>
+              </tr>
+            </table>
     post:
       summary: Create an integration
       description: This route allows you to create an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
@@ -16964,7 +17439,233 @@ paths:
             - 'create:integrations'
       responses:
         '200':
-          description: Default Response
+          description:  |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+                "ok": true,
+                "integration": {
+                "installationId": string,
+                "title": string | null,
+                "installationType": 'Saas' | 'OnPrem',
+                "installationAppType": string,
+                "version": string,
+                "config": {
+                  "deleteDependentEntities": boolean,
+                  "createMissingRelatedEntities": boolean,
+                  "resources": object[] | null,
+                },
+                "changelogDestination": 
+                  | {
+                      "type": 'WEBHOOK',
+                      "agent": boolean | null,
+                      "url": string
+                    }
+                  | {
+                      "type": 'KAFKA'
+                    },
+                "clientId": string,
+                "integrationType": string,
+                "logAttributes": {
+                  "ingestUrl": string,
+                  "ingestId": string
+                },
+                "resyncState": {
+                  "status": 'running' | 'completed' | 'failed',
+                  "lastResyncStart": string,
+                  "lastResyncEnd": string | null,
+                  "intervalInMinutes": number | null,
+                  "nextResync": string | null,
+                  "updatedAt": string
+                } | null,
+                "_id": string | null,
+                "_orgId": string | null,
+
+                "spec": {
+                  "integrationSpec": Record<string, unknown>,
+                  "appSpec": {
+                    "scheduledResyncInterval": string | null,
+                    "sendRawDataExamples": boolean | null,
+                  } | null,
+                } | null,
+                "statusInfo": {
+                  "integrationStatus": {
+                    "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                    "lastSyncedAt": string | null,
+                    "message": string | null,
+                  } | null,
+                  "createdAt": string | null,
+                  "updatedAt": string | null,
+                }
+              }
+            }
+            ```
+
+            <table>
+              <tr>
+                  <th>Key</th>
+                  <th>Type</th>
+              </tr>
+              <tr>
+                  <td>`installationId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`title`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`installationType`</td>
+                  <td>InstallationType</td>
+              </tr>
+              <tr>
+                  <td>`installationAppType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`version`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.deleteDependentEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.createMissingRelatedEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.kind`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.selector.query`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier`</td>
+                  <td>string | object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.combinator`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.rules`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.title`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.blueprint`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.properties`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.relations`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.type`</td>
+                  <td>'WEBHOOK' | 'KAFKA'</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.agent`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.url`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`clientId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`integrationType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestUrl`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.status`</td>
+                  <td>'running' | 'completed' | 'failed'</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncStart`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncEnd`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.intervalInMinutes`</td>
+                  <td>number | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.nextResync`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.updatedAt`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`_id`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`_orgId`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.integrationSpec`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.scheduledResyncInterval`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.sendRawDataExamples`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.status`</td>
+                  <td>'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted'</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.lastSyncedAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.message`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.createdAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.updatedAt`</td>
+                  <td>string | null</td>
+              </tr>
+            </table>
+
   '/v1/integration/{identifier}':
     get:
       summary: Get an integration
@@ -16993,7 +17694,232 @@ paths:
             - 'read:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+              "ok": true,
+              "integration": {
+                "installationId": string,
+                "title": string | null,
+                "installationType": 'Saas' | 'OnPrem',
+                "installationAppType": string,
+                "version": string,
+                "config": {
+                  "deleteDependentEntities": boolean,
+                  "createMissingRelatedEntities": boolean,
+                  "resources": object[] | null,
+                },
+                "changelogDestination": 
+                  | {
+                      "type": 'WEBHOOK',
+                      "agent": boolean | null,
+                      "url": string
+                    }
+                  | {
+                      "type": 'KAFKA'
+                    },
+                "clientId": string,
+                "integrationType": string,
+                "logAttributes": {
+                  "ingestUrl": string,
+                  "ingestId": string
+                },
+                "resyncState": {
+                  "status": 'running' | 'completed' | 'failed',
+                  "lastResyncStart": string,
+                  "lastResyncEnd": string | null,
+                  "intervalInMinutes": number | null,
+                  "nextResync": string | null,
+                  "updatedAt": string
+                } | null,
+                "_id": string | null,
+                "_orgId": string | null,
+
+                "spec": {
+                  "integrationSpec": Record<string, unknown>,
+                  "appSpec": {
+                    "scheduledResyncInterval": string | null,
+                    "sendRawDataExamples": boolean | null,
+                  } | null,
+                } | null,
+                "statusInfo": {
+                  "integrationStatus": {
+                    "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                    "lastSyncedAt": string | null,
+                    "message": string | null,
+                  } | null,
+                  "createdAt": string | null,
+                  "updatedAt": string | null,
+                }
+              }
+            }
+            ```
+
+            <table>
+              <tr>
+                  <th>Key</th>
+                  <th>Type</th>
+              </tr>
+              <tr>
+                  <td>`installationId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`title`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`installationType`</td>
+                  <td>InstallationType</td>
+              </tr>
+              <tr>
+                  <td>`installationAppType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`version`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.deleteDependentEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.createMissingRelatedEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.kind`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.selector.query`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier`</td>
+                  <td>string | object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.combinator`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.rules`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.title`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.blueprint`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.properties`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.relations`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.type`</td>
+                  <td>'WEBHOOK' | 'KAFKA'</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.agent`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.url`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`clientId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`integrationType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestUrl`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.status`</td>
+                  <td>'running' | 'completed' | 'failed'</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncStart`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncEnd`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.intervalInMinutes`</td>
+                  <td>number | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.nextResync`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.updatedAt`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`_id`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`_orgId`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.integrationSpec`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.scheduledResyncInterval`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.sendRawDataExamples`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.status`</td>
+                  <td>'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted'</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.lastSyncedAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.message`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.createdAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.updatedAt`</td>
+                  <td>string | null</td>
+              </tr>
+            </table>
     patch:
       summary: Patch an integration
       description: |
@@ -17169,7 +18095,232 @@ paths:
             - 'update:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+              "ok": true,
+              "integration": {
+                "installationId": string,
+                "title": string | null,
+                "installationType": 'Saas' | 'OnPrem',
+                "installationAppType": string,
+                "version": string,
+                "config": {
+                  "deleteDependentEntities": boolean,
+                  "createMissingRelatedEntities": boolean,
+                  "resources": object[] | null,
+                },
+                "changelogDestination": 
+                  | {
+                      "type": 'WEBHOOK',
+                      "agent": boolean | null,
+                      "url": string
+                    }
+                  | {
+                      "type": 'KAFKA'
+                    },
+                "clientId": string,
+                "integrationType": string,
+                "logAttributes": {
+                  "ingestUrl": string,
+                  "ingestId": string
+                },
+                "resyncState": {
+                  "status": 'running' | 'completed' | 'failed',
+                  "lastResyncStart": string,
+                  "lastResyncEnd": string | null,
+                  "intervalInMinutes": number | null,
+                  "nextResync": string | null,
+                  "updatedAt": string
+                } | null,
+                "_id": string | null,
+                "_orgId": string | null,
+
+                "spec": {
+                  "integrationSpec": Record<string, unknown>,
+                  "appSpec": {
+                    "scheduledResyncInterval": string | null,
+                    "sendRawDataExamples": boolean | null,
+                  } | null,
+                } | null,
+                "statusInfo": {
+                  "integrationStatus": {
+                    "status": 'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted',
+                    "lastSyncedAt": string | null,
+                    "message": string | null,
+                  } | null,
+                  "createdAt": string | null,
+                  "updatedAt": string | null,
+                }
+              }
+            }
+            ```
+
+            <table>
+              <tr>
+                  <th>Key</th>
+                  <th>Type</th>
+              </tr>
+              <tr>
+                  <td>`installationId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`title`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`installationType`</td>
+                  <td>InstallationType</td>
+              </tr>
+              <tr>
+                  <td>`installationAppType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`version`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.deleteDependentEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.createMissingRelatedEntities`</td>
+                  <td>boolean</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.kind`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.selector.query`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier`</td>
+                  <td>string | object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.combinator`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.identifier.rules`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.title`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.blueprint`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.properties`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`config.resources.port.entity.mappings.relations`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.type`</td>
+                  <td>'WEBHOOK' | 'KAFKA'</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.agent`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`changelogDestination.url`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`clientId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`integrationType`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestUrl`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`logAttributes.ingestId`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.status`</td>
+                  <td>'running' | 'completed' | 'failed'</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncStart`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.lastResyncEnd`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.intervalInMinutes`</td>
+                  <td>number | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.nextResync`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`resyncState.updatedAt`</td>
+                  <td>string</td>
+              </tr>
+              <tr>
+                  <td>`_id`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`_orgId`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.integrationSpec`</td>
+                  <td>object</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.scheduledResyncInterval`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`spec.appSpec.sendRawDataExamples`</td>
+                  <td>boolean | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.status`</td>
+                  <td>'Creating' | 'Error' | 'Running' | 'UnHealthy' | 'Updating' | 'Deleting' | 'Deleted'</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.lastSyncedAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.integrationStatus.message`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.createdAt`</td>
+                  <td>string | null</td>
+              </tr>
+              <tr>
+                  <td>`statusInfo.updatedAt`</td>
+                  <td>string | null</td>
+              </tr>
+            </table>
     delete:
       summary: Delete an integration
       description: This route allows you to delete an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
@@ -17187,7 +18338,15 @@ paths:
             - 'delete:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+              "ok": true,
+            }
+            ```
   /v1/webhooks:
     post:
       summary: Create a webhook
@@ -17300,8 +18459,245 @@ paths:
         - bearer:
             - 'create:integrations'
       responses:
-        '200':
-          description: Default Response
+        '201':
+          description:  |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+                "ok": true,
+                "integration": {
+                  "identifier": string,
+                  "title": string,
+                  "icon": string | null,
+                  "description": string | null,
+                  "mappings": object[] | null,
+                  "enabled": boolean,
+                  "integrationType": 'custom' | 'template' | null,
+                  "createdBy": string,
+                  "updatedBy": string,
+                  "createdAt": string,
+                  "updatedAt": string,
+                  "security": {
+                    "signatureHeaderName": string | null,
+                    "signatureAlgorithm": string | null,
+                    "signaturePrefix": string | null,
+                    "requestIdentifierPath": string | null
+                  },
+                  "events": object[],
+                  "url": string,
+                  "_id": string
+                }
+            }
+            ```
+
+            <table>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                </tr>
+                <tr>
+                    <td>`identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`title`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`description`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation`</td>
+                    <td>'create' | 'delete'</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.type`</td>
+                    <td>'create' | 'delete' | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.filter`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.itemsToParse`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier`</td>
+                    <td>string | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.combinator`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.rules`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.team`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.relations`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`enabled`</td>
+                    <td>boolean</td>
+                </tr>
+                <tr>
+                    <td>`integrationType`</td>
+                    <td>'custom' | 'template' | null</td>
+                </tr>
+                <tr>
+                    <td>`createdBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`createdAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureHeaderName`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureAlgorithm`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signaturePrefix`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.requestIdentifierPath`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.webhookKey`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.integrationId`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.timestamp`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.status`</td>
+                    <td>'Success' | 'Failure'</td>
+                </tr>
+                <tr>
+                    <td>`events.reason`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.idempotencyKey`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.body`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.headers`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.queryParams`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.identifier`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.team`</td>
+                    <td>string[] | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`events.result.relations`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation.type`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operatio.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`url`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`_id`</td>
+                    <td>string</td>
+                </tr>
+            </table>
     get:
       summary: Get all webhooks
       description: This route allows you to fetch all webhooks configured in your Port organization. You can also see them in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
@@ -17312,7 +18708,246 @@ paths:
             - 'read:integrations'
       responses:
         '200':
-          description: Default Response
+          description:   |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+              {
+                "ok": true,
+                "integrations": [
+                  {
+                    "identifier": string,
+                    "title": string,
+                    "icon": string | null,
+                    "description": string | null,
+                    "mappings": object[] | null,
+                    "enabled": boolean,
+                    "integrationType": 'custom' | 'template' | null,
+                    "createdBy": string,
+                    "updatedBy": string,
+                    "createdAt": string,
+                    "updatedAt": string,
+                    "security": {
+                      "signatureHeaderName": string | null,
+                      "signatureAlgorithm": string | null,
+                      "signaturePrefix": string | null,
+                      "requestIdentifierPath": string | null
+                    },
+                    "events": object[],
+                    "url": string,
+                    "_id": string
+                  }
+                ]
+              }
+            ```
+            
+            <table>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                </tr>
+                <tr>
+                    <td>`identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`title`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`description`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation`</td>
+                    <td>'create' | 'delete'</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.type`</td>
+                    <td>'create' | 'delete' | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.filter`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.itemsToParse`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier`</td>
+                    <td>string | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.combinator`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.rules`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.team`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.relations`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`enabled`</td>
+                    <td>boolean</td>
+                </tr>
+                <tr>
+                    <td>`integrationType`</td>
+                    <td>'custom' | 'template' | null</td>
+                </tr>
+                <tr>
+                    <td>`createdBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`createdAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureHeaderName`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureAlgorithm`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signaturePrefix`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.requestIdentifierPath`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.webhookKey`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.integrationId`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.timestamp`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.status`</td>
+                    <td>'Success' | 'Failure'</td>
+                </tr>
+                <tr>
+                    <td>`events.reason`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.idempotencyKey`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.body`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.headers`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.queryParams`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.identifier`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.team`</td>
+                    <td>string[] | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`events.result.relations`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation.type`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operatio.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`url`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`_id`</td>
+                    <td>string</td>
+                </tr>
+            </table>
   '/v1/webhooks/{identifier}':
     patch:
       summary: Patch a webhook
@@ -17429,7 +19064,244 @@ paths:
             - 'update:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+              {
+                "ok": true,
+                "integration": {
+                  "identifier": string,
+                  "title": string,
+                  "icon": string | null,
+                  "description": string | null,
+                  "mappings": object[] | null,
+                  "enabled": boolean,
+                  "integrationType": 'custom' | 'template' | null,
+                  "createdBy": string,
+                  "updatedBy": string,
+                  "createdAt": string,
+                  "updatedAt": string,
+                  "security": {
+                    "signatureHeaderName": string | null,
+                    "signatureAlgorithm": string | null,
+                    "signaturePrefix": string | null,
+                    "requestIdentifierPath": string | null
+                  },
+                  "events": object[],
+                  "url": string,
+                  "_id": string
+                }
+              }
+            ```
+            
+            <table>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                </tr>
+                <tr>
+                    <td>`identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`title`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`description`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation`</td>
+                    <td>'create' | 'delete'</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.type`</td>
+                    <td>'create' | 'delete' | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.filter`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.itemsToParse`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier`</td>
+                    <td>string | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.combinator`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.rules`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.team`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.relations`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`enabled`</td>
+                    <td>boolean</td>
+                </tr>
+                <tr>
+                    <td>`integrationType`</td>
+                    <td>'custom' | 'template' | null</td>
+                </tr>
+                <tr>
+                    <td>`createdBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`createdAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureHeaderName`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureAlgorithm`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signaturePrefix`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.requestIdentifierPath`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.webhookKey`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.integrationId`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.timestamp`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.status`</td>
+                    <td>'Success' | 'Failure'</td>
+                </tr>
+                <tr>
+                    <td>`events.reason`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.idempotencyKey`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.body`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.headers`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.queryParams`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.identifier`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.team`</td>
+                    <td>string[] | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`events.result.relations`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation.type`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operatio.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`url`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`_id`</td>
+                    <td>string</td>
+                </tr>
+            </table>
     put:
       summary: Change a webhook
       description: This route allows you to modify a webhook in your Port organization. You can also modify it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
@@ -17549,7 +19421,244 @@ paths:
             - 'update:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+              {
+                "ok": true,
+                "integration": {
+                  "identifier": string,
+                  "title": string,
+                  "icon": string | null,
+                  "description": string | null,
+                  "mappings": object[] | null,
+                  "enabled": boolean,
+                  "integrationType": 'custom' | 'template' | null,
+                  "createdBy": string,
+                  "updatedBy": string,
+                  "createdAt": string,
+                  "updatedAt": string,
+                  "security": {
+                    "signatureHeaderName": string | null,
+                    "signatureAlgorithm": string | null,
+                    "signaturePrefix": string | null,
+                    "requestIdentifierPath": string | null
+                  },
+                  "events": object[],
+                  "url": string,
+                  "_id": string
+                }
+              }
+              ```
+
+            <table>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                </tr>
+                <tr>
+                    <td>`identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`title`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`description`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation`</td>
+                    <td>'create' | 'delete'</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.type`</td>
+                    <td>'create' | 'delete' | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.filter`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.itemsToParse`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier`</td>
+                    <td>string | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.combinator`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.rules`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.team`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.relations`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`enabled`</td>
+                    <td>boolean</td>
+                </tr>
+                <tr>
+                    <td>`integrationType`</td>
+                    <td>'custom' | 'template' | null</td>
+                </tr>
+                <tr>
+                    <td>`createdBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`createdAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureHeaderName`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureAlgorithm`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signaturePrefix`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.requestIdentifierPath`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.webhookKey`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.integrationId`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.timestamp`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.status`</td>
+                    <td>'Success' | 'Failure'</td>
+                </tr>
+                <tr>
+                    <td>`events.reason`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.idempotencyKey`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.body`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.headers`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.queryParams`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.identifier`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.team`</td>
+                    <td>string[] | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`events.result.relations`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation.type`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operatio.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`url`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`_id`</td>
+                    <td>string</td>
+                </tr>
+            </table>
     get:
       summary: Get a webhook
       description: This route allows you to fetch a specific webhook in your Port organization. You can also see it in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
@@ -17567,7 +19676,244 @@ paths:
             - 'read:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+              {
+                "ok": true,
+                "integration": {
+                  "identifier": string,
+                  "title": string,
+                  "icon": string | null,
+                  "description": string | null,
+                  "mappings": object[] | null,
+                  "enabled": boolean,
+                  "integrationType": 'custom' | 'template' | null,
+                  "createdBy": string,
+                  "updatedBy": string,
+                  "createdAt": string,
+                  "updatedAt": string,
+                  "security": {
+                    "signatureHeaderName": string | null,
+                    "signatureAlgorithm": string | null,
+                    "signaturePrefix": string | null,
+                    "requestIdentifierPath": string | null
+                  },
+                  "events": object[],
+                  "url": string,
+                  "_id": string
+                }
+              }
+              ```
+
+            <table>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                </tr>
+                <tr>
+                    <td>`identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`title`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`description`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation`</td>
+                    <td>'create' | 'delete'</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.type`</td>
+                    <td>'create' | 'delete' | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.operation.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.filter`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.itemsToParse`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier`</td>
+                    <td>string | object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.combinator`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.identifier.rules`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.team`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`mappings.entity.relations`</td>
+                    <td>object[]</td>
+                </tr>
+                <tr>
+                    <td>`enabled`</td>
+                    <td>boolean</td>
+                </tr>
+                <tr>
+                    <td>`integrationType`</td>
+                    <td>'custom' | 'template' | null</td>
+                </tr>
+                <tr>
+                    <td>`createdBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedBy`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`createdAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`updatedAt`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureHeaderName`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signatureAlgorithm`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.signaturePrefix`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`security.requestIdentifierPath`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.identifier`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.webhookKey`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.integrationId`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.timestamp`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.status`</td>
+                    <td>'Success' | 'Failure'</td>
+                </tr>
+                <tr>
+                    <td>`events.reason`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.idempotencyKey`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.body`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.headers`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.payload.queryParams`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.identifier`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.title`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.team`</td>
+                    <td>string[] | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.icon`</td>
+                    <td>string | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.properties`</td>
+                    <td>object</td>
+                </tr>
+                <tr>
+                    <td>`events.result.relations`</td>
+                    <td>object | null</td>
+                </tr>
+                <tr>
+                    <td>`events.result.blueprint`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operation.type`</td>
+                    <td>'create' | 'delete' </td>
+                </tr>
+                <tr>
+                    <td>`events.result.operatio.deleteDependents`</td>
+                    <td>boolean | null</td>
+                </tr>
+                <tr>
+                    <td>`url`</td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td>`_id`</td>
+                    <td>string</td>
+                </tr>
+            </table>
     delete:
       summary: Delete a webhook
       description: This route allows you to delete a webhook in your Port organization. You can also delete it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
@@ -17585,7 +19931,15 @@ paths:
             - 'delete:integrations'
       responses:
         '200':
-          description: Default Response
+          description: |
+            Successfully changed the entity.  
+            The response will have the following structure:
+              
+            ```json
+            {
+              "ok": true
+            }
+            ```
   /v1/migrations:
     get:
       summary: Get all migrations
