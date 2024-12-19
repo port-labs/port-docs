@@ -508,6 +508,6 @@ When a new scorecard is created, Port automatically creates a relation in the Ru
 
 The system enforces several validation rules to maintain data integrity:
 
-1. Rule levels must match one of the levels defined in their parent scorecard
-2. Scorecard blueprint built-in relations cannot be renamed or modified
-3. Rule results maintain immutable core properties while allowing updates to custom properties
+1. Rule levels must match one of the levels defined in their parent scorecard.
+2. Scorecard blueprint built-in relations cannot be renamed or modified.
+3. Rule results maintain immutable core properties while allowing updates to custom properties.
