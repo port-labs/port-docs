@@ -5,7 +5,6 @@ sidebar_label: Promote scorecards
 ---
 
 import CombinatorIntro from "/docs/search-and-query/\_combinator_intro.md"
-import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 import Tabs from "@theme/Tabs"
@@ -380,7 +379,10 @@ For example, these services have some rules defined in their scorecards, and we 
 
 ## Scorecards as Blueprints
 
-<BetaFeatureNotice />
+:::info Closed beta feature
+This capability is currently in closed beta, and is still undergoing final testing before its official release.
+If you would like to join the beta, please reach out to us.
+:::
 
 Port allows you to manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip>. This feature enables you to create and manage scorecards that evaluate entities in your data model based on customizable rules and levels.
 
@@ -407,7 +409,7 @@ With this powerful feature you can accomplish the following:
 
 ### Overview
 
-When scorecards are enabled, three new blueprints will be created in your [data model](https://app.getport.io/settings/data-model):
+After enabling `scorecards as blueprints`, three new blueprints will be created in your [data model](https://app.getport.io/settings/data-model):
 - `Scorecard` - Represents a collection of rules and levels for evaluating entities
 - `Rule` - Defines specific criteria for evaluation
 - `Rule Result` - Stores the evaluation results for each entity
@@ -422,7 +424,7 @@ When scorecards are enabled, three new blueprints will be created in your [data 
 
 <TabItem value="scorecard">
 
-Properties:
+The `Scorecard` blueprint contains the following properties:
 | Type | Name | Description |
 |------|------|-------------|
 | string (format: blueprints) | Blueprint | The target blueprint whose entities will be evaluated |
@@ -441,7 +443,7 @@ Relations:
 
 <TabItem value="rule">
 
-Properties:
+The `Rule` blueprint contains the following properties:
 | Type | Name | Description |
 |------|------|-------------|
 | string (enum) | Level | The required level for this rule (must be one of the scorecard's defined levels) |
@@ -460,7 +462,7 @@ Relations:
 
 <TabItem value="rule-result">
 
-Properties:
+The `Rule result` blueprint contains the following properties:
 | Type | Name | Description |
 |------|------|-------------|
 | string (enum) | Result | Whether the entity passed the rule ("Passed" or "Not passed") |
@@ -507,5 +509,5 @@ When a new scorecard is created, Port automatically creates a relation in the Ru
 The system enforces several validation rules to maintain data integrity:
 
 1. Rule levels must match one of the levels defined in their parent scorecard
-2. Scorecard blueprint built in relations cannot be renamed or modified
+2. Scorecard blueprint built-in relations cannot be renamed or modified
 3. Rule results maintain immutable core properties while allowing updates to custom properties
