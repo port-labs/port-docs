@@ -425,18 +425,18 @@ After enabling `scorecards as blueprints`, three new blueprints will be created 
 <TabItem value="scorecard">
 
 The `Scorecard` blueprint contains the following properties:
-| Type | Name | Description |
+| Name | Type | Description |
 |------|------|-------------|
-| string (format: blueprints) | Blueprint | The target blueprint whose entities will be evaluated |
-| array of objects | Levels | An array of levels with titles and colors (e.g., Bronze, Silver, Gold) |
-| object | Filter | Optional query to filter which entities should be evaluated |
-| number (aggregation) | Rules Tested | Number of rule evaluations performed |
-| number (aggregation) | Rules Passed | Number of successful rule evaluations |
-| number (calculation) | % of Rules Passed | Calculated percentage of passed rules |
+| Blueprint | string (format: blueprints) | The target blueprint whose entities will be evaluated |
+| Levels | array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold) |
+| Filter | object | Optional query to filter which entities should be evaluated |
+| Rules Tested | number (aggregation) | Number of rule evaluations performed |
+| Rules Passed | number (aggregation) | Number of successful rule evaluations |
+| % of Rules Passed | number (calculation) | Calculated percentage of passed rules |
 
 Relations:
-| Target Blueprint | Name | Required | Many | Description |
-|-----------------|------|----------|-------|-------------|
+| Name | Target Blueprint | Required | Many | Description |
+|------|-----------------|----------|-------|-------------|
 | - | - | - | - | No default relations |
 
 </TabItem>
@@ -444,40 +444,40 @@ Relations:
 <TabItem value="rule">
 
 The `Rule` blueprint contains the following properties:
-| Type | Name | Description |
+| Name | Type | Description |
 |------|------|-------------|
-| string (enum) | Level | The required level for this rule (must be one of the scorecard's defined levels) |
-| object | Query | The evaluation criteria for entities |
-| string | Rule Description | Optional explanation of the rule's logic |
-| number (aggregation) | Entities Tested | Number of entities evaluated by this rule |
-| number (aggregation) | Entities Passed | Number of entities that passed this rule |
-| number (calculation) | % of Entities Passed | Calculated percentage of passed entities |
+| Level | string (enum) | The required level for this rule (must be one of the scorecard's defined levels) |
+| Query | object | The evaluation criteria for entities |
+| Rule Description | string | Optional explanation of the rule's logic |
+| Entities Tested | number (aggregation) | Number of entities evaluated by this rule |
+| Entities Passed | number (aggregation) | Number of entities that passed this rule |
+| % of Entities Passed | number (calculation) | Calculated percentage of passed entities |
 
 Relations:
-| Target Blueprint | Name | Required | Many | Description |
-|-----------------|------|----------|-------|-------------|
-| Scorecard | scorecard | true | false | The scorecard this rule belongs to |
+| Name | Target Blueprint | Required | Many | Description |
+|------|-----------------|----------|-------|-------------|
+| scorecard | Scorecard | true | false | The scorecard this rule belongs to |
 
 </TabItem>
 
 <TabItem value="rule-result">
 
 The `Rule result` blueprint contains the following properties:
-| Type | Name | Description |
+| Name | Type | Description |
 |------|------|-------------|
-| string (enum) | Result | Whether the entity passed the rule ("Passed" or "Not passed") |
-| string | Entity | The identifier of the evaluated entity |
-| string (date-time) | Result Last Change | Timestamp of the last result change |
-| string (mirror) | Level | Mirror property from the related rule |
-| string (mirror) | Scorecard | Mirror property showing the parent scorecard title |
-| string (mirror) | Blueprint | Mirror property showing the target blueprint |
-| string (url) | Entity Link | Calculated URL to the evaluated entity |
+| Result | string (enum) | Whether the entity passed the rule ("Passed" or "Not passed") |
+| Entity | string | The identifier of the evaluated entity |
+| Result Last Change | string (date-time) | Timestamp of the last result change |
+| Level | string (mirror) | Mirror property from the related rule |
+| Scorecard | string (mirror) | Mirror property showing the parent scorecard title |
+| Blueprint | string (mirror) | Mirror property showing the target blueprint |
+| Entity Link | string (url) | Calculated URL to the evaluated entity |
 
 Relations:
-| Target Blueprint | Name | Required | Many | Description |
-|-----------------|------|----------|-------|-------------|
-| Rule | rule | true | false | The rule that generated this result |
-| [Dynamic] | [Blueprint Identifier] | false | false | Automatically created relation to the target blueprint when a new scorecard is created |
+| Name | Target Blueprint | Required | Many | Description |
+|------|-----------------|----------|-------|-------------|
+| rule | Rule | true | false | The rule that generated this result |
+| [Blueprint Identifier] | [Dynamic] | false | false | Automatically created relation to the target blueprint when a new scorecard is created |
 
 :::info Dynamic Relations
 When a new scorecard is created, Port automatically creates a relation in the Rule Result blueprint to the scorecard's target blueprint. For example, if you create a scorecard for the "service" blueprint, a new relation named "service" will be added to the Rule Result blueprint.
