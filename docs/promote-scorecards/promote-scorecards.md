@@ -391,28 +391,28 @@ Port allows you to manage scorecards as <PortTooltip id="blueprint">blueprints</
 With this powerful feature you can accomplish the following:
 
 1. **RBAC Management**
-   - Control who can create and modify scorecards and rules
-   - Define which teams can view specific scorecard results
-   - Manage permissions for rule creation and modification at a granular level
+   - Control who can create and modify scorecards and rules.
+   - Define which teams can view specific scorecard results.
+   - Manage permissions for rule creation and modification at a granular level.
 
 2. **Automations and Actions**
-   - Create workflows that trigger based on rule results
-   - Set up automated notifications when entities change compliance levels
-   - Build self-service actions to remediate failed rules
-   - Integrate with external systems to sync scorecard data
+   - Create workflows that trigger based on rule results.
+   - Set up automated notifications when entities change compliance levels.
+   - Build self-service actions to remediate failed rules.
+   - Integrate with external systems to sync scorecard data.
 
 3. **Reports and Dashboards**
-   - Build custom dashboards to visualize compliance across your organization
-   - Track progress of entities through different levels
-   - Generate reports on rule effectiveness and entity compliance
-   - Monitor trends in rule results over time
+   - Build custom dashboards to visualize compliance across your organization.
+   - Track progress of entities through different levels.
+   - Generate reports on rule effectiveness and entity compliance.
+   - Monitor trends in rule results over time.
 
 ### Overview
 
 After enabling `scorecards as blueprints`, three new blueprints will be created in your [data model](https://app.getport.io/settings/data-model):
-- `Scorecard` - Represents a collection of rules and levels for evaluating entities
-- `Rule` - Defines specific criteria for evaluation
-- `Rule Result` - Stores the evaluation results for each entity
+- `Scorecard` - Represents a collection of rules and levels for evaluating entities.
+- `Rule` - Defines specific criteria for evaluation.
+- `Rule Result` - Stores the evaluation results for each entity.
 
 ### Blueprint Structure
 
@@ -489,20 +489,20 @@ When a new scorecard is created, Port automatically creates a relation in the Ru
 ### Important Notes
 
 1. The scorecard blueprints are protected and their core structure cannot be modified:
-   - Default properties cannot be changed or deleted
-   - Required relations cannot be modified
-   - The blueprints themselves cannot be deleted
+   - Default properties cannot be changed or deleted.
+   - Required relations cannot be modified.
+   - The blueprints themselves cannot be deleted.
 
 2. You can extend the blueprints with:
-   - New properties
-   - New non-required relations
-   - Additional configurations that don't affect the core functionality
+   - New properties.
+   - New non-required relations.
+   - Additional configurations that don't affect the core functionality.
 
 3. Rule Results are automatically generated and managed by Port:
-   - They cannot be created, deleted, or modified directly
-   - You can update the custom properties you created for the rule results
-   - Rule results are not searchable in the global search
-   - They are updated automatically when rules are evaluated
+   - They cannot be created, deleted, or modified directly.
+   - You can update the custom properties you created for the rule results.
+   - Rule results are not searchable in the global search.
+   - They are updated automatically when rules are evaluated.
 
 ### Validation Rules
 
