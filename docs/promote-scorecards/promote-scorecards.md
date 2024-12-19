@@ -430,9 +430,9 @@ The `Scorecard` blueprint contains the following properties:
 | Blueprint | string (format: blueprints) | The target blueprint whose entities will be evaluated |
 | Levels | array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold) |
 | Filter | object | Optional query to filter which entities should be evaluated |
-| Rules Tested | number (aggregation) | Number of rule evaluations performed |
-| Rules Passed | number (aggregation) | Number of successful rule evaluations |
-| % of Rules Passed | number (calculation) | Calculated percentage of passed rules |
+| Rules Tested | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of rule evaluations performed |
+| Rules Passed | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful rule evaluations |
+| % of Rules Passed | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules |
 
 Relations:
 | Name | Target Blueprint | Required | Many | Description |
@@ -449,9 +449,9 @@ The `Rule` blueprint contains the following properties:
 | Level | string (enum) | The required level for this rule (must be one of the scorecard's defined levels) |
 | Query | object | The evaluation criteria for entities |
 | Rule Description | string | Optional explanation of the rule's logic |
-| Entities Tested | number (aggregation) | Number of entities evaluated by this rule |
-| Entities Passed | number (aggregation) | Number of entities that passed this rule |
-| % of Entities Passed | number (calculation) | Calculated percentage of passed entities |
+| Entities Tested | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities evaluated by this rule |
+| Entities Passed | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities that passed this rule |
+| % of Entities Passed | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed entities |
 
 Relations:
 | Name | Target Blueprint | Required | Many | Description |
