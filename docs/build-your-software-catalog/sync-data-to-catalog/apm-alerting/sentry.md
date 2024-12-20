@@ -29,11 +29,12 @@ This integration allows you to:
 
 The resources that can be ingested from Sentry into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
+- [`User`](https://docs.sentry.io/api/organizations/list-an-organizations-members/)
+- [`Team`](https://docs.sentry.io/api/teams/list-an-organizations-teams/) - when enabled, the integration enrich the team resource with members using the [team member API](https://docs.sentry.io/api/teams/list-a-teams-members/)
 - [`Project`](https://docs.sentry.io/api/projects/list-your-projects/)
 - [`Issue`](https://docs.sentry.io/api/events/list-a-projects-issues/)
 - [`Project Tag`](https://docs.sentry.io/api/projects/list-a-tags-values/)
 - [`Issue Tag`](https://docs.sentry.io/api/events/list-a-tags-values-related-to-an-issue/)
-
 
 ## Setup
 
@@ -168,7 +169,7 @@ Note the parameters specific to this integration, they are last in the table.
 | `integration.eventListener.type`        | The event listener type                                                                                                                                | ✅        |
 | `scheduledResyncInterval`               | The number of minutes between each resync                                                                                                              | ❌        |
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                          | ❌        |
-| `integration.secrets.sentryToken`       | The Sentry API [token](https://docs.sentry.io/api/guides/create-auth-token/). The token requires `read` permissions for `Projects` and `Issue & Event` | ✅        |
+| `integration.secrets.sentryToken`       | The Sentry API [token](https://docs.sentry.io/api/guides/create-auth-token/). The token requires `read` permissions for `Member`, `Team`, `Organization`, `Project` and `Issue & Event` | ✅        |
 | `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                                                         | ✅        |
 | `integration.config.sentryOrganization` | The Sentry organization slug. For example `acme` from `https://acme.sentry.io`                                                                         | ✅        |
 
@@ -402,6 +403,186 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 
 Examples of blueprints and the relevant integration configurations:
 
+### User
+
+<details>
+<summary>User blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "sentryUser",
+  "description": "This blueprint represents a Sentry user in our software catalog.",
+  "title": "Sentry User",
+  "icon": "Sentry",
+  "schema": {
+    "properties": {
+      "username": {
+        "type": "string",
+        "title": "Username"
+      },
+      "isActive": {
+        "type": "boolean",
+        "title": "Is Active"
+      },
+      "dateJoined": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Date Joined"
+      },
+      "lastLogin": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Last Login"
+      },
+      "orgRole": {
+        "icon": "DefaultProperty",
+        "title": "Organization Role",
+        "type": "string",
+        "enum": [
+          "member",
+          "admin",
+          "owner",
+          "manager",
+          "biling"
+        ],
+        "enumColors": {
+          "member": "pink",
+          "admin": "green",
+          "owner": "green",
+          "manager": "yellow",
+          "biling": "lightGray"
+        }
+      },
+      "inviteStatus": {
+        "type": "string",
+        "title": "Invite Status",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: user
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .email
+          title: .user.name
+          blueprint: '"sentryUser"'
+          properties:
+            username: .user.username
+            isActive: .user.isActive
+            dateJoined: .user.dateJoined
+            lastLogin: .user.lastLogin
+            orgRole: .orgRole
+            inviteStatus: .inviteStatus
+```
+
+</details>
+
+
+### Team
+
+<details>
+<summary>Team blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "sentryTeam",
+  "description": "This blueprint represents an Sentry team in our software catalog",
+  "title": "Sentry Team",
+  "icon": "Sentry",
+  "schema": {
+    "properties": {
+      "dateCreated": {
+        "type": "string",
+        "title": "Date Created",
+        "format": "date-time"
+      },
+      "memberCount": {
+        "type": "number",
+        "title": "Number of Members"
+      },
+      "roles": {
+        "type": "string",
+        "title": "Roles"
+      },
+      "projects": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "title": "Projects"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "members": {
+      "title": "Members",
+      "target": "sentryUser",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+:::tip Enable Team Members
+The `includeMembers` flag is used to decide enrich the teams response with details about the members of the team. To turn this feature off, set it to `false`.
+:::
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: team
+    selector:
+      query: 'true'
+      includeMembers: true
+    port:
+      entity:
+        mappings:
+          identifier: .slug
+          title: .name
+          blueprint: '"sentryTeam"'
+          properties:
+            dateCreated: .dateCreated
+            memberCount: .memberCount
+            roles: .teamRole
+            projects: .projects | map (.slug)
+          relations:
+            members: if .__members != null then .__members | map(.user.email) | map(select(. != null)) else [] end
+```
+
+</details>
+
+
 ### Project
 
 <details>
@@ -522,6 +703,12 @@ resources:
       "target": "sentryProject",
       "required": false,
       "many": true
+    },
+    "assignedTo": {
+      "title": "Assigned To",
+      "target": "sentryUser",
+      "required": false,
+      "many": false
     }
   }
 }
@@ -550,7 +737,8 @@ resources:
               status: ".status"
               isUnhandled: ".isUnhandled"
             relations:
-              project: ".project.slug"
+              projectEnvironment: ".project.slug"
+              assignedTo: .assignedTo.email
 ```
 
 </details>
@@ -562,7 +750,7 @@ resources:
 
 ```json showLineNumbers
 {
-  "identifier": "sentryProjectEnvironment",
+  "identifier": "sentryProject",
   "title": "Sentry Project Environment",
   "icon": "Sentry",
   "schema": {
@@ -596,7 +784,14 @@ resources:
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "team": {
+      "title": "Team",
+      "target": "sentryTeam",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 
@@ -622,13 +817,19 @@ resources:
         mappings:
           identifier: .slug + "-" + .__tags.name
           title: .name + "-" + .__tags.name
-          blueprint: '"sentryProjectEnvironment"'
+          blueprint: '"sentryProject"'
           properties:
             dateCreated: .dateCreated
             platform: .platform
             status: .status
             link: .organization.links.organizationUrl + "/projects/" + .name
-
+          relations:
+            team:
+              combinator: '"and"'
+              rules:
+                - property: '"projects"'
+                  operator: '"contains"'
+                  value: .slug
   - kind: issue-tag
     selector:
       query: "true"
@@ -645,6 +846,7 @@ resources:
             isUnhandled: .isUnhandled
           relations:
             projectEnvironment: '[(.project.slug as $slug | .__tags[] | "\($slug)-\(.name)")]'
+            assignedTo: .assignedTo.email
 ```
 
 </details>
@@ -656,6 +858,270 @@ This section includes a sample response data from Sentry. In addition, it includ
 ### Payload
 
 Here is an example of the payload structure from Sentry:
+
+<details>
+<summary> User response data</summary>
+
+```json showLineNumbers
+{
+  "id": "10909027",
+  "email": "developer@getport.io",
+  "name": "Michael",
+  "user": {
+    "id": "1722098",
+    "name": "Michael",
+    "username": "developer@getport.io",
+    "email": "developer@getport.io",
+    "avatarUrl": "https://gravatar.com/avatar/9645cd28334383caa5efa6a681dddf7cba33f94ddaf234297ba13cb30d5c5718?s=32&d=mm",
+    "isActive": true,
+    "hasPasswordAuth": true,
+    "isManaged": false,
+    "dateJoined": "2022-01-18T22:38:13.946094Z",
+    "lastLogin": "2024-11-10T23:25:31.826834Z",
+    "has2fa": false,
+    "lastActive": "2024-11-11T07:32:23.490455Z",
+    "isSuperuser": false,
+    "isStaff": false,
+    "experiments": {},
+    "emails": [
+      {
+        "id": "1861335",
+        "email": "developer@getport.io",
+        "is_verified": false
+      }
+    ],
+    "avatar": {
+      "avatarType": "letter_avatar",
+      "avatarUuid": null,
+      "avatarUrl": null
+    }
+  },
+  "orgRole": "owner",
+  "pending": false,
+  "expired": false,
+  "flags": {
+    "idp:provisioned": false,
+    "idp:role-restricted": false,
+    "sso:linked": true,
+    "sso:invalid": false,
+    "member-limit:restricted": false,
+    "partnership:restricted": false
+  },
+  "dateCreated": "2022-01-18T22:33:43.222734Z",
+  "inviteStatus": "approved",
+  "inviterName": "Port Admin",
+  "role": "owner",
+  "roleName": "Owner"
+}
+```
+
+</details>
+
+<details>
+<summary> Team response data</summary>
+
+```json showLineNumbers
+{
+  "id": "1275104",
+  "slug": "platform-team",
+  "name": "Developer Experience",
+  "dateCreated": "2021-11-16T13:25:53.617157Z",
+  "isMember": true,
+  "teamRole": "contributor",
+  "flags": {
+    "idp:provisioned": false
+  },
+  "access": [
+    "org:read",
+    "alerts:read",
+    "project:releases",
+    "event:write",
+    "event:read",
+    "project:read",
+    "team:read",
+    "member:read"
+  ],
+  "hasAccess": true,
+  "isPending": false,
+  "memberCount": 43,
+  "avatar": {
+    "avatarType": "letter_avatar",
+    "avatarUuid": null
+  },
+  "externalTeams": [],
+  "projects": [
+    {
+      "id": "4504592557998080",
+      "slug": "admin-service",
+      "name": "admin-service",
+      "platform": "node",
+      "dateCreated": "2023-01-30T08:35:19.602158Z",
+      "isBookmarked": false,
+      "isMember": true,
+      "features": [
+        "first-event-severity-new-escalation",
+        "minidump",
+        "similarity-indexing",
+        "similarity-view",
+        "span-metrics-extraction",
+        "span-metrics-extraction-addons",
+        "releases"
+      ],
+      "firstEvent": null,
+      "firstTransactionEvent": false,
+      "access": [
+        "org:read",
+        "alerts:read",
+        "project:releases",
+        "event:write",
+        "event:read",
+        "project:read",
+        "team:read",
+        "member:read"
+      ],
+      "hasAccess": true,
+      "hasCustomMetrics": false,
+      "hasMinifiedStackTrace": false,
+      "hasMonitors": false,
+      "hasProfiles": false,
+      "hasReplays": false,
+      "hasFeedbacks": false,
+      "hasNewFeedbacks": false,
+      "hasSessions": false,
+      "hasInsightsHttp": false,
+      "hasInsightsDb": false,
+      "hasInsightsAssets": false,
+      "hasInsightsAppStart": false,
+      "hasInsightsScreenLoad": false,
+      "hasInsightsVitals": false,
+      "hasInsightsCaches": false,
+      "hasInsightsQueues": false,
+      "hasInsightsLlmMonitoring": false,
+      "isInternal": false,
+      "isPublic": false,
+      "avatar": {
+        "avatarType": "letter_avatar",
+        "avatarUuid": null
+      },
+      "color": "#3f8abf",
+      "status": "active"
+    },
+    {
+      "id": "4508444173533184",
+      "slug": "oauth-service",
+      "name": "oauth-service",
+      "platform": "node-fastify",
+      "dateCreated": "2024-12-10T13:51:48.350544Z",
+      "isBookmarked": false,
+      "isMember": true,
+      "features": [
+        "first-event-severity-new-escalation",
+        "minidump",
+        "similarity-indexing",
+        "similarity-view",
+        "span-metrics-extraction",
+        "span-metrics-extraction-addons",
+        "releases"
+      ],
+      "firstEvent": null,
+      "firstTransactionEvent": false,
+      "access": [
+        "org:read",
+        "alerts:read",
+        "project:releases",
+        "event:write",
+        "event:read",
+        "project:read",
+        "team:read",
+        "member:read"
+      ],
+      "hasAccess": true,
+      "hasCustomMetrics": false,
+      "hasMinifiedStackTrace": false,
+      "hasMonitors": false,
+      "hasProfiles": false,
+      "hasReplays": false,
+      "hasFeedbacks": false,
+      "hasNewFeedbacks": false,
+      "hasSessions": false,
+      "hasInsightsHttp": false,
+      "hasInsightsDb": false,
+      "hasInsightsAssets": false,
+      "hasInsightsAppStart": false,
+      "hasInsightsScreenLoad": false,
+      "hasInsightsVitals": false,
+      "hasInsightsCaches": false,
+      "hasInsightsQueues": false,
+      "hasInsightsLlmMonitoring": false,
+      "isInternal": false,
+      "isPublic": false,
+      "avatar": {
+        "avatarType": "letter_avatar",
+        "avatarUuid": null
+      },
+      "color": "#60bf3f",
+      "status": "active"
+    },
+  ],
+  "__members": [
+    {
+      "id": "11033546",
+      "email": "danny@domain.io",
+      "name": "danny@domain.io",
+      "user": {
+        "id": "1823521",
+        "name": "danny@domain.io",
+        "username": "6032da5ae6c84433bb139023b23e3774",
+        "email": "danny@domain.io",
+        "avatarUrl": "https://gravatar.com/avatar/6fd8727dde707fd7bbf59ddde0f2a803416b082a2ddf538f6edfb0f9535a6dec?s=32&d=mm",
+        "isActive": true,
+        "hasPasswordAuth": false,
+        "isManaged": false,
+        "dateJoined": "2022-03-21T09:44:08.054654Z",
+        "lastLogin": "2024-12-09T07:42:25.535883Z",
+        "has2fa": false,
+        "lastActive": "2024-12-18T13:02:41.565988Z",
+        "isSuperuser": false,
+        "isStaff": false,
+        "experiments": {},
+        "emails": [
+          {
+            "id": "1965065",
+            "email": "danny@domain.io",
+            "is_verified": false
+          }
+        ],
+        "avatar": {
+          "avatarType": "letter_avatar",
+          "avatarUuid": null,
+          "avatarUrl": null
+        }
+      },
+      "orgRole": "member",
+      "pending": false,
+      "expired": false,
+      "flags": {
+        "idp:provisioned": false,
+        "idp:role-restricted": false,
+        "sso:linked": true,
+        "sso:invalid": false,
+        "member-limit:restricted": false,
+        "partnership:restricted": false
+      },
+      "dateCreated": "2022-03-21T09:44:09.037845Z",
+      "inviteStatus": "approved",
+      "inviterName": null,
+      "role": "member",
+      "roleName": "Member",
+      "teamRole": null,
+      "teamSlug": "getport"
+    }
+
+  ]
+}
+```
+
+</details>
 
 <details>
 <summary> Project response data</summary>
@@ -768,7 +1234,11 @@ Here is an example of the payload structure from Sentry:
     "in_app_frame_mix": "mixed"
   },
   "numComments": 0,
-  "assignedTo": "None",
+  "assignedTo": {
+    "email": "danny@domain.io",
+    "id": "11033546",
+    "name": "danny@domain.io"
+  },
   "isBookmarked": false,
   "isSubscribed": false,
   "subscriptionDetails": "None",
@@ -880,6 +1350,65 @@ Here is an example of the payload structure from Sentry:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
+<summary> User entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "developer@getport.io",
+  "title": "Michael",
+  "blueprint": "sentryUser",
+  "team": [],
+  "properties": {
+    "username": "developer@getport.io",
+    "isActive": true,
+    "dateJoined": "2022-01-18T22:38:13.946094Z",
+    "lastLogin": "2024-11-10T23:25:31.826834Z",
+    "orgRole": "owner",
+    "inviteStatus": "approved"
+  },
+  "relations": {},
+  "createdAt": "2024-11-06T08:49:17.700Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-11-06T08:59:11.446Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Team entity in Port</summary>
+
+```json showLineNumbers
+{
+    "identifier": "platform-team",
+    "title": "Developer Experience",
+    "blueprint": "sentryTeam",
+    "properties": {
+      "dateCreated": "2022-11-16T13:25:53.617157Z",
+      "memberCount": 1,
+      "roles": "contributor",
+      "projects": [
+        "admin-service",
+        "oauth-service"
+      ]
+    },
+    "relations": {
+      "members": [
+        "danny@domain.io"
+      ]
+    },
+  "createdAt": "2023-11-06T08:49:17.700Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-06T08:59:11.446Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+
+<details>
 <summary> Project entity in Port</summary>
 
 ```json showLineNumbers
@@ -922,6 +1451,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   },
   "relations": {
     "project": "python-fastapi"
+    "assignedTo": "danny@domain.io"
   },
   "createdAt": "2023-11-06T08:49:20.406Z",
   "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
@@ -948,7 +1478,11 @@ The combination of the sample payload and the Ocean configuration generates the 
     "status": "active",
     "link": "https://test-org.sentry.io/projects/python-fastapi"
   },
-  "relations": {},
+  "relations": {
+    "team": [
+      "platform-team"
+    ]
+  },
   "createdAt": "2024-03-07T12:18:17.111Z",
   "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
   "updatedAt": "2024-03-07T12:31:52.041Z",
