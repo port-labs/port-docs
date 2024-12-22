@@ -532,11 +532,11 @@ Next, create a Jenkins pipeline with the following configuration:
 
 - Define the value of the [`token`](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `bucket-creator-token`.
 
-- [Define variables for the pipeline](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, `BUCKET_NAME`, `VISIBILITY` and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table bellow for the full variable list):
+- [Define variables for the pipeline](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, `BUCKET_NAME`, `VISIBILITY` and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table below for the full variable list):
 
    <img src='/img/guides/jenkinsGenericVariable.png' width='100%' border='1px' />
 
-Create the following varaibles and their related JSONPath expression:
+Create the following variables and their related JSONPath expression:
 
 | Variable Name            | JSONPath Expression                             |
 | ------------------------ | ----------------------------------------------- |

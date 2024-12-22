@@ -58,7 +58,7 @@ As you can see, after connecting your Git provider to Port, a new `Service` blue
 **Learn more:**
 
 - [Setup blueprints](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/)
-- [Relate Blueprints](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
+- [Relate blueprints](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
 
 ---
 
@@ -110,7 +110,7 @@ The existing actions in your portal only have their frontends defined. To finish
 Another one of Port's main pillars is scorecards. Scorecards are used to define and track metrics for your resources, and can be used to enforce standards in your organization.  
 Scorecards are defined per blueprint, and can be created/modified from the blueprint itself in your [builder](https://app.getport.io/settings/data-model).
 
-Take a look at your `Service` blueprint, it has a `Production Readiness` scorecard that defines and track three rules.  
+Take a look at your `Service` blueprint, it has a `Production Readiness` scorecard that defines and tracks three rules.  
 
 **Learn more:**
 

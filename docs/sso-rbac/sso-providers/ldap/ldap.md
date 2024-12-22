@@ -75,7 +75,7 @@ The `config.js` file is placed by default in the following paths:
 - Windows machines - `C:\Program Files (x86)\Auth0\AD LDAP Connector\config.js`
 - Linux machines - `/opt/auth0-adldap/config.js`
 
-To view the full list of configruation variables for the `config.js` file, click [here](https://auth0.com/docs/authenticate/identity-providers/enterprise-identity-providers/active-directory-ldap/ad-ldap-connector/ad-ldap-connector-config-file-schema).
+To view the full list of configuration variables for the `config.js` file, click [here](https://auth0.com/docs/authenticate/identity-providers/enterprise-identity-providers/active-directory-ldap/ad-ldap-connector/ad-ldap-connector-config-file-schema).
 
 :::
 
