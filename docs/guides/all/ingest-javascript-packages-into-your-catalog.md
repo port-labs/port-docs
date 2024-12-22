@@ -113,7 +113,7 @@ Create the following blueprint definition and mapping configuration:
     "properties": {
       "version": {
         "type": "string",
-        "title": "Depedency Version"
+        "title": "Dependency Version"
       }
     },
     "required": []

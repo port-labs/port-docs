@@ -87,7 +87,7 @@ You can also filter entities so the aggregation number chart will only apply to 
 | Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
 | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
 | `Entity`       | `String` | The chosen entity from which property data is visualized from                                                                                                                                                                    | `null`     | `true`   |
-| `Property`        | `String` | The number property which will be visulized                                                 | `null`     | `true`   |                                                                                     | `null`     | `true`   |
+| `Property`        | `String` | The number property which will be visualized                                                 | `null`     | `true`   |                                                                                     | `null`     | `true`   |
 
 
 **Chart type: Count entities**

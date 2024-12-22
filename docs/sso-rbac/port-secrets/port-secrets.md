@@ -9,13 +9,13 @@ Port secrets can be used in:
 
 ## Usage
 
-To create a new secret:
+To view your organization secrets:
 
-1. In your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`.
+- In your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`.
 
-2. In the `Credentials` window, choose the `Secrets` tab.
+- In the `Credentials` window, choose the `Secrets` tab.
 
-3. Click on the `+ Secret` button.
+To create a new secret, click on the `+ Secret` button.
     <img src="/img/secrets/secretsTabExample.png" width="50%" border="1px" />
 
 :::info One-time view
