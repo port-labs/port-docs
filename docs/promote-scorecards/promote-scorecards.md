@@ -380,7 +380,7 @@ For example, these services have some rules defined in their scorecards, and we 
 ## Scorecards as Blueprints
 
 :::info Closed beta feature
-This capability is currently in closed beta, and is still undergoing final testing before its official release.
+This capability is currently in closed beta, and is not yet generally available.  
 If you would like to join the beta, please reach out to us.
 :::
 
