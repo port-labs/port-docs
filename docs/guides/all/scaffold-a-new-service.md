@@ -34,242 +34,17 @@ After completing it, you will get a sense of how it can benefit different person
 
 <br/>
 
-### Setup the action's frontend
-
-<Tabs groupId="git-provider" queryString defaultValue="github-gitlab-bitbucket" values={[
-{label: "GitHub, GitLab, Bitbucket", value: "github-gitlab-bitbucket"},
-{label: "Azure DevOps", value: "azure-devops"}
-]}>
-
-<TabItem value="github-gitlab-bitbucket">
-
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
-2. Click on the `+ Action` button in the top-right corner:
-
-    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
-
-3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
-
-    <img src='/img/guides/scaffoldActionDetails.png' width='70%' border='1px' />
-    <br/>
-4. Click on the `Next` to proceed to the `User Form` tab and click on `+ Input`.
-5. Enter `Service name` as the **Title**, select `Text` for the **Type**, set **Required** to `True`, and click on the `Create` button.
-
-    <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
-    <br/>
-
-6. Click on the `Next` to configure the **Backend**.
-
-</TabItem>
-
-<TabItem value="azure-devops">
-
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
-2. Click on the `+ Action` button in the top-right corner:
-
-    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
-
-3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
-
-    <img src='/img/guides/scaffoldActionADODetails.png' width='70%' border='1px' />
-    <br/>
-
-4. Click on `Next`, and add the following inputs: `Service Name`, `Azure Organization`, `Azure Project`, and `Description`.
-
-    To create each input field:
-
-      - Click on `+ Input`.
-      - Enter the **Title** (e.g., `Service Name`).
-      - Select the appropriate **Type**.
-      - Set **Required** to `True` if the input is mandatory.
-      - Click on the `Create` button.  
-      <br/>
-   
-      <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
-
-      **Input Details:**
-
-      | Input Name         | Type             | Required | Additional Information            |
-      |--------------------|------------------|----------|-----------------------------------|
-      | Service Name       | Text             | Yes      |                                   |
-      | Azure Organization | String           | Yes      |                                   |
-      | Azure Project      | Entity Selection | Yes      | Select `Project` as the blueprint |
-      | Description        | String           | No       |                                   |
-
-      :::tip Data type and required fields
-      - Ensure that the `Azure Organization` and `Description` inputs are of type **String**.
-      - For the `Azure Project` input, select **Entity Selection** as the type and choose `Project` as the blueprint.
-      - Make sure the `Service Name`, `Azure Organization`, and `Azure Project` inputs are marked as required.
-      :::
-      <br/>
-
-5. Click on `Next` to configure the **Backend**.
-
-
-</TabItem>
-
-</Tabs>
-
-#### Define backend type
-
-Now we'll define the backend of the action. Port supports multiple invocation types, depending on the Git provider you are using.
-
-<Tabs groupId="git-provider" queryString defaultValue="github" values={[
-{label: "GitHub", value: "github"},
-{label: "GitLab", value: "gitlab"},
-{label: "Bitbucket (Jenkins)", value: "bitbucket"},
-{label: "Azure DevOps", value: "azure-devops"}
-
-]}>
-
-<TabItem value="github">
-
-Fill out the form with your values:
-
-- Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-  
-- Name the workflow `port-create-repo.yml`.
-  
-- Fill out your workflow details:  
-  <img src='/img/guides/scaffoldGithubBackendDetails.png' width='55%' border='1px' />
-  <br/>
-
-- Scroll down to the `Configure the invocation payload` section.  
-  This is where you can define which data will be sent to your backend each time the action is executed.  
-
-  For this example, we will send two details that our backend needs to know - the service name, and the id of the action run.  
-  Copy the following JSON snippet and paste it in the payload code box:
-
-  ```json showLineNumbers
-  {
-    "port_context": {
-        "runId": "{{ .run.id }}"
-    },
-    "service_name": "{{ .inputs.service_name }}"
-  }
-  ```
-
-</TabItem>
-
-<TabItem value="gitlab">
-
-:::tip
-You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
-:::
-
-First, choose `Trigger Webhook URL` as the invocation type, then fill out the form:
-
-- For the `Endpoint URL` you need to add a URL in the following format:
-  ```text showLineNumbers
-  https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
-  ```
-    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-ci.yml` pipeline file.
-      - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
-    - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
-
-- Set `HTTP method` to `POST`.
-
-- Set `Request type` to `Async`.
-
-- Set `Use self-hosted agent` to `No`.
-
-  <img src='/img/guides/scaffoldBackendForm.png' width='80%' border='1px' />
-
-- Scroll down to the `Configure the invocation payload` section.  
-  This is where you can define which data will be sent to your backend each time the action is executed.  
-
-  For this example, we will send some details that our backend needs to know, including the service name and the id of the action run.  
-  Copy the following JSON snippet and paste it in the "Body" code box:
-
-  ```json showLineNumbers
-  {
-    "port_context": {
-        "runId": "{{ .run.id }}",
-        "blueprint": "{{ .action.blueprint }}",
-        "user": {
-          "firstName": "{{ .trigger.by.user.firstName }}",
-          "lastName": "{{ .trigger.by.user.lastName }}",
-          "email": "{{ .trigger.by.user.email }}",
-        }
-    },
-    "service_name": "{{ .inputs.service_name }}",
-  }
-  ```
-
-</TabItem>
-
-<TabItem value="bitbucket">
-
-First, choose `Jenkins` as the invocation type.
-
-- Follow the instructions under `Define a webhook to trigger a Jenkins job` to obtain your webhook URL.
- 
-Then, fill out your workflow details:  
-
-- Replace the `Webhook URL` with your value (this is where the pipeline will reside and run).
-
-- Leave the `Use self-hosted agent` option set to `No`.
-  <img src='/img/guides/scaffoldBitbucketBackendDetails.png' width='55%' border='1px' />
-
-- Scroll down to the `Configure the invocation payload` section.  
-  This is where you can define which data will be sent to your backend each time the action is executed.  
-
-  For this example, we will send some details that our backend needs to know - the user inputs, and the id of the action run.  
-  Copy the following JSON snippet and paste it in the payload code box:
-
-  ```json showLineNumbers
-  {
-    "port_context": {
-      "runId": "{{ .run.id }}",
-    },
-    "service_name": "{{ .inputs.service_name }}",
-    "bitbucket_workspace_name": "{{ .inputs.bitbucket_workspace_name }}",
-    "bitbucket_project_key": "{{ .inputs.bitbucket_project_key }}",
-  }
-  ```
-
-</TabItem>
-
-<TabItem value="azure-devops">
-
-First, choose `Run Azure Pipeline` as the invocation type. Then fill out the form:
-
-- Replace `Incoming Webhook`with the name of your webhook trigger.
-- Replace `Organization` with your Azure DevOps organization name.
-- Under `Payload`, we will define the data sent to the backend. Copy the following JSON snippet and paste it in the `Payload` code box:
-
-```json showLineNumbers
-{
-    "properties": {
-        "service_name": "{{.inputs.\"service_name\"}}",
-        "azure_organization": "{{.inputs.\"azure_organization\"}}",
-        "description": "{{.inputs.\"description\"}}",
-        "azure_project": "{{.inputs.\"azure_project\"}}"
-    },
-    "port_context": {
-        "blueprint": "{{.action.blueprint}}",
-        "runId": "{{.run.id}}",
-        "trigger": "{{ .trigger }}"
-    }
-}
-  ```
-  <img src='/img/guides/scaffoldAdoBackendForm.png' width='80%' border='1px' />
-
-</TabItem>
-
-</Tabs>
-
-<br/>
-
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
-
-The action's frontend is now ready 🥳
-
-<br/>
 
 ### Setup the action's backend
 
-Now we want to write the logic that our action will trigger.
+First we want to write the logic that our action will trigger.
+
+
+:::info Note
+
+You can skip to the [Setup the action's frontend](#setup-the-actions-frontend) step if you already have a repository with a workflow/pipeline that creates a new repository.
+
+:::
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
@@ -374,16 +149,16 @@ Next, let's create the necessary token and secrets:
 - Go to the new GitLab project you created, from the `Settings` menu in the sidebar on the left, select `CI/CD`.
 
 - Expand the `Variables` section and save the following secrets:
-  - `PORT_CLIENT_ID` - Your Port client ID.
-  - `PORT_CLIENT_SECRET` - Your Port client secret.
-  - `GITLAB_ACCESS_TOKEN` - The GitLab group access token you created in the previous step.
-  <br/>
-  <img src='/img/guides/gitlabPipelineVariables.png' width='85%' border='1px' />
+    - `PORT_CLIENT_ID` - Your Port client ID.
+    - `PORT_CLIENT_SECRET` - Your Port client secret.
+    - `GITLAB_ACCESS_TOKEN` - The GitLab group access token you created in the previous step.
+      <br/>
+      <img src='/img/guides/gitlabPipelineVariables.png' width='85%' border='1px' />
 
 - Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Scaffolder token` and save its value
-  - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the [define backend type](#define-backend-type) section.
+    - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the [define backend type](#define-backend-type) section.
 
-    <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' border='1px' />
+      <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' border='1px' />
 
 :::tip
 Now that you have both the new GitLab project and its respective trigger token, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
@@ -596,16 +371,16 @@ update-run-status:
 <TabItem value="bitbucket">
 
 First, let's create the necessary tokens and secrets:
- 
+
 - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 - Configure the following as Jenkins credentials:
-  - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
-  - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
-  - `PORT_CLIENT_ID` - Your Port client ID.
-  - `PORT_CLIENT_SECRET` - Your Port client secret.
-  <br/>
-  <img src='/img/guides/bitbucketJenkinsCredentials.png' width='90%' border='1px' />
+    - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
+    - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
+    - `PORT_CLIENT_ID` - Your Port client ID.
+    - `PORT_CLIENT_SECRET` - Your Port client secret.
+      <br/>
+      <img src='/img/guides/bitbucketJenkinsCredentials.png' width='90%' border='1px' />
 
 <br/>
 
@@ -852,12 +627,12 @@ default_context:
 
 - Create an Azure DevOps repository called `Port-actions` in your Azure DevOps Organization/Project.
 - Configure Service Connection and Webhook:
-  - Go to your Azure DevOps project.
-  - Navigate to `Project Settings` > `Service connections`.
-  - Click on `New service connection`.
-  - Select `Incoming Webhook`.
-  - Use the same name for both `Webhook Name` and `Service connection name`.
-  
+    - Go to your Azure DevOps project.
+    - Navigate to `Project Settings` > `Service connections`.
+    - Click on `New service connection`.
+    - Select `Incoming Webhook`.
+    - Use the same name for both `Webhook Name` and `Service connection name`.
+
 - Create Azure Pipeline in `Port-actions` Repository
 
 In your `Port-actions` Azure DevOps repository, create an Azure Pipeline file named `azure-pipelines.yml` in the root of the repo's main branch with the following content:
@@ -1060,27 +835,27 @@ stages:
 </details>
 
 :::info Placeholder values
-Replace `<SERVICE_CONNECTION_NAME>` with the name of the service connection you created in Azure DevOps 
+Replace `<SERVICE_CONNECTION_NAME>` with the name of the service connection you created in Azure DevOps
 and `<WEBHOOK NAME>` with the name of the webhook you created in Azure DevOps which should be the same as the service connection name.
 :::
 
 - Configure the Pipeline:
-  - In your Azure DevOps project, navigate to **`Pipelines`** > **`Create Pipeline`**.
-  - Select **`Azure Repos Git`** and choose the `Port-actions` repository.
-  - Click **`Save`** (in the "Run" dropdown menu).
+    - In your Azure DevOps project, navigate to **`Pipelines`** > **`Create Pipeline`**.
+    - Select **`Azure Repos Git`** and choose the `Port-actions` repository.
+    - Click **`Save`** (in the "Run" dropdown menu).
 
 - Create the necessary tokens and secrets:
     - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 - Configure the following as Variables for the `azure-pipelines.yml`:
-  - Go to pipelines and select the `Port-actions` pipeline.
-  - Click on `Edit` and then `Variables`.
-  - Add the following variables:
-    - `PORT_CLIENT_ID` - Your Port `client ID`.
-    - `PORT_CLIENT_SECRET` - Your Port `client secret`.
-    - `PERSONAL_ACCESS_TOKEN` - Your Azure DevOps personal access token.
-    <br/>
-    <img src='/img/guides/azureDevOpsPipelineVariables.png' width='45%' border='1px' />
+    - Go to pipelines and select the `Port-actions` pipeline.
+    - Click on `Edit` and then `Variables`.
+    - Add the following variables:
+        - `PORT_CLIENT_ID` - Your Port `client ID`.
+        - `PORT_CLIENT_SECRET` - Your Port `client secret`.
+        - `PERSONAL_ACCESS_TOKEN` - Your Azure DevOps personal access token.
+          <br/>
+          <img src='/img/guides/azureDevOpsPipelineVariables.png' width='45%' border='1px' />
 
 </TabItem>
 
@@ -1091,6 +866,245 @@ The cookiecutter templates provided in the workflows are just examples, you can 
 :::
 
 All done! The action is ready to be used 🚀
+
+### Setup the action's frontend
+
+<Tabs groupId="git-provider" queryString defaultValue="github-gitlab-bitbucket" values={[
+{label: "GitHub, GitLab, Bitbucket", value: "github-gitlab-bitbucket"},
+{label: "Azure DevOps", value: "azure-devops"}
+]}>
+
+<TabItem value="github-gitlab-bitbucket">
+
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
+2. Click on the `+ Action` button in the top-right corner:
+
+    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
+
+3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
+
+    <img src='/img/guides/scaffoldActionDetails.png' width='70%' border='1px' />
+    <br/>
+4. Click on the `Next` to proceed to the `User Form` tab and click on `+ Input`.
+5. Enter `Service name` as the **Title**, select `Text` for the **Type**, set **Required** to `True`, and click on the `Create` button.
+
+    <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
+    <br/>
+
+6. Click on the `Next` to configure the **Backend**.
+
+</TabItem>
+
+<TabItem value="azure-devops">
+
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
+2. Click on the `+ Action` button in the top-right corner:
+
+    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
+
+3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
+
+    <img src='/img/guides/scaffoldActionADODetails.png' width='70%' border='1px' />
+    <br/>
+
+4. Click on `Next`, and add the following inputs: `Service Name`, `Azure Organization`, `Azure Project`, and `Description`.
+
+   To create each input field:
+
+    - Click on `+ Input`.
+    - Enter the **Title** (e.g., `Service Name`).
+    - Select the appropriate **Type**.
+    - Set **Required** to `True` if the input is mandatory.
+    - Click on the `Create` button.  
+      <br/>
+
+      <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
+
+   **Input Details:**
+
+   | Input Name         | Type             | Required | Additional Information            |
+         |--------------------|------------------|----------|-----------------------------------|
+   | Service Name       | Text             | Yes      |                                   |
+   | Azure Organization | String           | Yes      |                                   |
+   | Azure Project      | Entity Selection | Yes      | Select `Project` as the blueprint |
+   | Description        | String           | No       |                                   |
+
+   :::tip Data type and required fields
+    - Ensure that the `Azure Organization` and `Description` inputs are of type **String**.
+    - For the `Azure Project` input, select **Entity Selection** as the type and choose `Project` as the blueprint.
+    - Make sure the `Service Name`, `Azure Organization`, and `Azure Project` inputs are marked as required.
+      :::
+      <br/>
+
+5. Click on `Next` to configure the **Backend**.
+
+
+</TabItem>
+
+</Tabs>
+
+#### Define backend type
+
+Now we'll define the backend of the action. Port supports multiple invocation types, depending on the Git provider you are using.
+
+:::info Note
+
+The Repository & Workflow values you fill here should match the ones from the [Setup the action's backend](#setup-the-actions-backend) step.
+
+:::
+
+<Tabs groupId="git-provider" queryString defaultValue="github" values={[
+{label: "GitHub", value: "github"},
+{label: "GitLab", value: "gitlab"},
+{label: "Bitbucket (Jenkins)", value: "bitbucket"},
+{label: "Azure DevOps", value: "azure-devops"}
+
+]}>
+
+<TabItem value="github">
+
+Fill out the form with your values:
+
+- Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
+
+- Name the workflow `port-create-repo.yml`.
+
+- Fill out your workflow details:  
+  <img src='/img/guides/scaffoldGithubBackendDetails.png' width='55%' border='1px' />
+  <br/>
+
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.
+
+  For this example, we will send two details that our backend needs to know - the service name, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "port_context": {
+        "runId": "{{ .run.id }}"
+    },
+    "service_name": "{{ .inputs.service_name }}"
+  }
+  ```
+
+</TabItem>
+
+<TabItem value="gitlab">
+
+:::tip
+You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
+:::
+
+First, choose `Trigger Webhook URL` as the invocation type, then fill out the form:
+
+- For the `Endpoint URL` you need to add a URL in the following format:
+  ```text showLineNumbers
+  https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
+  ```
+    - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-ci.yml` pipeline file.
+        - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
+    - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
+
+- Set `HTTP method` to `POST`.
+
+- Set `Request type` to `Async`.
+
+- Set `Use self-hosted agent` to `No`.
+
+  <img src='/img/guides/scaffoldBackendForm.png' width='80%' border='1px' />
+
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.
+
+  For this example, we will send some details that our backend needs to know, including the service name and the id of the action run.  
+  Copy the following JSON snippet and paste it in the "Body" code box:
+
+  ```json showLineNumbers
+  {
+    "port_context": {
+        "runId": "{{ .run.id }}",
+        "blueprint": "{{ .action.blueprint }}",
+        "user": {
+          "firstName": "{{ .trigger.by.user.firstName }}",
+          "lastName": "{{ .trigger.by.user.lastName }}",
+          "email": "{{ .trigger.by.user.email }}",
+        }
+    },
+    "service_name": "{{ .inputs.service_name }}",
+  }
+  ```
+
+</TabItem>
+
+<TabItem value="bitbucket">
+
+First, choose `Jenkins` as the invocation type.
+
+- Follow the instructions under `Define a webhook to trigger a Jenkins job` to obtain your webhook URL.
+
+Then, fill out your workflow details:
+
+- Replace the `Webhook URL` with your value (this is where the pipeline will reside and run).
+
+- Leave the `Use self-hosted agent` option set to `No`.
+  <img src='/img/guides/scaffoldBitbucketBackendDetails.png' width='55%' border='1px' />
+
+- Scroll down to the `Configure the invocation payload` section.  
+  This is where you can define which data will be sent to your backend each time the action is executed.
+
+  For this example, we will send some details that our backend needs to know - the user inputs, and the id of the action run.  
+  Copy the following JSON snippet and paste it in the payload code box:
+
+  ```json showLineNumbers
+  {
+    "port_context": {
+      "runId": "{{ .run.id }}",
+    },
+    "service_name": "{{ .inputs.service_name }}",
+    "bitbucket_workspace_name": "{{ .inputs.bitbucket_workspace_name }}",
+    "bitbucket_project_key": "{{ .inputs.bitbucket_project_key }}",
+  }
+  ```
+
+</TabItem>
+
+<TabItem value="azure-devops">
+
+First, choose `Run Azure Pipeline` as the invocation type. Then fill out the form:
+
+- Replace `Incoming Webhook`with the name of your webhook trigger.
+- Replace `Organization` with your Azure DevOps organization name.
+- Under `Payload`, we will define the data sent to the backend. Copy the following JSON snippet and paste it in the `Payload` code box:
+
+```json showLineNumbers
+{
+    "properties": {
+        "service_name": "{{.inputs.\"service_name\"}}",
+        "azure_organization": "{{.inputs.\"azure_organization\"}}",
+        "description": "{{.inputs.\"description\"}}",
+        "azure_project": "{{.inputs.\"azure_project\"}}"
+    },
+    "port_context": {
+        "blueprint": "{{.action.blueprint}}",
+        "runId": "{{.run.id}}",
+        "trigger": "{{ .trigger }}"
+    }
+}
+  ```
+  <img src='/img/guides/scaffoldAdoBackendForm.png' width='80%' border='1px' />
+
+</TabItem>
+
+</Tabs>
+
+<br/>
+
+The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
+
+The action's frontend is now ready 🥳
+
+<br/>
 
 
 ### Execute the action
@@ -1121,7 +1135,7 @@ When executing the Bitbucket scaffolder, you will need to provide two additional
 
 - `Bitbucket Workspace Name` - the name of the workspace to create the new repository in.
 - `Bitbucket Project Key` - the key of the Bitbucket project to create the new repository in.
-  - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table.
+    - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table.
 
 </TabItem>
 
@@ -1165,4 +1179,3 @@ Congratulations! You can now create services easily from Port 💪🏽
 Creating a service is not just a periodic task developers undertake, but a vital step that can occur on a monthly basis. However, it's crucial to recognize that this is only a fragment of the broader experience that we're striving to create for developers.
 Our ultimate goal is to facilitate a seamless transition from ideation to production. In doing so, we aim to eliminate the need for developers to navigate through a plethora of tools, reducing friction and accelerating the time-to-production.  
 In essence, we're not just building a tool, but sculpting an ecosystem that empowers developers to bring new features to life with utmost efficiency.
-
