@@ -9,6 +9,18 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Examples
 
+## Import Gradle dependencies
+
+[This GitHub repository](https://github.com/matarpeles/extract-gradle-plugins-example) contains an implementation of a workflow that uses Port's GitHub action and a supporting Python script to import [Gradle](https://gradle.org/) dependencies into Port.  
+
+The workflow achieves the following:
+
+- Extract plugins and their versions from a Gradle build file.
+- Map the extracted plugins as package entities in Port.
+- Automatically create or update a service entity in Port, connecting it to its plugin dependencies.
+
+See the [repository](https://github.com/matarpeles/extract-gradle-plugins-example) for the full implementation and a detailed README describing how to use it.
+
 ## Basic create/update example
 
 In this example you will create blueprints for `ciJob` and `image` entities, and a relation between them. Using Port's GitHub action you will create new entities every time the GitHub workflow runs:

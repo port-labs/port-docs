@@ -1,0 +1,131 @@
+import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import OceanSaasDefaultSettings from "/src/components/ocean-saas-specifics/default-settings.jsx";
+import OceanSaasIntegrationSettings from "/src/components/ocean-saas-specifics/integration-settings.jsx";
+
+Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
+
+<h3>Live event support</h3>
+
+Currently, live events are not supported for integrations hosted by Port.  
+Resyncs will be performed **periodically** (with a configurable interval), or **manually** triggered by you via Port's UI.
+
+Therefore, real-time events (including GitOps) will not be ingested into Port immediately.  
+Support for live events is WIP and will be supported in the near future.
+
+<h3>Installation</h3>
+
+<Tabs queryString="oauth">
+<TabItem value="oauth" label="OAuth">
+
+This integration supports **OAuth2** for quick installation with default settings.
+
+1. Go to the <a target="_blank" rel="noopener noreferrer" href={`https://app.getport.io/settings/data-sources?section=EXPORTERS&provider=${props.integration}`}>{props.integration} data source page</a> in your portal.
+
+2. Under `Select your installation method`, choose `Hosted by Port`.
+
+3. Click `Connect`.  
+   This will prompt you to authorize Port and install the integration with the following default settings:
+    <OceanSaasDefaultSettings id={props.integration} />
+   See the `Application settings` section below for descriptions of these settings.
+
+Answers to common questions about OAuth integrations can be found here:
+<details>
+<summary>**OAuth integrations FAQ (click to expand)**</summary>
+
+**What permissions do I need to install the integration using OAuth2?**
+
+Any level of permission will work. However, the data fetched depends on the user’s access level:
+    - If the user has admin-level access, Port will fetch all project data.
+    - If the user has restricted access (e.g., only specific projects), Port will fetch data based on those permissions.
+
+**Are there any differences in the sync behavior between OAuth2 and custom token-based installation?**
+
+Token-Based Installation requires users to manually generate and provide tokens, offering control over permissions but increasing the risk of setup errors.  
+OAuth2 Installation automates the process, simplifying setup and reducing errors while aligning access levels with the user’s permissions.
+
+**Can multiple integrations use the same OAuth connection? Can multiple organizations use the same OAuth connection?**
+
+There is no limit to the number of OAuth connections you can create for integrations or organizations.
+
+**What is the level of permissions Port requests in the OAuth2 authentication flow, and why?**
+
+The exact permissions Port requests will appear when connecting the OAuth provider.  
+Port requests both read and write access so the secrets can be used later for running self-service actions (e.g., creating Jira tickets).
+
+**What happens if my integration shows an authorization error with the 3rd party?**
+
+OAuth tokens are refreshed automatically by Port, including before manual syncs.  
+If you encounter an HTTP 401 unauthorized error, try running a manual resync or wait for the next scheduled sync, and the issue will resolve itself. 
+If the error persists, please contact our support team.
+
+**What happens if I delete an installation of OAuth2?**
+
+- Deleting an OAuth2-based installation will not revoke access to the third-party service.
+- Port will delete the OAuth secret, which prevents it from utilizing the connection for future syncs.
+- If you reinstall the integration, you will need to reconnect OAuth.
+- Actions relying on the deleted secret (e.g., creating a Jira ticket) will fail until the secret is recreated or the integration is reinstalled.
+
+</details>
+
+</TabItem>
+
+<TabItem value="manual" label="Manual installation">
+
+To manually configure the installation settings:
+1. Toggle on the `Use Custom Settings` switch.
+
+2. Configure the `integration settings` and `application settings` as you wish (see below for details).
+
+</TabItem>
+</Tabs>
+
+<h3>Application settings</h3>
+
+Every integration hosted by Port has the following customizable application settings, which are configurable after installation:
+
+- `Resync interval`: The frequency at which Port will ingest data from the integration. There are various options available, ranging from every 1 hour to once a day.
+
+- `Send raw data examples`: A boolean toggle (`enabled` by default). If enabled, raw data examples will be sent from the integration to Port. These examples are used when [testing your mapping configuration](/build-your-software-catalog/customize-integrations/configure-mapping#test-your-mapping---jq-playground), they allow you to run your `jq` expressions against real data and see the results.
+
+<h3>Integration settings</h3>
+
+Every integration has its own tool-specific settings, under the `Integration settings` section:  
+<OceanSaasIntegrationSettings id={props.integration} />
+
+You can also hover over the ⓘ icon next each setting to see a description.
+
+
+<h4>Port secrets</h4>
+
+Some integration settings require sensitive pieces of data, such as tokens.  
+For these settings, [Port secrets](/sso-rbac/port-secrets/) will be used, ensuring that your sensitive data is encrypted and secure.
+
+When filling in such a setting, its value will be obscured (shown as `••••••••`).  
+For each such setting, Port will automatically create a secret in your organization.  
+
+To see all secrets in your organization, follow [these steps](/sso-rbac/port-secrets/#usage).
+
+<h3>Port source IP addresses</h3>
+
+When using this installation method, Port will make outbound calls to your 3rd-party applications from static IP addresses.  
+You may need to add these addresses to your allowlist, in order to allow Port to interact with the integrated service:
+
+<Tabs>
+<TabItem value="eu" label="Europe (EU)">
+```
+54.73.167.226  
+63.33.143.237  
+54.76.185.219
+```
+</TabItem>
+<TabItem value="us" label="United States (US)">
+```
+3.234.37.33  
+54.225.172.136  
+3.225.234.99
+```
+</TabItem>
+</Tabs>
+
