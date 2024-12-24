@@ -32,7 +32,7 @@ This integration allows you to:
 The resources that can be ingested from SonarQube into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
 
-- `Project` - represents a SonarQube project. Retrieves data
+- [`Project`](https://next.sonarqube.com/sonarqube/web_api/api/projects/search) - represents a SonarQube project. Retrieves data
   from [`components`](https://next.sonarqube.com/sonarqube/web_api/api/components), [`measures`](https://next.sonarqube.com/sonarqube/web_api/api/measures),
   and [`branches`](https://next.sonarqube.com/sonarqube/web_api/api/project_branches).
 - [`Issue`](https://next.sonarqube.com/sonarqube/web_api/api/issues) -  represents a SonarQube issue
@@ -810,7 +810,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
-## Migration from SonarQube integration version `<=0.1.114`
+## Migration from SonarQube integration version `<=0.1.121`
 Versions prior to `v0.1.115` used SonarQube's internal API for components to retrieve projects. However, this API apart from being internal and subject to change without notification by SonarQube is also inconsistent and will intermittently return an empty response causing previously ingested entities to be deleted. This deletion is because Ocean and therefore Port assumes these entities no longer exist.
 
 To remedy this, we have switched to the globally available API for projects instead for new users of the SonarQube integration. This comes with a few changes below
@@ -826,7 +826,7 @@ To remedy this, we have switched to the globally available API for projects inst
 
 <details>
 
-<summary><b>`<=v0.1.114` `sonarqubeProject` blueprint (Click to expand)</b></summary>
+<summary><b>`<=v0.1.121` `sonarqubeProject` blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1103,7 +1103,7 @@ To remedy this, we have switched to the globally available API for projects inst
 
 </details>
 
-- If you however, choose to stick with the internal API with the `project` kind, use the new blueprint with the following mapping:
+- If you however, choose to stick with the internal API with the `project` kind, use any of the blueprints with the following mapping:
 
 
 <details>
@@ -1133,7 +1133,8 @@ resources:
     port:
       entity:
         mappings:
-          blueprint: '"sonarQubeProject"'
+        // highlight-next-line
+          blueprint: '"sonarQubeProject"' # or any other blueprint you decide to use
           identifier: .key
           title: .name
           properties:
