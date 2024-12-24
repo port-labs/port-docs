@@ -176,8 +176,8 @@ To create a system hook in GitLab, you must set `useSystemHook: true` and choose
 :::info Repository Setup and Initial Commit
 Due to GitLab webhook limitations, new repositories require special handling:
 
-- A repository will only appear in Port after its first commit (GitLab webhooks don't support `project_create` events)
-- Empty repositories (no commits) will only appear after the next scheduled resync
+- A repository will only appear in Port after its first commit (GitLab webhooks don't support `project_create` events).
+- Empty repositories (no commits) will only appear after the next scheduled resync.
 
 For more details, see GitLab's [webhook events documentation](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html).
 :::
