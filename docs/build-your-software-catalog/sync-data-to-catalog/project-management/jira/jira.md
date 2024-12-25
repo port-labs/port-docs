@@ -528,6 +528,11 @@ Examples of blueprints and the relevant integration configurations:
 <details>
 <summary><b>Integration configuration</b></summary>
 
+The `project` kind has a selector property, `expand` that specifies additional fields to be included in the response. It accepts a comma-separated string that allows you to include more fields in the response data that can be used in the mapping configuration. Possible values are `description`, `lead`, `issueTypes`, `url`, `projectKeys`, `insight`.
+
+If not specified, it defaults to `"insight"`.
+
+
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
@@ -535,6 +540,7 @@ resources:
   - kind: project
     selector:
       query: "true"
+      expand: "description,lead,issueTypes,url,projectKeys,insight"
     port:
       entity:
         mappings:
