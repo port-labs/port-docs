@@ -9,7 +9,7 @@ import Image from "@theme/IdealImage";
 # AWS Exporter
 
 :::warning Deprecated
-This exporter is deprecated and will be removed in the future.  
+This exporter is deprecated, Port will discontinue support for organizations using it by Q2 2025.
 
 To integrate Port with AWS, use the [Ocean AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/).
 :::
