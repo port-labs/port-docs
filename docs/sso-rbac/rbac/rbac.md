@@ -167,7 +167,7 @@ Team dropdown selector in the entity create/edit page:
 Okta and AzureAD integrations are only available after configuring SSO from the relevant identity provider, refer to the [Single Sign-On (SSO)](../sso-providers/) section for more details
 :::
 
-## Users and teams as blueprints
+<!-- ## Users and teams as blueprints
 
 <BetaFeatureNotice />
 
@@ -396,4 +396,5 @@ Port service accounts are treated like any other users and extend the same RBAC 
 
 ### Disabling service accounts
 Service accounts can easily be disabled at any time. To disable a service account, update it's `status` property to `Disabled`.
-Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`.
+Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`. 
+-->
