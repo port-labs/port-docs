@@ -163,8 +163,15 @@ html[data-theme="dark"] .intercom-launcher {
   border: 2px white solid !important;
 }
 
+/* Tooltips */
+
 .tooltip {
   max-width: 420px;
+}
+
+.tooltip-link {
+  color: #30BFBF;
+  font-weight: bold;
 }
 
 html[data-theme="light"] details details  {
