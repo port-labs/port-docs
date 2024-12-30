@@ -9,7 +9,7 @@ import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
 import DockerParameters from "./\_gitlab_one_time_docker_parameters.mdx"
 import AdvancedConfig from '/docs/generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation_oauth.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 
 
@@ -23,11 +23,14 @@ This page outlines the following steps:
 - How to [configure](#configure-the-gitlab-integration) and customize the integration before deploying it.
 - How to [deploy](#deploy-the-gitlab-integration) the integration in the configuration that fits your use case.
 
+:::tip OAuth2 Installation
+Port's GitLab integration supports OAuth2 for quick installation, see [OAuth2 installation](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation?deploy=hosted-by-port&installation-methods=hosted-by-port&oauth=oauth#deploy-the-gitlab-integration) for more information.
+:::
+
 ## Prerequisites
 
 - A GitLab account with admin privileges.
 - A GitLab group account with the `api` scope.
-- If you choose the real-time & always-on installation method, a Kubernetes cluster to install the integration on.
 - Your Port user role is set to `Admin`.
 
 ## Setup
@@ -214,7 +217,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="GitLab" />
 
 </TabItem>
 

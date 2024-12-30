@@ -2,7 +2,7 @@
 
 Sensitive data such as tokens and passwords can be stored using [Port secrets](/sso-rbac/port-secrets/).
 
-To use a secret in the payload, you can reference it using `{{ .secrets.<secret_name> }}`.  
+To use a secret in the payload, you can reference it using `{{ .secrets.<secret_name> }}`.
 
 For example:
 
@@ -35,5 +35,6 @@ For example, the following expression will add the `ref` key to the payload only
 ```
 
 :::warning Using jq in keys
-Note that if a **key** in the payload evaluates to `null` for any reason, the entire expression (key + value) will be ommitted from the payload.
+Note that if a **key** in the payload evaluates to `null` for any reason, the entire expression (key + value) will be omitted from the payload.
 :::
+

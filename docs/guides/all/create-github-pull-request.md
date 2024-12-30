@@ -32,7 +32,7 @@ The workflow involves adding a resource block to a Terraform `main.tf` file and 
    
    Choose `Service` from the dropdown list.
 
-3. This action does not create/delete entites, but rather performs an operation on an existing <PortTooltip id="entity">entity</PortTooltip>. Therefore, we will choose `Day-2` as the action type.  
+3. This action does not create/delete entities, but rather performs an operation on an existing <PortTooltip id="entity">entity</PortTooltip>. Therefore, we will choose `Day-2` as the action type.  
    Fill out the form like this and click `Next`:
 
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionDetails.png' width='50%' />
@@ -102,7 +102,7 @@ Now we want to write the Jenkins pipeline that our action will trigger.
 
 resource "azurerm_storage_account" "storage_account" {
   name                = "{{ storage_name }}"
-  resource_group_name = "YourResourcesGroup" # replace this with one of your resource groups in your azure cloud acount
+  resource_group_name = "YourResourcesGroup" # replace this with one of your resource groups in your azure cloud account
 
   location                 = "{{ storage_location }}"
   account_tier             = "Standard"

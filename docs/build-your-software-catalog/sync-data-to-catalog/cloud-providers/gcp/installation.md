@@ -342,16 +342,18 @@ The Port GCP integration's Terraform module offers a set of configurations:
 | `port_client_id` |  | True | The Port client id.  |
 | `port_client_secret` |  | True | The Port client secret.  |
 | `gcp_organization` |  | True | Your Google Cloud Organization Id.  |
-| `gcp_ocean_setup_project` |  | True | The Project ot create all the Integration's infrastructure (Topic, Subscription, Service account etc.) on.  |
+| `gcp_ocean_setup_project` |  | True | The Project to create all the Integration's infrastructure (Topic, Subscription, Service account etc.) on.  |
 | `gcp_ocean_integration_image` |  | True | The Artifact Registry / Dockerhub image to deploy.  |
 | `integration_identifier` |  | True | The Integration's identifier in Port  |
 | `port_base_url` | 'https://api.getport.io' | False | The Port Base url.  |
 | `gcp_included_projects` | [] | False | The Projects list you want the integration to collect from. If left empty, It will collect *All* projects in the organization. `This option will be deprecated soon.`  |
+| `gcp_cloud_run_cpu` | 2 | False | The CPU limit for the Cloud Run service  |
+| `gcp_cloud_run_memory` | 1024Mi | False | The Memory limit for the Cloud Run service  |
 | `gcp_project_filter` |  | False | The filter string used to retrieve GCP projects, allowing complex filtering by combining multiple conditions with logical operators. Follows GCP's [filter expressions syntax](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/projects#filter-1). Example `parent.id:184606565139 labels.environment:production AND labels.team:devops OR labels priority:high` |
-| `gcp_excluded_projects` | [] | False | The Projects list you want the integration NOT to collect from. This will be overriden by any value in gcp_included_projects besides []. `This option will be deprecated soon.` |
+| `gcp_excluded_projects` | [] | False | The Projects list you want the integration NOT to collect from. This will be overridden by any value in gcp_included_projects besides []. `This option will be deprecated soon.` |
 | `assets_types_for_monitoring` | ["cloudresourcemanager.googleapis.com/Organization", "cloudresourcemanager.googleapis.com/Project", "storage.googleapis.com/Bucket", "cloudfunctions.googleapis.com/Function", "pubsub.googleapis.com/Subscription", "pubsub.googleapis.com/Topic"] | False | The list of asset types the integration will digest real-time events for.  |
 | `ocean_integration_service_account_permissions` | ["cloudasset.assets.exportResource", "cloudasset.assets.listCloudAssetFeeds", "cloudasset.assets.listResource", "cloudasset.assets.searchAllResources", "cloudasset.feeds.create", "cloudasset.feeds.list", "pubsub.topics.list", "pubsub.topics.get", "pubsub.subscriptions.list", "pubsub.subscriptions.get", "resourcemanager.projects.get", "resourcemanager.projects.list", "resourcemanager.folders.get", "resourcemanager.folders.list", "resourcemanager.organizations.get", "cloudquotas.quotas.get", "run.routes.invoke", "run.jobs.run"] | False | The permissions granted to the integration's service_account. We recommend not changing it to prevent unexpected errors.  |
-| `assets_feed_topic_id` | "ocean-integration-topic" | False | The name of the topic created to recieve real time events.  |
+| `assets_feed_topic_id` | "ocean-integration-topic" | False | The name of the topic created to receive real time events.  |
 | `assets_feed_id` | "ocean-gcp-integration-assets-feed" | False | The ID for the Ocean GCP Integration feed.  |
 | `service_account_name` | "ocean-service-account" | False | The name of the service account used by the Ocean integration.  |
 | `role_name` | "OceanIntegrationRole" | False | The name of the role created for the Integration's Service account.  |

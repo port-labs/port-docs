@@ -382,7 +382,7 @@ jobs:
         "type": "number",
         "title": "Minimum number of nodes",
         "default": 1,
-        "description": "The minimun number of nodes (autoscaler might increase this number)"
+        "description": "The minimum number of nodes (autoscaler might increase this number)"
       },
       "kube-config": {
         "type": "string",
@@ -458,7 +458,7 @@ jobs:
           "type": "string",
           "title": "Minimum number of nodes",
           "default": "1",
-          "description": "The minimun number of nodes (autoscaler might increase this number)"
+          "description": "The minimum number of nodes (autoscaler might increase this number)"
         }
       },
       "required": [

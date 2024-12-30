@@ -49,11 +49,12 @@ It is possible to reference any field that appears in the API responses linked b
 
 Choose one of the following installation methods:
 
+
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation />
 
 </TabItem>
 
@@ -480,6 +481,10 @@ That's it! Now Jira API responses will include the `emailAddress` field when ret
 All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
 :::
 
+<!-- ### OAuth account password change
+
+If the password of the account used to authenticate with Jira changes, the integration will need to be **reinstalled**. This is because the Jira API requires the use of an API token for authentication, and the token is generated using the account's password. -->
+
 ## Examples
 
 To view and test the integration's mapping against examples of the third-party API responses, use the **jq playground** in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
@@ -523,6 +528,11 @@ Examples of blueprints and the relevant integration configurations:
 <details>
 <summary><b>Integration configuration</b></summary>
 
+The `project` kind has a selector property, `expand` that specifies additional fields to be included in the response. It accepts a comma-separated string that allows you to include more fields in the response data that can be used in the mapping configuration. Possible values are `description`, `lead`, `issueTypes`, `url`, `projectKeys`, `insight`.
+
+If not specified, it defaults to `"insight"`.
+
+
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
@@ -530,6 +540,7 @@ resources:
   - kind: project
     selector:
       query: "true"
+      expand: "description,lead,issueTypes,url,projectKeys,insight"
     port:
       entity:
         mappings:
