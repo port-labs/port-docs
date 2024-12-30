@@ -2,7 +2,7 @@ import Markdown from "@theme/Markdown";
 
 const defaultSettings = {
     Jira:
-      '- `Resync interval`: Every 1 hour.' + '\n\n' +
+      '- `Resync interval`: Every 2 hours.' + '\n\n' +
       '- `Send raw data examples`: Enabled.',
     GitLab:
       '- `Resync interval`: Every 2 hours.' + '\n\n' +
