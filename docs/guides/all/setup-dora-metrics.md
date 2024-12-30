@@ -11,10 +11,10 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 This guide is designed
 to help you
-implement and track [DevOps Research and Assessment (DORA) metrics](https://cloud.google.com/blog/products/devops-sre/using-the-four-keys-to-measure-your-devops-performance) within your organization in Port.  
+implement and track [DevOps Research and Assessment (DORA) metrics](https://cloud.google.com/blog/products/devops-sre/using-the-four-keys-to-measure-your-devops-performance) within your organization in Port.
 
 DORA Metrics are a set of key performance indicators
-that measure the effectiveness and efficiency of your software development and delivery process. 
+that measure the effectiveness and efficiency of your software development and delivery process.
 By tracking these metrics,
 you can identify areas for improvement and ensure that your team is delivering high-quality software efficiently.
 This guide will cover the four key metrics: **deployment frequency**, **lead time**, **change failure rate**, and **mean time to recovery**.
@@ -24,7 +24,7 @@ This guide will cover the four key metrics: **deployment frequency**, **lead tim
 - Access to a repository (GitHub, GitLab, or Azure Repos) that is connected to Port via the onboarding process.
 - While this guide demonstrates implementations using **GitHub**, **GitLab**, and **Azure Repos**, other Git providers can be used as well.
 - Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD integrations or your platform-specific tools.
-
+- Optional for alternate tracking strategies: Install the [Port Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira) to track deployments, lead time and change failure rate using Jira.
 
 ## Tracking deployments
 
@@ -108,14 +108,53 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
 ```
 </details>
 
-:::note Missing Lead Time
+:::info Missing Lead Time
+
+We calculate the lead time using the **lead time** property in the git provider.
 If you do not have the **lead time** configured, you can follow the integration guide for your Git provider to add this property:
 
 - **GitHub**: [GitHub integration guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests)
 - **GitLab**: [GitLab integration guide](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)
-- **Azure Repos**: [Azure Repos integration guide](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples#mapping-repositories-file-contents-repository-policies-and-pull-requests) 
+- **Azure Repos**: [Azure Repos integration guide](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples#mapping-repositories-file-contents-repository-policies-and-pull-requests)
 
 :::
+
+### Tracking lead time with Jira tickets
+
+The **recommended** approach in tracking the lead time is using measuring the time that a pr was opened to the time it was merged.
+An **alternate** approach is to track lead time using Jira tickets from their **creation** until **resolution**.  
+This approach focuses on the entire lifecycle of a task rather than just code merges.
+
+Add this mapping config to the Jira [data source](https://app.getport.io/settings/data-sources?filter=Jira):
+
+<details>
+<summary><b> Jira tickets config (click to expand)</b></summary>
+
+```yaml showLineNumbers
+- kind: issue
+    selector:
+      query: 'true'
+      jql: 'status in ("In Progress", "Done")'
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .fields.summary
+          blueprint: '"jiraIssue"'
+          properties:
+            leadTimeHours: >
+              (.fields.created as $created | .fields.resolutiondate as $resolved |
+              if $resolved == null then null else
+              ((($resolved | sub("\\.[0-9]+\\+\\d{4}"; "") | strptime("%Y-%m-%dT%H:%M:%S") | mktime) -
+                ($created | sub("\\.[0-9]+\\+\\d{4}"; "") | strptime("%Y-%m-%dT%H:%M:%S") | mktime)) / 3600) end)
+```
+</details>
+
+If you want to measure lead time from the moment a ticket moves **In Progress** rather than from creation, set up an automation to update a custom field in Port when the status changes to In Progress, 
+and then use a calculation property in Port to measure the time between this custom field’s timestamp and the resolved date.  
+Read more about setting automations [here](/actions-and-automations/define-automations/).
+
+
 
 :::tip Adding JSON Schema Using Port's UI
 1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
@@ -126,12 +165,11 @@ If you do not have the **lead time** configured, you can follow the integration 
 By following these steps, you can paste and manage the JSON schema required to track DORA metrics in Port.
 :::
 
-
 ### Tracking strategies
 Below are the main ways you can track deployments directly within Port:
 
 <Tabs groupId="deployment-strategies" queryString defaultValue="pr-merge" values={[
-{label: "PR/MR Merge", value: "pr-merge"},
+{label: "PR/MR Merge (Recommended)", value: "pr-merge"},
 {label: "Workflow/Job", value: "workflow-job"},
 {label: "CI/CD Pipelines", value: "ci-cd-pipelines"},
 {label: "Releases/Tags", value: "releases-tags"},
@@ -146,26 +184,26 @@ This is the **recommended** approach for tracking deployments and calculating le
 
 The lead time for these merges is calculated as the difference between when the PR/MR was created and when it was merged.
 
-  <Tabs groupId="pr-merge-strategies" defaultValue="github-pr-merge" values={[
-  {label: "GitHub", value: "github-pr-merge"},
-  {label: "GitLab", value: "gitlab-pr-merge"},
-  {label: "Azure Repos", value: "azure-repos-pr-merge"}
-  ]}>
+<Tabs groupId="pr-merge-strategies" defaultValue="github-pr-merge" values={[
+{label: "GitHub", value: "github-pr-merge"},
+{label: "GitLab", value: "gitlab-pr-merge"},
+{label: "Azure Repos", value: "azure-repos-pr-merge"}
+]}>
 
-  <TabItem value="github-pr-merge" label="GitHub">
+<TabItem value="github-pr-merge" label="GitHub">
 
-  Below is a demonstration of how deployment tracking can be implemented using the PR merge strategy.
+Below is a demonstration of how deployment tracking can be implemented using the PR merge strategy.
 
-  **Example**:
+**Example**:
 
-  - When a PR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
-  - The **lead time** for that PR is calculated and added to the deployment as part of the blueprint.
+- When a PR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
+- The **lead time** for that PR is calculated and added to the deployment as part of the blueprint.
 
-  Here’s how you can implement this:
+Here’s how you can implement this:
 
-  1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**.
+1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**.
 
-  2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration:
+2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration:
 
   <details>
  <summary><b>Deployment config (click to expand)</b></summary>
@@ -195,18 +233,18 @@ The lead time for these merges is calculated as the difference between when the 
 
   <TabItem value="gitlab-pr-merge" label="GitLab">
 
-  Below is a demonstration of how deployment tracking can be implemented using the MR merge strategy:
+Below is a demonstration of how deployment tracking can be implemented using the MR merge strategy:
 
-  **Example**:
+**Example**:
 
-  - When a MR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
-  - The **lead time** for that MR is calculated and added to the deployment as part of the blueprint.
+- When a MR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
+- The **lead time** for that MR is calculated and added to the deployment as part of the blueprint.
 
-  Here’s how you can implement this:
+Here’s how you can implement this:
 
-  1. **Add Merge Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)**.
+1. **Add Merge Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)**.
 
-  2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitLab integration:
+2. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitLab integration:
 
   <details>
  <summary><b>Deployment config (click to expand)</b></summary>
@@ -303,28 +341,28 @@ You can modify these values based on your requirements.
 <TabItem value="workflow-job" label="Workflow/Job">
 
 Track deployments by monitoring workflow runs in your pipeline.
-This setup captures all workflow runs from the main branch and maps them to deployment entities. 
+This setup captures all workflow runs from the main branch and maps them to deployment entities.
 The deployment status is set dynamically based on whether the workflow run concluded successfully or failed.
 
 Below is a demonstration of how deployment tracking can be implemented using workflow/job.
 
-  <Tabs groupId="workflow-job-strategies" defaultValue="github-workflow-job" values={[
-  {label: "GitHub", value: "github-workflow-job"},
-  {label: "GitLab", value: "gitlab-workflow-job"},
-  ]}>
+<Tabs groupId="workflow-job-strategies" defaultValue="github-workflow-job" values={[
+{label: "GitHub", value: "github-workflow-job"},
+{label: "GitLab", value: "gitlab-workflow-job"},
+]}>
 
   <TabItem value="github-workflow-job" label="GitHub">
 
-  Below is how the deployment tracking can be done in **GitHub** using workflow runs:
+Below is how the deployment tracking can be done in **GitHub** using workflow runs:
 
-  **Example**:
+**Example**:
 
-  - When a GitHub Actions workflow runs on the main branch, a **deployment entity** is created in Port to represent the deployment.
-  - The **deployment status** is dynamically set based on the workflow run's conclusion.
+- When a GitHub Actions workflow runs on the main branch, a **deployment entity** is created in Port to represent the deployment.
+- The **deployment status** is dynamically set based on the workflow run's conclusion.
 
-  Here’s how you can implement this:
+Here’s how you can implement this:
 
-  1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitHub** integration:
+1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitHub** integration:
 
   <details>
   <summary><b>Deployment via Workflow Runs (click to expand)</b></summary>
@@ -355,16 +393,16 @@ Below is a demonstration of how deployment tracking can be implemented using wor
 
   <TabItem value="gitlab-workflow-job" label="GitLab">
 
-  Below is how the deployment tracking can be done in **GitLab** using pipeline jobs:
+Below is how the deployment tracking can be done in **GitLab** using pipeline jobs:
 
-  **Example**:
+**Example**:
 
-  - When a GitLab CI/CD pipeline runs on the main branch, a **deployment entity** is created in Port.
-  - The **deployment status** is dynamically set based on the pipeline's status.
+- When a GitLab CI/CD pipeline runs on the main branch, a **deployment entity** is created in Port.
+- The **deployment status** is dynamically set based on the pipeline's status.
 
-  Here’s how you can implement this:
+Here’s how you can implement this:
 
-  1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitLab** integration:
+1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitLab** integration:
 
   <details>
   <summary><b>Deployment via Pipeline Runs (click to expand)</b></summary>
@@ -418,23 +456,23 @@ CI/CD pipelines, such as those run by Jenkins, provide a robust way to track dep
 
 Port supports tracking deployments from various CI/CD tools by monitoring pipelines and reporting the deployment status to Port. Here are examples for some commonly used CI/CD tools:
 
-   <Tabs groupId="ci-cd" defaultValue="jenkins" values={[
-   { label: 'Jenkins', value: 'jenkins' },
-   { label: 'Octopus Deploy', value: 'octopus-deploy' },
-   { label: 'CircleCI', value: 'circleci' },
-   { label: 'Azure Pipelines', value: 'azure-pipelines' },
-   { label: 'Codefresh', value: 'codefresh' },
-   { label: 'Gitlab', value: 'gitlab' },
-   ]}>
-   
-   <TabItem value="jenkins" label="Jenkins">
-    
-   Jenkins provides a robust way to track deployments by dynamically reporting build statuses to Port using Port's API. [find more here](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/)
+<Tabs groupId="ci-cd" defaultValue="jenkins" values={[
+{ label: 'Jenkins', value: 'jenkins' },
+{ label: 'Octopus Deploy', value: 'octopus-deploy' },
+{ label: 'CircleCI', value: 'circleci' },
+{ label: 'Azure Pipelines', value: 'azure-pipelines' },
+{ label: 'Codefresh', value: 'codefresh' },
+{ label: 'Gitlab', value: 'gitlab' },
+]}>
 
-   Add this example to your Jenkins pipeline to report deployments to Port:
+   <TabItem value="jenkins" label="Jenkins">
+
+Jenkins provides a robust way to track deployments by dynamically reporting build statuses to Port using Port's API. [find more here](/build-your-software-catalog/custom-integration/api/ci-cd/jenkins-deployment/)
+
+Add this example to your Jenkins pipeline to report deployments to Port:
    <details>
    <summary><b>Jenkins Pipeline Example (click to expand)</b></summary>
-   
+
    ```groovy showLineNumbers
    pipeline {
      agent any
@@ -500,19 +538,19 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
      }
    }
    ```
-   
+
    </details>
    </TabItem>
 
    <TabItem value="octopus-deploy" label="Octopus Deploy">
 
 
-   Octopus can be used to track deployments by reporting to Port using custom API calls after deployments are triggered. [Find more here](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
-   
-   Add this example to your Octopus script to report deployments to Port:
+Octopus can be used to track deployments by reporting to Port using custom API calls after deployments are triggered. [Find more here](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy)
+
+Add this example to your Octopus script to report deployments to Port:
    <details>
    <summary><b>Octopus Deploy Example (click to expand)</b></summary>
-   
+
    ```yaml
    # Octopus script example for deployment tracking in Port
    steps:
@@ -543,19 +581,19 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
          }' \
          https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true
    ```
-   
+
    </details>
 
    </TabItem>
 
    <TabItem value="circleci" label="CircleCI">
 
-   Track deployments in CircleCI by reporting pipeline runs to Port using a configuration similar to Jenkins. [Find more here](/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/)
-   
-   Add this example to your CircleCI pipeline to report deployments to Port:
+Track deployments in CircleCI by reporting pipeline runs to Port using a configuration similar to Jenkins. [Find more here](/build-your-software-catalog/custom-integration/api/ci-cd/circleci-workflow/)
+
+Add this example to your CircleCI pipeline to report deployments to Port:
    <details>
       <summary><b>CircleCI Pipeline Example (click to expand)</b></summary>
-   
+
 ```yaml
       version: 2.1
       
@@ -637,20 +675,20 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
          }' \
          https://api.getport.io/v1/blueprints/deployment/entities?upsert=true&merge=true
    ```
-   
+
    </details>
 
   </TabItem>
 
-   
+
   <TabItem value="codefresh" label="Codefresh">
 
-  Track deployments in Codefresh by integrating Port's API with your pipeline configurations. [find more here](/build-your-software-catalog/custom-integration/api/ci-cd/codefresh-workflow-template/)
+Track deployments in Codefresh by integrating Port's API with your pipeline configurations. [find more here](/build-your-software-catalog/custom-integration/api/ci-cd/codefresh-workflow-template/)
 
-   Add this example to your Codefresh pipeline to report deployments to Port:
+Add this example to your Codefresh pipeline to report deployments to Port:
    <details>
    <summary><b>Codefresh Pipeline Example (click to expand)</b></summary>
-   
+
    ```yaml
    version: '1.0'
    steps:
@@ -683,18 +721,18 @@ Port supports tracking deployments from various CI/CD tools by monitoring pipeli
            }
            }'
    ```
-   
+
    </details>
   </TabItem>
 
   <TabItem value="gitlab" label="Gitlab">
 
-   Track GitLab pipeline deployments using a similar approach to report data to Port. [find more here](/build-your-software-catalog/custom-integration/api/ci-cd/gitlab-pipelines/)
-   
-   Add this example to your GitLab pipeline to report deployments to Port:
+Track GitLab pipeline deployments using a similar approach to report data to Port. [find more here](/build-your-software-catalog/custom-integration/api/ci-cd/gitlab-pipelines/)
+
+Add this example to your GitLab pipeline to report deployments to Port:
    <details>
    <summary><b>GitLab Pipeline Example (click to expand)</b></summary>
-   
+
    ```yaml
    stages:
      - deploy
@@ -847,7 +885,7 @@ giving you full flexibility across all your deployment workflows.
 
 <br/>
 
-### Monorepo Tracking
+### Monorepo tracking
 By using **custom integrations**, you can effectively track services or components within a monorepo.
 
 Here’s how you can do this:
@@ -886,25 +924,71 @@ By this method, individual services within a monorepo are mapped to Port bluepri
 Custom integrations provide flexibility in mapping and tracking each service or microservice within a monorepo. With Port’s API, you can track deployments and updates for each component separately, giving you granular control over monitoring and managing services in a monorepo.
 :::
 
+### Tracking deployment via Jira tickets (Alternative)
+
+Instead of relying solely on PR merges or pipeline runs,
+you can treat a Jira ticket moving to the "Done" status as indicating that code has been deployed. 
+To implement this, add this to your Jira data source configuration:
+
+:::tip Install jira integration
+You need to make sure that you have a Jira integration set up in Port with the Issue blueprint to track Jira tickets.
+If you don't have this set up, follow the [Jira integration guide](/build-your-software-catalog/sync-data-to-catalog/project-management/jira) to configure it.
+:::
+
+Add this mapping config to the Jira [data source](https://app.getport.io/settings/data-sources?filter=Jira)
+
+```yaml showLineNumbers
+- kind: issue
+  selector:
+    query: 'true'
+    jql: 'status = Done'
+  port:
+    entity:
+      mappings:
+        identifier: .key
+        title: .fields.summary
+        blueprint: '"deployment"'
+        properties:
+          createdAt: .fields.created
+          deploymentStatus: '"Success"'
+```
+
+This approach shifts the deployment definition from a code-centric event (PR merge) to a work-management event (Jira issue completion).
+
+
 
 ## Tracking incidents
 
-Incidents are essential for tracking key DORA metrics, including **Change Failure Rate (CFR)** and **Mean Time to Recovery (MTTR)**. Effective incident tracking reveals insights into how frequently deployments fail and how quickly teams can resolve issues. This section outlines how to:
+Incidents are essential for tracking key DORA metrics, including **Change Failure Rate (CFR)** and **Mean Time to Recovery (MTTR)**. 
+Effective incident tracking reveals insights into how frequently deployments fail and how quickly teams can resolve issues. This section outlines how to:
 
 - Use incidents to calculate **CFR** and **MTTR**.
 - Link incidents to services to track the impact of failures.
 - Aggregate metrics across incidents for better monitoring.
 
-### Data model setup
+Track incident by following the ways below:
 
-Ensure that your **PagerDuty incident blueprint** is properly configured to map incidents to the correct services(gitHub). 
+<Tabs groupId="tracking-strategies" defaultValue="recommended" values={[
+{ label: "Recommended", value: "recommended" },
+{ label: "Alternative", value: "alternative" }
+]}>
+
+<TabItem value="recommended" label="Recommended">
+
+We recommend using a dedicated incident management tool, like PagerDuty, to streamline this process. 
+
+Below is an example of how to do this
+
+<h3> Data model setup </h3>
+
+Ensure that your **PagerDuty incident blueprint** is properly configured to map incidents to the correct services(gitHub).
 This includes defining the appropriate properties and relations for incidents.Follow this [PagerDuty Incident Blueprint Setup Link](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty#incident-blueprint-setup) to implement.
 
 - Add the following properties to capture incident resolution time and recovery time:
 
    <details>
    <summary><b>Additional properties for PagerDuty Incident Blueprint (click to expand)</b></summary>
-   
+
    ```json showLineNumbers
     "resolvedAt": {
       "title": "Incident Resolution Time",
@@ -925,7 +1009,7 @@ This includes defining the appropriate properties and relations for incidents.Fo
 
    <details>
      <summary><b>Incident mapping config for resolvedAt and recoveryTime (click to expand)</b></summary>
-     
+
    ```yaml showLineNumbers
       resolvedAt: .resolved_at
       recoveryTime: >-
@@ -934,10 +1018,10 @@ This includes defining the appropriate properties and relations for incidents.Fo
          ( ($resolvedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) -
            ($createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) ) / 60 end) # Time in minutes and divide by 3600 if you want it calculated in hours
      ```
-   
+
    </details>
 
-### Syncing incidents with PagerDuty and other tools
+<h3> Syncing incidents with PagerDuty and other tools </h3>
 
 To sync incidents from **PagerDuty**, follow the steps in the [PagerDuty guide](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty). The guide provides detailed steps for setting up integrations to track incidents related to deployments.
 
@@ -947,7 +1031,8 @@ For other incident management tools, follow these respective guides:
 - [ServiceNow](/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow)
 - [Statuspage](/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
 
-### Relating Incident to services
+<h3> Relating Incident to services </h3>
+
 Add this relationship to the **Incident blueprint** to link incidents to GitHub or Gitlab or Azure DevOps repository (service):
 
 <Tabs groupId="incident-relation-strategies" defaultValue="github-relation" values={[
@@ -1049,8 +1134,119 @@ Update the mapping config to pagerduty incident [data source](https://app.getpor
 we use the **search relation** entity to map the `pagerdutyIncident` blueprint to the correct service based on the service's `$title` and the pagerduty incident `service.summary`.
 We have assumed that the **service name/title** exists in the `service.summary` property of the incident, but you can modify this query to map based on other properties that better match your setup
 To learn more about using search relations, see [our documentation on Mapping Relations
-Using Search Queries](/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries). 
+Using Search Queries](/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries).
 :::
+
+Note that the above implementation of tracking incidents using an incident manager tool like Pagerduty and others is the **recommended** approach.
+  
+</TabItem>
+
+  
+<TabItem value="alternative" label="Alternative">
+
+There are different ways to track incidents depending on your tools and needs. Below are a couple of alternate
+strategies that can complement the recommended methods:
+
+<Tabs groupId="tracking-cfr-strategies" defaultValue="hotfix" values={[
+{ label: "Tracking CFR with Jira bugs", value: "jira-cfr" },
+{ label: "Tracking hotfix deployments", value: "hotfix" }
+]}>
+
+<TabItem value="jira-cfr" label="Tracking CFR with Jira bugs">
+
+<h2> Tracking CFR with Jira bugs </h2>
+
+Count the number of urgent Jira bugs that appear after deployments to gauge the change failure rate.
+This method aligns failure rate with customer-impacting issues tracked in your ticketing system.
+
+To implement this follow the steps below:
+
+1. Add an aggregation property to the Jira `project` blueprint to count high-priority issues on a project:
+
+<details>
+<summary><b>Aggregation property for high-priority issues (click to expand)</b></summary>
+
+```json showLineNumbers
+"highestPriorityIssueCount": {
+"title": "Highest Priority Issue Count",
+"target": "jiraIssue",
+"calculationSpec": {
+  "calculationBy": "entities",
+  "func": "count"
+},
+"query": {
+  "combinator": "and",
+  "rules": [
+    {
+      "property": "priority",
+      "operator": "=",
+      "value": "Highest"
+    }
+  ]
+}
+}
+
+```
+</details>
+
+:::tip Project relationship with issues
+
+Ensure that your Jira project blueprint has a relationship with the Jira issue blueprint
+
+  ```yaml showLineNumbers
+    relations:
+    project: .fields.project.key
+  ```
+:::
+
+2. Navigate to the service blueprint and add this mirror property:
+
+<details>
+<summary><b> Highest priority issues count as CFR (click to expand)</b></summary>
+
+```json showLineNumbers
+  "changeFailureRate": {
+    "title": "Change Failure Rate Jira",
+    "path": "jiraProject.highestPriorityIssueCount"
+  }
+```
+</details></TabItem>
+
+<TabItem value="hotfix" label="Tracking hotfix deployments">
+
+<h2> Tracking hotfix deployments </h2>
+
+Another way of tracking incidents is to use the hotfix approach.
+The “hotfix” approach interprets any pull request labeled as “hotfix”
+as representing a deployment that had to be rapidly fixed after release, effectively signaling a failed change.
+
+Add this mapping to the service configuration to track hotfix deployments:
+
+<details>
+<summary><b>Hotfix Deployment Mapping (click to expand)</b></summary>
+
+```yaml showLineNumbers
+- kind: pull-request
+  selector:
+    query: '.labels | map(select(.name == "hotfix")) | length > 0'
+  port:
+    entity:
+      mappings:
+        identifier: .head.repo.name + '-' + (.id|tostring)
+        title: .head.repo.name + " Hotfix Deployment"
+        blueprint: '"deployment"'
+        properties:
+          createdAt: .merged_at
+          deploymentStatus: '"Failed"'
+
+```
+</details>
+  </TabItem>
+
+</Tabs>
+</TabItem>
+
+</Tabs>
 
 
 ## Metrics
@@ -1058,7 +1254,11 @@ Using Search Queries](/build-your-software-catalog/customize-integrations/config
 We will now aggregate the **DORA metrics** at the **service level**, allowing us to track metrics such as **Deployment Frequency**, **Change Lead Time**, **Change Failure Rate (CFR)**, and **Mean Time to Recovery (MTTR)** for each service.
 
 :::note Metrics Aggregation
-If you want to track these metrics at higher levels, such as **team** or **domain**, makes sure the appropriate **team** or **domain** blueprints exist, and that they have relationships defined with the **service** blueprint. Then, you can apply the aggregation properties for these higher hierarchies, similar to how we are doing for the **service** blueprint below.
+If you want to track these metrics at higher levels, such as **team** or **domain**,
+makes sure the appropriate **team** or **domain** blueprints exist,
+and that they have relationships defined with the **service** blueprint. 
+Then, you can apply the aggregation properties for these higher hierarchies,
+similar to how we are doing for the **service** blueprint below.
 :::
 
 ###  Aggregation
@@ -1073,6 +1273,7 @@ Before proceeding, follow these steps to add the aggregation and calculation pro
 3. Click the `{...}` button in the top right corner, and choose **Edit JSON**.
 4. Insert the respective **aggregation** or **calculation properties** under the `aggregationProperties` or `calculationProperties` section in the Service blueprint's JSON schema.
 5. Save your changes to apply the new aggregation configuration.
+
 :::
 
 
@@ -1215,7 +1416,7 @@ Add the following to the aggregated property in service:
 Add this calculation property to calculate the cfr from the aggregated properties:
 <details>
 <summary><b>CFR calculation property (click to expand)</b></summary>
-    
+
 ```json showLineNumbers
       "changeFailureRate": {
         "title": "Change Failure Rate",
@@ -1288,7 +1489,7 @@ By leveraging Port's Dashboards, you can create custom dashboards to track the m
 3. Select **New dashboard**.
 4. Name the dashboard (e.g., DORA Metrics), choose an icon if desired, and click `Create`.
 
-This will create a new empty dashboard. Let's get ready-to-add widgets 
+This will create a new empty dashboard. Let's get ready-to-add widgets
 
 ### Adding widgets
 
@@ -1301,7 +1502,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 4. Select an `Entity` and choose `Monthly Deployment Frequency` as the **Property**.
 
    <img src="/img/guides/deploymentFrequencyChartDoraMetrics.png" width="50%"/>
-   
+
 5. Click `Save`.
 
 </details>
@@ -1315,7 +1516,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 4. Select an `Entity` and choose `Mean Time to Recovery` as the **Property**.
 
    <img src="/img/guides/mttrDoraMetricsChart.png" width="50%"/>
-   
+
 5. Click `Save`.
 
 </details>
@@ -1331,7 +1532,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 5. Add custom Unit for **Unit of Measurement** (Hours).
 
    <img src="/img/guides/leadTimeForChangesDoraMetrics.png"  width="50%"/>
-   
+
 6. Click `Save`.
 
 </details>
