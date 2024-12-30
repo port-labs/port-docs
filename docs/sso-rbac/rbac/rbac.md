@@ -1,5 +1,4 @@
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md"
 import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -169,12 +168,10 @@ Okta and AzureAD integrations are only available after configuring SSO from the 
 
 ## Users and teams as blueprints
 
-<BetaFeatureNotice />
+Port allows you to manage users and teams as <PortTooltip id="blueprint">blueprints</PortTooltip>. This feature is enabled by default once you’ve onboarded.   
+If you don’t see it enabled in your account, you can [enabled via Port's API](/sso-rbac/rbac/#enable-option). 
 
-Port allows you to manage users and teams as <PortTooltip id="blueprint">blueprints</PortTooltip>.  
-This option is disabled by default, and can be [enabled via Port's API](/sso-rbac/rbac/#enable-option). 
-
-After enabling this option, two new blueprints will be created in your [data model](https://app.getport.io/settings/data-model) - `User` and `Team`.  
+After onboarding, two new blueprints will be created in your [data model](https://app.getport.io/settings/data-model) - `User` and `Team`.  
 These blueprints represent Port users and teams, and their data will be synced accordingly:
 - When you create a user/team <PortTooltip id="entity">entity</PortTooltip>, a matching Port user/team will be created as well.
 - When you delete a user/team <PortTooltip id="entity">entity</PortTooltip>, the matching Port user/team will be deleted as well.  
@@ -183,14 +180,14 @@ The syncing mechanism is bidirectional, meaning that every create/edit/delete ac
 
 #### Why manage users and teams as blueprints?
 
-With this powerful feature you can accomplish the following:
+With this powerful feature, you can achieve the following:
 
 1. Enrich your users and teams data by adding *properties* to these blueprints - Slack URLs, titles, profiles, or any other data.
 2. Enrich your users and teams data by adding *relations* to these blueprints - for example, you can relate a user to a domain, or a team to a project.
 3. As with all other blueprints, you can ingest data into your entities using an integration. For example, you can map your GitHub users into Port users via your GitHub integration configuration.
 
 :::info Important
-The `User` and `Team` blueprints cannot be deleted or edited, and their default properties cannot be changed.  
+The `User` and `Team` blueprints cannot be deleted, and their default properties cannot be changed.  
 You can, however, create new properties and relations in them and edit/delete them as you wish.
 :::
 
@@ -213,7 +210,7 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/system/user-and-team' \
 
 #### Blueprints Structure
 
-The new blueprints have the following structure:
+The blueprints have the following structure:
 <Tabs groupId="user-and-team-blueprint-structure" queryString values={[
 {label: "User", value: "user"},
 {label: "Team", value: "team"},
@@ -243,7 +240,7 @@ The new blueprints have the following structure:
 
 #### Consequent changes
 
-After enabling this feature, some functionalities will be affected:
+When users and teams are managed as blueprints, some existing Port functionalities are affected:
 
 - Any search query that includes `$team` will use the team's `identifier` instead of its `name`.  
   For example:
@@ -320,17 +317,20 @@ Service accounts are non-human users (bots) that can be used for integrating ext
 
 ### Create a service account
 :::info API-only and Users and Teams required 
-Creating service accounts requires enabling [Users and Teams as blueprints](/sso-rbac/rbac/#users-and-teams-as-blueprints), and 
+Creating service accounts requires [Users and Teams as blueprints](/sso-rbac/rbac/#users-and-teams-as-blueprints), and 
 is currently only available via Port's API.
 :::
-To create a new service account, all you need to do is create a new user entity using the [Create Entity API](/api-reference/create-an-entity) endpoint with the value of `Service Account` in the `port_type` property.<br/>
+
+To create a new service account, create a new user entity using the [Create Entity API](/api-reference/create-an-entity) endpoint with the value of `Service Account` in the `port_type` property.<br/>
 Creating a service account has two limitations:
+
 1. The new service account email domain must be `serviceaccounts.getport.io`.
 For example `my-new-service-account@serviceaccounts.getport.io`
 2. The `status` property of the new service account must be `Active`.
 
 <details>
 <summary><b>Full example (click to expand)</b></summary>
+
 ```bash
 curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
 -d '{
@@ -352,15 +352,19 @@ curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
 </details>
 
 ### Using The Service Account
-When creating a new service account entity you might notice a new section in the response body named `additional_data`. Inside this section you can find the new service account credentials you can use to authenticate against Port's API.
+When creating a new service account entity, you might notice a new section in the response body named `additional_data`.   
+Inside this section, you can find the new service account credentials you can use to authenticate against Port's API.  
+
 :::warning Sensitive credentials
 These credentials will not appear anywhere else. Make sure you keep it in a secure place and share them only with people in your organization.
 :::
+
 To use Port's API with the new service account, you can generate an API access token with the credentials using the [Create Access Token API](/api-reference/create-an-access-token) endpoint.
-With the generated token you can use any of the API endpoints as the new service account.
+With the generated token, you can use any of the API endpoints as the new service account.
 
 <details>
 <summary><b>Full response (click to expand)</b></summary>
+
 ```json
 {
     "ok": true,
