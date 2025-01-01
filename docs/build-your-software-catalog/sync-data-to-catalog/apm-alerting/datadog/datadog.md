@@ -783,10 +783,10 @@ This enrichment significantly enhances the usability of the Datadog response by 
   "id": "468a7e28-4d70-11ef-9b68-c2d109cdf094",
   "attributes": {
     "name": "",
-    "handle": " <mailto:john.doe@gmail.com|john.doe@gmail.com>",
+    "handle": "john.doe@example.com",
     "created_at": "2024-07-29T06:03:28.693227+00:00",
     "modified_at": "2024-07-29T06:05:30.392353+00:00",
-    "email": " <mailto:john.doe@gmail.com|john.doe@gmail.com>",
+    "email": "john.doe@example.com",
     "icon": "<https://secure.gravatar.com/avatar/04659c42251ec0dacaa5eb88507e3016?s=48&amp;d=retro>",
     "title": "",
     "verified": true,
@@ -1044,8 +1044,8 @@ The combination of the sample payload and the Ocean configuration generates the 
   "title": "Matan  Grady",
   "team": [],
   "properties": {
-    "email": " <mailto:john.doe@gmail.com|john.doe@gmail.com>",
-    "handle": " <mailto:john.doe@gmail.com|john.doe@gmail.com>",
+    "email": "john.doe@example.com",
+    "handle": "john.doe@example.com",
     "status": "Active",
     "disabled": false,
     "verified": true
