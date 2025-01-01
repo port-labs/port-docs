@@ -420,6 +420,9 @@ To delete an entity using Terraform, simply remove the `port_entity` resource de
 <Tabs groupId="terraform-import" queryString="current-scenario" defaultValue="entity" values={[
 {label: "Blueprint", value: "blueprint"},
 {label: "Entity", value: "entity"},
+{label: "Scorecard", value: "scorecard"},
+{label: "Aggregation Property", value: "aggregation"},
+{label: "Actions/Automations", value: "action"}
 ]} >
 
 <TabItem value="blueprint">
@@ -458,6 +461,68 @@ Then run the following command to import the entity to the Terraform state:
 
 ```shell showLineNumbers
 terraform import port_entity.myEntity "{blueprintIdentifier}:{entityIdentifier}"
+```
+
+</TabItem>
+
+<TabItem value="scorecard">
+
+To import an existing scorecard to the Terraform state, add a `port_scorecard` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+# highlight-start
+resource "port_scorecard" "myScorecard" {
+  ...
+}
+# highlight-end
+```
+
+Then run the following command to import the scorecard to the Terraform state:
+
+```shell showLineNumbers
+terraform import port_scorecard.myScorecard "blueprintIdentifier:scorecardIdentifier"
+```
+
+</TabItem>
+
+<TabItem value="aggregation">
+
+To import an existing aggregation property to the Terraform state, add a `port_aggregation_properties` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+# highlight-start
+resource "port_aggregation_properties" "myAggregationProperty" {
+  ...
+}
+# highlight-end
+```
+
+Then run the following command to import the aggregation property to the Terraform state:
+
+```shell showLineNumbers
+terraform import port_aggregation_properties.myAggregationProperty "<BLUEPRINT>"
+```
+
+Note that aggregation properties are created in the context of a blueprint, so `<BLUEPRINT>` is the blueprint identifier from which we import the aggregation property.
+
+</TabItem>
+
+<TabItem value="action">
+
+To import an existing action to the Terraform state, add a `port_action` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+# highlight-start
+resource "port_action" "myAction" {
+  ...
+}
+# highlight-end
+```
+
+Then run the following command to import the action to the Terraform state:
+
+```shell showLineNumbers
+terraform import port_action.myAction "actionIdentifier"
 ```
 
 </TabItem>
