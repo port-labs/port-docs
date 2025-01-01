@@ -423,7 +423,7 @@ The SLO history selector supports two time-related configurations:
 
 - `timeframe`: How many days to look back for each SLO history data point. Must be greater than 0 (default: 7 days)
 - `periodOfTimeInMonths`: How far back in time to fetch SLO history. Must be between 1-12 months (default: 6 months)
-  :::
+:::
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
