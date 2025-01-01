@@ -192,7 +192,9 @@ To test the AI enrichment:
 6. Refresh the page
 7. You should now see the AI-generated summary in the "AI Summary" field
 
-The summary will include:
+![AI-generated summary for CVE-2022-48196](/img/guides/ai-security-summary-example.png)
+
+The image above shows an example of an AI-generated summary for CVE-2022-48196, demonstrating how the AI provides:
 
 - A brief explanation of the vulnerability
 - Potential impact
