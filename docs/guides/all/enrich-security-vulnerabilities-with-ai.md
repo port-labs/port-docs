@@ -1,6 +1,9 @@
 ---
 title: Enrich security vulnerabilities using AI
+displayed_sidebar: null
 ---
+
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Enrich security vulnerabilities using AI
 
@@ -82,7 +85,10 @@ We'll add a new markdown field to store AI-generated insights about security vul
 2. Click on "New action"
 3. Click on "Edit JSON" and paste the following configuration:
 
-```json
+<details>
+<summary><b>Action Configuration (Click to expand)</b></summary>
+
+```json showLineNumbers
 {
   "identifier": "enrichSecurityVulnerabilityUsingAI",
   "title": "Enrich security vulnerability using AI",
@@ -125,6 +131,8 @@ We'll add a new markdown field to store AI-generated insights about security vul
 }
 ```
 
+</details>
+
 4. Click "Create" to save the action
 
 ## Setup automation
@@ -135,7 +143,10 @@ To automatically update the security issue with the AI response, we'll create an
 2. Click on "New automation"
 3. Click on "Edit JSON" and paste the following configuration:
 
-```json
+<details>
+<summary><b>Automation Configuration (Click to expand)</b></summary>
+
+```json showLineNumbers
 {
   "identifier": "updateSecurityIssueWithAIResponse",
   "title": "Update security issue based on AI",
@@ -165,6 +176,8 @@ To automatically update the security issue with the AI response, we'll create an
 }
 ```
 
+</details>
+
 4. Click "Create" to save the automation
 
 ## Testing the action
@@ -186,3 +199,10 @@ The summary will include:
 - Recommended remediation steps
 
 By following these steps, you've set up an AI-powered system to help developers understand and fix security vulnerabilities more effectively 🎉
+
+:::info AI Integration
+The integration uses OpenAI's GPT-3.5 Turbo model by default, but you can modify the configuration to use other AI models:
+- Change the `url` in the action configuration to point to your preferred AI service
+- Adjust the prompt in the `content` field to match your use case
+- Modify the response parsing in the automation if the AI service returns a different format
+:::
