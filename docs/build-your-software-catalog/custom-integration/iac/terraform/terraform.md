@@ -503,7 +503,7 @@ Then run the following command to import the aggregation property to the Terrafo
 terraform import port_aggregation_properties.myAggregationProperty "{blueprintIdentifier}"
 ```
 
-Note that aggregation properties are created in the context of a blueprint, so `{blueprintIdentifier}` is the blueprint identifier from which we import the aggregation property.
+Unlike other resources, all aggregation properties of a blueprint are managed in a single Terraform resource, which is why the import command only requires the blueprint identifier.
 
 </TabItem>
 
