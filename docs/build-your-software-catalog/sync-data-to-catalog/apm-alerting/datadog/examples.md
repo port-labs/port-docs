@@ -676,3 +676,88 @@ resources:
 ```
 
 </details>
+
+## Team
+
+<details>
+<summary>Team blueprint</summary>
+
+```json showLineNumbers
+{
+    "identifier": "datadogTeam",
+    "description": "This blueprint represents a Datadog team",
+    "title": "Datadog Team",
+    "icon": "Datadog",
+    "schema": {
+      "properties": {
+        "description": {
+          "type": "string",
+          "title": "Description",
+          "description": "A description of the team's purpose and responsibilities"
+        },
+        "handle": {
+          "type": "string",
+          "title": "Handle",
+          "description": "The unique handle identifier for the team within Datadog"
+        },
+        "userCount": {
+          "type": "number",
+          "title": "User Count",
+          "description": "The total number of users that are members of this team"
+        },
+        "summary": {
+          "type": "string",
+          "title": "Summary",
+          "description": "A brief summary of the team's purpose or main responsibilities"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created At",
+          "description": "The timestamp when the team was created"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "members": {
+        "target": "datadogUser",
+        "title": "Members",
+        "description": "Users who are members of this team",
+        "many": true,
+        "required": false
+      }
+    }
+  }
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+  - kind: team
+    selector:
+      query: 'true'
+      includeMembers: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .attributes.name
+          blueprint: '"datadogTeam"'
+          properties:
+            description: .attributes.description
+            handle: .attributes.handle
+            userCount: .attributes.user_count
+            summary: .attributes.summary
+            createdAt: .attributes.created_at | todate
+          relations:
+            members: if .__members then .__members[].id else [] end
+```
+
+</details>
