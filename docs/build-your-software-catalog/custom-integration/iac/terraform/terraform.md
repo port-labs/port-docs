@@ -487,7 +487,7 @@ terraform import port_scorecard.myScorecard "{blueprintIdentifier}:{scorecardIde
 
 <TabItem value="aggregation">
 
-To import an existing aggregation property to the Terraform state, add a `port_aggregation_properties` resource to your `.tf` definition file:
+To import existing aggregation properties to the Terraform state, add a `port_aggregation_properties` resource to your `.tf` definition file:
 
 ```hcl showLineNumbers
 # highlight-start
