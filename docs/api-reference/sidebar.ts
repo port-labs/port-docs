@@ -156,6 +156,12 @@ const sidebar: SidebarsConfig = {
           label: "Search entities",
           className: "api-method post",
         },
+        {
+          type: "doc",
+          id: "api-reference/scan-entities",
+          label: "Scan entities",
+          className: "api-method post",
+        },
       ],
     },
     {
