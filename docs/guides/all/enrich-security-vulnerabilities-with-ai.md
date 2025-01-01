@@ -8,10 +8,10 @@ This guide demonstrates how to leverage 3rd-party AI tools within Port to get ad
 
 ## Prerequisites
 
-* This guide assumes you have a Port account and that you have finished the [onboarding process](https://docs.getport.io/quickstart).
-* You will need at least one code security tool integrated. You can check our [integrations section](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/).
-* You will need access to the LLM API you wish to integrate (e.g., OpenAI ChatGPT).
-* You should have a security issue blueprint set up in your Port installation (such as the `snykVulnerability` blueprint).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](https://docs.getport.io/quickstart).
+- You will need at least one code security tool integrated. You can check our [integrations section](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/).
+- You will need access to the LLM API you wish to integrate (e.g., OpenAI ChatGPT).
+- You should have a security issue blueprint set up in your Port installation (such as the `snykVulnerability` blueprint).
 
 ## The goal of this guide
 
@@ -122,9 +122,7 @@ To automatically update the security issue with the AI response, we'll create an
     },
     "condition": {
       "type": "JQ",
-      "expressions": [
-        ".diff.after.status == \"SUCCESS\""
-      ],
+      "expressions": [".diff.after.status == \"SUCCESS\""],
       "combinator": "and"
     }
   },
@@ -157,6 +155,7 @@ To test the AI enrichment:
 7. You should now see the AI-generated summary in the "AI Summary" field
 
 The summary will include:
+
 - A brief explanation of the vulnerability
 - Potential impact
 - Recommended remediation steps
