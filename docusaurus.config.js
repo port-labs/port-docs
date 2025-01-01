@@ -354,7 +354,7 @@ const config = {
         config: {
           port: { // the <id> referenced when running CLI commands
             specPath: './static/apispec.yaml', // path to OpenAPI spec, URLs supported
-            outputDir: "docs/api-reference-temp", // dir of generated files, REMEMBER to move them to /api-reference when ready
+            outputDir: "docs/api-reference", // dir of generated files
             sidebarOptions: {
               groupPathsBy: "tag",
               categoryLinkSource: "tag",
