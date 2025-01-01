@@ -31,6 +31,8 @@ This integration allows you to:
 - [`SLO`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-all-slos)
 - [`SLO History`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-an-slos-history)
 - [`Service Metric`](https://docs.datadoghq.com/api/latest/metrics/#query-timeseries-points)
+- [`User`](https://docs.datadoghq.com/api/latest/users/#list-all-users)
+- [`Team`](https://docs.datadoghq.com/api/latest/teams/#get-all-teams)
 
 
 
@@ -772,6 +774,49 @@ This enrichment significantly enhances the usability of the Datadog response by 
 
 </details>
 
+<details>
+<summary> User response data</summary>
+
+```json showLineNumbers
+{
+  "type": "users",
+  "id": "468a7e28-4d70-11ef-9b68-c2d109cdf094",
+  "attributes": {
+    "name": "",
+    "handle": " <mailto:john.doe@gmail.com|john.doe@gmail.com>",
+    "created_at": "2024-07-29T06:03:28.693227+00:00",
+    "modified_at": "2024-07-29T06:05:30.392353+00:00",
+    "email": " <mailto:john.doe@gmail.com|john.doe@gmail.com>",
+    "icon": "<https://secure.gravatar.com/avatar/04659c42251ec0dacaa5eb88507e3016?s=48&amp;d=retro>",
+    "title": "",
+    "verified": true,
+    "service_account": false,
+    "disabled": false,
+    "allowed_login_methods": [],
+    "status": "Active",
+    "mfa_enabled": false
+  },
+  "relationships": {
+    "roles": {
+      "data": [
+        {
+          "type": "roles",
+          "id": "dbc3577a-396e-11ef-b12b-da7ad0900002"
+        }
+      ]
+    },
+    "org": {
+      "data": {
+        "type": "orgs",
+        "id": "dbb758e9-396e-11ef-800c-bea43249b5f6"
+      }
+    }
+  }
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -936,6 +981,30 @@ The combination of the sample payload and the Ocean configuration generates the 
   "createdBy": "<port-client-id>",
   "updatedAt": "2024-08-16T08:02:02.399Z",
   "updatedBy": "<port-client-id>"
+}
+```
+
+</details>
+
+<details>
+<summary>User entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "1e675d18-b002-11ef-9df4-2a2722803530",
+  "title": "Matan  Grady",
+  "team": [],
+  "properties": {
+    "email": " <mailto:john.doe@gmail.com|john.doe@gmail.com>",
+    "handle": " <mailto:john.doe@gmail.com|john.doe@gmail.com>",
+    "status": "Active",
+    "disabled": false,
+    "verified": true
+  },
+  "relations": {
+    "team": []
+  },
+  "icon": "Datadog"
 }
 ```
 
