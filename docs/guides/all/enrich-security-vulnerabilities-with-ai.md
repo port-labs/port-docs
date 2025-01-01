@@ -13,6 +13,31 @@ This guide demonstrates how to leverage 3rd-party AI tools within Port to get ad
 - You will need access to the LLM API you wish to integrate (e.g., OpenAI ChatGPT).
 - You should have a security issue blueprint set up in your Port installation (such as the `snykVulnerability` blueprint).
 
+### About CVEs
+
+A Common Vulnerabilities and Exposures (CVE) is a unique identifier assigned to a specific security vulnerability. CVEs help track and reference known security issues across different security tools and databases. For example, `CVE-2021-44228` refers to the Log4Shell vulnerability in Log4j.
+
+### Required Blueprint Fields
+
+This guide assumes your security issue blueprint includes a `cveID` field to store the CVE identifier. If your blueprint doesn't have this field, you'll need to add it first:
+
+1. Go to the [Builder](https://app.getport.io/settings/data-model) page
+2. Find your security issue blueprint
+3. Click "Edit JSON"
+4. Add the following field to your blueprint's properties:
+
+```json
+{
+  "cveID": {
+    "type": "string",
+    "title": "CVE ID",
+    "description": "The CVE identifier for this security vulnerability"
+  }
+}
+```
+
+5. Click "Save" to update the blueprint
+
 ## The goal of this guide
 
 Code security tools provide context for issues in your code. This guide will show how to leverage AI to understand these issues better and how to fix them.
