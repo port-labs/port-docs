@@ -817,6 +817,55 @@ This enrichment significantly enhances the usability of the Datadog response by 
 
 </details>
 
+<details>
+<summary> Team response data</summary>
+
+```json showLineNumbers
+{
+  "type": "team",
+  "attributes": {
+    "description": "",
+    "modified_at": "2024-12-09T08:44:00.526954+00:00",
+    "is_managed": false,
+    "link_count": 0,
+    "user_count": 3,
+    "name": "Dummy",
+    "created_at": "2024-12-09T08:44:00.526949+00:00",
+    "handle": "Dummy",
+    "summary": null
+  },
+  "relationships": {
+    "user_team_permissions": {
+      "links": {
+        "related": "/api/v2/team/b7c4d123-a981-4b75-cd5b-86e246513f3c/permission-settings"
+      }
+    },
+    "team_links": {
+      "links": {
+        "related": "/api/v2/team/b7c4d123-a981-4b75-cd5b-86e246513f3c/links"
+      }
+    }
+  },
+  "id": "b7c4d123-a981-4b75-cd5b-86e246513f3c",
+  "__members": [
+    {
+      "type": "users",
+      "id": "579e8a70-4d70-11ef-b68c-f276c989c0b2",
+      "attributes": {
+        "name": "John Doe",
+        "handle": "john.doe@example.com",
+        "email": "john.doe@example.com",
+        "icon": "<https://secure.gravatar.com/avatar/c6ad65005b22c404c949f5ad826e8fc4?s=48&d=retro>",
+        "disabled": false,
+        "service_account": false
+      }
+    }
+  ]
+}
+```
+
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -1005,55 +1054,6 @@ The combination of the sample payload and the Ocean configuration generates the 
     "team": []
   },
   "icon": "Datadog"
-}
-```
-
-</details>
-
-<details>
-<summary> Team response data</summary>
-
-```json showLineNumbers
-{
-  "type": "team",
-  "attributes": {
-    "description": "",
-    "modified_at": "2024-12-09T08:44:00.526954+00:00",
-    "is_managed": false,
-    "link_count": 0,
-    "user_count": 3,
-    "name": "Dummy",
-    "created_at": "2024-12-09T08:44:00.526949+00:00",
-    "handle": "Dummy",
-    "summary": null
-  },
-  "relationships": {
-    "user_team_permissions": {
-      "links": {
-        "related": "/api/v2/team/b7c4d123-a981-4b75-cd5b-86e246513f3c/permission-settings"
-      }
-    },
-    "team_links": {
-      "links": {
-        "related": "/api/v2/team/b7c4d123-a981-4b75-cd5b-86e246513f3c/links"
-      }
-    }
-  },
-  "id": "b7c4d123-a981-4b75-cd5b-86e246513f3c",
-  "__members": [
-    {
-      "type": "users",
-      "id": "579e8a70-4d70-11ef-b68c-f276c989c0b2",
-      "attributes": {
-        "name": "John Doe",
-        "handle": "<mailto:john.doe@example.com|john.doe@example.com>",
-        "email": "<mailto:john.doe@example.com|john.doe@example.com>",
-        "icon": "<https://secure.gravatar.com/avatar/c6ad65005b22c404c949f5ad826e8fc4?s=48&d=retro>",
-        "disabled": false,
-        "service_account": false
-      }
-    }
-  ]
 }
 ```
 
