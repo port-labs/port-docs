@@ -480,7 +480,7 @@ resource "port_scorecard" "myScorecard" {
 Then run the following command to import the scorecard to the Terraform state:
 
 ```shell showLineNumbers
-terraform import port_scorecard.myScorecard "blueprintIdentifier:scorecardIdentifier"
+terraform import port_scorecard.myScorecard "{blueprintIdentifier}:{scorecardIdentifier}"
 ```
 
 </TabItem>
@@ -500,10 +500,10 @@ resource "port_aggregation_properties" "myAggregationProperty" {
 Then run the following command to import the aggregation property to the Terraform state:
 
 ```shell showLineNumbers
-terraform import port_aggregation_properties.myAggregationProperty "<BLUEPRINT>"
+terraform import port_aggregation_properties.myAggregationProperty "{blueprintIdentifier}"
 ```
 
-Note that aggregation properties are created in the context of a blueprint, so `<BLUEPRINT>` is the blueprint identifier from which we import the aggregation property.
+Note that aggregation properties are created in the context of a blueprint, so `{blueprintIdentifier}` is the blueprint identifier from which we import the aggregation property.
 
 </TabItem>
 
@@ -522,7 +522,7 @@ resource "port_action" "myAction" {
 Then run the following command to import the action to the Terraform state:
 
 ```shell showLineNumbers
-terraform import port_action.myAction "actionIdentifier"
+terraform import port_action.myAction "{actionIdentifier}"
 ```
 
 </TabItem>
@@ -536,3 +536,4 @@ Before using `terraform import` to bring data from your Port account into your T
 :::note Advanced Example
 See [this](/guides/all/import-and-manage-integration) guide which explains more in depth of how you can use import state to manage Port integrations using Terraform
 :::
+
