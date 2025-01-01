@@ -1,0 +1,71 @@
+---
+id: get-a-blueprints-scorecards
+title: "Get a blueprint's scorecards"
+description: "This route allows you to fetch all scorecards for a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/)."
+sidebar_label: "Get a blueprint's scorecards"
+hide_title: true
+hide_table_of_contents: true
+api: eJztVE1v00AQ/SurudBKS9xwtBBSJVCF4FC15VRFaGKP41XtXXd2NiVY/u9o4nw4kHLiyMUfu2/W896b5x5KigW7TlzwkMND7aLhkIQMNk14iWYTkpFgKpKi1jUTi8BUIJfRVIENmpVbkzfLJlHHzsvMXB8xxkWDJpKYUBlODUUjNYopqXKejNRknhM2TjYKwMkp75ecfdheHoJpCNmbNjAZXIYkkyasKWoqnoyu6nGPZShSS15QKS0uapEu5llWhiLOViRdYJm5kHUc2iD09nhSdjkDC4KrCPkj3B/WYWGhQ8aWhFj3eohFTS1C3oNsOoIcorDzK7DQOv+V/EpqyOeDBaeidig1WPDYKvRA8bsryYurHDHYP3wgc9xWbZTbodS81CHS1Aq16QW9HLwaBQQLTM/JMZWQCycaFhYiFYmdbLZUloRMrIyZsMzjhLZimWIXfKSoZN9dXenttNWPVGFqxNztkDAMFlqSOpSQw4oE7KhADtl6nh04xKw/J8WQTVrQXnm9Vz1xAznsDcXOTfyEwZ4DpHiCmZC/VwtHWnsJDm5i577Q5mjZdZI6sPu5HSnYuVoTlsRbts5XYVvupFH8bWAx17efwYI2P+o0n13BYKELUVr0Ct+dfkMynfw30ZwocKJ2D0XwQl7+Z1WzOtol9EOyrkHnVeDtEPS7kXuE9RzsMXMqaP5KAuNJ4usQRev7fomRvnEzDLr8nIg1OAsLa2SHSzX8sYfSRX0uIa+wifQX2y7udoG8NP8w5Wel2I+z11leY5P0DSw80ea1H9GwmKb35tMDWMCkUk7T8bRNx+5B6Z/90u+xGT+rVw3r2ZK+H7M3DAf8uPVqxS6Ge7QSXwzD8AvybGVe
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a blueprint's scorecards"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/blueprints/{blueprint_identifier}/scorecards"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch all scorecards for a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","description":"The identifier of the blueprint whose scorecards you want to fetch.<br/>","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
+      

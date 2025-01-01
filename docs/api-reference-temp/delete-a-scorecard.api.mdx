@@ -1,0 +1,71 @@
+---
+id: delete-a-scorecard
+title: "Delete a scorecard"
+description: "This route allows you to delete a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/)."
+sidebar_label: "Delete a scorecard"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVE1v2zAM/SsCTyugxe2OxjCgQHsY1kPRdqfAGBSbiYXakktR6TJD/32gncRpmw5Yu9su/pCeKPI9PvZQYSjJdmy9gxzuahsU+cioTNP4x6A2Pir2qsIGZVGFDku7tKUKpScsDVUzdT79KBsEhKz8UlFsMCiuDasKl9ah4hrVQzSN5Y0AjFo0ETuyjmefF5R9GR53XjVoyKnWEyqz8JGnC4JWZY3lvZJVCTevfBlbdGykhuJDzdyFPMsqX4bZCrnzxDPrs4586xk/TpGykxloYLMKkM/hdr8OhYbOkGmRkWSvh1DW2BrIe+BNh5BDYLJuBRpa667QrbiG/CxpsMJiZ7gGDc60A3QX+Iet0LFdWiTQL4hHNW0LN1LbRKvI8GgcT1qMhIEGwodoCSvImSIm/b5s94L8fbb7o+qx9uFt2RcaApaRLG8G4hdoCAnyeSFbhKHzLmCQ2j6dnsrraWYXuDSxYXWzRUJKGlrk2leQw3g36LHmHLL1WbbPOmT9seJTdtAx/TExE0jStN41S6QGctj1oensQRuC6PMSEMMTzAELt6LlWPCOi72sprPfcDNpdx659mR/DU6Arbw1mgpp4MG6pR+OW24Ef+2J1fn1V9AgyY8Mns1OIWnofODWOIFvo1/sR8COg+d90UPpHaPj/3SSjKow/uSsa4x1wuOgdb9tuDmsz0BPHgugIX/FcVN0AR0dIoWG2geWuH2/MAG/U5OSLD9EJDFQoWFtyJqF6D3vobJBvivIl6YJ+Af9PtxsjXmi3jGbjlKy614nrbs2TZQ/0HCPm9fGpbjmH+b+pkn1hlqOSpuKw5F0cXl1eXcJGkyUDjn09v3g7e2HqHf0suemH2+Wp5B29Ejfj5MjpT1+3Hr1xHaI7NBSe5FS+g3aVeGs
+sidebar_class_name: "delete api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Delete a scorecard"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to delete a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"scorecard_identifier","description":"The identifier of the scorecard you want to delete.<br/>","required":true},{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","description":"The identifier of the blueprint whose scorecard you want to delete.<br/>","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
+      

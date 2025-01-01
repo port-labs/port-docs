@@ -1,0 +1,71 @@
+---
+id: delete-an-entity
+title: "Delete an entity"
+description: "This route allows you to delete a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities)."
+sidebar_label: "Delete an entity"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlV9tuGzcQ/RWCeUmAldZO05eFKsCAXSBogAat+1DYgkwtZ7VEuORmOJSjCvr3YvYm2ZKc1GnRoH2RVtwheeacuWkjNYQcTU3GO5nJ69IEgT4SCGWtvw9i7aMgLzRY4EURashNYXIBjgythXFsgiL4gu4VgsgVKeuX48kC02nzce2FBYVOVB5BqIWP1O42EBKRl5B/ELxGJYgb7fNYgSPFiGYvS6I6ZGmqfR7GS6DaI42NTxfRWD3im0f9zaPu5jSsXT7SitSI/LD4or/x1VgmktQyyOxGXnWLcpbIWqGqgAD5zUaGvIRKyWwjaV2DzOTCewvKyURqKFS0JLNC2QDbRBrm7mMEXMtEOlWxecvYXEMNToOjIBOJ8DEaBC0zwgjJI/LfFuKO1+8SQaxDrqwV98ZaoWzYSWDtwJ64N1QKJRBswxcrxSy2prrTqJVCbpMjTgVC45byhA8Y3dzoB8Ablx8j/91HkSsnavQrozlM7tqtd4xIheBzowiOYOs9GMLqRuWNJxifUD9HUASjALYYBcCVyWEEn2pAAy6HkCIUFnIatWeNavRLhBDSF7Q2bjnq6eP4UK63wuhefQFViayMewduSaXMznviakXljrfWt7lh3U1hAD+r/XUJYmcufNFw1XHEOXivHO0S8W/CubARajSOvh7qcNQ+8AVY75ZBkO8BzxIZII9oaN1k2QIUAsrsZsavEELtXYDA7rw+O+Ovh5dftQf3QRRinkMIRbR2zUH85uy7wz0/O+hRFp6rmnFLAYgeg/B5HhFBZ7fu1k1ILSxM+QGnt06ICZXTKzacpFQOK5e707v1Sdps2G3T08liWpkQjFvOa8Dm0bswSRfTSUp6MOPM0V44T6JUKxB7tqx2DVh4rBrsrAoE9trXgE2+j8WPHkURkUpAoYGUsSERtQUVQOTekcqprc9KV8Z1Vx+HW6qwV60OkF7vZC1VEIPlrhhRqUhUMZBY7NJccQS0WW5oLK49u8uWiYgBxO1hnfyBg+5WPsKa9tq0Mr/5dmR2nuaFj04fUHbhHlQ5RtZVSC3udil0J+5VaEKgO+YJkZ64bC8Fv+K6hzy/fv3t8GzcSlmj510eHA3QwV9u/0J7aB2tFOUtIe1s09bMpzz//ljx+fc8J0Cn7BzaIw7DrLdo0QxgTnu4TWQFVHo9TCoyaZtDJtPVeTrEUkg3x7rENu3TPt0cdLut5CqPq36UimhlJvtmrmqz18ubHnZoEMMDm7228Str13aIvnkMrU/V5ifYm18uIpUezR9NsZRdCyxBacCGAuMK32w3ZNn+vUcSF+/fykQy+Fb18/EZR0TtA1XKsXl3+mU3kPVZLh91yo3kCgyO/k+DdSsEwSdKa6tMk0yNvJsuvG7k6lwmu9GD5+LsxCDSH80mhzPVLJGlD8RHbjYLFeA3tNstL7djLIeeNoFj/sTguq/Qy1+6qeeV+IcH8RMsfYD1ib8NK2Uj2ze58uUe/dem8id5G/6q7Mia8Q80zNbzY+F5g/kJqH2Zcut9oL0LhxH+1/T+LOovm9Gfhf1oAm9n+23m8urd1fWVTKSKXAf2i/aHpmh3DyzV0cseV/P2Zv5kno5u2WzalrDdDvbtq5M7uu7QW7Pvs+12+ydwEAmp
+sidebar_class_name: "delete api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Delete an entity"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"delete"}
+  path={"/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to delete a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"boolean","default":false},"in":"query","name":"delete_dependents","required":true,"description":"If `true`, this call will also delete all entities with a relation to the deleted entity.<br/>"},{"schema":{"type":"string"},"in":"query","name":"run_id","required":false,"description":"You can provide a `run_id` to associate the deleted entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>"},{"schema":{"type":"string","minLength":1},"in":"path","name":"entity_identifier","required":true,"description":"The identifier of the entity you want to delete.<br/>"},{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint the entity belongs to.<br/>"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Entity deleted successfully"},"403":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>missing_permissions</b></td>\n  <td>You do not have permissions to perform the requested operation. For further details, please contact your admin</td>\n</tr>\n<tr>\n  <td><b>has_dependents</b></td>\n  <td>The entity has dependent entities that must be deleted along with it. To do that, use \"delete_dependents=true\"</td>\n</tr>\n</table>\n"},"404":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>not_found</b></td>\n  <td>An entity with the provided `identifier` was not found</td>\n</tr>\n<tr>\n  <td><b>not_found</b></td>\n  <td>A blueprint with the provided `identifier` was not found</td>\n</tr>\n</table>\n"},"422":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>invalid_request</b></td>\n  <td>The provided data does not match the route schema</td>\n</tr>\n</table>\n"},"500":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>internal_error</b></td>\n  <td>An internal error occurred</td>\n</tr>\n</table>\n"}}}
+>
+  
+</StatusCodes>
+
+
+      

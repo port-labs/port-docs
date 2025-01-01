@@ -1,0 +1,71 @@
+---
+id: patch-an-action-run
+title: "Patch an action run"
+description: "This route allows you to patch an action run's details. This can be used to update the run's status & label, and add links to it (e.g. external logs of the job runner).<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
+sidebar_label: "Patch an action run"
+hide_title: true
+hide_table_of_contents: true
+api: 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
+sidebar_class_name: "patch api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Patch an action run"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"patch"}
+  path={"/v1/actions/runs/{run_id}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to patch an action run's details. This can be used to update the run's status & label, and add links to it (e.g. external logs of the job runner).<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false},{"schema":{"type":"string"},"in":"path","name":"run_id","description":"The identifier of the action run you want to patch.<br/>","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"status":{"type":"string","enum":["SUCCESS","FAILURE"]},"statusLabel":{"type":"string","description":"A label to describe the status of the action run.<br/>"},"link":{"description":"One or more links to be displayed in the run's page in Port. For example, a link to the external logs of the job runner.<br/>","oneOf":[{"type":"string","title":"string","format":"url"},{"type":"array","title":"array","items":{"type":"string","format":"url"}}]},"summary":{"type":"string","description":"A summary of the action run, which will be displayed in the run's page in Port.<br/>"},"externalRunId":{"type":"string","description":"The run id of your backend, for example the id that GitHub gives the workflow. This can be used to identify the action run instead of the `run_id`.<br/>"}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Patched successfully.","content":{"application/json":{"schema":{"properties":{"ok":{"type":"any","enum":[true]},"run":{"type":"object","properties":{"id":{"type":"string"},"blueprint":{"type":"object","properties":{"identifier":{"type":"string"},"title":{"type":["string","null"]},"icon":{"type":["string","null"]},"deleted":{"type":"boolean"}},"required":["identifier"]},"entity":{"type":"object","properties":{"identifier":{"type":"string"},"title":{"type":["string","null"]},"icon":{"type":["string","null"]},"deleted":{"type":"boolean"}},"required":["identifier"]},"action":{"type":"object","properties":{"identifier":{"type":"string"},"title":{"type":["string","null"]},"icon":{"type":["string","null"]},"deleted":{"type":"boolean"}},"required":["identifier"]},"properties":{"type":"object"},"endedAt":{"type":"string","format":"date-time"},"source":{"type":["string","object"]},"requiredApproval":{"type":["boolean","object"],"properties":{"type":{"type":"string","enum":["ALL","ANY"]}},"required":["type"]},"status":{"type":"string"},"statusLabel":{"type":["string","null"]},"link":{"type":["array","string"],"items":{"type":"string"}},"summary":{"type":"string"},"approval":{"type":["object","null"],"properties":{"description":{"type":"string"},"userId":{"type":["string","null"]},"state":{"type":"string"}}},"payload":{"type":["object","null"],"properties":{"type":{"type":"string"},"url":{"type":"string","format":"uri"},"agent":{"type":"boolean"},"synchronized":{"type":"boolean"},"method":{"type":"string"},"headers":{"type":"object","properties":{"RUN_ID":{"type":"string"}}},"body":{"type":"object","properties":{"port_context":{"type":"object","properties":{"runId":{"type":"string"}}}}}}},"response":{"type":["string","array","object"],"items":{}},"createdBy":{"type":"string"},"updatedBy":{"type":"string"},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"}},"required":["id","action","properties","requiredApproval","source","status"]}},"required":["ok"],"additionalProperties":false,"description":"OK"}}}},"404":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>not_found</b></td>\n  <td>The action run with the provided identifier was not found</td>\n</tr>\n</table>\n"},"422":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>invalid_request</b></td>\n  <td>The data provided does not match the route schema</td>\n</tr>\n<tr>\n  <td><b>run_synchronized_error</b></td>\n  <td>Cannot manually change status of a synchronized action run</td>\n</tr>\n</table>\n"},"500":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>internal_error</b></td>\n  <td>An internal error occurred</td>\n</tr>\n</table>\n"}}}
+>
+  
+</StatusCodes>
+
+
+      

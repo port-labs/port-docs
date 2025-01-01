@@ -1,0 +1,71 @@
+---
+id: get-an-entity
+title: "Get an entity"
+description: "This route allows you to fetch a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities)."
+sidebar_label: "Get an entity"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlV9tu20YQ/ZXF9CUGKNEO0hdCEGCgaZC2aILGfbINe0kOxW2Wu8zsrB1F4L8Xy4tIW5ZjJ0Eu7YskLmfncmbmzGgDObqMVM3KGkjgpFROkPWMQmptr51YWy/YigI5K4UUrsZMFSoTaFjxWigTJEg4W/C1JBSZZKntar5IKV62HydWaJRkRGUJhUyt5+62QheJrMTsrQhnXKI4zW3mKzQsg0PnT0rm2iVxnNvMzVfItSWeKxunXul8FizPBsuz3nLs1iab5ZLljO328KfB4sEcImC5cpCcwvP+EM4jqCXJChkpvNmAy0qsJCQb4HWNkEBqrUZpIIIcC+k1Q1JI7bCJQAXo3nmkNURgZBXE8X2mfY4XmdSZ15Ixv6jJ1kitvQgI33lFmPdaoluJeFmISyaPl5E4HVWIUcWnYZN5x7ZSH3CmDOOKWphdnFlTqJUn7HCrbI46dsi+nqXaY03KcDzajgePlDWz/ngdH4hrpbVIUfSx56IgW7V57aqlKwpoojvglUQywKcYKzc5d0zKrKDZA7MyramPA3psRGtC2EJcSe3Rjd6d9sX825tXf37JmvvHWTNzTD5jT3gwF6+MXgeLDgcfBsgI2ZPBPDRUcInQ1dY47CD71ZLA97KqNSbiciPOYEzGfEjAyzyEUSikM4jOQE0em8svCnqf3x8C9EBeKQpbVYp5WpJfB+EeyQgqZf5As+ISkqMB1lpyOUG1xeNi1HoD30AGt+E9KVGM4gHksdda4r6WhrfsfV/3PcLNLSF8vqdbVVO/U9TWrJxgOzh8HoHDzJPidUvNKUpCCvxNKPMEtyQeJIe0tuX89PAwfN305Y3PMnQOmgieHT7bff/K4OBgYcMQVGYlkMiSEzbLPBHmyZk5MwuWqcZl+EHLMyPEgsvl8yC4iLncnvwyau/PF3F7YbyWLxfp0li+KKw3+SJOl4uY8+3LYzOAc624bD2ryV6pQLGXI6yX4lo6YSyLXk2r4tHGJmn5DHPxAE6L89On3w/OylxJrfKLULHoeAeAk2m8gV5EbrELtJJhC2rZo92Ruj66L/Kf76rAbxc5IxmpL7BTsVtmg0TnzdaZ/RE2EVTIpc0hgRUyRB1bJBBfHcXbQnLx5i7aaOKhd+PNDvs1ENqeroaFzJOGBIY5IWs1GRMtqe0KeHdDZsIjb0LiOo4Y2GQcirX6HSfT7thzaUl9aNcd6DmxRJkj9ROysO11xTrIv7bE4vj1S4ggON+l/Gh+GMqhto4raYJ4r/0FspBDf8Mt3txAZg2j4f/Rat4lgfE9x7WWqu2iNrWbvrRO4eoIonEOhW062TOVtrMhgmR3vp5HUFrHQeVmk0qHf5NumnDcLTyh7HLlQrHv2XCmCfovr+x78vIW1w/4q9NufpBA26UPx/M7WB6/6cZ+L+bj/54fF92vt5o/pHxvQHkeHkgFLB/JAk/+6hfhA/FJ6/keV4fZZNZTP7ch7FDb44rho04/bFP/JN/vZO7mfLpYvHh+AhFIH9h/OqbftmO6/xHSdKel2/O7Mxs+A0h3XtlsuiWgabby3au9N/p9YGzPEELT/As4z9/v
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an entity"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"boolean","default":false},"in":"query","name":"exclude_calculated_properties","required":false,"description":"If `true`, [calculated properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entity.<br/>"},{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"include","required":false,"description":"An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"},{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"exclude","required":false,"description":"An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"},{"schema":{"type":"string","minLength":1},"in":"path","name":"entity_identifier","required":true,"description":"The identifier of the entity you want to fetch.<br/>"},{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint the entity belongs to.<br/>"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Success"},"404":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>not_found</b></td>\n  <td>An entity with the provided `identifier` was not found</td>\n</tr>\n<tr>\n  <td><b>not_found</b></td>\n  <td>A blueprint with the provided `identifier` was not found</td>\n</tr>\n</table>\n"},"422":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>invalid_request</b></td>\n  <td>The provided data does not match the route schema</td>\n</tr>\n</table>\n"},"500":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>internal_error</b></td>\n  <td>An internal error occurred</td>\n</tr>\n</table>\n"}}}
+>
+  
+</StatusCodes>
+
+
+      

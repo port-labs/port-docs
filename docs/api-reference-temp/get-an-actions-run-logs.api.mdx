@@ -1,0 +1,71 @@
+---
+id: get-an-actions-run-logs
+title: "Get an action's run logs"
+description: "This route allows you to fetch the logs from an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/)."
+sidebar_label: "Get an action's run logs"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVt9r40YQ/leWfekdKFESci/CGFx6HEcLDWn65Jiw1o6svUi7utlZJ67R/15GK9tyrKQNFFr6YsnamZ1f33wzW6nB52gaMs7KTN6Vxgt0gUCoqnJPXmxcEOREAZSXgkoQlVt5UaCrhbJC5awoMNjzyRLTafdz50QFCq2oHYJQSxdoIOgTkZeQPwr+zBfOtctDDZYUiyw+lESNz9JUu9yfr4Aah3RuXJojKIIzD1Vx5gHXJoczeG4ADdgcfIpQVJDTWTR11qBbIXiffjyXiSS18jKby1n04zZYLxeJbBSqGgiQD7fS5yXUSmZbSZsGZCZtqJeAMpG1saYOtcwuE1mr5/j+6aJNpOG8fQ+AG5lIq2pWq0xtSCYnyQXR64p4sXBFzOcuwzGLMpEI34NB0DIrVOWhTV537hUfXFF4GHfi1Lh/NM27bHtCY1d7242i8mAag30wetS00WDJFCaa5/IfkNFh7UlZOgAugs3hiG+EAdpFIj3kAQ1tugIuQSGgzOYLPkLwjbMePDt+dXHBj2OXboHQwBq08CHPwfsiVNWGAZM7S2CJVVTTVCbv0Jl+86w3TEiDrgEkE624x0GSlOV6gGWszNnfRZtwcn5xKz8UQ1QsaAjq4Xe3/AY5V/DYhNGjdcBgv46f1OC9WsHoWWwq/ePmrdMZnZ4msnBYK5KZ1NyWZGqQbTus0Fx2IIiOHdwYGh2aWLQv1d0j96jS2nDuVXUzyEMHzZcIe62cbXf19cX1KQJ+tbBDYuGY8oxdCUB06IXL84AIOru393ZCalnBlF9wem+FmFA5/cyCk5TK/ZefDrf33ydpp3BQ09PJcmodPRQuWD1Jl9NJSnp/eHfcFE+GIvE26NZGgx720JPywjoS/U3dLTt76c5hruT11dV/J3Zj16oy+oFrDZ5GM6AVqUPI2kEMtFa7ORSnVOzDtyL/NNb3/17kBGhV9QDxiheBz6zYSURv9s68HmHX4FQ6LTO56gi/I+NMpuvLNOLIpzx3023k5TZlVpXMnLjeTb6AlczkbvSqxgwmr+QJcCoQ/JHMgIp/46JEstoR8oHsGvMzDMbULFDp0PzR0avsx0kJSvNk68ZL4Tp1QxXL3zgkMbv5KhPJzsdyXp5fcKkb56lWHT/3t38BOqwpP/iuofrojwCxPfD9/3gHihUgeKa0qZTp2qOr67bHzFyuL2Uie9RE7uZHtp/oXfIWiSydJ5bfbpfKw+9YtS1/jjsIA0obzxDV40x9nO+/vxaNhvAIm8HOtVZVYJkOte/z4i/2ojeM75etg/UF/0HD5t+ZkA+3/Qz8KP6JlWnU7aMNZe/0Lpy+3C3vK30vcgjxcJbn0AxjPdmPOPY9J335fMeQCoyvIQs8dizQv/Dtoy69pIfoAv9yeUdVttvIMW27l49Hr2r0Ie6kOUO8jPwJtC+G6A==
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get an action's run logs"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/actions/runs/{run_id}/logs"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch the logs from an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"number","minimum":1,"maximum":50},"in":"query","name":"limit","description":"The maximum number of logs to fetch.<br/>","required":false},{"schema":{"type":"number"},"in":"query","name":"offset","description":"The number of logs to skip.<br/>","required":false},{"schema":{"type":"string"},"in":"path","name":"run_id","description":"The identifier of the action run you want to fetch logs for.<br/>","required":true}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Retrieved successfully.","content":{"application/json":{"schema":{"properties":{"ok":{"type":"any","enum":[true]},"runLogs":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string"},"runId":{"type":"string"},"message":{"type":"string"},"createdBy":{"type":"string"},"createdAt":{"type":"string","format":"date-time"}},"required":["id","runId","message","createdBy","createdAt"]}}},"required":["ok"],"additionalProperties":false,"description":"Retrieved successfully."}}}},"404":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>not_found</b></td>\n  <td>The action run with the provided identifier was not found</td>\n</tr>\n</table>\n"},"422":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>invalid_request</b></td>\n  <td>The data provided does not match the route schema</td>\n</tr>\n</table>\n"},"500":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>internal_error</b></td>\n  <td>An internal error occurred</td>\n</tr>\n</table>\n"}}}
+>
+  
+</StatusCodes>
+
+
+      

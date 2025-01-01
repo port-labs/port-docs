@@ -1,0 +1,71 @@
+---
+id: get-a-blueprints-permissions
+title: "Get a blueprint's permissions"
+description: "This route allows you to retrieve the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.getport.io/build-your-software-catalog/set-catalog-rbac/examples)."
+sidebar_label: "Get a blueprint's permissions"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVMtu2zAQ/BViL00Axop7FIoCKVoERXsI0vQUGMVKWltEJFJZLu24gv69WL8ip/atp14oihqSOzM76qGiWLLrxAUPOTzULhoOSchg04RVNOuQjATDJOxoSUZqMh1x62J0wUcT5gZN0STq2HmZfCg4+7gZHoJpCNmbNjAZLEKS8UZryprKJ6PLeuZjFcrUkhfUUmYXtUgX8yyrQhknC5IusExcyIrkmupqHRJfxTCXFTJdlSjYhEUWSfbzKy6wzOgF266heDkBC4KLCPkjfNoXG2FmoUPGloRYv/UQy5pahLwHWXcEOURh5xdgoXX+O/mF1JBPBwtO5epQarDgsVXoQYVfriIvbu6IwQLTc3JMFeTCiexfipN5haucqsbhKLOqQzxWXB1ZoZexLRMYZhYilYmdrDdMCkImVsJMWOXFiLVimWIXfKSoXN9fX+vjuLLPNMfUiLnfIWEYLLQkdagghwUJ2K0AOWTLafZ6QdafUmLIRiRAi+XlXvXEDeSwtxw7N3IcBnsKkOIRZsT+h1q45bXX4OAmdu4brV8tu0lSB3a/N00HO1drwop4Q9f5edhsd9Io/i6wmJu7r2BBi98KNZ1cw2ChC1Fa9ArfnX5LMg7Hu2iOJTjSu4cyeCEv/3sMt04IvUjWNei8arfxt9+10yMsp2Bh1LEW8jPhGgs6s1CHKHpA3xcY6Sc3w6DLz4lYUzGzsER2WKiZjz1ULuq8gnyOTXybzbEjF/e7FF+af5XYM1LsO9Vrmy6xSfoGFp5ofe4fM8zGybz98gAWMKmU48Z/2jT+bqLsT970NhHba3XUHJ7c0vfbWA3DAb/9dHbHLmF7tBKfDcPwBy1gUCc=
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get a blueprint's permissions"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/blueprints/{blueprint_identifier}/permissions"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to retrieve the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.getport.io/build-your-software-catalog/set-catalog-rbac/examples).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint whose permissions you want to retrieve."}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
+      

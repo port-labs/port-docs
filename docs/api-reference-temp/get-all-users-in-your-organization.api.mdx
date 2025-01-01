@@ -1,0 +1,71 @@
+---
+id: get-all-users-in-your-organization
+title: "Get all users in your organization"
+description: "This route allows you to fetch all of the users in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
+sidebar_label: "Get all users in your organization"
+hide_title: true
+hide_table_of_contents: true
+api: eJzdVU1v4zYQ/SvEnFpAsZMehaJADsViUaAI2uwp8IEmRxY3lKgdDp26hv57MaRly1ltm+4eCtQHmRzOF4fvzRzBYjTkBnahhxoeWxcVhcSotPfhJapDSIqDapBNKzIVGsUtqhSRonK9KJB6CMQq0E737k8tvlY/bmn9U/48BuVRU6+6QKj0NiQu1pUyLZpnJQJx+WSDSR32nD1svmuZh1iv1zaYuNohD4F45cI6xnBDW23W8rkJe6S9w5f19yuogPUuQv0EHyQAbCoYNOkOWXb10xGiabHTUB+BDwNCDZpIH6ACx9jFmTwyuX4HFWCfOvHorGw67TxU0DiK/KvuECrw+rwcnOFEsoqsOUVJSNxVMFDYOytZVGAINaO9Z6ggDfa8ZtRdXPXFVdlMZmfB3LZI5h4oeDx7KJv5+04yF+9t5y77gQKjYbRnyTxMkVzCbMaxAido+ZSQpHY5YA2NQ2/lgq8xhaocZTC96J4viGoCKdSmzYhYqfeNLGylQu8PGRRxQOMah3by8eK8V1tUrjc+WbSCQVEkjEPoIxbkSd74KTlCC3WjfcRxU0FEk8jxIUNhi5qQ5GkJta1TQYyoTa4yHn64vZW/6zv9hkwO92hVTMZgjE3y/iAANKFn7FlM9DB4ZzKY1x+j2M3x91aHJzyG7Uc0XJA0ILEr2YXnOZb7wwWwTAk3YwXlXv8M+C8EKIj/jBfjnANLp2dWLB1OPFk6OzFn6cjZRXERLIU5k+7NfBdsX8C/0A6aQJ1mqEHocMOuQ4l0YcebTQLtvuFZFksxzkGfO1bmau4T/64EmfNfn12//PCv8stamzH/rk8KZitB96YCba0Tmmj/MItSSF1sO+Q2WKhhhzkZzS3UsN7frSdPEWk/zYBEHmqYpose3Gy4wFgtKaR4pTNrJb8Locutp4ZyqdrgfsFZg7xP3AY6TUg4NdEWtTT40lSbkM0de9HPU/X+4T1UIMmXTnG3us3YDpE73V+qDe+Q84C+nszzofy6NR8v3ep/MPlLzRn/4PXgteszLyn3rgKIJ9jfwdQQNxW0IbJIj8etjviB/DiKuEw1AYp1UW/9eYL8bfX+mxm3eOlnPMyn8V77JEoZtntNTu4E9ZMMhxP45LLF6t4YHHhm9dkQEy9nvr37+REq0EnKO4f9c4b9aSHerybU5Ps1H0oK8hUWLpocj4VU43jWL0dftDhdcdKWEknP+QuupcnB
+sidebar_class_name: "get api-method"
+info_path: api-reference-temp/port-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Get all users in your organization"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/v1/users"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+This route allows you to fetch all of the users in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"array","items":{"type":"string","enum":["id","email","firstName","lastName","picture","status","type","providers","createdAt","updatedAt","teams.name","teams.provider","teams.createdAt","teams.updatedAt","roles.name","roles.description","roles.isAdmin","roles.protected","roles.createdAt","roles.updatedAt"]}},"in":"query","name":"fields","description":"The fields you want to fetch for each user. If used, only the specified fields will be included in the response.<br/>","required":false}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Retrieved successfully.","content":{"application/json":{"schema":{"description":"Retrieved successfully.","type":"object","properties":{"ok":{"type":"any","enum":[true]},"users":{"type":"array","items":{"type":"object","properties":{"email":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"picture":{"type":"string"},"status":{"type":"string"},"id":{"type":"string"},"type":{"type":"string"},"providers":{"type":"array","items":{"type":"string"}},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"},"orgs":{"type":"array","items":{"type":"object","properties":{"id":{"type":"string"}},"required":["id"]}},"teams":{"type":"array","items":{"type":"string"}},"roles":{"type":"array","items":{"type":"object","properties":{"name":{"type":"string"}},"required":["name"]}}}}}},"required":["users","ok"],"additionalProperties":false}}}}}}
+>
+  
+</StatusCodes>
+
+
+      
