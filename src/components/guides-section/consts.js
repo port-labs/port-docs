@@ -29,6 +29,7 @@ export const tagsCategoryMap = {
         "Humanitec",
         "New Relic",
         "ServiceNow",
+        "AI"
     ]
 };
 
@@ -869,5 +870,12 @@ export const availableGuides = [
         tags: ["Incident management", "GitLab", "Actions", "Automations"],
         logos: ["ServiceNow", "GitLab"],
         link: "/guides/all/approval-workflow-for-gitlab-deployment"
+    },
+    {
+        title: "Enrich security vulnerabilities using AI",
+        description: "Use AI to get additional details and mitigation strategies for security vulnerabilities",
+        tags: ["Security", "AI", "Actions", "Automations"],
+        logos: ["AI"],
+        link: "/guides/all/enrich-security-vulnerabilities-with-ai",
     }
 ]
