@@ -174,7 +174,32 @@ As platform engineers, we want to enable our developers to perform certain actio
             The `Entity selection` type allows the executing user to choose an entity directly from the catalog.
          :::
 
-5. Click on `Next` to configure the **Backend**.
+5. Click on `+ Input` again to add the service type:
+
+    - Enter the **Title** `Type`
+    - Select the **Type** `String`
+    - Add the **Description** "The type of service (e.g., Backend, Frontend)"
+    - Set **Required** to `True`
+    - Enable **Enum** and add the following values:
+      - Backend
+      - Frontend
+      - Full-stack
+      - Data
+    - Click on the `Create` button
+
+6. Click on `+ Input` one more time to add the lifecycle state:
+
+    - Enter the **Title** `Lifecycle`
+    - Select the **Type** `String`
+    - Add the **Description** "The current lifecycle state of the service"
+    - Set **Required** to `True`
+    - Enable **Enum** and add the following values:
+      - Production
+      - Development
+      - Deprecated
+    - Click on the `Create` button
+
+7. Click on `Next` to configure the **Backend**.
 
 
 #### Define backend type
