@@ -771,7 +771,7 @@ resources:
   - kind: issue
     selector:
       // highlight-next-line
-      query: .fields.customfield_11111[-1].name == "Sprint 35"
+      query: .fields.customfield_11111[-1].name == "Sprint 35"  # Replace "Sprint 35" with the name of the current sprint
       jql: "statusCategory != Done"
     port:
       entity:
@@ -789,7 +789,7 @@ resources:
             creator: .fields.creator.emailAddress
             priority: .fields.priority.name
             // highlight-next-line
-            sprint: .fields.customfield_10020[-1].name // ""
+            sprint: .fields.customfield_11111 | sort_by(.id) | .[-1].name // ""
             created: .fields.created
             updated: .fields.updated
           relations:
@@ -799,6 +799,11 @@ resources:
 ```
 
 </details>
+
+:::note Issues with blank Sprint values
+
+It is to be noted that if the `createMissingRelatedEntities` is set to `true`, issues with blank sprint values will be created in Port thereby showing some issues with blank `Sprint` fields and empty or null properties. To avoid this, set `createMissingRelatedEntities` to `false`.
+:::
 
 
 ## Limitations
