@@ -18,7 +18,10 @@ import JiraUserEntity from "/docs/build-your-software-catalog/sync-data-to-catal
 import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_issue_example_entity.mdx"
 import JiraIssueExampleBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_example_issue_blueprint.mdx"
 import JiraIssueExampleConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_example_issue_configuration.mdx"
-
+import JiraTeamBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_exporter_example_team_blueprint.mdx"
+import JiraTeamConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_exporter_example_team_configuration.mdx"
+import JiraTeamExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_response.mdx"
+import JiraTeamEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_entity.mdx"
 
 # Jira
 
@@ -42,6 +45,7 @@ It is possible to reference any field that appears in the API responses linked b
 
 - [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
 - [`User`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-users/#api-group-users)
+- [`Team`](https://developer.atlassian.com/platform/teams/rest/v1/api-group-teams-public-api/#api-group-teams-public-api)
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
 
 
@@ -564,6 +568,22 @@ resources:
 
 </details>
 
+### Team
+
+<details>
+<summary><b>Team blueprint</b></summary>
+
+<JiraTeamBlueprint/>
+
+</details>
+
+<details>
+<summary><b>Integration configuration</b></summary>
+
+<JiraTeamConfiguration/>
+
+</details>
+
 ### Issue
 
 <details>
@@ -621,6 +641,13 @@ Here is an example of the payload structure from Jira:
 <summary> User response data</summary>
 
 <JiraUserExampleResponse/>
+
+</details>
+
+<details>
+<summary> Team response data</summary>
+
+<JiraTeamExampleResponse/>
 
 </details>
 
@@ -840,6 +867,13 @@ The combination of the sample payload and the Ocean configuration generates the 
 <summary> User entity in Port</summary>
 
 <JiraUserEntity/>
+
+</details>
+
+<details>
+<summary> Team entity in Port</summary>
+
+<JiraTeamEntity/>
 
 </details>
 

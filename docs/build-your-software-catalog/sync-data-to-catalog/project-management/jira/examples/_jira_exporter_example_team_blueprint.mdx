@@ -1,0 +1,43 @@
+```json showLineNumbers
+{
+"identifier": "jiraTeam",
+"title": "Jira Team",
+"icon": "Users",
+"description": "A team within the organization",
+"schema": {
+    "properties": {
+    "organizationId": {
+        "title": "Organization ID",
+        "type": "string",
+        "description": "Unique identifier for the parent organization"
+    },
+    "teamType": {
+        "title": "Team Type",
+        "type": "string",
+        "description": "Type of team (e.g., MEMBER_INVITE, OPEN)",
+        "enum": [
+        "MEMBER_INVITE",
+        "OPEN"
+        ]
+    },
+    "description": {
+        "title": "Description",
+        "type": "string",
+        "description": "Team description"
+    }
+    }
+},
+"relations": {
+    "members": {
+    "target": "jiraUser",
+    "title": "Users",
+    "description": "The Jira users belonging to this team",
+    "required": false,
+    "many": true
+    }
+},
+"mirrorProperties": {},
+"calculationProperties": {},
+"aggregationProperties": {}
+}
+```
