@@ -136,7 +136,7 @@ When creating a line chart in an [entity page](/customize-pages-dashboards-and-p
 
 Additionally, you need to specify the following properties:
 - **Time interval** - the amount of time between each data point in the chart.
-- **Time range** - how far back in time the chart will display data.
+- **Time range** - how far back in time the chart will display data (limited to the last year).
 
 The chart will display the property values over the span of the selected time range, using the selected intervals.  
 The x-axis represents the time and the y-axis representing the property values.
@@ -167,10 +167,12 @@ Say you have a Kubernetes `cluster` blueprint, with a related `node` blueprint r
 We can create an aggregation property on the `cluster` blueprint, which sums the `cost` properties of all related `node` entities.  
 Then, we can create a line chart displaying the `cost` property of the `cluster` entity over time, showing the total cost of the cluster.
 
-:::info Available historical data
-The line chart will display data starting from the time the property was created on the blueprint.  
-Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
-:::
+#### Limitations
+
+- Line charts display data starting from the time the property was created on the blueprint.  
+  Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
+
+- Line chart data is limited to the last 365 days.
 
 ### Markdown
 

@@ -8,11 +8,6 @@ import Image from "@theme/IdealImage";
 
 # AWS
 
-:::warning Ocean integration
-This documentation refers to the newer (and recommended) AWS Ocean integration.  
-If you are using the older AWS Exporter (Lambda), please refer to the [AWS Exporter documentation](./aws-exporter/).
-:::
-
 Port's AWS integration allows you to import your AWS resources into Port, according to your configuration.  
 After the initial import of data, the integration will also listen to live events from AWS to update data in Port in real time.
 
