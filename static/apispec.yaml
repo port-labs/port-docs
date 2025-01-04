@@ -8598,7 +8598,7 @@ paths:
             type: boolean
           in: query
           name: published
-          description: If `true`, only published actions/automations will be fetched.<br/>
+          description: "Only relevant for **automations**. If `true`, only published automations will be fetched.<br/>"
           required: false
         - schema:
             type: string

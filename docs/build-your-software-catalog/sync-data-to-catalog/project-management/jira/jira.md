@@ -1,7 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation_oauth.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/_jira_one_time_docker_parameters.mdx"
@@ -18,7 +18,10 @@ import JiraUserEntity from "/docs/build-your-software-catalog/sync-data-to-catal
 import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_issue_example_entity.mdx"
 import JiraIssueExampleBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_example_issue_blueprint.mdx"
 import JiraIssueExampleConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_example_issue_configuration.mdx"
-
+import JiraTeamBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_exporter_example_team_blueprint.mdx"
+import JiraTeamConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_exporter_example_team_configuration.mdx"
+import JiraTeamExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_response.mdx"
+import JiraTeamEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_entity.mdx"
 
 # Jira
 
@@ -42,6 +45,7 @@ It is possible to reference any field that appears in the API responses linked b
 
 - [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
 - [`User`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-users/#api-group-users)
+- [`Team`](https://developer.atlassian.com/platform/teams/rest/v1/api-group-teams-public-api/#api-group-teams-public-api)
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
 
 
@@ -54,7 +58,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation />
+<OceanSaasInstallation integration="Jira" />
 
 </TabItem>
 
@@ -481,9 +485,12 @@ That's it! Now Jira API responses will include the `emailAddress` field when ret
 All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
 :::
 
-<!-- ### OAuth account password change
+### OAuth account password change
 
-If the password of the account used to authenticate with Jira changes, the integration will need to be **reinstalled**. This is because the Jira API requires the use of an API token for authentication, and the token is generated using the account's password. -->
+When installing the integration [via OAuth](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/?oauth=oauth#setup):  
+
+If the password of the account used to authenticate with Jira changes, the integration will need to be **reinstalled**.  
+This is because the Jira API requires the use of an API token for authentication, and the token is generated using the account's password.
 
 ## Examples
 
@@ -528,6 +535,11 @@ Examples of blueprints and the relevant integration configurations:
 <details>
 <summary><b>Integration configuration</b></summary>
 
+The `project` kind has a selector property, `expand` that specifies additional fields to be included in the response. It accepts a comma-separated string that allows you to include more fields in the response data that can be used in the mapping configuration. Possible values are `description`, `lead`, `issueTypes`, `url`, `projectKeys`, `insight`.
+
+If not specified, it defaults to `"insight"`.
+
+
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
@@ -535,6 +547,7 @@ resources:
   - kind: project
     selector:
       query: "true"
+      expand: "description,lead,issueTypes,url,projectKeys,insight"
     port:
       entity:
         mappings:
@@ -561,6 +574,22 @@ resources:
 <summary><b>Integration configuration</b></summary>
 
 <JiraUserConfiguration/>
+
+</details>
+
+### Team
+
+<details>
+<summary><b>Team blueprint</b></summary>
+
+<JiraTeamBlueprint/>
+
+</details>
+
+<details>
+<summary><b>Integration configuration</b></summary>
+
+<JiraTeamConfiguration/>
 
 </details>
 
@@ -621,6 +650,13 @@ Here is an example of the payload structure from Jira:
 <summary> User response data</summary>
 
 <JiraUserExampleResponse/>
+
+</details>
+
+<details>
+<summary> Team response data</summary>
+
+<JiraTeamExampleResponse/>
 
 </details>
 
@@ -840,6 +876,13 @@ The combination of the sample payload and the Ocean configuration generates the 
 <summary> User entity in Port</summary>
 
 <JiraUserEntity/>
+
+</details>
+
+<details>
+<summary> Team entity in Port</summary>
+
+<JiraTeamEntity/>
 
 </details>
 
