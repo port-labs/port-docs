@@ -6896,8 +6896,9 @@ paths:
                   items:
                     type: string
                 limit:
-                  description: The maximum number of entities to return. The default is 200.<br/>
+                  description: The maximum number of entities to return.<br/>
                   type: number
+                  default: 200
                   minimum: 1
                   maximum: 1000
                 from:
