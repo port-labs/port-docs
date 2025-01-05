@@ -450,26 +450,15 @@ Since we don't have context of the logged-in user when using the API, these func
 
 ### Filter by relations/scorecards
 
-When using the [search a blueprint's entities](/api-reference/search-a-blueprints-entities) API route, you can also filter results by relations or scorecards.
+When using the [search a blueprint's entities](/api-reference/search-a-blueprints-entities) API route, you can also filter results by <PortTooltip id="relation">relations</PortTooltip> or <PortTooltip id="scorecard">scorecards</PortTooltip>.
 
 See the following examples for each filter type:
 
-<Tabs groupId="filterby" defaultValue="property" values={[
-{label: "Property", value: "property"},
+<Tabs groupId="filterby" defaultValue="relation" values={[
 {label: "Relation", value: "relation"},
 {label: "Scorecard", value: "scorecard"},
 {label: "Scorecard rule", value: "scorecardRule"},
 ]}>
-
-<TabItem value="property">
-```json showLineNumbers
-{
-  "property": "propertyId",
-  "operator": "=",
-  "value": "value"
-}
-```
-</TabItem>
 
 <TabItem value="relation">
 ```json showLineNumbers
