@@ -19,14 +19,16 @@ If you created your account **before** January 6, 2025, see the [**classic users
 After creating a Port account, two <PortTooltip id="blueprint">blueprints</PortTooltip> will be automatically created in your [data model](https://app.getport.io/settings/data-model) - `User` and `Team`.
 
 These blueprints represent Port users and teams, and their data will be synced accordingly:
+
 - When you create a user/team <PortTooltip id="entity">entity</PortTooltip>, a matching Port user/team will be created as well.
-- When you delete a user/team <PortTooltip id="entity">entity</PortTooltip>, the matching Port user/team will be deleted as well.  
+- When you delete a user/team <PortTooltip id="entity">entity</PortTooltip>, the matching Port user/team will be deleted as well.
 
-The syncing mechanism is bidirectional, meaning that every create/edit/delete action performed on a user/team will be reflected in the entities as well.
+The syncing mechanism is bidirectional, meaning that every create/edit/delete action performed on a Port user/team will be reflected in the relevant entity as well.
 
-The `User` and `Team` blueprints allow you to: 
-- Enrich your users and teams data by adding *properties* to these blueprints - Slack URLs, titles, profiles, or any other data.
-- Enrich your users and teams data by adding *relations* to these blueprints - for example, you can relate a user to a domain, or a team to a project.
+The `User` and `Team` blueprints allow you to:
+
+- Enrich your users and teams data by adding _properties_ to these blueprints - Slack URLs, titles, profiles, or any other data.
+- Enrich your users and teams data by adding _relations_ to these blueprints - for example, you can relate a user to a domain, or a team to a project.
 
 :::info Important
 The `User` and `Team` blueprints cannot be deleted or edited, and their default properties cannot be changed.  
@@ -45,10 +47,7 @@ The `User` and `Team` blueprints are comprised of the following properties:
 <TabItem value="user">
 - Identifier - the user's email, which will be synced with the Port user's email.
 - Title - the user's name, which will be synced with the Port user's first and last name.
-- Status - the user's status, which can be one of the following:
-  - `Active` - the user has logged into Port .
-  - `Invited` - the user was invited to Port via an invitation email.
-  - `Disabled` - the user is disabled and cannot use Port.
+- Status - the user's [status](#user-status).
 - Port Role - the user's internal [role in Port](/sso-rbac/rbac/#roles). This property affects the permissions granted to this user.
 - Moderated Blueprints - the blueprints that can be moderated by the user. Only relevant for `moderator` users.
 - Port type - the type of the user, can be one of the following:
@@ -74,6 +73,26 @@ Since these teams are synced from your IdP the following actions cannot be perfo
 - Delete SSO teams.
 
 :::
+
+## User status
+
+A user can have one of the following statuses at any given time:
+
+- `Active` - the user has logged into Port and can use the portal normally.
+- `Invited` - the user was invited to Port via an invitation email.
+- `Disabled` - the user is disabled and cannot use Port.
+
+By default, all new users are created with the `Disabled` status (no email invitation is sent).
+
+In your software catalog, admins can access the [Users](https://app.getport.io/_users) page to view and manage all of the user entities in the organization.  
+Here admins can also change a user's status, and invite new users.
+
+### Limitations
+
+- Only users with a UI/API origin can invite users and change their status.  
+  [Service accounts](/sso-rbac/rbac/as-blueprints#service-accounts) can only create `Disabled` users.
+
+- Users cannot change their own status.
 
 ## Ownership
 
@@ -130,6 +149,7 @@ The `$team` property will not be accessible via API calls, and will not be visib
   ...
 }
 ```
+
 2. **Direct**
 
 Ownership of the blueprint's entities will be defined by a hidden <PortTooltip id="relation">relation</PortTooltip> to the `Team` blueprint.  
@@ -163,72 +183,79 @@ The `Owning teams` column will be visible in tables containing entities of the b
 }
 ```
 
-#### Consequent changes
+---
 
-After enabling this feature, some functionalities will be affected:
+## Additional capabilities
 
-- In [Advanced input configurations](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations) of self-service actions, when using a [jqQuery](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations#filter-the-dropdowns-available-options-based-on-properties-of-the-user-that-executes-the-action), team identifiers should be used instead of team names.  
-  Also, when using `.user` in the jqQuery, you have access any of the user's properties and/or relations.  
-  For example:
-  ```json showLineNumbers
-  {
-    "properties": {
-      "namespace": {
-        "type": "string",
-        "format": "entity",
-        "blueprint": "namespace",
-        "dataset": {
-          "combinator": "and",
-          "rules": [
-            {
-              "property": "$team",
-              "operator": "containsAny",
-              "value": {
-                "jqQuery": "[.user.relations.teams[].identifier]" // instead of [.user.teams[].name]
-              }
-            }
-          ]
-        }
-      }
-    }
-  }
-  ```
+### Self-service actions
 
-- In [dynamic permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions) of self-service actions, under the `rules` and/or `conditions` keys, you can access the entire user object, including its properties and relations.  
-  For example:
-  ```json showLineNumbers
-  {
-    "policy": {
-      "queries": {
-        "search_entity": {
-          "rules": [
-            {
-              "value": "service",
-              "operator": "=",
-              "property": "$blueprint"
-            },
-            {
-              "value": "{{ .inputs.name }}",
-              "operator": "=",
-              "property": "$identifier"
-            }
-          ],
-          "combinator": "and"
-        }
-      },
-      "conditions": [
-        // highlight-next-line
-        ".user.properties.role == \"Manager\""
-      ]
-    }
-  }
-  ``` 
+1. When using [Advanced input configurations](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations) in self-service actions, you can use a [jqQuery](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/advanced-form-configurations#writing-your-configuration-schema) for the rule value.
+
+   When using `.user` in this jqQuery, you have access any of the user's properties and/or relations.  
+   For example:
+
+   ```json showLineNumbers
+   {
+     "properties": {
+       "namespace": {
+         "type": "string",
+         "format": "entity",
+         "blueprint": "namespace",
+         "dataset": {
+           "combinator": "and",
+           "rules": [
+             {
+               "property": "$team",
+               "operator": "containsAny",
+               "value": {
+                 "jqQuery": "[.user.relations.teams[].identifier]"
+               }
+             }
+           ]
+         }
+       }
+     }
+   }
+   ```
+<br/>
+2. When using [dynamic permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions) in self-service actions, under the `rules` and/or `conditions` keys, you can access the entire user object, including its properties and relations.
+
+   For example:
+
+   ```json showLineNumbers
+   {
+     "policy": {
+       "queries": {
+         "search_entity": {
+           "rules": [
+             {
+               "value": "service",
+               "operator": "=",
+               "property": "$blueprint"
+             },
+             {
+               "value": "{{ .inputs.name }}",
+               "operator": "=",
+               "property": "$identifier"
+             }
+           ],
+           "combinator": "and"
+         }
+       },
+       "conditions": [
+         // highlight-next-line
+         ".user.properties.role == \"Manager\""
+       ]
+     }
+   }
+   ```
 
 ## Service Accounts
 
 Service accounts are non-human users (bots) that can be used for integrating external tools and automating daily tasks using Port. <br/> For example - creating a Slack bot that can execute Port [self service actions](/actions-and-automations/create-self-service-experiences/).
 
 ### Create a service account
+
 :::info API-only
 Creating service accounts is currently only available via Port's API.
 :::
@@ -238,31 +265,32 @@ To create a new service account, create a new user entity using the [`Create ent
 Creating a service account has two limitations:
 
 1. The new service account email domain must be `serviceaccounts.getport.io`.  
-For example, `my-new-service-account@serviceaccounts.getport.io`.
+   For example, `my-new-service-account@serviceaccounts.getport.io`.
 
 2. The `status` property of the new service account must be `Active`.
 
-    <details>
-    <summary><b>Full example (click to expand)</b></summary>
-    ```bash
-    curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
-    -d '{
-        "identifier": "my-new-service-account@serviceaccounts.getport.io",
-        "title": "My New Service Account",
-        "blueprint": "_user",
-        "icon": "User",
-        "properties": {
-            "port_type": "Service Account",
-            "port_role": "Member",
-            "status": "Active"
-        },
-        "relations": {}
-    }' \
-    -H 'content-type: application/json' \
-    -H 'Authorization: <YOUR API TOKEN>'
+   <details>
+   <summary><b>Full example (click to expand)</b></summary>
+   ```bash
+   curl -L -X POST 'https://api.getport.io/v1/blueprints/_user/entities' \
+   -d '{
+       "identifier": "my-new-service-account@serviceaccounts.getport.io",
+       "title": "My New Service Account",
+       "blueprint": "_user",
+       "icon": "User",
+       "properties": {
+           "port_type": "Service Account",
+           "port_role": "Member",
+           "status": "Active"
+       },
+       "relations": {}
+   }' \
+   -H 'content-type: application/json' \
+   -H 'Authorization: <YOUR API TOKEN>'
 
-    ```
-    </details>
+   ```
+   </details>
+   ```
 
 ### Using service accounts
 
@@ -307,10 +335,11 @@ With the generated token you can use any of the API endpoints as the new service
 
 ### Service account permissions
 
-Port service accounts are treated like any other users and extend the same RBAC mechanism. This means that you can define roles for them (Member, Admin, etc.) or add them to teams and they will be granted the relevant permissions accordingly. 
+Port service accounts are treated like any other users and extend the same RBAC mechanism. This means that you can define roles for them (Member, Admin, etc.) or add them to teams and they will be granted the relevant permissions accordingly.
 
-**Note** that service accounts **cannot** create/invite users or change their `status`.
+**Note** that service accounts can only create `Disabled` users, and **cannot** change a user's `status`.
 
 ### Disable a service account
+
 Service accounts can easily be disabled at any time. To disable a service account, update it's `status` property to `Disabled`.
-Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`. 
+Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`.

@@ -52,97 +52,16 @@ For more information and examples, see the [catalog RBAC](/build-your-software-c
 
 :::warning New default behavior
 A new mechanism to manage users and teams has been released, using dedicated blueprints.  
-Starting **January 6, 2025**, this will be the default behavior for all new Port accounts.
+This mechanism also differs in how **ownership** is defined.
+
+Starting **`January 7, 2025`**, this will be the default behavior for all new Port accounts.
 
 Accounts created before this date will continue to use the old behavior, with no changes to their current setup.
 
 Choose the relevant section below to learn more about the behavior that applies to your account.
 :::
 
-#### [Classic](/) (old behavior).
-#### [As blueprints](./as-blueprints.md) (new behavior).
-
----
-
-## Manage users and teams
-
-:::warning New default behavior
-A new way of managing users and teams has been released, using dedicated blueprints.  
-Starting **January 6, 2024**, this will be the default behavior for all new Port accounts.
-
-Accounts created before this date will continue to use the old behavior, with no changes to their current setup.
-
-Choose the relevant section below to learn more about the behavior that applies to your account.
-:::
-
-<Tabs groupId="behavior" queryString>
-
-<TabItem value="old" label="Classic (old behavior)">
 
 
-
-</TabItem>
-
-<TabItem value="new" label="As blueprints (new behavior)">
-
-
-
-</TabItem>
-
-</Tabs>
-
-
-Each user is defined by the following properties:
-
-1. Basic information - image, name, and email address.
-2. [Role](/sso-rbac/rbac/#roles) - the user’s permissions level.
-3. [Teams](#team-meta-property) - a `team` is a group of users that owns Entities.
-
-:::tip Using SSO for users and teams
-
-When Single Sign-On (SSO) is enabled, users and teams information (including team membership) is taken directly from your identity provider (IdP).
-
-Since these teams are synced from your IdP the following actions cannot be performed on them:
-
-- Edit SSO team membership.
-- Delete SSO teams.
-
-:::
-
-
-
-### `Team` meta property
-
-Each entity has a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) called `team`, that allows you to set which team owns the entity. As an admin, you can also set blueprint permissions according to this field.
-
-Entity JSON example with `team` field:
-
-```json showLineNumbers
-{
-  "identifier": "unique-ID",
-  "title": "Entity Title",
-  "team": [],
-  "blueprint": "testBlueprint",
-  "properties": {
-    "prop1": "value"
-  },
-  "relations": {}
-}
-```
-
-Team dropdown selector in the entity create/edit page:
-
-<img src="/img/software-catalog/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png" width="70%" border='1px' />
-<br/><br/>
-
-| Field | Type | Description                                            | Default      |
-| ----- | ---- | ------------------------------------------------------ | ------------ |
-| team  | List | System field that defines the team that owns an Entity | `"team": []` |
-
-- We support the manual creation of teams on Port, as well as integrating with identity providers, such as [Okta](/sso-rbac/sso-providers/oidc/okta.md) and [AzureAD](/sso-rbac/sso-providers/oidc/azure-ad.md), to import existing teams.
-- When users log in to Port, their groups will be pulled automatically from their identity provider, and the allowed team values will be updated accordingly.
-- It is also possible to configure [team inheritance](/build-your-software-catalog/set-catalog-rbac/examples.md#team-inheritance) and utilize relations to auto-populate the `team` key of entities.
-
-:::info
-Okta and AzureAD integrations are only available after configuring SSO from the relevant identity provider, refer to the [Single Sign-On (SSO)](../sso-providers/) section for more details
-:::
+#### [Classic](/sso-rbac/rbac/classic) (old behavior).
+#### [As blueprints](/sso-rbac/rbac/as-blueprints) (new behavior).
