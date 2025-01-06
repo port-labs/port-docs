@@ -206,10 +206,10 @@ The `path` key is a dot-separated path of **relation identifiers** that lead to 
            "combinator": "and",
            "rules": [
              {
-               "property": "$title",
+               "property": "$team",
                "operator": "containsAny",
                "value": {
-                 "jqQuery": "[.user.properties.identifier]"
+                 "jqQuery": "[.user.team]"
                }
              }
            ]
