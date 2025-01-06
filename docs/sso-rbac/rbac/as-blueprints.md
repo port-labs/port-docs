@@ -6,12 +6,12 @@ import TabItem from '@theme/TabItem'
 
 :::warning New default behavior
 A new mechanism to manage users and teams has been released, using dedicated blueprints.  
-Starting **January 6, 2025**, this will be the default behavior for all new Port accounts.
+Starting **January 8, 2025**, this will be the default behavior for all new Port accounts.
 
 Accounts created before this date will continue to use the old behavior, with no changes to their current setup.
 
 This page describes the **new behavior**.  
-If you created your account **before** January 6, 2025, see the [**classic users & teams**](/sso-rbac/rbac/classic) page.
+If you created your account **before** this date, see the [**classic users & teams**](/sso-rbac/rbac/classic) page.
 :::
 
 ## Overview
@@ -90,7 +90,6 @@ Here admins can also change a user's status, and invite new users.
 ### Limitations
 
 - Only users with a UI/API origin can invite users and change their status.  
-  [Service accounts](/sso-rbac/rbac/as-blueprints#service-accounts) can only create `Disabled` users.
 
 - Users cannot change their own status.
 
@@ -140,7 +139,7 @@ These are the available options for the `ownership` property:
 1. **No ownership**
 
 The blueprint has no defined ownership.  
-The `$team` property will not be accessible via API calls, and will not be visible in tables containing entities of the blueprint.
+The `$team` property will have no meaningful value.
 
 ```json showLineNumbers
 {
@@ -168,8 +167,10 @@ The `Owning teams` column will be visible in tables containing entities of the b
 
 3. **Inherited**
 
-Ownership of the blueprint's entities will be inherited from a different related blueprint with `Direct` ownership (similar to team inheritance).  
+Ownership of the blueprint's entities will be inherited from a different related blueprint with `Direct` ownership.  
 The `Owning teams` column will be visible in tables containing entities of the blueprint, but will not be editable.
+
+The `path` key is a dot-separated path of **relation identifiers** that lead to the desired blueprint.
 
 ```json showLineNumbers
 {
@@ -177,7 +178,7 @@ The `Owning teams` column will be visible in tables containing entities of the b
   "title": "Package Version",
   "ownership": {
     "type": "Inherited",
-    "path": "my_service"
+    "path": "relationIdentifier1.relationIdentifier2.relationIdentifier3"
   }
   ...
 }
@@ -205,10 +206,10 @@ The `Owning teams` column will be visible in tables containing entities of the b
            "combinator": "and",
            "rules": [
              {
-               "property": "$team",
+               "property": "$title",
                "operator": "containsAny",
                "value": {
-                 "jqQuery": "[.user.relations.teams[].identifier]"
+                 "jqQuery": "[.user.properties.identifier]"
                }
              }
            ]
@@ -336,8 +337,6 @@ With the generated token you can use any of the API endpoints as the new service
 ### Service account permissions
 
 Port service accounts are treated like any other users and extend the same RBAC mechanism. This means that you can define roles for them (Member, Admin, etc.) or add them to teams and they will be granted the relevant permissions accordingly.
-
-**Note** that service accounts can only create `Disabled` users, and **cannot** change a user's `status`.
 
 ### Disable a service account
 
