@@ -18,7 +18,10 @@ import JiraUserEntity from "/docs/build-your-software-catalog/sync-data-to-catal
 import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_issue_example_entity.mdx"
 import JiraIssueExampleBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_example_issue_blueprint.mdx"
 import JiraIssueExampleConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_example_issue_configuration.mdx"
-
+import JiraTeamBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_exporter_example_team_blueprint.mdx"
+import JiraTeamConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_exporter_example_team_configuration.mdx"
+import JiraTeamExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_response.mdx"
+import JiraTeamEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_entity.mdx"
 
 # Jira
 
@@ -42,6 +45,7 @@ It is possible to reference any field that appears in the API responses linked b
 
 - [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
 - [`User`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-users/#api-group-users)
+- [`Team`](https://developer.atlassian.com/platform/teams/rest/v1/api-group-teams-public-api/#api-group-teams-public-api)
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
 
 
@@ -933,6 +937,22 @@ resources:
 
 </details>
 
+### Team
+
+<details>
+<summary><b>Team blueprint</b></summary>
+
+<JiraTeamBlueprint/>
+
+</details>
+
+<details>
+<summary><b>Integration configuration</b></summary>
+
+<JiraTeamConfiguration/>
+
+</details>
+
 ### Issue
 
 <details>
@@ -987,14 +1007,22 @@ Here is an example of the payload structure from Jira:
 </details>
 
 <details>
-<summary> User response data (Click to expand)</summary>
+<summary>User response data (Click to expand)</summary>
 
 <JiraUserExampleResponse/>
 
 </details>
 
+
 <details>
-<summary> Issue response data (Click to expand)</summary>
+<summary><b>Team response data (Click to expand)</b></summary>
+
+<JiraTeamExampleResponse/>
+
+</details>
+
+<details>
+<summary><b>Issue response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1206,14 +1234,21 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> User entity in Port (Click to expand)</summary>
+<summary>User entity in Port (Click to expand)</summary>
 
 <JiraUserEntity/>
 
 </details>
 
 <details>
-<summary> Issue entity in Port (Click to expand)</summary>
+<summary>Team entity in Port</summary>
+
+<JiraTeamEntity/>
+
+</details>
+
+<details>
+<summary>Issue entity in Port (Click to expand)</summary>
 
 <JiraIssueEntity/>
 
@@ -1236,7 +1271,7 @@ While the Ocean integration described above is the recommended installation meth
 
 In this example you are going to create a webhook integration between [Jira](https://www.atlassian.com/software/jira) and Port, which will ingest Jira issue entities.
 
-<h2> Port configuration </h2>
+<h2>Port configuration </h2>
 
 Create the following blueprint definition:
 
@@ -1287,11 +1322,11 @@ In order to view the different payloads and events available in Jira webhooks, [
 
 Done! any change you make to an issue (open, close, edit, etc.) will trigger a webhook event that Jira will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-<h2> Let's Test It </h2>
+<h2>Let's Test It </h2>
 
 This section includes a sample webhook event sent from Jira when an issue is created or updated. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
 
-<h3> Payload </h3>
+<h3>Payload </h3>
 
 Here is an example of the payload structure sent to the webhook URL when a Jira issue is created:
 
@@ -1461,7 +1496,7 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
 
 </details>
 
-<h3> Mapping Result </h3>
+<h3>Mapping Result </h3>
 
 The combination of the sample payload and the webhook configuration generates the following Port entity:
 
@@ -1483,17 +1518,17 @@ The combination of the sample payload and the webhook configuration generates th
 }
 ```
 
-<h2> Import Jira Historical Issues </h2>
+<h2>Import Jira Historical Issues </h2>
 
 In this example you are going to use the provided Python script to fetch data from the Jira API and ingest it to Port.
 
-<h3> Prerequisites </h3>
+<h3>Prerequisites </h3>
 
 This example utilizes the same [blueprint and webhook](#prerequisites) definition from the previous section.
 
 In addition, it requires a Jira API token that is provided as a parameter to the Python script
 
-<h4> Create the Jira API token </h4>
+<h4>Create the Jira API token </h4>
 
 1. Log in to your [Jira account](https://id.atlassian.com/manage-profile/security/api-tokens).
 2. Click Create API token.
