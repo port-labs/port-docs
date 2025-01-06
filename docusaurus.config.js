@@ -219,6 +219,10 @@ const config = {
             title: "More",
             items: [
               {
+                label: "Release notes",
+                href: "https://roadmap.getport.io/changelog",
+              },
+              {
                 label: "Blog",
                 href: "https://www.getport.io/blog",
               },

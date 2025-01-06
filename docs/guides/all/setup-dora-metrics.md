@@ -269,22 +269,21 @@ Here’s how you can implement this:
  ```yaml showLineNumbers
   - kind: pull-request
     selector:
-      query: .targetRefName == 'refs/heads/main' and .status == 'completed'  # Track PRs merged into the main branch
+      query: .targetRefName == "refs/heads/main" and .status == "completed"   # Track PRs merged into the main branch
     port:
-    entity:
-      mappings:
-        identifier: .repository.name + '-' + (.pullRequestId|tostring)
-        title: .repository.name + " Deployment"
-        blueprint: '"deployment"'
-        properties:
-          environment: '"Production"'  # Hardcoded value
-          createdAt: .closedDate
-          deploymentStatus: '"Success"'  # Hardcoded value
-        relations:
-          pullRequest: .repository.name + '-' + (.pullRequestId|tostring)
-          service: .repository.name
-
- ```
+      entity:
+        mappings:
+          identifier: .repository.name + (.pullRequestId| tostring)
+          blueprint: '"deployment"'
+          title: .repository.name + " Deployment"
+          properties:
+            createdAt: .closedDate
+            deploymentStatus: '"Success"' # Hardcoded value
+            environment: '"Production"' # Hardcoded value
+          relations:
+            pullRequest: .repository.name + '-' + (.pullRequestId|tostring)
+            service: .repository.name
+```
 
   </details>
 

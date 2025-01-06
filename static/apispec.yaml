@@ -8501,7 +8501,7 @@ paths:
                     - type
                 publish:
                   type: boolean
-                  description: If `true`, the action will be visible to all users and available for use.<br/>
+                  description: Only relevant for **automations**. If `false`, the automation will be inactive (will not be triggered).<br/>
               additionalProperties: false
               required:
                 - identifier
@@ -8598,7 +8598,7 @@ paths:
             type: boolean
           in: query
           name: published
-          description: If `true`, only published actions/automations will be fetched.<br/>
+          description: "Only relevant for **automations**. If `true`, only published automations will be fetched.<br/>"
           required: false
         - schema:
             type: string
@@ -11359,7 +11359,7 @@ paths:
                     - type
                 publish:
                   type: boolean
-                  description: If `true`, the action will be visible to all users and available for use.<br/>
+                  description: Only relevant for **automations**. If `false`, the automation will be inactive (will not be triggered).<br/>
               additionalProperties: false
               required:
                 - identifier

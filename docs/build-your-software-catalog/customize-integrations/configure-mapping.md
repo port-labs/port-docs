@@ -381,7 +381,7 @@ The object returned from Jira for which we would apply this mapping might look l
 ## Common use-cases
 
 ### Splitting a `kind` block
-Sometimes the `CreateRelatedMissingEntities` flag is passed as `false` to prevent generation of additional entities for relations. This can lead to cases where entity ingestion will not happen because the target entity for a relation does not exist in your catalog.  
+Sometimes the `CreateMissingRelatedEntities` flag is passed as `false` to prevent generation of additional entities for relations. This can lead to cases where entity ingestion will not happen because the target entity for a relation does not exist in your catalog.  
 To handle such cases, you can split a single `kind` to multiple mappings like this:
 
 
