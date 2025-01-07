@@ -9,6 +9,14 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide demonstrates how to leverage 3rd-party AI tools within Port to get additional details on security vulnerabilities and mitigation strategies.
 
+## Common Use Cases
+
+- **Rapid Vulnerability Assessment**: Quickly understand the impact and severity of newly discovered vulnerabilities in your codebase
+- **Automated Remediation Guidance**: Get immediate, AI-powered suggestions for fixing security issues without extensive research
+- **Security Knowledge Sharing**: Democratize security expertise across development teams by providing AI-generated explanations
+- **Efficient Triage**: Help security teams prioritize vulnerabilities based on AI-enhanced context and impact analysis
+- **Developer Education**: Use AI-generated explanations as learning opportunities for developers to understand security concepts
+
 ## Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](https://docs.getport.io/quickstart).
@@ -46,9 +54,9 @@ This guide assumes your security issue blueprint includes a `cveID` field to sto
 Code security tools provide context for issues in your code. This guide will show how to leverage AI to understand these issues better and how to fix them.
 After completing it, developers can resolve issues faster and more independently by getting AI-powered insights about vulnerabilities and their remediation steps.
 
-## Set up AI integration
+## Configure AI Integration
 
-To set up the AI integration, follow these steps:
+To configure the AI integration with your LLM provider, follow these steps:
 
 1. Go to your Port [settings page](https://app.getport.io/settings/secrets)
 2. Click on "Add new secret"
@@ -56,9 +64,11 @@ To set up the AI integration, follow these steps:
 4. Paste your LLM API token (e.g., OpenAI API key)
 5. Click "Save"
 
+:::tip
 For more information about managing secrets in Port, see the [secrets documentation](https://docs.getport.io/sso-rbac/port-secrets/).
+:::
 
-## Data model setup
+## Create Blueprint Fields
 
 We'll add a new markdown field to store AI-generated insights about security vulnerabilities. This field will be added to your existing security issue blueprint (e.g., `snykVulnerability`).
 
@@ -79,9 +89,9 @@ We'll add a new markdown field to store AI-generated insights about security vul
 
 5. Click "Save" to update the blueprint
 
-## Set up the action
+## Define Action Configuration
 
-1. Head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application
+1. Navigate to the [Self-service tab](https://app.getport.io/self-serve) in your Port application
 2. Click on "New action"
 3. Click on "Edit JSON" and paste the following configuration:
 
@@ -135,11 +145,11 @@ We'll add a new markdown field to store AI-generated insights about security vul
 
 4. Click "Create" to save the action
 
-## Setup automation
+## Create Automation Workflow
 
-To automatically update the security issue with the AI response, we'll create an automation:
+To automatically update the security issue with the AI response, create an automation:
 
-1. Go to the [Automations](https://app.getport.io/settings/automations) page
+1. Navigate to the [Automations](https://app.getport.io/settings/automations) page
 2. Click on "New automation"
 3. Click on "Edit JSON" and paste the following configuration:
 
@@ -180,9 +190,9 @@ To automatically update the security issue with the AI response, we'll create an
 
 4. Click "Create" to save the automation
 
-## Testing the action
+## Verify Integration
 
-To test the AI enrichment:
+To test the AI enrichment functionality:
 
 1. Navigate to your security issues page in Port
 2. Select a security issue that has a CVE ID
@@ -202,9 +212,24 @@ The image above shows an example of an AI-generated summary for CVE-2022-48196, 
 
 By following these steps, you've set up an AI-powered system to help developers understand and fix security vulnerabilities more effectively 🎉
 
+## Possible Enhancements
+
+Here are some ways you could extend this integration:
+
+- **Multiple AI Models**: Configure the action to use different AI models based on the vulnerability type
+- **Enhanced Prompts**: Customize the AI prompt to include more context about your specific technology stack
+- **Automated Notifications**: Set up Slack notifications when new AI-enriched vulnerabilities are detected
+- **Historical Analysis**: Store and analyze AI-generated remediation suggestions to build an knowledge base
+- **Custom Scoring**: Use AI insights to develop a custom vulnerability scoring system
+
 :::info AI Integration
 The integration uses OpenAI's GPT-3.5 Turbo model by default, but you can modify the configuration to use other AI models:
-- Change the `url` in the action configuration to point to your preferred AI service
-- Adjust the prompt in the `content` field to match your use case
-- Modify the response parsing in the automation if the AI service returns a different format
+
+- Change the `url` in the action configuration to point to your preferred AI service (e.g., Azure OpenAI, Anthropic, or your own hosted model)
+- Adjust the prompt in the `content` field to match your use case (e.g., focus on specific vulnerability types or include company-specific mitigation policies)
+- Modify the response parsing in the automation if the AI service returns a different format (the current automation expects the response in the OpenAI API format)
+- Update the model parameter in the configuration to use a different model version or provider-specific model identifier
+
+:::tip
+Remember to update your API authentication headers according to your chosen AI provider's requirements.
 :::
