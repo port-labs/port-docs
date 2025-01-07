@@ -28,9 +28,32 @@ This guide demonstrates how to leverage 3rd-party AI tools within Port to get ad
 
 A Common Vulnerabilities and Exposures (CVE) is a unique identifier assigned to a specific security vulnerability. CVEs help track and reference known security issues across different security tools and databases. For example, `CVE-2021-44228` refers to the Log4Shell vulnerability in Log4j.
 
+## Set up data model
+
+To enrich security vulnerabilities with AI-powered insights, we'll first set up the required data model in Port. This includes configuring the necessary fields in your security issue blueprint and setting up API access to your chosen AI provider.
+
+### Configure API Access
+
+To configure the AI integration with your LLM provider, follow these steps:
+
+1. Go to your Port [settings page](https://app.getport.io/settings/secrets)
+2. Click on "Add new secret"
+3. Enter a name for your secret (e.g., `gpt_token`)
+4. Paste your LLM API token (e.g., OpenAI API key)
+5. Click "Save"
+
+:::tip
+For more information about managing secrets in Port, see the [secrets documentation](https://docs.getport.io/sso-rbac/port-secrets/).
+:::
+
 ### Required Blueprint Fields
 
-This guide assumes your security issue blueprint includes a `cveID` field to store the CVE identifier. If your blueprint doesn't have this field, you'll need to add it first:
+This guide requires two fields in your security issue blueprint:
+
+1. **CVE ID Field**: Stores the vulnerability identifier
+2. **AI Summary Field**: Stores the AI-generated insights
+
+First, ensure your blueprint has the CVE ID field:
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) page
 2. Find your security issue blueprint
@@ -47,35 +70,10 @@ This guide assumes your security issue blueprint includes a `cveID` field to sto
 }
 ```
 
-5. Click "Save" to update the blueprint
+Next, add the AI summary field to store the generated insights:
 
-## The goal of this guide
-
-Code security tools provide context for issues in your code. This guide will show how to leverage AI to understand these issues better and how to fix them.
-After completing it, developers can resolve issues faster and more independently by getting AI-powered insights about vulnerabilities and their remediation steps.
-
-## Configure AI Integration
-
-To configure the AI integration with your LLM provider, follow these steps:
-
-1. Go to your Port [settings page](https://app.getport.io/settings/secrets)
-2. Click on "Add new secret"
-3. Enter a name for your secret (e.g., `gpt_token`)
-4. Paste your LLM API token (e.g., OpenAI API key)
-5. Click "Save"
-
-:::tip
-For more information about managing secrets in Port, see the [secrets documentation](https://docs.getport.io/sso-rbac/port-secrets/).
-:::
-
-## Create Blueprint Fields
-
-We'll add a new markdown field to store AI-generated insights about security vulnerabilities. This field will be added to your existing security issue blueprint (e.g., `snykVulnerability`).
-
-1. Go to the [Builder](https://app.getport.io/settings/data-model) page in your Port installation
-2. Find your security issue blueprint (e.g., `snykVulnerability`)
-3. Click on "Edit JSON"
-4. Add the following field to your blueprint's properties:
+1. In the same blueprint JSON
+2. Add the following field to your blueprint's properties:
 
 ```json
 {
@@ -87,9 +85,15 @@ We'll add a new markdown field to store AI-generated insights about security vul
 }
 ```
 
-5. Click "Save" to update the blueprint
+3. Click "Save" to update the blueprint
 
-## Define Action Configuration
+## Create self-service actions
+
+Now that we have our data model set up, we'll create the necessary actions to integrate with the AI service. This involves creating a self-service action to trigger the AI analysis and an automation to handle the response.
+
+### Create AI Analysis Action
+
+First, let's create the action that will send the CVE information to the AI service:
 
 1. Navigate to the [Self-service tab](https://app.getport.io/self-serve) in your Port application
 2. Click on "New action"
@@ -145,9 +149,9 @@ We'll add a new markdown field to store AI-generated insights about security vul
 
 4. Click "Create" to save the action
 
-## Create Automation Workflow
+### Create Response Handler Automation
 
-To automatically update the security issue with the AI response, create an automation:
+Next, we'll create an automation to handle the AI service's response and update the security issue with the generated insights:
 
 1. Navigate to the [Automations](https://app.getport.io/settings/automations) page
 2. Click on "New automation"
@@ -190,9 +194,9 @@ To automatically update the security issue with the AI response, create an autom
 
 4. Click "Create" to save the automation
 
-## Verify Integration
+## Execute the actions
 
-To test the AI enrichment functionality:
+Now that we have set up our data model and created the necessary actions, let's test the AI enrichment functionality:
 
 1. Navigate to your security issues page in Port
 2. Select a security issue that has a CVE ID
