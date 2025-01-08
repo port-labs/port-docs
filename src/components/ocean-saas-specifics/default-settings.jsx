@@ -10,6 +10,9 @@ const defaultSettings = {
     PagerDuty:
       '- `Resync interval`: Every 1 hour.' + '\n\n' +
       '- `Send raw data examples`: Enabled.',
+    Datadog:
+      '- `Resync interval`: Every 1 hour.' + '\n\n' +
+      '- `Send raw data examples`: Enabled.',
   };
 
   const OceanSaasDefaultSettings = ({ id }) => {
