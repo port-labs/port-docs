@@ -804,9 +804,9 @@ resources:
 
 </details>
 
-:::note Issues with blank Sprint values
-
-It is to be noted that if the `createMissingRelatedEntities` is set to `true`, issues with blank sprint values will be created in Port thereby showing some issues with blank `Sprint` fields and empty or null properties. To avoid this, set `createMissingRelatedEntities` to `false`.
+:::info Issues with blank Sprint values
+If the `createMissingRelatedEntities` is set to `true`, issues with blank `Sprint` values and some empty/null properties will be created in Port.  
+To avoid this, set `createMissingRelatedEntities` to `false`.
 :::
 
 
