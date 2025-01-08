@@ -87,9 +87,6 @@ First, let's create the action that will send the CVE information to the AI serv
 2. Click on "New action"
 3. Click on "Edit JSON" and paste the following configuration:
 
-   <details>
-   <summary><b>Action Configuration (Click to expand)</b></summary>
-
    ```json showLineNumbers
    {
      "identifier": "enrichSecurityVulnerabilityUsingAI",
@@ -133,8 +130,6 @@ First, let's create the action that will send the CVE information to the AI serv
 }
 ```
 
-</details>
-
 4. Click "Create" to save the action
 
 ### Create Response Handler Automation
@@ -144,9 +139,6 @@ Next, we'll create an automation to handle the AI service's response and update 
 1. Navigate to the [Automations](https://app.getport.io/settings/automations) page
 2. Click on "New automation"
 3. Click on "Edit JSON" and paste the following configuration:
-
-   <details>
-   <summary><b>Automation Configuration (Click to expand)</b></summary>
 
    ```json showLineNumbers
    {
@@ -177,8 +169,6 @@ Next, we'll create an automation to handle the AI service's response and update 
      "publish": true
 }
 ```
-
-</details>
 
 4. Click "Create" to save the automation
 
