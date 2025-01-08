@@ -184,7 +184,7 @@ Now that we have set up our data model and created the necessary actions, let's 
 6. Refresh the page.
 7. You should now see the AI-generated summary in the "AI Summary" field.
 
-![AI-generated summary for CVE-2022-48196](/img/guides/ai-security-summary-example.png){border="1px"}
+![AI-generated summary for CVE-2022-48196](/img/guides/ai-security-summary-example.png border="1px")
 
 The image above shows an example of an AI-generated summary for CVE-2022-48196, demonstrating how the AI provides:
 
