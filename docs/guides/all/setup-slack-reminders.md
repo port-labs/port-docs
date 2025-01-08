@@ -26,7 +26,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate:
 
 ### The goal of this guide
 
-In this guide we will create a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.getport.io/promote-scorecards/#what-is-a-scorecard). In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
+In this guide we will create a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.port.io/promote-scorecards/#what-is-a-scorecard). In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
 
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
@@ -337,7 +337,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 <img src='/img/guides/runStatusReminder.png' width='90%' />
 
 :::tip Logging action progress
-💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.getport.io/actions-and-automations/reflect-action-progress/) to learn more.
+💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.port.io/actions-and-automations/reflect-action-progress/) to learn more.
 :::
 
 <br/>
