@@ -433,7 +433,7 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-### JQL support for `issue` kind
+### JQL support for issues
 
 The Ocean Jira integration supports querying objects from the `issue` kind using [JQL](https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/), making it possible to specifically filter the issues that are queried from Jira and ingested to Port.
 
