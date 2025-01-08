@@ -38,14 +38,14 @@ For more information about managing secrets in Port, see the [secrets documentat
 
 This guide requires two fields in your security issue blueprint:
 
-1. **CVE ID Field**: Stores the vulnerability identifier
-2. **AI Summary Field**: Stores the AI-generated insights
+1. **CVE ID Field**: Stores the vulnerability identifier.
+2. **AI Summary Field**: Stores the AI-generated insights.
 
 First, ensure your blueprint has the CVE ID field:
 
-1. Go to the [Builder](https://app.getport.io/settings/data-model) page
-2. Find your security issue blueprint
-3. Click "Edit JSON"
+1. Go to the [Builder](https://app.getport.io/settings/data-model) page.
+2. Find your security issue blueprint.
+3. Click "Edit JSON".
 4. Add the following field to your blueprint's properties:
 
    ```json
@@ -60,7 +60,7 @@ First, ensure your blueprint has the CVE ID field:
 
 Next, add the AI summary field to store the generated insights:
 
-1. In the same blueprint JSON
+1. In the same blueprint JSON.
 2. Add the following field to your blueprint's properties:
 
    ```json
@@ -73,7 +73,7 @@ Next, add the AI summary field to store the generated insights:
    }
    ```
 
-3. Click "Save" to update the blueprint
+3. Click "Save" to update the blueprint.
 
 ## Create self-service actions
 
@@ -83,8 +83,8 @@ Now that we have our data model set up, we'll create the necessary actions to in
 
 First, let's create the action that will send the CVE information to the AI service:
 
-1. Navigate to the [Self-service tab](https://app.getport.io/self-serve) in your Port application
-2. Click on "New action"
+1. Navigate to the [Self-service tab](https://app.getport.io/self-serve) in your Port application.
+2. Click on "New action".
 3. Click on "Edit JSON" and paste the following configuration:
 
    ```json showLineNumbers
@@ -130,14 +130,14 @@ First, let's create the action that will send the CVE information to the AI serv
 }
 ```
 
-4. Click `Create` to save the action.
+4. Click "Create" to save the action.
 
 ### Create Response Handler Automation
 
 Next, we'll create an automation to handle the AI service's response and update the security issue with the generated insights:
 
-1. Navigate to the [Automations](https://app.getport.io/settings/automations) page
-2. Click on "New automation"
+1. Navigate to the [Automations](https://app.getport.io/settings/automations) page.
+2. Click on "New automation".
 3. Click on "Edit JSON" and paste the following configuration:
 
    ```json showLineNumbers
@@ -170,7 +170,7 @@ Next, we'll create an automation to handle the AI service's response and update 
 }
 ```
 
-4. Click "Create" to save the automation
+4. Click "Create" to save the automation.
 
 ## Execute the actions
 
@@ -184,7 +184,7 @@ Now that we have set up our data model and created the necessary actions, let's 
 6. Refresh the page.
 7. You should now see the AI-generated summary in the "AI Summary" field.
 
-<img src="/img/guides/ai-security-summary-example.png" alt="AI-generated summary for CVE-2022-48196" border="1px" />
+<img src="/img/guides/ai-security-summary-example.png" alt="AI-generated summary for CVE-2022-48196" border="1" />
 
 The image above shows an example of an AI-generated summary for CVE-2022-48196, demonstrating how the AI provides:
 
