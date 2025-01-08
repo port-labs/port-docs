@@ -130,7 +130,7 @@ First, let's create the action that will send the CVE information to the AI serv
 }
 ```
 
-4. Click "Create" to save the action
+4. Click `Create` to save the action.
 
 ### Create Response Handler Automation
 
