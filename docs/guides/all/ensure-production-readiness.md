@@ -220,7 +220,7 @@ Let's see how we can easily ingest a CODEOWNERS file into our existing services:
 
 4. Under `Exporters`, click on the Github exporter with your organization name.
 
-5. In the mapping YAML (the bottom-left panel), add the line `code_owners: file://CODEOWNERS` as shown here, then click `Resync`:
+5. In the mapping YAML (the bottom-left panel), add the line `code_owners: file://CODEOWNERS` as shown here, then click `Save & Resync`:
 
 <img src='/img/guides/prodReadinessMappingAddCodeOwners.png' width='70%' border='1px' />
 <br/><br/>
