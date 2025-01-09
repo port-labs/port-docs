@@ -1,15 +1,15 @@
 ---
 sidebar_position: 1
-title: Scaffold a new service
+title: Scaffold a new repository
 displayed_sidebar: null
-description: Learn how to scaffold a new service in Port with this guide, ensuring efficient setup and streamlined development.
+description: Learn how to scaffold a new repository in Port with this guide, ensuring efficient setup and streamlined development.
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Scaffold a new service
+# Scaffold a new repository
 
 This guide takes 7 minutes to complete, and aims to demonstrate the power of self-service actions in Port.
 
@@ -24,13 +24,13 @@ This guide takes 7 minutes to complete, and aims to demonstrate the power of sel
 
 ### The goal of this guide
 
-In this guide we will create an action that initializes a new Git repository. In reality, such an action can be used by developers to scaffold new services.
+In this guide we will create an action that initializes a new Git repository and attach it to the existing **Service** in Port. In reality, such an action can be used by developers to scaffold a new repository.
 
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
-- Developers will be able to scaffold new services easily.
-- R&D managers will be able to get an overview of new services - how many were created and by whom.
-- Platform engineers will be able to control permissions to ensure only the relevant people can create new services.
+- Developers will be able to scaffold new repositories easily.
+- R&D managers will be able to get an overview of new repositories and the services they are related to, how many were created and by whom.
+- Platform engineers will be able to control permissions to ensure only the relevant people can create new repositories.
 
 <br/>
 
@@ -48,12 +48,12 @@ After completing it, you will get a sense of how it can benefit different person
 
     <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
-3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
+3. Fill the basic form with the **Title** and **Description** and select `Create` and `Repository` for the **Operation** and **Blueprint** respectively.
 
     <img src='/img/guides/scaffoldActionDetails.png' width='70%' border='1px' />
     <br/>
 4. Click on the `Next` to proceed to the `User Form` tab and click on `+ Input`.
-5. Enter `Service name` as the **Title**, select `Text` for the **Type**, set **Required** to `True`, and click on the `Create` button.
+5. Enter `Repository name` as the **Title**, select `Text` for the **Type**, set **Required** to `True`, and click on the `Create` button.
 
     <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
     <br/>
@@ -320,7 +320,7 @@ If the template GitHub repo is not within the same organization where this repo 
 <summary><b>Github workflow (click to expand)</b></summary>
 
 ```yaml showLineNumbers title="port-create-repo.yml"
-name: Scaffold a new service
+name: Scaffold a new repository
 on:
   workflow_dispatch:
     inputs:
@@ -329,7 +329,7 @@ on:
         description: Includes the action's run id
       service_name:
         required: true
-        description: The name of the new service
+        description: The name of the new repository
         type: string
 jobs:
   scaffold-service:
@@ -1157,7 +1157,7 @@ Congratulations! You can now create services easily from Port 💪🏽
 
 ### Possible daily routine integrations
 
-- Send a slack message in the R&D channel to let everyone know that a new service was created.
+- Send a slack message in the R&D channel to let everyone know that a new repository was created.
 - Send a weekly/monthly report for managers showing all the new services created in this timeframe and their owners.
 
 ### Conclusion
