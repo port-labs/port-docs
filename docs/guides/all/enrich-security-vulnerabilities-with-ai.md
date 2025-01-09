@@ -127,8 +127,8 @@ First, let's create the action that will send the CVE information to the AI serv
          ]
        }
      }
-}
-```
+   }
+   ```
 
 4. Click "Create" to save the action.
 
@@ -167,8 +167,8 @@ Next, we'll create an automation to handle the AI service's response and update 
        }
      },
      "publish": true
-}
-```
+   }
+   ```
 
 4. Click "Create" to save the automation.
 
