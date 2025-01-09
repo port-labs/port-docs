@@ -69,17 +69,17 @@ After completing it, you will get a sense of how it can benefit different person
 
     <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
-3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
+3. Fill the basic form with the **Title** and **Description** and select `Create` and `Repository` for the **Operation** and **Blueprint** respectively.
 
     <img src='/img/guides/scaffoldActionADODetails.png' width='70%' border='1px' />
     <br/>
 
-4. Click on `Next`, and add the following inputs: `Service Name`, `Azure Organization`, `Azure Project`, and `Description`.
+4. Click on `Next`, and add the following inputs: `Repository Name`, `Azure Organization`, `Azure Project`, and `Description`.
 
     To create each input field:
 
       - Click on `+ Input`.
-      - Enter the **Title** (e.g., `Service Name`).
+      - Enter the **Title** (e.g., `Repository Name`).
       - Select the appropriate **Type**.
       - Set **Required** to `True` if the input is mandatory.
       - Click on the `Create` button.  
@@ -91,7 +91,7 @@ After completing it, you will get a sense of how it can benefit different person
 
       | Input Name         | Type             | Required | Additional Information            |
       |--------------------|------------------|----------|-----------------------------------|
-      | Service Name       | Text             | Yes      |                                   |
+      | Repository Name    | Text             | Yes      |                                   |
       | Azure Organization | String           | Yes      |                                   |
       | Azure Project      | Entity Selection | Yes      | Select `Project` as the blueprint |
       | Description        | String           | No       |                                   |
@@ -99,7 +99,7 @@ After completing it, you will get a sense of how it can benefit different person
       :::tip Data type and required fields
       - Ensure that the `Azure Organization` and `Description` inputs are of type **String**.
       - For the `Azure Project` input, select **Entity Selection** as the type and choose `Project` as the blueprint.
-      - Make sure the `Service Name`, `Azure Organization`, and `Azure Project` inputs are marked as required.
+      - Make sure the `Repository Name`, `Azure Organization`, and `Azure Project` inputs are marked as required.
       :::
       <br/>
 
@@ -137,7 +137,7 @@ Fill out the form with your values:
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this example, we will send two details that our backend needs to know - the service name, and the id of the action run.  
+  For this example, we will send two details that our backend needs to know - the repository name, and the id of the action run.  
   Copy the following JSON snippet and paste it in the payload code box:
 
   ```json showLineNumbers
@@ -145,7 +145,7 @@ Fill out the form with your values:
     "port_context": {
         "runId": "{{ .run.id }}"
     },
-    "service_name": "{{ .inputs.service_name }}"
+    "repository_name": "{{ .inputs.repository_name }}"
   }
   ```
 
@@ -178,7 +178,7 @@ First, choose `Trigger Webhook URL` as the invocation type, then fill out the fo
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this example, we will send some details that our backend needs to know, including the service name and the id of the action run.  
+  For this example, we will send some details that our backend needs to know, including the repository name and the id of the action run.  
   Copy the following JSON snippet and paste it in the "Body" code box:
 
   ```json showLineNumbers
@@ -192,7 +192,7 @@ First, choose `Trigger Webhook URL` as the invocation type, then fill out the fo
           "email": "{{ .trigger.by.user.email }}",
         }
     },
-    "service_name": "{{ .inputs.service_name }}",
+    "repository_name": "{{ .inputs.repository_name }}",
   }
   ```
 
@@ -222,7 +222,7 @@ Then, fill out your workflow details:
     "port_context": {
       "runId": "{{ .run.id }}",
     },
-    "service_name": "{{ .inputs.service_name }}",
+    "repository_name": "{{ .inputs.repository_name }}",
     "bitbucket_workspace_name": "{{ .inputs.bitbucket_workspace_name }}",
     "bitbucket_project_key": "{{ .inputs.bitbucket_project_key }}",
   }
@@ -241,7 +241,7 @@ First, choose `Run Azure Pipeline` as the invocation type. Then fill out the for
 ```json showLineNumbers
 {
     "properties": {
-        "service_name": "{{.inputs.\"service_name\"}}",
+        "repository_name": "{{.inputs.\"repository_name\"}}",
         "azure_organization": "{{.inputs.\"azure_organization\"}}",
         "description": "{{.inputs.\"description\"}}",
         "azure_project": "{{.inputs.\"azure_project\"}}"
@@ -327,7 +327,7 @@ on:
       port_context:
         required: true
         description: Includes the action's run id
-      service_name:
+      repository_name:
         required: true
         description: The name of the new repository
         type: string
@@ -345,10 +345,10 @@ jobs:
           portClientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
           portRunId: ${{ fromJson(inputs.port_context).runId }}
-          repositoryName: ${{ inputs.service_name }}
-          portUserInputs: '{"cookiecutter_app_name": "${{ inputs.service_name }}" }'
+          repositoryName: ${{ inputs.repository_name }}
+          portUserInputs: '{"cookiecutter_app_name": "${{ inputs.repository_name }}" }'
           cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
-          blueprintIdentifier: "service"
+          blueprintIdentifier: "repository"
           organizationName: ${{ env.ORG_NAME }}
 ```
 
@@ -462,9 +462,9 @@ scaffold:
         -d '{"message":"⚙️ Creating new GitLab repository"}' \
         "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
 
-      # this step creates an empty repo with the service_name provided by the executor of the action...
-      service_name=$(cat $TRIGGER_PAYLOAD | jq -r '.service_name')
-      CREATE_REPO_RESPONSE=$(curl -X POST -s "$CI_API_V4_URL/projects" --header "Private-Token: $GITLAB_ACCESS_TOKEN" --form "name=$service_name" --form "namespace_id=$CI_PROJECT_NAMESPACE_ID")
+      # this step creates an empty repo with the repository_name provided by the executor of the action...
+      repository_name=$(cat $TRIGGER_PAYLOAD | jq -r '.repository_name')
+      CREATE_REPO_RESPONSE=$(curl -X POST -s "$CI_API_V4_URL/projects" --header "Private-Token: $GITLAB_ACCESS_TOKEN" --form "name=repository_name" --form "namespace_id=$CI_PROJECT_NAMESPACE_ID")
       PROJECT_URL=$(echo $CREATE_REPO_RESPONSE | jq -r .http_url_to_repo)
 
       # ...and ensures that this step was successful
@@ -489,7 +489,7 @@ scaffold:
 
       echo "PROJECT_URL=$PROJECT_URL" >> data.env
       echo "BLUEPRINT_ID=$BLUEPRINT_ID" >> data.env
-      echo "SERVICE_NAME=$service_name" >> data.env
+      echo "REPOSITORY_NAME=$repository_name" >> data.env
 
       # this step updates the executor of the action that a new cookiecutter project is being created
       curl -X POST \
@@ -505,7 +505,7 @@ scaffold:
         email: "${EMAIL}"
         project_short_description: "Project scaffolded by Port"
         gitlab_username: "${gitlab_username}"
-        project_name: "${service_name}"
+        project_name: "${repository_name}"
       EOF
       cookiecutter $COOKIECUTTER_TEMPLATE_URL --no-input --config-file cookiecutter.yaml --output-dir scaffold_out
 
@@ -524,13 +524,13 @@ scaffold:
 
       # this step copies the cookiecutter template
       # and adds it to the empty repo with the parameters provided by the user
-      modified_service_name=$(echo "$service_name" | sed 's/[[:space:]-]/_/g')
-      cd scaffold_out/$modified_service_name
+      modified_repository_name=$(echo "$repository_name" | sed 's/[[:space:]-]/_/g')
+      cd scaffold_out/$modified_repository_name
       git init
       git add .
       git commit -m "Initial commit"
       GITLAB_HOSTNAME=$(echo "$CI_API_V4_URL" | cut -d'/' -f3)
-      git remote add origin https://:$GITLAB_ACCESS_TOKEN@$GITLAB_HOSTNAME/${CI_PROJECT_NAMESPACE}/${service_name}.git
+      git remote add origin https://:$GITLAB_ACCESS_TOKEN@$GITLAB_HOSTNAME/${CI_PROJECT_NAMESPACE}/${repository_name}.git
       git push -u origin main
 
       # this step informs the executor of the action that the repo has been updated
@@ -557,12 +557,12 @@ create-entity:
       curl -X POST \
           -H 'Content-Type: application/json' \
           -H "Authorization: Bearer $ACCESS_TOKEN" \
-          -d '{"message":"🚀 Creating new '"$BLUEPRINT_ID"' entity: '"$SERVICE_NAME"'"}' \
+          -d '{"message":"🚀 Creating new '"$BLUEPRINT_ID"' entity: '"$REPOSITORY_NAME"'"}' \
           "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
       curl --location --request POST "https://api.getport.io/v1/blueprints/$BLUEPRINT_ID/entities?upsert=true&run_id=$RUN_ID&create_missing_related_entities=true" \
         --header "Authorization: Bearer $ACCESS_TOKEN" \
         --header "Content-Type: application/json" \
-        -d '{"identifier": "'"$SERVICE_NAME"'","title": "'"$SERVICE_NAME"'","properties": {"url": "'"$PROJECT_URL"'"}, "relations": {}}'
+        -d '{"identifier": "'"$REPOSITORY_NAME"'","title": "'"$REPOSITORY_NAME"'","properties": {"url": "'"$PROJECT_URL"'"}, "relations": {}}'
 
 update-run-status:
   stage: update-run-status
@@ -576,7 +576,7 @@ update-run-status:
       curl -X POST \
         -H 'Content-Type: application/json' \
         -H "Authorization: Bearer $ACCESS_TOKEN" \
-        -d '{"message":"✅ Scaffold '"$SERVICE_NAME"' finished successfully!"}' \
+        -d '{"message":"✅ Scaffold '"$REPOSITORY_NAME"' finished successfully!"}' \
         "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
       curl -X POST \
         -H 'Content-Type: application/json' \
@@ -586,7 +586,7 @@ update-run-status:
       curl -X PATCH \
         -H 'Content-Type: application/json' \
         -H "Authorization: Bearer $ACCESS_TOKEN" \
-        -d '{"status":"SUCCESS", "message": {"run_status": "Scaffold '"$SERVICE_NAME"' finished successfully! Project URL: '"$PROJECT_URL"'"}}' \
+        -d '{"status":"SUCCESS", "message": {"run_status": "Scaffold '"$REPOSITORY_NAME"' finished successfully! Project URL: '"$PROJECT_URL"'"}}' \
         "https://api.getport.io/v1/actions/runs/$RUN_ID"
 ```
 
@@ -614,7 +614,7 @@ Next, create a Jenkins pipeline with the following configuration:
 
 - Define the value of the [`token`](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `scaffolder-token`.
 
-- [Define variables for the pipeline](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table below for the full variable list):
+- [Define variables for the pipeline](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `REPOSITORY_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table below for the full variable list):
 
   <img src='/img/guides/jenkinsGenericVariable.png' width='100%' border='1px' />
 
@@ -622,7 +622,7 @@ Create the following variables and their related JSONPath expression:
 
     | Variable Name            | JSONPath Expression                             |
     | ------------------------ | ----------------------------------------------- |
-    | SERVICE_NAME             | `$.service_name`                                |
+    | REPOSITORY_NAME             | `$.repository_name`                                |
     | BITBUCKET_WORKSPACE_NAME | `$.bitbucket_workspace_name`                    |
     | BITBUCKET_PROJECT_KEY    | `$.bitbucket_project_key`                       |
     | RUN_ID                   | `$.port_context.runId`                          |
@@ -642,10 +642,10 @@ pipeline {
 
     environment {
         COOKIECUTTER_TEMPLATE = 'https://github.com/lacion/cookiecutter-golang'
-        SERVICE_NAME = "${SERVICE_NAME}"
+        REPOSITORY_NAME = "${REPOSITORY_NAME}"
         BITBUCKET_WORKSPACE_NAME = "${BITBUCKET_WORKSPACE_NAME}"
         BITBUCKET_PROJECT_KEY = "${BITBUCKET_PROJECT_KEY}"
-        SCAFFOLD_DIR = "scaffold_${SERVICE_NAME}"
+        SCAFFOLD_DIR = "scaffold_${REPOSITORY_NAME}"
         PORT_ACCESS_TOKEN = ""
         PORT_BLUEPRINT_ID = "microservice"
         PORT_RUN_ID = "${RUN_ID}"
@@ -687,7 +687,7 @@ pipeline {
                         curl -X POST \
                           -H "Content-Type: application/json" \
                           -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
-                          -d '{"message": "Creating BitBucket repository: ${SERVICE_NAME} in Workspace: ${BITBUCKET_WORKSPACE_NAME}, Project: ${BITBUCKET_PROJECT_KEY}..."}' \
+                          -d '{"message": "Creating BitBucket repository: ${REPOSITORY_NAME} in Workspace: ${BITBUCKET_WORKSPACE_NAME}, Project: ${BITBUCKET_PROJECT_KEY}..."}' \
                              "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}/logs"
                     """, returnStdout: true)
 
@@ -701,7 +701,7 @@ pipeline {
                         sh """
                             curl -i -u ${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD} \\
                             -d '{"is_private": true, "scm": "git", "project": {"key": "${BITBUCKET_PROJECT_KEY}"}}' \\
-                            https://api.bitbucket.org/2.0/repositories/${BITBUCKET_WORKSPACE_NAME}/${SERVICE_NAME}
+                            https://api.bitbucket.org/2.0/repositories/${BITBUCKET_WORKSPACE_NAME}/${REPOSITORY_NAME}
                         """
                     }
                 }
@@ -715,7 +715,7 @@ pipeline {
                         curl -X POST \
                           -H "Content-Type: application/json" \
                           -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
-                          -d '{"message": "Scaffolding ${SERVICE_NAME}..."}' \
+                          -d '{"message": "Scaffolding ${REPOSITORY_NAME}..."}' \
                              "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}/logs"
                     """, returnStdout: true)
 
@@ -730,7 +730,7 @@ pipeline {
 default_context:
   full_name: "Full Name"
   github_username: "bitbucketuser"
-  app_name: "${SERVICE_NAME}"
+  app_name: "${REPOSITORY_NAME}"
   project_short_description": "A Golang project."
   docker_hub_username: "dockerhubuser"
   docker_image: "dockerhubuser/alpine-base-image:latest"
@@ -740,23 +740,23 @@ default_context:
                     writeFile(file: 'cookiecutter.yaml', text: yamlContent)
 
                         sh("""
-                            rm -rf ${SCAFFOLD_DIR} ${SERVICE_NAME}
-                            git clone https://${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}@bitbucket.org/${BITBUCKET_WORKSPACE_NAME}/${SERVICE_NAME}.git
+                            rm -rf ${SCAFFOLD_DIR} ${REPOSITORY_NAME}
+                            git clone https://${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}@bitbucket.org/${BITBUCKET_WORKSPACE_NAME}/${REPOSITORY_NAME}.git
 
                             cookiecutter ${COOKIECUTTER_TEMPLATE} --output-dir ${SCAFFOLD_DIR} --no-input --config-file cookiecutter.yaml -f
 
-                            rm -rf ${SCAFFOLD_DIR}/${SERVICE_NAME}/.git*
-                            cp -r ${SCAFFOLD_DIR}/${SERVICE_NAME}/* "${SERVICE_NAME}/"
+                            rm -rf ${SCAFFOLD_DIR}/${REPOSITORY_NAME}/.git*
+                            cp -r ${SCAFFOLD_DIR}/${REPOSITORY_NAME}/* "${REPOSITORY_NAME}/"
 
-                            cd ${SERVICE_NAME}
+                            cd ${REPOSITORY_NAME}
                             git config user.name "Jenkins Pipeline Bot"
                             git config user.email "jenkins-pipeline[bot]@users.noreply.jenkins.com"
                             git add .
-                            git commit -m "Scaffolded project ${SERVICE_NAME}"
+                            git commit -m "Scaffolded project ${REPOSITORY_NAME}"
                             git push -u origin master
                             cd ..
 
-                            rm -rf ${SCAFFOLD_DIR} ${SERVICE_NAME}
+                            rm -rf ${SCAFFOLD_DIR} ${REPOSITORY_NAME}
                         """)
                     }
 
@@ -771,7 +771,7 @@ default_context:
                         curl -X POST \
                           -H "Content-Type: application/json" \
                           -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
-                          -d '{"message": "Creating ${SERVICE_NAME} Microservice Port entity..."}' \
+                          -d '{"message": "Creating ${REPOSITORY_NAME} Microservice Port entity..."}' \
                              "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}/logs"
                     """, returnStdout: true)
 
@@ -783,9 +783,9 @@ default_context:
         --header "Authorization: Bearer $PORT_ACCESS_TOKEN" \
         --header "Content-Type: application/json" \
         --data-raw '{
-				"identifier": "${SERVICE_NAME}",
-				"title": "${SERVICE_NAME}",
-				"properties": {"description":"${SERVICE_NAME} golang project","url":"https://bitbucket.org/${BITBUCKET_WORKSPACE_NAME}/${SERVICE_NAME}/src"},
+				"identifier": "${REPOSITORY_NAME}",
+				"title": "${REPOSITORY_NAME}",
+				"properties": {"description":"${REPOSITORY_NAME} golang project","url":"https://bitbucket.org/${BITBUCKET_WORKSPACE_NAME}/${REPOSITORY_NAME}/src"},
 				"relations": {}
 			}'
 
@@ -822,7 +822,7 @@ default_context:
                     curl -X PATCH \
                         -H "Content-Type: application/json" \
                         -H "Authorization: Bearer ${PORT_ACCESS_TOKEN}" \
-                        -d '{"status":"FAILURE", "message": {"run_status": "Failed to Scaffold ${SERVICE_NAME}"}}' \
+                        -d '{"status":"FAILURE", "message": {"run_status": "Failed to Scaffold ${REPOSITORY_NAME}"}}' \
                             "https://api.getport.io/v1/actions/runs/${PORT_RUN_ID}"
                 """, returnStdout: true)
 
@@ -874,7 +874,7 @@ pool:
 variables:
   RUN_ID: "${{ parameters.SERVICE_CONNECTION_NAME.port_context.runId }}"
   BLUEPRINT_ID: "${{ parameters.SERVICE_CONNECTION_NAME.port_context.blueprint }}"
-  SERVICE_NAME: "${{ parameters.SERVICE_CONNECTION_NAME.properties.service_name }}"
+  REPOSITORY_NAME: "${{ parameters.SERVICE_CONNECTION_NAME.properties.repository_name }}"
   DESCRIPTION: "${{ parameters.SERVICE_CONNECTION_NAME.properties.description }}"
   AZURE_ORGANIZATION: "${{ parameters.SERVICE_CONNECTION_NAME.properties.azure_organization }}"
   AZURE_PROJECT: "${{ parameters.SERVICE_CONNECTION_NAME.properties.azure_project.title }}"
@@ -918,9 +918,9 @@ stages:
               sudo pip install cookiecutter -q
           - script: |
               # Use shell variable syntax for accessing variables
-              PAYLOAD="{\"name\":\"$SERVICE_NAME\",\"project\":{\"id\":\"$PROJECT_ID\"}}"
+              PAYLOAD="{\"name\":\"$REPOSITORY_NAME\",\"project\":{\"id\":\"$PROJECT_ID\"}}"
 
-              echo "SERVICE_NAME: $SERVICE_NAME"
+              echo "REPOSITORY_NAME: $REPOSITORY_NAME"
               echo "AZURE_ORGANIZATION: $AZURE_ORGANIZATION"
               echo "PROJECT_ID: $PROJECT_ID"
               echo "PAYLOAD: $PAYLOAD"
@@ -952,7 +952,7 @@ stages:
 
               cat <<EOF > cookiecutter.yaml
               default_context:
-                site_name: "$SERVICE_NAME"
+                site_name: "$REPOSITORY_NAME"
                 python_version: "3.6.0"
               EOF
               cookiecutter $COOKIECUTTER_TEMPLATE_URL --no-input --config-file cookiecutter.yaml --output-dir scaffold_out
@@ -962,7 +962,7 @@ stages:
               git config --global user.name "Mighty Scaffolder"
               git config --global init.defaultBranch "main"
 
-              cd "scaffold_out/$SERVICE_NAME"
+              cd "scaffold_out/$REPOSITORY_NAME"
               git init
               git add .
               git commit -m "Initial commit"
@@ -1007,8 +1007,8 @@ stages:
                 -H 'Content-Type: application/json' \
                 -H 'Authorization: Bearer $(accessToken)' \
                 -d '{
-                    "identifier": "${{ variables.SERVICE_NAME }}",
-                    "title": "${{ variables.SERVICE_NAME }}",
+                    "identifier": "${{ variables.REPOSITORY_NAME }}",
+                    "title": "${{ variables.REPOSITORY_NAME }}",
                     "properties": {"description":"${{ variables.DESCRIPTION }}","url":"$(PROJECT_URL)" },
                     "relations": {
                       "project":"${{ variables.PROJECT_ID }}"
@@ -1035,7 +1035,7 @@ stages:
               curl -X PATCH \
                 -H 'Content-Type: application/json' \
                 -H 'Authorization: Bearer $(accessToken)' \
-                -d '{"status":"SUCCESS", "message": {"run_status": "Scaffold ${{ variables.SERVICE_NAME }} finished successfully!\\n Project URL: $(PROJECT_URL)" }}' \
+                -d '{"status":"SUCCESS", "message": {"run_status": "Scaffold ${{ variables.REPOSITORY_NAME }} finished successfully!\\n Project URL: $(PROJECT_URL)" }}' \
                 "https://api.getport.io/v1/actions/runs/${{ variables.RUN_ID }}"
 
   - stage: update_run_status_failed
@@ -1053,7 +1053,7 @@ stages:
               curl -X PATCH \
                 -H 'Content-Type: application/json' \
                 -H "Authorization: Bearer $accessToken" \
-                -d '{"status":"FAILURE", "message": {"run_status": "Scaffold '"$SERVICE_NAME"' failed" }}' \
+                -d '{"status":"FAILURE", "message": {"run_status": "Scaffold '"$REPOSITORY_NAME"' failed" }}' \
                 "https://api.getport.io/v1/actions/runs/$RUN_ID"
 
 ```
@@ -1153,16 +1153,16 @@ When executing the Azure DevOps scaffolder, you will need to provide the followi
 💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](/actions-and-automations/reflect-action-progress/reflect-action-progress.md) to learn more.
 :::
 
-Congratulations! You can now create services easily from Port 💪🏽
+Congratulations! You can now create repositories easily from Port 💪🏽
 
 ### Possible daily routine integrations
 
 - Send a slack message in the R&D channel to let everyone know that a new repository was created.
-- Send a weekly/monthly report for managers showing all the new services created in this timeframe and their owners.
+- Send a weekly/monthly report for managers showing all the new repositories created in this timeframe and their owners.
 
 ### Conclusion
 
-Creating a service is not just a periodic task developers undertake, but a vital step that can occur on a monthly basis. However, it's crucial to recognize that this is only a fragment of the broader experience that we're striving to create for developers.
+Creating a repository is not just a periodic task developers undertake, but a vital step that can occur on a monthly basis. However, it's crucial to recognize that this is only a fragment of the broader experience that we're striving to create for developers.
 Our ultimate goal is to facilitate a seamless transition from ideation to production. In doing so, we aim to eliminate the need for developers to navigate through a plethora of tools, reducing friction and accelerating the time-to-production.  
 In essence, we're not just building a tool, but sculpting an ecosystem that empowers developers to bring new features to life with utmost efficiency.
 
