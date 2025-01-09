@@ -30,7 +30,8 @@ This guide takes 10 minutes to complete, and aims to cover:
 :::info Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `service` blueprint that was created during the onboarding process.
-
+- You should have your Git provider integration installed via Port. If you haven't installed it yet,  click [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/)
+  to select and install your preferred Git provider:
 :::
 
 ### The goal of this guide
@@ -174,7 +175,7 @@ Now, if our `service` identifier is equal to the Pagerduty service's name, the `
 
 <br/><br/>
 
-### Display each service's code owners
+### Display each repository's code owners
 
 Git providers allow you to add a `CODEOWNERS` file to a repository specifying its owner/s. See the relevant documentation for details and examples:
 
@@ -207,14 +208,14 @@ Git providers allow you to add a `CODEOWNERS` file to a repository specifying it
 <br/>
 Let's see how we can easily ingest a CODEOWNERS file into our existing services:
 
-#### Add a codeowners property to the service blueprint
+#### Add a codeowners property to the repository blueprint
 
-1. Go to your [Builder](https://app.getport.io/settings/data-model) again, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click `New property`.
+1. Go to your [Builder](https://app.getport.io/settings/data-model) again, choose the `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click `New property`.
 
 2. Fill in the form like this:  
    _Note the `identifier` field value, we will need it in the next step._
 
-<img src='/img/guides/addCodeownersForm.png' width='40%' />
+    <img src='/img/guides/addCodeownersForm.png' width='40%' />
 
 3. Next we will update the Github exporter mapping and add the new property. Go to your [data sources page](https://app.getport.io/settings/data-sources).
 
@@ -222,8 +223,8 @@ Let's see how we can easily ingest a CODEOWNERS file into our existing services:
 
 5. In the mapping YAML (the bottom-left panel), add the line `code_owners: file://CODEOWNERS` as shown here, then click `Save & Resync`:
 
-<img src='/img/guides/prodReadinessMappingAddCodeOwners.png' width='70%' border='1px' />
-<br/><br/>
+    <img src='/img/guides/prodReadinessMappingAddCodeOwners.png' width='70%' border='1px' />
+    <br/><br/>
 
 _Remember the `identifier` from step 2? This tells Port how to populate the new property_ 😎
 
