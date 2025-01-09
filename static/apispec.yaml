@@ -4289,6 +4289,7 @@ paths:
               type: object
               properties:
                 combinator:
+                  type: string
                   enum:
                     - and
                     - or
