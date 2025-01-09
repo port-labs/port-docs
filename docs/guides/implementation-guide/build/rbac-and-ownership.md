@@ -17,12 +17,12 @@ Since we have not yet set up any self-service actions, this step should be done 
 
 ## Define ownership
 
-Ownership is a way to assign responsibility for a specific [**entity**](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities) in your software catalog.  
+Ownership is a way to assign responsibility for a specific [**entity**](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities) in your software catalog.  
 Each entity can be assigned to one or more **teams** of users.
 
 Ownership can also be used to enforce permissions, as it allows you to make sure developers can only perform actions or view entities that are **owned by their team**.
 
-See the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/#configuring-team-ownership) for more information.
+See the [documentation](https://docs.port.io/sso-rbac/rbac-overview/#configuring-team-ownership) for more information.
 
 ## Next step - set up scorecards & dashboards
 

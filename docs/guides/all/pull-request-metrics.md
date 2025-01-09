@@ -11,8 +11,8 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 :::warning Deprecated
 This guide is deprecated and is no longer recommended for use. Please refer to the new guides for the most up-to-date information:
 
-- [Track DORA metrics](https://docs.getport.io/guides/all/setup-dora-metrics)
-- [Measuring pull request standards](https://docs.getport.io/guides/all/working_agreements_and_measuring_pr_standards)
+- [Track DORA metrics](https://docs.port.io/guides/all/setup-dora-metrics)
+- [Measuring pull request standards](https://docs.port.io/guides/all/working_agreements_and_measuring_pr_standards)
 :::
 
 In this guide, we will create a GitHub action that computes pull-request metrics for a service (repository) on schedule and ingests the results to Port.

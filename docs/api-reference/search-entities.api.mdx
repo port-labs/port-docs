@@ -1,7 +1,7 @@
 ---
 id: search-entities
 title: "Search entities"
-description: "This route allows you to search for entities in your software catalog based on a given set of rules.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.getport.io/search-and-query/)."
+description: "This route allows you to search for entities in your software catalog based on a given set of rules.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.port.io/search-and-query/)."
 sidebar_label: "Search entities"
 hide_title: true
 hide_table_of_contents: true
@@ -36,7 +36,7 @@ import Heading from "@theme/Heading";
 
 
 
-This route allows you to search for entities in your software catalog based on a given set of rules.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.getport.io/search-and-query/).
+This route allows you to search for entities in your software catalog based on a given set of rules.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.port.io/search-and-query/).
 
 <Heading
   id={"request"}
@@ -47,7 +47,7 @@ This route allows you to search for entities in your software catalog based on a
 </Heading>
 
 <ParamsDetails
-  parameters={[{"schema":{"type":"boolean","default":false},"in":"query","name":"exclude_calculated_properties","required":false,"description":"If `true`, [calculated properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entities.<br/>"},{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"include","required":false,"description":"An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"},{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"exclude","required":false,"description":"An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"}]}
+  parameters={[{"schema":{"type":"boolean","default":false},"in":"query","name":"exclude_calculated_properties","required":false,"description":"If `true`, [calculated properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entities.<br/>"},{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"include","required":false,"description":"An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"},{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"exclude","required":false,"description":"An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"}]}
 >
   
 </ParamsDetails>

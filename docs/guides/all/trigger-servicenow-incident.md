@@ -15,10 +15,10 @@ This GitHub action allows you to quickly trigger incidents in ServiceNow directl
     * `SERVICENOW_USERNAME` - ServiceNow instance username
     * `SERVICENOW_PASSWORD` - ServiceNow instance password.
     * `SERVICENOW_INSTANCE_URL` - ServiceNow instance URL.
-    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
-4. Optional - Install Port's ServiceNow integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow).
+4. Optional - Install Port's ServiceNow integration [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow).
 
 :::tip ServiceNow integration
 

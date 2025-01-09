@@ -71,7 +71,7 @@ Make sure to add the mirror properties.
 These mirror properties allow the `Pull Request` blueprint
 to access the Slack channel and webhook URL from the related `Service` blueprint.
 
-To read more about mirror properties and understand their usage better, visit the [Port Documentation on Mirror Properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property).
+To read more about mirror properties and understand their usage better, visit the [Port Documentation on Mirror Properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property).
 :::
 
 
