@@ -70,7 +70,7 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 
 </TabItem>
 
-<TabItem value="branch" label="Use Default Branch">
+<TabItem value="branch" label="Branch">
 
 The Azure Devops integration listens to real-time events from the branch specified in the `branch` field which is set to `main` by default. This is configurable and you can set the `branch` parameter to the branch you want to listen to events from.
 
