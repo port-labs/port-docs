@@ -15,7 +15,7 @@ This guide takes 10 minutes to complete, and aims to demonstrate the value of Po
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have installed any of Port's [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/). We will use the `Repository` blueprint that was created during the installation process
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
 - [Helm](https://helm.sh/docs/intro/install/) - required to install Port's Kubernetes exporter.
 
@@ -92,11 +92,11 @@ After installation, the exporter will:
 
 <br/>
 
-### Define the connection between services and workloads
+### Define the connection between repositories and workloads
 
 Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between them by relating the `Workload` blueprint to the `Service` blueprint. This will grant us some helpful context in our Software catalog, allowing us to see relevant `Workloads` in a `Service`'s context, or a `Service`'s property directly in its corresponding `Workload`.
 
-In this guide we will create one relation named `service` which will represent the service that a workload is running.
+In this guide we will create one relation named `repository` which will represent the service that a workload is running.
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Workload` blueprint, and click on `New relation`.
 
@@ -106,21 +106,21 @@ In this guide we will create one relation named `service` which will represent t
 
 <br/><br/>
 
-### Map your workloads to their services
+### Map your workloads to their repositories
 
-You may have noticed that the `service` relations are empty for all of our `workloads`. This is because we haven't specified which `workload` belongs to which `service`. This can be done manually, or via mapping by using a convention of your choice.
+You may have noticed that the `repository` relations are empty for all of our `workloads`. This is because we haven't specified which `workload` belongs to which `repository`. This can be done manually, or via mapping by using a convention of your choice.
 
 In this guide we will use the following convention:  
-A `workload` with a label in the form of `portService: <service-identifier>` will automatically be assigned to a `service` with that identifier.
+A `workload` with a label in the form of `portRepository: <repository-identifier>` will automatically be assigned to a `repository` with that identifier.
 
-For example, a k8s deployment with the label `portService: myService` will be assigned to a `service` with the identifier `myService`.
+For example, a k8s deployment with the label `portRepository: myRepository` will be assigned to a `repository` with the identifier `myRepository`.
 
 We achieved this by adding a [mapping definition](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml#L111-L119) in the configuration YAML we used when installing the exporter. The definition uses `jq` to perform calculations between properties.
 
 **Let's see this in action:**
 
-1. Create a `Deployment` resource in your cluster with a label matching the identifier of a `service` in your [Software catalog](https://app.getport.io/services).  
-   You can use the simple example below and change the `metadata.labels.portService` value to match your desired `service`. Copy it into a file named `deployment.yaml`, then apply it:
+1. Create a `Deployment` resource in your cluster with a label matching the identifier of a `repository` in your [Software catalog](https://app.getport.io/services).  
+   You can use the simple example below and change the `metadata.labels.portRepository` value to match your desired `repository`. Copy it into a file named `deployment.yaml`, then apply it:
 
 ```bash
 kubectl apply -f deployment.yaml
@@ -133,10 +133,10 @@ kubectl apply -f deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: awesomeservice
+  name: awesomerepository
   labels:
     app: nginx
-    portService: AwesomeService
+    portRepository: AwesomeRepository
 spec:
   replicas: 2
   selector:
@@ -177,13 +177,13 @@ resources:
             "my-cluster"
           properties: {}
           relations:
-            service: .metadata.labels.portService
+            repository: .metadata.labels.portRepository
           title: .metadata.name
 ```
 
 <br/>
 
-3. Go to your [Software catalog](https://app.getport.io/services), and click on `Workloads`. Click on the `Workload` for which you created the deployment, and you should see the `service` relation filled.
+3. Go to your [Software catalog](https://app.getport.io/repositories), and click on `Workloads`. Click on the `Workload` for which you created the deployment, and you should see the `repository` relation filled.
 
 <img src='/img/guides/k8sEntityAfterIngestion.png' width='80%' />
 
