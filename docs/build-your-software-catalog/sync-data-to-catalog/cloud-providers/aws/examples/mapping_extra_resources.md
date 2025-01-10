@@ -48,7 +48,7 @@ For the full list of supported resources, refer to [AWS Cloud Control API Suppor
 ## Resources supported by Cloud Control API but not supported in AWS Integration
 
 The AWS Integration relies on AWS's Cloud Control API. While many resources are supported, some require additional inputs to be queried, which the integration currently does not support. 
-Below is a list of some that are unsupported due to this limitation.
+Below is a list of the resources that are unsupported due to this limitation.
 
 ### List of unsupported resources
 
