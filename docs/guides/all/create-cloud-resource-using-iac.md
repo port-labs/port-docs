@@ -18,7 +18,7 @@ This guide takes 8 minutes to complete, and aims to demonstrate:
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have installed any of Port's [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/). We will use the `Repository` blueprint that was created during the installation process.
 - You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 
 :::
@@ -36,15 +36,15 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Add a URL to your new resource's definition
 
-In this guide we will add a new property to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we can use to access our cloud resource definitions.
+In this guide we will add a new property to our `repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we can use to access our cloud resource definitions.
 
 1. Go to your [Data model](https://app.getport.io/settings/data-model) page.
-2. Expand your `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, then click on `+ New property`.
+2. Expand your `repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, then click on `+ New property`.
 3. Choose `URL` as the type, fill it like this and click `Save`:
 
     <img src='/img/guides/iacPropertyForm.png' width='40%' border='1px' />
 
-This property is empty for now in all services, we will fill it as part of the action we're about to create 😎
+This property is empty for now in all repositories, we will fill it as part of the action we're about to create 😎
 
 ### Setup the action's frontend
 
@@ -59,7 +59,7 @@ This property is empty for now in all services, we will fill it as part of the a
     - **Description**:  Enter the description (e.g., Create an s3 bucket)
     - **Icon**: Type s3 and choose the  Icon (optional)
     - **Operation**:  Choose `Day-2`  from the dropdown
-    - **Blueprint**:  Choose `Service` from the dropdown
+    - **Blueprint**:  Choose `Repository` from the dropdown
       
       <img src='/img/guides/iacActionDetails.png' width='50%' border='1px' />
      <br/>
@@ -323,7 +323,7 @@ jobs:
         uses: port-labs/port-github-action@v1
         with:
           identifier: ${{ fromJson(inputs.port_context).entity }}
-          blueprint: service
+          blueprint: repository
           properties: |-
             {
               "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}/blob/main/resources/"
@@ -562,7 +562,7 @@ pipeline {
         REPO_NAME = "${SERVICE_NAME}"
         BITBUCKET_WORKSPACE_NAME = "${BITBUCKET_WORKSPACE_NAME}"
         PORT_ACCESS_TOKEN = ""
-        PORT_BLUEPRINT_ID = "service"
+        PORT_BLUEPRINT_ID = "repository"
         PORT_RUN_ID = "${RUN_ID}"
         VISIBILITY="${VISIBILITY}"
         PR_URL=""
