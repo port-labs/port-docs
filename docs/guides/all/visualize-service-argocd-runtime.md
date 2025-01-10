@@ -15,7 +15,7 @@ This guide takes 10 minutes to complete, and aims to demonstrate the value of Po
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have installed any of Port's [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/). We will use the `Repository` blueprint that was created during the installation process.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
 - [Helm](https://helm.sh/docs/intro/install/) - required to install Port's ArgoCD integration.
 
@@ -187,11 +187,11 @@ After installation, the integration will:
 
 <br/>
 
-### Define the connection between workloads and services
+### Define the connection between workloads and repositories
 
-Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between our ArgoCD resources and the `Service` blueprint that already exists in our builder. This will grant us some helpful context in our software catalog, allowing us to see relevant ArgoCD application/s in a `Service`'s context, and their corresponding data.
+Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between our ArgoCD resources and the `Repository` blueprint that already exists in our builder. This will grant us some helpful context in our software catalog, allowing us to see relevant ArgoCD application/s in a `Service`'s context, and their corresponding data.
 
-In this guide we will create a relation named `Service` for the `Running Service` blueprint, which represents the service a workload is running.
+In this guide we will create a relation named `Repository` for the `Running Service` blueprint, which represents the service a workload is running.
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Running Service` blueprint, and click on `New relation`.
 
@@ -202,14 +202,14 @@ In this guide we will create a relation named `Service` for the `Running Service
 
 <br/><br/>
 
-### Map your workloads to their services
+### Map your workloads to their repositories
 
-You may have noticed that the `service` relation is empty for all of our `Running Services`. This is because we haven't specified which `Running service` belongs to which `service`. This can be done manually, or via mapping by using a convention of your choice.
+You may have noticed that the `repository` relation is empty for all of our `Running Services`. This is because we haven't specified which `Running service` belongs to which `repository`. This can be done manually, or via mapping by using a convention of your choice.
 
 In this guide we will use the following convention:  
-An Argo application with a label in the form of `portService: <service-identifier>` will automatically be assigned to a `service` with that identifier.
+An Argo application with a label in the form of `portService: <service-identifier>` will automatically be assigned to a `repository` with that identifier.
 
-For example, an ArgoCD application with the label `portService: awesomeService` will be assigned to a `service` with the identifier `awesomeService`.
+For example, an ArgoCD application with the label `portService: awesomeService` will be assigned to a `repository` with the identifier `awesomeService`.
 
 To achieve this, we need to update the ArgoCD integration's mapping configuration:
 
@@ -224,7 +224,7 @@ Add the following block to the mapping configuration and click `Resync`:
       entity:
         mappings:
           identifier: .metadata.labels.portService
-          blueprint: '"service"'
+          blueprint: '"repository"'
           properties: {}
   - kind: application
     selector:
@@ -236,12 +236,12 @@ Add the following block to the mapping configuration and click `Resync`:
           blueprint: '"argocdApplication"'
           properties: {}
           relations:
-            service: .metadata.labels.portService
+            repository: .metadata.labels.portService
 ```
 
 <br/>
 
-2. Go to the [services page](https://app.getport.io/services) of your software catalog. Click on the `Service` for which you created the deployment. At the bottom of the page, you will see the `Running Services` related to this service, along with all of their data:
+2. Go to the [services page](https://app.getport.io/repositories) of your software catalog. Click on the `Repository` for which you created the deployment. At the bottom of the page, you will see the `Running Services` related to this service, along with all of their data:
 
 <img src='/img/guides/argoEntityAfterIngestion.png' width='100%' border='1px' />
 
@@ -249,10 +249,10 @@ Add the following block to the mapping configuration and click `Resync`:
 
 ### Visualize data from your Kubernetes environment
 
-We now have a lot of data about our Argo applications, and a dashboard that visualizes it in ways that will benefit the routines of our developers and managers. Since we connected our ArgoCD application(`Running service`) blueprint to our `Service` blueprint, we can now access some of the application's data directly in the context of the service.  
+We now have a lot of data about our Argo applications, and a dashboard that visualizes it in ways that will benefit the routines of our developers and managers. Since we connected our ArgoCD application(`Running service`) blueprint to our `Repository` blueprint, we can now access some of the application's data directly in the context of the service.  
 Let's see an example of how we can add useful visualizations to our dashboard:
 
-#### Show all "degraded" workloads of `AwesomeService` service belonging to a specific team
+#### Show all "degraded" workloads of `AwesomeService` repository belonging to a specific team
 
 1. Go to your [ArgoCD dashboard](https://app.getport.io/argocdDashboard), click on the `+ Add` button in the top right corner, then select `Table`.
 
@@ -265,7 +265,7 @@ Let's see an example of how we can add useful visualizations to our dashboard:
 
     <img src='/img/guides/argoTableFilterDegraded.png' width='80%' border='1px' />
 
-4. Your table should now display all services belonging to your specified team, whose `Health` is `Degraded`:
+4. Your table should now display all repositories belonging to your specified team, whose `Health` is `Degraded`:
 
     <img src='/img/guides/argoTableDegradedServices.png' width='90%' border='1px' />
 
