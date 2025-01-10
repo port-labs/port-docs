@@ -50,11 +50,11 @@ For the full list of supported resources, refer to [AWS Cloud Control API Suppor
 The AWS Integration relies on AWS's Cloud Control API. While many resources are supported, some require additional inputs to be queried, which the integration currently does not support. 
 Below is a list of some that are unsupported due to this limitation.
 
-### List of Unsupported Resources
+### List of unsupported resources
 
 <UnsupportedResources/>
 
-### What Can You Do?
+### What can you do?
 
 - **Contact Us**: If you require support for any of these resources, please reach out to our team for assistance.
 - **Submit a Feature Request**: Contribute to our integration's improvement by [submitting a feature request](https://roadmap.getport.io/).
