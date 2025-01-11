@@ -275,7 +275,11 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/main-menu/port-overview.svg');
 }
 
-.sidebar-menu-getting-started .menu__link::before {
+/* .sidebar-menu-getting-started .menu__link::before {
+  content: url('/static/img/sidebar-icons/main-menu/getting-started.svg');
+} */
+
+.sidebar-menu-getting-started > div .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/getting-started.svg');
 }
 

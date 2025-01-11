@@ -1,8 +1,7 @@
 ---
 sidebar_position: 2
 title: Getting started
-sidebar_label: Getting started
-sidebar_class_name: custom-sidebar-item sidebar-menu-getting-started
+sidebar_label: "1. Connect your Git provider"
 ---
 
 import Tabs from "@theme/Tabs"
@@ -94,16 +93,41 @@ In addition to the components created in the previous steps, Port will create a 
 
 Several blueprints used to represent common concepts in your organization are created automatically by Port.
 
-- `_service` - a flexible <PortTooltip id="blueprint">blueprint</PortTooltip> used to represent a service, as best fits your organization. This blueprint will be directly related to other blueprints in your data model, giving it the context it needs to model any business-oriented concept in your organization.  
+- `_service` - a flexible <PortTooltip id="blueprint">blueprint</PortTooltip> representing a piece of software that is owned by a team/group in your organization.  
+  
+  This blueprint serves as a single component with rich context about all the resources related to the software, such as:
+  - `The code itself` - a repository or a specific folder in a monorepo.
 
-    For example, your `_service` blueprint can be related to `Repository` and `PagerDuty` blueprints, representing a microservice implemented in a Git repository **and** its corresponding PagerDuty service.
+  - `Incident management` components, such as a PagerDuty service.
 
-- `_environment` - represents an environment in your organization.  
-  For this <PortTooltip id="blueprint">blueprint</PortTooltip>, 3 <PortTooltip id="entity">entities</PortTooltip> be created by default: `Dev`, `Test` and `Prod`.
-- `_workload` - represents a running service in your organization.  
-  This blueprint will be related to the `_service` and `_environment` blueprints, representing a service running in a specific environment.
+  - `Code scanning` components, such as Snyk Targets or Sonar Cloud projects.
+
+  - `Project management` components, such as Jira projects and issues.
+
+  - `Runtime` components, such as workloads.
+  
+  Services are the core component of R&D operations within a developer portal, providing each team with a unified view of its services and their status across different domains, such as **security**, **stability**, **access management**, and more.
+
+---
+
+- `_environment` - a representation of an environment in your organization.  
+  In addition to this <PortTooltip id="blueprint">blueprint</PortTooltip>, 3 default <PortTooltip id="entity">entities</PortTooltip> will be created: `Dev`, `Test` and `Prod`.  
+
+  You can, of course, modify the default environments and/or create additional ones.
+
+---
+
+- `_workload` - represents a `service` running in a specific `environment`, with context of the relevant related components.
+
+  For example, a `frontend` service in your organization can have `frontend-prod` and `frontend-test` workloads, each with its own Kubernetes namespace, Sentry project, and owning team.
+
+---
 
 - `_user` - represents a user in your organization.  
-  This blueprint will be related to the `_team` blueprint, as a user belongs to a team.
+  This blueprint can be related to other "user" blueprints coming from your data sources, such as `github_user`, allowing you to manage a user across multiple tools from a single component.  
 
-- `_team` - represents a team in your organization.  
+- `_team` - represents a team in your organization. 
+  This blueprint can be related to other "team" blueprints coming from your data sources, such as `github_team`, allowing you to manage a team across multiple tools from a single component.
+
+  Users in Port can be assigned to teams, allowing you to implement ownership of components in your portal.
+
