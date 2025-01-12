@@ -45,10 +45,7 @@ Each user is defined by the following properties:
 - Email address.
 - [Role](/sso-rbac/rbac/#roles).
 - Teams - a list of teams this user is a member of.
-- Status - the user's status, which can be one of the following:
-  - `Active` - the user has logged into Port .
-  - `Invited` - the user was invited to Port via an invitation email.
-  - `Disabled` - the user is disabled and cannot use Port.
+- Status - the user's [status](#user-status).
 
 </TabItem>
 
@@ -69,6 +66,25 @@ Since these teams are synced from your IdP the following actions cannot be perfo
 - Delete SSO teams.
 
 :::
+
+## User status
+
+A user can have one of the following statuses at any given time:
+
+- `Active` - the user has logged into Port and can use the portal normally.
+- `Invited` - the user was invited to Port via an invitation email.
+- `Disabled` - the user is disabled and cannot use Port.
+
+By default, all new users are created with the `Disabled` status (no email invitation is sent).
+
+In your software catalog, admins can access the [Users](https://app.getport.io/_users) page to view and manage all of the user entities in the organization.  
+Here admins can also change a user's status, and invite new users.
+
+### Limitations
+
+- Only users with a UI/API origin can invite users and change their status.  
+
+- Users cannot change their own status.
 
 ## Ownership
 
