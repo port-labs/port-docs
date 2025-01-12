@@ -1,22 +1,19 @@
----
-sidebar_position: 1
----
-
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-# As blueprints (new)
+# As blueprints (beta version)
 
 :::warning New default behavior
 A new mechanism to manage users and teams has been released, using dedicated blueprints.  
 Starting **January 12, 2025**, this will be the default behavior for all new Port accounts.
 
-- If you created your account **after** this date, continue reading this page, which describes the **new behavior**.
+- If you created your account **before** this date, and enabled the `"Users & teams as blueprints beta feature"` in your organization, continue reading this page, which describes the **beta version behavior**.  
+Note that this behavior will be deprecated in the near future.
 
-- If you created your account **before** this date, and enabled the `"Users & teams as blueprints beta feature"` in your organization, see the [**users & teams as blueprints beta**](/sso-rbac/rbac/as-blueprints-beta) page.
+- If you created your account **before** this date, and **did not** enable the beta feature, see the [**old users & teams behavior**](/sso-rbac/rbac/no-blueprints) page.
 
-- If you created your account **before** this date, and did not enable the beta feature, see the [**old users & teams behavior**](/sso-rbac/rbac/no-blueprints) page.
+- If you created your account **after** this date, see the [**users & teams as blueprints**](/sso-rbac/rbac/as-blueprints) page.
 :::
 
 ## Overview
@@ -105,14 +102,14 @@ Here admins can also change a user's status, and invite new users.
 Each entity has a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) named `team`, that is used to define the team/s that own the entity.  
 As an `admin`, you can also set blueprint permissions according to this field.
 
-The `team` meta-property is an array of the owning teams' `identifiers`.  
+The `team` meta-property is an array of the owning teams' names.  
 Here is an example entity:
 
 ```json showLineNumbers
 {
   "identifier": "pod-1",
   "title": "Awesome pod",
-  "team": ["some-team-identifier", "another-team-identifier"],
+  "team": ["Awesome team", "The best team"],
   "blueprint": "Pod",
   "properties": {
     ...
@@ -130,66 +127,24 @@ For example, in a search query:
 {
   "operator": "containsAny",
   "property": "$team",
-  "value": ["team-identifier"]
+  "value": ["Team name"]
 }
 ```
 
-### The `ownership` property
+### Team inheritance
 
-All blueprints have an `ownership` property that defines ownership for its entities.  
-This field is not mandatory.
+To simplify the setup of ownership, Port allows you to utilize <PortTooltip id="relation">relations</PortTooltip> to automatically retrieve teams from a parent entity.  
 
-These are the available options for the `ownership` property:
+You can configure team inheritance on a blueprint, so that every entity created from this blueprint will inherit the parent entity's team.
 
-1. **No ownership**
+In the example below, we can configure a team for every `service`: 
 
-The blueprint has no defined ownership.  
-The `$team` property will have no meaningful value.
+<img src='/img/software-catalog/role-based-access-control/overview/teaminheritancegraph.png' width='100%' border='1px' /> 
+<br/><br/>
 
-```json showLineNumbers
-{
-  "identifier": "packageVersion",
-  "title": "Package Version",
-  ...
-}
-```
+When configuring team inheritance in `Pull requests`, every pull request will inherit its parent Port team. 
 
-2. **Direct**
-
-Ownership of the blueprint's entities will be defined by a hidden <PortTooltip id="relation">relation</PortTooltip> to the `Team` blueprint.  
-The `Owning teams` column will be visible in tables containing entities of the blueprint.
-
-```json showLineNumbers
-{
-  "identifier": "packageVersion",
-  "title": "Package Version",
-  "ownership": {
-	"type": "Direct"
-  }
-  ...
-}
-```
-
-3. **Inherited**
-
-Ownership of the blueprint's entities will be inherited from a different related blueprint with `Direct` ownership.  
-The `Owning teams` column will be visible in tables containing entities of the blueprint, but will not be editable.
-
-The `path` key is a dot-separated path of **relation identifiers** that lead to the desired blueprint.
-
-```json showLineNumbers
-{
-  "identifier": "packageVersion",
-  "title": "Package Version",
-  "ownership": {
-    "type": "Inherited",
-    "path": "relationIdentifier1.relationIdentifier2.relationIdentifier3"
-  }
-  ...
-}
-```
-
----
+<img src='/img/software-catalog/role-based-access-control/overview/teaminheritance.png' width='50%' border='1px' /> 
 
 ## Additional capabilities
 

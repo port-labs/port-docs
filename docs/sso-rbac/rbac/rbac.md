@@ -56,12 +56,13 @@ This mechanism also differs in how **ownership** is defined.
 
 Starting **`January 12, 2025`**, this will be the default behavior for all new Port accounts.
 
-Accounts created before this date will continue to use the old behavior, with no changes to their current setup.
+- If you created your account **after** this date, see the [**users & teams as blueprints**](/sso-rbac/rbac/as-blueprints) page.
 
-Choose the relevant section below to learn more about the behavior that applies to your account.
+- If you created your account **before** this date, and enabled the `"Users & teams as blueprints beta feature"` in your organization, see the [**users & teams as blueprints beta**](/sso-rbac/rbac/as-blueprints-beta) page.
+
+- If you created your account **before** this date, and did not enable the beta feature, see the [**old users & teams behavior**](/sso-rbac/rbac/no-blueprints) page.
 :::
 
-
-
-#### [Classic](/sso-rbac/rbac/classic) (old behavior)
 #### [As blueprints](/sso-rbac/rbac/as-blueprints) (new behavior)
+#### [As blueprints beta](/sso-rbac/rbac/as-blueprints-beta) (beta behavior)
+#### [No blueprints](/sso-rbac/rbac/no-blueprints) (old behavior)
