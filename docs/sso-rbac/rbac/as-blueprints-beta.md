@@ -121,15 +121,20 @@ Here is an example entity:
 #### Reference an entity's team
 
 In places where you need to reference an entity's team, use `$team` to reference the meta-property.  
-For example, in a search query:
+
+**Note** that any search query that includes `$team` will use the team's **identifier** instead of its **name**.  
+For example:
 
 ```json showLineNumbers
 {
   "operator": "containsAny",
   "property": "$team",
-  "value": ["Team name"]
+   "value": ["team-identifier"] // instead of ["team-name"]
 }
 ```
+
+This change will affect all search queries that include the `$team` property, in any component (widget filters, entity search, dynamic permissions, etc.).  
+Note that the [getUserTeams()](https://docs.port.io/search-and-query/#dynamic-properties) function will automatically return the team's identifier, so it can be used as is.
 
 ### Team inheritance
 

@@ -75,16 +75,8 @@ A user can have one of the following statuses at any given time:
 - `Invited` - the user was invited to Port via an invitation email.
 - `Disabled` - the user is disabled and cannot use Port.
 
-By default, all new users are created with the `Disabled` status (no email invitation is sent).
-
-In your software catalog, admins can access the [Users](https://app.getport.io/_users) page to view and manage all of the user entities in the organization.  
+Admins can access the [Users](https://app.getport.io/settings/users) page to view and manage all of the users in the organization.  
 Here admins can also change a user's status, and invite new users.
-
-### Limitations
-
-- Only users with a UI/API origin can invite users and change their status.  
-
-- Users cannot change their own status.
 
 ## Ownership
 
