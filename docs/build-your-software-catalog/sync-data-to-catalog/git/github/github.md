@@ -457,7 +457,7 @@ Refer to the [examples](./examples/resource-mapping-examples.md) page for practi
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=GitHub).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=GitHub).
 
 ## GitOps
 

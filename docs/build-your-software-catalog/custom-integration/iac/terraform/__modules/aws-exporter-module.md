@@ -20,7 +20,7 @@ Before using this module, make sure you have completed the following prerequisit
 
    Refer to the [AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) for instructions.
 
-2. Export your [Port credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials):
+2. Export your [Port credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials):
 
    ```bash
    export PORT_CLIENT_ID="YOUR_PORT_CLIENT_ID"
@@ -126,7 +126,7 @@ terraform destroy
 
 ## Further Information
 
-- See the [AWS exporter docs](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) for further information about the exporter.
+- See the [AWS exporter docs](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) for further information about the exporter.
 - Visit the Terraform module [Github repository](https://github.com/port-labs/terraform-aws-port-exporter):
   - The [module example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/run_module_example) folder for a more complete example of the Terraform module.
   - The Event Bridge rule [Terraform example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/terraform_deploy_eventbridge_rule) for example of deploying an [Eventbridge rule](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) for the AWS exporter.

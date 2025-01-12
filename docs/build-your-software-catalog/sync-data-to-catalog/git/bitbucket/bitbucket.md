@@ -124,7 +124,7 @@ Refer to the [examples](./examples.md) page for practical configurations and the
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=BitBucket).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=BitBucket).
 
 ## GitOps
 

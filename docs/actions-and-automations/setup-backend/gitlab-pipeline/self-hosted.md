@@ -83,7 +83,7 @@ Once the agent is installed, we can finish setting up the backend in Port.
 - **Default ref** - the branch/tag name we want the action/automation to use.
 
 :::tip Create action/automation via API
-If you wish to create a self-service action or automation via [Port's API](https://docs.getport.io/api-reference/create-an-action-automation), choose the `gitlab` backend type under the `invocationMethod` object.
+If you wish to create a self-service action or automation via [Port's API](https://docs.port.io/api-reference/create-an-action-automation), choose the `gitlab` backend type under the `invocationMethod` object.
 :::
 
 ### Configure the payload

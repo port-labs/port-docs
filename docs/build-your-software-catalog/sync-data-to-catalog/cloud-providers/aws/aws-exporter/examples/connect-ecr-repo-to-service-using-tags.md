@@ -129,5 +129,5 @@ By following these steps, you can seamlessly connect an ECR repository with an e
 
 Relevant guides and examples:
 
-- [Port's AWS integration for ECR Repositories](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples#ecr-repositories)
+- [Port's AWS integration for ECR Repositories](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/examples#ecr-repositories)
 - [Python script to ingest ECR Repositories and Images into Port](https://github.com/port-labs/example-ecr-images)

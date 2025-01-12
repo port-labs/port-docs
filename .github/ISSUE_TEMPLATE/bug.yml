@@ -9,6 +9,6 @@ body:
       label: Description
       description: |
         The bug, mistake, typo or other issue you noticed in the docs. Please include a thorough explanation and links to pages in the documentation if relevant
-      placeholder: I found a typo in the docs' [Quickstart](https://docs.getport.io)
+      placeholder: I found a typo in the docs' [Quickstart](https://docs.port.io)
     validations:
       required: true

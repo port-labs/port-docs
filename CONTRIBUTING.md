@@ -45,7 +45,7 @@ If you want to use headers inside tabs, use `<h>` , for example `<h2>Header text
 ### Links
 
 - All links must use full paths and not relative ones, to ensure safer code.
-- Decide if you want your link to open in the same tab or a new one. To make an internal link* open in a new tab, add [`https://docs.getport.io`](https://docs.getport.io) to the beginning of the link.
+- Decide if you want your link to open in the same tab or a new one. To make an internal link* open in a new tab, add [`https://docs.port.io`](https://docs.port.io) to the beginning of the link.
 *Internal link - a link that leads to another page **within** the docs site.
 
 ### Lists
