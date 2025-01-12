@@ -194,7 +194,7 @@ export const integrations = [
     category: 'monitoring',
     icon: '/img/guides/icons/Dynatrace.svg',
     darkIcon: '/img/guides/icons/dark/Dynatrace.svg',
-    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/incident-management/dynatrace',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace',
   },
   // Cloud Cost
   {

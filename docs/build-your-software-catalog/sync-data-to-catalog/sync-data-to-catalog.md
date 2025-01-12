@@ -34,7 +34,6 @@ After the installation, you can customize the blueprints and/or mapping to inges
 ## Available plug & play integrations
 
 <IntegrationsTable />
-<!-- <DocCardList /> -->
 
 ## Customize your integrations
 
