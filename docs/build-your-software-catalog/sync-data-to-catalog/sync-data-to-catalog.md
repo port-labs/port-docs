@@ -1,5 +1,6 @@
 import DocCardList from '@theme/DocCardList';
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import IntegrationsTable from "/src/components/IntegrationsTable/IntegrationsTable.jsx"
 
 # Install an integration
 
@@ -32,7 +33,8 @@ After the installation, you can customize the blueprints and/or mapping to inges
 
 ## Available plug & play integrations
 
-<DocCardList />
+<IntegrationsTable />
+<!-- <DocCardList /> -->
 
 ## Customize your integrations
 
