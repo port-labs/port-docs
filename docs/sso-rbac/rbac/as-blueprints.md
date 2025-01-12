@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem'
 
 :::warning New default behavior
 A new mechanism to manage users and teams has been released, using dedicated blueprints.  
-Starting **January 12, 2025**, this will be the default behavior for all new Port accounts.
+Starting **January 13, 2025**, this will be the default behavior for all new Port accounts.
 
 - If you created your account **after** this date, continue reading this page, which describes the **new behavior**.
 

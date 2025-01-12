@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem'
 
 :::warning New default behavior
 A new mechanism to manage users and teams has been released, using dedicated blueprints.  
-Starting **January 12, 2025**, this will be the default behavior for all new Port accounts.
+Starting **January 13, 2025**, this will be the default behavior for all new Port accounts.
 
 - If you created your account **before** this date, and did not enable the `"Users & teams as blueprints beta feature"` in your organization, continue reading this page, which describes the **old behavior**.  
 Note that this behavior will be deprecated in the near future.
