@@ -385,7 +385,7 @@ In addition, you require the following environment variables:
 - `JFROG_HOST_URL` - The host URL of your Jfrog instance
 
 :::info
-Find your Port credentials using this [guide](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+Find your Port credentials using this [guide](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 :::
 
 Use the following Python script to ingest historical JFrog builds and repositories into port:

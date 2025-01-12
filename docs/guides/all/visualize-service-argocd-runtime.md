@@ -49,8 +49,8 @@ To install the integration using Helm, run the following command:
 
   :::tip Variable replacement
    Remember to replace the following placeholders with your own values:
-   - `YOUR_PORT_CLIENT_ID` -  Your [Port client ID](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-   - `YOUR_PORT_CLIENT_SECRET` - Your [Port client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+   - `YOUR_PORT_CLIENT_ID` -  Your [Port client ID](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+   - `YOUR_PORT_CLIENT_SECRET` - Your [Port client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
    - `YOUR_ARGOCD_TOKEN` - Your [ArgoCD API token](https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/#authorization). Ensure that the token has sufficient permissions to read ArgoCD resources. You can configure the RBAC policy for the token user by following [this guide](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/)
    - `YOUR_ARGOCD_SERVER_URL` - The server url of your ArgoCD instance
    :::

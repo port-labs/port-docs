@@ -709,7 +709,7 @@ Attempting to use the previous sign-in URL again will demonstrate that the permi
 
 #### Remove permissions with automations
 
-With the [automations](https://docs.getport.io/actions-and-automations/define-automations) feature, you can automatically trigger actions using events from the catalog. 
+With the [automations](https://docs.port.io/actions-and-automations/define-automations) feature, you can automatically trigger actions using events from the catalog. 
 
 For instance, your HR system can automatically trigger an event to revoke permissions via Port when an employee departs the company. In this guide, we will utilize the timer expired event to initiate the revoke permissions action, ensuring temporary permissions expire as required by your security or compliance teams.
 
@@ -728,7 +728,7 @@ Note that `Provisioned Permissions` blueprint we deployed earlier has a timer pr
 The automation you will create will monitor events related to `Provisioned Permissions` entities in your catalog. It will check if these events are triggered by the `expiry_time` timer property expiring and then execute the `Delete IAM Permissions` GitHub workflow described earlier in this guide.
 
 :::tip Building Automations
-Need help building automations? Check out our [guide](https://docs.getport.io/actions-and-automations/define-automations/) on creating automations!
+Need help building automations? Check out our [guide](https://docs.port.io/actions-and-automations/define-automations/) on creating automations!
 :::
 
 Next, proceed to deploy the automation outlined below. Remember to replace `YOUR_GITHUB_ORG` in the JSON with your GitHub Organization ID.

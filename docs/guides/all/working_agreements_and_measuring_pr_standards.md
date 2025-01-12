@@ -38,7 +38,7 @@ please refer to our [DORA Metrics guide](/guides/all/setup-dora-metrics).
 
 
 ## Prerequisites
-- Complete the [Port onboarding process](https://docs.getport.io/quickstart).
+- Complete the [Port onboarding process](https://docs.port.io/quickstart).
 - Access to a GitHub repository that is connected to Port via the onboarding process.
 
 

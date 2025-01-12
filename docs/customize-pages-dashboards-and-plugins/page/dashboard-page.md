@@ -54,7 +54,7 @@ This guide walks you through creating custom pages using our [Pulumi provider](h
 **Prerequisites**
 
 1. Basic Port Concepts: Familiarity with <PortTooltip id="blueprint">blueprints</PortTooltip>, <PortTooltip id="entity">entities</PortTooltip>, and <PortTooltip id="dataset">datasets</PortTooltip> in your Port system is helpful.
-2. You will also need your [Port credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+2. You will also need your [Port credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 3. This guide also assumes that you have installed Pulumi, and [the Port provider's SDK](https://www.pulumi.com/registry/packages/port/installation-configuration/) in your chosen language.
 
 <Tabs groupId="pulumi-create-dashboard" queryString values={[
