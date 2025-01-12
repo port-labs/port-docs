@@ -13,6 +13,12 @@ const integrationSettings = {
     PagerDuty:
       '- `Token`: The API token used to query PagerDuty. To create a token, see the [PagerDuty documentation](https://support.pagerduty.com/docs/api-access-keys).' + '\n\n' +
       '- `API URL`: The host of the PagerDuty instance. If not specified, the default will be `https://api.pagerduty.com` (or `https://api.eu.pagerduty.com` for EU customers).',
+    Datadog:
+      '- `Datadog Base Url`: For example, https://api.datadoghq.com or https://api.datadoghq.eu. To identify your base URL, see the [Datadog documentation](https://docs.datadoghq.com/getting_started/site/#access-the-datadog-site).' + '\n\n' +
+      '- `Datadog Api Key` - To create an API key, see the [Datadog documentation](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).' + '\n\n' +
+      '- `Datadog Application Key` - To create an application key, see the [Datadog documentation](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys).' + '\n\n' +
+      '- `Datadog Webhook Token` - *Optional*. This token is used to secure webhook communication between Datadog and Port. To learn more, see the [Datadog documentation](https://docs.datadoghq.com/integrations/webhooks/#setup).' + '\n\n' +
+      '- `Datadog Access Token` - *Optional*. This is used to authenticate with Datadog using OAuth2. You should not set this value manually.',
   };
 
   const OceanSaasIntegrationSettings = ({ id }) => {
