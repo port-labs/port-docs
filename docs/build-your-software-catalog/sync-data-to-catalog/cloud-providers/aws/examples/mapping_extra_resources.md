@@ -56,9 +56,9 @@ Below is a list of the resources that are unsupported due to this limitation.
 
 ### What can you do?
 
-- **Contact Us**: If you require support for any of these resources, please reach out to our team for assistance.
-- **Submit a Feature Request**: Contribute to our integration's improvement by [submitting a feature request](https://roadmap.getport.io/).
-- **Contribute Directly**: Developers are encouraged to [contribute](https://ocean.getport.io/develop-an-integration/) by adding support for these resources [here](https://github.com/port-labs/ocean/tree/main/integrations/aws).
+- **Contact us**: If you require support for any of these resources, please reach out to our team for assistance.
+- **Submit a feature request**: Contribute to our integration's improvement by [submitting a feature request](https://roadmap.getport.io/).
+- **Contribute directly**: Developers are encouraged to [contribute](https://ocean.getport.io/develop-an-integration/) by adding support for these resources [here](https://github.com/port-labs/ocean/tree/main/integrations/aws).
 
 
 ## Configuration
