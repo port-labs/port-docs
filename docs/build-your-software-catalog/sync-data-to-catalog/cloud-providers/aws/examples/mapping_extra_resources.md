@@ -37,7 +37,7 @@ This page will help you understand what kind of AWS resources are supported by t
 
 ## Is the resource supported by the AWS Integration?
 
-The AWS Integration is relying on AWS's Cloud Control API. That means:
+The AWS Integration relies on AWS's Cloud Control API. That means:
 
 1. Is the type of resource I want to ingest listed [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html) and supported by the list method?
    - **If so**: Great! It's supported.
