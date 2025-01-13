@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useColorMode } from '@docusaurus/theme-common';
 import styles from './styles.module.css';
 import { integrations, categories } from './integrations-data';
+import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
 
 const IntegrationCard = ({ integration }) => {
   const { colorMode } = useColorMode();
@@ -14,7 +15,8 @@ const IntegrationCard = ({ integration }) => {
   return (
     <Link to={integration.docsUrl} className={styles.card}>
       <div className={styles.cardHeader}>
-        <img 
+        <LogoImage logo={integration.name} width='32px' />
+        {/* <img 
           src={iconPath} 
           alt={integration.name} 
           className={`${styles.icon} not-zoom`}
@@ -23,7 +25,7 @@ const IntegrationCard = ({ integration }) => {
               e.target.src = integration.icon;
             }
           }}
-        />
+        /> */}
         <h3>{integration.name}</h3>
       </div>
     </Link>

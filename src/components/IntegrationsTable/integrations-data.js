@@ -95,7 +95,7 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp',
   },
   {
-    name: 'Terraform Cloud',
+    name: 'Terraform',
     category: 'iac',
     icon: '/img/guides/icons/Terraform.svg',
     darkIcon: '/img/guides/icons/dark/Terraform.svg',
@@ -147,7 +147,7 @@ export const integrations = [
   },
   // Feature Management
   {
-    name: 'LaunchDarkly',
+    name: 'Launchdarkly',
     category: 'feature',
     icon: '/img/guides/icons/Launchdarkly.svg',
     darkIcon: '/img/guides/icons/dark/Launchdarkly.svg',
