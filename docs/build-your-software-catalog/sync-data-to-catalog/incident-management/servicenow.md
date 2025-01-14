@@ -661,7 +661,7 @@ Port's ServiceNow integration provides an option to filter the data that is retr
 
     Queries can be chained using ^ or ^OR for AND/OR logic. An example query could be this: `active=true^nameLIKEdev^urgency=3` which returns all active incidents with an urgency level of 3 and have a name like `dev` 
 
-All these four filtering attributes can be enabled using the `selector.apiQueryParams` path as shown below:
+The filtering attributes described above can be enabled using the `selector.apiQueryParams` path, for example:
 
 ```yaml showLineNumbers
 - kind: <name of table>
