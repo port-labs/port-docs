@@ -37,7 +37,8 @@ The resources that can be ingested from ServiceNow into Port are listed below.
 - `Incident` - (`<your-servicenow-url>/api/now/table/incident`)
 
 :::tip Ingesting extra resources
-While our documentation lists only three supported resources, Port's ServiceNow integration uses the [ServiceNow Table API](https://developer.servicenow.com/dev.do#!/reference/api/xanadu/rest/c_TableAPI#table-GET) to ingest entities. This means you can ingest a lot more resources from your ServiceNow instance as long as the underlying resource can be found in the Table API. All you need is to specify the `table name` as a new `kind` in the [Data sources configuration page](/build-your-software-catalog/sync-data-to-catalog/#customize-your-integrations), and the records from the table will be ingested to Port.
+While the section above only lists three supported resources, Port's ServiceNow integration uses the [ServiceNow Table API](https://developer.servicenow.com/dev.do#!/reference/api/xanadu/rest/c_TableAPI#table-GET) to ingest entities.  
+This means you can ingest a lot more resources from your ServiceNow instance as long as the underlying resource can be found in the Table API. All you need is to specify the `table name` as a new `kind` in the [Data sources configuration page](/build-your-software-catalog/sync-data-to-catalog/#customize-your-integrations), and the records from the table will be ingested to Port.
 :::
 
 
