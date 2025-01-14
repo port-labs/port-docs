@@ -29,11 +29,11 @@ Before following the guide, you will need to set up an Upbound organization, ini
 <h3>Port</h3>
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
-- Save the Port organization's `CLIENT_ID` and `CLIENT_SECRET` for later ([how to find your Port credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
+- Save the Port organization's `CLIENT_ID` and `CLIENT_SECRET` for later ([how to find your Port credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 
 <h3>Git repository</h3>
 
-The actions backend, and the state of the different control planes will be handled in a GitHub repository. For Port to interact with the new GitHub repo, you will need Port's GitHub app to be installed ([install Port's GitHub app](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)).
+The actions backend, and the state of the different control planes will be handled in a GitHub repository. For Port to interact with the new GitHub repo, you will need Port's GitHub app to be installed ([install Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)).
 
 Create a new git repository, and make sure that Port's GitHub app is installed on it either by:
 - Installing Port's GitHub app on all the repositories in the used GitHub organization;
@@ -653,7 +653,7 @@ Follow GitHub's [guide](https://docs.github.com/en/actions/security-guides/using
 * `PORT_CLIENT_SECRET` - The Port organization's client secret.
 
 ## Setting up Port
-Starting with a clean Port organization, you will have to create some Port components. These components are Port [blueprints](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint) and Port [actions](https://docs.getport.io/create-self-service-experiences/).
+Starting with a clean Port organization, you will have to create some Port components. These components are Port [blueprints](https://docs.port.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint) and Port [actions](https://docs.port.io/create-self-service-experiences/).
 
 ### Creating blueprints
 Create the following blueprints in the order that they appear below:

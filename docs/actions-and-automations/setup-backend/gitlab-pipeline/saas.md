@@ -24,7 +24,7 @@ When using the webhook backend, you need to configure several parameters:
 - The `Endpoint URL` field should be filled with the webhook URL you create in GitLab (see below).
 
 :::tip Create action/automation via API
-If you wish to create a self-service action or automation via [Port's API](https://docs.getport.io/api-reference/create-an-action-automation), choose the `webhook` backend type under the `invocationMethod` object.
+If you wish to create a self-service action or automation via [Port's API](https://docs.port.io/api-reference/create-an-action-automation), choose the `webhook` backend type under the `invocationMethod` object.
 :::
 
 ### Create the webhook URL

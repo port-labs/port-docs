@@ -396,4 +396,5 @@ Port service accounts are treated like any other users and extend the same RBAC 
 
 ### Disabling service accounts
 Service accounts can easily be disabled at any time. To disable a service account, update it's `status` property to `Disabled`.
-Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`.
+Disabled service accounts can no longer generate new API tokens or use existing ones. Disabled service accounts can be re-enabled at any time by updating the `status` property back to `Active`. 
+

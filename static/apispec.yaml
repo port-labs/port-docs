@@ -2777,7 +2777,7 @@ components:
             - or
         rules:
           type: array
-          description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
+          description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
           items:
             anyOf:
               - type: object
@@ -2825,7 +2825,7 @@ components:
 paths:
   '/v1/blueprints/{blueprint_identifier}/permissions':
     get:
-      description: This route allows you to retrieve the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.getport.io/build-your-software-catalog/set-catalog-rbac/examples).
+      description: This route allows you to retrieve the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.port.io/build-your-software-catalog/set-catalog-rbac/examples).
       summary: Get a blueprint's permissions
       tags:
         - Blueprints
@@ -2845,7 +2845,7 @@ paths:
           description: Default Response
     patch:
       summary: Patch a blueprint's permissions
-      description: This route allows you to patch the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.getport.io/build-your-software-catalog/set-catalog-rbac/examples).
+      description: This route allows you to patch the permissions of a blueprint.<br/><br/>To learn more about permissions, check out the [documentation](https://docs.port.io/build-your-software-catalog/set-catalog-rbac/examples).
       tags:
         - Blueprints
       requestBody:
@@ -3039,7 +3039,7 @@ paths:
   '/v1/blueprints/{blueprint_identifier}/entities':
     post:
       summary: Create an entity
-      description: This route allows you to create an entity in your software catalog based on an existing blueprint in your data model. It can also be used to overwrite or update an existing entity.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      description: This route allows you to create an entity in your software catalog based on an existing blueprint in your data model. It can also be used to overwrite or update an existing entity.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       requestBody:
@@ -3062,7 +3062,7 @@ paths:
                             - and
                             - or
                         rules:
-                          description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
+                          description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
                           type: array
                           items:
                             anyOf:
@@ -3128,7 +3128,7 @@ paths:
                   description: An object containing the properties of the new entity, in `"key":"value"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>
                 relations:
                   type: object
-                  description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>You can also use a [search query](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to define relations based on a property of the related entity.<br/> 
+                  description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>You can also use a [search query](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to define relations based on a property of the related entity.<br/> 
               additionalProperties: true
             example:
               identifier: new-microservice
@@ -3172,7 +3172,7 @@ paths:
           in: query
           name: run_id
           required: false
-          description: You can provide a `run_id` to associate the created entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
+          description: You can provide a `run_id` to associate the created entity with a specific [action run](https://docs.port.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: string
             minLength: 1
@@ -3307,7 +3307,7 @@ paths:
             </table>
     get:
       summary: Get all entities of a blueprint
-      description: This route allows you to fetch all entities in your software catalog based on a given blueprint.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      description: This route allows you to fetch all entities in your software catalog based on a given blueprint.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       parameters:
@@ -3317,7 +3317,7 @@ paths:
           in: query
           name: exclude_calculated_properties
           required: false
-          description: If `true`, [calculated properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entities.<br/>
+          description: If `true`, [calculated properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entities.<br/>
         - schema:
             type: array
             items:
@@ -3325,14 +3325,14 @@ paths:
           in: query
           name: include
           required: false
-          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
+          description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
             items:
               type: string
           in: query
           name: exclude
-          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
+          description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
           required: false
         - schema:
             type: string
@@ -3392,7 +3392,7 @@ paths:
   '/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}':
     patch:
       summary: Patch an entity
-      description: This route allows you to edit a specific entity in your software catalog and update its properties.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      description: This route allows you to edit a specific entity in your software catalog and update its properties.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       requestBody:
@@ -3422,7 +3422,7 @@ paths:
                   description: An object containing the properties of the entity, in `"key":"value"` pairs where the `key` is the property's identifier, and the `value` is its value.<br/>
                 relations:
                   type: object
-                  description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>You can also use a [search query](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to define relations based on a property of the related entity.<br/>
+                  description: An object containing the relations of the new entity, in `"key":"value"` pairs where the `key` is the relation's identifier, and the `value` is the related entity's identifier.<br/>You can also use a [search query](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to define relations based on a property of the related entity.<br/>
                   additionalProperties:
                     type: object
                     anyOf:
@@ -3437,7 +3437,7 @@ paths:
                       - type: "null"
                       - type: object
                         title: Search query
-                        description: A search query to define relations based on a property of the related entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries).
+                        description: A search query to define relations based on a property of the related entity.<br/>Read more [here](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries).
                         properties:
                           combinator:
                             enum:
@@ -3485,7 +3485,7 @@ paths:
           in: query
           name: run_id
           required: false
-          description: You can provide a `run_id` to associate the created entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
+          description: You can provide a `run_id` to associate the created entity with a specific [action run](https://docs.port.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: string
             minLength: 1
@@ -3616,7 +3616,7 @@ paths:
             </table>
     put:
       summary: Change an entity
-      description: This route allows you to edit a specific entity in your software catalog and update its properties.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      description: This route allows you to edit a specific entity in your software catalog and update its properties.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       requestBody:
@@ -3633,7 +3633,7 @@ paths:
                       description: The new identifier of the entity.<br/>
                     - type: object
                       title: Search query
-                      description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
+                      description: A search query to define the entity's identifier based on a property of the entity.<br/>Read more [here](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#map-by-property).
                       properties:
                         combinator:
                           enum:
@@ -3712,7 +3712,7 @@ paths:
           in: query
           name: run_id
           required: false
-          description: You can provide a `run_id` to associate the modified entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
+          description: You can provide a `run_id` to associate the modified entity with a specific [action run](https://docs.port.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: string
             minLength: 1
@@ -3906,7 +3906,7 @@ paths:
             </table>
     get:
       summary: Get an entity
-      description: This route allows you to fetch a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      description: This route allows you to fetch a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       parameters:
@@ -3916,7 +3916,7 @@ paths:
           in: query
           name: exclude_calculated_properties
           required: false
-          description: If `true`, [calculated properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entity.<br/>
+          description: If `true`, [calculated properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entity.<br/>
         - schema:
             type: array
             items:
@@ -3924,7 +3924,7 @@ paths:
           in: query
           name: include
           required: false
-          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
+          description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
             items:
@@ -3932,7 +3932,7 @@ paths:
           in: query
           name: exclude
           required: false
-          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
+          description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         # - schema:
         #     type: boolean
         #   in: query
@@ -4012,7 +4012,7 @@ paths:
             </table>
     delete:
       summary: Delete an entity
-      description: This route allows you to delete a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      description: This route allows you to delete a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       parameters:
@@ -4028,7 +4028,7 @@ paths:
           in: query
           name: run_id
           required: false
-          description: You can provide a `run_id` to associate the deleted entity with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
+          description: You can provide a `run_id` to associate the deleted entity with a specific [action run](https://docs.port.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: string
             minLength: 1
@@ -4127,7 +4127,7 @@ paths:
   '/v1/blueprints/{blueprint_identifier}/entities-count':
     get:
       summary: Get a blueprint's entity count
-      description: This route allows you to count the number of entities in a specific blueprint in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      description: This route allows you to count the number of entities in a specific blueprint in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       parameters:
@@ -4188,7 +4188,7 @@ paths:
   '/v1/blueprints/{blueprint_identifier}/all-entities':
     delete:
       summary: Delete all entities of a blueprint
-      description: This route allows you to delete all entities of a specific blueprint in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+      description: This route allows you to delete all entities of a specific blueprint in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
       tags:
         - Entities
       parameters:
@@ -4197,7 +4197,7 @@ paths:
           in: query
           name: run_id
           required: false
-          description: You can provide a `run_id` to associate the deleted entities with a specific [action run](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
+          description: You can provide a `run_id` to associate the deleted entities with a specific [action run](https://docs.port.io/create-self-service-experiences/reflect-action-progress/#tying-entities-to-an-action-run).<br/>
         - schema:
             type: boolean
           in: query
@@ -4281,7 +4281,7 @@ paths:
       summary: Search entities
       tags:
         - Entities
-      description: This route allows you to search for entities in your software catalog based on a given set of rules.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.getport.io/search-and-query/).
+      description: This route allows you to search for entities in your software catalog based on a given set of rules.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).<br/><br/>For more details about Port's search mechanism, rules, and operators - see the [search & query documentation](https://docs.port.io/search-and-query/).
       requestBody:
         content:
           application/json:
@@ -4289,6 +4289,7 @@ paths:
               type: object
               properties:
                 combinator:
+                  type: string
                   enum:
                     - and
                     - or
@@ -4478,7 +4479,7 @@ paths:
           in: query
           name: exclude_calculated_properties
           required: false
-          description: If `true`, [calculated properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entities.<br/>
+          description: If `true`, [calculated properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entities.<br/>
         - schema:
             type: array
             items:
@@ -4486,7 +4487,7 @@ paths:
           in: query
           name: include
           required: false
-          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
+          description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         - schema:
             type: array
             items:
@@ -4494,7 +4495,7 @@ paths:
           in: query
           name: exclude
           required: false
-          description: "An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
+          description: "An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"
         # - schema:
         #     type: boolean
         #   in: query
@@ -4543,7 +4544,7 @@ paths:
   /v1/blueprints:
     get:
       summary: Get all blueprints
-      description: This route allows you to fetch all blueprints in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      description: This route allows you to fetch all blueprints in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
       tags:
         - Blueprints
       security:
@@ -4554,7 +4555,7 @@ paths:
           description: Default Response
     post:
       summary: Create a blueprint
-      description: This route allows you to create a new blueprint in your data model.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      description: This route allows you to create a new blueprint in your data model.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
       tags:
         - Blueprints
       requestBody:
@@ -4610,7 +4611,7 @@ paths:
                             type: string
                             description: The icon of the property.<br/>
                           type:
-                            description: The [type](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties) of the property.<br/>
+                            description: The [type](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties) of the property.<br/>
                             enum:
                               - string
                               - number
@@ -4618,7 +4619,7 @@ paths:
                               - object
                               - array
                           format:
-                            description: The type's [format](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).<br/>
+                            description: The type's [format](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties).<br/>
                             enum:
                               - date-time
                               - url
@@ -4632,7 +4633,7 @@ paths:
                               - timer
                               - proto
                           spec:
-                            description: The [spec](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties) of the property.<br/>
+                            description: The [spec](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/#supported-properties) of the property.<br/>
                             enum:
                               - open-api
                               - embedded-url
@@ -4649,7 +4650,7 @@ paths:
                     - properties
                 calculationProperties:
                   type: object
-                  description: The [calculation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) of the new blueprint.<br/>
+                  description: The [calculation properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) of the new blueprint.<br/>
                   default: {}
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
@@ -4720,7 +4721,7 @@ paths:
                       - type
                 mirrorProperties:
                   type: object
-                  description: The [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) of the new blueprint.<br/>
+                  description: The [mirror properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) of the new blueprint.<br/>
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
                   additionalProperties:
@@ -4736,7 +4737,7 @@ paths:
                       - path
                 aggregationProperties:
                   type: object
-                  description: The [aggregation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/) of the new blueprint.<br/>
+                  description: The [aggregation properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/) of the new blueprint.<br/>
                   default: {}
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
@@ -4851,7 +4852,7 @@ paths:
                       - calculationSpec
                 relations:
                   type: object
-                  description: The [relations](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) of the new blueprint.<br/>
+                  description: The [relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) of the new blueprint.<br/>
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
                   additionalProperties:
@@ -4922,7 +4923,7 @@ paths:
   '/v1/blueprints/{identifier}':
     get:
       summary: Get a blueprint
-      description: This route allows you to fetch a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      description: This route allows you to fetch a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
       tags:
         - Blueprints
       parameters:
@@ -4940,7 +4941,7 @@ paths:
           description: Default Response
     put:
       summary: Change a blueprint
-      description: This route allows you to change a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      description: This route allows you to change a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
       tags:
         - Blueprints
       requestBody:
@@ -5029,7 +5030,7 @@ paths:
                     - properties
                 calculationProperties:
                   type: object
-                  description: The new [calculation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) of the blueprint.<br/>
+                  description: The new [calculation properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) of the blueprint.<br/>
                   default: {}
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
@@ -5100,7 +5101,7 @@ paths:
                       - type
                 mirrorProperties:
                   type: object
-                  description: The new [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) of the blueprint.<br/>
+                  description: The new [mirror properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) of the blueprint.<br/>
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
                   additionalProperties:
@@ -5116,7 +5117,7 @@ paths:
                       - path
                 aggregationProperties:
                   type: object
-                  description: The new [aggregation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/) of the blueprint.<br/>
+                  description: The new [aggregation properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/) of the blueprint.<br/>
                   default: {}
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
@@ -5137,7 +5138,7 @@ paths:
                         type: string
                       calculationSpec:
                         type: object
-                        description: The calculation specification of the aggregation property. For more information and examples, see the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/).<br/>
+                        description: The calculation specification of the aggregation property. For more information and examples, see the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/).<br/>
                         oneOf:
                           - oneOf:
                               - type: object
@@ -5232,7 +5233,7 @@ paths:
                       - calculationSpec
                 relations:
                   type: object
-                  description: The new [relations](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) of the blueprint.<br/>
+                  description: The new [relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) of the blueprint.<br/>
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
                   additionalProperties:
@@ -5307,7 +5308,7 @@ paths:
           description: Default Response
     patch:
       summary: Patch a blueprint
-      description: This route allows you to patch a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      description: This route allows you to patch a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
       tags:
         - Blueprints
       requestBody:
@@ -5395,7 +5396,7 @@ paths:
                     - properties
                 calculationProperties:
                   type: object
-                  description: The new [calculation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) of the blueprint.<br/>
+                  description: The new [calculation properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) of the blueprint.<br/>
                   default: {}
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
@@ -5466,7 +5467,7 @@ paths:
                       - type
                 mirrorProperties:
                   type: object
-                  description: The new [mirror properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) of the blueprint.<br/>
+                  description: The new [mirror properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) of the blueprint.<br/>
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
                   additionalProperties:
@@ -5482,7 +5483,7 @@ paths:
                       - path
                 aggregationProperties:
                   type: object
-                  description: The new [aggregation properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/) of the blueprint.<br/>
+                  description: The new [aggregation properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property/) of the blueprint.<br/>
                   default: {}
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
@@ -5597,7 +5598,7 @@ paths:
                       - calculationSpec
                 relations:
                   type: object
-                  description: The new [relations](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) of the blueprint.<br/>
+                  description: The new [relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) of the blueprint.<br/>
                   propertyNames:
                     pattern: '^[A-Za-z0-9@_=\\-]+$'
                   additionalProperties:
@@ -5668,7 +5669,7 @@ paths:
           description: Default Response
     delete:
       summary: Delete a blueprint
-      description: This route allows you to delete a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      description: This route allows you to delete a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
       tags:
         - Blueprints
       parameters:
@@ -5704,7 +5705,7 @@ paths:
   '/v1/blueprints/{identifier}/properties/{property_name}/rename':
     patch:
       summary: Rename a property in a blueprint
-      description: This route allows you to change the identifier of a property in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      description: This route allows you to change the identifier of a property in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
       tags:
         - Blueprints
       requestBody:
@@ -5739,7 +5740,7 @@ paths:
   '/v1/blueprints/{identifier}/mirror/{mirror_name}/rename':
     patch:
       summary: Rename a blueprint's mirror property
-      description: This route allows you to change the identifier of a mirror property in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      description: This route allows you to change the identifier of a mirror property in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
       tags:
         - Blueprints
       requestBody:
@@ -5774,7 +5775,7 @@ paths:
   '/v1/blueprints/{identifier}/relations/{relation_identifier}/rename':
     patch:
       summary: Rename a blueprint's relation
-      description: This route allows you to change the identifier of a relation in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
+      description: This route allows you to change the identifier of a relation in a specific blueprint in your Port account.<br/><br/>To learn more about blueprints, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/).
       tags:
         - Blueprints
       requestBody:
@@ -5809,7 +5810,7 @@ paths:
   /v1/actions:
     post:
       summary: Create an action/automation
-      description: This route allows you to create a new self-service action or automation in your Port account.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).
+      description: This route allows you to create a new self-service action or automation in your Port account.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.port.io/actions-and-automations/).
       tags:
         - Actions
       requestBody:
@@ -5839,7 +5840,7 @@ paths:
                       properties:
                         operation:
                           type: string
-                          description: The [operation type](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
+                          description: The [operation type](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
                           enum:
                             - DAY-2
                             - DELETE
@@ -6877,7 +6878,7 @@ paths:
                                 - steps
                               additionalProperties: false
                           type: object
-                          description: The [user inputs](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
+                          description: The [user inputs](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
                           additionalProperties: false
                           required:
                             - properties
@@ -6892,7 +6893,7 @@ paths:
                                 - SEARCH
                             rules:
                               type: array
-                              description: The [rules](https://docs.getport.io/search-and-query/#rules) used to filter entities.<br/>
+                              description: The [rules](https://docs.port.io/search-and-query/#rules) used to filter entities.<br/>
                               items:
                                 anyOf:
                                   - type: object
@@ -7088,7 +7089,7 @@ paths:
                       properties:
                         operation:
                           type: string
-                          description: The [operation type](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
+                          description: The [operation type](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
                           enum:
                             - CREATE
                         type:
@@ -8125,7 +8126,7 @@ paths:
                                 - steps
                               additionalProperties: false
                           type: object
-                          description: The [user inputs](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
+                          description: The [user inputs](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
                           additionalProperties: false
                           required:
                             - properties
@@ -8143,7 +8144,7 @@ paths:
                           enum:
                             - automation
                         event:
-                          description: The [event](https://docs.getport.io/actions-and-automations/define-automations/setup-trigger) that triggers the action.<br/>
+                          description: The [event](https://docs.port.io/actions-and-automations/define-automations/setup-trigger) that triggers the action.<br/>
                           oneOf:
                             - type: object
                               title: Entity created
@@ -8231,7 +8232,7 @@ paths:
                                     - JQ
                                 expressions:
                                   type: array
-                                  description: An array of [jq expressions](https://docs.getport.io/search-and-query/#jq-expressions) used to filter entities.<br/>Read more [here](https://docs.getport.io/actions-and-automations/define-automations/setup-trigger#conditions).<br/>
+                                  description: An array of [jq expressions](https://docs.port.io/search-and-query/#jq-expressions) used to filter entities.<br/>Read more [here](https://docs.port.io/actions-and-automations/define-automations/setup-trigger#conditions).<br/>
                                   items:
                                     type: string
                                 combinator:
@@ -8258,7 +8259,7 @@ paths:
                           enum:
                             - KAFKA
                         payload:
-                          description: An object containing the [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload).<br/>
+                          description: An object containing the [action payload](https://docs.port.io/create-self-service-experiences/setup-backend/#define-the-actions-payload).<br/>
                           type: object
                           # oneOf:
                           #   - type: array
@@ -8278,13 +8279,13 @@ paths:
                           description: The URL of the webhook.<br/>
                         agent:
                           type: boolean
-                          description: If `true`, Port's [execution agent](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/) will be used to handle invocations of this action.<br/>
+                          description: If `true`, Port's [execution agent](https://docs.port.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/) will be used to handle invocations of this action.<br/>
                           # oneOf:
                           #   - type: boolean
                           #   - type: string
                         synchronized:
                           type: boolean
-                          description: If `true`, the action will be executed [synchronously](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/#sync-vs-async-execution).<br/>
+                          description: If `true`, the action will be executed [synchronously](https://docs.port.io/create-self-service-experiences/setup-backend/webhook/#sync-vs-async-execution).<br/>
                           # oneOf:
                           #   - type: boolean
                           #   - type: string
@@ -8298,7 +8299,7 @@ paths:
                           #   type: string
                         body:
                           type: object
-                          description: The body sent to the webhook in each execution. This is where the [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) is specified.<br/>
+                          description: The body sent to the webhook in each execution. This is where the [action payload](https://docs.port.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) is specified.<br/>
                           # oneOf:
                           #   - type: array
                           #   - type: object
@@ -8324,7 +8325,7 @@ paths:
                           description: The name of the workflow (YAML file) to trigger. The file should be placed under `.github/workflows/`.<br/>
                         workflowInputs:
                           type: object
-                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Github upon execution.<br/>
+                          description: The [action payload](https://docs.port.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Github upon execution.<br/>
                         reportWorkflowStatus:
                           type: boolean
                           description: If `true`, the action run will update its status automatically based on the workflow's result (pass/fail).<br/>
@@ -8355,7 +8356,7 @@ paths:
                           description: The default ref (branch/tag name) we want the action to use. Default ref can be overridden dynamically by adding "ref" as a user input. If not set, the agent triggers the `main` branch.
                         pipelineVariables:
                           type: object
-                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to GitLab upon execution.<br/>
+                          description: The [action payload](https://docs.port.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to GitLab upon execution.<br/>
                       required:
                         - type
                         - projectName
@@ -8376,7 +8377,7 @@ paths:
                           description: The Azure DevOps organization in which the pipeline is located.<br/>
                         payload:
                           type: object
-                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Azure DevOps upon execution.<br/>
+                          description: The [action payload](https://docs.port.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Azure DevOps upon execution.<br/>
                           # oneOf:
                           #   - type: array
                           #   - type: object
@@ -8562,7 +8563,7 @@ paths:
             </table>
     get:
       summary: Get actions/automations
-      description: This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+      description: This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.port.io/actions-and-automations/).<br/>
       tags:
         - Actions
       parameters:
@@ -8592,13 +8593,13 @@ paths:
                 - DAY-2
           in: query
           name: operation
-          description: The [operation type/s](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch. Relevant only for self-service actions.<br/>
+          description: The [operation type/s](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch. Relevant only for self-service actions.<br/>
           required: false
         - schema:
             type: boolean
           in: query
           name: published
-          description: If `true`, only published actions/automations will be fetched.<br/>
+          description: "Only relevant for **automations**. If `true`, only published automations will be fetched.<br/>"
           required: false
         - schema:
             type: string
@@ -8667,7 +8668,7 @@ paths:
   "/v1/actions/{action_identifier}":
     put:
       summary: Update an action/automation
-      description: This route allows you to update an existing self-service action or automation in your Port account.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+      description: This route allows you to update an existing self-service action or automation in your Port account.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.port.io/actions-and-automations/).<br/>
       tags:
         - Actions
       requestBody:
@@ -8697,7 +8698,7 @@ paths:
                       properties:
                         operation:
                           type: string
-                          description: The [operation type](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
+                          description: The [operation type](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
                           enum:
                             - DAY-2
                             - DELETE
@@ -9735,7 +9736,7 @@ paths:
                                 - steps
                               additionalProperties: false
                           type: object
-                          description: The [user inputs](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
+                          description: The [user inputs](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
                           additionalProperties: false
                           required:
                             - properties
@@ -9750,7 +9751,7 @@ paths:
                                 - SEARCH
                             rules:
                               type: array
-                              description: The [rules](https://docs.getport.io/search-and-query/#rules) used to filter entities.<br/>
+                              description: The [rules](https://docs.port.io/search-and-query/#rules) used to filter entities.<br/>
                               items:
                                 anyOf:
                                   - type: object
@@ -9946,7 +9947,7 @@ paths:
                       properties:
                         operation:
                           type: string
-                          description: The [operation type](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
+                          description: The [operation type](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action.<br/>
                           enum:
                             - CREATE
                         type:
@@ -10983,7 +10984,7 @@ paths:
                                 - steps
                               additionalProperties: false
                           type: object
-                          description: The [user inputs](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
+                          description: The [user inputs](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/user-inputs/) of the action.<br/>
                           additionalProperties: false
                           required:
                             - properties
@@ -11001,7 +11002,7 @@ paths:
                           enum:
                             - automation
                         event:
-                          description: The [event](https://docs.getport.io/actions-and-automations/define-automations/setup-trigger) that triggers the action.<br/>
+                          description: The [event](https://docs.port.io/actions-and-automations/define-automations/setup-trigger) that triggers the action.<br/>
                           oneOf:
                             - type: object
                               title: Entity created
@@ -11089,7 +11090,7 @@ paths:
                                     - JQ
                                 expressions:
                                   type: array
-                                  description: An array of [jq expressions](https://docs.getport.io/search-and-query/#jq-expressions) used to filter entities.<br/>Read more [here](https://docs.getport.io/actions-and-automations/define-automations/setup-trigger#conditions).<br/>
+                                  description: An array of [jq expressions](https://docs.port.io/search-and-query/#jq-expressions) used to filter entities.<br/>Read more [here](https://docs.port.io/actions-and-automations/define-automations/setup-trigger#conditions).<br/>
                                   items:
                                     type: string
                                 combinator:
@@ -11116,7 +11117,7 @@ paths:
                           enum:
                             - KAFKA
                         payload:
-                          description: An object containing the [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload).<br/>
+                          description: An object containing the [action payload](https://docs.port.io/create-self-service-experiences/setup-backend/#define-the-actions-payload).<br/>
                           type: object
                           # oneOf:
                           #   - type: array
@@ -11136,13 +11137,13 @@ paths:
                           description: The URL of the webhook.<br/>
                         agent:
                           type: boolean
-                          description: If `true`, Port's [execution agent](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/) will be used to handle invocations of this action.<br/>
+                          description: If `true`, Port's [execution agent](https://docs.port.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/) will be used to handle invocations of this action.<br/>
                           # oneOf:
                           #   - type: boolean
                           #   - type: string
                         synchronized:
                           type: boolean
-                          description: If `true`, the action will be executed [synchronously](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/#sync-vs-async-execution).<br/>
+                          description: If `true`, the action will be executed [synchronously](https://docs.port.io/create-self-service-experiences/setup-backend/webhook/#sync-vs-async-execution).<br/>
                           # oneOf:
                           #   - type: boolean
                           #   - type: string
@@ -11156,7 +11157,7 @@ paths:
                           #   type: string
                         body:
                           type: object
-                          description: The body sent to the webhook in each execution. This is where the [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) is specified.<br/>
+                          description: The body sent to the webhook in each execution. This is where the [action payload](https://docs.port.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) is specified.<br/>
                           # oneOf:
                           #   - type: array
                           #   - type: object
@@ -11182,7 +11183,7 @@ paths:
                           description: The name of the workflow (YAML file) to trigger. The file should be placed under `.github/workflows/`.<br/>
                         workflowInputs:
                           type: object
-                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Github upon execution.<br/>
+                          description: The [action payload](https://docs.port.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Github upon execution.<br/>
                         reportWorkflowStatus:
                           type: boolean
                           description: If `true`, the action run will update its status automatically based on the workflow's result (pass/fail).<br/>
@@ -11213,7 +11214,7 @@ paths:
                           description: The default ref (branch/tag name) we want the action to use. Default ref can be overridden dynamically by adding "ref" as a user input. If not set, the agent triggers the `main` branch.
                         pipelineVariables:
                           type: object
-                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to GitLab upon execution.<br/>
+                          description: The [action payload](https://docs.port.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to GitLab upon execution.<br/>
                       required:
                         - type
                         - projectName
@@ -11234,7 +11235,7 @@ paths:
                           description: The Azure DevOps organization in which the pipeline is located.<br/>
                         payload:
                           type: object
-                          description: The [action payload](https://docs.getport.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Azure DevOps upon execution.<br/>
+                          description: The [action payload](https://docs.port.io/create-self-service-experiences/setup-backend/#define-the-actions-payload) to be sent to Azure DevOps upon execution.<br/>
                           # oneOf:
                           #   - type: array
                           #   - type: object
@@ -11438,7 +11439,7 @@ paths:
             </table>
     get:
       summary: Get an action/automation
-      description: This route allows you to fetch the details of a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+      description: This route allows you to fetch the details of a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.port.io/actions-and-automations/).<br/>
       tags:
         - Actions
       parameters:
@@ -11499,7 +11500,7 @@ paths:
             </table>
     delete:
       summary: Delete an action/automation
-      description: This route allows you to delete a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+      description: This route allows you to delete a self-service action or automation.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.port.io/actions-and-automations/).<br/>
       tags:
         - Actions
       parameters:
@@ -11561,7 +11562,7 @@ paths:
   "/v1/actions/{action_identifier}/permissions":
     get:
       summary: Get an action's permissions
-      description: This route allows you to fetch the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
+      description: This route allows you to fetch the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.port.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
       tags:
         - Actions
       parameters:
@@ -11621,7 +11622,7 @@ paths:
             </table>
     patch:
       summary: Update an action's permissions
-      description: This route allows you to update the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
+      description: This route allows you to update the permissions of a self-service action.<br/><br/>To learn more about action RBAC, check out the [documentation](https://docs.port.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/).
       tags:
         - Actions
       requestBody:
@@ -11651,9 +11652,9 @@ paths:
                         type: string
                     ownedByTeam:
                       type: boolean
-                      description: Relevant only for [DAY-2/DELETE actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/setup-ui-for-action/#basic-details). If `true`, any member of the team that the entity belongs to can execute the action.<br/>
+                      description: Relevant only for [DAY-2/DELETE actions](https://docs.port.io/actions-and-automations/create-self-service-experiences/setup-ui-for-action/#basic-details). If `true`, any member of the team that the entity belongs to can execute the action.<br/>
                     policy:
-                      description: An optional custom policy the determines if action execution is allowed.<br/>See instructions and examples [here](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/#instructions).
+                      description: An optional custom policy the determines if action execution is allowed.<br/>See instructions and examples [here](https://docs.port.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/#instructions).
                       type:
                         - object
                         # - "null"
@@ -11696,7 +11697,7 @@ paths:
                       items:
                         type: string
                     policy:
-                      description: An optional custom policy the determines who can approve the action.<br/>See instructions and examples [here](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/#instructions).
+                      description: An optional custom policy the determines who can approve the action.<br/>See instructions and examples [here](https://docs.port.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/dynamic-permissions/#instructions).
                       type:
                         - object
                         # - "null"
@@ -11779,7 +11780,7 @@ paths:
   "/v1/actions/{action_identifier}/runs":
     post:
       summary: Execute a self-service action
-      description: This route allows you to execute a self-service action, thus creating an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+      description: This route allows you to execute a self-service action, thus creating an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
       tags:
         - Action Runs
       requestBody:
@@ -12081,7 +12082,7 @@ paths:
   '/v1/actions/runs/{run_id}':
     patch:
       summary: Patch an action run
-      description: This route allows you to patch an action run's details. This can be used to update the run's status & label, and add links to it (e.g. external logs of the job runner).<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+      description: This route allows you to patch an action run's details. This can be used to update the run's status & label, and add links to it (e.g. external logs of the job runner).<br/><br/>To learn more about action runs, check out the [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
       tags:
         - Action Runs
       requestBody:
@@ -12355,7 +12356,7 @@ paths:
             </table>
     get:
       summary: Get an action run's details
-      description: This route allows you to fetch the details of an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+      description: This route allows you to fetch the details of an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
       tags:
         - Action Runs
       parameters:
@@ -12592,7 +12593,7 @@ paths:
   '/v1/actions/runs/{run_id}/approval':
     patch:
       summary: Approve an action run
-      description: This route allows you to approve or decline a request to execute an action that requires approval.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
+      description: This route allows you to approve or decline a request to execute an action that requires approval.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.port.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
       tags:
         - Action Runs
       requestBody:
@@ -12864,7 +12865,7 @@ paths:
   "/v1/actions/runs/{run_id}/approvers":
     get:
       summary: Get an action run's approvers
-      description: This route allows you to fetch the approvers of a specific action run.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.getport.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
+      description: This route allows you to fetch the approvers of a specific action run.<br/><br/>To learn more about manual approval for actions, check out the [documentation](https://docs.port.io/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).
       tags:
         - Action Runs
       parameters:
@@ -12917,7 +12918,7 @@ paths:
   /v1/actions/runs:
     get:
       summary: Get all action runs
-      description: This route allows you to fetch all action runs in your Port account. The route will perform a logical `AND` between all query parameters below, and return all action runs that match the criteria.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+      description: This route allows you to fetch all action runs in your Port account. The route will perform a logical `AND` between all query parameters below, and return all action runs that match the criteria.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
       tags:
         - Action Runs
       parameters:
@@ -13174,7 +13175,7 @@ paths:
   '/v1/actions/runs/{run_id}/logs':
     post:
       summary: Add a log to an action run
-      description: This route allows you to send a log message back to Port, which will be displayed in the action run's page. You can also use this route to update the run's termination status (SUCCESS/FAILURE) and label describing the status.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).  
+      description: This route allows you to send a log message back to Port, which will be displayed in the action run's page. You can also use this route to update the run's termination status (SUCCESS/FAILURE) and label describing the status.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).  
       tags:
         - Action Runs
       requestBody:
@@ -13290,7 +13291,7 @@ paths:
             </table>
     get:
       summary: Get an action's run logs
-      description: This route allows you to fetch the logs from an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/).
+      description: This route allows you to fetch the logs from an action run.<br/><br/>To learn more about action runs, check out the [documentation](https://docs.port.io/create-self-service-experiences/reflect-action-progress/).
       tags:
         - Action Runs
       parameters:
@@ -13398,7 +13399,7 @@ paths:
   /v1/teams:
     get:
       summary: Get all teams in your organization
-      description: This route allows you to fetch all of the teams in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      description: This route allows you to fetch all of the teams in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
       tags:
         - Teams
       parameters:
@@ -13478,7 +13479,7 @@ paths:
                 additionalProperties: false
     post:
       summary: Create a team
-      description: This route allows you to create a new team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      description: This route allows you to create a new team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
       tags:
         - Teams
       requestBody:
@@ -13557,7 +13558,7 @@ paths:
   '/v1/teams/{name}':
     get:
       summary: Get a team
-      description: This route allows you to fetch a specific team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      description: This route allows you to fetch a specific team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
       tags:
         - Teams
       parameters:
@@ -13625,7 +13626,7 @@ paths:
                 additionalProperties: false
     patch:
       summary: Patch a team
-      description: This route allows you to patch a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      description: This route allows you to patch a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
       tags:
         - Teams
       requestBody:
@@ -13708,7 +13709,7 @@ paths:
                 additionalProperties: false
     put:
       summary: Change a team
-      description: This route allows you to change a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      description: This route allows you to change a team's details. This can be used to update the team's name, users, and description.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
       tags:
         - Teams
       requestBody:
@@ -13792,7 +13793,7 @@ paths:
                 additionalProperties: false
     delete:
       summary: Delete a team
-      description: This route allows you to delete a team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      description: This route allows you to delete a team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
       tags:
         - Teams
       parameters:
@@ -13823,7 +13824,7 @@ paths:
   /v1/users:
     get:
       summary: Get all users in your organization
-      description: This route allows you to fetch all of the users in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      description: This route allows you to fetch all of the users in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
       tags:
         - Users
       parameters:
@@ -13930,7 +13931,7 @@ paths:
   /v1/users/invite:
     post:
       summary: Invite a user to your organization
-      description: This route allows you to invite a user to your Port organization.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      description: This route allows you to invite a user to your Port organization.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
       tags:
         - Users
       requestBody:
@@ -13992,7 +13993,7 @@ paths:
   '/v1/users/{user_email}':
     get:
       summary: Get a user
-      description: This route allows you to fetch a specific user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      description: This route allows you to fetch a specific user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
       tags:
         - Users
       parameters:
@@ -14074,7 +14075,7 @@ paths:
                 additionalProperties: false
     patch:
       summary: Patch a user
-      description: This route allows you to patch a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      description: This route allows you to patch a user's details. This can be used to update the user's role/s and team/s.<br/><br/>To learn more about users, roles, and teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
       tags:
         - Users
       requestBody:
@@ -14168,7 +14169,7 @@ paths:
                 additionalProperties: false
     delete:
       summary: Delete a user
-      description: This route allows you to delete a user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+      description: This route allows you to delete a user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
       tags:
         - Users
       parameters:
@@ -14347,7 +14348,7 @@ paths:
   '/v1/blueprints/{blueprint_identifier}/scorecards':
     post:
       summary: Create a scorecard
-      description: This route allows you to create a scorecard for a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      description: This route allows you to create a scorecard for a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.port.io/promote-scorecards/).
       tags:
         - Scorecards
       requestBody:
@@ -14365,7 +14366,7 @@ paths:
                   description: The title of the scorecard.<br/>
                 filter:
                   type: object
-                  description: An optional set of [conditions](https://docs.getport.io/promote-scorecards/#conditions) to filter entities that will be evaluated by the scorecard.<br/>
+                  description: An optional set of [conditions](https://docs.port.io/promote-scorecards/#conditions) to filter entities that will be evaluated by the scorecard.<br/>
                   properties:
                     combinator:
                       type: string
@@ -14537,7 +14538,7 @@ paths:
                     - combinator
                     - conditions
                 rules:
-                  description: The [rules](https://docs.getport.io/promote-scorecards/#rule-elements) that define the scorecard.<br/>
+                  description: The [rules](https://docs.port.io/promote-scorecards/#rule-elements) that define the scorecard.<br/>
                   type: array
                   items:
                     type: object
@@ -15163,7 +15164,7 @@ paths:
           description: Default Response
     put:
       summary: Change scorecards
-      description: This route allows you to modify one or more scorecards of a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      description: This route allows you to modify one or more scorecards of a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.port.io/promote-scorecards/).
       tags:
         - Scorecards
       requestBody:
@@ -15184,7 +15185,7 @@ paths:
                     description: The title of the scorecard.<br/>
                   filter:
                     type: object
-                    description: An optional set of [conditions](https://docs.getport.io/promote-scorecards/#conditions) to filter entities that will be evaluated by the scorecard.<br/>
+                    description: An optional set of [conditions](https://docs.port.io/promote-scorecards/#conditions) to filter entities that will be evaluated by the scorecard.<br/>
                     properties:
                       combinator:
                         type: string
@@ -15349,7 +15350,7 @@ paths:
                       - conditions
                   rules:
                     type: array
-                    description: The [rules](https://docs.getport.io/promote-scorecards/#rule-elements) that define the scorecard.<br/>
+                    description: The [rules](https://docs.port.io/promote-scorecards/#rule-elements) that define the scorecard.<br/>
                     items:
                       type: object
                       properties:
@@ -15974,7 +15975,7 @@ paths:
           description: Default Response
     get:
       summary: Get a blueprint's scorecards
-      description: This route allows you to fetch all scorecards for a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      description: This route allows you to fetch all scorecards for a given blueprint. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.port.io/promote-scorecards/).
       tags:
         - Scorecards
       parameters:
@@ -15994,7 +15995,7 @@ paths:
   '/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}':
     put:
       summary: Change a scorecard
-      description: This route allows you to modify a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      description: This route allows you to modify a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.port.io/promote-scorecards/).
       tags:
         - Scorecards
       requestBody:
@@ -16012,7 +16013,7 @@ paths:
                   description: The new title of the scorecard.<br/>
                 filter:
                   type: object
-                  description: An optional set of [conditions](https://docs.getport.io/promote-scorecards/#conditions) to filter entities that will be evaluated by the scorecard.<br/>
+                  description: An optional set of [conditions](https://docs.port.io/promote-scorecards/#conditions) to filter entities that will be evaluated by the scorecard.<br/>
                   properties:
                     combinator:
                       type: string
@@ -16182,7 +16183,7 @@ paths:
                     - combinator
                     - conditions
                 rules:
-                  description: The [rules](https://docs.getport.io/promote-scorecards/#rule-elements) that define the scorecard.<br/>
+                  description: The [rules](https://docs.port.io/promote-scorecards/#rule-elements) that define the scorecard.<br/>
                   type: array
                   items:
                     type: object
@@ -16199,7 +16200,7 @@ paths:
                         description: A description for the rule.<br/>
                       level:
                         type: string
-                        description: The [level](https://docs.getport.io/promote-scorecards/#scorecard-total-level-calculation) of the rule.<br/>
+                        description: The [level](https://docs.port.io/promote-scorecards/#scorecard-total-level-calculation) of the rule.<br/>
                         enum:
                           - Gold
                           - Silver
@@ -16437,7 +16438,7 @@ paths:
           description: Default Response
     get:
       summary: Get a scorecard
-      description: This route allows you to fetch a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      description: This route allows you to fetch a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.port.io/promote-scorecards/).
       tags:
         - Scorecards
       parameters:
@@ -16463,7 +16464,7 @@ paths:
           description: Default Response
     delete:
       summary: Delete a scorecard
-      description: This route allows you to delete a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      description: This route allows you to delete a specific scorecard. A scorecard is a set of rules that define the quality of a blueprint.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.port.io/promote-scorecards/).
       tags:
         - Scorecards
       parameters:
@@ -16489,7 +16490,7 @@ paths:
   /v1/scorecards:
     get:
       summary: Get all scorecards
-      description: This route allows you to fetch all scorecards in your Port organization.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.getport.io/promote-scorecards/).
+      description: This route allows you to fetch all scorecards in your Port organization.<br/><br/>To learn more about scorecards, check out the [documentation](https://docs.port.io/promote-scorecards/).
       tags:
         - Scorecards
       security:
@@ -16600,7 +16601,7 @@ paths:
   '/v1/integration/{identifier}/logs':
     get:
       summary: Get an integration's audit logs
-      description: This route allows you to fetch the audit logs of a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      description: This route allows you to fetch the audit logs of a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
       tags:
         - Integrations
       parameters:
@@ -16650,7 +16651,7 @@ paths:
   '/v1/integration/{identifier}/config':
     patch:
       summary: Patch an integration's config
-      description: This route allows you to modify an integration's configuration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      description: This route allows you to modify an integration's configuration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
       tags:
         - Integrations
       requestBody:
@@ -16677,7 +16678,7 @@ paths:
                       description: If `true`, creating an entity with a relation to a non-existing entity will also create the related entity.<br/>
                     resources:
                       type: array
-                      description: The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping).<br/>
+                      description: The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping).<br/>
                       items:
                         type: object
                         required:
@@ -16693,7 +16694,7 @@ paths:
                             properties:
                               query:
                                 type: string
-                                description: A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `"true"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work).<br/>
+                                description: A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `"true"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work).<br/>
                           port:
                             type: object
                             description: An object containing the mapping definitions of the `kind` resource into Port.<br/>
@@ -16706,7 +16707,7 @@ paths:
                                   - mappings
                                 properties:
                                   mappings:
-                                    description: The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                    description: The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                     oneOf:
                                       - type: array
                                         title: array
@@ -16727,11 +16728,11 @@ paths:
                                               description: The identifier of the blueprint to map the data into.<br/>
                                             properties:
                                               type: object
-                                              description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                               additionalProperties: true
                                             relations:
                                               type: object
-                                              description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                               additionalProperties: true
                                       - type: object
                                         title: object
@@ -16750,11 +16751,11 @@ paths:
                                             description: The identifier of the blueprint to map the data into.<br/>
                                           properties:
                                             type: object
-                                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                             additionalProperties: true
                                           relations:
                                             type: object
-                                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                             additionalProperties: true
               additionalProperties: false
               required:
@@ -16776,7 +16777,7 @@ paths:
   /v1/integration:
     get:
       summary: Get all integrations
-      description: This route allows you to fetch all integrations in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      description: This route allows you to fetch all integrations in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
       tags:
         - Integrations
       security:
@@ -16787,7 +16788,7 @@ paths:
           description: Default Response
     post:
       summary: Create an integration
-      description: This route allows you to create an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      description: This route allows you to create an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
       tags:
         - Integrations
       requestBody:
@@ -16825,7 +16826,7 @@ paths:
                       description: If `true`, creating an entity with a relation to a non-existing entity will also create the related entity.<br/>
                     resources:
                       type: array
-                      description: The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping).<br/>
+                      description: The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping).<br/>
                       items:
                         type: object
                         required:
@@ -16840,7 +16841,7 @@ paths:
                             type: object
                             properties:
                               query:
-                                description: A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `"true"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work).<br/>
+                                description: A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `"true"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work).<br/>
                                 type: string
                           port:
                             type: object
@@ -16854,7 +16855,7 @@ paths:
                                   - mappings
                                 properties:
                                   mappings:
-                                    description: The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                    description: The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                     oneOf:
                                       - type: array
                                         title: array
@@ -16875,11 +16876,11 @@ paths:
                                               description: The identifier of the blueprint to map the data into.<br/>
                                             properties:
                                               type: object
-                                              description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                               additionalProperties: true
                                             relations:
                                               type: object
-                                              description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                               additionalProperties: true
                                       - type: object
                                         title: object
@@ -16898,11 +16899,11 @@ paths:
                                             description: The identifier of the blueprint to map the data into.<br/>
                                           properties:
                                             type: object
-                                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                             additionalProperties: true
                                           relations:
                                             type: object
-                                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                             additionalProperties: true
                 changelogDestination:
                   type: object
@@ -16968,7 +16969,7 @@ paths:
   '/v1/integration/{identifier}':
     get:
       summary: Get an integration
-      description: This route allows you to fetch a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      description: This route allows you to fetch a specific integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
       tags:
         - Integrations
       parameters:
@@ -16997,7 +16998,7 @@ paths:
     patch:
       summary: Patch an integration
       description: |
-        This route allows you to modify an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).<br/>
+        This route allows you to modify an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).<br/>
         :::tip Simple resync
         To trigger a resync of an integration without changing its mapping, simply provide its identifier and leave the body empty.
         :::
@@ -17034,7 +17035,7 @@ paths:
                       description: If `true`, creating an entity with a relation to a non-existing entity will also create the related entity.<br/>
                     resources:
                       type: array
-                      description: The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping).<br/>
+                      description: The mapping definition of resources from the integrated tool/platform into Port. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping).<br/>
                       items:
                         type: object
                         required:
@@ -17050,7 +17051,7 @@ paths:
                             properties:
                               query:
                                 type: string
-                                description: A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `"true"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work).<br/>
+                                description: A `jq` query used to specify which resources to fetch from the integrated tool/platform. If set to `"true"`, all resources of the specified `kind` will be ingested. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#how-does-mapping-work).<br/>
                           port:
                             type: object
                             description: An object containing the mapping definitions of the `kind` resource into Port.<br/>
@@ -17063,7 +17064,7 @@ paths:
                                   - mappings
                                 properties:
                                   mappings:
-                                    description: The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                    description: The mapping definitions used to map the resource fields into Port entities. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                     oneOf:
                                       - type: array
                                         title: array
@@ -17084,11 +17085,11 @@ paths:
                                               description: The identifier of the blueprint to map the data into.<br/>
                                             properties:
                                               type: object
-                                              description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                               additionalProperties: true
                                             relations:
                                               type: object
-                                              description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                              description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                               additionalProperties: true
                                       - type: object
                                         title: object
@@ -17107,11 +17108,11 @@ paths:
                                             description: The identifier of the blueprint to map the data into.<br/>
                                           properties:
                                             type: object
-                                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                             additionalProperties: true
                                           relations:
                                             type: object
-                                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
+                                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure).<br/>
                                             additionalProperties: true
                 changelogDestination:
                   type: object
@@ -17172,7 +17173,7 @@ paths:
           description: Default Response
     delete:
       summary: Delete an integration
-      description: This route allows you to delete an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/).
+      description: This route allows you to delete an integration in your Port organization.<br/><br/>To learn more about integrations, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/).
       tags:
         - Integrations
       parameters:
@@ -17191,7 +17192,7 @@ paths:
   /v1/webhooks:
     post:
       summary: Create a webhook
-      description: This route allows you to create a webhook in your Port organization. Webhooks provide a way to ingest data from an external tool/platform into Port. You can also create a webhook via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      description: This route allows you to create a webhook in your Port organization. Webhooks provide a way to ingest data from an external tool/platform into Port. You can also create a webhook via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
       tags:
         - Webhook
       requestBody:
@@ -17216,7 +17217,7 @@ paths:
                   type: string
                   description: The icon of the webhook.<br/>
                 mappings:
-                  description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                  description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
                   type: array
                   items:
                     type: object
@@ -17248,12 +17249,12 @@ paths:
                             description: The team the entity belongs to.<br/>
                           properties:
                             type: object
-                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
                             propertyNames:
                               type: string
                           relations:
                             type: object
-                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
                             propertyNames:
                               type: string
                         additionalProperties: false
@@ -17269,7 +17270,7 @@ paths:
                   default: true
                 security:
                   type: object
-                  description: The security configuration of the webhook, used to tell Port how to verify the hashed signature sent with incoming requests.<br/>For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).<br/>
+                  description: The security configuration of the webhook, used to tell Port how to verify the hashed signature sent with incoming requests.<br/>For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).<br/>
                   properties:
                     secret:
                       type: string
@@ -17304,7 +17305,7 @@ paths:
           description: Default Response
     get:
       summary: Get all webhooks
-      description: This route allows you to fetch all webhooks configured in your Port organization. You can also see them in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      description: This route allows you to fetch all webhooks configured in your Port organization. You can also see them in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
       tags:
         - Webhook
       security:
@@ -17316,7 +17317,7 @@ paths:
   '/v1/webhooks/{identifier}':
     patch:
       summary: Patch a webhook
-      description: This route allows you to modify a webhook in your Port organization. You can also modify it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      description: This route allows you to modify a webhook in your Port organization. You can also modify it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
       tags:
         - Webhook
       requestBody:
@@ -17342,7 +17343,7 @@ paths:
                   description: The new icon of the webhook.<br/>
                 mappings:
                   type: array
-                  description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                  description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
                   items:
                     type: object
                     properties:
@@ -17373,12 +17374,12 @@ paths:
                             description: The team the entity belongs to.<br/>
                           properties:
                             type: object
-                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
                             propertyNames:
                               type: string
                           relations:
                             type: object
-                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
                             propertyNames:
                               type: string
                         additionalProperties: false
@@ -17394,7 +17395,7 @@ paths:
                   default: true
                 security:
                   type: object
-                  description: The security configuration of the webhook, used to tell Port how to verify the hashed signature sent with incoming requests.<br/>For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).<br/>
+                  description: The security configuration of the webhook, used to tell Port how to verify the hashed signature sent with incoming requests.<br/>For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).<br/>
                   properties:
                     secret:
                       type: string
@@ -17432,7 +17433,7 @@ paths:
           description: Default Response
     put:
       summary: Change a webhook
-      description: This route allows you to modify a webhook in your Port organization. You can also modify it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      description: This route allows you to modify a webhook in your Port organization. You can also modify it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
       tags:
         - Webhook
       requestBody:
@@ -17458,7 +17459,7 @@ paths:
                   description: The new icon of the webhook.<br/>
                 mappings:
                   type: array
-                  description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                  description: The mapping definitions used to map the data from the webhook into Port entities. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
                   items:
                     type: object
                     properties:
@@ -17489,12 +17490,12 @@ paths:
                             description: The team the entity belongs to.<br/>
                           properties:
                             type: object
-                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            description: An object containing the properties of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
                             propertyNames:
                               type: string
                           relations:
                             type: object
-                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).<br/>
+                            description: An object containing the relations of the entity and their values. For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).<br/>
                             propertyNames:
                               type: string
                         additionalProperties: false
@@ -17510,7 +17511,7 @@ paths:
                   default: true
                 security:
                   type: object
-                  description: The security configuration of the webhook, used to tell Port how to verify the hashed signature sent with incoming requests.<br/>For more information and examples, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).<br/>
+                  description: The security configuration of the webhook, used to tell Port how to verify the hashed signature sent with incoming requests.<br/>For more information and examples, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/#security-configuration).<br/>
                   properties:
                     secret:
                       type: string
@@ -17552,7 +17553,7 @@ paths:
           description: Default Response
     get:
       summary: Get a webhook
-      description: This route allows you to fetch a specific webhook in your Port organization. You can also see it in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      description: This route allows you to fetch a specific webhook in your Port organization. You can also see it in the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
       tags:
         - Webhook
       parameters:
@@ -17570,7 +17571,7 @@ paths:
           description: Default Response
     delete:
       summary: Delete a webhook
-      description: This route allows you to delete a webhook in your Port organization. You can also delete it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.getport.io/build-your-software-catalog/custom-integration/webhook/).
+      description: This route allows you to delete a webhook in your Port organization. You can also delete it via the [data sources page](https://app.getport.io/settings/data-sources) of your Port account.<br/><br/>To learn more about webhooks, check out the [documentation](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
       tags:
         - Webhook
       parameters:
@@ -17651,10 +17652,10 @@ paths:
                       description: The identifier of the target blueprint.<br/>
                     filter:
                       type: string
-                      description: An optional set of [conditions](https://docs.getport.io/promote-scorecards/#conditions) to filter the entities that will be migrated.<br/>
+                      description: An optional set of [conditions](https://docs.port.io/promote-scorecards/#conditions) to filter the entities that will be migrated.<br/>
                     itemsToParse:
                       type: string
-                      description: A `jq` query that evaluates to an array of items, used to create multiple entities at once. See more information [here](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping/#create-multiple-entities-from-an-array-api-object).<br/>
+                      description: A `jq` query that evaluates to an array of items, used to create multiple entities at once. See more information [here](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping/#create-multiple-entities-from-an-array-api-object).<br/>
                     entity:
                       type: object
                       properties:
@@ -17741,7 +17742,7 @@ paths:
           description: Default Response
   /v1/organization/secrets:
     get:
-      description: This route allows you to retrieve all of the secrets in your organization.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).
+      description: This route allows you to retrieve all of the secrets in your organization.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.port.io/sso-rbac/port-secrets).
       summary: Get all organization secrets
       tags:
         - Organization
@@ -17753,7 +17754,7 @@ paths:
           description: Default Response
     post:
       summary: Create an organization secret
-      description: This route allows you to create an organization secret.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).
+      description: This route allows you to create an organization secret.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.port.io/sso-rbac/port-secrets).
       tags:
         - Organization
       requestBody:
@@ -17789,7 +17790,7 @@ paths:
   "/v1/organization/secrets/{secret_name}":
     get:
       summary: Get an organization secret
-      description: This route allows you to retrieve a specific secret in your organization.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).
+      description: This route allows you to retrieve a specific secret in your organization.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.port.io/sso-rbac/port-secrets).
       tags:
         - Organization
       security:
@@ -17800,7 +17801,7 @@ paths:
           description: Default Response
     patch:
       summary: Patch an organization secret
-      description: This route allows you to patch an organization secret.<br/><br/>To learn more about secrets management, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).
+      description: This route allows you to patch an organization secret.<br/><br/>To learn more about secrets management, check out the [documentation](https://docs.port.io/sso-rbac/port-secrets).
       tags:
         - Organization
       requestBody:
@@ -17833,7 +17834,7 @@ paths:
           description: Default Response
     delete:
       summary: Delete an organization secret
-      description: This route allows you to delete an organization secret.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.getport.io/sso-rbac/port-secrets).
+      description: This route allows you to delete an organization secret.<br/><br/>To learn more about secrets management in Port, check out the [documentation](https://docs.port.io/sso-rbac/port-secrets).
       tags:
         - Organization
       parameters:

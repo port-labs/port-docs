@@ -1267,4 +1267,4 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Launchdarkly).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=Launchdarkly).
