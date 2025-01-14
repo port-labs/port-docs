@@ -25,6 +25,9 @@ import PortBoardAppConfig from './example-board/\_azuredevops_exporter_example_b
 import ReleaseBlueprint from './example-release/\_azuredevops_exporter_example_release_blueprint.mdx'
 import PortReleaseAppConfig from './example-release/\_azuredevops_exporter_example_release_port_app_config.mdx'
 
+import ColumnBlueprint from './example-columns/\_azuredevops_exporter_example_column_blueprint.mdx'
+import PortColumnAppConfig from './example-columns/\_azuredevops_exporter_example_column_port_app_config.mdx'
+
 
 # Examples
 
@@ -137,9 +140,26 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PortBoardAppConfig/>
 
-
 :::tip To Learn More
 - Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/work/boards/list?view=azure-devops-rest-7.1) for the Azure DevOps board object structure.
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your Azure DevOps boards.
+
+
+## Mapping columns
+
+The example below shows how to ingest Azure DevOps Columns into Port.  
+You can use the following Port blueprint definitions and integration configuration: 
+
+
+<ColumnBlueprint/>
+
+<PortColumnAppConfig/>
+
+
+:::tip To Learn More
+- Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/work/columns/list?view=azure-devops-rest-7.1) for the Azure DevOps column object structure.
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your Azure DevOps boards.
