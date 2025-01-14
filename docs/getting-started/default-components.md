@@ -1,12 +1,12 @@
 ---
 sidebar_position: 5
-title: Default Components
+title: Default components
 sidebar_label: "Default components"
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Default Components
+# Default components
 
 In addition to the components created in the previous steps, Port will create a few default components for you (even if you did not select any tools).
 

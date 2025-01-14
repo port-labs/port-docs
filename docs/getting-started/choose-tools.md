@@ -1,12 +1,12 @@
 ---
 sidebar_position: 3
-title: Choose Your Tools
-sidebar_label: "2. Choose Tools"
+title: Choose your tools
+sidebar_label: "2. Choose tools"
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Choose Your Tools
+# Choose your tools
 
 The second step is to select the tools and platforms that are used in your organization.  
 This will allow Port to create components in your portal for the selected tools, preparing for integration with them.

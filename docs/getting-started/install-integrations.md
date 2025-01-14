@@ -1,12 +1,12 @@
 ---
 sidebar_position: 4
-title: Install Integrations
-sidebar_label: "3. Install Integrations"
+title: Install integrations
+sidebar_label: "3. Install integrations"
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Install Integrations
+# Install integrations
 
 The third step is to install integrations for the tools you selected in the previous step.  
 This will connect the tools to Port, allowing Port to ingest data from them into your software catalog.

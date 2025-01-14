@@ -1,11 +1,11 @@
 ---
 sidebar_position: 2
-sidebar_label: "1. Connect Git Provider"
+sidebar_label: "1. Connect Git provider"
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Connect Your Git Provider
+# Connect your Git provider
 
 The first step of the onboarding process is to connect your Git provider to Port.  
 This will allow Port to fetch data from your Git provider and start populating your software catalog.
