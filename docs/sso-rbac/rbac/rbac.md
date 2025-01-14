@@ -54,7 +54,7 @@ For more information and examples, see the [catalog RBAC](/build-your-software-c
 A new mechanism to manage users and teams has been released, using dedicated blueprints.  
 This mechanism also differs in how **ownership** is defined.
 
-Starting **`January 13, 2025`**, this will be the default behavior for all new Port accounts.
+Starting **`January 14, 2025`**, this will be the default behavior for all new Port accounts.
 
 - If you created your account **after** this date, see the [**users & teams as blueprints**](/sso-rbac/rbac/as-blueprints) page.
 
