@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 displayed_sidebar: null
-description: Learn how to visualize ArgoCD service runtime in Port, enhancing monitoring and management of your Kubernetes applications.
+description: Learn how to visualize ArgoCD repositories runtime in Port, enhancing monitoring and management of your Kubernetes applications.
 ---
 
 import Tabs from "@theme/Tabs"
@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Visualize your services' Kubernetes runtime using ArgoCD
+# Visualize your repositories' Kubernetes runtime using ArgoCD
 
 This guide takes 10 minutes to complete, and aims to demonstrate the value of Port's integration with ArgoCD.
 
