@@ -155,4 +155,51 @@ html[data-theme='dark'] .cardHeader h3 {
   border: 1px dashed var(--ifm-color-emphasis-300);
   grid-column: 1 / -1;
   font-family: 'DM Sans', sans-serif;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .sidebar {
+    flex: none;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--ifm-color-emphasis-200);
+    padding-right: 0;
+    padding-bottom: 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .card {
+    padding: 0.75rem;
+  }
+
+  .cardHeader {
+    gap: 0.75rem;
+  }
+
+  .cardHeader h3 {
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+
+  .searchInput {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 } 
