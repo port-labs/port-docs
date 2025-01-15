@@ -105,7 +105,7 @@ Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to repres
 
 2. Fill out the form like this, then click `Create`:
 
-    <img src='/img/guides/gitopsDomainRelationForm.png' width='50%' />
+    <img src='/img/guides/gitopsDomainRelationForm.png' width='50%' border="1px" />
 
 <br/><br/>
 
@@ -748,11 +748,11 @@ The action is ready to be executed 🚀
 
 2. Choose a repository from the dropdown, a domain to assign it to, and any values for its type and lifecycle, then click `Execute`:
 
-    <img src='/img/guides/gitopsEnrichActionExecute.png' width='50%' />
+    <img src='/img/guides/gitopsEnrichActionExecute.png' width='50%' border="1px" />
 
 3. Click on the running actions icon on the top right conner to view running actions.:
 
-    <img src='/img/guides/gitopsActionExecutePopup.png' width='40%' />
+    <img src='/img/guides/gitopsActionExecutePopup.png' width='40%' border="1px" />
 
 <br/>
 
@@ -760,13 +760,13 @@ This page provides details about the action run. We can see that the backend ret
 
 4. Head over to your repository, you will see that a new pull-request was created:
 
-    <img src='/img/guides/gitopsActionRepoPullRequest.png' width='70%' />
+    <img src='/img/guides/gitopsActionRepoPullRequest.png' width='70%' border="1px" />
 
 5. Merge the pull-request, then head back to your [software catalog](https://app.getport.io/services).
 
 6. Find your repository, and click on its identifier. This will take you to the repository's catalog page, where you can see your new properties populated with data:
 
-    <img src='/img/guides/gitopsServicePageAfterAction.png' width='80%' />
+    <img src='/img/guides/gitopsServicePageAfterAction.png' width='80%' border="1px" />
 
 <br/>
 
