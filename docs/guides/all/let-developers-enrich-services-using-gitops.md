@@ -1,8 +1,8 @@
 ---
 sidebar_position: 6
-title: Enrich services using Gitops
+title: Enrich repositories using Gitops
 displayed_sidebar: null
-description: Learn how developers can enrich services using GitOps in Port, enabling efficient and automated service management.
+description: Learn how developers can enrich repositories using GitOps in Port, enabling efficient and automated service management.
 ---
 
 import Tabs from "@theme/Tabs"
@@ -11,13 +11,13 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Enrich services using Gitops
+# Enrich repositories using Gitops
 
 This guide takes 10 minutes to complete, and aims to demonstrate Port's flexibility when working with Gitops.
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have installed any of Port's [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/). We will use the `Repository` blueprint that was created during the installation process.
 - You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 
 :::
@@ -26,33 +26,37 @@ This guide takes 10 minutes to complete, and aims to demonstrate Port's flexibil
 
 ### The goal of this guide
 
-In this guide we will enrich a service in Port using Gitops. In reality, this can be used by developers to independently add additional valuable data about their services to Port.
+In this guide we will enrich a repository in Port using Gitops. In reality, this can be used by developers to independently add additional valuable data about their repositories to Port.
 
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
-- Developers will be able to enrich their services without needing to nag devops engineers.
+- Developers will be able to enrich their repositories without needing to nag devops engineers.
 - Platform engineers will be able to create RBAC-controlled actions for developers, empowering their independence.
-- R&D managers will be able to track additional, valuable data about services in the organization.
+- R&D managers will be able to track additional, valuable data about repositories in the organization.
 
 <br/>
 
-### Add new properties to your `Service` blueprint
+### Add new properties to your `Repository` blueprint
 
-Let's start by adding two new properties to the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, that we will later populate using Gitops.
+Let's start by adding two new properties to the `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, that we will later populate using Gitops.
 
-1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New property`.
+1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New property`.
 
-2. The first property will be the service's type, chosen from a predefined list of options. Fill out the form like this, then click `Create`:
+2. The first property will be the repository's type, chosen from a predefined list of options. Fill out the form like this, then click `Create`:
 
-    <img src='/img/guides/gitopsServicePropType.png' width='50%' />
+<img src="/img/guides/gitopsServicePropType1.png" width="45%" border='1px'  style={{ display: 'inline-block', marginRight: '1rem' }} />
 
-3. The second property will be the lifecycle state of the service, also chosen from a predefined list of options. Fill out the form like this, then click `Create`:
+<img src="/img/guides/gitopsServicePropType2.png"  width="45%" border='1px' style={{ display: 'inline-block' }}  />
 
-    _Note the colors of the inputs, this will make it easier to see a service's lifecycle in your catalog_ 😎
+3. The second property will be the lifecycle state of the repository, also chosen from a predefined list of options. Fill out the form like this, then click `Create`:
 
-    <img src='/img/guides/gitopsServicePropLifecycle.png' width='50%' />
+    _Note the colors of the inputs, this will make it easier to see a repository's lifecycle in your catalog_ 😎
 
-### Model domains for your services
+   <img src="/img/guides/gitopsServicePropLifecycle1.png" width="45%" border='1px'  style={{ display: 'inline-block', marginRight: '1rem' }} />
+
+   <img src="/img/guides/gitopsServicePropLifecycle2.png"  width="45%" border='1px' style={{ display: 'inline-block' }}  />
+
+### Model domains for your repositories
 
 Services that share a business purpose (e.g. payments, shipping) are often grouped together using domains. Let's create a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain in Port:
 
@@ -91,13 +95,13 @@ Services that share a business purpose (e.g. payments, shipping) are often group
 
 <br/>
 
-### Connect your services to their domains
+### Connect your repositories to their domains
 
-Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain, let's connect it to our services. We will do this by adding a relation to the `Service` blueprint:
+Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain, let's connect it to our repositories. We will do this by adding a relation to the `Repository` blueprint:
 
-1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Service` blueprint, and click on `New relation`:
+1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Repository` blueprint, and click on `New relation`:
 
-    <img src='/img/guides/serviceCreateRelation.png' width='30%' />
+    <img src='/img/guides/repoCreateRelation.png' width='30%' border="1px" />
 
 2. Fill out the form like this, then click `Create`:
 
@@ -137,9 +141,9 @@ The `architecture` property is a URL to a Lucidchart diagram. This is a handy wa
 
 <br/>
 
-### Create an action to enrich services
+### Create an action to enrich repositories
 
-As platform engineers, we want to enable our developers to perform certain actions on their own. Let's create an action that developers can use to add data to a service, and allocate it to a domain.
+As platform engineers, we want to enable our developers to perform certain actions on their own. Let's create an action that developers can use to add data to a repository, and allocate it to a domain.
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `+ Action` button in the top-right corner :
@@ -147,12 +151,12 @@ As platform engineers, we want to enable our developers to perform certain actio
     <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
 3. Fill the basic form with the  following:
-    - **Title**: Enter `Enrich service`
-    - **Identifier** Toggle the switch icon off and  type a  `service_enrich_service`
-    - **Description**:  Enter the description (e.g., Enrich service with data )
+    - **Title**: Enter `Enrich Repository`
+    - **Identifier** Toggle the switch icon off and  type a  `repository_enrich_repository`
+    - **Description**:  Enter the description (e.g., Enrich repository with data )
     - **Icon**: Type Git and choose the  Icon (optional)
     - **Operation**:  Choose `Day-2`  from the dropdown
-    - **Blueprint**:  Choose `Service` from the dropdown
+    - **Blueprint**:  Choose `Repository` from the dropdown
 
       <img src='/img/guides/enrichActionDetails.png' width='70%' border='1px' />
      <br/>
@@ -195,7 +199,7 @@ Fill out the form with your values:
 
 - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
 
-- Name the workflow `port-enrich-service.yml`.
+- Name the workflow `port-enrich-repository.yml`.
 
 - Fill out your workflow details:
   <img src='/img/guides/gitopsActionBackendForm.png' width='50%' border='1px' />
@@ -240,7 +244,7 @@ In order to protect the webhook, see the [Validating webhook signatures page](/a
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this example, we will send some details that our backend needs to know, including the service name, and the id of the action run.  
+  For this example, we will send some details that our backend needs to know, including the repository name, and the id of the action run.  
   Copy the following JSON snippet and paste it in the payload code box:
 
   ```json showLineNumbers
@@ -265,7 +269,7 @@ First, choose `Jenkins` as the invocation type.
 
 - Follow the instructions under `Define a webhook to trigger a Jenkins job` to obtain your webhook URL.
 
-- Use `enrichService` as the name of your new job token.
+- Use `enrichRepository` as the name of your new job token.
  
 Then, fill out your workflow details:  
 
@@ -301,7 +305,7 @@ The last step is customizing the action's permissions. For simplicity's sake, we
 
 #### Setup the action's backend
 
-Our action will create a pull-request in the service's repository, containing a `port.yml` file that will add data to the service in Port. Choose a backend type below to setup the workflow:
+Our action will create a pull-request in the  repository, containing a `port.yml` file that will add data to the repository in Port. Choose a backend type below to setup the workflow:
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -311,7 +315,7 @@ Our action will create a pull-request in the service's repository, containing a 
 
 <TabItem value="github">
 
-1. First, let's create the necessary token and secrets. If you've already completed the [`scaffold a new service guide`](/guides/all/scaffold-a-new-service), you should already have these configured and you can skip this step.
+1. First, let's create the necessary token and secrets. If you've already completed the [`scaffold a new repository guide`](/guides/all/scaffold-a-new-service), you should already have these configured and you can skip this step.
 
 - Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our workflow).
 
@@ -374,7 +378,7 @@ Our action will create a pull-request in the service's repository, containing a 
     | REPO_URL | $.port_context.repo_url |
     | RUN_ID | $.port_context.runId |
 
-  - Set `enrichService` as the pipeline's token.
+  - Set `enrichRepository` as the pipeline's token.
 
 </TabItem>
 
@@ -382,22 +386,22 @@ Our action will create a pull-request in the service's repository, containing a 
 
 ---
 
-We will now create a YML file that will serve as a template for our services' `port.yml` configuration file.
+We will now create a YML file that will serve as a template for our repository's `port.yml` configuration file.
 
-- In your repository, create a file named `enrichService.yml` under `/templates/` (its path should be `/templates/enrichService.yml`).
+- In your repository, create a file named `enrichRepository.yml` under `/templates/` (its path should be `/templates/enrichRepository.yml`).
 - Copy the following snippet and paste it in the file's contents:
 
 <details>
-<summary><b>enrichService.yml (click to expand)</b></summary>
+<summary><b>enrichRepository.yml (click to expand)</b></summary>
 
 ```yaml showLineNumbers
-# enrichService.yml
+# enrichRepository.yml
 
-- identifier: "{{ service_identifier }}"
-  blueprint: service
+- identifier: "{{ repository_identifier }}"
+  blueprint: repository
   properties:
-    type: "{{ service_type }}"
-    lifecycle: "{{ service_lifecycle }}"
+    type: "{{ repository_type }}"
+    lifecycle: "{{ repository_lifecycle }}"
   relations:
     domain: "{{ domain_identifier }}"
 ```
@@ -416,13 +420,13 @@ Now let's create the file that contains our logic:
 
 <TabItem value="github">
 
-In the same repository, under `.github/workflows`, create a new file named `port-enrich-service.yml` and use the following snippet as its content:
+In the same repository, under `.github/workflows`, create a new file named `port-enrich-repository.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
 
 ```yaml showLineNumbers
-name: Enrich service
+name: Enrich repository
 on:
   workflow_dispatch:
     inputs:
@@ -431,23 +435,23 @@ on:
         description: Includes the entity identifier and the action's run id
       domain:
         required: true
-        description: The domain to assign the service to
+        description: The domain to assign the repository to
         type: string
       type:
         required: true
-        description: The type of the service
+        description: The type of the repository
         type: string
       lifecycle:
         required: true
-        description: The lifecycle state of the service
+        description: The lifecycle state of the repository
         type: string
 jobs:
-  enrichService:
+  enrichRepository:
     runs-on: ubuntu-latest
     steps:
       # Checkout the workflow's repository
       - uses: actions/checkout@v4
-      # Checkout the service's repository
+      # Checkout the repository
       - uses: actions/checkout@v4
         with:
           repository: "${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}"
@@ -455,19 +459,19 @@ jobs:
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
       - name: Copy template yml file
         run: |
-          cp templates/enrichService.yml ./targetRepo/port.yml
+          cp templates/enrichRepository.yml ./targetRepo/port.yml
       - name: Update new file data
         run: |
-          sed -i 's/{{ service_identifier }}/${{ fromJson(inputs.port_context).entity }}/' ./targetRepo/port.yml
+          sed -i 's/{{ repository_identifier }}/${{ fromJson(inputs.port_context).entity }}/' ./targetRepo/port.yml
           sed -i 's/{{ domain_identifier }}/${{ inputs.domain }}/' ./targetRepo/port.yml
-          sed -i 's/{{ service_type }}/${{ inputs.type }}/' ./targetRepo/port.yml
-          sed -i 's/{{ service_lifecycle }}/${{ inputs.lifecycle }}/' ./targetRepo/port.yml
+          sed -i 's/{{ repository_type }}/${{ inputs.type }}/' ./targetRepo/port.yml
+          sed -i 's/{{ repository_lifecycle }}/${{ inputs.lifecycle }}/' ./targetRepo/port.yml
       - name: Open a pull request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.ORG_ADMIN_TOKEN }}
           path: ./targetRepo
-          commit-message: Enrich service - ${{ fromJson(inputs.port_context).entity}}
+          commit-message: Enrich repository - ${{ fromJson(inputs.port_context).entity}}
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
@@ -475,7 +479,7 @@ jobs:
           delete-branch: true
           title: Create port.yml - ${{ fromJson(inputs.port_context).entity }}
           body: |
-            Add port.yaml to enrich service in Port.
+            Add port.yaml to enrich repository in Port.
           draft: false
       - name: Create a log message
         uses: port-labs/port-github-action@v1
@@ -485,7 +489,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
-          logMessage: Pull request to add port.yml created successfully for service "${{ fromJson(inputs.port_context).entity }}" 🚀
+          logMessage: Pull request to add port.yml created successfully for repository "${{ fromJson(inputs.port_context).entity }}" 🚀
 ```
 
 </details>
@@ -500,10 +504,10 @@ In the same repository, create a new file called `.gitlab-ci.yml` and inside it 
 
 ```yaml showLineNumbers
 stages:
-  - enrichService
+  - enrichRepository
 
-enrichService:
-  stage: enrichService
+enrichRepository:
+  stage: enrichRepository
   only:
     - triggers # This pipeline will be triggered via the GitLab webhook service.
   before_script:
@@ -518,22 +522,22 @@ enrichService:
       }"
     - git config --global user.email "gitRunner@git.com"
     - git config --global user.name "Git Runner"
-    - SERVICE_IDENTIFIER=$(echo $PAYLOAD | jq -r '.port_context.entity')
+    - REPOSITORY_IDENTIFIER=$(echo $PAYLOAD | jq -r '.port_context.entity')
     - DOMAIN_IDENTIFIER=$(echo $PAYLOAD | jq -r '.domain.identifier')
-    - SERVICE_TYPE=$(echo $PAYLOAD | jq -r '.type')
-    - SERVICE_LIFECYCLE=$(echo $PAYLOAD | jq -r '.lifecycle')
+    - REPOSITORY_TYPE=$(echo $PAYLOAD | jq -r '.type')
+    - REPOSITORY_LIFECYCLE=$(echo $PAYLOAD | jq -r '.lifecycle')
     - git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git
-    - git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${SERVICE_IDENTIFIER}.git ./targetRepo
-    - cp templates/enrichService.yml ./targetRepo/port.yml
-    - yq --in-place --arg SERVICE_ID $SERVICE_IDENTIFIER  '.[0].identifier = $SERVICE_ID' ./targetRepo/port.yml -y
-    - yq --in-place --arg TYPE $SERVICE_TYPE  '.[0].properties.type = $TYPE' ./targetRepo/port.yml -y
-    - yq --in-place --arg LIFECYCLE $SERVICE_LIFECYCLE '.[0].properties.lifecycle = $LIFECYCLE' ./targetRepo/port.yml -Y
+    - git clone https://:${GITLAB_ACCESS_TOKEN}@gitlab.com/${REPOSITORY_IDENTIFIER}.git ./targetRepo
+    - cp templates/enrichRepository.yml ./targetRepo/port.yml
+    - yq --in-place --arg REPOSITORY_ID $REPOSITORY_IDENTIFIER  '.[0].identifier = $REPOSITORY_ID' ./targetRepo/port.yml -y
+    - yq --in-place --arg TYPE $REPOSITORY_TYPE  '.[0].properties.type = $TYPE' ./targetRepo/port.yml -y
+    - yq --in-place --arg LIFECYCLE $REPOSITORY_LIFECYCLE '.[0].properties.lifecycle = $LIFECYCLE' ./targetRepo/port.yml -Y
     - yq --in-place --arg DOMAIN $DOMAIN_IDENTIFIER  '.[0].relations.domain = $DOMAIN' ./targetRepo/port.yml -Y
     - cd targetRepo
     - git pull
     - git checkout -b add-port-yml
     - git add port.yml
-    - git commit -m "Enrich service - ${SERVICE_IDENTIFIER}"
+    - git commit -m "Enrich repository - ${REPOSITORY_IDENTIFIER}"
     - set +e
     - output=$(git push origin add-port-yml -o merge_request.create 2>&1)
     - echo "$output"
@@ -636,16 +640,16 @@ pipeline {
         }
         stage('copyTemplateFile') {
             steps {
-                sh 'cp templates/enrichService.yml ./destinationRepo/port.yml'
+                sh 'cp templates/enrichRepository.yml ./destinationRepo/port.yml'
             }
         }
         stage('updateFileData') {
             steps {
                 sh """#!/bin/bash
-                    sed -i .bak 's/{{ service_identifier }}/${ENTITY_IDENTIFIER}/' ./destinationRepo/port.yml
+                    sed -i .bak 's/{{ repository_identifier }}/${ENTITY_IDENTIFIER}/' ./destinationRepo/port.yml
                     sed -i .bak 's/{{ domain_identifier }}/${DOMAIN}/' ./destinationRepo/port.yml
-                    sed -i .bak 's/{{ service_type }}/${TYPE}/' ./destinationRepo/port.yml
-                    sed -i .bak 's/{{ service_lifecycle }}/${LIFECYCLE}/' ./destinationRepo/port.yml
+                    sed -i .bak 's/{{ repository_type }}/${TYPE}/' ./destinationRepo/port.yml
+                    sed -i .bak 's/{{ repository_lifecycle }}/${LIFECYCLE}/' ./destinationRepo/port.yml
                 """
             }
         }
@@ -740,13 +744,13 @@ The action is ready to be executed 🚀
 
 #### Execute the action
 
-1. After creating an action, it will appear under the [Self-service page](https://app.getport.io/self-serve). Find your new `Enrich service` action, and click on `Execute`.
+1. After creating an action, it will appear under the [Self-service page](https://app.getport.io/self-serve). Find your new `Enrich repository` action, and click on `Execute`.
 
-2. Choose a service from the dropdown, a domain to assign it to, and any values for its type and lifecycle, then click `Execute`:
+2. Choose a repository from the dropdown, a domain to assign it to, and any values for its type and lifecycle, then click `Execute`:
 
     <img src='/img/guides/gitopsEnrichActionExecute.png' width='50%' />
 
-3. A small popup will appear, click on `View details`:
+3. Click on the running actions icon on the top right conner to view running actions.:
 
     <img src='/img/guides/gitopsActionExecutePopup.png' width='40%' />
 
@@ -754,13 +758,13 @@ The action is ready to be executed 🚀
 
 This page provides details about the action run. We can see that the backend returned `Success` and the pull-request was created successfully.
 
-4. Head over to your service's repository, you will see that a new pull-request was created:
+4. Head over to your repository, you will see that a new pull-request was created:
 
     <img src='/img/guides/gitopsActionRepoPullRequest.png' width='70%' />
 
 5. Merge the pull-request, then head back to your [software catalog](https://app.getport.io/services).
 
-6. Find your service, and click on its identifier. This will take you to the service's catalog page, where you can see your new properties populated with data:
+6. Find your repository, and click on its identifier. This will take you to the repository's catalog page, where you can see your new properties populated with data:
 
     <img src='/img/guides/gitopsServicePageAfterAction.png' width='80%' />
 
@@ -771,7 +775,7 @@ All done! 💪🏽
 ### Possible daily routine integrations
 
 - Fetch data from a Sentry project and reflect it in your software catalog.
-- Create and onboard services with a few clicks from your developer portal.
+- Create and onboard repositories with a few clicks from your developer portal.
 
 ### Conclusion
 
