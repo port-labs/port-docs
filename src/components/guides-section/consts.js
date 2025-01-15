@@ -78,12 +78,12 @@ export const availableGuides = [
     },
     {
         title: "Enrich repositories using Gitops",
-        description: "Empower developers to independently enrich their services using a self-service action",
+        description: "Empower developers to independently enrich their repositories using a self-service action",
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
         category: "Getting started",
-        link: "/guides/all/let-developers-enrich-services-using-gitops",
+        link: "/guides/all/let-developers-enrich-repositories-using-gitops",
     },
     {
         title: "Slack reminders for scorecards",
