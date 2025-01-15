@@ -77,7 +77,7 @@ export const availableGuides = [
         link: "/guides/all/visualize-service-argocd-runtime",
     },
     {
-        title: "Enrich services using Gitops",
+        title: "Enrich repositories using Gitops",
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
