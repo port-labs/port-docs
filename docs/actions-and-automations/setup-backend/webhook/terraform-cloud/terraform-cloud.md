@@ -30,7 +30,7 @@ token** or **team token**.
 ## Further steps
 
 - See the [Triggering example](#Triggering-example) for Terraform Cloud.
-- Contact us through Intercom to set up a Kafka topic for your organization.
+- Contact us using Intercom/Slack/mail to [support@getport.io](support@getport.io) to set up a Kafka topic for your organization.
 - [Install the Port execution agent to trigger the Terraform Cloud Run](#Installation).
 
 ## Triggering example
