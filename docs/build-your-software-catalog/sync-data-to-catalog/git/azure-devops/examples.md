@@ -162,7 +162,7 @@ You can use the following Port blueprint definitions and integration configurati
 - Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/work/columns/list?view=azure-devops-rest-7.1) for the Azure DevOps column object structure.
 :::
 
-After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your Azure DevOps boards.
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your Azure DevOps columns.
 
 
 ## Mapping releases
