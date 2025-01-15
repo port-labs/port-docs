@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 displayed_sidebar: null
-description: Learn how to visualize Kubernetes service runtime in Port, improving monitoring and management of your cloud-native applications.
+description: Learn how to visualize Kubernetes repository runtime in Port, improving monitoring and management of your cloud-native applications.
 ---
 
 import Tabs from "@theme/Tabs"
@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Visualize your services' k8s runtime
+# Visualize your repositories' k8s runtime
 
 This guide takes 10 minutes to complete, and aims to demonstrate the value of Port's integration with Kubernetes.
 

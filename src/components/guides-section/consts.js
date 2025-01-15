@@ -61,12 +61,12 @@ export const availableGuides = [
         link: "/guides/all/create-cloud-resource-using-iac",
     },
     {
-        title: "Visualize your services' k8s runtime",
-        description: "Create views to track the health, status, and other standards of your services' k8s runtime",
+        title: "Visualize your repositories' k8s runtime",
+        description: "Create views to track the health, status, and other standards of your repositories' k8s runtime",
         tags: ["K8s for devs", "Actions", "Dashboards", "Scorecards"],
         logos: ["Kubernetes" ],
         category: "Getting started",
-        link: "/guides/all/visualize-service-k8s-runtime",
+        link: "/guides/all/visualize-repository-k8s-runtime",
     },
     {
         title: "Visualize your services' k8s runtime using ArgoCD",
