@@ -18,7 +18,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate:
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have installed any of Port's [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/). We will use the `Repository` blueprint that was created during the installation process.
 - You will need a Git repository in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 :::
 
@@ -46,7 +46,7 @@ After completing it, you will get a sense of how it can benefit different person
 
   - **Title** and **Description**
   - **Operation**: `Create`
-  - **Blueprint**: `Service`
+  - **Blueprint**: `Repository`
   - **icon**: `Slack`
 
 This Self-service has no user inputs, click on the `Next` button twice  to proceed to the `Backend` tab.
@@ -177,7 +177,7 @@ jobs:
                 port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
                 port_region: eu
                 slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-                blueprint: service
+                blueprint: repository
                 scorecard: ProductionReadiness
                 target_kind: slack
             - name: Report status to Port
@@ -269,7 +269,7 @@ generate-scorecards-reminders:
       -e INPUT_PORT_CLIENT_SECRET=$PORT_CLIENT_SECRET \
       -e INPUT_SLACK_WEBHOOK_URL=$SLACK_WEBHOOK_URL \
       -e INPUT_OPERATION_KIND="scorecard_reminder" \
-      -e INPUT_BLUEPRINT="service" \
+      -e INPUT_BLUEPRINT="repository" \
       -e INPUT_SCORECARD="ProductionReadiness" \
       -e INPUT_TARGET_KIND="slack" \
       $image_name
