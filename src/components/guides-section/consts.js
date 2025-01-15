@@ -34,13 +34,13 @@ export const tagsCategoryMap = {
 
 export const availableGuides = [
     {
-        title: "Scaffold a new service",
-        description: "Create a self-service action that scaffolds a new service",
+        title: "Scaffold a new repository",
+        description: "Create a self-service action that scaffolds a new repository",
         tags: ["SDLC", "Actions"],
         additionalTags: ["BitBucket", "GitHub", "GitLab"],
         logos: ["Git"],
         category: "Getting started",
-        link: "/guides/all/scaffold-a-new-service",
+        link: "/guides/all/scaffold-a-new-repository",
     },
     {
         title: "Ensure production readiness",

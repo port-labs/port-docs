@@ -21,7 +21,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitHub workflow self-service actions](/actions-and-automations/setup-backend/github-workflow/github-workflow.md)
 - [Sync repositories, file contents, pull-requests, workflows, teams and more](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md)
 - [Sync Dependabot](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-dependabot-alerts)
-- [GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-service.md?git-provider=github)
+- [GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-repository.md?git-provider=github)
 - [GitHub scaffolder using Jenkins pipelines](/guides/all/scaffold-github-using-cookiecutter.md)
 - [GitHub scaffolder using FastAPI backend](/actions-and-automations/setup-backend/webhook/examples/software-templates.md)
 - [Deploy AWS resources using AWS CloudFormation](/guides/all/deploy-cloudformation-template.md)
@@ -42,7 +42,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [GitLab advanced file search and search checks](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/mapping_extensions.md)
 - [Sync GitLab pipelines](/build-your-software-catalog/custom-integration/api/ci-cd/gitlab-pipelines/gitlab-pipelines.md)
 - [GitLab pipeline self-service actions](/actions-and-automations/setup-backend/gitlab-pipeline/gitlab-pipeline.md)
-- [GitLab scaffolder](/guides/all/scaffold-a-new-service.md?git-provider=gitlab)
+- [GitLab scaffolder](/guides/all/scaffold-a-new-repository.md?git-provider=gitlab)
 - [Sync projects, file contents, merge-requests and more](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples.md)
 
 ### Bitbucket
@@ -141,10 +141,10 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Cookiecutter
 
-- [Cookiecutter GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-service.md?git-provider=github)
+- [Cookiecutter GitHub scaffolder using GitHub workflows](/guides/all/scaffold-a-new-repository.md?git-provider=github)
 - [Cookiecutter GitHub scaffolder using Jenkins pipelines](/guides/all/scaffold-github-using-cookiecutter.md)
 - [Cookiecutter GitHub scaffolder using FastAPI backend](/actions-and-automations/setup-backend/webhook/examples/software-templates.md)
-- [Cookiecutter GitLab scaffolder using GitLab pipelines](/guides/all/scaffold-a-new-service.md?git-provider=gitlab)
+- [Cookiecutter GitLab scaffolder using GitLab pipelines](/guides/all/scaffold-a-new-repository.md?git-provider=gitlab)
 - [Cookiecutter Bitbucket scaffolder using Jenkins pipelines](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
 - [Cookiecutter Azure DevOps scaffolder using Azure DevOps pipelines](/guides/all/scaffold-repositories-using-cookiecutter.md)
 
