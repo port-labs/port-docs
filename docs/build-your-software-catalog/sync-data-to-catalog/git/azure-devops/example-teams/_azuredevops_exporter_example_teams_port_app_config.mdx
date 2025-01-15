@@ -28,7 +28,7 @@ resources:
         mappings:
           identifier: '.project.name + "/" + .name | gsub(" "; "")'
           title: .name
-          blueprint: '"azureDevopsRepository"'
+          blueprint: '"service"'
           properties:
             url: .url
             readme: file://README.md
@@ -41,7 +41,7 @@ resources:
       entity:
         mappings:
           identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
-          blueprint: '"azureDevopsRepository"'
+          blueprint: '"service"'
           properties:
             minimumApproverCount: .settings.minimumApproverCount
   - kind: repository-policy
@@ -51,7 +51,7 @@ resources:
       entity:
         mappings:
           identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
-          blueprint: '"azureDevopsRepository"'
+          blueprint: '"service"'
           properties:
             workItemLinking: .isEnabled and .isBlocking
   - kind: team
