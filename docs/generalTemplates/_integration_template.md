@@ -169,8 +169,8 @@ resources:
 
 <!-- This section should contain one or more links (using bullets) to the guides section, filtered by technology/use-case. -->
 <!-- Make sure to replace the ?tags=<X> with your integration identifier -->
-- For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=<X>).
-- For guides on USE_CASE, see the [guides section](https://docs.getport.io/guides?tags=<USE_CASE>).
+- For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=<X>).
+- For guides on USE_CASE, see the [guides section](https://docs.port.io/guides?tags=<USE_CASE>).
 
 ## Alternative installation via webhook
 

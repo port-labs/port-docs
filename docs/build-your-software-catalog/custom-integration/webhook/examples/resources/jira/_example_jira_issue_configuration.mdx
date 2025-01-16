@@ -4,15 +4,25 @@
     "blueprint": "jiraIssue",
     "entity": {
       "identifier": ".body.issue.key",
-      "title": ".body.issue.key + \" - \" + .body.issue.fields.summary",
+      "title": ".body.issue.fields.summary",
       "properties": {
+        "url": "(.body.issue.self | split("/") | .[:3] | join("/"))" + "/browse/" + ".body.issue.key",
+        "status": ".body.issue.fields.status.name",
+        "issueType": ".body.issue.fields.issuetype.name",
         "summary": ".body.issue.fields.summary",
         "description": ".body.issue.fields.description",
-        "status": ".body.issue.fields.status.name",
         "lastChangeType": ".body.issue_event_type_name",
         "changingUser": ".body.user.displayName",
-        "issueUrl": "(.body.issue.self | split(\"rest\") | first) + \"browse/\" + .body.issue.key",
-        "issueType": ".body.issue.fields.issuetype.name"
+        "components": ".body.issue.fields.components",
+        "assignee": ".body.issue.fields.assignee.emailAddress",
+        "reporter": ".body.issue.fields.reporter.emailAddress",
+        "creator": ".body.issue.fields.creator.emailAddress",
+        "priority": ".body.issue.fields.priority.name",
+        "created": ".body.issue.fields.created",
+        "updated": ".body.issue.fields.updated"
+      },
+      "relations: {
+        "project": ".body.issue.fields.project.key"
       }
     }
   }

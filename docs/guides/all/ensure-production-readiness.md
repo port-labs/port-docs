@@ -120,7 +120,7 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 <br/><br/>
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
+Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
 
 1. Choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip> again, and under the `PagerDuty Service` relation, click on `New mirror property`.  
    Fill the form out like this, then click `Create`:
@@ -220,7 +220,7 @@ Let's see how we can easily ingest a CODEOWNERS file into our existing services:
 
 4. Under `Exporters`, click on the Github exporter with your organization name.
 
-5. In the mapping YAML (the bottom-left panel), add the line `code_owners: file://CODEOWNERS` as shown here, then click `Resync`:
+5. In the mapping YAML (the bottom-left panel), add the line `code_owners: file://CODEOWNERS` as shown here, then click `Save & Resync`:
 
 <img src='/img/guides/prodReadinessMappingAddCodeOwners.png' width='70%' border='1px' />
 <br/><br/>
@@ -362,5 +362,5 @@ With Port, standards are easy to set-up, prioritize and track. Using Port's API,
 
 More relevant guides and examples:
 
-- [Port's OpsGenie integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie/)
-- [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)
+- [Port's OpsGenie integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie/)
+- [Integrate scorecards with Slack](https://docs.port.io/promote-scorecards/manage-using-3rd-party-apps/slack)

@@ -12,7 +12,7 @@ import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/\_scim_oidc_limita
 Follow this step-by-step guide to configure the integration between Port and Azure Active Directory.
 
 :::info
-In order to complete the process you will need to contact us to receive the information you require, as well as the [information Port requires from you](https://docs.getport.io/sso-rbac/sso-providers/oidc/azure-ad#step-6-providing-the-application-information-to-port). Read below for more information.
+In order to complete the process you will need to contact us to receive the information you require, as well as the [information Port requires from you](https://docs.port.io/sso-rbac/sso-providers/oidc/azure-ad#step-6-providing-the-application-information-to-port). Read below for more information.
 
 :::
 
@@ -93,7 +93,7 @@ To make the **Port** app connection work, users who have access need to have a l
     ```
 
     :::note
-    We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
+    We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
     :::
 
     1.2 Add the Port logo (optional):
