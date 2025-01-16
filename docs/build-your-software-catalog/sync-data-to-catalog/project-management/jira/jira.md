@@ -1017,7 +1017,14 @@ Here is an example of the payload structure from Jira:
 
 
 <details>
-<summary> Issue response data</summary>
+<summary><b>Team response data (Click to expand)</b></summary>
+
+<JiraTeamExampleResponse/>
+
+</details>
+
+<details>
+<summary><b>Issue response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -1236,7 +1243,14 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> Issue entity in Port</summary>
+<summary>Team entity in Port</summary>
+
+<JiraTeamEntity/>
+
+</details>
+
+<details>
+<summary>Issue entity in Port (Click to expand)</summary>
 
 <JiraIssueEntity/>
 
