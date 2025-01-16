@@ -362,8 +362,8 @@ Our action will create a pull-request in the service's repository, containing a 
 
 3. Create a Jenkins Pipeline with the following configuration:
 
-  - [Enable webhook trigger](https://docs.getport.io/actions-and-automations/setup-backend/jenkins-pipeline/#enabling-webhook-trigger-for-a-pipeline) for the pipeline.
-  - [Define post-content variables](https://docs.getport.io/actions-and-automations/setup-backend/jenkins-pipeline/#defining-variables) for the pipeline with the following names and values:
+  - [Enable webhook trigger](https://docs.port.io/actions-and-automations/setup-backend/jenkins-pipeline/#enabling-webhook-trigger-for-a-pipeline) for the pipeline.
+  - [Define post-content variables](https://docs.port.io/actions-and-automations/setup-backend/jenkins-pipeline/#defining-variables) for the pipeline with the following names and values:
     
     | Name | Value |
     | --- | --- |

@@ -27,6 +27,7 @@ import DynamoDBBlueprint from './storage/\_dynamodb.mdx'
 import ElasticacheBlueprint from './storage/\_elasticache.mdx'
 import RDSBlueprint from './storage/\_rds.mdx'
 import StorageAppConfig from './storage/\_port_app_config.mdx'
+import UnsupportedResources from './unsupported/\_resources.mdx'
 
 # Mapping Extra Resources
 
@@ -36,15 +37,29 @@ This page will help you understand what kind of AWS resources are supported by t
 
 ## Is the resource supported by the AWS Integration?
 
-The AWS Integration is relying on AWS's Cloud Control API. That means:
+The AWS Integration relies on AWS's Cloud Control API. That means:
 
-1. Does the type of resource I want to ingest listed [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html)?
+1. Is the type of resource I want to ingest listed [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html) and supported by the list method?
    - **If so**: Great! It's supported.
    - **If not**: Please contact us or contribute by [adding support](https://ocean.getport.io/develop-an-integration/) to [the integration](https://github.com/port-labs/ocean/tree/main/integrations/aws) yourself.
 
-:::info Resource limitation
-In Cloud Control, some resources require an input in order to be queried. Currently, the integration does not support passing these inputs, which means those resources are currently not supported.
-:::
+For the full list of supported resources, refer to [AWS Cloud Control API Supported Resources](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html).
+
+## Resources supported by Cloud Control API but not supported in AWS Integration
+
+The AWS Integration relies on AWS's Cloud Control API. While many resources are supported, some require additional inputs to be queried, which the integration currently does not support. 
+Below is a list of the resources that are unsupported due to this limitation.
+
+### List of unsupported resources
+
+<UnsupportedResources/>
+
+### What can you do?
+
+- **Contact us**: If you require support for any of these resources, please reach out to our team for assistance.
+- **Submit a feature request**: Contribute to our integration's improvement by [submitting a feature request](https://roadmap.getport.io/).
+- **Contribute directly**: Developers are encouraged to [contribute](https://ocean.getport.io/develop-an-integration/) by adding support for these resources [here](https://github.com/port-labs/ocean/tree/main/integrations/aws).
+
 
 ## Configuration
 

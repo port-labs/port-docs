@@ -328,7 +328,7 @@ In addition, you require the following environment variables:
 - `JIRA_PASSWORD` - Your Jira account password or token to use when accessing the Jira resources
 
 :::info
-Find your Port credentials using this [guide](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+Find your Port credentials using this [guide](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 :::
 
 Use the following Python script to ingest historical Jira issues into port:
