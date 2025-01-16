@@ -152,6 +152,12 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
+          id: "api-reference/search-a-blueprints-entities",
+          label: "Search a blueprint's entities",
+          className: "api-method post",
+        },        
+        {
+          type: "doc",
           id: "api-reference/search-entities",
           label: "Search entities",
           className: "api-method post",
