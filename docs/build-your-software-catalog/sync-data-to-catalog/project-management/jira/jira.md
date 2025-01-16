@@ -739,17 +739,17 @@ resources:
             status: .fields.status.name
             issueType: .fields.issuetype.name
             components: .fields.components
-            assignee: .fields.assignee.emailAddress
+            assignee: .fields.assignee.emailAddress // empty
             reporter: .fields.reporter.emailAddress
-            creator: .fields.creator.emailAddress
+            creator: .fields.creator.emailAddress // empty
             priority: .fields.priority.name
             // highlight-next-line
-            sprint: .fields.customfield_11111[-1].name // ""
+            sprint: .fields.customfield_11111[-1].name // empty
             created: .fields.created
             updated: .fields.updated
           relations:
             project: .fields.project.key
-            parentIssue: .fields.parent.key
+            parentIssue: .fields.parent.key // empty
             subtasks: .fields.subtasks | map(.key)
 ```
 
@@ -788,17 +788,17 @@ resources:
             status: .fields.status.name
             issueType: .fields.issuetype.name
             components: .fields.components
-            assignee: .fields.assignee.emailAddress
+            assignee: .fields.assignee.emailAddress // empty
             reporter: .fields.reporter.emailAddress
-            creator: .fields.creator.emailAddress
+            creator: .fields.creator.emailAddress // empty
             priority: .fields.priority.name
             // highlight-next-line
-            sprint: .fields.customfield_11111 | sort_by(.id) | .[-1].name // ""
+            sprint: .fields.customfield_11111 | sort_by(.id) | .[-1].name // empty
             created: .fields.created
             updated: .fields.updated
           relations:
             project: .fields.project.key
-            parentIssue: .fields.parent.key
+            parentIssue: .fields.parent.key // empty
             subtasks: .fields.subtasks | map(.key)
 ```
 
