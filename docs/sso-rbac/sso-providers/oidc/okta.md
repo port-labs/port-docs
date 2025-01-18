@@ -70,7 +70,7 @@ Get your `Okta Domain` by clicking on your user mail at the top-right corner of 
 
 Under `General` tab:
 
-1. Copy the `Client ID` and send it to Port along with the `Okta Domain` from the previous step (on the slack channel/Intercom).
+1. Copy the `Client ID` and send it to Port along with the `Okta Domain` from the previous step (using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
 
    ![Okta app settings](/img/sso/okta/OktaAppSettingsPage.png)
 
@@ -93,7 +93,7 @@ Under `General` tab:
    ```
 
    :::note
-   We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
+   We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
    :::
 
    ![Okta app settings login flow](/img/sso/okta/OktaAppLoginflowSettings.png)

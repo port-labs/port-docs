@@ -334,7 +334,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "PortIntegration/final_project_to_project_test",
   "title": "final_project_to_project_test",
-  "blueprint": "azureDevopsRepository",
+  "blueprint": "service",
   "properties": {
     "url": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_apis/git/repositories/43c319c8-5adc-41f8-8486-745fe2130cd6",
     "readme": "<README.md Content>",
@@ -424,7 +424,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 
 ## Relevant Guides
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=AzureDevops).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=AzureDevops).
 
 ## GitOps
 

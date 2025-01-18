@@ -4,7 +4,7 @@ import { useColorMode } from "@docusaurus/theme-common";
 
 const glossary = {
   entity:
-    '💡 <b>Port Concepts</b><br/><b>Entity</b> - An instance of a <a href="https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint" style="color:#30BFBF"><b>blueprint</b></a>, represents data as defined by that blueprint\'s properties.',
+    '💡 <b>Port Concepts</b><br/><b>Entity</b> - An instance of a <a href="https://docs.port.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint" style="color:#30BFBF"><b>blueprint</b></a>, represents data as defined by that blueprint\'s properties.',
   blueprint:
     "💡 <b>Port Concepts</b><br/><b>Blueprint</b> - A schema definition used to model any type of asset in your software catalog.",
   scorecard:
@@ -18,7 +18,7 @@ const glossary = {
   dataset:
     "💡 <b>Port Concepts</b><br/><b>Dataset</b> - A filtering mechanism for entity inputs comprising two properties: a combinator, and rules.",
   relation:
-    '💡 <b>Port Concepts</b><br/><b>Relation</b> - A mechanism to define the connections between <a href="https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint" style="color:#30BFBF"><b>blueprints</b></a>, consequently connecting the entities based on these blueprints.',
+    '💡 <b>Port Concepts</b><br/><b>Relation</b> - A mechanism to define the connections between <a href="https://docs.port.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint" style="color:#30BFBF"><b>blueprints</b></a>, consequently connecting the entities based on these blueprints.',
 
 };
 
