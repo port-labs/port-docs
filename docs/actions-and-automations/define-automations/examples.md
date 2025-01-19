@@ -251,3 +251,53 @@ The following example uses a [`Send Slack message`](/actions-and-automations/set
 - The `invocationMethod` specifies a webhook that sends a message to a Slack channel.
   - The message includes details about the failed deployment, such as the service name, image, and environment.
   - The message also includes a link to the action run page in Port.
+
+---
+
+## Approve a self-service action based on an input value
+
+When configuring [manual approval](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions) for a self-service action, in some cases you may want to automatically approve/decline the action if a certain input value is provided.
+
+For example, the following automation will automatically approve a deployment if the `type` input is set to `Testing`:
+
+```json showLineNumbers
+{
+  "identifier": "approve_deployment_based_on_input",
+  "title": "Automatically approve testing deployments",
+  "description": "Automatically approve testing deployments",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "RUN_CREATED",
+      "actionIdentifier": "deploy_service"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.after.properties.type == \"Testing\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/actions/runs/{{.event.diff.after.id}}/approval",
+    "agent": false,
+    "synchronized": true,
+    "method": "PATCH",
+    "headers": {},
+    "body": {
+      "status": "APPROVE",
+      "description": "Approved"
+    }
+  },
+  "publish": true
+}
+```
+
+### Explanation
+
+- This automation is triggered whenever a new run is created for the `deploy_service` action.
+- The `condition` block checks if the `type` input is set to `Testing`, and will only trigger the automation if this is the case.
+- The backend of the automation directly makes an API call to approve the relevant run.
+- Note that if the `condition` is not met, the automation will not be triggered.
