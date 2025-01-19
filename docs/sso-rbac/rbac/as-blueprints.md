@@ -136,12 +136,12 @@ For example, in a search query:
 
 ### The `ownership` property
 
+All blueprints have an `ownership` property that defines ownership for its entities.  
+This field is not mandatory.
+
 :::info Terraform
 The `ownership` property is supported in Terraform from version 2.1.4.
 :::
-
-All blueprints have an `ownership` property that defines ownership for its entities.  
-This field is not mandatory.
 
 These are the available options for the `ownership` property:
 
