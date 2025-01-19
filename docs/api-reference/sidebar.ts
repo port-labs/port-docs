@@ -11,6 +11,10 @@ const sidebar: SidebarsConfig = {
       id: "api-reference/rate-limits",
     },
     {
+      type: "doc",
+      id: "api-reference/security",
+    },
+    {
       type: "html",
       value: '<hr style="margin: 0.8rem">',
     },
