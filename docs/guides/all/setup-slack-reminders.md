@@ -26,7 +26,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate:
 
 ### The goal of this guide
 
-In this guide we will create a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.getport.io/promote-scorecards/#what-is-a-scorecard). In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
+In this guide we will create a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.port.io/promote-scorecards/#what-is-a-scorecard). In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
 
 After completing it, you will get a sense of how it can benefit different personas in your organization:
 
@@ -37,24 +37,25 @@ After completing it, you will get a sense of how it can benefit different person
 
 ### Setup the action's frontend
 
-:::tip Onboarding
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
+2. Click on the `+ Action` button on the top left conner :
 
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
+  <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
-If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
-:::
+3. Fill in the action's details as shown below:
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Send scorecard reminder` action, click the `...` button in the top right corner, and choose "Edit":
+  - **Title** and **Description**
+  - **Operation**: `Create`
+  - **Blueprint**: `Service`
+  - **icon**: `Slack`
 
-    <img src='/img/guides/slackEditAction.png' width='45%' border='1px' />
+This Self-service has no user inputs, click on the `Next` button twice  to proceed to the `Backend` tab.
 
-2. The action's basic details should look like the image below. This action has no user inputs, so when ready, click on the `Backend` tab to proceed.
-
-    <img src='/img/guides/slackActionDetails.png' width='60%' border='1px' />
+<img src='/img/guides/slackActionDetails.png' width='60%' border='1px' />
 
 #### Define backend type
 
-Now we'll define the backend type of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
+Now we'll define the backend of the action. Port supports multiple invocation types, depending on the Git provider you are using.
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -336,7 +337,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 <img src='/img/guides/runStatusReminder.png' width='90%' />
 
 :::tip Logging action progress
-💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.getport.io/actions-and-automations/reflect-action-progress/) to learn more.
+💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.port.io/actions-and-automations/reflect-action-progress/) to learn more.
 :::
 
 <br/>
@@ -348,7 +349,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 Congratulations! You can now send Slack reminders easily from Port 💪🏽
 
 ### Conclusion
-Creating scorecards is the first step in setting standards in our development lifecycle. However, to ensure these standards are met, we need to turn rule violations into action items. By automating Slack reminders and the creation of Jira tasks, we can drive change across the entire organization using familiar tools to combine it natively within our delievery lifecycle.
+Creating scorecards is the first step in setting standards in our development lifecycle. However, to ensure these standards are met, we need to turn rule violations into action items. By automating Slack reminders and the creation of Jira tasks, we can drive change across the entire organization using familiar tools to combine it natively within our delivery lifecycle.
 
 ### More Examples
 - [Open/Close JIRA issues based on scorecards](/promote-scorecards/manage-using-3rd-party-apps/jira)

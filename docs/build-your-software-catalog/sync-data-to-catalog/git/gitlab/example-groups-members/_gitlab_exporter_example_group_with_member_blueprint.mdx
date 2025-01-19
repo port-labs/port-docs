@@ -1,0 +1,56 @@
+<details>
+<summary>Group blueprint</summary>
+
+```json showLineNumbers
+ {
+    "identifier": "gitlabGroup",
+    "title": "Group",
+    "icon": "GitLab",
+    "schema": {
+      "properties": {
+        "visibility": {
+          "icon": "Lock",
+          "title": "Visibility",
+          "type": "string",
+          "description": "Visibility status of the group. (e.g public, internal etc. )",
+          "enum": [
+            "public",
+            "internal",
+            "private"
+          ],
+          "enumColors": {
+            "public": "red",
+            "internal": "yellow",
+            "private": "green"
+          }
+        },
+        "url": {
+          "title": "URL",
+          "format": "url",
+          "type": "string",
+          "icon": "Link",
+          "description": "Link to the gitlab group"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "icon": "BlankPage",
+          "description": "A short description of the gitlab group"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "gitlabMembers": {
+        "title": "Gitlab Members",
+        "target": "gitlabMember",
+        "required": false,
+        "many": true
+      }
+    }
+  }
+```
+</details>

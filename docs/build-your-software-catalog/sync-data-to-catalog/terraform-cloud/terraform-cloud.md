@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Terraform Cloud
+title: Terraform
 description: Terraform integration in Port
 ---
 
@@ -9,41 +9,42 @@ import TabItem from "@theme/TabItem"
 import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+
+
 
 # Terraform Cloud and Terraform Enterprise
 
-The Terraform Cloud Integration for Port enables seamless import and synchronization of `organizations`, `projects`, `workspaces`, `runs`, and `state versions` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
-
-An `Organization` is a shared space for one or more teams to collaborate on workspaces.
-
-A `Project` in Terraform Cloud is a collection of infrastructure configurations, often corresponding to a code repository. It serves as the primary organizational unit, grouping related `workspaces`, `runs`, and `state versions` to manage and structure Terraform code for efficient deployment and collaboration.
-
-A `Workspace` represents a workspace in Terraform cloud. A workspace is a logical environment where Terraform manages infrastructure, such as a set of cloud resources.
-
-A `Run` represents an instance of Terraform operations (plan, apply, or destroy) executed within a workspace. Each run holds information about the operation status, duration, and other relevant metadata.
-
-A `State Version` represents a versioned state file in Terraform. Each state version is immutable and represents the state of your managed infrastructure at a particular point in time. State versions are used to track the changes in your infrastructure and help with auditing, rollbacks, and historical analysis.
+Port's Terraform Cloud integration allows you to model Terraform Cloud resources in your software catalog and ingest data into them.
 
 
-## Common use cases
+## Overview
 
-- Synchronization of Infrastructure Management: Automatically synchronize workspace, run and state version data from Terraform Cloud into Port for centralized tracking and management.
-- Monitoring Run Statuses: Keep track of run outcomes (success, failure, etc.) and durations, providing insights into the health and performance of your infrastructure management processes.
-- Identify drifts between your Terraform configuration and what's effectively deployed in your Cloud.
+This integration allows you to:
 
-## Terraform Enterprise (Self Hosted)
+- Map and organize your desired Terraform Cloud resources and their metadata in Port (see supported resources below).
+- Watch for Terraform Cloud object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+- Automatically synchronize workspace, run and state version data from Terraform Cloud into Port for centralized tracking and management.
+
+:::info Terraform enterprise (self hosted)
 
 Port supports both Terraform Cloud and Terraform Enterprise versions (self hosted). The following data model and use cases are common for both integrations. 
 If installing Port exporter for Terraform Enterprise, you will be required to specify your Terraform 's host URL by passing the following parameter to the installer: `integration.config.appHost` 
+:::
+
+### Supported Resources
+
+The resources that can be ingested from Terraform Cloud into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Organization`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/organizations)
+- [`Project`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/projects)
+- [`Workspace`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/workspaces)
+- [`Run`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run)
+- [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
 
 
-## Prerequisites
-
-To install the integration, you need a Kubernetes cluster that the integration's container chart will be deployed to.
-
-Please make sure that you have [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl) and [`helm`](https://helm.sh/) installed on your machine, and that your `kubectl` CLI is connected to the Kubernetes cluster where you plan to install the integration.
-
-## Installation
+## Setup
 
 Choose one of the following installation methods:
 
@@ -55,53 +56,28 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                                | Description                                                                                                   | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------- |
-| `port.clientId`                          | Your Port client id                                                                                           | ✅      |
-| `port.clientSecret`                      | Your Port client secret                                                                                       | ✅      |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                               | ✅      |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅      |
-| `integration.type`                       | The integration type                                                                                          | ✅      |
-| `integration.eventListener.type`         | The event listener type                                                                                       | ✅      |
-| `integration.config.terraformCloudHost` | Your Terraform host. For example https://app.terraform.io  token                                                                           | ✅      |
-| `integration.config.terraformCloudToken` | The Terraform cloud API token                                                                           | ✅      |
-| `integration.config.appHost`             | Your application's host url. Required when installing Terraform Enterprise (self hosted)                                                                                   | ✅       |
-| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌      |
-| `initializePortResources`                | When set to true the integration will create default blueprints and the port App config Mapping, defaults is true.  | ❌      |
-| `sendRawDataExamples`                | Enable sending raw data examples from the third party API to port for testing and managingthe integration mapping, default is true.  | ❌      |
+<Prerequisites />
 
-<br/>
+For details about the available parameters for the installation, see the table below.
+
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm">
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install terraform port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set integration.identifier="my-terraform-cloud-integration"  \
-  --set integration.type="terraform-cloud"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.terraformCloudHost="string" \
-  --set integration.secrets.terraformCloudToken="string" 
-```
+<OceanRealtimeInstallation integration="Terraform-cloud" />
+
+
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-terraform-cloud-integration` in your git repository with the content:
 
@@ -184,21 +160,41 @@ kubectl apply -f my-ocean-terraform-cloud-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                                | Description                                                                                                                                        | Required |
+|------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                          | Your Port client id                                                                                                                                | ✅        |
+| `port.clientSecret`                      | Your Port client secret                                                                                                                            | ✅        |
+| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                            | ✅        |
+| `integration.identifier`                 | Change the identifier to describe your integration                                                                                                 | ✅        |
+| `integration.type`                       | The integration type                                                                                                                               | ✅        |
+| `integration.eventListener.type`         | The event listener type                                                                                                                            | ✅        |
+| `integration.config.appHost`             | Your application's host url. Required when installing Terraform Enterprise (self hosted)                                                           | ✅        |
+| `scheduledResyncInterval`                | The number of minutes between each resync                                                                                                          | ❌        |
+| `initializePortResources`                | When set to true the integration will create default blueprints and the port App config Mapping, defaults is true.                                 | ❌        |
+| `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping, default is true.               | ❌        |
+| `integration.config.terraformCloudHost`  | Your Terraform host. For example `https://app.terraform.io`                                                                                        | ✅        |
+| `integration.config.terraformCloudToken` | The Terraform cloud API token, docs can be found [here](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens) | ✅        |
+
+<br/>
+
 <h3>Event listener</h3>
 
 The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the Terraform Cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
 
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Terraform cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -235,13 +231,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Terraform  cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Terraform Cloud Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
@@ -293,13 +285,7 @@ pipeline {
 ```
 
   </TabItem>
-
-<TabItem value="gitlab" label="GitLab">
-This workflow will run the Terraform cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+  <TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -356,584 +342,21 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting Terraform Cloud objects
 
-The Terraform integration uses a YAML configuration to describe the process of loading data into the developer portal.
+## Configuration
 
-Here is an example snippet from the config which demonstrates the process for getting `Workspace` from Terraform cloud:
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-```yaml showLineNumbers
-resources:
-  - kind: workspace
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .attributes.name
-          blueprint: '"terrafomCloudWorkspace"'
-          properties:
-            organization: .relationships.organization.data.id
-            createdAt: .attributes."created-at"
-            updatedAt: .attributes."updated-at"
-            terraformVersion: .attributes."terraform-version"
-            locked: .attributes.locked
-            executionMode: .attributes."execution-mode"
-            resourceCount: .attributes."resource-count"
-            latestChangeAt: .attributes."latest-change-at"
-```
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Terraform's API events.
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Terraform Cloud, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from Terraform Cloud, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Organization`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/organizations)
-- [`Project`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/projects)
-- [`Workspace`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/workspaces)
-- [`Run`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/run)
-- [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: workspace
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Terraform object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: run
-        selector:
-        ...
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Terraform Cloud object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-```yaml showLineNumbers
-resources:
-  - kind: workspace
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .attributes.name
-          blueprint: '"terrafomCloudWorkspace"'
-          properties:
-            organization: .relationships.organization.data.id
-            createdAt: .attributes."created-at"
-            updatedAt: .attributes."updated-at"
-            terraformVersion: .attributes."terraform-version"
-            locked: .attributes.locked
-            executionMode: .attributes."execution-mode"
-            resourceCount: .attributes."resource-count"
-            latestChangeAt: .attributes."latest-change-at"
-          relations:
-            currentStateVersion: .relationships."current-state-version".data.id
-```
-
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-:::
-
-### Ingest data into Port
-
-To ingest Terraform Cloud objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Terraform Cloud.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Terraform Cloud under the IaC category.
-5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
-6. Click `Resync`.
 
 ## Examples
 
-Examples of blueprints and the relevant integration configurations:
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). 
+Find the integration in the list of data sources and click on it to open the playground.
 
-### Organization
+Examples of blueprints and the relevant integration configurations can be found on the Terraform Cloud [examples page](examples.md)
 
-<details>
-<summary>Organization blueprint</summary>
-
-```json showLineNumbers
-  {
-    "identifier": "terraformCloudOrganization",
-    "description": "This blueprint represents an organization in Terraform Cloud",
-    "title": "Terraform Cloud Organization",
-    "icon": "Terraform",
-    "schema": {
-      "properties": {
-        "externalId": {
-          "type": "string",
-          "title": "External ID",
-          "description": "The external ID of the organization"
-        },
-        "ownerEmail": {
-          "type": "string",
-          "title": "Owner Email",
-          "description": "The email associated with the organization"
-        },
-        "collaboratorAuthPolicy": {
-          "type": "string",
-          "title": "Collaborator Authentication Policy",
-          "description": "Policy for collaborator authentication"
-        },
-        "planExpired": {
-          "type": "string",
-          "title": "Plan Expired",
-          "description": "Indicates if plan is expired"
-        },
-        "planExpiresAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Plan Expiry Date",
-          "description": "The data and time which the plan expires"
-        },
-        "permissions": {
-          "type": "object",
-          "title": "Permissions",
-          "description": "Permissions associated with the organization"
-        },
-        "samlEnabled": {
-          "type": "boolean",
-          "title": "SAML Enabled",
-          "description": "Indicates if SAML is enabled for the organization"
-        },
-        "defaultExecutionMode": {
-          "type": "string",
-          "title": "Default Execution Mode",
-          "description": "The default execution mode for the organization"
-        }
-      }
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {}
-  }
-```
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-- kind: organization
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .attributes.name
-        blueprint: '"terraformCloudOrganization"'
-        properties:
-          externalId: .attributes."external-id"
-          ownerEmail: .attributes.email
-          collaboratorAuthPolicy: .attributes."collaborator-auth-policy"
-          planExpired: .attributes."plan-expired"
-          planExpiresAt: .attributes."plan-expires-at"
-          permissions: .attributes.permissions
-          samlEnabled: .attributes."saml-enabled"
-          defaultExecutionMode: .attributes."default-execution-mode"
-```
-</details>
-
-### Project
-<details>
-<summary>Project blueprint</summary>
-
-```json showLineNumbers
-  {
-    "identifier": "terraformCloudProject",
-    "description": "This blueprint represents a project in Terraform Cloud",
-    "title": "Terraform Cloud Project",
-    "icon": "Terraform",
-    "schema": {
-      "properties": {
-        "name": {
-          "type": "string",
-          "title": "Project Name",
-          "description": "The name of the Terraform Cloud project"
-        },
-        "permissions": {
-          "type": "object",
-          "title": "Permissions",
-          "description": "The permisssions on the project"
-        }
-      }
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {
-      "organization": {
-        "title": "Terraform Cloud Organization",
-        "target": "terraformCloudOrganization",
-        "required": true,
-        "many": false
-      }
-    }
-  }
-```
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-- kind: project
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .attributes.name
-        blueprint: '"terraformCloudProject"'
-        properties:
-          name: .attributes.name
-          permissions: .attributes.permissions
-        relations:
-          organization: .relationships.organization.data.id
-```
-</details>
-
-### Workspace
-
-<details>
-<summary>Workspace blueprint</summary>
-
-```json showLineNumbers
-  {
-    "identifier": "terraformCloudWorkspace",
-    "description": "This blueprint represents a workspace in Terraform Cloud",
-    "title": "Terraform Cloud Workspace",
-    "icon": "Terraform",
-    "schema": {
-      "properties": {
-        "organization": {
-          "type": "string",
-          "title": "Organization",
-          "description": "The organization within which the workspace belongs to"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Creation Time",
-          "description": "The creation timestamp of the workspace"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Last Updated",
-          "description": "The last update timestamp of the workspace"
-        },
-        "terraformVersion": {
-          "type": "string",
-          "title": "Terraform Cloud Version",
-          "description": "Version of Terraform cloud used by the workspace"
-        },
-        "locked": {
-          "type": "boolean",
-          "title": "Locked Status",
-          "description": "Indicates whether the workspace is locked"
-        },
-        "executionMode": {
-          "type": "string",
-          "title": "Execution Mode",
-          "description": "The execution mode of the workspace"
-        },
-        "resourceCount": {
-          "type": "number",
-          "title": "Resource Count",
-          "description": "Number of resources managed by the workspace"
-        },
-        "latestChangeAt": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Latest Change",
-          "description": "Timestamp of the latest change in the workspace"
-        },
-        "tags": {
-          "type": "array",
-          "title": "Workspace Tags",
-          "description": "Terraform workspace tags"
-        }
-      }
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {
-      "currentStateVersion": {
-        "title": "Current State Version",
-        "target": "terraformCloudStateVersion",
-        "required": false,
-        "many": false
-      },
-      "project": {
-        "title": "Terraform Cloud Project",
-        "target": "terraformCloudProject",
-        "required": false,
-        "many": false
-      }
-    }
-  }
-```
-</details>
-
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-- kind: workspace
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .attributes.name
-        blueprint: '"terraformCloudWorkspace"'
-        properties:
-          organization: .relationships.organization.data.id
-          createdAt: .attributes."created-at"
-          updatedAt: .attributes."updated-at"
-          terraformVersion: .attributes."terraform-version"
-          locked: .attributes.locked
-          executionMode: .attributes."execution-mode"
-          resourceCount: .attributes."resource-count"
-          latestChangeAt: .attributes."latest-change-at"
-          tags: .__tags
-        relations:
-          currentStateVersion: .relationships."current-state-version".data.id
-          project: .relationships.project.data.id
-```
-
-</details>
-
-### Run
-
-<details>
-<summary>Run blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "terraformCloudRun",
-  "description": "This blueprint represents a run in Terraform cloud",
-  "title": "Terraform Cloud Run",
-  "icon": "Terraform",
-  "schema": {
-    "properties": {
-      "createdAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Creation Time",
-        "description": "The creation timestamp of the run"
-      },
-      "status": {
-        "type": "string",
-        "title": "Run Status",
-        "description": "The current status of the run"
-      },
-      "hasChanges": {
-        "type": "boolean",
-        "title": "Has Changes",
-        "description": "Indicates whether the run has changes"
-      },
-      "isDestroy": {
-        "type": "boolean",
-        "title": "Is Destroy",
-        "description": "Indicates whether the run is a destroy operation"
-      },
-      "message": {
-        "type": "string",
-        "title": "Run Message",
-        "description": "Message associated with the run"
-      },
-      "terraformVersion": {
-        "type": "string",
-        "title": "Terraform Cloud Version",
-        "description": "Version of Terraform cloud used in the run"
-      },
-      "appliedAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Applied Time",
-        "description": "Timestamp when the run was applied"
-      },
-      "plannedAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Planned Time",
-        "description": "Timestamp when the run was planned"
-      },
-      "source": {
-        "type": "string",
-        "title": "Run Source",
-        "description": "The source of the run initiation"
-      }
-    }
-  },
-  "relations": {
-    "terraformCloudWorkspace": {
-      "title": "Terraform Cloud Workspace",
-      "target": "terraformCloudWorkspace",
-      "required": false,
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-- kind: run
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .attributes.message
-        blueprint: '"terraformCloudRun"'
-        properties:
-          createdAt: .attributes."created-at"
-          status: .attributes.status
-          hasChanges: .attributes."has-changes"
-          isDestroy: .attributes."is-destroy"
-          message: .attributes.message
-          terraformVersion: .attributes."terraform-version"
-          appliedAt: .attributes."status-timestamps"."applied-at"
-          plannedAt: .attributes."status-timestamps"."planned-at"
-          source: .attributes.source
-        relations:
-          terraformCloudWorkspace: .relationships.workspace.data.id
-```
-
-</details>
-
-### State Version
-
-<details>
-<summary>State Version blueprint</summary>
-
-```json showLineNumbers
-{
-  "identifier": "terraformCloudStateVersion",
-  "description": "This blueprint represents a version of a Terraform state version",
-  "title": "Terraform Cloud State Versions",
-  "icon": "Terraform",
-  "schema": {
-    "properties": {
-      "createdAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Creation Time",
-        "description": "Timestamp when the state version was created"
-      },
-      "serial": {
-        "type": "number",
-        "title": "Serial Number",
-        "description": "A unique identifier for this version within the workspace"
-      },
-      "status": {
-        "type": "string",
-        "title": "Status",
-        "description": "The current status of the state version (e.g., 'queued', 'finished')"
-      },
-      "size": {
-        "type": "number",
-        "title": "Size",
-        "description": "The size of the resources"
-      },
-      "isResourcesProcessed": {
-        "type": "boolean",
-        "title": "Is Resources Processed",
-        "description": "Whethere the resources has been processed"
-      },
-      "hostedStateDownloadUrl": {
-        "type": "string",
-        "title": "Download Url",
-        "format": "url",
-        "description": "Hosted state version download url "
-      },
-      "hostedJsonDownloadUrl": {
-        "type": "string",
-        "title": "Download Url",
-        "format": "url",
-        "description": "Url for downloading state version in json format"
-      },
-      "outputData": {
-        "type": "array",
-        "title": "Output",
-        "description": "output returned from state version"
-      },
-      "vcsCommitUrl": {
-        "type": "string",
-        "title": "VCS Commit URL",
-        "format": "url",
-        "description": "URL of the VCS commit that triggered this state version"
-      }
-    }
-  },
-  "relations": {},
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {}
-}
-```
-
-</details>
-
-<details>
-<summary>Integration configuration</summary>
-
-```yaml showLineNumbers
-- kind: state-version
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .id
-        title: .id
-        blueprint: '"terraformCloudStateVersion"'
-        properties:
-          createdAt: .attributes."created-at"
-          serial: .attributes.serial
-          status: .attributes.status
-          size: .attributes.size
-          isResourcesProcessed: .attributes."resources-processed"
-          hostedStateDownloadUrl: .attributes."hosted-state-download-url"
-          hostedJsonDownloadUrl: .attributes."hosted-json-state-download-url"
-          vcsCommitUrl: .attributes."vcs-commit-url"
-          outputData: .__output
-```
-
-</details>
 
 ## Let's Test It
 
@@ -2053,3 +1476,8 @@ The combination of the sample payload and the Ocean configuration generates the 
 ```
 
 </details>
+
+
+## Relevant Guides
+
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=Terraform).

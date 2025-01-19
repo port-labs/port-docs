@@ -1,11 +1,11 @@
 ---
 id: delete-a-team
 title: "Delete a team"
-description: "This route allows you to delete a team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
+description: "This route allows you to delete a team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/)."
 sidebar_label: "Delete a team"
 hide_title: true
 hide_table_of_contents: true
-api: eJzVU8Fu2zAM/RVBpxZw42RHoyhQIDkM26HoslOQg2wzsRBbcinJWWb430fKTpt22YAdd5Fl6pF6fHzqZQmuQN16bY3M5LrSTqANHoSqa3t04mSD8FaUUAMHhQfVCG04juLJohcW98ron4pLzO5zTB/israiBoVGNBYpMaeiMdkloqigOIgYqEBsSluEBoyPFbY3lfety9KUwm62B9/SJTNtU+fsHeaqSHm5sx1gp+GY3s5kIr3aO5lt5JovkNtEtgpVQ4yRw710dGWjZNZLf2qBGnUetdnLIZGa+26Vr6iMoRz6i5/kN2lA8IGwu0g7CsHqHJXxbxKNClA2wkvQCKXMPAYYiJODIqD2p8goJ20AmfOYl/mROgMRXGuNA8eEP83n/HlPZgk7FWovniekHKgT6reydN9UUSZjW5lMu0Uay6c9dzBI5oLdWZyANYHOsqtWX6hOCl0DBPcOc9HcN1Z6ZH5u8VV0yvwCpzedHwMRxsk6chpFBaqkrCGOZmdjuvY146PdHp8+E5TJj1IsZnMeY2udb5Rh+FR9eWnZj+PsZWGNJ9P9z6YfVfXww6dtrUg90iHOqp8mv5HdgoHRWonMojI0rIrE4tO+z5WD71gPA4dfAiC7k7adQq1yVp0MUmrHe7LWTtUO/iLlzfPk+lvxr+/lajdn4xh2TafqwH+0PZCNpnc6bC+tv1x9Xa1XhFCBBbi03iFab9pwW1eLf/TkeBOv/BKuptyTJQUZ++EVPp78MWGy+BnNrW6HYfgF2yrkUA==
+api: eJzVVMFu2zAM/RWBpxZQ43ZHYxhQoD0M26HYslPgg2IzsRbbUiXKnWfo3wfKTuO22bAdl4PsSCT1+PieR6jQl05b0qaDHNa19sKZQChU05gnLwYTBBlRYYO8KQhVK3TH+048GEfCuL3q9E/FJVbvty77kJa1EQ0q14nWOBRqawKlZC9FWWN5EGmjRrGpTBla7ChVKC5qIuvzLKtM6Vd7JGscrbTJvDdXbqvKjJcr06PrNT5llyuQQGrvId/Ami+AQoJVTrVI6Hh7BF/W2CrIR6DBIuTgyeluD1GC5r6tohokdKrlw/SQb6hBwQfC7BLsRASz86Q6OlE0MQASHD4G7bCCnFzAWEjwWAanaUiItqgcOsY85eU0QedAh96azqNnwO+ur/nxEsxdyqmED2WJ3u9C0wzMQ2k6wo44QVnb6DJxmn33nLWk4e/KWWcsOtITEnNYEKi6ASRgF1rIN9xhEeOy6Q2HFxJUVWm+RTUPi2I71XiM/JPQItWmgnwmgq/laeSQ9TdZYiUbmfgITKHrjzMNroEcjmpRVi/EAlGeCwj+RcxiJl+ZmanN42ROrVr9CYeTPG4D1cbNiodZQTWqCh3EpKidSemaGo5PLrl9+AgSGPxE+c3qmtVnjadWpeHM1e+WTnutwvE04f/XqxOrhD8os43SHfOQZjXOk99Af8OByRES8sRMIaE2nvh0HLfK4zfXxMjbjwEdm6qQ0Cun1ZZZ34xQac/v1Sy3P1B58WXW7aX4V5uf7eaFR3rVBP4HEg44HD8vsYjyKBoGOx3dliVaWiS9cTGL9tkxd/ef79f3IEEF5m2p2ENS7PzCF5zF9FrKEwpe2UBnU8Zx8kOMz/HT0W8z5i6P0UxREWP8BcX4OnY=
 sidebar_class_name: "delete api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -20,7 +20,6 @@ import ParamsItem from "@theme/ParamsItem";
 import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
 import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
@@ -41,7 +40,7 @@ import TabItem from "@theme/TabItem";
 
 
 
-This route allows you to delete a team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+This route allows you to delete a team in your Port organization.<br/><br/>To learn more about teams, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
 
 <Heading
   id={"request"}
@@ -88,11 +87,71 @@ This route allows you to delete a team in your Port organization.<br/><br/>To le
         <div>
           
           
-          Default Response
+          Deleted successfully.
           
           
         </div><div>
-          
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"ok"}
+                        required={true}
+                        schemaName={"any"}
+                        qualifierMessage={"**Possible values:** [`true`]"}
+                        schema={{"type":"any","enum":[true]}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"ok\": true\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
         </div>
       </TabItem>
     </ApiTabs>

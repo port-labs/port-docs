@@ -29,7 +29,7 @@ Setting up the mapping depends on how you install the agent.
 
 <TabItem value="helm">
 
-To provide the mapping configuration to the agent, run the [installation command](https://docs.getport.io/actions-and-automations/setup-backend/webhook/port-execution-agent/installation-methods/helm#installation) again, and add the following parameter:
+To provide the mapping configuration to the agent, run the [installation command](https://docs.port.io/actions-and-automations/setup-backend/webhook/port-execution-agent/installation-methods/helm#installation) again, and add the following parameter:
 
 ```bash
 --set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.yml
@@ -39,7 +39,7 @@ To provide the mapping configuration to the agent, run the [installation command
 
 <TabItem value="argo">
 
-To provide the mapping to the agent, add the mapping to the `values.yaml` file created in the installation [here](https://docs.getport.io/actions-and-automations/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation). The needs to be added as a top level field.
+To provide the mapping to the agent, add the mapping to the `values.yaml` file created in the installation [here](https://docs.port.io/actions-and-automations/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation). The needs to be added as a top level field.
 
 Below you can find the default mapping to use as a starting point:
 
@@ -56,7 +56,7 @@ controlThePayloadConfig: |
 </TabItem>
 
 <TabItem value="docker">
-To provide the mapping to the agent, mount the mapping file to the container by adding the following parameter to the [installation command](https://docs.getport.io/actions-and-automations/setup-backend/webhook/port-execution-agent/installation-methods/docker#installation):
+To provide the mapping to the agent, mount the mapping file to the container by adding the following parameter to the [installation command](https://docs.port.io/actions-and-automations/setup-backend/webhook/port-execution-agent/installation-methods/docker#installation):
 
 ```bash
 -v /PATH/TO/LOCAL/FILE.json:/app/control_the_payload_config.json
@@ -113,7 +113,7 @@ Here is the mapping file schema:
 
 ### Mapping examples
 
-Below you can find some mapping examples to demonstate how you can use JQ and the action payload sent from Port to change the payload sent to your target endpoint by the agent.
+Below you can find some mapping examples to demonstrate how you can use JQ and the action payload sent from Port to change the payload sent to your target endpoint by the agent.
 In each mapping, we will show the relevant fields.
 
 #### Apply a filter to the mapping

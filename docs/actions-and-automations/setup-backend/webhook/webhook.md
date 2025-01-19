@@ -65,7 +65,7 @@ https://example.com?token={{ .secrets.secret_token_name }}
 The [Port execution agent](/actions-and-automations/setup-backend/webhook/port-execution-agent/) provides you with a secure and convenient way to act upon webhook invocations of self-service actions and automations.  
 The agent pulls the new invocation event from your dedicated Kafka topic, and sends it to the URL you specified.  
 
-If you prefer to send a webhook without using the agent, you can [validate the webhook signature](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/signature-verification) for increased security.
+If you prefer to send a webhook without using the agent, you can [validate the webhook signature](https://docs.port.io/create-self-service-experiences/setup-backend/webhook/signature-verification) for increased security.
 
 To use the agent, set the `agent` field to `true` in the `invocationMethod` object, or set the `Use self-hosted agent` toggle to `Yes` if using the UI.
 
@@ -82,7 +82,7 @@ You can change the request to any of the supported types: `POST`, `PUT`, `DELETE
 
 ## Trigger Port API
 
-You can use this backend type to trigger [Port's API](http://localhost:4001/api-reference/port-api), allowing you to execute any route you wish with automatic authentication.  
+You can use this backend type to trigger [Port's API](https://docs.port.io/api-reference/port-api), allowing you to execute any route you wish with automatic authentication.  
 Port will automatically use the organization's API key to authenticate the request.
 
 This can be useful when you want to perform an operation in Port, such as creating a new user or executing a self-service action, especially if you want to trigger logic that you have already defined.

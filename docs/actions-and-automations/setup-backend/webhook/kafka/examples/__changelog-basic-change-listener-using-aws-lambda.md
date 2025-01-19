@@ -9,7 +9,7 @@ In this guide, we will show how to deploy a new `AWS Lambda function`, that will
 ## Prerequisites
 
 :::note
-To follow this example, please contact us via Intercom to receive a dedicated Kafka topic.
+To follow this example, please contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) to receive a dedicated Kafka topic.
 :::
 
 - AWS CLI installed and configured to your desired AWS account;
@@ -309,7 +309,7 @@ pip install -r requirements.txt --platform manylinux2014_x86_64 --target ./pytho
 # Create a zip of the layer
 zip -r layer.zip python
 # Upload a new layer version to AWS
-aws lambda publish-layer-version --layer-name lambda_port_execution_package_layer --description "Python pacakges layer for lambda Port execution example" --compatible-runtimes python3.6 python3.7 python3.8 python3.9 --zip-file fileb://layer.zip --region eu-west-1
+aws lambda publish-layer-version --layer-name lambda_port_execution_package_layer --description "Python packages layer for lambda Port execution example" --compatible-runtimes python3.6 python3.7 python3.8 python3.9 --zip-file fileb://layer.zip --region eu-west-1
 ```
 
 You should see output similar to the following:
@@ -323,7 +323,7 @@ You should see output similar to the following:
   },
   "LayerArn": "arn:aws:lambda:eu-west-1:123456789012:layer:lambda_port_execution_package_layer",
   "LayerVersionArn": "arn:aws:lambda:eu-west-1:123456789012:layer:lambda_port_execution_package_layer:1",
-  "Description": "Python pacakges layer for lambda Port execution example",
+  "Description": "Python packages layer for lambda Port execution example",
   "CreatedDate": "2018-11-14T23:03:52.894+0000",
   "Version": 1,
   "CompatibleArchitectures": ["x86_64"],

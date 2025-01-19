@@ -1,29 +1,23 @@
 ---
 id: get-actions-automations
 title: "Get actions/automations"
-description: "This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>"
+description: "This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.port.io/actions-and-automations/).<br/>"
 sidebar_label: "Get actions/automations"
 hide_title: true
 hide_table_of_contents: true
-api: eJztVm2P4jYQ/iuW+6UnwWZ31X5Bq5VQibao7R7iOKmnPQROMhBrg52zHfY4xH/v2E4gQEC9Y09tpX7Jy8x4PC/PvKxpAjpWPDdcCtqho5RromRhgLAsky+arGRBjCQzMHFKpAAiFVlIBURDNmtrUEseo3BsFWjCRBKgACuMXDBP4sLqUGQglUG5WBbCXN1FKrh3j1EKJMa7yAvHRw5qJtWCMJLJOUc6mXYfe1MSgXkBENYo8qkAtSI5U2wBBpRGJlrasncTBaZQXqxm0p49JmWG4A+6Y+zdiqMSzuomSZIBQzXOTxZhOE5pa5E4hfiZWBGr7SmRcbEAYRx7/GNqTK47QYBkfTUHk2MQrrgMSnVtVNeuqQveeDNoixo217TzRLteko5bdOcyMtZU49ULRjtralY5YPKYUmyFR9Ghha7RtVFczOlmgyybZBdAlBOozR5zN0x4gmbzGQeFrENUANmxA03kzHnrTwYNaQ88cF6YMFv0bF1T8KngChLambFMw6b1er5EWQE5SphvcWd7GEkvqdRbWAd1/Di/uE6/i18tCqJY2Lz/Mgy7oxAJvfD30H90P7Rv6fiU6xJrx5nY6O/Tlk3sjYE+jc1YATPQrtd3Gz7jcQ4iBh1orLG8XfA2Vmq7hMAPEdM8bidgGM/0myOAHIOBDCGDpSVJka0I6mrsKF8V3EhKLFxBT0QoL6IME4c6DiPUn5GpUQVMW96arWQjAlynisA7AslXmXiU57rTSN7dg5ludgM1zOegJk7jK6MufBz1Rx8mHnw9ZJSE94PePsGj0hJG/T/C4WQwfDsIh8gI/xz0h47RfcS/Ut+v3ceH8DR2K5dgiVXZiF/HCcruXYpjehzIznedBqDVknlZ8pY3+LO8PZmqJfZqX5GH6rGda4gLHD4r18wjHDjYqlAnVl/SYVXXt4IKdI4/4DJ3e31tX/sRelfEWJnaAv+n29tj/ls7t31JzqSd6+gGAaUkTk8ZoxloWeej+CjuDIsyuLcfCp+E3Jn0PrSCdwF+VZTeTntJx5faO5bcT7lYsownE+s7aDNFmWTLtUlNmGEkV3KJ3TghiQRNhKwPZ7+J+DyUp6uLgspS6/TPTUH5p5zGAS1YNnE37fvcFaRie0O2dpx2Dr3DmZ9KRA7FJk3tGmBS/AmWN9UaQS2Y1LJaDAqVIb9q7yznte5OLbCPBQq9J1ND5zsbfA+9CqO7tpLz36AG926Bhir+pRpDriRSxDOe8qU/k+44N5mVdythd9C3RVRWSofeXF3blOZSmwX2chQvtT+AaWrHh+1iTWOJQcY+8v86+y9aZz1iDHw2QZ4x7srW4XBdArrspmy37+IKZix9vcbtAt6rbLOxZN9jLdATrm2dVE31LBBedYNt9OYZS6F5m8Y2WFh5V3yXG33pnnrG+hP78wUO/OcXzzPRqq/c3xii19k8z9hYX3rP2+jlD7bLCzL/3Ve2M14fLpR/x/PdsraTHtsfbKeRnVdP4/owfghHfl9P9yfis5uI5YftUhVLrGqqD0elN8E+rYWNR+5wUhKct/dbcc85eaCcvJW0jQ9u4Ju/AA6HP4U=
+api: eJztVm1v4zYM/iuC9mVXOHVbbF+MIECwBl2xrQ16OWBFG6SyzcRCFclH0cnlgvz3QZaduHnD7tpiG7AvqUtRFB/y4cuSp2ATlDlJo3nEB5m0DE1BwIRSZm7ZwhSMDBsDJRkzGphBNjUIzIIatyzgTCbAROIMWCZ0GhpkoiAzFV4ktbOBrG+QmEgSU2g6bccYdsqfQQYsEUqxuVSK5YBjg1MmmDITmQjFnro3l08sBpoDaOcU+1wALlguUEyBAC2LQZl54N5mCFSgV2u49MIfygSxqXBwyL2NkgClaLpkmAKB2uMUsSnokLWAJRkkz8ypOGsPqUmKKWgqj4c/ZkS5jcIwNYk9nQDlBulUmrAy1xI6bTXMhR+8GzzgJCaWRw+86zX5MOAbyDx6WHKbZDAVPFpyWuTAIy4QxYIHXBJMbUNuCaWe8NUq4NIluQwgD7gW0/Ja+cJIpqBJjiUgD3ZYAWxzHFpmxiVafzPck/bQE2cuNK3Zs4aG8LmQCCmPxkJZWAVvhyVWBeQoNX0PnPXl0LJ5Zuya1mGTPyUuabN3wRVw0MXU5f2Xu1530OMBv+z93vMf3fvWBR8egm5ywNLFvXgf1sfMvRjaw9xMEARBq1nfLfiSA0rQCdjQAhV5q5CtscFWRYEfYmFl0kqBhFT2ww5BdsnA7kDBzImMVgs2Nri3o3xTcGNjFAjND0QoL2IlbQbpToRunQtYO+R8OTlp5Pzk5JRdj9kTYQFPgXd4bexFcymbWAweI6Tf5P0OBZrx4AHfvMOHBxASyskEcFRafGNC9m4G14P7keflJQ9qwaf+5UuBJ6wTDK7/6N2N+ne3/d7d4H7U+7N/fVcedG/uR7W9X7s3V73DtK4hwQw07aV2eRJWjb1Sh9Tz73hD2sPBRjJfl7zZOQ/47OJgqmaA1hfrtvlhwC0kBUpalH0+BoGAziaCSCNRDwSniGBzoy2Umbs4O3N/XkboY5EkYK2riZ8uLnbPb91I99U6Nm7kSz1hgGjQMpMkBSKk0aN+1G0SsYKO+8DOo2asTVmn5xTbIWVryeXGeiVvh+WFzbW00447Us+EkunIoQdL7TDutENK1yous6kgwXI0M5lCylIDlmnTHN5+U/HJqG7Xr4W1uw75z/si888hJ0At1Ai8iS3gXc1qDe/N2pnDCFcBnwJlJuURn4Ark1xQxiMezs7rXYM7WuGs3h4KVDzi9QwQuWyMAO4ovqtQ2Bc6DZ5+dBnwJKzZumkwufwNGsTvFpQZlF/rWVUWRwYiBazG+tiU1yUpp1/ujd3+tSunqmYifn565vKaG0tToZ16Zf0KaN/U3m4cS54YTa6j/L/z/ot2Xs8Ygi8U5krIsnZLHi4rQld9VWyW4sxYcvLlMhYWPqFarZzYd1tH9FRaVyd1ez1KhDddc/eieYbFgZV7JlTh9Mvie73Tr11mj3h/YMl+BYD//HZ6JFrNvfw7Q/Tu6+kR95tL83H3vf7WCvoKUrz7XncE9fbW+XeQbza6jfbQ/YPSqfPoYdic01e9gV/qs5fD8rkcltWHa2D1kV40TG9PUe+C+3Ue7r2yXPpRvFqt9f3RwRvVVK61XYCGq9XqL/62VfE=
 sidebar_class_name: "get api-method"
-info_path: api-reference/port-api
+info_path: api-reference-temp/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,13 +29,14 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"get"}
   path={"/v1/actions"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
 
 
 
-This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.port.io/actions-and-automations/).<br/>
 
 <Heading
   id={"request"}
@@ -51,131 +46,26 @@ This route allows you to fetch one or more self-service actions and/or automatio
 >
 </Heading>
 
-<details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
+<ParamsDetails
+  parameters={[{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"action_identifier","description":"The identifier/s of the action/s and/or automation/s you want to fetch.<br/>","required":false},{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"blueprint_identifier","description":"The identifier/s of the blueprint/s whose actions/automations you wish to fetch.<br/>","required":false},{"schema":{"type":"array","items":{"type":"string","enum":["CREATE","DELETE","DAY-2"]}},"in":"query","name":"operation","description":"The [operation type/s](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch. Relevant only for self-service actions.<br/>","required":false},{"schema":{"type":"boolean"},"in":"query","name":"published","description":"Only relevant for **automations**. If `true`, only published automations will be fetched.<br/>","required":false},{"schema":{"type":"string","enum":["self-service","automation"]},"in":"query","name":"trigger_type","required":false},{"schema":{"type":"array","items":{"type":"string","enum":["ENTITY_CREATED","ENTITY_UPDATED","ENTITY_DELETED","TIMER_PROPERTY_EXPIRED","ANY_ENTITY_CHANGE"]}},"in":"query","name":"trigger_event","description":"The event/s that triggered the automation/s you want to fetch. Relevant only for automations.<br/>","required":false},{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}]}
 >
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Query Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"action_identifier","description":"The identifier/s of the action/s and/or automation/s you want to fetch.<br/>","required":false}}
-      >
-        
-      </ParamsItem><ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"blueprint_identifier","description":"The identifier/s of the blueprint/s whose actions/automations you wish to fetch.<br/>","required":false}}
-      >
-        
-      </ParamsItem><ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"array","items":{"type":"string","enum":["CREATE","DELETE","DAY-2"]}},"in":"query","name":"operation","description":"The [operation type/s](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch. Relevant only for self-service actions.<br/>","required":false}}
-      >
-        
-      </ParamsItem><ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"boolean"},"in":"query","name":"published","description":"If `true`, only published actions/automations will be fetched.<br/>","required":false}}
-      >
-        
-      </ParamsItem><ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string","enum":["self-service","automation"]},"in":"query","name":"trigger_type","required":false}}
-      >
-        
-      </ParamsItem><ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"array","items":{"type":"string","enum":["ENTITY_CREATED","ENTITY_UPDATED","ENTITY_DELETED","TIMER_PROPERTY_EXPIRED","ANY_ENTITY_CHANGE"]}},"in":"query","name":"trigger_event","description":"The event/s that triggered the automation/s you want to fetch. Relevant only for automations.<br/>","required":false}}
-      >
-        
-      </ParamsItem><ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Success
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem><TabItem
-        label={"422"}
-        value={"422"}
-      >
-        <div>
-          
-          
-          One of the following errors occurred:
-          
-          <table>
-          <tr>
-            <th>Error</th>
-            <th>Description</th>
-          </tr>
-          <tr>
-            <td>`invalid_request`</td>
-            <td>The data provided does not match the route schema</td>
-          </tr>
-          </table>
-          
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem><TabItem
-        label={"500"}
-        value={"500"}
-      >
-        <div>
-          
-          
-          One of the following errors occurred:
-          
-          <table>
-          <tr>
-            <th>Error</th>
-            <th>Description</th>
-          </tr>
-          <tr>
-            <td>`internal_error`</td>
-            <td>An internal error occurred</td>
-          </tr>
-          </table>
-          
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Success"},"422":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>invalid_request</b></td>\n  <td>The data provided does not match the route schema</td>\n</tr>\n</table>\n"},"500":{"description":"One of the following errors occurred:\n\n<table>\n<tr>\n  <th>Error</th>\n  <th>Description</th>\n</tr>\n<tr>\n  <td><b>internal_error</b></td>\n  <td>An internal error occurred</td>\n</tr>\n</table>\n"}}}
+>
+  
+</StatusCodes>
+
+
       

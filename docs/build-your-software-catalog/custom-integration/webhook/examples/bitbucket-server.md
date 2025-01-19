@@ -303,6 +303,8 @@ In addition, provide the following environment variables:
 - `BITBUCKET_PROJECTS_FILTER` - An optional comma separated list of Bitbucket projects to filter. If not provided, all projects will be fetched.
 - `WEBHOOK_SECRET` - An optional secret to use when creating a webhook in Port. If not provided, `bitbucket_webhook_secret` will be used.
 - `PORT_API_URL` - An optional variable that defaults to the EU Port API `https://api.getport.io/v1`. For US organizations use `https://api.us.getport.io/v1` instead.
+- `IS_VERSION_8_7_OR_OLDER` - An optional variable that specifies whether the Bitbucket version is older than 8.7. This setting determines if webhooks should be created at the repository level (for older versions `<=8.7`) or at the project level (for newer versions `>=8.8`).
+- `PULL_REQUEST_STATE` - An optional variable to specify the state of Bitbucket pull requests to be ingested. Accepted values are `"ALL"`, `"OPEN"`, `"MERGED"`, or `"DECLINED"`. If not specified, the default value is `OPEN`.
 
 :::tip Webhook Configuration
 This app will automatically set up a webhook that allows Bitbucket to send events to Port. To understand more about how Bitbucket sends event payloads via webhooks, you can refer to [this documentation](https://confluence.atlassian.com/bitbucketserver/event-payload-938025882.html).
@@ -312,13 +314,17 @@ Ensure that the Bitbucket credentials you use have `PROJECT_ADMIN` permissions t
 
 
 :::info
-Find your Port credentials using this [guide](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+Find your Port credentials using this [guide](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 :::
 
 Use the following Python script to set up webhook and ingest historical Bitbucket users, projects, repositories and pull requests into port:
 
 <details>
 <summary>Bitbucket Python script</summary>
+
+:::tip Latest Version
+You can pull the latest version of this code by cloning this [repository](https://github.com/port-labs/bitbucket-workspace-data/)
+:::
 
 <BitbucketServerPythonScript/>
 

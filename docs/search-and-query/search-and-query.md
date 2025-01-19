@@ -4,15 +4,13 @@ sidebar_label: Search & query
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-
-# Search & query
-
 import CombinatorIntro from "./\_combinator_intro.md"
-
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used accross the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list. 
+# Search & query
+
+Port's API provides tools to easily query, search and filter software catalog data. Port's search and queries can be used across the Port product: in the catalog such as in initial filters to create advanced dynamic filtering, or in the self service actions form, to dynamically select a dropdown list. 
 
 ## Common queries usage
 
@@ -25,15 +23,17 @@ High quality search is essential to effectively track assets in your software ca
 
 ## Search request
 
-The base search route is `https://api.getport.io/v1/entities/search`, it receives HTTP POST requests.
+A search request contains filters and rules to find matching <PortTooltip id="entity">entities</PortTooltip> in your software catalog.  
+To search for entities using the API, see the [search](/api-reference/search-a-blueprints-entities) route.
 
-:::info United States region
-The route above uses the EU region API.  
-If you wish to use the US region API, the route is: `https://api.us.getport.io/v1/entities/search`.
-:::
+A search request is comprised of the following elements:
 
-A search request defines the logical relation between different search rules, and contains filters and rules to find matching <PortTooltip id="entity">entities</PortTooltip>.
-Each search request is represented by a JSON object, as shown in the following example:
+| Field        | Description                                               |
+| ------------ | --------------------------------------------------------- |
+| `combinator` | Defines the logical operation to apply to the query rules |
+| `rules`      | An array of search rules to filter results with           |
+
+For example:
 
 ```json showLineNumbers
 {
@@ -53,14 +53,7 @@ Each search request is represented by a JSON object, as shown in the following e
 }
 ```
 
-The above query searches for all entities based on the `myBlueprint` blueprint whose `identifier` contains the string `myIdentifierPart`.
-
-## Search request elements
-
-| Field        | Description                                               |
-| ------------ | --------------------------------------------------------- |
-| `combinator` | Defines the logical operation to apply to the query rules |
-| `rules`      | An array of search rules to filter results with           |
+The query above searches for all entities based on the `myBlueprint` blueprint whose `identifier` contains the string `myIdentifierPart`.
 
 ## Combinator
 
@@ -135,8 +128,8 @@ Here is an example search rule:
 
 Port has 2 types of search rule operators:
 
-1. Comparison (`=` `>`, etc.);
-2. Relation (`relatedTo`).
+1. Comparison (e.g. `=`, `>`).
+2. Relation (e.g. `relatedTo`).
 
 ### Comparison operators
 
@@ -167,7 +160,7 @@ ___
 #### Operators
 
 <Tabs groupId="relation" defaultValue="relatedTo" values={[
-{label: "Related To", value: "relatedTo"},
+{label: "RelatedTo", value: "relatedTo"},
 ]}>
 
 <TabItem value="relatedTo">
@@ -455,6 +448,50 @@ Since we don't have context of the logged-in user when using the API, these func
 ]
 ```
 
+### Filter by relations/scorecards
+
+When using the [search a blueprint's entities](/api-reference/search-a-blueprints-entities) API route, you can also filter results by <PortTooltip id="relation">relations</PortTooltip> or <PortTooltip id="scorecard">scorecards</PortTooltip>.
+
+See the following examples for each filter type:
+
+<Tabs groupId="filterby" defaultValue="relation" values={[
+{label: "Relation", value: "relation"},
+{label: "Scorecard", value: "scorecard"},
+{label: "Scorecard rule", value: "scorecardRule"},
+]}>
+
+<TabItem value="relation">
+```json showLineNumbers
+{
+  "relation": "relationId",
+  "operator": "=",
+  "value": "value"
+}
+```
+</TabItem>
+
+<TabItem value="scorecard">
+```json showLineNumbers
+{
+  "scorecard": "scorecardId",
+  "operator": "=",
+  "value": "Bronze"
+}
+```
+</TabItem>
+
+<TabItem value="scorecardRule">
+```json showLineNumbers
+{
+  "scorecard": "scorecardId",
+  "scorecardRule": "scorecardRuleId",
+  "operator": "=",
+  "value": "Bronze"
+}
+```
+</TabItem>
+
+</Tabs>
 
 ## Examples
 
