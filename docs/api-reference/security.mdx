@@ -1,0 +1,28 @@
+---
+id: security
+title: "Security"
+description: ""
+sidebar_label: Security
+sidebar_position: 2
+hide_title: true
+custom_edit_url: null
+---
+
+import ApiLogo from "@theme/ApiLogo";
+import SchemaTabs from "@theme/SchemaTabs";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Export from "@theme/ApiExplorer/Export";
+
+# Security
+
+Port's REST API is served through a network of Application Load Balancers (ALBs) and as such is not served from a closed list of IP addresses.
+
+For cases where your internal network has strict limitations on the addresses that outbound requests can be made to, you will need to add the following addresses to your network's allowlist:
+
+- For Port's EU tenant:
+  - [https://api.getport.io](https://api.getport.io)
+  - [https://ingest.getport.io](https://ingest.getport.io)
+- For Port's US tenant:
+  - [https://api.us.getport.io](https://api.us.getport.io)
+  - [https://ingest.us.getport.io](https://ingest.us.getport.io)
