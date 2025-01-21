@@ -10,7 +10,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 # Scaffold a new service
 
 This guide will walk you through setting up a **self-service action** in Port to automatically create a new **Service** entity, representing a microservice. This microservice can have various integrations such as Git repositories, PagerDuty, Datadog, Jira, and more.   
-In this guide, we will link it to a Git repository. Once implemented:
+In this guide, we will relate it to a Git repository. Once implemented:
 - Developers can quickly generate and register new repositories and services.
 - R&D managers can track newly created services and see their associated repositories.
 - Platform engineers can control permissions for who can create new services.
@@ -30,21 +30,21 @@ In this guide, we will link it to a Git repository. Once implemented:
 - A Git repository (GitHub, GitLab, Bitbucket, or Azure DevOps) to store a workflow.
 
 
+:::info Service and repository relationship
+When you set up a Git integration, Port automatically creates a repository blueprint unique to your Git provider.   
+This blueprint establishes a relationship with the service blueprint.  
+This allows you to relate each new service to its corresponding repository.   
+Below are the blueprint identifiers for each Git provider:  
+- **GitHub**: `githubRepository`
+- **GitLab**: `gitlabRepository`
+- **Bitbucket**: `bitbucketRepository`
+- **Azure DevOps**: `azuredevopsRepository`
+
+:::
+
+
+
 ## Implementation
-
-###  Relate service and repository
-
-Before setting up the action, we need to establish the relationship between the `Repository` blueprint (from the Git integration) and the `Service` blueprint. This ensures that each new service is correctly linked to its repository.
-
-1. Go to the [Blueprints](https://app.getport.io/blueprints) page in your Port application.
-2. Select the `Service` blueprint.
-3. Click on the `+ New relation` button.
-4. Fill the form like the image below:
-  <img src='/img/guides/serviceRepositoryRelation.png' width='50%' border='1px' />
-  <br/><br/>
-5. Click `Create` 
-
-Now, each `Service` entity will have a `repository` relation pointing to its corresponding `Repository` entity.
 
 ###  Setup the action's frontend
 
@@ -384,7 +384,7 @@ jobs:
           repositoryName: ${{ inputs.service_name }}
           portUserInputs: '{"cookiecutter_app_name": "${{ inputs.service_name }}" }'
           cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
-          blueprintIdentifier: "repository"
+          blueprintIdentifier: "githubRepository"
           organizationName: ${{ env.ORG_NAME }}
 
 
@@ -398,10 +398,10 @@ jobs:
           operation: UPSERT
           identifier: "${{ inputs.service_name }}_service"
           title: "${{ inputs.service_name }} Service"
-          blueprint: service
+          blueprint: "service"
           relations: |
             {
-              "repository": "${{ inputs.service_name }}"
+              "githubRepository": "${{ inputs.service_name }}"
             }
 
       - name: Create a log message
@@ -629,7 +629,7 @@ create-repo-entity:
           -H "Authorization: Bearer $ACCESS_TOKEN" \
           -d '{"message":"🚀 Creating new repository entity: '"$SERVICE_NAME"'"}' \
           "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
-      curl --location --request POST "https://api.getport.io/v1/blueprints/repository/entities?upsert=true&run_id=$RUN_ID&create_missing_related_entities=true" \
+      curl --location --request POST "https://api.getport.io/v1/blueprints/gitlabRepository/entities?upsert=true&run_id=$RUN_ID&create_missing_related_entities=true" \
         --header "Authorization: Bearer $ACCESS_TOKEN" \
         --header "Content-Type: application/json" \
         -d '{"identifier": "'"$SERVICE_NAME"'","title": "'"$SERVICE_NAME"'","properties": {"url": "'"$PROJECT_URL"'"}, "relations": {}}'
@@ -655,7 +655,7 @@ create-service:
       curl --location --request POST "https://api.getport.io/v1/blueprints/service/entities?upsert=true&run_id=$RUN_ID&create_missing_related_entities=true" \
         --header "Authorization: Bearer $ACCESS_TOKEN" \
         --header "Content-Type: application/json" \
-        -d '{"identifier": "'"$SERVICE_NAME"'_service","title": "'"$SERVICE_NAME"' Service","properties": {},"relations": {"repository": "'"$SERVICE_NAME"'"}}'
+        -d '{"identifier": "'"$SERVICE_NAME"'_service","title": "'"$SERVICE_NAME"' Service","properties": {},"relations": {"gitlabRepository": "'"$SERVICE_NAME"'"}}'
 
 
 # 5) Mark the run as SUCCESS and log final messages
@@ -873,7 +873,7 @@ default_context:
                 }
                 script {
                     def status_report_response = sh(script: """
-						curl --location --request POST "https://api.getport.io/v1/blueprints/repository/entities?upsert=true&run_id=$PORT_RUN_ID&create_missing_related_entities=true" \
+						curl --location --request POST "https://api.getport.io/v1/blueprints/bitbucketRepository/entities?upsert=true&run_id=$PORT_RUN_ID&create_missing_related_entities=true" \
         --header "Authorization: Bearer $PORT_ACCESS_TOKEN" \
         --header "Content-Type: application/json" \
         --data-raw '{
@@ -912,7 +912,7 @@ default_context:
 				"identifier": "${SERVICE_NAME}_service",
 				"title": "${SERVICE_NAME} Service",
 				"properties": {},
-				"relations": {"repository": "${SERVICE_NAME}"}
+				"relations": {"bitbucketRepository": "${SERVICE_NAME}"}
 			}'
 
                     """, returnStdout: true)
@@ -1139,7 +1139,7 @@ stages:
                       "project":"${{ variables.PROJECT_ID }}"
                     }
                   }' \
-                "https://api.getport.io/v1/blueprints/repository/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"
+                "https://api.getport.io/v1/blueprints/azuredevopsRepository/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"
               
   - stage: upsert_service
     dependsOn:
@@ -1165,7 +1165,7 @@ stages:
                       "description":"${{ variables.DESCRIPTION }}"
                     },
                     "relations": {
-                      "repository": "${{ variables.SERVICE_NAME }}"
+                      "azuredevopsRepository": "${{ variables.SERVICE_NAME }}"
                     }
                   }' \
                 "https://api.getport.io/v1/blueprints/service/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"    
