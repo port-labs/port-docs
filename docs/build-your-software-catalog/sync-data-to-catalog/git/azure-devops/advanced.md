@@ -69,4 +69,28 @@ The `createMissingRelatedEntities` parameter is used to enable the creation of m
 - Use case: use `true` if you want Azure Devops app to create barebones related entities, in case those related entities do not exist in the software catalog.
 
 </TabItem>
+
+<TabItem value="branch" label="Branch">
+
+The Azure Devops integration listens to real-time events from the branch specified in the `branch` field which is set to `main` by default. This is configurable and you can set the `branch` parameter to the branch you want to listen to events from.
+
+- Default value: `main` (default to the branch specified in the `branch` field.)
+- Use case: `develop` if you want to listen to events from the `develop` branch of the repository.
+
+:::note Use Default Branch
+
+If you want to listen to events from the default branch of the repository, you can set the `useDefaultBranch` parameter to `true`.
+
+:::
+
+</TabItem>
+
+<TabItem value="useDefaultBranch" label="Use Default Branch">
+
+The Azure Devops integration by default listens to events from the `main` branch. If you want to listen to events from the default branch of the repository, you can set the `useDefaultBranch` parameter to `true`.
+
+- Default value: `null` or `false` (default to the branch specified in the `branch` field.)
+- Use case: `true` if you want to listen to events from the default branch of the repository.
+
+</TabItem>
 </Tabs>

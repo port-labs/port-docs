@@ -382,6 +382,7 @@ const config = {
       src: "https://widget.kapa.ai/kapa-widget.bundle.js",
       "data-website-id": "1aefba51-348e-4747-9a4c-93306459542d",
       "data-project-name": "Port-documentation",
+      "data-user-analytics-fingerprint-enabled": "true",
       "data-project-color": "#FFFFFF",
       "data-project-logo": "https://raw.githubusercontent.com/port-labs/port-docs/refs/heads/main/static/img/logos/port-logo.svg",
       "data-button-hide": "true",
