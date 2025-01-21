@@ -50,7 +50,7 @@ After completing it, you will get a sense of how it can benefit different person
 If you don't have a CRD and you would like to create one, you can use Crossplane's XRD to create a CRD like we do in this guide or to install any operator that applies CRD into your cluster. You can follow the [Crossplane XRD documentation](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) to create a CRD.
 For this guide, we followed the [AWS DynamoDB composition example](https://docs.crossplane.io/latest/getting-started/provider-aws-part-2/)
 
-### 2. Install the Kubernetes Exporter
+### 2. Install Port's Kubernetes exporter
 
 In this example we will use [Helm](https://helm.sh/) to install the Kubernetes Exporter, but for more installation options please visit the [Kubernetes Exporter documentation](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#installation)
 
