@@ -73,7 +73,7 @@ helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
 
 <PortApiRegionTip/>
 
-### 3. Update the Kubernetes Exporter configuration with the `crdsToDiscover` parameter
+### 3. Update the exporter configuration with `crdsToDiscover`
 
 The `crdsToDiscover` mapping parameter is a JQ pattern to discover and export CRDs to Port as blueprints and actions.
 
