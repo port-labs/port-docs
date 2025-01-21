@@ -82,7 +82,7 @@ The `crdsToDiscover` mapping parameter is a JQ pattern to discover and export CR
 With the pattern below, the Kubernetes Exporter will discover CRDs that are managed by [Crossplane's XRD](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) and that are not namespaced scoped. This is just an example, and you can adjust the pattern to match your own CRDs - even if they are managed by a custom operator.
 :::
 
-After installing the k8s exporter [add to it's configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration) the following value:
+After installing the k8s exporter, add the following value to [its configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration):
 
 ```yaml
 crdsToDiscover: ".metadata.ownerReferences[0].kind == \"CompositeResourceDefinition\" and .spec.scope != \"Namespaced\""
