@@ -1,0 +1,89 @@
+name: Weekly Kapa Usage Report
+
+on:
+#   schedule:
+#     # Runs at 9:00 AM UTC every Monday
+#     - cron: '0 9 * * 1'
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  generate-and-send-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Current Date
+        id: date
+        run: |
+          echo "start_date=$(date -d '7 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
+          echo "end_date=$(date -u +%Y-%m-%dT23:59:59Z)" >> $GITHUB_ENV
+
+      - name: Fetch Kapa Analytics
+        id: fetch-analytics
+        run: |
+          response=$(curl -s -X GET \
+            "https://api.kapa.ai/query/v1/projects/e64464bc-19b5-4cd2-9779-2930e2ca0b81/analytics/activity/?start_date_time=${{ env.start_date }}&end_date_time=${{ env.end_date }}&aggregation_period=DAY" \
+            -H "X-API-KEY: ${{ secrets.KAPA_API_KEY }}")
+          
+          # Save response to a file for processing
+          echo "$response" > kapa_response.json
+          
+          # Extract key metrics and format the message
+          stats=$(jq -r '.aggregate_statistics' kapa_response.json)
+          
+          # Create a formatted message
+          message="📊 *Weekly Kapa.ai Usage Report*\n"
+          message+="Period: $(date -d '${{ env.start_date }}' '+%B %d') - $(date -d '${{ env.end_date }}' '+%B %d, %Y')\n\n"
+          
+          message+="*Key Metrics:*\n"
+          message+="• Total Questions: $(echo $stats | jq -r '.total_questions')\n"
+          message+="• Unique Users: $(echo $stats | jq -r '.total_unique_users')\n"
+          message+="• Support Tickets Deflected: $(echo $stats | jq -r '.total_support_tickets_deflected')\n\n"
+          
+          message+="*Quality Metrics:*\n"
+          message+="• Upvotes: $(echo $stats | jq -r '.total_upvotes')\n"
+          message+="• Downvotes: $(echo $stats | jq -r '.total_downvotes')\n"
+          message+="• Uncertain Responses: $(echo $stats | jq -r '.total_questions_uncertain')\n"
+          
+          # Calculate success rate
+          total_votes=$(echo "$stats" | jq -r '.total_upvotes + .total_downvotes')
+          if [ "$total_votes" -gt 0 ]; then
+            success_rate=$(echo "scale=1; $(echo $stats | jq -r '.total_upvotes') * 100 / $total_votes" | bc)
+            message+="\n*Success Rate:* ${success_rate}%\n"
+          fi
+
+          # Add integration breakdown
+          message+="\n*Questions by Integration:*\n"
+          
+          # Process time_series data to get total counts per integration
+          integration_counts=$(jq -r '
+            .time_series | 
+            map(.count_by_integration[]) | 
+            group_by(.integration_type) | 
+            map({
+              type: .[0].integration_type,
+              description: .[0].description,
+              total: map(.count) | add
+            }) |
+            sort_by(.total) |
+            reverse[]' kapa_response.json)
+
+          # Add each integration's stats to the message
+          echo "$integration_counts" | while IFS= read -r integration; do
+            type=$(echo "$integration" | jq -r '.type')
+            desc=$(echo "$integration" | jq -r '.description')
+            count=$(echo "$integration" | jq -r '.total')
+            if [ "$count" -gt 0 ]; then
+              message+="• ${desc:-$type}: $count\n"
+            fi
+          done
+          
+          echo "message<<EOF" >> $GITHUB_ENV
+          echo "$message" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Send to Slack
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          message: ${{ env.message }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
