@@ -306,7 +306,7 @@ We also need to create the following secrets in our GitHub repository:
 - `ORG_ADMIN_TOKEN` - Your GitHub personal access token.
 - `BOT_USER_OAUTH_TOKEN` - The Slack app bot token.
 
-If you've already completed the [scaffold a new service guide](/guides/all/scaffold-a-new-repository), you should already have the first three configured.
+If you've already completed the [scaffold a new service guide](/guides/all/scaffold-a-new-service), you should already have the first three configured.
 
 ### Automation trigger
 After setting up the automation backend, we will create the Port automation which will trigger the backend.
