@@ -1,6 +1,4 @@
 ---
-sidebar_position: 8
-title: Send Slack reminders for scorecards
 displayed_sidebar: null
 description: Learn how to set up Slack reminders in Port, ensuring timely notifications and improved team productivity.
 ---
@@ -12,28 +10,26 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Slack reminders for scorecards
 
-This guide takes 7 minutes to complete, and aims to demonstrate:
-* How to initiate changes in the organization using scorecards
-* How to automate Slack reminders using Port's self service actions
+This guide will walk you through creating a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.port.io/promote-scorecards/#what-is-a-scorecard). 
+In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
 
-:::info Prerequisites
-
-- This guide assumes you have a Port account and that you have installed any of Port's [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/). We will use the `Repository` blueprint that was created during the installation process.
-- You will need a Git repository in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
-:::
-
-<br/>
-
-### The goal of this guide
-
-In this guide we will create a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.port.io/promote-scorecards/#what-is-a-scorecard). In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
-
-After completing it, you will get a sense of how it can benefit different personas in your organization:
-
+Once implemented:
 - Developers will be notified about policies set by the platform engineer that need to be fixed.
 - R&D managers & Platform engineers will be able to remind developers about unmet requirements in the services.
 
-<br/>
+
+## Common use cases
+
+- Initiate changes in the organization using scorecards
+- Automate Slack reminders using Port's self-service actions
+
+
+## Prerequisites
+
+- This guide assumes you have a Port account and that you have installed any of Port's [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/). We will use the `Repository` blueprint that was created during the installation process.
+- You will need a Git repository in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
+
+## Implementation
 
 ### Setup the action's frontend
 
@@ -346,7 +342,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 <img src='/img/guides/slackReminderExample.png' width='50%' />
 
 
-Congratulations! You can now send Slack reminders easily from Port 💪🏽
+Congratulations! You can now send Slack reminders easily from Port. 💪🏽
 
 ### Conclusion
 Creating scorecards is the first step in setting standards in our development lifecycle. However, to ensure these standards are met, we need to turn rule violations into action items. By automating Slack reminders and the creation of Jira tasks, we can drive change across the entire organization using familiar tools to combine it natively within our delivery lifecycle.
