@@ -19,7 +19,7 @@ In order to integrate Port with an OIDC SSO application, you will need to do the
      https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
      ````
      :::note
-     We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
+     We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
      :::
 3. Expose the application to your organization by either granting access to everyone or restricting it to specific roles.
 4. Share information about your SSO application:
