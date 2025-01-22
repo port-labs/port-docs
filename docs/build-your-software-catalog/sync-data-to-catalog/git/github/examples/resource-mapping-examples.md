@@ -250,7 +250,7 @@ If you need to ingest these fields, consider using a self-hosted GitHub app with
 
 :::tip self-hosted gitHub app option
 For users who need access to the full range of repository fields, including enabling WRITE permissions, we recommend setting up a self-hosted GitHub app. This allows full customization of permissions, ensuring all necessary data can be ingested into Port.
-Refer to our [Self-Hosted Installation Guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation/) for detailed instructions.
+Refer to our [Self-Hosted Installation Guide](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation/) for detailed instructions.
 
 Alternatively, you can create a GitHub workflow that gathers the required data and sends it to Port, allowing you to work around the limitations of the Cloud app.
 :::

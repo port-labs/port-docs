@@ -9,14 +9,12 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .Identifier
-          title: .Properties.StackId | split("/")[1]
+          identifier: .StackId
+          title: .StackName
           blueprint: '"cloudformationStack"'
           properties:
-            link: >-
-                'https://console.aws.amazon.com/go/view?arn=' +
-                .Properties.StackId
-            arn: .Properties.StackId
+            link: '"https://console.aws.amazon.com/go/view?arn=" + .StackId'
+            arn: .StackId
             kind: .__Kind
             region: .__Region
           relations:

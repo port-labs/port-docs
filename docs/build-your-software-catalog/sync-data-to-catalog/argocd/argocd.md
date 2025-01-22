@@ -557,7 +557,7 @@ Examples of blueprints and the relevant integration configurations can be found 
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=ArgoCD).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=ArgoCD).
 
 
 ## Alternative installation via webhook
