@@ -592,7 +592,7 @@ export const availableGuides = [
     {
         title: "Trigger a ServiceNow Incident",
         description: "Create a self-service action that triggers a ServiceNow incident",
-        tags: ["Incident management", "GitHub", "Actions"],
+        tags: ["Incident management", "ServiceNow", "GitHub", "Actions"],
         logos: ["ServiceNow", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/trigger-servicenow-incident",
@@ -866,7 +866,7 @@ export const availableGuides = [
     {
         title: "Manage service deployments using GitLab and ServiceNow", 
         description: "Create a chain of self-service actions that deploy a service using GitLab and ServiceNow",
-        tags: ["Incident management", "GitLab", "Actions", "Automations"],
+        tags: ["Incident management", "ServiceNow", "GitLab", "Actions", "Automations"],
         logos: ["ServiceNow", "GitLab"],
         link: "/guides/all/approval-workflow-for-gitlab-deployment"
     }
