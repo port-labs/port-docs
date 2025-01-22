@@ -1,5 +1,4 @@
 ---
-sidebar_position: 3
 displayed_sidebar: null
 description: Learn how to create cloud resources using Infrastructure as Code (IaC) in Port for efficient and automated deployments.
 ---
@@ -11,53 +10,56 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Create cloud resources using IaC
 
-This guide takes 8 minutes to complete, and aims to demonstrate:
 
-- A complete flow to create a resource using IaC.
-- The simplicity of communicating with Port from a self-service action backend.
+This guide shows how to open a pull request in your Git repository—directly from Port—to create a new cloud resource using GitOps. After completing it, you’ll see how it can benefit different personas in your organization:
 
-:::info Prerequisites
+- Platform engineers can define powerful actions that developers use within controlled permission boundaries.
+- Developers can easily create and track cloud resources from Port, streamlining their workflow.
+
+
+
+## Prerequisites
 
 - This guide assumes you have a Port account and that you have installed any of Port's [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/). We will use the `Repository` blueprint that was created during the installation process.
 - You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 
-:::
 
-<br/>
+## Common use cases
 
-### The goal of this guide
+- Complete IaC flow: Walk through an end-to-end process for creating resources via Infrastructure as Code (IaC), from defining a template to merging a pull request.
+- Easy Port-Backend Communication: Illustrate how a self-service action in Port can seamlessly talk to your Git repositories or CI pipelines.
+- Simplified Developer Experience: Provide a single portal where developers can create resources without needing direct access to cloud consoles or YAML files.
 
-In this guide we will open a pull-request in our Git repository from within Port to create a new cloud resource using gitops.
+## Set up data model
 
-After completing it, you will get a sense of how it can benefit different personas in your organization:
+To enable tracking of cloud resource definitions in Port, we'll add a new **URL** property to the existing `Repository` blueprint. 
+This property will point to the location of IaC templates in your Git repository, letting us seamlessly link infrastructure code to each repository.
 
-- Platform engineers will be able to define powerful actions that developers can use within controlled permission boundaries.
-- Developers will be able to easily create and track cloud resources from Port.
 
 ### Add a URL to your new resource's definition
 
-In this guide we will add a new property to our `repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we can use to access our cloud resource definitions.
+In this guide we will add a new property to our `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we can use to access our cloud resource definitions.
 
 1. Go to your [Data model](https://app.getport.io/settings/data-model) page.
-2. Expand your `repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, then click on `+ New property`.
+2. Expand your `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, then click on `+ New property`.
 3. Choose `URL` as the type, fill it like this and click `Save`:
 
     <img src='/img/guides/iacPropertyForm.png' width='40%' border='1px' />
 
 This property is empty for now in all repositories, we will fill it as part of the action we're about to create 😎
 
-### Setup the action's frontend
+## Setup the action's frontend
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `+ Action` button in the top-right corner :
 
     <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
-3. Fill the basic form with the  following:
+3. Fill the basic form with the following:
     - **Title**: Enter `Create s3 bucket`
-    - **Identifier** Toggle the switch icon off and  type a  `create_s3_bucket`
-    - **Description**:  Enter the description (e.g., Create an s3 bucket)
-    - **Icon**: Type s3 and choose the  Icon (optional)
+    - **Identifier** Toggle the switch icon off and type a  `create_s3_bucket`
+    - **Description**: Enter the description (e.g., Create an s3 bucket)
+    - **Icon**: Type s3 and choose the Icon (optional)
     - **Operation**:  Choose `Day-2`  from the dropdown
     - **Blueprint**:  Choose `Repository` from the dropdown
       
@@ -223,7 +225,7 @@ The last step is customizing the action's permissions. For simplicity's sake, we
 
 The action's frontend is now ready 🥳
 
-### Setup the action's backend
+## Setup the action's backend
 
 Now we want to write the logic that our action will trigger.
 
@@ -323,7 +325,7 @@ jobs:
         uses: port-labs/port-github-action@v1
         with:
           identifier: ${{ fromJson(inputs.port_context).entity }}
-          blueprint: repository
+          blueprint: githubRepository
           properties: |-
             {
               "resource_definitions": "${{ github.server_url }}/${{ github.repository_owner }}/${{ fromJson(inputs.port_context).entity }}/blob/main/resources/"
@@ -483,7 +485,7 @@ create-entity:
           -H "Authorization: Bearer $ACCESS_TOKEN" \
           -d '{"message":"🚀 Updating the service with the new resource definition!"}' \
           "https://api.getport.io/v1/actions/runs/$RUN_ID/logs"
-      curl --location --request POST "https://api.getport.io/v1/blueprints/service/entities?upsert=true&run_id=$RUN_ID&create_missing_related_entities=true" \
+      curl --location --request POST "https://api.getport.io/v1/blueprints/gitlabRepository/entities?upsert=true&run_id=$RUN_ID&create_missing_related_entities=true" \
         --header "Authorization: Bearer $ACCESS_TOKEN" \
         --header "Content-Type: application/json" \
         -d '{"identifier": "'"$SERVICE_ID"'","title": "'"$SERVICE_ID"'","properties": {"resource_definitions": "'"$PROJECT_URL"'"}, "relations": {}}'
@@ -519,7 +521,7 @@ First, let's create the necessary tokens and secrets:
 
 - Configure the following as Jenkins credentials:
   - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
-  - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
+  - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions.
   - `PORT_CLIENT_ID` - Your Port client ID.
   - `PORT_CLIENT_SECRET` - Your Port client secret.
   <br/>
@@ -562,7 +564,7 @@ pipeline {
         REPO_NAME = "${SERVICE_NAME}"
         BITBUCKET_WORKSPACE_NAME = "${BITBUCKET_WORKSPACE_NAME}"
         PORT_ACCESS_TOKEN = ""
-        PORT_BLUEPRINT_ID = "repository"
+        PORT_BLUEPRINT_ID = "bitbucketRepository"
         PORT_RUN_ID = "${RUN_ID}"
         VISIBILITY="${VISIBILITY}"
         PR_URL=""
@@ -780,7 +782,7 @@ All done! The action is ready to be executed 🚀
 
 <br/>
 
-### Execute the action
+## Execute the action
 
 After creating an action, it will appear under the `Self-service` tab of your Port application:
 
@@ -796,7 +798,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
     <img src='/img/guides/iacActionRunAfterExecution.png' width='90%' />
 
-#### Access the bucket's definition from Port
+### Access the bucket's definition from Port
 
 You may have noticed that even though we updated the service's `Resource definitions` URL, it still leads to a non-existent page. This is because we do not have any resources in the repository yet, let's take care of that:
 
@@ -809,12 +811,12 @@ You may have noticed that even though we updated the service's `Resource definit
 
 All done! You can now create resources for your services directly from Port 💪🏽
 
-### Possible daily routine integrations
+## Possible daily routine integrations
 
 - Send a slack message to relevant people in the organization, notifying about the new resource.
 - Send a weekly/monthly report for managers/devops showing the new resources created in this timeframe and their owners.
 
-### Conclusion
+## Conclusion
 
 Developer portals need to support and integrate with git-ops practices seamlessly. Developers should be able to perform routine tasks independently, without having to create bottlenecks within the organization.  
 With Port, platform engineers can design precise and flexible self-service actions for their developers, while integrating with many different backends to suit your specific needs.
