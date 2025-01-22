@@ -1,6 +1,4 @@
 ---
-sidebar_position: 6
-title: Enrich repositories using Gitops
 displayed_sidebar: null
 description: Learn how developers can enrich repositories using GitOps in Port, enabling efficient and automated service management.
 ---
@@ -11,34 +9,42 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials_collapsed.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 
-# Enrich repositories using Gitops
+# Enrich repositories using GitOps in Port
 
-This guide takes 10 minutes to complete, and aims to demonstrate Port's flexibility when working with Gitops.
-
-:::info Prerequisites
-
-- This guide assumes you have a Port account and that you have installed any of Port's [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/). We will use the `Repository` blueprint that was created during the installation process.
-- You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
-
-:::
-
-<br/>
-
-### The goal of this guide
-
-In this guide we will enrich a repository in Port using Gitops. In reality, this can be used by developers to independently add additional valuable data about their repositories to Port.
-
-After completing it, you will get a sense of how it can benefit different personas in your organization:
+This guide will walk you through configuring a GitOps-based approach to enrich repositories in your Port software catalog. Once implemented, you’ll be able to:
 
 - Developers will be able to enrich their repositories without needing to nag devops engineers.
 - Platform engineers will be able to create RBAC-controlled actions for developers, empowering their independence.
 - R&D managers will be able to track additional, valuable data about repositories in the organization.
 
-<br/>
 
-### Add new properties to your `Repository` blueprint
+## Common use cases
 
-Let's start by adding two new properties to the `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, that we will later populate using Gitops.
+- Flexible Repository Metadata: Allow teams to add or update repository properties (e.g., lifecycle, type) without manual intervention.
+- Domain Assignments: Group related repositories under business-oriented domains (e.g., payments, shipping).
+- Developer Autonomy: Let developers customize their repositories via self-service actions, reducing dependency on DevOps or platform teams.
+- Scalable Governance: Maintain consistency and governance at scale, while giving teams freedom to innovate within set boundaries.
+
+## Prerequisites
+
+- This guide assumes you have a Port account with permissions to create blueprints and self-service actions.
+- This guide assumes  that you have installed any of Port's [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/). We will use the `Repository` blueprint that was created during the installation process.
+- You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
+
+
+## Set up data model
+
+To support GitOps-based repository enrichment in your portal,
+we’ll add two new properties to the existing `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>,
+and create a new `Domain` blueprint that groups related repositories together.
+
+Once implemented:
+- **Type**: Classify each repository (e.g., microservice, library, CLI).
+- **Lifecycle**: Track whether a repository is in development, staging, or production.
+- **Domain**: A blueprint that represents a business or functional domain (e.g., “Payments,” “Shipping”), connecting multiple repositories under a shared purpose.
+
+
+### Add new properties to the `Repository` blueprint
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New property`.
 
@@ -56,9 +62,9 @@ Let's start by adding two new properties to the `Repository` <PortTooltip id="bl
 
    <img src="/img/guides/gitopsServicePropLifecycle2.png"  width="45%" border='1px' style={{ display: 'inline-block' }}  />
 
-### Model domains for your repositories
+### Create a Domain blueprint
 
-Services that share a business purpose (e.g. payments, shipping) are often grouped together using domains. Let's create a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain in Port:
+To group repositories by business or functional areas, let’s define a `Domain` blueprint:
 
 1. In your [Builder](https://app.getport.io/settings/data-model), click on the `+ Blueprint` button:
 
@@ -95,9 +101,10 @@ Services that share a business purpose (e.g. payments, shipping) are often group
 
 <br/>
 
-### Connect your repositories to their domains
+### Connect  repositories to  domains
 
-Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain, let's connect it to our repositories. We will do this by adding a relation to the `Repository` blueprint:
+Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain, let's connect it to our repositories.
+We will do this by adding a relation to the `Repository` blueprint:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Repository` blueprint, and click on `New relation`:
 
@@ -109,7 +116,7 @@ Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to repres
 
 <br/><br/>
 
-### Create domains via Gitops
+## Create domains via Gitops
 
 Now that we have a `Domain` <PortTooltip id="blueprint">blueprint</PortTooltip>, we can create some domains in Port. This can be done manually from the UI, or via Gitops which is the method we will use in this guide.
 
@@ -141,7 +148,7 @@ The `architecture` property is a URL to a Lucidchart diagram. This is a handy wa
 
 <br/>
 
-### Create an action to enrich repositories
+## Create an action to enrich repositories
 
 As platform engineers, we want to enable our developers to perform certain actions on their own. Let's create an action that developers can use to add data to a repository, and allocate it to a domain.
 
@@ -174,14 +181,14 @@ As platform engineers, we want to enable our developers to perform certain actio
           <img src='/img/guides/gitopsDomainInput.png' width='50%' border='1px' />
     
     
-        :::tip Entity selection input type 
-            The `Entity selection` type allows the executing user to choose an entity directly from the catalog.
-         :::
+  :::tip Entity selection input type 
+     The `Entity selection` type allows the executing user to choose an entity directly from the catalog.
+  :::
 
 5. Click on `Next` to configure the **Backend**.
 
 
-#### Define backend type
+### Define backend type
 
 Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`, a `GitLab pipeline`, or a `Jenkins pipeline` (choose this option if you are using Bitbucket).
 
@@ -303,7 +310,7 @@ Then, fill out your workflow details:
 
 The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
 
-#### Setup the action's backend
+### Setup the action's backend
 
 Our action will create a pull-request in the  repository, containing a `port.yml` file that will add data to the repository in Port. Choose a backend type below to setup the workflow:
 
@@ -315,7 +322,7 @@ Our action will create a pull-request in the  repository, containing a `port.yml
 
 <TabItem value="github">
 
-1. First, let's create the necessary token and secrets. If you've already completed the [`scaffold a new repository guide`](/guides/all/scaffold-a-new-service), you should already have these configured and you can skip this step.
+1. First, let's create the necessary token and secrets. If you've already completed the [`scaffold a new service guide`](/guides/all/scaffold-a-new-service), you should already have these configured and you can skip this step.
 
 - Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our workflow).
 
@@ -398,7 +405,7 @@ We will now create a YML file that will serve as a template for our repository's
 # enrichRepository.yml
 
 - identifier: "{{ repository_identifier }}"
-  blueprint: repository
+  blueprint: repository # Replace with your installed Git integration blueprint identifier (e.g., gitlabRepository, githubRepository,bucketRepository)
   properties:
     type: "{{ repository_type }}"
     lifecycle: "{{ repository_lifecycle }}"
@@ -742,7 +749,7 @@ pipeline {
 
 The action is ready to be executed 🚀
 
-#### Execute the action
+### Execute the action
 
 1. After creating an action, it will appear under the [Self-service page](https://app.getport.io/self-serve). Find your new `Enrich repository` action, and click on `Execute`.
 
@@ -772,12 +779,15 @@ This page provides details about the action run. We can see that the backend ret
 
 All done! 💪🏽
 
-### Possible daily routine integrations
 
-- Fetch data from a Sentry project and reflect it in your software catalog.
-- Create and onboard repositories with a few clicks from your developer portal.
+## Possible enhancements
+- More Custom Properties: Add extra fields (e.g., repository owner, security posture) to your Repository blueprint.
+- Sentry or Other Integrations: Fetch data from tools like Sentry or Jira and reflect it in your software catalog automatically.
+- Customized GitOps Templates: Adjust the enrichRepository.yml file for more complex updates—e.g., adding environment variables, custom tags, or even provisioning logic.
+- Advanced RBAC: Limit who can run the “Enrich repository” action or which properties certain teams can modify.
+- Multi-step Workflows: Chain additional steps to notify Slack, create a Jira ticket, or update other systems before merging.
 
-### Conclusion
+## Conclusion
 
 Gitops is a common practice in modern software development, as it ensures that the state of your infrastructure is always in sync with your codebase.  
 Port allows you to easily integrate your Gitops practices with your software catalog, reflecting the state of your infrastructure, and allowing you to empower your developers with controlled actions.
