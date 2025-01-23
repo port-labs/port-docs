@@ -583,51 +583,7 @@ resources:
         "type": "array",
         "description": "List of members in the consumer group.",
         "items": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "title": "Member ID",
-              "type": "string",
-              "description": "Unique identifier for the consumer member."
-            },
-            "client_id": {
-              "title": "Client ID",
-              "type": "string",
-              "description": "Client ID of the consumer member."
-            },
-            "host": {
-              "title": "Host",
-              "type": "string",
-              "description": "Host address of the consumer member."
-            },
-            "assignment": {
-              "title": "Assignment",
-              "type": "object",
-              "description": "Details of the topic partitions assigned to the member.",
-              "properties": {
-                "topic_partitions": {
-                  "title": "Topic Partitions",
-                  "type": "array",
-                  "description": "List of topic-partition pairs assigned to the member.",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "topic": {
-                        "title": "Topic",
-                        "type": "string",
-                        "description": "Name of the topic."
-                      },
-                      "partition": {
-                        "title": "Partition",
-                        "type": "number",
-                        "description": "Partition number within the topic."
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
+          "type": "string"
         }
       },
       "coordinator": {
