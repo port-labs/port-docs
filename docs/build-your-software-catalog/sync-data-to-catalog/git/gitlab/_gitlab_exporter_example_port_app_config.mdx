@@ -13,7 +13,7 @@ resources:
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"service"'
+          blueprint: '"gitlabRepository"'
           properties:
             url: .web_url
             readme: file://README.md
@@ -48,7 +48,7 @@ resources:
                 (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
             reviewers: .reviewers | map(.name)
           relations:
-            service: .references.full | gsub("!.+"; "")
+            repository: .references.full | gsub("!.+"; "")
 ```
 
 </details>

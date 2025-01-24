@@ -28,7 +28,7 @@ resources:
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"service"'
+          blueprint: '"gitlabRepository"'
           properties:
             url: .web_url
             readme: file://README.md

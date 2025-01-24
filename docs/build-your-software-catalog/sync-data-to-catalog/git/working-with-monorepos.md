@@ -52,7 +52,7 @@ resources:
         mappings:
           identifier: ".folder.name"
           title: ".folder.name"
-          blueprint: '"service"'
+          blueprint: '"githubRepository"'
           properties:
             url: .repo.html_url + "/tree/" + .repo.default_branch  + "/" + .folder.path
             readme: file://README.md
@@ -79,7 +79,7 @@ resources:
         mappings:
           identifier: .folder.name
           title: .folder.name
-          blueprint: '"service"'
+          blueprint: '"gitlabRepository"'
           properties:
             url: >-
               .repo.web_url + "/tree/" + .repo.default_branch  + "/" +
@@ -108,7 +108,7 @@ resources:
       entity:
         mappings:
           identifier: .folder.name
-          blueprint: '"service"'
+          blueprint: '"bitbucketRepository"'
           properties:
             url: .repo.links.html.href + "/src/" + .repo.mainbranch.name + "/" + .folder.path
             readme: file://README.md

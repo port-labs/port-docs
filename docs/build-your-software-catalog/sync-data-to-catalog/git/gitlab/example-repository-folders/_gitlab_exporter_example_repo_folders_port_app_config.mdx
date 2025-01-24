@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"service"'
+          blueprint: '"gitlabRepository"'
           properties:
             readme: file://README.md
             url: .web_url
@@ -37,7 +37,7 @@ resources:
               .folder.path
             readme: file://README.md
           relations:
-            service: .repo.name
+            repository: .repo.name
 ```
 
 </details>
