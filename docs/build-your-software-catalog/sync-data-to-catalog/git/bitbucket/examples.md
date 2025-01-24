@@ -33,7 +33,7 @@ After creating the blueprints and committing the `port-app-config.yml` file to y
 
 ## Mapping repositories and monorepos
 
-In the following example you will ingest your Bitbucket repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. you may use the following Port blueprint definitions and `port-app-config.yml`:
+In the following example you will ingest your Bitbucket repositories and their folders to Port. By following this example you can map your different repositories, packages and libraries from your monorepo into separate entities in Port. you may use the following Port blueprint definitions and `port-app-config.yml`:
 
 <MicroserviceBlueprint/>
 

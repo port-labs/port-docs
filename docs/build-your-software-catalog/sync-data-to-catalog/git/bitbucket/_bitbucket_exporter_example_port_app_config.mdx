@@ -10,9 +10,9 @@ resources:
     port:
       entity:
         mappings:
-          identifier: ".name" # The Entity identifier will be the service (repository) name. After the Entity is created, the exporter will send `PATCH` requests to update this microservice within Port.
+          identifier: ".name" # The Entity identifier will be the repository name. After the Entity is created, the exporter will send `PATCH` requests to update this microservice within Port.
           title: ".name"
-          blueprint: '"service"'
+          blueprint: '"bitbucketRepository"'
           properties:
             readme: file://README.md # fetching the README.md file that is within the root folder of the repository and ingesting its contents as a markdown property
             url: ".links.html.href"
@@ -35,7 +35,7 @@ resources:
             updatedAt: ".updated_on"
             link: ".links.html.href"
           relations:
-            service: ".destination.repository.name"
+            repository: ".destination.repository.name"
 ```
 
 </details>
