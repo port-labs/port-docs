@@ -69,12 +69,12 @@ export const availableGuides = [
         link: "/guides/all/visualize-service-k8s-runtime",
     },
     {
-        title: "Visualize your repositories' k8s runtime using ArgoCD",
-        description: "Create views to track the health, status, and other standards of your repositories' k8s runtime using ArgoCD",
+        title: "Visualize your services' k8s runtime using ArgoCD",
+        description: "Create views to track the health, status, and other standards of your services' k8s runtime using ArgoCD",
         tags: ["K8s for devs", "ArgoCD", "Actions", "Dashboards", "Scorecards"],
         logos: ["ArgoCD", "Kubernetes"],
         category: "Getting started",
-        link: "/guides/all/visualize-repository-argocd-runtime",
+        link: "/guides/all/visualize-service-argocd-runtime",
     },
     {
         title: "Enrich services using Gitops",
