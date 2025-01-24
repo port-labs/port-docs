@@ -38,7 +38,7 @@ Below are the blueprint identifiers for each Git provider:
 - **GitHub**: `githubRepository`
 - **GitLab**: `gitlabRepository`
 - **Bitbucket**: `bitbucketRepository`
-- **Azure DevOps**: `azuredevopsRepository`
+- **Azure DevOps**: `azureDevopsRepository`
 
 :::
 
@@ -1139,7 +1139,7 @@ stages:
                       "project":"${{ variables.PROJECT_ID }}"
                     }
                   }' \
-                "https://api.getport.io/v1/blueprints/azuredevopsRepository/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"
+                "https://api.getport.io/v1/blueprints/azureDevopsRepository/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"
               
   - stage: upsert_service
     dependsOn:
@@ -1165,7 +1165,7 @@ stages:
                       "description":"${{ variables.DESCRIPTION }}"
                     },
                     "relations": {
-                      "azuredevopsRepository": "${{ variables.SERVICE_NAME }}"
+                      "azureDevopsRepository": "${{ variables.SERVICE_NAME }}"
                     }
                   }' \
                 "https://api.getport.io/v1/blueprints/service/entities?upsert=true&run_id=${{ variables.RUN_ID }}&create_missing_related_entities=true"    
