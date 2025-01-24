@@ -17,7 +17,7 @@ resources:
         mappings:
           identifier: ".folder.name"
           title: ".folder.name"
-          blueprint: '"service"'
+          blueprint: '"githubRepository"'
           properties:
             url: .repo.html_url + "/tree/" + .repo.default_branch  + "/" + .folder.path
             readme: file://README.md
