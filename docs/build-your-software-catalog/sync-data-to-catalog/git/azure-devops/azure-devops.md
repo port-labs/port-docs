@@ -334,7 +334,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "PortIntegration/final_project_to_project_test",
   "title": "final_project_to_project_test",
-  "blueprint": "service",
+  "blueprint": "azureDevopsRepository",
   "properties": {
     "url": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_apis/git/repositories/43c319c8-5adc-41f8-8486-745fe2130cd6",
     "readme": "<README.md Content>",

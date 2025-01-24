@@ -28,7 +28,7 @@ resources:
         mappings:
           identifier: "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
           title: .name
-          blueprint: '"service"'
+          blueprint: '"azureDevopsRepository"'
           properties:
             url: .url
             readme: file://README.md
@@ -41,7 +41,7 @@ resources:
       entity:
         mappings:
           identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
-          blueprint: '"service"'
+          blueprint: '"azureDevopsRepository"'
           properties:
             minimumApproverCount: .settings.minimumApproverCount
   - kind: repository-policy
@@ -51,7 +51,7 @@ resources:
       entity:
         mappings:
           identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
-          blueprint: '"service"'
+          blueprint: '"azureDevopsRepository"'
           properties:
             workItemLinking: .isEnabled and .isBlocking
   - kind: pull-request
@@ -78,7 +78,7 @@ resources:
               (((($closedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100)
               else null end)
           relations:
-            service: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
+            repository: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
 ```
 
 </details>
