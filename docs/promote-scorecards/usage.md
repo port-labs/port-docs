@@ -18,10 +18,6 @@ Scorecards can be created by three methods:
 
 <!-- TODO: fix this back to some actual blueprint -->
 
-:::info
-A Scorecard is created upon blueprint. So if you haven't created the `microservice` blueprint in the [Quickstart](../quickstart.md#service-blueprint), please make sure to do so to follow along.
-:::
-
 :::note
 For more information of which operators you can use in the scorecard rules explained below, refer to the [Promote Scorecards](./promote-scorecards.md#conditions).
 :::
