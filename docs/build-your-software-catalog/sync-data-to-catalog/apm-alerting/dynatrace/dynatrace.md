@@ -34,6 +34,7 @@ The resources that can be ingested from Dynatrace into Port are listed below. It
 ### Generate a Dynatrace API key
 
 1. Navigate to `<instanceURL>/ui/apps/dynatrace.classic.tokens/ui/access-tokens`. For example, if you access your Dynatrace instance at `https://npm82883.apps.dynatrace.com`, you should navigate to `https://npm82883.apps.dynatrace.com/ui/apps/dynatrace.classic.tokens/ui/access-tokens`.
+
 2. Click **Generate new token** to create a new token. Ensure the permissions: `DataExport`, `Read entities`, `Read problems`, `Read SLO` and `Read settings` are assigned to the token. The `DataExport` permission allows Dynatrace to perform healthchecks before ingestion starts. The `Read settings` scope allows the integration to ingest teams.
 
 ### Construct your Dynatrace Host URL
