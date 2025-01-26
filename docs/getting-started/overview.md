@@ -10,17 +10,16 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Getting started
 
-After [signing up](https://app.getport.io) to Port, you will be prompted to follow an onboarding process that aims to help you get started with Port quickly, using real data from tools in your tech stack.
+After [signing up](https://app.getport.io) to Port, you will be prompted to follow an onboarding process that aims to help you start building your developer portal, using real data from tools in your tech stack.
 
 This section will walk you through the phases of the onboarding process, and describe the components that Port will create for you. 
 
 ## Onboarding steps
 
-1. [Connect Your Git Provider](./connect-git-provider.md) - Connect your Git provider to Port to start populating your software catalog with repositories and pull requests.
+1. [Connect your tools](./connect-tools.md) - Select the tools and platforms used in your organization, and connect them to to your portal.
 
-2. [Choose Your Tools](./choose-tools.md) - Select the tools and platforms used in your organization to prepare for integration with Port.
+2. [Set up your service catalog](./set-up-service-catalog.md) - Create some components to start populating your software catalog with data from your tools.
 
-3. [Install Integrations](./install-integrations.md) - Install the integrations for your selected tools to start ingesting data into your software catalog.
-
+3. [Set up automatic discovery](./set-up-automatic-discovery.md) - Set up automatic discovery to start populating your software catalog with data from your tools.
 Upon creating your portal, Port will create several [default components](./default-components.md) to help you get started with organizing your software catalog. 
 

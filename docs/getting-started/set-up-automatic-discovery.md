@@ -1,6 +1,6 @@
 ---
-displayed_sidebar: null
-description: Learn how to automatically discover and sync your software catalog
+sidebar_position: 4
+sidebar_label: "3. Set up automatic discovery"
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
@@ -12,24 +12,29 @@ These actions involve manually selecting the components related to the new entit
 
 These are routine tasks that most organizations perform on a regular basis, which is why the manual process of using these actions is not efficient or scalable.
 
-This guide will walk you through automating the process of creating these entities in a way that suits your organization's standards.
-
-
-## Prerequisites
-
-This guide assumes you have a Port account with permissions to create blueprints and self-service actions.
+This guide will walk you through automating the process of creating and updating these entities in a way that suits your organization's standards.
 
 ## Choose discovery type
 
 Automatic discovery can be configured using one of two approaches:
 1. Define one of your external tools as a "source of truth" for the resources you want to ingest.
-2. Use the integration's <PortTooltip content="mapping">mapping</PortTooltip> to create resources from the integration.
+2. Use metadata from your external tools (e.g. labels) to identify and update an entity in Port.
+
+Both options require modifying the [mapping configuration](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping) of the relevant integration.  
+
+<details>
+<summary>**How to modify a mapping configuration (click to expand)**</summary>
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+2. Under "Exporters", find the relevant integration and click on it.
+3. A window will open, containing the mapping configuration. Use the editor in the bottom-left corner to update the configuration.
+4. Click on the "Save & Resync" button to save the changes and resync the integration.
+</details>
 
 ### 1. Define a source of truth
 
 This approach is useful when you want to create entities of a specific type (e.g. services, environments, teams, users) based on resources from a specific external tool.  
 
-#### Examples
+#### Example
 
 One example that works for many organizations is to define a **Git repository** as a source of truth for `services`, and automatically create a new `service` in Port for each repository in your Git provider.  
 
@@ -84,7 +89,7 @@ This approach is useful when you want to update entities of a specific type (e.g
 Note that this approach requires you to have a way to identify the Port entity that you want to update.  
 This is usually achieved by adding a tag or label to the resource in the external tool, with an indicative key (for example, prefixed with `port-`).
 
-#### Examples
+#### Example
 
 After installing the `ArgoCD` integration and ingesting our ArgoCD applications, we may want to automatically connect them to their corresponding `service` entities.
 
@@ -113,13 +118,3 @@ This example assumes that each ArgoCD application has a label named `portService
 The meaning of this configuration is:  
 *For every application in the ArgoCD , update the `service` entity with the identifier matching the `portService` label, relating it to this `argocdApplication` entity*.
 
-
-
-## Possible enhancements
-
-This guide provides a basic setup for announcements in your portal.  
-You can further enhance the announcements mechanism by customizing the actions and widgets, for example:
-- **Customize the announcement template**: You can customize the default message template in the `Announce message` action to include your own message format.
-- **Add more properties to the announcement blueprint**: You can add more properties to the announcement blueprint to include additional information, such as the author of the announcement or a link to more details.
-- **Send announcements to specific users**: You can modify the `Announce message` action to allow users to select specific users or teams to send the announcement to.
-- **Send announcements to additional channels**: You can modify the `Announce message` action to send announcements via email, Slack, or other channels in addition to the portal homepage.
