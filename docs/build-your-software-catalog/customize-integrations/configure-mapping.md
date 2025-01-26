@@ -15,7 +15,7 @@ The mapping of an integration's data source defines the ingested data and its de
 Integration mapping is configured in the [data sources page](https://app.getport.io/settings/data-sources) of your portal, under `Exporters`.  
 Each integration has its own mapping, written in `YAML`.
 
-To understand how mapping works, let's take a look at an example. After you complete the [onboarding](/quickstart) and connect your Git provider to Port, you will see an exporter entry in your [data sources page](https://app.getport.io/settings/data-sources):
+To understand how mapping works, let's take a look at an example. After you complete the [onboarding](/getting-started/overview) and connect your Git provider to Port, you will see an exporter entry in your [data sources page](https://app.getport.io/settings/data-sources):
 
 <img src='/img/software-catalog/customize-integrations/mappingExampleEntry.png' width='55%' />
 

@@ -29,7 +29,7 @@ This guide takes 10 minutes to complete, and aims to cover:
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview). We will use the `service` blueprint that was created during the onboarding process.
 
 :::
 

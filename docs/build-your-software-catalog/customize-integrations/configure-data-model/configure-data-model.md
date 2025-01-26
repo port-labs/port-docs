@@ -20,7 +20,7 @@ Each blueprint is made up of [properties](/build-your-software-catalog/customize
 After installing an integration, you can configure its data model in the [builder page](https://app.getport.io/settings/data-model) of your portal. 
 
 To understand how an integration's data model works, let's take a look at an example.  
-After you complete the [onboarding](/quickstart) and connect your Git provider to Port, you will see a `service` blueprint that represents a microservice in your organization (which correlates to a Git repository):
+After you complete the [onboarding](/getting-started/overview) and connect your Git provider to Port, you will see a `service` blueprint that represents a microservice in your organization (which correlates to a Git repository):
 
 <img src='/img/software-catalog/customize-integrations/serviceBlueprint.png' width='40%' border='1px' />
 

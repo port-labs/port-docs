@@ -18,7 +18,7 @@ sidebar_class_name: custom-sidebar-item sidebar-menu-port-overview
 
 Trying out Port for yourself is free, simply [create an account](https://app.getport.io) and follow the onboarding process.  
 
-The [Getting started](/quickstart) page will walk you through the onboarding process and demonstrate the value of using Port in your organization.
+The [Getting started](/getting-started/overview) page will walk you through the onboarding process and demonstrate the value of using Port in your organization.
 
 ## What is Port
 

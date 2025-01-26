@@ -16,7 +16,7 @@ This guide aims to show you how to ingest cloud resources using New Relic to hav
 
 This guide assumes the following:
 
-- You have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
+- You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - You have [installed and set up Port's New Relic integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic).
 - You have entities from cloud providers configured in New Relic. See [New Relic's documentation](https://docs.newrelic.com/docs/infrastructure/) for details on setting up cloud integrations.
 

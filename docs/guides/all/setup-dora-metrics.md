@@ -20,7 +20,7 @@ you can identify areas for improvement and ensure that your team is delivering h
 This guide will cover the four key metrics: **deployment frequency**, **lead time**, **change failure rate**, and **mean time to recovery**.
 
 ### Prerequisites
-- Complete the [Port onboarding process](https://docs.port.io/quickstart).
+- Complete the [Port onboarding process](https://docs.port.io/getting-started/overview).
 - Access to a repository (GitHub, GitLab, or Azure Repos) that is connected to Port via the onboarding process.
 - While this guide demonstrates implementations using **GitHub**, **GitLab**, and **Azure Repos**, other Git providers can be used as well.
 - Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD integrations or your platform-specific tools.

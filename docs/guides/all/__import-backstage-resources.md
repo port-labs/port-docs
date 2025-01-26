@@ -14,7 +14,7 @@ The source code of the import script is open and available on [**GitHub**](https
 
 :::info Prerequisites
 
-- While it is not mandatory for this guide, we recommend that you complete the [onboarding process](/quickstart) before proceeding.
+- While it is not mandatory for this guide, we recommend that you complete the [onboarding process](/getting-started/overview) before proceeding.
 - [Docker](https://docs.docker.com/engine/install/).
 - A Backstage instance.
 

@@ -16,7 +16,7 @@ The workflow involves adding a resource block to a Terraform `main.tf` file and 
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart). **Setup the `Service` blueprint that you will be using in this guide.**
+- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/getting-started/overview). **Setup the `Service` blueprint that you will be using in this guide.**
 - You will need a GitHub repository in which you can place the files that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `port-actions`.
 - [Generic Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger/) - This plugin enables Jenkins to receive and trigger jobs based on incoming HTTP requests, extracting data from JSON or XML payloads and making it available as variables.
 :::

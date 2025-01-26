@@ -15,7 +15,7 @@ This guide aims to cover how to connect a GitHub pull request with a SonarQube a
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview).
 - Ensure you have [SonarQube ocean integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md) installed and configured in your environment.
 - Ensure you have a registered organization in Port and your Port user role is set to `Admin`.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).

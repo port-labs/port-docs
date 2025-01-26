@@ -15,7 +15,7 @@ This guide takes 7 minutes to complete, and aims to demonstrate the power of sel
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview). We will use the `Service` blueprint that was created during the onboarding process.
 - You will need a Git repository (GitHub, GitLab, Bitbucket or Azure DevOps) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
 
 :::

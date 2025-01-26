@@ -13,7 +13,7 @@ This guide aims to show you how to ingest cloud resources using Datadog to have 
 
 ## Prerequisites
 This guide assumes the following:
-- You have a Port account and that you have finished the [onboarding process](/quickstart).
+- You have a Port account and that you have finished the [onboarding process](/getting-started/overview).
 - You have [installed and setup Port's Datadog integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/datadog.md)
 - You have installed integrations for [GCP](https://docs.datadoghq.com/integrations/google_cloud_platform/?tab=project), [AWS](https://docs.datadoghq.com/integrations/#cat-aws) and [Azure](https://docs.datadoghq.com/integrations/azure/) on your Datadog environment
 

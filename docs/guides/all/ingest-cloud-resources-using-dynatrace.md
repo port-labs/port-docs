@@ -13,7 +13,7 @@ This guide aims to show you how to ingest cloud resources using Dynatrace to hav
 
 ## Prerequisites
 This guide assumes the following:
-- You have a Port account and that you have finished the [onboarding process](/quickstart).
+- You have a Port account and that you have finished the [onboarding process](/getting-started/overview).
 - You have [installed and setup Port's Dynatrace integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace/dynatrace.md)
 - You have entities from cloud providers configured on Dynatrace. See [Dynatrace documentation](https://docs.dynatrace.com/managed#deploy-on) for this.
 

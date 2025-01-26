@@ -15,7 +15,7 @@ This guide demonstrates how to set up a GitHub workflow that periodically syncs 
 
 ## Prerequisites
 
-- You need a Port account and should have completed the [onboarding process](/quickstart)
+- You need a Port account and should have completed the [onboarding process](/getting-started/overview)
 - A GitHub repository where you can trigger a workflow for this guide
 - An [incident.io](https://app.incident.io/) account and an API key
 
