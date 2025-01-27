@@ -57,6 +57,7 @@ resources:
   - kind: team
     selector:
       query: 'true'
+      includeMembers: 'true'
     port:
       entity:
         mappings:
@@ -67,6 +68,7 @@ resources:
             url: .url
             description: .description
           relations:
+            members: if .__members != null then .__members | map(.identity.uniqueName) else [] end
             project: .projectId | gsub(" "; "")
   - kind: member
     selector:
@@ -74,14 +76,12 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .identity.uniqueName + "-" + .__teamId
-          title: .identity.displayName
+          identifier: .mailAddress
+          title: .principalName
           blueprint: '"azureDevopsMember"'
           properties:
-            url: .identity.url
-            email: .identity.uniqueName
-          relations:
-            team: .__teamId
+            url: .url
+            email: .mailAddress
 ```
 
 </details>
