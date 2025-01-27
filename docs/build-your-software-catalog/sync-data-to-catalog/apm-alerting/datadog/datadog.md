@@ -29,12 +29,15 @@ This integration allows you to:
 - [`Monitor`](https://docs.datadoghq.com/api/latest/monitors/#get-all-monitor-details)
 - [`Service`](https://docs.datadoghq.com/api/latest/service-definition/#get-all-service-definitions)
 - [`SLO`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-all-slos)
-- [`SLO History`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-an-slos-history)
-- [`Service Metric`](https://docs.datadoghq.com/api/latest/metrics/#query-timeseries-points)
+- [`SLO History`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-an-slos-history)*
+- [`Service Metric`](https://docs.datadoghq.com/api/latest/metrics/#query-timeseries-points)*
 - [`User`](https://docs.datadoghq.com/api/latest/users/#list-all-users)
 - [`Team`](https://docs.datadoghq.com/api/latest/teams/#get-all-teams)
+<br />
 
+  *_SLO History and Service Metric resources are not collected out of the box. Follow the examples [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples) to configure blueprints and resource mappings._
 
+<br />
 
 ## Setup
 
