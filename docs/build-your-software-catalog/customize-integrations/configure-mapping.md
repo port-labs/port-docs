@@ -316,6 +316,7 @@ Searching by property can also be used when using Port's API to [create an entit
 ### Limitations
 
 - The search query must return exactly one entity (else the entire request will fail).
+- If the search query returns no entities, a new entity **will not** be created.
 - The query will be executed on the same blueprint from the request’s url.
 - Only the `=` and `in` operators is supported for the search query rule.
 - `Calculation` and `mirror` properties are not supported.
@@ -380,7 +381,7 @@ The object returned from Jira for which we would apply this mapping might look l
 ## Common use-cases
 
 ### Splitting a `kind` block
-Sometimes the `CreateRelatedMissingEntities` flag is passed as `false` to prevent generation of additional entities for relations. This can lead to cases where entity ingestion will not happen because the target entity for a relation does not exist in your catalog.  
+Sometimes the `CreateMissingRelatedEntities` flag is passed as `false` to prevent generation of additional entities for relations. This can lead to cases where entity ingestion will not happen because the target entity for a relation does not exist in your catalog.  
 To handle such cases, you can split a single `kind` to multiple mappings like this:
 
 

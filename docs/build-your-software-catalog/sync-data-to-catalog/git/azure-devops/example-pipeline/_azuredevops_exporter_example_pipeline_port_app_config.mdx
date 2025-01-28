@@ -1,13 +1,13 @@
 <details>
 
-<summary>Ocean integration configuration</summary>
+<summary>Integration mapping</summary>
 
 ```yaml showLineNumbers
 resources:
   - kind: project
     selector:
       query: 'true'
-      defaultTeam: "false"
+      defaultTeam: 'true'
     port:
       entity:
         mappings:
@@ -15,11 +15,11 @@ resources:
           blueprint: '"project"'
           title: .name
           properties:
-            state: '.state'
-            revision: '.revision'
-            visibility": '.visibility'
-            defaultTeam: '.defaultTeam.name'
-            link: '.url | gsub("_apis/projects/"; "")'
+            state: .state
+            revision: .revision
+            visibility: .visibility
+            defaultTeam: .defaultTeam.name
+            link: .url | gsub("_apis/projects/"; "")
   - kind: pipeline
     selector:
       query: 'true'

@@ -20,7 +20,7 @@ you can identify areas for improvement and ensure that your team is delivering h
 This guide will cover the four key metrics: **deployment frequency**, **lead time**, **change failure rate**, and **mean time to recovery**.
 
 ### Prerequisites
-- Complete the [Port onboarding process](https://docs.getport.io/quickstart).
+- Complete the [Port onboarding process](https://docs.port.io/quickstart).
 - Access to a repository (GitHub, GitLab, or Azure Repos) that is connected to Port via the onboarding process.
 - While this guide demonstrates implementations using **GitHub**, **GitLab**, and **Azure Repos**, other Git providers can be used as well.
 - Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD integrations or your platform-specific tools.
@@ -269,22 +269,21 @@ Here’s how you can implement this:
  ```yaml showLineNumbers
   - kind: pull-request
     selector:
-      query: .targetRefName == 'refs/heads/main' and .status == 'completed'  # Track PRs merged into the main branch
+      query: .targetRefName == "refs/heads/main" and .status == "completed"   # Track PRs merged into the main branch
     port:
-    entity:
-      mappings:
-        identifier: .repository.name + '-' + (.pullRequestId|tostring)
-        title: .repository.name + " Deployment"
-        blueprint: '"deployment"'
-        properties:
-          environment: '"Production"'  # Hardcoded value
-          createdAt: .closedDate
-          deploymentStatus: '"Success"'  # Hardcoded value
-        relations:
-          pullRequest: .repository.name + '-' + (.pullRequestId|tostring)
-          service: .repository.name
-
- ```
+      entity:
+        mappings:
+          identifier: .repository.name + (.pullRequestId| tostring)
+          blueprint: '"deployment"'
+          title: .repository.name + " Deployment"
+          properties:
+            createdAt: .closedDate
+            deploymentStatus: '"Success"' # Hardcoded value
+            environment: '"Production"' # Hardcoded value
+          relations:
+            pullRequest: .repository.name + '-' + (.pullRequestId|tostring)
+            service: .repository.name
+```
 
   </details>
 

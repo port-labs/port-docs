@@ -1,8 +1,10 @@
 ---
 title: "Okta (SAML)"
-sidebar_position: 4
+sidebar_position: 2
 description: Integrate Okta with Port using SAML
 ---
+
+import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
 
 # How to configure Okta
 
@@ -30,8 +32,10 @@ The Port team will provide you with your `CONNECTION_NAME`, which will be used i
 6. On the `Configure SAML` page, under `SAML Settings`, you’ll need to fill in some details:
     - **Single sign on URL**: `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
     - **Audience URI (SP Entity ID)**: `urn:auth0:port-prod:{CONNECTION_NAME}`
-7. Scroll down to the `Attribute Statements (Optional)` section:
-    - Add an attribute statement for `email`, with the `Value` set to `user.email`.
+7. Scroll down to the `Attribute Statements (Optional)` section and add the following:
+    - `email`, with the `Value` set to `user.email`
+    - `given_name`, with the `Value` set to `user.firstName`
+    - `family_name`, with the `Value` set to `user.lastName`
 8. Click `Next` and then `Finish` to create the application.
 
 ## Generate a Certificate and Send to Port
@@ -60,9 +64,13 @@ To expose your Okta groups to Port via the application, follow these steps:
 
 These groups will be ingested into Port as teams, enabling you to manage user permissions and RBAC in your Port account.
 
-<!-- ## SCIM Configuration (beta)
+ ## SCIM Configuration (beta)
 
 Okta supports [SCIM](https://auth0.com/docs/authenticate/protocols/scim) for SAML applications.
+
+<ScimFunctionality/>
+
+### Setup SCIM
 
 To set up SCIM for AzureAD SAML based applications, contact Port's support team.
 
@@ -80,4 +88,4 @@ When configuring SCIM:
 - Set the `Unique identifier field` to `userName`.
 - For authenticating the SCIM connection, choose `HTTP Header`, and use the SCIM `token` provided by Port.
 
-::: -->
+:::

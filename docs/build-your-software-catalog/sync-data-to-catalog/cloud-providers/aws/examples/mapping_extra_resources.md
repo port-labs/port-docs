@@ -27,6 +27,7 @@ import DynamoDBBlueprint from './storage/\_dynamodb.mdx'
 import ElasticacheBlueprint from './storage/\_elasticache.mdx'
 import RDSBlueprint from './storage/\_rds.mdx'
 import StorageAppConfig from './storage/\_port_app_config.mdx'
+import UnsupportedResources from './unsupported/\_resources.mdx'
 
 # Mapping Extra Resources
 
@@ -36,15 +37,29 @@ This page will help you understand what kind of AWS resources are supported by t
 
 ## Is the resource supported by the AWS Integration?
 
-The AWS Integration is relying on AWS's Cloud Control API. That means:
+The AWS Integration relies on AWS's Cloud Control API. That means:
 
-1. Does the type of resource I want to ingest listed [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html)?
+1. Is the type of resource I want to ingest listed [here](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html) and supported by the list method?
    - **If so**: Great! It's supported.
    - **If not**: Please contact us or contribute by [adding support](https://ocean.getport.io/develop-an-integration/) to [the integration](https://github.com/port-labs/ocean/tree/main/integrations/aws) yourself.
 
-:::info Resource limitation
-In Cloud Control, some resources require an input in order to be queried. Currently, the integration does not support passing these inputs, which means those resources are currently not supported.
-:::
+For the full list of supported resources, refer to [AWS Cloud Control API Supported Resources](https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/supported-resources.html).
+
+## Resources supported by Cloud Control API but not supported in AWS Integration
+
+The AWS Integration relies on AWS's Cloud Control API. While many resources are supported, some require additional inputs to be queried, which the integration currently does not support. 
+Below is a list of the resources that are unsupported due to this limitation.
+
+### List of unsupported resources
+
+<UnsupportedResources/>
+
+### What can you do?
+
+- **Contact us**: If you require support for any of these resources, please reach out to our team for assistance.
+- **Submit a feature request**: Contribute to our integration's improvement by [submitting a feature request](https://roadmap.getport.io/).
+- **Contribute directly**: Developers are encouraged to [contribute](https://ocean.getport.io/develop-an-integration/) by adding support for these resources [here](https://github.com/port-labs/ocean/tree/main/integrations/aws).
+
 
 ## Configuration
 
@@ -106,6 +121,49 @@ aws cloudcontrol list-resources --type-name AWS::Lambda::Function --max-items 1 
 
 :::
 
+
+### Querying resources from specific regions
+
+The `regionPolicy` option allows users to define a policy for querying resources in specific AWS regions. This feature enables finer control over which AWS regions are included or excluded when fetching resources. The `regionPolicy` option works with `allow` and `deny` lists to specify allowed or restricted regions.
+
+- **allow**: A list of regions explicitly permitted for querying.
+- **deny**: A list of regions explicitly restricted from querying.
+
+#### How `regionPolicy` Works
+
+1. **If both lists are empty**: All regions are allowed.
+2. **If the region is in `deny`**: It is excluded unless explicitly allowed.
+3. **If the region is in `allow`**: It is included for querying.
+4. **If a region appears in both lists**: It is excluded.
+5. **If only `deny` is specified**: Only regions in the `deny` list are excluded.
+6. **If only `allow` is specified**: Only regions in the `allow` list are included.
+
+#### Example Configuration
+
+```yaml showLineNumbers
+resources:
+  - kind: AWS::Lambda::Function
+    selector:
+      query: 'true'
+      useGetResourceAPI: 'true'
+      regionPolicy:
+        allow: ["us-east-1", "eu-west-1"]
+        deny: ["us-west-2"]
+    port:
+      entity:
+        mappings:
+          identifier: '.Identifier'
+          title: '.Properties.FunctionName'
+          blueprint: 'lambda'
+          properties:
+            region: '.__Region'
+            description: '.Properties.Description'
+            arn: '.Properties.Arn'
+          relations:
+            account: '.__AccountId'
+```
+
+In this example, resources in the `us-east-1` and `eu-west-1` regions are allowed, while `us-west-2` is denied.
 
 ## Mapping the resource to Port
 

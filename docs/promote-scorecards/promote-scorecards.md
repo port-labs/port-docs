@@ -5,6 +5,7 @@ sidebar_label: Promote scorecards
 ---
 
 import CombinatorIntro from "/docs/search-and-query/\_combinator_intro.md"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -356,7 +357,7 @@ For example, here are the scores of all `Services` in an organization grouped by
 
 ![catalogViewScorecardsByTeam](../../static/img/software-catalog/scorecard/catalogViewScorecardsByTeam.png)
 
-Note that every coloumn (scorecard metric) in the table has an aggregation in the bottom, hover over it to see the compliance of this metric across all entities in the table.
+Note that every column (scorecard metric) in the table has an aggregation in the bottom, hover over it to see the compliance of this metric across all entities in the table.
 
 ### Rule result summaries
 
@@ -375,3 +376,138 @@ For example, these services have some rules defined in their scorecards, and we 
 [Explore How to Create, Edit, and Delete Scorecards with basic examples](/promote-scorecards/usage)
 
 [Dive into advanced operations on Scorecards with our API ➡️ ](/api-reference/port-api)
+
+## Scorecards as Blueprints
+
+:::info Closed beta feature
+This capability is currently in closed beta, and is not yet generally available.  
+If you would like to join the beta, please reach out to us.
+:::
+
+Port allows you to manage scorecards as <PortTooltip id="blueprint">blueprints</PortTooltip>. This feature enables you to create and manage scorecards that evaluate entities in your data model based on customizable rules and levels.
+
+### Why manage scorecards as blueprints?
+
+With this powerful feature you can accomplish the following:
+
+1. **RBAC Management**
+   - Control who can create and modify scorecards and rules.
+   - Define which teams can view specific scorecard results.
+   - Manage permissions for rule creation and modification at a granular level.
+
+2. **Automations and Actions**
+   - Create workflows that trigger based on rule results.
+   - Set up automated notifications when entities change compliance levels.
+   - Build self-service actions to remediate failed rules.
+   - Integrate with external systems to sync scorecard data.
+
+3. **Reports and Dashboards**
+   - Build custom dashboards to visualize compliance across your organization.
+   - Track progress of entities through different levels.
+   - Generate reports on rule effectiveness and entity compliance.
+   - Monitor trends in rule results over time.
+
+### Overview
+
+After enabling `scorecards as blueprints`, three new blueprints will be created in your [data model](https://app.getport.io/settings/data-model):
+- `Scorecard` - Represents a collection of rules and levels for evaluating entities.
+- `Rule` - Defines specific criteria for evaluation.
+- `Rule Result` - Stores the evaluation results for each entity.
+
+### Blueprint Structure
+
+<Tabs groupId="scorecard-blueprint-structure" queryString values={[
+{label: "Scorecard", value: "scorecard"},
+{label: "Rule", value: "rule"},
+{label: "Rule Result", value: "rule-result"},
+]}>
+
+<TabItem value="scorecard">
+
+The `Scorecard` blueprint contains the following properties:
+| Name | Type | Description |
+|------|------|-------------|
+| Blueprint | string (format: blueprints) | The target blueprint whose entities will be evaluated |
+| Levels | array of objects | An array of levels with titles and colors (e.g., Bronze, Silver, Gold) |
+| Filter | object | Optional query to filter which entities should be evaluated |
+| Rules Tested | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of rule evaluations performed |
+| Rules Passed | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of successful rule evaluations |
+| % of Rules Passed | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed rules |
+
+Relations:
+| Name | Target Blueprint | Required | Many | Description |
+|------|-----------------|----------|-------|-------------|
+| - | - | - | - | No default relations |
+
+</TabItem>
+
+<TabItem value="rule">
+
+The `Rule` blueprint contains the following properties:
+| Name | Type | Description |
+|------|------|-------------|
+| Level | string (enum) | The required level for this rule (must be one of the scorecard's defined levels) |
+| Query | object | The evaluation criteria for entities |
+| Rule Description | string | Optional explanation of the rule's logic |
+| Entities Tested | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities evaluated by this rule |
+| Entities Passed | number ([aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property)) | Number of entities that passed this rule |
+| % of Entities Passed | number ([calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property)) | Calculated percentage of passed entities |
+
+Relations:
+| Name | Target Blueprint | Required | Many | Description |
+|------|-----------------|----------|-------|-------------|
+| scorecard | Scorecard | true | false | The scorecard this rule belongs to |
+
+</TabItem>
+
+<TabItem value="rule-result">
+
+The `Rule result` blueprint contains the following properties:
+| Name | Type | Description |
+|------|------|-------------|
+| Result | string (enum) | Whether the entity passed the rule ("Passed" or "Not passed") |
+| Entity | string | The identifier of the evaluated entity |
+| Result Last Change | string (date-time) | Timestamp of the last result change |
+| Level | string (mirror) | Mirror property from the related rule |
+| Scorecard | string (mirror) | Mirror property showing the parent scorecard title |
+| Blueprint | string (mirror) | Mirror property showing the target blueprint |
+| Entity Link | string (url) | Calculated URL to the evaluated entity |
+
+Relations:
+| Name | Target Blueprint | Required | Many | Description |
+|------|-----------------|----------|-------|-------------|
+| rule | Rule | true | false | The rule that generated this result |
+| [Blueprint Identifier] | [Dynamic] | false | false | Automatically created relation to the target blueprint when a new scorecard is created |
+
+:::info Dynamic Relations
+When a new scorecard is created, Port automatically creates a relation in the Rule Result blueprint to the scorecard's target blueprint. For example, if you create a scorecard for the "service" blueprint, a new relation named "service" will be added to the Rule Result blueprint.
+:::
+
+</TabItem>
+</Tabs>
+
+### Important Notes
+
+1. The scorecard blueprints are protected and their core structure cannot be modified:
+   - Default properties cannot be changed or deleted.
+   - Required relations cannot be modified.
+   - The blueprints themselves cannot be deleted.
+
+2. You can extend the blueprints with:
+   - New properties.
+   - New non-required relations.
+   - Additional configurations that don't affect the core functionality.
+
+3. Rule Results are automatically generated and managed by Port:
+   - They cannot be created, deleted, or modified directly.
+   - You can update the custom properties you created for the rule results.
+   - Rule results are not searchable in the global search.
+   - They are updated automatically when rules are evaluated.
+
+### Validation Rules
+
+The system enforces several validation rules to maintain data integrity:
+
+1. Rule levels must match one of the levels defined in their parent scorecard.
+2. Scorecard blueprint built-in relations cannot be renamed or modified.
+3. Rule results maintain immutable core properties while allowing updates to custom properties.

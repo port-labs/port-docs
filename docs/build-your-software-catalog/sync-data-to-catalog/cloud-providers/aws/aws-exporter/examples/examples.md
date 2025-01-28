@@ -3060,7 +3060,7 @@ Here's an example showing how to connect CloudFormation Stacks and Lambda functi
 
    </details>
 
-Make sure your [Lambda function configuration](#lambda) appears before your CloudFormation defintion in the `config.json`.
+Make sure your [Lambda function configuration](#lambda) appears before your CloudFormation definition in the `config.json`.
 
 Done! soon, you will be able to see any `CloudFormation Stacks`.
 
@@ -4229,7 +4229,7 @@ In this step-by-step example, you will export your `Serverless cache` to Port.
 
    </details>
 
-4. Optional: create an event rule to trigger automatic syncing of changes in Elasticache serveless caches.
+4. Optional: create an event rule to trigger automatic syncing of changes in Elasticache serverless caches.
 
    You may use the following CloudFormation template:
 
@@ -4821,7 +4821,7 @@ This guide assumes that you have ingested S3 buckets into Port using the `terraf
 
 ### Ingest Services from GitHub.
 
-Follow this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation) to ingest your GitHub repositories into Port. Port will create a `service` blueprint that you will be using subsequently.
+Follow this [guide](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) to ingest your GitHub repositories into Port. Port will create a `service` blueprint that you will be using subsequently.
 
 <details>
 <summary>Service Blueprint</summary>
@@ -4894,7 +4894,7 @@ Your [data model](https://app.getport.io/settings/data-model) should now contain
 
 Now that Port is synced with your `s3_bucket` and `service` blueprints, let's map the two together.
 
-1. Add a tag to the bucket with the key `service` and a value representing the identifier of the service. For instance, if your service has an indentifier of `webapp`, create a tag on the bucket with `{ "service": "webapp" }`.
+1. Add a tag to the bucket with the key `service` and a value representing the identifier of the service. For instance, if your service has an identifier of `webapp`, create a tag on the bucket with `{ "service": "webapp" }`.
 
 Refer to this [AWS guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging-managing.html) for more details on tagging resources in S3.
 

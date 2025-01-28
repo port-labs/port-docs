@@ -1,6 +1,6 @@
 ---
 title: "Google Workspace"
-sidebar_position: 2
+sidebar_position: 4
 description: Integrate Google Workspace with Port using SAML
 ---
 
@@ -92,13 +92,13 @@ Pass these to Port. <br/>
 
 Press `Continue`.
 
-5. Configure your new application as shown bellow:
+5. Configure your new application as shown below:
 
 - `ACS URL` - `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
 - `Entity ID` - `urn:auth0:port-prod:{CONNECTION_NAME}`
 
 :::note
-We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
+We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
 :::
 
 Press `Continue`

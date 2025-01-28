@@ -4,7 +4,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Image from "@theme/IdealImage";
 import WebhookArchitecture from '/static/img/build-your-software-catalog/sync-data-to-catalog/webhook/webhook-architecture.png';
-import ExampleGithubPRWebhook from './examples/resources/github/\_example_github_pr_configuration.mdx';
+import ExampleFullConfiguration from './examples/resources/general/\_example_full_configuration.mdx';
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_api_available_regions.md"
 
@@ -38,17 +38,36 @@ By using the webhook mapping you can:
 - **Update** a single property on an entity.
 - **Delete** an entity from your catalog.
 
+## Create a custom webhook
+
+Choose your preferred method to create a custom webhook:
+<Tabs>
+<TabItem value="ui" label="UI">
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+
+2. Click on the `+ Data source` button in the top right corner.
+
+3. Select the `Webhook` tab.
+
+4. Click on `Custom integration`.
+</TabItem>
+<TabItem value="api" label="API">
+See the [Create a webhook route](/api-reference/create-a-webhook) in the API reference.
+</TabItem>
+</Tabs>
+
 ## Webhook configuration
 
-The webhook configuration is how you specify:
+A webhook configuration consists of the following parts:
 
-- The basic [metadata](#metadata-configuration) of the custom webhook integration;
-- The [mapping configuration](#mapping-configuration) controlling which entities are created from the payload;
+- The basic [metadata](#metadata-configuration) of the custom webhook integration.
+- The [mapping configuration](#mapping-configuration) controlling which entities are created from the payload.
 - The [security configuration](#security-configuration) used to make sure that payloads that arrive to Port were really sent by a 3rd party you authorized.
 
-Here is an example webhook configuration:
+Below is an example JSON definition of a complete webhook configuration.  
+See the [Configuration structure section](#configuration-structure) for a breakdown of the different parts.
 
-<ExampleGithubPRWebhook/>
+<ExampleFullConfiguration/>
 
 ## Configuration structure
 
@@ -201,9 +220,6 @@ Below is an example of a mapping configuration:
 
 </Tabs>
 
-
-#### Available keys
-
 When configuring the mapping, the following keys are available for use in the JQ expressions:
 
 | Key            | Description                                                                                                                   |
@@ -351,7 +367,8 @@ Now let's explore the structure of a single mapping object:
         "properties": {
           "author": ".body.pull_request.user.login",
           "url": ".body.pull_request.html_url"
-        }
+        },
+        "relations": {}
       }
       // highlight-end
     }
@@ -359,6 +376,47 @@ Now let's explore the structure of a single mapping object:
   ...
 }
 ```
+
+#### Search relation
+
+Port supports [mapping relations using search queries](/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) in the webhook mapping configuration.  
+
+Here is an example that demonstrates how to create a relation between a deployment entity and another component deployment entity based on the `appVersion` property:
+
+```json showLineNumbers
+[
+  {
+    "blueprint": "deployment",
+    "operation": "create",
+    "filter": "true",
+    "entity": {
+      "identifier": ".body.version | tostring",
+      "title": ".body.version | tostring as $version | \"deployment of version \" + $version ",
+      "properties": {
+        "version": ".body.version",
+        "createdAt": ".body.date",
+        "deploymentStatus": "'Success'",
+        "environment": "'Production'"
+      },
+      // highlight-start
+      "relations": {
+        "component_deployment": {
+          "combinator": "'and'",
+          "rules": [
+            {
+              "property": "'appVersion'",
+              "operator": "'='",
+              "value": ".body.version | tostring"
+            }
+          ]
+        }
+      }
+      // highlight-end
+    }
+  }
+]
+```
+
 
 ### Security configuration
 
@@ -636,9 +694,13 @@ The maximum size of the webhook payload is **512KiB**.
 Reaching this limit will throw a `413 Request Entity Too Large` HTTP error.
 :::
 
-## Limitations
-The webhook api has the following limitations:
-1. Webhook payload max size - 512KiB. Reaching this limit will throw a `413 Request Entity Too Large` http error.
+### Custom webhook HTTP response
+
+Custom webhook endpoints provided by Port perform their processing in an asynchronous manner. 
+
+Most 3rd party providers expect a webhook endpoint to provide a correct response after a short period of time.
+
+In order to comply with the expectation from custom webhook endpoints, when you or your 3rd party provider makes a request to your custom webhook, you will see a **`202 ACCEPTED`** status code returned in the response. This is the expected behavior and it means that the payload sent to your custom webhook has been received and will undergo processing in the background, after which it will appear in your catalog as determined by your mapping configuration.
 
 ## Examples
 

@@ -1,0 +1,25 @@
+<details>
+
+<summary> Integration mapping </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: group-with-members # replace with `project-with-members` to retrieve members from projects
+    selector:
+      query: 'true'
+      includeBotMembers: 'true'
+      includeInheritedMembers: 'true'
+    port:
+      itemsToParse: .__members
+      entity:
+        mappings:
+          identifier: .item.username
+          title: .item.name
+          blueprint: '"gitlabMember"'
+          properties:
+            link: .item.web_url
+            state: .item.state
+            email: .item.email
+            locked: .item.locked
+```
+</details>

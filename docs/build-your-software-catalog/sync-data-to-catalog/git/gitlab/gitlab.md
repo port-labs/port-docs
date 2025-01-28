@@ -24,10 +24,13 @@ It is possible to reference any field that appears in the API responses linked b
 - [`pipeline`](https://docs.gitlab.com/ee/api/pipelines.html#get-a-single-pipeline)
 - [`group`](https://docs.gitlab.com/ee/api/groups.html#details-of-a-group)
 - [`file`](https://docs.gitlab.com/ee/api/repository_files.html#get-file-from-repository)
+- [`members`](https://docs.gitlab.com/ee/api/members.html#list-all-members-of-a-group-or-project)
+
 
 ## Setup
 
-To install Port's GitLab integration, follow the [installation](./installation.md#setup) guide.
+To install Port's GitLab integration, see the [installation](./installation.md#setup) page.
+
 :::info Permission
 Port's GitLab integration requires a group access token with the `api` scope.
 To create a group access token, follow the instructions in the [installation](./installation.md#creating-a-gitlab-group-access-token) guide
@@ -382,7 +385,7 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 ```
 :::
 
-## Limitations
+#### Limitations
 
 - Currently only files up to 1MB in size are supported.
 - Only JSON and YAML formats are automatically parsed. Other file formats can be ingested as raw files.
@@ -397,7 +400,7 @@ Refer to the [examples](./examples.md) page for practical configurations and the
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=GitLab).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=GitLab).
 
 ## GitOps
 

@@ -4,12 +4,15 @@ sidebar_position: 1
 description: Integrate AzureAD with Port
 ---
 
+import ScimFunctionality from "/docs/sso-rbac/sso-providers/\_scim_functionality_list.mdx"
+import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/\_scim_oidc_limitation.mdx"
+
 # How to configure AzureAD
 
 Follow this step-by-step guide to configure the integration between Port and Azure Active Directory.
 
 :::info
-In order to complete the process you will need to contact us to receive the information you require, as well as the [information Port requires from you](https://docs.getport.io/sso-rbac/sso-providers/oidc/azure-ad#step-6-providing-the-application-information-to-port). Read below for more information.
+In order to complete the process you will need to contact us to receive the information you require, as well as the [information Port requires from you](https://docs.port.io/sso-rbac/sso-providers/oidc/azure-ad#step-6-providing-the-application-information-to-port). Read below for more information.
 
 :::
 
@@ -77,8 +80,6 @@ To make the **Port** app connection work, users who have access need to have a l
 
    4.7 Click `Save`.
 
-
-
 ### Step #2: Customize your Port app with Login URL and Logo
 
 1.  On the new Port App page, click `Branding & Properties`.
@@ -92,7 +93,7 @@ To make the **Port** app connection work, users who have access need to have a l
     ```
 
     :::note
-    We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
+    We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
     :::
 
     1.2 Add the Port logo (optional):
@@ -262,14 +263,44 @@ Port needs the following information for this process:
 
    ![Azure application dashboard](/img/sso/azure-ad/AzureDashboardWithPort.png)
 
-   :::note
+   :::note manual URL based login
    Users can also manually access Port by going to the App Homepage URL: `https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io`
    :::
 
----
+:::warning Multiple Azure AD SSO connections
+In case you have multiple Port environments, it is possible to setup an OIDC Azure AD SSO connection for each of those environments.
+
+However, note that in this instance you **will not** be able to use Port's main login page to reliably sign in to a specific environment, when you enter your email address to login, it will take you to one of your Port environments but it is not guaranteed to take you to the same Port environment every time.
+
+In that case you have the following options:
+
+- Use the [https://myapplications.microsoft.com](https://myapplications.microsoft.com) dashboard provided by Azure AD and select the desired Port environment to connect to.
+- Use the manual login URL for each environment directly, by specifying the desired environment based on its respective `CONNECTION_NAME` value
+  :::
 
 ## Permissions required to pull AzureAD groups to Port
 
 Port can query the group membership of users who log in through the AzureAD SSO, and add their teams as team entities inside Port. This allows the platform engineers to take advantage of both existing groups from AzureAD and teams created manually inside Port to manage permissions and access to resources inside Port's catalog.
 
 **Important:** In order to import Azure AD groups into Port, Port will require the connection app to approve the `Directory.Read.All` permission
+
+## SCIM Configuration (beta)
+
+<ScimLimitation/>
+
+Entra ID (AzureAD) OIDC applications support [SCIM](https://auth0.com/docs/authenticate/protocols/scim).
+
+<ScimFunctionality/>
+
+### Setup SCIM
+
+To set up SCIM for Entra ID OIDC based applications, contact Port's support team.
+
+You will be provided with:
+
+- An SCIM `endpoint`
+- An SCIM `token`
+
+The `endpoint` and `token` will be used to set up the SCIM integration in your identity provider.
+
+After receiving the SCIM `endpoint` and `token`, follow this [step-by-step guide](https://auth0.com/docs/authenticate/protocols/scim/inbound-scim-for-new-azure-ad-connections#configure-scim-in-azure-ad-for-oidc-apps) to enable SCIM. Begin in step 3, by registering a new application.

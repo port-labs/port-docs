@@ -25,7 +25,7 @@ To use this automation, ensure you have:
 
 ## Data Model Setup
 
-For this guide, we will be using the same data model as in the [GitHub installation](/build-your-software-catalog/sync-data-to-catalog/git/github/installation) and the [Resource mapping examples](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests) guide.
+For this guide, we will be using the same data model as in the [GitHub installation](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) and the [Resource mapping examples](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests) guide.
 
 ### Update the `Pull Request` Blueprint
 
@@ -71,7 +71,7 @@ Make sure to add the mirror properties.
 These mirror properties allow the `Pull Request` blueprint
 to access the Slack channel and webhook URL from the related `Service` blueprint.
 
-To read more about mirror properties and understand their usage better, visit the [Port Documentation on Mirror Properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property).
+To read more about mirror properties and understand their usage better, visit the [Port Documentation on Mirror Properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property).
 :::
 
 

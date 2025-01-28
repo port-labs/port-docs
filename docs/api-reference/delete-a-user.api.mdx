@@ -1,11 +1,11 @@
 ---
 id: delete-a-user
 title: "Delete a user"
-description: "This route allows you to delete a user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/)."
+description: "This route allows you to delete a user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/)."
 sidebar_label: "Delete a user"
 hide_title: true
 hide_table_of_contents: true
-api: eJzVU01vm0AQ/SurPSUSMXaPKIoUyT5U7SFKnZNlVQuMzcqYJbO7uC7iv3dmwTG2nB566wWW4c3He/O2lTnYDHXttKlkIpeFtgKNdyBUWZqDFUfjhTMihxI4KLwFFLriOIoXg04Y3KpK/1ZcYvKYYvwUHksjSlBYib1BSkypaEi2kcgKyHaCA64AscpN5vdQuVBhfVc4V9skjilsJ1twNTWZaBNbax4wVVnMjwfTADYaDvH9REbSqa2VyUq+cQO5jmStUO1pYuRwKy213CuZtNIdayCi1qGutrKLpGbetXIFlakoh754zJ+E1yXFrgUCEf4IlecI1gqzCSyCLizWQVXurFgvCJVBePcaIZeJQw8djWgh86jdMQyYklSATKHPS3zPhIHUpjaVBcvzf5lO+XU51Rw2ypdOvA5I2RExol8Y6jdUlFHPMpFxM4tD+bg9M+0kT4TNSTGPJUFPu1C1Hq2CZLsF8PYCM6L4g+Xv5z8R/dgEZX6D41n8Z09j4+AnOeynAJVTVhf2tTEhXbuS8cGDzy9fCcrD94LMJlPebW2s26uK4UP1+djH19ttZWYqR078n29Cr6qDXy6uS0XqkQ5hV+2w/5VsZgTsDRbJZOR2WllBkjGmbVNl4Q3LruPwuwdkp9KxUahVytqTTXJt+Uw226jSwl8EvXsdbsC9+OdLdJPcyUcVm6hRpecvOu7IVRd3uVuPb8V88X2xXBBOeVZl7Mdd8ONwYJY3W1wbte/HT74eN1MeyaeC3P70Ae//fJow+P6EZsLrruv+APV19kY=
+api: eJzVVMFu2zAM/RWBpxZQ43ZHYxhQoD0M26HY2lNgDIrN1FpkS6WkdJmhfx8oO43TZsOw23JQbImk+B7f8wAN+pq0C9r2UMJ9q70gGwMKZYx99mJnowhWNGiQN0X0SEL3vE/izlIQlh5Vr38qLrF4v6LiQ17urTCoqBedJRRqZWPIyV6KusV6I3gjtCiWja1jh33IFaqzNgTny6JobO0XjxicpbDQtvDeXtBK1QUvF3aLtNX4XJwvQEJQjx7KJTzwBVBJcIpUh4HfyuUAvm6xU1AOEHYOoQQfSPePkCRoxu1UaEFCrzo+5Da/Yae0AfmGIBT5RKimIfRe2HVGkXlhsp5VHw6MjYSABMKnqAkbKANFTJUEj3UkHXa5wRUqQmIIY14ZRyQcSOid7T167v/d5SX/HXd1k3Ma4WNdo/fraMyOaaltH7APnKCcM7rOFBffPWfNWfm7co6sQwp67MRuZnyqfgcSsI8dlEtGWKU0B73k8EqCahrNtyhzNyu2VsZj4p+EDkNrGygnIvhaHk4JxfaqyKwUw2FACZhI2u4HHclACXsJKadnCoIkTwVEfxQzm8xX5mcEu5/PAbDTn3B30Mx1DK2lyQYwyapF1SBByjJb25yug+H4bJ3ru48ggZsfib9aXLIknfWhU3lEU/Wbuf1ei3I4zPn/NfDIasAfoXBG6Z55yLMapvkvYXsFEkZfSChnJq0ktNYHjhmGlfL4QCYl3n6KSGywSsJWkVYr5n45QKM9PzeT9P5A6NmXScPn4p+9fxLckXG2ykR+Awkb3B1/glKV5F5J3PsYcF3X6MIs9Y3BWckvZrq5/Xx7fwsSVGQy5zLeZBlPD3zByc5e63vsgld21cmUYRhNktJL/Hj024wJ5T6aiapSSr8AU4JMbA==
 sidebar_class_name: "delete api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
@@ -20,7 +20,6 @@ import ParamsItem from "@theme/ParamsItem";
 import ResponseSamples from "@theme/ResponseSamples";
 import SchemaItem from "@theme/SchemaItem";
 import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
 import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
@@ -41,7 +40,7 @@ import TabItem from "@theme/TabItem";
 
 
 
-This route allows you to delete a user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.getport.io/sso-rbac/rbac-overview/).
+This route allows you to delete a user in your Port organization.<br/><br/>To learn more about users, check out the [documentation](https://docs.port.io/sso-rbac/rbac-overview/).
 
 <Heading
   id={"request"}
@@ -88,11 +87,71 @@ This route allows you to delete a user in your Port organization.<br/><br/>To le
         <div>
           
           
-          Default Response
+          Deleted successfully.
           
           
         </div><div>
-          
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"ok"}
+                        required={true}
+                        schemaName={"any"}
+                        qualifierMessage={"**Possible values:** [`true`]"}
+                        schema={{"type":"any","enum":[true]}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"ok\": true\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
         </div>
       </TabItem>
     </ApiTabs>
