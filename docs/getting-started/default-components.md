@@ -12,7 +12,7 @@ In addition to the components created in the previous steps, Port will create a 
 
 ## Blueprints
 
-Several blueprints used to represent common concepts in your organization are created automatically by Port.  
+Several blueprints used to represent common concepts in your organization will be created automatically.
 
 You can view and edit blueprints in the [data model page](https://app.getport.io/settings/data-model) of your portal.
 

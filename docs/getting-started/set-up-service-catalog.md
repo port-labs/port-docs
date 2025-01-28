@@ -7,37 +7,69 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Set up your service catalog
 
-### Default blueprints
+Now that your tools are connected to your portal, you can start creating your service catalog and add some users and teams to your organization.
 
+This page will explain some basic concepts and describe the process of onboarding assets to your portal.
 
-Every Port account comes with a set of default blueprints.  
+<!-- maybe split into "service catalog" and "users & teams" -->
+
+## Service catalog
+
+Every Port account comes with a set of default <PortTooltip id="blueprint">blueprints</PortTooltip>.  
 Three of these blueprints are designed to help you create a rich and dynamic service catalog:
 
-1. [`_service`](/) *(these will link to the docs page that explains the meaning of these default blueprints)*
-2. [`_workload`](/)
-3. [`_environment`](/)
+1. [`_service`](/getting-started/default-components#-service)
+2. [`_workload`](/getting-started/default-components#-workload)
+3. [`_environment`](/getting-started/default-components#-environment)
 
-Read on to learn how to use these blueprints in a way that best suits your organization.
+To help you onboard `services`, `workloads` and `environments`, the [Set up service catalog](https://app.getport.io/1_set_up_service_catalog) page in your portal contains several actions for you to execute. 
 
-<br/>
-
-### Create entities
-
-
-To help you onboard services, workloads and environments, this page contains several actions for you to execute.  
 These actions will create entities, with rich context from the tools you've integrated.  
 
-For example:  
+*For example:*  
 Say you've integrated `GitHub`, `Jira`, and `Pagerduty`.  
 When onboarding a service via the action, you will be able to select the relevant `GitHub repository`, `Jira project`, and `Pagerduty service` related to that service.  
-This will create a single `service` entity, with relations to the relevant entities you selected, serving as a single component to track & manage the service.
 
-The relevant onboarding actions can be found below, along with tables that display the created entities.
+This will create a single `service` entity, with relations to the relevant entities you selected, serving as a single component to track & manage the service.  
 
-### Automatic discovery 
+## Users & teams
 
-The onboarding actions are a great way to get started, but eventually you may want to automate this process.  
-`link to automatic discovery`
+Two other default blueprints are designed to help you manage users, teams, and ownership in your portal:
 
-### Next step  - set up ownership
-Proceed to the next step - [set up users, teams, and ownership](https://app.getport.io/setup_ownership) in your portal.
+1. [`_user`](/getting-started/default-components#-user)
+2. [`_team`](/getting-started/default-components#-team)
+
+To help you onboard users and teams, the [Set up users & teams](https://app.getport.io/2_set_up_users_teams) page in your portal contains several actions for you to execute.
+  
+These actions will create entities, with rich context from the tools you've integrated.  
+
+#### Onboard your user
+
+First, execute the `Onboard your user` action.  
+This will create a `user` entity with context of your user accounts in other tools you've integrated.  
+
+Now that you've onboarded your user, some components in your portal will be populated with data.  
+
+For example, the table named `Track your open pull requests` in the [Plan my day](https://app.getport.io/plan_my_day) page is configured to display `pull request` entities that were opened by the logged in user (in this case, you).  
+This table should now be populated with PRs from your Git provider.
+
+#### Onboard teams
+
+Use the `Onboard new team` action to create a new `team` entity and add your user to it.  
+Now that your user is a member of a team, widgets in the [My team](https://app.getport.io/my_team) page will be populated with data.
+
+#### Onboard more users
+
+To see what components in your portal look like with more than one user, use the `Onboard user` action to add users to your Port organization.  
+
+If you want to create users without inviting them to the portal just yet, make sure the `Invite to Port` toggle is disabled when executing the action.
+
+:::tip User & team management
+The `user` and `team` blueprints are powerful components that can be leveraged for many use cases, such as **ownership definition**, **RBAC definition**, **dynamic visualization**, and more. 
+
+Read more about them in the [User & team management](/sso-rbac/rbac/) page.
+:::
+
+## Next step - automatic discovery
+
+Proceed to the [next step](/getting-started/set-up-automatic-discovery) to learn how to manage your catalog automatically, creating and updating components based on changes in data from your tools.

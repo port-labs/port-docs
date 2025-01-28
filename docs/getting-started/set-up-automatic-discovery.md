@@ -105,16 +105,37 @@ This example assumes that each ArgoCD application has a label named `portService
       entity:
         mappings:
           identifier: .metadata.labels.portService
-            # combinator: '"and"'
-            # rules:
-            #   - operator: '"="'
-            #     property: '"$identifier"'
-            #     value: .metadata.labels.portService
           blueprint: '"service"'
           relations:
             argocdApplication: .metadata.uid
 ```
 
 The meaning of this configuration is:  
-*For every application in the ArgoCD , update the `service` entity with the identifier matching the `portService` label, relating it to this `argocdApplication` entity*.
+*For every application ingested from ArgoCD, update the `service` entity with the identifier matching the `portService` label, relating it to this `argocdApplication` entity*.
 
+#### Map by property
+
+If the label's value is not an identifier, but some other property of the entity, you can use a rule to find the relevant entity and update it.
+
+For example, say each ArgoCD application has a label named `portService` with the value being the `title` of the `service` entity in Port. We can use the following mapping configuration:
+
+```yaml showLineNumbers
+  - kind: application
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier:
+            combinator: '"and"'
+            rules:
+              - operator: '"="'
+                property: '"$title"'
+                value: .metadata.labels.portService
+          blueprint: '"service"'
+          relations:
+            argocdApplication: .metadata.uid
+```
+
+The meaning of this configuration is:  
+*For every application ingested from ArgoCD, update the `service` entity with the title matching the `portService` label, relating it to this `argocdApplication` entity*.

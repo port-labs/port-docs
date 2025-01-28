@@ -18,8 +18,9 @@ This section will walk you through the phases of the onboarding process, and des
 
 1. [Connect your tools](./connect-tools.md) - Select the tools and platforms used in your organization, and connect them to to your portal.
 
-2. [Set up your service catalog](./set-up-service-catalog.md) - Create some components to start populating your software catalog with data from your tools.
+2. [Set up your service catalog](./set-up-service-catalog.md) - Create some core components to start populating your software catalog with data from your tools.
 
-3. [Set up automatic discovery](./set-up-automatic-discovery.md) - Set up automatic discovery to start populating your software catalog with data from your tools.
+3. [Set up automatic discovery](./set-up-automatic-discovery.md) - Learn how to manage your catalog automatically, creating and updating components based on changes in data from your tools.
+
 Upon creating your portal, Port will create several [default components](./default-components.md) to help you get started with organizing your software catalog. 
 
