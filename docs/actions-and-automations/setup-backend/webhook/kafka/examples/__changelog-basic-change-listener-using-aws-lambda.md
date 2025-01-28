@@ -9,7 +9,7 @@ In this guide, we will show how to deploy a new `AWS Lambda function`, that will
 ## Prerequisites
 
 :::note
-To follow this example, please contact us via Intercom to receive a dedicated Kafka topic.
+To follow this example, please contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) to receive a dedicated Kafka topic.
 :::
 
 - AWS CLI installed and configured to your desired AWS account;

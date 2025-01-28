@@ -50,14 +50,9 @@ After completing it, you will get a sense of how it can benefit different person
 If you don't have a CRD and you would like to create one, you can use Crossplane's XRD to create a CRD like we do in this guide or to install any operator that applies CRD into your cluster. You can follow the [Crossplane XRD documentation](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) to create a CRD.
 For this guide, we followed the [AWS DynamoDB composition example](https://docs.crossplane.io/latest/getting-started/provider-aws-part-2/)
 
-### 2. Install the Kubernetes Exporter with the `crdsToDiscover` flag
+### 2. Install Port's Kubernetes exporter
 
-The Kubernetes Exporter can be installed with the `crdsToDiscover` flag which is a JQ pattern to discover and export CRDs to Port as blueprints and actions. In this example we will use [Helm](https://helm.sh/) to install the Kubernetes Exporter, but for more installation options please visit the [Kubernetes Exporter documentation](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#installation)
-
-:::tip Crossplane's XRD
-
-With the pattern below, the Kubernetes Exporter will discover CRDs that are managed by [Crossplane's XRD](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) and that are not namespaced scoped. This is just an example, and you can adjust the pattern to match your own CRDs - even if they are managed by a custom operator.
-:::
+In this example we will use [Helm](https://helm.sh/) to install the Kubernetes Exporter, but for more installation options please visit the [Kubernetes Exporter documentation](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#installation)
 
 Here is a script that will help you install the Kubernetes Exporter without initializing default blueprints and mappings, if you would like to install it with the defaults remove the `createDefaultResources=false` variable from the script below.
 
@@ -78,7 +73,16 @@ helm upgrade --install my-port-k8s-exporter port-labs/port-k8s-exporter \
 
 <PortApiRegionTip/>
 
-After installing the k8s exporter [update the `crdsToDiscover` configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration) with the following value:
+### 3. Update the exporter configuration with `crdsToDiscover`
+
+The `crdsToDiscover` mapping parameter is a JQ pattern to discover and export CRDs to Port as blueprints and actions.
+
+:::tip Crossplane's XRD
+
+With the pattern below, the Kubernetes Exporter will discover CRDs that are managed by [Crossplane's XRD](https://docs.crossplane.io/latest/concepts/composite-resource-definitions/) and that are not namespaced scoped. This is just an example, and you can adjust the pattern to match your own CRDs - even if they are managed by a custom operator.
+:::
+
+After installing the k8s exporter, add the following value to [its configuration](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md#updating-exporter-configuration):
 
 ```yaml
 crdsToDiscover: ".metadata.ownerReferences[0].kind == \"CompositeResourceDefinition\" and .spec.scope != \"Namespaced\""
@@ -87,7 +91,7 @@ crdsToDiscover: ".metadata.ownerReferences[0].kind == \"CompositeResourceDefinit
 After this change, it should take no longer than 2 minutes to see the resources in Port.
 If everything succeeded you should see the relevant CRDs as `blueprints` and `actions`, and any existing CRs as `entities` in Port's catalog.
 
-### 3. Connect a GitHub workflow
+### 4. Connect a GitHub workflow
 
 Now, to execute the action we need to add some workflow to it for Port to trigger the action, the workflow that we will configure will do the operations in the Kubernetes cluster using the `kubeconfig` that we will provide as a secret in the GitHub repository.
 
@@ -124,7 +128,7 @@ If you would like to use this method, at the same repo you cloned there is anoth
 :::
 
 
-### 4. Executing the action
+### 5. Executing the action
 
 * Now that everything is set up, go to the [Self-Service Tab](https://app.getport.io/self-serve) and execute the Create action.
 <img src='/img/guides/createNosqlComposition.png' width='100%' border='1px' />
