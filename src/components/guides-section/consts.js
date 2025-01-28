@@ -94,6 +94,14 @@ export const availableGuides = [
         link: "/guides/all/setup-slack-reminders",
     },
     {
+        title: "Set up automatic discovery",
+        description:  "Automate the onboarding of services, workloads, and environments into your software catalog by integrating with tools like Jira, PagerDuty, and Kubernetes.",
+        tags: [ "Automations"],
+        logos: ["Jira", "PagerDuty", "Kubernetes"],
+        category: "Getting started",
+        link: "/guides/all/automatic-discovery",
+    },
+    {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["Cloud access management", "Actions", "RBAC"],
