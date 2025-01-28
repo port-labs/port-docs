@@ -6,7 +6,7 @@ import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog
 import DockerParameters from "./\_datadog_one_time_docker_parameters.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation_oauth.mdx"
 import DatadogBlueprint from "../resources/datadog/\_example_datadog_alert_blueprint.mdx";
 import DatadogConfiguration from "../resources/datadog/\_example_datadog_webhook_configuration.mdx"
 import DatadogMicroserviceBlueprint from "../resources/datadog/\_example_datadog_microservice.mdx"
@@ -29,12 +29,15 @@ This integration allows you to:
 - [`Monitor`](https://docs.datadoghq.com/api/latest/monitors/#get-all-monitor-details)
 - [`Service`](https://docs.datadoghq.com/api/latest/service-definition/#get-all-service-definitions)
 - [`SLO`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-all-slos)
-- [`SLO History`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-an-slos-history)
-- [`Service Metric`](https://docs.datadoghq.com/api/latest/metrics/#query-timeseries-points)
+- [`SLO History`](https://docs.datadoghq.com/api/latest/service-level-objectives/#get-an-slos-history)*
+- [`Service Metric`](https://docs.datadoghq.com/api/latest/metrics/#query-timeseries-points)*
 - [`User`](https://docs.datadoghq.com/api/latest/users/#list-all-users)
 - [`Team`](https://docs.datadoghq.com/api/latest/teams/#get-all-teams)
+<br />
 
+  *_SLO History and Service Metric resources are not collected out of the box. Follow the examples [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/examples) to configure blueprints and resource mappings._
 
+<br />
 
 ## Setup
 
@@ -44,7 +47,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="Datadog" />
 
 </TabItem>
 
@@ -162,8 +165,8 @@ This table summarizes the available parameters for the installation.
 
 | Parameter                                   | Description                                                                                                                                                                                                                                                                                    | Example                          | Required |
 |---------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
-| `port.clientId`                             | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
-| `port.clientSecret`                         | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
+| `port.clientId`                             | Your port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
+| `port.clientSecret`                         | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
 | `port.baseUrl`                              | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
 | `integration.secrets.datadogApiKey`         | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)                                                                                                                                                          |                                  | ✅        |
 | `integration.secrets.datadogApplicationKey` | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)                                                                                                                                                            |                                  | ✅        |
@@ -198,8 +201,8 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 
 | Parameter                           | Description                                                                                                                                                                                                                                                                              | Example | Required |
 |-------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|----------|
-| `port_client_id`                    | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |         | ✅        |
-| `port_client_secret`                | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |         | ✅        |
+| `port_client_id`                    | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |         | ✅        |
+| `port_client_secret`                | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |         | ✅        |
 | `port_base_url`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |         | ✅        |
 | `config -> datadog_base_url`        | US: https://api.datadoghq.com EU: https://api.datadoghq.eu                                                                                                                                                                                                                               |         | ✅        |
 | `config -> datadog_api_key`         | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)                                                                                                                                                    |         | ✅        |
@@ -1086,7 +1089,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Datadog).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=Datadog).
 
 
 ## Alternative installation via webhook

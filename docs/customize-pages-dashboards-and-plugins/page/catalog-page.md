@@ -8,7 +8,7 @@ import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/template
 
 # Catalog page
 
-A catalog page displays a table of all existing [entities](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
+A catalog page displays a table of all existing [entities](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](https://docs.port.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
 In this example we can see all of the microservice entities we created from the `microservice` blueprint:
 
 <img src='/img/software-catalog/pages/catalogPage.png' width='80%' border='1px' />

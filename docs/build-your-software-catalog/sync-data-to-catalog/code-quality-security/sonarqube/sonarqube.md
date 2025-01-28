@@ -164,8 +164,8 @@ This table summarizes the available parameters for the installation.
 
 | Parameter                                | Description                                                                                                                                                                                  | Example                          | Required |
 |------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
-| `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                   |                                  | ✅        |
-| `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                               |                                  | ✅        |
+| `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                   |                                  | ✅        |
+| `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                               |                                  | ✅        |
 | `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                      |                                  | ✅        |
 | `integration.secrets.sonarApiToken`      | The [SonarQube API token](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)                                                |                                  | ✅        |
 | `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Not required when using on-prem sonarqube instance) | myOrganization                   | ✅        |
@@ -817,7 +817,7 @@ To remedy this, we have switched to the globally available API for projects inst
 
 ### Changes to the SonarQube integration
 
-- The `project` kind is deprecated in support for the `projects_ga` kind.
+- The `project` kind is deprecated in support for the `projects_ga` kind. *Deprecation effective: 2024-02-23*
 
 - Since `tags` property is only available with the internal API, the tags property will read `null` for existing users.
 

@@ -11,6 +11,10 @@ const sidebar: SidebarsConfig = {
       id: "api-reference/rate-limits",
     },
     {
+      type: "doc",
+      id: "api-reference/security",
+    },
+    {
       type: "html",
       value: '<hr style="margin: 0.8rem">',
     },
@@ -150,6 +154,12 @@ const sidebar: SidebarsConfig = {
           label: "Delete all entities of a blueprint",
           className: "api-method delete",
         },
+        {
+          type: "doc",
+          id: "api-reference/search-a-blueprints-entities",
+          label: "Search a blueprint's entities",
+          className: "api-method post",
+        },        
         {
           type: "doc",
           id: "api-reference/search-entities",

@@ -27,15 +27,15 @@ The resources that can be ingested from Dynatrace into Port are listed below. It
 - [`problem`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/problems-v2/problems/get-problems-list#definition--Problem)
 - [`entity`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entities-list#definition--Entity)
 - [`slo`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/service-level-objectives/get-all#definition--SLO)
-- [`entity types`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entity-type#definition--EntityType) for selectors in the `entity` resource.
-
+- [`team`](https://docs.dynatrace.com/docs/discover-dynatrace/references/dynatrace-api/environment-api/settings/objects/get-object)
 
 ## Prerequisites
 
 ### Generate a Dynatrace API key
 
 1. Navigate to `<instanceURL>/ui/apps/dynatrace.classic.tokens/ui/access-tokens`. For example, if you access your Dynatrace instance at `https://npm82883.apps.dynatrace.com`, you should navigate to `https://npm82883.apps.dynatrace.com/ui/apps/dynatrace.classic.tokens/ui/access-tokens`.
-2. Click **Generate new token** to create a new token. Ensure the permissions: `DataExport`, `Read entities`, `Read problems` and `Read SLO` are assigned to the token. The `DataExport` permission allows Dynatrace to perform healthchecks before ingestion starts.
+
+2. Click **Generate new token** to create a new token. Ensure the permissions: `DataExport`, `Read entities`, `Read problems`, `Read SLO` and `Read settings` are assigned to the token. The `DataExport` permission allows Dynatrace to perform healthchecks before ingestion starts. The `Read settings` scope allows the integration to ingest teams.
 
 ### Construct your Dynatrace Host URL
 Your Dynatrace host URL should be `https://<environment-id>.live.dynatrace.com`. Note that there is a difference between the instance URL and the API host URL. The former contains `apps` while the latter (as shown prior) uses `live`. This means if your environment ID is `npm82883`, your API host URL should be `https://npm82883.live.dynatrace.com`.
@@ -163,8 +163,8 @@ This table summarizes the available parameters for the installation.
 
 | Parameter                             | Description                                                                                                                                                               | Required |
 |---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| `port.clientId`                       | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                             | ✅        |
-| `port.clientSecret`                   | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                         | ✅        |
+| `port.clientId`                       | Your port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                             | ✅        |
+| `port.clientSecret`                   | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                         | ✅        |
 | `port.baseUrl`                        | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                   | ✅        |
 | `integration.identifier`              | Change the identifier to describe your integration                                                                                                                        | ✅        |
 | `integration.type`                    | The integration type                                                                                                                                                      | ✅        |
@@ -1156,7 +1156,14 @@ resources:
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "entities": {
+      "title": "Related Entities",
+      "target": "dynatraceEntity",
+      "required": false,
+      "many": true
+    }
+  }
 }
 ```
 
@@ -1172,6 +1179,7 @@ resources:
   - kind: slo
     selector:
       query: "true"
+      attachRelatedEntities: true
     port:
       entity:
         mappings:
@@ -1188,6 +1196,97 @@ resources:
             evaluatedPercentage: .evaluatedPercentage
             evaluationType: .evaluationType
             filter: .filter
+          relations:
+            entities: if .__entities != null then .__entities | map(.entityId) else [] end
+```
+
+</details>
+
+### Team
+
+<details>
+<summary>Team blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "dynatraceTeam",
+  "description": "This blueprint represents a Dynatrace team in our software catalog",
+  "title": "Dynatrace Team",
+  "icon": "Dynatrace",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "responsibilities": {
+        "type": "object",
+        "title": "Responsibilities"
+      },
+      "productivityToolsContact": {
+        "type": "array",
+        "title": "Productivity Tools Contact",
+        "items": {
+          "type": "string",
+          "format": "url"
+        }
+      },
+      "emailContact": {
+        "type": "string",
+        "title": "Email Contact",
+        "format": "user"
+      },
+      "additionalDetails": {
+        "items": {
+          "type": "object"
+        },
+        "type": "array",
+        "title": "Additional Details"
+      },
+      "links": {
+        "icon": "DefaultProperty",
+        "type": "array",
+        "title": "Links",
+        "items": {
+          "type": "string",
+          "format": "url"
+        }
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: team
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .value.identifier
+          title: .value.name
+          blueprint: '"dynatraceTeam"'
+          properties:
+            description: .value.descriptions
+            links: '[.value.links[] | .url]'
+            emailContact: .value.contactDetails[] | select(.integrationType == "EMAIL") | .email
+            productivityToolsContact: '[.value.contactDetails[] | select(.integrationType != "EMAIL" and .url != null) | .url]'
+            responsibilities: .value.responsibilities
+            additionalDetails: .value.additionalInformation
 ```
 
 </details>
@@ -1406,11 +1505,82 @@ Here is an example of the payload structure from Dynatrace:
   "target": 95,
   "timeframe": "-1d",
   "useRateMetric": true,
-  "warning": 97.5
+  "warning": 97.5,
+  "__entities": [{"entityId": "SERVICE-EF25D598399706BD", "type": "SERVICE", "displayName": "oidic-authentication-service"}]
 }
 ```
 
 </details>
+
+<details>
+<summary>Team response data</summary>
+
+```json showLineNumbers
+{
+  "objectId": "vu9U3hXa3q0AAAABABdidWlsdGluOm93bmVyc2hpcC50ZWFtcwAGdGVuYW50AAZ0ZW5hbnQAJDBkNGU5YjRmLWU3YzktM2Q2Ni1iYTlmLWUyNjRiMjhmZjI4ML7vVN4V2t6t",
+  "value": {
+    "name": "integration-devs",
+    "description": "Task to improve all integrations in Port",
+    "identifier": "integration-devs",
+    "supplementaryIdentifiers": [
+      {
+        "supplementaryIdentifier": "integral"
+      }
+    ],
+    "responsibilities": {
+      "development": false,
+      "security": true,
+      "operations": false,
+      "infrastructure": false,
+      "lineOfBusiness": false
+    },
+    "contactDetails": [
+      {
+        "integrationType": "MS_TEAMS",
+        "msTeams": "internal developer portal",
+        "url": "https://microsoft.teams.com"
+      },
+      {
+        "integrationType": "JIRA",
+        "jira": {
+          "project": "DEMO",
+          "defaultAssignee": "support@devex.io"
+        },
+        "url": "https://mydomain.atlassian.net/jira/your-work"
+      },
+      {
+        "integrationType": "EMAIL",
+        "email": "support@getport.io"
+      },
+      {
+        "integrationType": "SLACK",
+        "slackChannel": "devex",
+        "url": "https://app.slack.com/client/SOMEID"
+      }
+    ],
+    "links": [
+      {
+        "linkType": "REPOSITORY",
+        "url": "https://github.com/getport"
+      },
+      {
+        "linkType": "URL",
+        "url": "https://myjira.io/teams/integration_bugs"
+      }
+    ],
+    "additionalInformation": [
+      {
+        "key": "hero",
+        "value": "batman",
+        "url": "https://example.com"
+      }
+    ]
+  }
+}
+```
+
+</details>
+
 
 ### Mapping Result
 
@@ -1497,6 +1667,50 @@ The combination of the sample payload and the Ocean configuration generates the 
     "evaluationType": "AGGREGATE",
     "filter": "type(\"SERVICE\")"
   },
+  "relations": {
+    "entities": [
+      "SERVICE-EF25D598399706BD"
+    ]
+  }
+}
+```
+</details>
+
+<details>
+<summary>Team entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "integration-devs",
+  "title": "integration-devs",
+  "blueprint": "dynatraceTeam",
+  "properties": {
+    "description": "Task to improve all integrations in Port",
+    "links": [
+      "https://github.com/getport",
+      "https://myapp.io/teams/integration_bugs"
+    ],
+    "emailContact": "support@devex.io",
+    "additionalDetails": [
+      {
+        "key": "hero",
+        "value": "batman",
+        "url": "https://example.com"
+      }
+    ],
+    "productivityContactDetails": [
+      "https://microsoft.teams.com",
+      "https://mydomain.atlassian.net/jira/your-work",
+      "https://app.slack.com/client/SOMEID"
+    ],
+    "responsibilities": {
+      "development": false,
+      "security": true,
+      "operations": false,
+      "infrastructure": false,
+      "lineOfBusiness": false
+    }
+  }
 }
 ```
 </details>

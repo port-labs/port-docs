@@ -22,7 +22,7 @@ This page will introduce the agent and guide you through the installation and co
 
 ## Prerequisites
 
-- Connection credentials to Kafka are required. To obtain them, contact us via the intercom bubble in the bottom-right corner, or via our [community Slack](https://www.getport.io/community).
+- Connection credentials to Kafka are required. To obtain them, contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io).
 - [Helm](https://helm.sh) must be installed in order to install the relevant chart.
 - In order to trigger a GitLab Pipeline, you need to have a [GitLab trigger token](https://docs.gitlab.com/ee/ci/triggers/).
 
@@ -83,7 +83,7 @@ Once the agent is installed, we can finish setting up the backend in Port.
 - **Default ref** - the branch/tag name we want the action/automation to use.
 
 :::tip Create action/automation via API
-If you wish to create a self-service action or automation via [Port's API](https://docs.getport.io/api-reference/create-an-action-automation), choose the `gitlab` backend type under the `invocationMethod` object.
+If you wish to create a self-service action or automation via [Port's API](https://docs.port.io/api-reference/create-an-action-automation), choose the `gitlab` backend type under the `invocationMethod` object.
 :::
 
 ### Configure the payload

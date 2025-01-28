@@ -1,13 +1,13 @@
 <details>
 
-<summary> Ocean integration configuration </summary>
+<summary> Integration mapping </summary>
 
 ```yaml showLineNumbers
 resources:
   - kind: project
     selector:
       query: 'true'
-      defaultTeam: "false"
+      defaultTeam: 'true'
     port:
       entity:
         mappings:
@@ -15,20 +15,20 @@ resources:
           blueprint: '"project"'
           title: .name
           properties:
-            state: '.state'
-            revision: '.revision'
-            visibility: '.visibility'
-            defaultTeam: '.defaultTeam.name'
-            link: '.url | gsub("_apis/projects/"; "")'
+            state: .state
+            revision: .revision
+            visibility: .visibility
+            defaultTeam: .defaultTeam.name
+            link: .url | gsub("_apis/projects/"; "")
   - kind: repository
     selector:
       query: 'true'
     port:
       entity:
         mappings:
-          identifier: '.project.name + "/" + .name | gsub(" "; "")'
+          identifier: "\(.project.name | ascii_downcase | gsub("[ ();]"; ""))/\(.name | ascii_downcase | gsub("[ ();]"; ""))"
           title: .name
-          blueprint: '"azureDevopsRepository"'
+          blueprint: '"service"'
           properties:
             url: .url
             readme: file://README.md
@@ -41,7 +41,7 @@ resources:
       entity:
         mappings:
           identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
-          blueprint: '"azureDevopsRepository"'
+          blueprint: '"service"'
           properties:
             minimumApproverCount: .settings.minimumApproverCount
   - kind: repository-policy
@@ -51,7 +51,7 @@ resources:
       entity:
         mappings:
           identifier: '.__repository.project.name + "/" + .__repository.name | gsub(" "; "")'
-          blueprint: '"azureDevopsRepository"'
+          blueprint: '"service"'
           properties:
             workItemLinking: .isEnabled and .isBlocking
   - kind: pull-request
@@ -78,7 +78,7 @@ resources:
               (((($closedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100)
               else null end)
           relations:
-            repository: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
+            service: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
 ```
 
 </details>

@@ -103,6 +103,6 @@ By following these steps, you can seamlessly connect a `Service` with a `SonarQu
 
 More relevant guides and examples:
 
-- [A self-service action to add tags to SonarQube project](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/SonarQube/add-tags-to-sonarqube-project)
-- [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
-- [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)
+- [A self-service action to add tags to SonarQube project](https://docs.port.io/create-self-service-experiences/setup-backend/github-workflow/examples/SonarQube/add-tags-to-sonarqube-project)
+- [Port's SonarQube integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
+- [Integrate scorecards with Slack](https://docs.port.io/promote-scorecards/manage-using-3rd-party-apps/slack)

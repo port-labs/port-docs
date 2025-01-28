@@ -1,25 +1,25 @@
 <details>
 
-<summary> Ocean integration configuration </summary>
+<summary> Integration mapping </summary>
 
 ```yaml showLineNumbers
 resources:
   - kind: project
     selector:
       query: 'true'
-      defaultTeam: "false"
+      defaultTeam: 'true'
     port:
       entity:
         mappings:
-          identifier: '.id | gsub(" "; "")'
-          blueprint: '"project"'
+          identifier: .id | gsub(" "; "")
           title: .name
+          blueprint: '"project"'
           properties:
-            state: '.state'
-            revision: '.revision'
-            visibility: '.visibility'
-            defaultTeam: '.defaultTeam.name'
-            link: '.url | gsub("_apis/projects/"; "")'
+            state: .state
+            revision: .revision
+            visibility: .visibility
+            defaultTeam: .defaultTeam.name
+            link: .url | gsub("_apis/projects/"; "")
 
 ```
 

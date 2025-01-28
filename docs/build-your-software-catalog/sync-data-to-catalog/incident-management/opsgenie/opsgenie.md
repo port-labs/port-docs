@@ -1525,4 +1525,4 @@ Following this guide will ensure your integration is up-to-date and optimized fo
 
 ## More relevant guides and examples
 
-- [Self-service action to trigger an OpsGenie incident](https://docs.getport.io/guides/all/create-an-opsgenie-incident)
+- [Self-service action to trigger an OpsGenie incident](https://docs.port.io/guides/all/create-an-opsgenie-incident)

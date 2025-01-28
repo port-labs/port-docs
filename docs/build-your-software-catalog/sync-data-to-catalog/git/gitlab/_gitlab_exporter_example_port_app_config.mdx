@@ -1,12 +1,13 @@
 <details>
 
-<summary> Ocean integration configuration </summary>
+<summary> Integration mapping </summary>
 
 ```yaml showLineNumbers
 resources:
   - kind: project
     selector:
       query: "true"
+      includeLabels: "true"
     port:
       entity:
         mappings:
@@ -21,6 +22,7 @@ resources:
             namespace: .namespace.name
             fullPath: .namespace.full_path
             defaultBranch: .default_branch
+            labels: .__labels
   - kind: merge-request
     selector:
       query: "true"

@@ -6,7 +6,7 @@ sidebar_position: 3
 
 ## Define scorecards
 
-[Scorecards](https://docs.getport.io/promote-scorecards/) are configured per blueprint, and enable you to define and track metrics/standards for your entities, based on their properties.  
+[Scorecards](https://docs.port.io/promote-scorecards/) are configured per blueprint, and enable you to define and track metrics/standards for your entities, based on their properties.  
 You can define multiple tiers within a scorecard, with different criteria for each tier.
 
 Here is an example of a "Production readiness" scorecard that defines and measures criteria for a running service to be considered production-ready. As you can see, the service is compliant with one of two defined tiers:
@@ -26,7 +26,7 @@ Define scorecards for the blueprints you created as part of your MVP.
 
 ## Create dashboards
 
-[Dashboards](https://docs.getport.io/customize-pages-dashboards-and-plugins/dashboards/) are a great way to visualize and track data from your software catalog.  
+[Dashboards](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/) are a great way to visualize and track data from your software catalog.  
 A dashboard can contain any number of widgets that display data relevant to your users.
 
 We recommend creating dashboards for different personas in your organization to display data that is important to them.  
