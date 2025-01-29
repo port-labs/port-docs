@@ -49,7 +49,7 @@ The response will contain the roles and users that are allowed to read (view) th
   "read": {
     "roles": ["Admin", "Member"],
     "users": ["exampleUser1@example.com", "exampleUser2@example.com"],
-    "teams": ["Team 1", "Team 2"]
+    "teams": ["team1", "team2"]
   }
 }
 ```
@@ -344,7 +344,7 @@ Making an **HTTP PATCH** request with the following body will give the specified
 ```json showLineNumbers
 {
   "read": {
-    "teams": ["Team 1", "Team 2"]
+    "teams": ["team1", "team2"]
   }
 }
 ```
