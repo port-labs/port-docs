@@ -130,7 +130,7 @@ Common examples for resources that can be used as a source of truth for `service
 </details>
 
 <details>
-<summary><LogoImage logo="Bitbucket" /> **Bitbucket repository (click to expand)**</summary>
+<summary><LogoImage logo="BitBucket" /> **Bitbucket repository (click to expand)**</summary>
 ```yaml showLineNumbers
 - kind: repository
   selector:
@@ -147,7 +147,7 @@ Common examples for resources that can be used as a source of truth for `service
 </details>
 
 <details>
-<summary><LogoImage logo="AzureDevOps" /> **Azure DevOps repository (click to expand)**</summary>
+<summary><LogoImage logo="AzureDevops" /> **Azure DevOps repository (click to expand)**</summary>
 ```yaml showLineNumbers
 - kind: repository
   selector:
