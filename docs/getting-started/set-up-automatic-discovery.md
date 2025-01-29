@@ -422,7 +422,7 @@ Common examples for resources that can be used as a source of truth for `teams`:
 </details>
 
 <details>
-<summary><LogoImage logo="AzureDevOps" /> **Azure DevOps team (click to expand)**</summary>
+<summary><LogoImage logo="AzureDevops" /> **Azure DevOps team (click to expand)**</summary>
 ```yaml showLineNumbers
 - kind: team
   selector:
