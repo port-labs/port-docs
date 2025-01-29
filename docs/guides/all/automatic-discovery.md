@@ -56,7 +56,9 @@ Next let's  create the automations to automatically create or update services, w
 By following these steps, you can paste and manage the JSON schema required to create automations in Port.
 :::
 
-### Onboard service from Jira
+### Onboard service
+
+#### Onboard service from Jira
 
 Use this automation to auto-create a service entity in Port each time a new Jira project entity is synced:
 
@@ -95,12 +97,7 @@ Use this automation to auto-create a service entity in Port each time a new Jira
 ```
 </details>
 
-Take note that you can enrich your service blueprint with additional properties that relate to the Jira project entity.
-
-
-
-
-### Onboard service from PagerDuty
+#### Onboard service from PagerDuty
 
 Use this automation to auto-create a service entity in Port each time a new PagerDuty service entity is synced:
 
@@ -137,7 +134,6 @@ Use this automation to auto-create a service entity in Port each time a new Page
 ```
 </details>
 
-Take note that you can enrich your service blueprint with additional properties that relate to the PagerDuty service entity.
 
 
 
@@ -393,3 +389,9 @@ Take note that you can enrich your service blueprint with additional properties 
 [//]: # ()
 [//]: # ()
 
+:::info Additional properties
+Take note that you can add additional properties to the service, workload, and environment blueprints to capture more metadata from the integrated tool
+:::
+
+
+### Onboard workload
