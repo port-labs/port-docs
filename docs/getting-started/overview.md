@@ -22,5 +22,5 @@ This section will walk you through the phases of the onboarding process, and des
 
 3. [Set up automatic discovery](./set-up-automatic-discovery.md) - Learn how to manage your catalog automatically, creating and updating components based on changes in data from your tools.
 
-Upon creating your portal, Port will create several [default components](./default-components.md) to help you get started with organizing your software catalog. 
+Upon creating your portal, Port will create several [default components](./default-components.md) to help you build and organize your software catalog. 
 

@@ -13,6 +13,7 @@ export default function LogoImage({ logo, width }) {
             width={width}
             className='not-zoom'
             sources={{ light: lightSrc, dark: darkSrc }}
+            style={{ verticalAlign: 'text-top' }}
         />
     );
 }
