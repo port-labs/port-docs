@@ -5,11 +5,10 @@ description: Learn how to map Dynatrace teams to monitored entities in Port
 
 # Assign teams to monitored entities
 
-This guide aims to show you how to assign team owners to your Dynatrace entities to teams to have a better understanding of the team responsible for your monitored entities.
-
+This guide explains how to assign team ownership to Dynatrace entities, allowing you to easily identify which team is responsible for each monitored entity.
 
 ## Common use cases
-- Easily find the responsible team of your entities and contact them when need arises
+- Quickly determine which team owns a specific entity and contact them when needed.
 
 ## Prerequisites
 This guide assumes the following:
@@ -20,11 +19,11 @@ This guide assumes the following:
 
 ## Set up data model
 
-In this setup, we will update the `Dynatrace Entity` blueprint to create the `owned_by` relation. Follow the steps below to **update** the `Dynatrace Entity` blueprint:
+To establish team ownership,  we will modify the `Dynatrace Entity` blueprint by adding an `owned_by` relation. Follow the steps below to **update** the `Dynatrace Entity` blueprint:
 
 1. Navigate to the `Dynatrace Entity` blueprint in your Port [Builder](https://app.getport.io/settings/data-model).
 2. Hover over it, click on the `...` button on the right, and select "Edit JSON".
-3. Add the `owned_by` relation:
+3. Add the `owned_by` relation as shown below:
 
    <details>
    <summary><b>Team relation (Click to expand)</b></summary>
@@ -43,18 +42,16 @@ In this setup, we will update the `Dynatrace Entity` blueprint to create the `ow
 
 
 ## Creating the mapping configuration
-Now that we have defined the relationship between the team and monitored entities, we need to assign the relevant team to each of our `Dynatrace Entity`. This can be done by adding some mapping logic.
+Now that the relationship between teams and monitored entities is defined, the next step is to assign the appropriate team to each `Dynatrace Entity`. This can be done by adding mapping logic based on your ingested resources.
+Dynatrace supports multiple methods for assigning team ownership, including Kubernetes labels and annotations, host metadata, environment variables, and tags.
 
-We will be using of the `entity` and `team` kind in Port's Dynatrace integration which provides information on entities being monitored and teams in Dynatrace respectively. Dynatrace offers several methods that can be used to define the team ownership. These are Kubernetes labels and annotations, host metadata, environment variables, and tags.
-
-Next, locate the Dynatrace integration in the [Data Sources page](https://app.getport.io/settings/data-sources) and add the following mapping based on the methods:
+To set up the mapping, navigate to the Dynatrace integration in the [Data Sources page](https://app.getport.io/settings/data-sources) and add the following mapping based on your preferred method:
 
 
 <details>
 <summary><b>Dynatrace ownership configuration using Kubernetes labels and annotations</b></summary>
 
 ```yaml showLineNumbers
-
 deleteDependentEntities: true
 createMissingRelatedEntities: true
 enableMergeEntity: true
@@ -83,7 +80,7 @@ resources:
             owned_by: .properties.kubernetesLabels | to_entries | map(select(.key == "dt.ower" or .key == "owner") | .value) | if length == 0 then null else . end
 ```
 :::tip ownership keys
-In this example, we are using the `dt.owner` and `owner` key from the kubernetes resource label. You are advised to use the ownership keys you have defined in your Dynatrace environment. More information on how create the keys can be found in [this docs](https://docs.dynatrace.com/docs/deliver/ownership/assign-ownership#format)
+In this example, the `dt.owner` and `owner` keys from Kubernetes resource labels are used to define ownership. You should use the keys configured in your Dynatrace environment. For more details on setting up ownership keys, refer to the [Dynatrace documentation](https://docs.dynatrace.com/docs/deliver/ownership/assign-ownership#format)
 :::
 
 </details>
@@ -93,7 +90,6 @@ In this example, we are using the `dt.owner` and `owner` key from the kubernetes
 <summary><b>Dynatrace ownership configuration using tags</b></summary>
 
 ```yaml showLineNumbers
-
 deleteDependentEntities: true
 createMissingRelatedEntities: true
 enableMergeEntity: true
@@ -132,12 +128,14 @@ resources:
           relations:
             owned_by: .tags | map(select(.key == "dt.owner" or .key == "owner") | .value) | if length == 0 then null else . end
 ```
-
+:::tip ownership keys
+In this example, the `dt.owner` and `owner` keys from the tags are used to define ownership. You should use the keys configured in your Dynatrace environment. For more details on setting up ownership keys, refer to the [Dynatrace documentation](https://docs.dynatrace.com/docs/deliver/ownership/assign-ownership#format)
+:::
 </details>
 
-Next, click on resync and watch your Dynatrace entities being mapped to the teams based on the configuration:
+Next, click on the **resync** button and watch your Dynatrace `entities` being mapped to the `teams` as shown below in this example:
 
 <img src='/img/guides/dynatraceEntityTeamOwnership.png' border='1px' />
 
 
-By following this guide, you have successfully configures your Dyntrace integration to map entities to their team owners.
+By following this guide, you have successfully configured your Dynatrace integration to map monitored entities to their respective team owners.
