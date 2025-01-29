@@ -11,7 +11,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 # Scaffold a new service
 
 This guide will walk you through setting up a **self-service action** to allow developers to scaffold a new **service**.  
-A [service](/getting-started/default-components#-service) in Port is a flexible concept, allowing you to represent a piece of software and its related components in a way that makes sense for you.   
+A [service](/) in Port is a flexible concept, allowing you to represent a piece of software and its related components in a way that makes sense for you.   
 The action we will create in this guide will:
 - Create a new Git repository.
 - Create a new service in Port, and relate it to the new repository, giving it its context.
