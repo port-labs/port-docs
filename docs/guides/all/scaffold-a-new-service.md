@@ -1,5 +1,6 @@
 ---
 displayed_sidebar: null
+title: Scaffold a new service
 description: Learn how to scaffold a new service in Port with this guide, ensuring efficient setup and streamlined development.
 ---
 
@@ -9,11 +10,13 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Scaffold a new service
 
-This guide will walk you through setting up a **self-service action** in Port to automatically create a new **Service** entity, representing a microservice. This microservice can have various integrations such as Git repositories, PagerDuty, Datadog, Jira, and more.   
-In this guide, we will relate it to a Git repository. Once implemented:
-- Developers can quickly generate and register new repositories and services.
-- R&D managers can track newly created services and see their associated repositories.
-- Platform engineers can control permissions for who can create new services.
+This guide will walk you through setting up a **self-service action** to allow developers to scaffold a new **service**.  
+A [service](/getting-started/default-components#-service) in Port is a flexible concept, allowing you to represent a piece of software and its related components in a way that makes sense for you.   
+The action we will create in this guide will:
+- Create a new Git repository.
+- Create a new service in Port, and relate it to the new repository, giving it its context.
+
+Once this guide is implemented:
 
 ## Common use cases
 
@@ -24,36 +27,14 @@ In this guide, we will relate it to a Git repository. Once implemented:
 
 ## Prerequisites
 
-- A Port account (with permission to create self-service actions).
-- The `Service` blueprint created during onboarding.
-- Port’s [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/) installed.
-- A Git repository (GitHub, GitLab, Bitbucket, or Azure DevOps) to store a workflow.
-
-
-:::info Service and repository relationship
-When you set up a Git integration, Port automatically creates a repository blueprint unique to your Git provider.   
-This blueprint establishes a relationship with the service blueprint.  
-This allows you to relate each new service to its corresponding repository.   
-Below are the blueprint identifiers for each Git provider:  
-- **GitHub**: `githubRepository`
-- **GitLab**: `gitlabRepository`
-- **Bitbucket**: `bitbucketRepository`
-- **Azure DevOps**: `azureDevopsRepository`
-
-:::
-
+- A Port account with permissions to create self-service actions.
+- The [Git Integration](/build-your-software-catalog/sync-data-to-catalog/git/) that is relevant for you needs to be installed.
+- A repository in your Git provider in which you can create a workflow/pipeline.
 
 
 ## Implementation
 
 ###  Setup the action's frontend
-
-<Tabs groupId="git-provider" queryString defaultValue="github-gitlab-bitbucket" values={[
-{label: "GitHub, GitLab, Bitbucket", value: "github-gitlab-bitbucket"},
-{label: "Azure DevOps", value: "azure-devops"}
-]}>
-
-<TabItem value="github-gitlab-bitbucket">
 
 1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
 2. Click on the `+ Action` button in the top-right corner (or in the middle if there are no actions yet):
@@ -70,62 +51,28 @@ Below are the blueprint identifiers for each Git provider:
     <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
     <br/>
 
-6. Click on the `Next` to configure the **Backend**.
-
 :::tip Optional input field
 Optionally you can repeat the same process to create an input field for **description** and other input fields to match your company's standards
 :::
 
+:::info Azure DevOps  Requirements
+For Azure DevOps configure the following **required** input fields:
 
-</TabItem>
+| Input Name         | Type             | Required | Additional Information              |
+|--------------------|------------------|----------|-------------------------------------|
+| Service Name       | Text             | Yes      |                                     |
+| Azure Organization | String           | Yes      |                                     |
+| Azure Project      | Entity Selection | Yes      | Select **Project** as the blueprint |
+| Description        | String           | No       |                                     |
 
-<TabItem value="azure-devops">
+- **Service Name**, **Azure Organization**, and **Azure Project** must be marked as required.
+- `Azure Organization` and `Description` should be of type **String**.
+- For `Azure Project`, select **Entity Selection** and choose **Project** as the blueprint.
+:::
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
-2. Click on the `+ Action` button in the top-right corner:
-
-    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
-
-3. Fill the basic form with the **Title** and **Description** and select `Create` and `Service` for the **Operation** and **Blueprint** respectively.
-
-    <img src='/img/guides/scaffoldActionADODetails.png' width='70%' border='1px' />
-    <br/>
-
-4. Click on `Next`, and add the following inputs: `Service Name`, `Azure Organization`, `Azure Project`, and `Description`.
-
-   To create each input field:
-
-    - Click on `+ Input`.
-    - Enter the **Title** (e.g., `Service Name`).
-    - Select the appropriate **Type**.
-    - Set **Required** to `True` if the input is mandatory.
-    - Click on the `Create` button.  
-      <br/>
-
-      <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
-
-   **Input Details:**
-
-   | Input Name         | Type             | Required | Additional Information            |
-         |--------------------|------------------|----------|-----------------------------------|
-   | Service Name       | Text             | Yes      |                                   |
-   | Azure Organization | String           | Yes      |                                   |
-   | Azure Project      | Entity Selection | Yes      | Select `Project` as the blueprint |
-   | Description        | String           | No       |                                   |
-
-   :::tip Data type and required fields
-    - Ensure that the `Azure Organization` and `Description` inputs are of type **String**.
-    - For the `Azure Project` input, select **Entity Selection** as the type and choose `Project` as the blueprint.
-    - Make sure the `Service Name`, `Azure Organization`, and `Azure Project` inputs are marked as required.
-      :::
-      <br/>
-
-5. Click on `Next` to configure the **Backend**.
+6. Click on the `Next` to configure the **Backend**.
 
 
-</TabItem>
-
-</Tabs>
 
 #### Define backend type
 
