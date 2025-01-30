@@ -24,7 +24,7 @@ Follow the steps below to **update** the `Dynatrace Entity` blueprint:
 
 1. Go to the [data model page](https://app.getport.io/settings/data-model) of your portal, and locate the`Dynatrace Entity` blueprint.
 2. Hover over it, click on the `...` button on the right, and select "Edit JSON".
-3. Add the `owned_by` relation as shown below:
+3. Add the `owned_by` relation as shown below, then click `Save`:
 
    <details>
    <summary><b>Team relation (Click to expand)</b></summary>
