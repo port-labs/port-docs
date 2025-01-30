@@ -21,7 +21,7 @@ This guide assumes the following:
 
 To establish team ownership,  we will modify the `Dynatrace Entity` blueprint by adding an `owned_by` relation. Follow the steps below to **update** the `Dynatrace Entity` blueprint:
 
-1. Navigate to the `Dynatrace Entity` blueprint in your Port [Builder](https://app.getport.io/settings/data-model).
+1. Go to the [data model page](https://app.getport.io/settings/data-model) of your portal, and locate the`Dynatrace Entity` blueprint.
 2. Hover over it, click on the `...` button on the right, and select "Edit JSON".
 3. Add the `owned_by` relation as shown below:
 
