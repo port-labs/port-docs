@@ -1,10 +1,10 @@
 <details>
-<summary>Team blueprint</summary>
+<summary>Team with members blueprint</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "azureDevopsTeam",
-  "title": "Azure Devops Team",
+  "identifier": "azureDevopsTeamWithMembers",
+  "title": "Azure Devops Team With Members",
   "icon": "AzureDevops",
   "schema": {
     "properties": {
@@ -31,6 +31,13 @@
       "target": "project",
       "required": true,
       "many": false
+    },
+    "members": {
+      "title": "Members",
+      "description": "The ADO users belonging to this team",
+      "target": "azureDevopsUser",
+      "required": false,
+      "many": true
     }
   }
 }
