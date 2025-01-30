@@ -31,12 +31,12 @@
     "clsx": "^2.1.1",
     "docusaurus-plugin-hotjar": "^0.0.2",
     "docusaurus-plugin-image-zoom": "^2.0.0",
-    "docusaurus-plugin-openapi-docs": "^4.3.2",
-    "docusaurus-theme-openapi-docs": "^4.3.2",
+    "docusaurus-plugin-openapi-docs": "^4.3.3",
+    "docusaurus-theme-openapi-docs": "^4.3.3",
     "prettier": "^3.4.2",
     "prism-react-renderer": "^2.4.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-tooltip": "^5.28.0"
   },
   "devDependencies": {
