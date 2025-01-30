@@ -12,18 +12,18 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 This guide will walk you through setting up a **self-service action** to allow developers to scaffold a new **service**.  
 A [service](/) in Port is a flexible concept, allowing you to represent a piece of software and its related components in a way that makes sense for you.   
+
 The action we will create in this guide will:
 - Create a new Git repository.
 - Create a new service in Port, and relate it to the new repository, giving it its context.
 
-Once this guide is implemented:
+
 
 ## Common use cases
 
-- Spin up new microservices with boilerplate code and store them in a Git repository.
-- Reduce friction for developers by providing a self-service workflow to create new services.
-- Maintain oversight for newly created repositories, using Port’s built-in catalog and relations.
-
+- Enable developers to independently spin up new microservices with boilerplate code.
+- Reduce friction for developers and prevent implementation differences by defining the logic of scaffolding a service and providing developers with an action they can simply execute.
+- Track created services using a wide array of visualizations.
 
 ## Prerequisites
 
@@ -51,12 +51,33 @@ Once this guide is implemented:
     <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
     <br/>
 
-:::tip Optional input field
-Optionally you can repeat the same process to create an input field for **description** and other input fields to match your company's standards
-:::
+<Tabs groupId="git-provider" queryString defaultValue="bitbucket" values={[
 
-:::info Azure DevOps  Requirements
-For Azure DevOps configure the following **required** input fields:
+{label: "Bitbucket (Jenkins)", value: "bitbucket"},
+{label: "Azure DevOps", value: "azure-devops"}
+]}>
+
+<TabItem value="bitbucket">
+
+If using Bitbucket, you will need to create these two additional inputs:
+
+<details>
+<summary>Bitbucket Requirements</summary>
+
+| Input Name               | Type   | Required | Additional Information                                                  |
+|--------------------------|--------|----------|-------------------------------------------------------------------------|
+| Bitbucket Workspace Name | String | Yes      | The name of the workspace in which to create the new repository.        |
+| Bitbucket Project Key    | String | Yes      | The key of the Bitbucket project in which to create the new repository. |
+
+</details>
+
+</TabItem>
+
+<TabItem value="azure-devops" >
+If using Azure DevOps, you will need to create these additional inputs:
+
+<details>
+<summary>Azure DevOps Requirements</summary>
 
 | Input Name         | Type             | Required | Additional Information              |
 |--------------------|------------------|----------|-------------------------------------|
@@ -65,10 +86,13 @@ For Azure DevOps configure the following **required** input fields:
 | Azure Project      | Entity Selection | Yes      | Select **Project** as the blueprint |
 | Description        | String           | No       |                                     |
 
-- **Service Name**, **Azure Organization**, and **Azure Project** must be marked as required.
-- `Azure Organization` and `Description` should be of type **String**.
-- For `Azure Project`, select **Entity Selection** and choose **Project** as the blueprint.
-:::
+</details>
+
+</TabItem>
+
+</Tabs> 
+
+
 
 6. Click on the `Next` to configure the **Backend**.
 
