@@ -51,46 +51,46 @@ The action we will create in this guide will:
     <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
     <br/>
 
-<Tabs groupId="git-provider" queryString defaultValue="bitbucket" values={[
-
-{label: "Bitbucket (Jenkins)", value: "bitbucket"},
-{label: "Azure DevOps", value: "azure-devops"}
-]}>
-
-<TabItem value="bitbucket">
-
-If using Bitbucket, you will need to create these two additional inputs:
-
-<details>
-<summary>Bitbucket Requirements</summary>
-
-| Input Name               | Type   | Required | Additional Information                                                  |
-|--------------------------|--------|----------|-------------------------------------------------------------------------|
-| Bitbucket Workspace Name | String | Yes      | The name of the workspace in which to create the new repository.        |
-| Bitbucket Project Key    | String | Yes      | The key of the Bitbucket project in which to create the new repository. |
-
-</details>
-
-</TabItem>
-
-<TabItem value="azure-devops" >
-If using Azure DevOps, you will need to create these additional inputs:
-
-<details>
-<summary>Azure DevOps Requirements</summary>
-
-| Input Name         | Type             | Required | Additional Information              |
-|--------------------|------------------|----------|-------------------------------------|
-| Service Name       | Text             | Yes      |                                     |
-| Azure Organization | String           | Yes      |                                     |
-| Azure Project      | Entity Selection | Yes      | Select **Project** as the blueprint |
-| Description        | String           | No       |                                     |
-
-</details>
-
-</TabItem>
-
-</Tabs> 
+    <Tabs groupId="git-provider" queryString defaultValue="bitbucket" values={[
+    
+    {label: "Bitbucket (Jenkins)", value: "bitbucket"},
+    {label: "Azure DevOps", value: "azure-devops"}
+    ]}>
+    
+    <TabItem value="bitbucket">
+    
+    If using Bitbucket, you will need to create these two additional inputs:
+    
+    <details>
+    <summary>Bitbucket Requirements</summary>
+    
+    | Input Name               | Type   | Required | Additional Information                                                  |
+    |--------------------------|--------|----------|-------------------------------------------------------------------------|
+    | Bitbucket Workspace Name | String | Yes      | The name of the workspace in which to create the new repository.        |
+    | Bitbucket Project Key    | String | Yes      | The key of the Bitbucket project in which to create the new repository. |
+    
+    </details>
+    
+    </TabItem>
+    
+    <TabItem value="azure-devops" >
+    If using Azure DevOps, you will need to create these additional inputs:
+    
+    <details>
+    <summary>Azure DevOps Requirements</summary>
+    
+    | Input Name         | Type             | Required | Additional Information              |
+    |--------------------|------------------|----------|-------------------------------------|
+    | Service Name       | Text             | Yes      |                                     |
+    | Azure Organization | String           | Yes      |                                     |
+    | Azure Project      | Entity Selection | Yes      | Select **Project** as the blueprint |
+    | Description        | String           | No       |                                     |
+    
+    </details>
+    
+    </TabItem>
+    
+    </Tabs> 
 
 
 
@@ -273,125 +273,125 @@ If the GitHub organization which will house your workflow is not the same as the
 
 1. First, let's create the necessary token and secrets:
 
-- Go to your [GitHub tokens page](https://github.com/settings/tokens), create a personal access token (classic) with `repo`, `admin:repo_hook` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
+   - Go to your [GitHub tokens page](https://github.com/settings/tokens), create a personal access token (classic) with `repo`, `admin:repo_hook` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
 
-  <img src='/img/guides/personalAccessToken.png' width='80%' />
+     <img src='/img/guides/personalAccessToken.png' width='80%' />
+    
+      :::info SAML SSO
+      If your organization uses SAML SSO, you will need to authorize your token. Follow [these instructions](https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on) and then continue this guide.
+      :::
 
-:::info SAML SSO
-If your organization uses SAML SSO, you will need to authorize your token. Follow [these instructions](https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on) and then continue this guide.
-:::
-
-- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 2. In the repository where your workflow will reside, create 3 new secrets under `Settings->Secrets and variables->Actions`:
 
-- `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
-- `PORT_CLIENT_ID` - the client ID you copied from your Port app.
-- `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+     - `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
+     - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
+     - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+    
+     <img src='/img/guides/repositorySecret.png' width='50%' />
 
-<img src='/img/guides/repositorySecret.png' width='50%' />
-
-<br/><br/>
+     <br/><br/>
 
 3. Now let's create the workflow file that contains our logic.  
    First, ensure that you have a `.github/workflows` directory, then create a new file named `port-create-service.yml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` on line 15 to your GitHub organization name):
 
-:::tip
-The GitHub workflow example below assumes that you will use the cookiecutter template specified in line 27.  
-If you would instead prefer to use a template from a private repository, replace the line in the template below with the following, ensuring to specify the GitHub org and repo name where instructed:  
-`cookiecutterTemplate: https://oauth2:$ORG_ADMIN_TOKEN@github.com/$<GITHUB-ORG-NAME>/$<TEMPLATE-REPO>.git`.  
-If the template GitHub repo is not within the same organization where this repo will be placed, please ensure you replace the `ORG_ADMIN_TOKEN` parameter with a token containing the same parameters used when you created the token in the previous step.
-:::
+    :::tip
+    The GitHub workflow example below assumes that you will use the cookiecutter template specified in line 27.  
+    If you would instead prefer to use a template from a private repository, replace the line in the template below with the following, ensuring to specify the GitHub org and repo name where instructed:  
+    `cookiecutterTemplate: https://oauth2:$ORG_ADMIN_TOKEN@github.com/$<GITHUB-ORG-NAME>/$<TEMPLATE-REPO>.git`.  
+    If the template GitHub repo is not within the same organization where this repo will be placed, please ensure you replace the `ORG_ADMIN_TOKEN` parameter with a token containing the same parameters used when you created the token in the previous step.
+    :::
 
-<details>
-<summary><b>Github workflow (click to expand)</b></summary>
+    <details>
+    <summary><b>Github workflow (click to expand)</b></summary>
+    
+    ```yaml showLineNumbers title="port-create-service.yml"
+    name: Scaffold a new service
+    
+    on:
+      workflow_dispatch:
+        inputs:
+          service_name:
+            required: true
+            description: The name of the new service
+            type: string
+          description:
+            required: false
+            description: Description of the service
+            type: string
+          port_context:
+            required: true
+            description: Includes the action's run id
+            type: string
+    
+    jobs:
+      scaffold-service:
+        runs-on: ubuntu-latest
+        env:
+          ORG_NAME: <Your ORG name>
+          PORT_RUN_ID: ${{ fromJson(inputs.port_context).runId }}
+    
+        steps:
+          - uses: actions/checkout@v4
+    
+          - name: Create a log message
+            uses: port-labs/port-github-action@v1
+            with:
+              clientId: ${{ secrets.PORT_CLIENT_ID }}
+              clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+              baseUrl: https://api.getport.io
+              operation: PATCH_RUN
+              runId: ${{ env.PORT_RUN_ID }}
+              logMessage: "Starting scaffolding of service and repository: ${{ inputs.service_name }}"
+    
+          - name: Create GitHub Repository
+            uses: port-labs/cookiecutter-gha@v1.1.1
+            with:
+              portClientId: ${{ secrets.PORT_CLIENT_ID }}
+              portClientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+              token: ${{ secrets.ORG_ADMIN_TOKEN }}
+              portRunId: ${{ fromJson(inputs.port_context).runId }}
+              repositoryName: ${{ inputs.service_name }}
+              portUserInputs: '{"cookiecutter_app_name": "${{ inputs.service_name }}" }'
+              cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
+              blueprintIdentifier: "githubRepository"
+              organizationName: ${{ env.ORG_NAME }}
+    
+    
+    
+          - name: Create Service in Port with Repository Relation
+            uses: port-labs/port-github-action@v1
+            with:
+              clientId: ${{ secrets.PORT_CLIENT_ID }}
+              clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+              baseUrl: https://api.getport.io
+              operation: UPSERT
+              identifier: "${{ inputs.service_name }}_service"
+              title: "${{ inputs.service_name }} Service"
+              blueprint: "service"
+              relations: |
+                {
+                  "githubRepository": "${{ inputs.service_name }}"
+                }
+    
+          - name: Create a log message
+            uses: port-labs/port-github-action@v1
+            with:
+              clientId: ${{ secrets.PORT_CLIENT_ID }}
+              clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+              baseUrl: https://api.getport.io
+              operation: PATCH_RUN
+              runId: ${{ env.PORT_RUN_ID }}
+              logMessage: "Finished scaffolding of service and repository: ${{ inputs.service_name }}"
+    
+    ```
+    
+    </details>
 
-```yaml showLineNumbers title="port-create-service.yml"
-name: Scaffold a new service
-
-on:
-  workflow_dispatch:
-    inputs:
-      service_name:
-        required: true
-        description: The name of the new service
-        type: string
-      description:
-        required: false
-        description: Description of the service
-        type: string
-      port_context:
-        required: true
-        description: Includes the action's run id
-        type: string
-
-jobs:
-  scaffold-service:
-    runs-on: ubuntu-latest
-    env:
-      ORG_NAME: <Your ORG name>
-      PORT_RUN_ID: ${{ fromJson(inputs.port_context).runId }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Create a log message
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{ env.PORT_RUN_ID }}
-          logMessage: "Starting scaffolding of service and repository: ${{ inputs.service_name }}"
-
-      - name: Create GitHub Repository
-        uses: port-labs/cookiecutter-gha@v1.1.1
-        with:
-          portClientId: ${{ secrets.PORT_CLIENT_ID }}
-          portClientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          token: ${{ secrets.ORG_ADMIN_TOKEN }}
-          portRunId: ${{ fromJson(inputs.port_context).runId }}
-          repositoryName: ${{ inputs.service_name }}
-          portUserInputs: '{"cookiecutter_app_name": "${{ inputs.service_name }}" }'
-          cookiecutterTemplate: https://github.com/lacion/cookiecutter-golang
-          blueprintIdentifier: "githubRepository"
-          organizationName: ${{ env.ORG_NAME }}
-
-
-
-      - name: Create Service in Port with Repository Relation
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: UPSERT
-          identifier: "${{ inputs.service_name }}_service"
-          title: "${{ inputs.service_name }} Service"
-          blueprint: "service"
-          relations: |
-            {
-              "githubRepository": "${{ inputs.service_name }}"
-            }
-
-      - name: Create a log message
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{ env.PORT_RUN_ID }}
-          logMessage: "Finished scaffolding of service and repository: ${{ inputs.service_name }}"
-
-```
-
-</details>
-
-:::tip
-This workflow uses Port's [cookiecutter Github action](https://github.com/port-labs/cookiecutter-gha) to scaffold the new repository.
-:::
+    :::tip
+    This workflow uses Port's [cookiecutter Github action](https://github.com/port-labs/cookiecutter-gha) to scaffold the new repository.
+    :::
 
 </TabItem> 
 
@@ -419,6 +419,7 @@ Next, let's create the necessary token and secrets:
     - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the [define backend type](#define-backend-type) section.
 
       <img src='/img/guides/gitlabPipelineTriggerToken.png' width='80%' border='1px' />
+      <br/><br/>
 
 :::tip
 Now that you have both the new GitLab project and its respective trigger token, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
@@ -673,7 +674,7 @@ First, let's create the necessary tokens and secrets:
       <br/>
       <img src='/img/guides/bitbucketJenkinsCredentials.png' width='90%' border='1px' />
 
-<br/>
+    <br/>
 
 Next, create a Jenkins pipeline with the following configuration:
 - [Enable the webhook trigger for the pipeline](/actions-and-automations/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline).
@@ -1234,51 +1235,51 @@ Head back to the [Self-service page](https://app.getport.io/self-serve) of your 
 
 3. For some of the available Git providers, additional inputs are required when executing the action.
 
-<Tabs groupId="git-provider" queryString defaultValue="bitbucket" values={[
+    <Tabs groupId="git-provider" queryString defaultValue="bitbucket" values={[
+    
+    {label: "Bitbucket (Jenkins)", value: "bitbucket"},
+    {label: "Azure DevOps", value: "azure-devops"}
+    ]}>
+    
+    <TabItem value="bitbucket">
+    
+    When executing the Bitbucket scaffolder, you will need to provide two additional inputs:
+    
+    - `Bitbucket Workspace Name` - the name of the workspace to create the new repository in.
+      - `Bitbucket Project Key` - the key of the Bitbucket project to create the new repository in.
+          - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table.
+    
+    </TabItem>
+    
+    <TabItem value="azure-devops" >
+    
+    When executing the Azure DevOps scaffolder, you will need to provide the following additional inputs:
+    
+    - `Azure Organization` - the name of the Azure DevOps organization.
+      - `Azure Project` - select the Azure DevOps project you want the repo to be created in.
+      - `Description` - a brief description of the repository. (Optional)
+    
+    </TabItem>
+    
+    </Tabs>  
 
-{label: "Bitbucket (Jenkins)", value: "bitbucket"},
-{label: "Azure DevOps", value: "azure-devops"}
-]}>
+4. Click `Execute`. On the top right corner of the page,  click on the action button to view the action progress.:
 
-<TabItem value="bitbucket">
+    <img src='/img/guides/executionDetails.png' width='45%' border="1px" />
+    
+    <br/><br/>
 
-When executing the Bitbucket scaffolder, you will need to provide two additional inputs:
+5. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
 
-- `Bitbucket Workspace Name` - the name of the workspace to create the new repository in.
-- `Bitbucket Project Key` - the key of the Bitbucket project to create the new repository in.
-    - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table.
+    <img src='/img/guides/runStatusScaffolding.png' width='90%' border="1px" />
+    
+    <br/><br/>
+    
+    :::tip Logging action progress
+    💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](/actions-and-automations/reflect-action-progress/reflect-action-progress.md) to learn more.
+    :::
 
-</TabItem>
-
-<TabItem value="azure-devops" >
-
-When executing the Azure DevOps scaffolder, you will need to provide the following additional inputs:
-
-- `Azure Organization` - the name of the Azure DevOps organization.
-- `Azure Project` - select the Azure DevOps project you want the repo to be created in.
-- `Description` - a brief description of the repository. (Optional)
-
-</TabItem>
-
-</Tabs>  
-
-3. Click `Execute`. On the top right corner of the page,  click on the action button to view the action progress.:
-
-<img src='/img/guides/executionDetails.png' width='45%' border="1px" />
-
-<br/><br/>
-
-4. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
-
-<img src='/img/guides/runStatusScaffolding.png' width='90%' border="1px" />
-
-<br/><br/>
-
-:::tip Logging action progress
-💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](/actions-and-automations/reflect-action-progress/reflect-action-progress.md) to learn more.
-:::
-
-5. Head over to the service catalog and you will see a microservice entity created with the repository linked to it:
+6. Head over to the service catalog and you will see a microservice entity created with the repository linked to it:
 
     <img src='/img/guides/serviceCatalogAfterScaffolding.png' width='90%'  border="1px"  />   
    
