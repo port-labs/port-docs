@@ -36,8 +36,8 @@ Once implemented, you’ll be able to:
 ## Prerequisites
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `service` blueprint that was created during the onboarding process.
-- You should have your Git provider integration installed via Port. If you haven't installed it yet,  click [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/)
-  to select and install your preferred Git provider:
+- The [Git Integration](/build-your-software-catalog/sync-data-to-catalog/git/) that is relevant for you needs to be installed.
+
 
 ## Set up data model
 
@@ -65,12 +65,12 @@ If you already have a Pagerduty account that you can play around with, feel free
 
 2. Create a new service:
 
-![pagerdutyServiceCreation](/img/guides/pagerdutyServiceCreation.png)
-
-- Name the service `DemoPdService`.
-- Choose the existing `Default` escalation policy.
-- Under `Reduce noise` use the recommended settings.
-- Under `Integrations` scroll down and click on `Create service without an integration`.
+    ![pagerdutyServiceCreation](/img/guides/pagerdutyServiceCreation.png)
+    
+    - Name the service `DemoPdService`.
+    - Choose the existing `Default` escalation policy.
+    - Under `Reduce noise` use the recommended settings.
+    - Under `Integrations` scroll down and click on `Create service without an integration`.
 
 ##### Integrate Pagerduty into Port
 
@@ -86,22 +86,27 @@ To install the integration:
 
 4. Enter the required parameters:
    - Token - Your Pagerduty API token. To create one, see the [Pagerduty documentation](https://support.pagerduty.com/docs/api-access-keys).
-     :::info Port secrets
+     
+    :::info Port secrets
      The `Token` field is a Port secret, meaning it will be encrypted and stored securely in Port.  
      Select a secret from the dropdown, or create a new one by clicking on `+ Add secret`.
 
      Learn more about Port secrets [here](/sso-rbac/port-secrets/).  
      :::
+
    - API URL - The Pagerduty API URL. For most users, this will be `https://api.pagerduty.com`. If you use the EU data centers, set this to `https://api.eu.pagerduty.com`.
 
 5. Click `Done`. Port will now install the integration and start fetching your Pagerduty data. This may take a few minutes.    
    You can see the integration in the `Data sources` page, when ready it will look like this:
    <img src='/img/guides/prodReadinessInstallationCompleteDataSources.png' width='75%' border='1px' />
+   <br/><br/>
+
 
 Great! Now that the integration is installed, we should see some new components in Port:
 
-- Go to your [Builder](https://app.getport.io/settings/data-model), you should now see two new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `PagerDuty Service` and `PagerDuty Incident`.
-- Go to your [Software catalog](https://app.getport.io/services), click on `PagerDuty Services` in the sidebar, you should now see a new <PortTooltip id="entity">entity</PortTooltip> created for our `DemoPdService`, with a populated `On-call` property.
+   - Go to your [Builder](https://app.getport.io/settings/data-model), you should now see two new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `PagerDuty Service` and `PagerDuty Incident`.
+   - Go to your [Software catalog](https://app.getport.io/services), click on `PagerDuty Services` in the sidebar, you should now see a new <PortTooltip id="entity">entity</PortTooltip> created for our `DemoPdService`, with a populated `On-call` property.
+
 
 ##### Mirror the on-call property in the service blueprint
 
@@ -110,52 +115,52 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
 
 1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
 
-<img src='/img/guides/serviceCreateRelation.png' width='40%' />
-
-<br/><br/>
+    <img src='/img/guides/serviceCreateRelation.png' width='40%' />
+    
+    <br/><br/>
 
 2. Fill out the form like this, then click `Create`:
 
-<img src='/img/guides/prodReadinessRelationCreation.png' width='50%' />
+    <img src='/img/guides/prodReadinessRelationCreation.png' width='50%' />
+    
+    <br/><br/>
 
-<br/><br/>
+     Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
-
-1. Choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip> again, and under the `PagerDuty Service` relation, click on `New mirror property`.  
+3. Choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip> again, and under the `PagerDuty Service` relation, click on `New mirror property`.  
    Fill the form out like this, then click `Create`:
 
-<img src='/img/guides/mirrorPropertyCreation.png' width='40%' />
+    <img src='/img/guides/mirrorPropertyCreation.png' width='40%' />
+    
+    <br/><br/>
 
-<br/><br/>
+4. Now that our mirror property is set, we need to assign the relevant Pagerduty service to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your Pagerduty integration:
 
-2. Now that our mirror property is set, we need to assign the relevant Pagerduty service to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your Pagerduty integration:
+    <img src='/img/guides/pdDataSources.png' width='60%' />
+    
+    <br/><br/>
 
-<img src='/img/guides/pdDataSources.png' width='60%' />
+5. Add the following YAML block to the mapping under the `resources` key, then click `save & resync`:
 
-<br/><br/>
-
-Add the following YAML block to the mapping under the `resources` key, then click `save & resync`:
-
-<details>
-<summary>Relation mapping (click to expand)</summary>
-
-```yaml showLineNumbers
-- kind: services
-  selector:
-    query: "true"
-  port:
-    entity:
-      mappings:
-        identifier: .name | gsub("[^a-zA-Z0-9@_.:/=-]"; "-") | tostring
-        title: .name
-        blueprint: '"service"'
-        properties: {}
-        relations:
-          pagerduty_service: .id
-```
-
-</details>
+    <details>
+    <summary>Relation mapping (click to expand)</summary>
+    
+    ```yaml showLineNumbers
+    - kind: services
+      selector:
+        query: "true"
+      port:
+        entity:
+          mappings:
+            identifier: .name | gsub("[^a-zA-Z0-9@_.:/=-]"; "-") | tostring
+            title: .name
+            blueprint: '"service"'
+            properties: {}
+            relations:
+              pagerduty_service: .id
+    ```
+    
+    </details>
 
 What we just did was map the `Pagerduty service` to the relation between it and our `services`.  
 Now, if our `service` identifier is equal to the Pagerduty service's name, the `service` will automatically have its `on-call` property filled: &nbsp;🎉
@@ -166,13 +171,13 @@ Now, if our `service` identifier is equal to the Pagerduty service's name, the `
 
 1. Go to your [Software catalog](https://app.getport.io/services), choose any service in the table under `Services`, click on the `...`, and click `Edit`:
 
-![editServiceEntity](/img/guides/editServiceEntity.png)
+    ![editServiceEntity](/img/guides/editServiceEntity.png)
 
 2. In the form you will now see a property named `PagerDuty Service`, choose the `DemoPdService` we created from the dropdown, then click `Update`:
 
-<img src='/img/guides/editServiceChoosePdService.png' width='40%' />
-
-<br/><br/>
+    <img src='/img/guides/editServiceChoosePdService.png' width='40%' border="1px" />
+    
+    <br/><br/>
 
 
 #### Add a codeowners property to the repository blueprint
@@ -182,9 +187,9 @@ Now, if our `service` identifier is equal to the Pagerduty service's name, the `
 2. Fill in the form like this:  
    _Note the `identifier` field value, we will need it in the next step._
 
-    <img src='/img/guides/addCodeownersForm.png' width='40%' />
+    <img src='/img/guides/addCodeownersForm.png' width='40%' border="1px" />
 
-3. Next we will update the Github exporter mapping and add the new property. Go to your [data sources page](https://app.getport.io/settings/data-sources).
+3. Next, we will update the Github exporter mapping and add the new property. Go to your [data sources page](https://app.getport.io/settings/data-sources).
 
 4. Under `Exporters`, click on the Github exporter with your organization name.
 
@@ -232,6 +237,7 @@ Git providers allow you to add a `CODEOWNERS` file to a repository specifying it
 </Tabs>
 
 <br/>
+
 Let's see how we can easily ingest a CODEOWNERS file into our existing services:
 
 ## Update your service's scorecard
@@ -250,105 +256,106 @@ Now let's implement it:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, click on `Scorecards`, then click our existing `Production readiness` scorecard:
 
-<img src='/img/guides/editReadinessScorecard.png' width='30%' />
-
-<br/><br/>
+    <img src='/img/guides/editReadinessScorecard.png' width='30%' />
+    
+    <br/><br/>
 
 2. Replace the content with this, then click `Save`:
 
-<details>
-<summary><b>Scorecard schema (click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "ProductionReadiness",
-  "title": "Production Readiness",
-  "rules": [
+    <details>
+    <summary><b>Scorecard schema (click to expand)</b></summary>
+    
+    ```json showLineNumbers
     {
-      "identifier": "hasReadme",
-      "description": "Checks if the service has a readme file in the repository",
-      "title": "Has a readme",
-      "level": "Bronze",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": "isNotEmpty",
-            "property": "readme"
+      "identifier": "ProductionReadiness",
+      "title": "Production Readiness",
+      "rules": [
+        {
+          "identifier": "hasReadme",
+          "description": "Checks if the service has a readme file in the repository",
+          "title": "Has a readme",
+          "level": "Bronze",
+          "query": {
+            "combinator": "and",
+            "conditions": [
+              {
+                "operator": "isNotEmpty",
+                "property": "readme"
+              }
+            ]
           }
-        ]
-      }
-    },
-    {
-      "identifier": "usesSupportedLang",
-      "description": "Checks if the service uses one of the supported languages. You can change this rule to include the supported languages in your organization by editing the blueprint via the \"Builder\" page",
-      "title": "Uses a supported language",
-      "level": "Silver",
-      "query": {
-        "combinator": "or",
-        "conditions": [
-          {
-            "operator": "=",
-            "property": "language",
-            "value": "Python"
-          },
-          {
-            "operator": "=",
-            "property": "language",
-            "value": "JavaScript"
-          },
-          {
-            "operator": "=",
-            "property": "language",
-            "value": "React"
-          },
-          {
-            "operator": "=",
-            "property": "language",
-            "value": "GoLang"
+        },
+        {
+          "identifier": "usesSupportedLang",
+          "description": "Checks if the service uses one of the supported languages. You can change this rule to include the supported languages in your organization by editing the blueprint via the \"Builder\" page",
+          "title": "Uses a supported language",
+          "level": "Silver",
+          "query": {
+            "combinator": "or",
+            "conditions": [
+              {
+                "operator": "=",
+                "property": "language",
+                "value": "Python"
+              },
+              {
+                "operator": "=",
+                "property": "language",
+                "value": "JavaScript"
+              },
+              {
+                "operator": "=",
+                "property": "language",
+                "value": "React"
+              },
+              {
+                "operator": "=",
+                "property": "language",
+                "value": "GoLang"
+              }
+            ]
           }
-        ]
-      }
-    },
-    {
-      "identifier": "hasTeam",
-      "description": "Checks if the service has a team that owns it (according to the \"Team\" property of the service)",
-      "title": "Has a Team",
-      "level": "Gold",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": "isNotEmpty",
-            "property": "$team"
+        },
+        {
+          "identifier": "hasTeam",
+          "description": "Checks if the service has a team that owns it (according to the \"Team\" property of the service)",
+          "title": "Has a Team",
+          "level": "Gold",
+          "query": {
+            "combinator": "and",
+            "conditions": [
+              {
+                "operator": "isNotEmpty",
+                "property": "$team"
+              }
+            ]
           }
-        ]
-      }
-    },
-    {
-      "identifier": "hasOncall",
-      "title": "Has On-call",
-      "level": "Gold",
-      "query": {
-        "combinator": "and",
-        "conditions": [
-          {
-            "operator": "isNotEmpty",
-            "property": "on_call"
+        },
+        {
+          "identifier": "hasOncall",
+          "title": "Has On-call",
+          "level": "Gold",
+          "query": {
+            "combinator": "and",
+            "conditions": [
+              {
+                "operator": "isNotEmpty",
+                "property": "on_call"
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     }
-  ]
-}
-```
+    ```
+    
+    </details>
 
-</details>
+3. Now go to your Catalog and click on any of your services.  
 
-Now go to your Catalog and click on any of your services.  
-Click on the `Scorecards` tab and you will see the score of the service, with details of which checks passed/failed:
+4. Click on the `Scorecards` tab and you will see the score of the service, with details of which checks passed/failed:
 
-<img src='/img/guides/prodReadinessEntityAfterScorecard.png' width='100%' border='1px' />
+    <img src='/img/guides/prodReadinessEntityAfterScorecard.png' width='100%' border='1px' />
 
 ## Possible daily routine integrations
 
