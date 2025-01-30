@@ -203,6 +203,7 @@ Common examples for resources that can be used as a source of truth for `service
     entity:
       mappings:
         identifier: .id
+        title: .attributes.display_name
         blueprint: '"service"'
         relations:
           snyk_target: .id
@@ -219,6 +220,7 @@ Common examples for resources that can be used as a source of truth for `service
     entity:
       mappings:
         identifier: .id
+        title: .name
         blueprint: '"service"'
         relations:
           pager_duty_service: .id
@@ -299,8 +301,8 @@ Common examples for resources that can be used as a source of truth for `workloa
         identifier: .slug + "-" + .__tags.name
         title: .name + "-" + .__tags.name
         blueprint: '"workload"'
-      relations:
-        sentry_project: .id | tostring
+        relations:
+          sentry_project: .slug + "-" + .__tags.name
 ```
 </details>
 
@@ -320,8 +322,8 @@ Common examples for resources that can be used as a source of truth for `workloa
         identifier: .entityId
         title: .displayName
         blueprint: '"workload"'
-      relations:
-        dynatrace_entity: .entityId
+        relations:
+          dynatrace_entity: .entityId
 ```
 </details>
 
@@ -335,14 +337,11 @@ Common examples for resources that can be used as a source of truth for `workloa
     entity:
       mappings:
         - identifier: >-
-            .metadata.name + "-Deployment-" + .metadata.namespace + "-" +
-            env.CLUSTER_NAME
+            .metadata.name + "-Deployment-" + .metadata.namespace + "-" + env.CLUSTER_NAME
           title: .metadata.name
           blueprint: '"workload"'
           relations:
-            k8s_workload: >-
-            .metadata.name + "-Deployment-" + .metadata.namespace + "-" +
-            env.CLUSTER_NAME
+            k8s_workload: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + env.CLUSTER_NAME
 ```
 </details>
 
@@ -418,6 +417,24 @@ Common examples for resources that can be used as a source of truth for `teams`:
         blueprint: '"_team"'
         relations:
           git_hub_team: .id | tostring
+```
+</details>
+
+<details>
+<summary><LogoImage logo="GitLab" /> **GitLab team (click to expand)**</summary>
+```yaml showLineNumbers
+- kind: group-with-members
+  selector:
+    query: 'true'
+    includeBotMembers: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .full_path
+        title: .name
+        blueprint: '"_team"'
+        relations:
+          gitlab_group: .full_path
 ```
 </details>
 
