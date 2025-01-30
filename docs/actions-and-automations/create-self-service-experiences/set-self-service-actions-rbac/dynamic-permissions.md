@@ -76,7 +76,7 @@ For example, the following configuration will allow the action to be executed by
 "execute": {
     "roles": ["Admin"],
     "users": [],
-    "teams": ["Engineering"]
+    "teams": ["engineering"]
 ```
 
 Here is an example of using the policy key in a permissions JSON:
