@@ -137,6 +137,3 @@ In this example, the `dt.owner` and `owner` keys from the tags are used to defin
 Next, click on the **resync** button and watch your Dynatrace `entities` being mapped to the `teams` as shown below in this example:
 
 <img src='/img/guides/dynatraceEntityTeamOwnership.png' border='1px' />
-
-
-By following this guide, you have successfully configured your Dynatrace integration to map monitored entities to their respective team owners.
