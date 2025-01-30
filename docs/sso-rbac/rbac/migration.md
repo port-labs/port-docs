@@ -29,7 +29,7 @@ To prepare for the migration, you can follow the steps described in the next sec
 
 ## Preparing for the migration
 Before running the migration, you can check the affected resources and see if they need to be migrated manually.
-To do this, you can use [this script (TBD)](/sso-rbac/rbac/migration-script) provided by us.
+To do this, you can use [this script (TBD)](https://github.com/port-labs/script-examples) provided by us.
 The script will retrieve all affected resources and generate a report with the resources that need to be migrated manually.
 After downloading the script, follow the instructions in the README.md file to execute it.
 
