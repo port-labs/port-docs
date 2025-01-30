@@ -869,5 +869,12 @@ export const availableGuides = [
         tags: ["Incident management", "ServiceNow", "GitLab", "Actions", "Automations"],
         logos: ["ServiceNow", "GitLab"],
         link: "/guides/all/approval-workflow-for-gitlab-deployment"
+    },
+    {
+        title: "Assign teams to monitored entities", 
+        description: "Configure your Dynatrace data sources to map entities to teams",
+        tags: ["Engineering metrics", "Dynatrace"],
+        logos: ["Dynatrace"],
+        link: "/guides/all/connect-dynatrace-team-with-entities"
     }
 ]
