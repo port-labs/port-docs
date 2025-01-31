@@ -119,7 +119,7 @@ To grant permissions for a specific team to edit the `deployedAt` relation, add 
         "roles": ["Admin", "Env-moderator"],
         "users": [],
         // highlight-next-line
-        "teams": ["ServiceMaintainers"], // changed from []
+        "teams": ["serviceMaintainers"],
         "ownedByTeam": false
       }
     }
