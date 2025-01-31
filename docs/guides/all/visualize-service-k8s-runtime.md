@@ -41,21 +41,21 @@ To integrate Kubernetes resources with your existing `Service` blueprint, we’l
 
 2. Copy the installation command after specifying your cluster's name, it should look something like this:
 
-```bash showLineNumbers
-# The following script will install a K8s integration at your K8s cluster using helm
-# Change the stateKey to describe your integration.
-# For example, the name of the cluster it will be installed on.
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-cluster port-labs/port-k8s-exporter \
-  --create-namespace --namespace port-k8s-exporter \
-	--set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
-	--set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
-	--set portBaseUrl="https://api.getport.io"  \
-	--set stateKey="my-cluster"  \
-	--set eventListener.type="POLLING"  \
-	--set "extraEnv[0].name"="CLUSTER_NAME"  \
-	--set "extraEnv[0].value"="my-cluster"
-```
+    ```bash showLineNumbers
+    # The following script will install a K8s integration at your K8s cluster using helm
+    # Change the stateKey to describe your integration.
+    # For example, the name of the cluster it will be installed on.
+    helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+    helm upgrade --install my-cluster port-labs/port-k8s-exporter \
+      --create-namespace --namespace port-k8s-exporter \
+      --set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
+      --set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
+      --set portBaseUrl="https://api.getport.io"  \
+      --set stateKey="my-cluster"  \
+      --set eventListener.type="POLLING"  \
+      --set "extraEnv[0].name"="CLUSTER_NAME"  \
+      --set "extraEnv[0].value"="my-cluster"
+    ```
 
 <PortApiRegionTip/>
 
@@ -65,23 +65,23 @@ After installation, the exporter will:
 
 1. Create <PortTooltip id="blueprint">blueprints</PortTooltip> in your [Builder](https://app.getport.io/settings/data-model) (as defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/blueprints.json)) that represent Kubernetes resources:
 
-<img src='/img/guides/k8sBlueprintsCreated.png' width='95%' />
+    <img src='/img/guides/k8sBlueprintsCreated.png' width='95%' />
 
-<br/><br/>
+    <br/><br/>
 
-:::info Note
+    :::info Note
 
-`Workload` is an abstraction of Kubernetes objects which create and manage pods (e.g. `Deployment`, `StatefulSet`, `DaemonSet`).
+    `Workload` is an abstraction of Kubernetes objects which create and manage pods (e.g. `Deployment`, `StatefulSet`, `DaemonSet`).
 
-:::
+    :::
 
-<br/>
+    <br/>
 
 2. Create <PortTooltip id="entity">entities</PortTooltip> in your [Software catalog](https://app.getport.io/services). You will see a new page for each <PortTooltip id="blueprint">blueprint</PortTooltip> containing your resources, filled with data from your Kubernetes cluster (according to the default mapping that is defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/appConfig.yaml)):
 
-<img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
+    <img src='/img/guides/k8sEntitiesCreated.png' width='100%' />
 
-<br/><br/>
+    <br/><br/>
 
 3. Create <PortTooltip id="scorecard">scorecards</PortTooltip> for the blueprints that represent your K8s resources (as defined [here](https://github.com/port-labs/port-k8s-exporter/blob/main/assets/defaults/scorecards.json)). These scorecards define rules and checks over the data ingested from your K8s cluster, making it easy to check that your K8s resources meet your standards.
 
@@ -101,9 +101,9 @@ In this guide we will create one relation named `service` which will represent t
 
 2. Fill out the form like this, then click `Create`:
 
-<img src='/img/guides/createServiceRelation.png' width='50%' />
+    <img src='/img/guides/createServiceRelation.png' width='50%' />
 
-<br/><br/>
+    <br/><br/>
 
 
 ## Map your workloads to their services
@@ -122,72 +122,72 @@ We achieved this by adding a [mapping definition](https://github.com/port-labs/t
 1. Create a `Deployment` resource in your cluster with a label matching the identifier of a `service` in your [Software catalog](https://app.getport.io/services).  
    You can use the simple example below and change the `metadata.labels.portService` value to match your desired `service`. Copy it into a file named `deployment.yaml`, then apply it:
 
-```bash
-kubectl apply -f deployment.yaml
-```
+    ```bash
+    kubectl apply -f deployment.yaml
+    ```
 
-<details>
-<summary><b>Deployment example (Click to expand)</b></summary>
+    <details>
+    <summary><b>Deployment example (Click to expand)</b></summary>
 
-```yaml showLineNumbers
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: awesomeservice
-  labels:
-    app: nginx
-    portService: AwesomeService
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: nginx
-  template:
+    ```yaml showLineNumbers
+    apiVersion: apps/v1
+    kind: Deployment
     metadata:
+      name: awesomeservice
       labels:
         app: nginx
+        portService: AwesomeService
     spec:
-      containers:
-        - name: nginx
-          image: nginx:1.14.2
-          ports:
-            - containerPort: 80
-```
+      replicas: 2
+      selector:
+        matchLabels:
+          app: nginx
+      template:
+        metadata:
+          labels:
+            app: nginx
+        spec:
+          containers:
+            - name: nginx
+              image: nginx:1.14.2
+              ports:
+                - containerPort: 80
+    ```
 
-</details>
+    </details>
 
-<br/>
+    <br/>
 
 2. To see the new data, we need to update the mapping configuration that the K8s exporter uses to ingest data.  
    To edit the mapping, go to your [data sources page](https://app.getport.io/settings/data-sources), find the K8s exporter card, click on it and you will see a YAML editor showing the current configuration.  
    Add the following block to the mapping configuration and click `Resync`:
 
-```yaml showLineNumbers
-resources:
-  # ... Other resource mappings installed by the K8s exporter
-  - kind: apps/v1/deployments
-    selector:
-      query: .metadata.namespace | startswith("kube") | not
-    port:
-      entity:
-        mappings:
-        - blueprint: '"workload"'
-          icon: '"Deployment"'
-          identifier: .metadata.name + "-Deployment-" + .metadata.namespace + "-" +
-            "my-cluster"
-          properties: {}
-          relations:
-            service: .metadata.labels.portService
-          title: .metadata.name
-```
+    ```yaml showLineNumbers
+    resources:
+      # ... Other resource mappings installed by the K8s exporter
+      - kind: apps/v1/deployments
+        selector:
+          query: .metadata.namespace | startswith("kube") | not
+        port:
+          entity:
+            mappings:
+            - blueprint: '"workload"'
+              icon: '"Deployment"'
+              identifier: .metadata.name + "-Deployment-" + .metadata.namespace + "-" +
+                "my-cluster"
+              properties: {}
+              relations:
+                service: .metadata.labels.portService
+              title: .metadata.name
+    ```
 
-<br/>
+    <br/>
 
 3. Go to your [Software catalog](https://app.getport.io/services), and click on `Workloads`. Click on the `Workload` for which you created the deployment, and you should see the `service` relation filled.
 
-<img src='/img/guides/k8sEntityAfterIngestion.png' width='80%' />
+    <img src='/img/guides/k8sEntityAfterIngestion.png' width='80%' />
 
-<br/><br/>
+    <br/><br/>
 
 ## Visualize data from your Kubernetes environment
 
@@ -203,29 +203,30 @@ In the configuration provided for this guide, a `workload` is considered `Health
 
 2. Fill the form out like this, then click `Save`:
 
-<img src='/img/guides/k8sHomepageTableUnhealthyServices.png' width='50%' />
+    <img src='/img/guides/k8sHomepageTableUnhealthyServices.png' width='50%' />
 
-<br/><br/>
+    <br/><br/>
 
 3. In your new table, click on `Filter`, then on `+ Add new filter`. Fill out the fields like this:
 
-<img src='/img/guides/k8sHomepageTableFilterUnhealthy.png' width='50%' />
+    <img src='/img/guides/k8sHomepageTableFilterUnhealthy.png' width='50%' />
 
-<br/><br/>
+    <br/><br/>
 
 Now you can keep track of services that need your attention right from your homepage.
 
-<img src='/img/guides/k8sHomepageTableUnhealthyFilter.png' width='70%' />
+  <img src='/img/guides/k8sHomepageTableUnhealthyFilter.png' width='70%' />
 
-_These services were not included in this guide, but serve to show an example of how this table might look._
+  _These services were not included in this guide, but serve to show an example of how this table might look._
+
 
 ### Use your scorecards to get a clear overview of your workloads' availability
 
 In the configuration provided for this guide, the availability metric is defined like this:
 
-- Bronze: >=1 replica
-- Silver: >=2 replicas
-- Gold: >=3 replicas
+  - Bronze: >=1 replica
+  - Silver: >=2 replicas
+  - Gold: >=3 replicas
 
 To get an overall picture of our workloads' availability, we can use a table operation.
 
@@ -233,15 +234,15 @@ To get an overall picture of our workloads' availability, we can use a table ope
 
 2. Click on the `Group by` button, then choose `High availability` from the dropdown:
 
-<img src='/img/guides/k8sGroupByAvailability.png' width='40%' />
+    <img src='/img/guides/k8sGroupByAvailability.png' width='40%' />
 
-<br/><br/>
+    <br/><br/>
 
 3. Click on any of the metric levels to see the corresponding workloads:
 
-<img src='/img/guides/k8sWorkloadsAfterGroupByAvailability.png' width='90%' />
+    <img src='/img/guides/k8sWorkloadsAfterGroupByAvailability.png' width='90%' />
 
-<br/><br/>
+    <br/><br/>
 
 Note that you can also set this as the default view by click on the `Save this view` button 📝
 
