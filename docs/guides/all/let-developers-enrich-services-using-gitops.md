@@ -27,9 +27,9 @@ This guide will walk you through configuring a GitOps-based approach to enrich r
 
 ## Prerequisites
 
-- This guide assumes you have a Port account with permissions to create blueprints and self-service actions.
-- This guide assumes  that you have installed any of Port's [Git Integrations](/build-your-software-catalog/sync-data-to-catalog/git/). We will use the `Repository` blueprint that was created during the installation process.
-- You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
+- A Port account with permissions to create self-service actions.
+- The [Git Integration](/build-your-software-catalog/sync-data-to-catalog/git/) that is relevant for you needs to be installed.
+- A repository in your Git provider in which you can create a workflow/pipeline. If you don't have one, we recommend creating a new repository named `Port-actions`.
 
 
 ## Set up data model
@@ -48,13 +48,13 @@ Once implemented:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New property`.
 
-2. The first property will be the repository's type, chosen from a predefined list of options. Fill out the form like this, then click `Create`:
+2. The first property will be the repository's type, chosen from a predefined list of options. Fill out the form like the example below, and click `Create`:
 
-<img src="/img/guides/gitopsServicePropType1.png" width="45%" border='1px'  style={{ display: 'inline-block', marginRight: '1rem' }} />
+    <img src="/img/guides/gitopsServicePropType1.png" width="45%" border='1px'  style={{ display: 'inline-block', marginRight: '1rem' }} />
 
-<img src="/img/guides/gitopsServicePropType2.png"  width="45%" border='1px' style={{ display: 'inline-block' }}  />
+    <img src="/img/guides/gitopsServicePropType2.png"  width="45%" border='1px' style={{ display: 'inline-block' }}  />
 
-3. The second property will be the lifecycle state of the repository, also chosen from a predefined list of options. Fill out the form like this, then click `Create`:
+3. The second property will be the lifecycle state of the repository, also chosen from a predefined list of options. Fill out the form like the example below, and click `Create`:
 
     _Note the colors of the inputs, this will make it easier to see a repository's lifecycle in your catalog_ 😎
 
@@ -142,7 +142,7 @@ Now that we have a `Domain` <PortTooltip id="blueprint">blueprint</PortTooltip>,
 
 2. Head back to your [software catalog](https://app.getport.io/domains), you will see that Port has created two new `domain` <PortTooltip id="entity">entities</PortTooltip>:
 
-    <img src='/img/guides/gitopsDomainEntities.png' width='50%' />
+      <img src='/img/guides/gitopsDomainEntities.png' width='50%' />
 
 The `architecture` property is a URL to a Lucidchart diagram. This is a handy way to track a domain's architecture in your software catalog.
 
@@ -179,11 +179,13 @@ As platform engineers, we want to enable our developers to perform certain actio
    
         <br/>
           <img src='/img/guides/gitopsDomainInput.png' width='50%' border='1px' />
+
+        <br/><br/>
     
     
-  :::tip Entity selection input type 
-     The `Entity selection` type allows the executing user to choose an entity directly from the catalog.
-  :::
+        :::tip Entity selection input type 
+          The `Entity selection` type allows the executing user to choose an entity directly from the catalog.
+        :::
 
 5. Click on `Next` to configure the **Backend**.
 
@@ -209,7 +211,7 @@ Fill out the form with your values:
 - Name the workflow `port-enrich-repository.yml`.
 
 - Fill out your workflow details:
-  <img src='/img/guides/gitopsActionBackendForm.png' width='50%' border='1px' />
+    <img src='/img/guides/gitopsActionBackendForm.png' width='50%' border='1px' />
 
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
@@ -235,18 +237,20 @@ Fill out the form with your values:
 First, choose `Trigger Webhook URL` as the invocation type. 
  
 - The endpoint URL should look like this:  
-`https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<TRIGGER_TOKEN>`.  
-We will create the `PROJECT_ID` and `TRIGGER_TOKEN` in the next section and come back to update the URL.
+  `https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<TRIGGER_TOKEN>`.  
+  We will create the `PROJECT_ID` and `TRIGGER_TOKEN` in the next section and come back to update the URL.
 
 - Fill out the rest of the form like this, then click `Next`:
-  <img src='/img/guides/gitopsGitlabActionBackendForm.png' width='80%' border='1px' />
+    <img src='/img/guides/gitopsGitlabActionBackendForm.png' width='80%' border='1px' />
 
-:::info Webhook protection
+    <br/><br/>
 
-The webhook URL can be triggered by anyone with access to it.  
-In order to protect the webhook, see the [Validating webhook signatures page](/actions-and-automations/setup-backend/webhook/signature-verification.md).
+    :::info Webhook protection
 
-:::
+    The webhook URL can be triggered by anyone with access to it.  
+    In order to protect the webhook, see the [Validating webhook signatures page](/actions-and-automations/setup-backend/webhook/signature-verification.md).
+
+    :::
 
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
@@ -283,7 +287,7 @@ Then, fill out your workflow details:
 - Replace the `Webhook URL` with your value (this is where the pipeline will reside and run).
 
 - Leave the `Use self-hosted agent` option set to `No`.
-  <img src='/img/guides/scaffoldBitbucketBackendDetails.png' width='55%' border='1px' />
+    <img src='/img/guides/scaffoldBitbucketBackendDetails.png' width='55%' border='1px' />
 
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
@@ -326,7 +330,7 @@ Our action will create a pull-request in the  repository, containing a `port.yml
 
 - Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our workflow).
 
-  <img src='/img/guides/personalAccessToken.png' width='80%' />
+    <img src='/img/guides/personalAccessToken.png' width='80%' />
 
 - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
@@ -335,8 +339,9 @@ Our action will create a pull-request in the  repository, containing a `port.yml
    - `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
    - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
    - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
-<br/>
-   <img src='/img/guides/repositorySecret.png' width='60%' />
+      <br/>
+       <img src='/img/guides/repositorySecret.png' width='60%' />
+       <br/><br/>
 
 </TabItem>
 
@@ -363,29 +368,28 @@ Our action will create a pull-request in the  repository, containing a `port.yml
 
 1. Create a Bitbucket [app password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with `Pull requests:write` permissions, and copy its value.
 
-2. Create the following [Jenkins credentials](https://www.jenkins.io/doc/book/using/using-credentials/#configuring-credentials
-) in your Jenkins instance:
+2. Create the following [Jenkins credentials](https://www.jenkins.io/doc/book/using/using-credentials/#configuring-credentials) in your Jenkins instance:
 
-  - A `username with password` credential named `BITBUCKET_CREDENTIALS` with your Bitbucket username as the username, and the `app password` you created in the previous step as the password.
-  <FindCredentials />
-  - A `secret text` credential named `PORT_CLIENT_ID` with your Port client ID as the secret.
-  - A `secret text` credential named `PORT_CLIENT_SECRET` with your Port client secret as the secret.
+    - A `username with password` credential named `BITBUCKET_CREDENTIALS` with your Bitbucket username as the username, and the `app password` you created in the previous step as the password.
+    <FindCredentials />
+    - A `secret text` credential named `PORT_CLIENT_ID` with your Port client ID as the secret.
+    - A `secret text` credential named `PORT_CLIENT_SECRET` with your Port client secret as the secret.
 
 3. Create a Jenkins Pipeline with the following configuration:
 
-  - [Enable webhook trigger](https://docs.port.io/actions-and-automations/setup-backend/jenkins-pipeline/#enabling-webhook-trigger-for-a-pipeline) for the pipeline.
-  - [Define post-content variables](https://docs.port.io/actions-and-automations/setup-backend/jenkins-pipeline/#defining-variables) for the pipeline with the following names and values:
-    
-    | Name | Value |
-    | --- | --- |
-    | LIFECYCLE | $.lifecycle |
-    | TYPE | $.type |
-    | DOMAIN | $.domain |
-    | ENTITY_IDENTIFIER | $.port_context.entity |
-    | REPO_URL | $.port_context.repo_url |
-    | RUN_ID | $.port_context.runId |
+    - [Enable webhook trigger](https://docs.port.io/actions-and-automations/setup-backend/jenkins-pipeline/#enabling-webhook-trigger-for-a-pipeline) for the pipeline.
+    - [Define post-content variables](https://docs.port.io/actions-and-automations/setup-backend/jenkins-pipeline/#defining-variables) for the pipeline with the following names and values:
+      
+      | Name | Value |
+      | --- | --- |
+      | LIFECYCLE | $.lifecycle |
+      | TYPE | $.type |
+      | DOMAIN | $.domain |
+      | ENTITY_IDENTIFIER | $.port_context.entity |
+      | REPO_URL | $.port_context.repo_url |
+      | RUN_ID | $.port_context.runId |
 
-  - Set `enrichRepository` as the pipeline's token.
+    - Set `enrichRepository` as the pipeline's token.
 
 </TabItem>
 
@@ -761,13 +765,13 @@ The action is ready to be executed 🚀
 
     <img src='/img/guides/gitopsActionExecutePopup.png' width='40%' border="1px" />
 
-<br/>
-
-This page provides details about the action run. We can see that the backend returned `Success` and the pull-request was created successfully.
+    <br/>
 
 4. Head over to your repository, you will see that a new pull-request was created:
 
     <img src='/img/guides/gitopsActionRepoPullRequest.png' width='70%' border="1px" />
+    
+    This page provides details about the action run. We can see that the backend returned `Success` and the pull-request was created successfully.
 
 5. Merge the pull-request, then head back to your [software catalog](https://app.getport.io/services).
 
@@ -775,7 +779,7 @@ This page provides details about the action run. We can see that the backend ret
 
     <img src='/img/guides/gitopsServicePageAfterAction.png' width='80%' border="1px" />
 
-<br/>
+    <br/>
 
 All done! 💪🏽
 
