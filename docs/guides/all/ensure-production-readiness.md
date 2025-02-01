@@ -44,20 +44,14 @@ Once implemented, you’ll be able to:
 To ensure production readiness,
 we will expand the `service` blueprint with two new properties (on-call and code owners),
 and then apply these to a Port scorecard to manage production readiness.
+First let's install an incident management tool to get our services' on-call.
 
-### Add new properties to service blueprint
-
-First we will add two new properties to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we will then use to set production readiness standards:
-
-1. The service's `on-call`, fetched from Pagerduty.
-2. The service's `Code owners`, fetched from Github.
-
-#### Set up PagerDuty on-call for your services
+### Set up PagerDuty on-call for your services
 
 Port offers various integrations with incident response platforms.  
 In this guide, we will use **Pagerduty** to get our services' on-call.
 
-##### Create the necessary Pagerduty resources
+#### Create the necessary Pagerduty resources
 
 If you already have a Pagerduty account that you can play around with, feel free to skip this step.
 
@@ -72,7 +66,7 @@ If you already have a Pagerduty account that you can play around with, feel free
     - Under `Reduce noise` use the recommended settings.
     - Under `Integrations` scroll down and click on `Create service without an integration`.
 
-##### Integrate Pagerduty into Port
+#### Integrate Pagerduty into Port
 
 Now let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.  
 To install the integration:
@@ -108,7 +102,15 @@ Great! Now that the integration is installed, we should see some new components 
    - Go to your [Software catalog](https://app.getport.io/services), click on `PagerDuty Services` in the sidebar, you should now see a new <PortTooltip id="entity">entity</PortTooltip> created for our `DemoPdService`, with a populated `On-call` property.
 
 
-##### Mirror the on-call property in the service blueprint
+### Add new properties to service blueprint
+
+First we will add two new properties to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we will then use to set production readiness standards:
+
+1. The service's `on-call`, fetched from Pagerduty.
+2. The service's `Code owners`, fetched from Github.
+
+
+#### Mirror the on-call property in the service blueprint
 
 Now that Port is synced with our Pagerduty resources, let's reflect the Pagerduty service's on-call in our services.  
 First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
