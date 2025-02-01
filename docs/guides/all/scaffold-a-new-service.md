@@ -45,7 +45,7 @@ The action we will create in this guide will:
 
     <img src='/img/guides/scaffoldActionDetails.png' width='70%' border='1px' />
     <br/>
-4. Click on the `Next` to proceed to the `User Form` tab and click on `+ Input`.
+4.  Click `Next` to proceed to the `User Form` tab, then click on `+ Input`.
 5. Enter `Service name` as the **Title**, select `Text` for the **Type**, set **Required** to `True`, and click on the `Create` button.
 
     <img src='/img/guides/scaffoldActionInputDetails.png' width='70%' border='1px' />
@@ -94,7 +94,7 @@ The action we will create in this guide will:
 
 
 
-6. Click on the `Next` to configure the **Backend**.
+6. Click `Next` to configure the **Backend**.
 
 
 
