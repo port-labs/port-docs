@@ -227,6 +227,23 @@ Common examples for resources that can be used as a source of truth for `service
 ```
 </details>
 
+<details>
+<summary><LogoImage logo="OpsGenie" /> **OpsGenie service (click to expand)**</summary>
+```yaml showLineNumbers
+- kind: service
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .id
+        title: .name
+        blueprint: '"service"'
+        relations:
+          _opsGenieService: .id
+```
+</details>
+
 </TabItem>
 
 <TabItem value="Environments">
@@ -468,11 +485,11 @@ This is usually achieved by adding a tag or label to the resource in the externa
 
 #### Full example
 
-After installing the `ArgoCD` integration and ingesting our ArgoCD applications, we may want to automatically connect them to their corresponding `service` entities.
+After installing the `PagerDuty` integration and ingesting our PagerDuty services, we may want to automatically connect them to their corresponding `service` entities.
 
-To achieve this, we need to update the mapping configuration of the ArgoCD integration to include an entry for the `service` blueprint.
+To achieve this, we need to update the mapping configuration of the PagerDuty integration to include an entry for the `service` blueprint.
 
-This example assumes that each ArgoCD application has a label named `portService` with the value being the identifier of the relevant `service` entity in Port.
+This example assumes that each PagerDuty service has a label named `portService` with the value being the identifier of the relevant `service` entity in Port.
 
 ```yaml showLineNumbers
   - kind: application
@@ -484,17 +501,17 @@ This example assumes that each ArgoCD application has a label named `portService
           identifier: .metadata.labels.portService
           blueprint: '"service"'
           relations:
-            argocdApplication: .metadata.uid
+            pager_duty_service: .id
 ```
 
 The meaning of this configuration is:  
-*For every application ingested from ArgoCD, update the `service` entity with the identifier matching the `portService` label, relating it to this `argocdApplication` entity*.
+*For every PagerDuty service ingested from PagerDuty, update the `service` entity with the identifier matching the `portService` label, relating it to this `pager_duty_service` entity*.
 
 #### Map by property
 
 If the label's value is not an identifier, but some other property of the entity, you can use a [query rule](/search-and-query/#rules) to find the relevant entity and update it.
 
-For example, say each ArgoCD application has a label named `portService` with the value being the `title` of the `service` entity in Port. We can use the following mapping configuration:
+For example, say each PagerDuty service has a label named `portService` with the value being the `title` of the `service` entity in Port. We can use the following mapping configuration:
 
 ```yaml showLineNumbers
   - kind: application
@@ -511,8 +528,8 @@ For example, say each ArgoCD application has a label named `portService` with th
                 value: .metadata.labels.portService
           blueprint: '"service"'
           relations:
-            argocdApplication: .metadata.uid
+            pager_duty_service: .id
 ```
 
 The meaning of this configuration is:  
-*For every application ingested from ArgoCD, update the `service` entity with the title matching the `portService` label, relating it to this `argocdApplication` entity*.
+*For every PagerDuty service ingested from PagerDuty, update the `service` entity with the title matching the `portService` label, relating it to this `pagerdutyService` entity*.
