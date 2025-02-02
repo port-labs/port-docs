@@ -45,6 +45,7 @@ The report is divided into two main sections: resources that will be migrated au
 Each section contains the resources that will be affected by the migration.
 
 ### Resources that will be migrated automatically
+This section includes resources that will be migrated automatically once the migration is triggered.
 
 #### Blueprints
 <img src="/img/users-and-teams-migration/blueprints-to-be-migrated.png" border='1px' />
@@ -145,6 +146,28 @@ Will need to be changed to:
 While those changes will be applied automatically, if you manage blueprints using IaC or GitOps (Terraform, Pulumi, etc.), you will need to apply the changes manually in your repository state.
 
 ### Resources that will require manual intervention
+This section includes resources that might be affected by the migration and will require manual intervention once the migration is triggered.
+#### Blueprints
+<img src="/img/users-and-teams-migration/blueprints-to-be-reviewed.png" border='1px' />
+Blueprints with calculation properties that based on the team meta property or the old teams relation identifier will be affected. The script will report all blueprints that have calculation properties based on those values.
+
+For example the current blueprint:
+```json
+{
+  ...
+  "calculationProperties": {
+    "calc": {
+      "title": "calc",
+      "calculation": ".relations.teams",
+      "type": "array"
+    }
+  }
+  ...
+}
+```
+
+This change will <b>not be applied automatically</b>, you will need to review the blueprints and apply the changes manually.
+
 #### Actions
 <img src="/img/users-and-teams-migration/actions-to-be-reviewed.png" border='1px' />
 Actions might have advanced input configurations based on the team meta property value or the teams relation identifier that will be changed. This typically occurs when using the `jqQuery` configuration in user inputs. Because the team meta property value will be changed to identifier instead of title, the `jqQuery` configuration might break and need to be reviewed. The script will report all actions that use the team meta property value or the teams relation identifier in their configuration.

@@ -18,6 +18,8 @@ Note that this behavior will be deprecated in the near future.
 - If you created your account **before** this date, and enabled the beta feature, see the [**users & teams as blueprints beta**](/sso-rbac/rbac/as-blueprints-beta) page.
 
 - If you created your account **after** this date, see the [**users & teams as blueprints**](/sso-rbac/rbac/as-blueprints) page.
+
+To migrate to the new users & teams behavior, see the [migration guide](/sso-rbac/rbac/migration).
 :::
 
 ## Overview
