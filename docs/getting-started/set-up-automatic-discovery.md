@@ -110,6 +110,31 @@ Common examples for resources that can be used as a source of truth for `service
         relations:
           repository: .full_name
 ```
+
+<h4>Monorepo support</h4>
+If you are using a monorepo, see the [working with monorepos](/build-your-software-catalog/sync-data-to-catalog/git/working-with-monorepos?git-provider=github) page to learn how to tweak the mapping configuration to create entities for each folder in the repository.  
+
+Once you have done this, you can add the following block to the mapping configuration to create a `service` entity for each folder in the repository, and relate it to the relevant `githubRepository` entity:
+
+```yaml showLineNumbers
+# Be sure to change the `path` and `repos` values to match your monorepo structure
+- kind: folder
+  selector:
+    query: "true"
+    folders: # Specify the repositories and folders to include under this relative path
+      - path: apps/* # Relative path to the folders within the repositories
+        repos: # List of repositories to include folders from
+          - backend-service
+          - frontend-service
+  port:
+    entity:
+      mappings:
+        identifier: ".folder.name"
+        title: ".folder.name"
+        blueprint: '"service"'
+        relations:
+          repository: ".folder.name"
+```
 </details>
 
 <details>
@@ -127,6 +152,31 @@ Common examples for resources that can be used as a source of truth for `service
         relations:
           git_lab_repositry: .path_with_namespace | gsub(" "; "")
 ```
+
+<h4>Monorepo support</h4>
+If you are using a monorepo, see the [working with monorepos](/build-your-software-catalog/sync-data-to-catalog/git/working-with-monorepos?git-provider=gitlab) page to learn how to tweak the mapping configuration to create entities for each folder in the repository.  
+
+Once you have done this, you can add the following block to the mapping configuration to create a `service` entity for each folder in the repository, and relate it to the relevant `gitlabRepository` entity:
+
+```yaml showLineNumbers
+# Be sure to change the `path` and `repos` values to match your monorepo structure
+- kind: folder
+  selector:
+    query: "true"
+    folders: # Specify the repositories and folders to include under this relative path
+      - path: "apps/" # Relative path to the folders within the repositories
+        repos: # List of repositories to include folders from
+          - backend-service
+          - frontend-service
+  port:
+    entity:
+      mappings:
+        identifier: .folder.name
+        title: .folder.name
+        blueprint: '"service"'
+        relations:
+          git_lab_repositry: .folder.name
+```
 </details>
 
 <details>
@@ -143,6 +193,30 @@ Common examples for resources that can be used as a source of truth for `service
         blueprint: '"service"'
         relations:
           bitbucketRepository: .name
+```
+
+<h4>Monorepo support</h4>
+If you are using a monorepo, see the [working with monorepos](/build-your-software-catalog/sync-data-to-catalog/git/working-with-monorepos?git-provider=bitbucket) page to learn how to tweak the mapping configuration to create entities for each folder in the repository.  
+
+Once you have done this, you can add the following block to the mapping configuration to create a `service` entity for each folder in the repository, and relate it to the relevant `bitbucketRepository` entity:
+
+```yaml showLineNumbers
+# Be sure to change the `path` and `repos` values to match your monorepo structure
+- kind: folder
+  selector:
+    query: "true"
+    folders: # Specify the repositories and folders to include under this relative path
+      - path: apps/* # Relative path to the folders within the repositories
+        repos: # List of repositories to include folders from
+          - backend-service
+          - frontend-service
+  port:
+    entity:
+      mappings:
+        identifier: .folder.name
+        blueprint: '"service"'
+        relations:
+          bitbucketRepository: .folder.name
 ```
 </details>
 

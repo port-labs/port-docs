@@ -52,7 +52,7 @@ resources:
         mappings:
           identifier: ".folder.name"
           title: ".folder.name"
-          blueprint: '"service"'
+          blueprint: '"githubRepository"'
           properties:
             url: .repo.html_url + "/tree/" + .repo.default_branch  + "/" + .folder.path
             readme: file://README.md
@@ -79,7 +79,7 @@ resources:
         mappings:
           identifier: .folder.name
           title: .folder.name
-          blueprint: '"service"'
+          blueprint: '"gitlabRepository"'
           properties:
             url: >-
               .repo.web_url + "/tree/" + .repo.default_branch  + "/" +
@@ -108,7 +108,7 @@ resources:
       entity:
         mappings:
           identifier: .folder.name
-          blueprint: '"service"'
+          blueprint: '"bitbucketRepository"'
           properties:
             url: .repo.links.html.href + "/src/" + .repo.mainbranch.name + "/" + .folder.path
             readme: file://README.md
@@ -128,4 +128,4 @@ Support for Azure DevOps is coming soon. Stay tuned!
 
 4. Click on `Resync` to apply the changes.
 
-5. Head back to your [catalog](https://app.getport.io/services), as you can see Port has now created an entity for each folder in the specified repositories, instead of creating an entity for each repository.
+5. Head back to your [catalog](https://app.getport.io/organization/catalog), as you can see Port has now created an entity for each folder in the specified repositories, instead of creating an entity for each repository.
