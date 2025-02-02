@@ -1,6 +1,7 @@
 import DocCardList from '@theme/DocCardList';
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import IntegrationsTable from "/src/components/IntegrationsTable/IntegrationsTable.jsx"
+import OceanContribution from "/docs/generalTemplates/_ocean_contribution.md"
 
 # Install an integration
 
@@ -34,6 +35,9 @@ After the installation, you can customize the blueprints and/or mapping to inges
 ## Available plug & play integrations
 
 <IntegrationsTable />
+
+<br/>
+<OceanContribution />
 
 ## Customize your integrations
 

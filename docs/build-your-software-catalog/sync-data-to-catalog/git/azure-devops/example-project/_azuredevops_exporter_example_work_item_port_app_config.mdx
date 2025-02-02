@@ -1,6 +1,6 @@
 <details>
 
-<summary> Ocean integration configuration </summary>
+<summary> Integration mapping </summary>
 
 ```yaml showLineNumbers
 resources:
@@ -29,6 +29,9 @@ resources:
             changedDate: .fields."System.ChangedDate"
           relations:
             project: .__projectId | gsub(" "; "")
+            column: >-
+              .fields."System.WorkItemType"+"-"+.fields."System.BoardColumn"+"-"+.__project.id
+              | gsub(" "; "")
 
 ```
 

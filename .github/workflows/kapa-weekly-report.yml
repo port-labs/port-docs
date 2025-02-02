@@ -1,0 +1,139 @@
+name: Weekly Kapa Usage Report
+
+on:
+  schedule:
+    # Runs at 7:00 AM UTC every Monday
+    - cron: '0 7 * * 1'
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  generate-and-send-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Current Date
+        id: date
+        run: |
+          echo "start_date=$(date -d '7 days ago' -u +%Y-%m-%dT00:00:00Z)" >> $GITHUB_ENV
+          echo "end_date=$(date -u +%Y-%m-%dT23:59:59Z)" >> $GITHUB_ENV
+
+      - name: Fetch Kapa Analytics
+        id: fetch-analytics
+        run: |
+          # Make the API call and store response directly to file
+          curl -v -s -X GET \
+            "https://api.kapa.ai/query/v1/projects/e64464bc-19b5-4cd2-9779-2930e2ca0b81/analytics/activity/?start_date_time=${{ env.start_date }}&end_date_time=${{ env.end_date }}&aggregation_period=WEEK" \
+            -H "X-API-KEY: ${{ secrets.KAPA_API_KEY }}" \
+            -o kapa_response.json
+          
+          # Debug: Print the first part of the response
+          echo "API Response (first 500 chars):"
+          head -c 500 kapa_response.json
+          
+          # Validate JSON response
+          if ! jq empty kapa_response.json; then
+            echo "Error: Invalid JSON response from API"
+            echo "Full response:"
+            cat kapa_response.json
+            exit 1
+          fi
+          
+          # Verify the response has the expected structure
+          if ! jq -e '.aggregate_statistics' kapa_response.json > /dev/null; then
+            echo "Error: Response missing aggregate_statistics"
+            echo "Response structure:"
+            jq '.' kapa_response.json
+            exit 1
+          fi
+          
+          if ! jq -e '.time_series' kapa_response.json > /dev/null; then
+            echo "Error: Response missing time_series"
+            echo "Response structure:"
+            jq '.' kapa_response.json
+            exit 1
+          fi
+          
+          # Create formatted message sections
+          period_text="Period: $(date -d '${{ env.start_date }}' '+%B %d') - $(date -d '${{ env.end_date }}' '+%B %d, %Y')"
+          
+          # Calculate uncertain percentage
+          total_questions=$(jq -r '.aggregate_statistics.total_questions' kapa_response.json)
+          uncertain_questions=$(jq -r '.aggregate_statistics.total_questions_uncertain' kapa_response.json)
+          if [ "$total_questions" -gt 0 ]; then
+            uncertain_percentage=$(echo "scale=1; $uncertain_questions * 100 / $total_questions" | bc)
+          else
+            uncertain_percentage=0
+          fi
+          
+          key_metrics="*Key Metrics:*\n• Total Questions: $(jq -r '.aggregate_statistics.total_questions' kapa_response.json)\n• Unique Users: $(jq -r '.aggregate_statistics.total_unique_users' kapa_response.json)\n• Uncertain Responses: $uncertain_questions ($uncertain_percentage%)"
+          
+          quality_metrics="*Quality Metrics:*\n• Upvotes: $(jq -r '.aggregate_statistics.total_upvotes' kapa_response.json)\n• Downvotes: $(jq -r '.aggregate_statistics.total_downvotes' kapa_response.json)"
+          
+          # Calculate success rate
+          total_votes=$(jq -r '.aggregate_statistics.total_upvotes + .aggregate_statistics.total_downvotes' kapa_response.json)
+          if [ "$total_votes" -gt 0 ]; then
+            success_rate=$(echo "scale=1; $(jq -r '.aggregate_statistics.total_upvotes' kapa_response.json) * 100 / $total_votes" | bc)
+            success_text="\n*Success Rate:* ${success_rate}%"
+          else
+            success_text=""
+          fi
+
+          # Get counts for each integration
+          # Community channel count
+          community_count=$(jq -r '
+            .time_series | 
+            map(.count_by_integration[]) | 
+            map(select(.type == "SLACK_CHANNEL" and (.description | test("community"; "i")))) |
+            map(.count) |
+            add // 0
+          ' kapa_response.json)
+
+          # Docs AI count
+          docs_ai_count=$(jq -r '
+            .time_series | 
+            map(.count_by_integration[]) | 
+            map(select(.description == "Docs AI")) |
+            map(.count) |
+            add // 0
+          ' kapa_response.json)
+
+          # Ask-ai internal Slack count
+          internal_slack_count=$(jq -r '
+            .time_series | 
+            map(.count_by_integration[]) | 
+            map(select(.description == "Ask-ai internal Slack")) |
+            map(.count) |
+            add // 0
+          ' kapa_response.json)
+
+          # Slack enterprise count
+          slack_enterprise_count=$(jq -r '
+            .time_series | 
+            map(.count_by_integration[]) | 
+            map(select(.description == "Slack enterprise")) |
+            map(.count) |
+            add // 0
+          ' kapa_response.json)
+
+          # Port app widget count
+          port_app_count=$(jq -r '
+            .time_series | 
+            map(.count_by_integration[]) | 
+            map(select(.description == "Port app widget")) |
+            map(.count) |
+            add // 0
+          ' kapa_response.json)
+
+          # Combine all integrations in the desired order
+          integration_text="\n\n*Questions by Integration:*"
+          integration_text+="\n• Docs widget: $docs_ai_count"
+          integration_text+="\n• Community Slack channel: $community_count"
+          integration_text+="\n• Internal Slack channel: $internal_slack_count"
+          integration_text+="\n• Enterprise Slack workspace: $slack_enterprise_count"
+          integration_text+="\n• Port app widget: $port_app_count"
+
+          # Send to Slack using curl
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{
+              \"text\": \"📊 *Weekly Kapa.ai Usage Report*\n${period_text}\n\n${key_metrics}\n\n${quality_metrics}${success_text}${integration_text}\"
+            }" \
+            ${{ secrets.SLACK_WEBHOOK_URL }} 
