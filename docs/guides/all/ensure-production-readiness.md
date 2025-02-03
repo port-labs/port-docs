@@ -256,7 +256,7 @@ Now let's implement it:
     ```json showLineNumbers
     {
       "identifier": "ProductionReadiness",
-      "title": "Production Readiness",
+      "title": "Production Readiness", 
       "rules": [
         {
           "identifier": "hasReadme",
@@ -274,32 +274,81 @@ Now let's implement it:
           }
         },
         {
-          "identifier": "usesSupportedLang",
-          "description": "Checks if the service uses one of the supported languages. You can change this rule to include the supported languages in your organization by editing the blueprint via the \"Builder\" page",
-          "title": "Uses a supported language",
-          "level": "Silver",
+          "identifier": "fressnessUnderYear",
+          "description": "Checks that the last PR merged is less than a year ago",
+          "title": "Freshness < year",
+          "level": "B",
           "query": {
-            "combinator": "or",
+            "combinator": "and",
+            "conditions": [
+              {
+                "operator": "<",
+                "property": "freshness",
+                "value": 366
+              }
+            ]
+          }
+        },
+        {
+          "identifier": "fressnessUnder90",
+          "description": "Checks that the last PR merged is less than 90 days ago", 
+          "title": "Freshness < 90 days",
+          "level": "B",
+          "query": {
+            "combinator": "and",
+            "conditions": [
+              {
+                "operator": "<",
+                "property": "freshness",
+                "value": 90
+              }
+            ]
+          }
+        },
+        {
+          "identifier": "fressnessUnder30",
+          "description": "Checks that the last PR merged is less than 30 days ago",
+          "title": "Freshness < 30 days", 
+          "level": "A",
+          "query": {
+            "combinator": "and",
+            "conditions": [
+              {
+                "operator": "<",
+                "property": "freshness",
+                "value": 30
+              }
+            ]
+          }
+        },
+        {
+          "identifier": "branchProtection",
+          "description": "Checks if the repository have required approvals",
+          "title": "Branch protection set",
+          "level": "B",
+          "query": {
+            "combinator": "and",
+            "conditions": [
+              {
+                "operator": ">",
+                "property": "required_approvals_for_pr",
+                "value": 0
+              }
+            ]
+          }
+        },
+        {
+          "identifier": "ownerProtection",
+          "description": "Checks if the repository have required approval from code owners",
+          "title": "Branch protection set",
+          "level": "A",
+          "query": {
+            "combinator": "and",
             "conditions": [
               {
                 "operator": "=",
-                "property": "language",
-                "value": "Python"
-              },
-              {
-                "operator": "=",
-                "property": "language",
-                "value": "JavaScript"
-              },
-              {
-                "operator": "=",
-                "property": "language",
-                "value": "React"
-              },
-              {
-                "operator": "=",
-                "property": "language",
-                "value": "GoLang"
+                "property": "require_code_owner_review",
+                "value": "true"
               }
             ]
           }
