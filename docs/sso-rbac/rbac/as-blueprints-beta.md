@@ -6,10 +6,10 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-# As blueprints (beta version)
+# As blueprints (beta version - deprecated)
 
 :::warning New default behavior
-A new mechanism to manage users and teams has been released, using dedicated blueprints.  
+The current behavior of users and teams is deprecated and will be replaced by the new behavior starting **January 14, 2025**.  
 Starting **January 14, 2025**, this will be the default behavior for all new Port accounts.
 
 - If you created your account **before** this date, and enabled the `"Users & teams as blueprints beta feature"` in your organization, continue reading this page, which describes the **beta version behavior**.  
@@ -19,7 +19,7 @@ Note that this behavior will be deprecated in the near future.
 
 - If you created your account **after** this date, see the [**users & teams as blueprints**](/sso-rbac/rbac/as-blueprints) page.
 
-To migrate to the new users & teams behavior, see the [migration guide](/sso-rbac/rbac/migration).
+To migrate to the new behavior, see the [migration guide](/sso-rbac/rbac/migration).
 :::
 
 ## Overview

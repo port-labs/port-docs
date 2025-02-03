@@ -6,7 +6,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-# No blueprints (old)
+# No blueprints (old - deprecated)
 
 :::warning New default behavior
 A new mechanism to manage users and teams has been released, using dedicated blueprints.  
@@ -19,7 +19,7 @@ Note that this behavior will be deprecated in the near future.
 
 - If you created your account **after** this date, see the [**users & teams as blueprints**](/sso-rbac/rbac/as-blueprints) page.
 
-To migrate to the new users & teams behavior, see the [migration guide](/sso-rbac/rbac/migration).
+To migrate to the new behavior, see the [migration guide](/sso-rbac/rbac/migration).
 :::
 
 ## Overview
