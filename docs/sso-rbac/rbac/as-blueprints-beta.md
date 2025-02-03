@@ -8,18 +8,12 @@ import TabItem from '@theme/TabItem'
 
 # As blueprints (beta version - deprecated)
 
-:::warning New default behavior
-The current behavior of users and teams is deprecated and will be replaced by the new behavior starting **January 14, 2025**.  
-Starting **January 14, 2025**, this will be the default behavior for all new Port accounts.
+:::warning Migration required
+Starting **January 14, 2025**, a new default behavior for managing users & teams is applied to all new Port accounts.
 
-- If you created your account **before** this date, and enabled the `"Users & teams as blueprints beta feature"` in your organization, continue reading this page, which describes the **beta version behavior**.  
-Note that this behavior will be deprecated in the near future.
+If you created your account **before** this date, you will need to migrate to the new behavior using this [migration guide](/sso-rbac/rbac/migration) by **May 1, 2025**.
 
-- If you created your account **before** this date, and **did not** enable the beta feature, see the [**old users & teams behavior**](/sso-rbac/rbac/no-blueprints) page.
-
-- If you created your account **after** this date, see the [**users & teams as blueprints**](/sso-rbac/rbac/as-blueprints) page.
-
-To migrate to the new behavior, see the [migration guide](/sso-rbac/rbac/migration).
+If you enabled the `"Users & teams as blueprints beta feature"` in your organization and do not wish to migrate yet, continue reading this page, which describes the **beta version behavior**.  
 :::
 
 ## Overview
