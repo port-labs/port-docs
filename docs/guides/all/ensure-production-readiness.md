@@ -10,11 +10,8 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Ensure production readiness
 
-This guide will walk you through configuring production readiness standards for services in Port.  
-Once implemented, you'll be able to:
-- Define clear policies (e.g., requiring on-call assignments or code owners).
-- Empower developers to see which readiness checks they pass or fail.
-- Give managers an at-a-glance view of service health and compliance.
+This guide will walk you through configuring production readiness standards for your services.  
+You'll learn how to track metrics like on-call coverage and code ownership, and integrate them with your deployment process.
 
 <br/>
 🎬 If you would like to follow along to a **video** that implements this guide, check out this one by @TeKanAid 🎬
@@ -28,9 +25,9 @@ Once implemented, you'll be able to:
 
 ## Common use cases
 
-- Platform engineers will be able to define policies for any service, and automatically pass/fail releases accordingly.
-- Developers will be able to easily see which policies set by the platform engineer are not met, and what they need to fix.
-- R&D managers will get a bird's-eye-view of the state of all services in the organization.
+- Platform engineers will be able to define clear policies for services, and automatically pass/fail releases accordingly.
+- Developers will be able to easily see which policies are not met, and what they need to fix.
+- R&D managers will have a bird's-eye view of service health and compliance.
 
 
 ## Prerequisites
@@ -42,8 +39,8 @@ Once implemented, you'll be able to:
 ## Set up data model
 
 To ensure production readiness,
-we will expand the `service` blueprint with two new properties (on-call and code owners),
-and then apply these to a Port scorecard to manage production readiness.
+we will expand the `service` blueprint with two new properties - `on-call` and `code owners`.  
+We will then create a scorecard in Port to define and track production readiness.
 First let's install an incident management tool to get our services' on-call.
 
 ### Set up PagerDuty on-call for your services
