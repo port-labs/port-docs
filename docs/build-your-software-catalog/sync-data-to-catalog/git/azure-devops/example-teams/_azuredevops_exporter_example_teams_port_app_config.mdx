@@ -60,15 +60,16 @@ resources:
     port:
       entity:
         mappings:
-          identifier: .mailAddress
+          identifier: .user.mailAddress
           title: .displayName
           blueprint: '"azureDevopsMember"'
           properties:
-            url: .url
-            email: .mailAddress
+            url: .user.url
+            email: .user.mailAddress
   - kind: team
     selector:
       query: 'true'
+      includeMembers: 'true'
     port:
       entity:
         mappings:
@@ -80,6 +81,8 @@ resources:
             description: .description
           relations:
             project: .projectId | gsub(" "; "")
+            members: .__members | map(.identity.uniqueName)
+
   - kind: member
     selector:
       query: 'true'
@@ -94,24 +97,6 @@ resources:
             email: .identity.uniqueName
           relations:
             team: .__teamId
-  - kind: team-with-members
-    selector:
-      query: 'true'
-      includeMembers: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .id
-          title: .name
-          blueprint: '"azureDevopsTeamWithMembers"'
-          properties:
-            url: .url
-            description: .description
-          relations:
-            members: >-
-              if .__members != null then .__members | map(.identity.uniqueName)
-              else [] end
-            project: .projectId | gsub(" "; "")
 
 ```
 
