@@ -105,11 +105,31 @@ jobs:
             add // 0
           ' kapa_response.json)
 
+          # Slack enterprise count
+          slack_enterprise_count=$(jq -r '
+            .time_series | 
+            map(.count_by_integration[]) | 
+            map(select(.description == "Slack enterprise")) |
+            map(.count) |
+            add // 0
+          ' kapa_response.json)
+
+          # Port app widget count
+          port_app_count=$(jq -r '
+            .time_series | 
+            map(.count_by_integration[]) | 
+            map(select(.description == "Port app widget")) |
+            map(.count) |
+            add // 0
+          ' kapa_response.json)
+
           # Combine all integrations in the desired order
           integration_text="\n\n*Questions by Integration:*"
           integration_text+="\n• Docs widget: $docs_ai_count"
           integration_text+="\n• Community Slack channel: $community_count"
           integration_text+="\n• Internal Slack channel: $internal_slack_count"
+          integration_text+="\n• Enterprise Slack workspace: $slack_enterprise_count"
+          integration_text+="\n• Port app widget: $port_app_count"
 
           # Send to Slack using curl
           curl -X POST -H 'Content-type: application/json' \
