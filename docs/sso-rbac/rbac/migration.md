@@ -10,8 +10,8 @@ Its purpose is to guide you through the migration process to use the new behavio
 
 ## Major changes
 The migration includes two major changes:
-1. New blueprints to represent and manage users and teams (only for organizations that did not enable the beta feature)
-2. Blueprint ownership is now defined using a new property, as described [here](/sso-rbac/rbac/as-blueprints#the-ownership-property)
+1. New blueprints to represent and manage users and teams (only for organizations that did not enable the beta feature).
+2. Blueprint ownership is now defined using a new property, as described [here](/sso-rbac/rbac/as-blueprints#the-ownership-property).
 3. The value of the `$team` property will be the entity's `identifier` (and not its `title` as it was before).
 
 These changes will be applied once you trigger the migration. Once applied, some resources in your portal <b>might break</b>. 
@@ -28,8 +28,7 @@ The resources that might be affected are:
 Some of the resources will be migrated automatically, while others will require manual intervention.
 
 ## Prepare for migration
-Before running the migration, you can you can use [this script](https://github.com/port-labs/script-examples/tree/main/users-and-teams-as-blueprints-migration-visibility-script) to check the affected resources and see if they need to be migrated manually.
-The script will retrieve all affected resources and generate a report with the resources them needs to be migrated manually.
+Before running the migration, you can you can use [this script](https://github.com/port-labs/script-examples/tree/main/users-and-teams-as-blueprints-migration-visibility-script) to check the affected resources and see if they need to be migrated manually. The script will retrieve all affected resources and generate a report.
 After downloading the script, follow the instructions in the README file to execute it.
 
 :::info Security concerns
@@ -38,8 +37,7 @@ The script is open source, you can review it before running it to see the implem
 :::
 
 ### Migration report
-Running the script will output an `output/index.html` file that contains the report.
-The report is divided into two main sections: resources that will be migrated **automatically** and resources that will require **manual intervention**.
+Running the script will output an `output/index.html` file that contains the report. The report is divided into two main sections: resources that will be migrated **automatically** and resources that will require **manual intervention**.
 
 ### Resources that will require manual intervention
 This section includes resources that might be affected by the migration and will require manual intervention once the migration is triggered.
@@ -47,8 +45,8 @@ This section includes resources that might be affected by the migration and will
 <img src="/img/users-and-teams-migration/calculation-properties-to-be-reviewed.png" border='1px' />
 Blueprints with calculation properties that based on the team meta property or the old teams relation identifier will be affected. The script will report all blueprints that have calculation properties based on those values.
 
-For example the current calculation property uses the old teams relation identifier that will be changed:
-```json
+For example, the following calculation property uses the old teams relation identifier that will be changed:
+```json showLineNumbers
 {
   ...
   "calculationProperties": {
@@ -67,15 +65,15 @@ This change will <b>not be applied automatically</b>, you will need to review th
 #### Actions & Automations
 <img src="/img/users-and-teams-migration/actions-and-automations-to-be-reviewed.png" border='1px' />
 Actions and automations might be affected by the migration in two cases:
-1. User Inputs: Actions might have advanced input configurations based on the team meta property value or the teams relation identifier that will be changed. This typically occurs when using the `jqQuery` configuration in user inputs. Because the team meta property value will be changed to `identifier` instead of `title`, the `jqQuery` configuration might break and need to be reviewed.
-2. Mapping configurations: Actions and automations might have mapping configurations based on the team meta property value or the teams relation identifier that will be changed.
-3. Use team-related fields in webhook bodies or URL parameters
+1. **User Inputs**: actions might have advanced input configurations based on the team meta property value or the teams relation identifier that will be changed. This typically occurs when using the `jqQuery` configuration in user inputs. Because the team meta property value will be changed to `identifier` instead of `title`, the `jqQuery` configuration might break and need to be reviewed.
+2. **Mapping configurations**: actions and automations might have mapping configurations based on the team meta property value or the teams relation identifier that will be changed.
+3. **Webhook**: use team-related fields in webhook bodies or URL parameters
 
 The script will report all actions and automations that use the team meta property value or the teams relation identifier in their configuration.
 This change will <b>not be applied automatically</b>. You will need to review them and apply the changes manually.
 
 User inputs based on the team meta property value example:
-```json
+```json showLineNumbers
 {
   "userInputs": {
       "properties": {
@@ -94,7 +92,7 @@ User inputs based on the team meta property value example:
 ```
 
 Mapping values based on the team meta property value example:
-```json
+```json showLineNumbers
 {
   "mapping": {
     "entity": {
@@ -107,11 +105,12 @@ Mapping values based on the team meta property value example:
 
 #### Action dynamic permissions
 <img src="/img/users-and-teams-migration/actions-dynamic-permissions-to-be-reviewed.png" border='1px' />
-While explicit team permissions will be migrated to identifiers automatically as described in the [Permissions](#permissions) section, an action's dynamic permissions might have conditions based on the team meta property value or the teams relation identifier. These conditions might break and need to be reviewed.<br/>
+While explicit team permissions will be migrated to identifiers automatically as described in the [Permissions](#permissions) section, an action's dynamic permissions might have conditions based on the team meta property value or the teams relation identifier. These conditions might break and need to be reviewed.
+
 The script will report all actions that use the team meta property value or the teams relation identifier in their dynamic permissions.
 
-For example the current action permissions based on the team meta property value and might break:
-```json
+For example, the following action permissions based on the team meta property value and might break:
+```json showLineNumbers
 {
     "execute": {
         "roles": [],
@@ -146,13 +145,14 @@ Integration and webhook mappings ingesting data to the team meta property of ent
 Mappings that manages with a `port.yaml` will appear also in the report since we can't know if they maps to the team meta property or not.<br/>
 The script will report all integration and webhook mappings that ingest data to the team meta property.
 
-For example the current mapping:
-```yaml
+For example, take the following mapping:
+```yaml showLineNumbers
 port:
   entity:
     mappings:
           identifier: .name
           title: .name
+          #highlight-next-line
           team: '"My Team"'
           blueprint: '"service"'
           properties:
@@ -160,14 +160,15 @@ port:
             url: .html_url
             language: .language
 ```
-
+The team value `My Team` is the`title` of the team, it will need to be changed to the team's `identifier`.
 Tries to map the 'My Team' value to the team meta property so it will need to be changed to the identifier:
-```yaml
+```yaml showLineNumbers
 port:
   entity:
     mappings:
           identifier: .name
           title: .name
+          #highlight-next-line
           team: '"my_team"'
           blueprint: '"service"'
           properties:
@@ -179,7 +180,8 @@ This change will <b>not be applied automatically</b>, you will need to review th
 
 #### Pages
 <img src="/img/users-and-teams-migration/pages-to-be-reviewed.png" border='1px' />
-Page widgets might have configurations based on the teams relations old identifier that will be changed during the migration. These configurations might break and needs to be reviewed. The script will report all pages that use the teams relations old identifier in their widget configurations.<br/>
+Page widgets might have configurations based on the teams relations old identifier that will be changed during the migration. These configurations might break and needs to be reviewed. The script will report all pages that use the teams relations old identifier in their widget configurations.
+
 The main use case for this is adding the relation identifier to the `excludedFields` (excluded properties) configuration of a widget or in the `blueprintConfig` field. The blueprint config includes all filters, sorting, hidden and shown fields, and group-by fields of table widgets. If the old relation identifier is used in any of these properties, it will need to be changed to the new identifier.
 
 This change will <b>not be applied automatically</b>. You will need to review the pages and apply the changes manually.
@@ -190,80 +192,81 @@ This section includes resources that will be migrated automatically once the mig
 #### Blueprints
 <img src="/img/users-and-teams-migration/blueprints-to-be-migrated.png" border='1px' />
 Besides calculation properties, all relevant blueprints will be migrated automatically to have the new ownership property. As described in the report, you can check which blueprints will be affected by the migration and what the changes will be.
+
 The migration rules are:
 1. Blueprints with entities that have `$team` value -> the ownership field will be set to `direct`.
-```json
-// Direct ownership
-{
-  "identifier": "PackageVersion",
-  "title": "Package Version",
-  "ownership": {
-	  "type": "Direct"
-  }
-  ...
-}
-```
+   ```json showLineNumbers
+   // Direct ownership
+   {
+     "identifier": "PackageVersion",
+     "title": "Package Version",
+     "ownership": {
+       "type": "Direct"
+     }
+     ...
+   }
+   ```
 2. Blueprints with team inheritance defined -> the ownership field will be set to `inherited` and the team inheritance definitions will be removed.
 
-For example the current blueprint:
-```json
-// Team inheritance
-{
-  "identifier": "PackageVersion",
-  "title": "Package Version",
-  "teamInheritance": {
-	  "path": "my_service"
-  }
-  ...
-}
-```
-Will be changed to:
-```json
-// Inherited ownership
-{
-  "identifier": "PackageVersion",
-  "title": "Package Version",
-  "ownership": {
-	  "type": "Inherited",
-      "path": "my_service"
-  }
-  ...
-}
-```
+   For example, the following blueprint:
+   ```json showLineNumbers
+   // Team inheritance
+   {
+     "identifier": "PackageVersion",
+     "title": "Package Version",
+     "teamInheritance": {
+       "path": "my_service"
+     }
+     ...
+   }
+   ```
+   Will be changed to:
+   ```json showLineNumbers
+   // Inherited ownership
+   {
+     "identifier": "PackageVersion",
+     "title": "Package Version",
+     "ownership": {
+       "type": "Inherited",
+       "path": "my_service"
+     }
+     ...
+   }
+   ```
 3. Blueprints with a direct relation to the Team blueprint and team inheritance defined on top of this relation -> the relation will be removed and the ownership field will be set to `direct`. This change only relevant to organizations with the beta version enabled.
 
-For example the current blueprint:
-```json
-// Team inheritance on top of direct relation
-{
-  "identifier": "PackageVersion",
-  "title": "Package Version",
-  "relations": {
-    "teams": {
-      "target": "_team",
-      "many": true,
-      "required": false
+    For example, the following blueprint:
+    ```json showLineNumbers
+    // Team inheritance on top of direct relation
+    {
+      "identifier": "PackageVersion",
+      "title": "Package Version",
+      "relations": {
+        "teams": {
+          "target": "_team",
+          "many": true,
+          "required": false
+        }
+      },
+      "teamInheritance": {
+        "path": "teams"
+      }
+      ...
     }
-  },
-  "teamInheritance": {
-    "path": "teams"
-  }
-  ...
-}
-```
-Will be changed to:
-```json
-// Direct ownership
-{
-  "identifier": "PackageVersion",
-  "title": "Package Version",
-  "relations": {},
-  "ownership": {
-    "type": "Direct"
-  }
-  ...
-}
-```
+    ```
+    Will be changed to:
+    ```json showLineNumbers
+    // Direct ownership
+    {
+      "identifier": "PackageVersion",
+      "title": "Package Version",
+      "relations": {},
+      "ownership": {
+        "type": "Direct"
+      }
+      ...
+    }
+    ```
 
 While those changes will be applied automatically, if you manage blueprints using IaC, GitOps (Terraform, Pulumi, etc.) or directly by the API, you will need to apply the changes manually in your repository state.
 
@@ -272,8 +275,8 @@ While those changes will be applied automatically, if you manage blueprints usin
 As the team meta property of entities will be changed from `title` to `identifier`, permissions with explicit team permissions will be migrated to use identifiers.
 This change will be applied automatically for blueprints, actions, and page permissions.
 
-For example the current permissions:
-```json
+For example, the following permissions:
+```json showLineNumbers
 {
   "permissions": {
     "teams": ["My Team"]
@@ -281,7 +284,7 @@ For example the current permissions:
 }
 ```
 Will need to be changed to:
-```json
+```json showLineNumbers
 {
   "permissions": {
     "teams": ["my_team"]
@@ -292,7 +295,7 @@ Will need to be changed to:
 While those changes will be applied automatically, if you manage blueprints using IaC, GitOps (Terraform, Pulumi, etc.) or directly by the API, you will need to apply the changes manually in your repository state.
 
 ## Execute the migration
-Once you are ready and want to start the migration of management of users and teams as blueprints, send a POST request to a designated endpoint:
+Once you are ready to start the migration, send a POST request to a designated endpoint:
 :::tip To obtain your bearer token:
 
 1. Go to your [Port application](https://app.getport.io), click on the `...` button in the top right corner, and select `Credentials`. 
