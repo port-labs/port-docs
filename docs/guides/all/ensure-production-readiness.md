@@ -11,7 +11,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 # Ensure production readiness
 
 This guide will walk you through configuring production readiness standards for services in Port.  
-Once implemented, you’ll be able to:
+Once implemented, you'll be able to:
 - Define clear policies (e.g., requiring on-call assignments or code owners).
 - Empower developers to see which readiness checks they pass or fail.
 - Give managers an at-a-glance view of service health and compliance.
@@ -51,34 +51,21 @@ First let's install an incident management tool to get our services' on-call.
 Port offers various integrations with incident response platforms.  
 In this guide, we will use **Pagerduty** to get our services' on-call.
 
-#### Create the necessary Pagerduty resources
-
-If you already have a Pagerduty account that you can play around with, feel free to skip this step.
-
-1. Create a [Pagerduty account](https://www.pagerduty.com/sign-up/) (free 14-day trial).
-
-2. Create a new service:
-
-    ![pagerdutyServiceCreation](/img/guides/pagerdutyServiceCreation.png)
-    
-    - Name the service `DemoPdService`.
-    - Choose the existing `Default` escalation policy.
-    - Under `Reduce noise` use the recommended settings.
-    - Under `Integrations` scroll down and click on `Create service without an integration`.
-
 #### Integrate Pagerduty into Port
 
-Now let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.  
+Let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.  
 To install the integration:
 
 1. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on the `+ Data source` button in the top-right corner.
 
 2. Under the `Incident Management` section, choose `Pagerduty`.
 
-3. As you can see in this form, Port supports multiple installation methods. This integration can be installed in your environment (e.g. on your Kubernetes cluster), or it can be hosted by Port, on Port's infrastructure.  
-   For this guide, we will use the `Hosted by Port` method.
+3. Port supports multiple installation methods including:
+   - **Hosted by Port**: The integration runs on Port's infrastructure
+   - **Self-hosted**: Install the integration in your environment (e.g., on your Kubernetes cluster)
+   - **OAuth**: Quickly connect using PagerDuty OAuth authentication
 
-4. Enter the required parameters:
+4. For this guide, we will use the `Hosted by Port` method. Enter the required parameters:
    - Token - Your Pagerduty API token. To create one, see the [Pagerduty documentation](https://support.pagerduty.com/docs/api-access-keys).
      
     :::info Port secrets
@@ -99,7 +86,7 @@ To install the integration:
 Great! Now that the integration is installed, we should see some new components in Port:
 
    - Go to your [Builder](https://app.getport.io/settings/data-model), you should now see two new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `PagerDuty Service` and `PagerDuty Incident`.
-   - Go to your [Software catalog](https://app.getport.io/services), click on `PagerDuty Services` in the sidebar, you should now see a new <PortTooltip id="entity">entity</PortTooltip> created for our `DemoPdService`, with a populated `On-call` property.
+   - Go to your [Software catalog](https://app.getport.io/services), click on `PagerDuty Services` in the sidebar to see your PagerDuty services with populated `On-call` properties.
 
 
 ### Add new properties to service blueprint
