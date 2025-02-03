@@ -34,22 +34,23 @@ You'll learn how to track metrics like on-call coverage and code ownership, and 
 
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `service` blueprint that was created during the onboarding process.
 - The [Git Integration](/build-your-software-catalog/sync-data-to-catalog/git/) that is relevant for you needs to be installed.
+- The [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/) needs to be installed.
 
 
 ## Set up data model
 
-To ensure production readiness,
-we will expand the `service` blueprint with two new properties - `on-call` and `code owners`.  
-We will then create a scorecard in Port to define and track production readiness.
-First let's install an incident management tool to get our services' on-call.
+When you install the PagerDuty and Git integrations, they automatically add useful properties to your service blueprint:
+- `pagerduty_oncall`: Shows the current on-call for the service (from PagerDuty)
+- `require_code_owner_review`: Indicates if code owner review is required (from Git)
 
-### Set up PagerDuty on-call for your services
+We'll use these properties to track production readiness standards.
 
-Port offers various integrations with incident response platforms.  
-In this guide, we will use **Pagerduty** to get our services' on-call.
+### Set up PagerDuty integration
+
+Port offers various integrations with incident response platforms. In this guide, we will use **Pagerduty** to get our services' on-call.
 
 :::tip Skip if already installed
-If you have already installed the PagerDuty integration you can skip this step and proceed to [Mirror the on-call property in the service blueprint](#mirror-the-on-call-property-in-the-service-blueprint).
+If you have already installed the PagerDuty integration you can skip this step.
 :::
 
 
@@ -88,157 +89,27 @@ Great! Now that the integration is installed, we should see some new components 
    - Go to your [Software catalog](https://app.getport.io/services), click on `PagerDuty Services` in the sidebar to see your PagerDuty services with populated `On-call` properties.
 
 
-### Add new properties to service blueprint
+### Set up Git integration
 
-First we will add two new properties to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we will then use to set production readiness standards:
+Port's Git integration automatically fetches repository data, including branch protection rules. This allows us to track if code owner review is required for each repository.
 
-1. The service's `on-call`, fetched from Pagerduty.
-2. The service's `Code owners`, fetched from Github.
+:::tip Skip if already installed
+If you have already installed the Git integration you can skip this step.
+:::
 
+To install the Git integration, follow the [Git integration guide](/build-your-software-catalog/sync-data-to-catalog/git/github/installation).
 
-#### Mirror the on-call property in the service blueprint
-
-Now that Port is synced with our Pagerduty resources, let's reflect the Pagerduty service's on-call in our services.  
-First, we will need to create a [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
-
-1. Head back to the [Builder](https://app.getport.io/settings/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
-
-    <img src='/img/guides/serviceCreateRelation.png' width='40%' />
-    
-    <br/><br/>
-
-2. Fill out the form like this, then click `Create`:
-
-    <img src='/img/guides/prodReadinessRelationCreation.png' width='50%' />
-    
-    <br/><br/>
-
-     Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
-
-3. Choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip> again, and under the `PagerDuty Service` relation, click on `New mirror property`.  
-   Fill the form out like this, then click `Create`:
-
-    <img src='/img/guides/mirrorPropertyCreation.png' width='40%' />
-    
-    <br/><br/>
-
-4. Now that our mirror property is set, we need to assign the relevant Pagerduty service to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your Pagerduty integration:
-
-    <img src='/img/guides/pdDataSources.png' width='60%' />
-    
-    <br/><br/>
-
-5. Add the following YAML block to the mapping under the `resources` key, then click `save & resync`:
-
-    <details>
-    <summary>Relation mapping (click to expand)</summary>
-    
-    ```yaml showLineNumbers
-    - kind: services
-      selector:
-        query: "true"
-      port:
-        entity:
-          mappings:
-            identifier: .name | gsub("[^a-zA-Z0-9@_.:/=-]"; "-") | tostring
-            title: .name
-            blueprint: '"service"'
-            properties: {}
-            relations:
-              pagerduty_service: .id
-    ```
-    
-    </details>
-
-What we just did was map the `Pagerduty service` to the relation between it and our `services`.  
-Now, if our `service` identifier is equal to the Pagerduty service's name, the `service` will automatically have its `on-call` property filled: &nbsp;🎉
-
-![entitiesAfterOnCallMapping](/img/guides/entitiesAfterOnCallMapping.png)
-
-**Note** that you can always perform this assignment manually if you wish:
-
-1. Go to your [Software catalog](https://app.getport.io/services), choose any service in the table under `Services`, click on the `...`, and click `Edit`:
-
-    ![editServiceEntity](/img/guides/editServiceEntity.png)
-
-2. In the form you will now see a property named `PagerDuty Service`, choose the `DemoPdService` we created from the dropdown, then click `Update`:
-
-    <img src='/img/guides/editServiceChoosePdService.png' width='40%' border="1px" />
-    
-    <br/><br/>
+Once installed, Port will automatically track the `require_code_owner_review` property for your repositories, which we'll use in our scorecard rules.
 
 
-#### Add a codeowners property to the repository blueprint
-
-1. Go to your [Builder](https://app.getport.io/settings/data-model) again, choose the `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click `New property`.
-
-2. Fill in the form like this:  
-   _Note the `identifier` field value, we will need it in the next step._
-
-    <img src='/img/guides/addCodeownersForm.png' width='40%' border="1px" />
-
-3. Next, we will update the Github exporter mapping and add the new property. Go to your [data sources page](https://app.getport.io/settings/data-sources).
-
-4. Under `Exporters`, click on the Github exporter with your organization name.
-
-5. In the mapping YAML (the bottom-left panel), add the line `code_owners: file://CODEOWNERS` as shown here, then click `Save & Resync`:
-
-    <img src='/img/guides/prodReadinessMappingAddCodeOwners.png' width='70%' border='1px' />
-    <br/><br/>
-
-_Remember the `identifier` from step 2? This tells Port how to populate the new property_ 😎
-
-Going back to our Catalog, we can now see that our <PortTooltip id="entity">entities</PortTooltip> have their code owners displayed:
-
-![entityAfterCodeowners](/img/guides/entityAfterCodeowners.png)
-
-<br/>
-
-##### Display each repository's code owners
-
-Git providers allow you to add a `CODEOWNERS` file to a repository specifying its owner/s. See the relevant documentation for details and examples:
-
-<Tabs groupId="git-provider" queryString defaultValue="github" values={[
-{label: "GitHub", value: "github"},
-{label: "GitLab", value: "gitlab"},
-{label: "Bitbucket", value: "bitbucket"}
-]}>
-
-<TabItem value="github" label="Github">
-
-[Github codeowners documentation](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
-
-</TabItem>
-
-<TabItem value="gitlab" label="GitLab">
-
-[GitLab codeowners documentation](https://docs.gitlab.com/ee/user/project/codeowners/)
-
-</TabItem>
-
-<TabItem value="bitbucket" label="BitBucket">
-
-[BitBucket codeowners documentation](https://confluence.atlassian.com/bitbucketserver/code-owners-1296171116.html)
-
-</TabItem>
-
-</Tabs>
-
-<br/>
-
-Let's see how we can easily ingest a CODEOWNERS file into our existing services:
-
-## Update your service's scorecard
-
-Now let's use the properties we created to set standards for our services.
-
-### Add rules to existing scorecard
-
+## Update your existing service's scorecard
+Now let's use the mirror properties created from the pagerduty and git installations to set standards for our services.
 Say we want to ensure each service meets our new requirements, with different levels of importance. Our `Service` blueprint already has a scorecard called `Production readiness`, with three rules.  
-Let's add our metrics to it:
 
-- `Bronze` - each service must have a `Readme` (we have already defined this in the quickstart guide).
-- `Silver` - each service must have an on-call defined.
+Let's add our metrics to it:
+- `Bronze` - each service must have a `Readme`
+- `Silver` - each service must have code owner reviews enabled
+- `Gold` - each service must have an on-call defined
 
 Now let's implement it:
 
