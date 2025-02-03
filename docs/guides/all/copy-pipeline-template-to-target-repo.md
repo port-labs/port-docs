@@ -1,12 +1,26 @@
 ---
-sidebar_position: 2
 displayed_sidebar: null
 description: Learn how to copy pipeline template from one repository to another using Port Actions.
 ---
 
 # Copy Pipeline Template to Target Repo
 
-This guide demonstrates how to copy a `pipeline.yaml` template from a base Azure DevOps repository to a target repository using a Port action and an Azure DevOps pipeline.
+This guide demonstrates how to copy pipeline templates between Azure DevOps repositories using Port Actions. 
+
+Once implemented:
+- Platform teams can define standard pipeline templates in a base repository
+- Developers can easily copy these templates to their repositories using a self-service action
+- Teams maintain consistent CI/CD configurations across projects
+
+
+## Common use cases
+
+- Standardize CI/CD configurations across multiple repositories
+- Quickly set up new repositories with approved pipeline templates
+- Ensure compliance with organizational build and deployment standards
+- Enable developers to self-serve pipeline configurations within controlled boundaries
+
+
 
 ## Prerequisites
 
@@ -16,7 +30,11 @@ This guide demonstrates how to copy a `pipeline.yaml` template from a base Azure
     - Alternatively, create only the `Azure DevOps Repository` blueprint and ingest repositories directly using [Port’s APIs](https://docs.getport.io/api-reference/create-an-entity)
 
 
-## Copy pipeline template from a repo to another
+## Set up infrastructure
+
+First, let's set up the necessary Azure DevOps components to handle the pipeline copying process.
+
+### Create pipeline copier repository
 
 1. Create an Azure DevOps repository called `pipeline_copier` in your Azure DevOps Organization/Project and [configure a service connection](/actions-and-automations/setup-backend/azure-pipeline#define-incoming-webhook-in-azure).
 
