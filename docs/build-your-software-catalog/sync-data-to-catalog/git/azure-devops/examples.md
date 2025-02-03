@@ -11,7 +11,6 @@ import PipelineBlueprint from './example-pipeline/\_azuredevops_exporter_example
 import PortPipelineAppConfig from './example-pipeline/\_azuredevops_exporter_example_pipeline_port_app_config.mdx'
 
 import TeamsBlueprint from './example-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
-import UsersBlueprint from './example-teams/\_azuredevops_exporter_example_user_blueprint.mdx'
 import MembersBlueprint from './example-teams/\_azuredevops_exporter_example_member_blueprint.mdx'
 import TeamWithMembersBlueprint from './example-teams/\_azuredevops_exporter_example_team_with_member_blueprint.mdx'
 import PortTeamsAppConfig from './example-teams/\_azuredevops_exporter_example_teams_port_app_config.mdx'
@@ -100,8 +99,6 @@ In the following example you will ingest your Azure Devops teams and their membe
 <ProjectBlueprint/>
 
 <RepositoryBlueprint/>
-
-<UsersBlueprint/>
 
 <TeamsBlueprint/>
 
