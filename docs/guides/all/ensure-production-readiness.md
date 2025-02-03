@@ -48,6 +48,11 @@ First let's install an incident management tool to get our services' on-call.
 Port offers various integrations with incident response platforms.  
 In this guide, we will use **Pagerduty** to get our services' on-call.
 
+:::tip Skip if already installed
+If you have already installed the PagerDuty integration you can skip this step and proceed to [Mirror the on-call property in the service blueprint](#mirror-the-on-call-property-in-the-service-blueprint).
+:::
+
+
 #### Integrate Pagerduty into Port
 
 Let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.  
@@ -57,20 +62,17 @@ To install the integration:
 
 2. Under the `Incident Management` section, choose `Pagerduty`.
 
-3. Port supports multiple installation methods including:
-   - **Hosted by Port**: The integration runs on Port's infrastructure
-   - **Self-hosted**: Install the integration in your environment (e.g., on your Kubernetes cluster)
-   - **OAuth**: Quickly connect using PagerDuty OAuth authentication
+3. Port supports multiple installation methods, for this guide we will use "Hosted by port". You can use OAuth for a quick and easy installation.
 
-4. For this guide, we will use the `Hosted by Port` method. Enter the required parameters:
+4. Enter the required parameters:
    - Token - Your Pagerduty API token. To create one, see the [Pagerduty documentation](https://support.pagerduty.com/docs/api-access-keys).
      
-    :::info Port secrets
-     The `Token` field is a Port secret, meaning it will be encrypted and stored securely in Port.  
-     Select a secret from the dropdown, or create a new one by clicking on `+ Add secret`.
+      :::info Port secrets
+      The `Token` field is a Port secret, meaning it will be encrypted and stored securely in Port.  
+      Select a secret from the dropdown, or create a new one by clicking on `+ Add secret`.
 
-     Learn more about Port secrets [here](/sso-rbac/port-secrets/).  
-     :::
+      Learn more about Port secrets [here](/sso-rbac/port-secrets/).  
+      :::
 
    - API URL - The Pagerduty API URL. For most users, this will be `https://api.pagerduty.com`. If you use the EU data centers, set this to `https://api.eu.pagerduty.com`.
 
