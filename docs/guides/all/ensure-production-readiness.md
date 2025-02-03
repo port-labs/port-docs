@@ -97,7 +97,7 @@ Port's Git integration automatically fetches repository data, including branch p
 If you have already installed the Git integration you can skip this step.
 :::
 
-To install the Git integration, follow the [Git integration guide](/build-your-software-catalog/sync-data-to-catalog/git/github/installation).
+To install the Git integration, follow the [Git integration guide](/build-your-software-catalog/sync-data-to-catalog/git).
 
 Once installed, Port will automatically track the `require_code_owner_review` property for your repositories, which we'll use in our scorecard rules.
 
