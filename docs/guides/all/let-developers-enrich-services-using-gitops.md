@@ -11,7 +11,8 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Enrich repositories using GitOps in Port
 
-This guide will walk you through configuring a GitOps-based approach to enrich repositories in your Port software catalog. Once implemented, you’ll be able to:
+This guide will walk you through configuring a GitOps-based approach to enrich repositories in your Port software catalog.   
+Once implemented:
 
 - Developers will be able to enrich their repositories without needing to nag devops engineers.
 - Platform engineers will be able to create RBAC-controlled actions for developers, empowering their independence.
@@ -20,10 +21,9 @@ This guide will walk you through configuring a GitOps-based approach to enrich r
 
 ## Common use cases
 
-- Flexible Repository Metadata: Allow teams to add or update repository properties (e.g., lifecycle, type) without manual intervention.
-- Domain Assignments: Group related repositories under business-oriented domains (e.g., payments, shipping).
-- Developer Autonomy: Let developers customize their repositories via self-service actions, reducing dependency on DevOps or platform teams.
-- Scalable Governance: Maintain consistency and governance at scale, while giving teams freedom to innovate within set boundaries.
+- Repository Enrichment: Enable teams to add metadata like type, lifecycle stage, and domain assignments through GitOps workflows
+- Compliance Tracking: Monitor repository lifecycle stages and maintain audit trails through GitOps-based changes
+- Cross-team Collaboration: Foster collaboration by making repository metadata and domain relationships visible across teams
 
 ## Prerequisites
 
@@ -38,17 +38,16 @@ To support GitOps-based repository enrichment in your portal,
 we’ll add two new properties to the existing `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>,
 and create a new `Domain` blueprint that groups related repositories together.
 
-Once implemented:
-- **Type**: Classify each repository (e.g., microservice, library, CLI).
-- **Lifecycle**: Track whether a repository is in development, staging, or production.
-- **Domain**: A blueprint that represents a business or functional domain (e.g., “Payments,” “Shipping”), connecting multiple repositories under a shared purpose.
+Let's add the following properties to track important metadata about our repositories:
+- A **Type** property to classify repositories (e.g., microservice, library, CLI)
+- A **Lifecycle** property to track development stages (development, staging, production)
 
 
 ### Add new properties to the `Repository` blueprint
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New property`.
 
-2. The first property will be the repository's type, chosen from a predefined list of options. Fill out the form like the example below, and click `Create`:
+2. The first property will be the repository type, chosen from a predefined list of options. Fill out the form like the example below, and click `Create`:
 
     <img src="/img/guides/gitopsServicePropType1.png" width="45%" border='1px'  style={{ display: 'inline-block', marginRight: '1rem' }} />
 
@@ -61,6 +60,7 @@ Once implemented:
    <img src="/img/guides/gitopsServicePropLifecycle1.png" width="45%" border='1px'  style={{ display: 'inline-block', marginRight: '1rem' }} />
 
    <img src="/img/guides/gitopsServicePropLifecycle2.png"  width="45%" border='1px' style={{ display: 'inline-block' }}  />
+
 
 ### Create a Domain blueprint
 
@@ -328,11 +328,11 @@ Our action will create a pull-request in the  repository, containing a `port.yml
 
 1. First, let's create the necessary token and secrets. If you've already completed the [`scaffold a new service guide`](/guides/all/scaffold-a-new-service), you should already have these configured and you can skip this step.
 
-- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our workflow).
+    - Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our workflow).
 
-    <img src='/img/guides/personalAccessToken.png' width='80%' />
+        <img src='/img/guides/personalAccessToken.png' width='80%' />
 
-- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+    - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
 
 2. In your `Port-actions` (or equivalent) Github repository, create 3 new secrets under `Settings->Secrets and variables->Actions`:
 
@@ -371,7 +371,7 @@ Our action will create a pull-request in the  repository, containing a `port.yml
 2. Create the following [Jenkins credentials](https://www.jenkins.io/doc/book/using/using-credentials/#configuring-credentials) in your Jenkins instance:
 
     - A `username with password` credential named `BITBUCKET_CREDENTIALS` with your Bitbucket username as the username, and the `app password` you created in the previous step as the password.
-    <FindCredentials />
+      <FindCredentials />
     - A `secret text` credential named `PORT_CLIENT_ID` with your Port client ID as the secret.
     - A `secret text` credential named `PORT_CLIENT_SECRET` with your Port client secret as the secret.
 
