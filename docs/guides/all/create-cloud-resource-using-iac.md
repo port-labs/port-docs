@@ -13,7 +13,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 This guide shows how to open a pull request in your Git repository—directly from Port—to create a new cloud resource using GitOps. 
 The action we will create in this guide demonstrates how:
-- Platform engineers can define powerful actions that developers use within controlled permission boundaries
+- Platform engineers can define powerful actions to control permission boundaries
 - Developers can easily create and track cloud resources from Port, streamlining their workflow
 
 
@@ -22,14 +22,15 @@ The action we will create in this guide demonstrates how:
 
 - A Port account with permissions to create self-service actions.
 - The [Git Integration](/build-your-software-catalog/sync-data-to-catalog/git/) that is relevant for you needs to be installed.
-- A repository in your Git provider in which you can create a workflow/pipeline.We recommend naming it `Port-actions`.
+- A repository in your Git provider in which you can create a workflow/pipeline. We recommend naming it `Port-actions`.
 
 
 ## Common use cases
 
-- Complete IaC flow: Walk through an end-to-end process for creating resources via Infrastructure as Code (IaC), from defining a template to merging a pull request.
-- Easy Port-Backend Communication: Illustrate how a self-service action in Port can seamlessly talk to your Git repositories or CI pipelines.
-- Simplified Developer Experience: Provide a single portal where developers can create resources without needing direct access to cloud consoles or YAML files.
+- Automated S3 Bucket Creation: Create AWS S3 buckets by automatically generating Terraform configurations and opening pull requests
+- Streamlined Developer Workflow: Enable developers to provision cloud resources through a self-service portal
+- Infrastructure Visibility: Track and monitor cloud resource definitions directly in your software catalog
+
 
 ## Set up data model
 
@@ -37,7 +38,7 @@ To enable tracking of cloud resource definitions in Port, we'll add a new **URL*
 This property will point to the location of IaC templates in your Git repository, letting us seamlessly link infrastructure code to each repository.
 
 
-### Add a URL to your new resource's definition
+### Add a resource definitions property
 
 In this guide we will add a new property to our `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we can use to access our cloud resource definitions.
 
