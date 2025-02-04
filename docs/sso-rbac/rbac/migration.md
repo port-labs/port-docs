@@ -28,7 +28,7 @@ The resources that might be affected are:
 Some of the resources will be migrated automatically, while others will require manual intervention.
 
 ## Prepare for migration
-Before running the migration, you can you can use [this script](https://github.com/port-labs/script-examples/tree/main/users-and-teams-as-blueprints-migration-visibility-script) to check the affected resources and see if they need to be migrated manually. The script will retrieve all affected resources and generate a report.
+Before running the migration, you can use [this script](https://github.com/port-labs/script-examples/tree/main/users-and-teams-as-blueprints-migration-visibility-script) to check the affected resources and see if they need to be migrated manually. The script will retrieve all affected resources and generate a report.
 After downloading the script, follow the instructions in the README file to execute it.
 
 :::info Security concerns
