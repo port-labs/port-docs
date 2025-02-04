@@ -39,67 +39,36 @@ You'll learn how to track metrics like on-call coverage and code ownership, and 
 
 ## Set up data model
 
-When you install the PagerDuty and Git integrations, they automatically add useful properties to your service blueprint:
+When you install the PagerDuty and Git integration, Port will automatically add the following properties to your service blueprint:
 - `pagerduty_oncall`: Shows the current on-call for the service (from PagerDuty)
 - `require_code_owner_review`: Indicates if code owner review is required (from Git)
 
-We'll use these properties to track production readiness standards.
+We'll use these properties in our metrics to track production readiness standards.
 
-### Set up PagerDuty integration
+## Configure PagerDuty service mapping
 
-Port offers various integrations with incident response platforms. In this guide, we will use **Pagerduty** to get our services' on-call.
+To ensure your PagerDuty services are correctly mapped to your Port services, you'll need to configure the mapping in your PagerDuty integration. This will allow Port to automatically discover and relate PagerDuty services to your existing service entities.
 
-:::tip Skip if already installed
-If you have already installed the PagerDuty integration you can skip this step.
-:::
+1. Go to your [data sources page](https://app.getport.io/settings/data-sources) and click on your PagerDuty integration
 
+    <img src='/img/guides/pdDataSources.png' width='100%' border='1px' />
+    <br/><br/>
 
-#### Integrate Pagerduty into Port
-
-Let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.  
-To install the integration:
-
-1. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on the `+ Data source` button in the top-right corner.
-
-2. Under the `Incident Management` section, choose `Pagerduty`.
-
-3. Port supports multiple installation methods, for this guide we will use "Hosted by port". You can use OAuth for a quick and easy installation.
-
-4. Enter the required parameters:
-   - Token - Your Pagerduty API token. To create one, see the [Pagerduty documentation](https://support.pagerduty.com/docs/api-access-keys).
-     
-      :::info Port secrets
-      The `Token` field is a Port secret, meaning it will be encrypted and stored securely in Port.  
-      Select a secret from the dropdown, or create a new one by clicking on `+ Add secret`.
-
-      Learn more about Port secrets [here](/sso-rbac/port-secrets/).  
-      :::
-
-   - API URL - The Pagerduty API URL. For most users, this will be `https://api.pagerduty.com`. If you use the EU data centers, set this to `https://api.eu.pagerduty.com`.
-
-5. Click `Done`. Port will now install the integration and start fetching your Pagerduty data. This may take a few minutes.    
-   You can see the integration in the `Data sources` page, when ready it will look like this:
-   <img src='/img/guides/prodReadinessInstallationCompleteDataSources.png' width='75%' border='1px' />
-   <br/><br/>
-
-
-Great! Now that the integration is installed, we should see some new components in Port:
-
-   - Go to your [Builder](https://app.getport.io/settings/data-model), you should now see two new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `PagerDuty Service` and `PagerDuty Incident`.
-   - Go to your [Software catalog](https://app.getport.io/services), click on `PagerDuty Services` in the sidebar to see your PagerDuty services with populated `On-call` properties.
-
-
-### Set up Git integration
-
-Port's Git integration automatically fetches repository data, including branch protection rules. This allows us to track if code owner review is required for each repository.
-
-:::tip Skip if already installed
-If you have already installed the Git integration you can skip this step.
-:::
-
-To install the Git integration, follow the [Git integration guide](/build-your-software-catalog/sync-data-to-catalog/git).
-
-Once installed, Port will automatically track the `require_code_owner_review` property for your repositories, which we'll use in our scorecard rules.
+2. Add the following mapping configuration:
+      ```yaml showLineNumbers
+      - kind: services
+        selector:
+          query: "true"
+        port:
+          entity:
+            mappings:
+              identifier: .name | gsub("[^a-zA-Z0-9@_.:/=-]"; "-") | tostring
+              title: .name
+              blueprint: '"service"'
+              properties: {}
+              relations:
+                pager_duty_service: .id
+      ```
 
 
 ## Update your existing service's scorecard
