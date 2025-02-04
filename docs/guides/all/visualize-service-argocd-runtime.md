@@ -184,11 +184,11 @@ After installation, the integration will:
 
 <br/>
 
-### Define the connection between workloads and repositories
+### Define the connection between workloads and services
 
-Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between our ArgoCD resources and the `Repository` blueprint that already exists in our builder. This will grant us some helpful context in our software catalog, allowing us to see relevant ArgoCD application/s in a `Service`'s context, and their corresponding data.
+Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between our ArgoCD resources and the `Service` blueprint that already exists in our builder. This will grant us some helpful context in our software catalog, allowing us to see relevant ArgoCD application/s in a service's context, and their corresponding data.
 
-In this guide we will create a relation named `Repository` for the `Running Service` blueprint, which represents the service a workload is running.
+In this guide we will create a relation named `Service` for the `Running Service` blueprint, which represents the service a workload is running.
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Running Service` blueprint, and click on `New relation`.
 
@@ -210,8 +210,7 @@ For example, an ArgoCD application with the label `portService: awesomeService` 
 
 To achieve this, we need to update the ArgoCD integration's mapping configuration:
 
-1. Go to your [data sources page](https://app.getport.io/settings/data-sources), find the ArgoCD exporter card, click on it and you will see a YAML editor showing the current configuration.  
-   Add the following block to the mapping configuration and click `Resync`:
+1. Go to your [data sources page](https://app.getport.io/settings/data-sources), find the ArgoCD exporter card, click on it and you will see a YAML editor showing the current configuration. Add the following block to the mapping configuration and click `Resync`:
 
     ```yaml showLineNumbers
       - kind: application
