@@ -1,0 +1,79 @@
+.actionUrlGenerator {
+  background: var(--ifm-color-emphasis-100);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.actionUrlGenerator div {
+  margin-bottom: 15px;
+}
+
+.actionUrlGenerator label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.actionUrlGenerator input[type="text"],
+.actionUrlGenerator textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.actionUrlGenerator textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.generateButton {
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-white);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.generateButton:hover {
+  background: var(--ifm-color-primary-darker);
+}
+
+.exampleButton {
+  margin-left: auto;
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-700);
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.exampleButton:hover {
+  background: var(--ifm-color-emphasis-300);
+}
+
+.error {
+  color: var(--ifm-color-danger);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.urlContainer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.copyButton {
+  padding: 8px 16px;
+  white-space: nowrap;
+} 
