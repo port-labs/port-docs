@@ -1,5 +1,5 @@
 ---
-sidebar_label: Send link to an action
+sidebar_label: Share a pre-filled action link
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
