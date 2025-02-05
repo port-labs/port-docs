@@ -21,13 +21,14 @@ This guide will walk you through automating the process of creating and updating
 Not sure what these entities mean? See their definitions [here](/getting-started/default-components).
 :::
 
-## Choose discovery type
+## Discovery methods
 
-Automatic discovery can be configured using one of two approaches:
+This page describes two steps you can take to automatically discover and update entities in your catalog:
+
 1. Define one of your external tools as a "source of truth" for the resources you want to ingest.
 2. Use metadata from your external tools (e.g. labels, naming conventions) to identify and update an entity in Port.
 
-Both options require modifying the [mapping configuration](/build-your-software-catalog/customize-integrations/configure-mapping) of the relevant integration.  
+Both steps require modifying the [mapping configuration](/build-your-software-catalog/customize-integrations/configure-mapping) of the relevant integration.  
 
 <details>
 <summary>**How to modify a mapping configuration (click to expand)**</summary>
@@ -37,7 +38,7 @@ Both options require modifying the [mapping configuration](/build-your-software-
 4. Click on the "Save & Resync" button to save the changes and resync the integration.
 </details>
 
-## Option 1: Define a source of truth
+## Step 1: Define a source of truth
 
 This approach is useful when you want to create entities of a specific type (e.g. services, environments, teams, users) based on resources from a specific external tool.  
 
@@ -549,12 +550,12 @@ Common examples for resources that can be used as a source of truth for `teams`:
 
 </Tabs>
 
-## Option 2: Use predefined metadata
+## Step 2: Use predefined metadata
 
-Another way to automatically update your catalog is to use data from your external tools to identify a specific entity in Port.  
-This approach is useful when you want to update entities of a specific type (e.g. services, environments, teams, users) based on a label, naming convention, or other piece of metadata in a specific external tool.  
+In addition to defining "sources of truth", you can use data from your external tools to identify and update entities in Port.  
+This is useful when you want to update entities of a specific type (e.g. services, environments, teams, users) based on a label, naming convention, or other piece of metadata in a specific external tool.  
 
-See below for various examples of how to use this approach.
+See below for various examples of how to implement this.
 
 ### Identifier is **known**
 
