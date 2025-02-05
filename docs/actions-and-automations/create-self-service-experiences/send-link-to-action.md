@@ -7,7 +7,8 @@ import ActionUrlGenerator from '@site/src/components/ActionUrlGenerator';
 
 # Send link to an action
 
-Port allows you to generate links that pre-fill action inputs, making it easy to share action execution URLs with your developers. This is particularly useful when you want to:
+Port allows you to generate links that pre-fill action inputs, making it easy to share action execution URLs with your developers.  
+This is particularly useful when you want to:
 
 1. Create bookmarks for commonly used actions with specific inputs.
 2. Share action execution links in documentation.
