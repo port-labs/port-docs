@@ -63,7 +63,7 @@ Let's say you have a "Report Bug" action with identifier `report_bug` that accep
 - `severity`: Bug severity level
 - `description`: Detailed bug description
 
-Here's how to generate a link for it:
+The following code will generate a link for it:
 
 ```javascript
 let actionInputs = {
