@@ -100,7 +100,7 @@ resources:
         mappings:
           identifier: .item.query_id
           title: .item.query_name
-          blueprint: '"kicsScan"'
+          blueprint: '"checkmarxScan"'
           properties:
             category: .item.category
             cloud_provider: .item.cloud_provider
