@@ -97,7 +97,7 @@ resources:
         mappings:
           identifier: .item.VulnerabilityID
           title: .item.Title
-          blueprint: '"trivyVulnerability"'
+          blueprint: '"kicsVulnerability"'
           properties:
             version: .item.InstalledVersion
             package_name: .item.PkgName
