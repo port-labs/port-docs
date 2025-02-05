@@ -26,7 +26,7 @@ https://app.getport.io/self-serve?action=ACTION_IDENTIFIER&actionInputs=ENCODED_
 
 ## Generate action execution URL
 
-To generate an action execution URL, you'll need to use the JSURL library to properly encode the action inputs.
+To generate an action execution URL, you will need to use the `JSURL` library to properly encode the action inputs.
 
 <details>
 <summary><b>Code example (click to expand)</b></summary>
