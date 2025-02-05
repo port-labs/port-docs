@@ -1,6 +1,9 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Image from "@theme/IdealImage";
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
+import GitHubFileDryRunSuccessfulCheck from '/static/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunSuccessfulCheck.png'
+import GitHubFileDryRunFailedCheck from '/static/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunFailedCheck.png'
 
 # GitHub
 
@@ -398,6 +401,36 @@ If you have both single-document and multi-document YAML files in your repositor
 itemsToParse: .file.content | if type== "object" then [.] else . end
 ```
 :::
+
+#### Dry-run for file changes
+
+To prevent unwanted changes to the ingested file, you can use the dry-run mechanism utilizing GitHub Check. 
+When `validationCheck: true` is enabled in the file kind mapping, our Github app will run schema validation on these files before they are processed.
+
+To enable file validation, add the `validationCheck` flag to your file kind mapping:
+
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: .repo.name == "port"
+      files:
+        - path: data-model/domains/*.yaml
+          validationCheck: true
+    port:
+      entity:
+        mappings:
+          // the rest of your mapping configuration
+```
+
+When a PR modifies a matching file, you will see a new check in your PR with the validation results.
+
+Example for a successful validation:
+<Image img={GitHubFileDryRunSuccessfulCheck} style={{ width: 700 }} />
+
+<br />
+Example for a failed validation:
+<Image img={GitHubFileDryRunFailedCheck} style={{ width: 700 }} />
 
 #### Limitations
 
