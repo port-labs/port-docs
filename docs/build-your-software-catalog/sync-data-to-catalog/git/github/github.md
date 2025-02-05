@@ -432,6 +432,33 @@ Example for a successful validation:
 Example for a failed validation:
 <Image img={GitHubFileDryRunFailedCheck} style={{ width: 700 }} />
 
+#### Ingest raw file content
+
+If you need to ingest the raw content of a file without parsing it, you can use the `skipParsing` key in your file selector.  
+This is useful when you want to store the file content as a string or YAML property.  
+
+When `skipParsing` is set to `true`, the file content will be kept in its original string format instead of being parsed into a JSON/YAML object.
+
+Here's an example that ingests the raw content of a `values.yaml` file into the `content` property of a `file` entity:
+
+```yaml
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: values.yaml
+          skipParsing: true
+    port:
+      entity:
+        mappings:
+          identifier: >-
+            .repo.name + "-values"
+          blueprint: '"file"'
+          properties:
+            content: .file.content
+```
+
 #### Limitations
 
 - Currently only files up to 512KB in size are supported.
