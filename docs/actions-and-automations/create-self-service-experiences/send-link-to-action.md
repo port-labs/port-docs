@@ -85,6 +85,6 @@ For complex inputs with special characters, spaces, or nested objects, using JSU
 
 ## Interactive URL generator
 
-To make it easier to generate action URLs, you can use this interactive tool:
+To simplify the process described in this page, you can use this interactive tool to generate the finalized URL:
 
 <ActionUrlGenerator />
