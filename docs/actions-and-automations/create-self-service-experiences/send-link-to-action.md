@@ -83,7 +83,7 @@ The generated URL will lead to the action's execution form, pre-filled with the 
 For complex inputs with special characters, spaces, or nested objects, using JSURL encoding is essential as it properly handles these cases while keeping the URL compact.
 :::
 
-## Generate direct link online
+## Interactive URL generator
 
 To make it easier to generate action URLs, you can use this interactive tool:
 
