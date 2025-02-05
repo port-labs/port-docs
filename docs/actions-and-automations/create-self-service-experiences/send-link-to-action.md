@@ -1,11 +1,11 @@
 ---
-sidebar_label: Share a pre-filled action link
+sidebar_label: Share a pre-filled action URL
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import ActionUrlGenerator from '@site/src/components/ActionUrlGenerator';
 
-# Send link to an action
+# Share a pre-filled action URL
 
 Port allows you to generate links that pre-fill action inputs, making it easy to share action execution URLs with your developers.  
 This is particularly useful when you want to:
