@@ -7,26 +7,21 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Visualize your services' Kubernetes runtime using ArgoCD
 
 Port’s ArgoCD integration allows you to model and visualize your Kubernetes deployments managed by ArgoCD, directly in Port.  
-Once implemented:
-
-- Developers will be able to easily view the health and status of their services' K8s runtime.
-- Platform engineers will be able to create custom views and visualizations for different stakeholders in the organization.
-- Platform engineers will be able to set, maintain and track standards for K8s resources.
-- R&D managers will be able to track any data about services' K8s resources, using tailor-made views and dashboards.
-
+This guide will help you set up the integration and visualize your services' Kubernetes runtime.
 
 
 ## Common use cases
 
-- ArgoCD and Port Unified View: Manage GitOps workflows in ArgoCD, while seeing real-time resource states in Port.
-- Enhanced Observability: Track multiple clusters or namespaces in a single catalog, with health statuses at a glance.
-- Centralized Dashboards: Build a single dashboard that shows ArgoCD “Running services” alongside your `Service` blueprint.
-- Custom Automation: Extend or combine data from ArgoCD with Slack, Jira, or other external tools, all from Port.
-
+- Developers can easily view the health and status of their services' K8s runtime.
+- Platform engineers can create custom views and visualizations for different stakeholders in the organization.
+- Platform engineers can set, maintain and track standards for K8s resources.
+- R&D managers can track any data about services' K8s resources, using tailor-made views and dashboards.
 
 ## Prerequisites
 - The [Git Integration](/build-your-software-catalog/sync-data-to-catalog/git/) that is relevant for you needs to be installed.
@@ -47,32 +42,11 @@ ArgoCD integration creates new **blueprints** (e.g., `argocdApplication`) that r
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-  :::tip Variable replacement
-   Remember to replace the following placeholders with your own values:
-   - `YOUR_PORT_CLIENT_ID` -  Your [Port client ID](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-   - `YOUR_PORT_CLIENT_SECRET` - Your [Port client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
-   - `YOUR_ARGOCD_TOKEN` - Your [ArgoCD API token](https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/#authorization). Ensure that the token has sufficient permissions to read ArgoCD resources. You can configure the RBAC policy for the token user by following [this guide](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/)
-   - `YOUR_ARGOCD_SERVER_URL` - The server url of your ArgoCD instance
-   :::
-
-```bash showLineNumbers
-# The following script will install an Ocean integration in your K8s cluster using helm
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install argocd port-labs/port-ocean \
-	--set port.clientId="YOUR_PORT_CLIENT_ID"  \
-	--set port.clientSecret="YOUR_PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set integration.identifier="argocd"  \
-	--set integration.type="argocd"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.token="YOUR_ARGOCD_TOKEN"  \
-	--set integration.config.serverUrl="YOUR_ARGOCD_SERVER_URL" 
-```
+<OceanRealtimeInstallation integration="Argocd" />
 
 <PortApiRegionTip/>
+
 
 </TabItem>
 
@@ -184,24 +158,12 @@ After installation, the integration will:
 
 <br/>
 
-### Define the connection between workloads and services
+## Set up automatic discovery
 
-Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between our ArgoCD resources and the `Service` blueprint that already exists in our builder. This will grant us some helpful context in our software catalog, allowing us to see relevant ArgoCD application/s in a service's context, and their corresponding data.
+After onboarding, the relationship between the **Workload** blueprint and the **Service** blueprint is established automatically.   
+The next step is to configure automatic discovery to ensure that each **Workload** entity is properly related to its respective **Service** entity.  
 
-In this guide we will create a relation named `Service` for the `Running Service` blueprint, which represents the service a workload is running.
-
-1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Running Service` blueprint, and click on `New relation`.
-
-2. Fill out the form like this, then click `Create`:
-
-    <img src='/img/guides/createServiceRelation.png' width='50%' border='1px' />
-
-
-    <br/><br/>
-
-## Map your workloads to their services
-
-You may have noticed that the `service` relation is empty for all of our `Running Services`. This is because we haven't specified which `Running service` belongs to which `service`. This can be done manually, or via mapping by using a convention of your choice.
+You may have noticed that the service relation is empty for all of our workload entities. This is because we haven't specified which **Workload** belongs to which **Service**. This can be done manually, or via mapping by using a convention of your choice.
 
 In this guide we will use the following convention:  
 An Argo application with a label in the form of `portService: <service-identifier>` will automatically be assigned to a `service` with that identifier.
@@ -237,7 +199,7 @@ To achieve this, we need to update the ArgoCD integration's mapping configuratio
 
     <br/>
 
-2. Go to the [services page](https://app.getport.io/services) of your software catalog. Click on the `Service` for which you created the deployment. At the bottom of the page, you will see the `Running Services` related to this service, along with all of their data:
+2. Go to the [services page](https://app.getport.io/services) of your software catalog. Click on the `Service` for which you created the deployment. At the bottom of the page, you will see the `Workload` related to this service, along with all of their data:
 
     <img src='/img/guides/argoEntityAfterIngestion.png' width='100%' border='1px' />
 
@@ -246,10 +208,11 @@ To achieve this, we need to update the ArgoCD integration's mapping configuratio
 
 ## Visualize data from your Kubernetes environment
 
-We now have a lot of data about our Argo applications, and a dashboard that visualizes it in ways that will benefit the routines of our developers and managers. Since we connected our ArgoCD application(`Running service`) blueprint to our `Service` blueprint, we can now access some of the application's data directly in the context of the service.  
+We now have a lot of data about our Argo applications, and a dashboard that visualizes it in ways that will benefit the routines of our developers and managers. Since our ArgoCD application(`Workload`) blueprint is connected to our `Service` blueprint, we can now access some of the application's data directly in the context of the service.  
 Let's see an example of how we can add useful visualizations to our dashboard:
 
-### Show all "degraded" workloads of `AwesomeService` service belonging to a specific team
+    
+### Display all degraded workloads for the `AwesomeService` service by team
 
 1. Go to your [ArgoCD dashboard](https://app.getport.io/argocdDashboard), click on the `+ Add` button in the top right corner, then select `Table`.
 
