@@ -5,6 +5,7 @@ sidebar_label: "Default components"
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
 
 # Default components
 
@@ -42,13 +43,13 @@ You can modify the default environments and/or create additional ones.
 
 For example, a `frontend` service in your organization can have `frontend-prod` and `frontend-test` workloads, each with its own Kubernetes namespace, Sentry project, and owning team.
 
-### <img src="/img/icons/user.svg" style={{"vertical-align": "middle"}} className="not-zoom" /> User 
+### <LogoImage logo="User" verticalAlign="middle" /> User 
 
 `_user` - represents a user in your organization.  
 
 This blueprint can be related to other "user" blueprints coming from your data sources, such as `github_user`, allowing you to manage a user across multiple tools from a single component.  
 
-### <img src="/img/icons/team.svg" style={{"vertical-align": "middle"}} className="not-zoom" /> Team
+### <LogoImage logo="Team" verticalAlign="middle" /> Team
 
 `_team` - represents a team in your organization. 
 
