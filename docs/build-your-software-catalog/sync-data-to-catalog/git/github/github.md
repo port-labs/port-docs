@@ -401,8 +401,8 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 
 #### Dry-run for file changes
 
-To prevent unwanted changes to the ingested file, you can use the dry-run mechanism utilizing GitHub Check. 
-When `validationCheck: true` is enabled in the file kind mapping, our Github app will run schema validation on these files before they are processed.
+To prevent unwanted changes to the ingested file, you can enable `GitHub checks` to perform a validation on ingested files.  
+When `validationCheck: true` is enabled in the `kind: file` mapping, Port's Github app will perform a schema validation on these files before they are processed.
 
 To enable file validation, add the `validationCheck` flag to your file kind mapping:
 
