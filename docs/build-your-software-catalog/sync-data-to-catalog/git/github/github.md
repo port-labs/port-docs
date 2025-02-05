@@ -1,9 +1,6 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Image from "@theme/IdealImage";
 import GitHubResources from './\_github_exporter_supported_resources.mdx'
-import GitHubFileDryRunSuccessfulCheck from '/static/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunSuccessfulCheck.png'
-import GitHubFileDryRunFailedCheck from '/static/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunFailedCheck.png'
 
 # GitHub
 
@@ -426,11 +423,12 @@ resources:
 When a PR modifies a matching file, you will see a new check in your PR with the validation results.
 
 Example for a successful validation:
-<Image img={GitHubFileDryRunSuccessfulCheck} style={{ width: 700 }} />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunSuccessfulCheck.png' width='70%' />
 
-<br />
+<br /> <br />
+
 Example for a failed validation:
-<Image img={GitHubFileDryRunFailedCheck} style={{ width: 700 }} />
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunFailedCheck.png' width='70%' />
 
 #### Ingest raw file content
 
