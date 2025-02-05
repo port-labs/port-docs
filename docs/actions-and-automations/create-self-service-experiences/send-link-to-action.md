@@ -77,7 +77,7 @@ let encodedInputs = JSURL.stringify(actionInputs);
 let url = `https://app.getport.io/self-serve?action=report_bug&actionInputs=${encodedInputs}`;
 ```
 
-This will generate a URL that when opened, will pre-fill all the inputs in the action form.
+The generated URL will lead to the action's execution form, pre-filled with the defined input values.
 
 :::tip
 For complex inputs with special characters, spaces, or nested objects, using JSURL encoding is essential as it properly handles these cases while keeping the URL compact.
