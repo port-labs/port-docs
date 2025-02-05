@@ -21,7 +21,6 @@ The action execution URL follows this structure:
 https://app.getport.io/self-serve?action=ACTION_IDENTIFIER&actionInputs=ENCODED_INPUTS
 ```
 
-Where:
 - `ACTION_IDENTIFIER` is your action's unique identifier
 - `ENCODED_INPUTS` is a minified version of your inputs using JSURL encoding
 
