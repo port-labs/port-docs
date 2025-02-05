@@ -399,7 +399,7 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 ```
 :::
 
-#### Accessing raw file content
+#### Ingest raw file content
 
 If you need to access the raw content of a file without parsing it, you can use the `skipParsing` key in your file selector. This is useful when you want to store the file content as a string or YAML property. When `skipParsing` is set to `true`, the file content will be kept in its original string format instead of being parsed into a JSON/YAML object.
 
