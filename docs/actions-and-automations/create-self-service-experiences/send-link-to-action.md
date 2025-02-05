@@ -79,7 +79,7 @@ let url = `https://app.getport.io/self-serve?action=report_bug&actionInputs=${en
 
 The generated URL will lead to the action's execution form, pre-filled with the defined input values.
 
-:::tip
+:::tip JSURL
 For complex inputs with special characters, spaces, or nested objects, using JSURL encoding is essential as it properly handles these cases while keeping the URL compact.
 :::
 
