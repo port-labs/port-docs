@@ -4,7 +4,7 @@ import TabItem from "@theme/TabItem"
 # Dynamic permissions
 
 Port allows users to set dynamic permissions for both executing and approving execution of self-service actions.   
-To support these dynamic permission, Port offers the following to users within the JSON configuration of any given self-service action:
+To support dynamic permissions, the following items are available to you via the JSON configuration of any given self-service action:
 - The organization's full software catalog as defined in Port (to provide necessary context to the self-service action).
 - The ability to query the software catalog.
 - The ability to set conditions based on queries of the software catalog.
@@ -70,10 +70,10 @@ Under each of these two keys, you can add one or more of the following keys:
   - [`"queries"`](/search-and-query/) - a collection of [rules](/search-and-query/#rules) you can use to fetch and filter the data you need from your software catalog.
   - `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data. There is an implicit `"OR"` between each condition.
 
-If there is **no** `policy`, then `roles`, `users`, and `teams` control who can **view**, **approve**, or **execute** the action.  
-However, If there **is a** `policy`, then `roles`, `users`, and `teams` only control who can **view** the action, while the `policy` exclusively controls who can **execute** and **approve** the action.  
+If there is **no** `policy` object defined, then `roles`, `users`, and `teams` control who can **view**, **approve**, or **execute** the action.  
+If the `policy` object **is** defined, then `roles`, `users`, and `teams` only control who can **view** the action, while `policy` exclusively controls who can **execute** and **approve** the action.  
 
-For example, **If no policy is defined**, the following configuration will allow the action to be **both visible and executed** by any user who is either an `Admin` or a member of the `Engineering` team:
+For example, the following configuration (note that no `policy` is defined) will allow the action to be **both visible and executed** by any user who is either an `Admin` or a member of the `Engineering` team:
 
 ```json
   "execute": {
@@ -82,9 +82,9 @@ For example, **If no policy is defined**, the following configuration will allow
     "teams": ["engineering"]
   }
   ```
-But **If a policy exists**, these roles and teams only determine who can view the action, while the policy exclusively controls who can **execute** or **approve** it.
+Using the same configuration, but this time with a `policy` object defined, these `roles` and `teams` only determine who can view the action, while the `policy` exclusively controls who can **execute** or **approve** it.
 
-For example:
+In the following example, the action will be visible to `Admin` and `Engineering` team members, but its execution permissions depend only on whether the `policy` conditions evaluate to `true`:
 ```json 
 "execute": {
   "roles": ["Admin"],
@@ -106,9 +106,8 @@ For example:
 }
 ```
 
-In the above configuration, the action will be visible to `Admin` and `Engineering` team members; however, execution depends only on whether the policy conditions evaluate to true.
 
-### Using a policy key
+### Using a policy object
 
 Here is an example of using the policy key in a permissions JSON:
 <details>
