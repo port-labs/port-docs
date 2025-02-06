@@ -12,9 +12,9 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Kubernetes
 
-Our integration with Kubernetes queries your Kubernetes clusters directly according to your definition. By using our Kubernetes integration, you can ingest live data directly from your K8s clusters into Port in a transparent, efficient and precise manner, thus making sure only the information you need appears in the software catalog, and remains up to date.
+Port's Kubernetes exporter allows you to model Kubernetes resources in your software catalog and ingest data into them.
 
-Our integration with Kubernetes provides real-time event processing, this allows for an accurate **real-time** representation of your K8s cluster inside Port.
+
 
 <center>
 
