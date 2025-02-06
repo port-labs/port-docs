@@ -34,3 +34,12 @@ Generally, integrating a platform/tool with Port consists of 3 steps:
 
   - When using a webhook, the last step is to [configure the integration's mapping](/build-your-software-catalog/customize-integrations/configure-mapping), in order to tell your integration where to find the data in your tool, and how to map it to your blueprint/s.
   - When using Port's API, there is no need to configure mapping. Since you are directly interacting with the software catalog, the mapping is done as part of the ingestion process.
+
+## Develop an Ocean integration
+
+Most of Port's integrations were developed using the **Ocean framework**.  
+Ocean is an open-source framework that simplifies the development of integrations with external tools, providing many out-of-the-box functionalities.  
+
+In addition to the methods described above, you can also write your own Ocean integration for a specific tool.
+
+Want to write and/or contribute an integration? Check out the [**Ocean documentation**](https://ocean.getport.io) to get started, and reach out to us if you have any questions 🌟

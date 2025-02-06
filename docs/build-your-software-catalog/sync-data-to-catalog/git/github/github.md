@@ -399,6 +399,64 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 ```
 :::
 
+#### Dry-run for file changes
+
+To prevent unwanted changes to the ingested file, you can enable `GitHub checks` to perform a validation on ingested files.  
+When `validationCheck: true` is enabled in the `kind: file` mapping, Port's Github app will perform a schema validation on these files before they are processed.
+
+To enable file validation, add the `validationCheck` flag to your file kind mapping:
+
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: .repo.name == "port"
+      files:
+        - path: data-model/domains/*.yaml
+          validationCheck: true
+    port:
+      entity:
+        mappings:
+          // the rest of your mapping configuration
+```
+
+When a PR modifies a matching file, you will see a new check in your PR with the validation results.
+
+Example for a successful validation:
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunSuccessfulCheck.png' width='70%' />
+
+<br /> <br />
+
+Example for a failed validation:
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunFailedCheck.png' width='70%' />
+
+#### Ingest raw file content
+
+If you need to ingest the raw content of a file without parsing it, you can use the `skipParsing` key in your file selector.  
+This is useful when you want to store the file content as a string or YAML property.  
+
+When `skipParsing` is set to `true`, the file content will be kept in its original string format instead of being parsed into a JSON/YAML object.
+
+Here's an example that ingests the raw content of a `values.yaml` file into the `content` property of a `file` entity:
+
+```yaml
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: values.yaml
+          skipParsing: true
+    port:
+      entity:
+        mappings:
+          identifier: >-
+            .repo.name + "-values"
+          blueprint: '"file"'
+          properties:
+            content: .file.content
+```
+
 #### Limitations
 
 - Currently only files up to 512KB in size are supported.
