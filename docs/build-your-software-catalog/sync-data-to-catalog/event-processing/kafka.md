@@ -642,7 +642,7 @@ resources:
           blueprint: '"kafkaConsumerGroup"'
           properties:
             state: .state
-            members: .members
+            members: .members | map(.client_id)
             coordinator: .coordinator.id
             partition_assignor: .partition_assignor
             is_simple_consumer_group: .is_simple_consumer_group
