@@ -10,18 +10,14 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Visualize your services' k8s runtime
 
-Port’s Kubernetes integration helps you easily model and visualize your cluster’s workloads alongside your existing services in Port. Once implemented:
-- Developers can quickly see the health and status of their services’ K8s runtime.
-- Platform engineers can create custom views and dashboards for different stakeholders.
-- R&D managers can track data about services’ K8s resources, enabling high-level oversight and better decision-making.
+Port’s Kubernetes integration helps you model and visualize your cluster’s workloads alongside your existing services in Port. This guide will help you set up the integration and visualize your services' Kubernetes runtime.
 
 ## Common use cases
 
-- Unified Observability: Bring your `Service` blueprint and Kubernetes workloads together in one catalog.
-- Automatic Discovery: Reflect new deployments or changes in K8s as updated entities in Port, no manual steps needed.
-- Metrics and Standards: Attach scorecards to K8s resources to ensure best practices (e.g., minimum replicas, correct naming labels).
-- Customized Visuals: Build dashboards that highlight critical metrics—like resource usage or availability—tailored to your team’s needs.
-
+- Developers can easily view the health and status of their services' K8s runtime.
+- Platform engineers can create custom views and dashboards for different stakeholders.
+- Platform engineers can set, maintain, and track standards for Kubernetes resources.
+- R&D managers can track data about services' Kubernetes resources, enabling high-level oversight and better decision-making.
 
 ## Prerequisites
 
@@ -32,7 +28,7 @@ Port’s Kubernetes integration helps you easily model and visualize your cluste
 
 ## Set up data model
 
-To integrate Kubernetes resources with your existing `Service` blueprint, we’ll first install Port’s Kubernetes exporter, which automatically creates Kubernetes-related blueprints and entities in Port. Then we’ll define a relation that ties each `Workload` to the `Service` it belongs to.
+To integrate Kubernetes resources with your existing `Service` blueprint, we’ll first install Port’s Kubernetes exporter, which automatically creates Kubernetes-related blueprints and entities in Port. 
 
 
 ### Install Port's Kubernetes exporter
@@ -57,7 +53,7 @@ To integrate Kubernetes resources with your existing `Service` blueprint, we’l
       --set "extraEnv[0].value"="my-cluster"
     ```
 
-<PortApiRegionTip/>
+    <PortApiRegionTip/>
 
 #### What does the exporter do?
 
@@ -69,7 +65,7 @@ After installation, the exporter will:
 
     <br/><br/>
 
-    :::info Note
+    :::info What is Workload?
 
     `Workload` is an abstraction of Kubernetes objects which create and manage pods (e.g. `Deployment`, `StatefulSet`, `DaemonSet`).
 
@@ -91,27 +87,17 @@ After installation, the exporter will:
 
 <br/>
 
-### Define the connection between services and workloads
 
-Now that we have our <PortTooltip id="blueprint">blueprints</PortTooltip> set up, we want to model the logical connection between them by relating the `Workload` blueprint to the `Service` blueprint. This will grant us some helpful context in our Software catalog, allowing us to see relevant `Workloads` in a `Service`'s context, or a `Service`'s property directly in its corresponding `Workload`.
+## Set up automatic discovery
 
-In this guide we will create one relation named `service` which will represent the service that a workload is running.
-
-1. Go to your [Builder](https://app.getport.io/settings/data-model), expand the `Workload` blueprint, and click on `New relation`.
-
-2. Fill out the form like this, then click `Create`:
-
-    <img src='/img/guides/createServiceRelation.png' width='50%' />
-
-    <br/><br/>
-
-
-## Map your workloads to their services
+After onboarding, the relationship between the **Workload** blueprint and the **Service** blueprint is established automatically.   
+To ensure each **Workload** entity is properly related to its respective **Service** entity, we will configure automatic discovery using labels.
 
 You may have noticed that the `service` relations are empty for all of our `workloads`. This is because we haven't specified which `workload` belongs to which `service`. This can be done manually, or via mapping by using a convention of your choice.
 
 In this guide we will use the following convention:  
 A `workload` with a label in the form of `portService: <service-identifier>` will automatically be assigned to a `service` with that identifier.
+
 
 For example, a k8s deployment with the label `portService: myService` will be assigned to a `service` with the identifier `myService`.
 
