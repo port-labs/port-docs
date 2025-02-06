@@ -147,47 +147,61 @@ These are the available options for the `ownership` property:
 
 1. **No ownership**
 
-The blueprint has no defined ownership.  
-The `$team` property will have no meaningful value.
+    The blueprint has no defined ownership.  
+    The `$team` property will have no meaningful value.
 
-```json showLineNumbers
-{
-  "identifier": "packageVersion",
-  "title": "Package Version",
-  ...
-}
-```
+    ```json showLineNumbers
+    {
+      "identifier": "packageVersion",
+      "title": "Package Version",
+      ...
+    }
+    ```
 
 2. **Direct**
 
-Ownership of the blueprint's entities will be defined by a hidden <PortTooltip id="relation">relation</PortTooltip> to the `Team` blueprint.  
-The `Owning teams` column will be visible in tables containing entities of the blueprint.
+    Ownership of the blueprint's entities will be defined by a hidden <PortTooltip id="relation">relation</PortTooltip> to the `Team` blueprint.  
+    The `Owning teams` column will be visible in tables containing entities of the blueprint.
 
-```json showLineNumbers
-{
-  "identifier": "packageVersion",
-  "title": "Package Version",
-  "ownership": {
-	"type": "Direct"
-  }
-  ...
-}
-```
+    ```json showLineNumbers
+    {
+      "identifier": "packageVersion",
+      "title": "Package Version",
+      "ownership": {
+      "type": "Direct"
+      }
+      ...
+    }
+    ```
 
 3. **Inherited**
 
-Ownership of the blueprint's entities will be inherited from a different related blueprint with `Direct` ownership.  
-The `Owning teams` column will be visible in tables containing entities of the blueprint, but will not be editable.
+    Ownership of the blueprint's entities will be inherited from a different related blueprint with `Direct` ownership.  
+    The `Owning teams` column will be visible in tables containing entities of the blueprint, but will not be editable.
 
-The `path` key is a dot-separated path of **relation identifiers** that lead to the desired blueprint.
+    The `path` key is a dot-separated path of **relation identifiers** that lead to the desired blueprint.
+
+    ```json showLineNumbers
+    {
+      "identifier": "packageVersion",
+      "title": "Package Version",
+      "ownership": {
+        "type": "Inherited",
+        "path": "relationIdentifier1.relationIdentifier2.relationIdentifier3"
+      }
+      ...
+    }
+    ```
+
+You can also change the `title` of the ownership property. The default value is `Owning teams`.
 
 ```json showLineNumbers
 {
   "identifier": "packageVersion",
   "title": "Package Version",
   "ownership": {
-    "type": "Inherited",
-    "path": "relationIdentifier1.relationIdentifier2.relationIdentifier3"
+    "type": "Direct",
+    "title": "My Custom Ownership Title"
   }
   ...
 }
