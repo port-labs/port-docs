@@ -82,7 +82,6 @@ resources:
           relations:
             project: .projectId | gsub(" "; "")
             members: .__members | map(.identity.uniqueName)
-
   - kind: member
     selector:
       query: 'true'
