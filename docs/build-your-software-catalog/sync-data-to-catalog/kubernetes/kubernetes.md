@@ -14,8 +14,6 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 Port's Kubernetes exporter allows you to model Kubernetes resources in your software catalog and ingest data into them.
 
-
-
 <center>
 
 <Image img={KubernetesIllustration} style={{ width: 700 }} />
@@ -26,15 +24,25 @@ Port's Kubernetes exporter allows you to model Kubernetes resources in your soft
 Port's Kubernetes exporter is open source, view the source code [**here**](https://github.com/port-labs/port-k8s-exporter)
 :::
 
-## 💡 Kubernetes exporter common use cases
+## Overview
 
-Our Kubernetes exporter makes it easy to fill the software catalog with live data directly from your clusters, for example:
+This integration allows you to:
 
-- Map all the resources in your clusters, including **namespaces**, **pods**, **replica sets**, **cluster nodes**, **deployments** and other cluster objects;
-- Get real-time metadata from your cluster such as _replica counts_, _deployment health_, _node health_ and more;
+- Map and organize your desired Kubernetes resources and their metadata in Port (see supported resources below).
+- Watch for Kubernetes object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Use relations to create a complete, easily digestible map of your K8s cluster inside Port;
 - Map your Kubernetes resources from common CRDs such as ArgoCD, Istio and more;
-- etc.
+
+
+### Supported resources
+
+The resources that can be mapped from Kubernetes cluster into Port are listed below.
+- Namespaces
+- Pods
+- Replica sets
+- Cluster nodes
+- Deployments
+- Other cluster objects;
 
 ## How it works
 
