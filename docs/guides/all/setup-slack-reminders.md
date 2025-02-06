@@ -319,13 +319,13 @@ All done! The action is ready to be used 🚀
 
 After creating an action, it will appear under the `Self-service` tab of your Port application:
 
-<img src='/img/guides/selfServiceAfterReminderCreation.png' width='75%' border='1px' />
+<img src='/img/guides/selfServiceAfterReminderCreation.png' width='45%' border='1px' />
 
 1. Click on `Create` to begin executing the action.
 
 2. Click `Execute`. A small popup will appear, click on `View details`:
 
-    <img src='/img/guides/executionDetails.png' width='45%' />
+    <img src='/img/guides/executionDetailsSlack.png' width='45%' />
 
     <br/><br/>
 
