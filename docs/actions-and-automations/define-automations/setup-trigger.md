@@ -40,6 +40,14 @@ The following trigger events are available for each type:
 </TabItem>
 </Tabs>
 
+### Limitations
+
+- Regarding the `ANY_ENTITY_CHANGE` trigger:
+  - When a [mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) on the entity changes, the automation **will not** be triggered.  
+  However, if the target of the relation changes from one entity to another, the automation **will** be triggered.
+  
+  - When a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property) based on a mirror property changes, the automation **will not** be triggered. 
+
 ## Trigger JSON structure
 
 An automation's trigger is defined under the `trigger` key:
