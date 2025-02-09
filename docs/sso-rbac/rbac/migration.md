@@ -313,3 +313,8 @@ Please note that running the script after completing the migration may still sho
 
 If you need to verify your migration status, please review the actual changes made to your resources directly.
 :::
+
+## Terraform migration
+In order to properly manage the `User` and `Team` blueprints using Terraform, you need to use the `port_system_blueprint` resource (and not the `port_blueprint` resource). This resource will extend the defined blueprint with the new specified properties and relations. This will make sure no drift will happen in the future if the base structure of the system blueprint will change.
+The `port_system_blueprint` resource is supported in Terraform starting from version **2.1.8**.
+
