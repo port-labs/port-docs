@@ -21,7 +21,9 @@ Port's Kubernetes integration allows you to model Kubernetes resources in your s
 
 </center>
 
-:::tip
+<br/><br/>
+
+:::tip Kubernetes Exporter
 Port's Kubernetes exporter is open source, view the source code [**here**](https://github.com/port-labs/port-k8s-exporter)
 :::
 
