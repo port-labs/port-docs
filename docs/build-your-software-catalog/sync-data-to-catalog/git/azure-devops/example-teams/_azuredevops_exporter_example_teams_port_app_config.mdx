@@ -54,21 +54,9 @@ resources:
           blueprint: '"service"'
           properties:
             workItemLinking: .isEnabled and .isBlocking
-  - kind: user
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .user.mailAddress
-          title: .displayName
-          blueprint: '"azureDevopsMember"'
-          properties:
-            url: .user.url
   - kind: team
     selector:
       query: 'true'
-      includeMembers: 'true'
     port:
       entity:
         mappings:
@@ -80,7 +68,6 @@ resources:
             description: .description
           relations:
             project: .projectId | gsub(" "; "")
-            members: .__members | map(.identity.uniqueName)
   - kind: member
     selector:
       query: 'true'
@@ -95,7 +82,6 @@ resources:
             email: .identity.uniqueName
           relations:
             team: .__teamId
-
 ```
 
 </details>

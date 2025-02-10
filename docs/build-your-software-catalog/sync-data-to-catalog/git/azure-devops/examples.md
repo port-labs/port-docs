@@ -91,7 +91,7 @@ In the following example you will ingest your Azure Devops pipelines to Port, yo
 After creating the blueprints and saving the integration configuration, you will see new entities in Port.
 
 
-## Mapping users, teams and members
+## Mapping teams and members
 
 In the following example you will ingest your Azure Devops teams and their members to Port, you may use the following Port blueprint definitions and integration configuration:
 
