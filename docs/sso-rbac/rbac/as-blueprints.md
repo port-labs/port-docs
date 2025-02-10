@@ -81,7 +81,9 @@ Since these teams are synced from your IdP the following actions cannot be perfo
 
 :::info Terraform support
 
-Since the `User` and `Team` blueprints can only be extended, to configure them using Terraform you need use the `port_system_blueprint` resource. Those blueprints can not be created so don't forget to import them to your Terraform state.
+Since the `User` and `Team` blueprints can only be extended, to configure them using Terraform you need use the `port_system_blueprint` resource.  
+These blueprints can not be created so don't forget to import them to your Terraform state.
+
 The `port_system_blueprint` resource is supported in Terraform starting from version **2.1.8**.
 
 For example:
