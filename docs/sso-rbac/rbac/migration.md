@@ -4,7 +4,8 @@ sidebar_position: 4
 
 # Migration guide
 :::warning Migration relevance
-This migration guide is relevant only for users who created their Port account **before** January 14, 2025. 
+This migration guide is relevant for all users who created their Port account **before January 14, 2025**, even if they have already enabled the beta feature.  
+
 Its purpose is to guide you through the migration process to use the new behavior and manage users and teams using dedicated blueprints.
 :::
 
