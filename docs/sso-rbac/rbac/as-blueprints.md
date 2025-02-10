@@ -79,7 +79,10 @@ Since these teams are synced from your IdP the following actions cannot be perfo
 
 :::
 
-:::info Terraform support
+### Terraform support
+
+<details>
+<summary>Manage the `User` and `Team` blueprints using Terraform</summary>
 
 Since the `User` and `Team` blueprints can only be extended, to configure them using Terraform you need use the `port_system_blueprint` resource.  
 These blueprints can not be created so don't forget to import them to your Terraform state.
@@ -103,7 +106,7 @@ resource "port_system_blueprint" "user" {
 }
 ```
 
-:::
+</details>
 
 ## User status
 
