@@ -50,12 +50,12 @@ The resources listed above are just a subset of what the Kubernetes integration 
 
 ## Prerequisites
 
-- Port's Kubernetes exporter is installed using [Helm](https://helm.sh), so Helm must be installed
-- You will need your [Port credentials](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials)
+- [Helm](https://helm.sh) is required to install the exporter.
+- Prepare your [Port credentials](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials).
 
-:::tip
-<FindCredentials />
-:::
+  :::tip Find your port credentials
+    <FindCredentials />
+  :::
 
 ## Setup
 
