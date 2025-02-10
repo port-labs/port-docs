@@ -1122,7 +1122,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "PWAXLIH",
   "title": "Port Test Service - Weekly Rotation",
-  "icon": null,
+  "icon": "pagerduty",
   "blueprint": "pagerdutySchedule",
   "team": [],
   "properties": {
