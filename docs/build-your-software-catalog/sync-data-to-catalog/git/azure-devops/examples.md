@@ -10,7 +10,7 @@ import AzureDevopsResources from './\_azuredevops_exporter_supported_resources.m
 import PipelineBlueprint from './example-pipeline/\_azuredevops_exporter_example_pipeline_blueprint.mdx'
 import PortPipelineAppConfig from './example-pipeline/\_azuredevops_exporter_example_pipeline_port_app_config.mdx'
 
-import TeamsBlueprint from './example-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
+import TeamsBlueprintDeprecated from './example-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
 import MembersBlueprint from './example-teams/\_azuredevops_exporter_example_member_blueprint.mdx'
 import PortTeamsAppConfig from './example-teams/\_azuredevops_exporter_example_teams_port_app_config.mdx'
 
@@ -27,6 +27,11 @@ import PortReleaseAppConfig from './example-release/\_azuredevops_exporter_examp
 
 import ColumnBlueprint from './example-columns/\_azuredevops_exporter_example_column_blueprint.mdx'
 import PortColumnAppConfig from './example-columns/\_azuredevops_exporter_example_column_port_app_config.mdx'
+
+import PortUsersAndTeamsAppConfig from './example-users-and-teams/\_azuredevops_exporter_example_teams_port_app_config.mdx'
+import UsersBlueprint from './example-users-and-teams/\_azuredevops_exporter_example_user_blueprint.mdx'
+import TeamsBlueprint from './example-users-and-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
+
 
 
 # Examples
@@ -90,8 +95,29 @@ In the following example you will ingest your Azure Devops pipelines to Port, yo
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port.
 
+## Mapping users and teams
 
-## Mapping teams and members
+In the following example you will ingest your Azure Devops users and teams to Port, you may use the following Port blueprint definitions and integration configuration:
+
+<ProjectBlueprint/>
+
+<UsersBlueprint/>
+
+<TeamsBlueprint/>
+
+<PortUsersAndTeamsAppConfig/>
+
+:::tip To Learn more
+- Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
+- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure Devops objects to Port entities.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/teams/get%20all%20teams?view=azure-devops-rest-7.1#team) for the Azure Devops team object structure.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/teams/get-team-members-with-extended-properties?view=azure-devops-rest-7.1&tabs=HTTP#teammember) for the Azure Devops team member object structure.
+
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your teams alongside their members.
+
+## Mapping teams and members (Deprecated)
 
 In the following example you will ingest your Azure Devops teams and their members to Port, you may use the following Port blueprint definitions and integration configuration:
 
@@ -99,9 +125,9 @@ In the following example you will ingest your Azure Devops teams and their membe
 
 <RepositoryBlueprint/>
 
-<TeamsBlueprint/>
-
 <MembersBlueprint/>
+
+<TeamsBlueprintDeprecated/>
 
 <PortTeamsAppConfig/>
 
