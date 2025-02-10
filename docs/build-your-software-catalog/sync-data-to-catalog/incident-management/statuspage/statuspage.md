@@ -753,6 +753,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "8m2l51279rpl",
   "title": "Ctrlv Solutions",
   "blueprint": "statuspage",
+  "icon": "Statuspage",
   "team": [],
   "properties": {
     "time_zone": "UTC",
@@ -785,6 +786,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "9w477s340zqt",
   "title": "Backend",
   "blueprint": "statuspageComponentGroup",
+  "icon": "Statuspage",
   "team": [],
   "properties": {
     "updatedAt": "2024-06-06T15:51:24Z",
@@ -810,6 +812,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "y6ssccsqgy8s",
   "title": "API Gateway",
   "blueprint": "statuspageComponent",
+  "icon": "Statuspage",
   "team": [],
   "properties": {
     "startDate": "2024-06-07T00:00:00Z",
@@ -840,6 +843,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "f5v3b6dr7k53",
   "title": "API Gateway Timeout Errors",
   "blueprint": "statuspageIncident",
+  "icon": "Statuspage",
   "team": [],
   "properties": {
     "scheduled_auto_completed": false,
@@ -889,6 +893,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "gkjdpm52nm97",
   "title": "We are currently experiencing timeout errors with our API Gateway. Some API requests may fail or take longer to process. Our team is investigating the issue.",
   "blueprint": "statuspageIncidentUpdate",
+  "icon": "Statuspage",
   "team": [],
   "properties": {
     "status": "investigating",
