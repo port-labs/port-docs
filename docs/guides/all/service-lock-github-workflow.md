@@ -25,7 +25,7 @@ The CI/CD deployment check described in this guide will follow these steps:
 ## Prerequisites
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart)
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview)
 - You will need a GitHub repository in which you can trigger a workflow that we will use in this guide
 :::
 

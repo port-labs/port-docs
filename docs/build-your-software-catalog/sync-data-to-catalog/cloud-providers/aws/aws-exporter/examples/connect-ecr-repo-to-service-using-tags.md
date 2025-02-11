@@ -7,7 +7,7 @@ This guide aims to show how to connect an ECR `repository` to an existing servic
 :::info Prerequisites
 This guide assumes you have:
 
-- A Port account and that you have completed the [onboarding process](/quickstart). We will use the `Service` blueprint created during the onboarding process.
+- A Port account and that you have completed the [onboarding process](/getting-started/overview). We will use the `Service` blueprint created during the onboarding process.
 - [AWS exporter installed and configured](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws-exporter/aws-exporter.md) in your environment.
 
 :::
