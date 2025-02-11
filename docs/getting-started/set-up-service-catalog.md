@@ -70,6 +70,56 @@ The `user` and `team` blueprints are powerful components that can be leveraged f
 Read more about them in the [User & team management](/sso-rbac/rbac/) page.
 :::
 
+## How the service catalog works
+
+As you may have seen, installing an integration will create one or more <PortTooltip id="blueprint">blueprints</PortTooltip>, some of which may have a <PortTooltip id="relation">relation</PortTooltip> to other blueprints.
+
+For example, when installing the `PagerDuty` integration, the `pagerdutyIncident` blueprint has a relation to the `pagerdutyService` blueprint. 
+
+Additionally, some of the blueprints will have a <PortTooltip id="relation">relation</PortTooltip> to one of the default blueprints (e.g. `service`).
+
+In the `PagerDuty` example, the `pagerdutyIncident` blueprint has a relation to the `service` blueprint.
+
+This results in a rich `service` component, as these relations give it context from other components in your data model.  
+You can then use this service component to achieve many use cases, such as:
+
+* Calculate "Mean time to recovery" for a `service` by adding an aggregation property to it, that will sum the `timeToRecovery` property of all `pagerdutyIncident` entities related to it.
+
+* Calculate total monthly incident count for a `service` by adding an aggregation property to it, that will sum the number of related `pagerdutyIncident` entities.
+
+* Create visualizations to track incidents, e.g. a chart that shows the number of incidents per service, a table that shows all incidents per service/team, and more.
+
+### Relation mapping
+
+To connect integration entities and default component entities, (like the `pagerdutyIncident`->`service` relation), we use a rule to find the relevant `service` entity for each `pagerdutyIncident` entity.
+
+Read more about relation mapping [here](/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries).
+
+For example, here is part of the default mapping for the `PagerDuty` integration.  
+Note the rule that is used under the `service` relation, which will find the relevant `service` entity for each `pagerdutyIncident` entity:
+
+```yaml showLineNumbers
+kind: incidents
+selector:
+    ...
+port:
+  entity:
+    mappings:
+      ...
+      #highlight-start
+      relations:
+        pagerdutyService: .service.id
+        service:
+          combinator: '"and"'
+          rules:
+            - property: '"pagerdutyServiceId"'
+              operator: '"="'
+              value: .service.id
+      #highlight-end
+```
+
+You can use this method to connect additional components to default components in your data model.
+
 ## Next step - automatic discovery
 
 Proceed to the [next step](/getting-started/set-up-automatic-discovery) to learn how to manage your catalog automatically, creating and updating components based on changes in data from your tools.
