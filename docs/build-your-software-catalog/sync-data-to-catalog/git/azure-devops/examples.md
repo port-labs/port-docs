@@ -107,7 +107,7 @@ The following example blueprints and integration configurations demonstrate how 
 
 <PortUsersAndTeamsAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 - Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure Devops objects to Port entities.
 - Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/teams/get%20all%20teams?view=azure-devops-rest-7.1#team) for the Azure Devops team object structure.
