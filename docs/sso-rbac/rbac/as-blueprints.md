@@ -79,6 +79,30 @@ Since these teams are synced from your IdP the following actions cannot be perfo
 
 :::
 
+### Terraform support
+
+Since the `User` and `Team` blueprints can only be extended, to configure them using Terraform you need use the `port_system_blueprint` resource.  
+These blueprints can not be created so don't forget to import them to your Terraform state.
+
+The `port_system_blueprint` resource is supported in Terraform starting from version **2.1.8**.
+
+For example:
+
+```hcl showLineNumbers
+resource "port_system_blueprint" "user" {
+  identifier = "_user"
+  # Only new properties that will be added to the blueprint
+  properties = {
+    string_props = {
+      "age" = {
+        type  = "number"
+        title = "Age"
+      }
+    }
+  }
+}
+```
+
 ## User status
 
 A user can have one of the following statuses at any given time:
@@ -147,47 +171,61 @@ These are the available options for the `ownership` property:
 
 1. **No ownership**
 
-The blueprint has no defined ownership.  
-The `$team` property will have no meaningful value.
+    The blueprint has no defined ownership.  
+    The `$team` property will have no meaningful value.
 
-```json showLineNumbers
-{
-  "identifier": "packageVersion",
-  "title": "Package Version",
-  ...
-}
-```
+    ```json showLineNumbers
+    {
+      "identifier": "packageVersion",
+      "title": "Package Version",
+      ...
+    }
+    ```
 
 2. **Direct**
 
-Ownership of the blueprint's entities will be defined by a hidden <PortTooltip id="relation">relation</PortTooltip> to the `Team` blueprint.  
-The `Owning teams` column will be visible in tables containing entities of the blueprint.
+    Ownership of the blueprint's entities will be defined by a hidden <PortTooltip id="relation">relation</PortTooltip> to the `Team` blueprint.  
+    The `Owning teams` column will be visible in tables containing entities of the blueprint.
 
-```json showLineNumbers
-{
-  "identifier": "packageVersion",
-  "title": "Package Version",
-  "ownership": {
-	"type": "Direct"
-  }
-  ...
-}
-```
+    ```json showLineNumbers
+    {
+      "identifier": "packageVersion",
+      "title": "Package Version",
+      "ownership": {
+      "type": "Direct"
+      }
+      ...
+    }
+    ```
 
 3. **Inherited**
 
-Ownership of the blueprint's entities will be inherited from a different related blueprint with `Direct` ownership.  
-The `Owning teams` column will be visible in tables containing entities of the blueprint, but will not be editable.
+    Ownership of the blueprint's entities will be inherited from a different related blueprint with `Direct` ownership.  
+    The `Owning teams` column will be visible in tables containing entities of the blueprint, but will not be editable.
 
-The `path` key is a dot-separated path of **relation identifiers** that lead to the desired blueprint.
+    The `path` key is a dot-separated path of **relation identifiers** that lead to the desired blueprint.
+
+    ```json showLineNumbers
+    {
+      "identifier": "packageVersion",
+      "title": "Package Version",
+      "ownership": {
+        "type": "Inherited",
+        "path": "relationIdentifier1.relationIdentifier2.relationIdentifier3"
+      }
+      ...
+    }
+    ```
+
+You can also change the `title` of the ownership property. The default value is `Owning teams`.
 
 ```json showLineNumbers
 {
   "identifier": "packageVersion",
   "title": "Package Version",
   "ownership": {
-    "type": "Inherited",
-    "path": "relationIdentifier1.relationIdentifier2.relationIdentifier3"
+    "type": "Direct",
+    "title": "My Custom Ownership Title"
   }
   ...
 }

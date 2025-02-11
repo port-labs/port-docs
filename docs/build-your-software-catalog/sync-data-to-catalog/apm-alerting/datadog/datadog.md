@@ -1015,7 +1015,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "avg:system.disk.used/service:inventory-management/env:prod",
   "title": "avg:system.disk.used{service:inventory-management,env:prod}",
-  "icon": null,
+  "icon": "Datadog",
   "blueprint": "datadogServiceMetric",
   "team": [],
   "properties": {

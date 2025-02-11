@@ -134,11 +134,14 @@ Several more advanced options are available in the mapping configuration:
 
 - `deleteDependentEntities` - used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this parameter is set to `false`. If set to `true`, the source entity will be deleted as well.
 
+- `entityDeletionThreshold` - used to set the threshold for the number of entities to delete by an Ocean integration. Ocean integrations compare the third-party data against the data in Port and may delete entities accordingly. This parameter allows you to control this behavior and avoid unexpected interruptions. The parameter can be set from 0 to 1.0. For example, if the parameter is set to 0.5, it means that if the number of entities to delete is greater than 50% of the total number of entities, the deletion will be skipped.
+
 To use these options, add them to the root of the mapping configuration:
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
+entityDeletionThreshold: 0.5
 resources:
   - kind: repository
     ...
