@@ -97,7 +97,7 @@ After creating the blueprints and saving the integration configuration, you will
 
 ## Mapping users and teams
 
-In the following example you will ingest your Azure Devops users and teams to Port, you may use the following Port blueprint definitions and integration configuration:
+The following example blueprints and integration configurations demonstrate how to ingest Azure Devops users and teams into Port:
 
 <ProjectBlueprint/>
 
