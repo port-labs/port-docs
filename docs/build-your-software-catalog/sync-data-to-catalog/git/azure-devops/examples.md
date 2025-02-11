@@ -111,13 +111,17 @@ The following example blueprints and integration configurations demonstrate how 
 - Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
 - Port leverages the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure Devops objects to Port entities.
 - Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/teams/get%20all%20teams?view=azure-devops-rest-7.1#team) for the Azure Devops team object structure.
-- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/teams/get-team-members-with-extended-properties?view=azure-devops-rest-7.1&tabs=HTTP#teammember) for the Azure Devops team member object structure.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/memberentitlementmanagement/user-entitlements/list?view=azure-devops-rest-4.1&tabs=HTTP) for the Azure Devops User object structure.
 
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your teams alongside their members.
 
 ## Mapping teams and members (Deprecated)
+
+:::caution Deprecation notice
+This section is deprecated and will be removed in a future version. Please refer to the [Mapping users and teams](#mapping-users-and-teams) section for the current implementation.
+:::
 
 In the following example you will ingest your Azure Devops teams and their members to Port, you may use the following Port blueprint definitions and integration configuration:
 
@@ -135,7 +139,7 @@ In the following example you will ingest your Azure Devops teams and their membe
 - Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure Devops objects to Port entities.
 - Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/teams/get%20all%20teams?view=azure-devops-rest-7.1#team) for the Azure Devops team object structure.
-- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/memberentitlementmanagement/user-entitlements/list?view=azure-devops-rest-4.1&tabs=HTTP) for the Azure Devops User object structure.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/teams/get-team-members-with-extended-properties?view=azure-devops-rest-7.1&tabs=HTTP#teammember) for the Azure Devops team member object structure.
 
 :::
 
