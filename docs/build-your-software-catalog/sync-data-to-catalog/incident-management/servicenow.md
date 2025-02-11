@@ -896,7 +896,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "019ad92ec7230010393d265c95c260dd",
   "title": "Analytics Settings Managers",
-  "icon": null,
+  "icon": "ServiceNow",
   "blueprint": "servicenowGroup",
   "team": [],
   "properties": {
@@ -922,7 +922,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "56e48e6a9743311083e6ff0de053af56",
   "title": "Test Service Catalog",
-  "icon": null,
+  "icon": "ServiceNow",
   "blueprint": "servicenowCatalog",
   "team": [],
   "properties": {
@@ -948,7 +948,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "INC0000060",
   "title": "Unable to connect to email",
-  "icon": null,
+  "icon": "ServiceNow",
   "blueprint": "servicenowIncident",
   "team": [],
   "properties": {
