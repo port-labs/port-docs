@@ -40,6 +40,12 @@ Just like catalog pages, tables support the following customization options:
 - [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
 - [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
+#### Limitations
+
+- Tables are limited to displaying up to **100,000** entities.  
+  All UI table operations such as searching, filtering, grouping, etc. will be limited only to the entities that are displayed in the table.  
+  If one of your blueprints has more than 100,000 entities, you can use the [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to narrow down the entities displayed in the table.
+
 ### Pie chart
 
 Pie charts illustrate data from entities in your software catalog divided by categories and entity properties.
