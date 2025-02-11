@@ -1,6 +1,7 @@
 import DocCardList from '@theme/DocCardList';
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import IntegrationsTable from "/src/components/IntegrationsTable/IntegrationsTable.jsx"
+import OceanContribution from "/docs/generalTemplates/_ocean_contribution.md"
 
 # Install an integration
 
@@ -35,6 +36,9 @@ After the installation, you can customize the blueprints and/or mapping to inges
 
 <IntegrationsTable />
 
+<br/>
+<OceanContribution />
+
 ## Customize your integrations
 
 Now that you've installed an integration, let's see how you can customize it:
@@ -49,7 +53,7 @@ An entity is an instance of a [blueprint](/build-your-software-catalog/customize
 
 After installing an integration, a page will be created in your catalog, populated with entities representing the ingested data.
 
-For example, once you complete Port's [onboarding process](/quickstart) and connect your Git provider to Port, a new [Services page](https://app.getport.io/services) will be created in your software catalog, populated with entities representing your services (Git repositories):
+For example, once you complete Port's [onboarding process](/getting-started/overview) and connect your Git provider to Port, a new [Services page](https://app.getport.io/services) will be created in your software catalog, populated with entities representing your services (Git repositories):
 
 <img src='/img/software-catalog/entitiesExample.png' width='75%' border='1px' />
 

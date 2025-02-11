@@ -17,8 +17,6 @@ The action we will create in this guide will:
 - Create a new Git repository.
 - Create a new service in Port, and relate it to the new repository, giving it its context.
 
-
-
 ## Common use cases
 
 - Enable developers to independently spin up new microservices with boilerplate code.
