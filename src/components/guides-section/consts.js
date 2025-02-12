@@ -771,6 +771,13 @@ export const availableGuides = [
         link: "/guides/all/setup-dora-metrics",
     },
     {
+        title: "Create a developer survey",
+        description: "Create a developer survey to collect feedback from your developers",
+        tags: ["Metrics","Survey","DevEx","Port360", "DORA"],
+        logos: ["Bar"],
+        link: "/guides/all/create-surveys",
+    },
+    {
         title: "Ingest a swagger.json file into your catalog",
         description: "Ingest API paths from a `swagger.json` file in a GitHub repository into Port",
         tags: ["API catalog", "GitHub"],

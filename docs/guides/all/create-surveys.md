@@ -375,7 +375,7 @@ For better tracking, we recommend creating these widgets in the Question bluepri
 
 1. Click `+ Widget` and select `Number Chart`
 2. Configure as follows:
-   - Title: "{selected question} Avg. Score"
+   - Title: "&#123;selected question&#125; Avg. Score"
    - Chart Type: Display single property
    - Blueprint: Question (can be omitted if configuring on the question entity page)
    - Entity: The specific question you want to track (can be omitted if configuring on the question entity page)
@@ -392,27 +392,27 @@ This widget displays the average score calculated from all responses for the cho
 
 1. Click `+ Widget` and select `Pie chart`
 2. Configure as follows:
-   - Title: "{selected question} distribution"
+   - Title: "&#123;selected question&#125; distribution"
    - Blueprint: Response
    - Breakdown by property: Answer
    - Additional filters: 
    ```json
-   { 
-    "combinator": "and",
-    "rules": [
-        {
-            "operator": "relatedTo",
-            "blueprint": "question",
-            "value": "{question_identifier}"
-        },
-        {
-            "operator": "=",
-            "value": "response",
-            "property": "$blueprint"
-        }
-    ]
-    }
-    ```
+   {
+     "combinator": "and",
+     "rules": [
+       {
+         "operator": "relatedTo",
+         "blueprint": "question",
+         "value": "{question_identifier}"
+       },
+       {
+         "operator": "=",
+         "value": "response",
+         "property": "$blueprint"
+       }
+     ]
+   }
+   ```
 
 This widget shows the distribution of answers across all responses for the selected question.
 
@@ -424,9 +424,9 @@ This widget shows the distribution of answers across all responses for the selec
 
 1. Click `+ Widget` and select `Line Chart`
 2. Configure as follows:
-   - Title: "{specific_question} over time"
+   - Title: "&#123;specific_question&#125; over time"
    - Blueprint: Question (can be omitted if configuring on the question entity page)
-   - Entity: {specific_question} (can be omitted if configuring on the question entity page)
+   - Entity: &#123;specific_question&#125; (can be omitted if configuring on the question entity page)
    - Propeties: Avg Score
    - Time Interval: Your desired time interval
    - Time Range: Your desired time range
