@@ -813,7 +813,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 ## Migration from SonarQube integration version `<=0.1.121`
 Versions prior to `v0.1.115` used SonarQube's internal API for components to retrieve projects. Since this API is internal and subject to change, it is not globally available and not recommended for new users.
 
-To remedy this, we have switched to the globally available API for projects instead for new users of the SonarQube integration. This comes with a few changes below
+To remedy this, we have switched to the globally available API for projects instead for new users of the SonarQube integration. This comes with a few changes that are listed below.
 
 ### Changes to the SonarQube integration
 
