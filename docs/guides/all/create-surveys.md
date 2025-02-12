@@ -416,7 +416,7 @@ This widget displays the average score calculated from all responses for the cho
 
 This widget shows the distribution of answers across all responses for the selected question.
 
-![Answer Distribution Widget](/img/guides/answerDistributionWidget.png)
+![Answer Distribution Widget](/img/guides/AnswerDistributionWidget.png)
 </details>
 
 <details>
