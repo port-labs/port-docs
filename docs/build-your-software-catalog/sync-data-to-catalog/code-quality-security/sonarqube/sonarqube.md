@@ -819,7 +819,7 @@ To remedy this, we have switched to the globally available API for projects inst
 
 - The `project` kind is deprecated in support for the `projects_ga` kind. *Deprecation effective: 2024-02-23*
 
-- Since `tags` property is only available with the internal API, the tags property will read `null` for existing users of the SonarQube integration.
+- Since the `tags` property is only available with the internal API, it will read `null` for existing users of the SonarQube integration.
 
 - Minor but backwards compatible changes have been made to the `sonarQubeProject` blueprint:
 
