@@ -774,7 +774,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "POR",
   "title": "Port",
-  "icon": null,
+  "icon": "Linear",
   "blueprint": "linearTeam",
   "team": [],
   "properties": {
@@ -798,7 +798,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "36f84d2c-7b7d-4a71-96f2-6ea4140004d5",
   "title": "New-sample-label",
-  "icon": null,
+  "icon": "Linear",
   "blueprint": "linearLabel",
   "team": [],
   "properties": {
@@ -824,7 +824,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "POR-2",
   "title": "sub issue with new title",
-  "icon": null,
+  "icon": "Linear",
   "blueprint": "linearIssue",
   "team": [],
   "properties": {
