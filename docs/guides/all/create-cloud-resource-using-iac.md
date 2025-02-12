@@ -12,10 +12,6 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 
 This guide shows how to open a pull request in your Git repository—directly from Port—to create a new cloud resource using GitOps. 
-The action we will create in this guide demonstrates how:
-- Platform engineers can define powerful actions to control permission boundaries
-- Developers can easily create and track cloud resources from Port, streamlining their workflow
-
 
 
 ## Prerequisites
@@ -27,9 +23,8 @@ The action we will create in this guide demonstrates how:
 
 ## Common use cases
 
-- Automated S3 Bucket Creation: Create AWS S3 buckets by automatically generating Terraform configurations and opening pull requests
-- Streamlined Developer Workflow: Enable developers to provision cloud resources through a self-service portal
-- Infrastructure Visibility: Track and monitor cloud resource definitions directly in your software catalog
+- Platform engineers can define powerful actions to control permission boundaries
+- Developers can easily create and track cloud resources from Port, streamlining their workflow
 
 
 ## Set up data model
@@ -792,7 +787,7 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 1. Click `Execute`. On the top right corner of the page, click on the action button to view the action progress:
 
-    <img src='/img/guides/executionDetails.png' width='45%' border="1px" />
+    <img src='/img/guides/executionDetailsS3Iac.png' width='45%' border="1px" />
 
     <br/><br/>
 
