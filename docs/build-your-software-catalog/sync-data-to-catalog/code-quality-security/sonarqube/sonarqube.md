@@ -811,15 +811,15 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 ## Migration from SonarQube integration version `<=0.1.121`
-Versions prior to `v0.1.115` used SonarQube's internal API for components to retrieve projects. However, this API apart from being internal and subject to change without notification by SonarQube is also inconsistent and will intermittently return an empty response causing previously ingested entities to be deleted. This deletion is because Ocean and therefore Port assumes these entities no longer exist.
+Versions prior to `v0.1.115` used SonarQube's internal API for components to retrieve projects. Since this API is internal and subject to change, it is not globally available and not recommended for new users.
 
-To remedy this, we have switched to the globally available API for projects instead for new users of the SonarQube integration. This comes with a few changes below
+To remedy this, we have switched to the globally available API for projects instead for new users of the SonarQube integration. This comes with a few changes that are listed below.
 
 ### Changes to the SonarQube integration
 
 - The `project` kind is deprecated in support for the `projects_ga` kind. *Deprecation effective: 2024-02-23*
 
-- Since `tags` property is only available with the internal API, the tags property will read `null` for existing users.
+- Since the `tags` property is only available with the internal API, it will read `null` for existing users of the SonarQube integration.
 
 - Minor but backwards compatible changes have been made to the `sonarQubeProject` blueprint:
 
