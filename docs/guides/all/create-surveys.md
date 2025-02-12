@@ -383,7 +383,7 @@ For better tracking, we recommend creating these widgets in the Question bluepri
    
 This widget displays the average score calculated from all responses for the chosen question
 
-![Avg Score Widget](/img/guides/avgScoreWidget.png)
+![Avg Score Widget](/img/guides/AvgScoreWidget.png)
 
 </details>
 
