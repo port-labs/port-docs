@@ -109,7 +109,7 @@ The app allows you to ingest a variety of objects resources provided by the GitH
 
 The GitHub app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
-After installing the app, Port will automatically create a `service` blueprint in your catalog (representing a GitHub repository), along with a default YAML configuration file that defines where the data fetched from Github's API should go in the blueprint.
+After installing the app, Port will automatically create a `repository` blueprint in your catalog (representing a GitHub repository), along with a default YAML configuration file that defines where the data fetched from Github's API should go in the blueprint.
 
 ### Ingest files from your repositories
 
