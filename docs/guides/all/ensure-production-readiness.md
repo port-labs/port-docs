@@ -32,7 +32,7 @@ You'll learn how to track metrics like on-call coverage and code ownership, and 
 
 ## Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview). We will use the `service` blueprint that was created during the onboarding process.
 - The [Git Integration](/build-your-software-catalog/sync-data-to-catalog/git/) that is relevant for you needs to be installed.
 - The [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/) needs to be installed.
 
