@@ -14,7 +14,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 This guide aims to cover how to connect a GitHub pull request with a Jira Issue to understand the scan results of your PR.
 
 :::info Prerequisites
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview).
 - Ensure you have [Jira installed and configured in your environment](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
 - Ensure you have a registered organization in Port and your Port user role is set to `Admin`.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).

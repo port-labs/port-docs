@@ -12,10 +12,9 @@ Before writing custom logic to integrate Port into your GitOps process, you shou
 
 ## 💡 Custom GitOps common use cases
 
-- Use your Git provider as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets;
-- Allow developers to keep the catalog up-to-date, by making updates to files in their Git repositories;
-- Create a standardized way to document software catalog assets in your organization;
-- etc.
+- Use your Git provider as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets.
+- Allow developers to keep the catalog up-to-date, by making updates to files in their Git repositories.
+- Create a standardized way to document software catalog assets in your organization.
 
 ## Managing entities using custom GitOps
 
@@ -24,10 +23,6 @@ To manage entities using GitOps, add a `json` file to microservice repository co
 Then, whenever your CI/CD process runs, an automated check will review whether the contents of the file changed, and will send the new file contents to Port's API using a simple API call, thus always keeping your microservice entity up to date.
 
 ## Example
-
-:::info
-In this example, you will create an Entity for the `Microservice` blueprint from [the quickstart](../../../quickstart.md#define-a-blueprint).
-:::
 
 Create a local JSON file, named `entity.json`, with the following content:
 

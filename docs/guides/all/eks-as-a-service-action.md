@@ -28,7 +28,7 @@ Before following the guide, you will need to set up an Upbound organization, ini
 
 <h3>Port</h3>
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview).
 - Save the Port organization's `CLIENT_ID` and `CLIENT_SECRET` for later ([how to find your Port credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 
 <h3>Git repository</h3>

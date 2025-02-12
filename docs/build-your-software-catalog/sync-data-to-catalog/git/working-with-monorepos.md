@@ -128,4 +128,4 @@ Support for Azure DevOps is coming soon. Stay tuned!
 
 4. Click on `Resync` to apply the changes.
 
-5. Head back to your [catalog](https://app.getport.io/services), as you can see Port has now created an entity for each folder in the specified repositories, instead of creating an entity for each repository.
+5. Head back to your [catalog](https://app.getport.io/organization/catalog), as you can see Port has now created an entity for each folder in the specified repositories, instead of creating an entity for each repository.
