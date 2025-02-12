@@ -39,7 +39,7 @@ To do so, we will use the `file://` prefix with the path of the file to tell the
         mappings:
           identifier: .project.name + "/" + .name
           title: .name
-          blueprint: '"service"'
+          blueprint: '"azureDevopsRepository"'
           properties:
             url: .url
             // highlight-next-line

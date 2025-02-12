@@ -11,7 +11,7 @@ This guide aims to cover how to connect a Launchdarkly `flag` to an existing ser
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview). We will use the `Service` blueprint that was created during the onboarding process.
 - Ensure you have [Launchdarkly installed and configured](/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly/launchdarkly.md#installation) in your environment.
 
 :::
