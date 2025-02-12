@@ -7,10 +7,12 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Visualize your services' k8s runtime
 
-Port’s Kubernetes integration helps you model and visualize your cluster’s workloads alongside your existing services in Port. This guide will help you set up the integration and visualize your services' Kubernetes runtime.
+Port’s Kubernetes integration helps you model and visualize your cluster’s workloads alongside your existing workloads in Port. This guide will help you set up the integration and visualize your services' Kubernetes runtime.
 
 ## Common use cases
 
@@ -21,39 +23,21 @@ Port’s Kubernetes integration helps you model and visualize your cluster’s w
 
 ## Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Workload` blueprint that was created during the onboarding process.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
 - [Helm](https://helm.sh/docs/intro/install/) - required to install Port's Kubernetes exporter.
 
 
 ## Set up data model
 
-To integrate Kubernetes resources with your existing `Service` blueprint, we’ll first install Port’s Kubernetes exporter, which automatically creates Kubernetes-related blueprints and entities in Port. 
+To integrate Kubernetes resources with your existing `Workload` blueprint, we’ll first install Port’s Kubernetes exporter, which automatically creates Kubernetes-related blueprints and entities in Port. 
 
 
 ### Install Port's Kubernetes exporter
 
-1. Go to your [data sources page](https://app.getport.io/settings/data-sources), click on `+ Data source`, find the `Kubernetes Stack` category and select `Kubernetes`:
+<OceanRealtimeInstallation integration="Kubernetes" />
 
-2. Copy the installation command after specifying your cluster's name, it should look something like this:
-
-    ```bash showLineNumbers
-    # The following script will install a K8s integration at your K8s cluster using helm
-    # Change the stateKey to describe your integration.
-    # For example, the name of the cluster it will be installed on.
-    helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-    helm upgrade --install my-cluster port-labs/port-k8s-exporter \
-      --create-namespace --namespace port-k8s-exporter \
-      --set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
-      --set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
-      --set portBaseUrl="https://api.getport.io"  \
-      --set stateKey="my-cluster"  \
-      --set eventListener.type="POLLING"  \
-      --set "extraEnv[0].name"="CLUSTER_NAME"  \
-      --set "extraEnv[0].value"="my-cluster"
-    ```
-
-    <PortApiRegionTip/>
+<PortApiRegionTip/>
 
 #### What does the exporter do?
 
@@ -65,9 +49,9 @@ After installation, the exporter will:
 
     <br/><br/>
 
-    :::info What is Workload?
+    :::info What is K8sWorkload?
 
-    `Workload` is an abstraction of Kubernetes objects which create and manage pods (e.g. `Deployment`, `StatefulSet`, `DaemonSet`).
+    `K8sWorkload` is an abstraction of Kubernetes objects which create and manage pods (e.g. `Deployment`, `StatefulSet`, `DaemonSet`).
 
     :::
 
@@ -90,23 +74,21 @@ After installation, the exporter will:
 
 ## Set up automatic discovery
 
-After onboarding, the relationship between the **Workload** blueprint and the **Service** blueprint is established automatically.   
-To ensure each **Workload** entity is properly related to its respective **Service** entity, we will configure automatic discovery using labels.
+After installing the integration, the relationship between the **Workload** blueprint and the **k8_workload** blueprint is established automatically. To ensure each **Workload** entity is properly related to its respective **k8_workload** entity, we will configure automatic discovery using labels.
 
-You may have noticed that the `service` relations are empty for all of our `workloads`. This is because we haven't specified which `workload` belongs to which `service`. This can be done manually, or via mapping by using a convention of your choice.
 
 In this guide we will use the following convention:  
-A `workload` with a label in the form of `portService: <service-identifier>` will automatically be assigned to a `service` with that identifier.
+A `k8_workload` with a label in the form of `portWorkload: <workload-identifier>` will automatically be assigned to a `Workload` with that identifier.
 
 
-For example, a k8s deployment with the label `portService: myService` will be assigned to a `service` with the identifier `myService`.
+For example, a k8s deployment with the label `portWorkload: myWorkload` will be assigned to a `Workload` with the identifier `myWorkload`.
 
 We achieved this by adding a [mapping definition](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/k8s-guide/k8s_guide_config.yaml#L111-L119) in the configuration YAML we used when installing the exporter. The definition uses `jq` to perform calculations between properties.
 
 **Let's see this in action:**
 
-1. Create a `Deployment` resource in your cluster with a label matching the identifier of a `service` in your [Software catalog](https://app.getport.io/services).  
-   You can use the simple example below and change the `metadata.labels.portService` value to match your desired `service`. Copy it into a file named `deployment.yaml`, then apply it:
+1. Create a `Deployment` resource in your cluster with a label matching the identifier of a `Workload` in your [Software catalog](https://app.getport.io/services).  
+   You can use the simple example below and change the `metadata.labels.portWorkload` value to match your desired `Workload`. Copy it into a file named `deployment.yaml`, then apply it:
 
     ```bash
     kubectl apply -f deployment.yaml
@@ -116,28 +98,35 @@ We achieved this by adding a [mapping definition](https://github.com/port-labs/t
     <summary><b>Deployment example (Click to expand)</b></summary>
 
     ```yaml showLineNumbers
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: awesomeservice
-      labels:
-        app: nginx
-        portService: AwesomeService
-    spec:
-      replicas: 2
-      selector:
-        matchLabels:
-          app: nginx
-      template:
+        apiVersion: apps/v1
+        kind: Deployment
         metadata:
-          labels:
+        name: awesomeapp
+        labels:
             app: nginx
+            portWorkload: AwesomeWorkload
         spec:
-          containers:
-            - name: nginx
-              image: nginx:1.14.2
-              ports:
-                - containerPort: 80
+        replicas: 2
+        selector:
+            matchLabels:
+            app: nginx
+        template:
+            metadata:
+            labels:
+                app: nginx
+            spec:
+            containers:
+                - name: nginx
+                image: nginx:1.14.2
+                resources:
+                    limits:
+                    cpu: "200m"
+                    memory: "256Mi"
+                    requests:
+                    cpu: "100m"
+                    memory: "128Mi"
+                ports:
+                    - containerPort: 80
     ```
 
     </details>
@@ -145,33 +134,33 @@ We achieved this by adding a [mapping definition](https://github.com/port-labs/t
     <br/>
 
 2. To see the new data, we need to update the mapping configuration that the K8s exporter uses to ingest data.  
-   To edit the mapping, go to your [data sources page](https://app.getport.io/settings/data-sources), find the K8s exporter card, click on it and you will see a YAML editor showing the current configuration.  
+   To edit the mapping, go to your [data sources page](https://app.getport.io/settings/data-sources), find the K8s exporter card, click on it and you will see a YAML editor showing the current configuration.
+     
    Add the following block to the mapping configuration and click `Resync`:
 
     ```yaml showLineNumbers
     resources:
       # ... Other resource mappings installed by the K8s exporter
-      - kind: apps/v1/deployments
-        selector:
-          query: .metadata.namespace | startswith("kube") | not
-        port:
-          entity:
-            mappings:
-            - blueprint: '"workload"'
-              icon: '"Deployment"'
-              identifier: .metadata.name + "-Deployment-" + .metadata.namespace + "-" +
-                "my-cluster"
-              properties: {}
-              relations:
-                service: .metadata.labels.portService
+    - kind: apps/v1/deployments
+      selector:
+        query: .metadata.namespace | startswith("kube") | not
+      port:
+        entity:
+          mappings:
+            - identifier: .metadata.labels.portWorkload
               title: .metadata.name
+              blueprint: '"workload"'
+              relations:
+                k8s_workload: >-
+                  .metadata.name + "-Deployment-" + .metadata.namespace + "-" +
+                  env.CLUSTER_NAME
     ```
 
     <br/>
 
-3. Go to your [Software catalog](https://app.getport.io/services), and click on `Workloads`. Click on the `Workload` for which you created the deployment, and you should see the `service` relation filled.
+3. Go to your [Software catalog](https://app.getport.io/services), and click on `Workloads`. Click on the `Workload` for which you created the deployment, and you should see the `k8_workload` relation filled.
 
-    <img src='/img/guides/k8sEntityAfterIngestion.png' width='80%' />
+    <img src='/img/guides/k8sEntityAfterIngestion.png' boarder='1px' width='100%'  />
 
     <br/><br/>
 
