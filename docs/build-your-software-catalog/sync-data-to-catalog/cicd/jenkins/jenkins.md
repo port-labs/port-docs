@@ -947,6 +947,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "hello-job",
   "title": "Hello Job",
+  "icon": "Jenkins",
   "blueprint": "jenkinsJob",
   "properties": {
     "jobName": "Hello Job",
@@ -971,6 +972,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "hello-job-2",
   "title": "Hello Job #2",
+  "icon": "Jenkins",
   "blueprint": "jenkinsBuild",
   "properties": {
     "buildStatus": "SUCCESS",
@@ -997,6 +999,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "admin",
   "title": "admin",
+  "icon": "Jenkins",
   "blueprint": "jenkinsUser",
   "properties": {
     "url": "http://localhost:8080/user/admin",
@@ -1019,7 +1022,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "job-Phalbert-job-salesdash-job-master-229-execution-node-17-wfapi-describe",
   "title": "Declarative: Post Actions",
-  "icon": null,
+  "icon": "Jenkins",
   "blueprint": "jenkinsStage",
   "team": [],
   "properties": {

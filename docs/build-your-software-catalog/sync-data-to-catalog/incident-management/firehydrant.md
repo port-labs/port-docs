@@ -1778,7 +1778,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "21011924-215e-4aa4-abbf-6155ecf237ae",
   "title": "Production",
-  "icon": null,
+  "icon": "FireHydrant",
   "blueprint": "firehydrantEnvironment",
   "team": [],
   "properties": {
@@ -1804,7 +1804,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "87aeea3d-4dcd-4c1e-bf8c-e68e73892e44",
   "title": "My Test Service",
-  "icon": null,
+  "icon": "FireHydrant",
   "blueprint": "firehydrantService",
   "team": [],
   "properties": {
@@ -1841,7 +1841,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "eb03f3f2-1a58-4d19-9f85-b3e46dbf5c2e",
   "title": "System outage",
-  "icon": null,
+  "icon": "FireHydrant",
   "blueprint": "firehydrantIncident",
   "team": [],
   "properties": {
@@ -1877,7 +1877,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "da2ff7ef-6faf-4e4e-9577-985ffa739c9f",
   "title": "Bump request library",
-  "icon": null,
+  "icon": "FireHydrant",
   "blueprint": "firehydrantRetrospective",
   "team": [],
   "properties": {

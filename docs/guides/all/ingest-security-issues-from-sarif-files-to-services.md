@@ -11,7 +11,7 @@ This guide will demonstrate how to ingest security issues from `.sarif` files an
 
 ## Prerequisites
 
-- Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
+- Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
 - The `Service` blueprint should be created during the onboarding process.
 - Ensure you have [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) or [Gitlab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation) installed and configured in your environment.
 
