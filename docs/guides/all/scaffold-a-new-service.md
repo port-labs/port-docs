@@ -370,7 +370,7 @@ If the GitHub organization which will house your workflow is not the same as the
               blueprint: "service"
               relations: |
                 {
-                  "githubRepository": "${{ inputs.service_name }}"
+                  "repository": "${{ inputs.service_name }}"
                 }
     
           - name: Create a log message
