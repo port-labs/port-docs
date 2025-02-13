@@ -126,6 +126,10 @@ If you do not have the **lead time** configured, you can follow the integration 
 By following these steps, you can paste and manage the JSON schema required to track DORA metrics in Port.
 :::
 
+:::info Service-Centric Approach
+The deployment blueprint focuses on the service relationship only, as services are the primary entities in your software catalog. Port's default configurations will automatically handle any necessary repository relationships when they are relevant to your setup, eliminating the need for explicit repository relations in the deployment blueprint.
+:::
+
 
 ### Tracking strategies
 Below are the main ways you can track deployments directly within Port:
@@ -161,7 +165,7 @@ The lead time for these merges is calculated as the difference between when the 
   - When a PR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
   - The **lead time** for that PR is calculated and added to the deployment as part of the blueprint.
 
-  Here’s how you can implement this:
+  Here's how you can implement this:
 
   1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**.
 
@@ -202,7 +206,7 @@ The lead time for these merges is calculated as the difference between when the 
   - When a MR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
   - The **lead time** for that MR is calculated and added to the deployment as part of the blueprint.
 
-  Here’s how you can implement this:
+  Here's how you can implement this:
 
   1. **Add Merge Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)**.
 
@@ -257,7 +261,7 @@ Below is a demonstration of how deployment tracking can be implemented using the
 - When a PR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
 - The **lead time** for that PR is calculated and added to the deployment as part of the blueprint.
 
-Here’s how you can implement this:
+Here's how you can implement this:
 
 1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples#mapping-repositories-file-contents-repository-policies-and-pull-requests)**.
 
@@ -322,7 +326,7 @@ Below is a demonstration of how deployment tracking can be implemented using wor
   - When a GitHub Actions workflow runs on the main branch, a **deployment entity** is created in Port to represent the deployment.
   - The **deployment status** is dynamically set based on the workflow run's conclusion.
 
-  Here’s how you can implement this:
+  Here's how you can implement this:
 
   1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitHub** integration:
 
@@ -362,7 +366,7 @@ Below is a demonstration of how deployment tracking can be implemented using wor
   - When a GitLab CI/CD pipeline runs on the main branch, a **deployment entity** is created in Port.
   - The **deployment status** is dynamically set based on the pipeline's status.
 
-  Here’s how you can implement this:
+  Here's how you can implement this:
 
   1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitLab** integration:
 
@@ -750,7 +754,7 @@ Using Search Queries](/build-your-software-catalog/customize-integrations/config
 GitHub deployments can be tracked by mapping repository releases and tags to deployment entities in Port.
 These repositories can hold critical information related to service versions, commits, and releases.
 
-Here’s how you can implement this:
+Here's how you can implement this:
 
 1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration.
 
@@ -794,9 +798,9 @@ Unlike GitHub, **GitLab** and **Azure DevOps** do not support traditional releas
 
 
 <TabItem value="custom-api" label="Custom API">
-If your tool or workflow is not natively supported, you can create custom integrations by directly interacting with Port’s API. This method allows you to track deployments from any system that can make HTTP API calls.
+If your tool or workflow is not natively supported, you can create custom integrations by directly interacting with Port's API. This method allows you to track deployments from any system that can make HTTP API calls.
 
-Here’s how you can use the API to create a deployment entity in Port:
+Here's how you can use the API to create a deployment entity in Port:
 
 <details>
 <summary><b>Custom API Example (click to expand)</b></summary>
@@ -850,7 +854,7 @@ giving you full flexibility across all your deployment workflows.
 ### Monorepo Tracking
 By using **custom integrations**, you can effectively track services or components within a monorepo.
 
-Here’s how you can do this:
+Here's how you can do this:
 
 - **Mapping Service with Monorepo**: You can track the individual services or features within a monorepo by adjusting the mappings associated with the file kind. Each microservice or feature should have distinct properties such as `name`, `deployment status`, and `dependencies`.
 
@@ -883,7 +887,7 @@ In this setup:
 By this method, individual services within a monorepo are mapped to Port blueprints.
 
 :::tip Custom Integration Benefits
-Custom integrations provide flexibility in mapping and tracking each service or microservice within a monorepo. With Port’s API, you can track deployments and updates for each component separately, giving you granular control over monitoring and managing services in a monorepo.
+Custom integrations provide flexibility in mapping and tracking each service or microservice within a monorepo. With Port's API, you can track deployments and updates for each component separately, giving you granular control over monitoring and managing services in a monorepo.
 :::
 
 
