@@ -100,7 +100,7 @@ docker run \
   -e GHE_HOST=<GITHUB BASE HOST, ie github.compay.com> \
   -e PORT=<Any PORT> \
   -e PORT_URL=https://api.getport.io \
-  -e PORT_ORG_ID=<ORG_ID> \
+  -e PORT_ORG_ID=<ORG_ID> \        #For self service actions, requires a Kafka topic
   -e PORT_CLIENT_ID=<CLIENT_ID> \
   -e PORT_CLIENT_SECRET=<CLIENT_SECRET> \
   -e PRIVATE_KEY=<BASE 64 PRIVATEKEY> \
@@ -115,7 +115,7 @@ docker run \
 | `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                     |
 | `PORT`               | The port that the GitHub App will listen to                                         |
 | `PORT_URL`           | Port's API Base URL                                                                 |
-| `PORT_ORG_ID`        | Your Port org id                                                                    |
+| `PORT_ORG_ID`        | Your Port org id (For self service actions, requires a Kafka topic)                 |
 | `PORT_CLIENT_ID`     | Port client id for interacting with the API                                         |
 | `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                     |
 | `PRIVATE_KEY`        | A base64 encoded private key. You can use a tool like https://www.base64encode.org/ |
