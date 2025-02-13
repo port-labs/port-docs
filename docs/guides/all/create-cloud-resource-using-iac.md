@@ -23,8 +23,8 @@ This guide shows how to open a pull request in your Git repository—directly fr
 
 ## Common use cases
 
-- Platform engineers can define powerful actions to control permission boundaries
-- Developers can easily create and track cloud resources from Port, streamlining their workflow
+- Platform engineers can define the logic of creating a cloud resource, including standard enforcement, security and permission boundaries.
+- Developers can easily create and track cloud resources directly from Port.
 
 
 ## Set up data model
