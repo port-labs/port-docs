@@ -651,7 +651,6 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
    5. Under **S3 Bucket Region** enter the appropriate region
    6. For output format, **choose "JSON Lines: Newline-delimited JSON"**
    7. For compression, **choose "GZIP"**
-   8. Under **Optional Fields - S3 Path Format** enter "\${NAMESPACE}/\${STREAM_NAME}/year=\${YEAR}/month=\${MONTH}/\${DAY}\_\${EPOCH}_"
 5. **Click Test and save** and wait for Airbyte to confirm the Destination is set up correctly.
 
 
@@ -670,6 +669,6 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
   make sure to inform your Port account manager about any of these changes to ensure the integration will run smoothly.
 ::: 
 
-By following these steps, you have effectively created and executed a continuous integration of Slack channel & user data into Port 🎉.
+By following these steps, you have effectively created and executed a continous integration of Slack channel & user data into Port 🎉.
 
 
