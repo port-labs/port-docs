@@ -164,7 +164,18 @@ resources:
         - path: '**/openapi.json' # or .yaml
     
     port:
-      itemsToParse: '[. as $root | .paths | to_entries[] as $entries | {version: $root.info.version, servers: $root.servers, title: $root.info.title, path: $entries.key, methods: ($entries.value | to_entries[] as $inner | {method: ($inner.key), rest: $inner.value, path: $entries.key})}][] | {id: .title + "-" + .path + .methods.method, path, method: .methods.method, summary: .methods.rest.summary, description: .methods.rest.description, parameters: .methods.rest.parameters, requestBody: .methods.rest.requestBody, responses: .methods.rest.responses, tags: .methods.rest.tags, project: .title, version, serverUrl: .servers[0].url}'
+      itemsToParse: >-
+        .file.content | [[. as $root | .paths | to_entries[] as $entries |
+        {version: $root.info.version, servers: $root.servers, title:
+        $root.info.title, path: $entries.key, methods: ($entries.value |
+        to_entries[] as $inner | {method: ($inner.key), rest: $inner.value,
+        path: $entries.key})}][] | {id: (.title + "-" + .path +
+        .methods.method), path, method: .methods.method, summary:
+        .methods.rest.summary, description: .methods.rest.description,
+        parameters: .methods.rest.parameters, requestBody:
+        .methods.rest.requestBody, responses: .methods.rest.responses, tags:
+        .methods.rest.tags, project: .title, version, serverUrl:
+        .servers[0].url}]
       entity:
         mappings:
           identifier: '.item.id | sub("[^A-Za-z0-9@_.:/=-]"; "-"; "g")'
