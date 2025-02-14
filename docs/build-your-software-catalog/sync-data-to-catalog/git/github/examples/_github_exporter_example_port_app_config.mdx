@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: ".name" # The Entity identifier will be the repository name.
           title: ".name"
-          blueprint: '"service"'
+          blueprint: '"githubRepository"'
           properties:
             readme: file://README.md # fetching the README.md file that is within the root folder of the repository and ingesting its contents as a markdown property
             url: .html_url
@@ -46,7 +46,7 @@ resources:
                 (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
 
           relations:
-            service: .head.repo.name
+            repository: .head.repo.name
 ```
 
 </details>

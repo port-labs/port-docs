@@ -1,5 +1,5 @@
 
-const darkTags = [ "AWS", "Datadog", "GitHub", "Kafka", "Launchdarkly", "Linear", "Backstage" ] 
+const darkTags = [ "AWS", "Datadog", "GitHub", "Kafka", "Launchdarkly", "Linear", "Backstage", "Sentry", "User", "Team" ] 
 
 export const getImagePath = (image) => {
     if (darkTags.includes(image)) {

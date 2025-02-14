@@ -1169,6 +1169,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "blueprint": "newRelicServiceLevel",
     "identifier": "599434",
     "title": "Service Level Name - Metric",
+    "icon": "NewRelic",
     "properties": {
       "description": "Proportion of requests that are served faster than a threshold.",
       "targetThreshold": 95,

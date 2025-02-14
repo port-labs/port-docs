@@ -109,7 +109,7 @@ The app allows you to ingest a variety of objects resources provided by the GitH
 
 The GitHub app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
-After installing the app, Port will automatically create a `service` blueprint in your catalog (representing a GitHub repository), along with a default YAML configuration file that defines where the data fetched from Github's API should go in the blueprint.
+After installing the app, Port will automatically create a `repository` blueprint in your catalog (representing a GitHub repository), along with a default YAML configuration file that defines where the data fetched from Github's API should go in the blueprint.
 
 ### Ingest files from your repositories
 
@@ -398,6 +398,37 @@ If you have both single-document and multi-document YAML files in your repositor
 itemsToParse: .file.content | if type== "object" then [.] else . end
 ```
 :::
+
+#### Dry-run for file changes
+
+To prevent unwanted changes to the ingested file, you can enable `GitHub checks` to perform a validation on ingested files.  
+When `validationCheck: true` is enabled in the `kind: file` mapping, Port's Github app will perform a schema validation on these files before they are processed.
+
+To enable file validation, add the `validationCheck` flag to your file kind mapping:
+
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: .repo.name == "port"
+      files:
+        - path: data-model/domains/*.yaml
+          validationCheck: true
+    port:
+      entity:
+        mappings:
+          // the rest of your mapping configuration
+```
+
+When a PR modifies a matching file, you will see a new check in your PR with the validation results.
+
+Example for a successful validation:
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunSuccessfulCheck.png' width='70%' />
+
+<br /> <br />
+
+Example for a failed validation:
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunFailedCheck.png' width='70%' />
 
 #### Ingest raw file content
 

@@ -1218,7 +1218,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "PA",
   "title": "Port-AI",
-  "icon": null,
+  "icon": "Jira",
   "blueprint": "jiraProject",
   "team": [],
   "properties": {
