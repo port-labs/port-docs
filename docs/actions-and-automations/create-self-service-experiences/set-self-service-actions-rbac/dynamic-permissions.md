@@ -264,7 +264,7 @@ The `condition` checks if the approver is the executer's team leader, via the re
           "rules": [
             // fetches all users from user blueprint
             {
-              "value": "user",
+              "value": "_user",
               "operator": "=",
               "property": "$blueprint"
             },
@@ -283,16 +283,16 @@ The `condition` checks if the approver is the executer's team leader, via the re
           "rules": [
             // fetches all users from user blueprint
             {
-              "value": "user",
+              "value": "_user",
               "operator": "=",
               "property": "$blueprint"
             },
             // filters all users from immediately previous query
             // to find all users who are approvers
             {
-              "value": "Approver",
+              "value": "Moderator",
               "operator": "=",
-              "property": "role"
+              "property": "port_role"
             }
           ],
           "combinator": "and" // both of the conditions above must be true
@@ -311,7 +311,7 @@ The `condition` checks if the approver is the executer's team leader, via the re
 
 #### Explanation
 
-The `conditions` query uses the two arrays produced as a result of the `executingUser` and `approvingUsers` queries and returns an array of users who may approve the self-service action. While the Port public documentation site does not provide exhaustive guidance on how to use the [JQ JSON processor](https://jqlang.github.io/jq/manual/), the following explanation is provided to ensure users can craft their own JQ queries when configuring dynamic permissions.
+The `conditions` query uses the two arrays produced as a result of the `executingUser` and `approvingUsers` queries and returns an array of users who may approve the self-service action. 
 
 The query below filters the array produced by the `executingUser` query down to only the first element in the array, then further filters this array to show only the contents of the `.relations.team` key. This newly filtered array is saved as a variable (`$`) called `executerTeam`.
 
