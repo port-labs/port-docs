@@ -186,6 +186,10 @@ html[data-theme="dark"] details details  {
   font-size: 90%;
 }
 
+.table-of-contents li:last-child {
+  margin-bottom: 0.8rem;
+}
+
 :not(.theme-api-markdown *) > .tabs-container {
   border: 1px solid #ccc; 
   padding: 1rem;         
