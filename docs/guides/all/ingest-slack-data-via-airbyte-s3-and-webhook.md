@@ -1,13 +1,15 @@
 ---
-title: Ingest Slack channels data into Port via Airbyte and S3
+title: Ingest Slack channels data into Port via Airbyte, S3 and Webhook
 displayed_sidebar: null
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Ingest Slack channels data into Port via Airbyte and S3
+# Ingest Slack channels data into Port via Airbyte, S3 and Webhook
 
-This guide will demonstrate how to ingest slack channels and channel membership data into Port using Airbyte and S3.
+This guide will demonstrate how to ingest slack channels and channel membership data into Port using Airbyte, S3 and Webhook integration.
 
 ## Prerequisites
 
@@ -640,18 +642,75 @@ Create Webhook integration to ingest the data into Port:
 
 If you haven't already set up S3 Destination for Port S3, follow these steps:
 
+<Tabs groupId="S3 Destination" queryString values={
+[{label: "User Interface", value: "ui"},{label: "Terraform", value: "terraform"}]
+}>
+
+<TabItem value="ui" label="User Interface">
+
 1. **Login** to your Airbyte application (cloud or self-hosted)
 2. In the left-side pane, **Click on Destinations**
 3. **Click on "+ New Destination"**.
 4. Input S3 Credentials that were provided by port: (contact us)
    1. Under **S3 Key ID** enter your S3 Access Key ID
    2. Under **S3 Access Key** enter your S3 Access Key Secret
-   3. Under **S3 Bucket Name** enter the bucket name (example: "puddle-org-xxx")
+   3. Under **S3 Bucket Name** enter the bucket name (example: "org-xxx")
    4. Under **S3 Bucket Path** enter "/data"
    5. Under **S3 Bucket Region** enter the appropriate region
    6. For output format, **choose "JSON Lines: Newline-delimited JSON"**
    7. For compression, **choose "GZIP"**
+   8. Under Optional Fields, **enter the following in S3 Path Format**: `${NAMESPACE}/${STREAM_NAME}/year=${YEAR}/month=${MONTH}/${DAY}_$${EPOCH}_`
 5. **Click Test and save** and wait for Airbyte to confirm the Destination is set up correctly.
+
+
+</TabItem>
+
+<TabItem value="terraform" label="Terraform">
+
+```code showLineNumbers
+terraform {
+  required_providers {
+    airbyte = {
+      source = "airbytehq/airbyte"
+      version = "0.6.5"
+    }
+  }
+}
+
+provider "airbyte" {
+  username = "<AIRBYTE_USERNAME>"
+  password = "<AIRBYTE_PASSWORD>"
+  server_url = "<AIRBYTE_API_URL>"
+}
+
+resource "airbyte_destination_s3" "puddle-s3" {
+  configuration = {
+    access_key_id     = "<S3_ACCESS_KEY>"
+    secret_access_key = "<S3_SECRET_KEY>"
+    s3_bucket_region  = "<S3_REGION>"
+    s3_bucket_name    = "<S3_BUCKET>"
+    s3_bucket_path    = "data/"
+    format = {
+      json_lines_newline_delimited_json = {
+        compression = { gzip = {} }
+        format_type = "JSONL"
+      }
+    }
+    s3_path_format    = `$${NAMESPACE}/$${STREAM_NAME}/year=$${YEAR}/month=$${MONTH}/$${DAY}_$${EPOCH}_`
+    destination_type = "s3"
+  }
+  name          = "port-s3-destination"
+  workspace_id  = var.workspace_id
+}
+
+variable "workspace_id" {
+  default     = "<AIRBYTE_WORKSPACE_ID>"
+}
+```
+
+</TabItem>
+
+</Tabs>
 
 
 ### Set up Slack Connection
@@ -669,6 +728,6 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
   make sure to inform your Port account manager about any of these changes to ensure the integration will run smoothly.
 ::: 
 
-By following these steps, you have effectively created and executed a continous integration of Slack channel & user data into Port 🎉.
+By following these steps, you have effectively created and executed a continuous integration of Slack channel & user data into Port 🎉.
 
 
