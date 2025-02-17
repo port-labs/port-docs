@@ -42,7 +42,7 @@ Once implemented:
 
     - **Title** and **Description**
     - **Operation**: `Create`
-    - **Blueprint**: `Repository`
+    - **Blueprint**: `Service`
     - **icon**: `Slack`
 
     This Self-service has no user inputs, click on the `Next` button twice  to proceed to the `Backend` tab.
@@ -174,7 +174,7 @@ jobs:
                 port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
                 port_region: eu
                 slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-                blueprint: repository
+                blueprint: service
                 scorecard: ProductionReadiness
                 target_kind: slack
             - name: Report status to Port
