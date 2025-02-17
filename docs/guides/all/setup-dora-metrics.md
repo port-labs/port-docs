@@ -886,8 +886,15 @@ In this setup:
 
 By this method, individual services within a monorepo are mapped to Port blueprints.
 
+
+:::info Monorepo as service
+For the purposes of this guide, the monorepo is treated as individual services. This allows for granular tracking and management of each service within the monorepo.
+:::
+
+
+
 :::tip Custom Integration Benefits
-Custom integrations provide flexibility in mapping and tracking each service or microservice within a monorepo. With Port's API, you can track deployments and updates for each component separately, giving you granular control over monitoring and managing services in a monorepo.
+Custom integrations provide flexibility in mapping and tracking each service or microservice within a monorepo. With Port's API, you can track deployments and updates for each component separately.
 :::
 
 
@@ -952,109 +959,8 @@ For other incident management tools, follow these respective guides:
 - [Statuspage](/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
 
 ### Relating Incident to services
-Add this relationship to the **Incident blueprint** to link incidents to GitHub or Gitlab or Azure DevOps repository (service):
 
-<Tabs groupId="incident-relation-strategies" defaultValue="github-relation" values={[
-{label: "GitHub", value: "github-relation"},
-{label: "GitLab", value: "gitlab-relation"},
-{label: "Azure DevOps", value: "azure-relation"}
-]}>
-
-  <TabItem value="github-relation" label="GitHub">
-    This section covers how to map incidents to **GitHub repositories** using the `gitHubRepository` relation.
-
-    ```json showLineNumbers
-    {
-      "gitHubRepository": {
-        "title": "GitHub Service",
-        "target": "service",
-        "required": false,
-        "many": false
-      }
-    }
-    ```
-
-  </TabItem>
-
-  <TabItem value="gitlab-relation" label="GitLab">
-    This section covers how to map incidents to **GitLab repositories** using the `gitLabRepository` relation.
-
-    ```json showLineNumbers
-    {
-      "gitLabRepository": {
-        "title": "GitLab Service",
-        "target": "service",
-        "required": false,
-        "many": false
-      }
-    }
-    ```
-
-  </TabItem>
-
-  <TabItem value="azure-relation" label="Azure DevOps">
-    This section covers how to map incidents to **Azure DevOps repositories** using the `azureRepository` relation.
-
-    ```json showLineNumbers
-    {
-      "azureRepository": {
-        "title": "Azure DevOps Service",
-        "target": "service",
-        "required": false,
-        "many": false
-      }
-    }
-    ```
-
-  </TabItem>
-
-</Tabs>
-
-
-Update the mapping config to pagerduty incident [data source](https://app.getport.io/settings/data-sources):
-<details>
-<summary><b>Incident mapping config (click to expand)</b></summary>
-
-```yaml showLineNumbers
-   - kind: incidents
-     selector:
-        query: 'true'
-        ...: # Add other selectors as needed
-     port:
-        entity:
-           mappings:
-              identifier: .id | tostring
-              title: .title
-              blueprint: '"pagerdutyIncident"'
-              properties:
-                 status: .status
-                 url: .self
-                 resolvedAt: .resolved_at
-                 recoveryTime: >-
-                    (.created_at as $createdAt | .resolved_at as $resolvedAt |
-                    if $resolvedAt == null then null else 
-                    ( ($resolvedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) -
-                      ($createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) ) / 60 end)
-                 ... # Add other properties as needed
-              relations:
-                 pagerdutyService: .service.id
-                 # Add this relation to map the incident to the correct service
-                 gitHubRepository:
-                    combinator: '"and"'
-                    rules:
-                       - property: '"$title"'
-                         operator: '"="'
-                         value: .service.summary
-```
-</details>
-
-
-:::tip Mapping Incidents to Services
-we use the **search relation** entity to map the `pagerdutyIncident` blueprint to the correct service based on the service's `$title` and the pagerduty incident `service.summary`.
-We have assumed that the **service name/title** exists in the `service.summary` property of the incident, but you can modify this query to map based on other properties that better match your setup
-To learn more about using search relations, see [our documentation on Mapping Relations
-Using Search Queries](/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries). 
-:::
+The relationship between a PagerDuty incident and a service blueprint is automatically established when you install the PagerDuty integration. This ensures that each incident is correctly associated with the relevant service within Port.
 
 
 ## Metrics
@@ -1314,7 +1220,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <summary><b>Setup MTTR Widget</b></summary>
 
 1. Click `+ Widget` and select **Number Chart**.
-2. Title: `MTTR – Monthly Average (Seconds)`, (add the pagerduty icon).
+2. Title: `MTTR – Monthly Average (Hour)`, (add the pagerduty icon).
 3. Select `Display single property` and choose **Service** as the **Blueprint**.
 4. Select an `Entity` and choose `Mean Time to Recovery` as the **Property**.
 
