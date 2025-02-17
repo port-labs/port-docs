@@ -40,6 +40,12 @@ Just like catalog pages, tables support the following customization options:
 - [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
 - [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
+#### Limitations
+
+- Tables are limited to displaying up to **100,000** entities.  
+  All UI table operations such as searching, filtering, grouping, etc. will be limited only to the entities that are displayed in the table.  
+  If one of your blueprints has more than 100,000 entities, you can use the [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to narrow down the entities displayed in the table.
+
 ### Pie chart
 
 Pie charts illustrate data from entities in your software catalog divided by categories and entity properties.
@@ -55,7 +61,7 @@ Pie charts illustrate data from entities in your software catalog divided by cat
 | `Description`           | `String` | Pie chart description                                                                                                        | `null`  | `false`  |
 | `Blueprint`             | `String` | The chosen blueprint from which related entities data is visualized                                                          | `null`  | `true`   |
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
-| `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules) | []      | `false`  |
+| `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](/search-and-query/search-and-query.md#rules) | []      | `false`  |
 
 ### Number chart
 
@@ -70,7 +76,7 @@ You can choose one of these chart types:
 You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 ::: 
 
-![Number Chart](../../../static/img/software-catalog/widgets/numberChartExample.png)
+![Number Chart](/img/software-catalog/widgets/numberChartExample.png)
 
 #### Number chart properties
 
@@ -97,7 +103,7 @@ You can also filter entities so the aggregation number chart will only apply to 
 | `Function`        | `String` | `count` and `average` (by time).                                                   | `null`     | `true`   |
 | `Average of`      | `String` | `hour`, `day`, `week` and `month`. | `null`     | `true`   |
 | `Measure time by` | `String` | Used to specify an alternative property to use as the time property for the average calculation instead of the default field which is `createdAt`.                                                                                          | `createdAt`     | `false`  |
-| `Additional filters`         | `Array`  | Filters to include or exclude specific data based on Port's [search rules](../../search-and-query/search-and-query.md#rules)                                                                                                                | []         | `false`  |
+| `Additional filters`         | `Array`  | Filters to include or exclude specific data based on Port's [search rules](/search-and-query/search-and-query.md#rules)                                                                                                                | []         | `false`  |
 | `Unit`            | `String` | The unit of the number chart. Possible Values: `%`, `$`, `£`, `€`, `none`, `custom`                                                                                                                                                         | `null`     | `true`   |
 | `Custom unit`      | `String` | Text to display below the number value. The `unitCustom` key is only available when `unit` equals to `custom`                                                                                                                               | `null`     | `true`   |
 | `Unit alignment`   | `String` | `left`, `right`, `bottom`.                                                                                                                                                                                                                  | `null`     | `true`   |
@@ -110,7 +116,7 @@ You can also filter entities so the aggregation number chart will only apply to 
 | `Function`        | `String` | `sum`, `min`, `max`, `average` and `median` | `null`     | `true`   |
 | `Average of`      | `String` | `hour`, `day`, `week`, `month` and `total` (divide the sum by the number of entities) | `null`     | `true`   |
 | `Measure time by` | `String` | Used to specify an alternative property to use as the time property for the average calculation instead of the default field which is `createdAt`.                                                                                          | `createdAt`     | `false`  |
-| `Additional filters`         | `Array`  | Filters to include or exclude specific data based on Port's [search rules](../../search-and-query/search-and-query.md#rules)                                                                                                                | []         | `false`  |
+| `Additional filters`         | `Array`  | Filters to include or exclude specific data based on Port's [search rules](/search-and-query/search-and-query.md#rules)                                                                                                                | []         | `false`  |
 | `Unit`            | `String` | The unit of the number chart. Possible Values: `%`, `$`, `£`, `€`, `none`, `custom`                                                                                                                                                         | `null`     | `true`   |
 | `Custom unit`      | `String` | Text to display below the number value. The `unitCustom` key is only available when `unit` equals to `custom`                                                                                                                               | `null`     | `true`   |
 | `Unit alignment`   | `String` | `left`, `right`, `bottom`.                                                                                                                                                                                                                  | `null`     | `true`   |
@@ -253,13 +259,19 @@ A practical example of using HTML in a markdown widget can be found in Port's [l
 | `Icon`     | `String` | Markdown widget Icon  | `null`  | `false`  |
 | `markdown` | `String` | Markdown content      | `null`  | `false`  |
 
+#### Internal markdown links
+
+When linking to other pages in your portal, you can use `/` as the URL base, instead of using full URLs.  
+
+For example, you can use `<a href="/plan_my_day">` instead of `<a href="https://demo.getport.io/plan_my_day">`.
+
 ### Iframe visualization
 
 You can create an iframe widget to display an embedded url in the dashboard. The iframe widget is useful to display external dashboards or other external content. It also appends to the iframe URL query params the entity identifier and the blueprint identifier so the embedded page can use it for various purposes.
 
 The entity identifier will be concatenated under the `entity` query param and the blueprint identifier will be concatenated under the `blueprint` query param. For example: `https://some-iframe-url.com?entity=entity_identifier&blueprint=blueprint_identifier`.
 
-![iFrame](../../../static/img/software-catalog/widgets/iframeWidget.png)
+![iFrame](/img/software-catalog/widgets/iframeWidget.png)
 
 #### Widget properties
 

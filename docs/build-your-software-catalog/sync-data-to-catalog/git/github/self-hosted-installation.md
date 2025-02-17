@@ -122,7 +122,7 @@ docker run \
 
 ## Health check route
 
-A health check is a route that is used to check the health of a service. It is a means to ensure that the service is running properly and can perform its intended function.
+A health check is a route that is used to check the health of a repository. It is a means to ensure that the service is running properly and can perform its intended function.
 
 Our GitHub App image exposes a health check route at `https://host:port/health` to monitor its status.
 

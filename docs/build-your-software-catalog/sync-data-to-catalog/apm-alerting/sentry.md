@@ -1357,6 +1357,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "identifier": "developer@getport.io",
   "title": "Michael",
   "blueprint": "sentryUser",
+  "icon": "Sentry",
   "team": [],
   "properties": {
     "username": "developer@getport.io",
@@ -1384,6 +1385,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "identifier": "platform-team",
     "title": "Developer Experience",
     "blueprint": "sentryTeam",
+    "icon": "Sentry",
     "properties": {
       "dateCreated": "2022-11-16T13:25:53.617157Z",
       "memberCount": 1,
@@ -1415,7 +1417,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "python-fastapi",
   "title": "python-fastapi",
-  "icon": null,
+  "icon": "Sentry",
   "blueprint": "sentryProject",
   "team": [],
   "properties": {
@@ -1441,7 +1443,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "4605173695",
   "title": "ZeroDivisionError: division by zero",
-  "icon": null,
+  "icon": "Sentry",
   "blueprint": "sentryIssue",
   "team": [],
   "properties": {
@@ -1469,7 +1471,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "python-fastapi-production",
   "title": "python-fastapi-production",
-  "icon": null,
+  "icon": "Sentry",
   "blueprint": "sentryProjectEnvironment",
   "team": [],
   "properties": {
@@ -1706,6 +1708,7 @@ The combination of the sample payload and the webhook configuration generates th
   "identifier": "4253613038",
   "title": "NameError: name 'total' is not defined",
   "blueprint": "sentryIssue",
+  "icon": "Sentry",
   "properties": {
     "action": "created",
     "level": "error",

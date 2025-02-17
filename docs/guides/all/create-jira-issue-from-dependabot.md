@@ -61,7 +61,7 @@ This step is not required for this example, but it will create all the blueprint
 </details>
 
 
-6. You have finished the [onboarding process](/quickstart) and created a `Service` blueprint from the onboarding steps. You can alternatively create the `Service` blueprint in Port using the schema below: 
+6. You have finished the [onboarding process](/getting-started/overview) and created a `Service` blueprint from the onboarding steps. You can alternatively create the `Service` blueprint in Port using the schema below: 
 
 <details>
 <summary><b>Service Blueprint (Click to expand)</b></summary>

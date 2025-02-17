@@ -3,7 +3,8 @@ import TabItem from "@theme/TabItem"
 
 # Dynamic permissions
 
-Port allows users to set dynamic permissions for both executing and approving execution of self-service actions. To support these dynamic permission, Port offers the following to users within the JSON configuration of any given self-service action:
+Port allows users to set dynamic permissions for both executing and approving execution of self-service actions.   
+To support dynamic permissions, the following items are available to you via the JSON configuration of any given self-service action:
 - The organization's full software catalog as defined in Port (to provide necessary context to the self-service action).
 - The ability to query the software catalog.
 - The ability to set conditions based on queries of the software catalog.
@@ -69,15 +70,44 @@ Under each of these two keys, you can add one or more of the following keys:
   - [`"queries"`](/search-and-query/) - a collection of [rules](/search-and-query/#rules) you can use to fetch and filter the data you need from your software catalog.
   - `"conditions"` - an array of strings, where each string is a `jq` query with access to the `"queries"` data. There is an implicit `"OR"` between each condition.
 
-There is an implicit `'OR'` between the `roles`, `users`, `teams`, and `policy` keys, meaning that if any of them evaluate to `true`, the action will be allowed.  
-For example, the following configuration will allow the action to be executed by any user who is either an `Admin` **or** a member of the `Engineering` team:
+If there is **no** `policy` object defined, then `roles`, `users`, and `teams` control who can **view**, **approve**, or **execute** the action.  
+If the `policy` object **is** defined, then `roles`, `users`, and `teams` only control who can **view** the action, while `policy` exclusively controls who can **execute** and **approve** the action.  
+
+For example, the following configuration (note that no `policy` is defined) will allow the action to be **both visible and executed** by any user who is either an `Admin` or a member of the `Engineering` team:
 
 ```json
-"execute": {
+  "execute": {
     "roles": ["Admin"],
     "users": [],
     "teams": ["engineering"]
+  }
+  ```
+Using the same configuration, but this time with a `policy` object defined, these `roles` and `teams` only determine who can view the action, while the `policy` exclusively controls who can **execute** or **approve** it.
+
+In the following example, the action will be visible to `Admin` and `Engineering` team members, but its execution permissions depend only on whether the `policy` conditions evaluate to `true`:
+```json 
+"execute": {
+  "roles": ["Admin"],
+  "users": [],
+  "teams": ["engineering"],
+  "policy": {
+    "queries": {
+      "example_query": {
+        "rules": [
+          // Your rule logic here
+        ],
+        "combinator": "and"
+      }
+    },
+    "conditions": [
+      // A jq query returning a boolean (allowed/not-allowed to execute)
+    ]
+  }
+}
 ```
+
+
+### Using a policy object
 
 Here is an example of using the policy key in a permissions JSON:
 <details>
@@ -199,10 +229,7 @@ The `conditions` query checks if the resulting array is empty or not, and return
 
 In this example we create rules that state that execution of an action can be **approved** only by the team leader of the user that asked to execute the action.
 
-Note that this example assumes that you have:
-- A `user` blueprint in your catalog representing a user in the organization.
-- A `team` blueprint in your catalog representing a team in the organization.
-- A [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between the `user` and `team` blueprints.
+**Note** that this example assumes that the relevant team leader has the `Moderator` role, as you can see in the `approvingUsers` section of the permissions JSON below.
 
 The example contains two queries:
 1. `executingUser` - fetches the user who executed the action.
@@ -234,7 +261,7 @@ The `condition` checks if the approver is the executer's team leader, via the re
           "rules": [
             // fetches all users from user blueprint
             {
-              "value": "user",
+              "value": "_user",
               "operator": "=",
               "property": "$blueprint"
             },
@@ -253,16 +280,15 @@ The `condition` checks if the approver is the executer's team leader, via the re
           "rules": [
             // fetches all users from user blueprint
             {
-              "value": "user",
+              "value": "_user",
               "operator": "=",
               "property": "$blueprint"
             },
-            // filters all users from immediately previous query
-            // to find all users who are approvers
+            // fetches all users with the `Moderator` role
             {
-              "value": "Approver",
+              "value": "Moderator",
               "operator": "=",
-              "property": "role"
+              "property": "port_role"
             }
           ],
           "combinator": "and" // both of the conditions above must be true
@@ -281,7 +307,7 @@ The `condition` checks if the approver is the executer's team leader, via the re
 
 #### Explanation
 
-The `conditions` query uses the two arrays produced as a result of the `executingUser` and `approvingUsers` queries and returns an array of users who may approve the self-service action. While the Port public documentation site does not provide exhaustive guidance on how to use the [JQ JSON processor](https://jqlang.github.io/jq/manual/), the following explanation is provided to ensure users can craft their own JQ queries when configuring dynamic permissions.
+The `conditions` query uses the two arrays produced as a result of the `executingUser` and `approvingUsers` queries and returns an array of users who may approve the self-service action. 
 
 The query below filters the array produced by the `executingUser` query down to only the first element in the array, then further filters this array to show only the contents of the `.relations.team` key. This newly filtered array is saved as a variable (`$`) called `executerTeam`.
 

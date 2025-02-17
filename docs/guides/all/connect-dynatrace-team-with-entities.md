@@ -12,7 +12,7 @@ This guide explains how to assign team ownership to Dynatrace entities, allowing
 
 ## Prerequisites
 This guide assumes the following:
-- You have a Port account and you have completed the [onboarding process](/quickstart).
+- You have a Port account and you have completed the [onboarding process](/getting-started/overview).
 - You have installed Port's [Dynatrace integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/dynatrace/dynatrace.md).
 - You have entities from cloud providers configured on Dynatrace. See [Dynatrace documentation](https://docs.dynatrace.com/managed#deploy-on) for this.
 
