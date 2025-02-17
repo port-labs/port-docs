@@ -734,7 +734,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "argocd",
   "title": "argocd",
-  "icon": null,
+  "icon": "Cluster",
   "blueprint": "kubecostResourceAllocation",
   "team": [],
   "properties": {

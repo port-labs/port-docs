@@ -12,6 +12,13 @@ A catalog page displays a table of all existing [entities](https://docs.port.io/
 In this example we can see all of the microservice entities we created from the `microservice` blueprint:
 
 <img src='/img/software-catalog/pages/catalogPage.png' width='80%' border='1px' />
+<br/><br/>
+
+:::info Entity limit
+Tables are limited to displaying up to **100,000** entities.  
+All UI table operations such as searching, filtering, grouping, etc. will be limited only to the entities that are displayed in the table.  
+If one of your blueprints has more than 100,000 entities, you can use the [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to narrow down the entities displayed in the table.
+:::
 
 ## Page creation
 
