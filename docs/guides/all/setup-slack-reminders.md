@@ -20,14 +20,14 @@ Once implemented:
 
 ## Common use cases
 
-- Initiate changes in the organization using scorecards
-- Automate Slack reminders using Port's self-service actions
+- Initiate changes in the organization using scorecards.
+- Automate Slack reminders using Port's self-service actions.
 
 
 ## Prerequisites
 
 - The [Git Integration](/build-your-software-catalog/sync-data-to-catalog/git/) that is relevant for you needs to be installed.
-- A repository in your Git provider in which you can create a workflow/pipeline. If you don't have one, we recommend creating a new repository named `Port-actions`.
+- A repository in your Git provider in which you can create a workflow/pipeline.
 
 ## Implementation
 
@@ -40,7 +40,8 @@ Once implemented:
 
 3. Fill in the action's details as shown below:
 
-    - **Title** and **Description**
+    - **Title**: `Send scorecard reminder`
+    - **Description**: `Send a scorecard reminder to your team on slack`
     - **Operation**: `Create`
     - **Blueprint**: `Service`
     - **icon**: `Slack`
@@ -146,7 +147,8 @@ In the repository where your workflow will reside, create 3 new secrets under `S
 
   <br/><br/>
 
-Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `port-slack-reminder.yml` and use the following snippet as its content:
+Now let's create the workflow file that contains our logic.  
+Under `.github/workflows`, create a new file named `port-slack-reminder.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -266,7 +268,7 @@ generate-scorecards-reminders:
       -e INPUT_PORT_CLIENT_SECRET=$PORT_CLIENT_SECRET \
       -e INPUT_SLACK_WEBHOOK_URL=$SLACK_WEBHOOK_URL \
       -e INPUT_OPERATION_KIND="scorecard_reminder" \
-      -e INPUT_BLUEPRINT="repository" \
+      -e INPUT_BLUEPRINT="service" \
       -e INPUT_SCORECARD="ProductionReadiness" \
       -e INPUT_TARGET_KIND="slack" \
       $image_name
@@ -325,13 +327,13 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 
 2. Click `Execute`. A small popup will appear, click on `View details`:
 
-    <img src='/img/guides/executionDetailsSlack.png' width='45%' />
+    <img src='/img/guides/executionDetailsSlack.png' width='45%' border='1px' />
 
     <br/><br/>
 
 3. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created:
 
-    <img src='/img/guides/runStatusReminder.png' width='90%' />
+    <img src='/img/guides/runStatusReminder.png' width='90%' border='1px' />
     <br/><br/>
 
     :::tip Logging action progress
@@ -343,8 +345,6 @@ After creating an action, it will appear under the `Self-service` tab of your Po
 4. You can now enter your Slack channel and view the scorecard reminder:
     <img src='/img/guides/slackReminderExample.png' width='50%' />
 
-
-Congratulations! You can now send Slack reminders easily from Port. 💪🏽
 
 ### Conclusion
 Creating scorecards is the first step in setting standards in our development lifecycle. However, to ensure these standards are met, we need to turn rule violations into action items. By automating Slack reminders and the creation of Jira tasks, we can drive change across the entire organization using familiar tools to combine it natively within our delivery lifecycle.
