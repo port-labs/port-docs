@@ -229,10 +229,7 @@ The `conditions` query checks if the resulting array is empty or not, and return
 
 In this example we create rules that state that execution of an action can be **approved** only by the team leader of the user that asked to execute the action.
 
-Note that this example assumes that you have:
-- A `user` blueprint in your catalog representing a user in the organization.
-- A `team` blueprint in your catalog representing a team in the organization.
-- A [relation](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) between the `user` and `team` blueprints.
+**Note** that this example assumes that the relevant team leader has the `Moderator` role, as you can see in the `approvingUsers` section of the permissions JSON below.
 
 The example contains two queries:
 1. `executingUser` - fetches the user who executed the action.
@@ -287,8 +284,7 @@ The `condition` checks if the approver is the executer's team leader, via the re
               "operator": "=",
               "property": "$blueprint"
             },
-            // filters all users from immediately previous query
-            // to find all users who are approvers
+            // fetches all users with the `Moderator` role
             {
               "value": "Moderator",
               "operator": "=",
