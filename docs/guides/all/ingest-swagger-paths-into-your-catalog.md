@@ -10,7 +10,7 @@ import SwaggerBlueprint from '../templates/swagger/_example_swagger_blueprint.md
 import SwaggerWebhookConfig from '../templates/swagger/_example_swagger_webhook_config.mdx'
 
 # Ingest API paths from an OpenAPI spec in a GitHub repository into Port
-The following example shows you how to create an `apiPath` blueprint that ingests all API paths in your `openapi.json` file using Port's GitHub file ingesting feature.
+The following example demonstrates how to create an `apiPath` blueprint, and ingest all API paths in your spec JSON file using Port's GitHub file ingesting feature.
 
 To ingest the packages to Port, the GitHub integration is used.
 
