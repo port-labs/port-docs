@@ -962,7 +962,8 @@ For other incident management tools, follow these respective guides:
 
 ### Relating Incident to services
 
-The relation between a PagerDuty incident and the service blueprint is automatically established when you install the PagerDuty integration. This ensures that each pagerduty incident is related to the relevant service in Port.
+The relation between the "PagerDuty incident" blueprint and the "service" blueprint is automatically created when you install the PagerDuty integration.  
+This ensures that each PagerDuty incident is related to the relevant service in Port.
 
 
 ## Metrics
@@ -1192,7 +1193,7 @@ click [here](/build-your-software-catalog/customize-integrations/configure-data-
 
 
 ## Visualization
-By leveraging Port's Dashboards, you can create custom dashboards to track the metrics and monitor your team's performance over time.
+Port's dashboards allow you to create custom widgets to track metrics and monitor your team's performance over time.
 
 ### Dashboard setup
 1. Go to your [software catalog](https://app.getport.io/organization/catalog).
