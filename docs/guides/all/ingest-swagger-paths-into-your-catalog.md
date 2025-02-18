@@ -1,7 +1,7 @@
 ---
 description: Ingest API paths from an OpenAPI spec in a GitHub repository into Port
 displayed_sidebar: null
-title: Ingest OpenAPI paths from openapi.json file into your catalog
+title: Ingest API paths from an OpenAPI spec in a GitHub repository into your catalog
 ---
 
 import Tabs from "@theme/Tabs"
