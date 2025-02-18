@@ -179,3 +179,9 @@ You can also choose whether **all** specified approvers must approve the action,
 <br/><br/>
 
 Alternatively, you can allow anyone with the `Admin` role to approve the action, by enabling the `Admins` toggle.
+
+### Example - automate approval based on an input value
+
+Actions that require approval can also be approved/declined using Port's API.
+
+Click [here](/actions-and-automations/define-automations/examples/#approve-a-self-service-action-based-on-an-input-value) to see an example of an automation that approves a self-service action using Port's API, based on the value provided in a certain input field.
