@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem"
 import SwaggerBlueprint from '../templates/swagger/_example_swagger_blueprint.mdx'
 import SwaggerWebhookConfig from '../templates/swagger/_example_swagger_webhook_config.mdx'
 
-# Ingest OpenAPI paths from openapi.json file into your catalog
+# Ingest API paths from an OpenAPI spec in a GitHub repository into Port
 The following example shows you how to create an `apiPath` blueprint that ingests all API paths in your `openapi.json` file using Port's GitHub file ingesting feature.
 
 To ingest the packages to Port, the GitHub integration is used.
