@@ -82,7 +82,7 @@ Create the following blueprint definition and mapping configuration:
   "identifier": "apiPath",
   "description": "This blueprint represents an OpenAPI path in our software catalog",
   "title": "API Paths",
-  "icon": "Api",
+  "icon": "Swagger",
   "schema": {
     "properties": {
       "method": {
