@@ -108,27 +108,15 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
 ```
 </details>
 
-:::note Missing Lead Time
-If you do not have the **lead time** configured, you can follow the integration guide for your Git provider to add this property:
+:::tip Missing Lead Time
+If you do not have the **lead time** configured, you can follow the example guides below to map resources for your Git provider's respective blueprint:
 
-- **GitHub**: [GitHub integration guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests)
-- **GitLab**: [GitLab integration guide](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)
-- **Azure Repos**: [Azure Repos integration guide](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples#mapping-repositories-file-contents-repository-policies-and-pull-requests) 
+- **Open the Pull Request Blueprint**: [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests)
+- **Open the Merge Request Blueprint**: [GitLab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)
+- **Open the Pull Request Blueprint**: [Azure DevOps](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples#mapping-repositories-file-contents-repository-policies-and-pull-requests) 
 
 :::
 
-:::tip Adding JSON Schema Using Port's UI
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"** to create a new blueprint.
-3. **Click on the `{...}` button** in the top right corner, and choose **"Edit JSON"**.
-4. **Add this JSON schema** to define the properties and relations needed for your blueprint.
-
-By following these steps, you can paste and manage the JSON schema required to track DORA metrics in Port.
-:::
-
-:::info Service-Centric Approach
-The deployment blueprint focuses on the service relationship only, as services are the primary entities in your software catalog. Port's default configurations will automatically handle any necessary repository relationships when they are relevant to your setup, eliminating the need for explicit repository relations in the deployment blueprint.
-:::
 
 
 ### Tracking strategies
@@ -165,7 +153,7 @@ The lead time for these merges is calculated as the difference between when the 
   - When a PR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
   - The **lead time** for that PR is calculated and added to the deployment as part of the blueprint.
 
-  Here's how you can implement this:
+  Here is how you can implement this:
 
   1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**.
 
@@ -206,7 +194,7 @@ The lead time for these merges is calculated as the difference between when the 
   - When a MR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
   - The **lead time** for that MR is calculated and added to the deployment as part of the blueprint.
 
-  Here's how you can implement this:
+  Here is how you can implement this:
 
   1. **Add Merge Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)**.
 
@@ -261,7 +249,7 @@ Below is a demonstration of how deployment tracking can be implemented using the
 - When a PR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
 - The **lead time** for that PR is calculated and added to the deployment as part of the blueprint.
 
-Here's how you can implement this:
+Here is how you can implement this:
 
 1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples#mapping-repositories-file-contents-repository-policies-and-pull-requests)**.
 
@@ -326,7 +314,7 @@ Below is a demonstration of how deployment tracking can be implemented using wor
   - When a GitHub Actions workflow runs on the main branch, a **deployment entity** is created in Port to represent the deployment.
   - The **deployment status** is dynamically set based on the workflow run's conclusion.
 
-  Here's how you can implement this:
+  Here is how you can implement this:
 
   1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitHub** integration:
 
@@ -366,7 +354,7 @@ Below is a demonstration of how deployment tracking can be implemented using wor
   - When a GitLab CI/CD pipeline runs on the main branch, a **deployment entity** is created in Port.
   - The **deployment status** is dynamically set based on the pipeline's status.
 
-  Here's how you can implement this:
+  Here is how you can implement this:
 
   1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitLab** integration:
 
@@ -754,7 +742,7 @@ Using Search Queries](/build-your-software-catalog/customize-integrations/config
 GitHub deployments can be tracked by mapping repository releases and tags to deployment entities in Port.
 These repositories can hold critical information related to service versions, commits, and releases.
 
-Here's how you can implement this:
+Here is how you can implement this:
 
 1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration.
 
@@ -800,7 +788,7 @@ Unlike GitHub, **GitLab** and **Azure DevOps** do not support traditional releas
 <TabItem value="custom-api" label="Custom API">
 If your tool or workflow is not natively supported, you can create custom integrations by directly interacting with Port's API. This method allows you to track deployments from any system that can make HTTP API calls.
 
-Here's how you can use the API to create a deployment entity in Port:
+Here is how you can use the API to create a deployment entity in Port:
 
 <details>
 <summary><b>Custom API Example (click to expand)</b></summary>
@@ -851,10 +839,10 @@ giving you full flexibility across all your deployment workflows.
 
 <br/>
 
-### Monorepo Tracking
+<!-- ### Monorepo Tracking
 By using **custom integrations**, you can effectively track services or components within a monorepo.
 
-Here's how you can do this:
+Here is how you can do this:
 
 - **Mapping Service with Monorepo**: You can track the individual services or features within a monorepo by adjusting the mappings associated with the file kind. Each microservice or feature should have distinct properties such as `name`, `deployment status`, and `dependencies`.
 
@@ -895,7 +883,7 @@ For the purposes of this guide, the monorepo is treated as individual services. 
 
 :::tip Custom Integration Benefits
 Custom integrations provide flexibility in mapping and tracking each service or microservice within a monorepo. With Port's API, you can track deployments and updates for each component separately.
-:::
+::: -->
 
 
 ## Tracking incidents
@@ -910,6 +898,10 @@ Incidents are essential for tracking key DORA metrics, including **Change Failur
 
 Ensure that your **PagerDuty incident blueprint** is properly configured to map incidents to the correct services(gitHub). 
 This includes defining the appropriate properties and relations for incidents.Follow this [PagerDuty Incident Blueprint Setup Link](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty#incident-blueprint-setup) to implement.
+
+
+
+
 
 - Add the following properties to capture incident resolution time and recovery time:
 
@@ -960,7 +952,7 @@ For other incident management tools, follow these respective guides:
 
 ### Relating Incident to services
 
-The relationship between a PagerDuty incident and a service blueprint is automatically established when you install the PagerDuty integration. This ensures that each incident is correctly associated with the relevant service within Port.
+The relation between a PagerDuty incident and the service blueprint is automatically established when you install the PagerDuty integration. This ensures that each pagerduty incident is related to the relevant service in Port.
 
 
 ## Metrics
