@@ -145,7 +145,7 @@ const config = {
               },
               {
                 label: "Quickstart",
-                to: "/quickstart",
+                to: "/getting-started/overview",
               },
               {
                 label: "Build a software catalog",
