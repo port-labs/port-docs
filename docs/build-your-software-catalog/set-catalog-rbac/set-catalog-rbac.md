@@ -446,7 +446,7 @@ To give `delete` permissions to members of the owning team of an entity, change 
 
 ## Set *granular* access controls to catalog data
 
-It is possible to assign more granular permissions controls on **entities**:
+It is possible to assign more granular permissions controls on **entities**, allowing you to prevent users from editing certain properties or relations.
 
 <Tabs groupId="permission" defaultValue="updateProp">
 
