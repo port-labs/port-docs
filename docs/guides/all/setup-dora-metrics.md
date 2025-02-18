@@ -901,44 +901,54 @@ This includes defining the appropriate properties and relations for incidents.Fo
 
 
 
+**Add incident resolution time and recovery time properties**
 
+To add incident resolution time and recovery time properties to the PagerDuty incident blueprint, follow these steps:
 
-- Add the following properties to capture incident resolution time and recovery time:
+   1. Navigate to your [Port Builder](https://app.getport.io/settings/data-model) page.
+   2. Select the **PagerDuty Incident** blueprint.
+   3. Click on the `{...}` button in the top right corner, and choose `{...}Edit JSON`.
+   4. Add the following properties to the blueprint:
 
-   <details>
-   <summary><b>Additional properties for PagerDuty Incident Blueprint (click to expand)</b></summary>
-   
-   ```json showLineNumbers
-    "resolvedAt": {
-      "title": "Incident Resolution Time",
-      "type": "string",
-      "format": "date-time",
-      "description": "The timestamp when the incident was resolved"
-    },
-    "recoveryTime": {
-      "title": "Time to Recovery",
-      "type": "number",
-      "description": "The time (in minutes) between the incident being triggered and resolved"
-    }
-   
-   ```
-   </details>
+      <details>
+      <summary><b>Additional properties for PagerDuty Incident Blueprint (click to expand)</b></summary>
+      
+      ```json showLineNumbers
+        "resolvedAt": {
+          "title": "Incident Resolution Time",
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the incident was resolved"
+        },
+        "recoveryTime": {
+          "title": "Time to Recovery",
+          "type": "number",
+          "description": "The time (in minutes) between the incident being triggered and resolved"
+        }
+      
+      ```
+      </details>
 
-- Add this mapping config to pagerduty incident [data source](https://app.getport.io/settings/data-sources):
+**Add incident resolution time and recovery time mapping config**
 
-   <details>
-     <summary><b>Incident mapping config for resolvedAt and recoveryTime (click to expand)</b></summary>
-     
-   ```yaml showLineNumbers
-      resolvedAt: .resolved_at
-      recoveryTime: >-
-         (.created_at as $createdAt | .resolved_at as $resolvedAt |
-         if $resolvedAt == null then null else 
-         ( ($resolvedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) -
-           ($createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) ) / 60 end) # Time in minutes and divide by 3600 if you want it calculated in hours
-     ```
-   
-   </details>
+To add incident resolution time and recovery time mapping config to the PagerDuty data source, follow these steps:
+   1. Navigate to your [Port Data Sources](https://app.getport.io/settings/data-sources) page.
+   2. Select the **PagerDuty** data source.
+   3. Add the following mapping to the incident mapping section:
+
+      <details>
+        <summary><b>Incident mapping config for resolvedAt and recoveryTime (click to expand)</b></summary>
+        
+      ```yaml showLineNumbers
+          resolvedAt: .resolved_at
+          recoveryTime: >-
+            (.created_at as $createdAt | .resolved_at as $resolvedAt |
+            if $resolvedAt == null then null else 
+            ( ($resolvedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) -
+              ($createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) ) / 60 end) # Time in minutes and divide by 3600 if you want it calculated in hours
+        ```
+      
+      </details>
 
 ### Syncing incidents with PagerDuty and other tools
 
@@ -972,7 +982,7 @@ Before proceeding, follow these steps to add the aggregation and calculation pro
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
 2. Locate and select your **Service** blueprint.
-3. Click the `{...}` button in the top right corner, and choose **Edit JSON**.
+3. Click the `{...}` button in the top right corner, and choose `{...}Edit JSON`.
 4. Insert the respective **aggregation** or **calculation properties** under the `aggregationProperties` or `calculationProperties` section in the Service blueprint's JSON schema.
 5. Save your changes to apply the new aggregation configuration.
 :::
