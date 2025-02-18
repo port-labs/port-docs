@@ -18,24 +18,24 @@ In this example we'll use the Import State feature of Terraform, then manage our
 
 ## Prerequisites
 
-You will need to create an integration within the Port UI, For example the [Kubernetes Exporter](/guides/all/visualize-service-k8s-runtime
-)
+The [Kubernetes](/guides/all/visualize-service-k8s-runtime) integration needs to be installed.
 
-:::note  Installation Id
-As you create the integration, take note of the installation Id.
+
+:::info  Installation Id
+Take note of the installation Id of the Kubernetes integration when installing it.
 :::
 
 
-### Getting started
+## Getting started
 
-In order to interact with the API you will need an API token.
+In order to interact with the API you will need an **API token**.
 
-Getting an API token involves 2 steps:
+To get an **API token** you need to:
 
-1. Finding your Port API credentials.
-2. Making an API request to generate a valid token.
+1. Find your Port API credentials.
+2. Make an API request to generate a valid token.
 
-### Find your Port credentials
+### Find your Port API credentials
 
 <FindCredentials />
 
