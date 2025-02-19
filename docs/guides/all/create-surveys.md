@@ -269,7 +269,7 @@ Finally, create a blueprint for survey responses:
 
 Now that we have our basic blueprints set up, let's add calculation and aggregation properties to enable advanced metrics and analytics for our surveys.
 
-### Adding Score Tracking to Question Template
+### Add score tracking to question template
 
 Navigate to your Question Template blueprint and add the following properties:
 
