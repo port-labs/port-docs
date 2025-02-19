@@ -116,7 +116,7 @@ Create a blueprint for survey:
 ```
 </details>
 
-### Question Template Blueprint
+### Question template blueprint
 
 Create a blueprint for question templates:
 
