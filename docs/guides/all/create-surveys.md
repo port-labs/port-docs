@@ -522,42 +522,17 @@ Now let's create an action that allows users to submit survey responses:
 
 1. Go to the [Self Service Actions](https://app.getport.io/actions) page of your portal.
 
-2. Click `+ Action`.
+2. Click `+ Action` button to create a new action.
 
-3. Select `Create Entity`.
+3. Click on the `Edit JSON` button.
 
-4. Configure the action:
-
-:::note Webhook URL
-Make sure to replace the example URL (`https://example.com`) with the webhook URL you saved from the previous step.
-:::
-
-:::note Important Hidden Inputs
-It's important to include these hidden inputs in the form so we can have versioning and track user information:
-```json showLineNumbers
-"version": {
-  "title": "Version",
-  "icon": "DefaultProperty",
-  "type": "string",
-  "default": "Q1 2025",
-  "visible": false
-},
-"user": {
-  "type": "string",
-  "title": "user",
-  "blueprint": "_user",
-  "format": "entity",
-  "default": {
-    "jqQuery": ".user.email"
-  },
-  "visible": false
-}
-```
-:::
+4. Copy the configuration below and paste it in the editor:
 
 <details>
 <summary><b>Survey action configuration (click to expand)</b></summary>
-
+:::info Webhook URL
+Make sure to replace the example URL (`https://example.com`) with the webhook URL you saved from the previous step.
+:::
 ```json showLineNumbers
 {
   "identifier": "answer_example_survey",
@@ -664,6 +639,10 @@ It's important to include these hidden inputs in the form so we can have version
 }
 ```
 </details>
+
+:::info Important Hidden Inputs
+It's important to include `userInputs.properties.version` and `userInputs.properties.user` as hidden inputs in the form so we can have versioning and track user information:
+:::
 
 ## Create a dashboard
 
