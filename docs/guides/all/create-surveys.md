@@ -9,7 +9,13 @@ import TabItem from "@theme/TabItem"
 # Create Surveys
 
 This guide is designed to help you implement and manage a complete survey experience within your organization using Port.  
-With surveys, you can collect structured feedback, track user responses, and visualize the results on a custom dashboard.  In this guide, you'll build the core components: blueprints for surveys, questions, and responses; a webhook datasource to capture survey data; a self-service action for survey participation; and a dashboard to monitor your survey metrics.
+
+With surveys, you can collect structured feedback, track user responses, and visualize the results in a custom dashboard.  
+In this guide, we will build the core components:
+- Blueprints for surveys, questions, and responses.
+- A webhook datasource to capture survey data.
+- A self-service action for survey participation.
+- A dashboard to monitor survey metrics.
 
 ## Prerequisites
 
