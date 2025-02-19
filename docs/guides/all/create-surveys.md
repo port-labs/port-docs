@@ -37,36 +37,34 @@ We will create several blueprints: `Survey Template`, `Survey`, `Question`, `Que
 
 4. Copy the definition below and paste it in the editor:
 
+    <details>
+    <summary><b>Survey Template blueprint (click to expand)</b></summary>
 
-<details>
-<summary><b>Survey Template blueprint (click to expand)</b></summary>
-
-```json
-{
-  "identifier": "survey_template",
-  "title": "Survey Template",
-  "icon": "GroupBy",
-  "schema": {
-    "properties": {
-      "description": {
-        "type": "string",
-        "title": "Description"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-</details>
+    ```json
+    {
+      "identifier": "survey_template",
+      "title": "Survey Template",
+      "icon": "GroupBy",
+      "schema": {
+        "properties": {
+          "description": {
+            "type": "string",
+            "title": "Description"
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
+    </details>
 
 ### Survey blueprint
 
 Create a blueprint for survey:
-
 
 <details>
 <summary><b>Survey blueprint (click to expand)</b></summary>
@@ -267,108 +265,118 @@ Finally, create a blueprint for survey responses:
 
 ## Add calculation and aggregation properties
 
-Now that we have our basic blueprints set up, let's add calculation and aggregation properties to enable advanced metrics and analytics for our surveys.
+Now that we have our basic blueprints set up, let's add [calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property) and [aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) properties to enable advanced metrics and analytics for our surveys.
 
 ### Add score tracking to question template
 
-Navigate to your Question Template blueprint and add the following properties:
+Go to the [builder page](https://app.getport.io/settings/data-model), find and expand the `Question Template` blueprint.  
 
-1. Add calculation properties to create a scorecard based on average scores:
+Click on the `...` button and select `Edit blueprint`, then click on the `Edit JSON` button.  
 
-```json
-"calculationProperties": {
-  "avg_score_scorecard": {
-    "title": "Score Standards",
-    "icon": "DefaultProperty",
-    "calculation": "if (.properties.avg_score == null) then null else if (.properties.avg_score < 3) then \"low\" elif (.properties.avg_score <= 4) then \"medium\" else \"high\" end end",
-    "type": "string",
-    "colorized": true,
-    "colors": {
-      "low": "red",
-      "medium": "yellow",
-      "high": "green"
+1. Let's add a calculation property to create a scorecard based on average scores.  
+   Under the `calculationProperties` key, paste the following JSON:
+
+    ```json showLineNumbers
+    "calculationProperties": {
+      "avg_score_scorecard": {
+        "title": "Score Standards",
+        "icon": "DefaultProperty",
+        "calculation": "if (.properties.avg_score == null) then null else if (.properties.avg_score < 3) then \"low\" elif (.properties.avg_score <= 4) then \"medium\" else \"high\" end end",
+        "type": "string",
+        "colorized": true,
+        "colors": {
+          "low": "red",
+          "medium": "yellow",
+          "high": "green"
+        }
+      }
     }
-  }
-}
-```
+    ```
 
-This calculation property creates a color-coded scorecard that categorizes average scores into three levels:
-- Low (red): scores below 3
-- Medium (yellow): scores between 3 and 4
-- High (green): scores above 4
+    This calculation property creates a color-coded scorecard that categorizes average scores into three levels:
+    - Low (red): scores below 3
+    - Medium (yellow): scores between 3 and 4
+    - High (green): scores above 4
 
-2. Add aggregation properties to calculate the average score from responses:
+2. Let's add an aggregation property to calculate the average score from responses.  
+   Under the `aggregationProperties` key, paste the following JSON:
 
-```json
-"aggregationProperties": {
-  "avg_score": {
-    "title": "Avg. Score",
-    "type": "number",
-    "target": "response",
-    "calculationSpec": {
-      "func": "average",
-      "averageOf": "total",
-      "property": "numeric_value",
-      "calculationBy": "property",
-      "measureTimeBy": "$createdAt"
+    ```json showLineNumbers
+    "aggregationProperties": {
+      "avg_score": {
+        "title": "Avg. Score",
+        "type": "number",
+        "target": "response",
+        "calculationSpec": {
+          "func": "average",
+          "averageOf": "total",
+          "property": "numeric_value",
+          "calculationBy": "property",
+          "measureTimeBy": "$createdAt"
+        }
+      }
     }
-  }
-}
-```
+    ```
 
-This aggregation property:
-- Calculates the average of all numeric responses
-- Uses the `numeric_value` from responses
-- Updates in real-time as new responses are submitted
+    This aggregation property:
+    - Calculates the average of all numeric responses
+    - Uses the `numeric_value` from responses
+    - Updates in real-time as new responses are submitted
 
-### Adding Score Tracking to Question
+### Add score tracking to question
 
-Navigate to your Question blueprint and add similar properties for score tracking:
+Go to the [builder page](https://app.getport.io/settings/data-model), find and expand the `Question` blueprint.  
 
-1. Add calculation properties for the scorecard:
+Click on the `...` button and select `Edit blueprint`, then click on the `Edit JSON` button.  
 
-```json
-"calculationProperties": {
-  "avg_score_scorecard": {
-    "title": "Score Standards",
-    "icon": "DefaultProperty",
-    "calculation": "if (.properties.avg_score == null) then null else if (.properties.avg_score < 3) then \"low\" elif (.properties.avg_score <= 4) then \"medium\" else \"high\" end end",
-    "type": "string",
-    "colorized": true,
-    "colors": {
-      "low": "red",
-      "medium": "yellow",
-      "high": "green"
+1. Under the `calculationProperties` key, paste the following JSON:
+
+    ```json showLineNumbers
+    "calculationProperties": {
+      "avg_score_scorecard": {
+        "title": "Score Standards",
+        "icon": "DefaultProperty",
+        "calculation": "if (.properties.avg_score == null) then null else if (.properties.avg_score < 3) then \"low\" elif (.properties.avg_score <= 4) then \"medium\" else \"high\" end end",
+        "type": "string",
+        "colorized": true,
+        "colors": {
+          "low": "red",
+          "medium": "yellow",
+          "high": "green"
+        }
+      }
     }
-  }
-}
-```
+    ```
 
-2. Add aggregation properties to calculate the average score:
+2. Under the `aggregationProperties` key, paste the following JSON:
 
-```json
-"aggregationProperties": {
-  "avg_score": {
-    "title": "Avg. Score",
-    "icon": "DefaultProperty",
-    "type": "number",
-    "target": "response",
-    "calculationSpec": {
-      "func": "average",
-      "averageOf": "total",
-      "property": "numeric_value",
-      "calculationBy": "property",
-      "measureTimeBy": "$createdAt"
+    ```json showLineNumbers
+    "aggregationProperties": {
+      "avg_score": {
+        "title": "Avg. Score",
+        "icon": "DefaultProperty",
+        "type": "number",
+        "target": "response",
+        "calculationSpec": {
+          "func": "average",
+          "averageOf": "total",
+          "property": "numeric_value",
+          "calculationBy": "property",
+          "measureTimeBy": "$createdAt"
+        }
+      }
     }
-  }
-}
-```
+    ```
 
-### Adding Mirror Properties to Response
+### Add mirror properties to response
 
-Navigate to your Response blueprint and add the following mirror property:
+Go to the [builder page](https://app.getport.io/settings/data-model), find and expand the `Response` blueprint.  
 
-```json
+Click on the `...` button and select `Edit blueprint`, then click on the `Edit JSON` button.  
+
+Under the `mirrorProperties` key, paste the following JSON:
+
+```json showLineNumbers
 "mirrorProperties": {
   "avg_score": {
     "title": "Avg Score",
@@ -377,139 +385,147 @@ Navigate to your Response blueprint and add the following mirror property:
 }
 ```
 
-This mirror property allows responses to reflect the average score from their related questions, providing easy access to this metric at the response level.
+This [mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) allows responses to reflect the average score from their related questions, providing easy access to this metric at the response level.
 
-## Creating a webhook datasource
+## Create a webhook datasource
 
-To capture survey responses, we'll set up a webhook datasource:
+To capture survey responses, let's set up a webhook datasource:
 
-1. Go to the [Data Sources](https://app.getport.io/settings/data-sources) page
-2. Click `+ Data Source`
-3. Select `Webhook`
-4. Select `Custom Integration`
-5. Title it `Calculate Survey Response`
+1. Go to the [Data Sources](https://app.getport.io/settings/data-sources) page of your portal.
+
+2. Click `+ Data Source`.
+
+3. Select `Webhook`.
+
+4. Select `Custom Integration`.
+
+5. Title it `Calculate Survey Response`.
+
 6. Configure the webhook with the following mapping:
 
-<details>
-<summary><b>Webhook configuration (click to expand)</b></summary>
+    <details>
+    <summary><b>Webhook configuration (click to expand)</b></summary>
 
-```json
-[
-  {
-    "blueprint": "survey_template",
-    "operation": "create",
-    "filter": "true",
-    "entity": {
-      "identifier": ".body.port_context.actionId",
-      "title": ".body.port_context.actionId"
-    }
-  },
-  {
-    "blueprint": "survey",
-    "operation": "create",
-    "filter": "true",
-    "entity": {
-      "identifier": "[(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\")), (.body.port_context.version | ascii_downcase | gsub(\" \"; \"_\"))] | join(\"_\")",
-      "title": "[.body.port_context.actionId, .body.port_context.version] | join(\" \")",
-      "properties": {
-        "version": ".body.port_context.version"
+    ```json showLineNumbers
+    [
+      {
+        "blueprint": "survey_template",
+        "operation": "create",
+        "filter": "true",
+        "entity": {
+          "identifier": ".body.port_context.actionId",
+          "title": ".body.port_context.actionId"
+        }
       },
-      "relations": {
-        "survey_template": ".body.port_context.actionId"
-      }
-    }
-  },
-  {
-    "blueprint": "question",
-    "operation": "create",
-    "itemsToParse": ".body.responses",
-    "entity": {
-      "identifier": "[.item.key,(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\")), (.body.port_context.version | ascii_downcase | gsub(\" \"; \"_\"))] | join (\"_\")",
-      "title": "[.item.key,(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\")), (.body.port_context.version | ascii_downcase | gsub(\" \"; \"_\"))] | join (\"_\")",
-      "properties": {
-        "numeric_question": ".item.value | type == \"number\""
+      {
+        "blueprint": "survey",
+        "operation": "create",
+        "filter": "true",
+        "entity": {
+          "identifier": "[(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\")), (.body.port_context.version | ascii_downcase | gsub(\" \"; \"_\"))] | join(\"_\")",
+          "title": "[.body.port_context.actionId, .body.port_context.version] | join(\" \")",
+          "properties": {
+            "version": ".body.port_context.version"
+          },
+          "relations": {
+            "survey_template": ".body.port_context.actionId"
+          }
+        }
       },
-      "relations": {
-        "question_template": ".item.key",
-        "survey": "[(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\")), (.body.port_context.version | ascii_downcase | gsub(\" \"; \"_\"))] | join(\"_\")"
-      }
-    }
-  },
-  {
-    "blueprint": "question_template",
-    "operation": "create",
-    "itemsToParse": ".body.responses",
-    "entity": {
-      "identifier": ".item.key",
-      "title": ".item.key",
-      "properties": {
-        "numeric_question": ".item.value | type == \"number\""
+      {
+        "blueprint": "question",
+        "operation": "create",
+        "itemsToParse": ".body.responses",
+        "entity": {
+          "identifier": "[.item.key,(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\")), (.body.port_context.version | ascii_downcase | gsub(\" \"; \"_\"))] | join (\"_\")",
+          "title": "[.item.key,(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\")), (.body.port_context.version | ascii_downcase | gsub(\" \"; \"_\"))] | join (\"_\")",
+          "properties": {
+            "numeric_question": ".item.value | type == \"number\""
+          },
+          "relations": {
+            "question_template": ".item.key",
+            "survey": "[(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\")), (.body.port_context.version | ascii_downcase | gsub(\" \"; \"_\"))] | join(\"_\")"
+          }
+        }
       },
-      "relations": {
-        "survey_template": "(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\"))"
-      }
-    }
-  },
-  {
-    "blueprint": "response",
-    "operation": "create",
-    "itemsToParse": ".body.responses",
-    "entity": {
-      "identifier": "[.headers.run_id, .item.key, .item.value] | join(\"_\") | gsub(\" |/|,|\\\\.|\\\\(|\\\\)\"; \"\")",
-      "title": "[.headers.run_id, .item.key, .item.value] | join(\" \") | gsub(\" |/|,|\\\\.|\\\\(|\\\\)\"; \"\")",
-      "properties": {
-        "value": ".item.value"
+      {
+        "blueprint": "question_template",
+        "operation": "create",
+        "itemsToParse": ".body.responses",
+        "entity": {
+          "identifier": ".item.key",
+          "title": ".item.key",
+          "properties": {
+            "numeric_question": ".item.value | type == \"number\""
+          },
+          "relations": {
+            "survey_template": "(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\"))"
+          }
+        }
       },
-      "relations": {
-        "question": "[.item.key,(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\")), (.body.port_context.version | ascii_downcase | gsub(\" \"; \"_\"))] | join (\"_\")",
-        "user": ".body.port_context.user",
-        "current_team": ".body.port_context.teams"
+      {
+        "blueprint": "response",
+        "operation": "create",
+        "itemsToParse": ".body.responses",
+        "entity": {
+          "identifier": "[.headers.run_id, .item.key, .item.value] | join(\"_\") | gsub(\" |/|,|\\\\.|\\\\(|\\\\)\"; \"\")",
+          "title": "[.headers.run_id, .item.key, .item.value] | join(\" \") | gsub(\" |/|,|\\\\.|\\\\(|\\\\)\"; \"\")",
+          "properties": {
+            "value": ".item.value"
+          },
+          "relations": {
+            "question": "[.item.key,(.body.port_context.actionId | ascii_downcase | gsub(\" \"; \"_\")), (.body.port_context.version | ascii_downcase | gsub(\" \"; \"_\"))] | join (\"_\")",
+            "user": ".body.port_context.user",
+            "current_team": ".body.port_context.teams"
+          }
+        }
       }
-    }
-  }
-]
-```
-</details>
+    ]
+    ```
+    </details>
 
-:::note Webhook URL
-Make sure to copy and save the webhook URL - you'll need it when configuring the survey action in the next section.
-:::
+    :::tip Webhook URL
+    Make sure to copy and save the webhook URL - you'll need it when configuring the survey action in the next section.
+    :::
 
-### Understanding Survey Versions
+## Understanding survey versions
 
-The version property in the survey configuration enables you to run the same survey multiple times and track responses over time. This is particularly useful for:
+The `version` property in the survey configuration enables you to run the same survey multiple times and track responses over time. This is particularly useful for:
 
-- Running periodic surveys (e.g., quarterly developer satisfaction surveys)
-- Comparing results across different time periods
-- Tracking trends and improvements
+- Running periodic surveys (e.g., quarterly developer satisfaction surveys).
+- Comparing results across different time periods.
+- Tracking trends and improvements.
 
 When you create a new instance of a survey:
-1. The survey template remains the same
-2. A new survey entity is created with a unique version (e.g., "Q1 2024", "Q2 2024")
-3. All responses are linked to this specific version
-4. The aggregation properties will show metrics both per version and across all versions
+1. The survey template remains the same.
+2. A new survey entity is created with a unique version (e.g., "Q1 2024", "Q2 2024").
+3. All responses are linked to this specific version.
+4. The aggregation properties will show metrics both per version and across all versions.
 
 For example, you can:
-- Compare average scores between Q1 and Q2
-- Track improvement trends over multiple quarters
-- View combined statistics across all versions of the survey
+- Compare average scores between Q1 and Q2.
+- Track improvement trends over multiple quarters.
+- View combined statistics across all versions of the survey.
 
 The distinction between Question Templates and Questions is similar:
-- Question Templates define the base structure of questions that can be reused across different survey versions
-- Questions are specific instances of these templates, linked to a particular survey version
-- This allows you to track responses to the same question across different survey versions while maintaining the connection to the original template
+- Question Templates define the base structure of questions that can be reused across different survey versions.
+- Questions are specific instances of these templates, linked to a particular survey version.
+- This allows you to track responses to the same question across different survey versions while maintaining the connection to the original template.
 
 :::tip
 Use a consistent versioning format (e.g., "Q1 2024", "Q2 2024") to make it easier to organize and compare survey results.
 :::
 
-## Setting up the survey action
+## Set up a survey action
 
 Now let's create an action that allows users to submit survey responses:
 
-1. Go to the [Self Service Actions](https://app.getport.io/actions) page
-2. Click `+ Action`
-3. Select `Create Entity`
+1. Go to the [Self Service Actions](https://app.getport.io/actions) page of your portal.
+
+2. Click `+ Action`.
+
+3. Select `Create Entity`.
+
 4. Configure the action:
 
 :::note Webhook URL
