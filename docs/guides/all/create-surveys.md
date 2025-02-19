@@ -6,7 +6,7 @@ displayed_sidebar: null
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Create Surveys in your portal
+# Create surveys in your portal
 
 This guide is designed to help you implement and manage a complete survey experience within your organization using Port.  
 
