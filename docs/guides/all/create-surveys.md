@@ -152,7 +152,7 @@ Create a blueprint for question templates:
 ```
 </details>
 
-### Question Blueprint
+### Question blueprint
 
 Create another blueprint for survey questions:
 
