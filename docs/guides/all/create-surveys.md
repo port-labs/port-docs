@@ -9,17 +9,23 @@ import TabItem from "@theme/TabItem"
 # Create Surveys in your portal
 
 This guide is designed to help you implement and manage a complete survey experience within your organization using Port.  
-With surveys, you can collect structured feedback, track user responses, and visualize the results on a custom dashboard.  In this guide, you'll build the core components: blueprints for surveys, questions, and responses; a webhook datasource to capture survey data; a self-service action for survey participation; and a dashboard to monitor your survey metrics.
+
+With surveys, you can collect structured feedback, track user responses, and visualize the results in a custom dashboard.  
+In this guide, we will build the core components:
+- Blueprints for surveys, questions, and responses.
+- A webhook datasource to capture survey data.
+- A self-service action for survey participation.
+- A dashboard to monitor survey metrics.
 
 ## Prerequisites
 
-- Complete the [Port onboarding process](https://docs.getport.io/quickstart)
-- Admin access to your Port environment
-- Basic understanding of Port's [data model concepts](/build-your-software-catalog/customize-integrations/configure-data-model)
+- Complete the [onboarding process](/getting-started/overview).
+- Admin access to your Port environment.
 
-## Setting up the data model
+## Set up the data model
 
-First, let's create the necessary blueprints to store survey data. We'll create three blueprints: Survey, Question, and Response.
+First, let's create the necessary blueprints to store survey data.  
+We will create three blueprints: `Survey`, `Question`, and `Response`.
 
 ### Survey Template Blueprint
 
