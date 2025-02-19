@@ -6,7 +6,7 @@ displayed_sidebar: null
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Create Surveys
+# Create Surveys in your portal
 
 This guide is designed to help you implement and manage a complete survey experience within your organization using Port.  
 With surveys, you can collect structured feedback, track user responses, and visualize the results on a custom dashboard.  In this guide, you'll build the core components: blueprints for surveys, questions, and responses; a webhook datasource to capture survey data; a self-service action for survey participation; and a dashboard to monitor your survey metrics.
@@ -722,7 +722,7 @@ This widget displays the average score calculated from all responses for the cho
 
 This widget shows the distribution of answers across all responses for the selected question.
 
-![Answer Distribution Widget](/img/guides/answerDistributionWidget.png)
+![Answer Distribution Widget](/img/guides/AnswerDistributionWidget.png)
 </details>
 
 <details>
