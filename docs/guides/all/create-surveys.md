@@ -27,7 +27,7 @@ In this guide, we will build the core components:
 First, let's create the necessary blueprints to store survey data.  
 We will create several blueprints: `Survey Template`, `Survey`, `Question`, `Question Template`, and `Response`.
 
-### Survey Template Blueprint
+### Survey template blueprint
 
 1. Navigate to your [Port Builder](https://app.getport.io/settings/data-model) page.
 
