@@ -63,7 +63,7 @@ We will create several blueprints: `Survey Template`, `Survey`, `Question`, `Que
 ```
 </details>
 
-### Survey Blueprint
+### Survey blueprint
 
 Create a blueprint for survey:
 
