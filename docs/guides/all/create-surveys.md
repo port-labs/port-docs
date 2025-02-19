@@ -196,7 +196,7 @@ Create another blueprint for survey questions:
 ```
 </details>
 
-### Response Blueprint
+### Response blueprint
 
 Finally, create a blueprint for survey responses:
 
