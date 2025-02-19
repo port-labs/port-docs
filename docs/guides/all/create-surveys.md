@@ -24,7 +24,8 @@ In this guide, we will build the core components:
 
 ## Set up the data model
 
-First, let's create the necessary blueprints to store survey data. We'll create three blueprints: Survey, Question, and Response.
+First, let's create the necessary blueprints to store survey data.  
+We will create three blueprints: `Survey`, `Question`, and `Response`.
 
 ### Survey Template Blueprint
 
