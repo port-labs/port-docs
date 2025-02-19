@@ -15,7 +15,7 @@ In this guide, we will build the core components:
 - **Blueprints** for surveys, questions, and responses.
 - A **webhook datasource** to capture survey data.
 - A **self-service action** for survey participation.
-- A dashboard to monitor survey metrics.
+- A **dashboard** to monitor survey metrics.
 
 ## Prerequisites
 
