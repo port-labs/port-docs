@@ -29,9 +29,13 @@ We will create several blueprints: `Survey Template`, `Survey`, `Question`, `Que
 
 ### Survey Template Blueprint
 
-1. Navigate to your [Port Builder](https://app.getport.io/settings/data-model) page
-2. Click the `+ Blueprint` button to create a new blueprint
-3. Name it `Survey Template` and add the schema below:
+1. Navigate to your [Port Builder](https://app.getport.io/settings/data-model) page.
+
+2. Click the `+ Blueprint` button to create a new blueprint.
+
+3. Click on the `Edit JSON` button.
+
+4. Copy the definition below and paste it in the editor:
 
 
 <details>
