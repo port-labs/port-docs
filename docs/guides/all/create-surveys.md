@@ -528,121 +528,120 @@ Now let's create an action that allows users to submit survey responses:
 
 4. Copy the configuration below and paste it in the editor:
 
-<details>
-<summary><b>Survey action configuration (click to expand)</b></summary>
-:::info Webhook URL
-Make sure to replace the example URL (`https://example.com`) with the webhook URL you saved from the previous step.
-:::
-```json showLineNumbers
-{
-  "identifier": "answer_example_survey",
-  "title": "Answer Example Survey",
-  "icon": "Chat",
-  "trigger": {
-    "type": "self-service",
-    "operation": "CREATE",
-    "userInputs": {
-      "properties": {
-        "how_would_you_rate_this_rating": {
-          "type": "number",
-          "title": "Example Rating Question (0-5)",
-          "enum": [
-            5,
-            4,
-            3,
-            2,
-            1,
-            0
-          ],
-          "enumColors": {
-            "0": "lightGray",
-            "1": "red",
-            "2": "orange",
-            "3": "yellow",
-            "4": "blue",
-            "5": "green"
-          }
-        },
-        "select_from_options": {
-          "type": "string",
-          "title": "Example Selection Question",
-          "enum": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-          ]
-        },
-        "what_do_you_think_on_this_open": {
-          "type": "string",
-          "title": "Example Open-Ended Question"
-        },
-        "version": {
-          "title": "Version",
-          "icon": "DefaultProperty",
-          "type": "string",
-          "default": "Q1 2025",
-          "visible": false
-        },
-        "user": {
-          "type": "string",
-          "title": "user",
-          "blueprint": "_user",
-          "format": "entity",
-          "default": {
-            "jqQuery": ".user.email"
+    <details>
+    <summary><b>Survey action configuration (click to expand)</b></summary>
+
+    Make sure to replace the example URL (`https://example.com`) with the webhook URL from the previous step.
+    ```json showLineNumbers
+    {
+      "identifier": "answer_example_survey",
+      "title": "Answer Example Survey",
+      "icon": "Chat",
+      "trigger": {
+        "type": "self-service",
+        "operation": "CREATE",
+        "userInputs": {
+          "properties": {
+            "how_would_you_rate_this_rating": {
+              "type": "number",
+              "title": "Example Rating Question (0-5)",
+              "enum": [
+                5,
+                4,
+                3,
+                2,
+                1,
+                0
+              ],
+              "enumColors": {
+                "0": "lightGray",
+                "1": "red",
+                "2": "orange",
+                "3": "yellow",
+                "4": "blue",
+                "5": "green"
+              }
+            },
+            "select_from_options": {
+              "type": "string",
+              "title": "Example Selection Question",
+              "enum": [
+                "Option A",
+                "Option B",
+                "Option C",
+                "Option D"
+              ]
+            },
+            "what_do_you_think_on_this_open": {
+              "type": "string",
+              "title": "Example Open-Ended Question"
+            },
+            "version": {
+              "title": "Version",
+              "icon": "DefaultProperty",
+              "type": "string",
+              "default": "Q1 2025",
+              "visible": false
+            },
+            "user": {
+              "type": "string",
+              "title": "user",
+              "blueprint": "_user",
+              "format": "entity",
+              "default": {
+                "jqQuery": ".user.email"
+              },
+              "visible": false
+            }
           },
-          "visible": false
+          "required": [],
+          "steps": [
+            {
+              "title": "First Step",
+              "order": [
+                "how_would_you_rate_this_rating",
+                "select_from_options"
+              ]
+            },
+            {
+              "title": "Second Step",
+              "order": [
+                "what_do_you_think_on_this_open",
+                "version",
+                "user"
+              ]
+            }
+          ]
         }
       },
-      "required": [],
-      "steps": [
-        {
-          "title": "First Step",
-          "order": [
-            "how_would_you_rate_this_rating",
-            "select_from_options"
-          ]
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://example.com",
+        "agent": false,
+        "synchronized": true,
+        "method": "POST",
+        "headers": {
+          "RUN_ID": "{{ .run.id }}"
         },
-        {
-          "title": "Second Step",
-          "order": [
-            "what_do_you_think_on_this_open",
-            "version",
-            "user"
-          ]
+        "body": {
+          "responses": "{{ .inputs | del(.[\"user\"]) | to_entries | map( if (.value | type) == \"array\" then (. as {key: $k, value: $vals} | $vals | map({\"key\": $k, \"value\": .})) else {\"key\": .key, \"value\": .value} end ) | flatten }}",
+          "port_context": {
+            "runId": "{{ .run.id }}",
+            "actionId": "{{.action.identifier}}",
+            "user": "{{.trigger.by.user.email}}",
+            "teams": "{{ .inputs.user.team }}",
+            "version": "{{ .inputs.version }}"
+          }
         }
-      ]
+      },
+      "requiredApproval": false
     }
-  },
-  "invocationMethod": {
-    "type": "WEBHOOK",
-    "url": "https://ingest.getport.io/rFy9IJLjjPxQrHB2",
-    "agent": false,
-    "synchronized": true,
-    "method": "POST",
-    "headers": {
-      "RUN_ID": "{{ .run.id }}"
-    },
-    "body": {
-      "responses": "{{ .inputs | del(.[\"user\"]) | to_entries | map( if (.value | type) == \"array\" then (. as {key: $k, value: $vals} | $vals | map({\"key\": $k, \"value\": .})) else {\"key\": .key, \"value\": .value} end ) | flatten }}",
-      "port_context": {
-        "runId": "{{ .run.id }}",
-        "actionId": "{{.action.identifier}}",
-        "user": "{{.trigger.by.user.email}}",
-        "teams": "{{ .inputs.user.team }}",
-        "version": "{{ .inputs.version }}"
-      }
-    }
-  },
-  "requiredApproval": false
-}
-```
-</details>
+    ```
+    </details>
 
-:::info Important Hidden Inputs
-It's important to include `userInputs.properties.version` and `userInputs.properties.user` as hidden inputs in the form so we can have versioning and track user information:
-:::
+    :::info Hidden Inputs
+    It's important to define `userInputs.properties.version` and `userInputs.properties.user` as hidden inputs (see `visible: false`) in the form for versioning and tracking purposes.
+    :::
 
 ## Create a dashboard
 
