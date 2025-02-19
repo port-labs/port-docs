@@ -265,7 +265,7 @@ Finally, create a blueprint for survey responses:
 ```
 </details>
 
-## Adding calculation and aggregation properties
+## Add calculation and aggregation properties
 
 Now that we have our basic blueprints set up, let's add calculation and aggregation properties to enable advanced metrics and analytics for our surveys.
 
