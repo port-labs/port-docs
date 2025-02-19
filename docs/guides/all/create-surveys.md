@@ -22,7 +22,7 @@ In this guide, we will build the core components:
 - Complete the [onboarding process](/getting-started/overview).
 - Admin access to your Port environment.
 
-## Setting up the data model
+## Set up the data model
 
 First, let's create the necessary blueprints to store survey data. We'll create three blueprints: Survey, Question, and Response.
 
