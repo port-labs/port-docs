@@ -12,9 +12,9 @@ This guide is designed to help you implement and manage a complete survey experi
 
 With surveys, you can collect structured feedback, track user responses, and visualize the results in a custom dashboard.  
 In this guide, we will build the core components:
-- Blueprints for surveys, questions, and responses.
-- A webhook datasource to capture survey data.
-- A self-service action for survey participation.
+- **Blueprints** for surveys, questions, and responses.
+- A **webhook datasource** to capture survey data.
+- A **self-service action** for survey participation.
 - A dashboard to monitor survey metrics.
 
 ## Prerequisites
