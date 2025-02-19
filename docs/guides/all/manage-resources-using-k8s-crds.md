@@ -164,7 +164,7 @@ By leveraging the power of the K8s API extensions, platform engineers can keep u
 
 ### Next Steps
 
-- Enrich the catalog and visualize the Runtime existing objects in your K8s cluster, by following the [Visualize services' k8s runtime guide](./visualize-service-k8s-runtime.md).
+- Enrich the catalog and visualize the Runtime existing objects in your K8s cluster, by following the [Visualize services' k8s runtime guide](./visualize-service-k8s-runtime).
 - Port allows multiple ways to enhance the experience of executing `Actions`, feel free to alter the `Action` in Port to your needs by visiting [Action Documentation](/actions-and-automations/create-self-service-experiences/create-self-service-experiences.md).
 - [Sync data](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md) and create more `Blueprints` to enrich the data beyond what exists in K8S.
 - Build dashboards and reports to visualize the usage of the CRDs and resources in your K8s cluster by following the [Build dashboards and reports guide](/customize-pages-dashboards-and-plugins/dashboards/dashboards.md).
