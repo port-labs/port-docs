@@ -20,8 +20,7 @@ In this guide, we will build the core components:
 ## Prerequisites
 
 - Complete the [onboarding process](/getting-started/overview).
-- Admin access to your Port environment
-- Basic understanding of Port's [data model concepts](/build-your-software-catalog/customize-integrations/configure-data-model)
+- Admin access to your Port environment.
 
 ## Setting up the data model
 
