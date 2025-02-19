@@ -534,7 +534,7 @@ Make sure to replace the example URL (`https://example.com`) with the webhook UR
 
 :::note Important Hidden Inputs
 It's important to include these hidden inputs in the form so we can have versioning and track user information:
-```json
+```json showLineNumbers
 "version": {
   "title": "Version",
   "icon": "DefaultProperty",
@@ -558,7 +558,7 @@ It's important to include these hidden inputs in the form so we can have version
 <details>
 <summary><b>Survey action configuration (click to expand)</b></summary>
 
-```json
+```json showLineNumbers
 {
   "identifier": "answer_example_survey",
   "title": "Answer Example Survey",
@@ -665,123 +665,97 @@ It's important to include these hidden inputs in the form so we can have version
 ```
 </details>
 
-## Creating a dashboard
+## Create a dashboard
 
-Let's create a dashboard to visualize survey data:
+Let's create a dashboard, where we will visualize survey data:
 
-1. Go to your [software catalog](https://app.getport.io/organization/catalog)
-2. Click on the `+ New` button in the left sidebar
-3. Select `New dashboard`
-4. Name it "Survey Analytics"
+1. Go to your [software catalog](https://app.getport.io/organization/catalog).
 
-Add these widgets to track survey metrics:
+2. Click on the `+ New` button in the left sidebar.
+
+3. Select `New dashboard`.
+
+4. Name it "Survey Analytics".
+
+Add the following widgets to track survey metrics:
 
 <details>
-<summary><b>Action History Widget</b></summary>
-1. Click `+ Widget` and select `Action History`
-2. Click on the "Survey Response" self-service action we just created
-3. Configure columns:
-   - Hide all meta properties 
-   - Reorder columns:
-     1. Start Time
-     2. Port User Info
-     3. All survey question columns
+<summary><b>Action history widget (click to expand)</b></summary>
+1. Click `+ Widget` and select `Action History`.
 
-![Survey Dashboard Example](/img/guides/survey-responses-dashboard-example.png)
+2. Click on the "Survey Response" self-service action we just created.
+    <img src="/img/guides/survey-responses-dashboard-example.png" width="90%"/>
 </details>
 
-:::note
-For better tracking, we recommend creating these widgets in the Question blueprint as well. This will allow you to view the metrics for individual questions when viewing their entity pages.
-:::
-
-
 <details>
-<summary><b>Avg. Score Widget</b></summary>
+<summary><b>Average score widget (click to expand)</b></summary>
 
-1. Click `+ Widget` and select `Number Chart`
-2. Configure as follows:
-   - Title: "&#123;selected question&#125; Avg. Score"
-   - Chart Type: Display single property
-   - Blueprint: Question (can be omitted if configuring on the question entity page)
-   - Entity: The specific question you want to track (can be omitted if configuring on the question entity page)
-   - Property: Avg. Score
-   
-This widget displays the average score calculated from all responses for the chosen question
+1. Click `+ Widget` and select `Number Chart`.
 
-:::note
-   you can swap the question for question_template if you want to see the distribution of answers from all versions of the survey
+2. Configure the widget as follows:
+   - **Title**: "\{selected question\} Avg. Score".
+   - **Chart Type**: Display single property.
+   - **Blueprint**: Question (can be omitted if configuring on the question entity page).
+   - **Entity**: The specific question you want to track (can be omitted if configuring on the question entity page).
+   - **Property**: Avg. Score.  
+
+This widget displays the average score calculated from all responses for the chosen question.
+
+:::note Survey version
+You can swap `question` for `question_template` if you want to see the distribution of answers from all versions of the survey.
 :::
 
-![Avg Score Widget](/img/guides/AvgScoreWidget.png)
+<img src="/img/guides/AvgScoreWidget.png" width="40%"/>
 
 </details>
 
 <details>
-<summary><b>Response distribution widget</b></summary>
+<summary><b>Response distribution widget (click to expand)</b></summary>
 
-1. Click `+ Widget` and select `Pie chart`
-2. Configure as follows:
-   - Title: "&#123;selected question&#125; distribution"
-   - Blueprint: Response
-   - Breakdown by property: Answer
-   - Additional filters: 
-   ```json
-   {
-     "combinator": "and",
-     "rules": [
-       {
-         "operator": "relatedTo",
-         "blueprint": "question",
-         "value": "{question_identifier}"
-       },
-       {
-         "operator": "=",
-         "value": "response",
-         "property": "$blueprint"
-       }
-     ]
-   }
-   ```
-   :::note
-   you can swap the question for question_template if you want to see the distribution of answers from all versions of the survey
-   :::
+1. Click `+ Widget` and select `Pie chart`.
+
+2. Configure the widget as follows:
+   - **Title**: "\{selected question\} distribution".
+   - **Blueprint**: Response.
+   - **Breakdown by property**: Answer.
+   - **Additional filters**: 
+      ```json showLineNumbers
+      {
+        "combinator": "and",
+        "rules": [
+          {
+            "operator": "relatedTo",
+            "blueprint": "question",
+            "value": "{question_identifier}"
+          },
+          {
+            "operator": "=",
+            "value": "response",
+            "property": "$blueprint"
+          }
+        ]
+      }
+      ```
 
 This widget shows the distribution of answers across all responses for the selected question.
 
-![Answer Distribution Widget](/img/guides/AnswerDistributionWidget.png)
+<img src="/img/guides/AnswerDistributionWidget.png" width="40%"/>
+
 </details>
 
 <details>
-<summary><b>Response timeline visualization</b></summary>
+<summary><b>Response timeline visualization (click to expand)</b></summary>
 
-1. Click `+ Widget` and select `Line Chart`
-2. Configure as follows:
-   - Title: "&#123;specific_question&#125; over time"
-   - Blueprint: Question (can be omitted if configuring on the question entity page)
-   - Entity: &#123;specific_question&#125; (can be omitted if configuring on the question entity page)
-   - Propeties: Avg Score
-   - Time Interval: Your desired time interval
-   - Time Range: Your desired time range
+1. Click `+ Widget` and select `Line Chart`.
+
+2. Configure the widget as follows:
+   - **Title**: "\{specific_question\} over time".
+   - **Blueprint**: Question (can be omitted if configuring on the question entity page).
+   - **Entity**: \{specific_question\} (can be omitted if configuring on the question entity page).
+   - **Propeties**: Avg Score.
+   - **Time Interval**: Your desired time interval.
+   - **Time Range**: Your desired time range.
 
 This widget shows the average score for the selected question over time.
 
-:::note
-   you can swap the question for question_template if you want to see the distribution of answers from all versions of the survey
-:::
-
 </details>
-
-## Troubleshooting
-
-Common issues and solutions:
-
-1. **Webhook not receiving data**:
-   - Verify webhook URL is correct
-   - Validate payload format
-
-2. **Action execution fails**:
-   - Confirm all required fields are filled
-   - Ensure the webhook URL is properly configured
-   - Make sure the action body is properly configured
-
-Congrats 🎉 You have successfully set up surveys in your portal!
