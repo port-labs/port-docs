@@ -19,5 +19,5 @@ Ensure you have the following before proceeding with the setup:
 Clone the repository and navigate to the project directory:
 
 ```bash
-git clone https://github.com/kanmitcode/ocean.git
+git clone https://github.com/Gahdloot/port-docs.git
 cd ocean
