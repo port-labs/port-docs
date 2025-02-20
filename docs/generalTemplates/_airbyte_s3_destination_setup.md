@@ -18,7 +18,7 @@ import TabItem from "@theme/TabItem"
    5. Under **S3 Bucket Region** enter the appropriate region
    6. For output format, **choose "JSON Lines: Newline-delimited JSON"**
    7. For compression, **choose "GZIP"**
-   8. Under Optional Fields, **enter the following in S3 Path Format**: `${NAMESPACE}/${STREAM_NAME}/year=${YEAR}/month=${MONTH}/${DAY}_$${EPOCH}_`
+   8. Under Optional Fields, **enter the following in S3 Path Format**: `${NAMESPACE}/${STREAM_NAME}/year=${YEAR}/month=${MONTH}/${DAY}_${EPOCH}_`
 5. **Click Test and save** and wait for Airbyte to confirm the Destination is set up correctly.
 
 
