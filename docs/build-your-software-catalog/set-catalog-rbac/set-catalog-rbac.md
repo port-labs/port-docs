@@ -82,7 +82,7 @@ To give `read` permissions to another user, add it to the `users` array:
 {
   "entities": {
     ... other permissions
-    "register": {
+    "read": {
       "roles": ["my-blueprint-moderator", "Admin"],
       // highlight-next-line
       "users": ["my-user@example.com"], // added my-user@example.com
@@ -103,7 +103,7 @@ To give `read` permissions to another team, add it to the `teams` array:
 {
   "entities": {
     ... other permissions
-    "register": {
+    "read": {
       "roles": ["my-blueprint-moderator", "Admin"],
       "users": [],
       // highlight-next-line
@@ -126,7 +126,7 @@ To give `read` permissions to members of the owning team of an entity, change th
 {
   "entities": {
     ... other permissions
-    "register": {
+    "read": {
       "roles": ["my-blueprint-moderator", "Admin"],
       "users": [],
       "teams": [],
