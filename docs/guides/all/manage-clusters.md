@@ -481,8 +481,7 @@ jobs:
       "node-size": "{{.inputs.\"node-size\"}}",
       "min-node-count": "{{.inputs.\"min-node-count\"}}"
     }
-  },
-  "publish": true
+  }
 }
 ```
 
@@ -523,8 +522,7 @@ jobs:
     "workflowInputs": {
       "name": "{{.inputs.\"name\"}}"
     }
-  },
-  "publish": true
+  }
 }
 ```
 

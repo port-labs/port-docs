@@ -332,8 +332,8 @@ Make sure to change 'WEBHOOK-URL-FROM-GITLAB' into your webhook URL from gitlab.
       "iam_role_name": "{{ .inputs."iam_role_name" }}"
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
+  
 }
 ```
 

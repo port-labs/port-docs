@@ -139,8 +139,7 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
         "censoredProperties": "{{.action.encryptedProperties}}"
       }
     }
-  },
-  "publish": true
+  }
 }
   {
   "identifier": "service_CreateCPPService",
@@ -203,8 +202,7 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
         "censoredProperties": "{{.action.encryptedProperties}}"
       }
     }
-  },
-  "publish": true
+  }
 },
   {
   "identifier": "service_CreateGoService",
@@ -267,8 +265,7 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
         "censoredProperties": "{{.action.encryptedProperties}}"
       }
     }
-  },
-  "publish": true
+  }
 }
 ]
 ```

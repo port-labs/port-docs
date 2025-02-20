@@ -305,8 +305,7 @@ Create a new self service action using the following JSON configuration.
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>

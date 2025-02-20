@@ -162,8 +162,7 @@ Follow these steps to get started:
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

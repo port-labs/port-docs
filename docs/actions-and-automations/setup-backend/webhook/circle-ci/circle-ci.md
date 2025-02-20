@@ -107,8 +107,7 @@ Create the following blueprint, action and mapping to trigger a Circle CI pipeli
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

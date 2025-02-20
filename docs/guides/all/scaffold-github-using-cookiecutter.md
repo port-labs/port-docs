@@ -123,8 +123,7 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
         "censoredProperties": "{{.action.encryptedProperties}}"
       }
     }
-  },
-  "publish": true
+  }
 }
 ```
 

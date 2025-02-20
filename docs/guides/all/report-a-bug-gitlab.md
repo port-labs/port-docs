@@ -135,8 +135,7 @@ Install [Port's Jira Integration](https://docs.port.io/build-your-software-catal
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

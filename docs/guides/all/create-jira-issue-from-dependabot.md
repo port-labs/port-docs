@@ -441,8 +441,7 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
       },
       "reportWorkflowStatus": true
    },
-   "requiredApproval": false,
-   "publish": true
+   "requiredApproval": false
 }
 ```
 </details>

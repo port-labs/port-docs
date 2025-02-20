@@ -242,8 +242,7 @@ Here is the action JSON:
         "censoredProperties": "{{.action.encryptedProperties}}"
       }
     }
-  },
-  "publish": true
+  }
 }
 ```
 

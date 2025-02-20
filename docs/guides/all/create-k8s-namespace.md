@@ -456,8 +456,8 @@ update-run-status:
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
+  
 }
 ```
 </details>

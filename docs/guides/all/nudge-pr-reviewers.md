@@ -66,8 +66,7 @@ In the following guide, we are going to create a self-service action in Port tha
       "text": "\n*Reminder: Pending Pull Request Review*\nThis PR needs your attention!\n\n*PR:* <{{ .entity.properties.link }}|{{ .entity.title }}>\n*Reviewers:* {{ .entity.properties.reviewers }}\nReview PR: {{ .entity.properties.link }}"
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 
 ```

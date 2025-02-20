@@ -164,8 +164,7 @@ Import Azure resources into your Port account using the [Azure Exporter](/build-
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

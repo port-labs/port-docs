@@ -278,8 +278,7 @@ Follow these steps to get started:
       }
     },
     "reportWorkflowStatus": true
-  },
-  "publish": true
+  }
 }
 ```
 

@@ -824,8 +824,7 @@ Before we continue, add some entities onto the AMI blueprint. The **identifier**
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
