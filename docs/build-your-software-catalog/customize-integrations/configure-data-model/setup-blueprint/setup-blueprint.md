@@ -88,13 +88,13 @@ Port offers a variety of ways to create and edit blueprints:
 <h4>To create a new blueprint:</h4>
 
 1. Go to your [Builder page](https://app.getport.io/settings).
-2. Click on `+ Blueprint` in the top right corner:
+2. Click on `+ Blueprint`:
 
 <img src='/img/software-catalog/customize-integrations/newBlueprintButton.png' width='40%' border='1px' />
 
 <br/><br/>
 
-3. Choose a name, icon, and description for your blueprint, then click `Create`.
+3. Choose a title, icon, and description for your blueprint, then click `Create`.
 4. Your blueprint has been created, the next step is to [ingest data into it](/build-your-software-catalog/sync-data-to-catalog/).
 
 </TabItem>

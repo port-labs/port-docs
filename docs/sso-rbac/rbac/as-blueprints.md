@@ -79,6 +79,30 @@ Since these teams are synced from your IdP the following actions cannot be perfo
 
 :::
 
+### Terraform support
+
+Since the `User` and `Team` blueprints can only be extended, to configure them using Terraform you need use the `port_system_blueprint` resource.  
+These blueprints can not be created so don't forget to **import** them to your Terraform state`.
+
+The `port_system_blueprint` resource is supported in Terraform starting from version **2.2.0**.
+
+For example:
+
+```hcl showLineNumbers
+resource "port_system_blueprint" "user" {
+  identifier = "_user"
+  # Only new properties that will be added to the blueprint
+  properties = {
+    string_props = {
+      "age" = {
+        type  = "number"
+        title = "Age"
+      }
+    }
+  }
+}
+```
+
 ## User status
 
 A user can have one of the following statuses at any given time:
@@ -268,7 +292,7 @@ You can also change the `title` of the ownership property. The default value is 
        },
        "conditions": [
          // highlight-next-line
-         ".user.properties.role == \"Manager\""
+         ".user.properties.port_role == \"Manager\""
        ]
      }
    }
@@ -314,7 +338,6 @@ Creating a service account has two limitations:
 
    ```
    </details>
-   ```
 
 ### Using service accounts
 

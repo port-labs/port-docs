@@ -4,7 +4,8 @@ sidebar_position: 4
 
 # Migration guide
 :::warning Migration relevance
-This migration guide is relevant only for users who created their Port account **before** January 14, 2025. 
+This migration guide is relevant for all users who created their Port account **before January 14, 2025**, even if they have already enabled the beta feature.  
+
 Its purpose is to guide you through the migration process to use the new behavior and manage users and teams using dedicated blueprints.
 :::
 
@@ -313,3 +314,11 @@ Please note that running the script after completing the migration may still sho
 
 If you need to verify your migration status, please review the actual changes made to your resources directly.
 :::
+
+## Terraform migration
+In order to properly manage the `User` and `Team` blueprints using Terraform, you need to use the `port_system_blueprint` resource (and not the `port_blueprint` resource).  
+This resource will extend the defined blueprint with the new specified properties and relations. This will make sure no drift will happen in the future if the base structure of the system blueprint will change.
+The `User` and `Team` blueprints can not be created so don't forget to import them to your Terraform state.
+
+The `port_system_blueprint` resource is supported in Terraform starting from version **2.2.0**.
+

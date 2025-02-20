@@ -20,7 +20,7 @@ you can identify areas for improvement and ensure that your team is delivering h
 This guide will cover the four key metrics: **deployment frequency**, **lead time**, **change failure rate**, and **mean time to recovery**.
 
 ### Prerequisites
-- Complete the [Port onboarding process](https://docs.port.io/quickstart).
+- Complete the [Port onboarding process](https://docs.port.io/getting-started/overview).
 - Access to a repository (GitHub, GitLab, or Azure Repos) that is connected to Port via the onboarding process.
 - While this guide demonstrates implementations using **GitHub**, **GitLab**, and **Azure Repos**, other Git providers can be used as well.
 - Optional for advanced strategies: If you're using workflows or pipelines, ensure they are configured for deployment tracking by following the relevant setup guides, such as CI/CD integrations or your platform-specific tools.
@@ -108,23 +108,15 @@ To track the necessary data for these metrics, we will create a **Deployment Blu
 ```
 </details>
 
-:::note Missing Lead Time
-If you do not have the **lead time** configured, you can follow the integration guide for your Git provider to add this property:
+:::tip Missing Lead Time
+If you do not have the **lead time** configured, you can follow the example guides below to map resources for your Git provider's respective blueprint:
 
-- **GitHub**: [GitHub integration guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests)
-- **GitLab**: [GitLab integration guide](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)
-- **Azure Repos**: [Azure Repos integration guide](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples#mapping-repositories-file-contents-repository-policies-and-pull-requests) 
+- **Open the Pull Request Blueprint**: [GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests)
+- **Open the Merge Request Blueprint**: [GitLab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)
+- **Open the Pull Request Blueprint**: [Azure DevOps](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples#mapping-repositories-file-contents-repository-policies-and-pull-requests) 
 
 :::
 
-:::tip Adding JSON Schema Using Port's UI
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"** to create a new blueprint.
-3. **Click on the `{...}` button** in the top right corner, and choose **"Edit JSON"**.
-4. **Add this JSON schema** to define the properties and relations needed for your blueprint.
-
-By following these steps, you can paste and manage the JSON schema required to track DORA metrics in Port.
-:::
 
 
 ### Tracking strategies
@@ -161,7 +153,7 @@ The lead time for these merges is calculated as the difference between when the 
   - When a PR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
   - The **lead time** for that PR is calculated and added to the deployment as part of the blueprint.
 
-  Here’s how you can implement this:
+  Here is how you can implement this:
 
   1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples/#map-repositories-and-pull-requests)**.
 
@@ -202,7 +194,7 @@ The lead time for these merges is calculated as the difference between when the 
   - When a MR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
   - The **lead time** for that MR is calculated and added to the deployment as part of the blueprint.
 
-  Here’s how you can implement this:
+  Here is how you can implement this:
 
   1. **Add Merge Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/examples#mapping-projects-readmemd-and-merge-requests)**.
 
@@ -257,7 +249,7 @@ Below is a demonstration of how deployment tracking can be implemented using the
 - When a PR is merged, a **deployment entity** is created in Port to represent the deployment that took place.
 - The **lead time** for that PR is calculated and added to the deployment as part of the blueprint.
 
-Here’s how you can implement this:
+Here is how you can implement this:
 
 1. **Add Pull Request blueprint, sample can be found [here](/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/examples#mapping-repositories-file-contents-repository-policies-and-pull-requests)**.
 
@@ -322,7 +314,7 @@ Below is a demonstration of how deployment tracking can be implemented using wor
   - When a GitHub Actions workflow runs on the main branch, a **deployment entity** is created in Port to represent the deployment.
   - The **deployment status** is dynamically set based on the workflow run's conclusion.
 
-  Here’s how you can implement this:
+  Here is how you can implement this:
 
   1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitHub** integration:
 
@@ -362,7 +354,7 @@ Below is a demonstration of how deployment tracking can be implemented using wor
   - When a GitLab CI/CD pipeline runs on the main branch, a **deployment entity** is created in Port.
   - The **deployment status** is dynamically set based on the pipeline's status.
 
-  Here’s how you can implement this:
+  Here is how you can implement this:
 
   1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your **GitLab** integration:
 
@@ -750,7 +742,7 @@ Using Search Queries](/build-your-software-catalog/customize-integrations/config
 GitHub deployments can be tracked by mapping repository releases and tags to deployment entities in Port.
 These repositories can hold critical information related to service versions, commits, and releases.
 
-Here’s how you can implement this:
+Here is how you can implement this:
 
 1. **Add the configuration below** to the [data sources page](https://app.getport.io/settings/data-sources) in your Port portal, and select your GitHub integration.
 
@@ -794,9 +786,9 @@ Unlike GitHub, **GitLab** and **Azure DevOps** do not support traditional releas
 
 
 <TabItem value="custom-api" label="Custom API">
-If your tool or workflow is not natively supported, you can create custom integrations by directly interacting with Port’s API. This method allows you to track deployments from any system that can make HTTP API calls.
+If your tool or workflow is not natively supported, you can create custom integrations by directly interacting with Port's API. This method allows you to track deployments from any system that can make HTTP API calls.
 
-Here’s how you can use the API to create a deployment entity in Port:
+Here is how you can use the API to create a deployment entity in Port:
 
 <details>
 <summary><b>Custom API Example (click to expand)</b></summary>
@@ -847,10 +839,10 @@ giving you full flexibility across all your deployment workflows.
 
 <br/>
 
-### Monorepo Tracking
+<!-- ### Monorepo Tracking
 By using **custom integrations**, you can effectively track services or components within a monorepo.
 
-Here’s how you can do this:
+Here is how you can do this:
 
 - **Mapping Service with Monorepo**: You can track the individual services or features within a monorepo by adjusting the mappings associated with the file kind. Each microservice or feature should have distinct properties such as `name`, `deployment status`, and `dependencies`.
 
@@ -882,9 +874,16 @@ In this setup:
 
 By this method, individual services within a monorepo are mapped to Port blueprints.
 
-:::tip Custom Integration Benefits
-Custom integrations provide flexibility in mapping and tracking each service or microservice within a monorepo. With Port’s API, you can track deployments and updates for each component separately, giving you granular control over monitoring and managing services in a monorepo.
+
+:::info Monorepo as service
+For the purposes of this guide, the monorepo is treated as individual services. This allows for granular tracking and management of each service within the monorepo.
 :::
+
+
+
+:::tip Custom Integration Benefits
+Custom integrations provide flexibility in mapping and tracking each service or microservice within a monorepo. With Port's API, you can track deployments and updates for each component separately.
+::: -->
 
 
 ## Tracking incidents
@@ -900,42 +899,56 @@ Incidents are essential for tracking key DORA metrics, including **Change Failur
 Ensure that your **PagerDuty incident blueprint** is properly configured to map incidents to the correct services(gitHub). 
 This includes defining the appropriate properties and relations for incidents.Follow this [PagerDuty Incident Blueprint Setup Link](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty#incident-blueprint-setup) to implement.
 
-- Add the following properties to capture incident resolution time and recovery time:
 
-   <details>
-   <summary><b>Additional properties for PagerDuty Incident Blueprint (click to expand)</b></summary>
-   
-   ```json showLineNumbers
-    "resolvedAt": {
-      "title": "Incident Resolution Time",
-      "type": "string",
-      "format": "date-time",
-      "description": "The timestamp when the incident was resolved"
-    },
-    "recoveryTime": {
-      "title": "Time to Recovery",
-      "type": "number",
-      "description": "The time (in minutes) between the incident being triggered and resolved"
-    }
-   
-   ```
-   </details>
 
-- Add this mapping config to pagerduty incident [data source](https://app.getport.io/settings/data-sources):
+**Add incident resolution time and recovery time properties**
 
-   <details>
-     <summary><b>Incident mapping config for resolvedAt and recoveryTime (click to expand)</b></summary>
-     
-   ```yaml showLineNumbers
-      resolvedAt: .resolved_at
-      recoveryTime: >-
-         (.created_at as $createdAt | .resolved_at as $resolvedAt |
-         if $resolvedAt == null then null else 
-         ( ($resolvedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) -
-           ($createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) ) / 60 end) # Time in minutes and divide by 3600 if you want it calculated in hours
-     ```
-   
-   </details>
+To add incident resolution time and recovery time properties to the PagerDuty incident blueprint, follow these steps:
+
+   1. Navigate to your [Port Builder](https://app.getport.io/settings/data-model) page.
+   2. Select the **PagerDuty Incident** blueprint.
+   3. Click on the `{...}` button in the top right corner, and choose `{...}Edit JSON`.
+   4. Add the following properties to the blueprint:
+
+      <details>
+      <summary><b>Additional properties for PagerDuty Incident Blueprint (click to expand)</b></summary>
+      
+      ```json showLineNumbers
+        "resolvedAt": {
+          "title": "Incident Resolution Time",
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the incident was resolved"
+        },
+        "recoveryTime": {
+          "title": "Time to Recovery",
+          "type": "number",
+          "description": "The time (in minutes) between the incident being triggered and resolved"
+        }
+      
+      ```
+      </details>
+
+**Add incident resolution time and recovery time mapping config**
+
+To add incident resolution time and recovery time mapping config to the PagerDuty data source, follow these steps:
+   1. Navigate to your [Port Data Sources](https://app.getport.io/settings/data-sources) page.
+   2. Select the **PagerDuty** data source.
+   3. Add the following mapping to the incident mapping section:
+
+      <details>
+        <summary><b>Incident mapping config for resolvedAt and recoveryTime (click to expand)</b></summary>
+        
+      ```yaml showLineNumbers
+          resolvedAt: .resolved_at
+          recoveryTime: >-
+            (.created_at as $createdAt | .resolved_at as $resolvedAt |
+            if $resolvedAt == null then null else 
+            ( ($resolvedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) -
+              ($createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) ) / 60 end) # Time in minutes and divide by 3600 if you want it calculated in hours
+        ```
+      
+      </details>
 
 ### Syncing incidents with PagerDuty and other tools
 
@@ -948,109 +961,9 @@ For other incident management tools, follow these respective guides:
 - [Statuspage](/build-your-software-catalog/sync-data-to-catalog/incident-management/statuspage)
 
 ### Relating Incident to services
-Add this relationship to the **Incident blueprint** to link incidents to GitHub or Gitlab or Azure DevOps repository (service):
 
-<Tabs groupId="incident-relation-strategies" defaultValue="github-relation" values={[
-{label: "GitHub", value: "github-relation"},
-{label: "GitLab", value: "gitlab-relation"},
-{label: "Azure DevOps", value: "azure-relation"}
-]}>
-
-  <TabItem value="github-relation" label="GitHub">
-    This section covers how to map incidents to **GitHub repositories** using the `gitHubRepository` relation.
-
-    ```json showLineNumbers
-    {
-      "gitHubRepository": {
-        "title": "GitHub Service",
-        "target": "service",
-        "required": false,
-        "many": false
-      }
-    }
-    ```
-
-  </TabItem>
-
-  <TabItem value="gitlab-relation" label="GitLab">
-    This section covers how to map incidents to **GitLab repositories** using the `gitLabRepository` relation.
-
-    ```json showLineNumbers
-    {
-      "gitLabRepository": {
-        "title": "GitLab Service",
-        "target": "service",
-        "required": false,
-        "many": false
-      }
-    }
-    ```
-
-  </TabItem>
-
-  <TabItem value="azure-relation" label="Azure DevOps">
-    This section covers how to map incidents to **Azure DevOps repositories** using the `azureRepository` relation.
-
-    ```json showLineNumbers
-    {
-      "azureRepository": {
-        "title": "Azure DevOps Service",
-        "target": "service",
-        "required": false,
-        "many": false
-      }
-    }
-    ```
-
-  </TabItem>
-
-</Tabs>
-
-
-Update the mapping config to pagerduty incident [data source](https://app.getport.io/settings/data-sources):
-<details>
-<summary><b>Incident mapping config (click to expand)</b></summary>
-
-```yaml showLineNumbers
-   - kind: incidents
-     selector:
-        query: 'true'
-        ...: # Add other selectors as needed
-     port:
-        entity:
-           mappings:
-              identifier: .id | tostring
-              title: .title
-              blueprint: '"pagerdutyIncident"'
-              properties:
-                 status: .status
-                 url: .self
-                 resolvedAt: .resolved_at
-                 recoveryTime: >-
-                    (.created_at as $createdAt | .resolved_at as $resolvedAt |
-                    if $resolvedAt == null then null else 
-                    ( ($resolvedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) -
-                      ($createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) ) / 60 end)
-                 ... # Add other properties as needed
-              relations:
-                 pagerdutyService: .service.id
-                 # Add this relation to map the incident to the correct service
-                 gitHubRepository:
-                    combinator: '"and"'
-                    rules:
-                       - property: '"$title"'
-                         operator: '"="'
-                         value: .service.summary
-```
-</details>
-
-
-:::tip Mapping Incidents to Services
-we use the **search relation** entity to map the `pagerdutyIncident` blueprint to the correct service based on the service's `$title` and the pagerduty incident `service.summary`.
-We have assumed that the **service name/title** exists in the `service.summary` property of the incident, but you can modify this query to map based on other properties that better match your setup
-To learn more about using search relations, see [our documentation on Mapping Relations
-Using Search Queries](/build-your-software-catalog/customize-integrations/configure-mapping/#mapping-relations-using-search-queries). 
-:::
+The relation between the "PagerDuty incident" blueprint and the "service" blueprint is automatically created when you install the PagerDuty integration.  
+This ensures that each PagerDuty incident is related to the relevant service in Port.
 
 
 ## Metrics
@@ -1070,7 +983,7 @@ Before proceeding, follow these steps to add the aggregation and calculation pro
 
 1. Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
 2. Locate and select your **Service** blueprint.
-3. Click the `{...}` button in the top right corner, and choose **Edit JSON**.
+3. Click the `{...}` button in the top right corner, and choose `{...}Edit JSON`.
 4. Insert the respective **aggregation** or **calculation properties** under the `aggregationProperties` or `calculationProperties` section in the Service blueprint's JSON schema.
 5. Save your changes to apply the new aggregation configuration.
 :::
@@ -1280,7 +1193,7 @@ click [here](/build-your-software-catalog/customize-integrations/configure-data-
 
 
 ## Visualization
-By leveraging Port's Dashboards, you can create custom dashboards to track the metrics and monitor your team's performance over time.
+Port's dashboards allow you to create custom widgets to track metrics and monitor your team's performance over time.
 
 ### Dashboard setup
 1. Go to your [software catalog](https://app.getport.io/organization/catalog).
@@ -1310,7 +1223,7 @@ This will create a new empty dashboard. Let's get ready-to-add widgets
 <summary><b>Setup MTTR Widget</b></summary>
 
 1. Click `+ Widget` and select **Number Chart**.
-2. Title: `MTTR – Monthly Average (Seconds)`, (add the pagerduty icon).
+2. Title: `MTTR – Monthly Average (Hour)`, (add the pagerduty icon).
 3. Select `Display single property` and choose **Service** as the **Blueprint**.
 4. Select an `Entity` and choose `Mean Time to Recovery` as the **Property**.
 
