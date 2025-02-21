@@ -39,101 +39,101 @@ ArgoCD integration creates new **blueprints** (e.g., `argocdApplication`) that r
 
 2. Follow the installation command for your preferred installation method:
 
-<Tabs groupId="deploy" queryString="deploy">
+    <Tabs groupId="deploy" queryString="deploy">
 
-<TabItem value="helm" label="Helm" default>
+    <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="Argocd" />
-
-<PortApiRegionTip/>
-
-
-</TabItem>
-
-<TabItem value="argocd" label="ArgoCD">
-To install the integration using ArgoCD, follow these steps:
-
-1. Create a `values.yaml` file in `argocd/my-ocean-argocd-integration` in your git repository with the content:
-
-    :::tip Variable Replacement 
-    Remember to replace the placeholders for `TOKEN` and `SERVER_URL`, which represents your ArgoCD API token and server url respectively. Ensure that the token has sufficient permissions to read ArgoCD resources. You can configure the RBAC policy for the token user by following [this guide](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/)
-    :::
-
-    ```yaml showLineNumbers
-    initializePortResources: true
-    scheduledResyncInterval: 120
-    integration:
-      identifier: my-ocean-argocd-integration
-      type: argocd
-      eventListener:
-        type: POLLING
-      config:
-      // highlight-next-line
-        serverUrl: SERVER_URL
-      secrets:
-      // highlight-next-line
-        token: TOKEN
-    ```
-    <br/>
-
-2. Install the `my-ocean-argocd-integration` ArgoCD Application by creating the following `my-ocean-argocd-integration.yaml` manifest:
-    :::tip Variable Replacement 
-    Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
-
-    Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
-    :::
-
-    <details>
-      <summary>ArgoCD Application</summary>
-
-    ```yaml showLineNumbers
-    apiVersion: argoproj.io/v1alpha1
-    kind: Application
-    metadata:
-      name: my-ocean-argocd-integration
-      namespace: argocd
-    spec:
-      destination:
-        namespace: my-ocean-argocd-integration
-        server: https://kubernetes.default.svc
-      project: default
-      sources:
-      - repoURL: 'https://port-labs.github.io/helm-charts/'
-        chart: port-ocean
-        targetRevision: 0.1.18
-        helm:
-          valueFiles:
-          - $values/argocd/my-ocean-argocd-integration/values.yaml
-          // highlight-start
-          parameters:
-            - name: port.clientId
-              value: YOUR_PORT_CLIENT_ID
-            - name: port.clientSecret
-              value: YOUR_PORT_CLIENT_SECRET
-            - name: port.baseUrl
-              value: https://api.getport.io
-      - repoURL: YOUR_GIT_REPO_URL
-      // highlight-end
-        targetRevision: main
-        ref: values
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-        - CreateNamespace=true
-    ```
+    <OceanRealtimeInstallation integration="Argocd" />
 
     <PortApiRegionTip/>
-    </details>
-    <br/>
 
-3. Apply your application manifest with `kubectl`:
-    ```bash
-    kubectl apply -f my-ocean-argocd-integration.yaml
-    ```
-</TabItem>
-</Tabs>
+
+    </TabItem>
+
+    <TabItem value="argocd" label="ArgoCD">
+    To install the integration using ArgoCD, follow these steps:
+
+    1. Create a `values.yaml` file in `argocd/my-ocean-argocd-integration` in your git repository with the content:
+
+        :::tip Variable Replacement 
+        Remember to replace the placeholders for `TOKEN` and `SERVER_URL`, which represents your ArgoCD API token and server url respectively. Ensure that the token has sufficient permissions to read ArgoCD resources. You can configure the RBAC policy for the token user by following [this guide](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/)
+        :::
+
+        ```yaml showLineNumbers
+        initializePortResources: true
+        scheduledResyncInterval: 120
+        integration:
+          identifier: my-ocean-argocd-integration
+          type: argocd
+          eventListener:
+            type: POLLING
+          config:
+          // highlight-next-line
+            serverUrl: SERVER_URL
+          secrets:
+          // highlight-next-line
+            token: TOKEN
+        ```
+        <br/>
+
+    2. Install the `my-ocean-argocd-integration` ArgoCD Application by creating the following `my-ocean-argocd-integration.yaml` manifest:
+        :::tip Variable Replacement 
+        Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+        Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+        :::
+
+        <details>
+          <summary>ArgoCD Application</summary>
+
+        ```yaml showLineNumbers
+        apiVersion: argoproj.io/v1alpha1
+        kind: Application
+        metadata:
+          name: my-ocean-argocd-integration
+          namespace: argocd
+        spec:
+          destination:
+            namespace: my-ocean-argocd-integration
+            server: https://kubernetes.default.svc
+          project: default
+          sources:
+          - repoURL: 'https://port-labs.github.io/helm-charts/'
+            chart: port-ocean
+            targetRevision: 0.1.18
+            helm:
+              valueFiles:
+              - $values/argocd/my-ocean-argocd-integration/values.yaml
+              // highlight-start
+              parameters:
+                - name: port.clientId
+                  value: YOUR_PORT_CLIENT_ID
+                - name: port.clientSecret
+                  value: YOUR_PORT_CLIENT_SECRET
+                - name: port.baseUrl
+                  value: https://api.getport.io
+          - repoURL: YOUR_GIT_REPO_URL
+          // highlight-end
+            targetRevision: main
+            ref: values
+          syncPolicy:
+            automated:
+              prune: true
+              selfHeal: true
+            syncOptions:
+            - CreateNamespace=true
+        ```
+
+        <PortApiRegionTip/>
+        </details>
+        <br/>
+
+    3. Apply your application manifest with `kubectl`:
+        ```bash
+        kubectl apply -f my-ocean-argocd-integration.yaml
+        ```
+    </TabItem>
+    </Tabs>
 
 #### What does the integration do?
 
@@ -160,10 +160,10 @@ After installation, the integration will:
 
 ## Set up automatic discovery
 
-After onboarding, the relationship between the **Workload** blueprint and the **Service** blueprint is established automatically.   
-The next step is to configure automatic discovery to ensure that each **Workload** entity is properly related to its respective **Service** entity.  
+After onboarding, the relationship between the **workload** blueprint and the **service** blueprint is established automatically.   
+The next step is to configure automatic discovery to ensure that each **workload** entity is properly related to its respective **service** entity.  
 
-You may have noticed that the service relation is empty for all of our workload entities. This is because we haven't specified which **Workload** belongs to which **Service**. This can be done manually, or via mapping by using a convention of your choice.
+You may have noticed that the service relation is empty for all of our workload entities. This is because we haven't specified which **workload** belongs to which **service**. This can be done manually, or via mapping by using a convention of your choice.
 
 In this guide we will use the following convention:  
 An Argo application with a label in the form of `portService: <service-identifier>` will automatically be assigned to a `service` with that identifier.
@@ -199,7 +199,7 @@ To achieve this, we need to update the ArgoCD integration's mapping configuratio
 
     <br/>
 
-2. Go to the [services page](https://app.getport.io/services) of your software catalog. Click on the `Service` for which you created the deployment. At the bottom of the page, you will see the `Workload` related to this service, along with all of their data:
+2. Go to the [services page](https://app.getport.io/services) of your software catalog. Click on the `service` for which you created the deployment. At the bottom of the page, you will see the `workload` related to this service, along with all of their data:
 
     <img src='/img/guides/argoEntityAfterIngestion.png' width='100%' border='1px' />
 
@@ -208,7 +208,7 @@ To achieve this, we need to update the ArgoCD integration's mapping configuratio
 
 ## Visualize data from your Kubernetes environment
 
-We now have a lot of data about our Argo applications, and a dashboard that visualizes it in ways that will benefit the routines of our developers and managers. Since our ArgoCD application(`Workload`) blueprint is connected to our `Service` blueprint, we can now access some of the application's data directly in the context of the service.  
+We now have a lot of data about our Argo applications, and a dashboard that visualizes it in ways that will benefit the routines of our developers and managers. Since our ArgoCD application(`workload`) blueprint is connected to our `service` blueprint, we can now access some of the application's data directly in the context of the service.  
 Let's see an example of how we can add useful visualizations to our dashboard:
 
     
