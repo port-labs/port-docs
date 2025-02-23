@@ -245,8 +245,7 @@ Here is an example for an action that will trigger the webhook you just set up:
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
