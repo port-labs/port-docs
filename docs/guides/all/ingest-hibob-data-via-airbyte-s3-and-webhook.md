@@ -16,6 +16,11 @@ This guide will demonstrate how to ingest HiBob data into Port using Airbyte, S3
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
 - Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) to set up the integration and get Access keys and S3 Bucket name.
+
+:::note contact us
+This feature is part of our limited-access offering. To obtain the required S3 bucket, please contact our team directly. We will create and manage the bucket on your behalf
+:::
+
 - Access to available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart)
 - Setup Hibob API Service User - [Hibob Guide](https://apidocs.hibob.com/docs/api-service-users#step-1-create-a-new-api-service-user)
 
@@ -52,12 +57,6 @@ Add the `Hibob Profile` blueprint:
         "type": "object"
       },
       "surname": {
-        "type": "string"
-      },
-      "displayname": {
-        "type": "string"
-      },
-      "id": {
         "type": "string"
       },
       "email": {
@@ -115,9 +114,6 @@ Add the `Hibob Payroll` blueprint:
       "state": {
         "type": "string"
       },
-      "id": {
-        "type": "string"
-      },
       "email": {
         "type": "string",
         "format": "email"
@@ -125,9 +121,6 @@ Add the `Hibob Payroll` blueprint:
       "creationdatetime": {
         "type": "string",
         "format": "date-time"
-      },
-      "displayname": {
-        "type": "string"
       },
       "coverimageurl": {
         "type": "string",
@@ -159,7 +152,7 @@ Create Webhook integration to ingest the data into Port:
 2. **Click on "+ Data source"**.
 3. In the top selection bar, **click on Webhook** and then **Custom Integration**.
 4. Enter a **name for your Integration** (for example: "Hibob Integration"), a description (optional), and **Click on Next**
-5. **Copy the Webhook URL** that was generated and include it when you **contact us** to set up the integration.
+5. **Copy the Webhook URL** that was generated and include set up the airbyte connection (see Below).
 6. Scroll down to the **3rd Section - Map the data from the external system into Port** and **Paste** the following mapping:
 
 
@@ -171,21 +164,19 @@ Create Webhook integration to ingest the data into Port:
   {
     "blueprint": "hibob_payroll",
     "operation": "create",
-    "filter": ".body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"payroll\")",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"payroll\"))",
     "entity": {
       "identifier": ".body.id",
       "title": ".body.displayName",
       "properties": {
-        "creationdate": ".body.creationDate",
+        "creationdate": "(.body.creationDate? // null) | if type == \"string\" then strptime(\"%Y-%m-%d\") | strftime(\"%Y-%m-%dT%H:%M:%SZ\") else null end",
         "firstname": ".body.firstName",
         "avatarurl": ".body.avatarUrl",
         "companyid": ".body.companyId",
         "surname": ".body.surname",
         "state": ".body.state",
-        "id": ".body.id",
         "email": ".body.email",
         "creationdatetime": ".body.creationDatetime",
-        "displayname": ".body.displayname",
         "coverimageurl": ".body.coverImageUrl",
         "fullname": ".body.fullName"
       }
@@ -194,7 +185,7 @@ Create Webhook integration to ingest the data into Port:
   {
     "blueprint": "hibob_profile",
     "operation": "create",
-    "filter": ".body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"profiles\")",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"profiles\"))",
     "entity": {
       "identifier": ".body.id",
       "title": ".body.displayName",
@@ -203,13 +194,12 @@ Create Webhook integration to ingest the data into Port:
         "firstname": ".body.firstName",
         "work": ".body.work",
         "surname": ".body.surname",
-        "displayname": ".body.displayName",
-        "id": ".body.id",
         "email": ".body.email"
       }
     }
   }
 ]
+
 ```
 
 </details>
@@ -231,8 +221,8 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
 2. After the Source is set up, Proceed to Create a "+ New Connection"
 3. For Source, choose the Hibob source you have set up
 4. For Destination, choose the S3 Destination you have set up
-5. In the **Select Streams** step, make sure only "channel_members", "channels" and "users" are marked for synchronization
-6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and enter the value "hibob"
+5. In the **Select Streams** step, make sure only "payroll", "profiles" are marked for synchronization
+6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and **enter the Webhook URL you have copied when setting up the webhook"**, for example: "wSLvwtI1LFwQzXXX" 
 7. **Click on Finish & Sync** to apply and start the Integration process!
 
 :::tip Important

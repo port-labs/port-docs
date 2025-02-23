@@ -17,6 +17,11 @@ This guide will demonstrate how to ingest Okta data into Port using Airbyte, S3 
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
 - Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) to set up the integration and get Access keys and S3 Bucket name.
+
+:::note contact us
+This feature is part of our limited-access offering. To obtain the required S3 bucket, please contact our team directly. We will create and manage the bucket on your behalf
+:::
+
 - Access to available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart)
 - You have generated Okta Personal API Token to retrieve data
 
@@ -53,7 +58,7 @@ Add the `Okta Permission` blueprint:
         "type": "object",
         "description": "Conditions associated with the permission (can be null)."
       },
-      "_links": {
+      "links": {
         "type": "object",
         "description": "Links related to the permission."
       }
@@ -99,7 +104,7 @@ Add the `Okta Role` blueprint:
         "format": "date-time",
         "description": "Creation timestamp of the role."
       },
-      "_links": {
+      "links": {
         "type": "object",
         "description": "Links related to the role."
       }
@@ -160,7 +165,7 @@ Add the `Okta Role Assignment` blueprint:
         "type": "string",
         "description": "Type of assignment (e.g., USER)."
       },
-      "_links": {
+      "links": {
         "type": "object",
         "description": "Links related to the role assignment."
       },
@@ -247,21 +252,9 @@ Add the `Okta User` blueprint:
         "type": "object",
         "description": "User profile information."
       },
-      "_links": {
+      "links": {
         "type": "object",
-        "description": "Links related to the user.",
-        "properties": {
-          "self": {
-            "type": "object",
-            "properties": {
-              "href": {
-                "type": "string",
-                "format": "url",
-                "description": "Link to the user itself."
-              }
-            }
-          }
-        }
+        "description": "Links related to the user."
       }
     },
     "required": [
@@ -289,113 +282,6 @@ Add the `Okta User` blueprint:
 
 </details>
 
-Add the `Okta Event` blueprint:
-
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
-4. **Add this JSON schema**:
-
-<details>
-<summary><b>Okta Event (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "okta_event",
-  "description": "Represents an Okta event, such as a policy evaluation.",
-  "title": "Okta Event",
-  "icon": "Okta",
-  "schema": {
-    "properties": {
-      "actor": {
-        "type": "object"
-      },
-      "client": {
-        "type": "object"
-      },
-      "device": {
-        "type": "string"
-      },
-      "authenticationContext": {
-        "type": "object"
-      },
-      "displayMessage": {
-        "type": "string"
-      },
-      "eventType": {
-        "type": "string"
-      },
-      "outcome": {
-        "type": "object"
-      },
-      "published": {
-        "type": "string",
-        "format": "date-time"
-      },
-      "securityContext": {
-        "type": "object"
-      },
-      "severity": {
-        "type": "string"
-      },
-      "debugContext": {
-        "type": "object"
-      },
-      "legacyEventType": {
-        "type": "string"
-      },
-      "transaction": {
-        "type": "object"
-      },
-      "uuid": {
-        "type": "string"
-      },
-      "version": {
-        "type": "string"
-      },
-      "request": {
-        "type": "object"
-      },
-      "target": {
-        "type": "array",
-        "items": {
-          "type": "object"
-        }
-      }
-    },
-    "required": [
-      "actor",
-      "client",
-      "authenticationContext",
-      "eventType",
-      "outcome",
-      "published",
-      "securityContext",
-      "severity",
-      "debugContext",
-      "transaction",
-      "uuid",
-      "version",
-      "request"
-    ]
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "OktaUser": {
-      "title": "Actor",
-      "target": "okta_user",
-      "required": true,
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-
 <br/>
 
 ### Create Webhook Integration
@@ -406,7 +292,7 @@ Create Webhook integration to ingest the data into Port:
 2. **Click on "+ Data source"**.
 3. In the top selection bar, **click on Webhook** and then **Custom Integration**.
 4. Enter a **name for your Integration** (for example: "Okta Integration"), a description (optional), and **Click on Next**
-5. **Copy the Webhook URL** that was generated and include it when you **contact us** to set up the integration.
+5. **Copy the Webhook URL** that was generated and include set up the airbyte connection (see Below).
 6. Scroll down to the **3rd Section - Map the data from the external system into Port** and **Paste** the following mapping:
 
 
@@ -418,35 +304,35 @@ Create Webhook integration to ingest the data into Port:
   {
     "blueprint": "okta_role",
     "operation": "create",
-    "filter": ".body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"custom_roles\")",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"custom_roles\"))",
     "entity": {
       "identifier": ".body.id",
       "title": ".body.label",
       "properties": {
         "description": ".body.description",
         "created": ".body.created",
-        "_links": ".body._links"
+        "links": ".body._links"
       }
     }
   },
   {
     "blueprint": "okta_permission",
     "operation": "create",
-    "filter": ".body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"permissions\")",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"permissions\"))",
     "entity": {
       "identifier": ".body._links.self.href",
       "title": ".body.label",
       "properties": {
         "created": ".body.created",
         "conditions": ".body.conditions",
-        "_links": ".body._links"
+        "links": ".body._links"
       }
     }
   },
   {
     "blueprint": "okta_role_assignment",
     "operation": "create",
-    "filter": ".body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"user_role_assignments\")",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"user_role_assignments\"))",
     "entity": {
       "identifier": ".body.id",
       "title": ".body.label",
@@ -455,7 +341,7 @@ Create Webhook integration to ingest the data into Port:
         "status": ".body.status",
         "created": ".body.created",
         "assignmentType": ".body.assignmentType",
-        "_links": ".body._links",
+        "links": ".body._links",
         "userId": ".body.userId"
       }
     }
@@ -463,7 +349,7 @@ Create Webhook integration to ingest the data into Port:
   {
     "blueprint": "okta_user",
     "operation": "create",
-    "filter": ".body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"users\")",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"users\"))",
     "entity": {
       "identifier": ".body.id",
       "title": ".body.profile.login",
@@ -476,38 +362,7 @@ Create Webhook integration to ingest the data into Port:
         "passwordChanged": ".body.passwordChanged",
         "type": ".body.type",
         "profile": ".body.profile",
-        "_links": ".body._links"
-      }
-    }
-  },
-  {
-    "blueprint": "okta_event",
-    "operation": "create",
-    "filter": ".body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"logs\")",
-    "entity": {
-      "identifier": ".body.uuid",
-      "title": ".body.eventType",
-      "properties": {
-        "actor": ".body.actor",
-        "client": ".body.client",
-        "device": ".body.device",
-        "authenticationContext": ".body.authenticationContext",
-        "displayMessage": ".body.displayMessage",
-        "eventType": ".body.eventType",
-        "outcome": ".body.outcome",
-        "published": ".body.published",
-        "securityContext": ".body.securityContext",
-        "severity": ".body.severity",
-        "debugContext": ".body.debugContext",
-        "legacyEventType": ".body.legacyEventType",
-        "transaction": ".body.transaction",
-        "uuid": ".body.uuid",
-        "version": ".body.version",
-        "request": ".body.request",
-        "target": ".body.target"
-      },
-      "relations": {
-        "OktaUser": ".body.actor.id"
+        "links": ".body._links"
       }
     }
   }
@@ -532,8 +387,8 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
 2. After the Source is set up, Proceed to Create a "+ New Connection"
 3. For Source, choose the Okta source you have set up
 4. For Destination, choose the S3 Destination you have set up
-5. In the **Select Streams** step, make sure only "channel_members", "channels" and "users" are marked for synchronization
-6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and enter the value "okta"
+5. In the **Select Streams** step, make sure only "custom_roles", "permissions", "user_role_assignments" and "users" are marked for synchronization
+6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and **enter the Webhook URL you have copied when setting up the webhook"**, for example: "wSLvwtI1LFwQzXXX" 
 7. **Click on Finish & Sync** to apply and start the Integration process!
 
 :::tip Important

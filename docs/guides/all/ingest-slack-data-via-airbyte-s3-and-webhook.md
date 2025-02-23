@@ -17,6 +17,11 @@ This guide will demonstrate how to ingest Slack channels and channel membership 
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
 - Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) to set up the integration and get Access keys and S3 Bucket name.
+
+:::note contact us
+This feature is part of our limited-access offering. To obtain the required S3 bucket, please contact our team directly. We will create and manage the bucket on your behalf
+:::
+
 - Access to available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart)
 - Setup Slack Airbyte exporter App - follow Airbyte's guide: https://docs.airbyte.com/integrations/sources/slack
 
@@ -113,7 +118,7 @@ Add the `Slack Channel` blueprint:
         "type": "string",
         "description": "ID of the user who created the channel."
       },
-      "created": {
+      "createdAt": {
         "type": "number",
         "description": "Timestamp of when the channel was created."
       },
@@ -129,10 +134,6 @@ Add the `Slack Channel` blueprint:
         "type": "boolean",
         "description": "Indicates if the channel is archived."
       },
-      "name": {
-        "type": "string",
-        "description": "Name of the channel."
-      },
       "shared_team_ids": {
         "type": "array",
         "description": "List of teams the channel is shared with."
@@ -140,10 +141,6 @@ Add the `Slack Channel` blueprint:
       "is_org_shared": {
         "type": "boolean",
         "description": "Indicates if the channel is shared across the entire organization."
-      },
-      "updated": {
-        "type": "number",
-        "description": "Timestamp of the last time the channel was updated."
       },
       "num_members": {
         "type": "number",
@@ -207,10 +204,6 @@ Add the `Slack User` blueprint:
       "is_restricted": {
         "type": "boolean",
         "description": "Indicates if the user is restricted."
-      },
-      "profile": {
-        "type": "object",
-        "description": "An object containing the user's profile information."
       },
       "is_primary_owner": {
         "type": "boolean",
@@ -285,7 +278,7 @@ Create Webhook integration to ingest the data into Port:
 2. **Click on "+ Data source"**.
 3. In the top selection bar, **click on Webhook** and then **Custom Integration**.
 4. Enter a **name for your Integration** (for example: "Slack Integration"), a description (optional), and **Click on Next**
-5. **Copy the Webhook URL** that was generated and include it when you **contact us** to set up the integration.
+5. **Copy the Webhook URL** that was generated and include set up the airbyte connection (see Below).
 6. Scroll down to the **3rd Section - Map the data from the external system into Port** and **Paste** the following mapping:
 
 
@@ -297,7 +290,7 @@ Create Webhook integration to ingest the data into Port:
   {
     "blueprint": "slack_channel",
     "operation": "create",
-    "filter": ".body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"channels\")",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"channels\"))",
     "entity": {
       "identifier": ".body.id | tostring",
       "title": ".body.name_normalized | tostring",
@@ -308,16 +301,14 @@ Create Webhook integration to ingest the data into Port:
         "is_shared": ".body.is_shared",
         "previous_names": ".body.previous_names",
         "creator": ".body.creator",
-        "created": ".body.created",
+        "createdAt": ".body.created",
         "is_ext_shared": ".body.is_ext_shared",
         "is_group": ".body.is_group",
         "is_archived": ".body.is_archived",
         "num_members": ".body.num_members | tonumber? // .",
-        "name": ".body.name",
         "topic": ".body.topic.value",
         "shared_team_ids": ".body.shared_team_ids",
-        "is_org_shared": ".body.is_org_shared",
-        "updated": ".body.updated"
+        "is_org_shared": ".body.is_org_shared"
       },
       "relations": {
         "users": {
@@ -336,7 +327,7 @@ Create Webhook integration to ingest the data into Port:
   {
     "blueprint": "slack_user",
     "operation": "create",
-    "filter": ".body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"users\")",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"users\"))",
     "entity": {
       "identifier": ".body.id | tostring",
       "title": ".body.name | tostring",
@@ -350,7 +341,6 @@ Create Webhook integration to ingest the data into Port:
         "is_app_user": ".body.is_app_user",
         "deleted": ".body.deleted",
         "is_bot": ".body.is_bot",
-        "profile": ".body.profile",
         "email": ".body.profile.email"
       },
       "relations": {
@@ -361,7 +351,7 @@ Create Webhook integration to ingest the data into Port:
   {
     "blueprint": "slack_channel_membership",
     "operation": "create",
-    "filter": ".body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"channel_members\")",
+    "filter": "(.body | has(\"_PORT_SOURCE_OBJECT_KEY\")) and (.body._PORT_SOURCE_OBJECT_KEY | split(\"/\") | .[2] | IN(\"channel_members\"))",
     "entity": {
       "identifier": ".body.channel_id + \"_\" + .body.member_id | tostring",
       "title": ".body.channel_id + \"_\" + .body.member_id | tostring",
@@ -372,6 +362,7 @@ Create Webhook integration to ingest the data into Port:
     }
   }
 ]
+
 ```
 
 </details>
@@ -401,7 +392,7 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
 3. For Source, choose the Slack source you have set up
 4. For Destination, choose the S3 Destination you have set up
 5. In the **Select Streams** step, make sure only "channel_members", "channels" and "users" are marked for synchronization
-6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and enter the value "slack"
+6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and **enter the Webhook URL you have copied when setting up the webhook"**, for example: "wSLvwtI1LFwQzXXX" 
 7. **Click on Finish & Sync** to apply and start the Integration process!
 
 :::tip Important
