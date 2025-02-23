@@ -518,15 +518,18 @@ Use a consistent versioning format (e.g., "Q1 2024", "Q2 2024") to make it easie
 
 ## Set up a survey action
 
-Now let's create an action that allows users to submit survey responses:
+Below are various examples of survey actions, covering common use cases.  
+You can use these examples for your own survey actions, or modify them to fit your specific needs.
 
-1. Go to the [Self Service Actions](https://app.getport.io/actions) page of your portal.
+To create a survey action in your portal:
+
+1. Go to the [self-service](https://app.getport.io/actions) page.
 
 2. Click `+ Action` button to create a new action.
 
 3. Click on the `Edit JSON` button.
 
-4. Copy the configuration below and paste it in the editor:
+4. Copy the definition of the relevant survey action and paste it in the editor:
 
 <Tabs groupId="ootb-surveys" queryString defaultValue="custom-survey" values={[
 {label: "Custom survey", value: "custom-survey"},
