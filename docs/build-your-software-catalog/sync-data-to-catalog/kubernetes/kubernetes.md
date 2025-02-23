@@ -5,7 +5,6 @@ sidebar_position: 1
 import Image from "@theme/IdealImage";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem"
-import KubernetesIllustration from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-exporter-illustration.png";
 import KubernetesEtl from "/static/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-etl.png";
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/_template_docs/_find_credentials_collapsed.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
@@ -17,7 +16,7 @@ Port's Kubernetes integration allows you to model Kubernetes resources in your s
 
 <center>
 
-<Image img={KubernetesIllustration} style={{ width: 700 }} />
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-exporter-illustration.png" width="70%"/>
 
 </center>
 
