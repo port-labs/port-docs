@@ -766,7 +766,7 @@ export const availableGuides = [
     {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","GitLab","AzureDevOps","Dashboards"],
+        tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
         logos: ["Git"],
         link: "/guides/all/setup-dora-metrics",
     },
