@@ -11,20 +11,17 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Enrich services using GitOps
 
-This guide will walk you through how to enrich a service in Port using Gitops.   
-In reality, this can be used by developers to independently add additional valuable data about their services to Port.   
-Once implemented:
+This guide will walk you through the process of enriching a service in Port using Gitops.   
+In practice, this can be used by developers to independently add additional valuable data to their services in Port.
 
-- Developers will be able to enrich their services without needing to nag devops engineers.
-- Platform engineers will be able to create RBAC-controlled actions for developers, empowering their independence.
-- R&D managers will be able to track additional, valuable data about services in the organization.
 
 
 ## Common use cases
 
-- Repository Enrichment: Enable teams to add metadata like type, lifecycle stage, and domain assignments through GitOps workflows
-- Compliance Tracking: Monitor repository lifecycle stages and maintain audit trails through GitOps-based changes
-- Cross-team Collaboration: Foster collaboration by making repository metadata and domain relationships visible across teams
+- Developers can enrich their services without needing to nag devops engineers.
+- Platform engineers can create RBAC-controlled actions for developers, empowering their independence.
+- R&D managers can track additional, valuable data about services in the organization.
+
 
 ## Prerequisites
 
@@ -820,7 +817,7 @@ The action is ready to be executed 🚀
 
 5. Merge the pull-request, then head back to your [software catalog](https://app.getport.io/services).
 
-6. Find your repository, and click on its identifier. This will take you to the repository's catalog page, where you can see your new properties populated with data:
+6. Find your service, and click on its identifier. This will take you to the service's catalog page, where you can see your new properties populated with data:
 
     <img src='/img/guides/gitopsServicePageAfterAction.png' width='100%' border="1px" />
 
