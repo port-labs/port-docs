@@ -317,20 +317,26 @@ const config = {
     }),
   themes: [
     "docusaurus-theme-openapi-docs", 
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      {
-        indexBlog: false,
-        indexDocs: true,
-        docsRouteBasePath: "/",
-        hashed: true,
-        explicitSearchResultPath: true,
-      },
-    ]
+    // [
+    //   require.resolve("@easyops-cn/docusaurus-search-local"),
+    //   {
+    //     indexBlog: false,
+    //     indexDocs: true,
+    //     docsRouteBasePath: "/",
+    //     hashed: true,
+    //     explicitSearchResultPath: true,
+    //   },
+    // ]
   ],
 
   plugins: [
     require.resolve("docusaurus-plugin-image-zoom"),
+    [
+      require.resolve('docusaurus-lunr-search'),
+      {
+        maxHits: 6,
+      },
+    ],
     "@docusaurus/theme-live-codeblock",
     "docusaurus-plugin-hotjar",
     "@stackql/docusaurus-plugin-hubspot",
