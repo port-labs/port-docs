@@ -29,52 +29,6 @@ This feature is part of our limited-access offering. To obtain the required S3 b
 
 
 ### Add Blueprints 
-Add the `Hibob Profile` blueprint:
-
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
-4. **Add this JSON schema**:
-
-<details>
-<summary><b>Hibob Profile (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "hibob_profile",
-  "description": "Represents an employee record.",
-  "title": "Hibob Profile",
-  "icon": "User",
-  "schema": {
-    "properties": {
-      "companyid": {
-        "type": "string"
-      },
-      "firstname": {
-        "type": "string"
-      },
-      "work": {
-        "type": "object"
-      },
-      "surname": {
-        "type": "string"
-      },
-      "email": {
-        "type": "string",
-        "format": "email"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
 
 Add the `Hibob Payroll` blueprint:
 
@@ -141,6 +95,66 @@ Add the `Hibob Payroll` blueprint:
 
 </details>
 
+Add the `Hibob Profile` blueprint:
+
+1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
+2. **Click on "+ Blueprint"**.
+3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
+4. **Add this JSON schema**:
+
+<details>
+<summary><b>Hibob Profile (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "hibob_profile",
+  "description": "Represents an employee record.",
+  "title": "Hibob Profile",
+  "icon": "User",
+  "schema": {
+    "properties": {
+      "companyid": {
+        "type": "string"
+      },
+      "firstname": {
+        "type": "string"
+      },
+      "surname": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      },
+      "is_manager": {
+        "type": "boolean",
+        "title": "is_manager"
+      },
+      "duration_of_employment": {
+        "type": "string",
+        "title": "duration_of_employment"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "payroll": {
+      "title": "Payroll",
+      "target": "hibob_payroll",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+
+
 
 <br/>
 
@@ -192,14 +206,17 @@ Create Webhook integration to ingest the data into Port:
       "properties": {
         "companyid": ".body.companyId",
         "firstname": ".body.firstName",
-        "work": ".body.work",
+        "is_manager": ".body.work.isManager",
+        "duration_of_employment": ".body.work.durationOfEmployment.humanize",
         "surname": ".body.surname",
         "email": ".body.email"
+      },
+      "relations": {
+        "payroll": ".body.id"
       }
     }
   }
 ]
-
 ```
 
 </details>

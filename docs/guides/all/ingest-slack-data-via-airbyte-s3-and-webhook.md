@@ -23,10 +23,10 @@ This feature is part of our limited-access offering. To obtain the required S3 b
 :::
 
 - Access to available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart)
-- Setup Slack Airbyte exporter App - follow Airbyte's guide: https://docs.airbyte.com/integrations/sources/slack
+- Setup Slack Airbyte exporter App - follow [Airbyte's guide for slack connector](https://docs.airbyte.com/integrations/sources/slack)
 
 :::tip Important
-If you with to include Email data, in addition to the permissions listed in the guide above, you need to also include user.email:read 
+If you wish to include Email data, in addition to the permissions listed in the guide above, you need to also include user.email:read 
 :::
 
   
