@@ -8,7 +8,7 @@ The Azure backend can trigger [Azure pipelines](https://azure.microsoft.com/en-u
 The steps shown in the image above are as follows:
 
 1. A self-service action or automation is invoked in Port.
-2. Port signs the action payload using SHA-1 with your Port [`clientSecret`](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
+2. Port signs the action payload using SHA-1 with your Port [`clientSecret`](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `x-port-signature` request header.
 
    :::info Webhook security
    Verifying the webhook request using the request headers provides the following benefits:
@@ -41,7 +41,7 @@ To define an incoming webhook in Azure, follow the steps below:
         - **Webhook Name**: The webhook name e.g. "port_trigger"
         - **Service connection name**: The name of the service connection (e.g., "port_trigger").
         - **Secret key**: Enter your Port `clientSecret` value.
-        - **Headers**: Type in `X-Port-Signature`.
+        - **Headers**: Type in `x-port-signature`.
     - Check `Grant access to all pipelines`
     - Click `Save`.
 
