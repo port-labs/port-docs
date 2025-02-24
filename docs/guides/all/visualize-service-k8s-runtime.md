@@ -30,7 +30,7 @@ Port’s Kubernetes integration helps you model and visualize your cluster’s w
 
 ## Set up data model
 
-To integrate Kubernetes resources with your existing `Workload` blueprint, we’ll first install Port’s Kubernetes exporter, which automatically creates Kubernetes-related blueprints and entities in Port. 
+To visualize your cluster's workloads in Port, we’ll first install Port’s Kubernetes exporter, which automatically creates Kubernetes-related blueprints and entities in Port. 
 
 
 ### Install Port's Kubernetes exporter

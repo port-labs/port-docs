@@ -31,7 +31,8 @@ This guide will help you set up the integration and visualize your services' Kub
 
 ## Set up data model
 
-ArgoCD integration creates new **blueprints** (e.g., `argocdApplication`) that reflect ArgoCD resources, and it updates Port with live changes from your ArgoCD server.
+To visualize your Kubernetes deployment managed by ArgoCD in Port, we'll first install Port's ArgoCD integration which automatically creates ArgoCD-related blueprints and entities in Port. 
+
 
 ### Install Port's ArgoCD integration
 
