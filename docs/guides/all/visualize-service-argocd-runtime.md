@@ -31,7 +31,7 @@ This guide will help you set up the integration and visualize your services' Kub
 
 ## Set up data model
 
-To visualize your Kubernetes deployment managed by ArgoCD in Port, we'll first install Port's ArgoCD integration which automatically creates ArgoCD-related blueprints and entities in Port. 
+To visualize your Kubernetes deployment managed by ArgoCD in Port, we will first install Port's ArgoCD integration which automatically creates ArgoCD-related blueprints and entities in your portal. 
 
 
 ### Install Port's ArgoCD integration
