@@ -817,7 +817,7 @@ The action is ready to be executed 🚀
 
 5. Merge the pull-request, then head back to your [software catalog](https://app.getport.io/services).
 
-6. Find your service, and click on its identifier. This will take you to the service's catalog page, where you can see your new properties populated with data:
+6. Find your service, and click on its identifier. This will take you to the service's entity page, where you can see your new properties populated with data:
 
     <img src='/img/guides/gitopsServicePageAfterAction.png' width='100%' border="1px" />
 
