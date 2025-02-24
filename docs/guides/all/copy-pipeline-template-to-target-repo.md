@@ -191,8 +191,7 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
