@@ -22,13 +22,13 @@ Three of these blueprints are designed to help you create a rich and dynamic ser
 2. [`_workload`](/getting-started/default-components#-workload)
 3. [`_environment`](/getting-started/default-components#-environment)
 
-To help you onboard `services`, `workloads` and `environments`, the [Set up service catalog](https://app.getport.io/1_set_up_service_catalog) page in your portal contains several actions for you to execute. 
+To manually onboard `services`, `workloads` and `environments`, go to the relevant page in the [Service catalog](https://app.getport.io/services) page, and click on the `+` button in the top right corner (for example, `+ Service` in the `Services` page).
 
-These actions will create entities, with rich context from the tools you've integrated.  
+This will create entities, with rich context from the tools you've integrated.  
 
 *For example:*  
 Say you've integrated `GitHub`, `Jira`, and `Pagerduty`.  
-When onboarding a service via the action, you will be able to select the relevant `GitHub repository`, `Jira project`, and `Pagerduty service` related to that service.  
+When onboarding a service via the `+ Service` button, you will be able to select the relevant `GitHub repository`, `Jira project`, and `Pagerduty service` related to that service.  
 
 This will create a single `service` entity, with relations to the relevant entities you selected, serving as a single component to track & manage the service.  
 
@@ -39,30 +39,31 @@ Two other default blueprints are designed to help you manage users, teams, and o
 1. [`_user`](/getting-started/default-components#-user)
 2. [`_team`](/getting-started/default-components#-team)
 
-To help you onboard users and teams, the [Set up users & teams](https://app.getport.io/2_set_up_users_teams) page in your portal contains several actions for you to execute.
-  
-These actions will create entities, with rich context from the tools you've integrated.  
+To manually onboard users and teams, go to the relvant page in the [Organization catalog](https://app.getport.io/users), and click on the `+` button in the top right corner (for example, `+ User` in the `Users` page).
 
-#### Onboard your user
+This will create entities, with rich context from the tools you've integrated.  
 
-First, execute the `Onboard your user` action.  
+#### Register your user
+
+First, in the [users](https://app.getport.io/users) page, choose `Register your user`.  
 This will create a `user` entity with context of your user accounts in other tools you've integrated.  
 
-Now that you've onboarded your user, some components in your portal will be populated with data.  
+Now that you've registered your user, some components in your portal will be populated with data.  
 
 For example, the table named `Track your open pull requests` in the [Plan my day](https://app.getport.io/plan_my_day) page is configured to display `pull request` entities that were opened by the logged in user (in this case, you).  
 This table should now be populated with PRs from your Git provider.
 
-#### Onboard teams
+#### Register teams
 
-Use the `Onboard new team` action to create a new `team` entity and add your user to it.  
+In the [teams](https://app.getport.io/teams) page, choose `Register a new team` and select your user as a member.  
+This will create a `team` entity and add your user to it.  
 Now that your user is a member of a team, widgets in the [My team](https://app.getport.io/my_team) page will be populated with data.
 
-#### Onboard more users
+#### Register more users
 
-To see what components in your portal look like with more than one user, use the `Onboard user` action to add users to your Port organization.  
+To see what components in your portal look like with more than one user, register additional users to add them to your Port organization.  
 
-If you want to create users without inviting them to the portal just yet, make sure the `Invite to Port` toggle is disabled when executing the action.
+If you want to create users without inviting them to the portal just yet, make sure the `Invite to Port` toggle is disabled when creating the user.
 
 :::tip User & team management
 The `user` and `team` blueprints are powerful components that can be leveraged for many use cases, such as **ownership definition**, **RBAC definition**, **dynamic visualization**, and more. 
