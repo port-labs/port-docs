@@ -262,8 +262,7 @@ Let's create the Port Self-service action:
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
