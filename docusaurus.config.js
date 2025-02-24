@@ -317,20 +317,26 @@ const config = {
     }),
   themes: [
     "docusaurus-theme-openapi-docs", 
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      {
-        indexBlog: false,
-        indexDocs: true,
-        docsRouteBasePath: "/",
-        hashed: true,
-        explicitSearchResultPath: true,
-      },
-    ]
+    // [
+    //   require.resolve("@easyops-cn/docusaurus-search-local"),
+    //   {
+    //     indexBlog: false,
+    //     indexDocs: true,
+    //     docsRouteBasePath: "/",
+    //     hashed: true,
+    //     explicitSearchResultPath: true,
+    //   },
+    // ]
   ],
 
   plugins: [
-    require.resolve("docusaurus-plugin-image-zoom"),
+    // require.resolve("docusaurus-plugin-image-zoom"),
+    // [
+    //   require.resolve('docusaurus-lunr-search'),
+    //   {
+    //     maxHits: 6,
+    //   },
+    // ],
     "@docusaurus/theme-live-codeblock",
     "docusaurus-plugin-hotjar",
     "@stackql/docusaurus-plugin-hubspot",
@@ -383,7 +389,7 @@ const config = {
       "data-website-id": "1aefba51-348e-4747-9a4c-93306459542d",
       "data-project-name": "Port-documentation",
       "data-user-analytics-fingerprint-enabled": "true",
-      "data-project-color": "#FFFFFF",
+      "data-project-color": "#000000",
       "data-project-logo": "https://raw.githubusercontent.com/port-labs/port-docs/refs/heads/main/static/img/logos/port-logo.svg",
       "data-button-hide": "true",
       "data-modal-override-open-class": "ask-kapa-button",
@@ -397,11 +403,12 @@ const config = {
       "data-modal-example-questions-col-span": "12",
       "data-modal-disclaimer-font-size": "0.85rem", // default is 0.75rem
       "data-example-question-button-font-size": "0.85rem", // default is not set
-      // "data-search-mode-enabled": "true",
-      // "data-modal-search-input-placeholder": "What are you looking for?",
-      // "data-modal-title-search": "Search Port's documentation",
-      // "data-search-result-secondary-text-color": "#000000",
-      // "data-search-result-primary-text-color": "#000000",
+      "data-search-mode-enabled": "true",
+      "data-modal-search-input-placeholder": "What are you looking for?",
+      "data-modal-title-search": "Search Port's documentation",
+      "data-search-result-secondary-text-color": "#000000",
+      "data-search-result-primary-text-color": "#000000",
+      "data-search-include-source-names": '["DOCUMENTATION"]',
       async: true,
     },
   ],
