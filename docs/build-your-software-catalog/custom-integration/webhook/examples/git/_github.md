@@ -37,10 +37,10 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
 3. Scroll down to **Advanced settings** and input the following details:
 
    1. Secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Hub-Signature-256`;
+   2. Signature Header Name : `x-hub-signature-256`;
    3. Signature Algorithm : Select `sha256` from dropdown option;
    4. Signature Prefix : `sha256=`;
-   5. Request Identifier Path : `.headers.\"X-GitHub-Delivery\"`;
+   5. Request Identifier Path : `.headers.\"x-github-delivery\"`;
    6. Click **Save** at the bottom of the page.
 
 </details>

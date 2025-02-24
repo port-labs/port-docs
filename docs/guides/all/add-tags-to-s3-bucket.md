@@ -137,8 +137,7 @@ Replace the invocation method with your own repository details.
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

@@ -113,8 +113,7 @@ Create the following blueprint, action and mapping to trigger a Terraform Cloud 
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

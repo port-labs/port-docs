@@ -248,8 +248,7 @@ We will create a slack channel for each service, and therefore a webhook for eac
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
