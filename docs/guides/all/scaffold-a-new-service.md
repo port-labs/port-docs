@@ -370,7 +370,7 @@ If the GitHub organization which will house your workflow is not the same as the
               blueprint: "service"
               relations: |
                 {
-                  "githubRepository": "${{ inputs.service_name }}"
+                  "repository": "${{ inputs.service_name }}"
                 }
     
           - name: Create a log message
@@ -625,7 +625,7 @@ create-service:
       curl --location --request POST "https://api.getport.io/v1/blueprints/service/entities?upsert=true&run_id=$RUN_ID&create_missing_related_entities=true" \
         --header "Authorization: Bearer $ACCESS_TOKEN" \
         --header "Content-Type: application/json" \
-        -d '{"identifier": "'"$SERVICE_NAME"'_service","title": "'"$SERVICE_NAME"' Service","properties": {},"relations": {"gitlabRepository": "'"$SERVICE_NAME"'"}}'
+        -d '{"identifier": "'"$SERVICE_NAME"'_service","title": "'"$SERVICE_NAME"' Service","properties": {},"relations": {"git_lab_repositry": "'"$SERVICE_NAME"'"}}'
 
 
 # 5) Mark the run as SUCCESS and log final messages

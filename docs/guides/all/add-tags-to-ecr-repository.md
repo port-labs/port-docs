@@ -186,8 +186,7 @@ This option is way easier but if you do not want this, you can simply type in re
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

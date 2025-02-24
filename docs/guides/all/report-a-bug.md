@@ -90,8 +90,7 @@ You can add this action to the `Service` or `Jira Issue` blueprints
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

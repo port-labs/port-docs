@@ -913,8 +913,7 @@ Creates a EKS Cluster Request to request a new Upbound Cluster
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -952,8 +951,7 @@ Grants approval to a request to create a new Upbound Cluster
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -991,8 +989,7 @@ Denies a request to create a new Upbound cluster
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -1075,8 +1072,7 @@ Creates a new Upbound Cluster and an EKS Cluster entity
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -1118,8 +1114,7 @@ Deletes an existing Upbound Cluster and its corresponding EKS Cluster entity on 
   "requiredApproval": true,
   "approvalNotification": {
     "type": "email"
-  },
-  "publish": true
+  }
 }
 ```
 

@@ -93,6 +93,11 @@ See [Set actions RBAC](/actions-and-automations/create-self-service-experiences/
 
 <ExecuteActionLocations />
 
+:::tip Execute in JSON format
+When executing an action from the UI, a `JSON mode` toggle is available, allowing you to view and edit the action's inputs in JSON format.  
+Note that this toggle will not be available when executing an action that has multiple [steps](/actions-and-automations/create-self-service-experiences/setup-ui-for-action/#steps).
+:::
+
 ### Reflect action progress
 
 After executing an action, Port allows you update its state and progress, using a `success/in-progress/failure` status, live logs, ChatOps notifications, friendly and indicative error messages, and more.

@@ -766,7 +766,7 @@ export const availableGuides = [
     {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","GitLab","AzureDevOps","Dashboards"],
+        tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
         logos: ["Git"],
         link: "/guides/all/setup-dora-metrics",
     },
@@ -876,5 +876,12 @@ export const availableGuides = [
         tags: ["Engineering metrics", "Dynatrace"],
         logos: ["Dynatrace"],
         link: "/guides/all/connect-dynatrace-team-with-entities"
-    }
+    },
+    {
+        title: "Create surveys in your portal",
+        description: "Create surveys to collect feedback from your developers",
+        tags: ["Engineering metrics", "Actions", "Dashboards"],
+        logos: ["Engineering metrics"],
+        link: "/guides/all/create-surveys",
+    },
 ]
