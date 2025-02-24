@@ -154,10 +154,10 @@ async def create_port_webhook():
         "enabled": True,
         "security": {
             "secret": WEBHOOK_SECRET,
-            "signatureHeaderName": "X-Hub-Signature",
+            "signatureHeaderName": "x-hub-signature",
             "signatureAlgorithm": "sha256",
             "signaturePrefix": "sha256=",
-            "requestIdentifierPath": ".headers['X-Request-ID']",
+            "requestIdentifierPath": ".headers['x-request-id']",
         },
         "integrationType": "custom",
     }

@@ -8,7 +8,7 @@
   "mappings": [
     {
       "blueprint": "pullRequest",
-      "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"",
+      "filter": ".headers.\"x-github-event\" == \"pull_request\"",
       "entity": {
         "identifier": ".body.pull_request.id | tostring",
         "title": ".body.pull_request.title",

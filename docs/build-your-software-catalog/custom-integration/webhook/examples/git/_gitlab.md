@@ -37,7 +37,7 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
    <MergeRequestWebhookConfig/>
 
 3. Scroll down to **Advanced settings** and input the following details:
-   1. Request Identifier Path : `.headers.X-Gitlab-Event-Uuid`;
+   1. Request Identifier Path : `.headers.x-gitlab-event-uuid`;
    2. Click **Save** at the bottom of the page.
 
 </details>
