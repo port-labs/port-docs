@@ -22,6 +22,12 @@ To change them:
 3. Change the `Title` and `Logo URL` to your desired values.  
    The previews will update automatically with your changes, one for light mode and one for dark mode.
 
+   :::tip Title scope
+   This title is intended to be used for visual purposes, it will only affect the text in the top left corner of the portal.  
+
+   It is not related to the title & identifier of your organization (i.e. the name & id returned by the [Get ortanization details](/api-reference/get-organization-details) API endpoint).
+   :::
+
 4. Click on `Save`.
 
 ### Limitations
