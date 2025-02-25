@@ -7,7 +7,7 @@ The `selector` section within a `file` resource demonstrates how to configure fi
 
 - **path:** Specify glob patterns to include specific files (e.g., `**/*.yaml`, `src/**/*.json`).
 - **repos:** Target specific repositories or leave blank to scan all repositories.
-- **max_depth:** Limit how deep the file scanner traverses directory structures
+- **max_depth:** Limit how deep the file scanner traverses directory structures. Omit to get all nested files.
 
 This configuration allows you to tailor your data fetching to specific needs and scenarios.
 
@@ -21,6 +21,8 @@ resources:
       query: 'true'
       files:
         path: '**/*.json' # pass one path
+        repos: ["my-repo", "another-repo"]  # Optional: specific repositories to scan
+        max_depth: 1 # get only one level. increase to get nested files
     port:
       entity:
         mappings:
