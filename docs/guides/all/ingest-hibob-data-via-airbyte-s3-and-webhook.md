@@ -8,34 +8,34 @@ import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
 
-# Ingest HiBob data into Port via Airbyte, S3 and Webhook
+# Ingest HiBob data into Port via Airbyte, S3 & webhook
 
-This guide will demonstrate how to ingest HiBob data into Port using Airbyte, S3 and Webhook integration.
+This guide will demonstrate how to ingest HiBob data into Port using Airbyte, S3 and a webhook integration.
 
 ## Prerequisites
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
-- Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) to set up the integration and get Access keys and S3 Bucket name.
 
-:::note contact us
-This feature is part of our limited-access offering. To obtain the required S3 bucket, please contact our team directly. We will create and manage the bucket on your behalf
-:::
+- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via Intercom, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
 
-- Access to available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart)
-- Setup Hibob API Service User - [Hibob Guide](https://apidocs.hibob.com/docs/api-service-users#step-1-create-a-new-api-service-user)
+- Access to an available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart).
+
+- Setup a Hibob API service user - [Hibob Guide](https://apidocs.hibob.com/docs/api-service-users#step-1-create-a-new-api-service-user).
 
 
 ## Data model setup
 
+### Create blueprints 
 
-### Add Blueprints 
+Create the `Hibob Payroll` blueprint:
 
-Add the `Hibob Payroll` blueprint:
+1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
 
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
-4. **Add this JSON schema**:
+2. Click on "+ Blueprint".
+
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+
+4. Paste the following JSON schema into the editor:
 
 <details>
 <summary><b>Hibob Payroll (Click to expand)</b></summary>
@@ -94,13 +94,9 @@ Add the `Hibob Payroll` blueprint:
 ```
 
 </details>
+<br/>
 
-Add the `Hibob Profile` blueprint:
-
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
-4. **Add this JSON schema**:
+Create the `Hibob Profile` blueprint in the same way:
 
 <details>
 <summary><b>Hibob Profile (Click to expand)</b></summary>
@@ -154,20 +150,21 @@ Add the `Hibob Profile` blueprint:
 </details>
 
 
-
-
-<br/>
-
 ### Create Webhook Integration
 
-Create Webhook integration to ingest the data into Port:
+Create a webhook integration to ingest the data into Port:
 
-1. **Go to the [Data-Sources](https://app.getport.io/settings/data-sources)** page in your Port portal.
-2. **Click on "+ Data source"**.
-3. In the top selection bar, **click on Webhook** and then **Custom Integration**.
-4. Enter a **name for your Integration** (for example: "Hibob Integration"), a description (optional), and **Click on Next**
-5. **Copy the Webhook URL** that was generated and include set up the airbyte connection (see Below).
-6. Scroll down to the **3rd Section - Map the data from the external system into Port** and **Paste** the following mapping:
+1. Go to the [Data sources page](https://app.getport.io/settings/data-sources) of your portal.
+
+2. Click on "+ Data source".
+
+3. In the top selection bar, click on Webhook, then select `Custom Integration`.
+
+4. Enter a **name** for your Integration (for example: "Hibob Integration"), enter a **description** (optional), then click on `Next`.
+
+5. Copy the Webhook URL that was generated and include set up the airbyte connection (see Below).
+
+6. Scroll down to the section titled "Map the data from the external system into Port" and paste the following mapping:
 
 
 <details>
@@ -234,20 +231,23 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
 
 ### Set up Hibob Connection
 
-1. Follow Airbyte's guide to set up [Hibob connector](https://docs.airbyte.com/integrations/sources/hibob)
-2. After the Source is set up, Proceed to Create a "+ New Connection"
-3. For Source, choose the Hibob source you have set up
-4. For Destination, choose the S3 Destination you have set up
-5. In the **Select Streams** step, make sure only "payroll", "profiles" are marked for synchronization
-6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and **enter the Webhook URL you have copied when setting up the webhook"**, for example: "wSLvwtI1LFwQzXXX" 
-7. **Click on Finish & Sync** to apply and start the Integration process!
+1. Follow Airbyte's guide to set up [Hibob connector](https://docs.airbyte.com/integrations/sources/hibob).
+
+2. After the Source is set up, proceed to create a "+ New Connection".
+
+3. For **Source**, choose the Hibob source you have set up.
+
+4. For **Destination**, choose the S3 Destination you have set up.
+
+5. In the **Select Streams** step, make sure only "payroll" and "profiles" are marked for synchronization.
+
+6. In the **Configuration** step, under **Destination Namespace**, choose "Custom Format" and enter the Webhook URL you have copied when setting up the webhook, for example: "wSLvwtI1LFwQzXXX".
+
+7. Click on **Finish & Sync** to apply and start the Integration process!
 
 :::tip Important
-  If for any reason you have entered different values than the ones specific listed in this guide,
-  inform us of these changes using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)
-  to ensure the integration will run smoothly.
+  If for any reason you have entered different values than the ones specified in this guide,
+  inform us so we can assist to ensure the integration will run smoothly.
 ::: 
-
-By following these steps, you have effectively created and executed a continuous integration of Hibob data into Port 🎉.
 
 
