@@ -887,21 +887,21 @@ export const availableGuides = [
     {
         title: "Ingest Slack channels data with Airbyte, S3 & webhook",
         description: "Send Slack channel data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["Slack", "AWS", "Webhook", "Automations"],
+        tags: ["Slack", "AWS", "Webhook"],
         logos: ["Slack", "AWS", "Webhook"],
         link: "/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook"
     },
     {
         title: "Ingest HiBob data with Airbyte, S3 & webhook",
         description: "Send Hibob data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["AWS", "Webhook", "Automations"],
+        tags: ["AWS", "Webhook"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook"
     },
     {
         title: "Ingest Okta data with Airbyte, S3 & webhook",
         description: "Send Okta data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
-        tags: ["AWS", "Webhook", "Automations"],
+        tags: ["AWS", "Webhook"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
     },
