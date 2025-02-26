@@ -1,0 +1,61 @@
+<details>
+
+<summary>Team Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "octopusTeam",
+  "title": "Octopus Team",
+  "icon": "Octopus",
+  "description": "A team in Octopus Deploy",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "The description of the team"
+      },
+      "canBeDeleted": {
+        "type": "boolean",
+        "title": "Can Be Deleted",
+        "description": "Indicates if the team can be deleted"
+      },
+      "canBeRenamed": {
+        "type": "boolean",
+        "title": "Can Be Renamed",
+        "description": "Indicates if the team can be renamed"
+      },
+      "canChangeMembers": {
+        "type": "boolean",
+        "title": "Can Change Members",
+        "description": "Indicates if the team members can be changed"
+      },
+      "canChangeRoles": {
+        "type": "boolean",
+        "title": "Can Change Roles",
+        "description": "Indicates if the team roles can be changed"
+      },
+      "memberUserIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Member User IDs",
+        "description": "The IDs of the users who are members of the team"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

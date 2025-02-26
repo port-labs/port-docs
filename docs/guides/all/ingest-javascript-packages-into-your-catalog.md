@@ -19,7 +19,7 @@ To ingest the packages to Port, a `port-app-config.yml` file in the needed repos
 ## Prerequisites
 This guide assumes:
 - You have a Port account
-- You have installed [Port's GitHub app](docs/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) in your organisation or in repositories you are interested in.
+- You have installed [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) in your organisation or in repositories you are interested in.
 
 ## GitHub configuration
 
@@ -113,7 +113,7 @@ Create the following blueprint definition and mapping configuration:
     "properties": {
       "version": {
         "type": "string",
-        "title": "Depedency Version"
+        "title": "Dependency Version"
       }
     },
     "required": []

@@ -10,7 +10,7 @@ Your developer portal contains valuable data about your entities, including thei
 The [Port message sender](https://github.com/marketplace/actions/port-sender) allows you to send reports and reminders via Slack to relevant personas, letting managers and developers know what standards need to be met that are relevant to them.
 
 :::tip Gitlab Support
-The example on this page uses a Github worfklow, to achieve this using Gitlab, see [this](/docs/guides/all/setup-slack-reminders.md?git-provider=gitlab) guide.
+The example on this page uses a Github workflow, to achieve this using Gitlab, see [this](/docs/guides/all/setup-slack-reminders.md?git-provider=gitlab) guide.
 :::
 
 Head to the Port sender [Slack section](https://github.com/marketplace/actions/port-sender#slack) to learn more about the integration and how to use it.

@@ -1,0 +1,67 @@
+```json showLineNumbers
+{
+  "identifier": "servicenowChangeRequest",
+  "title": "Servicenow Change Request",
+  "icon": "Servicenow",
+  "schema": {
+    "properties": {
+      "number": {
+        "title": "Change Number",
+        "type": "string"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "string"
+      },
+      "state": {
+        "icon": "DefaultProperty",
+        "title": "State",
+        "type": "string"
+      },
+      "createdOn": {
+        "title": "Created On",
+        "type": "string",
+        "format": "date-time"
+      },
+      "createdBy": {
+        "title": "Created By",
+        "type": "string"
+      },
+      "category": {
+        "type": "string",
+        "title": "Category"
+      },
+      "approval": {
+        "title": "Approval",
+        "icon": "DefaultProperty",
+        "type": "string",
+        "enum": [
+          "approved",
+          "not requested",
+          "requested",
+          "rejected"
+        ],
+        "enumColors": {
+          "approved": "green",
+          "not requested": "turquoise",
+          "requested": "yellow",
+          "rejected": "pink"
+        }
+      },
+      "tags": {
+        "type": "string",
+        "title": "Tags"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```

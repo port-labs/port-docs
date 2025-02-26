@@ -38,9 +38,21 @@ It is saved locally, and is NOT sent to Port at any time.
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
 
-   ```bash
-   cat <new-configuration-file> | base64 | pbcopy
-   ```
+  Linux/Mac (Bash/Zsh):
+
+    ```bash
+    cat <new-configuration-file> | base64 | pbcopy
+    ```
+
+  PowerShell:
+    ```powershell
+    [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("<new-configuration-file>")) | Set-Clipboard
+    ```
+  
+  Windows Command Prompt (creates a file : new-configuration-file.b64):
+    ```cmd
+    certutil -encode <new-configuration-file> new-configuration-file.b64 && type new-configuration-file.b64 | clip
+    ``` 
 
 2. Run the following command:
 
@@ -87,9 +99,22 @@ It is saved locally, and is NOT sent to Port at any time.
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
 
-   ```bash
-   cat <new-configuration-file> | base64 | pbcopy
-   ```
+  Linux/Mac (Bash/Zsh):
+
+    ```bash
+    cat <new-configuration-file> | base64 | pbcopy
+    ```
+
+  PowerShell:
+    ```powershell
+    [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("<new-configuration-file>")) | Set-Clipboard
+    ```
+  
+  Windows Command Prompt (creates a file : new-configuration-file.b64):
+    ```cmd
+    certutil -encode <new-configuration-file> new-configuration-file.b64 && type new-configuration-file.b64 | clip
+    ``` 
+
    
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -148,9 +173,21 @@ The Ocean integration doesn't store the encoded file anywhere but locally. It's 
 
 1. Take the service account [key file you create](#fetching-key-file), and run this command:
 
-   ```bash
-   cat <new-configuration-file> | base64 | pbcopy
-   ```
+  Linux/Mac (Bash/Zsh):
+
+    ```bash
+    cat <new-configuration-file> | base64 | pbcopy
+    ```
+
+  PowerShell:
+    ```powershell
+    [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("<new-configuration-file>")) | Set-Clipboard
+    ```
+  
+  Windows Command Prompt (creates a file : new-configuration-file.b64):
+    ```cmd
+    certutil -encode <new-configuration-file> new-configuration-file.b64 && type new-configuration-file.b64 | clip
+    ``` 
 
 2. Run the following command:
 
@@ -283,6 +320,7 @@ gcp_ocean_integration_image = "<your_artifact_registry_/_dockerhub>/port-ocean-g
 gcp_organization = "<your_gcp_organization>" 
 gcp_ocean_setup_project = "<your_gcp_project>" 
 gcp_included_projects = ["<your_gcp_project>"] # The Project list that the integration digests resources from.
+gcp_project_filter = "<filter>" # The filter string used to retrieve GCP projects, allowing complex filtering by combining multiple conditions with logical operators (AND | OR).
 integration_identifier = "gcp"
 scheduled_resync_interval = 1440
 event_listener = {
@@ -304,15 +342,18 @@ The Port GCP integration's Terraform module offers a set of configurations:
 | `port_client_id` |  | True | The Port client id.  |
 | `port_client_secret` |  | True | The Port client secret.  |
 | `gcp_organization` |  | True | Your Google Cloud Organization Id.  |
-| `gcp_ocean_setup_project` |  | True | The Project ot create all the Integration's infrastructure (Topic, Subscription, Service account etc.) on.  |
+| `gcp_ocean_setup_project` |  | True | The Project to create all the Integration's infrastructure (Topic, Subscription, Service account etc.) on.  |
 | `gcp_ocean_integration_image` |  | True | The Artifact Registry / Dockerhub image to deploy.  |
 | `integration_identifier` |  | True | The Integration's identifier in Port  |
 | `port_base_url` | 'https://api.getport.io' | False | The Port Base url.  |
-| `gcp_included_projects` | [] | False | The Projects list you want the integration to collect from. If left empty, It will collect *All* projects in the organization.  |
-| `gcp_excluded_projects` | [] | False | The Projects list you want the integration NOT to collect from. This will be overriden by any value in gcp_included_projects besides []. |
-| `assets_types_for_monitoring` | ["cloudresourcemanager.googleapis.com/Organization", "cloudresourcemanager.googleapis.com/Project", "storage.googleapis.com/Bucket", "cloudfunctions.googleapis.com/CloudFunction", "pubsub.googleapis.com/Subscription", "pubsub.googleapis.com/Topic"] | False | The list of asset types the integration will digest real-time events for.  |
+| `gcp_included_projects` | [] | False | The Projects list you want the integration to collect from. If left empty, It will collect *All* projects in the organization. `This option will be deprecated soon.`  |
+| `gcp_cloud_run_cpu` | 2 | False | The CPU limit for the Cloud Run service  |
+| `gcp_cloud_run_memory` | 1024Mi | False | The Memory limit for the Cloud Run service  |
+| `gcp_project_filter` |  | False | The filter string used to retrieve GCP projects, allowing complex filtering by combining multiple conditions with logical operators. Follows GCP's [filter expressions syntax](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/projects#filter-1). Example `parent.id:184606565139 labels.environment:production AND labels.team:devops OR labels priority:high` |
+| `gcp_excluded_projects` | [] | False | The Projects list you want the integration NOT to collect from. This will be overridden by any value in gcp_included_projects besides []. `This option will be deprecated soon.` |
+| `assets_types_for_monitoring` | ["cloudresourcemanager.googleapis.com/Organization", "cloudresourcemanager.googleapis.com/Project", "storage.googleapis.com/Bucket", "cloudfunctions.googleapis.com/Function", "pubsub.googleapis.com/Subscription", "pubsub.googleapis.com/Topic"] | False | The list of asset types the integration will digest real-time events for.  |
 | `ocean_integration_service_account_permissions` | ["cloudasset.assets.exportResource", "cloudasset.assets.listCloudAssetFeeds", "cloudasset.assets.listResource", "cloudasset.assets.searchAllResources", "cloudasset.feeds.create", "cloudasset.feeds.list", "pubsub.topics.list", "pubsub.topics.get", "pubsub.subscriptions.list", "pubsub.subscriptions.get", "resourcemanager.projects.get", "resourcemanager.projects.list", "resourcemanager.folders.get", "resourcemanager.folders.list", "resourcemanager.organizations.get", "cloudquotas.quotas.get", "run.routes.invoke", "run.jobs.run"] | False | The permissions granted to the integration's service_account. We recommend not changing it to prevent unexpected errors.  |
-| `assets_feed_topic_id` | "ocean-integration-topic" | False | The name of the topic created to recieve real time events.  |
+| `assets_feed_topic_id` | "ocean-integration-topic" | False | The name of the topic created to receive real time events.  |
 | `assets_feed_id` | "ocean-gcp-integration-assets-feed" | False | The ID for the Ocean GCP Integration feed.  |
 | `service_account_name` | "ocean-service-account" | False | The name of the service account used by the Ocean integration.  |
 | `role_name` | "OceanIntegrationRole" | False | The name of the role created for the Integration's Service account.  |
@@ -324,6 +365,41 @@ The Port GCP integration's Terraform module offers a set of configurations:
 | `integration_type` | "gcp" | False | The type of the integration.  |
 | `scheduled_resync_interval` | 1440 | False | The interval to resync the integration (in minutes).  |
 | `ocean_service_account_custom_roles` | [] | False | A list of custom roles you want to grant the Integration's Service account. The module will grant these permissions to every available project and to the setup project `gcp_ocean_setup_project`. Example value: ["organizations/1234567890/roles/MyCustomRole", "organizations/1234567890/roles/MyOtherCustomRole"]  |
+
+<h2>Optional - Project Filtering</h2>
+
+You have the option to specify which projects are included or excluded for real-time events. This can be particularly useful when you have a large number of projects and want to target specific ones based on certain criteria.
+
+:::warning Deprecation Notice
+The variables `gcp_included_projects` and `gcp_excluded_projects` are deprecated and will be removed in future releases. We recommend using the gcp_project_filter variable for project filtering moving forward.
+:::
+
+You can use the following three filtering strategies together:
+
+- `gcp_excluded_projects`
+- `gcp_included_projects`
+- `gcp_project_filter`
+
+However, please note the priority conditions when using them simultaneously.
+
+<h2>Priority Conditions</h2>
+You can use all three filtering strategies together, but it's important to understand how they interact. The following priority conditions apply:
+
+- **gcp_included_projects (Highest Priority):**
+  - When specified, only the projects listed in `gcp_included_projects` are included.
+  - All other filters (`gcp_excluded_projects` and `gcp_project_filter`) are ignored.
+  - Use this when you have a specific list of projects to include, regardless of other criteria.
+
+- **gcp_excluded_projects:**
+  - If `gcp_included_projects` is not specified but `gcp_excluded_projects` is provided, all projects are included except those listed.
+  - The `gcp_project_filter` is still applied, further refining the included projects.
+
+- **gcp_project_filter:**
+  - If neither `gcp_included_projects` nor `gcp_excluded_projects` are specified, and `gcp_project_filter` is provided, only projects matching the filter criteria are included.
+  - This allows for flexible and complex filtering using GCP's native filtering syntax.
+
+- **Default Behavior (Lowest Priority):**
+  - If none of the above variables are specified, all projects in your GCP organization are included by default.
 
 <h2> Optional - Scaling the permissions </h2>
 

@@ -6,71 +6,49 @@ import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_kafka_one_time_docker_params.mdx"
 import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 
 # Kafka
 
-Our Kafka integration allows you to import `brokers` and `topics` from your Kafka `clusters` into Port, according to your mapping and definition.
+Port's Kafka integration allows you to model Kafka resources in your software catalog and ingest data into them.
 
-## Common use cases
+## Overview
 
-- Map brokers and topics in your Kafka clusters.
-- Watch for object changes (create/update/delete) on schedule, and automatically apply the changes to your entities in Port.
-- Create/delete Kafka objects using self-service actions.
+- Map and organize your desired Kafka resources and their metadata in Port (see supported resources below).
+- Watch for Kafka object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-## Prerequisites
 
-<Prerequisites />
-
-## Installation
+## Setup
 
 Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)" default>
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                                | Description                                                                                                                                | Example                          | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅       |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅       |
-| `integration.secrets.clusterConfMapping` | The Mapping of Kafka cluster names to Kafka client config  |  | ✅       |
+<Prerequisites />
 
 
-<HelmParameters/>
+For details about the available parameters for the installation, see the table below.
 
-<br/>
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install kafka port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set scheduledResyncInterval=60  \
-  --set integration.identifier="my-kafka-integration"  \
-  --set integration.type="kafka"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set-json integration.secrets.clusterConfMapping='{"local": {"bootstrap.servers": "localhost:9092"}}'
-```
+<OceanRealtimeInstallation integration="Kafka" />
+
 
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-kafka-integration` in your git repository with the content:
 
@@ -151,17 +129,33 @@ kubectl apply -f my-ocean-kafka-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                                | Description                                                                                                                                                                                                                                                                                    | Example | Required |
+|------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|----------|
+| `port.clientId`                          | Your port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |         | ✅        |
+| `port.clientSecret`                      | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |         | ✅        |
+| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |         | ✅        |
+| `integration.secrets.clusterConfMapping` | The Mapping of Kafka cluster names to Kafka client config                                                                                                                                                                                                                                      |         | ✅        |
+| `integration.eventListener.type`         | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |         | ✅        |
+| `integration.type`                       | The integration to be installed                                                                                                                                                                                                                                                                |         | ✅        |
+| `scheduledResyncInterval`                | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |         | ❌        |
+| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |         | ❌        |
+| `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |         | ❌        |
+
+
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the Kafka integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Kafka integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -197,13 +191,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Kafka integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
@@ -253,10 +243,8 @@ pipeline {
 ```
 
   </TabItem>
-
-   
-<TabItem value="azure" label="Azure Devops">
-<AzurePremise name="Kafka" />
+  <TabItem value="azure" label="Azure Devops">
+<AzurePremise  />
 
 <DockerParameters />
 
@@ -299,12 +287,7 @@ steps:
 ```
 
   </TabItem>
-<TabItem value="gitlab" label="GitLab">
-This pipeline will run the Kafka integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+  <TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -361,158 +344,13 @@ ingest_data:
 
 <AdvancedConfig/>
 
-## Ingesting Kafka objects
 
-The Kafka integration uses a YAML configuration to describe the process of loading data into the developer portal.
+## Configuration
 
-Here is an example snippet from the config which demonstrates the process for getting `cluster` data from Kafka:
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-```yaml showLineNumbers
-createMissingRelatedEntities: false
-deleteDependentEntities: true
-resources:
-  - kind: cluster
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .name
-          title: .name
-          blueprint: '"kafkaCluster"'
-          properties:
-            controllerId: .controller_id
-```
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Kafka metadata objects.
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Kafka, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from Kafka, it is possible to reference any field that appears in the examples below for the mapping configuration.
-
-<details>
-<summary>Cluster example</summary>
-
-```json showLineNumbers
-{
-  "name": "local",
-  "controller_id": "1"
-}
-```
-
-</details>
-
-<details>
-<summary>Broker example</summary>
-
-```json showLineNumbers
-{
-  "id": "1",
-  "address": "localhost:9092/1",
-  "cluster_name": "local",
-  "config": {"key": "value", ...}
-}
-```
-
-</details>
-
-<details>
-<summary>Topic example</summary>
-
-```json showLineNumbers
-{
-  "name": "_consumer_offsets",
-  "cluster_name": "local",
-  "partitions": [
-    {
-      "id": 0,
-      "leader": 2,
-      "replicas": [2, 1, 3],
-      "isrs": [3, 2, 1]
-    }
-  ],
-  "config": {"key": "value", ...}
-}
-```
-
-</details>
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: cluster
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Kafka object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: cluster
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: cluster
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Kafka object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: cluster
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Kafka cluster to a Port entity. Each value is a JQ query.
-            identifier: .name
-            title: .name
-            blueprint: '"kafkaCluster"'
-            properties:
-              controllerId: .controller_id
-        # highlight-end
-    - kind: cluster # In this instance cluster is mapped again with a different filter
-      selector:
-        query: '.name == "MyClusterName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-### Ingest data into Port
-
-To ingest Kafka objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Kafka.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Kafka under the Event Processing providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
 
@@ -718,6 +556,99 @@ resources:
           relations:
             cluster: .cluster_name
             brokers: '[.cluster_name + "_" + (.partitions[].replicas[] | tostring)] | unique'
+```
+
+</details>
+
+
+### Consumer Group
+
+<details>
+<summary>Consumer Group blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "kafkaConsumerGroup",
+  "title": "Consumer Group",
+  "icon": "Kafka",
+  "schema": {
+    "properties": {
+      "state": {
+        "title": "State",
+        "type": "string",
+        "description": "The current state of the consumer group."
+      },
+      "members": {
+        "title": "Members",
+        "type": "array",
+        "description": "List of members in the consumer group.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "coordinator": {
+        "title": "Coordinator",
+        "type": "number",
+        "description": "Broker ID of the coordinator for the consumer group."
+      },
+      "partition_assignor": {
+        "title": "Partition Assignor",
+        "type": "string",
+        "description": "Strategy used to assign partitions to consumers."
+      },
+      "is_simple_consumer_group": {
+        "title": "Is Simple Consumer Group",
+        "type": "boolean",
+        "description": "Indicates if the group is a simple consumer group."
+      },
+      "authorized_operations": {
+        "title": "Authorized Operations",
+        "type": "array",
+        "description": "List of operations authorized for the consumer group.",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "cluster": {
+      "target": "kafkaCluster",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: false
+deleteDependentEntities: true
+resources:
+  - kind: consumer_group
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .cluster_name + "_" + .group_id
+          title: .group_id
+          blueprint: '"kafkaConsumerGroup"'
+          properties:
+            state: .state
+            members: .members | map(.client_id)
+            coordinator: .coordinator.id
+            partition_assignor: .partition_assignor
+            is_simple_consumer_group: .is_simple_consumer_group
+            authorized_operations: .authorized_operations
+          relations:
+            cluster: .cluster_name
 ```
 
 </details>

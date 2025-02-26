@@ -303,7 +303,7 @@ Take note of, and copy the Webhook URL that is provided in this tab
 
 ## Create a webhook in JFrog
 
-1. Log in to JFrog as a user with admin priviledges
+1. Log in to JFrog as a user with admin privileges
 2. Click the gear icon at the top right corner at the left side of the user icon;
 3. Choose **Platform Management**;
 4. At the bottom of the sidebar on the left, just below **General**, choose **Webhooks**;
@@ -385,7 +385,7 @@ In addition, you require the following environment variables:
 - `JFROG_HOST_URL` - The host URL of your Jfrog instance
 
 :::info
-Find your Port credentials using this [guide](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+Find your Port credentials using this [guide](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 :::
 
 Use the following Python script to ingest historical JFrog builds and repositories into port:

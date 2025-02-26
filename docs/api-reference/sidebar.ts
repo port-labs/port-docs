@@ -11,6 +11,10 @@ const sidebar: SidebarsConfig = {
       id: "api-reference/rate-limits",
     },
     {
+      type: "doc",
+      id: "api-reference/security",
+    },
+    {
       type: "html",
       value: '<hr style="margin: 0.8rem">',
     },
@@ -150,6 +154,12 @@ const sidebar: SidebarsConfig = {
           label: "Delete all entities of a blueprint",
           className: "api-method delete",
         },
+        {
+          type: "doc",
+          id: "api-reference/search-a-blueprints-entities",
+          label: "Search a blueprint's entities",
+          className: "api-method post",
+        },        
         {
           type: "doc",
           id: "api-reference/search-entities",
@@ -494,14 +504,26 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
+          id: "api-reference/create-a-migration",
+          label: "Create a migration",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
           id: "api-reference/get-all-migrations",
           label: "Get all migrations",
           className: "api-method get",
         },
         {
           type: "doc",
-          id: "api-reference/create-a-migration",
-          label: "Create a migration",
+          id: "api-reference/get-a-migration",
+          label: "Get a migration",
+          className: "api-method get",
+        },
+        {
+          type: "doc",
+          id: "api-reference/cancel-a-migration",
+          label: "Cancel a migration",
           className: "api-method post",
         },
       ],
@@ -539,6 +561,12 @@ const sidebar: SidebarsConfig = {
           id: "api-reference/create-an-organization-secret",
           label: "Create an organization secret",
           className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/get-an-organization-secret",
+          label: "Get an organization secret",
+          className: "api-method get",
         },
         {
           type: "doc",

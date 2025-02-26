@@ -11,24 +11,40 @@ import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/custo
 import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # SonarQube
 
-Port's SonarQube integration (powered by [Ocean](https://ocean.getport.io)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into
-Port, according to your mapping and definitions.
+Port's SonarQube integration allows you to model SonarQube resources in your software catalog and ingest data into them.
 
-## Common use cases
 
-- Map `projects`, `issues`, `analyses` and `portfolios` in your SonarQube organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in
-  Port.
-- Create/delete SonarQube objects using self-service actions.
+## Overview
 
-## Prerequisites
+This integration allows you to:
 
-<HelmPrerequisites />
+- Map and organize your desired SonarQube resources and their metadata in Port (see supported resources below).
+- Watch for SonarQube object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-## Installation
+
+### Supported Resources
+
+The resources that can be ingested from SonarQube into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+
+- [`Project`](https://next.sonarqube.com/sonarqube/web_api/api/projects/search) - represents a SonarQube project. Retrieves data
+  from [`components`](https://next.sonarqube.com/sonarqube/web_api/api/components), [`measures`](https://next.sonarqube.com/sonarqube/web_api/api/measures),
+  and [`branches`](https://next.sonarqube.com/sonarqube/web_api/api/project_branches).
+- [`Issue`](https://next.sonarqube.com/sonarqube/web_api/api/issues) -  represents a SonarQube issue
+- `Saas Analysis` - represents analysis and latest activity in your SonarCloud environment.
+- `On-premise Analysis` - since SonarQube doesn't offer a straightforward API
+  for fetching analysis and latest activity in on-premise installations,
+  Port's integration provides an alternative solution for on-premise installation.  
+By utilizing the [pull requests](https://next.sonarqube.com/sonarqube/web_api/api/project_pull_requests) and [measures](https://next.sonarqube.com/sonarqube/web_api/api/measures) APIs,
+  you can now visualize the results of scan analyses for each pull request.
+
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -40,54 +56,25 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Rea-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                                | Description                                                                                                                                                                                  | Example                             | Required |
-| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ------- |
-| `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                 |                                     | ✅      |
-| `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                             |                                     | ✅      |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅      |
-| `integration.secrets.sonarApiToken`      | The [SonarQube API token](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)                                                |                                     | ✅      |
-| `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Not required when using on-prem sonarqube instance) | myOrganization                      | ✅      |
-| `integration.config.sonarIsOnPremise` | A boolean value indicating whether the SonarQube instance is on-premise. The default value is `false` | false                      | ✅      |
-| `integration.config.appHost`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com    | ✅       |
-| `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-instance.com | ❌      |
+<HelmPrerequisites />
 
-<HelmParameters />
-
-<br/>
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set scheduledResyncInterval=120  \
-  --set integration.identifier="my-sonarqube-integration"  \
-  --set integration.type="sonarqube"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.config.sonarIsOnPremise="<ENTER BOOLEAN VALUE>"  \
-  --set integration.secrets.sonarApiToken="<ENTER API TOKEN>"  \
-  --set integration.config.sonarOrganizationId="<ENTER ORGANIZATION ID>"
-```
+<OceanRealtimeInstallation integration="Sonarqube" />
 
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-sonarqube-integration` in your git repository with the content:
 
@@ -173,20 +160,37 @@ kubectl apply -f my-ocean-sonarqube-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                                | Description                                                                                                                                                                                  | Example                          | Required |
+|------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
+| `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                   |                                  | ✅        |
+| `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                               |                                  | ✅        |
+| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                      |                                  | ✅        |
+| `integration.secrets.sonarApiToken`      | The [SonarQube API token](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)                                                |                                  | ✅        |
+| `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Not required when using on-prem sonarqube instance) | myOrganization                   | ✅        |
+| `integration.config.sonarIsOnPremise`    | A boolean value indicating whether the SonarQube instance is on-premise. The default value is `false`                                                                                        | false                            | ✅        |
+| `integration.config.appHost`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com | ✅        |
+| `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-instance.com    | ❌        |
+
+<HelmParameters />
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the
 following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
@@ -226,14 +230,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
@@ -288,17 +287,12 @@ pipeline {
 ```
 
   </TabItem>
-
   <TabItem value="azure" label="Azure Devops">
-This pipeline will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Azure Devops agent should be able to run docker commands.
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+
 
 Make sure to configure the following variables using [Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add them into in a variable group named `port-ocean-credentials`:
 
@@ -348,11 +342,7 @@ steps:
 
   </TabItem>
 <TabItem value="gitlab" label="GitLab">
-This pipeline will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -411,616 +401,22 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting SonarQube objects
+## Configuration
 
-The SonarQube integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-Here is an example snippet from the config which demonstrates the process for getting `project` data from SonarQube:
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-```yaml showLineNumbers
-resources:
-  - kind: projects
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          blueprint: '"sonarQubeProject"'
-          identifier: .key
-          title: .name
-          properties:
-            organization: .organization
-            link: .__link
-            lastAnalysisStatus: .__branch.status.qualityGateStatus
-            lastAnalysisDate: .__branch.analysisDate
-            numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
-            numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
-            numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
-            numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
-            numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
-            coverage: .__measures[]? | select(.metric == "coverage") | .value
-            mainBranch: .__branch.name
-            tags: .tags
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify,
-concatenate, transform and perform other operations on existing fields and values from SonarQube's API events.
-
-<ResourceMapping name="SonarQube" category="Code quality & security providers" components={{
-SupportedResources: SupportedResources
-}}>
-
-```yaml showLineNumbers
-resources:
-  - kind: projects
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          blueprint: '"sonarQubeProject"'
-          identifier: .key
-          title: .name
-          properties:
-            organization: .organization
-            link: .__link
-            lastAnalysisStatus: .__branch.status.qualityGateStatus
-            lastAnalysisDate: .__branch.analysisDate
-            numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
-            numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
-            numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
-            numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
-            numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
-            coverage: .__measures[]? | select(.metric == "coverage") | .value
-            mainBranch: .__branch.name
-            tags: .tags
-      # highlight-end
-  - kind: projects # In this instance project is mapped again with a different filter
-    selector:
-      query: '.name == "MyProjectName"'
-    port:
-      entity:
-        mappings: ...
-```
-
-</ ResourceMapping>
 
 ## Examples
 
-Examples of blueprints and the relevant integration configurations:
+To view and test the integration's mapping against examples of the third-party API responses,
+use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources).
+Find the integration in the list of data sources and click on it to open the playground.
 
-### Project
+Examples of blueprints and the relevant integration configurations can be found on the sonarqube [examples page](examples.md)
 
-<details>
-<summary><b>Projects blueprint (Click to expand)</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "sonarQubeProject",
-  "title": "SonarQube Project",
-  "icon": "sonarqube",
-  "schema": {
-    "properties": {
-      "organization": {
-        "type": "string",
-        "title": "Organization",
-        "icon": "TwoUsers"
-      },
-      "link": {
-        "type": "string",
-        "format": "url",
-        "title": "Link",
-        "icon": "Link"
-      },
-      "lastAnalysisDate": {
-        "type": "string",
-        "format": "date-time",
-        "icon": "Clock",
-        "title": "Last Analysis Date"
-      },
-      "numberOfBugs": {
-        "type": "number",
-        "title": "Number Of Bugs"
-      },
-      "numberOfCodeSmells": {
-        "type": "number",
-        "title": "Number Of CodeSmells"
-      },
-      "numberOfVulnerabilities": {
-        "type": "number",
-        "title": "Number Of Vulnerabilities"
-      },
-      "numberOfHotSpots": {
-        "type": "number",
-        "title": "Number Of HotSpots"
-      },
-      "numberOfDuplications": {
-        "type": "number",
-        "title": "Number Of Duplications"
-      },
-      "coverage": {
-        "type": "number",
-        "title": "Coverage"
-      },
-      "mainBranch": {
-        "type": "string",
-        "icon": "Git",
-        "title": "Main Branch"
-      },
-      "tags": {
-        "type": "array",
-        "title": "Tags"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-:::tip filter projects
-The integration provides an option to filter the data that is retrieved from the SonarQube API using the following attributes:
-
-1. `query`: Limits the search to component names that contain the supplied string
-2. `alertStatus`: To filter a project's quality gate status. Accepts a list of values such as `OK`, `ERROR` and `WARN`
-3. `languages`: To filter projects using a list of languages or a single language
-4. `tags`: To filter a list of tags or a single tag
-5. `qualifier`: To filter on a component qualifier. Accepts values such as `TRK` (for projects only) and `APP` (for applications only)
-
-These attributes can be enabled using the path: `selector.apiFilters.filter`. By default, the integration fetches only SonarQube projects using the `qualifier` attribute.
-:::
-
-:::tip Define your own metrics
-Besides filtering the API data, the integration provides a mechanism to allow users to define their own list of metrics used in SonarQube to evaluate the code. This list can be defined in the `selector.metrics` property. A complete list of valid SonarQube metrics can be in the [SonarQube documentation](https://docs.sonarsource.com/sonarqube/latest/user-guide/code-metrics/metrics-definition/)
-:::
-
-:::note Supported Sonar environment
-Please note that the API filters are supported on on-premise Sonar environments (SonarQube) only, and will not work on SonarCloud.
-:::
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: projects
-    selector:
-      query: "true"
-      apiFilters:
-        filter:
-          qualifier: TRK
-      metrics:
-        - code_smells
-        - coverage
-        - bugs
-        - vulnerabilities
-        - duplicated_files
-        - security_hotspots
-        - new_violations
-        - new_coverage
-        - new_duplicated_lines_density
-    port:
-      entity:
-        mappings:
-          blueprint: '"sonarQubeProject"'
-          identifier: .key
-          title: .name
-          properties:
-            organization: .organization
-            link: .__link
-            lastAnalysisStatus: .__branch.status.qualityGateStatus
-            lastAnalysisDate: .__branch.analysisDate
-            numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
-            numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
-            numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
-            numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
-            numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
-            coverage: .__measures[]? | select(.metric == "coverage") | .value
-            mainBranch: .__branch.name
-            tags: .tags
-```
-</details>
-
-### Issue
-
-<details>
-<summary><b>Issue blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "sonarQubeIssue",
-  "title": "SonarQube Issue",
-  "icon": "sonarqube",
-  "schema": {
-    "properties": {
-      "type": {
-        "type": "string",
-        "title": "Type",
-        "enum": ["CODE_SMELL", "BUG", "VULNERABILITY"]
-      },
-      "severity": {
-        "type": "string",
-        "title": "Severity",
-        "enum": ["MAJOR", "INFO", "MINOR", "CRITICAL", "BLOCKER"],
-        "enumColors": {
-          "MAJOR": "orange",
-          "INFO": "green",
-          "CRITICAL": "red",
-          "BLOCKER": "red",
-          "MINOR": "yellow"
-        }
-      },
-      "link": {
-        "type": "string",
-        "format": "url",
-        "icon": "Link",
-        "title": "Link"
-      },
-      "status": {
-        "type": "string",
-        "title": "Status",
-        "enum": ["OPEN", "CLOSED", "RESOLVED", "REOPENED", "CONFIRMED"]
-      },
-      "assignees": {
-        "title": "Assignees",
-        "type": "string",
-        "icon": "TwoUsers"
-      },
-      "tags": {
-        "type": "array",
-        "title": "Tags"
-      },
-      "createdAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Created At"
-      }
-    }
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "sonarQubeProject": {
-      "target": "sonarQubeProject",
-      "required": false,
-      "title": "SonarQube Project",
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-:::tip filter issues
-The integration provides an option to filter the data that is retrieved from the SonarQube API using the following attributes:
-
-1. `assigned`: To retrieve assigned or unassigned issues. Accepts values: `yes`, `no`, `true`, `false`
-2. `assignees`: A list of assignee logins
-3. `cleanCodeAttributeCategories`: List of clean code attribute categories. Accepts values: `ADAPTABLE`, `CONSISTENT`, `INTENTIONAL`, `RESPONSIBLE`
-4. `createdBefore`: To retrieve issues created before the given date
-5. `createdAfter`: To retrieve issues created after the given date
-6. `impactSeverities`: List of impact severities. Accepts values: `HIGH`, `LOW`, `MEDIUM`
-7. `impactSoftwareQualities`: List of impact software qualities. Accepts values: `MAINTAINABILITY`, `RELIABILITY`, `SECURITY`
-8. `statuses`: List of statuses. Accepts values: `OPEN`, `CONFIRMED`, `FALSE_POSITIVE`, `ACCEPTED`, `FIXED`
-9. `languages`: List of languages
-10. `resolved`: To retrieve resolved or unresolved issues. Accepts values: `yes`, `no`, `true`, `false`
-11. `scopes`: List of scopes. Accepts values: `MAIN`, `TESTS`
-12. `tags`: List of tags
-
-These attributes can be enabled using the path: `selector.apiFilters`. By default, the integration fetches unresolved SonarQube issues. It is also possible to configure the integration to fetch issues from a SonarQube project using the path: `selector.projectApiFilters.filter` while specifying any of [the above project attributes](#project) 
-:::
-
-:::note Supported Sonar environment
-Please note that the API filters are supported on on-premise Sonar environments (SonarQube) only, and will not work on SonarCloud.
-:::
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: issues
-    selector:
-      query: "true"
-      apiFilters:
-        resolved: 'false'
-      projectApiFilters:
-        filter:
-          qualifier: TRK
-    port:
-      entity:
-        mappings:
-          blueprint: '"sonarQubeIssue"'
-          identifier: .key
-          title: .message
-          properties:
-            type: .type
-            severity: .severity
-            link: .__link
-            status: .status
-            assignees: .assignee
-            tags: .tags
-            createdAt: .creationDate
-          relations:
-            sonarQubeProject: .project
-```
-
-</details>
-
-### Saas Analysis
-
-<details>
-<summary><b>Saas analysis blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "sonarQubeAnalysis",
-  "title": "SonarQube Analysis",
-  "icon": "sonarqube",
-  "schema": {
-    "properties": {
-      "branch": {
-        "type": "string",
-        "title": "Branch",
-        "icon": "GitVersion"
-      },
-      "fixedIssues": {
-        "type": "number",
-        "title": "Fixed Issues"
-      },
-      "newIssues": {
-        "type": "number",
-        "title": "New Issues"
-      },
-      "coverage": {
-        "title": "Coverage",
-        "type": "number"
-      },
-      "duplications": {
-        "type": "number",
-        "title": "Duplications"
-      },
-      "createdAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Created At"
-      }
-    }
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "sonarQubeProject": {
-      "target": "sonarQubeProject",
-      "required": false,
-      "title": "SonarQube Project",
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: saas_analysis
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          blueprint: '"sonarQubeAnalysis"'
-          identifier: .analysisId
-          title: .__commit.message // .analysisId
-          properties:
-            branch: .__branchName
-            fixedIssues: .measures.violations_fixed
-            newIssues: .measures.violations_added
-            coverage: .measures.coverage_change
-            duplications: .measures.duplicated_lines_density_change
-            createdAt: .__analysisDate
-          relations:
-            sonarQubeProject: .__project
-```
-
-</details>
-
-### On-Premise Analysis
-
-<details>
-<summary><b>On-premise analysis blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "sonarQubeAnalysis",
-  "title": "SonarQube Analysis",
-  "icon": "sonarqube",
-  "schema": {
-    "properties": {
-      "branch": {
-        "type": "string",
-        "title": "Branch",
-        "icon": "GitVersion"
-      },
-      "fixedIssues": {
-        "type": "number",
-        "title": "Fixed Issues"
-      },
-      "newIssues": {
-        "type": "number",
-        "title": "New Issues"
-      },
-      "coverage": {
-        "title": "Coverage",
-        "type": "number"
-      },
-      "duplications": {
-        "type": "number",
-        "title": "Duplications"
-      },
-      "createdAt": {
-        "type": "string",
-        "format": "date-time",
-        "title": "Created At"
-      }
-    }
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {
-    "sonarQubeProject": {
-      "target": "sonarQubeProject",
-      "required": false,
-      "title": "SonarQube Project",
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: onprem_analysis
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          blueprint: '"sonarQubeAnalysis"'
-          identifier: .__project + "-" + .key
-          title: .title
-          properties:
-            branch: .branch
-            newIssues: .__measures[]? | select(.metric == "new_violations") | .period.value
-            coverage: .__measures[]? | select(.metric == "new_coverage") | .period.value
-            duplications: .__measures[]? | select(.metric == "new_duplicated_lines_density") | .period.value
-            createdAt: .analysisDate
-          relations:
-            sonarQubeProject: .__project
-```
-
-</details>
-
-### Portfolio
-
-<details>
-<summary><b>Portfolio blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "sonarQubePortfolio",
-  "title": "SonarQube Portfolio",
-  "icon": "sonarqube",
-  "schema": {
-    "properties": {
-      "description": {
-        "type": "string",
-        "title": "Description"
-      },
-      "visibility": {
-        "type": "string",
-        "title": "Visibility",
-        "enum": [
-          "PUBLIC",
-          "PRIVATE"
-        ],
-        "enumColors": {
-          "PUBLIC": "green",
-          "PRIVATE": "lightGray"
-        }
-      },
-      "selectionMode": {
-        "type": "string",
-        "title": "Selection Mode",
-        "enum": [
-          "AUTO",
-          "MANUAL",
-          "NONE"
-        ],
-        "enumColors": {
-          "AUTO": "blue",
-          "MANUAL": "green",
-          "NONE": "lightGray"
-        }
-      },
-      "disabled": {
-        "type": "boolean",
-        "title": "Disabled"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "referencedBy": {
-      "title": "Referenced By",
-      "target": "sonarQubePortfolio",
-      "required": false,
-      "many": true
-    },
-    "subPortfolios": {
-      "title": "Sub Portfolios",
-      "target": "sonarQubePortfolio",
-      "required": false,
-      "many": true
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><b>Integration configuration (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-deleteDependentEntities: true
-createMissingRelatedEntities: true
-resources:
-  - kind: portfolios
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          identifier: .key
-          title: .name
-          blueprint: '"sonarQubePortfolio"'
-          properties:
-            description: .description
-            visibility: if .visibility then .visibility | ascii_upcase else null end
-            selectionMode: if .selectionMode then .selectionMode | ascii_upcase else null end
-            disabled: .disabled
-          relations:
-            subPortfolios: .subViews | map(select((.qualifier | IN("VW", "SVW"))) | .key)
-            referencedBy: .referencedBy | map(select((.qualifier | IN("VW", "SVW"))) | .key)
-```
-
-</details>
 
 ## Let's Test It
 
@@ -1041,12 +437,13 @@ Here is an example of the payload structure from SonarQube:
   "key": "PeyGis_Chatbot_For_Social_Media_Transaction",
   "name": "Chatbot_For_Social_Media_Transaction",
   "isFavorite": true,
-  "tags": [],
   "visibility": "public",
   "eligibilityStatus": "COMPLETED",
   "eligible": true,
   "isNew": false,
-  "analysisDateAllBranches": "2023-09-09T03:03:20+0200",
+  "lastAnalysisDate": "2017-03-02T15:21:47+0300",
+  "revision": "7be96a94ac0c95a61ee6ee0ef9c6f808d386a355",
+  "managed": false,
   "__measures": [
     {
       "metric": "bugs",
@@ -1321,7 +718,9 @@ The combination of the sample payload and the Ocean configuration generates the 
     "numberOfHotSpots": 8,
     "numberOfDuplications": 2,
     "mainBranch": "master",
-    "tags": []
+    "mainBranchLastAnalysisDate": "2023-09-07T12:38:41.000Z",
+    "revision": "7be96a94ac0c95a61ee6ee0ef9c6f808d386a355",
+    "managed": true
   },
   "relations": {},
   "icon": "sonarqube"
@@ -1408,6 +807,351 @@ The combination of the sample payload and the Ocean configuration generates the 
   }
 }
 ```
+
+</details>
+
+## Migration from SonarQube integration version `<=0.1.121`
+Versions prior to `v0.1.115` used SonarQube's internal API for components to retrieve projects. Since this API is internal and subject to change, it is not globally available and not recommended for new users.
+
+To remedy this, we have switched to the globally available API for projects instead for new users of the SonarQube integration. This comes with a few changes that are listed below.
+
+### Changes to the SonarQube integration
+
+- The `project` kind is deprecated in support for the `projects_ga` kind. *Deprecation effective: 2024-02-23*
+
+- Since the `tags` property is only available with the internal API, it will read `null` for existing users of the SonarQube integration.
+
+- Minor but backwards compatible changes have been made to the `sonarQubeProject` blueprint:
+
+
+<details>
+
+<summary><b>`<=v0.1.121` `sonarqubeProject` blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+    "identifier": "sonarQubeProject",
+    "title": "SonarQube Project",
+    "icon": "sonarqube",
+    "schema": {
+      "properties": {
+        "organization": {
+          "type": "string",
+          "title": "Organization",
+          "icon": "TwoUsers"
+        },
+        "link": {
+          "type": "string",
+          "format": "url",
+          "title": "Link",
+          "icon": "Link"
+        },
+        "lastAnalysisDate": {
+          "type": "string",
+          "format": "date-time",
+          "icon": "Clock",
+          "title": "Last Analysis Date"
+        },
+        "qualityGateStatus": {
+          "title": "Quality Gate Status",
+          "type": "string",
+          "enum": [
+            "OK",
+            "WARN",
+            "ERROR"
+          ],
+          "enumColors": {
+            "OK": "green",
+            "WARN": "yellow",
+            "ERROR": "red"
+          }
+        },
+        "numberOfBugs": {
+          "type": "number",
+          "title": "Number Of Bugs"
+        },
+        "numberOfCodeSmells": {
+          "type": "number",
+          "title": "Number Of CodeSmells"
+        },
+        "numberOfVulnerabilities": {
+          "type": "number",
+          "title": "Number Of Vulnerabilities"
+        },
+        "numberOfHotSpots": {
+          "type": "number",
+          "title": "Number Of HotSpots"
+        },
+        "numberOfDuplications": {
+          "type": "number",
+          "title": "Number Of Duplications"
+        },
+        "coverage": {
+          "type": "number",
+          "title": "Coverage"
+        },
+        "mainBranch": {
+          "type": "string",
+          "icon": "Git",
+          "title": "Main Branch"
+        },
+        "tags": {
+          "type": "array",
+          "title": "Tags"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {
+      "criticalOpenIssues": {
+        "title": "Number Of Open Critical Issues",
+        "type": "number",
+        "target": "sonarQubeIssue",
+        "query": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "status",
+              "operator": "in",
+              "value": ["OPEN", "REOPENED"]
+            },
+            {
+              "property": "severity",
+              "operator": "=",
+              "value": "CRITICAL"
+            }
+          ]
+        },
+        "calculationSpec": {
+          "calculationBy": "entities",
+          "func": "count"
+        }
+      },
+      "numberOfOpenIssues": {
+        "title": "Number Of Open Issues",
+        "type": "number",
+        "target": "sonarQubeIssue",
+        "query": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "status",
+              "operator": "in",
+              "value": [
+                "OPEN",
+                "REOPENED"
+              ]
+            }
+          ]
+        },
+        "calculationSpec": {
+          "calculationBy": "entities",
+          "func": "count"
+        }
+      }
+    },
+    "relations": {}
+  }
+```
+
+</details>
+
+<details>
+
+<summary><b>`>=v0.1.115` `sonarqubeProject` blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+    "identifier": "sonarQubeProject",
+    "title": "SonarQube Project",
+    "icon": "sonarqube",
+    "schema": {
+      "properties": {
+        "organization": {
+          "type": "string",
+          "title": "Organization",
+          "icon": "TwoUsers"
+        },
+        "link": {
+          "type": "string",
+          "format": "url",
+          "title": "Link",
+          "icon": "Link"
+        },
+        "lastAnalysisDate": {
+          "type": "string",
+          "format": "date-time",
+          "icon": "Clock",
+          "title": "Last Analysis Date"
+        },
+        "qualityGateStatus": {
+          "title": "Quality Gate Status",
+          "type": "string",
+          "enum": [
+            "OK",
+            "WARN",
+            "ERROR"
+          ],
+          "enumColors": {
+            "OK": "green",
+            "WARN": "yellow",
+            "ERROR": "red"
+          }
+        },
+        "numberOfBugs": {
+          "type": "number",
+          "title": "Number Of Bugs"
+        },
+        "numberOfCodeSmells": {
+          "type": "number",
+          "title": "Number Of CodeSmells"
+        },
+        "numberOfVulnerabilities": {
+          "type": "number",
+          "title": "Number Of Vulnerabilities"
+        },
+        "numberOfHotSpots": {
+          "type": "number",
+          "title": "Number Of HotSpots"
+        },
+        "numberOfDuplications": {
+          "type": "number",
+          "title": "Number Of Duplications"
+        },
+        "coverage": {
+          "type": "number",
+          "title": "Coverage"
+        },
+        "mainBranch": {
+          "type": "string",
+          "icon": "Git",
+          "title": "Main Branch"
+        },
+        "mainBranchLastAnalysisDate": {
+          "type": "string",
+          "format": "date-time",
+          "icon": "Clock",
+          "title": "Main Branch Last Analysis Date"
+        },
+        "revision": {
+          "type": "string",
+          "title": "Revision"
+        },
+        "managed": {
+          "type": "boolean",
+          "title": "Managed"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {
+      "criticalOpenIssues": {
+        "title": "Number Of Open Critical Issues",
+        "type": "number",
+        "target": "sonarQubeIssue",
+        "query": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "status",
+              "operator": "in",
+              "value": ["OPEN", "REOPENED"]
+            },
+            {
+              "property": "severity",
+              "operator": "=",
+              "value": "CRITICAL"
+            }
+          ]
+        },
+        "calculationSpec": {
+          "calculationBy": "entities",
+          "func": "count"
+        }
+      },
+      "numberOfOpenIssues": {
+        "title": "Number Of Open Issues",
+        "type": "number",
+        "target": "sonarQubeIssue",
+        "query": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "status",
+              "operator": "in",
+              "value": [
+                "OPEN",
+                "REOPENED"
+              ]
+            }
+          ]
+        },
+        "calculationSpec": {
+          "calculationBy": "entities",
+          "func": "count"
+        }
+      }
+    },
+    "relations": {}
+  }
+
+```
+
+</details>
+
+- If you however, choose to stick with the internal API with the `project` kind, use any of the blueprints with the following mapping:
+
+
+<details>
+
+<summary><b>Project mapping for `project` kind(Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: projects
+    selector:
+      query: 'true'
+      apiFilters:
+        filter:
+          qualifier: TRK
+      metrics:
+        - code_smells
+        - coverage
+        - bugs
+        - vulnerabilities
+        - duplicated_files
+        - security_hotspots
+        - new_violations
+        - new_coverage
+        - new_duplicated_lines_density
+    port:
+      entity:
+        mappings:
+        // highlight-next-line
+          blueprint: '"sonarQubeProject"' # or any other blueprint you decide to use
+          identifier: .key
+          title: .name
+          properties:
+            organization: .organization
+            link: .__link
+            qualityGateStatus: .__branch.status.qualityGateStatus
+            lastAnalysisDate: .__branch.analysisDate
+            numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
+            numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
+            numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
+            numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
+            numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
+            coverage: .__measures[]? | select(.metric == "coverage") | .value
+            mainBranch: .__branch.name
+            tags: .tags
+```
+
 
 </details>
 

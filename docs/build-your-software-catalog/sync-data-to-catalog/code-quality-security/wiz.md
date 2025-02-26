@@ -9,15 +9,31 @@ import WizConfiguration from "/docs/build-your-software-catalog/custom-integrati
 import FindCredentials from "/docs/build-your-software-catalog/custom-integration/api/_template_docs/_find_credentials.mdx";
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Wiz
 
-Our Wiz integration allows you to import `projects`, `issues`, `controls`, and `serviceTickets` from your Wiz account into Port, according to your mapping and definitions.
+Port's Wiz integration allows you to model Wiz resources in your software catalog and ingest data into them.
 
-## Common use cases
 
-- Map `projects`, `issues`, `controls`, and `serviceTickets` in your Wiz organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+## Overview
+
+This integration allows you to:
+
+- Map and organize your desired Wiz resources and their metadata in Port (see supported resources below).
+- Watch for Wiz object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+
+
+### Supported Resources
+
+The resources that can be ingested from Wiz into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Project`](https://integrate.wiz.io/reference/pull-projects)
+- [`Issue`](https://integrate.wiz.io/reference/issues-tutorial)
+- [`Control`](https://integrate.wiz.io/docs/welcome#controls)
+- [`Service ticket`](https://integrate.wiz.io/reference/issues-query#:~:text=string-,serviceTickets,-array)
+
 
 ## Prerequisites
 
@@ -49,7 +65,7 @@ Learn more [here](https://win.wiz.io/reference/quickstart#generate-a-bearer-toke
     - Click the **User Profile** icon available at the top right of the screen and click the **User Settings** option.
     - Click the **Tenant** option from the left options menu.
     - The system displays the **API Endpoint URL**.
-    - Copy and save the **API URL** to use while configuring the Wiz intergration.
+    - Copy and save the **API URL** to use while configuring the Wiz integration.
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/code-quality-security/wizApiUrl.png' width='85%' border='1px' />
 
@@ -85,7 +101,7 @@ You must create a service account in Wiz to generate the Client ID and Client Se
 <br />
 <br />
 
-## Installation
+## Setup
 
 Choose one of the following installation methods:
 
@@ -97,61 +113,28 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                           | Description                                                                                                        | Required |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
-| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                               | ✅      |
-| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                           | ✅      |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                       | ✅      |
-| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅      |
-| `integration.type`                  | The integration type                                                                                               | ✅      |
-| `integration.eventListener.type`    | The event listener type                                                                                            | ✅      |
-| `integration.secrets.wizClientId`   | The Wiz Client ID                                                                                                  | ✅      |
-| `integration.secrets.wizClientSecret`| The Wiz Client Secret                                                                                             | ✅      |
-| `integration.config.wizApiUrl`      | The Wiz API URL.                                                                                                   | ✅      |
-| `integration.config.wizTokenUrl`    | The Wiz Token Authentication URL                                                                                   | ✅      |
-| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Wiz  | ✅       |
-| `integration.secret.wizWebhookVerificationToken`  | This is a password you create, that is used to verify webhook events to Port                                       | ❌      |
-| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌      |
-| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌      |
-| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌      |
+<Prerequisites />
 
 
-<br/>
+For details about the available parameters for the installation, see the table below.
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-wiz-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set scheduledResyncInterval=120 \
-  --set integration.identifier="my-wiz-integration"  \
-  --set integration.type="wiz"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.wizClientId="WIZ_CLIENT_ID"  \
-  --set integration.secrets.wizClientSecret="WIZ_CLIENT_SECRET" \
-  --set integration.secrets.wizApiUrl="WIZ_API_URL"  \
-  --set integration.config.wizTokenUrl="WIZ_TOKEN_URL"  
-```
+<OceanRealtimeInstallation integration="Wiz" />
+
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-wiz-integration` in your git repository with the content:
 
@@ -238,18 +221,42 @@ kubectl apply -f my-ocean-wiz-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+Note the parameters specific to this integration, they are last in the table.
+
+| Parameter                                        | Description                                                                                                                                             | Required |
+|--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                                  | Your port client id ([Get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅        |
+| `port.clientSecret`                              | Your port client secret ([Get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅        |
+| `port.baseUrl`                                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                 | ✅        |
+| `integration.identifier`                         | Change the identifier to describe your integration                                                                                                      | ✅        |
+| `integration.type`                               | The integration type                                                                                                                                    | ✅        |
+| `integration.config.appHost`                     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in Wiz                                       | ✅        |
+| `integration.eventListener.type`                 | The event listener type                                                                                                                                 | ✅        |
+| `scheduledResyncInterval`                        | The number of minutes between each resync                                                                                                               | ❌        |
+| `initializePortResources`                        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                           | ❌        |
+| `sendRawDataExamples`                            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                     | ❌        |
+| `integration.secrets.wizClientId`                | The Wiz Client ID                                                                                                                                       | ✅        |
+| `integration.secrets.wizClientSecret`            | The Wiz Client Secret                                                                                                                                   | ✅        |
+| `integration.config.wizApiUrl`                   | The Wiz API URL.                                                                                                                                        | ✅        |
+| `integration.config.wizTokenUrl`                 | The Wiz Token Authentication URL                                                                                                                        | ✅        |
+| `integration.secret.wizWebhookVerificationToken` | This is a password you create, that is used to verify webhook events to Port                                                                            | ❌        |
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
-This workflow will run the Wiz integration once and then exit, this is useful for **scheduled** ingestion of data.
+<TabItem value="one-time-ci" label="Scheduled (CI)">
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+This workflow/pipeline will run the Wiz integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
 :::
+<Tabs groupId="cicd-method" queryString="cicd-method">
+<TabItem value="github" label="GitHub">
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -287,15 +294,10 @@ jobs:
 ```
 
 </TabItem>
-  <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Wiz integration once and then exit, this is useful for **scheduled** ingestion of data.
+<TabItem value="jenkins" label="Jenkins">
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 <br />
@@ -353,10 +355,9 @@ pipeline {
 ```
 
   </TabItem>
-
 <TabItem value="azure" label="Azure Devops">
 
-<AzurePremise name="Wiz" />
+<AzurePremise/>
 
 
 <DockerParameters />
@@ -402,11 +403,6 @@ steps:
 ```
 </TabItem>
 <TabItem value="gitlab" label="GitLab">
-This pipeline will run the Wiz integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -456,7 +452,7 @@ ingest_data:
 ```
 
 </TabItem>
-  </Tabs>
+</Tabs>
 
 <PortApiRegionTip/>
 
@@ -466,121 +462,12 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting Wiz objects
+## Configuration
 
-The Wiz integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-Here is an example snippet from the config which demonstrates the process for getting `project` data from Wiz:
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: project
-    selector:
-      query: 'true'
-    port:
-      entity:
-        mappings:
-          blueprint: '"wizProject"'
-          identifier: .id
-          title: .name
-          properties:
-            archived: .archived
-            businessUnit: .businessUnit
-            description: .description
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Wiz's API events.
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Wiz, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from Wiz, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Project`](https://integrate.wiz.io/reference/pull-projects)
-- [`Issue`](https://integrate.wiz.io/reference/issues-tutorial)
-- [`Control`](https://integrate.wiz.io/docs/welcome#controls)
-- [`Service ticket`](https://integrate.wiz.io/reference/issues-query#:~:text=string-,serviceTickets,-array)
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: project
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Wiz object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: project
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Wiz object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Wiz object to a Port entity. Each value is a JQ query.
-            identifier: .id
-            title: .attributes.name
-            blueprint: '"wizProject"'
-            identifier: .id
-            title: .name
-            properties:
-              archived: .archived
-              businessUnit: .businessUnit
-              description: .description
-        # highlight-end
-    - kind: project # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyProjectName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-### Ingest data into Port
-
-To ingest Wiz objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Wiz.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Wiz under the Code quality & security providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
 
@@ -932,7 +819,6 @@ resources:
 
 </details>
 
-
 ### Service Ticket
 
 <details>
@@ -982,50 +868,6 @@ resources:
           url: .url
 ```
 
-</details>
-
-## Alternative installation via webhook
-While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Wiz. If so, use the following instructions:
-
-<details>
-
-<summary><b>Webhook installation (click to expand)</b></summary>
-
-In this example you are going to create a webhook integration between [Wiz](https://wiz.io/) and Port, which will ingest Wiz issue entities into Port.
-
-<h2>Port configuration</h2>
-
-Create the following blueprint definition:
-
-<details>
-<summary>Wiz issue blueprint</summary>
-
-<WizBlueprint/>
-
-</details>
-
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
-
-<details>
-<summary>Wiz issue webhook configuration</summary>
-
-1. **Basic details** tab - fill the following details:
-   1. Title : `Wiz Mapper`;
-   2. Identifier : `wiz_mapper`;
-   3. Description : `A webhook configuration to map Wiz issues to Port`;
-   4. Icon : `Box`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
-   <WizConfiguration/>
-
-</details>
-
-<h2>Create a webhook in Wiz</h2>
-
-1. Send an email to win@wiz.io requesting for access to the developer documentation or reach out to your Wiz account manager.
-2. Follow this [guide](https://integrate.wiz.io/reference/webhook-tutorial#create-a-custom-webhook) in the documentation to create a webhook.
-
-Done! Any issue created in Wiz will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 </details>
 
 ## Let's Test It
@@ -1309,3 +1151,51 @@ The combination of the sample payload and the Ocean configuration generates the 
 ```
 
 </details>
+
+## Alternative installation via webhook
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Wiz. If so, use the following instructions:
+
+**Note** that when using the webhook installation method, data will be ingested into Port only when the webhook is triggered.
+
+
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+In this example you are going to create a webhook integration between [Wiz](https://wiz.io/) and Port, which will ingest Wiz issue entities into Port.
+
+<h2>Port configuration</h2>
+
+Create the following blueprint definition:
+
+<details>
+<summary>Wiz issue blueprint</summary>
+
+<WizBlueprint/>
+
+</details>
+
+Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
+
+<details>
+<summary>Wiz issue webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `Wiz Mapper`;
+   2. Identifier : `wiz_mapper`;
+   3. Description : `A webhook configuration to map Wiz issues to Port`;
+   4. Icon : `Box`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <WizConfiguration/>
+
+</details>
+
+<h2>Create a webhook in Wiz</h2>
+
+1. Send an email to win@wiz.io requesting for access to the developer documentation or reach out to your Wiz account manager.
+2. Follow this [guide](https://integrate.wiz.io/reference/webhook-tutorial#create-a-custom-webhook) in the documentation to create a webhook.
+
+Done! Any issue created in Wiz will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+</details>
+

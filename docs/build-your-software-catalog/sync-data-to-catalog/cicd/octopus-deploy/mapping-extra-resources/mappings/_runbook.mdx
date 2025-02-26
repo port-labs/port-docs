@@ -1,0 +1,27 @@
+<details>
+
+<summary>Mapping configuration for Runbook</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: runbook
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .Id
+          title: .Name
+          blueprint: '"octopusRunbook"'
+          properties:
+            description: .Description
+            lastModifiedOn: .LastModifiedOn
+            environmentScope: .EnvironmentScope
+            environments: .Environments
+          relations:
+            space: .SpaceId
+```
+
+</details>

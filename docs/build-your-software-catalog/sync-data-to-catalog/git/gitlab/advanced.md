@@ -86,4 +86,5 @@ By default this parameter is not set and the integration will sync all projects 
 The `projectVisibilityFilter` parameter is used to filter out projects based on their visibility level in GitLab (public, internal, private).
 The equivalent of this parameter in the gitlab API is the `visibility` parameter for the [list projects](https://docs.gitlab.com/ee/api/projects.html#list-user-projects) endpoint.
 </TabItem>
+
 </Tabs>

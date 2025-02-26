@@ -33,8 +33,8 @@ In this guide, we are going to use [self-service actions](/actions-and-automatio
       - `AWS_ACCESS_KEY_ID`: Your AWS access key.
       - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
    - `CREATOR_TOKEN`: A GitHub [personal access token (fine-grained)](https://github.blog/2022-10-18-introducing-fine-grained-personal-access-tokens-for-github/#creating-personal-access-tokens) that has `Read and Write` permissions on the following scopes: _Administration_, _Contents_.
-   * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-   * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+   * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+   * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
         
 5. Your AWS account has access to an [Elastic Container Registry](https://aws.amazon.com/ecr/).
 
@@ -319,8 +319,7 @@ jobs:
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -669,8 +668,7 @@ terraform {
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -833,7 +831,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{ env.PORT_RUN_ID }}
-          logMessage: "Commiting new app files: ${{ github.event.inputs.project_name }}"
+          logMessage: "Committing new app files: ${{ github.event.inputs.project_name }}"
 
       - name: Commit files
         working-directory: ./tmp/${{ github.event.inputs.repo_name }}
@@ -928,8 +926,7 @@ This action will create the following:
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>

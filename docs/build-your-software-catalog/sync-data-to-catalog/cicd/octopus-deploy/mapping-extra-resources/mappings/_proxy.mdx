@@ -1,0 +1,29 @@
+<details>
+
+<summary>Mapping configuration for Proxy</summary>
+:::tip Kind value
+The value of `kind` should be `proxie` for Proxy resources. This is because of the pattern of the API endpoints discussed in the [mapping the resource to port](#mapping-the-resource-to-port) section.
+:::
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: proxie
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .Id
+          title: .Name
+          blueprint: '"octopusProxy"'
+          properties:
+            host: .Host
+            port: .Port
+            username: .Username
+            proxyType: .ProxyType
+          relations:
+            space: .SpaceId
+```
+
+</details>

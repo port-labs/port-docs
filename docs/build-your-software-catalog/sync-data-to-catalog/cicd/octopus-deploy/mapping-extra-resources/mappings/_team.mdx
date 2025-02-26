@@ -1,0 +1,29 @@
+<details>
+
+<summary>Mapping configuration for Team</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: team
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .Id
+          title: .Name
+          blueprint: '"octopusTeam"'
+          properties:
+            description: .Description
+            canBeDeleted: .CanBeDeleted
+            canBeRenamed: .CanBeRenamed
+            canChangeMembers: .CanChangeMembers
+            canChangeRoles: .CanChangeRoles
+            memberUserIds: .MemberUserIds
+          relations:
+            space: .SpaceId
+```
+
+</details>

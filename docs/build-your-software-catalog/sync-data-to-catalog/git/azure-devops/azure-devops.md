@@ -2,180 +2,429 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import AzureDevopsResources from './\_azuredevops_exporter_supported_resources.mdx'
 
+
 # Azure DevOps
 
-Our integration with Azure DevOps allows you to export objects to Port as entities of existing blueprints. The integration supports real-time event processing so Port always provides an accurate real-time representation of your Azure DevOps resources.
+Port's Azure DevOps integration allows you to model Azure DevOps resources in your software catalog and ingest data into them.
 
-## Common use cases
+## Overview
 
-Our Azure DevOps integration makes it easy to fill the software catalog with data directly from your organization, for example:
+This integration allows you to:
 
-- Map most of the resources in the organization, including **projects**, **repositories**, **pipelines**, **pull requests**, **teams** and **members**.
+- Map and orgaize your desired Azure DevOps resources and their metadata in Port (see supported resources below).
 - Watch for Azure DevOps object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 - Manage Port entities using GitOps.
 
-## Installation
 
-To install Port's Azure DevOps integration, follow the [installation](./installation.md) guide.
+### Supported Resources
 
-## Ingesting Git objects
-
-This integration allows you to ingest a variety of objects resources provided by the Azure DevOps API. It allows you to perform ETL operations on data from the Azure DevOps API into the desired data model.
-
-This integration uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
-
-Here is an example snippet from the config which demonstrates the ETL process for getting `pull-request` data from Azure DevOps into the software catalog:
-
-```yaml showLineNumbers
-resources:
-  # Extract
-  # highlight-start
-  - kind: pull-request
-    selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-    # highlight-end
-    port:
-      entity:
-        mappings:
-          # Transform & Load
-          # highlight-start
-          identifier: >-
-            .repository.project.name + "/" + .repository.name + (.pullRequestId
-            | tostring) | gsub(" "; "")
-          blueprint: '"azureDevopsPullRequest"'
-          properties:
-            creator: .createdBy.uniqueName
-            status: .status
-            reviewers: '[.reviewers[].uniqueName]'
-            createdAt: .creationDate
-          relations:
-            repository: '.repository.project.name + "/" + .repository.name | gsub(" "; "")'
-        # highlight-end
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the different Azure DevOps API routes.
-
-### Integration configuration
-
-The integration's configuration is how you specify the exact resources you want to query from your organization, and which entities and properties you want to fill with the received data.
-
-Here is an example for the integration configuration block:
-
-```yaml showLineNumbers
-resources:
-  - kind: repository
-    selector:
-      query: 'true' # JQ boolean query. If evaluated to false - skip syncing the object.
-    port:
-      entity:
-        mappings:
-          identifier: .project.name + "/" + .name # The Entity identifier will be the repository name.
-          title: .name
-          blueprint: '"azureDevopsRepository"'
-          properties:
-            url: .url
-            readme: file://README.md
-```
-
-### Configuration structure
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: repository
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for an object from the Azure DevOps API:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: repository
-        selector:
-        ...
-  ```
+The resources that can be ingested from Azure DevOps into Port are listed below.
 
   <AzureDevopsResources/>
 
-#### Filtering unwanted objects
 
-The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog:
+## Setup
 
-  ```yaml showLineNumbers
-  resources:
-    - kind: repository
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-      # highlight-end
-      port:
-  ```
+To install Port's Azure DevOps integration, see the [installation](./installation.md#setup) page.
 
-For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
+## Configuration
 
-```yaml showLineNumbers
-query: .name | startswith("service")
-```
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-<br/>
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-:::tip WIQL Support
-The Ocean Azure DevOps integration supports querying objects from the `work-item` kind using [WIQL](https://learn.microsoft.com/en-us/azure/devops/boards/queries/wiql-syntax?view=azure-devops), providing fine-grained control over which work items are ingested into Port.
-
-To leverage WIQL filtering, add a `wiql` key with your WIQL query as the value within the `selector` object. For example:
-
-```yaml showLineNumbers
-resources:
-  - kind: work-item  # WIQL filtering can only be used with the "work-item" kind
-    selector:
-      query: "true" 
-      wiql: "[System.WorkItemType] = 'Task' AND [System.State] = 'Active'"  # WIQL query, will only ingest work items of type "Task" whose state is "Active"
-    port:
-```
-
-:::
-
-The `port`, `entity` and the `mappings` keys open the section used to map the Azure DevOps API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: repository
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Azure DevOps API object to a Port entity. Each value is a JQ query.
-            identifier: '.project.name + "/" + .name | gsub(" "; "")'
-            title: .name
-            blueprint: '"azureDevopsRepository"'
-            properties:
-              url: .url
-              readme: file://README.md
-        # highlight-end
-    - kind: repository # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyRepositoryName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip
-  Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-## Permissions
-
-Port's Azure DevOps integration requires a personal access token, follow the instructions in the [installation](./installation.md#create-a-personal-access-token) guide.
 
 ## Examples
 
 Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+
+
+## Let's Test It
+
+This section includes a sample response data from Azure DevOps. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Azure DevOps:
+
+<details>
+<summary> Project response data</summary>
+
+```json showLineNumbers
+{
+  "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+  "name": "Port Integration",
+  "description": "Ocean integration project",
+  "url": "[REDACTED]/_apis/projects/fd029361-7854-4cdd-8ace-bb033fca399c",
+  "state": "wellFormed",
+  "revision": 21,
+  "_links": {
+    "self": {
+      "href": "[REDACTED]/_apis/projects/fd029361-7854-4cdd-8ace-bb033fca399c"
+    },
+    "collection": {
+      "href": "[REDACTED]/_apis/projectCollections/a7db27e5-15a1-4e84-aca5-3de8874e5466"
+    },
+    "web": {
+      "href": "[REDACTED]/Port Integration"
+    }
+  },
+  "visibility": "private",
+  "defaultTeam": {
+    "id": "da84d6cf-fc6f-4a3a-b9f1-eccaf320589c",
+    "name": "Port Integration Team",
+    "url": "[REDACTED]/_apis/projects/fd029361-7854-4cdd-8ace-bb033fca399c/teams/da84d6cf-fc6f-4a3a-b9f1-eccaf320589c"
+  },
+  "lastUpdateTime": "2023-11-14T07:24:17.213Z"
+}
+
+```
+
+</details>
+
+<details>
+<summary> Repository response data</summary>
+
+```json showLineNumbers
+{
+  "id": "43c319c8-5adc-41f8-8486-745fe2130cd6",
+  "name": "final_project_to_project_test",
+  "url": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_apis/git/repositories/43c319c8-5adc-41f8-8486-745fe2130cd6",
+  "project": {
+    "id": "fd029361-7854-4cdd-8ace-bb033fca399c",
+    "name": "Port Integration",
+    "description": "Ocean integration project",
+    "url": "[REDACTED]/_apis/projects/fd029361-7854-4cdd-8ace-bb033fca399c",
+    "state": "wellFormed",
+    "revision": 21,
+    "visibility": "private",
+    "lastUpdateTime": "2023-11-14T07:24:17.213Z"
+  },
+  "defaultBranch": "refs/heads/main",
+  "size": 724,
+  "remoteUrl": "https://isaacpcoffie@dev.azure.com/isaacpcoffie/Port%20Integration/_git/final_project_to_project_test",
+  "sshUrl": "git@ssh.dev.azure.com:v3/isaacpcoffie/Port%20Integration/final_project_to_project_test",
+  "webUrl": "[REDACTED]/Port%20Integration/_git/final_project_to_project_test",
+  "isDisabled": false,
+  "isInMaintenance": false
+}
+```
+</details>
+
+<details>
+<summary> Work-item response data</summary>
+
+```json showLineNumbers
+{
+  "id": 1,
+  "rev": 2,
+  "fields": {
+    "System.AreaPath": "Test Project",
+    "System.TeamProject": "Test Project",
+    "System.IterationPath": "Test Project\\Sprint 1",
+    "System.WorkItemType": "Issue",
+    "System.State": "To Do",
+    "System.Reason": "Added to backlog",
+    "System.AssignedTo": {
+      "displayName": "Jaden Kodjo Miles",
+      "url": "https://spsprodcus5.vssps.visualstudio.com/Ac557ed0f-d9a1-4fab-b2fb-95d2f2493d42/_apis/Identities/40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+      "_links": {
+        "avatar": {
+          "href": "[REDACTED]/_apis/GraphProfile/MemberAvatars/msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm"
+        }
+      },
+      "id": "40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+      "uniqueName": "doe@gmail.com",
+      "imageUrl": "[REDACTED]/_apis/GraphProfile/MemberAvatars/msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm",
+      "descriptor": "msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm"
+    },
+    "System.CreatedDate": "2023-11-14T06:58:16.353Z",
+    "System.CreatedBy": {
+      "displayName": "Jaden Kodjo Miles",
+      "url": "https://spsprodcus5.vssps.visualstudio.com/Ac557ed0f-d9a1-4fab-b2fb-95d2f2493d42/_apis/Identities/40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+      "_links": {
+        "avatar": {
+          "href": "[REDACTED]/_apis/GraphProfile/MemberAvatars/msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm"
+        }
+      },
+      "id": "40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+      "uniqueName": "doe@gmail.com",
+      "imageUrl": "[REDACTED]/_apis/GraphProfile/MemberAvatars/msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm",
+      "descriptor": "msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm"
+    },
+    "System.ChangedDate": "2023-11-14T06:58:32.69Z",
+    "System.ChangedBy": {
+      "displayName": "Jaden Kodjo Miles",
+      "url": "https://spsprodcus5.vssps.visualstudio.com/Ac557ed0f-d9a1-4fab-b2fb-95d2f2493d42/_apis/Identities/40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+      "_links": {
+        "avatar": {
+          "href": "[REDACTED]/_apis/GraphProfile/MemberAvatars/msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm"
+        }
+      },
+      "id": "40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+      "uniqueName": "doe@gmail.com",
+      "imageUrl": "[REDACTED]/_apis/GraphProfile/MemberAvatars/msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm",
+      "descriptor": "msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm"
+    },
+    "System.CommentCount": 0,
+    "System.Title": "setup backend infra",
+    "System.BoardColumn": "To Do",
+    "System.BoardColumnDone": false,
+    "Microsoft.VSTS.Common.StateChangeDate": "2023-11-14T06:58:16.353Z",
+    "Microsoft.VSTS.Common.Priority": 2,
+    "WEF_88F4173AE02645C58988F456A7D828AB_Kanban.Column": "To Do",
+    "WEF_88F4173AE02645C58988F456A7D828AB_Kanban.Column.Done": false
+  },
+  "url": "[REDACTED]/1b6aba50-6176-4df2-a8e3-f0394ec0b0a2/_apis/wit/workItems/1",
+  "__projectId": "1b6aba50-6176-4df2-a8e3-f0394ec0b0a2",
+  "__project": {
+    "id": "1b6aba50-6176-4df2-a8e3-f0394ec0b0a2",
+    "name": "Test Project",
+    "description": "This is a project for Port",
+    "url": "[REDACTED]/_apis/projects/1b6aba50-6176-4df2-a8e3-f0394ec0b0a2",
+    "state": "wellFormed",
+    "revision": 13,
+    "visibility": "private",
+    "lastUpdateTime": "2023-11-14T06:56:02.157Z"
+  }
+}
+```
+</details>
+
+<details>
+<summary> Pipeline response data</summary>
+
+```json showLineNumbers
+{
+  "_links": {
+    "self": {
+      "href": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_apis/pipelines/7?revision=1"
+    },
+    "web": {
+      "href": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_build/definition?definitionId=7"
+    }
+  },
+  "url": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_apis/pipelines/7?revision=1",
+  "id": 7,
+  "revision": 1,
+  "name": "health-catalist",
+  "folder": "\\",
+  "__projectId": "fd029361-7854-4cdd-8ace-bb033fca399c"
+}
+```
+</details>
+
+<details>
+<summary> Pull request response data</summary>
+
+```json showLineNumbers
+{
+  "repository": {
+    "id": "075e1870-9a1a-4e3d-a219-6403c2004298",
+    "name": "data-analysis",
+    "url": "[REDACTED]/1b6aba50-6176-4df2-a8e3-f0394ec0b0a2/_apis/git/repositories/075e1870-9a1a-4e3d-a219-6403c2004298",
+    "project": {
+      "id": "1b6aba50-6176-4df2-a8e3-f0394ec0b0a2",
+      "name": "Test Project",
+      "state": "unchanged",
+      "visibility": "unchanged",
+      "lastUpdateTime": "0001-01-01T00:00:00"
+    }
+  },
+  "pullRequestId": 1,
+  "codeReviewId": 1,
+  "status": "active",
+  "createdBy": {
+    "displayName": "Jaden Kodjo Miles",
+    "url": "https://spsprodcus5.vssps.visualstudio.com/Ac557ed0f-d9a1-4fab-b2fb-95d2f2493d42/_apis/Identities/40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+    "_links": {
+      "avatar": {
+        "href": "[REDACTED]/_apis/GraphProfile/MemberAvatars/msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm"
+      }
+    },
+    "id": "40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+    "uniqueName": "doe@gmail.com",
+    "imageUrl": "[REDACTED]/_api/_common/identityImage?id=40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+    "descriptor": "msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm"
+  },
+  "creationDate": "2023-11-14T06:53:58.355547Z",
+  "title": "First Pull Request",
+  "description": "some description",
+  "sourceRefName": "refs/heads/master",
+  "targetRefName": "refs/heads/main",
+  "mergeStatus": "conflicts",
+  "isDraft": false,
+  "mergeId": "6c00586e-ebda-40a3-a09b-66454e4c352d",
+  "lastMergeSourceCommit": {
+    "commitId": "00ce7ec80fd8ce6cde516432dc9aadf190d5c977",
+    "url": "[REDACTED]/1b6aba50-6176-4df2-a8e3-f0394ec0b0a2/_apis/git/repositories/075e1870-9a1a-4e3d-a219-6403c2004298/commits/00ce7ec80fd8ce6cde516432dc9aadf190d5c977"
+  },
+  "lastMergeTargetCommit": {
+    "commitId": "a5c15f13af7d5f97369163fd76a63502600ada55",
+    "url": "[REDACTED]/1b6aba50-6176-4df2-a8e3-f0394ec0b0a2/_apis/git/repositories/075e1870-9a1a-4e3d-a219-6403c2004298/commits/a5c15f13af7d5f97369163fd76a63502600ada55"
+  },
+  "reviewers": [
+    {
+      "reviewerUrl": "[REDACTED]/1b6aba50-6176-4df2-a8e3-f0394ec0b0a2/_apis/git/repositories/075e1870-9a1a-4e3d-a219-6403c2004298/pullRequests/1/reviewers/40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+      "vote": 10,
+      "hasDeclined": false,
+      "isFlagged": false,
+      "displayName": "Jaden Kodjo Miles",
+      "url": "https://spsprodcus5.vssps.visualstudio.com/Ac557ed0f-d9a1-4fab-b2fb-95d2f2493d42/_apis/Identities/40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+      "_links": {
+        "avatar": {
+          "href": "[REDACTED]/_apis/GraphProfile/MemberAvatars/msa.NDBiZWU1MDItMzBjMS03ZWI1LTk3NTAtZjlkMzVmYTY2ZTZm"
+        }
+      },
+      "id": "40bee502-30c1-6eb5-9750-f9d35fa66e6f",
+      "uniqueName": "doe@gmail.com",
+      "imageUrl": "[REDACTED]/_api/_common/identityImage?id=40bee502-30c1-6eb5-9750-f9d35fa66e6f"
+    }
+  ],
+  "labels": [
+    {
+      "id": "68e1d7ae-1784-49fe-8865-2742c25b1993",
+      "name": "bitbucket",
+      "active": true
+    },
+    {
+      "id": "b11e1538-a984-440c-b756-ddc72e0e786c",
+      "name": "auth",
+      "active": true
+    }
+  ],
+  "url": "[REDACTED]/1b6aba50-6176-4df2-a8e3-f0394ec0b0a2/_apis/git/repositories/075e1870-9a1a-4e3d-a219-6403c2004298/pullRequests/1",
+  "supportsIterations": true
+}
+```
+</details>
+
+
+
+
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Project entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "fd029361-7854-4cdd-8ace-bb033fca399c",
+  "title": "Port Integration",
+  "blueprint": "project",
+  "properties": {
+    "state": "wellFormed",
+    "revision": 21,
+    "visibility": "private",
+    "defaultTeam": "Port Integration Team",
+    "link": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c"
+}
+  
+```
+
+</details>
+
+<details>
+<summary> Repository entity in Port </summary>
+
+```json showLineNumbers
+{
+  "identifier": "PortIntegration/final_project_to_project_test",
+  "title": "final_project_to_project_test",
+  "blueprint": "azureDevopsRepository",
+  "properties": {
+    "url": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_apis/git/repositories/43c319c8-5adc-41f8-8486-745fe2130cd6",
+    "readme": "<README.md Content>",
+    "defaultBranch": "refs/heads/main"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Work-item entity in Port </summary>
+
+```json showLineNumbers
+{
+  "identifier": "1",
+  "title": "setup backend infra",
+  "blueprint": "workItem",
+  "properties": {
+    "type": "Issue",
+    "state": "To Do",
+    "effort": null,
+    "description": null,
+    "link": "[REDACTED]/1b6aba50-6176-4df2-a8e3-f0394ec0b0a2/_apis/wit/workItems/1",
+    "reason": "Added to backlog",
+    "createdBy": "Jaden Kodjo Miles",
+    "changedBy": "Jaden Kodjo Miles",
+    "createdDate": "2023-11-14T06:58:16.353Z",
+    "changedDate": "2023-11-14T06:58:32.69Z"
+  },
+  "relations": {
+    "project": "1b6aba50-6176-4df2-a8e3-f0394ec0b0a2"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Pipeline entity in Port </summary>
+
+```json showLineNumbers
+{
+  "identifier": "7",
+  "title": "health-catalist",
+  "blueprint": "azureDevopsPipeline",
+  "properties": {
+    "url": "[REDACTED]/fd029361-7854-4cdd-8ace-bb033fca399c/_apis/pipelines/7?revision=1",
+    "revision": 1,
+    "folder": "\\"
+  },
+  "relations": {
+    "project": "fd029361-7854-4cdd-8ace-bb033fca399c"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Pull request entity in Port </summary>
+
+```json showLineNumbers
+{
+  "identifier": "TestProject/data-analysis1",
+  "blueprint": "azureDevopsPullRequest",
+  "properties": {
+    "creator": "doe@gmail.com",
+    "status": "active",
+    "reviewers": [
+      "doe@gmail.com"
+    ],
+    "createdAt": "2023-11-14T06:53:58.355547Z",
+    "leadTimeHours": null
+  },
+  "relations": {
+    "repository": "TestProject/data-analysis"
+  }
+}
+```
+
+</details>
+
+
+
+## Relevant Guides
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=AzureDevops).
 
 ## GitOps
 

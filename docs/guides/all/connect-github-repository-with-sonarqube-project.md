@@ -11,9 +11,9 @@ This guide aims to demonstrate how to connect a GitHub repository (referred to a
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview). We will use the `Service` blueprint that was created during the onboarding process.
 - Ensure you have [SonarQube installed and configured](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md#installation) in your environment.
-- Ensure you have [GitHub installed and configured](docs/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md)
+- Ensure you have [GitHub installed and configured](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
 
 :::
 
@@ -107,6 +107,6 @@ Now, if our `SonarQube Project` identifier is equal to the GitHub service label,
 By following these steps, you can seamlessly connect a GitHub repository with an existing SonarQube Project blueprint in Port using topics.
 
 More relevant guides and examples:
-- [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/jira/)
-- [Mini guide to connect SonarQube Project to a service](https://docs.getport.io/guides/all/connect-sonar-project-to-service)
-- [Self-service action to add tags to SonarQube Project](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/examples/SonarQube/add-tags-to-sonarqube-project.md)
+- [Port's SonarQube integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/jira/)
+- [Mini guide to connect SonarQube Project to a service](https://docs.port.io/guides/all/connect-sonar-project-to-service)
+- [Self-service action to add tags to SonarQube Project](https://docs.port.io/guides/all/add-tags-to-sonarqube-project)

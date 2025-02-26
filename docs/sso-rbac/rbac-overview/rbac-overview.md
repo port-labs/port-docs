@@ -29,34 +29,9 @@ To configure who can see which pages, refer to the [Page Permissions](/customize
 
 ### Configuring team ownership
 
-Port offers various features to provide personalized views such as "**show me my team’s services**" or "**my pull requests**".  
+Port allows you to assign ownership of specific entities to teams in your organization, enabling personalized views such as "**show me my team’s services**" or "**my pull requests**".
 
-#### team meta property
-
-Every entity in Port has a meta property called `$team`, which stores the Port team that the entity belongs to.  
-The `$team` property as well as other meta properties are documented [here](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties).
-
-#### Port Team and Identity provider
-
-Port teams are automatically fetched from your identity provider when [connecting to SSO](/sso-rbac/sso-providers/). So the Port Team options will be coming from the Port Teams available under **Users and teams** settings.
-
-<img src='/img/software-catalog/role-based-access-control/overview/portteam.png' width='100%' border='1px' /> 
-
-#### Team inheritance
-
-To simplify the setup of ownership, Port supports team inheritance. Team inheritance lets you to utilize relations to automatically retrieve Port Teams from a parent entity.
-
-In the example below, we can configure a Port Team for every service: 
-
-<img src='/img/software-catalog/role-based-access-control/overview/teaminheritancegraph.png' width='100%' border='1px' /> 
-<br/><br/>
-
-When configuring team inheritance in Pull Requests, every Pull Request will inherit its parent Port team. 
-
-<img src='/img/software-catalog/role-based-access-control/overview/teaminheritance.png' width='50%' border='1px' /> 
-<br/><br/>
-
-For more details, see the [Team Inheritance](/build-your-software-catalog/set-catalog-rbac/examples/#team-inheritance) documentation.
+For more details about **ownership** in Port, see the [relevant documentation](/sso-rbac/rbac/#ownership--user-management).
 
 ### Dynamic team filtering
 

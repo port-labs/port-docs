@@ -1,0 +1,205 @@
+.container {
+  display: flex;
+  width: 100%;
+  gap: 2rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+  font-family: 'DM Sans', sans-serif;
+  border: 1px solid var(--ifm-color-emphasis-500);
+  border-radius: 12px;
+}
+
+.sidebar {
+  flex: 0 0 250px;
+  border-right: 1px solid var(--ifm-color-emphasis-200);
+  padding-right: 1.5rem;
+  position: relative;
+}
+
+.mainContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 1px black;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.categoryButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ifm-color-emphasis-700);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  text-align: left;
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  position: relative;
+}
+
+.categoryButton:hover {
+  background-color: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-emphasis-900);
+}
+
+.categoryButton.active {
+  border-color: #000000;
+  color: #000000;
+  font-weight: 500;
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+html[data-theme='dark'] .categoryButton.active {
+  border-color: #ffffff;
+  color: #ffffff;
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+html[data-theme='dark'] .categoryButton.active::after {
+  border-left-color: #ffffff;
+}
+
+.categoryCount {
+  background-color: var(--ifm-color-emphasis-200);
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  background-color: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 6px;
+  padding: 4px;
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.cardHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #000000;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+
+html[data-theme='dark'] .cardHeader h3 {
+  color: #ffffff;
+}
+
+.noResults {
+  text-align: center;
+  padding: 3rem;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 1.1rem;
+  background-color: var(--ifm-background-surface-color);
+  border-radius: 8px;
+  border: 1px dashed var(--ifm-color-emphasis-300);
+  grid-column: 1 / -1;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .sidebar {
+    flex: none;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--ifm-color-emphasis-200);
+    padding-right: 0;
+    padding-bottom: 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .card {
+    padding: 0.75rem;
+  }
+
+  .cardHeader {
+    gap: 0.75rem;
+  }
+
+  .cardHeader h3 {
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+
+  .searchInput {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+} 

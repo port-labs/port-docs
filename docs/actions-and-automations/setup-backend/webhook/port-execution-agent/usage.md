@@ -70,7 +70,7 @@ ALL_PROXY=http://my-proxy.com:3333
 
 #### `NO_PROXY`
 
-`NO_PROXY` allows blacklisting certain addresses from being handled through a proxy. This vairable accepts a comma-seperated list of hostnames or urls.
+`NO_PROXY` allows blacklisting certain addresses from being handled through a proxy. This variable accepts a comma-seperated list of hostnames or urls.
 
 For example:
 ```sh showLineNumbers

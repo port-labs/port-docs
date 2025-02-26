@@ -1,0 +1,46 @@
+<details>
+
+<summary> Integration mapping </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: project-with-members
+    selector:
+      query: 'true'
+      includeBotMembers: 'true'
+      includeInheritedMembers: 'true'
+    port:
+      itemsToParse: .__members
+      entity:
+        mappings:
+          identifier: .item.username
+          title: .item.name
+          blueprint: '"gitlabMember"'
+          properties:
+            link: .item.web_url
+            state: .item.state
+            email: .item.email
+            locked: .item.locked
+  - kind: project-with-members
+    selector:
+      query: 'true'
+      includeInheritedMembers: 'false'
+      includeBotMembers: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"gitlabRepository"'
+          properties:
+            url: .web_url
+            readme: file://README.md
+            description: .description
+            language: .__languages | to_entries | max_by(.value) | .key
+            namespace: .namespace.name
+            fullPath: .namespace.full_path
+            defaultBranch: .default_branch
+          relations:
+            gitlabMembers: .__members | map(.username)
+```
+</details>

@@ -23,10 +23,10 @@ To streamline deployments with this example, ensure you have a GitOps tool confi
 
 - Kubernetes cluster.
 - Crossplane installed in your cluster:
-  - Crossplane [Installation Guide](https://docs.crossplane.io/v1.14/software/install/).
-  - Crossplane [AWS Quickstart Guide](https://docs.crossplane.io/v1.14/getting-started/provider-aws/):
-    - Deploy a Crossplane [Provider](https://docs.crossplane.io/v1.14/getting-started/provider-aws/#install-the-aws-provider).
-    - Deploy a Crossplane [ProviderConfig](https://docs.crossplane.io/v1.14/getting-started/provider-aws/#create-a-providerconfig).
+  - Crossplane [Installation Guide](https://docs.crossplane.io/v1.18/software/install/).
+  - Crossplane [AWS Quickstart Guide](https://docs.crossplane.io/v1.18/getting-started/provider-aws/):
+    - Deploy a Crossplane [Provider](https://docs.crossplane.io/v1.18/getting-started/provider-aws/#install-the-aws-provider).
+    - Deploy a Crossplane [ProviderConfig](https://docs.crossplane.io/v1.18/getting-started/provider-aws/#create-a-providerconfig).
 - GitOps mechanism of your choosing which synchronizes files from your Gitlab Project to your Kubernetes cluster.
 
 ## Port Configuration
@@ -472,7 +472,7 @@ This example focuses on creating either Merge Requests in GitLab or Pull Request
 :::
 
 7. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.<br/>
-   You will notice a new Pull Request / Merge Request was created, commiting the S3 Bucket manifest.
+   You will notice a new Pull Request / Merge Request was created, committing the S3 Bucket manifest.
 
 ## Next steps
 

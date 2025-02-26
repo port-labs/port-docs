@@ -9,6 +9,10 @@ import TabItem from "@theme/TabItem"
 import DockerParameters from "./\_launchdarkly_one_time_docker_parameters.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
+
+
 
 # LaunchDarkly
 
@@ -45,61 +49,27 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
-
-<h2> Prerequisites </h2>
-
-To install the integration, you need a Kubernetes cluster that the integration's container chart will be deployed to.
-
-Please make sure that you have [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl) and [`helm`](https://helm.sh/) installed on your machine, and that your `kubectl` CLI is connected to the Kubernetes cluster where you plan to install the integration.
-
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                                | Description                                                                                                   | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------- |
-| `port.clientId`                          | Your Port client id                                                                                           | ✅      |
-| `port.clientSecret`                      | Your Port client secret                                                                                       | ✅      |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US | ✅      |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅      |
-| `integration.type`                       | The integration type                                                                                          | ✅      |
-| `integration.eventListener.type`         | The event listener type                                                                                       | ✅      |
-| `integration.config.launchdarklyHost` | Your LaunchDarkly host. For example https://app.launchdarkly.com for the default endpoint                                                                        | ✅      |
-| `integration.config.launchdarklyToken` | The LaunchDarkly API token                                                                           | ✅      |
-| `integration.config.appHost`             | Your application's host url                                                                                   | ✅       |
-| `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌      |
-| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌      |
-| `sendRawDataExamples` | Default, true, Enable sending raw data examples from the third part API to port for testing and managing the integration mapping |  ❌   | 
+<Prerequisites />
 
-<br/>
+For details about the available parameters for the installation, see the table below.
+
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm">
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install launchdarkly port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true \
-  --set integration.identifier="my-launchdarkly-integration"  \
-  --set integration.type="launchdarkly"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.launchdarklyHost="string" \
-  --set integration.secrets.launchdarklyToken="string" \
-```
+<OceanRealtimeInstallation integration="Launchdarkly" />
 
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-launchdarkly-integration` in your git repository with the content:
 
@@ -182,6 +152,23 @@ kubectl apply -f my-ocean-launchdarkly-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                              | Description                                                                                                                      | Required |
+|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                        | Your Port client id                                                                                                              | ✅        |
+| `port.clientSecret`                    | Your Port client secret                                                                                                          | ✅        |
+| `port.baseUrl`                         | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                          | ✅        |
+| `integration.identifier`               | Change the identifier to describe your integration                                                                               | ✅        |
+| `integration.type`                     | The integration type                                                                                                             | ✅        |
+| `integration.eventListener.type`       | The event listener type                                                                                                          | ✅        |
+| `integration.config.launchdarklyHost`  | Your LaunchDarkly host. For example https://app.launchdarkly.com for the default endpoint                                        | ✅        |
+| `integration.config.launchdarklyToken` | The LaunchDarkly API token, docs can be found [here](https://docs.launchdarkly.com/home/account/api-create)                      | ✅        |
+| `integration.config.appHost`           | Your application's host url                                                                                                      | ✅        |
+| `scheduledResyncInterval`              | The number of minutes between each resync                                                                                        | ❌        |
+| `initializePortResources`              | Default true, When set to true the integration will create default blueprints and the port App config Mapping                    | ❌        |
+| `sendRawDataExamples`                  | Default, true, Enable sending raw data examples from the third part API to port for testing and managing the integration mapping | ❌        | 
+
 <h3>Event listener</h3>
 
 The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
@@ -191,13 +178,14 @@ The integration uses polling to pull the configuration from Port every minute an
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
+This workflow/pipeline will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
+
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -234,13 +222,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [LaunchDarkly Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
@@ -293,11 +277,6 @@ pipeline {
 
   </TabItem>
     <TabItem value="gitlab" label="GitLab">
-This workflow will run the LaunchDarkly integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -346,7 +325,6 @@ ingest_data:
 ```
 
 </TabItem>
-
   </Tabs>
 
 <PortApiRegionTip/>
@@ -706,6 +684,587 @@ resources:
 </details>
 
 
+
+## Let's Test It
+
+This section includes sample response data from LaunchDarkly. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from LaunchDarkly:
+
+<details>
+<summary> Project response data</summary>
+
+```json showLineNumbers
+{
+  "_links": {
+    "environments": {
+      "href": "/api/v2/projects/fourth-project/environments",
+      "type": "application/json"
+    },
+    "flagDefaults": {
+      "href": "/api/v2/projects/fourth-project/flag-defaults",
+      "type": "application/json"
+    },
+    "self": {
+      "href": "/api/v2/projects/fourth-project",
+      "type": "application/json"
+    }
+  },
+  "_id": "666b298cc671e81012b578c6",
+  "key": "fourth-project",
+  "includeInSnippetByDefault": false,
+  "defaultClientSideAvailability": {
+    "usingMobileKey": false,
+    "usingEnvironmentId": false
+  },
+  "name": "Fourth Project",
+  "tags": []
+}
+```
+</details>
+
+
+<details>
+<summary> Feature Flag response data</summary>
+
+```json showLineNumbers
+{
+  "_links": {
+    "parent": {
+      "href": "/api/v2/flags/fourth-project",
+      "type": "application/json"
+    },
+    "self": {
+      "href": "/api/v2/flags/fourth-project/randomflag",
+      "type": "application/json"
+    }
+  },
+  "_maintainer": {
+    "_id": "6669b0f34162860fefd6d724",
+    "_links": {
+      "self": {
+        "href": "/api/v2/members/6669b0f34162860fefd6d724",
+        "type": "application/json"
+      }
+    },
+    "email": "example@gmail.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "role": "owner"
+  },
+  "_version": 1,
+  "archived": false,
+  "clientSideAvailability": {
+    "usingEnvironmentId": false,
+    "usingMobileKey": false
+  },
+  "creationDate": 1718299647527,
+  "customProperties": {},
+  "defaults": {
+    "offVariation": 1,
+    "onVariation": 0
+  },
+  "deprecated": false,
+  "description": "",
+  "environments": {
+    "fourth-env": {
+      "_environmentName": "fourth-env",
+      "_site": {
+        "href": "/fourth-project/fourth-env/features/randomflag",
+        "type": "text/html"
+      },
+      "_summary": {
+        "prerequisites": 0,
+        "variations": {
+          "0": {
+            "contextTargets": 0,
+            "isFallthrough": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          },
+          "1": {
+            "contextTargets": 0,
+            "isOff": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          }
+        }
+      },
+      "archived": false,
+      "lastModified": 1718299647539,
+      "on": false,
+      "salt": "c713989066a446febf07a42d488221e8",
+      "sel": "6d7c3692dd9d4ffa8eee8e2d96b6fd2c",
+      "trackEvents": false,
+      "trackEventsFallthrough": false,
+      "version": 1
+    },
+    "new-env": {
+      "_environmentName": "new env",
+      "_site": {
+        "href": "/fourth-project/new-env/features/randomflag",
+        "type": "text/html"
+      },
+      "_summary": {
+        "prerequisites": 0,
+        "variations": {
+          "0": {
+            "contextTargets": 0,
+            "isFallthrough": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          },
+          "1": {
+            "contextTargets": 0,
+            "isOff": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          }
+        }
+      },
+      "archived": false,
+      "lastModified": 1718299647539,
+      "on": false,
+      "salt": "caa436a38411406491f0da9230349bb3",
+      "sel": "8bcf1667ab2f4f628fc26ad31966f045",
+      "trackEvents": false,
+      "trackEventsFallthrough": false,
+      "version": 1
+    },
+    "new-project": {
+      "_environmentName": "new_project",
+      "_site": {
+        "href": "/fourth-project/new-project/features/randomflag",
+        "type": "text/html"
+      },
+      "_summary": {
+        "prerequisites": 0,
+        "variations": {
+          "0": {
+            "contextTargets": 0,
+            "isFallthrough": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          },
+          "1": {
+            "contextTargets": 0,
+            "isOff": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          }
+        }
+      },
+      "archived": false,
+      "lastModified": 1718299647539,
+      "on": false,
+      "salt": "f79c8849d22d497d8a519fbb6263aeda",
+      "sel": "257f0acaf18f4252b40258f8aa93b966",
+      "trackEvents": false,
+      "trackEventsFallthrough": false,
+      "version": 1
+    },
+    "production": {
+      "_environmentName": "Production",
+      "_site": {
+        "href": "/fourth-project/production/features/randomflag",
+        "type": "text/html"
+      },
+      "_summary": {
+        "prerequisites": 0,
+        "variations": {
+          "0": {
+            "contextTargets": 0,
+            "isFallthrough": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          },
+          "1": {
+            "contextTargets": 0,
+            "isOff": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          }
+        }
+      },
+      "archived": false,
+      "lastModified": 1718299647539,
+      "on": false,
+      "salt": "28c5efba5fd445d5896a8b9f7f8fbff6",
+      "sel": "28a317cdf3aa4d40b8a0b1c6f56be4c9",
+      "trackEvents": false,
+      "trackEventsFallthrough": false,
+      "version": 1
+    },
+    "shadow": {
+      "_environmentName": "shadow",
+      "_site": {
+        "href": "/fourth-project/shadow/features/randomflag",
+        "type": "text/html"
+      },
+      "_summary": {
+        "prerequisites": 0,
+        "variations": {
+          "0": {
+            "contextTargets": 0,
+            "isFallthrough": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          },
+          "1": {
+            "contextTargets": 0,
+            "isOff": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          }
+        }
+      },
+      "archived": false,
+      "lastModified": 1718311480830,
+      "on": false,
+      "salt": "cb214aeac84f48d08ff136514c589b11",
+      "sel": "00b5f9ae56a547db9c4e5e619bdb39f3",
+      "trackEvents": false,
+      "trackEventsFallthrough": false,
+      "version": 1
+    },
+    "some-random-env": {
+      "_environmentName": "some-random-env",
+      "_site": {
+        "href": "/fourth-project/some-random-env/features/randomflag",
+        "type": "text/html"
+      },
+      "_summary": {
+        "prerequisites": 0,
+        "variations": {
+          "0": {
+            "contextTargets": 0,
+            "isFallthrough": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          },
+          "1": {
+            "contextTargets": 0,
+            "isOff": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          }
+        }
+      },
+      "archived": false,
+      "lastModified": 1718300514123,
+      "on": false,
+      "salt": "0618861de85c48a5a77c360db7a8847b",
+      "sel": "5ae511fe5630469084453c2c4d45f719",
+      "trackEvents": false,
+      "trackEventsFallthrough": false,
+      "version": 1
+    },
+    "staging": {
+      "_environmentName": "staging",
+      "_site": {
+        "href": "/fourth-project/staging/features/randomflag",
+        "type": "text/html"
+      },
+      "_summary": {
+        "prerequisites": 0,
+        "variations": {
+          "0": {
+            "contextTargets": 0,
+            "isFallthrough": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          },
+          "1": {
+            "contextTargets": 0,
+            "isOff": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          }
+        }
+      },
+      "archived": false,
+      "lastModified": 1718300902420,
+      "on": false,
+      "salt": "bc27ddc205984379a4863f5f1323bdb0",
+      "sel": "2762811a62734de79277544ff4362f8c",
+      "trackEvents": false,
+      "trackEventsFallthrough": false,
+      "version": 1
+    },
+    "test": {
+      "_environmentName": "Test",
+      "_site": {
+        "href": "/fourth-project/test/features/randomflag",
+        "type": "text/html"
+      },
+      "_summary": {
+        "prerequisites": 0,
+        "variations": {
+          "0": {
+            "contextTargets": 0,
+            "isFallthrough": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          },
+          "1": {
+            "contextTargets": 0,
+            "isOff": true,
+            "nullRules": 0,
+            "rules": 0,
+            "targets": 0
+          }
+        }
+      },
+      "archived": false,
+      "lastModified": 1718299647539,
+      "on": false,
+      "salt": "fac0fe470f844433986166f3d570415d",
+      "sel": "8e8ae9542dc94f35b1ac64c845277d8a",
+      "trackEvents": false,
+      "trackEventsFallthrough": false,
+      "version": 1
+    }
+  },
+  "experiments": {
+    "baselineIdx": 0,
+    "items": []
+  },
+  "goalIds": [],
+  "includeInSnippet": false,
+  "key": "randomflag",
+  "kind": "boolean",
+  "maintainerId": "6669b0f34162860fefd6d724",
+  "name": "randomflag",
+  "tags": [],
+  "temporary": true,
+  "variationJsonSchema": null,
+  "variations": [
+    {
+      "_id": "8868f0d9-8b1d-4575-9436-827188276792",
+      "value": true
+    },
+    {
+      "_id": "8929317b-d2aa-479c-9249-e6c0ec5dc415",
+      "value": false
+    }
+  ],
+  "__projectKey": "fourth-project"
+}
+```
+
+</details>
+
+<details>
+<summary> Environment response data</summary>
+
+```json showLineNumbers
+{
+  "_links": {
+    "analytics": {
+      "href": "https://app.launchdarkly.com/snippet/events/v1/666b2a74cbdbfb108f3fc911.js",
+      "type": "text/html"
+    },
+    "apiKey": {
+      "href": "/api/v2/projects/fourth-project/environments/fourth-env/apiKey",
+      "type": "application/json"
+    },
+    "mobileKey": {
+      "href": "/api/v2/projects/fourth-project/environments/fourth-env/mobileKey",
+      "type": "application/json"
+    },
+    "self": {
+      "href": "/api/v2/projects/fourth-project/environments/fourth-env",
+      "type": "application/json"
+    },
+    "snippet": {
+      "href": "https://app.launchdarkly.com/snippet/features/666b2a74cbdbfb108f3fc911.js",
+      "type": "text/html"
+    }
+  },
+  "_id": "666b2a74cbdbfb108f3fc911",
+  "_pubnub": {
+    "channel": "b4f644c56dbbfe88a4028cb2d2142c258926f9b7a9add263d105202f0cd6599c",
+    "cipherKey": "9571e2de187881614fe9b6b94d13a99fbdb056e508c9226e6c6bb7d0be117725"
+  },
+  "key": "fourth-env",
+  "name": "fourth-env",
+  "apiKey": "sdk-1b3cf928-acae-4553-aab3-c956b7f04219",
+  "mobileKey": "mob-87679d8a-698d-4c5f-9ec1-05e368975afe",
+  "color": "e2e6ff",
+  "defaultTtl": 0,
+  "secureMode": false,
+  "defaultTrackEvents": false,
+  "requireComments": false,
+  "confirmChanges": false,
+  "tags": [],
+  "approvalSettings": {
+    "required": false,
+    "bypassApprovalsForPendingChanges": false,
+    "minNumApprovals": 1,
+    "canReviewOwnRequest": false,
+    "canApplyDeclinedChanges": true,
+    "serviceKind": "launchdarkly",
+    "serviceConfig": {},
+    "requiredApprovalTags": []
+  },
+  "critical": false,
+  "__projectKey": "fourth-project"
+}
+```
+
+</details>
+
+
+<details>
+<summary> Feature Flag In Environment response data</summary>
+
+```json showLineNumbers
+{
+  "_links": {
+    "parent": {
+      "href": "/api/v2/flags/fourth-project/olulufe",
+      "type": "application/json"
+    },
+    "self": {
+      "href": "/api/v2/flag-statuses/fourth-project/shadow/olulufe",
+      "type": "application/json"
+    }
+  },
+  "name": "new",
+  "lastRequested": null,
+  "__environmentKey": "shadow",
+  "__projectKey": "fourth-project"
+}
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Project entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "fourth-project",
+  "title": "Fourth Project",
+  "blueprint": "launchDarklyProject",
+  "properties": {
+    "tags": []
+  },
+  "relation": {
+    "service": "fourth-project"
+  }
+}
+```
+</details>
+
+<details>
+<summary> Feature Flag entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "randomflag-fourth-project",
+  "title": "randomflag",
+  "blueprint": "launchDarklyFeatureFlag",
+  "properties": {
+    "kind": "boolean",
+    "description": "",
+    "creationDate": "2024-06-13T17:27:27Z",
+    "clientSideAvailability": {
+      "usingEnvironmentId": false,
+      "usingMobileKey": false
+    },
+    "temporary": true,
+    "tags": [],
+    "maintainer": "example@gmail.com",
+    "deprecated": false,
+    "variations": [
+      {
+        "_id": "8868f0d9-8b1d-4575-9436-827188276792",
+        "value": true
+      },
+      {
+        "_id": "8929317b-d2aa-479c-9249-e6c0ec5dc415",
+        "value": false
+      }
+    ],
+    "customProperties": {},
+    "archived": false
+  },
+  "relations": {
+    "project": "fourth-project"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary> Environment entity in Port</summary>
+
+```json showLineNumbers
+{
+    "identifier": "fourth-env-fourth-project",
+    "title": "fourth-env",
+    "blueprint": "launchDarklyEnvironment",
+    "properties": {
+      "defaultTtl": 0,
+      "secureMode": false,
+      "defaultTrackEvents": false,
+      "requireComments": false,
+      "confirmChanges": false,
+      "tags": [],
+      "critical": false
+    },
+    "relations": {
+      "project": "fourth-project"
+    }
+  }
+```
+
+</details>
+
+<details>
+<summary> Feature Flag In Environment entity in Port</summary>
+
+```json showLineNumbers
+{
+    "identifier": "olulufe-shadow",
+    "title": "olulufe-shadow",
+    "blueprint": "launchDarklyFFInEnvironment",
+    "properties": {
+      "status": "new"
+    },
+    "relations": {
+      "environment": "shadow-fourth-project",
+      "featureFlag": "olulufe-fourth-project"
+    }
+  }
+```
+</details>
+
+
+
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Launchdarkly).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=Launchdarkly).

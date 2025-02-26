@@ -49,7 +49,7 @@ installation script. You can read more about the installation script [here](#how
 
 The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/openshift-blueprints.json) to define your blueprints. Do this by running:
 
-```bash showLineNumbers
+```bash
 export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/openshift-blueprints.json"
 ```
 
@@ -70,7 +70,7 @@ This `blueprints.json` file defines the following blueprints:
   - StatefulSet
   - DaemonSet
 
-- `Openshift Route` is one of the most important Openshift resources, giving developers the capability to connect to their services, while the entire network layer is managed by the Openshift API, and providing a simple DNS record for accessability.
+- `Openshift Route` is one of the most important Openshift resources, giving developers the capability to connect to their services, while the entire network layer is managed by the Openshift API, and providing a simple DNS record for accessibility.
 
 :::
 
@@ -82,7 +82,7 @@ Below are the Openshift blueprint schemas used in the exporter:
 ```json showLineNumbers
 {
   "identifier": "k8sService",
-  "title": "K8s Serivce",
+  "title": "K8s Service",
   "description": "This blueprint represents a k8s Service",
   "icon": "Microservice",
   "schema": {
@@ -179,7 +179,7 @@ Using the `CONFIG_YAML_URL` parameter, you can define a custom resource configur
 
 In this use-case you will be using **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/openshift_usecase.yaml)**. To achieve this, run:
 
-```bash showLineNumbers
+```bash
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/openshift_usecase.yaml"
 ```
 

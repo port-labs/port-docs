@@ -1,6 +1,4 @@
 ---
-sidebar_position: 8
-title: Send Slack reminders for scorecards
 displayed_sidebar: null
 description: Learn how to set up Slack reminders in Port, ensuring timely notifications and improved team productivity.
 ---
@@ -12,49 +10,49 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Slack reminders for scorecards
 
-This guide takes 7 minutes to complete, and aims to demonstrate:
-* How to initiate changes in the organization using scorecards
-* How to automate Slack reminders using Port's self service actions
+This guide will walk you through creating a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.port.io/promote-scorecards/#what-is-a-scorecard). 
+In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
 
-:::info Prerequisites
-
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- You will need a Git repository in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
-:::
-
-<br/>
-
-### The goal of this guide
-
-In this guide we will create a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.getport.io/promote-scorecards/#what-is-a-scorecard). In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
-
-After completing it, you will get a sense of how it can benefit different personas in your organization:
-
+Once implemented:
 - Developers will be notified about policies set by the platform engineer that need to be fixed.
 - R&D managers & Platform engineers will be able to remind developers about unmet requirements in the services.
 
-<br/>
+
+## Common use cases
+
+- Initiate changes in the organization using scorecards.
+- Automate Slack reminders using Port's self-service actions.
+
+
+## Prerequisites
+
+- The [Git Integration](/build-your-software-catalog/sync-data-to-catalog/git/) that is relevant for you needs to be installed.
+- A repository in your Git provider in which you can create a workflow/pipeline.
+
+## Implementation
 
 ### Setup the action's frontend
 
-:::tip Onboarding
+1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal.
+2. Click on the `+ Action` button on the top left conner :
 
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve).  
+    <img src='/img/guides/addActionIcon.png' width='35%' border='1px' />
 
-If you **skipped** the onboarding, follow the instructions listed [here](/quickstart).
-:::
+3. Fill in the action's details as shown below:
 
-1. Head to the [Self-service page](https://app.getport.io/self-serve) of your portal. Hover over the `Send scorecard reminder` action, click the `...` button in the top right corner, and choose "Edit":
+    - **Title**: `Send scorecard reminder`
+    - **Description**: `Send a scorecard reminder to your team on slack`
+    - **Operation**: `Create`
+    - **Blueprint**: `Service`
+    - **icon**: `Slack`
 
-    <img src='/img/guides/slackEditAction.png' width='45%' border='1px' />
-
-2. The action's basic details should look like the image below. This action has no user inputs, so when ready, click on the `Backend` tab to proceed.
+    This Self-service has no user inputs, click on the `Next` button twice  to proceed to the `Backend` tab.
 
     <img src='/img/guides/slackActionDetails.png' width='60%' border='1px' />
 
 #### Define backend type
 
-Now we'll define the backend type of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
+Now we'll define the backend of the action. Port supports multiple invocation types, depending on the Git provider you are using.
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -70,20 +68,21 @@ Fill out the form with your values:
 - Name the workflow `port-slack-reminder.yml`.
 
 - Fill out your workflow details:
-  <img src='/img/guides/slackReminderBackend.png' width='70%' />
-  <br/>
+
+    <img src='/img/guides/slackReminderBackend.png' width='70%' />
+    <br/>
 
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this action, our backend only needs to know the id of the action run, so let's send it.  
-  Copy the following JSON snippet and paste it in the payload code box:
+    For this action, our backend only needs to know the id of the action run, so let's send it.  
+    Copy the following JSON snippet and paste it in the payload code box:
 
-  ```json showLineNumbers
-  {
-    "runId": "{{ .run.id }}"
-  }
-  ```
+    ```json showLineNumbers
+    {
+      "runId": "{{ .run.id }}"
+    }
+    ```
 
 The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
 
@@ -97,19 +96,19 @@ Fill out the form:
   - Leave `Endpoint URL` blank for now, we will create it in the next section and come back to update it.
   - Fill the rest of the form out like this, then click `Next`:
 
-<img src='/img/guides/slackReminderBackendGitLab.png' width='70%' border='1px' />
+    <img src='/img/guides/slackReminderBackendGitLab.png' width='70%' border='1px' />
 
 - Scroll down to the `Configure the invocation payload` section.  
   This is where you can define which data will be sent to your backend each time the action is executed.  
 
-  For this action, our backend only needs to know the id of the action run, so let's send it.  
-  Copy the following JSON snippet and paste it in the payload code box:
+    For this action, our backend only needs to know the id of the action run, so let's send it.  
+    Copy the following JSON snippet and paste it in the payload code box:
 
-  ```json showLineNumbers
-  {
-    "runId": "{{ .run.id }}"
-  }
-  ```
+    ```json showLineNumbers
+    {
+      "runId": "{{ .run.id }}"
+    }
+    ```
 
 The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Save`.
 
@@ -140,15 +139,16 @@ First, let's create the necessary token and secrets:
 
 In the repository where your workflow will reside, create 3 new secrets under `Settings -> Secrets and variables -> Actions`:
 
-- `SLACK_WEBHOOK_URL` - the Slack Webhook URL of the destination channel.
-- `PORT_CLIENT_ID` - the client ID you copied from your Port app.
-- `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+  - `SLACK_WEBHOOK_URL` - the Slack Webhook URL of the destination channel.
+  - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
+  - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
 
-<img src='/img/guides/repositorySecretSlack.png' width='80%' border='1px' />
+    <img src='/img/guides/repositorySecretSlack.png' width='80%' border='1px' />
 
-<br/><br/>
+  <br/><br/>
 
-Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `port-slack-reminder.yml` and use the following snippet as its content:
+Now let's create the workflow file that contains our logic.  
+Under `.github/workflows`, create a new file named `port-slack-reminder.yml` and use the following snippet as its content:
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -209,11 +209,11 @@ First, let's create the required webhooks and variables:
 
 In the GitLab project where your pipeline will reside, create 3 new variables under `Settings->CI/CD->Variables`:
 
-- `SLACK_WEBHOOK_URL` - the Slack Webhook URL of the destination channel.
-- `PORT_CLIENT_ID` - the client ID you copied from your Port app.
-- `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+  - `SLACK_WEBHOOK_URL` - the Slack Webhook URL of the destination channel.
+  - `PORT_CLIENT_ID` - the client ID you copied from your Port app.
+  - `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
 
-<img src='/img/guides/repositorySecretSlackGitLab.png' width='75%' />
+    <img src='/img/guides/repositorySecretSlackGitLab.png' width='75%' />
 
 Create a webhook in GitLab for triggering your GitLab:
   - Create a [pipeline trigger token](https://docs.gitlab.com/ee/ci/triggers);
@@ -321,34 +321,33 @@ All done! The action is ready to be used 🚀
 
 After creating an action, it will appear under the `Self-service` tab of your Port application:
 
-<img src='/img/guides/selfServiceAfterReminderCreation.png' width='75%' border='1px' />
+<img src='/img/guides/selfServiceAfterReminderCreation.png' width='45%' border='1px' />
 
 1. Click on `Create` to begin executing the action.
 
 2. Click `Execute`. A small popup will appear, click on `View details`:
 
-<img src='/img/guides/executionDetails.png' width='45%' />
+    <img src='/img/guides/executionDetailsSlack.png' width='45%' border='1px' />
 
-<br/><br/>
+    <br/><br/>
 
 3. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created:
 
-<img src='/img/guides/runStatusReminder.png' width='90%' />
+    <img src='/img/guides/runStatusReminder.png' width='90%' border='1px' />
+    <br/><br/>
 
-:::tip Logging action progress
-💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.getport.io/actions-and-automations/reflect-action-progress/) to learn more.
-:::
+    :::tip Logging action progress
+    💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.port.io/actions-and-automations/reflect-action-progress/) to learn more.
+    :::
 
-<br/>
+    <br/>
 
 4. You can now enter your Slack channel and view the scorecard reminder:
-<img src='/img/guides/slackReminderExample.png' width='50%' />
+    <img src='/img/guides/slackReminderExample.png' width='50%' />
 
-
-Congratulations! You can now send Slack reminders easily from Port 💪🏽
 
 ### Conclusion
-Creating scorecards is the first step in setting standards in our development lifecycle. However, to ensure these standards are met, we need to turn rule violations into action items. By automating Slack reminders and the creation of Jira tasks, we can drive change across the entire organization using familiar tools to combine it natively within our delievery lifecycle.
+Creating scorecards is the first step in setting standards in our development lifecycle. However, to ensure these standards are met, we need to turn rule violations into action items. By automating Slack reminders and the creation of Jira tasks, we can drive change across the entire organization using familiar tools to combine it natively within our delivery lifecycle.
 
 ### More Examples
 - [Open/Close JIRA issues based on scorecards](/promote-scorecards/manage-using-3rd-party-apps/jira)

@@ -1,18 +1,19 @@
 <details>
 
-<summary> Ocean integration configuration </summary>
+<summary> Integration mapping </summary>
 
 ```yaml showLineNumbers
 resources:
   - kind: project
     selector:
       query: "true"
+      includeLabels: "true"
     port:
       entity:
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"service"'
+          blueprint: '"gitlabRepository"'
           properties:
             url: .web_url
             readme: file://README.md
@@ -21,6 +22,7 @@ resources:
             namespace: .namespace.name
             fullPath: .namespace.full_path
             defaultBranch: .default_branch
+            labels: .__labels
   - kind: merge-request
     selector:
       query: "true"
@@ -46,7 +48,7 @@ resources:
                 (((($mergedTimestamp - $createdTimestamp) / 3600) * 100 | floor) / 100) end)
             reviewers: .reviewers | map(.name)
           relations:
-            service: .references.full | gsub("!.+"; "")
+            repository: .references.full | gsub("!.+"; "")
 ```
 
 </details>

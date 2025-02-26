@@ -6,6 +6,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import SlackTeamsMessagingWebhook from "/docs/actions-and-automations/define-automations/templates/_slack_teams_webhook_setup_instructions.mdx"
+import PortApiRegion from "/docs/generalTemplates/_port_api_available_regions.md"
 
 # Examples
 
@@ -134,6 +135,69 @@ The run id can be used to [interact with the execution in Port](/actions-and-aut
 
 ---
 
+## Automatically trigger a self-service action
+
+Say you have a self-service action that sends a Slack notification, with the identifier `slack_notify`.  
+The following example shows an automation definition that triggers this self-service action, when a service's `passed` property changes from `Passed` to `Not passed`:
+
+### Automation definition
+<PortApiRegion />
+```yaml showLineNumbers
+{
+  "identifier": "slack_notify_on_service_failure",
+  "title": "Notify via Slack on service failure",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "ENTITY_UPDATED",
+      "blueprintIdentifier": "service"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.before.properties.passed == \"Passed\"",
+        ".diff.after.properties.passed == \"Not passed\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/actions/slack_notify/runs?run_as=user-email@gmail.com",
+    "synchronized": true,
+    "method": "POST",
+    "body": {
+      "properties": {
+        "message": "Service {{ .event.diff.before.title }} has degraded from `Passed` to `Not passed`."
+      }
+    }
+  },
+  "publish": true
+}
+```
+
+### Backend - direct API call (webhook)
+
+In this example, the automation directly triggers an existing self-service action by making a request to [Port's API](/api-reference/execute-a-self-service-action).
+
+The webhook will trigger the `slack_notify` action with the specified message whenever a service's `passed` property changes from `Passed` to `Not passed`.
+
+Note the following:
+
+- `synchronized` must be set to `true`, so that the automation's status will be updated when the action is triggered.
+
+- In the `url` field, you can add `run_as` to the url to specify the user that will execute the action (replace `user-email@gmail.com` with the desired user's email).  
+  If you don't specify a user, the action will be executed using the organization's default credentials.
+
+- The `body.properties` object contains the action's user inputs. If the action does not require any inputs, pass an empty object:
+   ```json
+   "body": {
+      "properties": {}
+   }
+   ```
+
+---
+
 ## Send a Slack/Teams message when a TTL expires
 
 ### Automation definition
@@ -251,3 +315,53 @@ The following example uses a [`Send Slack message`](/actions-and-automations/set
 - The `invocationMethod` specifies a webhook that sends a message to a Slack channel.
   - The message includes details about the failed deployment, such as the service name, image, and environment.
   - The message also includes a link to the action run page in Port.
+
+---
+
+## Approve a self-service action based on an input value
+
+When configuring [manual approval](/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions) for a self-service action, in some cases you may want to automatically approve/decline the action if a certain input value is provided.
+
+For example, the following automation will automatically approve a deployment if the `type` input is set to `Testing`:
+
+```json showLineNumbers
+{
+  "identifier": "approve_deployment_based_on_input",
+  "title": "Automatically approve testing deployments",
+  "description": "Automatically approve testing deployments",
+  "trigger": {
+    "type": "automation",
+    "event": {
+      "type": "RUN_CREATED",
+      "actionIdentifier": "deploy_service"
+    },
+    "condition": {
+      "type": "JQ",
+      "expressions": [
+        ".diff.after.properties.type == \"Testing\""
+      ],
+      "combinator": "and"
+    }
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "https://api.getport.io/v1/actions/runs/{{.event.diff.after.id}}/approval",
+    "agent": false,
+    "synchronized": true,
+    "method": "PATCH",
+    "headers": {},
+    "body": {
+      "status": "APPROVE",
+      "description": "Approved"
+    }
+  },
+  "publish": true
+}
+```
+
+### Explanation
+
+- This automation is triggered whenever a new run is created for the `deploy_service` action.
+- The `condition` block checks if the `type` input is set to `Testing`, and will only trigger the automation if this is the case.
+- The backend of the automation directly makes an API call to approve the relevant run.
+- Note that if the `condition` is not met, the automation will not be triggered.

@@ -10,21 +10,30 @@ import DockerParameters from "./\_kubecost-docker-parameters.mdx"
 import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Kubecost
 
-Our Kubecost integration allows you to import `kubesystem` and `cloud` cost allocations from your Kubecost instance into Port, according to your mapping and definition.
+Port's Kubecost integration allows you to model Kubecost resources in your software catalog and ingest data into them.
 
-## Common use cases
+## Overview
 
-- Map your monitored Kubernetes resources and cloud cost allocations in Kubecost.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+This integration allows you to:
 
-## Prerequisites
+- Map and organize your desired Kubecost resources and their metadata in Port (see supported resources below).
+- Watch for Kubecost object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-<Prerequisites />
 
-## Installation
+### Supported Resources
+
+The resources that can be ingested from Kubecost into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`kubesystem`](https://docs.kubecost.com/apis/monitoring-apis/api-allocation#allocation-api)
+- [`cloud`](https://docs.kubecost.com/apis/monitoring-apis/cloud-cost-api#cloud-cost-querying-api)
+
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -36,54 +45,29 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
-Using this installation option means that the integration will be able to update Port in real time.
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                         | Description                                                                                                   | Required |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                   | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`               | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                       | ✅       |
-| `integration.identifier`          | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`                | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type`  | The event listener type                                                                                       | ✅       |
-| `integration.config.kubecostHost` | The Kubecost server URL                                                                                       | ✅       |
-| `integration.config.kubecostApiVersion` | The API version of the Kubecost instance. Possible values are v1 and v2. The default value is v2                                                                                       | ❌        |
-| `scheduledResyncInterval`         | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`         | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
-| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true     | ❌       |
+<Prerequisites />
 
-<br/>
+
+For details about the available parameters for the installation, see the table below.
+
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-kubecost-integration port-labs/port-ocean \
-  --set port.clientId="CLIENT_ID"  \
-  --set port.clientSecret="CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set scheduledResyncInterval=60 \
-  --set integration.identifier="my-kubecost-integration"  \
-  --set integration.type="kubecost"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.config.kubecostHost="https://kubecostInstance:9090"
-```
+<OceanRealtimeInstallation integration="Kubecost" />
 
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-kubecost-integration` in your git repository with the content:
 
@@ -164,18 +148,38 @@ kubectl apply -f my-ocean-kubecost-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                               | Description                                                                                                                         | Required |
+|-----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                         | Your port client id                                                                                                                 | ✅        |
+| `port.clientSecret`                     | Your port client secret                                                                                                             | ✅        |
+| `port.baseUrl`                          | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                             | ✅        |
+| `integration.identifier`                | Change the identifier to describe your integration                                                                                  | ✅        |
+| `integration.type`                      | The integration type                                                                                                                | ✅        |
+| `integration.eventListener.type`        | The event listener type                                                                                                             | ✅        |
+| `integration.config.kubecostHost`       | The Kubecost server URL                                                                                                             | ✅        |
+| `integration.config.kubecostApiVersion` | The API version of the Kubecost instance. Possible values are v1 and v2. The default value is v2                                    | ❌        |
+| `scheduledResyncInterval`               | The number of minutes between each resync                                                                                           | ❌        |
+| `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
+| `sendRawDataExamples`                   | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the Kubecost integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
+:::
+
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Kubecost integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -211,15 +215,11 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Kubecost integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
@@ -269,10 +269,9 @@ pipeline {
 ```
 
   </TabItem>
-
   <TabItem value="azure" label="Azure Devops">
 
-<AzurePremise name="Kubecost" />
+<AzurePremise />
 
 <DockerParameters />  
 
@@ -314,12 +313,8 @@ steps:
 
 ```
 </TabItem>
-<TabItem value="gitlab" label="GitLab">
-This pipeline will run the Kubecost integration once and then exit, this is useful for **scheduled** ingestion of data.
+  <TabItem value="gitlab" label="GitLab">
 
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -376,24 +371,14 @@ ingest_data:
 
 </Tabs>
 
-### Ingest data into Port
 
-To ingest Kubecost objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+## Configuration
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Kubecost.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Kubecost under the Cloud cost providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-:::tip Supported resources
-The following resources can be used to map data from Kubecost, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-- [`kubesystem`](https://docs.kubecost.com/apis/monitoring-apis/api-allocation#allocation-api)
-- [`cloud`](https://docs.kubecost.com/apis/monitoring-apis/cloud-cost-api#cloud-cost-querying-api)
 
-:::
 ## Examples
 
 Examples of blueprints and the relevant integration configurations:
@@ -749,7 +734,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "argocd",
   "title": "argocd",
-  "icon": null,
+  "icon": "Cluster",
   "blueprint": "kubecostResourceAllocation",
   "team": [],
   "properties": {

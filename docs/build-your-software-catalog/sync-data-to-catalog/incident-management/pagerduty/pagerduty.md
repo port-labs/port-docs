@@ -14,7 +14,9 @@ import PagerDutyWebhookConfig from "/docs/build-your-software-catalog/custom-int
 import PagerDutyWebhookHistory from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx"
 import PagerDutyScript from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_shell_history_config.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation_oauth.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # PagerDuty
 
@@ -34,11 +36,17 @@ This integration allows you to:
 
 The resources that can be ingested from PagerDuty into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
+- [`User`](https://developer.pagerduty.com/api-reference/c96e889522dd6-list-users)
 - [`Schedule`](https://developer.pagerduty.com/api-reference/846ecf84402bb-list-schedules)
 - [`Oncall`](https://developer.pagerduty.com/api-reference/3a6b910f11050-list-all-of-the-on-calls)
 - [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
 - [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
 - [`Escalation Policy`](https://developer.pagerduty.com/api-reference/51b21014a4f5a-list-escalation-policies)
+
+:::tip Ingesting Additional Resources
+The resources listed above are just a subset of what the PagerDuty integration supports. You can ingest additional PagerDuty resources if they have a `GET List <resource name>` endpoint in the [PagerDuty API documentation](https://developer.pagerduty.com/api-reference/e65c5833eeb07-pager-duty-api). This means, resources such as teams, audit records, business services, extensions, incident workflows, status dashboards, vendor etc can be ingested into Port.
+:::
+
 
 
 ## Setup
@@ -49,63 +57,34 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="PagerDuty" />
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
 
 <h2> Prerequisites </h2>
 
 <Prerequisites />
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
-
-| Parameter                        | Description                                                                                                             | Required |
-| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------- |
-| `port.clientId`                  | Your port client id                                                                                                     | ✅      |
-| `port.clientSecret`              | Your port client secret                                                                                                 | ✅      |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅      |
-| `integration.identifier`         | Change the identifier to describe your integration                                                                      | ✅      |
-| `integration.type`               | The integration type                                                                                                    | ✅      |
-| `integration.eventListener.type` | The event listener type                                                                                                 | ✅      |
-| `integration.secrets.token`      | PagerDuty API token                                                                                                | ✅      |
-| `integration.config.apiUrl`      | Pagerduty api url. If not specified, the default will be https://api.pagerduty.com                                      | ✅      |
-| `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in PagerDuty | ✅       |
-| `scheduledResyncInterval`        | The number of minutes between each resync                                                                               | ❌      |
-| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping           | ❌      |
-| `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true  | ❌      |
-
-<br/>
+For details about the available parameters for the installation, see the table below.
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true \
-  --set scheduledResyncInterval=120  \
-  --set integration.identifier="my-pagerduty-integration"  \
-  --set integration.type="pagerduty"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.token="string"  \
-  --set integration.config.apiUrl="string"
-```
+<OceanRealtimeInstallation integration="PagerDuty" />
+
 <PortApiRegionTip/>
+
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-pagerduty-integration` in your git repository with the content:
 
@@ -186,20 +165,41 @@ spec:
 kubectl apply -f my-ocean-pagerduty-integration.yaml
 ```
 </TabItem>
+
 </Tabs>
+
+This table summarizes the available parameters for the installation.
+
+| Parameter                        | Description                                                                                                                         | Required |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                  | Your port client id                                                                                                                 | ✅        |
+| `port.clientSecret`              | Your port client secret                                                                                                             | ✅        |
+| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                             | ✅        |
+| `integration.identifier`         | Change the identifier to describe your integration                                                                                  | ✅        |
+| `integration.type`               | The integration type                                                                                                                | ✅        |
+| `integration.eventListener.type` | The event listener type                                                                                                             | ✅        |
+| `integration.secrets.token`      | PagerDuty API token, docs can be found [here](https://developer.pagerduty.com/docs/ZG9jOjExMDI5NTUx-authentication)                 | ✅        |
+| `integration.config.apiUrl`      | Pagerduty api url. If not specified, the default will be https://api.pagerduty.com                                                  | ✅        |
+| `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in PagerDuty             | ✅        |
+| `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
+| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
+| `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
+
+<br/>
 
 <AdvancedConfig/>
 
 </TabItem>
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -237,16 +237,11 @@ jobs:
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
 
-This pipeline will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
@@ -300,7 +295,7 @@ pipeline {
   </TabItem>
 
    <TabItem value="azure" label="Azure Devops">
-<AzurePremise name="PagerDuty" />
+<AzurePremise />
 
 <DockerParameters />
 
@@ -345,11 +340,6 @@ steps:
 
   </TabItem>
 <TabItem value="gitlab" label="GitLab">
-This workflow will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -406,6 +396,7 @@ ingest_data:
 </TabItem>
 
 </Tabs>
+
 
 ## Configuration
 
@@ -776,16 +767,382 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
     ```
     </details>
 
+
 ## Examples
 
 To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
-Additional examples of blueprints and the relevant integration configurations can be found on the pagerduty [examples page](example.md)
+Additional examples of blueprints and the relevant integration configurations can be found on the pagerduty [examples page](examples.md)
 
+
+## Let's Test It
+This section includes sample response data from Pagerduty.
+In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+Here is an example of the payload structure from Pagerduty:
+
+<details>
+<summary> Schedule response data</summary>
+
+```json showLineNumbers
+{
+  "id": "PWAXLIH",
+  "type": "schedule",
+  "summary": "Port Test Service - Weekly Rotation",
+  "self": "https://api.pagerduty.com/schedules/PWAXLIH",
+  "html_url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
+  "name": "Port Test Service - Weekly Rotation",
+  "time_zone": "Asia/Jerusalem",
+  "description": "This is the weekly on call schedule for Port Test Service associated with your first escalation policy.",
+  "users": [
+    {
+      "id": "PJCRRLH",
+      "type": "user_reference",
+      "summary": "Adam",
+      "self": "https://api.pagerduty.com/users/PJCRRLH",
+      "html_url": "https://getport-io.pagerduty.com/users/PJCRRLH"
+    },
+    {
+      "id": "P4K4DLP",
+      "type": "user_reference",
+      "summary": "Alice",
+      "self": "https://api.pagerduty.com/users/P4K4DLP",
+      "html_url": "https://getport-io.pagerduty.com/users/P4K4DLP"
+    },
+    {
+      "id": "HDW63E2",
+      "type": "user_reference",
+      "summary": "Doe",
+      "self": "https://api.pagerduty.com/users/HDW63E2",
+      "html_url": "https://getport-io.pagerduty.com/users/HDW63E2"
+    },
+    {
+      "id": "PRGAUI4",
+      "type": "user_reference",
+      "summary": "Pages",
+      "self": null,
+      "html_url": "https://getport-io.pagerduty.com/users/PRGAUI4",
+      "deleted_at": "2023-10-17T18:58:07+03:00"
+    },
+    {
+      "id": "PYIEKLY",
+      "type": "user_reference",
+      "summary": "Demo",
+      "self": "https://api.pagerduty.com/users/PYIEKLY",
+      "html_url": "https://getport-io.pagerduty.com/users/PYIEKLY"
+    }
+  ],
+  "escalation_policies": [
+    {
+      "id": "P7LVMYP",
+      "type": "escalation_policy_reference",
+      "summary": "Test Escalation Policy",
+      "self": "https://api.pagerduty.com/escalation_policies/P7LVMYP",
+      "html_url": "https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
+    }
+  ],
+  "teams": []
+}
+```
+</details>
+
+<details>
+<summary> Oncall response data</summary>
+
+```json showLineNumbers
+{
+   "escalation_policy":{
+      "id":"P7LVMYP",
+      "type":"escalation_policy_reference",
+      "summary":"Test Escalation Policy",
+      "self":"https://api.pagerduty.com/escalation_policies/P7LVMYP",
+      "html_url":"https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
+   },
+   "escalation_level":1,
+   "schedule":{
+      "id":"PWAXLIH",
+      "type":"schedule_reference",
+      "summary":"Port Test Service - Weekly Rotation",
+      "self":"https://api.pagerduty.com/schedules/PWAXLIH",
+      "html_url":"https://getport-io.pagerduty.com/schedules/PWAXLIH"
+   },
+   "user":{
+      "name":"John Doe",
+      "email":"johndoe@domain.io",
+      "time_zone":"Asia/Jerusalem",
+      "color":"red",
+      "avatar_url":"https://secure.gravatar.com/avatar/149cf38119ee25af9b8b3a68d06f39e3.png?d=mm&r=PG",
+      "billed":true,
+      "role":"user",
+      "description":null,
+      "invitation_sent":false,
+      "job_title":null,
+      "teams":[
+
+      ],
+      "contact_methods":[
+         {
+            "id":"PK3SHEX",
+            "type":"email_contact_method_reference",
+            "summary":"Default",
+            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/PK3SHEX",
+            "html_url":null
+         },
+         {
+            "id":"PO3TNV8",
+            "type":"phone_contact_method_reference",
+            "summary":"Other",
+            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/PO3TNV8",
+            "html_url":null
+         },
+         {
+            "id":"P7U59FI",
+            "type":"sms_contact_method_reference",
+            "summary":"Other",
+            "self":"https://api.pagerduty.com/users/HDW63E2/contact_methods/P7U59FI",
+            "html_url":null
+         }
+      ],
+      "notification_rules":[
+         {
+            "id":"PMTOCX1",
+            "type":"assignment_notification_rule_reference",
+            "summary":"0 minutes: channel PK3SHEX",
+            "self":"https://api.pagerduty.com/users/HDW63E2/notification_rules/PMTOCX1",
+            "html_url":null
+         },
+         {
+            "id":"P3HAND3",
+            "type":"assignment_notification_rule_reference",
+            "summary":"0 minutes: channel P7U59FI",
+            "self":"https://api.pagerduty.com/users/HDW63E2/notification_rules/P3HAND3",
+            "html_url":null
+         }
+      ],
+      "id":"HDW63E2",
+      "type":"user",
+      "summary":"John Doe",
+      "self":"https://api.pagerduty.com/users/HDW63E2",
+      "html_url":"https://getport-io.pagerduty.com/users/HDW63E2"
+},
+"start":"2024-02-25T00:00:00Z",
+"end":"2024-04-14T11:10:48Z"
+}
+```
+</details>
+
+<details>
+<summary> Service response data</summary>
+
+```json showLineNumbers
+{
+  "id": "PGAAJBE",
+  "name": "My Test Service",
+  "description": "For testing",
+  "created_at": "2023-08-03T16:53:48+03:00",
+  "updated_at": "2023-08-03T16:53:48+03:00",
+  "status": "active",
+  "teams": [],
+  "alert_creation": "create_alerts_and_incidents",
+  "addons": [],
+  "scheduled_actions": [],
+  "support_hours": "None",
+  "last_incident_timestamp": "None",
+  "escalation_policy": {
+    "id": "P7LVMYP",
+    "type": "escalation_policy_reference",
+    "summary": "Test Escalation Policy",
+    "self": "https://api.pagerduty.com/escalation_policies/P7LVMYP",
+    "html_url": "https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
+  },
+  "incident_urgency_rule": {
+    "type": "constant",
+    "urgency": "high"
+  },
+  "acknowledgement_timeout": "None",
+  "auto_resolve_timeout": "None",
+  "integrations": [],
+  "type": "service",
+  "summary": "My Test Service",
+  "self": "https://api.pagerduty.com/services/PGAAJBE",
+  "html_url": "https://getport-io.pagerduty.com/service-directory/PGAAJBE",
+  "__oncall_user": [
+    {
+      "escalation_policy": {
+        "id": "P7LVMYP",
+        "type": "escalation_policy_reference",
+        "summary": "Test Escalation Policy",
+        "self": "https://api.pagerduty.com/escalation_policies/P7LVMYP",
+        "html_url": "https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
+      },
+      "escalation_level": 1,
+      "schedule": {
+        "id": "PWAXLIH",
+        "type": "schedule_reference",
+        "summary": "Port Test Service - Weekly Rotation",
+        "self": "https://api.pagerduty.com/schedules/PWAXLIH",
+        "html_url": "https://getport-io.pagerduty.com/schedules/PWAXLIH"
+      },
+      "user": {
+        "name": "demo",
+        "email": "devops-port@pager-demo.com",
+        "time_zone": "Asia/Jerusalem",
+        "color": "teal",
+        "avatar_url": "https://secure.gravatar.com/avatar/5cc831a4e778f54460efc4cd20d13acd.png?d=mm&r=PG",
+        "billed": true,
+        "role": "admin",
+        "description": "None",
+        "invitation_sent": true,
+        "job_title": "None",
+        "teams": [],
+        "contact_methods": [
+          {
+            "id": "POKPUFD",
+            "type": "email_contact_method_reference",
+            "summary": "Default",
+            "self": "https://api.pagerduty.com/users/PYIEKLY/contact_methods/POKPUFD",
+            "html_url": "None"
+          }
+        ],
+        "notification_rules": [
+          {
+            "id": "P9NWEKF",
+            "type": "assignment_notification_rule_reference",
+            "summary": "0 minutes: channel POKPUFD",
+            "self": "https://api.pagerduty.com/users/PYIEKLY/notification_rules/P9NWEKF",
+            "html_url": "None"
+          },
+          {
+            "id": "PPJHFA5",
+            "type": "assignment_notification_rule_reference",
+            "summary": "0 minutes: channel POKPUFD",
+            "self": "https://api.pagerduty.com/users/PYIEKLY/notification_rules/PPJHFA5",
+            "html_url": "None"
+          }
+        ],
+        "id": "PYIEKLY",
+        "type": "user",
+        "summary": "demo",
+        "self": "https://api.pagerduty.com/users/PYIEKLY",
+        "html_url": "https://getport-io.pagerduty.com/users/PYIEKLY"
+      },
+      "start": "2023-10-17T15:57:50Z",
+      "end": "2024-02-13T22:16:48Z"
+    }
+  ]
+}
+```
+</details>
+
+<details>
+<summary> Incident response data</summary>
+
+```json showLineNumbers
+{
+  "incident_number": 2,
+  "title": "Example Incident",
+  "description": "Example Incident",
+  "created_at": "2023-05-15T13:59:45Z",
+  "updated_at": "2023-05-15T13:59:45Z",
+  "status": "triggered",
+  "incident_key": "89809d37f4344d36a90c0a192c20c617",
+  "service": {
+    "id": "PWJAGSD",
+    "type": "service_reference",
+    "summary": "Port Test Service",
+    "self": "https://api.pagerduty.com/services/PWJAGSD",
+    "html_url": "https://getport-io.pagerduty.com/service-directory/PWJAGSD"
+  },
+  "assignments": [
+    {
+      "at": "2023-05-15T13:59:45Z",
+      "assignee": {
+        "id": "PJCRRLH",
+        "type": "user_reference",
+        "summary": "Username",
+        "self": "https://api.pagerduty.com/users/PJCRRLH",
+        "html_url": "https://getport-io.pagerduty.com/users/PJCRRLH"
+      }
+    }
+  ],
+  "assigned_via": "escalation_policy",
+  "last_status_change_at": "2023-05-15T13:59:45Z",
+  "resolved_at": null,
+  "first_trigger_log_entry": {
+    "id": "R5S5T07QR1SZRQFYB7SXEO2EKZ",
+    "type": "trigger_log_entry_reference",
+    "summary": "Triggered through the website.",
+    "self": "https://api.pagerduty.com/log_entries/R5S5T07QR1SZRQFYB7SXEO2EKZ",
+    "html_url": "https://getport-io.pagerduty.com/incidents/Q1P3AHC3KLGVAS/log_entries/R5S5T07QR1SZRQFYB7SXEO2EKZ"
+  },
+  "alert_counts": {
+    "all": 0,
+    "triggered": 0,
+    "resolved": 0
+  },
+  "is_mergeable": true,
+  "escalation_policy": {
+    "id": "P7LVMYP",
+    "type": "escalation_policy_reference",
+    "summary": "Test Escalation Policy",
+    "self": "https://api.pagerduty.com/escalation_policies/P7LVMYP",
+    "html_url": "https://getport-io.pagerduty.com/escalation_policies/P7LVMYP"
+  },
+  "teams": [],
+  "pending_actions": [],
+  "acknowledgements": [],
+  "basic_alert_grouping": null,
+  "alert_grouping": null,
+  "last_status_change_by": {
+    "id": "PWJAGSD",
+    "type": "service_reference",
+    "summary": "Port Test Service",
+    "self": "https://api.pagerduty.com/services/PWJAGSD",
+    "html_url": "https://getport-io.pagerduty.com/service-directory/PWJAGSD"
+  },
+  "urgency": "high",
+  "id": "Q1P3AHC3KLGVAS",
+  "type": "incident",
+  "summary": "[#2] Example Incident",
+  "self": "https://api.pagerduty.com/incidents/Q1P3AHC3KLGVAS",
+  "html_url": "https://getport-io.pagerduty.com/incidents/Q1P3AHC3KLGVAS"
+}
+```
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Schedule entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "PWAXLIH",
+  "title": "Port Test Service - Weekly Rotation",
+  "icon": "pagerduty",
+  "blueprint": "pagerdutySchedule",
+  "team": [],
+  "properties": {
+    "url": "https://getport-io.pagerduty.com/schedules/PWAXLIH",
+    "timezone": "Asia/Jerusalem",
+    "description": "Asia/Jerusalem",
+    "users": ["adam@getport-io.com", "alice@getport-io.com", "doe@getport-io.com", "demo@getport-io.com", "pages@getport-io.com"]
+  },
+  "relations": {},
+  "createdAt": "2023-12-01T13:18:02.215Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-12-01T13:18:02.215Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+</details>
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=PagerDuty).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=PagerDuty).
 
 
 ## Alternative installation via webhook
@@ -836,7 +1193,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 3. Scroll down to **Advanced settings** and input the following details:
 
    1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Pagerduty-Signature`;
+   2. Signature Header Name : `x-pagerduty-signature`;
    3. Signature Algorithm : Select `sha256` from dropdown option;
    4. Signature Prefix : `v1=`
    5. Click **Save** at the bottom of the page.
@@ -1030,7 +1387,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 
 3. Scroll down to **Advanced settings** and input the following details:
    1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Pagerduty-Signature`;
+   2. Signature Header Name : `x-pagerduty-signature`;
    3. Signature Algorithm : Select `sha256` from dropdown option;
    4. Signature Prefix : `v1=`
    5. Click **Save** at the bottom of the page.

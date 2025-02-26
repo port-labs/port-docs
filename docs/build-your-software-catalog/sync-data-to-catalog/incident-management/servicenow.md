@@ -12,23 +12,38 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 
+import ServiceNowChangeRequestBlueprint from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/servicenow/\_example_servicenow_change_request.mdx"
+import ServiceNowWebhookConfig from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/servicenow/\_example_servicenow_webhook_config.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
+
 # ServiceNow
 
-Our ServiceNow integration allows you to import `sys_user_group`, `sc_catalog`, and `incident` from your ServiceNow instance into Port, according to your mapping and definitions.
+Port's ServiceNow integration allows you to model ServiceNow resources in your software catalog and ingest data into them.
 
-- A `sys_user_group` corresponds to user groups in ServiceNow.
-- A `sc_catalog` corresponds to service catalogs in ServiceNow.
-- An `incident` represents incidents and tickets within ServiceNow.
 
-## Common use cases
+## Overview
 
-- Map `sys_user_group`, `sc_catalog`, and `incident` in your ServiceNow account.
+This integration allows you to:
 
-## Prerequisites
+- Map and organize your desired ServiceNow resources and their metadata in Port (see supported resources below).
 
-<Prerequisites />
+### Supported Resources
 
-## Installation
+The resources that can be ingested from ServiceNow into Port are listed below. 
+
+- `Group` - (`<your-servicenow-url>/api/now/table/sys_user_group`)
+- `Service Catalog` - (`<your-servicenow-url>/api/now/table/sc_catalog`)
+- `Incident` - (`<your-servicenow-url>/api/now/table/incident`)
+
+:::tip Ingesting extra resources
+While the section above only lists three supported resources, Port's ServiceNow integration uses the [ServiceNow Table API](https://developer.servicenow.com/dev.do#!/reference/api/xanadu/rest/c_TableAPI#table-GET) to ingest entities.  
+This means you can ingest a lot more resources from your ServiceNow instance as long as the underlying resource can be found in the Table API. All you need is to specify the `table name` as a new `kind` in the [Data sources configuration page](/build-your-software-catalog/sync-data-to-catalog/#customize-your-integrations), and the records from the table will be ingested to Port.
+:::
+
+
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -40,52 +55,29 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2>Prerequisites</h2>
 
-| Parameter                                | Description                                                                                                                                                      | Required |
-| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                          | Your Port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
-| `port.clientSecret`                      | Your Port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅       |
-| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                        | ✅       |
-| `integration.identifier`                 | Change the identifier to describe your integration                                                                                                               | ✅       |
-| `integration.config.servicenowUsername`  | The ServiceNow account username                                                                                                                                  | ✅       |
-| `integration.secrets.servicenowPassword` | The ServiceNow account password                                                                                                                                  | ✅       |
-| `integration.config.servicenowUrl`       | The ServiceNow instance URL. For example https://example-id.service-now.com                                                                                      | ✅       |
+<Prerequisites />
 
-<HelmParameters />
+For details about the available parameters for the installation, see the table below.
 
-<br/>
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-servicenow-integration port-labs/port-ocean \
-  --set port.clientId="CLIENT_ID"  \
-  --set port.clientSecret="CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set integration.identifier="my-servicenow-integration"  \
-  --set integration.type="servicenow"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.config.servicenowUsername="<SERVICENOW_USERNAME>"  \
-  --set integration.secrets.servicenowPassword="<SERVICENOW_PASSWORD>"  \
-  --set integration.config.servicenowUrl="<SERVICENOW_URL>"
-```
+<OceanRealtimeInstallation integration="Servicenow" />
+
+
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-servicenow-integration` in your git repository with the content:
 
@@ -171,19 +163,40 @@ kubectl apply -f my-ocean-servicenow-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                                | Description                                                                                                                                                                                                                                                                                    | Required |
+|------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                          | Your Port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                     | ✅        |
+| `port.clientSecret`                      | Your Port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                 | ✅        |
+| `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        | ✅        |
+| `integration.identifier`                 | Change the identifier to describe your integration                                                                                                                                                                                                                                             | ✅        |
+| `integration.config.servicenowUsername`  | The ServiceNow account username                                                                                                                                                                                                                                                                | ✅        |
+| `integration.secrets.servicenowPassword` | The ServiceNow account password                                                                                                                                                                                                                                                                | ✅        |
+| `integration.config.servicenowUrl`       | The ServiceNow instance URL. For example https://example-id.service-now.com                                                                                                                                                                                                                    | ✅        |
+| `integration.eventListener.type`         | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         | ✅        |
+| `integration.type`                       | The integration to be installed                                                                                                                                                                                                                                                                | ✅        |
+| `scheduledResyncInterval`                | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) | ❌        |
+| `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       | ❌        |
+| `sendRawDataExamples`                    | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            | ❌        |
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+
+This workflow/pipeline will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates 
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
+:::
+
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-
-This workflow will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -221,15 +234,11 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
@@ -283,9 +292,8 @@ pipeline {
 ```
 
   </TabItem>
-
   <TabItem value="azure" label="Azure Devops">
-<AzurePremise name="ServiceNow" />
+<AzurePremise />
 
 <DockerParameters />
 
@@ -330,13 +338,7 @@ steps:
 ```
 
   </TabItem>
-<TabItem value="gitlab" label="GitLab">
-This workflow will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
-
+ <TabItem value="gitlab" label="GitLab">
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
 <DockerParameters/>
@@ -394,100 +396,15 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting ServiceNow objects
 
-The ServiceNow integration uses a YAML configuration to describe the process of loading data into the developer portal. See [examples](#examples) below.
+## Configuration
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from ServiceNow's API events.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-### Configuration structure
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-The integration configuration determines which resources will be queried from ServiceNow, and which entities and properties will be created in Port.
 
-:::tip Supported resources and more
-Our ServiceNow integration currently supports the below resources for the mapping configuration. It is possible to extend the current capabilities by referencing any table that is supported in the [ServiceNow Table API](https://developer.servicenow.com/dev.do#!/reference/api/utah/rest/c_TableAPI#table-GET). When choosing this approach, the `kind` key in the mapping configuration should match the table name in ServiceNow as the integration uses the value of the `kind` key to fetch data from the Table API.
 
-- User Groups
-- Service Catalog
-- Incident
-
-For a list of CMDB tables, see the [ServiceNow Docs](https://docs.servicenow.com/bundle/xanadu-servicenow-platform/page/product/configuration-management/reference/cmdb-tables-details.html)
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: sc_catalog
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a ServiceNow object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: sc_catalog
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: sc_catalog
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the ServiceNow object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: sc_catalog
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one ServiceNow object to a Port entity. Each value is a JQ query.
-            identifier: .sys_id
-            title: .title
-            blueprint: '"servicenowCatalog"'
-            properties:
-              description: .description
-              isActive: .active
-              createdBy: .sys_created_by
-        # highlight-end
-    - kind: sc_catalog # In this instance sc_catalog is mapped again with a different filter
-      selector:
-        query: '.title == "MyServiceCatalogName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-### Ingest data into Port
-
-To ingest ServiceNow objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select the Data Sources tab at the left sidebar.
-3. Click on `+ Data Source` at the top right corner.
-4. Select ServiceNow under the Incident Management category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Run the installation command.
-7. Click `Next` and you can view the integration configuration and update it as necessary.
 
 ## Examples
 
@@ -544,6 +461,9 @@ resources:
   - kind: sys_user_group
     selector:
       query: "true"
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
     port:
       entity:
         mappings:
@@ -610,6 +530,9 @@ resources:
   - kind: sc_catalog
     selector:
       query: "true"
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
     port:
       entity:
         mappings:
@@ -701,6 +624,9 @@ resources:
   - kind: incident
     selector:
       query: "true"
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
     port:
       entity:
         mappings:
@@ -721,6 +647,32 @@ resources:
 ```
 
 </details>
+
+### Filtering ServiceNow resources
+Port's ServiceNow integration provides an option to filter the data that is retrieved from the ServiceNow Table API using the following attributes:
+
+1. `sysparmDisplayValue`: Determines the type of data returned, either the actual values from the database or the display values of the fields. The default is `true`
+2. `sysparmFields`: Comma-separated list of fields to return in the response
+3. `sysparmExcludeReferenceLink`: Flag that indicates whether to exclude Table API links for reference fields. The default is `false`
+4. `sysparmQuery`: Encoded query used to filter the result set. The syntax is `<col_name><operator><value>`:
+    1. `<col_name>`: Name of the table column to filter against
+    2. `<operator>`: =, !=, ^, ^OR, LIKE, STARTSWITH, ENDSWITH, `ORDERBY<col_name>`, `ORDERBYDESC<col_name>`
+    3. `<value>`: Value to match against
+
+    Queries can be chained using ^ or ^OR for AND/OR logic. An example query could be this: `active=true^nameLIKEdev^urgency=3` which returns all active incidents with an urgency level of 3 and have a name like `dev` 
+
+The filtering attributes described above can be enabled using the `selector.apiQueryParams` path, for example:
+
+```yaml showLineNumbers
+- kind: <name of table>
+  selector:
+    query: "true"
+    apiQueryParams:
+      sysparmDisplayValue: 'true'
+      sysparmExcludeReferenceLink: 'false'
+      sysparmQuery: active=true^nameLIKEdev^urgency=3
+      sysparmFields: sys_id,priority,created_by,state,active
+```
 
 ## Let's Test It
 
@@ -944,7 +896,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "019ad92ec7230010393d265c95c260dd",
   "title": "Analytics Settings Managers",
-  "icon": null,
+  "icon": "ServiceNow",
   "blueprint": "servicenowGroup",
   "team": [],
   "properties": {
@@ -970,7 +922,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "56e48e6a9743311083e6ff0de053af56",
   "title": "Test Service Catalog",
-  "icon": null,
+  "icon": "ServiceNow",
   "blueprint": "servicenowCatalog",
   "team": [],
   "properties": {
@@ -996,7 +948,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "INC0000060",
   "title": "Unable to connect to email",
-  "icon": null,
+  "icon": "ServiceNow",
   "blueprint": "servicenowIncident",
   "team": [],
   "properties": {
@@ -1019,4 +971,200 @@ The combination of the sample payload and the Ocean configuration generates the 
 }
 ```
 
+</details>
+
+## Relevant Guides
+
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=ServiceNow).
+
+## Alternative installation via webhook
+While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from ServiceNow. If so, use the following instructions:
+
+**Note** that when using the webhook installation method, data will be ingested into Port only when the webhook is triggered.
+
+<details>
+
+<summary><b>Webhook installation (click to expand)</b></summary>
+
+In this example you are going to create a webhook integration between [ServiceNow](https://www.servicenow.com/) and Port, which will ingest ServiceNow change requests into Port. This integration will involve setting up a webhook to receive notifications from Servicenow whenever a change request is created or updated.
+
+<h2>Import ServiceNow change request</h2>
+
+<h3>Port configuration</h3>
+
+Create the blueprint definition:
+
+<details>
+<summary>Servicenow change request blueprint</summary>
+
+<ServiceNowChangeRequestBlueprint/>
+
+</details>
+
+
+Create the following webhook configuration [using Port UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
+
+<details>
+<summary>Servicenow webhook configuration</summary>
+
+1. **Basic details** tab - fill the following details:
+   1. Title : `Servicenow Mapper`;
+   2. Identifier : `servicenow_mapper`;
+   3. Description : `A webhook configuration to map Servicenow change requests to Port`;
+   4. Icon : `Servicenow`;
+2. **Integration configuration** tab - fill the following JQ mapping:
+
+   <ServiceNowWebhookConfig/>
+
+3. Scroll down to **Advanced settings**, leave the form blank and click **Save** at the bottom of the page
+
+</details>
+
+<h3>Create a webhook in ServiceNow</h3>
+
+1. Log in to your [ServiceNow](https://www.servicenow.com/) instance
+2. Go to **System Definition** > **Business Rules**.
+3. Click **New** to create a business rule:
+   - **Name**: `Change Request Webhook`
+   - **Table**: `Change Request [change_request]`
+   - **Is Active**, **Advanced**: Check both
+4. In the **When to run** tab, provide the following details:
+   - **Insert**, **Update**: Check both
+   - **When**: `Async`
+   - **Order**: leave the default value of `100`
+5. In the **Advanced** tab, add the following script:
+
+<details>
+<summary>ServiceNow configuration code (click to expand)</summary>
+
+```javascript
+(function executeRule(current, previous /*null when async*/) {
+
+    gs.info('Triggering outbound REST API call for Change Request ID: ' + current.number);
+
+    if (current == null){
+        gs.error('Current record is null. Exiting the Business Rule.');
+        return;
+    }
+
+    // Prepare the REST message
+    var restMessage = new sn_ws.RESTMessageV2();
+    restMessage.setHttpMethod('POST');
+    restMessage.setEndpoint('https://ingest.getport.io/<WEBHOOK_KEY>');
+    restMessage.setRequestHeader('Content-Type', 'application/json');
+
+    // Construct the payload with additional fields
+    var payload = {
+        "sys_id": current.sys_id.toString(),
+        "number": current.number.toString(),
+        "state": current.state.toString(),
+        "short_description": current.short_description.toString(),
+        "description": current.description.toString(),
+        "sys_updated_by": current.sys_updated_by.toString(),
+        "sys_updated_on": current.sys_updated_on.toString(),
+        "approval": current.approval.toString(),
+        
+        "priority": current.priority ? current.priority.toString() : '',
+        "phase": current.phase ? current.phase.toString() : '',
+        "business_service": current.business_service ? current.business_service.toString() : '',
+        "phase_state": current.phase_state ? current.phase_state.toString() : '',
+        "category": current.category ? current.category.toString() : '',
+        "tags": current.u_external_tag ? current.sys_tags.toString() : '',
+        
+        "impact": current.impact ? current.impact.toString() : '',
+        "urgency": current.urgency ? current.urgency.toString() : '',
+        "risk": current.risk ? current.risk.toString() : '',
+        "assignment_group": current.assignment_group ? current.assignment_group.toString() : '',
+        "opened_by": current.opened_by ? current.opened_by.toString() : '',
+        "sys_domain": current.sys_domain ? current.sys_domain.toString() : ''
+    };
+
+    // Set the request body with the payload
+    restMessage.setRequestBody(JSON.stringify(payload));
+
+    // Execute the outbound REST call
+    try {
+        var response = restMessage.execute();  // Use async to avoid blocking
+        gs.info('Business Rule executed for Change Request: ' + current.number.toString());
+        gs.info('Response Status Code: ' + response.getStatusCode());
+        gs.info('Response Body: ' + response.getBody());
+    } catch (error) {
+        gs.error('Error in outbound REST call: ' + error.message);
+    }
+
+})(current, previous);
+```
+</details>
+
+6. Save and activate the Business Rule.
+
+
+Done! any change that happens to your change requests in ServiceNow will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+
+<h2>Let's Test It</h2>
+
+This section includes a sample webhook event sent from ServiceNow when a change request is created or updated. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+
+<h3>Payload</h3>
+
+Here is an example of the payload structure sent to the webhook URL when a ServiceNow change request is created or updated:
+
+<details>
+<summary>Webhook event payload</summary>
+
+```json showLineNumbers
+{
+  "body": {
+    "sys_id": "8a76536683f5de104665c730ceaad3bd",
+    "number": "CHG0030040",
+    "state": "3",
+    "short_description": "Automated change request from GitLab CI/CD",
+    "description": "needs approval",
+    "sys_updated_by": "admin",
+    "sys_updated_on": "2024-11-14 10:57:08",
+    "approval": "approved",
+    "priority": "2",
+    "phase": "requested",
+    "business_service": "getport-labs/awesome-projec",
+    "phase_state": "open",
+    "category": "Network",
+    "tags": "r_QWB886MmmkIBRGD5",
+    "impact": "3",
+    "urgency": "3",
+    "risk": "3",
+    "assignment_group": "287ebd7da9fe198100f92cc8d1d2154e",
+    "opened_by": "6816f79cc0a8016401c5a33be04be441",
+    "sys_domain": "global"
+  },
+  "queryParams": {}
+}
+```
+
+</details>
+
+<h3>Mapping Result</h3>
+
+The combination of the sample payload and the webhook configuration generates the following Port entity:
+
+```json showLineNumbers
+{
+    "identifier": "8a76536683f5de104665c730ceaad3bd",
+    "title": "Automated change request from GitLab CI/CD",
+    "blueprint": "servicenowChangeRequest",
+    "properties": {
+      "number": "CHG0030040",
+      "state": "open",
+      "approval": "approved",
+      "category": "Network",
+      "priority": "2",
+      "description": "needs approval",
+      "service": "getport-labs/awesome-projec",
+      "tags": "r_QWB886MmmkIBRGD5",
+      "createdOn": "2024-11-14 10:57:08",
+      "createdBy": "6816f79cc0a8016401c5a33be04be441"
+    },
+    "relations": {},
+    "filter": true
+  }
+```
 </details>

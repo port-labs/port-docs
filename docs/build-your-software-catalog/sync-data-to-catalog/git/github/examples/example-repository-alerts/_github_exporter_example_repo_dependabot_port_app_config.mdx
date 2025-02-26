@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"service"'
+          blueprint: '"githubRepository"'
           properties:
             readme: file://README.md
             url: .html_url
@@ -37,8 +37,10 @@ resources:
             cveID: .security_advisory.cve_id
             url: .html_url
             references: "[.security_advisory.references[].url]"
+            alertCreatedAt: .created_at
+            alertUpdatedAt: .updated_at
           relations:
-            service: .repo.name
+            repository: .repo.name
   - kind: code-scanning-alerts
     selector:
       query: "true"
@@ -55,7 +57,7 @@ resources:
             description: .rule.description
             url: .html_url
           relations:
-            service: .repo
+            repository: .repo
 ```
 
 </details>

@@ -1,5 +1,5 @@
 export const tagsCategoryMap = {
-    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "AppSec", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog"],
+    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "Security", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog", "Approval workflow"],
     "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
@@ -28,6 +28,7 @@ export const tagsCategoryMap = {
         "Dynatrace",
         "Humanitec",
         "New Relic",
+        "ServiceNow",
     ]
 };
 
@@ -143,7 +144,7 @@ export const availableGuides = [
     {
         title: "Connect GitHub repository (service) to a SonarQube project",
         description: "Create a logical connection between your services and their corresponding SonarQube projects",
-        tags: ["AppSec", "SonarQube", "GitHub"],
+        tags: ["Security", "SonarQube", "GitHub"],
         logos: ["SonarQube", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/connect-github-repository-with-sonarqube-project",
@@ -191,7 +192,7 @@ export const availableGuides = [
     {
         title: "Connect GitHub pull request to SonarQube analysis",
         description: "Create a logical connection between your GitHub PRs and their corresponding SonarQube analyses",
-        tags: ["AppSec", "SonarQube", "GitHub"],
+        tags: ["Security", "SonarQube", "GitHub"],
         logos: ["SonarQube", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/connect-github-pr-with-sonar-analysis",
@@ -199,7 +200,7 @@ export const availableGuides = [
     {
         title: "Connect SonarQube project to service",
         description: "Create a logical connection between your SonarQube projects and their corresponding services",
-        tags: ["AppSec", "SonarQube"],
+        tags: ["Security", "SonarQube"],
         logos: ["SonarQube", "Git"],
         // category: "Getting started",
         link: "/guides/all/connect-sonar-project-to-service",
@@ -407,7 +408,7 @@ export const availableGuides = [
     {
         title: "Provision Cloud Resource using Terraform",
         description: "Create a self-service action that provisions cloud resources using Terraform",
-        tags: ["IaC for devs", "AWS", "Terraform", "Actions"],
+        tags: ["IaC for devs", "Approval workflow", "AWS", "Terraform", "Actions"],
         logos: ["AWS", "Terraform"],
         // category: "Getting started",
         link: "/guides/all/terraform-plan-and-apply-aws-resource",
@@ -487,7 +488,7 @@ export const availableGuides = [
     {
         title: "Create Jira Issue from Dependabot Alert",
         description: "Create a self-service action that creates a Jira issue from a Dependabot alert",
-        tags: ["Jira", "GitHub", "Actions"],
+        tags: ["Security", "Jira", "GitHub", "Actions"],
         logos: ["Jira", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/create-jira-issue-from-dependabot",
@@ -591,15 +592,15 @@ export const availableGuides = [
     {
         title: "Trigger a ServiceNow Incident",
         description: "Create a self-service action that triggers a ServiceNow incident",
-        tags: ["Incident management", "GitHub", "Actions"],
-        logos: ["GitHub"],
+        tags: ["Incident management", "ServiceNow", "GitHub", "Actions"],
+        logos: ["ServiceNow", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/trigger-servicenow-incident",
     },
     {
         title: "Add tags to a SonarQube project",
         description: "Create a self-service action that adds tags to a SonarQube project",
-        tags: ["AppSec", "SonarQube", "GitHub", "Actions"], 
+        tags: ["Security", "SonarQube", "GitHub", "Actions"], 
         logos: ["SonarQube", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/add-tags-to-sonarqube-project",
@@ -743,7 +744,7 @@ export const availableGuides = [
     {
         title: "Manage Kubernetes namespaces via a Port workflow",
         description: "Chain actions and automations to automate the deletion of Kubernetes namespaces",
-        tags: ["K8s for devs", "Actions", "Automations", "GitLab"],
+        tags: ["K8s for devs", "Approval workflow", "GitLab", "Actions", "Automations"],
         logos: ["Kubernetes", "GitLab"],
         // category: "Getting started",
         link: "/guides/all/manage-kubernetes-namespaces",
@@ -765,9 +766,8 @@ export const availableGuides = [
     {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","Dashboards"],
-        logos: ["GitHub"],
-        // category: "Getting started",
+        tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
+        logos: ["Git"],
         link: "/guides/all/setup-dora-metrics",
     },
     {
@@ -780,7 +780,7 @@ export const availableGuides = [
     {
         title: "Ingest Checkmarx KICS scan results into your catalog",
         description: "Ingests Checkmarx KICS scan results in your Checkmarx KICS file using Port's GitHub file ingesting feature",
-        tags: ["AppSec", "Checkmarx", "GitHub"],
+        tags: ["Security", "Checkmarx", "GitHub"],
         logos: ["Checkmarx", "GitHub"],
         link: "/guides/all/ingest-checkmarx-kics-scan-into-your-catalog"
     },
@@ -794,14 +794,14 @@ export const availableGuides = [
     {
         title: "Ingest software bills of materials (SBOMs) into your catalog",
         description: "Ingests software bill of material (SBOM) in your `SBOM.json` or `SBOM.xml` file using Port's GitHub file ingesting feature",
-        tags: ["AppSec", "GitHub"],
+        tags: ["Security", "GitHub"],
         logos: ["GitHub"],
         link: "/guides/all/ingest-software-bill-of-materials-sbom-into-your-catalog"
     },
     {
         title: "Ingest Trivy vulnerabilities into your catalog",
         description: "Ingests Trivy vulnerabilities in your Trivy scan results file using Port's GitHub file ingesting feature",
-        tags: ["AppSec", "Trivy", "GitHub"],
+        tags: ["Security", "Trivy", "GitHub"],
         logos: ["Trivy", "GitHub"],
         link: "/guides/all/ingest-trivy-vulnerabilities-into-your-catalog"
     },
@@ -816,7 +816,7 @@ export const availableGuides = [
     {
         title: "Ingest vulnerability alerts from Orca Security",
         description: "Ingest vulnerability alerts from Orca Security using a custom webhook integration",
-        tags: ["AppSec", "Webhook"],
+        tags: ["Security", "Webhook"],
         logos: ["Webhook"],
         link: "/guides/all/ingest-vulnerability-alerts-from-orca-security-using-a-custom-webhook-integration"
     },
@@ -836,11 +836,52 @@ export const availableGuides = [
         link: "/guides/all/automatically-approve-action-using-automation"
     },
     {
+        title: "Track SLOs and SLIs for services",
+        description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
+        tags: ["Engineering metrics", "New Relic", "Dashboards"],
+        logos: ["New Relic"],
+        link: "/guides/all/track-slos-and-slis-for-services"
+    },
+    {
         title: "Ingest security issues from .sarif files to services",
         description: "Ingest .sarif files and relate them to the corresponding service entities",
-        tags: ["AppSec", "GitHub"],
+        tags: ["Security", "GitHub"],
         logos: ["GitHub"],
         link: "/guides/all/ingest-security-issues-from-sarif-files-to-services",
     },
-    
+    {
+        title: "Set up announcements in your portal",
+        description: "Create components to send announcements to members in your portal",
+        tags: ["Actions", "Dashboards"],
+        logos: ["Actions"],
+        link: "/guides/all/setup-portal-announcements",
+    },
+    {
+        title: "Set up DORA Metrics benchmark",
+        description: "Track and improve engineering performance by setting up DORA metrics benchmark",
+        tags: ["Engineering metrics","Scorecards","Dashboards"],
+        logos: ["Git"],
+        link: "/guides/all/setup-dora-metrics-benchmark"
+    },
+    {
+        title: "Manage service deployments using GitLab and ServiceNow", 
+        description: "Create a chain of self-service actions that deploy a service using GitLab and ServiceNow",
+        tags: ["Approval workflow", "ServiceNow", "GitLab", "Actions", "Automations"],
+        logos: ["ServiceNow", "GitLab"],
+        link: "/guides/all/approval-workflow-for-gitlab-deployment"
+    },
+    {
+        title: "Assign teams to monitored entities", 
+        description: "Configure your Dynatrace data sources to map entities to teams",
+        tags: ["Engineering metrics", "Dynatrace"],
+        logos: ["Dynatrace"],
+        link: "/guides/all/connect-dynatrace-team-with-entities"
+    },
+    {
+        title: "Create surveys in your portal",
+        description: "Create surveys to collect feedback from your developers",
+        tags: ["Engineering metrics", "Actions", "Dashboards"],
+        logos: ["Engineering metrics"],
+        link: "/guides/all/create-surveys",
+    },
 ]

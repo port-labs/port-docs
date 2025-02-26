@@ -1,0 +1,46 @@
+<details>
+<summary>Member blueprint</summary>
+
+```json showLineNumbers
+  {
+    "identifier": "gitlabMember",
+    "title": "Member",
+    "icon": "GitLab",
+    "schema": {
+      "properties": {
+        "email": {
+          "type": "string",
+          "title": "Email",
+          "description": "GitLab primary email address.",
+          "icon": "User",
+          "format": "user"
+        },
+        "link": {
+          "icon": "Link",
+          "type": "string",
+          "title": "Link",
+          "format": "url",
+          "description": "URL link to the GitLab member."
+        },
+        "state": {
+          "title": "State",
+          "type": "string",
+          "icon": "GitLab",
+          "description": "The current state of the GitLab member (e.g., active)."
+        },
+        "locked": {
+          "type": "string",
+          "title": "Locked",
+          "icon": "GitLab",
+          "description": "Indicates if the GitLab member is locked."
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {}
+  }
+```
+</details>

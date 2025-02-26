@@ -10,21 +10,33 @@ import DockerParameters from "./\_firehydrant_docker_params.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # FireHydrant
 
-Our FireHydrant integration allows you to import `environment`, `service`, `incident` and `retrospective` from your FireHydrant account into Port, according to your mapping and definitions.
+Port's FireHydrant integration allows you to model FireHydrant resources in your software catalog and ingest data into them.
 
-## Common use cases
+## Overview
 
-- Map `environment`, `service`, `incident` and `retrospective` in your FireHydrant account.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+This integration allows you to:
 
-## Prerequisites
+- Map and organize your desired FireHydrant resources and their metadata in Port (see supported resources below).
+- Watch for FireHydrant object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-<Prerequisites />
 
-## Installation
+### Supported Resources
+
+The resources that can be ingested from FireHydrant into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Environment`](https://developers.firehydrant.com/#/operations/getV1Environments)
+- [`Service`](https://developers.firehydrant.com/#/operations/getV1Services)
+- [`Incident`](https://developers.firehydrant.com/#/operations/getV1Incidents)
+- [`Retrospective`](https://developers.firehydrant.com/#/operations/getV1PostMortemsReports)
+
+
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -36,55 +48,28 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
+ 
+<h2> Prerequisites </h2>
+
+<Prerequisites />
 
 This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
-
-| Parameter                        | Description                                                                                                               | Required |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `port.clientId`                  | Your port client id                                                                                                       | ✅      |
-| `port.clientSecret`              | Your port client secret                                                                                                   | ✅      |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                   | ✅      |
-| `integration.identifier`         | Change the identifier to describe your integration                                                                        | ✅      |
-| `integration.type`               | The integration type                                                                                                      | ✅      |
-| `integration.eventListener.type` | The event listener type                                                                                                   | ✅      |
-| `integration.secrets.token`      | The FireHydrant API token                                                                                                 | ✅      |
-| `integration.config.apiUrl`      | The FireHydrant API URL. If not specified, the default will be https://api.firehydrant.io                                 | ❌      |
-| `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in FireHydrant | ✅       |
-| `scheduledResyncInterval`        | The number of minutes between each resync                                                                                 | ❌      |
-| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping             | ❌      |
-| `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true  | ❌      |
-
-<br/>
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-firehydrant-integration port-labs/port-ocean \
-  --set port.clientId="CLIENT_ID"  \
-  --set port.clientSecret="CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set integration.identifier="my-firehydrant-integration"  \
-  --set integration.type="firehydrant"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.config.apiUrl="https://api.firehydrant.io"  \
-  --set integration.secrets.token="<FIREHYDRANT_API_TOKEN>"
-```
+<OceanRealtimeInstallation integration="Firehydrant" />
 
 <PortApiRegionTip/>
+
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-firehydrant-integration` in your git repository with the content:
 
@@ -167,19 +152,40 @@ kubectl apply -f my-ocean-firehydrant-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                        | Description                                                                                                                         | Required |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                  | Your port client id                                                                                                                 | ✅        |
+| `port.clientSecret`              | Your port client secret                                                                                                             | ✅        |
+| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                             | ✅        |
+| `integration.identifier`         | Change the identifier to describe your integration                                                                                  | ✅        |
+| `integration.type`               | The integration type                                                                                                                | ✅        |
+| `integration.eventListener.type` | The event listener type                                                                                                             | ✅        |
+| `integration.secrets.token`      | The FireHydrant API token , docs can be found [here](https://docs.firehydrant.com/docs/api-keys)                                    | ✅        |
+| `integration.config.apiUrl`      | The FireHydrant API URL. If not specified, the default will be https://api.firehydrant.io                                           | ❌        |
+| `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in FireHydrant           | ✅        |
+| `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
+| `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
+| `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the FireHydrant integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
+:::
+
+
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-
-This workflow will run the FireHydrant integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -215,14 +221,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the FireHydrant integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
@@ -273,10 +274,8 @@ pipeline {
 ```
 
   </TabItem>
-
-    
-<TabItem value="azure" label="Azure Devops">
-<AzurePremise name="FireHydrant" />
+  <TabItem value="azure" label="Azure Devops">
+<AzurePremise />
 
 <DockerParameters />
 
@@ -319,13 +318,7 @@ steps:
 ```
 
   </TabItem>
-
-<TabItem value="gitlab" label="GitLab">
-This workflow will run the FireHydrant integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+  <TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -373,7 +366,6 @@ ingest_data:
 ```
 
 </TabItem>
-
   </Tabs>
 
 <PortApiRegionTip/>
@@ -384,97 +376,14 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting FireHydrant objects
 
-The FireHydrant integration uses a YAML configuration to describe the process of loading data into the developer portal. See [examples](#examples) below.
+## Configuration
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from FireHydrant's API events.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-### Configuration structure
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-The integration configuration determines which resources will be queried from FireHydrant, and which entities and properties will be created in Port.
 
-:::tip Supported resources
-The following resources can be used to map data from FireHydrant, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Environment`](https://developers.firehydrant.com/#/operations/getV1Environments)
-- [`Service`](https://developers.firehydrant.com/#/operations/getV1Services)
-- [`Incident`](https://developers.firehydrant.com/#/operations/getV1Incidents)
-- [`Retrospective`](https://developers.firehydrant.com/#/operations/getV1PostMortemsReports)
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: service
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a FireHydrant object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: service
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: service
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the FireHydrant object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: service
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one FireHydrant object to a Port entity. Each value is a JQ query.
-            identifier: .id
-            title: .name
-            blueprint: '"firehydrantService"'
-            properties:
-              description: .description
-        # highlight-end
-    - kind: service # In this instance service is mapped again with a different filter
-      selector:
-        query: '.name == "MyServiceName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-### Ingest data into Port
-
-To ingest FireHydrant objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using FireHydrant.
-3. Choose the **Ingest Data** option from the menu.
-4. Select FireHydrant under the Incident management category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
 
@@ -1869,7 +1778,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "21011924-215e-4aa4-abbf-6155ecf237ae",
   "title": "Production",
-  "icon": null,
+  "icon": "FireHydrant",
   "blueprint": "firehydrantEnvironment",
   "team": [],
   "properties": {
@@ -1895,7 +1804,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "87aeea3d-4dcd-4c1e-bf8c-e68e73892e44",
   "title": "My Test Service",
-  "icon": null,
+  "icon": "FireHydrant",
   "blueprint": "firehydrantService",
   "team": [],
   "properties": {
@@ -1932,7 +1841,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "eb03f3f2-1a58-4d19-9f85-b3e46dbf5c2e",
   "title": "System outage",
-  "icon": null,
+  "icon": "FireHydrant",
   "blueprint": "firehydrantIncident",
   "team": [],
   "properties": {
@@ -1968,7 +1877,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "da2ff7ef-6faf-4e4e-9577-985ffa739c9f",
   "title": "Bump request library",
-  "icon": null,
+  "icon": "FireHydrant",
   "blueprint": "firehydrantRetrospective",
   "team": [],
   "properties": {

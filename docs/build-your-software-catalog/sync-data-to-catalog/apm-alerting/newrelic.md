@@ -6,26 +6,32 @@ import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # New Relic
 
-Port's New Relic integration allows you to import `entities`, `issues` and `service-level` from your New Relic cloud account into Port, according to your mapping and definition.
-
-An `Entity` can be a host, an application, a service, a database, or any other component that sends data to New Relic.  
-An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
-A `Service Level` can be one of your key measurements or goals used to determine the performance of your monitored system.
+Port's New Relic integration allows you to model New Relic resources in your software catalog and ingest data into them.
 
 
-## Common use cases
 
-- Map your monitored applications and services in New Relic with their current open alerts.
-- Watch for new alerts and updates raised on your monitored applications and automatically synchronize them into Port.
+## Overview
 
-## Prerequisites
+This integration allows you to:
 
-<Prerequisites />
+- Map and organize your desired New Relic resources and their metadata in Port (see supported resources below).
+- Watch for New Relic object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-## Installation
+
+### Supported Resources
+
+The resources that can be ingested from New Relic into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Entity`](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/)
+- [`Issue`](https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/get-started/alerts-ai-overview-page/#issues)
+
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -37,63 +43,30 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
-Using this installation option means that the integration will be able to update Port in real time.
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                               | Description                                                                                                   | Required |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                         | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`                     | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
-| `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`                      | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type`        | The event listener type                                                                                       | ✅       |
-| `integration.secrets.newRelicAPIKey`    | The New Relic API key                                                                                         | ✅       |
-| `integration.secrets.newRelicAccountID` | The New Relic account ID                                                                                      | ✅       |
-| `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+<Prerequisites />
 
-<br/>
+
+For details about the available parameters for the installation, see the table below.
+
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-:::note
-If you are using New Relic's EU region, add the following flag to the command:
-
-`--set integration.config.newRelicGraphqlURL="https://api.eu.newrelic.com/graphql"`
-:::
-
-```bash showLineNumbers
-# The following script will install an Ocean integration at your K8s cluster using helm
-# initializePortResources: When set to true the integration will create default blueprints + JQ Mappings
-# scheduledResyncInterval: the number of minutes between each resync
-# integration.identifier: Change the identifier to describe your integration
-
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-newrelic-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set scheduledResyncInterval=120 \
-  --set integration.identifier="my-newrelic-integration"  \
-  --set integration.type="newrelic"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
-  --set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>"
-```
+<OceanRealtimeInstallation integration="NewRelic" />
 
 <PortApiRegionTip/>
 
+
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-newrelic-integration` in your git repository with the content:
 
@@ -197,6 +170,23 @@ kubectl apply -f my-ocean-newrelic-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                               | Description                                                                                                   | Required |
+|-----------------------------------------|---------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                         | Your port client id                                                                                           | ✅        |
+| `port.clientSecret`                     | Your port client secret                                                                                       | ✅        |
+| `port.baseUrl`                          | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                       | ✅        |
+| `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅        |
+| `integration.type`                      | The integration type                                                                                          | ✅        |
+| `integration.eventListener.type`        | The event listener type                                                                                       | ✅        |
+| `integration.secrets.newRelicAPIKey`    | The New Relic API key                                                                                         | ✅        |
+| `integration.secrets.newRelicAccountID` | The New Relic account ID                                                                                      | ✅        |
+| `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌        |
+| `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌        |
+
+<br/>
+
 <AdvancedConfig/>
 
 <h3>Event listener</h3>
@@ -205,14 +195,16 @@ The integration uses polling to pull the configuration from Port every minute an
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the New Relic integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
+:::
+
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the New Relic integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -254,13 +246,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the New Relic integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
@@ -316,9 +304,8 @@ pipeline {
 ```
 
   </TabItem>
-  
-<TabItem value="azure" label="Azure Devops">
-<AzurePremise name="New Relic" />
+  <TabItem value="azure" label="Azure Devops">
+<AzurePremise name/>
 
 <DockerParameters />
 
@@ -361,13 +348,7 @@ steps:
 ```
 
   </TabItem>
-
-     <TabItem value="gitlab" label="GitLab">
-This workflow will run the New Relic integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+  <TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -417,93 +398,19 @@ ingest_data:
 
   </Tabs>
 
-<PortApiRegionTip/>
-
 <AdvancedConfig/>
 
 </TabItem>
 
 </Tabs>
 
-## Ingesting Newrelic objects
+## Configuration
 
-The Newrelic integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-Here is an example snippet from the config which demonstrates the process for getting `Issue` data from Newrelic:
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-```yaml showLineNumbers
-resources:
-  - kind: newRelicAlert
-    selector:
-      query: "true"
-      newRelicTypes: ["ISSUE"]
-    port:
-      entity:
-        mappings:
-          blueprint: '"newRelicAlert"'
-          identifier: .issueId
-          title: .title[0]
-          properties:
-            priority: .priority
-            state: .state
-            sources: .sources
-            conditionName: .conditionName
-            alertPolicyNames: .policyName
-            activatedAt: .activatedAt
-          relations:
-            newRelicService: .__APPLICATION.entity_guids + .__SERVICE.entity_guids
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Newrelic's API events.
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Newrelic, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from Newrelic, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Entity`](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/)
-- [`Issue`](https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/get-started/alerts-ai-overview-page/#issues)
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: project
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Newrelic object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: project
-        selector:
-        ...
-  ```
-
-- The `selector` key allows you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: newRelicService
-      selector:
-        query: "true"
-        newRelicTypes: ["SERVICE", "APPLICATION"]
-        calculateOpenIssueCount: true
-        entityQueryFilter: "type in ('SERVICE','APPLICATION')"
-        entityExtraPropertiesQuery: |
-          ... on ApmApplicationEntityOutline {
-            guid
-            name
-          }
-  ```
+### Additional Configuration
 
   - **newRelicTypes** - An array of Newrelic entity types that will be fetched. The default value is ['SERVICE', 'APPLICATION']. This is related to the type field in the Newrelic entity.
   - **calculateOpenIssueCount:**
@@ -518,40 +425,9 @@ The following resources can be used to map data from Newrelic, it is possible to
 
 - The `port`, `entity` and the `mappings` keys are used to map the Newrelic object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
 
-  ```yaml showLineNumbers
-  resources:
-    - kind: newRelicAlert
-      selector:
-        query: "true"
-        newRelicTypes: ["ISSUE"]
-      port:
-        # highlight-start
-        entity:
-          mappings:
-            blueprint: '"newRelicAlert"'
-            identifier: .issueId
-            title: .title[0]
-            properties:
-              priority: .priority
-              state: .state
-              sources: .sources
-              conditionName: .conditionName
-              alertPolicyNames: .policyName
-              activatedAt: .activatedAt
-            relations:
-              newRelicService: .__APPLICATION.entity_guids + .__SERVICE.entity_guids
-        # highlight-end
-    - kind: newRelicAlert # In this instance project is mapped again with a different filter
-      selector:
-        query: '.name == "MyIssuetName"'
-      port:
-        entity:
-          mappings: ...
-  ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
+
+## Capabilities  
 
 ### Tags
 
@@ -574,22 +450,13 @@ Some Newrelic `entities` have a property named `tags` which contains potentially
 ]
 ```
 
-Before mapping, this integration performs a tranformation on each `tag`, after which the example above would look like this:
+Before mapping, this integration performs a transformation on each `tag`, after which the example above would look like this:
 
 ```json showLineNumbers
 tags = ["coreCount":"10","hostStatus":"running"]
 ```
 
-### Ingest data into Port
 
-To ingest Newrelic objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Newrelic.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Newrelic under the APM & alerting category.
-5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
-6. Click `Resync`.
 
 ## Examples
 
@@ -1302,6 +1169,7 @@ The combination of the sample payload and the Ocean configuration generates the 
     "blueprint": "newRelicServiceLevel",
     "identifier": "599434",
     "title": "Service Level Name - Metric",
+    "icon": "NewRelic",
     "properties": {
       "description": "Proportion of requests that are served faster than a threshold.",
       "targetThreshold": 95,

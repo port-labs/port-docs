@@ -11,9 +11,9 @@ This guide will demonstrate how to ingest dependencies from a `package.json` fil
 
 :::info Prerequisites
 
-- Ensure you have a Port account and have completed the [onboarding process](https://docs.getport.io/quickstart).
+- Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
 - The `Service` blueprint should be created during the onboarding process.
-- Ensure you have [GitHub installed and configured](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) in your environment.
+- Ensure you have [GitHub installed and configured](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) in your environment.
 
 :::
 
@@ -183,6 +183,6 @@ This would establish a relation between the `service` and `dependency` entities 
 By following these steps, you can effectively ingest dependencies from `package.json` files and relate them to the corresponding service entities in Port 🎉.
 
 More relevant guides and examples:
-- [Port's GitHub integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/)
-- [Self-service actions and workflows](https://docs.getport.io/create-self-service-experiences/setup-backend/github-workflow/)
+- [Port's GitHub integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/)
+- [Self-service actions and workflows](https://docs.port.io/create-self-service-experiences/setup-backend/github-workflow/)
 

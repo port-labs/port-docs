@@ -6,6 +6,7 @@ import SearchBar from "/src/components/guides-section/SearchBar/SearchBar.jsx";
 import GuideCards from "/src/components/guides-section/GuideCard/GuideCards.jsx";
 import { availableGuides } from "../consts.js";
 import ResetIcon from "/static/img/guides/icons/Reset.svg";
+import FilterIcon from "/static/img/guides/icons/Filter.svg";
 import { useHistory, useLocation } from "react-router-dom";
 
 function GuidePage() {
@@ -41,7 +42,7 @@ function GuidePage() {
     <>
       <div className="guide-tags-and-search-container">
         <div className="guide-tags-and-search-title-container">
-          <Typography className="guide-tags-and-search-title">Filters</Typography>
+          <Typography className="guide-tags-and-search-title"><FilterIcon className="filter-icon" /> Filters</Typography>
           <div className="guide-tags-reset-button" onClick={() => { setSelectedTags([]); setSearchText(''); history.replace({ search: "" })}}>
             <ResetIcon className="reset-icon" />
             <Typography className="guide-tags-reset-button-text">Clear filters</Typography>

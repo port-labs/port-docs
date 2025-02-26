@@ -1,0 +1,25 @@
+```json showLineNumbers
+[
+  {
+    "blueprint": "servicenowChangeRequest",
+    "operation": "create",
+    "filter": "true",
+    "entity": {
+      "identifier": ".body.sys_id | tostring",
+      "title": ".body.short_description | tostring",
+      "properties": {
+        "number": ".body.number",
+        "state": ".body.phase_state",
+        "approval": ".body.approval",
+        "category": ".body.category",
+        "priority": ".body.priority",
+        "description": ".body.description",
+        "service": ".body.business_service",
+        "tags": ".body.tags",
+        "createdOn": ".body.sys_updated_on",
+        "createdBy": ".body.opened_by"
+      }
+    }
+  }
+]
+```

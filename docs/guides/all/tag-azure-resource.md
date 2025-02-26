@@ -9,7 +9,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Add Tags to Azure Resource
 
-In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](https://docs.getport.io//actions-and-automations/setup-backend/github-workflow) to add tags to a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview).
+In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](https://docs.port.io/actions-and-automations/setup-backend/github-workflow) to add tags to a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview).
 
 :::tip Use-cases
 Organize and manage your Azure resources effectively by adding tags directly through Port.
@@ -22,7 +22,7 @@ Organize and manage your Azure resources effectively by adding tags directly thr
 ## Prerequisites
 
 1. **Azure Subscription**: An active Azure subscription is required to deploy the storage account.
-2. **Port Actions Knowledge**: Understanding how to create and use Port actions is necessary. Learn the basics [here](https://docs.getport.io/actions-and-automations/create-self-service-experiences/setup-ui-for-action/).
+2. **Port Actions Knowledge**: Understanding how to create and use Port actions is necessary. Learn the basics [here](https://docs.port.io/actions-and-automations/create-self-service-experiences/setup-ui-for-action/).
 3. **GitHub Repository**: A repository to store your GitHub workflow file for this action.
 
 
@@ -35,8 +35,8 @@ To successfully execute this workflow, we will add the following secrets to the 
 - Navigate to your GitHub repository's "Settings" tab.
 - Select "Secrets" and then "Actions" from the side menu.
 - Create the following secrets:
-    - `PORT_CLIENT_ID`: Your Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
-    - `PORT_CLIENT_SECRET`: Your Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token).
+    - `PORT_CLIENT_ID`: Your Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/custom-integration/api/#get-api-token).
+    - `PORT_CLIENT_SECRET`: Your Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/custom-integration/api/#get-api-token).
 
 **2. Azure Cloud Credentials**
 
@@ -164,8 +164,7 @@ Import Azure resources into your Port account using the [Azure Exporter](/build-
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -413,7 +412,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
-            Starting a GitHub worklfow to tag the Azure resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
+            Starting a GitHub workflow to tag the Azure resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
 
   
       - uses: azure/login@v1

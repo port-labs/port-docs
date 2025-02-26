@@ -54,8 +54,8 @@ This guide walks you through creating custom pages using our [Pulumi provider](h
 **Prerequisites**
 
 1. Basic Port Concepts: Familiarity with <PortTooltip id="blueprint">blueprints</PortTooltip>, <PortTooltip id="entity">entities</PortTooltip>, and <PortTooltip id="dataset">datasets</PortTooltip> in your Port system is helpful.
-2. You will also need your [Port credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
-3. This guide also assumes that you have installed Pulumi, and [the Port provider's SDK](https://www.pulumi.com/registry/packages/port/installation-configuration/) in your chosen lanaguage.
+2. You will also need your [Port credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+3. This guide also assumes that you have installed Pulumi, and [the Port provider's SDK](https://www.pulumi.com/registry/packages/port/installation-configuration/) in your chosen language.
 
 <Tabs groupId="pulumi-create-dashboard" queryString values={[
 {label: "Python", value: "python"},
@@ -230,7 +230,7 @@ microservice_dashboard_page = Page(
 4. Let us now add helper functions to create <PortTooltip id="dataset">dataset</PortTooltip> dependent widgets.
 
 :::tip
-If you have not already, we recommend [installing](/build-your-software-catalog/sync-data-to-catalog/git/github/installation) the GitHub app in order to get some data into your Port account. Subsequently, you can use the blueprints from this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-file-contents-and-pull-requests) and follow along for tangible results.
+If you have not already, we recommend [installing](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) the GitHub app in order to get some data into your Port account. Subsequently, you can use the blueprints from this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-file-contents-and-pull-requests) and follow along for tangible results.
 :::
 
 <details>
@@ -362,7 +362,7 @@ dashboard_layout = {
     "id": "myDashboardWidget",  # This is optional, as Port can auto-generate IDs
     "type": "dashboard-widget",
     "layout": [
-        # previous configuration: markdown and qoute widgets,
+        # previous configuration: markdown and quote widgets,
         {
             "height": 400,
             "columns": [

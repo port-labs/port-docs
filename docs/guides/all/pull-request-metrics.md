@@ -6,7 +6,14 @@ description: Learn how to track pull request metrics in Port, gaining insights i
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Pull-request metrics
+# Pull-request metrics (~~Deprecated~~)
+
+:::warning Deprecated
+This guide is deprecated and is no longer recommended for use. Please refer to the new guides for the most up-to-date information:
+
+- [Track DORA metrics](https://docs.port.io/guides/all/setup-dora-metrics)
+- [Measuring pull request standards](https://docs.port.io/guides/all/working_agreements_and_measuring_pr_standards)
+:::
 
 In this guide, we will create a GitHub action that computes pull-request metrics for a service (repository) on schedule and ingests the results to Port.
 
@@ -379,13 +386,13 @@ PyGithub==2.3.0
 - `<REPO-BRANCH>` - your preferred GitHub repository branch to estimate metrics on.
 :::
 
-| Name                 | Description                                                                                          | Required | Default            |
-|----------------------|------------------------------------------------------------------------------------------------------|----------|--------------------
-| owner              | GitHub organization or user name                                                            | true    | -               |
-| repository              | your GitHub repository name. The GitHub repository name should be represented as an entity ID in the service blueprint.                                                              | true    | -               |
-| timeframe              | Time frame in weeks to calculate metrics on                                                                | false    | 4               |
-| branch              | your preferred GitHub repository branch to estimate metrics on                                                              | false    | main              |
-| workflows              | An array of workflows to process. Multiple workflows can be separated by a comma (,)                                                              | false    | []               |
+| Name       | Description                                                                                                             | Required | Default |
+|------------|-------------------------------------------------------------------------------------------------------------------------|----------|---------|
+| owner      | GitHub organization or user name                                                                                        | true     | -       |
+| repository | your GitHub repository name. The GitHub repository name should be represented as an entity ID in the service blueprint. | true     | -       |
+| timeframe  | Time frame in weeks to calculate metrics on                                                                             | false    | 4       |
+| branch     | your preferred GitHub repository branch to estimate metrics on                                                          | false    | main    |
+| workflows  | An array of workflows to process. Multiple workflows can be separated by a comma (,)                                    | false    | []      |
 
 
 ```json showLineNumbers title="dora-config.json"

@@ -1,0 +1,32 @@
+<details>
+
+<summary>Mapping configuration for Package</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: package
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .Id
+          title: .Title
+          blueprint: '"octopusPackage"'
+          properties:
+            description: .Description
+            feedId: .FeedId
+            fileExtension: .FileExtension
+            version: .Version
+            hash: .Hash
+            packageSizeBytes: .PackageSizeBytes
+            published: .Published
+            releaseNotes: .ReleaseNotes
+            summary: .Summary
+          relations:
+            space: .SpaceId
+```
+
+</details>

@@ -126,9 +126,9 @@ For merging YAML properties, the merging behavior will be the same, but if you s
 
 ## If-else conditions
 
-Assume that your services uses multiple packages, some services use packages written in Python and some services use packages written in Node.js.
+Assume that your services use multiple packages, some written in Python and some written in Node.js.
 
-By using an if-else JQ rule, you can specify a different URL to each package, based on its language:
+By using an if-else JQ rule, you can specify a different URL for each package, based on its language:
 
 ```json showLineNumbers
 "calculationProperties" : {

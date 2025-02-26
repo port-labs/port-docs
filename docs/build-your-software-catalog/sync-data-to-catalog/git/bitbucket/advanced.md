@@ -45,6 +45,16 @@ The `enableMergeEntity` parameter specifies whether to use the [create/update](/
 
 </TabItem>
 
+<TabItem value="createMissingRelatedEntities" label="Create missing related entities">
+
+The `createMissingRelatedEntities` parameter is used to enable the creation of missing related Port entities automatically in cases where the target related entity does not exist in the software catalog yet.
+
+- Default value: `true` to allow the Bitbucket app to create barebones related entities, in case those related entities do not exist in the software catalog.
+- Use case: use `false` if you do not want this default behavior (do not create missing related entities).
+
+</TabItem>
+
+
 </Tabs>
 
 All of the advanced configurations listed below can be added to the [`port-app-config.yml`](./bitbucket.md#port-app-configyml-file) file.

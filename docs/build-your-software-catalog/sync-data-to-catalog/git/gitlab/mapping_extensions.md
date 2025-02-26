@@ -39,7 +39,7 @@ To do so, we will use the `file://` prefix with the path of the file to tell the
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"service"'
+          blueprint: '"gitlabRepository"'
           properties:
             url: .web_url
             // highlight-next-line
@@ -65,7 +65,7 @@ This means that any search query supported by the GitLab Search API can be used 
 ### Syntax
 
 - `search://scope=<scope>&&query=<query>`
-  - `search://` - This ist the prefix to indicate that the mapping is a search check;
+  - `search://` - This is the prefix to indicate that the mapping is a search check;
   - `scope` - The scope of the search, currently only `blobs` are supported (searches in the repository files) (see [GitLab Search API](https://docs.gitlab.com/ee/api/search.html#scope) for more details);
   - `query` - The query to search for, expected to be a valid GitLab Advanced Search query (see [GitLab Advanced Search syntax](https://docs.gitlab.com/ee/user/search/advanced_search.html#syntax) for more details).
 
@@ -90,7 +90,7 @@ This means that any search query supported by the GitLab Search API can be used 
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"service"'
+          blueprint: '"gitlabRepository"'
           properties:
             url: .web_link
             description: .description

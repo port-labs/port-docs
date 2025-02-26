@@ -9,7 +9,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 # Deployment/Rollback
 
 In this guide, we will create a self-service action in Port that executes a GitHub workflow to perform either a deployment or rollback operation using ArgoCD. 
-:::info Updating Enviroments
+:::info Updating Environments
 It's important to note that **Deployment** and **Rollback** operations essentially perform the same operation, with the difference being that Rollback occurs in the production environment and requires manual approval.
 :::
 
@@ -278,8 +278,7 @@ Follow these steps to get started:
       }
     },
     "reportWorkflowStatus": true
-  },
-  "publish": true
+  }
 }
 ```
 

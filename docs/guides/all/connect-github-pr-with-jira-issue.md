@@ -14,8 +14,8 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 This guide aims to cover how to connect a GitHub pull request with a Jira Issue to understand the scan results of your PR.
 
 :::info Prerequisites
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
-- Ensure you have [Jira installed and configured in your environment](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview).
+- Ensure you have [Jira installed and configured in your environment](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
 - Ensure you have a registered organization in Port and your Port user role is set to `Admin`.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
 - [Helm](https://helm.sh/docs/intro/install/) - required to install a relevant integration.
@@ -26,7 +26,7 @@ This guide aims to cover how to connect a GitHub pull request with a Jira Issue 
 
 ## Integrate GitHub resources with Port
 
-The goal of this section is to fill the software catalog with data directly from your GitHub organization. [Port's GitHub app](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/) allows you to import `repositories`, `pull requests`, `workflows`, `teams` and other GitHub objects. For the purpose of this guide, we shall focus on pull requests (PR) object only. Follow the steps below to ingest your PR data to Port.
+The goal of this section is to fill the software catalog with data directly from your GitHub organization. [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) allows you to import `repositories`, `pull requests`, `workflows`, `teams` and other GitHub objects. For the purpose of this guide, we shall focus on pull requests (PR) object only. Follow the steps below to ingest your PR data to Port.
 
 :::info Note
 For the GitHub app installation you will need to have a registered organization in Port and your Port user role must be set to `Admin` (see [prerequisites](#connect-github-pull-request-with-jira-issue)).
@@ -103,7 +103,7 @@ For the GitHub app installation you will need to have a registered organization 
 
 </details>
 
-3. Install Port's GitHub app by following the [installation guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation)
+3. Install Port's GitHub app by following the [installation guide](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
 
 4. Now that the integration is installed successfully, we need to ingest `githubPullRequest` data from the GitHub organization into the software catalog. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your GitHub integration:
 
@@ -143,7 +143,7 @@ You should now be able to see your GitHub pull requests ingested successfully in
 
 ## Integrate Jira into Port
 
-The goal of this section is to bring our Jira issues into Port. [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects` and `issues` from your Jira account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
+The goal of this section is to bring our Jira issues into Port. [Port's Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects` and `issues` from your Jira account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
 
 :::info Note
 For this installation you will need Helm and a running K8s cluster (see [prerequisites](#connect-github-pull-request-with-jira-issue)).
@@ -152,7 +152,7 @@ For this installation you will need Helm and a running K8s cluster (see [prerequ
 
 1. Install Port's Jira integration using Helm, by running the command below in your terminal.
 
-- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
+- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 
 - Replace `jiraHost` with the host URL to your Jira application. To obtain it, simply copy it from the url address bar when you are on your Jira dashboard. It has the format, `<org name>.atlassian.com`. If you are on Jira self-hosted, you can simply use the host URL where your Jira application is hosted.
 
@@ -262,5 +262,5 @@ By following these steps, you can seamlessly connect a GitHub pull request with 
 
 More relevant guides and examples:
 
-- [Port's Jira integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
-- [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)
+- [Port's Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
+- [Integrate scorecards with Slack](https://docs.port.io/promote-scorecards/manage-using-3rd-party-apps/slack)

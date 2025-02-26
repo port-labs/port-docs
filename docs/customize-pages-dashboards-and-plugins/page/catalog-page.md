@@ -8,10 +8,17 @@ import SaveTableView from "/docs/customize-pages-dashboards-and-plugins/template
 
 # Catalog page
 
-A catalog page displays a table of all existing [entities](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
+A catalog page displays a table of all existing [entities](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#creating-entities) created from a [blueprint](https://docs.port.io/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint).  
 In this example we can see all of the microservice entities we created from the `microservice` blueprint:
 
 <img src='/img/software-catalog/pages/catalogPage.png' width='80%' border='1px' />
+<br/><br/>
+
+:::info Entity limit
+Tables are limited to displaying up to **100,000** entities.  
+All UI table operations such as searching, filtering, grouping, etc. will be limited only to the entities that are displayed in the table.  
+If one of your blueprints has more than 100,000 entities, you can use the [initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to narrow down the entities displayed in the table.
+:::
 
 ## Page creation
 
@@ -26,14 +33,14 @@ You can also manually create additional catalog pages for any existing blueprint
 
 <TabItem value="ui">
 
-To create a new catalog page, go to your [Software Catalog](https://app.getport.io/services), click the `+ New` button in the top left corner, and select `New catalog page`.
+To create a new catalog page, go to the [Catalog](https://app.getport.io/organization/catalog) page, click the `+ New` button in the top left corner, and select `New catalog page`.
 
 </TabItem>
 
 <TabItem value="api">
 
 :::tip API options
-See all the available API fields [here](https://api.getport.io/static/index.html#/Pages/post_v1_pages).
+See all the available API fields [here](https://api.getport.io/swagger/static/index.html#/Pages/post_v1_pages).
 :::
 
 ```json showLineNumbers
@@ -181,7 +188,7 @@ The description will be displayed at the top of the page, under the page title:
 In some cases, an entities table may be very large, resulting in long loading times. To prevent this, you can define filters that resolve when Port queries the data (rather than after querying).  
 To define such a filter, use the `Initial filters` field when creating a page:
 
-<img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' />
+<img src='/img/software-catalog/pages/initialFiltersForm.png' width='50%' border='1px' />
 
 <br/><br/>
 
@@ -206,13 +213,13 @@ You can use [dynamic properties](/search-and-query/#dynamic-properties) of the l
 Another way to reduce loading times is to exclude undesired properties from an entities table when querying the data. When using this option, the new table will not contain columns for the excluded properties.  
 To do this, use the `Excluded properties` field when creating a page:
 
-<img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%' />
+<img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%'  border='1px' />
 
 ## Customization
 
 The entities table can be customized, which will define the users' view of the Port platform.
 
-:::tip
+:::tip Recommended customizations
 
 We highly recommend using these customizations to provide a clean and accurate view of the platform for your developers.
 
@@ -259,7 +266,7 @@ You can sort the table by using the following menu:
 
 You can sort by one or more fields of any kind.
 
-:::tip
+:::tip Column sorting
 To sort a specific column, click on the column title.
 :::
 
@@ -272,7 +279,7 @@ You can show/hide properties by using the `Manage Properties` option in the top-
 
 You can also drag and drop the properties in this view to reorder them in the table.
 
-:::tip
+:::tip Hide irrelevant data
 We highly recommend hiding irrelevant data from users, to provide them with a clean work environment, relieving them from any distractions.
 :::
 
@@ -339,7 +346,7 @@ You can edit, lock or delete a page by clicking the `...` button in the top righ
 
 #### Editing pages
 
-Editing a page allows you to change its name and/or icon:
+Editing a page allows you to change various properties:
 
 ![Edit Page popup window](/img/software-catalog/pages/EditPageForm.png)
 

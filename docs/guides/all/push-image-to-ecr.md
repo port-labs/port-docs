@@ -252,8 +252,8 @@ jobs:
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
+  
 }
 ```
 </details>
@@ -299,6 +299,6 @@ Done! 🎉 You can now build and push images for your repositories from Port.
 
 
 ## More Self Service AWS Actions Examples
-- [Deploy EKS cluster and deploy application](https://docs.getport.io/guides/all/create-eks-cluster-and-deploy-app)
-- [Create an EC2 instance](https://docs.getport.io/guides/all/create-an-ec2-instance)
-- [Deploy cloud formation stack](https://docs.getport.io/guides/all/deploy-cloudformation-template)
+- [Deploy EKS cluster and deploy application](https://docs.port.io/guides/all/create-eks-cluster-and-deploy-app)
+- [Create an EC2 instance](https://docs.port.io/guides/all/create-an-ec2-instance)
+- [Deploy cloud formation stack](https://docs.port.io/guides/all/deploy-cloudformation-template)

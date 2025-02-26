@@ -15,7 +15,7 @@ This guide aims to cover how to connect a GitHub pull request with a SonarQube a
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart).
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview).
 - Ensure you have [SonarQube ocean integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md) installed and configured in your environment.
 - Ensure you have a registered organization in Port and your Port user role is set to `Admin`.
 - You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
@@ -27,7 +27,7 @@ This guide aims to cover how to connect a GitHub pull request with a SonarQube a
 
 ## Integrate GitHub resources with Port
 
-The goal of this section is to fill the software catalog with data directly from your GitHub organization. [Port's GitHub app](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/) allows you to import `repositories`, `pull requests`, `workflows`, `teams` and other GitHub objects. For the purpose of this guide, we shall focus on pull requests (PR) object only. Follow the steps below to ingest your PR data to Port.
+The goal of this section is to fill the software catalog with data directly from your GitHub organization. [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/) allows you to import `repositories`, `pull requests`, `workflows`, `teams` and other GitHub objects. For the purpose of this guide, we shall focus on pull requests (PR) object only. Follow the steps below to ingest your PR data to Port.
 
 :::info Note
 For the GitHub app installation you will need to have a registered organization in Port and your Port user role must be set to `Admin` (see [prerequisites](#)).
@@ -101,7 +101,7 @@ For the GitHub app installation you will need to have a registered organization 
     ```
     </details>
 
-3. Install Port's GitHub app by following the [installation guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/installation)
+3. Install Port's GitHub app by following the [installation guide](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
 
 4. Now that the integration is installed successfully, we need to ingest `githubPullRequest` data from the GitHub organization into the software catalog. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/settings/data-sources), and click on your GitHub integration:
 
@@ -142,7 +142,7 @@ For the GitHub app installation you will need to have a registered organization 
 
 ## Integrate SonarQube into Port
 
-The goal of this section is to bring our SonarQube analysis data into Port. [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
+The goal of this section is to bring our SonarQube analysis data into Port. [Port's SonarQube integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube) (powered by [Ocean](https://ocean.getport.io/)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into Port. The integration automatically creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for these resources.
 
 :::info Note
 For this installation you will need Helm and a running K8s cluster (see [prerequisites](#)).
@@ -150,33 +150,33 @@ For this installation you will need Helm and a running K8s cluster (see [prerequ
 
 1. Install Port's SonarQube integration using Helm, by running the command below in your terminal.
 
-- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
+   - Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
 
-- Replace `sonarApiToken` with your SonarQube token. To obtain it, [follow this documentation](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)
+   - Replace `sonarApiToken` with your SonarQube token. To obtain it, [follow this documentation](https://docs.sonarsource.com/sonarqube/9.6/user-guide/user-account/generating-and-using-tokens/#generating-a-token).
 
-- Replace `sonarOrganizationId` with your SonarQube organization ID. To obtain it, [follow this documentation](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys). Note that the SonarQube organization ID is not required when using on-prem sonarqube instance.
+   - Replace `sonarOrganizationId` with your SonarQube organization ID. To obtain it, [follow this documentation](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys). Note that the SonarQube organization ID is not required when using on-prem sonarqube instance.
 
-<details>
-<summary>Installation command (click to expand)</summary>
+   <details>
+   <summary>Installation command (click to expand)</summary>
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \  # REPLACE VALUE
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \  # REPLACE VALUE
-	--set initializePortResources=true  \
-	--set integration.identifier="my-sonarqube-integration"  \
-	--set integration.type="sonarqube"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.sonarApiToken="MY_API_TOKEN"  \  # REPLACE VALUE
-	--set integration.config.sonarOrganizationId="MY_ORG_KEY"  # REPLACE VALUE
-```
-</details>
+   ```bash showLineNumbers
+   helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
+   helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
+   	--set port.clientId="PORT_CLIENT_ID"  \  # REPLACE VALUE
+   	--set port.clientSecret="PORT_CLIENT_SECRET"  \  # REPLACE VALUE
+   	--set initializePortResources=true  \
+   	--set integration.identifier="my-sonarqube-integration"  \
+   	--set integration.type="sonarqube"  \
+   	--set integration.eventListener.type="POLLING"  \
+   	--set integration.secrets.sonarApiToken="MY_API_TOKEN"  \  # REPLACE VALUE
+   	--set integration.config.sonarOrganizationId="MY_ORG_KEY"  # REPLACE VALUE
+   ```
+   </details>
 
 2. Great! Now that the integration is installed, we should see some new components in Port:
 
-- Go to your [Builder](https://app.getport.io/settings/data-model), you should now see three new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `SonarQube Project`, `SonarQube Issue` and `SonarQube Analysis`.
-- Go to your [Software catalog](https://app.getport.io/services), click on `SonarQube Analysis` in the sidebar, you should now see new <PortTooltip id="entity">entities</PortTooltip> created for all your SonarQube analysis.
+   - Go to your [Builder](https://app.getport.io/settings/data-model), you should now see three new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `SonarQube Project`, `SonarQube Issue` and `SonarQube Analysis`.
+   - Go to your [Software catalog](https://app.getport.io/services), click on `SonarQube Analysis` in the sidebar, you should now see new <PortTooltip id="entity">entities</PortTooltip> created for all your SonarQube analysis.
 
 
 ## Create the Sonar analysis relation
@@ -263,7 +263,7 @@ This configuration uses the `title` and `branch` properties to establish a relat
 
 The second way is to use the `commitSha` property that is common to both the pull request and SonarQube analysis:
    
-- Go to the [data model](https://github.com/port-labs/port-docs/pull/link-to-data-model) page of your portal
+- Go to the [data model](https://app.getport.io/settings/data-model) page of your portal
 - Go to the `SonarQube` <PortTooltip id="blueprint">blueprint</PortTooltip>.
 - Hover over it, click on the `...` button on the right, and select `Edit JSON`.
 <br></br>
@@ -322,7 +322,7 @@ By using **properties** like `title`, `branch`, and `commitSha`, we are able to 
 
 ## Configure mirror properties on pull request
 
-When looking at a `Pull Request`, some of its `sonarAnalysis` properties may be especially important to us, and we would like to see them directly in the `Pull Request's` context. This can be achieved using [mirror properties](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/), so let's create some:
+When looking at a `Pull Request`, some of its `sonarAnalysis` properties may be especially important to us, and we would like to see them directly in the `Pull Request's` context. This can be achieved using [mirror properties](https://docs.port.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/), so let's create some:
 
 1. The first one will be the number of new issues added to the analysis. Under the relation we just created, click on `New mirror property`:
 
@@ -362,6 +362,6 @@ By following these steps, you can seamlessly connect a GitHub pull request with 
 
 More relevant guides and examples:
 
-- [Port's SonarQube integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
-- [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)
-- [Connect GitHub repository with SonarQube Project](https://docs.getport.io/guides/all/connect-github-repository-with-sonarqube-project)
+- [Port's SonarQube integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
+- [Integrate scorecards with Slack](https://docs.port.io/promote-scorecards/manage-using-3rd-party-apps/slack)
+- [Connect GitHub repository with SonarQube Project](https://docs.port.io/guides/all/connect-github-repository-with-sonarqube-project)

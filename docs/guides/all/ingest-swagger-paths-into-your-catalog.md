@@ -1,16 +1,16 @@
 ---
-description: Ingest API paths from a `swagger.json` file in a GitHub repository into Port
+description: Ingest API paths from an OpenAPI spec in a GitHub repository into Port
 displayed_sidebar: null
-title: Ingest Swagger paths from swagger.json file into your catalog
+title: Ingest API paths from an OpenAPI spec in a GitHub repository into your catalog
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import SwaggerBlueprint from '../templates/swagger/\_example_swagger_blueprint.mdx'
-import SwaggerWebhookConfig from '../templates/swagger/\_example_swagger_webhook_config.mdx'
+import SwaggerBlueprint from '../templates/swagger/_example_swagger_blueprint.mdx'
+import SwaggerWebhookConfig from '../templates/swagger/_example_swagger_webhook_config.mdx'
 
-# Ingest Swagger paths from swagger.json file into your catalog
-The following example shows you how to create a `swaggerPath` blueprint that ingests all API paths in your `swagger.json` file using Port's GitHub file ingesting feature.
+# Ingest API paths from an OpenAPI spec in a GitHub repository into Port
+The following example demonstrates how to create an `apiPath` blueprint, and ingest all API paths in your spec JSON file using Port's GitHub file ingesting feature.
 
 To ingest the packages to Port, the GitHub integration is used.
 
@@ -18,7 +18,7 @@ To ingest the packages to Port, the GitHub integration is used.
 ## Prerequisites
 This guide assumes:
 - You have a Port account
-- You have installed [Port's GitHub app](docs/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) in your organisation or in repositories you are interested in.
+- You have installed [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) in your organisation or in repositories you are interested in.
 
 ## GitHub configuration
 
@@ -75,13 +75,13 @@ When **using Port's UI**, the specified configuration will override any `port-ap
 Create the following blueprint definition and mapping configuration:
 
 <details>
-<summary>Swagger path blueprint</summary>
+<summary>API path blueprint</summary>
 
 ```json showLineNumbers
 {
-  "identifier": "swaggerPath",
-  "description": "This blueprint represents a Swagger path in our software catalog",
-  "title": "Swagger API Paths",
+  "identifier": "apiPath",
+  "description": "This blueprint represents an OpenAPI path in our software catalog",
+  "title": "API Paths",
   "icon": "Swagger",
   "schema": {
     "properties": {
@@ -98,9 +98,9 @@ Create the following blueprint definition and mapping configuration:
           "patch": "purple"
         }
       },
-      "host": {
+      "serverUrl": {
         "type": "string",
-        "title": "API Base URL",
+        "title": "Server URL",
         "format": "url"
       },
       "path": {
@@ -113,6 +113,10 @@ Create the following blueprint definition and mapping configuration:
         },
         "title": "Parameters",
         "type": "array"
+      },
+      "requestBody": {
+        "title": "Request Body",
+        "type": "object"
       },
       "responses": {
         "title": "Responses",
@@ -129,6 +133,13 @@ Create the following blueprint definition and mapping configuration:
       "summary": {
         "title": "Summary",
         "type": "string"
+      },
+      "tags": {
+        "title": "Tags",
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
       }
     },
     "required": []
@@ -142,7 +153,7 @@ Create the following blueprint definition and mapping configuration:
 </details>
 
 <details>
-<summary>Swagger path mapping configuration</summary>
+<summary>API path mapping configuration</summary>
 
 ```yaml showLineNumbers
 resources:
@@ -150,24 +161,37 @@ resources:
     selector:
       query: 'true'
       files:
-        - path: '**/swagger.json' # or .yaml
+        - path: '**/openapi.json' # or .yaml
     
     port:
-      itemsToParse: '[. as $root | .paths | to_entries[] as $entries | {version: $root.info.version, host: $root.host, base_path: $root.basePath, title: $root.info.title, path: $entries.key, methods: ($entries.value | to_entries[] as $inner | {method: ($inner.key), rest: $inner.value, path: $entries.key})}][] | {id: .title + "-" + .path + .methods.method, path, method: .methods.method, summary: .methods.rest.summary, description: .methods.rest.description, parameters: .methods.rest.parameters, responses: .methods.rest.responses, project: .title, version, host: "https://" + .host + .base_path}'
+      itemsToParse: >-
+        .file.content | [[. as $root | .paths | to_entries[] as $entries |
+        {version: $root.info.version, servers: $root.servers, title:
+        $root.info.title, path: $entries.key, methods: ($entries.value |
+        to_entries[] as $inner | {method: ($inner.key), rest: $inner.value,
+        path: $entries.key})}][] | {id: (.title + "-" + .path +
+        .methods.method), path, method: .methods.method, summary:
+        .methods.rest.summary, description: .methods.rest.description,
+        parameters: .methods.rest.parameters, requestBody:
+        .methods.rest.requestBody, responses: .methods.rest.responses, tags:
+        .methods.rest.tags, project: .title, version, serverUrl:
+        .servers[0].url}]
       entity:
         mappings:
           identifier: '.item.id | sub("[^A-Za-z0-9@_.:/=-]"; "-"; "g")'
           title: .item.method + .item.path
-          blueprint: '"swaggerPath"'
+          blueprint: '"apiPath"'
           properties:
             method: .item.method
-            host: .item.host
+            serverUrl: .item.serverUrl
             path: .item.path
             parameters: .item.parameters
+            requestBody: .item.requestBody
             responses: .item.responses
             description: .item.description
             version: .item.version
             summary: .item.summary
+            tags: .item.tags
           relations: {}
 ```
 

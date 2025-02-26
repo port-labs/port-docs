@@ -20,8 +20,8 @@ This GitHub action allows you to add tags to an S3 Bucket via Port Actions with 
 - `AWS_REGION` - The region where S3 buckets are located. Available regions can be found on the [Regions, Availability Zones, and Local Zones page](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Regions) in AWS documentation.
 - `AWS_ACCESS_KEY_ID` - AWS Access Key
 - `AWS_SECRET_ACCESS_KEY` - AWS Secret Key, also gotten from the access key creation
-- `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+- `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
 3. Create an AWS S3 Bucket blueprint in Port using the blueprint below:
 
@@ -137,8 +137,7 @@ Replace the invocation method with your own repository details.
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -174,7 +173,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{ fromJson(inputs.port_context).runId }}
           logMessage: |
-            Starting a GitHub worklfow to tag the AWS resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
+            Starting a GitHub workflow to tag the AWS resource: ${{fromJson(inputs.port_context).entity.identifier}} ... ⛴️
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

@@ -1,0 +1,20 @@
+<details>
+
+<summary> Integration mapping </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: column
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .__stateType+"-"+.name+"-"+.__board.__project.id | gsub(" "; "")
+          title: .name
+          blueprint: '"column"'
+          relations:
+            board: .__board.id | gsub(" "; "")
+```
+
+</details>

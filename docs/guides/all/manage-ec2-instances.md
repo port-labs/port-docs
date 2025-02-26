@@ -30,12 +30,12 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
 
 3.  Create the following GitHub Action secrets:
     _ Port credentials:
-    _ `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) \* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    _ `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) \* `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
         * AWS Cloud credentials:
             - `AWS_ACCESS_KEY_ID`: Your AWS access key.
             - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
-            - `AWS_REGION` - the aws region which constains your ec2 instances.
+            - `AWS_REGION` - the aws region which contains your ec2 instances.
 
 ## Terminating an Instance
 
@@ -77,8 +77,7 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -180,8 +179,7 @@ jobs:
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false 
 }
 ```
 
@@ -311,8 +309,7 @@ jobs:
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

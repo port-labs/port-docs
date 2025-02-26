@@ -1,12 +1,13 @@
 <details>
 
-<summary> Ocean integration configuration </summary>
+<summary> Integration mapping </summary>
 
 ```yaml showLineNumbers
 resources:
   - kind: work-item
     selector:
       query: 'true'
+      expand: 'All'
       wiql: '[System.WorkItemType] = "Task" order by [System.CreatedDate] desc'
     port:
       entity:
@@ -23,10 +24,14 @@ resources:
             reason: .fields."System.Reason"
             createdBy: .fields."System.CreatedBy".displayName
             changedBy: .fields."System.ChangedBy".displayName
+            assignedTo: .fields."System.AssignedTo".displayName
             createdDate: .fields."System.CreatedDate"
             changedDate: .fields."System.ChangedDate"
           relations:
             project: .__projectId | gsub(" "; "")
+            column: >-
+              .fields."System.WorkItemType"+"-"+.fields."System.BoardColumn"+"-"+.__project.id
+              | gsub(" "; "")
 
 ```
 

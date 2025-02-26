@@ -1,4 +1,4 @@
-- This guide assumes you have completed the [visualize your services' k8s runtime guide](https://docs.getport.io/guides/all/visualize-service-k8s-runtime/) 
+- This guide assumes you have completed the [visualize your services' k8s runtime guide](https://docs.port.io/guides/all/visualize-service-k8s-runtime/) 
 - [Helm](https://helm.sh) must be installed to use the chart. Please refer to Helm's [documentation](https://helm.sh/docs) to get started
 - The `jq` command must installed
 - The `yq` command must installed
@@ -10,6 +10,6 @@ In this use-case, you will use a custom bash script which will assist you in the
 The script will install the helm chart to the Kubernetes cluster which is currently in kubectl context.
 To view the context name of the cluster the exporter will be installed on, run:
 
-```bash showLineNumbers
+```bash
 kubectl config current-context
 ```
