@@ -161,7 +161,7 @@ To make the **Port** app connection work, users who have access need to have a l
    ![Azure app permissions summary](/img/sso/azure-ad/AzureAppPermissionsFinal.png)
 
    :::info  
-   If you wish to configure the `groups claim` to pull your AzureAD groups into Port, please follow [How to allow pulling AzureAD groups to Port](#how-to-allow-pulling-azuread-groups-to-port).
+   If you wish to configure the `groups claim` to pull your AzureAD groups into Port, please follow [Permissions required to pull AzureAD groups to Port](#permissions-required-to-pull-azuread-groups-to-port).
    :::
 
 ### Step #5: Configuring application secret
