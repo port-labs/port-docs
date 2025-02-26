@@ -129,6 +129,10 @@ To make the **Port** app connection work, users who have access need to have a l
    3.3 Search and mark the following permissions:
 
    - `email`, `openid`, `profile`, `User.read`.
+  
+   :::info  
+   If you wish to pull in AzureAD groups into Port, you will also need to add the `Directory.Read.All` permission. See [Permissions required to pull AzureAD groups to Port](#permissions-required-to-pull-azuread-groups-to-port).
+   :::
 
    ![Azure API set permissions](/img/sso/azure-ad/AzureAppAPIPermissionsSettings.png)
 
@@ -159,10 +163,6 @@ To make the **Port** app connection work, users who have access need to have a l
 4. Your optional claims will look like this:
 
    ![Azure app permissions summary](/img/sso/azure-ad/AzureAppPermissionsFinal.png)
-
-   :::info  
-   If you wish to configure the `groups claim` to pull your AzureAD groups into Port, please follow [Permissions required to pull AzureAD groups to Port](#permissions-required-to-pull-azuread-groups-to-port).
-   :::
 
 ### Step #5: Configuring application secret
 
