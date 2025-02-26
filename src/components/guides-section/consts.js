@@ -885,22 +885,22 @@ export const availableGuides = [
         link: "/guides/all/create-surveys",
     },
     {
-        title: "Ingest Slack channels data into Port via Airbyte, S3 and Webhook",
-        description: "A step-by-step guide to configuring a pipeline that retrieves Slack data from S3 using Airbyte, triggers ingestion via webhooks, and ultimately integrates everything into Port for streamlined data management.",
+        title: "Ingest Slack channels data with Airbyte, S3 and Webhook",
+        description: "A step-by-step guide to sending Slack channel data to S3 with Airbyte, then ingesting it into Port via a custom webhook integration.",
         tags: ["Slack", "Automations", "AWS", "Webhook"],
         logos: ["Slack", "AWS", "Webhook"],
         link: "/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook"
     },
     {
-        title: "Ingest HiBob data into Port via Airbyte, S3 and Webhook",
-        description: "A step-by-step guide to configuring a pipeline that retrieves Hibob data from S3 using Airbyte, triggers ingestion via webhooks, and ultimately integrates everything into Port for streamlined data management.",
+        title: "Ingest HiBob data with Airbyte, S3 and Webhook",
+        description: "A step-by-step guide to sending Hibob data to S3 with Airbyte, then ingesting it into Port via a custom webhook integration.",
         tags: ["Automations", "AWS", "Webhook"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook"
     },
     {
-        title: "Ingest Okta data into Port via Airbyte, S3 and Webhook",
-        description: "A step-by-step guide to configuring a pipeline that retrieves Okta data from S3 using Airbyte, triggers ingestion via webhooks, and ultimately integrates everything into Port for streamlined data management.",
+        title: "Ingest Okta data with Airbyte, S3 and Webhook",
+        description: "A step-by-step guide to sending Okta data to S3 with Airbyte, then ingesting it into Port via a custom webhook integration.",
         tags: ["Automations", "AWS", "Webhook"],
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
