@@ -10,7 +10,7 @@ The Jenkins backend allows you to trigger Jenkins pipelines for your self-servic
 The steps shown in the image above are as follows:
 
 1. A self-service action or automation is invoked in Port.
-2. Port signs the action payload using SHA-1 with your Port [`clientSecret`](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
+2. Port signs the action payload using SHA-1 with your Port [`clientSecret`](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `x-port-signature` request header.
 
    :::info Webhook security
    Verifying the webhook request using the request headers provides the following benefits:
