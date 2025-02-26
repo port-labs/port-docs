@@ -211,6 +211,6 @@ If you're sure the Airbyte integration is working properly, there are no records
 there might be an issue with the pipeline set up by port. In this case, contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) and our support team will assist in diagnosing and solving the issue.
 
 ### More Airbyte, S3 and Webhook integration guides:
-- [Ingest Slack data into port]()
-- [Ingest Okta data into port]()
-- [Ingest Hibob data into port]()
+- [Ingest Slack data into port](https://docs.port.io/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook)
+- [Ingest Okta data into port](https://docs.port.io/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook)
+- [Ingest Hibob data into port](https://docs.port.io/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook)
