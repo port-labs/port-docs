@@ -9,34 +9,34 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
 
 
-# Ingest Okta data into Port via Airbyte, S3 and Webhook
+# Ingest Okta data into Port via Airbyte, S3 and webhook
 
-This guide will demonstrate how to ingest Okta data into Port using Airbyte, S3 and Webhook integration.
+This guide will demonstrate how to ingest Okta data into Port using Airbyte, S3 and a webhook integration.
 
 ## Prerequisites
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
-- Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) to set up the integration and get Access keys and S3 Bucket name.
 
-:::note contact us
-This feature is part of our limited-access offering. To obtain the required S3 bucket, please contact our team directly. We will create and manage the bucket on your behalf
-:::
+- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via Intercom, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
 
-- Access to available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart)
-- You have generated Okta Personal API Token to retrieve data
+- Access to an available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart).
+
+- An Okta **Personal API Token** used to retrieve data.
 
 
 ## Data model setup
-
 
 ### Add Blueprints 
 
 Add the `Okta Permission` blueprint:
 
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
-4. **Add this JSON schema**:
+1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
+
+2. Click on "+ Blueprint".
+
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+
+4. Paste the following JSON schema into the editor:
 
 <details>
 <summary><b>Okta Permission (Click to expand)</b></summary>
@@ -75,14 +75,9 @@ Add the `Okta Permission` blueprint:
 ```
 
 </details>
+<br/>
 
-
-Add the `Okta Role` blueprint:
-
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
-4. **Add this JSON schema**:
+Add the `Okta Role` blueprint in the same way:
 
 <details>
 <summary><b>Okta Role (Click to expand)</b></summary>
@@ -128,14 +123,9 @@ Add the `Okta Role` blueprint:
 ```
 
 </details>
+<br/>
 
-
-Add the `Okta Role Assignment` blueprint:
-
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
-4. **Add this JSON schema**:
+Add the `Okta Role Assignment` blueprint in the same way:
 
 <details>
 <summary><b>Okta Role Assignment (Click to expand)</b></summary>
@@ -190,13 +180,8 @@ Add the `Okta Role Assignment` blueprint:
 ```
 
 </details>
-
-Add the `Okta User` blueprint:
-
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
-4. **Add this JSON schema**:
+<br/>
+Add the `Okta User` blueprint in the same way:
 
 <details>
 <summary><b>Okta User (Click to expand)</b></summary>
@@ -286,15 +271,19 @@ Add the `Okta User` blueprint:
 
 ### Create Webhook Integration
 
-Create Webhook integration to ingest the data into Port:
+Create a webhook integration to ingest the data into Port:
 
-1. **Go to the [Data-Sources](https://app.getport.io/settings/data-sources)** page in your Port portal.
-2. **Click on "+ Data source"**.
-3. In the top selection bar, **click on Webhook** and then **Custom Integration**.
-4. Enter a **name for your Integration** (for example: "Okta Integration"), a description (optional), and **Click on Next**
-5. **Copy the Webhook URL** that was generated and include set up the airbyte connection (see Below).
-6. Scroll down to the **3rd Section - Map the data from the external system into Port** and **Paste** the following mapping:
+1. Go to the [Data sources page](https://app.getport.io/settings/data-sources) of your portal.
 
+2. Click on "+ Data source".
+
+3. In the top selection bar, click on Webhook, then select `Custom Integration`.
+
+4. Enter a **name** for your Integration (for example: "Okta Integration"), enter a **description** (optional), then click on `Next`.
+
+5. Copy the Webhook URL that was generated and include set up the airbyte connection (see Below).
+
+6. Scroll down to the section titled "Map the data from the external system into Port" and paste the following mapping:
 
 <details>
 <summary><b>Okta Webhook Mapping (Click to expand)</b></summary>
@@ -371,8 +360,6 @@ Create Webhook integration to ingest the data into Port:
 
 </details>
 
-<br/>
-
 ## Airbyte Setup
 
 ### Set up S3 Destination
@@ -383,20 +370,22 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
 
 ### Set up Okta Connection
 
-1. Follow Airbyte's guide to set up [Okta connector](https://docs.airbyte.com/integrations/sources/okta)
-2. After the Source is set up, Proceed to Create a "+ New Connection"
-3. For Source, choose the Okta source you have set up
-4. For Destination, choose the S3 Destination you have set up
-5. In the **Select Streams** step, make sure only "custom_roles", "permissions", "user_role_assignments" and "users" are marked for synchronization
-6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and **enter the Webhook URL you have copied when setting up the webhook"**, for example: "wSLvwtI1LFwQzXXX" 
-7. **Click on Finish & Sync** to apply and start the Integration process!
+1. Follow Airbyte's guide to set up [Okta connector](https://docs.airbyte.com/integrations/sources/okta).
+
+2. After the Source is set up, proceed to create a "+ New Connection".
+
+3. For **Source**, choose the Okta source you have set up.
+
+4. For **Destination**, choose the S3 Destination you have set up.
+
+5. In the **Select Streams** step, make sure only "custom_roles", "permissions", "user_role_assignments" and "users" are marked for synchronization.
+
+6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and **enter the Webhook URL you have copied when setting up the webhook"**, for example: "wSLvwtI1LFwQzXXX".
+
+7. Click on **Finish & Sync** to apply and start the Integration process!
 
 :::tip Important
-  If for any reason you have entered different values than the ones specific listed in this guide,
-  inform us of these changes using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)
-  to ensure the integration will run smoothly.
+  If for any reason you have entered different values than the ones specified in this guide,
+  inform us so we can assist to ensure the integration will run smoothly.
 ::: 
-
-By following these steps, you have effectively created and executed a continuous integration of Okta data into Port 🎉.
-
 

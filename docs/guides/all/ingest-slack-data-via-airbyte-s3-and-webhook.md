@@ -9,38 +9,38 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
 
 
-# Ingest Slack channels data into Port via Airbyte, S3 and Webhook
+# Ingest Slack channels data into Port via Airbyte, S3 and webhook
 
-This guide will demonstrate how to ingest Slack channels and channel membership data into Port using Airbyte, S3 and Webhook integration.
+This guide will demonstrate how to ingest Slack channels and channel membership data into Port using Airbyte, S3 and a webhook integration.
 
 ## Prerequisites
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
-- Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) to set up the integration and get Access keys and S3 Bucket name.
 
-:::note contact us
-This feature is part of our limited-access offering. To obtain the required S3 bucket, please contact our team directly. We will create and manage the bucket on your behalf
-:::
+- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via Intercom, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
 
-- Access to available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart)
-- Setup Slack Airbyte exporter App - follow [Airbyte's guide for slack connector](https://docs.airbyte.com/integrations/sources/slack)
+- Access to an available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart).
 
-:::tip Important
-If you wish to include Email data, in addition to the permissions listed in the guide above, you need to also include user.email:read 
-:::
+- Setup a Slack Airbyte exporter app - follow [Airbyte's guide for slack connector](https://docs.airbyte.com/integrations/sources/slack).
+
+  :::tip Include email data
+  If you wish to include email data, in addition to the permissions listed in the guide above, you will need to include `user.email:read` in the app's permissions.
+  :::
 
   
 ## Data model setup
-
 
 ### Add Blueprints 
 
 Add the `Slack Channel Membership` blueprint:
 
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
-4. **Add this JSON schema**:
+1. Go to the [Builder page](https://app.getport.io/settings/data-model) of your portal.
+
+2. Click on "+ Blueprint".
+
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+
+4. Paste the following JSON schema into the editor:
 
 <details>
 <summary><b>Slack Channel Membership (Click to expand)</b></summary>
@@ -75,13 +75,9 @@ Add the `Slack Channel Membership` blueprint:
 ```
 
 </details>
+<br/>
 
-Add the `Slack Channel` blueprint:
-
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
-4. **Add this JSON schema**:
+Add the `Slack Channel` blueprint in the same way:
 
 <details>
 <summary><b>Slack Channel (Click to expand)</b></summary>
@@ -177,14 +173,9 @@ Add the `Slack Channel` blueprint:
 ```
 
 </details>
+<br/>
 
-
-Add the `Slack User` blueprint:
-
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
-2. **Click on "+ Blueprint"**.
-3. **Click on the `{...}` button** in the top right corner, and choose "Edit JSON".
-4. **Add this JSON schema**:
+Add the `Slack User` blueprint in the same way:
 
 <details>
 <summary><b>Slack User (Click to expand)</b></summary>
@@ -267,20 +258,21 @@ Add the `Slack User` blueprint:
 
 </details>
 
-
-<br/>
-
 ### Create Webhook Integration
 
-Create Webhook integration to ingest the data into Port:
+Create a webhook integration to ingest the data into Port:
 
-1. **Go to the [Data-Sources](https://app.getport.io/settings/data-sources)** page in your Port portal.
-2. **Click on "+ Data source"**.
-3. In the top selection bar, **click on Webhook** and then **Custom Integration**.
-4. Enter a **name for your Integration** (for example: "Slack Integration"), a description (optional), and **Click on Next**
-5. **Copy the Webhook URL** that was generated and include set up the airbyte connection (see Below).
-6. Scroll down to the **3rd Section - Map the data from the external system into Port** and **Paste** the following mapping:
+1. Go to the [Data sources page](https://app.getport.io/settings/data-sources) of your portal.
 
+2. Click on "+ Data source".
+
+3. In the top selection bar, click on Webhook, then select `Custom Integration`.
+
+4. Enter a **name** for your Integration (for example: "Slack Integration"), enter a **description** (optional), then click on `Next`.
+
+5. Copy the Webhook URL that was generated and include set up the airbyte connection (see Below).
+
+6. Scroll down to the section titled "Map the data from the external system into Port" and paste the following mapping:
 
 <details>
 <summary><b>Slack Webhook Mapping (Click to expand)</b></summary>
@@ -367,8 +359,6 @@ Create Webhook integration to ingest the data into Port:
 
 </details>
 
-<br/>
-
 ## Airbyte Setup
 
 ### Set up S3 Destination
@@ -380,27 +370,28 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
 
 ### Set up Slack Connection
 
-1. Follow Airbyte's guide to set up [Slack connector](https://docs.airbyte.com/integrations/sources/slack)
+1. Follow Airbyte's guide to set up a [Slack connector](https://docs.airbyte.com/integrations/sources/slack).
 
-:::tip Important
-  Airbyte will not read information from private channels by default. 
-  If you wish to include private channels: tick the "include private channels" option, 
-  and manually add the Slack-export App to the channels you desire.
-::: 
+    :::tip Private Channels
+      Airbyte will not read information from private channels by default. 
+      If you wish to include private channels: tick the "include private channels" option, 
+      and manually add the Slack-export App to your desired private channels.
+    ::: 
 
-2. After the Source is set up, Proceed to Create a "+ New Connection"
-3. For Source, choose the Slack source you have set up
-4. For Destination, choose the S3 Destination you have set up
-5. In the **Select Streams** step, make sure only "channel_members", "channels" and "users" are marked for synchronization
-6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and **enter the Webhook URL you have copied when setting up the webhook"**, for example: "wSLvwtI1LFwQzXXX" 
+2. After the Source is set up, proceed to create a "+ New Connection".
+
+3. For **Source**, choose the Slack source you have set up.
+
+4. For **Destination**, choose the S3 Destination you have set up.
+
+5. In the **Select Streams** step, make sure only "channel_members", "channels" and "users" are marked for synchronization.
+
+6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and **enter the Webhook URL you have copied when setting up the webhook"**, for example: "wSLvwtI1LFwQzXXX".
+
 7. **Click on Finish & Sync** to apply and start the Integration process!
 
 :::tip Important
-  If for any reason you have entered different values than the ones specific listed in this guide,
-  inform us of these changes using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)
-  to ensure the integration will run smoothly.
+  If for any reason you have entered different values than the ones specified in this guide,
+  inform us so we can assist to ensure the integration will run smoothly.
 ::: 
-
-By following these steps, you have effectively created and executed a continuous integration of Slack channel & user data into Port 🎉.
-
 
