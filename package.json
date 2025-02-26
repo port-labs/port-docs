@@ -31,7 +31,7 @@
     "clsx": "^2.1.1",
     "docusaurus-plugin-hotjar": "^0.0.2",
     "docusaurus-plugin-image-zoom": "^3.0.1",
-    "docusaurus-plugin-openapi-docs": "^4.3.4",
+    "docusaurus-plugin-openapi-docs": "^4.3.5",
     "docusaurus-theme-openapi-docs": "^4.3.4",
     "prettier": "^3.5.2",
     "prism-react-renderer": "^2.4.1",
