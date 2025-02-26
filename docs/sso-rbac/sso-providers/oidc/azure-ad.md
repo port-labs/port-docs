@@ -131,7 +131,7 @@ To make the **Port** app connection work, users who have access need to have a l
    - `email`, `openid`, `profile`, `User.read`.
 
 
-   :::info  
+   :::info AzureAD groups
    If you wish to pull in AzureAD groups into Port, you will also need to add the `Directory.Read.All` permission. See [Permissions required to pull AzureAD groups to Port](#permissions-required-to-pull-azuread-groups-to-port).
    :::
 
