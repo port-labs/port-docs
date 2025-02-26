@@ -88,7 +88,7 @@ It can be deployed on any platform that allows deploying images as containers su
 You can pull the Docker image by running:
 
 ```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.15.0
+docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.16.0
 ```
 
 Run the following command to start the app:
@@ -105,7 +105,7 @@ docker run \
   -e PORT_CLIENT_SECRET=<CLIENT_SECRET> \
   -e PRIVATE_KEY=<BASE 64 PRIVATEKEY> \
   -p <PORT>:<PORT> \
-  ghcr.io/port-labs/port-self-hosted-github-app:0.15.0
+  ghcr.io/port-labs/port-self-hosted-github-app:0.16.0
 ```
 
 | Env variable         | Description                                                                         |
@@ -152,6 +152,6 @@ After you have the app registered in your organization and the Docker is up and 
 
 As this is a self-hosted version, there are some limitations due to security considerations and the fact that we don't have access to your GitHub instance
 
-- You must include configuration as part of the repository, and you can't configure it via Port's UI/API;
+- The configuration must be included as part of the repository, and cannot be configured via Port's UI/API. Refer to the [GitHub Configuration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/?method=github#configuration) for more details.
 
 - To use self-service actions, you will need [Kafka Credentials](/actions-and-automations/setup-backend/webhook/kafka/kafka.md) configured for your organization;
