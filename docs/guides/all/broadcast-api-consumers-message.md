@@ -248,8 +248,7 @@ We will create a slack channel for each service, and therefore a webhook for eac
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -258,8 +257,8 @@ We will create a slack channel for each service, and therefore a webhook for eac
 ## Github workflow
 
 1. Create the following GitHub Action secrets:
-    - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token)
-    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#get-api-token)
+    - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/custom-integration/api/#get-api-token)
+    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/custom-integration/api/#get-api-token)
 <br />
 
 2. In your Github repository, create a python script file under `/scripts/broadcast_messages.py` with the following content:

@@ -1,0 +1,18 @@
+```json showLineNumbers
+- kind: team
+  selector:
+    query: "true"
+    includeMembers: true
+  port:
+    entity:
+      mappings:
+        identifier: .teamId
+        title: .displayName
+        blueprint: '"jiraTeam"'
+        properties:
+          organizationId: .organizationId
+          teamType: .teamType
+          description: .description
+        relations:
+          members: if .__members != null then .__members | map(.accountId) else [] end
+```

@@ -56,7 +56,7 @@ Click `activate`.
    2. Copy the `IDP URL` from the SSO tab
       ![Jumpcloud IDP URL](/img/sso/jumpcloud/JumpcloudIDPUrl.png)
 
-6. Via intercom/slack, provide Port with the downloaded `certificate.pem` file, and the copied `IDP URL`.
+6. Via Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io), provide Port with the downloaded `certificate.pem` file, and the copied `IDP URL`.
 
 :::note
 After providing the `certificate.pem` file and the the `IDP URL` to Port, you will be provided with you with your `{CONNECTION_NAME}`. Replace the following occurrences with the provided value.

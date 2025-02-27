@@ -53,7 +53,7 @@ Each catalog page in your software catalog contains a table with all entities cr
 4. To create a new property in the blueprint, click on the `+ Property` button in the bottom of the dropdown.
 
 :::tip Hiding properties
-You can also hide properties from the table by clicking on the toggle next the `...` icon.
+You can also hide properties from the table by clicking on the toggle on the right side of the property name. 
 :::
 
 ## Structure

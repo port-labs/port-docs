@@ -8,7 +8,7 @@ const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 const config = {
   title: "Port",
   tagline: "Port documentation",
-  url: "https://docs.getport.io",
+  url: "https://docs.port.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
@@ -111,12 +111,6 @@ const config = {
             activeBasePath: "guides",
           },
           {
-            to: "https://demo.getport.io",
-            position: "right",
-            target: "_blank",
-            className: "header-demo-link",
-          },
-          {
             to: "https://github.com/port-labs/port-docs",
             position: "right",
             target: "_blank",
@@ -127,6 +121,12 @@ const config = {
             position: "right",
             target: "_blank",
             className: "header-slack-link",
+          },
+          {
+            to: "https://www.youtube.com/@getport",
+            position: "right",
+            target: "_blank",
+            className: "header-youtube-link",
           },
         ],
       },
@@ -145,7 +145,7 @@ const config = {
               },
               {
                 label: "Quickstart",
-                to: "/quickstart",
+                to: "/getting-started/overview",
               },
               {
                 label: "Build a software catalog",
@@ -218,6 +218,10 @@ const config = {
           {
             title: "More",
             items: [
+              {
+                label: "Release notes",
+                href: "https://roadmap.getport.io/changelog",
+              },
               {
                 label: "Blog",
                 href: "https://www.getport.io/blog",
@@ -303,10 +307,16 @@ const config = {
       //   indexName: "getport",
       //   contextualSearch: true,
       // },
+      announcementBar: {
+        id: 'port_ctas',
+        content: " ",
+        backgroundColor: '#000000',
+        textColor: '#FFFFFF',
+        isCloseable: false,
+      },
     }),
   themes: [
-    "docusaurus-theme-openapi-docs",
-    
+    "docusaurus-theme-openapi-docs", 
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
@@ -365,6 +375,35 @@ const config = {
       },
     ],
     "./src/plugins/intercom.js",
+  ],
+
+  scripts: [
+    {
+      src: "https://widget.kapa.ai/kapa-widget.bundle.js",
+      "data-website-id": "1aefba51-348e-4747-9a4c-93306459542d",
+      "data-project-name": "Port-documentation",
+      "data-user-analytics-fingerprint-enabled": "true",
+      "data-project-color": "#FFFFFF",
+      "data-project-logo": "https://raw.githubusercontent.com/port-labs/port-docs/refs/heads/main/static/img/logos/port-logo.svg",
+      "data-button-hide": "true",
+      "data-modal-override-open-class": "ask-kapa-button",
+      "data-modal-title": "Port AI Assistant",
+      "data-modal-ask-ai-input-placeholder": "Ask me anything about Port...",
+      "data-submit-query-button-bg-color": "#000000",
+      "data-modal-example-questions": "Which SSO providers are supported?, How can I install Port's Datadog integration without using k8s?, How can I create a table that shows all services belonging to my team?",
+      "data-font-family": "DM Sans",
+      "data-modal-disclaimer": "This AI assistant has full access to Port's documentation and API references.\nPlease note that answers may not be fully accurate.\n\nWe would appreciate your feedback (👍🏽/👎🏽) on answers you receive in order to improve the results 🙏🏽",
+      "data-modal-example-questions-title": "Example Questions",
+      "data-modal-example-questions-col-span": "12",
+      "data-modal-disclaimer-font-size": "0.85rem", // default is 0.75rem
+      "data-example-question-button-font-size": "0.85rem", // default is not set
+      // "data-search-mode-enabled": "true",
+      // "data-modal-search-input-placeholder": "What are you looking for?",
+      // "data-modal-title-search": "Search Port's documentation",
+      // "data-search-result-secondary-text-color": "#000000",
+      // "data-search-result-primary-text-color": "#000000",
+      async: true,
+    },
   ],
 };
 

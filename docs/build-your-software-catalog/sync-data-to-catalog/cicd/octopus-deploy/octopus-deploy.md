@@ -9,19 +9,35 @@ import AzurePremise from "../../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_octopus-deploy-docker-parameters.mdx"
 import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
-import OceanSaasInstallation from "./\_octopus_deploy_ocean_saas_installation.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Octopus Deploy Integration
 
-Port's Octopus Deploy integration allows you to import `spaces`, `projects`, `releases`, `deployments`, and `machines` from Octopus Deploy into Port based on your mappings and definitions.
+Port's Octopus Deploy integration allows you to model Octopus Deploy resources in your software catalog and ingest data into them.
 
-## Common Use Cases
+## Overview
 
-- Map `spaces`, `projects`, `releases`, `deployments`, and `machines` from Octopus Deploy to Port.
-- Monitor real-time changes (create/update/delete) in Octopus Deploy and automatically sync them with your entities in Port.
+This integration allows you to:
 
+- Map and organize your desired Octopus Deploy resources and their metadata in Port (see supported resources below).
+- Watch for Octopus Deploy object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-## Installation
+### Supported Resources
+
+Some of the resources that can be ingested from Octopus Deploy into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Space`](https://octopus.com/docs/octopus-rest-api/examples/spaces)
+- [`Project`](https://octopus.com/docs/octopus-rest-api/examples/projects)
+- [`Release`](https://octopus.com/docs/octopus-rest-api/examples/releases)
+- [`Deployment`](https://octopus.com/docs/octopus-rest-api/examples/deployments)
+
+:::tip Ingesting Additional Resources
+The integration supports additional resources, see the [ingest additional resources](/build-your-software-catalog/sync-data-to-catalog/cicd/octopus-deploy/mapping-extra-resources) page for more information
+:::
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -33,55 +49,28 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                           | Description                                                                                                                                             | Required |
-|-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------| -------- |
-| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅       |
-| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅       |
-| `port.baseUrl`                      | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                 |  ✅       |
-| `integration.identifier`            | Change the identifier to describe your integration                                                                                                      | ✅       |
-| `integration.type`                  | The integration type                                                                                                                                    | ✅       |
-| `integration.eventListener.type`    | The event listener type                                                                                                                                 | ✅       |
-| `integration.secrets.octopusApiKey` | The Octopus API Key                                                                                                                                     | ✅       |
-| `integration.config.serverUrl`      | The Octopus host                                                                                                                                        | ✅       |
-| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Octopus                                   | ❌       |
-| `scheduledResyncInterval`           | The number of minutes between each resync                                                                                                               | ❌       |
-| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                           | ❌       |
-| `sendRawDataExamples`               | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                     | ❌       |
+<Prerequisites />
 
 
-<br/>
+For details about the available parameters for the installation, see the table below.
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install octopus port-labs/port-ocean \
-	--set port.clientId=<YOUR_PORT_CLIENT_ID>  \
-	--set port.clientSecret=<YOUR_PORT_CLIENT_SECRET>  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set sendRawDataExamples=true  \
-	--set integration.identifier="octopus"  \
-	--set integration.type="octopus"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.octopusApiKey="Enter value here"  \
-	--set integration.config.serverUrl="https://example.com"  
-```
+<OceanRealtimeInstallation integration="Octopus" />
+
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD">
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-octopus-integration` in your git repository with the content:
 
@@ -169,18 +158,40 @@ kubectl apply -f my-octopus-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                           | Description                                                                                                                                             | Required |
+|-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅        |
+| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅        |
+| `port.baseUrl`                      | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                 | ✅        |
+| `integration.identifier`            | Change the identifier to describe your integration                                                                                                      | ✅        |
+| `integration.type`                  | The integration type                                                                                                                                    | ✅        |
+| `integration.eventListener.type`    | The event listener type                                                                                                                                 | ✅        |
+| `integration.secrets.octopusApiKey` | The Octopus API Key, docs can be found [here](https://octopus.com/docs/octopus-rest-api/how-to-create-an-api-key)                                       | ✅        |
+| `integration.config.serverUrl`      | The Octopus host                                                                                                                                        | ✅        |
+| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Octopus                                   | ❌        |
+| `scheduledResyncInterval`           | The number of minutes between each resync                                                                                                               | ❌        |
+| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                           | ❌        |
+| `sendRawDataExamples`               | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                     | ❌        |
+
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the Octopus integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
+:::
+
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Octopus integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -216,15 +227,11 @@ jobs:
 
 </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Octopus integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
@@ -275,8 +282,8 @@ pipeline {
 ```
 
   </TabItem>
-<TabItem value="azure" label="Azure Devops">
-<AzurePremise name="Octopus" />
+  <TabItem value="azure" label="Azure Devops">
+<AzurePremise/>
 
 <DockerParameters />
 <br/>
@@ -319,13 +326,7 @@ steps:
 ```
 
   </TabItem>
-
   <TabItem value="gitlab" label="GitLab">
-This workflow will run the Octopus integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -384,55 +385,13 @@ ingest_data:
 
 </Tabs>
 
-### Generating Octopus API Key
 
-To generate a Api Key for authenticating the Octopus Deploy API calls:
-1. Log into the Octopus Web Portal, click your profile image and select Profile.
-2. Click My API Keys.
-3. Click New API key, state the purpose of the API key, set the expiry and click Generate new.
-4. Copy the new API key to your clipboard and use as `OCTOPUS_API_KEY`.
+## Configuration
 
-<img src='/img/build-your-software-catalog/sync-data-to-catalog/octopus-deploy/configure-api-token.png' width='80%' border='1px' />
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-## Ingesting Octopus Objects
-
-The Octopus integration uses a YAML configuration to define how data is loaded into the developer portal.
-
-Below is an example snippet from the configuration that shows how to retrieve `space` data from Octopus:
-
-
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: space
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .Id
-          title: .Name
-          blueprint: '"octopusSpace"'
-          properties:
-            url: env.OCEAN__INTEGRATION__CONFIG__SERVER_URL + "/app#/" + .Id
-            description: .Description
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Octopus's API events.
-
-
-### Ingest data into Port
-
-To ingest Octopus objects using the [integration configuration](/build-your-software-catalog/customize-integrations/configure-mapping), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Octopus.
-3. Choose the **Ingest Data** option from the menu.
-4. Click the Octopus integration to open the edit page.
-5. Modify the [configuration](/build-your-software-catalog/customize-integrations/configure-mapping) according to your needs.
-6. Click `Resync`.
 
 ## Examples
 
@@ -567,7 +526,6 @@ resources:
 
 </details>
 
-
 ### Release
 
 <details>
@@ -643,7 +601,6 @@ resources:
 ```
 
 </details>
-
 
 ### Deployment
 
@@ -726,7 +683,6 @@ resources:
 ```
 
 </details>
-
 
 ### Machine
 
@@ -1139,7 +1095,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "Spaces-1",
   "title": "Default",
-  "icon": null,
+  "icon": "Octopus",
   "blueprint": "octopusSpace",
   "team": [],
   "properties": {
@@ -1163,7 +1119,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "Projects-1",
   "title": "Sample Project",
-  "icon": null,
+  "icon": "Octopus",
   "blueprint": "octopusProject",
   "team": [],
   "properties": {
@@ -1190,7 +1146,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "Releases-44",
   "title": "Projects-41(0.0.2)",
-  "icon": null,
+  "icon": "Octopus",
   "blueprint": "octopusRelease",
   "team": [],
   "properties": {
@@ -1217,7 +1173,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "Deployments-1",
   "title": "Deploy to Development",
-  "icon": null,
+  "icon": "Octopus",
   "blueprint": "octopusDeployment",
   "team": [],
   "properties": {
@@ -1245,7 +1201,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "Machines-4",
   "title": "ECS Instance Dev",
-  "icon": null,
+  "icon": "Octopus",
   "blueprint": "octopusMachine",
   "team": [],
   "properties": {

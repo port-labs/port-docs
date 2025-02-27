@@ -20,9 +20,9 @@ In the following guide, we are going to create a self-service action in Port tha
 2. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
    - `ARGOCD_TOKEN` - Argo CD token [learn more](https://argo-cd.readthedocs.io/en/stable/developer-guide/api-docs/).
    - `ARGOCD_APPLICATION_HOST` - The host URL of your deployed Argo CD instance. For example, my-argocd-app.com.
-   - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-   - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-3. Optional - Install Port's Argo CD integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/argocd/)
+   - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+   - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+3. Optional - Install Port's Argo CD integration [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/argocd/)
 
 :::tip Argo CD Integration
 	This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your Argo CD Applications.
@@ -208,7 +208,7 @@ jobs:
           baseUrl: https://api.getport.io
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_context).run_id}}
-          logMessage: "Successfully synced Argo CD Aplication ✅"
+          logMessage: "Successfully synced Argo CD Application ✅"
 ```
 </details>
 
@@ -265,8 +265,7 @@ Create a new self service action using the following JSON configuration.
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -277,7 +276,7 @@ Now you should see the `Sync Argo CD Application` action in the self-service pag
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 2. Click on the `Sync Argo CD Application` action
-3. Choose the Argo CD Application you want to synchronize (In case you didn't install the [Argo CD integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/argocd/), it means you don't have any Argo CD application in Port yet, so you will need to create one manually in Port to test this action)
+3. Choose the Argo CD Application you want to synchronize (In case you didn't install the [Argo CD integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/argocd/), it means you don't have any Argo CD application in Port yet, so you will need to create one manually in Port to test this action)
 4. Select the application you want to sync. The `application_name` field should auto-fill after this, if not, manually enter the application name.
 5. Click on `Execute`
 6. Done! wait for the application to be synchronized.

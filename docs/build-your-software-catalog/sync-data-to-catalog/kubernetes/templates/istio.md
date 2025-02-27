@@ -3,8 +3,8 @@ sidebar_position: 2
 description: Istio quickstart
 ---
 
-import TemplateInstallation from "./_template_installation.mdx";
-import TemplatePrerequisites from "./_template_prerequisites.mdx";
+import TemplateInstallation from "./\_template_installation.mdx";
+import TemplatePrerequisites from "./\_template_prerequisites.mdx";
 
 # Istio
 
@@ -37,7 +37,7 @@ variable, you can fetch a pre-defined `blueprints.json` to create your blueprint
 use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/istio-blueprints.json) to
 define your blueprints. Do this by running:
 
-```bash showLineNumbers
+```bash
 export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/istio-blueprints.json"
 ```
 
@@ -56,10 +56,10 @@ This `blueprints.json` file defines the following blueprints:
   look pretty similar.
   Here is the list of kubernetes objects `Workload` will represent:
 
-    - Deployment
-    - ReplicaSet
-    - StatefulSet
-    - DaemonSet
+  - Deployment
+  - ReplicaSet
+  - StatefulSet
+  - DaemonSet
 
 :::
 
@@ -70,38 +70,39 @@ Below are the Istio blueprint schemas used in the exporter:
 
 ```json showLineNumbers
 {
-   "identifier":"gateways",
-   "description":"This blueprint represents a service in our software catalog",
-   "title":"Istio Gateways",
-   "icon":"Cloud",
-   "schema":{
-      "properties":{
-         "name":{
-            "type":"string"
-         },
-         "ports":{
-            "type":"array"
-         },
-         "labels":{
-            "type":"object"
-         },
-         "selector":{
-            "type":"object"
-         }
+  "identifier": "gateways",
+  "description": "This blueprint represents a service in our software catalog",
+  "title": "Istio Gateways",
+  "icon": "Cloud",
+  "schema": {
+    "properties": {
+      "name": {
+        "type": "string"
       },
-      "required":[]
-   },
-   "mirrorProperties":{},
-   "calculationProperties":{},
-   "relations":{
-      "namespace":{
-         "target":"namespace",
-         "required":true,
-         "many":false
+      "ports": {
+        "type": "array"
+      },
+      "labels": {
+        "type": "object"
+      },
+      "selector": {
+        "type": "object"
       }
-   }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "namespace": {
+      "target": "namespace",
+      "required": true,
+      "many": false
+    }
+  }
 }
 ```
+
 </details>
 
 <details>
@@ -109,34 +110,35 @@ Below are the Istio blueprint schemas used in the exporter:
 
 ```json showLineNumbers
 {
-   "identifier":"virtualServices",
-   "description":"This blueprint represents a service in our software catalog",
-   "title":"Virtual Services",
-   "icon":"Istio",
-   "schema":{
-      "properties":{
-         "hosts":{
-            "type":"array"
-         },
-         "match":{
-            "type":"array"
-         },
-         "labels":{
-            "type":"object"
-         }
+  "identifier": "virtualServices",
+  "description": "This blueprint represents a service in our software catalog",
+  "title": "Virtual Services",
+  "icon": "Istio",
+  "schema": {
+    "properties": {
+      "hosts": {
+        "type": "array"
       },
-      "required":[]
-   },
-   "mirrorProperties":{},
-   "calculationProperties":{},
-   "relations":{
-      "gateways":{
-         "target":"gateways",
-         "many":true
+      "match": {
+        "type": "array"
+      },
+      "labels": {
+        "type": "object"
       }
-   }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "gateways": {
+      "target": "gateways",
+      "many": true
+    }
+  }
 }
 ```
+
 </details>
 
 ### Exporting custom resource mapping
@@ -145,7 +147,7 @@ Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping 
 
 In this use-case you will be using the **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/istio-kubernetes_v1_config.yaml)**. To achieve this, run:
 
-```bash showLineNumbers
+```bash
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/istio-kubernetes_v1_config.yaml"
 ```
 
@@ -156,6 +158,8 @@ Below is the mapping for the Istio resources:
 
 ```yaml showLineNumbers
 - kind: networking.istio.io/v1beta1/gateways
+  selector:
+    query: 'true'
   port:
     entity:
       mappings:
@@ -178,6 +182,8 @@ Below is the mapping for the Istio resources:
 
 ```yaml showLineNumbers
 - kind: networking.istio.io/v1beta1/virtualservices
+  selector:
+    query: 'true'
   port:
     entity:
       mappings:
@@ -189,12 +195,11 @@ Below is the mapping for the Istio resources:
             match: .spec.http[].match
             labels: .metadata.labels
           relations:
-            gateways: .spec.gateways[] + "-" + .metadata.namespace 
+            gateways: .spec.gateways[] + "-" + .metadata.namespace
             services: .metadata.namespace as $namespace | .spec.http[].route[].destination.host + "-" + $namespace
 ```
 
 </details>
-
 
 You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Istio
 resources are being reported to Port using the freshly installed k8s exporter.

@@ -29,7 +29,7 @@ In this guide, we will be using Port's [Automations](/actions-and-automations/de
 - Install Port's [GitHub app](https://github.com/apps/getport-io) in your GitHub organization.
 - Install Port's [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/pagerduty.md) for real-time incident ingestion to Port. This integration will in turn trigger our automation when a new incident is created in PagerDuty.
 - [Ingest GitHub issues](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples.md#mapping-repositories-and-issues) using Port's GitHub app.
-- Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+- Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 - Prepare a GitHub repository for maintaining your GitHub workflows, and other dependency files. In this guide we will be using `port-actions` as the repository name. 
 - Configure a Slack app:
     1. [Create a slack app](https://api.slack.com/start/quickstart#creating) and install it in a workspace. Save the `Bot User OAuth Token` for later use.
@@ -397,7 +397,7 @@ This automation will enable faster notification and response time when handling 
 
 ## Next Steps
 This guide can be enhanced to further meet your organization's needs. Here are some ideas you can implement:
-- Add a DAY-2 `Resolve incident` Port action to the `PagerDuty incident` which resolves the GitHub issue and sends an update in the Slack channel. You can use the following [guide](https://docs.getport.io/guides/all/resolve-pagerduty-incident).
+- Add a DAY-2 `Resolve incident` Port action to the `PagerDuty incident` which resolves the GitHub issue and sends an update in the Slack channel. You can use the following [guide](https://docs.port.io/guides/all/resolve-pagerduty-incident).
 - Add a mirror property in the `PagerDuty incident` blueprint, to show the GitHub issue `Link` in the PagerDuty entity page.
 - Filter the automation tirgger to only run for `High` urgency incidents.
 - Add the Port service owner to the Slack channel as part of the automation.

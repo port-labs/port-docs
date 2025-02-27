@@ -1,0 +1,32 @@
+```json showLineNumbers
+{
+  "identifier": "my-github-webhook",
+  "title": "GitHub Webhook",
+  "description": "Webhook description",
+  "icon": "Webhook",
+  "enabled": true,
+  "mappings": [
+    {
+      "blueprint": "pullRequest",
+      "filter": ".headers.\"x-github-event\" == \"pull_request\"",
+      "entity": {
+        "identifier": ".body.pull_request.id | tostring",
+        "title": ".body.pull_request.title",
+        "properties": {
+          "author": ".body.pull_request.user.login",
+          "url": ".body.pull_request.html_url"
+        },
+        "relations": {}
+      }
+    }
+  ],
+  "security": {
+    "secret": "string",
+    "signatureHeaderName": "string",
+    "signatureAlgorithm": "sha1",
+    "signaturePrefix": "string",
+    "requestIdentifierPath": "string"
+  },
+  "integrationType": "custom"
+}
+```

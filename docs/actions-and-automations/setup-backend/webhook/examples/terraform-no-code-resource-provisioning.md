@@ -180,8 +180,7 @@ Replace `https://your-webhook-url.com` with the URL you got earlier from Ngrok o
         "censoredProperties": "{{.action.encryptedProperties}}"
       }
     }
-  },
-  "publish": true
+  }
 },
   {
   "identifier": "s3_bucket_change_acl",
@@ -236,8 +235,7 @@ Replace `https://your-webhook-url.com` with the URL you got earlier from Ngrok o
         "censoredProperties": "{{.action.encryptedProperties}}"
       }
     }
-  },
-  "publish": true
+  }
 },
   {
   "identifier": "s3_bucket_delete_bucket",
@@ -279,8 +277,7 @@ Replace `https://your-webhook-url.com` with the URL you got earlier from Ngrok o
         "censoredProperties": "{{.action.encryptedProperties}}"
       }
     }
-  },
-  "publish": true
+  }
 }
 ]
 ```

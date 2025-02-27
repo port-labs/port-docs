@@ -18,56 +18,52 @@ Scorecards can be created by three methods:
 
 <!-- TODO: fix this back to some actual blueprint -->
 
-:::info
-A Scorecard is created upon blueprint. So if you haven't created the `microservice` blueprint in the [Quickstart](../quickstart.md#service-blueprint), please make sure to do so to follow along.
-:::
-
 :::note
 For more information of which operators you can use in the scorecard rules explained below, refer to the [Promote Scorecards](./promote-scorecards.md#conditions).
 :::
 
 ### From the UI
 
-To create a scorecard from the UI, go to the DevPortal Builder page and click the 3 dots icon on the `microservice` Blueprint.
+To create a scorecard from the UI, go to your [Data model](https://app.getport.io/settings/data-model) page, expand the relevant blueprint, and click on the `Scorecards` tab. Finally, click on `+ New scorecard`.
 
 An editor window will open with the current JSON array of the defined Scorecards. Since there is no Scorecard configured on the Blueprint at the moment, the `scorecard` arrays will be empty. Paste the following content inside the editor to create the scorecards of this example:
 
 ```json showLineNumbers
 [
-    {
-        "identifier": "Ownership",
-        "title": "Ownership",
-        "rules": [
+  {
+    "identifier": "Ownership",
+    "title": "Ownership",
+    "rules": [
+      {
+        "identifier": "hasSlackChannel",
+        "title": "Has Slack Channel",
+        "level": "Silver",
+        "query": {
+          "combinator": "and",
+          "conditions": [
             {
-                "identifier": "hasSlackChannel",
-                "title": "Has Slack Channel",
-                "level": "Silver",
-                "query": {
-                    "combinator": "and",
-                    "conditions": [
-                        {
-                            "operator": "isNotEmpty",
-                            "property": "slackChannel"
-                        }
-                    ]
-                }
-            },
-            {
-                "identifier": "hasTeam",
-                "title": "Has Team",
-                "level": "Bronze",
-                "query": {
-                    "combinator": "and",
-                    "conditions": [
-                        {
-                            "operator": "isNotEmpty",
-                            "property": "$team"
-                        }
-                    ]
-                }
+              "operator": "isNotEmpty",
+              "property": "slackChannel"
             }
-        ]
-    }
+          ]
+        }
+      },
+      {
+        "identifier": "hasTeam",
+        "title": "Has Team",
+        "level": "Bronze",
+        "query": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "operator": "isNotEmpty",
+              "property": "$team"
+            }
+          ]
+        }
+      }
+    ]
+  }
 ]
 ```
 

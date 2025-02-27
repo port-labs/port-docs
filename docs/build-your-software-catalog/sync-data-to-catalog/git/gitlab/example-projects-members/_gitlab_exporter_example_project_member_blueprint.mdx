@@ -1,0 +1,57 @@
+<details>
+<summary>Repository blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "gitlabRepository",
+  "title": "Repository",
+  "icon": "Microservice",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "URL",
+        "type": "string",
+        "format": "url"
+      },
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "language": {
+        "title": "Language",
+        "type": "string"
+      },
+      "namespace": {
+        "title": "Namespace",
+        "type": "string"
+      },
+      "fullPath": {
+        "title": "Full Path",
+        "type": "string"
+      },
+      "defaultBranch": {
+        "title": "Default Branch",
+        "type": "string"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {
+    "gitlabMembers": {
+      "title": "Gitlab Members",
+      "target": "gitlabMember",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>

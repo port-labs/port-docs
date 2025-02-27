@@ -1,0 +1,74 @@
+<details>
+
+<summary>Package Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "octopusPackage",
+  "title": "Octopus Package",
+  "icon": "Octopus",
+  "description": "A package stored in Octopus Deploy",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "The description of the package"
+      },
+      "feedId": {
+        "type": "string",
+        "title": "Feed ID",
+        "description": "ID of the feed associated with the package"
+      },
+      "fileExtension": {
+        "type": "string",
+        "title": "File Extension",
+        "description": "The file extension of the package"
+      },
+      "version": {
+        "type": "string",
+        "title": "Version",
+        "description": "The version of the package"
+      },
+      "hash": {
+        "type": "string",
+        "title": "Hash",
+        "description": "The hash of the package for verification"
+      },
+      "packageSizeBytes": {
+        "type": "integer",
+        "title": "Package Size (Bytes)",
+        "description": "The size of the package in bytes"
+      },
+      "published": {
+        "type": "string",
+        "title": "Published Date",
+        "format": "date-time",
+        "description": "The date the package was published"
+      },
+      "releaseNotes": {
+        "type": "string",
+        "title": "Release Notes",
+        "description": "Notes provided for the release of the package"
+      },
+      "summary": {
+        "type": "string",
+        "title": "Summary",
+        "description": "A summary of the package"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

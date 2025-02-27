@@ -1,0 +1,54 @@
+---
+id: security
+title: "Security"
+description: ""
+sidebar_label: Security
+sidebar_position: 2
+hide_title: true
+---
+
+import EnterpriseNote from "/docs/generalTemplates/_enterprise_feature_notice.md";
+
+# Security
+
+This page includes security information about Port API and the interactions of your infrastructure with it.
+
+## Address Allowlisting
+
+Port's REST API is served through a network of Application Load Balancers (ALBs) and as such is not served from a closed list of IP addresses.
+
+For cases where your internal network has strict limitations on the addresses that outbound requests can be made to, you will need to add the following addresses to your network's allowlist:
+
+- For Port's EU tenant:
+  - [https://api.getport.io](https://api.getport.io)
+  - [https://ingest.getport.io](https://ingest.getport.io)
+- For Port's US tenant:
+  - [https://api.us.getport.io](https://api.us.getport.io)
+  - [https://ingest.us.getport.io](https://ingest.us.getport.io)
+
+## AWS PrivateLink
+
+<EnterpriseNote />
+
+Port supports AWS PrivateLink to provide secure connectivity between your AWS [VPC](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) and Port's API.
+
+AWS [PrivateLink](https://aws.amazon.com/privatelink/) is an AWS service that provides private connectivity between resources in different AWS VPCs.
+
+With AWS PrivateLink you can make requests to Port's API from your AWS VPC, while ensuring that the traffic remains within the AWS data center, and without exposing your data to the internet.
+
+### Setup
+
+To setup an AWS PrivateLink between your VPC and Port, you can follow [this AWS guide](https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html#connect-to-endpoint-service).
+
+In step 5 of the guide, you are required to provide the **Service name**, which is the address of the PrivateLink address provided by Port, here are the Port API PrivateLink service names:
+
+| Service       | Public Address                                               | PrivateLink Region | PrivateLink Service Name                                  |
+| ------------- | ------------------------------------------------------------ | ------------------ | --------------------------------------------------------- |
+| Port API EU   | [https://api.getport.io](https://api.getport.io)             | `eu-west-1`        | `com.amazonaws.vpce.eu-west-1.vpce-svc-02addcefd47049d3f` |
+| Ingest API EU | [https://ingest.getport.io](https://ingest.getport.io)       | `eu-west-1`        | `com.amazonaws.vpce.eu-west-1.vpce-svc-01c8de843e5776402` |
+| Port API US   | [https://api.us.getport.io](https://api.us.getport.io)       | `us-east-1`        | `com.amazonaws.vpce.us-east-1.vpce-svc-047de27e65a0392a7` |
+| Ingest API US | [https://ingest.us.getport.io](https://ingest.us.getport.io) | `us-east-1`        | `com.amazonaws.vpce.us-east-1.vpce-svc-052d7ea18ebda9652` |
+
+**Note:** In case your AWS resources are in a different region than the ones Port's PrivateLinks are hosted at, refer to step 6 of the guide to setup a cross region connection.
+
+After following the guide, please contact Port's support team using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) and we will finalize the setup.

@@ -165,7 +165,7 @@ This action can be executed by a developer to request the deletion of a Kubernet
     "identifier": "request_for_deleting_namespace",
     "title": "Request deletion of a namespace",
     "icon": "Infinity",
-    "description": "Request the deletetion of a k8s namespace",
+    "description": "Request the deletion of a k8s namespace",
     "trigger": {
       "type": "self-service",
       "operation": "DAY-2",

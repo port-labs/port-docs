@@ -26,7 +26,7 @@ In this step-by-step guide, we will create Port blueprints and actions, which wi
 ## Prerequisites
 
 A List of prerequisites this guide has. Some common examples:
-- Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+- Prepare your Port organization's `Client ID` and `Client Secret`. To find you Port credentials, click [here](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 - In your GitHub organization, create a new repository called `XXXXXX`. You will use this repository to maintain your GitHub workflows, and other dependency files.
 - In this guide, we will be deploying X using Helm. Prepare a K8s cluster.
 

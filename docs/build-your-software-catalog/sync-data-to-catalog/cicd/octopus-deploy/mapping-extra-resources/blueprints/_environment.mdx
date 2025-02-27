@@ -1,0 +1,43 @@
+<details>
+
+<summary>Environment Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "octopusEnvironment",
+  "title": "Octopus Environment",
+  "icon": "Octopus",
+  "description": "An environment in Octopus Deploy",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "The description of the environment"
+      },
+      "allowDynamicInfrastructure": {
+        "type": "boolean",
+        "title": "Allow Dynamic Infrastructure",
+        "description": "Indicates if dynamic infrastructure is allowed in this environment"
+      },
+      "useGuidedFailure": {
+        "type": "boolean",
+        "title": "Use Guided Failure",
+        "description": "Indicates if guided failure mode is enabled for this environment"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

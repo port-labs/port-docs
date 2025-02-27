@@ -1,0 +1,67 @@
+<details>
+
+<summary>Account Blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "octopusAccount",
+  "title": "Octopus Account",
+  "icon": "Octopus",
+  "description": "An account configuration in Octopus Deploy",
+  "schema": {
+    "properties": {
+      "accountType": {
+        "type": "string",
+        "title": "Account Type",
+        "description": "The type of the account, e.g., AmazonWebServicesAccount"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "The description of the account"
+      },
+      "environmentIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Environment IDs",
+        "description": "IDs of the environments associated with the account"
+      },
+      "tenantedDeploymentParticipation": {
+        "type": "string",
+        "title": "Tenanted Deployment Participation",
+        "description": "Indicates the participation of the account in tenanted deployments"
+      },
+      "tenantIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Tenant IDs",
+        "description": "IDs of the tenants associated with the account"
+      },
+      "tenantTags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "title": "Tenant Tags",
+        "description": "Tags of tenants associated with the account"
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "space": {
+      "title": "Space",
+      "description": "The space to which this project belongs",
+      "target": "octopusSpace",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>

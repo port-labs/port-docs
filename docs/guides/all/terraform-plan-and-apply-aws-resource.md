@@ -244,7 +244,7 @@ variable "environment" {
         },
         "tf_plan_output": {
           "icon": "Terraform",
-          "title": "Terrform Plan Output",
+          "title": "Terraform Plan Output",
           "type": "object",
           "description": "JSON output of TF Plan"
         }
@@ -388,7 +388,7 @@ jobs:
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_context).runId}}
           logMessage: |
-              Error Occured while planning or saving terraform resource. Aborting request to approve the plan
+              Error Occurred while planning or saving terraform resource. Aborting request to approve the plan
 
       - name: Request approval to apply Terraform resource
         if: ${{ steps.plan.outcome == 'success' && steps.artifact-upload-step.outcome == 'success' }}

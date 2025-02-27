@@ -6,13 +6,19 @@ description: Learn how to trigger a Datadog incident in Port, ensuring effective
 # Trigger Datadog Incident
 
 This GitHub action allows you to quickly trigger incidents in Datadog directly from Port using Port's self service actions.
-You can trigger incidents in Datadog using either the GitHub workflow method or the sync webhook method.
 
 ## Prerequisites
-1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed if you are using the GitHub workflow method.
-2. Datadog API Key. Head over to your account's [API and application keys page](https://app.datadoghq.com/account/settings) to create a new API key.<br/> The API key should have the `incident_write` permission scope.
+1. [Port's GitHub app](https://github.com/apps/getport-io) needs to be installed.
+2. Datadog API Key. Head over to your account's [API and application keys page](https://app.datadoghq.com/account/settings) to create a new API key. The API key should have the `incident_write` permission scope.
 3. Datadog Application Key. This key is available on the same page as the Datadog API key.
-4. Create a Datadog incident blueprint in Port using the schema below:
+4. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+    * `DD_API_URL` - Datadog API URL by default should be [https://api.datadoghq.com](https://api.datadoghq.com). However, if you are on the Datadog EU site, set the secret to `https://api.datadoghq.eu`. If you have your region information you use `https://api.<region>.datadoghq.com` or `https://api.<region>.datadoghq.eu`.
+    * `DD_API_KEY` - Datadog API Key.
+    * `DD_APPLICATION_KEY` - Datadog Application Key.
+    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+
+5. Create a Datadog incident blueprint in Port using the schema below:
 
 <details>
 <summary><b>Datadog Incident Blueprint</b></summary>
@@ -103,19 +109,7 @@ You can trigger incidents in Datadog using either the GitHub workflow method or 
 </details>
 
 
-## Trigger via GitHub workflow
-This method uses a GitHub workflow to trigger Datadog incidents.  
-The workflow is triggered by a self-service action in Port, which sends the required data to the GitHub workflow.
-
-### Add GitHub secrets
-In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
-    * `DD_API_URL` - Datadog API URL by default should be [https://api.datadoghq.com](https://api.datadoghq.com).  <br/> However, if you are on the Datadog EU site, set the secret to `https://api.datadoghq.eu`. <br/>If you have your region information you use `https://api.<region>.datadoghq.com` or `https://api.<region>.datadoghq.eu`.
-    * `DD_API_KEY` - Datadog API Key.
-    * `DD_APPLICATION_KEY` - Datadog Application Key.
-    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-
-###  Workflow
+## GitHub Workflow
 Create the file `trigger-datadog-incident.yml` in the `.github/workflows` folder of your repository and copy the content of the workflow configuration below:
 
 :::tip Dedicated repository
@@ -253,7 +247,7 @@ jobs:
 
 </details>
 
-### Port configuration
+## Port Configuration
 On the [self-service](https://app.getport.io/self-serve) page, create the Port action against the `Datadog Incident` blueprint. This will trigger the GitHub workflow.
 
 <details>
@@ -341,6 +335,7 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
     },
     "reportWorkflowStatus": true
   },
+  "requiredApproval": false
   "requiredApproval": false
 }
 ```

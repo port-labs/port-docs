@@ -5,73 +5,61 @@ import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "./\_opencost-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # OpenCost
 
-Our OpenCost integration allows you to import `cost` from your OpenCost instance into Port, according to your mapping and definition.
+Port's Opencost integration allows you to model Opencost resources in your software catalog and ingest data into them.
 
-## Common use cases
 
-- Map your monitored Kubernetes resources and cost allocations in OpenCost.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-## Prerequisites
+## Overview
 
-<Prerequisites />
+This integration allows you to:
 
-## Installation
+- Map and organize your desired Opencost resources and their metadata in Port (see supported resources below).
+- Watch for Opencost object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+
+
+### Supported Resources
+
+The resources that can be ingested from Opencost into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
+
+- [`Cost`](https://www.opencost.io/docs/integrations/api-examples#allocation-examples)
+- [`Cloudcost`](https://www.opencost.io/docs/integrations/api-examples#cloudcost-examples)
+
+
+
+## Setup
 
 Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="real-time-always-on" label="Real Time & Always On" default>
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)" default>
 
-Using this installation option means that the integration will be able to update Port in real time.
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                         | Description                                                                                                   | Required |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                   | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`               | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                       | ✅       |
-| `integration.identifier`          | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`                | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type`  | The event listener type                                                                                       | ✅       |
-| `integration.config.opencostHost` | The Opencost server URL                                                                                       | ✅       |
-| `scheduledResyncInterval`         | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`         | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
-| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌       |
+<Prerequisites />
 
 
-<br/>
+For details about the available parameters for the installation, see the table below.
+
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-opencost-integration port-labs/port-ocean \
-  --set port.clientId="CLIENT_ID"  \
-  --set port.clientSecret="CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set integration.identifier="my-opencost-integration"  \
-  --set integration.type="opencost"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.config.opencostHost="https://myOpenCostInstance:9003"
-```
+<OceanRealtimeInstallation integration="Opencost" />
 
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-opencost-integration` in your git repository with the content:
 
@@ -152,16 +140,38 @@ kubectl apply -f my-ocean-opencost-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                         | Description                                                                                                                         | Required |
+|-----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                   | Your port client id                                                                                                                 | ✅        |
+| `port.clientSecret`               | Your port client secret                                                                                                             | ✅        |
+| `port.baseUrl`                    | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                             | ✅        |
+| `integration.identifier`          | Change the identifier to describe your integration                                                                                  | ✅        |
+| `integration.type`                | The integration type                                                                                                                | ✅        |
+| `integration.eventListener.type`  | The event listener type                                                                                                             | ✅        |
+| `integration.config.opencostHost` | The Opencost server URL                                                                                                             | ✅        |
+| `scheduledResyncInterval`         | The number of minutes between each resync                                                                                           | ❌        |
+| `initializePortResources`         | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
+| `sendRawDataExamples`             | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
+
+
+<br/>
+
+
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
-  <Tabs groupId="cicd-method" queryString="cicd-method">
-  <TabItem value="github" label="GitHub">
-This workflow will run the Opencost integration once and then exit, this is useful for **scheduled** ingestion of data.
+<TabItem value="one-time-ci" label="Scheduled (CI)">
 
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+This workflow/pipeline will run the Opencost integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
 :::
+
+  <Tabs groupId="cicd-method" queryString="cicd-method">
+
+  <TabItem value="github" label="GitHub">
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -197,14 +207,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the OpenCost integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
@@ -255,10 +260,9 @@ pipeline {
 ```
 
   </TabItem>
-
   <TabItem value="azure" label="Azure Devops">
 
-<AzurePremise name="Kubecost" />
+<AzurePremise />
 
 <DockerParameters />  
 
@@ -300,12 +304,7 @@ steps:
 
 ```
 </TabItem>
-<TabItem value="gitlab" label="GitLab">
-This pipeline will run the Opencost integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+  <TabItem value="gitlab" label="GitLab">
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -352,6 +351,7 @@ ingest_data:
 ```
 
 </TabItem>
+
   </Tabs>
 
 <PortApiRegionTip/>
@@ -362,164 +362,13 @@ ingest_data:
 
 <AdvancedConfig/>
 
-## Ingesting OpenCost objects
 
-The OpenCost integration uses a YAML configuration to describe the process of loading data into the developer portal.
+## Configuration
 
-Here is an example snippet from the config which demonstrates the process for getting `cost` data from OpenCost:
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: cost
-    selector:
-      query: "true"
-      window: "month"
-      aggregate: "pod"
-      step: "window"
-      resolution: "1m"
-    port:
-      entity:
-        mappings:
-          blueprint: '"openCostResourceAllocation"'
-          identifier: .name
-          title: .name
-          properties:
-            cluster: .properties.cluster
-            namespace: .properties.namespace
-            startDate: .start
-            endDate: .end
-            cpuCoreHours: .cpuCoreHours
-            cpuCost: .cpuCost
-            cpuEfficiency: .cpuEfficiency
-            gpuHours: .gpuHours
-            gpuCost: .gpuCost
-            networkCost: .networkCost
-            loadBalancerCost: .loadBalancerCost
-            pvCost: .pvCost
-            ramBytes: .ramBytes
-            ramCost: .ramCost
-            ramEfficiency: .ramEfficiency
-            sharedCost: .sharedCost
-            externalCost: .externalCost
-            totalCost: .totalCost
-            totalEfficiency: .totalEfficiency
-```
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from OpenCost's API events.
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from OpenCost, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from OpenCost, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Cost`](https://www.opencost.io/docs/integrations/api-examples#allocation-examples)
-- [`Cloudcost`](https://www.opencost.io/docs/integrations/api-examples#cloudcost-examples)
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: cost
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for an OpenCost object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: cost
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: cost
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-        window: "month"
-        aggregate: "pod"
-        step: "window"
-        resolution: "1m"
-      # highlight-end
-      port:
-  ```
-
-  - **window** - Duration of time over which to query. Accepts: words like `today`, `week`, `month`, `yesterday`, `lastweek`, `lastmonth`; durations like `30m`, `12h`, `7d`; RFC3339 date pairs like `2021-01-02T15:04:05Z,2021-02-02T15:04:05Z`; Unix timestamps like `1578002645,1580681045`.
-  - **aggregate** - Field by which to aggregate the results. Accepts: `cluster`, `node`, `namespace`, `controllerKind`, `controller`, `service`, `pod`, `container`, `label:name`, and `annotation:name`. Also accepts comma-separated lists for multi-aggregation, like `namespace,label:app`.
-  - **step** - Duration of a single allocation set. If unspecified, this defaults to the window, so that you receive exactly one set for the entire window. If specified, such as `30m`, `2h`, `1d` etc, it works chronologically backward, querying in durations of step until the full window is covered. Default is `window`.
-  - **resolution** - Duration to use as resolution in Prometheus queries. Smaller values (i.e. higher resolutions) will provide better accuracy, but worse performance (i.e. slower query time, higher memory use). Larger values (i.e. lower resolutions) will perform better, but at the expense of lower accuracy for short-running workloads. Default is `1m`.
-  - **filter** - Filter your results by any category which you can aggregate by, can support multiple filterable items in the same category in a comma-separated list. See the [Kubecost filter syntax guide](https://docs.kubecost.com/apis/filters-api) for more.
-
-- The `port`, `entity` and the `mappings` keys are used to map the OpenCost object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-```yaml showLineNumbers
-  resources:
-    - kind: cost
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one OpenCost object to a Port entity. Each value is a JQ query.
-            identifier: .name
-            title: .name
-            blueprint: '"openCostResourceAllocation"'
-            properties:
-              cluster: .properties.cluster
-              namespace: .properties.namespace
-              startDate: .start
-              endDate: .end
-              cpuCoreHours: .cpuCoreHours
-              cpuCost: .cpuCost
-              cpuEfficiency: .cpuEfficiency
-              gpuHours: .gpuHours
-              gpuCost: .gpuCost
-              networkCost: .networkCost
-              loadBalancerCost: .loadBalancerCost
-              pvCost: .pvCost
-              ramBytes: .ramBytes
-              ramCost: .ramCost
-              ramEfficiency: .ramEfficiency
-              sharedCost: .sharedCost
-              externalCost: .externalCost
-              totalCost: .totalCost
-              totalEfficiency: .totalEfficiency
-        # highlight-end
-    - kind: cost # In this instance cost is mapped again with a different filter
-      selector:
-        query: '.name == "MyNodeName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-### Ingest data into Port
-
-To ingest OpenCost objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using OpenCost.
-3. Choose the **Ingest Data** option from the menu.
-4. Select OpenCost under the Cloud cost providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
 
@@ -671,6 +520,7 @@ resources:
 ```
 
 </details>
+
 
 ## Let's Test It
 

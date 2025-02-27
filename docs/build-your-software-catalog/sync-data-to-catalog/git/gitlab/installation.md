@@ -5,10 +5,13 @@ sidebar_position: 1
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
+import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
 import DockerParameters from "./\_gitlab_one_time_docker_parameters.mdx"
 import AdvancedConfig from '/docs/generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation_oauth.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Installation
 
@@ -20,13 +23,15 @@ This page outlines the following steps:
 - How to [configure](#configure-the-gitlab-integration) and customize the integration before deploying it.
 - How to [deploy](#deploy-the-gitlab-integration) the integration in the configuration that fits your use case.
 
+:::tip OAuth2 Installation
+Port's GitLab integration supports OAuth2 for quick installation, see [OAuth2 installation](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/installation?deploy=hosted-by-port&installation-methods=hosted-by-port&oauth=oauth#deploy-the-gitlab-integration) for more information.
+:::
+
 ## Prerequisites
 
 - A GitLab account with admin privileges.
 - A GitLab group account with the `api` scope.
-- If you choose the real-time & always-on installation method, a Kubernetes cluster to install the integration on.
 - Your Port user role is set to `Admin`.
-
 
 ## Setup
 
@@ -63,7 +68,7 @@ In this example:
 
 </details>
 
-See the [token mapping](#tokenmapping) section for more information.
+See the [Token Mapping](#token-mapping) section for more information.
 
 The following steps will guide you how to create a GitLab group access token.
 
@@ -78,9 +83,7 @@ The following steps will guide you how to create a GitLab group access token.
 3. Click "Create group access token".
 4. Copy the generated token and use it when deploying the integration in the following steps.
 
-### Configure the GitLab integration 
-
-### `tokenMapping`
+### Token Mapping
 
 The GitLab integration supports fetching data related to specific paths in your GitLab groups. The integration is also able to fetch data from different GitLab parent groups by providing additional group tokens. In order to do so, you need to map the desired paths to the relevant access tokens.
 The `tokenMapping` parameter supports specifying the paths that the integration will search for files and information in, using [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns).
@@ -145,6 +148,9 @@ As part of the installation process, the integration will create a webhook in yo
     - `tag_push_events`
     - `subgroup_events`
     - `confidential_issues_events`
+    - `user_remove_from_group`
+    - `user_update_for_group`
+    - `user_add_to_group`
 
   - System Hooks supported event types:
 
@@ -162,24 +168,26 @@ By default, if `appHost` is provided, the integration will create group webhooks
 
 #### System Webhooks
 
-To create a system hook there are two options:
+To create a system hook in GitLab, you must set `useSystemHook: true` and choose one of the following setup methods:
 
-:::note
-In both options you'll need to provide the `useSystemHook` parameter with the value `true`.
+1. **Automatic Setup** - Provide a token with admin privileges using the `tokenMapping` parameter.
+2. **Manual Setup** - Create the system hook yourself in GitLab:
+   - Follow GitLab's [system hook setup guide](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook).
+   - Set the URL to `{appHost}/integration/system/hook` (e.g., `https://my-gitlab-integration.com/integration/system/hook`).
+   - Enable the supported triggers: `push` and `merge_request`.
+
+:::info Repository Setup and Initial Commit
+Due to GitLab webhook limitations, new repositories require special handling:
+
+- A repository will only appear in Port after its first commit (GitLab webhooks don't support `project_create` events).
+- Empty repositories (no commits) will only appear after the next scheduled resync.
+
+For more details, see GitLab's [webhook events documentation](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html).
 :::
-
-1. Provide a token with admin privileges in GitLab using the `tokenMapping` parameter.
-   - When choosing this option, the integration will create the system hook in your GitLab account automatically.
-2. Create the system hook manually
-   - Follow the instructions for creating a system hook in GitLab [here](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook).
-   - In the `URL` field, provide the `appHost` parameter value with the path `/integration/system/hook`. e.g. `https://my-gitlab-integration.com/integration/system/hook`.
-   - From the `Triggers` section, the GitLab integration currently supports the following events:
-      - `push`
-      - `merge_request`
 
 ![GitLab System Hook](/img/integrations/gitlab/GitLabSystemHook.png)
 
-### `tokenGroupHooksOverrideMapping`
+### Listen to specified groups
 
 the integration can support listening to webhooks on specified groups, by configuring the `tokenGroupHooksOverrideMapping` parameter. this parameter is not required, and when you don't use it, the integration will listen to all of the root groups (if not using `useSystemHooks=true`)
 
@@ -201,7 +209,7 @@ You can configure multiple tokens, and multiple groups per token (the token shou
 - The group path is the full path in gitlab. If a group path is incorrect, the webhook will not be created.
 - The events for each group must match the supported event types mentioned below. if you would like to have all the events provided in the webhook, you can use: `{"events" = []}`, but not eliminate this key completely, because it is required.
 
-### Deploy the GitLab integration
+## Deploy the GitLab integration
 
 Choose one of the following installation methods:
 
@@ -209,71 +217,31 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="GitLab" />
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-time (Self-hosted)">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                          | Description                                                                                                                         | Example                          | Required |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------- |
-| `port.clientId`                    | Your Port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅      |
-| `port.clientSecret`                | Your Port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) |                                  | ✅      |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅      |
-| `integration.secrets.tokenMapping` | The [token mapping](#tokenmapping) configuration used to query GitLab                                                               |                                  | ✅      |
-| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in GitLab                | https://my-ocean-integration.com | ✅       |
-| `integration.config.gitlabHost`    | (for self-hosted GitLab) the URL of your GitLab instance                                                                            | https://my-gitlab.com            | ❌      |
-| `integration.secrets.tokenGroupHooksOverrideMapping`    | The [token group hooks override mapping](#tokengrouphooksoverridemapping) configuration used to create custom webhooks on groups                                                                            |             | ❌      |
+<Prerequisites />
 
-<HelmParameters/>
+For details about the available parameters for the installation, see the table below.
 
-<br/>
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-gitlab-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true \
-  --set scheduledResyncInterval=120 \
-  --set integration.identifier="my-gitlab-integration"  \
-  --set integration.type="gitlab"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.tokenMapping="\{\"TOKEN\": [\"GROUP_NAME/**\"]\}"
-```
+<OceanRealtimeInstallation integration="Gitlab" />
 
 <PortApiRegionTip/>
 
-It is also possible to get Port's UI to generate your installation command for you, Port will inject values such as your Port client ID and client secret directly into the command, making it easier to get started.
-
-Follow these steps to setup the integration through Port's UI:
-
-1. Click the ingest button in Port Builder Page for the blueprint you want to ingest using GitLab:
-
-   ![DevPortal Builder ingest button](/img/integrations/gitlab/DevPortalBuilderIngestButton.png)
-
-2. Select GitLab under the Git providers category:
-
-   ![DevPortal Builder GitLab option](/img/integrations/gitlab/DevPortalBuilderGitLabOption.png)
-
-3. Copy the helm installation command and set the [required configuration](#configuring-the-gitlab-integration);
-
-4. Run the helm command with the updated parameters to install the integration in your Kubernetes cluster.
-
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-gitlab-integration` in your git repository with the content:
 
@@ -354,20 +322,42 @@ kubectl apply -f my-ocean-gitlab-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.  
+Note the parameters specific to this integration, they are last in the table.
+
+| Parameter                                            | Description                                                                                                                                                                                                                                                                                    | Example                          | Required |
+|------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
+| `port.clientId`                                      | Your Port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
+| `port.clientSecret`                                  | Your Port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
+| `port.baseUrl`                                       | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
+| `integration.secrets.tokenMapping`                   | The [token mapping](#tokenmapping) configuration used to query GitLab                                                                                                                                                                                                                          |                                  | ✅        |
+| `integration.config.appHost`                         | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in GitLab                                                                                                                                                                           | https://my-ocean-integration.com | ✅        |
+| `integration.config.gitlabHost`                      | (for self-hosted GitLab) the URL of your GitLab instance                                                                                                                                                                                                                                       | https://my-gitlab.com            | ❌        |
+| `integration.secrets.tokenGroupHooksOverrideMapping` | The [token group hooks override mapping](#tokengrouphooksoverridemapping) configuration used to create custom webhooks on groups                                                                                                                                                               |                                  | ❌        |
+| `integration.eventListener.type`                     | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
+| `integration.type`                                   | The integration to be installed                                                                                                                                                                                                                                                                |                                  | ✅        |
+| `scheduledResyncInterval`                            | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |                                  | ❌        |
+| `initializePortResources`                            | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |                                  | ❌        |
+| `sendRawDataExamples`                                | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |                                  | ❌        |
+
+
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time-ci" label="One-time (CI)">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This pipeline will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
 
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="gitlab" label="GitLab">
-
-This workflow will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to configure the following [GitLab Variables](https://docs.gitlab.com/ee/ci/variables/):
 
@@ -430,15 +420,11 @@ Also make sure to keep the double-quotes (`"`) when passing the `OCEAN__INTEGRAT
 
 </TabItem>
 <TabItem value="jenkins" label="Jenkins">
-  
-This pipeline will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
 
@@ -495,3 +481,6 @@ pipeline {
 </TabItem>
 
 </Tabs>
+
+
+

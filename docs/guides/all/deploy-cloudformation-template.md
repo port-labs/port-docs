@@ -17,8 +17,8 @@ We will use an AWS managed GitHub Action called [aws-actions/aws-cloudformation-
 
 1. Create the following GitHub action secrets:
 
-   1. `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+   1. `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+   2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
    3. `AWS_ACCESS_KEY_ID` - AWS credentials.
    4. `AWS_SECRET_ACCESS_KEY` - AWS credentials.
    5. `AWS_REGION` - AWS region name to deploy your resources to.
@@ -272,8 +272,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -342,8 +341,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -450,8 +448,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

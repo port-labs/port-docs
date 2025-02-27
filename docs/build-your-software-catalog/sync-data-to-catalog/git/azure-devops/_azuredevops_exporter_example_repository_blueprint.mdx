@@ -2,39 +2,78 @@
 <summary>Repository blueprint</summary>
 
 ```json showLineNumbers
-{
-  "identifier": "azureDevopsRepository",
-  "title": "Repository",
-  "icon": "AzureDevops",
-  "schema": {
-    "properties": {
-      "url": {
-        "title": "URL",
-        "format": "url",
-        "type": "string",
-        "icon": "Link"
+  {
+    "identifier": "azureDevopsRepository",
+    "title": "Repository",
+    "icon": "AzureDevops",
+    "schema": {
+      "properties": {
+        "url": {
+          "title": "URL",
+          "format": "url",
+          "type": "string",
+          "icon": "Link"
+        },
+        "readme": {
+          "title": "README",
+          "type": "string",
+          "format": "markdown",
+          "icon": "Book"
+        },
+        "workItemLinking": {
+          "title": "Work Item Linking",
+          "default": false,
+          "type": "boolean"
+        },
+        "minimumApproverCount": {
+          "title": "Minimum Approver Count",
+          "default": 0,
+          "type": "number"
+        },
+        "slack": {
+          "icon": "Slack",
+          "type": "string",
+          "title": "Slack",
+          "format": "url"
+        },
+        "tier": {
+          "title": "Tier",
+          "type": "string",
+          "description": "How mission-critical the service is",
+          "enum": [
+            "Mission Critical",
+            "Customer Facing",
+            "Internal Service",
+            "Other"
+          ],
+          "enumColors": {
+            "Mission Critical": "turquoise",
+            "Customer Facing": "green",
+            "Internal Service": "darkGray",
+            "Other": "yellow"
+          },
+          "icon": "DefaultProperty"
+        }
       },
-      "readme": {
-        "title": "README",
-        "type": "string",
-        "format": "markdown",
-        "icon": "Book"
+      "required": []
+    },
+    "mirrorProperties": {
+      "defaultTeam": {
+        "title": "Default Team",
+        "path": "project.defaultTeam"
       }
     },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "project": {
-      "title": "Project",
-      "target": "project",
-      "required": true,
-      "many": false
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "project": {
+        "title": "Project",
+        "target": "project",
+        "required": false,
+        "many": false
+      }
     }
   }
-}
 ```
 
 </details>

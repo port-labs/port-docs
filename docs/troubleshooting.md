@@ -74,7 +74,7 @@ In any case, after 7 days you will need to login again.
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-1. Set up the Application in your SSO dashboard. You can find the documentation for each supported provider [here](https://docs.getport.io/sso-rbac/sso-providers/).
+1. Set up the Application in your SSO dashboard. You can find the documentation for each supported provider [here](https://docs.port.io/sso-rbac/sso-providers/).
 2. Reach out to us with the required credentials in order to complete the set up.
 3. After completing the set up, Port will provide you with the `CONNECTION_NAME`. Head back to the documentation and replace it where needed.
 
@@ -106,7 +106,7 @@ After the `error_description`, you can see `User%20is%20not%20assigned%20to%20th
 <summary><b>Answer (click to expand)</b></summary>
 
 When using the free tier, Port allows you to be connected to a single organization. If your colleague is in another organization, you will not be able to invite him/her.  
-Reach out to us via [Slack](https://www.getport.io/community) or Intercom, and we will help you resolve the issue.
+Reach out to us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io), and we will help you resolve the issue.
 
 </details>
 
@@ -126,7 +126,7 @@ If you are facing issues after installing an Ocean integration, follow these ste
 3. In your [builder](https://app.getport.io/settings/data-model) page, make sure that the new `blueprints` were created with the correct properties/relations.
 4. If you tried to install a `self-hosted` integration, check the integration's documentation to ensure you included the necessary parameters.
 
-If you are still facing issues, reach out to us via [Slack](https://www.getport.io/community) or using the Intercom bubble in the bottom right corner, and we will help you resolve the issue.
+If you are still facing issues, reach out to us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io), and we will help you resolve the issue.
 
 </details>
 
@@ -142,7 +142,7 @@ If you are still facing issues, reach out to us via [Slack](https://www.getport.
 Please make sure that:
 
 1. The action backend is set up correctly. This includes the Organization/Group name, repository and workflow file name.
-2. For Gitlab, make sure the [Port execution agent](https://docs.getport.io/actions-and-automations/setup-backend/gitlab-pipeline/Installation#installing-the-agent) is installed properly. When triggering the action, you can view the logs of the agent to see what URL was triggered. 
+2. For Gitlab, make sure the [Port execution agent](https://docs.port.io/actions-and-automations/setup-backend/gitlab-pipeline/self-hosted#installing-the-agent) is installed properly. When triggering the action, you can view the logs of the agent to see what URL was triggered. 
 
 </details>
 
@@ -178,7 +178,7 @@ This will download a file with all **entities** of the selected blueprints in th
 <summary><b>Answer (click to expand)</b></summary>
 
 1. Check for table filters in the top right. Make sure no filter is applied, or no property is hidden.
-2. Sometimes users apply [initial filters](https://docs.getport.io/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to increase the loading speed of the catalog page. Make sure your missing entity is not being filtered out.
+2. Sometimes users apply [initial filters](https://docs.port.io/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to increase the loading speed of the catalog page. Make sure your missing entity is not being filtered out.
 
 </details>
 
@@ -195,7 +195,7 @@ To understand if you can embed your desired content, the first step will be to c
 
     For example, with Grafana self-hosted that accessible from your VPN, you can simply make a dashboard public and embed it, and users who have logged in to your VPN will be able to see it embedded in Port correctly.
 
-2. PKCE: Port supports [PKCE](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication) authentication flow to authenticate the logged in user with an OIDC application against your IdP to gain access. This requires the end service you are trying to embed (for example, a dashboard from self-hosted Grafana) to support OIDC, in order to use the SSO application. In order to set it up, follow the documentation and make sure you do the following:
+2. PKCE: Port supports [PKCE](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/embedded-url/authentication) authentication flow to authenticate the logged in user with an OIDC application against your IdP to gain access. This requires the end service you are trying to embed (for example, a dashboard from self-hosted Grafana) to support OIDC, in order to use the SSO application. In order to set it up, follow the documentation and make sure you do the following:
 
     - Create a new application in your IdP and configure the widget to use the correct application ID.
     - Configure the end service with the application credentials, in order to receive the authentication requests.

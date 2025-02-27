@@ -11,9 +11,9 @@ This guide aims to demonstrate how to connect a GitHub repository (referred to a
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview). We will use the `Service` blueprint that was created during the onboarding process.
 - Ensure you have [Launchdarkly installed and configured](/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly/launchdarkly.md#installation) in your environment.
-- Ensure you have [GitHub installed and configured](docs/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md)
+- Ensure you have [GitHub installed and configured](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
 
 :::
 

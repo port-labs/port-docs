@@ -14,19 +14,31 @@ import JenkinsBuildBlueprint from './\_example_jenkins_build_blueprint.mdx'
 import JenkinsBuildWebhookConfig from './\_example_jenkins_build_webhook_configuration.mdx'
 import JenkinsJobBlueprint from './\_example_jenkins_job_blueprint.mdx'
 import JenkinsJobWebhookConfig from './\_example_jenkins_job_webhook_configuration.mdx'
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Jenkins
 
-Port's Jenkins integration allows you to import `jobs`, `builds`, `stages`, and `users` from your Jenkins environment into Port, according to your mapping and definitions.
+Port's Jenkins integration allows you to model Jenkins resources in your software catalog and ingest data into them.
 
-## Common use cases
+## Overview
 
-- Map `jobs`, `builds`, `stages`, and `users` in your Jenkins environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+This integration allows you to:
+
+- Map and organize your desired Jenkins resources and their metadata in Port (see supported resources below).
+- Watch for Jenkins object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+
+### Supported Resources
+
+- `job` - (`<your-jenkins-host>/api/json`)
+- `build` - (`<your-jenkins-host>/api/json`)
+- `user` - (`<your-jenkins-host>/people/api/json`)
+
+
 
 ## Prerequisites
 
-<Prerequisites />
+### Generate Jenkins API Token
 
 To generate a token for authenticating the Jenkins API calls:
 1. In the Jenkins banner frame, click your user name to open the user menu.
@@ -38,7 +50,8 @@ To generate a token for authenticating the Jenkins API calls:
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' border='1px' />
 
 
-:::info Install Required Plugins
+### Install Required Plugins
+
 To ensure full functionality of the Jenkins integration, please install the following plugins:
 
 1. **People View Plugin**: Required for user information API (for Jenkins versions 2.452 and above)
@@ -50,9 +63,9 @@ To ensure full functionality of the Jenkins integration, please install the foll
    - Search for and install the [**"Pipeline: Stage View"** plugin](https://plugins.jenkins.io/pipeline-stage-view/)
 
 These plugins are essential for the integration to access user information and pipeline stage data.
-:::
 
-## Installation
+
+## Setup
 
 Choose one of the following installation methods:
 
@@ -64,58 +77,28 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
 
-| Parameter                           | Description                                                                                                        | Required |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------- |
-| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                               | ✅      |
-| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                           | ✅      |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |  ✅      |
-| `integration.identifier`            | Change the identifier to describe your integration                                                                 | ✅      |
-| `integration.type`                  | The integration type                                                                                               | ✅      |
-| `integration.eventListener.type`    | The event listener type                                                                                            | ✅      |
-| `integration.secrets.jenkinsUser`   | The Jenkins username                                                                                               | ✅      |
-| `integration.secrets.jenkinsToken`  | The Jenkins password or token                                                                                     | ✅      |
-| `integration.config.jenkinsHost`    | The Jenkins host                                                                                                  | ✅      |
-| `integration.config.appHost`        | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jenkins  | ✅       |
-| `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌      |
-| `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌      |
-| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                       | ❌      |
+<h2> Prerequisites </h2>
 
+<Prerequisites />
 
-<br/>
+For details about the available parameters for the installation, see the table below.
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-jenkins-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set scheduledResyncInterval=120 \
-  --set integration.identifier="my-jenkins-integration"  \
-  --set integration.type="jenkins"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.jenkinsUser="JENKINS_USER"  \
-  --set integration.secrets.jenkinsToken="JENKINS_TOKEN" \
-  --set integration.config.jenkinsHost="JENKINS_HOST"  
-```
+<OceanRealtimeInstallation integration="Jenkins" />
+
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-jenkins-integration` in your git repository with the content:
 
@@ -202,18 +185,41 @@ kubectl apply -f my-ocean-jenkins-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.  
+Note the parameters specific to this integration, they are last in the table.
+
+| Parameter                          | Description                                                                                                                                             | Required |
+|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                    | Your port client id ([Get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅        |
+| `port.clientSecret`                | Your port client secret ([Get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅        |
+| `port.baseUrl`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                 | ✅        |
+| `integration.identifier`           | Change the identifier to describe your integration                                                                                                      | ✅        |
+| `integration.type`                 | The integration type                                                                                                                                    | ✅        |
+| `integration.eventListener.type`   | The event listener type                                                                                                                                 | ✅        |
+| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jenkins                                   | ✅        |
+| `scheduledResyncInterval`          | The number of minutes between each resync                                                                                                               | ❌        |
+| `initializePortResources`          | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                           | ❌        |
+| `sendRawDataExamples`              | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                     | ❌        |
+| `integration.secrets.jenkinsUser`  | The Jenkins username                                                                                                                                    | ✅        |
+| `integration.secrets.jenkinsToken` | The Jenkins password or token                                                                                                                           | ✅        |
+| `integration.config.jenkinsHost`   | The Jenkins host                                                                                                                                        | ✅        |
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the Jenkins integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
+:::
+
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Jenkins integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -250,15 +256,11 @@ jobs:
 
 </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Jenkins integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
+
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
 of `Secret Text` type:
@@ -311,8 +313,8 @@ pipeline {
 ```
 
   </TabItem>
-<TabItem value="azure" label="Azure Devops">
-<AzurePremise name="Jenkins" />
+  <TabItem value="azure" label="Azure Devops">
+<AzurePremise />
 
 <DockerParameters />
 <br/>
@@ -356,13 +358,7 @@ steps:
 ```
 
   </TabItem>
-
   <TabItem value="gitlab" label="GitLab">
-This workflow will run the Jenkins integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -422,121 +418,12 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting Jenkins objects
+## Configuration
 
-The Jenkins integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-Here is an example snippet from the config which demonstrates the process for getting `job` data from Jenkins:
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-```yaml showLineNumbers
-createMissingRelatedEntities: true
-deleteDependentEntities: true
-resources:
-  - kind: job
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1]
-          title: .fullName
-          blueprint: '"jenkinsJob"'
-          properties:
-            jobName: .name
-            url: .url
-            jobStatus: '{"notbuilt": "created", "blue": "passing", "red": "failing"}[.color]'
-            timestamp: .time
-```
-
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Jenkins's API events.
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Jenkins, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from Jenkins, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- `job` - (`<your-jenkins-host>/api/json`)
-- `build` - (`<your-jenkins-host>/api/json`)
-- `user` - (`<your-jenkins-host>/people/api/json`)
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: job
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Jenkins object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: job
-        selector:
-        ...
-  ```
-
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: job
-      # highlight-start
-      selector:
-        query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-      # highlight-end
-      port:
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Jenkins object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: job
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings: # Mappings between one Jenkins object to a Port entity. Each value is a JQ query.
-            identifier: .url | split("://")[1] | sub("^.*?/"; "") | gsub("%20"; "-") | gsub("/"; "-") | .[:-1]
-            title: .fullName
-            blueprint: '"jenkinsJob"'
-            properties:
-              jobName: .name
-              url: .url
-              jobStatus: '{"notbuilt": "created", "blue": "passing", "red": "failing"}[.color]'
-              timestamp: .time
-        # highlight-end
-    - kind: job # In this instance job is mapped again with a different filter
-      selector:
-        query: '.name == "MyJobName"'
-      port:
-        entity:
-          mappings: ...
-  ```
-
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
-
-### Ingest data into Port
-
-To ingest Jenkins objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Jenkins.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Jenkins under the CI/CD category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
 
 ## Examples
 
@@ -729,7 +616,6 @@ resources:
 ```
 
 </details>
-
 
 ### User
 
@@ -1061,6 +947,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "hello-job",
   "title": "Hello Job",
+  "icon": "Jenkins",
   "blueprint": "jenkinsJob",
   "properties": {
     "jobName": "Hello Job",
@@ -1085,6 +972,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "hello-job-2",
   "title": "Hello Job #2",
+  "icon": "Jenkins",
   "blueprint": "jenkinsBuild",
   "properties": {
     "buildStatus": "SUCCESS",
@@ -1111,6 +999,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "admin",
   "title": "admin",
+  "icon": "Jenkins",
   "blueprint": "jenkinsUser",
   "properties": {
     "url": "http://localhost:8080/user/admin",
@@ -1133,7 +1022,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "job-Phalbert-job-salesdash-job-master-229-execution-node-17-wfapi-describe",
   "title": "Declarative: Post Actions",
-  "icon": null,
+  "icon": "Jenkins",
   "blueprint": "jenkinsStage",
   "team": [],
   "properties": {

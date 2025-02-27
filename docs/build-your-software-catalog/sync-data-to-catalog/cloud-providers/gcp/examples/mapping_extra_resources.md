@@ -148,3 +148,46 @@ Create an integration configuration for the resource. The integration configurat
               machineType: ".machineType"
         		# highlight-end
         ```
+
+
+
+### Case Style Preservation
+
+For the resources listed below, this integration provides flexibility to either transform the properties to `snake_case` or preserve the original case style (e.g., `camelCase`) returned by the API for consistency with other resources.
+
+This applies to the following kinds:
+
+- Projects (`cloudresourcemanager.googleapis.com/Project`)
+- Organizations (`cloudresourcemanager.googleapis.com/Organization`)
+- Folders (`cloudresourcemanager.googleapis.com/Folder`)
+- Topics (`pubsub.googleapis.com/Topic`)
+- Subscriptions (`pubsub.googleapis.com/Subscription`)
+
+This feature is particularly useful for ensuring compatibility with downstream systems or processes that require `camelCase` formatting.
+
+#### How to Enable Case Style Conversion
+
+To convert the case style to camelCase, set `preserveApiResponseCaseStyle: true` in the selector configuration for the relevant API. For example:
+
+```yaml
+- kind: pubsub.googleapis.com/Subscription
+    selector:
+      query: 'true'
+      preserveApiResponseCaseStyle: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name
+
+ - kind: pubsub.googleapis.com/Topic
+    selector:
+      query: 'true'
+      preserveApiResponseCaseStyle: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .name
+          title: .name | split("/") | last
+```
+
+When `preserveApiResponseCaseStyle` is not set or set to `false` (default behavior), all property names will converted to snake_case format regardless of their original case style in the API response.

@@ -10,26 +10,33 @@ import SentryIssuesBluePrint from "/docs/build-your-software-catalog/custom-inte
 import SentryIssuesConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/sentry/\_example_sentry_issue_event_webhook_configuration.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Sentry
 
-Port's Sentry integration allows you to import `projects`, `issues`, `project-tag` and `issue-tag` from your Sentry cloud account into Port, according to your mapping and definition.
+Port's Sentry integration allows you to model Sentry resources in your software catalog and ingest data into them.
 
-A `Project` is essentially a container for all the data and information related to a specific application or service that you want to monitor.
 
-An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
+## Overview
 
-A `Tag` is a key/value pair used to attach additional metadata to objects. This metadata can include information such as the environment, runtime, log level, and more.
+This integration allows you to:
 
-## Common use cases
+- Map and organize your desired Sentry resources and their metadata in Port (see supported resources below).
+- Watch for Sentry object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
 
-- Map your monitored projects and issues into Port.
+### Supported Resources
 
-## Prerequisites
+The resources that can be ingested from Sentry into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-<Prerequisites />
+- [`User`](https://docs.sentry.io/api/organizations/list-an-organizations-members/)
+- [`Team`](https://docs.sentry.io/api/teams/list-an-organizations-teams/) - when enabled, the integration enrich the team resource with members using the [team member API](https://docs.sentry.io/api/teams/list-a-teams-members/)
+- [`Project`](https://docs.sentry.io/api/projects/list-your-projects/)
+- [`Issue`](https://docs.sentry.io/api/events/list-a-projects-issues/)
+- [`Project Tag`](https://docs.sentry.io/api/projects/list-a-tags-values/)
+- [`Issue Tag`](https://docs.sentry.io/api/events/list-a-tags-values-related-to-an-issue/)
 
-## Installation
+## Setup
 
 Choose one of the following installation methods:
 
@@ -41,53 +48,29 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
 
-| Parameter                               | Description                                                                                                   | Required |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| `port.clientId`                         | Your port client id                                                                                           | ✅       |
-| `port.clientSecret`                     | Your port client secret                                                                                       | ✅       |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                 | ✅       |
-| `integration.identifier`                | Change the identifier to describe your integration                                                            | ✅       |
-| `integration.type`                      | The integration type                                                                                          | ✅       |
-| `integration.eventListener.type`        | The event listener type                                                                                       | ✅       |
-| `integration.secrets.sentryToken`       | The Sentry API [token](https://docs.sentry.io/api/guides/create-auth-token/). The token requires `read` permissions for `Projects` and `Issue & Event`                                                                                     | ✅       |
-| `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                | ✅       |
-| `integration.config.sentryOrganization` | The Sentry organization slug. For example `acme` from `https://acme.sentry.io`                                                                                 | ✅       |
-| `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌       |
-| `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+<h2> Prerequisites </h2>
 
-<br/>
+<Prerequisites />
+
+For details about the available parameters for the installation, see the table below.
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-sentry-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set integration.identifier="my-sentry-integration"  \
-  --set integration.type="sentry"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.config.sentryHost="https://sentry.io"  \
-  --set integration.secrets.sentryToken="string"  \
-  --set integration.config.sentryOrganization="string"
-```
+<OceanRealtimeInstallation integration="Sentry" />
+
 <PortApiRegionTip/>
 
 </TabItem>
+
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-sentry-integration` in your git repository with the content:
 
@@ -173,6 +156,26 @@ kubectl apply -f my-ocean-sentry-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+Note the parameters specific to this integration, they are last in the table.
+
+| Parameter                               | Description                                                                                                                                            | Required |
+|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                         | Your port client id                                                                                                                                    | ✅        |
+| `port.clientSecret`                     | Your port client secret                                                                                                                                | ✅        |
+| `port.baseUrl`                          | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                | ✅        |
+| `integration.identifier`                | Change the identifier to describe your integration                                                                                                     | ✅        |
+| `integration.type`                      | The integration type                                                                                                                                   | ✅        |
+| `integration.eventListener.type`        | The event listener type                                                                                                                                | ✅        |
+| `scheduledResyncInterval`               | The number of minutes between each resync                                                                                                              | ❌        |
+| `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                          | ❌        |
+| `integration.secrets.sentryToken`       | The Sentry API [token](https://docs.sentry.io/api/guides/create-auth-token/). The token requires `read` permissions for `Member`, `Team`, `Organization`, `Project` and `Issue & Event` | ✅        |
+| `integration.config.sentryHost`         | The Sentry host. For example https://sentry.io                                                                                                         | ✅        |
+| `integration.config.sentryOrganization` | The Sentry organization slug. For example `acme` from `https://acme.sentry.io`                                                                         | ✅        |
+
+
+<br/>
+
 <AdvancedConfig/>
 
 <h3>Event listener</h3>
@@ -181,14 +184,16 @@ The integration uses polling to pull the configuration from Port every minute an
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates 
+If you want the integration to update Port in real time you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
+:::
+
  <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
@@ -226,13 +231,9 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip
 Your Jenkins agent should be able to run docker commands.
-:::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
 :::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
@@ -285,10 +286,9 @@ pipeline {
 ```
 
   </TabItem>
-
   <TabItem value="azure" label="Azure Devops">
   
-  <AzurePremise name="Sentry" />
+  <AzurePremise  />
 
 <DockerParameters /> 
 
@@ -332,13 +332,8 @@ steps:
 ```
 
   </TabItem>
+  <TabItem value="gitlab" label="GitLab">
 
-<TabItem value="gitlab" label="GitLab">
-This workflow will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -396,108 +391,197 @@ ingest_data:
 
 </Tabs>
 
-## Ingesting Sentry objects
 
-The Sentry integration uses a YAML configuration to describe the process of loading data into the developer portal.
+## Configuration
 
-Here is an example snippet from the config which demonstrates the process for getting `Issue` data from Sentry:
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
 
-```yaml showLineNumbers
-resources:
-  - kind: issue
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: ".id"
-          title: ".title"
-          blueprint: '"sentryIssue"'
-          properties:
-            link: ".permalink"
-            status: ".status"
-            isUnhandled: ".isUnhandled"
-          relations:
-            project: ".project.slug"
-```
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Sentry's API events.
-
-### Configuration structure
-
-The integration configuration determines which resources will be queried from Sentry, and which entities and properties will be created in Port.
-
-:::tip Supported resources
-The following resources can be used to map data from Sentry, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
-
-- [`Project`](https://docs.sentry.io/api/projects/list-your-projects/)
-- [`Issue`](https://docs.sentry.io/api/events/list-a-projects-issues/)
-- [`Project Tag`](https://docs.sentry.io/api/projects/list-a-tags-values/)
-- [`Issue Tag`](https://docs.sentry.io/api/events/list-a-tags-values-related-to-an-issue/)
-
-
-:::
-
-- The root key of the integration configuration is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: project
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for a Sentry object:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: project
-        selector:
-        ...
-  ```
-
-- The `port`, `entity` and the `mappings` keys are used to map the Sentry object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
-
-  ```yaml showLineNumbers
-  resources:
-    - kind: project
-      selector:
-        query: "true"
-      port:
-        # highlight-start
-        entity:
-          mappings:
-            identifier: .slug
-            title: .name
-            blueprint: '"sentryProject"'
-            properties:
-              dateCreated: .dateCreated
-              platform: .platform
-              status: .status
-              link: .organization.links.organizationUrl + "/projects/" + .name
-          # highlight-end
-  ```
-
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-:::
-
-### Ingest data into Port
-
-To ingest Sentry objects using the [integration configuration](#configuration-structure), you can follow the steps below:
-
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Sentry.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Sentry under the APM & alerting category.
-5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
-6. Click `Resync`.
 
 ## Examples
 
 Examples of blueprints and the relevant integration configurations:
+
+### User
+
+<details>
+<summary>User blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "sentryUser",
+  "description": "This blueprint represents a Sentry user in our software catalog.",
+  "title": "Sentry User",
+  "icon": "Sentry",
+  "schema": {
+    "properties": {
+      "username": {
+        "type": "string",
+        "title": "Username"
+      },
+      "isActive": {
+        "type": "boolean",
+        "title": "Is Active"
+      },
+      "dateJoined": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Date Joined"
+      },
+      "lastLogin": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Last Login"
+      },
+      "orgRole": {
+        "icon": "DefaultProperty",
+        "title": "Organization Role",
+        "type": "string",
+        "enum": [
+          "member",
+          "admin",
+          "owner",
+          "manager",
+          "biling"
+        ],
+        "enumColors": {
+          "member": "pink",
+          "admin": "green",
+          "owner": "green",
+          "manager": "yellow",
+          "biling": "lightGray"
+        }
+      },
+      "inviteStatus": {
+        "type": "string",
+        "title": "Invite Status",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: user
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .email
+          title: .user.name
+          blueprint: '"sentryUser"'
+          properties:
+            username: .user.username
+            isActive: .user.isActive
+            dateJoined: .user.dateJoined
+            lastLogin: .user.lastLogin
+            orgRole: .orgRole
+            inviteStatus: .inviteStatus
+```
+
+</details>
+
+
+### Team
+
+<details>
+<summary>Team blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "sentryTeam",
+  "description": "This blueprint represents an Sentry team in our software catalog",
+  "title": "Sentry Team",
+  "icon": "Sentry",
+  "schema": {
+    "properties": {
+      "dateCreated": {
+        "type": "string",
+        "title": "Date Created",
+        "format": "date-time"
+      },
+      "memberCount": {
+        "type": "number",
+        "title": "Number of Members"
+      },
+      "roles": {
+        "type": "string",
+        "title": "Roles"
+      },
+      "projects": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "title": "Projects"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "members": {
+      "title": "Members",
+      "target": "sentryUser",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+:::tip Enable Team Members
+The `includeMembers` flag is used to decide enrich the teams response with details about the members of the team. To turn this feature off, set it to `false`.
+:::
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: team
+    selector:
+      query: 'true'
+      includeMembers: true
+    port:
+      entity:
+        mappings:
+          identifier: .slug
+          title: .name
+          blueprint: '"sentryTeam"'
+          properties:
+            dateCreated: .dateCreated
+            memberCount: .memberCount
+            roles: .teamRole
+            projects: .projects | map (.slug)
+          relations:
+            members: if .__members != null then .__members | map(.user.email) | map(select(. != null)) else [] end
+```
+
+</details>
+
 
 ### Project
 
@@ -619,6 +703,12 @@ resources:
       "target": "sentryProject",
       "required": false,
       "many": true
+    },
+    "assignedTo": {
+      "title": "Assigned To",
+      "target": "sentryUser",
+      "required": false,
+      "many": false
     }
   }
 }
@@ -647,7 +737,8 @@ resources:
               status: ".status"
               isUnhandled: ".isUnhandled"
             relations:
-              project: ".project.slug"
+              projectEnvironment: ".project.slug"
+              assignedTo: .assignedTo.email
 ```
 
 </details>
@@ -693,7 +784,14 @@ resources:
   },
   "mirrorProperties": {},
   "calculationProperties": {},
-  "relations": {}
+  "relations": {
+    "team": {
+      "title": "Team",
+      "target": "sentryTeam",
+      "required": false,
+      "many": false
+    }
+  }
 }
 ```
 
@@ -725,7 +823,13 @@ resources:
             platform: .platform
             status: .status
             link: .organization.links.organizationUrl + "/projects/" + .name
-
+          relations:
+            team:
+              combinator: '"and"'
+              rules:
+                - property: '"projects"'
+                  operator: '"contains"'
+                  value: .slug
   - kind: issue-tag
     selector:
       query: "true"
@@ -742,6 +846,7 @@ resources:
             isUnhandled: .isUnhandled
           relations:
             projectEnvironment: '[(.project.slug as $slug | .__tags[] | "\($slug)-\(.name)")]'
+            assignedTo: .assignedTo.email
 ```
 
 </details>
@@ -753,6 +858,270 @@ This section includes a sample response data from Sentry. In addition, it includ
 ### Payload
 
 Here is an example of the payload structure from Sentry:
+
+<details>
+<summary> User response data</summary>
+
+```json showLineNumbers
+{
+  "id": "10909027",
+  "email": "developer@getport.io",
+  "name": "Michael",
+  "user": {
+    "id": "1722098",
+    "name": "Michael",
+    "username": "developer@getport.io",
+    "email": "developer@getport.io",
+    "avatarUrl": "https://gravatar.com/avatar/9645cd28334383caa5efa6a681dddf7cba33f94ddaf234297ba13cb30d5c5718?s=32&d=mm",
+    "isActive": true,
+    "hasPasswordAuth": true,
+    "isManaged": false,
+    "dateJoined": "2022-01-18T22:38:13.946094Z",
+    "lastLogin": "2024-11-10T23:25:31.826834Z",
+    "has2fa": false,
+    "lastActive": "2024-11-11T07:32:23.490455Z",
+    "isSuperuser": false,
+    "isStaff": false,
+    "experiments": {},
+    "emails": [
+      {
+        "id": "1861335",
+        "email": "developer@getport.io",
+        "is_verified": false
+      }
+    ],
+    "avatar": {
+      "avatarType": "letter_avatar",
+      "avatarUuid": null,
+      "avatarUrl": null
+    }
+  },
+  "orgRole": "owner",
+  "pending": false,
+  "expired": false,
+  "flags": {
+    "idp:provisioned": false,
+    "idp:role-restricted": false,
+    "sso:linked": true,
+    "sso:invalid": false,
+    "member-limit:restricted": false,
+    "partnership:restricted": false
+  },
+  "dateCreated": "2022-01-18T22:33:43.222734Z",
+  "inviteStatus": "approved",
+  "inviterName": "Port Admin",
+  "role": "owner",
+  "roleName": "Owner"
+}
+```
+
+</details>
+
+<details>
+<summary> Team response data</summary>
+
+```json showLineNumbers
+{
+  "id": "1275104",
+  "slug": "platform-team",
+  "name": "Developer Experience",
+  "dateCreated": "2021-11-16T13:25:53.617157Z",
+  "isMember": true,
+  "teamRole": "contributor",
+  "flags": {
+    "idp:provisioned": false
+  },
+  "access": [
+    "org:read",
+    "alerts:read",
+    "project:releases",
+    "event:write",
+    "event:read",
+    "project:read",
+    "team:read",
+    "member:read"
+  ],
+  "hasAccess": true,
+  "isPending": false,
+  "memberCount": 43,
+  "avatar": {
+    "avatarType": "letter_avatar",
+    "avatarUuid": null
+  },
+  "externalTeams": [],
+  "projects": [
+    {
+      "id": "4504592557998080",
+      "slug": "admin-service",
+      "name": "admin-service",
+      "platform": "node",
+      "dateCreated": "2023-01-30T08:35:19.602158Z",
+      "isBookmarked": false,
+      "isMember": true,
+      "features": [
+        "first-event-severity-new-escalation",
+        "minidump",
+        "similarity-indexing",
+        "similarity-view",
+        "span-metrics-extraction",
+        "span-metrics-extraction-addons",
+        "releases"
+      ],
+      "firstEvent": null,
+      "firstTransactionEvent": false,
+      "access": [
+        "org:read",
+        "alerts:read",
+        "project:releases",
+        "event:write",
+        "event:read",
+        "project:read",
+        "team:read",
+        "member:read"
+      ],
+      "hasAccess": true,
+      "hasCustomMetrics": false,
+      "hasMinifiedStackTrace": false,
+      "hasMonitors": false,
+      "hasProfiles": false,
+      "hasReplays": false,
+      "hasFeedbacks": false,
+      "hasNewFeedbacks": false,
+      "hasSessions": false,
+      "hasInsightsHttp": false,
+      "hasInsightsDb": false,
+      "hasInsightsAssets": false,
+      "hasInsightsAppStart": false,
+      "hasInsightsScreenLoad": false,
+      "hasInsightsVitals": false,
+      "hasInsightsCaches": false,
+      "hasInsightsQueues": false,
+      "hasInsightsLlmMonitoring": false,
+      "isInternal": false,
+      "isPublic": false,
+      "avatar": {
+        "avatarType": "letter_avatar",
+        "avatarUuid": null
+      },
+      "color": "#3f8abf",
+      "status": "active"
+    },
+    {
+      "id": "4508444173533184",
+      "slug": "oauth-service",
+      "name": "oauth-service",
+      "platform": "node-fastify",
+      "dateCreated": "2024-12-10T13:51:48.350544Z",
+      "isBookmarked": false,
+      "isMember": true,
+      "features": [
+        "first-event-severity-new-escalation",
+        "minidump",
+        "similarity-indexing",
+        "similarity-view",
+        "span-metrics-extraction",
+        "span-metrics-extraction-addons",
+        "releases"
+      ],
+      "firstEvent": null,
+      "firstTransactionEvent": false,
+      "access": [
+        "org:read",
+        "alerts:read",
+        "project:releases",
+        "event:write",
+        "event:read",
+        "project:read",
+        "team:read",
+        "member:read"
+      ],
+      "hasAccess": true,
+      "hasCustomMetrics": false,
+      "hasMinifiedStackTrace": false,
+      "hasMonitors": false,
+      "hasProfiles": false,
+      "hasReplays": false,
+      "hasFeedbacks": false,
+      "hasNewFeedbacks": false,
+      "hasSessions": false,
+      "hasInsightsHttp": false,
+      "hasInsightsDb": false,
+      "hasInsightsAssets": false,
+      "hasInsightsAppStart": false,
+      "hasInsightsScreenLoad": false,
+      "hasInsightsVitals": false,
+      "hasInsightsCaches": false,
+      "hasInsightsQueues": false,
+      "hasInsightsLlmMonitoring": false,
+      "isInternal": false,
+      "isPublic": false,
+      "avatar": {
+        "avatarType": "letter_avatar",
+        "avatarUuid": null
+      },
+      "color": "#60bf3f",
+      "status": "active"
+    },
+  ],
+  "__members": [
+    {
+      "id": "11033546",
+      "email": "danny@domain.io",
+      "name": "danny@domain.io",
+      "user": {
+        "id": "1823521",
+        "name": "danny@domain.io",
+        "username": "6032da5ae6c84433bb139023b23e3774",
+        "email": "danny@domain.io",
+        "avatarUrl": "https://gravatar.com/avatar/6fd8727dde707fd7bbf59ddde0f2a803416b082a2ddf538f6edfb0f9535a6dec?s=32&d=mm",
+        "isActive": true,
+        "hasPasswordAuth": false,
+        "isManaged": false,
+        "dateJoined": "2022-03-21T09:44:08.054654Z",
+        "lastLogin": "2024-12-09T07:42:25.535883Z",
+        "has2fa": false,
+        "lastActive": "2024-12-18T13:02:41.565988Z",
+        "isSuperuser": false,
+        "isStaff": false,
+        "experiments": {},
+        "emails": [
+          {
+            "id": "1965065",
+            "email": "danny@domain.io",
+            "is_verified": false
+          }
+        ],
+        "avatar": {
+          "avatarType": "letter_avatar",
+          "avatarUuid": null,
+          "avatarUrl": null
+        }
+      },
+      "orgRole": "member",
+      "pending": false,
+      "expired": false,
+      "flags": {
+        "idp:provisioned": false,
+        "idp:role-restricted": false,
+        "sso:linked": true,
+        "sso:invalid": false,
+        "member-limit:restricted": false,
+        "partnership:restricted": false
+      },
+      "dateCreated": "2022-03-21T09:44:09.037845Z",
+      "inviteStatus": "approved",
+      "inviterName": null,
+      "role": "member",
+      "roleName": "Member",
+      "teamRole": null,
+      "teamSlug": "getport"
+    }
+
+  ]
+}
+```
+
+</details>
 
 <details>
 <summary> Project response data</summary>
@@ -865,7 +1234,11 @@ Here is an example of the payload structure from Sentry:
     "in_app_frame_mix": "mixed"
   },
   "numComments": 0,
-  "assignedTo": "None",
+  "assignedTo": {
+    "email": "danny@domain.io",
+    "id": "11033546",
+    "name": "danny@domain.io"
+  },
   "isBookmarked": false,
   "isSubscribed": false,
   "subscriptionDetails": "None",
@@ -977,13 +1350,74 @@ Here is an example of the payload structure from Sentry:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
+<summary> User entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "developer@getport.io",
+  "title": "Michael",
+  "blueprint": "sentryUser",
+  "icon": "Sentry",
+  "team": [],
+  "properties": {
+    "username": "developer@getport.io",
+    "isActive": true,
+    "dateJoined": "2022-01-18T22:38:13.946094Z",
+    "lastLogin": "2024-11-10T23:25:31.826834Z",
+    "orgRole": "owner",
+    "inviteStatus": "approved"
+  },
+  "relations": {},
+  "createdAt": "2024-11-06T08:49:17.700Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2024-11-06T08:59:11.446Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+<details>
+<summary> Team entity in Port</summary>
+
+```json showLineNumbers
+{
+    "identifier": "platform-team",
+    "title": "Developer Experience",
+    "blueprint": "sentryTeam",
+    "icon": "Sentry",
+    "properties": {
+      "dateCreated": "2022-11-16T13:25:53.617157Z",
+      "memberCount": 1,
+      "roles": "contributor",
+      "projects": [
+        "admin-service",
+        "oauth-service"
+      ]
+    },
+    "relations": {
+      "members": [
+        "danny@domain.io"
+      ]
+    },
+  "createdAt": "2023-11-06T08:49:17.700Z",
+  "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
+  "updatedAt": "2023-11-06T08:59:11.446Z",
+  "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+
+<details>
 <summary> Project entity in Port</summary>
 
 ```json showLineNumbers
 {
   "identifier": "python-fastapi",
   "title": "python-fastapi",
-  "icon": null,
+  "icon": "Sentry",
   "blueprint": "sentryProject",
   "team": [],
   "properties": {
@@ -1009,7 +1443,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "4605173695",
   "title": "ZeroDivisionError: division by zero",
-  "icon": null,
+  "icon": "Sentry",
   "blueprint": "sentryIssue",
   "team": [],
   "properties": {
@@ -1019,6 +1453,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   },
   "relations": {
     "project": "python-fastapi"
+    "assignedTo": "danny@domain.io"
   },
   "createdAt": "2023-11-06T08:49:20.406Z",
   "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
@@ -1036,8 +1471,8 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "python-fastapi-production",
   "title": "python-fastapi-production",
-  "icon": null,
-  "blueprint": "sentryProject",
+  "icon": "Sentry",
+  "blueprint": "sentryProjectEnvironment",
   "team": [],
   "properties": {
     "dateCreated": "2023-03-31T06:18:37.290732Z",
@@ -1045,7 +1480,11 @@ The combination of the sample payload and the Ocean configuration generates the 
     "status": "active",
     "link": "https://test-org.sentry.io/projects/python-fastapi"
   },
-  "relations": {},
+  "relations": {
+    "team": [
+      "platform-team"
+    ]
+  },
   "createdAt": "2024-03-07T12:18:17.111Z",
   "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
   "updatedAt": "2024-03-07T12:31:52.041Z",
@@ -1269,6 +1708,7 @@ The combination of the sample payload and the webhook configuration generates th
   "identifier": "4253613038",
   "title": "NameError: name 'total' is not defined",
   "blueprint": "sentryIssue",
+  "icon": "Sentry",
   "properties": {
     "action": "created",
     "level": "error",

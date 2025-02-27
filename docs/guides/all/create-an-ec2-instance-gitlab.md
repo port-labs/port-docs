@@ -20,8 +20,8 @@ In the following guide, you are going to create a self-service action in Port th
 3. An SSH Key Pair to connect with the provisioned instance. [Learn more](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html#having-ec2-create-your-key-pair)
 
 4. In your GitLab project, go to the `Settings` menu at the sidebar on the left, select `CI/CD` and create the following `Variables`:
-    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
     * `AWS_ACCESS_KEY_ID` - An aws access key with the right iam permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
     * `AWS_SECRET_ACCESS_KEY` - An aws access key secret with permission to create an ec2 instance [learn more](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
     * `AWS_DEFAULT_REGION` - The aws region where you would like to provision your ec2 instances.
@@ -824,8 +824,7 @@ Before we continue, add some entities onto the AMI blueprint. The **identifier**
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>

@@ -8,7 +8,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 # Lock and Unlock Service
 
-In this guide, we will create a self-service action in Port that uses the [upsert entity](https://docs.getport.io/actions-and-automations/setup-backend/create-update-entity/) backend to lock and unlock a service.
+In this guide, we will create a self-service action in Port that uses the [upsert entity](https://docs.port.io/actions-and-automations/setup-backend/create-update-entity/) backend to lock and unlock a service.
 The locking and unlocking mechanism involves
 updating the `locked` property in Port on a `production` or `development` environment.
 Additionally, the action will send a Slack notification to a designated channel.

@@ -50,6 +50,8 @@ Choose one of the following installation methods:
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
+
 <h2> Prerequisites </h2>
  
 <Prerequisites/>
@@ -64,6 +66,12 @@ Note the parameters specific to this integration, they are last in the table.
 </TabItem>
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the X integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
 
 </TabItem>
 
@@ -161,8 +169,8 @@ resources:
 
 <!-- This section should contain one or more links (using bullets) to the guides section, filtered by technology/use-case. -->
 <!-- Make sure to replace the ?tags=<X> with your integration identifier -->
-- For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=<X>).
-- For guides on USE_CASE, see the [guides section](https://docs.getport.io/guides?tags=<USE_CASE>).
+- For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=<X>).
+- For guides on USE_CASE, see the [guides section](https://docs.port.io/guides?tags=<USE_CASE>).
 
 ## Alternative installation via webhook
 

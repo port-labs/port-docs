@@ -50,8 +50,8 @@ Streamline incident response with this self-service action. It automatically cre
 
 3. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
       - `BOT_USER_OAUTH_TOKEN` - [Slack Bot User Oauth Token](https://api.slack.com/authentication/token-types#bot) generated for the slack app.
-      - `PORT_CLIENT_ID` - Your port [client id](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-      - `PORT_CLIENT_SECRET` - Your port [client secret](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+      - `PORT_CLIENT_ID` - Your port [client id](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+      - `PORT_CLIENT_SECRET` - Your port [client secret](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 4. Create a service <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
 
 <details>
@@ -217,7 +217,7 @@ Streamline incident response with this self-service action. It automatically cre
       },
       "last_contributer": {
         "icon": "TwoUsers",
-        "title": "Last contributer",
+        "title": "Last contributor",
         "type": "string",
         "format": "user"
       },
@@ -664,8 +664,7 @@ Create a new self service action using the following JSON configuration.
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -677,7 +676,7 @@ Now you should see the `Open Slack Channel` action in the self-service page. ðŸŽ
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 2. Click on the `Open Slack Channel` action
-3. Enter your prefered details for `channel_name` and optionally add `members`. You can toggle the `is_private` flag to make the channel private.
+3. Enter your preferred details for `channel_name` and optionally add `members`. You can toggle the `is_private` flag to make the channel private.
 6. Click on `Execute`
 7. Done! wait for the channel to be created in slack.
 

@@ -36,7 +36,7 @@ variable, you can fetch a pre-defined `blueprints.json` to create your blueprint
 use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/trivy-blueprints.json) to
 define your blueprints. Do this by running:
 
-```bash showLineNumbers
+```bash
 export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/trivy-blueprints.json"
 ```
 
@@ -259,7 +259,7 @@ Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping 
 
 In this use-case you will be using the **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/trivy-kubernetes_v1_config.yaml)**. To achieve this, run:
 
-```bash showLineNumbers
+```bash
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/trivy-kubernetes_v1_config.yaml"
 ```
 Below are the mappings for the Trivy resources:

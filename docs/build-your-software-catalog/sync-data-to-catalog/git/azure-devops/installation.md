@@ -4,11 +4,14 @@ sidebar_position: 1
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import Prerequisites from "../../templates/\_ocean_helm_prerequisites_block.mdx"
 import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
 import DockerParameters from "./\_azuredevops_one_time_docker_parameters.mdx"
 import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+
 
 # Installation
 
@@ -18,24 +21,24 @@ This page details how to install Port's Azure DevOps integration (powered by the
 - How to [configure](#configure-the-integration) and customize the integration before deploying it.
 - How to [deploy](#deploy-the-integration) the integration in the configuration that fits your use case.
 
-:::note Prerequisites
+## Prerequisites
 
 - An Azure DevOps account with admin privileges.
 - If you choose the real time & always on installation method, you will need a kubernetes cluster on which to install the integration.
 - Your Port user role is set to `Admin`.
 
-:::
 
-## Create a personal access token
+## Setup
+
+### Create a personal access token
 
 The integration requires a personal access token to authenticate with your Azure DevOps account.  
 You can create one by following [these steps](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows#create-a-pat).  
 
 The token should either have `admin` permissions, or `read` permissions for each of the supported resources you want to ingest into Port.
 
-## Configure the integration
 
-### `appHost` & listening to hooks
+### AppHost & listening to hooks
 
 :::tip
 The `appHost` parameter is used specifically to enable the real-time functionality of the integration.
@@ -58,52 +61,28 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-always-on" label="Real Time & Always On">
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
 Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+<h2> Prerequisites </h2>
 
-| Parameter                          | Description                                                                                                                         | Example                          | Required |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------- |
-| `port.clientId`                    | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)     |                                  | ✅      |
-| `port.clientSecret`                | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials) |                                  | ✅      |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅      |
-| `integration.secrets.personalAccessToken` | The [personal access token](#tokenmapping) used to query authenticate with your Azure Devops account                                                               |                                  | ✅      |
-| `integration.secrets.organizationUrl` | The URL of your Azure DevOps organization                                                                                           | https://dev.azure.com/organizationName     | ✅      |
-| `integration.secrets.isProjectsLimited` | If using a project-scoped personal access token, this setting is enabled to create webhooks for individual projects. Enabled by default                                                                                           |       | ❌      |
-| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Azure DevOps                | https://my-ocean-integration.com | ✅       |
+<Prerequisites />
 
-<HelmParameters/>
+For details about the available parameters for the installation, see the table below.
 
-<br/>
+
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-azure-devops-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-  --set sendRawDataExamples=true \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-azure-devops-integration"  \
-	--set integration.type="azure-devops"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.organizationUrl="https://dev.azure.com/organizationName"  \
-	--set integration.secrets.personalAccessToken="Enter value here"
-```
+<OceanRealtimeInstallation integration="Azure-devops" />
 
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-azure-devops-integration` in your git repository with the content:
 
@@ -186,11 +165,38 @@ kubectl apply -f my-ocean-azure-devops-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                                 | Description                                                                                                                                                                                                                                                                                    | Example                                | Required |
+|-------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|----------|
+| `port.clientId`                           | Your port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                        | ✅        |
+| `port.clientSecret`                       | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                        | ✅        |
+| `port.baseUrl`                            | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                        | ✅        |
+| `integration.secrets.personalAccessToken` | The [personal access token](#create-a-personal-access-token) used to query authenticate with your Azure Devops account                                                                                                                                                                         |                                        | ✅        |
+| `integration.secrets.organizationUrl`     | The URL of your Azure DevOps organization                                                                                                                                                                                                                                                      | https://dev.azure.com/organizationName | ✅        |
+| `integration.secrets.isProjectsLimited`   | If using a project-scoped personal access token, this setting is enabled to create webhooks for individual projects. Enabled by default                                                                                                                                                        |                                        | ❌        |
+| `integration.config.appHost`              | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Azure DevOps                                                                                                                                                                     | https://my-ocean-integration.com       | ✅        |
+| `integration.eventListener.type`          | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                        | ✅        |
+| `integration.type`                        | The integration to be installed                                                                                                                                                                                                                                                                |                                        | ✅        |
+| `scheduledResyncInterval`                 | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |                                        | ❌        |
+| `initializePortResources`                 | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |                                        | ❌        |
+| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |                                        | ❌        |
+
+
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
-<TabItem value="one-time" label="Scheduled">
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This pipeline will run the Azure DevOps integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
 
 <Tabs groupId="cicd-method" queryString="cicd-method">
 

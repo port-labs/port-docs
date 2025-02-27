@@ -272,7 +272,7 @@ resource "port_entity" "myEntity" {
 # highlight-start
   relations = {
     single_relations = {
-    "mySingleRelation" = "myTargetEntityIdentifier"
+      "mySingleRelation" = "myTargetEntityIdentifier"
     }
   }
 
@@ -358,7 +358,7 @@ resource "port_entity" "myEntity" {
       "myObjectProp" = jsonencode({ "my" : "object" })
     }
     "array_props" = {
-    "string_props" = {
+      "string_props" = {
         "myArrayProp" = ["a", "b", "c"]
       }
     }
@@ -420,6 +420,9 @@ To delete an entity using Terraform, simply remove the `port_entity` resource de
 <Tabs groupId="terraform-import" queryString="current-scenario" defaultValue="entity" values={[
 {label: "Blueprint", value: "blueprint"},
 {label: "Entity", value: "entity"},
+{label: "Scorecard", value: "scorecard"},
+{label: "Aggregation Property", value: "aggregation"},
+{label: "Actions/Automations", value: "action"}
 ]} >
 
 <TabItem value="blueprint">
@@ -427,13 +430,10 @@ To delete an entity using Terraform, simply remove the `port_entity` resource de
 To import an existing blueprint to the Terraform state, add a `port_blueprint` resource to your `.tf` definition file:
 
 ```hcl showLineNumbers
-
 # highlight-start
-
 resource "port_blueprint" "myBlueprint" {
   ...
 }
-
 # highlight-end
 ```
 
@@ -450,22 +450,79 @@ terraform import port_blueprint.myBlueprint "{blueprintIdentifier}"
 To import an existing entity to the Terraform state, add a `port_entity` resource to your `.tf` definition file:
 
 ```hcl showLineNumbers
-
 # highlight-start
-
 resource "port_entity" "myEntity" {
   ...
 }
-
-
 # highlight-end
 ```
 
 Then run the following command to import the entity to the Terraform state:
 
 ```shell showLineNumbers
-
 terraform import port_entity.myEntity "{blueprintIdentifier}:{entityIdentifier}"
+```
+
+</TabItem>
+
+<TabItem value="scorecard">
+
+To import an existing scorecard to the Terraform state, add a `port_scorecard` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+# highlight-start
+resource "port_scorecard" "myScorecard" {
+  ...
+}
+# highlight-end
+```
+
+Then run the following command to import the scorecard to the Terraform state:
+
+```shell showLineNumbers
+terraform import port_scorecard.myScorecard "{blueprintIdentifier}:{scorecardIdentifier}"
+```
+
+</TabItem>
+
+<TabItem value="aggregation">
+
+To import existing aggregation properties to the Terraform state, add a `port_aggregation_properties` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+# highlight-start
+resource "port_aggregation_properties" "myAggregationProperty" {
+  ...
+}
+# highlight-end
+```
+
+Then run the following command to import the aggregation property to the Terraform state:
+
+```shell showLineNumbers
+terraform import port_aggregation_properties.myAggregationProperty "{blueprintIdentifier}"
+```
+
+Unlike other resources, all aggregation properties of a blueprint are managed in a single Terraform resource, which is why the import command only requires the blueprint identifier.
+
+</TabItem>
+
+<TabItem value="action">
+
+To import an existing action to the Terraform state, add a `port_action` resource to your `.tf` definition file:
+
+```hcl showLineNumbers
+# highlight-start
+resource "port_action" "myAction" {
+  ...
+}
+# highlight-end
+```
+
+Then run the following command to import the action to the Terraform state:
+
+```shell showLineNumbers
+terraform import port_action.myAction "{actionIdentifier}"
 ```
 
 </TabItem>
@@ -473,13 +530,10 @@ terraform import port_entity.myEntity "{blueprintIdentifier}:{entityIdentifier}"
 </Tabs>
 
 :::danger Applying after import
-Before using `terraform import` to bring data from your Port account into your Terraform state file, make sure your resource definitions match the schema of your resources in Port. If they don't, your state will be deleted in the next `terraform apply`, since Terraform will try to apply the empty resources and override the imported state, while also updating Port in the process.                                                                                                                                          
+Before using `terraform import` to bring data from your Port account into your Terraform state file, make sure your resource definitions match the schema of your resources in Port. If they don't, your state will be deleted in the next `terraform apply`, since Terraform will try to apply the empty resources and override the imported state, while also updating Port in the process.  
 :::
 
 :::note Advanced Example
 See [this](/guides/all/import-and-manage-integration) guide which explains more in depth of how you can use import state to manage Port integrations using Terraform
-
-
 :::
-
 

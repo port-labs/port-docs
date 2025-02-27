@@ -70,6 +70,18 @@
           "type": "string",
           "format": "url"
         }
+      },
+      "alertCreatedAt": {
+        "icon": "DefaultProperty",
+        "type": "string",
+        "title": "Alert Created At",
+        "format": "date-time"
+      },
+      "alertUpdatedAt": {
+        "icon": "DefaultProperty",
+        "type": "string",
+        "title": "Alert Updated At",
+        "format": "date-time"
       }
     },
     "required": []
@@ -77,9 +89,9 @@
   "mirrorProperties": {},
   "calculationProperties": {},
   "relations": {
-    "service": {
-      "title": "Service",
-      "target": "service",
+    "repository": {
+      "title": "Repository",
+      "target": "githubRepository",
       "required": true,
       "many": false
     }

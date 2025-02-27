@@ -20,7 +20,7 @@ To ingest the packages to Port, a `port-app-config.yml` file in the needed repos
 ## Prerequisites
 This guide assumes:
 - You have a Port account
-- You have installed [Port's GitHub app](docs/build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) in your organisation or in repositories you are interested in.
+- You have installed [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) in your organisation or in repositories you are interested in.
 
 ## GitHub configuration
 
@@ -92,20 +92,23 @@ resources:
       files:
         - path: '**/results.json'
     port:
-      itemsToParse: '[.file.content[] | select(.Vulnerabilities != null) as $input | .Vulnerabilities[] | {VulnerabilityID, PkgName, InstalledVersion, FixedVersion, Title, Description, Severity, References, PrimaryURL, DataSource, Target: $input.Target}]'
+      itemsToParse: >-
+        [.file.url as $url | .file.content.queries[] | {$url, query_id,
+        query_name, severity, platform, files, cloud_provider, description,
+        category}]
       entity:
         mappings:
-          identifier: .item.VulnerabilityID
-          title: .item.Title
-          blueprint: '"trivyVulnerability"'
+          identifier: .item.query_id
+          title: .item.query_name
+          blueprint: '"checkmarxScan"'
           properties:
-            version: .item.InstalledVersion
-            package_name: .item.PkgName
-            primaryUrl: .item.PrimaryURL
-            description: .item.Description
-            target: .item.Target
-            severity: .item.Severity
-            data_source: .item.DataSource
+            category: .item.category
+            cloud_provider: .item.cloud_provider
+            description: .item.description
+            files: .item.files
+            severity: .item.severity
+            platform: .item.platform
+            url: .item.url
 ```
 
 </details>

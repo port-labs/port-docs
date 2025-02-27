@@ -1,4 +1,7 @@
 import DocCardList from '@theme/DocCardList';
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import IntegrationsTable from "/src/components/IntegrationsTable/IntegrationsTable.jsx"
+import OceanContribution from "/docs/generalTemplates/_ocean_contribution.md"
 
 # Install an integration
 
@@ -10,22 +13,31 @@ Once installed, you can customize and extend these integrations to fit your exac
 
 :::info custom integrations
 Don't see the tool you wish to integrate with Port in the available integrations below?  
-We provide you with the required tools to model your data and ingest it with ease, see [`Create a custom integration`](/build-your-software-catalog/custom-integration).
+Port provides you with the required tools to model your data and ingest it with ease, see [`Create a custom integration`](/build-your-software-catalog/custom-integration).
 :::
 
 ## Integration process
 
-Generally, integrating a platform/tool with Port consists of 3 steps:
-
-<img src='/img/software-catalog/integration-process.png' width='85%' />
-
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/integration_diagram.png' width='100%' border='1px' style={{ "borderRadius": "12px" }} />
 <br/><br/>
 
-**The available integrations below take care of all of these steps for you, and can be customized after installation.**
+Generally, installing an available integration results in the following:
+
+1. The integration's default **data model** is created for you:
+   1. Default <PortTooltip id="blueprint">blueprints</PortTooltip> will be created in the [Builder](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint) page of your portal.
+   2. Default [mapping](/build-your-software-catalog/customize-integrations/configure-mapping) will be defined in the integration's [data source](https://app.getport.io/settings/data-sources) page.
+
+2. Data from the integrated tool is ingested into Port.  
+   The sync mechanism and frequency depend on the installation method.
+
+After the installation, you can customize the blueprints and/or mapping to ingest more/less data (see below).
 
 ## Available plug & play integrations
 
-<DocCardList />
+<IntegrationsTable />
+
+<br/>
+<OceanContribution />
 
 ## Customize your integrations
 
@@ -41,7 +53,7 @@ An entity is an instance of a [blueprint](/build-your-software-catalog/customize
 
 After installing an integration, a page will be created in your catalog, populated with entities representing the ingested data.
 
-For example, once you complete Port's [onboarding process](/quickstart) and connect your Git provider to Port, a new [Services page](https://app.getport.io/services) will be created in your software catalog, populated with entities representing your services (Git repositories):
+For example, once you complete Port's [onboarding process](/getting-started/overview) and connect your Git provider to Port, a new [Services page](https://app.getport.io/services) will be created in your software catalog, populated with entities representing your services (Git repositories):
 
 <img src='/img/software-catalog/entitiesExample.png' width='75%' border='1px' />
 

@@ -4,32 +4,52 @@ import GitHubResources from './\_github_exporter_supported_resources.mdx'
 
 # GitHub
 
-Our integration with GitHub allows you to export GitHub objects to Port as entities of existing blueprints. The integration supports real-time event processing so Port always provides an accurate real-time representation of your GitHub resources.
+Port's GitHub integration allows you to model GitHub resources in your software catalog and ingest data into them.
 
-## 💡 GitHub integration common use cases
 
-Our GitHub integration makes it easy to fill the software catalog with data directly from your GitHub organization, for example:
+## Overview
 
-- Map all the resources in your GitHub organization, including **services**, **pull requests**, **workflows**, **workflow runs**, **teams**, **files**, **dependabot alerts**, **deployment environments** and other GitHub objects.
-- Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+This integration allows you to:
+
+
+- Map and organize your desired GitHub resources and their metadata in Port (see supported resources below).
+- Watch for GitHub object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Manage Port entities using GitOps.
 - Trigger GitHub workflows directly from Port.
 
-## Installation
 
-To install Port's GitHub app, follow the [installation](./installation.md) guide.
+### Supported resources
 
-## Ingesting Git objects
+The resources that can be ingested from GitHub into Port are listed below.
+It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-By using Port's GitHub app, you can automatically ingest GitHub resources into Port based on real-time events.
+ <GitHubResources/>
 
-The app allows you to ingest a variety of objects resources provided by the GitHub API, including repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
 
-The GitHub app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+## Setup
 
-After installing the app, Port will automatically create a `service` blueprint in your catalog (representing a GitHub repository), along with a default YAML configuration file that defines where the data fetched from Github's API should go in the blueprint. 
+To install Port's GitHub app, follow these steps:
 
-### Configuration
+1. Go to the [GitHub App page](https://github.com/apps/getport-io).
+
+2. Click on the `Configure` button.
+
+3. Choose the organization in which to install the app.
+
+4. Within the selected organization, choose the repositories in which to install the app.
+
+
+5. Click on the `Install` button.
+
+6. Once the installation has finished, you will be redirected to Port.
+
+
+## Configuration
+
+
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
+
+The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
 To ingest GitHub objects, use one of the following methods:
 
@@ -79,140 +99,17 @@ When using global configuration **using GitHub**, the configuration specified in
 When **using Port's UI**, the specified configuration will override any `port-app-config.yml` file in your GitHub repository/ies.
 :::
 
-Here is an example snippet from the `port-app-config.yml` file which demonstrates the ETL process for getting `githubPullRequest` data from the GitHub organization and into the software catalog:
+## Capabilities
 
-```yaml showLineNumbers
-resources:
-  # Extract
-  # highlight-start
-  - kind: pull-request
-    selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-    # highlight-end
-    port:
-      entity:
-        mappings:
-          # Transform & Load
-          # highlight-start
-          identifier: ".head.repo.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
-          title: ".title"
-          blueprint: '"githubPullRequest"'
-          properties:
-            creator: ".user.login"
-            assignees: "[.assignees[].login]"
-            reviewers: "[.requested_reviewers[].login]"
-            status: ".status" # merged, closed, open
-            closedAt: ".closed_at"
-            updatedAt: ".updated_at"
-            mergedAt: ".merged_at"
-            prNumber: ".id"
-            link: ".html_url"
-            # highlight-end
-```
+### Ingesting Git objects
 
-The app makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from GitHub's API events.
+By using Port's GitHub app, you can automatically ingest GitHub resources into Port based on real-time events.
 
-### `port-app-config.yml` file
+The app allows you to ingest a variety of objects resources provided by the GitHub API, including repositories, pull requests, workflows and more. It also allows you to perform "extract, transform, load (ETL)" on data from the GitHub API into the desired software catalog data model.
 
-The `port-app-config.yml` file is how you specify the exact resources you want to query from your GitHub organization, and also how you specify which entities and which properties you want to fill with data from GitHub.
+The GitHub app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
-Note that when using [Port's UI](/build-your-software-catalog/sync-data-to-catalog/git/github/?method=port#configuration) to configure the GitHub integration, `port-app-config.yml` refers to the YAML editor window where you can modify the configuration.
-
-Here is an example `port-app-config.yml` block:
-
-```yaml showLineNumbers
-resources:
-  - kind: repository
-    selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-    port:
-      entity:
-        mappings:
-          identifier: ".name" # The Entity identifier will be the repository name.
-          title: ".name"
-          blueprint: '"service"'
-          properties:
-            url: ".html_url"
-            description: ".description"
-```
-
-### `port-app-config.yml` structure
-
-- The root key of the `port-app-config.yml` file is the `resources` key:
-
-  ```yaml showLineNumbers
-  # highlight-next-line
-  resources:
-    - kind: repository
-      selector:
-      ...
-  ```
-
-- The `kind` key is a specifier for an object from the GitHub API:
-
-  ```yaml showLineNumbers
-    resources:
-      # highlight-next-line
-      - kind: repository
-        selector:
-        ...
-  ```
-
-  <GitHubResources/>
-
-#### Filtering unwanted objects
-
-The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested into the software catalog:
-
-```yaml showLineNumbers
-resources:
-  - kind: repository
-    # highlight-start
-    selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-    # highlight-end
-    port:
-```
-
-For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
-
-```yaml showLineNumbers
-query: .name | startswith("service")
-```
-
-<br/>
-
-The `port`, `entity` and the `mappings` keys open the section used to map the GitHub API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array:
-
-```yaml showLineNumbers
-resources:
-  - kind: repository
-    selector:
-      query: "true"
-    # highlight-start
-    port:
-      entity:
-        mappings: # Mappings between one GitHub API object to a Port entity. Each value is a JQ query.
-          currentIdentifier: ".name" # OPTIONAL - keep it only in case you want to change the identifier of an existing entity from "currentIdentifier" to "identifier".
-          identifier: ".name"
-          title: ".name"
-          blueprint: '"service"'
-          properties:
-            description: ".description"
-            url: ".html_url"
-            defaultBranch: ".default_branch"
-    # highlight-end
-  - kind: repository # In this instance repository is mapped again with a different filter
-    selector:
-      query: '.name == "MyRepositoryName"'
-    port:
-      entity:
-        mappings: ...
-```
-
-:::tip
-Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-:::
+After installing the app, Port will automatically create a `repository` blueprint in your catalog (representing a GitHub repository), along with a default YAML configuration file that defines where the data fetched from Github's API should go in the blueprint.
 
 ### Ingest files from your repositories
 
@@ -502,6 +399,64 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 ```
 :::
 
+#### Dry-run for file changes
+
+To prevent unwanted changes to the ingested file, you can enable `GitHub checks` to perform a validation on ingested files.  
+When `validationCheck: true` is enabled in the `kind: file` mapping, Port's Github app will perform a schema validation on these files before they are processed.
+
+To enable file validation, add the `validationCheck` flag to your file kind mapping:
+
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: .repo.name == "port"
+      files:
+        - path: data-model/domains/*.yaml
+          validationCheck: true
+    port:
+      entity:
+        mappings:
+          // the rest of your mapping configuration
+```
+
+When a PR modifies a matching file, you will see a new check in your PR with the validation results.
+
+Example for a successful validation:
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunSuccessfulCheck.png' width='70%' />
+
+<br /> <br />
+
+Example for a failed validation:
+<img src='/img/build-your-software-catalog/sync-data-to-catalog/github/githubFileDryRunFailedCheck.png' width='70%' />
+
+#### Ingest raw file content
+
+If you need to ingest the raw content of a file without parsing it, you can use the `skipParsing` key in your file selector.  
+This is useful when you want to store the file content as a string or YAML property.  
+
+When `skipParsing` is set to `true`, the file content will be kept in its original string format instead of being parsed into a JSON/YAML object.
+
+Here's an example that ingests the raw content of a `values.yaml` file into the `content` property of a `file` entity:
+
+```yaml
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: values.yaml
+          skipParsing: true
+    port:
+      entity:
+        mappings:
+          identifier: >-
+            .repo.name + "-values"
+          blueprint: '"file"'
+          properties:
+            content: .file.content
+```
+
 #### Limitations
 
 - Currently only files up to 512KB in size are supported.
@@ -546,16 +501,21 @@ Port's GitHub integration requires the following permissions:
   - Membership
   - Release
 
-:::note
-You will be prompted to confirm these permissions when first installing the App.
+:::info Default permissions
+You will be prompted to confirm the above listed permissions when first installing the App.
 
-Permissions can be given to select repositories in your organization, or to all repositories. You can reconfigure the app at any time, giving it access to new repositories, or removing access.
+Permissions can be given to selected repositories in your organization, or to all repositories.   
+You can reconfigure the app at any time, giving it access to new repositories, or removing access.
 
 :::
 
 ## Examples
 
 Refer to the [examples](./examples/resource-mapping-examples.md) page for practical configurations and their corresponding blueprint definitions.
+
+## Relevant Guides
+
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=GitHub).
 
 ## GitOps
 

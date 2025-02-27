@@ -10,6 +10,7 @@ import LinearIssueBlueprint from "/docs/build-your-software-catalog/custom-integ
 import LinearIssueConfiguration from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/linear/\_example_linear_issue_configuration.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 
 # Linear
 
@@ -43,53 +44,27 @@ Choose one of the following installation methods:
 
 </TabItem>
 
-<TabItem value="real-time-self-hosted" label="Real-Time (Self-hosted)">
+<TabItem value="real-time-self-hosted" label="Real-Time (self-hosted)">
+
+Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
 <h2> Prerequisites </h2>
 
 <Prerequisites />
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+For details about the available parameters for the installation, see the table below.
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
-
-| Parameter                                | Description                                                                                                                                | Example                          | Required |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | ------- |
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)            |                                  | ✅      |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)        |                                  | ✅      |
-| `port.baseUrl`                | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                                  | ✅      |
-| `integration.secrets.linearApiKey` | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                   |                  | ✅      |
-| `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear                         | https://my-ocean-integration.com | ✅       |
-
-<HelmParameters/>
-
-<br/>
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
-To install the integration using Helm, run the following command:
 
-```bash showLineNumbers
-helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
-helm upgrade --install my-linear-integration port-labs/port-ocean \
-  --set port.clientId="PORT_CLIENT_ID"  \
-  --set port.clientSecret="PORT_CLIENT_SECRET"  \
-  --set port.baseUrl="https://api.getport.io"  \
-  --set initializePortResources=true  \
-  --set sendRawDataExamples=true  \
-  --set scheduledResyncInterval=120 \
-  --set integration.identifier="my-linear-integration"  \
-  --set integration.type="linear"  \
-  --set integration.eventListener.type="POLLING"  \
-  --set integration.secrets.linearApiKey="string"
-```
+<OceanRealtimeInstallation integration="Linear" />
 
 <PortApiRegionTip/>
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
-To install the integration using ArgoCD, follow these steps:
+To install the integration using ArgoCD:
 
 1. Create a `values.yaml` file in `argocd/my-ocean-linear-integration` in your git repository with the content:
 
@@ -177,32 +152,50 @@ kubectl apply -f my-ocean-linear-integration.yaml
 </TabItem>
 </Tabs>
 
+This table summarizes the available parameters for the installation.
+
+| Parameter                          | Description                                                                                                                                                                                                                                                                                    | Example                          | Required |
+|------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
+| `port.clientId`                    | Your port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
+| `port.clientSecret`                | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
+| `port.baseUrl`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
+| `integration.secrets.linearApiKey` | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                                                               |                                  | ✅        |
+| `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear                                                                                                                                                                           | https://my-ocean-integration.com | ✅        |
+| `integration.eventListener.type`   | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
+| `integration.type`                 | The integration to be installed                                                                                                                                                                                                                                                                |                                  | ✅        |
+| `scheduledResyncInterval`          | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |                                  | ❌        |
+| `initializePortResources`          | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |                                  | ❌        |
+| `sendRawDataExamples`              | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |                                  | ❌        |
+
+<br/>
+
 <AdvancedConfig/>
 
 </TabItem>
 
 <TabItem value="one-time-ci" label="Scheduled (CI)">
 
+This workflow/pipeline will run the Linear integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time using webhooks you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option.
+:::
+
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
-This workflow will run the Linear integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
 
-| Parameter                        | Description                                                                                                                                                                                                                                                                              | Example                       | Required |
-|----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|----------|
-| `port_client_id`                 | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |                               | ✅        |
-| `port_client_secret`             | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |                               | ✅        |
-| `port_base_url`             | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US |                               | ✅        |
-| `config -> linear_api_key` | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                                                                                                                                                                 |               | ✅        |
-| `initialize_port_resources`      | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |                               | ❌        |
-| `identifier`                     | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |                               | ❌        |
-| `version`                        | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest                        | ❌        |`
-| `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                       |   true    |                   | ❌       |
+| Parameter                   | Description                                                                                                                                                                                                                                                                              | Example | Required |
+|-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|----------|
+| `port_client_id`            | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |         | ✅        |
+| `port_client_secret`        | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |         | ✅        |
+| `port_base_url`             | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |         | ✅        |
+| `config -> linear_api_key`  | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                                                         |         | ✅        |
+| `initialize_port_resources` | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |         | ❌        |
+| `identifier`                | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌        |
+| `version`                   | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest  | ❌        |`
+| `sendRawDataExamples`       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      | true    |          | ❌       |
 <br/>
 
 :::tip Ocean Sail Github Action
@@ -240,15 +233,11 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Linear integration once and then exit, this is useful for **scheduled** ingestion of data.
 
 :::tip Tip for Jenkins agent
 Your Jenkins agent should be able to run docker commands.
 :::
 
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
 
@@ -297,9 +286,8 @@ pipeline {
 ```
 
   </TabItem>
-
   <TabItem value="azure" label="Azure Devops">
-<AzurePremise name="Linear" />
+<AzurePremise />
 
 <DockerParameters />
 
@@ -340,13 +328,7 @@ steps:
 ```
 
   </TabItem>
-
   <TabItem value="gitlab" label="GitLab">
-This workflow will run the Linear integration once and then exit, this is useful for **scheduled** ingestion of data.
-
-:::warning Realtime updates in Port
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
-:::
 
 Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
 
@@ -659,6 +641,216 @@ resources:
 
 </details>
 
+
+## Let's Test It
+
+This section includes sample response data from Linear. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+
+### Payload
+
+Here is an example of the payload structure from Linear:
+
+<details>
+<summary> Team response data</summary>
+
+```json showLineNumbers
+{
+  "id": "92d25fa4-fb1c-449f-b314-47f82e8f280d",
+  "name": "Port",
+  "key": "POR",
+  "description": null,
+  "organization": {
+      "id": "36968e1b-496c-4610-8c25-641364da172e",
+      "name": "Getport",
+      "urlKey": "getport"
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Label response data</summary>
+
+```json showLineNumbers
+{
+  "id": "36f84d2c-7b7d-4a71-96f2-6ea4140004d5",
+  "createdAt": "2024-05-17T15:17:40.858Z",
+  "updatedAt": "2024-05-17T15:17:40.858Z",
+  "archivedAt": null,
+  "name": "New-sample-label",
+  "description": null,
+  "color": "#bec2c8",
+  "isGroup": true,
+  "parent": null,
+  "children": {
+      "edges": [
+          {
+              "node": {
+                  "id": "2e483c90-2aca-4db6-924d-b0571d49f691"
+              }
+          }
+      ]
+  }
+}
+```
+
+</details>
+
+
+<details>
+<summary> Issue response data</summary>
+
+```json showLineNumbers
+{
+  "id": "9b4745c2-a8e6-4432-9e56-0fa97b79ccbf",
+  "createdAt": "2024-05-16T21:52:00.299Z",
+  "updatedAt": "2024-05-17T09:27:40.077Z",
+  "archivedAt": null,
+  "number": 2,
+  "title": "sub issue with new title",
+  "priority": 3,
+  "estimate": null,
+  "sortOrder": -991,
+  "startedAt": null,
+  "completedAt": null,
+  "startedTriageAt": null,
+  "triagedAt": null,
+  "canceledAt": null,
+  "autoClosedAt": null,
+  "autoArchivedAt": null,
+  "dueDate": null,
+  "slaStartedAt": null,
+  "slaBreachesAt": null,
+  "trashed": null,
+  "snoozedUntilAt": null,
+  "labelIds": [
+      "402b218c-938c-4ddf-85db-0019bc632316"
+  ],
+  "previousIdentifiers": [],
+  "subIssueSortOrder": -56.17340471045278,
+  "priorityLabel": "Medium",
+  "integrationSourceType": null,
+  "identifier": "POR-2",
+  "url": "https://linear.app/getport/issue/POR-2/sub-issue-with-new-title",
+  "branchName": "mor/por-2-sub-issue-with-new-title",
+  "customerTicketCount": 0,
+  "description": "",
+  "descriptionState": "AQG/pOWPAgAHAQtwcm9zZW1pcnJvcgMJcGFyYWdyYXBoAA==",
+  "team": {
+      "id": "92d25fa4-fb1c-449f-b314-47f82e8f280d",
+      "name": "Port",
+      "key": "POR"
+  },
+  "state": {
+      "name": "Todo"
+  },
+  "creator": {
+      "name": "Mor Paz",
+      "email": "mor@getport.io"
+  },
+  "assignee": {
+      "name": "Dudi Elhadad",
+      "email": "dudi@getport.io"
+  },
+  "parent": {
+      "id": "5ddd8e85-ad89-4c96-b901-0b901b29100d",
+      "identifier": "POR-1"
+  }
+}
+              
+```
+
+</details>
+
+### Mapping Result
+
+The combination of the sample payload and the Ocean configuration generates the following Port entity:
+
+<details>
+<summary> Team entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "POR",
+  "title": "Port",
+  "icon": "Linear",
+  "blueprint": "linearTeam",
+  "team": [],
+  "properties": {
+      "url": "https://linear.app/getport/team/POR",
+      "workspaceName": "Getport"
+  },
+  "relations": {},
+  "createdAt": "2024-05-19T16:19:15.232Z",
+  "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE",
+  "updatedAt": "2024-05-19T16:19:15.232Z",
+  "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
+}
+```
+
+</details>
+
+<details>
+<summary>Label entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "36f84d2c-7b7d-4a71-96f2-6ea4140004d5",
+  "title": "New-sample-label",
+  "icon": "Linear",
+  "blueprint": "linearLabel",
+  "team": [],
+  "properties": {
+      "isGroup": false
+  },
+  "relations": {
+      "childLabels": [],
+      "parentLabel": null
+  },
+  "createdAt": "2024-05-19T16:19:17.747Z",
+  "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE",
+  "updatedAt": "2024-05-19T16:19:17.747Z",
+  "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
+}
+```
+
+</details>
+
+<details>
+<summary>Issue entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "POR-2",
+  "title": "sub issue with new title",
+  "icon": "Linear",
+  "blueprint": "linearIssue",
+  "team": [],
+  "properties": {
+      "status": "Todo",
+      "url": "https://linear.app/getport/issue/POR-2/sub-issue-with-new-title",
+      "created": "2024-05-16T21:52:00.299Z",
+      "priority": "Medium",
+      "assignee": "dudi@getport.io",
+      "updated": "2024-05-17T09:27:40.077Z",
+      "creator": "mor@getport.io"
+  },
+  "relations": {
+      "team": "POR",
+      "labels": [
+          "402b218c-938c-4ddf-85db-0019bc632316"
+      ],
+      "parentIssue": "POR-1"
+  },
+  "createdAt": "2024-05-19T16:19:21.143Z",
+  "createdBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE",
+  "updatedAt": "2024-05-19T16:19:21.143Z",
+  "updatedBy": "KZ5zDPudPshQMShUb4cLopBEE1fNSJGE"
+}
+```
+
+</details>
 
 
 ## Alternative installation via webhook

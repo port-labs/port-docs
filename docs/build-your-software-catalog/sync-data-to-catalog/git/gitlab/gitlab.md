@@ -24,10 +24,13 @@ It is possible to reference any field that appears in the API responses linked b
 - [`pipeline`](https://docs.gitlab.com/ee/api/pipelines.html#get-a-single-pipeline)
 - [`group`](https://docs.gitlab.com/ee/api/groups.html#details-of-a-group)
 - [`file`](https://docs.gitlab.com/ee/api/repository_files.html#get-file-from-repository)
+- [`members`](https://docs.gitlab.com/ee/api/members.html#list-all-members-of-a-group-or-project)
+
 
 ## Setup
 
-To install Port's GitLab integration, follow the [installation](./installation.md#setup) guide.
+To install Port's GitLab integration, see the [installation](./installation.md#setup) page.
+
 :::info Permission
 Port's GitLab integration requires a group access token with the `api` scope.
 To create a group access token, follow the instructions in the [installation](./installation.md#creating-a-gitlab-group-access-token) guide
@@ -47,6 +50,10 @@ Port allows you to fetch `JSON` and `YAML` files from your repositories, and cre
 This is done using the `file` kind in your GitLab mapping configuration.
 
 For example, say you want to manage your `package.json` files in Port. One option is to create a `manifest` blueprint, with each of its entities representing a `package.json` file.
+
+:::info Search Type  
+The `file` kind follows [GitLab's Advanced Search type](https://docs.gitlab.com/ee/user/search/advanced_search.html#:~:text=Advanced%20search%20is%20based%20on,Projects/), adhering to its syntax, limitations, and capabilities.
+:::
 
 The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
 
@@ -378,12 +385,14 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 ```
 :::
 
-## Limitations
+#### Limitations
 
 - Currently only files up to 1MB in size are supported.
 - Only JSON and YAML formats are automatically parsed. Other file formats can be ingested as raw files.
 - GLOB patterns are supported for file pattern matching, but wildcards at the end (e.g., `**/*`) are not allowed, in order to prevent matching all files indiscriminately.
 - Currently only the default branch of the repository is supported.
+
+For a list of known limitations with GitLab’s Advanced Search, see GitLab's [Advanced Search documentation](https://docs.gitlab.com/ee/user/search/advanced_search.html#known-issues).
 
 ## Examples
 
@@ -391,7 +400,7 @@ Refer to the [examples](./examples.md) page for practical configurations and the
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=GitLab).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=GitLab).
 
 ## GitOps
 

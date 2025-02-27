@@ -16,7 +16,7 @@ The workflow involves adding a resource block to a Terraform `main.tf` file and 
 
 :::info Prerequisites
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart). **Setup the `Service` blueprint that you will be using in this guide.**
+- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/getting-started/overview). **Setup the `Service` blueprint that you will be using in this guide.**
 - You will need a GitHub repository in which you can place the files that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `port-actions`.
 - [Generic Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger/) - This plugin enables Jenkins to receive and trigger jobs based on incoming HTTP requests, extracting data from JSON or XML payloads and making it available as variables.
 :::
@@ -32,7 +32,7 @@ The workflow involves adding a resource block to a Terraform `main.tf` file and 
    
    Choose `Service` from the dropdown list.
 
-3. This action does not create/delete entites, but rather performs an operation on an existing <PortTooltip id="entity">entity</PortTooltip>. Therefore, we will choose `Day-2` as the action type.  
+3. This action does not create/delete entities, but rather performs an operation on an existing <PortTooltip id="entity">entity</PortTooltip>. Therefore, we will choose `Day-2` as the action type.  
    Fill out the form like this and click `Next`:
 
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionDetails.png' width='50%' />
@@ -102,7 +102,7 @@ Now we want to write the Jenkins pipeline that our action will trigger.
 
 resource "azurerm_storage_account" "storage_account" {
   name                = "{{ storage_name }}"
-  resource_group_name = "YourResourcesGroup" # replace this with one of your resource groups in your azure cloud acount
+  resource_group_name = "YourResourcesGroup" # replace this with one of your resource groups in your azure cloud account
 
   location                 = "{{ storage_location }}"
   account_tier             = "Standard"

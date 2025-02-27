@@ -1,6 +1,6 @@
 <details>
 
-<summary> Ocean integration configuration </summary>
+<summary> Integration mapping </summary>
 
 ```yaml showLineNumbers
 resources:
@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: .path_with_namespace | gsub(" "; "")
           title: .name
-          blueprint: '"service"'
+          blueprint: '"gitlabRepository"'
           properties:
             url: .web_url
             description: .description
@@ -39,7 +39,7 @@ resources:
             link: .web_url
             labels: "[.labels[]]"
           relations:
-            service: .references.full | gsub("#.+"; "")
+            repository: .references.full | gsub("#.+"; "")
 ```
 
 </details>

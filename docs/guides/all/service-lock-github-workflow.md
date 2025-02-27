@@ -11,7 +11,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 
 # Lock service deployment
 
-During peak periods such as campaigns, holidays, or system outages, it becomes crucial to maintain stability and avoid unexpected changes or disruptions to services. Implementing a service locking mechanism using [Port's Github Action](http://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/) helps to enforce this stability by temporarily preventing deployments during these critical times.
+During peak periods such as campaigns, holidays, or system outages, it becomes crucial to maintain stability and avoid unexpected changes or disruptions to services. Implementing a service locking mechanism using [Port's Github Action](http://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/) helps to enforce this stability by temporarily preventing deployments during these critical times.
 
 
 The CI/CD deployment check described in this guide will follow these steps:
@@ -25,7 +25,7 @@ The CI/CD deployment check described in this guide will follow these steps:
 ## Prerequisites
 :::info Prerequisites
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart)
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview)
 - You will need a GitHub repository in which you can trigger a workflow that we will use in this guide
 :::
 

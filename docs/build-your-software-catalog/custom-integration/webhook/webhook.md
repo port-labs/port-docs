@@ -4,7 +4,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Image from "@theme/IdealImage";
 import WebhookArchitecture from '/static/img/build-your-software-catalog/sync-data-to-catalog/webhook/webhook-architecture.png';
-import ExampleGithubPRWebhook from './examples/resources/github/\_example_github_pr_configuration.mdx';
+import ExampleFullConfiguration from './examples/resources/general/\_example_full_configuration.mdx';
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_api_available_regions.md"
 
@@ -31,24 +31,43 @@ Port provides you with custom webhook endpoints, which you can use as the target
 
 Each webhook endpoint can receive a [custom mapping](#mapping-configuration), making it easy to turn the payload of events from your 3rd-party services into entities inside your software catalog.
 
-The custom mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the webhook payload.
+The custom mapping uses the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the webhook payload.
 
 By using the webhook mapping you can:
 - **Create/update** a complete entity.
 - **Update** a single property on an entity.
 - **Delete** an entity from your catalog.
 
+## Create a custom webhook
+
+Choose your preferred method to create a custom webhook:
+<Tabs>
+<TabItem value="ui" label="UI">
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+
+2. Click on the `+ Data source` button in the top right corner.
+
+3. Select the `Webhook` tab.
+
+4. Click on `Custom integration`.
+</TabItem>
+<TabItem value="api" label="API">
+See the [Create a webhook route](/api-reference/create-a-webhook) in the API reference.
+</TabItem>
+</Tabs>
+
 ## Webhook configuration
 
-The webhook configuration is how you specify:
+A webhook configuration consists of the following parts:
 
-- The basic [metadata](#metadata-configuration) of the custom webhook integration;
-- The [mapping configuration](#mapping-configuration) controlling which entities are created from the payload;
+- The basic [metadata](#metadata-configuration) of the custom webhook integration.
+- The [mapping configuration](#mapping-configuration) controlling which entities are created from the payload.
 - The [security configuration](#security-configuration) used to make sure that payloads that arrive to Port were really sent by a 3rd party you authorized.
 
-Here is an example webhook configuration:
+Below is an example JSON definition of a complete webhook configuration.  
+See the [Configuration structure section](#configuration-structure) for a breakdown of the different parts.
 
-<ExampleGithubPRWebhook/>
+<ExampleFullConfiguration/>
 
 ## Configuration structure
 
@@ -123,9 +142,9 @@ Here is an example metadata configuration:
 
 The mapping configuration of the webhook defines how the webhook event payload is mapped to one (or more) Port entities.
 
-The mapping configuration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to extract information from the event payload into Port entity properties.
+The mapping configuration uses the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to extract information from the event payload and map it to Port entity properties.
 
-Here is an example mapping configuration:
+Below is an example of a mapping configuration:
 
 <Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -145,7 +164,7 @@ Here is an example mapping configuration:
     {
       "blueprint": "pullRequest",
       "operation": "create",
-      "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"",
+      "filter": ".headers.\"x-github-event\" == \"pull_request\"",
       "entity": {
         "identifier": ".body.pull_request.id | tostring",
         "title": ".body.pull_request.title",
@@ -178,7 +197,7 @@ Here is an example mapping configuration:
       {
         blueprint = "pullRequest"
         operation = "create"
-        filter = ".headers.\"X-GitHub-Event\" == \"pull_request\""
+        filter = ".headers.\"x-github-event\" == \"pull_request\""
         entity = {
           identifier = ".body.pull_request.id | tostring"
           title = ".body.pull_request.title"
@@ -201,9 +220,6 @@ Here is an example mapping configuration:
 
 </Tabs>
 
-
-#### Available keys
-
 When configuring the mapping, the following keys are available for use in the JQ expressions:
 
 | Key            | Description                                                                                                                   |
@@ -214,7 +230,8 @@ When configuring the mapping, the following keys are available for use in the JQ
 | `.item`        | A reference to items in the array specified in `itemsToParse`. Will be available in the JQ context if `itemsToParse` is used. |
 
 :::warning Known issues
-As the webhook custom integration is receiving the requests from AWS API Gateway, there are some issues that might affect the value of the fields in one of the context keys. For example, the `headers` key might not have the expected casing.
+As the webhook custom integration is receiving the requests from AWS API Gateway, there are some issues that might affect the value of the fields in one of the context keys. For example, the keys in the `headers` object might not have the expected casing, we recommend that you always reference keys from the `headers` object using lowercase versions of the header names (for example - `x-port-signature`).
+
 Please refer to the [AWS API Gateway known issues](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-known-issues.html#api-gateway-known-issues-rest-apis) for more information.
 :::
 
@@ -248,7 +265,7 @@ Now let's explore the structure of a single mapping object:
     {
       // highlight-next-line
       "blueprint": "pullRequest",
-      "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"",
+      "filter": ".headers.\"x-github-event\" == \"pull_request\"",
       ...
     }
   ]
@@ -292,7 +309,7 @@ Now let's explore the structure of a single mapping object:
     {
       "blueprint": "pullRequest",
       // highlight-next-line
-      "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"" # JQ boolean query. If evaluated to false - skip the payload.
+      "filter": ".headers.\"x-github-event\" == \"pull_request\"" # JQ boolean query. If evaluated to false - skip the payload.
       ...
     }
   ]
@@ -343,7 +360,7 @@ Now let's explore the structure of a single mapping object:
   "mappings": [
     {
       ...
-      "filter": ".headers.\"X-GitHub-Event\" == \"pull_request\"",
+      "filter": ".headers.\"x-github-event\" == \"pull_request\"",
       // highlight-start
       "entity": {
         "identifier": ".body.pull_request.id | tostring",
@@ -351,7 +368,8 @@ Now let's explore the structure of a single mapping object:
         "properties": {
           "author": ".body.pull_request.user.login",
           "url": ".body.pull_request.html_url"
-        }
+        },
+        "relations": {}
       }
       // highlight-end
     }
@@ -359,6 +377,47 @@ Now let's explore the structure of a single mapping object:
   ...
 }
 ```
+
+#### Search relation
+
+Port supports [mapping relations using search queries](/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) in the webhook mapping configuration.  
+
+Here is an example that demonstrates how to create a relation between a deployment entity and another component deployment entity based on the `appVersion` property:
+
+```json showLineNumbers
+[
+  {
+    "blueprint": "deployment",
+    "operation": "create",
+    "filter": "true",
+    "entity": {
+      "identifier": ".body.version | tostring",
+      "title": ".body.version | tostring as $version | \"deployment of version \" + $version ",
+      "properties": {
+        "version": ".body.version",
+        "createdAt": ".body.date",
+        "deploymentStatus": "'Success'",
+        "environment": "'Production'"
+      },
+      // highlight-start
+      "relations": {
+        "component_deployment": {
+          "combinator": "'and'",
+          "rules": [
+            {
+              "property": "'appVersion'",
+              "operator": "'='",
+              "value": ".body.version | tostring"
+            }
+          ]
+        }
+      }
+      // highlight-end
+    }
+  }
+]
+```
+
 
 ### Security configuration
 
@@ -389,10 +448,10 @@ Here is an example security configuration:
   // highlight-start
   "security": {
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   // highlight-end
 }
@@ -413,10 +472,10 @@ resource "port_webhook" "myWebhook" {
     // highlight-start
     security = {
       secret = "WEBHOOK_SECRET"
-      signature_header_name = "X-Hub-Signature-256"
+      signature_header_name = "x-hub-signature-256"
       signature_algorithm = "sha256"
       signature_prefix = "sha256="
-      request_identifier_path = ".headers.\"X-GitHub-Delivery\""
+      request_identifier_path = ".headers.\"x-github-delivery\""
     }
     // highlight-end
 }
@@ -443,10 +502,10 @@ If you do not want to supply a security configuration with your webhook configur
   // highlight-next-line
   "security": {
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }
@@ -460,10 +519,10 @@ If you do not want to supply a security configuration with your webhook configur
   "security": {
     // highlight-next-line
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }
@@ -477,10 +536,10 @@ If you do not want to supply a security configuration with your webhook configur
   "security": {
     "secret": "WEBHOOK_SECRET",
     // highlight-next-line
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }
@@ -494,11 +553,11 @@ If you do not want to supply a security configuration with your webhook configur
   ...
   "security": {
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     // highlight-next-line
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }
@@ -515,11 +574,11 @@ When using the `plain` algorithm, no hashing will be performed and the value of 
   ...
   "security": {
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     // highlight-next-line
     "signaturePrefix": "sha256=",
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }
@@ -527,17 +586,17 @@ When using the `plain` algorithm, no hashing will be performed and the value of 
 
 - The `requestIdentifierPath` key is used to specify a JQ pattern resulting in a unique identifier of the webhook payload:
   - This key is used to prevent Port from processing an event more than once;
-  - For example, in GitHub webhooks, the `X-GitHub-Delivery` header contains a GUID used to identify the delivery. So the webhook should be configured with: `"requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""`;
+  - For example, in GitHub webhooks, the `x-github-delivery` header contains a GUID used to identify the delivery. So the webhook should be configured with: `"requestIdentifierPath": ".headers.\"x-github-delivery\""`;
 
 ```json showLineNumbers
   ...
   "security": {
     "secret": "WEBHOOK_SECRET",
-    "signatureHeaderName": "X-Hub-Signature-256",
+    "signatureHeaderName": "x-hub-signature-256",
     "signatureAlgorithm": "sha256",
     "signaturePrefix": "sha256=",
     // highlight-next-line
-    "requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""
+    "requestIdentifierPath": ".headers.\"x-github-delivery\""
   }
   ...
 }
@@ -635,6 +694,14 @@ After creating and configuring your custom webhook, go to your 3rd party provide
 The maximum size of the webhook payload is **512KiB**.  
 Reaching this limit will throw a `413 Request Entity Too Large` HTTP error.
 :::
+
+### Custom webhook HTTP response
+
+Custom webhook endpoints provided by Port perform their processing in an asynchronous manner. 
+
+Most 3rd party providers expect a webhook endpoint to provide a correct response after a short period of time.
+
+In order to comply with the expectation from custom webhook endpoints, when you or your 3rd party provider makes a request to your custom webhook, you will see a **`202 ACCEPTED`** status code returned in the response. This is the expected behavior and it means that the payload sent to your custom webhook has been received and will undergo processing in the background, after which it will appear in your catalog as determined by your mapping configuration.
 
 ## Examples
 
