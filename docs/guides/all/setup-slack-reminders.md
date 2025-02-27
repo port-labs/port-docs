@@ -169,7 +169,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Generate Scorecards Reminders
-              uses: port-labs/port-sender@v0.2.3
+              uses: port-labs/port-sender@v0.2.14
               with:
                 operation_kind: scorecard_reminder
                 port_client_id: ${{ secrets.PORT_CLIENT_ID }}
