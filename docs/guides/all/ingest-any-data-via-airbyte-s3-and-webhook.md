@@ -86,18 +86,18 @@ in airbyte after the resources in Port have been properly set up.
 
 <TabItem value="aws_cli" label="AWS CLI">
 
-Install AWS CLI:
+1. Install AWS CLI:
 Download and install the AWS CLI from [AWS’s official page](https://aws.amazon.com/cli/).
 
-Configure Your Credentials:
-Run the command below and input your ACCESS_KEY, SECRET_KEY, and region:
+2. Configure Your Credentials:
+Run the command below and input your `ACCESS_KEY`, `SECRET_KEY`, and `REGION`:
 
 ```code showLineNumbers
 aws configure
 ```
-Alternatively, you can set the environment variables AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_DEFAULT_REGION.
+Alternatively, you can set the environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_DEFAULT_REGION`.
 
-Download Files from S3:
+3. Download Files from S3:
 Use the following command, replacing the placeholders with your bucket name and file prefix:
 
 ```code showLineNumbers
