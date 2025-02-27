@@ -9,9 +9,9 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
 
 
-# Ingest Any data source into Port via Airbyte, S3 and Webhook
+# Ingest any data source into Port via Airbyte, S3 and webhook
 
-This guide will demonstrate how to ingest any data source into Port using Airbyte, S3 and Webhook integration.
+This guide will demonstrate how to ingest any data source into Port using Airbyte, S3 and a webhook integration.
 
 ## Prerequisites
 
@@ -19,23 +19,23 @@ This guide will demonstrate how to ingest any data source into Port using Airbyt
 
 - This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via Intercom, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
 
-- Access to available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart)
+- Access to an available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart).
 
 
-## Airbyte Setup
+## Airbyte setup
 
-To integrate in Airbyte-supported data source into Port, you will need to:
+To integrate Airbyte-supported data source into Port, you will need to:
 1. Set up the S3 destination (only once).
 
 2. Set up the Data Source - once per data source you wish to integrate. Airbyte provides detailed [documentation](https://docs.airbyte.com/integrations/sources/) on how to generate/receive the appropriate credentials to set each data source.
 
-3. Set up the Connection between the source and destination - In this step you will be able to decide what data is being ingested, to which Webhook Integration in Port (see below "Set up the Connection"), how often will the sync will be executed and in what mode (Full refresh / Incremental).  
+3. Set up the Connection between the source and destination - in this step you will be able to define what data will be ingested, to which webhook integration in Port (see below "Set up the Connection"), how often will the sync will be executed, and in what mode (full refresh / incremental).  
 
 ### Set up S3 Destination
 
 <AirbyteS3DestinationSetup/>
 
-### Set up Data Source
+### Set up data source
 
 #### Find the connector in Airbyte
 
@@ -46,15 +46,15 @@ community or build your own—ensuring maximum flexibility.
 
 ### Set up the connection in Airbyte
 
-1. In Airbyte "Connections" page, Create a "+ New Connection"
+1. In the Airbyte "Connections" page, create a "+ New Connection".
 
-2. For Source, choose the Desired data source you have set up
+2. For **Source**, choose your desired data source.
 
-3. For Destination, choose the S3 Destination you have set up
+3. For **Destination**, choose the S3 Destination you have set up.
 
-4. In the **Select Streams** step, tick the streams you are interested in synchronizing into Port.
+4. In the **Select Streams** step, check the streams you are interested in synchronizing into Port.
 
-5. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and **enter the Webhook URL you have copied when setting up the webhook"** (see below), for example: "wSLvwtI1LFwQzXXX"
+5. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and enter the webhook URL you copied when setting up the webhook, for example: "wSLvwtI1LFwQzXXX".
 
 6. **Click on Finish & Sync** to apply and start the Integration process!
 
@@ -78,7 +78,7 @@ If you set up a connection to S3 before setting the target blueprints and mappin
 in airbyte after the resources in Port have been properly set up.
 :::
 
-##### To download the extracted S3 files:
+**To download the extracted S3 files:**
 
 <Tabs groupId="Download S3 files extracted by Airbyte" queryString values={
 [{label: "AWS CLI", value: "aws_cli"},{label: "Python (Boto3)", value: "python_boto3"}]
@@ -161,65 +161,62 @@ python download_s3.py
 Once the files are in your local device you can use your preferred text editor to review it's content and
 construct the appropriate blueprints and mappings for your data.
 
-<br/>
 
-### Add Blueprints 
+### Create blueprints 
 
 Once you have decided on the desired blueprints you wish to set up, you can refer to the [blueprint creation docs](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/?definition=ui) to set them up in your account.
 
 
-### Create Webhook Integration
+### Create webhook integration
 
-Once you have decided on the desired mappings you wish to set up, you can refer to the [webhook creation docs](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/) to set them up in your account.
+Once you have decided on the mappings you wish to set up, you can refer to the [webhook creation docs](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/) to set them up in your portal.
 
 :::tip Important
 It is important that you use the generated webhook URL when setting up the Connection in Airbyte, otherwise the data will not be automatically ingested into Port from S3.
 :::
 
-<br/>
-
 
 ## Troubleshooting
 
-### Troubleshooting issues in Airbyte integration to S3
+### Issues with Airbyte<>S3 integration
 
 Airbyte provides detailed logs available through the web application on currently running sync processes as well as historical ones.  
 After a successful sync has completed, you will be able to see how long ago it was executed, and how many records were loaded to S3 in every stream.
 
-### Troubleshooting issues in ingestion to Port from S3
+### Issues with S3<>Port ingestion
 
-If everything in Airbyte is working properly, and you don't see the data in your Port account, you may follow these steps to diagnose the root cause for the missing data:
+If everything in Airbyte is working properly, and you don't see the data in your Port account, you can follow these steps to diagnose the root cause:
 
 #### Issues in the Webhook
-1. Navigate to [Data Sources page](https://app.getport.io/settings/data-sources) in your port account
+1. Navigate to [Data Sources page](https://app.getport.io/settings/data-sources) in your port account.
 
 2. Locate the Webhook integration you have set for the ingestion, and click on it.
 
 3. In the pop-up interface, under "Add test Event" click on "Load latest event". 
 
-4. You should now see an example event that was received from the ingestion pipeline (In case you don't - scroll down to the below section in this guide: Data in S3 is not propagating to Port)
+4. You should now see an example event that was received from the ingestion pipeline (in case you don't - scroll down to the below section in this guide: Data in S3 is not propagating to Port).
 
-5. Scroll down to the section "Test Mapping" and click on the "Test Mapping" button at the bottom of the pop-up interface.
-As a result of the steps above you should see the result of the mapping applied on the latest event that was received by the webhook URL in the text box above the "Test Mapping" button.
-If you encounter a jq error - it means you have a syntax error or the source's schema does not match the mapping you have set and you will need to adjust the mapping properly.
-If you encounter a JSON document list, it means the mapping is working properly, but it could be that the filters you have set in it all result in "false" (which means no entity will be created). 
-In this case you will need to look over the appropriate element in the document (with the relevant blueprint for the loaded event) and adjust the mapping so that the "filter" field will be "true"
+5. Scroll down to the section "Test Mapping" and click on the "Test Mapping" button at the bottom of the pop-up interface.  
+You should see the result of the mapping applied on the latest event that was received by the webhook URL in the text box above the "Test Mapping" button.  
+If you encounter a jq error - it means you have a syntax error or the source's schema does not match the mapping you have set and you will need to adjust the mapping properly.  
+If you encounter a JSON document list, it means the mapping is working properly, but it could be that the filters you have set in it all result in "false" (which means no entity will be created).  
+In this case you will need to look over the appropriate element in the document (with the relevant blueprint for the loaded event) and adjust the mapping so that the "filter" field will result to "true".
 
 #### Issues in the blueprint definition
-1. Navigate to [Data Sources page](https://app.getport.io/settings/data-sources) in your port account.
+1. Navigate to the [Data Sources page](https://app.getport.io/settings/data-sources) of your port account.
 
-2. Locate the Webhook integration you have set for the ingestion, and click on it.
+2. Locate the webhook integration you have set for the ingestion, and click on it.
 
 3. In the pop-up interface, in the top pane menu click on "Audit Log".
 
-4. You can now browse for issues in ingestion of specific entities in the audit log, or apply a filter where **Status != "Success"**
-If any Entities were created but failed to ingest, you will see an indicative error that may lead you to the issue in the blueprint definition.
+4. You can now browse for issues in ingestion of specific entities in the audit log, or apply a filter where **Status != "Success"**.  
+If any entities were created but failed to ingest, you will see an indicative error that may lead you to the issue in the blueprint definition.
 
 #### Data is not propagating from S3 to Port
-If you're sure the Airbyte integration is working properly, there are no records in the Audit Log, and the "Load latest event" button does not produce an event in the corresponding box,
-there might be an issue with the pipeline set up by port. In this case, contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) and our support team will assist in diagnosing and solving the issue.
+If you're sure the Airbyte integration is working properly, there are no records in the Audit Log, and the "Load latest event" button does not produce an event in the corresponding box, there might be an issue with the pipeline set up by Port.  
+In this case, contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) and our support team will assist in diagnosing and solving the issue.
 
-### More Airbyte, S3 and Webhook integration guides:
+### Additional relevant guides
 - [Ingest Slack data into port](https://docs.port.io/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook)
 - [Ingest Okta data into port](https://docs.port.io/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook)
 - [Ingest Hibob data into port](https://docs.port.io/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook)
