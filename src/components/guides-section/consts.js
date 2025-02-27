@@ -766,7 +766,7 @@ export const availableGuides = [
     {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","GitLab","AzureDevOps","Dashboards"],
+        tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
         logos: ["Git"],
         link: "/guides/all/setup-dora-metrics",
     },
@@ -876,5 +876,33 @@ export const availableGuides = [
         tags: ["Engineering metrics", "Dynatrace"],
         logos: ["Dynatrace"],
         link: "/guides/all/connect-dynatrace-team-with-entities"
-    }
+    },
+    {
+        title: "Create surveys in your portal",
+        description: "Create surveys to collect feedback from your developers",
+        tags: ["Engineering metrics", "Actions", "Dashboards"],
+        logos: ["Engineering metrics"],
+        link: "/guides/all/create-surveys",
+    },
+    {
+        title: "Ingest Slack channels data with Airbyte, S3 & webhook",
+        description: "Send Slack channel data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
+        tags: ["Slack", "AWS", "Webhook"],
+        logos: ["Slack", "AWS", "Webhook"],
+        link: "/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook"
+    },
+    {
+        title: "Ingest HiBob data with Airbyte, S3 & webhook",
+        description: "Send Hibob data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
+        tags: ["AWS", "Webhook"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook"
+    },
+    {
+        title: "Ingest Okta data with Airbyte, S3 & webhook",
+        description: "Send Okta data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
+        tags: ["AWS", "Webhook"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
+    },
 ]

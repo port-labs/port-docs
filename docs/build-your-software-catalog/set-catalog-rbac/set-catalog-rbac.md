@@ -82,7 +82,7 @@ To give `read` permissions to another user, add it to the `users` array:
 {
   "entities": {
     ... other permissions
-    "register": {
+    "read": {
       "roles": ["my-blueprint-moderator", "Admin"],
       // highlight-next-line
       "users": ["my-user@example.com"], // added my-user@example.com
@@ -103,7 +103,7 @@ To give `read` permissions to another team, add it to the `teams` array:
 {
   "entities": {
     ... other permissions
-    "register": {
+    "read": {
       "roles": ["my-blueprint-moderator", "Admin"],
       "users": [],
       // highlight-next-line
@@ -126,7 +126,7 @@ To give `read` permissions to members of the owning team of an entity, change th
 {
   "entities": {
     ... other permissions
-    "register": {
+    "read": {
       "roles": ["my-blueprint-moderator", "Admin"],
       "users": [],
       "teams": [],
@@ -446,7 +446,7 @@ To give `delete` permissions to members of the owning team of an entity, change 
 
 ## Set *granular* access controls to catalog data
 
-It is possible to assign more granular permissions controls on **entities**:
+It is possible to assign more granular permissions controls on **entities**, allowing you to prevent users from editing certain properties or relations.
 
 <Tabs groupId="permission" defaultValue="updateProp">
 

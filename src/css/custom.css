@@ -186,6 +186,10 @@ html[data-theme="dark"] details details  {
   font-size: 90%;
 }
 
+.table-of-contents li:last-child {
+  margin-bottom: 0.8rem;
+}
+
 :not(.theme-api-markdown *) > .tabs-container {
   border: 1px solid #ccc; 
   padding: 1rem;         
@@ -333,6 +337,10 @@ html[data-theme="dark"] details details  {
 
 .sidebar-menu-resources .menu__link::before {
   content: url('/static/img/sidebar-icons/main-menu/resources.svg');
+}
+
+.sidebar-menu-customization .menu__link::before {
+  content: url('/static/img/sidebar-icons/main-menu/customization.svg');
 }
 
 .sidebar-property-embedded-url > div > a::before {

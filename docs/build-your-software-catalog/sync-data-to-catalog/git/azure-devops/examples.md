@@ -25,6 +25,9 @@ import PortBoardAppConfig from './example-board/\_azuredevops_exporter_example_b
 import ReleaseBlueprint from './example-release/\_azuredevops_exporter_example_release_blueprint.mdx'
 import PortReleaseAppConfig from './example-release/\_azuredevops_exporter_example_release_port_app_config.mdx'
 
+import FileBlueprint from './example-file/\_azuredevops_exporter_example_file_blueprint.mdx'
+import PortFileAppConfig from './example-file/\_azuredevops_exporter_example_file_port_app_config.mdx'
+
 import ColumnBlueprint from './example-columns/\_azuredevops_exporter_example_column_blueprint.mdx'
 import PortColumnAppConfig from './example-columns/\_azuredevops_exporter_example_column_port_app_config.mdx'
 
@@ -205,6 +208,15 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PortReleaseAppConfig/>
 
+
+## Mapping files
+
+The example below shows how to ingest files from your repositories into Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<FileBlueprint/>
+
+<PortFileAppConfig/>
 
 :::tip To Learn more
 - Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/release/releases/list?view=azure-devops-rest-7.1&tabs=HTTP) for the Azure DevOps release object structure.

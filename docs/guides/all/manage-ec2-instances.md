@@ -77,8 +77,7 @@ terraform apply -var 'resources=["ec2_instance", "autoscaling_group"]'
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
@@ -180,8 +179,7 @@ jobs:
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false 
 }
 ```
 
@@ -311,8 +309,7 @@ jobs:
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

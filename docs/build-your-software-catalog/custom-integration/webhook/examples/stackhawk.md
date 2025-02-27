@@ -40,7 +40,7 @@ Remember to update the `WEBHOOK_SECRET` and `AUTH_SIGNATURE_HEADER` with the rea
    3. `Scan Data For` - choose the application(s) you want to receive webhook events for or choose `Select All` if you want to configure a global webhook for all your applications.
    4. `Scan Events` - choose `Scan Completed` event type.
    5. `Webhook Endpoint URL` - enter the value of the `url` key you received after [creating the webhook configuration](/build-your-software-catalog/custom-integration/webhook#configuring-webhook-endpoints).
-   6. `Auth Header Name` - enter the name of the HTTP header that will contain your auth token/key. For example, you can enter `X-StackHawk-Port-Webhook`.
+   6. `Auth Header Name` - enter the name of the HTTP header that will contain your auth token/key. For example, you can enter `x-stackhawk-port-webhook`.
    7. `Auth Header Value` - enter the secret authentication token that will be added to your webhook payload.
 4. Click **Create and Test** to create your webhook.
 

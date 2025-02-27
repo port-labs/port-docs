@@ -1193,7 +1193,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 3. Scroll down to **Advanced settings** and input the following details:
 
    1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Pagerduty-Signature`;
+   2. Signature Header Name : `x-pagerduty-signature`;
    3. Signature Algorithm : Select `sha256` from dropdown option;
    4. Signature Prefix : `v1=`
    5. Click **Save** at the bottom of the page.
@@ -1387,7 +1387,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 
 3. Scroll down to **Advanced settings** and input the following details:
    1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Pagerduty-Signature`;
+   2. Signature Header Name : `x-pagerduty-signature`;
    3. Signature Algorithm : Select `sha256` from dropdown option;
    4. Signature Prefix : `v1=`
    5. Click **Save** at the bottom of the page.

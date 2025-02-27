@@ -292,7 +292,7 @@ You can also change the `title` of the ownership property. The default value is 
        },
        "conditions": [
          // highlight-next-line
-         ".user.properties.role == \"Manager\""
+         ".user.properties.port_role == \"Manager\""
        ]
      }
    }
@@ -338,7 +338,6 @@ Creating a service account has two limitations:
 
    ```
    </details>
-   ```
 
 ### Using service accounts
 

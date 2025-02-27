@@ -252,8 +252,8 @@ jobs:
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
+  
 }
 ```
 </details>
