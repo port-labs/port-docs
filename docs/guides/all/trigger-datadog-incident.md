@@ -119,7 +119,7 @@ We recommend creating a dedicated repository for the workflows that are used by 
 <details>
 <summary><b>Trigger Datadog Incident Workflow (Click to expand)</b></summary>
 
-```yaml
+```yaml showLineNumbers
 name: Trigger Datadog Incident
 on:
   workflow_dispatch:
