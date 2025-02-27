@@ -178,7 +178,7 @@ It is important that you use the generated webhook URL when setting up the Conne
 
 ## Troubleshooting
 
-### Issues with Airbyte<>S3 integration
+### Issues with Airbyte->S3 integration
 
 Airbyte provides detailed logs available through the web application on currently running sync processes as well as historical ones.  
 After a successful sync has completed, you will be able to see how long ago it was executed, and how many records were loaded to S3 in every stream.
