@@ -341,8 +341,7 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -357,6 +356,7 @@ This method simplifies the setup by handling everything within Port.
 
 
 ### Add Port secrets
+
 Add the following secrets to your Port account:
 
 1. Click on the `...` button next to the profile icon in the top right conner.
