@@ -39,13 +39,10 @@ To integrate in Airbyte-supported data source into Port, you will need to:
 
 #### Find the connector in Airbyte
 
-Airbyte supports a growing, wide range of connectors for [Data Sources](https://airbyte.com/connectors?connector-type=Sources)
-Each connector may require different steps to set up, some may be simple (such as generating an API Access Token), 
-and some may be more demanding such as spinning up a dedicated app (for example a SlackApp with relevant permissions)
-In addition, pay attention to the Support Level of the connector - Airbyte is open source, and some connectors are maintained officially by Airbyte, but some are maintained by the community (labeled as "Marketplace Connectors")
-Also, some connectors are available in specific Airbyte deployment mode (some are Cloud only, while others are available on any mode).
-Lastly, if you cannot find the connector you desire, you can [submit a request](https://airbyte.com/connector-requests) to Airbyte for a new connector for the data source you require.
-
+Airbyte supports a growing range of [connectors](https://airbyte.com/connectors?connector-type=Sources), making it easy to pull data from virtually any source. 
+Setup is often straightforward (e.g., adding an API key), but some connectors may require extra steps (like creating a Slack app).
+If a connector doesn’t exist yet, you can [request it](https://airbyte.com/connector-requests) from the Airbyte
+community or build your own—ensuring maximum flexibility.
 
 ### Set up the connection in Airbyte
 
@@ -69,7 +66,10 @@ Lastly, if you cannot find the connector you desire, you can [submit a request](
 You will need to be able to determine the schema of the data you want to ingest.
 If you are unsure about the schema that the connector extracts, you can always set up the Airbyte connection to S3 first,
 and during the **Select Streams** step in the connection setup, you can review the expected schema for each stream and
-construct the appropriate blueprints and mappings for your needs.
+construct the appropriate blueprints and mappings for your needs:
+
+<img src="/img/guides/airbyteSelectStreamsScreenshot.png" width="70%" border="1px" />
+<br/>
 Alternatively, you may set up the connection completely and start the sync, and download the extracted files from S3,
 review them, and construct the appropriate blueprints and mappings for you needs.
 
