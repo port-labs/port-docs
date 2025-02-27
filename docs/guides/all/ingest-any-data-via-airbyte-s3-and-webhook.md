@@ -183,7 +183,7 @@ It is important that you use the generated webhook URL when setting up the Conne
 Airbyte provides detailed logs available through the web application on currently running sync processes as well as historical ones.  
 After a successful sync has completed, you will be able to see how long ago it was executed, and how many records were loaded to S3 in every stream.
 
-### Issues with S3<>Port ingestion
+### Issues with S3->Port ingestion
 
 If everything in Airbyte is working properly, and you don't see the data in your Port account, you can follow these steps to diagnose the root cause:
 
