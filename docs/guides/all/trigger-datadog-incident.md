@@ -459,8 +459,7 @@ If you have your region information you use `https://api.<region>.datadoghq.com`
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 
