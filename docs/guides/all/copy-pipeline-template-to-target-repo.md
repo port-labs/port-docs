@@ -481,7 +481,11 @@ First, let's set up the necessary Azure DevOps components to handle the pipeline
 
 ## Execute the action
 1. Head over to the [Self-service](https://app.getport.io/self-serve) page of your Port application.
+
 2. Click on the `Copy Pipeline Template to Target Repo` action.
-3. Select the `Base Repository` where the template resides
+
+3. Select the `Base Repository` where the template resides.
+
 4. Select the `Target Repository` where the repository will be copied to.
-5. Click `Execute` button to trigger the action.
+
+5. Click the `Execute` button to trigger the action.
