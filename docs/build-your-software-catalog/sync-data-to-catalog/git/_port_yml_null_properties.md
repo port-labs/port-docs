@@ -1,6 +1,7 @@
 ### Setting null properties
 
-When you want to clear a property's value in Port, you can explicitly set it to `null` in your `port.yml` file. Let's see how to do this:
+When you want to clear a property's value in Port, you can explicitly set it to `null` in your `port.yml` file.  
+For example:
 
 ```yaml showLineNumbers
 identifier: myEntity

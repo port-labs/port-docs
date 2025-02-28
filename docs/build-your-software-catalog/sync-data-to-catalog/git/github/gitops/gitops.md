@@ -15,15 +15,20 @@ import PortYmlNullProperties from '../../\_port_yml_null_properties.md'
 
 Port's GitHub integration makes it possible to manage Port entities with a GitOps approach, making your code repositories the source of truth for the various infrastructure assets you want to manage.
 
-## 💡 GitHub GitOps common use cases
+Some common use cases include:
 
 - Use GitHub as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets.
 - Allow developers to keep the catalog up-to-date, by making updates to files in their Git repositories.
 - Create a standardized way to document software catalog assets in your organization.
 
-## Managing entities using GitOps
+Port offers two ways to manage entities using GitOps:
 
-To manage entities using GitOps, you will need to add a `port.yml` file to the **default branch** (usually `main`) of your repository.
+1. Using a dedicated `port.yml` file in your repository.
+2. Using the GitHub integration mapping in your portal.
+
+## Option 1: Use a `port.yml` file
+
+This approach requires adding a `port.yml` file to the **default branch** (usually `main`) of your repository.
 
 Note that the `port.yml` file is not the same as the [`port-app-config.yml` file](/build-your-software-catalog/sync-data-to-catalog/git/github/#port-app-configyml-file) used to configure the GitHub integration, and does not replace it. 
 
@@ -34,8 +39,6 @@ To manage entities using GitOps and the `port.yml` file, Port's [Github app](/bu
 
 This means that if the `port.yml` file exists in the repository before installing the app, it will not be picked up automatically. You will need to make some update to the `port.yml` file and push it to the repository in order for the Git app to properly track and ingest the entity information.
 :::
-
-### GitOps `port.yml` file
 
 The `port.yml` file is how you specify your Port entities that are managed using GitOps and whose data is ingested from your Git repositories.
 
@@ -105,6 +108,54 @@ Since both of the valid `port.yml` formats follow the same structure, the follow
 #### Using relative paths
 
 <RelativeFileProperties/>
+
+## Option 2: Use the integration mapping
+
+Every integration in Port has a dedicated [mapping configuration](/build-your-software-catalog/customize-integrations/configure-mapping) that allows you to specify which resources to ingest from the integration into Port.
+
+In the case of the GitHub integration, one of the supported resources is the `file` resource, which allows you to ingest file contents from a repository into your portal.
+
+To use this approach, you will need to edit your GitHub integration mapping and add a `file` block that specifies which files to ingest.  
+To edit a mapping configuration:
+
+1. Go to the [data sources page](https://app.getport.io/settings/data-sources) of your portal.
+2. Under `Exporters`, find the GitHub data source and click on it.
+3. Scroll down to the `Mapping` section and add a `file` block to the `resources` array.
+
+For example, say you want to ingest a `package.json` file form your repository. You can add the following to your GitHub integration mapping:
+
+```yaml
+resources:
+  ...
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        - path: package.json
+    port:
+      entity:
+        mappings:
+          identifier: .file.name
+          blueprint: '"file"'
+          properties:
+            content: .file.content
+```
+
+The `selector.files.path` key also supports glob patterns, so you can ingest multiple files by matching against a pattern and create an entity in Port for each one, for example:
+
+```yaml
+- kind: file
+  selector:
+    query: 'true'
+    files:
+      - path: 'resources/*.yml'
+```
+
+### Advantages
+
+- **Resync support**: Since this approach uses the integration mapping, a resync of the integration will update the entities in Port with the latest file contents.
+
+- **Data manipulation**: Since this approach uses the integration mapping, `jq` is supported and can be used to transform the file contents before ingestion.
 
 ## Examples
 
