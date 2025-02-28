@@ -130,8 +130,7 @@ Make sure to replace the placeholders for JENKINS_URL and JOB_TOKEN.
         "censoredProperties": "{{.action.encryptedProperties}}"
       }
     }
-  },
-  "publish": true
+  }
 }
 ```
 

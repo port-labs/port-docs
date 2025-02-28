@@ -11,7 +11,7 @@ This guide provides a step-by-step process to automate the creation of a new AWS
 
 :::info Prerequisites
 This guide assumes you have:
-- A Port account and that you have completed the [onboarding process](/quickstart).
+- A Port account and that you have completed the [onboarding process](/getting-started/overview).
 - A GitLab account with a repository set up for CI/CD.
 :::
 
@@ -332,8 +332,8 @@ Make sure to change 'WEBHOOK-URL-FROM-GITLAB' into your webhook URL from gitlab.
       "iam_role_name": "{{ .inputs."iam_role_name" }}"
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
+  
 }
 ```
 

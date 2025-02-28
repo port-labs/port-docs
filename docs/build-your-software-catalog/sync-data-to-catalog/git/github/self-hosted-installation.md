@@ -88,7 +88,7 @@ It can be deployed on any platform that allows deploying images as containers su
 You can pull the Docker image by running:
 
 ```bash showLineNumbers
-docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.15.0
+docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.16.0
 ```
 
 Run the following command to start the app:
@@ -100,12 +100,12 @@ docker run \
   -e GHE_HOST=<GITHUB BASE HOST, ie github.compay.com> \
   -e PORT=<Any PORT> \
   -e PORT_URL=https://api.getport.io \
-  -e PORT_ORG_ID=<ORG_ID> \
+  -e PORT_ORG_ID=<ORG_ID> \        #For self service actions, requires a Kafka topic
   -e PORT_CLIENT_ID=<CLIENT_ID> \
   -e PORT_CLIENT_SECRET=<CLIENT_SECRET> \
   -e PRIVATE_KEY=<BASE 64 PRIVATEKEY> \
   -p <PORT>:<PORT> \
-  ghcr.io/port-labs/port-self-hosted-github-app:0.15.0
+  ghcr.io/port-labs/port-self-hosted-github-app:0.16.0
 ```
 
 | Env variable         | Description                                                                         |
@@ -115,14 +115,14 @@ docker run \
 | `GHE_HOST`           | Your organization's self-hosted GitHub hostname                                     |
 | `PORT`               | The port that the GitHub App will listen to                                         |
 | `PORT_URL`           | Port's API Base URL                                                                 |
-| `PORT_ORG_ID`        | Your Port org id                                                                    |
+| `PORT_ORG_ID`        | Your Port org id (For self service actions, requires a Kafka topic)                 |
 | `PORT_CLIENT_ID`     | Port client id for interacting with the API                                         |
 | `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                     |
 | `PRIVATE_KEY`        | A base64 encoded private key. You can use a tool like https://www.base64encode.org/ |
 
 ## Health check route
 
-A health check is a route that is used to check the health of a service. It is a means to ensure that the service is running properly and can perform its intended function.
+A health check is a route that is used to check the health of a repository. It is a means to ensure that the service is running properly and can perform its intended function.
 
 Our GitHub App image exposes a health check route at `https://host:port/health` to monitor its status.
 
@@ -152,6 +152,6 @@ After you have the app registered in your organization and the Docker is up and 
 
 As this is a self-hosted version, there are some limitations due to security considerations and the fact that we don't have access to your GitHub instance
 
-- You must include configuration as part of the repository, and you can't configure it via Port's UI/API;
+- The configuration must be included as part of the repository, and cannot be configured via Port's UI/API. Refer to the [GitHub Configuration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/?method=github#configuration) for more details.
 
 - To use self-service actions, you will need [Kafka Credentials](/actions-and-automations/setup-backend/webhook/kafka/kafka.md) configured for your organization;

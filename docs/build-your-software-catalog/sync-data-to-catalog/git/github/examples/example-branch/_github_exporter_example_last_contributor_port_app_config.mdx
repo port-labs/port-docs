@@ -11,7 +11,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"service"'
+          blueprint: '"githubRepository"'
           properties:
             readme: file://README.md
             url: .html_url
@@ -23,7 +23,7 @@ resources:
       entity:
         mappings:
           identifier: .repository.name
-          blueprint: '"service"'
+          blueprint: '"githubRepository"'
           properties:
             last_contributor: .branch.commit.commit.author.email
             last_push: .branch.commit.commit.committer.date

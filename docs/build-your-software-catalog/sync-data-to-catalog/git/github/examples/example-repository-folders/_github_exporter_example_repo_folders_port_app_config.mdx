@@ -12,7 +12,7 @@ resources:
         mappings:
           identifier: .name
           title: .name
-          blueprint: '"service"'
+          blueprint: '"githubRepository"'
           properties:
             readme: file://README.md
             url: .html_url
@@ -37,7 +37,7 @@ resources:
             prNumber: .id
             link: .html_url
           relations:
-            service: .head.repo.name
+            repository: .head.repo.name
   - kind: folder
     selector:
       query: "true"
@@ -58,7 +58,7 @@ resources:
               .folder.path
             readme: file://README.md
           relations:
-            service: .repo.name
+            repository: .repo.name
 ```
 
 </details>

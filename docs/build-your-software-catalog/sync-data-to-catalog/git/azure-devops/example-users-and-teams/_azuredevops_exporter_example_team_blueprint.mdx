@@ -1,0 +1,46 @@
+<details>
+<summary>Team blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "azureDevopsTeam",
+  "title": "Azure Devops Team",
+  "icon": "AzureDevops",
+  "schema": {
+    "properties": {
+      "url": {
+        "icon": "Link",
+        "title": "URL",
+        "type": "string",
+        "format": "url"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string",
+        "icon": "DefaultProperty"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Project",
+      "target": "project",
+      "required": true,
+      "many": false
+    },
+    "members": {
+      "title": "Members",
+      "description": "The ADO users belonging to this team",
+      "target": "azureDevopsUser",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
+
+</details>

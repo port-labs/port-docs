@@ -1,0 +1,52 @@
+<details>
+
+<summary> Integration mapping </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: user
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .user.mailAddress
+          title: .user.displayName
+          blueprint: '"azureDevopsUser"'
+          properties:
+            url: .user.url
+  - kind: project
+    selector:
+      query: 'true'
+      defaultTeam: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: '.id | gsub(" "; "")'
+          blueprint: '"project"'
+          title: .name
+          properties:
+            state: .state
+            revision: .revision
+            visibility: .visibility
+            defaultTeam: .defaultTeam.name
+            link: .url | gsub("_apis/projects/"; "")
+  - kind: team
+    selector:
+      query: 'true'
+      includeMembers: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id
+          title: .name
+          blueprint: '"azureDevopsTeam"'
+          properties:
+            url: .url
+            description: .description
+          relations:
+            project: .projectId | gsub(" "; "")
+            members: .__members | map(.identity.uniqueName)
+```
+
+</details>

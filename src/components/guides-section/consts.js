@@ -1,5 +1,5 @@
 export const tagsCategoryMap = {
-    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "Security", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog"],
+    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "Security", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog", "Approval workflow"],
     "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
@@ -408,7 +408,7 @@ export const availableGuides = [
     {
         title: "Provision Cloud Resource using Terraform",
         description: "Create a self-service action that provisions cloud resources using Terraform",
-        tags: ["IaC for devs", "AWS", "Terraform", "Actions"],
+        tags: ["IaC for devs", "Approval workflow", "AWS", "Terraform", "Actions"],
         logos: ["AWS", "Terraform"],
         // category: "Getting started",
         link: "/guides/all/terraform-plan-and-apply-aws-resource",
@@ -744,7 +744,7 @@ export const availableGuides = [
     {
         title: "Manage Kubernetes namespaces via a Port workflow",
         description: "Chain actions and automations to automate the deletion of Kubernetes namespaces",
-        tags: ["K8s for devs", "Actions", "Automations", "GitLab"],
+        tags: ["K8s for devs", "Approval workflow", "GitLab", "Actions", "Automations"],
         logos: ["Kubernetes", "GitLab"],
         // category: "Getting started",
         link: "/guides/all/manage-kubernetes-namespaces",
@@ -766,7 +766,7 @@ export const availableGuides = [
     {
         title: "Track DORA Metrics",
         description: "Setup DevOps Research and Assessment (DORA) metrics within your organization in PORT",
-        tags: ["Engineering metrics","GitHub","GitLab","AzureDevOps","Dashboards"],
+        tags: ["Engineering metrics","GitHub","GitLab","AzureDevops","Dashboards"],
         logos: ["Git"],
         link: "/guides/all/setup-dora-metrics",
     },
@@ -875,7 +875,7 @@ export const availableGuides = [
     {
         title: "Manage service deployments using GitLab and ServiceNow", 
         description: "Create a chain of self-service actions that deploy a service using GitLab and ServiceNow",
-        tags: ["Incident management", "ServiceNow", "GitLab", "Actions", "Automations"],
+        tags: ["Approval workflow", "ServiceNow", "GitLab", "Actions", "Automations"],
         logos: ["ServiceNow", "GitLab"],
         link: "/guides/all/approval-workflow-for-gitlab-deployment"
     },
@@ -885,5 +885,33 @@ export const availableGuides = [
         tags: ["Engineering metrics", "Dynatrace"],
         logos: ["Dynatrace"],
         link: "/guides/all/connect-dynatrace-team-with-entities"
-    }
+    },
+    {
+        title: "Create surveys in your portal",
+        description: "Create surveys to collect feedback from your developers",
+        tags: ["Engineering metrics", "Actions", "Dashboards"],
+        logos: ["Engineering metrics"],
+        link: "/guides/all/create-surveys",
+    },
+    {
+        title: "Ingest Slack channels data with Airbyte, S3 & webhook",
+        description: "Send Slack channel data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
+        tags: ["Slack", "AWS", "Webhook"],
+        logos: ["Slack", "AWS", "Webhook"],
+        link: "/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook"
+    },
+    {
+        title: "Ingest HiBob data with Airbyte, S3 & webhook",
+        description: "Send Hibob data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
+        tags: ["AWS", "Webhook"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook"
+    },
+    {
+        title: "Ingest Okta data with Airbyte, S3 & webhook",
+        description: "Send Okta data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
+        tags: ["AWS", "Webhook"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
+    },
 ]

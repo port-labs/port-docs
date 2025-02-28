@@ -10,7 +10,7 @@ import AzureDevopsResources from './\_azuredevops_exporter_supported_resources.m
 import PipelineBlueprint from './example-pipeline/\_azuredevops_exporter_example_pipeline_blueprint.mdx'
 import PortPipelineAppConfig from './example-pipeline/\_azuredevops_exporter_example_pipeline_port_app_config.mdx'
 
-import TeamsBlueprint from './example-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
+import TeamsBlueprintDeprecated from './example-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
 import MembersBlueprint from './example-teams/\_azuredevops_exporter_example_member_blueprint.mdx'
 import PortTeamsAppConfig from './example-teams/\_azuredevops_exporter_example_teams_port_app_config.mdx'
 
@@ -25,8 +25,16 @@ import PortBoardAppConfig from './example-board/\_azuredevops_exporter_example_b
 import ReleaseBlueprint from './example-release/\_azuredevops_exporter_example_release_blueprint.mdx'
 import PortReleaseAppConfig from './example-release/\_azuredevops_exporter_example_release_port_app_config.mdx'
 
+import FileBlueprint from './example-file/\_azuredevops_exporter_example_file_blueprint.mdx'
+import PortFileAppConfig from './example-file/\_azuredevops_exporter_example_file_port_app_config.mdx'
+
 import ColumnBlueprint from './example-columns/\_azuredevops_exporter_example_column_blueprint.mdx'
 import PortColumnAppConfig from './example-columns/\_azuredevops_exporter_example_column_port_app_config.mdx'
+
+import PortUsersAndTeamsAppConfig from './example-users-and-teams/\_azuredevops_exporter_example_teams_port_app_config.mdx'
+import UsersBlueprint from './example-users-and-teams/\_azuredevops_exporter_example_user_blueprint.mdx'
+import TeamsBlueprint from './example-users-and-teams/\_azuredevops_exporter_example_team_blueprint.mdx'
+
 
 
 # Examples
@@ -90,8 +98,33 @@ In the following example you will ingest your Azure Devops pipelines to Port, yo
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port.
 
+## Mapping users and teams
 
-## Mapping teams and members
+The following example blueprints and integration configurations demonstrate how to ingest Azure Devops users and teams into Port:
+
+<ProjectBlueprint/>
+
+<UsersBlueprint/>
+
+<TeamsBlueprint/>
+
+<PortUsersAndTeamsAppConfig/>
+
+:::tip Learn more
+- Refer to the [setup](azure-devops.md#setup) section to learn more about the integration configuration setup process.
+- Port leverages the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Azure Devops objects to Port entities.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/teams/get%20all%20teams?view=azure-devops-rest-7.1#team) for the Azure Devops team object structure.
+- Click [Here](https://learn.microsoft.com/en-us/rest/api/azure/devops/memberentitlementmanagement/user-entitlements/list?view=azure-devops-rest-4.1&tabs=HTTP) for the Azure Devops User object structure.
+
+:::
+
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your teams alongside their members.
+
+## Mapping teams and members (Deprecated)
+
+:::caution Deprecation notice
+This section is deprecated and will be removed in a future version. Please refer to the [Mapping users and teams](#mapping-users-and-teams) section for the current implementation.
+:::
 
 In the following example you will ingest your Azure Devops teams and their members to Port, you may use the following Port blueprint definitions and integration configuration:
 
@@ -99,9 +132,9 @@ In the following example you will ingest your Azure Devops teams and their membe
 
 <RepositoryBlueprint/>
 
-<TeamsBlueprint/>
-
 <MembersBlueprint/>
+
+<TeamsBlueprintDeprecated/>
 
 <PortTeamsAppConfig/>
 
@@ -175,6 +208,15 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PortReleaseAppConfig/>
 
+
+## Mapping files
+
+The example below shows how to ingest files from your repositories into Port.  
+You can use the following Port blueprint definitions and integration configuration:
+
+<FileBlueprint/>
+
+<PortFileAppConfig/>
 
 :::tip To Learn more
 - Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/release/releases/list?view=azure-devops-rest-7.1&tabs=HTTP) for the Azure DevOps release object structure.

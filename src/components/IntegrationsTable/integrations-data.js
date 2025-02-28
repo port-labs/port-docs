@@ -219,6 +219,13 @@ export const integrations = [
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/event-processing/kafka',
   },
   {
+    name: 'Amplication',
+    category: 'other',
+    icon: '/img/guides/icons/Amplication.svg',
+    darkIcon: '/img/guides/icons/dark/Amplication.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/amplication',
+  },
+  {
     name: 'Backstage',
     category: 'other',
     icon: '/img/guides/icons/Backstage.svg',
