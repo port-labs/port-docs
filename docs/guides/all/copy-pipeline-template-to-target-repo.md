@@ -114,7 +114,6 @@ First, let's set up the necessary Azure DevOps components to handle the pipeline
     ```
     </details>
     
-    <br/>
 
 4. Create a self-service action in Port using the following JSON definition:
 
@@ -464,11 +463,11 @@ First, let's set up the necessary Azure DevOps components to handle the pipeline
     ```
 
     </details>
-    <br/>
+
 
 6. To configure the Pipeline in your project go to Pipelines -> Create Pipeline -> Azure Repos Git and choose `pipeline_copier` and click Save (in "Run" dropdown menu). 
 
-<br/>
+
 
 7. Create the following variables as [Secret Variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash):
 
@@ -480,6 +479,9 @@ First, let's set up the necessary Azure DevOps components to handle the pipeline
    - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
 
-<br/>
-
-8. Trigger the action from the [Self-service](https://app.getport.io/self-serve) page of your Port application.
+## Execute the action
+1. Head over to the [Self-service](https://app.getport.io/self-serve) page of your Port application.
+2. Click on the `Copy Pipeline Template to Target Repo` action.
+3. Select the `Base Repository` where the template resides
+4. Select the `Target Repository` where the repository will be copied to.
+5. Click `Execute` button to trigger the action.
