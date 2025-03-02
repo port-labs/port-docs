@@ -914,4 +914,11 @@ export const availableGuides = [
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
     },
+    {
+        title: "Ingest any data source with Airbyte, S3 & webhook",
+        description: "Send any data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
+        tags: ["AWS", "Webhook"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/ingest-any-data-via-airbyte-s3-and-webhook"
+    },
 ]
