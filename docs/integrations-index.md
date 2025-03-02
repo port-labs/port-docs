@@ -327,3 +327,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Swagger
 - [Ingest Swagger paths into your catalog](/guides/all/ingest-swagger-paths-into-your-catalog)
+
+## Kratix (by Syntasso)
+- [Combine Kratix and Port](https://www.syntasso.io/solutions/port-and-kratix)
+- [Combine Kratix and Port (demo video)](https://www.youtube.com/watch?v=7nKx4CnEvoY)
