@@ -39,10 +39,13 @@ To integrate Airbyte-supported data source into Port, you will need to:
 
 #### Find the connector in Airbyte
 
-Airbyte supports a growing range of [connectors](https://airbyte.com/connectors?connector-type=Sources), making it easy to pull data from virtually any source. 
-Setup is often straightforward (e.g., adding an API key), but some connectors may require extra steps (like creating a Slack app).
+Airbyte supports a wide range of [connectors](https://airbyte.com/connectors?connector-type=Sources).
+
+Setup is often straightforward (such as generating an API key),
+and some connectors may require extra steps (like creating a Slack app).
+
 If a connector doesn’t exist yet, you can [request it](https://airbyte.com/connector-requests) from the Airbyte
-community or build your own—ensuring maximum flexibility.
+community or build your own.
 
 ### Set up the connection in Airbyte
 
@@ -63,15 +66,14 @@ community or build your own—ensuring maximum flexibility.
 
 ### Figure out the target schema and mapping
 
-You will need to be able to determine the schema of the data you want to ingest.
+To define the data model, you will need to know the schema of the data you want to ingest.  
 If you are unsure about the schema that the connector extracts, you can always set up the Airbyte connection to S3 first,
-and during the **Select Streams** step in the connection setup, you can review the expected schema for each stream and
-construct the appropriate blueprints and mappings for your needs:
+and during the **Select Streams** step in the connection setup, review the expected schema for each stream and construct the appropriate blueprints and mappings:
 
 <img src="/img/guides/airbyteSelectStreamsScreenshot.png" width="70%" border="1px" />
 <br/>
-Alternatively, you may set up the connection completely and start the sync, and download the extracted files from S3,
-review them, and construct the appropriate blueprints and mappings for you needs.
+
+Alternatively, you can set up the connection and start the sync, then download the extracted files from S3, review them, and construct the appropriate blueprints and mappings.
 
 :::tip Important
 If you set up a connection to S3 before setting the target blueprints and mappings, you will have to execute a "resync" 
@@ -90,7 +92,7 @@ in airbyte after the resources in Port have been properly set up.
 Download and install the AWS CLI from [AWS’s official page](https://aws.amazon.com/cli/).
 
 2. Configure Your Credentials:
-Run the command below and input your `ACCESS_KEY`, `SECRET_KEY`, and `REGION`:
+Run the command below and input your `ACCESS_KEY`, `SECRET_KEY`, and `region`:
 
 ```code showLineNumbers
 aws configure
