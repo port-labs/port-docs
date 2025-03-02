@@ -1,6 +1,7 @@
 import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import OceanSaasLimitations from "/src/components/ocean-saas-specifics/limitations.jsx";
 
 Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
 
@@ -52,6 +53,10 @@ When filling in such a setting, its value will be obscured (shown as `•••�
 For each such setting, Port will automatically create a secret in your organization.  
 
 To see all secrets in your organization, follow [these steps](/sso-rbac/port-secrets/#usage).
+
+<h3>Limitations</h3>
+
+<OceanSaasLimitations id={props.integration} />
 
 <h3>Port source IP addresses</h3>
 
