@@ -17,6 +17,12 @@ In this guide, we will build the core components:
 - A **self-service action** for survey participation.
 - A **dashboard** to monitor survey metrics.
 
+:::tip Complete examples
+This guide includes various examples of survey implementations for different use cases.  
+These are great starting points for your own surveys.  
+You can find them in the [`Set up a survey action`](/guides/all/create-surveys#set-up-a-survey-action) section.
+:::
+
 ## Prerequisites
 
 - Complete the [onboarding process](/getting-started/overview).
