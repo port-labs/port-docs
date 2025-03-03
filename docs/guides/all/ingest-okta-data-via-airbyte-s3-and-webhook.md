@@ -7,11 +7,15 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
+import S3IntegrationDisclaimer from "/docs/generalTemplates/_s3_integrations_disclaimer.md"
 
 
 # Ingest Okta data into Port via Airbyte, S3 and webhook
 
-This guide will demonstrate how to ingest Okta data into Port using Airbyte, S3 and a webhook integration.
+This guide will demonstrate how to ingest Okta data into Port using [Airbyte](https://airbyte.com/), [S3](https://aws.amazon.com/s3/) and a [webhook integration](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+
+<S3IntegrationDisclaimer/>
+
 
 ## Prerequisites
 
@@ -389,3 +393,5 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
   inform us so we can assist to ensure the integration will run smoothly.
 ::: 
 
+### Additional relevant guides
+- [Ingest Any data into port](https://docs.port.io/guides/all/ingest-any-data-via-airbyte-s3-and-webhook/)
