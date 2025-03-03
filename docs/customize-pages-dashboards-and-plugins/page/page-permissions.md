@@ -46,7 +46,7 @@ To update page permissions, you will need to specify the roles, teams or users t
 
 To perform an update, make an **HTTP PATCH** request to the following URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
 
-Here is an example request body:
+Here is an example request body that updates the permissions to allow all users in the organization to **view** the page:
 
 ```json showLineNumbers
 {
@@ -56,13 +56,24 @@ Here is an example request body:
 }
 ````
 
-:::tip
+Here is another example that updates the permissions to allow a specific user and team to **edit** the page:
+
+```json showLineNumbers
+{
+  "update": {
+    "users": ["user1@example.com"],
+    "teams": ["team1"]
+  }
+}
+````
+
+:::tip Page permissions API
 
 The `PATCH` API will perform updates only to keys that are specified in the request body. Be sure to include only the relevant keys in the request body (users, roles or teams)
 
 If you do not specify a specific key (for example `users` in the request, user permissions to the specific page will remain unchanged).
 
-When making changes to permissions, any role, user or team that does not appear in the corresponding key in the request body will lose permissions to the page (this is how you remove permissions to a page).
+When making changes to permissions, any role, user or team that does not appear in the corresponding key in the request body will lose permissions to the page (this is how you remove permissions).
 
 :::
 
@@ -268,13 +279,8 @@ with the following body:
 
 </Tabs>
 
-:::tip Locked page
-A locked page will have the `Lock` icon next to the page's title.
+A locked page will have the `Lock` icon next to the page's title:
 
-<center>
+<img src="/img/software-catalog/pages/LockedPage.png" border='1px' width='30%' />
 
-![Locked Page](../../../static/img/software-catalog/pages/LockedPage.png)
 
-</center>
-
-:::
