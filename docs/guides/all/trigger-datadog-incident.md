@@ -432,9 +432,142 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
     "reportWorkflowStatus": true
   },
   "requiredApproval": false
+  "requiredApproval": false
 }
 ```
 </details>
+
+
+## Alternative trigger via webhook
+
+In addition to triggering Datadog incidents via GitHub Actions,
+you can leverage on Port's **synced webhooks** and **secrets** to directly interact with Datadog's API. 
+This method simplifies the setup by handling everything within Port.
+
+
+
+### Add Port secrets
+
+Add the following secrets to your Port account:
+
+1. Click on the `...` button next to the profile icon in the top right conner.
+2. Click on **Credentials**.
+3. Click on the `Secrets` tab.
+4. Click on `+ Secret` and add the following secrets:
+      - `DD_API_KEY`: Your Datadog API Key.
+      - `DD_APPLICATION_KEY`: Your Datadog Application Key.
+
+### Port configuration
+Create a new self service action that uses a synced webhook to trigger a Datadog incident using the following JSON configuration.
+
+<details>
+<summary><b>Trigger Datadog Incident Action Using Synced Webhook (Click to expand)</b></summary>
+
+:::tip Modification Required
+Make sure to replace `<YOUR_DD_API_URL>` with your Datadog API URL.  
+Datadog API URL by default should be [https://api.datadoghq.com](https://api.datadoghq.com).
+However, if you are on the Datadog EU site, set the secret to `https://api.datadoghq.eu`.  
+If you have your region information you use `https://api.<region>.datadoghq.com` or `https://api.<region>.datadoghq.eu`.
+:::
+
+```json showLineNumbers
+{
+  "identifier": "datadogIncident_trigger_datadog_incident_webhook",
+  "title": "Trigger Datadog Incident (Webhook)",
+  "icon": "Datadog",
+  "description": "Triggers a Datadog incident using a synced webhook",
+  "trigger": {
+    "type": "self-service",
+    "operation": "CREATE",
+    "userInputs": {
+      "properties": {
+        "title": {
+          "title": "Title",
+          "description": "The title of the incident, summarizing what happened.",
+          "type": "string"
+        },
+        "customerImpacted": {
+          "title": "Customer Impacted",
+          "description": "Indicates whether the incident caused customer impact.",
+          "type": "boolean",
+          "default": false
+        },
+        "customerImpactScope": {
+          "icon": "DefaultProperty",
+          "title": "Customer Impact Scope",
+          "description": "Summary of the impact experienced by customers.",
+          "type": "string"
+        },
+        "notificationHandleName": {
+          "title": "Notification Handle Name",
+          "description": "The name of the notification handle.",
+          "type": "string"
+        },
+        "notificationHandleEmail": {
+          "title": "Notification Handle Email",
+          "description": "The email address used for the notification.",
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+        }
+      },
+      "required": [
+        "title",
+        "customerImpacted",
+        "notificationHandleName",
+        "notificationHandleEmail",
+        "customerImpactScope"
+      ],
+      "order": [
+        "title",
+        "customerImpacted",
+        "customerImpactScope",
+        "notificationHandleName",
+        "notificationHandleEmail"
+      ]
+    },
+    "blueprintIdentifier": "datadogIncident"
+  },
+  "invocationMethod": {
+    "type": "WEBHOOK",
+    "url": "<YOUR_DD_API_URL>/api/v2/incidents",
+    "agent": false,
+    "synchronized": true,
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "DD-API-KEY": "{{ .secrets.DD_API_KEY }}",
+      "DD-APPLICATION-KEY": "{{ .secrets.DD_APPLICATION_KEY }}"
+    },
+    "body": {
+      "data": {
+        "type": "incidents",
+        "attributes": {
+          "customer_impact_scope": "{{.inputs.\"customerImpactScope\"}}",
+          "customer_impacted": "{{.inputs.\"customerImpacted\"}}",
+          "title": "{{.inputs.\"title\"}}",
+          "notification_handles": [
+            {
+              "display_name": "{{.inputs.\"notificationHandleName\"}}",
+              "handle": "{{.inputs.\"notificationHandleEmail\"}}"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "requiredApproval": false
+}
+```
+
+</details>
+
+:::note Install the Datadog Integration
+Triggering the incident data via the api will not automatically update the incident data in your Port catalog.  
+To ensure that the Datadog incident data remains up to date in your catalog,  [install the Datadog integration](/build-your-software-catalog/sync-data-to-catalog/apm-alerting/datadog/) in Port.   
+This integration will automatically synchronize incident updates from Datadog to your Port catalog.
+:::
+
+
 
 ## Let's test it
 
