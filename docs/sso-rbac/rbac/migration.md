@@ -10,12 +10,14 @@ Its purpose is to guide you through the migration process to use the new behavio
 :::
 
 ## Major changes
-The migration includes several major changes:
+
+The migration includes several **major changes**:
+
 1. New **blueprints** to represent and manage users and teams (only for organizations that did not enable the beta feature).
 
 2. Blueprint **ownership** is now defined using a new property, as described [here](/sso-rbac/rbac/as-blueprints#the-ownership-property).
 
-3. In **all places** in the portal where the team meta property ($team) is used, its value will be the entity's **`identifier`** (and not its **`title`** as it was before).
+3. In **all places** where the team meta property ($team) is used, including Port's UI, API, and IaC, its value will be the entity's **`identifier`** (and not its **`title`** as it was before).
 
 These changes will be applied once you trigger the migration. Once applied, some resources in your portal <b>might break</b>. 
 The resources that might be affected are:
