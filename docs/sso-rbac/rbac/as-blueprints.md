@@ -192,7 +192,7 @@ These are the available options for the `ownership` property:
       "identifier": "packageVersion",
       "title": "Package Version",
       "ownership": {
-      "type": "Direct"
+        "type": "Direct"
       }
       ...
     }
