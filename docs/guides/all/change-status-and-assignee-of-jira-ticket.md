@@ -197,7 +197,7 @@ Create the file `.github/workflows/change-jira-ticket-status-and-assignee.yml` i
 <details>
 <summary><b>GitHub Workflow (Click to expand)</b></summary>
 
-```yaml showLineNumbers title="change-jira-ticket-status-and-assignee.yml"
+```yaml showLineNumbers 
 name: Change Jira Ticket Status and Assignee
 on:
   workflow_dispatch:
