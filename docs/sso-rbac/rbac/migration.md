@@ -48,7 +48,7 @@ This section includes resources that might be affected by the migration and will
 
 #### External ownership definitions
 
-External resources that define ownership for blueprints (e.g. **Terraform** resources, **API** calls, etc.) will need to be updated to use the new `Ownership` property in order to retain the same ownership behavior.
+External resources that define ownership for blueprints (e.g. **Terraform** resources, **API** calls, etc.) will need to be updated to use the new [`Ownership` property](/sso-rbac/rbac/as-blueprints#ownership) in order to retain the same ownership behavior.
 
 #### Calculation properties
 
