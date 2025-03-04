@@ -10,10 +10,12 @@ Its purpose is to guide you through the migration process to use the new behavio
 :::
 
 ## Major changes
-The migration includes two major changes:
-1. New blueprints to represent and manage users and teams (only for organizations that did not enable the beta feature).
-2. Blueprint ownership is now defined using a new property, as described [here](/sso-rbac/rbac/as-blueprints#the-ownership-property).
-3. The value of the `$team` property will be the entity's `identifier` (and not its `title` as it was before).
+The migration includes several major changes:
+1. New **blueprints** to represent and manage users and teams (only for organizations that did not enable the beta feature).
+
+2. Blueprint **ownership** is now defined using a new property, as described [here](/sso-rbac/rbac/as-blueprints#the-ownership-property).
+
+3. In **all places** in the portal where the team meta property ($team) is used, its value will be the entity's **`identifier`** (and not its **`title`** as it was before).
 
 These changes will be applied once you trigger the migration. Once applied, some resources in your portal <b>might break</b>. 
 The resources that might be affected are:
@@ -40,10 +42,18 @@ The script is open source, you can review it before running it to see the implem
 ### Migration report
 Running the script will output an `output/index.html` file that contains the report. The report is divided into two main sections: resources that will be migrated **automatically** and resources that will require **manual intervention**.
 
-### Resources that will require manual intervention
+### Resources that require manual intervention
+
 This section includes resources that might be affected by the migration and will require manual intervention once the migration is triggered.
+
+#### External ownership definitions
+
+External resources that define ownership for blueprints (e.g. **Terraform** resources, **API** calls, etc.) will need to be updated to use the new `Ownership` property in order to retain the same ownership behavior.
+
 #### Calculation properties
+
 <img src="/img/users-and-teams-migration/calculation-properties-to-be-reviewed.png" border='1px' />
+
 Blueprints with calculation properties that based on the team meta property or the old teams relation identifier will be affected. The script will report all blueprints that have calculation properties based on those values.
 
 For example, the following calculation property uses the old teams relation identifier that will be changed:
@@ -140,7 +150,7 @@ For example, the following action permissions based on the team meta property va
 
 This change will <b>not be applied automatically</b>, you will need to review the dynamic permissions and apply the changes manually.
 
-#### Integration & Webhook mappings
+#### Integration & webhook mappings
 <img src="/img/users-and-teams-migration/integrations-and-webhooks-mappings-to-be-reviewed.png" border='1px' />
 Integration and webhook mappings ingesting data to the team meta property of entities might be affected. After the migration, the team meta property will expect team identifiers instead of titles, so the mapping for this value might break.<br/>
 Mappings that manages with a `port.yaml` will appear also in the report since we can't know if they maps to the team meta property or not.<br/>
