@@ -7,11 +7,17 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
+import S3IntegrationDisclaimer from "/docs/generalTemplates/_s3_integrations_disclaimer.md"
 
 
 # Ingest any data source into Port via Airbyte, S3 and webhook
 
-This guide will demonstrate how to ingest any data source into Port using Airbyte, S3 and a webhook integration.
+This guide will demonstrate how to ingest any data source into Port using [Airbyte](https://airbyte.com/), [S3](https://aws.amazon.com/s3/) and a [webhook integration](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+
+<img src="/img/guides/s3integrations.png" width="95%" border="1px" />
+<br/>
+<br/>
+<S3IntegrationDisclaimer/>
 
 ## Prerequisites
 
