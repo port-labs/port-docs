@@ -12,9 +12,6 @@ import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedic
 This guide will help you implement a self-service action in Port that allows you to create Jira issues from Dependabot alerts.
 This functionality streamlines vulnerability management by enabling users to quickly create and track issues for security alerts.
 
-You can implement this action in two ways:
-1. **GitHub Actions**: A more flexible approach that allows for complex workflows and custom logic, suitable for teams that want to maintain their automation in Git.
-2. **Synced Webhooks**: A simpler approach that directly interacts with Jira's API through Port, ideal for quick implementation and minimal setup.
 
 ## Use cases
 * Automatically create Jira issues from Dependabot alerts.
@@ -47,7 +44,7 @@ This step is not required for this example, but it will create all the blueprint
    <details>
    <summary><b>Jira Project Blueprint (Click to expand)</b></summary>
 
-   ```json
+   ```json showLineNumbers
    {
       "identifier": "jiraProject",
       "description": "A Jira project",
@@ -83,109 +80,69 @@ This step is not required for this example, but it will create all the blueprint
 
 You should have installed the [Port's GitHub app](https://github.com/apps/getport-io) and created a `Repository` blueprint shuld be created for you, If you have not installed the app, you can alternatively create the `Repository` blueprint in Port using the schema below:
 
-      <details>
-      <summary><b>Repository Blueprint (Click to expand)</b></summary>
+<details>
+   <summary><b>Repository Blueprint (Click to expand)</b></summary>
 
-      ```json
+    ```json showLineNumbers
       {
-      "identifier": "repository",
-      "title": "Repository",
-      "icon": "Github",
-      "schema": {
-         "properties": {
-            "readme": {
-            "title": "README",
-            "type": "string",
-            "format": "markdown",
-            "icon": "Book"
-            },
-            "url": {
-            "title": "URL",
-            "format": "url",
-            "type": "string",
-            "icon": "Link"
-            },
-            "language": {
-            "icon": "Git",
-            "type": "string",
-            "title": "Language",
-            "enum": [
-               "GO",
-               "Python",
-               "Node",
-               "React"
-            ],
-            "enumColors": {
-               "GO": "red",
-               "Python": "green",
-               "Node": "blue",
-               "React": "yellow"
-            }
-            },
-            "slack": {
-            "icon": "Slack",
-            "type": "string",
-            "title": "Slack",
-            "format": "url"
-            },
-            "code_owners": {
-            "title": "Code owners",
-            "description": "This service's code owners",
-            "type": "string",
-            "icon": "TwoUsers"
-            },
-            "type": {
-            "title": "Type",
-            "description": "This repository's type",
-            "type": "string",
-            "enum": [
-               "Backend",
-               "Frontend",
-               "Library"
-            ],
-            "enumColors": {
-               "Backend": "purple",
-               "Frontend": "pink",
-               "Library": "green"
-            },
-            "icon": "DefaultProperty"
-            },
-            "lifecycle": {
-            "title": "Lifecycle",
-            "type": "string",
-            "enum": [
-               "Production",
-               "Experimental",
-               "Deprecated"
-            ],
-            "enumColors": {
-               "Production": "green",
-               "Experimental": "yellow",
-               "Deprecated": "red"
-            },
-            "icon": "DefaultProperty"
-            },
-            "locked_in_prod": {
-            "icon": "DefaultProperty",
-            "title": "Locked in Prod",
-            "type": "boolean",
-            "default": false
-            },
-            "locked_reason_prod": {
-            "icon": "DefaultProperty",
-            "title": "Locked Reason Prod",
-            "type": "string"
-            }
+         "identifier": "githubRepository",
+         "title": "Repository",
+         "icon": "Github",
+         "ownership": {
+            "type": "Direct"
          },
-         "required": []
-      },
-      "mirrorProperties": {},
-      "calculationProperties": {},
-      "aggregationProperties": {},
-      "relations": {}
+         "schema": {
+            "properties": {
+               "readme": {
+                  "title": "README",
+                  "type": "string",
+                  "format": "markdown"
+               },
+               "url": {
+                  "icon": "DefaultProperty",
+                  "title": "Repository URL",
+                  "type": "string",
+                  "format": "url"
+               },
+               "defaultBranch": {
+                  "title": "Default branch",
+                  "type": "string"
+               },
+               "last_contributor": {
+                  "title": "Last contributor",
+                  "icon": "TwoUsers",
+                  "type": "string",
+                  "format": "user"
+               },
+               "last_push": {
+                  "icon": "GitPullRequest",
+                  "title": "Last push",
+                  "description": "Last commit to the main branch",
+                  "type": "string",
+                  "format": "date-time"
+               },
+               "require_code_owner_review": {
+                  "title": "Require code owner review",
+                  "type": "boolean",
+                  "icon": "DefaultProperty",
+                  "description": "Requires review from code owners before a pull request can be merged"
+               },
+               "require_approval_count": {
+                  "title": "Require approvals",
+                  "type": "number",
+                  "icon": "DefaultProperty",
+                  "description": "The number of approvals required before merging a pull request"
+               }
+            },
+            "required": []
+         },
+         "mirrorProperties": {},
+         "calculationProperties": {},
+         "aggregationProperties": {},
+         "relations": {}
       }
-      ```
-      </details>
+   ```
+</details>
 
 ### Create the Dependabot Alert blueprint
 
@@ -194,108 +151,95 @@ Create the Dependabot Alert blueprint using this schema:
 <details>
 <summary><b>Dependabot Alert Blueprint (Click to expand)</b></summary>
 
-```json
-{
-   "identifier": "githubDependabotAlert",
-   "title": "Dependabot Alert",
-   "icon": "Github",
-   "schema": {
-      "properties": {
-         "severity": {
-            "icon": "DefaultProperty",
-            "title": "Severity",
-            "type": "string",
-            "enum": [
-               "low",
-               "medium",
-               "high",
-               "critical"
-            ],
-            "enumColors": {
-               "low": "green",
-               "medium": "orange",
-               "high": "red",
-               "critical": "red"
-            }
-         },
-         "state": {
-            "title": "State",
-            "type": "string",
-            "enum": [
-               "auto_dismissed",
-               "dismissed",
-               "fixed",
-               "open"
-            ],
-            "enumColors": {
-               "auto_dismissed": "green",
-               "dismissed": "green",
-               "fixed": "green",
-               "open": "red"
+ ```json showLineNumbers
+   {
+      "identifier": "githubDependabotAlert",
+      "title": "Dependabot Alert",
+      "icon": "Github",
+      "schema": {
+         "properties": {
+            "severity": {
+               "icon": "DefaultProperty",
+               "title": "Severity",
+               "type": "string",
+               "enum": [
+                  "low",
+                  "medium",
+                  "high",
+                  "critical"
+               ],
+               "enumColors": {
+                  "low": "green",
+                  "medium": "orange",
+                  "high": "red",
+                  "critical": "red"
+               }
             },
-            "icon": "DefaultProperty"
-         },
-         "packageName": {
-            "icon": "DefaultProperty",
-            "title": "Package Name",
-            "type": "string"
-         },
-         "packageEcosystem": {
-            "title": "Package Ecosystem",
-            "type": "string"
-         },
-         "manifestPath": {
-            "title": "Manifest Path",
-            "type": "string"
-         },
-         "scope": {
-            "title": "Scope",
-            "type": "string"
-         },
-         "ghsaID": {
-            "title": "GHSA ID",
-            "type": "string"
-         },
-         "cveID": {
-            "title": "CVE ID",
-            "type": "string"
-         },
-         "url": {
-            "title": "URL",
-            "type": "string",
-            "format": "url"
-         },
-         "references": {
-            "icon": "Vulnerability",
-            "title": "References",
-            "type": "array",
-            "items": {
+            "state": {
+               "title": "State",
+               "type": "string",
+               "enum": [
+                  "auto_dismissed",
+                  "dismissed",
+                  "fixed",
+                  "open"
+               ],
+               "enumColors": {
+                  "auto_dismissed": "green",
+                  "dismissed": "green",
+                  "fixed": "green",
+                  "open": "red"
+               },
+               "icon": "DefaultProperty"
+            },
+            "packageName": {
+               "icon": "DefaultProperty",
+               "title": "Package Name",
+               "type": "string"
+            },
+            "packageEcosystem": {
+               "title": "Package Ecosystem",
+               "type": "string"
+            },
+            "manifestPath": {
+               "title": "Manifest Path",
+               "type": "string"
+            },
+            "scope": {
+               "title": "Scope",
+               "type": "string"
+            },
+            "ghsaID": {
+               "title": "GHSA ID",
+               "type": "string"
+            },
+            "cveID": {
+               "title": "CVE ID",
+               "type": "string"
+            },
+            "url": {
+               "title": "URL",
                "type": "string",
                "format": "url"
+            },
+            "references": {
+               "icon": "Vulnerability",
+               "title": "References",
+               "type": "array",
+               "items": {
+                  "type": "string",
+                  "format": "url"
+               }
             }
-         }
+         },
+         "required": []
       },
-      "required": []
-   },
-   "mirrorProperties": {},
-   "calculationProperties": {},
-   "aggregationProperties": {},
-   "relations": {
-      "jira_issue": {
-         "title": "JIRA Issue",
-         "target": "jiraIssue",
-         "required": false,
-         "many": false
-      },
-      "service": {
-         "title": "Service",
-         "target": "service",
-         "required": false,
-         "many": false
-      }
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
    }
-}
-```
+  ```
 </details>
 
 :::tip Mapping Dependabot Alerts to Repository Blueprint
