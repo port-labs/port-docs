@@ -43,38 +43,38 @@ However we highly recommend you install the Jira integration to have these autom
 3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
 4. Add this JSON schema:
 
-<details>
-<summary><b>Jira Project Blueprint (Click to expand)</b></summary>
+   <details>
+   <summary><b>Jira Project Blueprint (Click to expand)</b></summary>
 
-```json showLineNumbers
-  {
-   "identifier": "jiraProject",
-   "description": "A Jira project",
-   "title": "Jira Project",
-   "icon": "Jira",
-   "schema": {
-      "properties": {
-         "url": {
-            "title": "Project URL",
-            "type": "string",
-            "format": "url",
-            "description": "URL to the project in Jira"
+   ```json showLineNumbers
+   {
+      "identifier": "jiraProject",
+      "description": "A Jira project",
+      "title": "Jira Project",
+      "icon": "Jira",
+      "schema": {
+         "properties": {
+            "url": {
+               "title": "Project URL",
+               "type": "string",
+               "format": "url",
+               "description": "URL to the project in Jira"
+            },
+            "totalIssues": {
+               "title": "Total Issues",
+               "type": "number",
+               "description": "The total number of issues in the project"
+            }
          },
-         "totalIssues": {
-            "title": "Total Issues",
-            "type": "number",
-            "description": "The total number of issues in the project"
-         }
+         "required": []
       },
-      "required": []
-   },
-   "mirrorProperties": {},
-   "calculationProperties": {},
-   "aggregationProperties": {},
-   "relations": {}
-}
-```
-</details>
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+   }
+   ```
+   </details>
 
 5. Click "Save" to create the blueprint.
 
@@ -85,65 +85,66 @@ You should have installed the [Port's GitHub app](https://github.com/apps/getpor
 <details>
    <summary><b>Repository Blueprint (Click to expand)</b></summary>
 
-```json showLineNumbers
-{
-         "identifier": "githubRepository",
-         "title": "Repository",
-  "icon": "Github",
-         "ownership": {
-            "type": "Direct"
+   ```json showLineNumbers
+   {
+      "identifier": "githubRepository",
+      "title": "Repository",
+      "icon": "Github",
+      "ownership": {
+         "type": "Direct"
+      },
+      "schema": {
+         "properties": {
+            "readme": {
+            "title": "README",
+            "type": "string",
+            "format": "markdown"
+            },
+            "url": {
+            "icon": "DefaultProperty",
+            "title": "Repository URL",
+            "type": "string",
+            "format": "url"
+            },
+            "defaultBranch": {
+            "title": "Default branch",
+            "type": "string"
+            },
+            "last_contributor": {
+            "title": "Last contributor",
+            "icon": "TwoUsers",
+            "type": "string",
+            "format": "user"
+            },
+            "last_push": {
+            "icon": "GitPullRequest",
+            "title": "Last push",
+            "description": "Last commit to the main branch",
+            "type": "string",
+            "format": "date-time"
+            },
+            "require_code_owner_review": {
+            "title": "Require code owner review",
+            "type": "boolean",
+            "icon": "DefaultProperty",
+            "description": "Requires review from code owners before a pull request can be merged"
+            },
+            "require_approval_count": {
+            "title": "Require approvals",
+            "type": "number",
+            "icon": "DefaultProperty",
+            "description": "The number of approvals required before merging a pull request"
+            }
          },
-  "schema": {
-    "properties": {
-      "readme": {
-        "title": "README",
-        "type": "string",
-                  "format": "markdown"
+         "required": []
       },
-      "url": {
-                  "icon": "DefaultProperty",
-                  "title": "Repository URL",
-        "type": "string",
-        "format": "url"
-      },
-               "defaultBranch": {
-                  "title": "Default branch",
-                  "type": "string"
-               },
-               "last_contributor": {
-                  "title": "Last contributor",
-                  "icon": "TwoUsers",
-        "type": "string",
-                  "format": "user"
-               },
-               "last_push": {
-                  "icon": "GitPullRequest",
-                  "title": "Last push",
-                  "description": "Last commit to the main branch",
-        "type": "string",
-                  "format": "date-time"
-               },
-               "require_code_owner_review": {
-                  "title": "Require code owner review",
-                  "type": "boolean",
-        "icon": "DefaultProperty",
-                  "description": "Requires review from code owners before a pull request can be merged"
-      },
-               "require_approval_count": {
-                  "title": "Require approvals",
-                  "type": "number",
-        "icon": "DefaultProperty",
-                  "description": "The number of approvals required before merging a pull request"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+   }
+
+   ```
 </details>
 
 ### Create the Dependabot Alert blueprint
@@ -355,78 +356,78 @@ To create a self-service action follow these steps:
 3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration into the editor.
 
-<details>
-      <summary><b>Create Jira Issue from Dependabot Alert (Click to expand)</b></summary>
+      <details>
+            <summary><b>Create Jira Issue from Dependabot Alert (Click to expand)</b></summary>
 
-      <GithubActionModificationHint/>
+            <GithubActionModificationHint/>
 
-```json showLineNumbers
-{
-   "identifier": "create_jira_issue_from_dependabot",
-   "title": "Create Jira Issue from Dependabot",
-   "icon": "Jira",
-   "description": "Creates a Jira issue from dependabot.",
-   "trigger": {
-      "type": "self-service",
-      "operation": "DAY-2",
-      "userInputs": {
-         "properties": {
-            "project": {
-               "title": "Project",
-               "description": "The issue will be created on this project",
-               "icon": "Jira",
-               "type": "string",
-               "blueprint": "jiraProject",
-               "format": "entity"
+      ```json showLineNumbers
+      {
+         "identifier": "create_jira_issue_from_dependabot",
+         "title": "Create Jira Issue from Dependabot",
+         "icon": "Jira",
+         "description": "Creates a Jira issue from dependabot.",
+         "trigger": {
+            "type": "self-service",
+            "operation": "DAY-2",
+            "userInputs": {
+               "properties": {
+                  "project": {
+                     "title": "Project",
+                     "description": "The issue will be created on this project",
+                     "icon": "Jira",
+                     "type": "string",
+                     "blueprint": "jiraProject",
+                     "format": "entity"
+                  },
+                  "type": {
+                     "title": "Type",
+                     "description": "Issue type",
+                     "icon": "Jira",
+                     "type": "string",
+                     "default": "Task",
+                     "enum": [
+                        "Task",
+                        "Story",
+                        "Bug",
+                        "Epic"
+                     ],
+                     "enumColors": {
+                        "Task": "blue",
+                        "Story": "green",
+                        "Bug": "red",
+                        "Epic": "pink"
+                     }
+                  }
+               },
+               "required": [
+                  "type",
+                  "project"
+               ]
             },
-            "type": {
-               "title": "Type",
-               "description": "Issue type",
-               "icon": "Jira",
-               "type": "string",
-               "default": "Task",
-               "enum": [
-                  "Task",
-                  "Story",
-                  "Bug",
-                  "Epic"
-               ],
-               "enumColors": {
-                  "Task": "blue",
-                  "Story": "green",
-                  "Bug": "red",
-                  "Epic": "pink"
-               }
-            }
+            "blueprintIdentifier": "githubDependabotAlert"
          },
-         "required": [
-            "type",
-            "project"
-         ]
-      },
-      "blueprintIdentifier": "githubDependabotAlert"
-   },
-   "invocationMethod": {
-      "type": "GITHUB",
-            "org": "<Enter GitHub organization>",
-            "repo": "<Enter GitHub repository>",
-      "workflow": "create-jira-issue-from-dependabot.yml",
-      "workflowInputs": {
-         "type": "{{.inputs.\"type\"}}",
-         "project": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-         "port_context": {
-            "entity": "{{.entity}}",
-            "run_id": "{{.run.id}}"
-         }
-      },
-      "reportWorkflowStatus": true
-   },
-   "requiredApproval": false
-}
-```
-</details>
+         "invocationMethod": {
+            "type": "GITHUB",
+                  "org": "<Enter GitHub organization>",
+                  "repo": "<Enter GitHub repository>",
+            "workflow": "create-jira-issue-from-dependabot.yml",
+            "workflowInputs": {
+               "type": "{{.inputs.\"type\"}}",
+               "project": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+               "port_context": {
+                  "entity": "{{.entity}}",
+                  "run_id": "{{.run.id}}"
+               }
+            },
+            "reportWorkflowStatus": true
+         },
+         "requiredApproval": false
+      }
+      ```
+      </details>
 
-6. Click `Save`.
+5. Click `Save`.
 
 Now you should see the `Create Jira Issue from Dependabot` action in the self-service page. 🎉
 
@@ -722,7 +723,7 @@ Follow these steps to create the self-service action:
       ```
       </details>
 
-6. Click `Save`.
+5. Click `Save`.
 
 Now you should see the `Create Jira Issue from Dependabot (Webhook)` action in the self-service page. 🎉
 

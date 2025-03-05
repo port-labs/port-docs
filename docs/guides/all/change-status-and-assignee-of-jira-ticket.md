@@ -466,7 +466,7 @@ To create a self-service action follow these steps:
 
     </details>
 
-6. Click `Save`.
+5. Click `Save`.
 
 Now you should see the `Change Jira ticket status and assignee` action in the self-service page. 🎉
 
@@ -637,7 +637,7 @@ Follow these steps to create the self-service actions:
 
     </details>
 
-6. Click `Save` for each action.
+5. Click `Save` for each action.
 
 Now you should see both the `Change Jira ticket status` and `Change Jira ticket assignee` actions in the self-service page. 🎉
 
