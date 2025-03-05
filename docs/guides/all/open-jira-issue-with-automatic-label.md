@@ -10,6 +10,10 @@ import GithubActionModificationHint from '/docs/guides/templates/github/_github_
 ## Overview
 This guide will help you implement a self-service action in Port that allows you to create Jira issues with automatic labels that link issues to services in your catalog using GitHub Actions.
 
+You can implement this action in two ways:
+1. **GitHub workflow**: A more flexible approach that allows for complex workflows and custom logic, suitable for teams that want to maintain their automation in Git.
+2. **Synced webhooks**: A simpler approach that directly interacts with Jira's API through Port, ideal for quick implementation and minimal setup.
+
 ## Use cases
 - Categorize tasks, issues and bugs by services directly from Port
 - Add service metadata to issues from Port
@@ -384,17 +388,223 @@ To create a self-service action follow these steps:
 
 Now you should see the `Open Jira Issue with automatic label` action in the self-service page. 🎉
 
-## Let's test it!
+## Synced webhook implementation
+
+You can create Jira issues by leveraging Port's **synced webhooks** and **secrets** to directly interact with the Jira's API. This method simplifies the setup by handling everything within Port.
+
+### Add Port secrets
+
+Add the following secrets to your Port account:
+
+1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+
+2. Click on **Credentials**.
+
+3. Click on the `Secrets` tab.
+
+4. Click on `+ Secret` and add the following secrets:
+   - `JIRA_API_TOKEN` - Your Jira API token
+   - `JIRA_USER_EMAIL` - The email of the Jira user that owns the API token
+   - `JIRA_AUTH` - Base64 encoded string of your Jira credentials. Generate this by running:
+     ```bash
+     echo -n "your-email@domain.com:your-api-token" | base64
+     ```
+     Replace `your-email@domain.com` with your Jira email and `your-api-token` with your Jira API token.
+     
+     :::info One time generation
+     The base64 encoded string only needs to be generated once and will work for all webhook calls until you change your API token.
+     :::
+
+### Set up self-service action
+
+Follow these steps to create the self-service action:
+
+1. Head to the [self-service](https://app.getport.io/self-serve) page.
+
+2. Click on the `+ New Action` button.
+
+3. Click on the `{...} Edit JSON` button.
+
+4. Copy and paste the following JSON configuration into the editor.
+
+    <details>
+    <summary><b>Create Jira Issue (Webhook) (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "service_create_jira_issue_webhook",
+      "title": "Open Jira Issue with automatic label (Webhook)",
+      "icon": "Jira",
+      "description": "Creates a Jira issue with a label to the concerned service using webhook",
+      "trigger": {
+        "type": "self-service",
+        "operation": "DAY-2",
+        "userInputs": {
+          "properties": {
+            "title": {
+              "title": "Title",
+              "description": "Title of the Jira issue",
+              "icon": "Jira",
+              "type": "string"
+            },
+            "type": {
+              "title": "Type",
+              "description": "Issue type",
+              "icon": "Jira",
+              "type": "string",
+              "default": "Task",
+              "enum": [
+                "Task",
+                "Story",
+                "Bug",
+                "Epic"
+              ],
+              "enumColors": {
+                "Task": "blue",
+                "Story": "green",
+                "Bug": "red",
+                "Epic": "pink"
+              }
+            },
+            "project": {
+              "title": "Project",
+              "description": "The issue will be created on this project",
+              "icon": "Jira",
+              "type": "string",
+              "blueprint": "jiraProject",
+              "format": "entity"
+            }
+          },
+          "required": [
+            "title",
+            "type",
+            "project"
+          ],
+          "order": [
+            "title",
+            "type",
+            "project"
+          ]
+        },
+        "blueprintIdentifier": "githubRepository"
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://<JIRA_ORGANIZATION_URL>/rest/api/3/issue",
+        "agent": false,
+        "synchronized": true,
+        "method": "POST",
+        "headers": {
+          "Authorization": "Basic {{.secrets.JIRA_AUTH}}",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "fields": {
+            "project": {
+              "key": "{{.inputs.project.identifier}}"
+            },
+            "summary": "{{.inputs.title}}",
+            "issuetype": {
+              "name": "{{.inputs.type}}"
+            }
+          }
+        }
+      },
+      "requiredApproval": false
+    }
+    ```
+
+    </details>
+
+5. Click `Save`.
+
+### Add automation to update issue labels
+
+Since the webhook implementation creates the issue first, we'll use an automation to add the service-specific label to the created issue. This keeps our implementation clean and modular.
+
+Follow these steps to add the automation:
+
+1. Head to the [Builder](https://app.getport.io/settings/data-model) icon.
+
+2. Click on the `Automations` button.
+
+3. Click on the `+ New Automation` button.
+
+4. Copy and paste the following JSON configuration into the editor.
+
+    <details>
+    <summary><b>Update Jira issue labels automation (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "jiraIssue_add_service_label",
+      "title": "Add Service Label to Jira Issue",
+      "description": "Add a service-specific label to the newly created Jira issue",
+      "trigger": {
+        "type": "automation",
+        "event": {
+          "type": "RUN_UPDATED",
+          "actionIdentifier": "service_create_jira_issue_webhook"
+        },
+        "condition": {
+          "type": "JQ",
+          "expressions": [
+            ".diff.after.status == \"SUCCESS\""
+          ],
+          "combinator": "and"
+        }
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://<JIRA_ORGANIZATION_URL>/rest/api/3/issue/{{.event.diff.after.response.id}}/",
+        "agent": false,
+        "synchronized": true,
+        "method": "PUT",
+        "headers": {
+          "Authorization": "Basic {{.secrets.JIRA_AUTH}}",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "fields": {
+            "labels": ["port-{{.event.diff.after.entity.identifier}}"]
+          }
+        }
+      },
+      "publish": true
+    }
+    ```
+
+    </details>
+
+5. Click `Save`.
+
+:::tip Configure your Jira URL
+Replace `<JIRA_ORGANIZATION_URL>` in both webhook URLs with your Jira organization URL (e.g., `example.atlassian.net`).
+:::
+
+
+## Let's test it! 
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
-2. Click on the `Open Jira Issue with automatic label` action
+
+2. Click on either:
+   - `Open Jira Issue with automatic label` for the GitHub workflow implementation, or
+   - `Open Jira Issue with automatic label (Webhook)` for the webhook implementation
+
 3. Select the repository you want to create an issue for
+
 4. Fill in the issue details:
    - Title of the issue
-   - Type of issue
+   - Type of issue (Task, Story, Bug, or Epic)
    - Project where the issue will be created
+
 5. Click on `Execute`
-6. Done! wait for the issue to be created in Jira with the automatic label
+
+6. Wait for:
+   - GitHub workflow: The workflow to complete and create the issue with the label
+   - Webhook: The issue to be created and the automation to add the label
+
+7. Check your Jira project to see the new issue with the service-specific label (format: `port-{repository-identifier}`)
 
 Congrats 🎉 You've created your first Jira issue with an automatic label that links to the service in Port! 🔥
 
