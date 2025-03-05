@@ -472,7 +472,7 @@ Now you should see the `Report a bug (Webhook)` action in the self-service page.
 
 ## Let's test it!
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
 2. Click on either the `Report a bug` action (GitHub Actions) or `Report a bug (Webhook)` action
 3. Fill in the bug details:
    - Select the Jira project where the bug will be created

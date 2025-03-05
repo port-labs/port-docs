@@ -502,8 +502,7 @@ Add the following secrets to your Port account:
 
 ### Set up self-service actions
 
-Due to the current limitation with Port's synced webhooks where we cannot chain multiple API calls or listen for success responses, 
-we need to create two separate self-service actions:
+Due to limitations of the Jira API, we will need to create two separate self-service actions:
 1. One action to change the status of a Jira issue
 2. Another action to change the assignee of a Jira issue
 
@@ -666,7 +665,7 @@ The response will contain an array of transitions, each with an `id` and a `name
 
 ## Let's test it!
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
 2. Click on the `Change Jira ticket status or assignee` action
 3. Choose the Jira ticket you want to update (In case you didn't install the [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/), it means you don't have any Jira tickets or users in Port yet, so you will need to create one manually in Port to test this action)
 4. For status changes: Select the new status from the dropdown

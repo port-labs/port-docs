@@ -328,7 +328,7 @@ Follow these steps to create the self-service action:
 
 Now you should see the `Acknowledge Incident (Webhook)` action in the self-service page. 🎉
 
-### Add automation to upsert entity in port
+### Create an automation to upsert entity in port
 
 Since the webhook implementation doesn't support callbacks in Port, you have two options to keep your catalog updated:
 
@@ -400,7 +400,7 @@ Now when you execute the webhook action, the incident data in Port will be autom
 
 ## Let's test it! 
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
 
 2. Click on the `Acknowledge Incident (Webhook)` action
 

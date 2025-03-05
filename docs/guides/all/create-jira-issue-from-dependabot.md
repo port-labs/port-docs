@@ -80,7 +80,7 @@ However we highly recommend you install the Jira integration to have these autom
 
 ### Create the Repository blueprint
 
-You should have installed the [Port's GitHub app](https://github.com/apps/getport-io) and created a `Repository` blueprint shuld be created for you, If you have not installed the app, you can alternatively create the `Repository` blueprint in Port using the schema below:
+You should have installed the [Port's GitHub app](https://github.com/apps/getport-io), which automatically creates a `Repository` blueprint for you. If you haven't installed the app, you can create the `Repository` blueprint in Port using the schema below:
 
 <details>
    <summary><b>Repository Blueprint (Click to expand)</b></summary>
@@ -732,7 +732,7 @@ Replace `<JIRA_ORGANIZATION_URL>` in the webhook URL with your Jira organization
 
 ## Let's test it!
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
 2. Click on the `Create Jira Issue from Dependabot` action (or the webhook version)
 3. Select the Dependabot alert you want to create an issue for
 4. Select the project where the issue will be created

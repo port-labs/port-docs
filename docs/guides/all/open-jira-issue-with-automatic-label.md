@@ -518,9 +518,9 @@ Follow these steps to create the self-service action:
 
 5. Click `Save`.
 
-### Add automation to update issue labels
+### Create an automation to update issue labels
 
-Since the webhook implementation creates the issue first, we'll use an automation to add the service-specific label to the created issue. This keeps our implementation clean and modular.
+This automation will ensure that the created Jira issue is properly labeled with the service identifier.
 
 Follow these steps to add the automation:
 
@@ -585,7 +585,7 @@ Replace `<JIRA_ORGANIZATION_URL>` in both webhook URLs with your Jira organizati
 
 ## Let's test it! 
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
 
 2. Click on either:
    - `Open Jira Issue with automatic label` for the GitHub workflow implementation, or
