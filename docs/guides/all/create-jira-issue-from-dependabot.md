@@ -84,12 +84,12 @@ This step is not required for this example, but it will create all the blueprint
 You should have installed the [Port's GitHub app](https://github.com/apps/getport-io) and created a `Repository` blueprint shuld be created for you, If you have not installed the app, you can alternatively create the `Repository` blueprint in Port using the schema below:
 
       <details>
-      <summary><b>Service Blueprint (Click to expand)</b></summary>
+      <summary><b>Repository Blueprint (Click to expand)</b></summary>
 
       ```json
       {
-      "identifier": "service",
-      "title": "Service",
+      "identifier": "repository",
+      "title": "Repository",
       "icon": "Github",
       "schema": {
          "properties": {
@@ -136,7 +136,7 @@ You should have installed the [Port's GitHub app](https://github.com/apps/getpor
             },
             "type": {
             "title": "Type",
-            "description": "This service's type",
+            "description": "This repository's type",
             "type": "string",
             "enum": [
                "Backend",
@@ -406,9 +406,8 @@ To create a self-service action follow these steps:
 
 1. Head to the [self-service](https://app.getport.io/self-serve) page.
 2. Click on the `+ New Action` button.
-3. Choose the `Dependabot Alert` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the following JSON configuration into the editor.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration into the editor.
 
       <details>
       <summary><b>Create Jira Issue from Dependabot Alert (Click to expand)</b></summary>
@@ -516,9 +515,8 @@ Follow these steps to create the self-service action:
 
 1. Head to the [self-service](https://app.getport.io/self-serve) page.
 2. Click on the `+ New Action` button.
-3. Choose the `Dependabot Alert` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the following JSON configuration into the editor.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration into the editor.
 
       <details>
       <summary><b>Create Jira Issue from Dependabot Alert (Webhook) (Click to expand)</b></summary>

@@ -387,9 +387,8 @@ To create a self-service action follow these steps:
 
 1. Head to the [self-service](https://app.getport.io/self-serve) page.
 2. Click on the `+ New Action` button.
-3. Choose the `Jira Issue` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the following JSON configuration into the editor.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration into the editor.
 
     <details>
     <summary><b>Change Jira ticket status and assignee (Click to expand)</b></summary>
@@ -509,9 +508,8 @@ Follow these steps to create the self-service actions:
 
 1. Head to the [self-service](https://app.getport.io/self-serve) page.
 2. Click on the `+ New Action` button.
-3. Choose the `Jira Issue` blueprint and click `Next`.
-4. Click on the `{...} Edit JSON` button.
-5. Copy and paste the appropriate JSON configuration into the editor.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the appropriate JSON configuration into the editor.
 
     <details>
     <summary><b>Change Jira Ticket Status Action (Click to expand)</b></summary>
