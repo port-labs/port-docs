@@ -15,7 +15,7 @@ This functionality streamlines incident management by enabling users to quickly 
 
 You can implement this action in two ways:
 1. **GitHub workflow**: A more flexible approach that allows for complex workflows and custom logic, suitable for teams that want to maintain their automation in Git.
-2. **Synced webhooks**: A simpler approach that directly interacts with Jira's API through Port, ideal for quick implementation and minimal setup.
+2. **Synced webhooks**: A simpler approach that directly interacts with Pagerduty's API through Port, ideal for quick implementation and minimal setup.
 
 ## Prerequisites
 
@@ -344,68 +344,65 @@ Follow these steps to add the automation:
 
 3. Click on the `+ New Automation` button.
 
-
 4. Copy and paste the following JSON configuration into the editor.
 
     <details>
-    <summary><b>Update PagerDuty incident entity automation (Click to expand)</b></summary>
+    <summary><b>Update PagerDuty incident in Port automation (Click to expand)</b></summary>
 
     ```json showLineNumbers
-    {
-      "identifier": "pagerdutyIncident_update_relations",
-      "title": "Update PagerDuty Incident Relations",
-      "description": "Update PagerDuty incident entity with its relations after the webhook action completes",
-      "trigger": {
-        "type": "automation",
-        "event": {
-          "type": "RUN_UPDATED",
-          "actionIdentifier": "pagerdutyIncident_acknowledge_incident_webhook"
-        },
-        "condition": {
-          "type": "JQ",
-          "expressions": [
-            ".diff.after.status == \"SUCCESS\""
-          ],
-          "combinator": "and"
-        }
-      },
-      "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://api.getport.io/v1/blueprints/{{.event.diff.after.blueprint.identifier}}/entities/{{.event.diff.after.entity.identifier}}",
-        "agent": false,
-        "synchronized": true,
-        "method": "PATCH",
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "body": {
-          "properties": {
-            "status": "{{.event.diff.after.entity.properties.status}}",
-            "url": "{{.event.diff.after.entity.properties.url}}",
-            "urgency": "{{.event.diff.after.entity.properties.urgency}}",
-            "responder": "{{.event.diff.after.entity.properties.responder}}",
-            "escalation_policy": "{{.event.diff.after.entity.properties.escalation_policy}}",
-            "created_at": "{{.event.diff.after.entity.properties.created_at}}",
-            "updated_at": "{{.event.diff.after.entity.properties.updated_at}}"
+        {
+          "identifier": "pagerdutyIncident_sync_status",
+          "title": "Sync PagerDuty Incident Status",
+          "description": "Update PagerDuty incident data in Port after acknowledgment",
+          "trigger": {
+            "type": "automation",
+            "event": {
+              "type": "RUN_UPDATED",
+              "actionIdentifier": "pagerdutyIncident_acknowledge_incident_webhook"
+            },
+            "condition": {
+              "type": "JQ",
+              "expressions": [
+                ".diff.after.status == \"SUCCESS\""
+              ],
+              "combinator": "and"
+            }
           },
-          "relations": "{{.event.diff.after.entity.relations}}"
-        }
-      },
-      "publish": true
-    }
+          "invocationMethod": {
+            "type": "UPSERT_ENTITY",
+            "blueprintIdentifier": "pagerdutyIncident",
+            "mapping": {
+              "identifier": "{{.event.diff.after.entity.identifier}}",
+              "title": "{{ .event.diff.after.entity.title }}",
+              "properties": {
+                "status": "{{.event.diff.after.response.incidents.0.status}}",
+                "url": "{{.event.diff.after.response.incidents.0.self}}",
+                "urgency": "{{.event.diff.after.response.incidents.0.urgency}}",
+                "responder": "{{.event.diff.after.response.incidents.0.assignments.0.assignee.summary}}",
+                "escalation_policy": "{{.event.diff.after.response.incidents.0.escalation_policy.summary}}",
+                "created_at": "{{.event.diff.after.response.incidents.0.created_at}}",
+                "updated_at": "{{.event.diff.after.response.incidents.0.updated_at}}"
+              },
+              "relations": {
+                "{{.event.diff.after.entity.relations.key}}": "{{.event.diff.after.entity.relations.value}}"
+              }
+            }
+          },
+          "publish": true
+       }
     ```
     </details>
 
 5. Click `Save`.
 
 
-Now when you execute the webhook action, the entity's relations will be maintained even though the webhook itself doesn't directly support this.
+Now when you execute the webhook action, the incident data in Port will be automatically updated with the latest information from PagerDuty.
 
 ## Let's test it! 
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 
-2. Click on the `Acknowledge Incident` action (or the webhook version)
+2. Click on the `Acknowledge Incident (Webhook)` action
 
 3. Choose the PagerDuty incident you want to acknowledge (In case you didn't install the [PagerDuty integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty), it means you don't have any PagerDuty incidents in Port yet, so you will need to create one manually in Port to test this action)
 
@@ -413,7 +410,9 @@ Now when you execute the webhook action, the entity's relations will be maintain
 
 5. Click on `Execute`
 
-6. Done! Wait for the incident's status to be changed in PagerDuty
+6. Wait for the incident's status to be changed in PagerDuty
+
+7. Verify that the entity in Port has been updated with the new status 
 
 Congrats 🎉 You've acknowledged a PagerDuty incident in Port 🔥
 
