@@ -199,7 +199,7 @@ You should have installed the [Port's GitHub app](https://github.com/apps/getpor
 
    </details>
 
-## GitHub actions implementation
+## GitHub workflow implementation
 To implement this self-service action using GitHub Actions, follow these steps to set up the required configuration:
 
 ### Add GitHub secrets

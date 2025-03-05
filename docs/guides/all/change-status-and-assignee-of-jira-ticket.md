@@ -13,8 +13,8 @@ This guide will help you implement a self-service action in Port that allows you
 This functionality streamlines ticket management by enabling users to update tickets without leaving Port.
 
 You can implement this action in two ways:
-1. **GitHub Actions**: A more flexible approach that allows for complex workflows and custom logic, suitable for teams that want to maintain their automation in Git.
-2. **Synced Webhooks**: A simpler approach that directly interacts with Jira's API through Port, ideal for quick implementation and minimal setup.
+1. **GitHub workflow**: A more flexible approach that allows for complex workflows and custom logic, suitable for teams that want to maintain their automation in Git.
+2. **Synced webhooks**: A simpler approach that directly interacts with Jira's API through Port, ideal for quick implementation and minimal setup.
 
 
 
@@ -175,7 +175,7 @@ However we highly recommend you install the Jira integration to have these autom
 5. Click "Save" to create the blueprint.
 
 
-## GitHub actions implementation
+## GitHub workflow implementation
 To implement this self-service action using GitHub Actions, follow these steps to set up the required configuration:
 
 
@@ -481,9 +481,12 @@ This method simplifies the setup by handling everything within Port.
 
 Add the following secrets to your Port account:
 
-1. Click on the `...` button next to the profile icon in the top right corner.
+1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+
 2. Click on **Credentials**.
+
 3. Click on the `Secrets` tab.
+
 4. Click on `+ Secret` and add the following secrets:
    - `JIRA_API_TOKEN` - Your Jira API token
    - `JIRA_USER_EMAIL` - The email of the Jira user that owns the API token
@@ -641,9 +644,9 @@ Now you should see both the `Change Jira ticket status` and `Change Jira ticket 
 
 
 :::tip Configure your Jira url and status values
-Replace `<JIRA_ORGANIZATION_URL>` in the webhook URL with your Jira organization URL (e.g., `doeness.atlassian.net`).
+Replace `<JIRA_ORGANIZATION_URL>` in the webhook URL with your Jira organization URL (e.g., `example.atlassian.net`).
 
-Ensure the status names are mapped to Jira transition IDs as done in our example:
+Ensure the status names are mapped to Jira transition IDs as done in the action definitions above:
 - "To Do" → 11
 - "In Progress" → 21
 - "Done" → 31
@@ -653,7 +656,7 @@ Ensure the status names are mapped to Jira transition IDs as done in our example
 
 Make sure to update these mappings to match your Jira workflow's transition IDs. You can find your workflow's transition IDs by calling:
 ```bash
-curl -X GET "https://your-org.atlassian.net/rest/api/3/issue/{issueKey}/transitions" \
+curl -X GET "https://example.atlassian.net/rest/api/3/issue/{issueKey}/transitions" \
   -H "Authorization: Basic $JIRA_AUTH" \
   -H "Content-Type: application/json"
 ```

@@ -12,8 +12,8 @@ import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedic
 This guide will help you implement a self-service action in Port that allows you to report bugs in Jira, ensuring prompt issue resolution and improving overall platform reliability.
 
 You can implement this action in two ways:
-1. **GitHub Actions**: A more flexible approach that allows for complex workflows and user search functionality, suitable for teams that want to maintain their automation in Git.
-2. **Synced Webhooks**: A simpler approach that directly interacts with Jira's API through Port, ideal for quick implementation and minimal setup.
+1. **GitHub workflow**: A more flexible approach that allows for complex workflows and custom logic, suitable for teams that want to maintain their automation in Git.
+2. **Synced webhooks**: A simpler approach that directly interacts with Jira's API through Port, ideal for quick implementation and minimal setup.
 
 ## Prerequisites
 
@@ -105,7 +105,7 @@ However we highly recommend you install the Jira integration to have these autom
 
 5. Click "Save" to create the blueprint.
 
-## GitHub actions implementation
+## GitHub workflow implementation
 
 To implement this self-service action using GitHub Actions, follow these steps to set up the required configuration:
 
@@ -337,21 +337,24 @@ You can create Jira bugs by leveraging Port's **synced webhooks** and **secrets*
 
 Add the following secrets to your Port account:
 
-1. Click on the `...` button next to the profile icon in the top right corner.
+1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+
 2. Click on **Credentials**.
+
 3. Click on the `Secrets` tab.
+
 4. Click on `+ Secret` and add the following secrets:
-   - `JIRA_API_TOKEN` - Your Jira API token
-   - `JIRA_USER_EMAIL` - The email of the Jira user that owns the API token
-   - `JIRA_AUTH` - Base64 encoded string of your Jira credentials. Generate this by running:
-     ```bash
-     echo -n "your-email@domain.com:your-api-token" | base64
-     ```
-     Replace `your-email@domain.com` with your Jira email and `your-api-token` with your Jira API token.
-     
-     :::info One time generation
-     The base64 encoded string only needs to be generated once and will work for all webhook calls until you change your API token.
-     :::
+    - `JIRA_API_TOKEN` - Your Jira API token
+    - `JIRA_USER_EMAIL` - The email of the Jira user that owns the API token
+    - `JIRA_AUTH` - Base64 encoded string of your Jira credentials. Generate this by running:
+      ```bash
+      echo -n "your-email@domain.com:your-api-token" | base64
+      ```
+      Replace `your-email@domain.com` with your Jira email and `your-api-token` with your Jira API token.
+
+      :::info One time generation
+      The base64 encoded string only needs to be generated once and will work for all webhook calls until you change your API token.
+      :::
 
 ### Set up self-service action
 
@@ -462,7 +465,7 @@ Follow these steps to create the self-service action:
 5. Click `Save`.
 
 :::tip Configure your Jira url
-Replace `<JIRA_ORGANIZATION_URL>` in the webhook URL with your Jira organization URL (e.g., `your-org.atlassian.net`).
+Replace `<JIRA_ORGANIZATION_URL>` in the webhook URL with your Jira organization URL (e.g., `example.atlassian.net`).
 :::
 
 Now you should see the `Report a bug (Webhook)` action in the self-service page. 🎉

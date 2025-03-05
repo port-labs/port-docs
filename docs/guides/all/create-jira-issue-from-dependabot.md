@@ -12,6 +12,11 @@ import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedic
 This guide will help you implement a self-service action in Port that allows you to create Jira issues from Dependabot alerts.
 This functionality streamlines vulnerability management by enabling users to quickly create and track issues for security alerts.
 
+You can implement this action in two ways:
+1. **GitHub workflow**: A more flexible approach that allows for complex workflows and custom logic, suitable for teams that want to maintain their automation in Git.
+2. **Synced webhooks**: A simpler approach that directly interacts with Jira's API through Port, ideal for quick implementation and minimal setup.
+
+
 
 ## Use cases
 * Automatically create Jira issues from Dependabot alerts.
@@ -30,9 +35,6 @@ This functionality streamlines vulnerability management by enabling users to qui
 If you haven't installed the [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/), you'll need to create blueprints for Jira projects and issues.    
 However we highly recommend you install the Jira integration to have these automatically set up for you.
 
-:::tip Jira integration
-This step is not required for this example, but it will create all the blueprint boilerplate for you, and also update the catalog in real time with the new issue created.
-:::
 
 ### Create the Jira Project blueprint
 
@@ -41,38 +43,38 @@ This step is not required for this example, but it will create all the blueprint
 3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
 4. Add this JSON schema:
 
-   <details>
-   <summary><b>Jira Project Blueprint (Click to expand)</b></summary>
+<details>
+<summary><b>Jira Project Blueprint (Click to expand)</b></summary>
 
-   ```json showLineNumbers
-   {
-      "identifier": "jiraProject",
-      "description": "A Jira project",
-      "title": "Jira Project",
-      "icon": "Jira",
-      "schema": {
-         "properties": {
-            "url": {
-               "title": "Project URL",
-               "type": "string",
-               "format": "url",
-               "description": "URL to the project in Jira"
-            },
-            "totalIssues": {
-               "title": "Total Issues",
-               "type": "number",
-               "description": "The total number of issues in the project"
-            }
+```json showLineNumbers
+  {
+   "identifier": "jiraProject",
+   "description": "A Jira project",
+   "title": "Jira Project",
+   "icon": "Jira",
+   "schema": {
+      "properties": {
+         "url": {
+            "title": "Project URL",
+            "type": "string",
+            "format": "url",
+            "description": "URL to the project in Jira"
          },
-         "required": []
+         "totalIssues": {
+            "title": "Total Issues",
+            "type": "number",
+            "description": "The total number of issues in the project"
+         }
       },
-      "mirrorProperties": {},
-      "calculationProperties": {},
-      "aggregationProperties": {},
-      "relations": {}
-   }
-   ```
-   </details>
+      "required": []
+   },
+   "mirrorProperties": {},
+   "calculationProperties": {},
+   "aggregationProperties": {},
+   "relations": {}
+}
+```
+</details>
 
 5. Click "Save" to create the blueprint.
 
@@ -83,27 +85,27 @@ You should have installed the [Port's GitHub app](https://github.com/apps/getpor
 <details>
    <summary><b>Repository Blueprint (Click to expand)</b></summary>
 
-    ```json showLineNumbers
-      {
+```json showLineNumbers
+{
          "identifier": "githubRepository",
          "title": "Repository",
-         "icon": "Github",
+  "icon": "Github",
          "ownership": {
             "type": "Direct"
          },
-         "schema": {
-            "properties": {
-               "readme": {
-                  "title": "README",
-                  "type": "string",
+  "schema": {
+    "properties": {
+      "readme": {
+        "title": "README",
+        "type": "string",
                   "format": "markdown"
-               },
-               "url": {
+      },
+      "url": {
                   "icon": "DefaultProperty",
                   "title": "Repository URL",
-                  "type": "string",
-                  "format": "url"
-               },
+        "type": "string",
+        "format": "url"
+      },
                "defaultBranch": {
                   "title": "Default branch",
                   "type": "string"
@@ -111,37 +113,37 @@ You should have installed the [Port's GitHub app](https://github.com/apps/getpor
                "last_contributor": {
                   "title": "Last contributor",
                   "icon": "TwoUsers",
-                  "type": "string",
+        "type": "string",
                   "format": "user"
                },
                "last_push": {
                   "icon": "GitPullRequest",
                   "title": "Last push",
                   "description": "Last commit to the main branch",
-                  "type": "string",
+        "type": "string",
                   "format": "date-time"
                },
                "require_code_owner_review": {
                   "title": "Require code owner review",
                   "type": "boolean",
-                  "icon": "DefaultProperty",
+        "icon": "DefaultProperty",
                   "description": "Requires review from code owners before a pull request can be merged"
-               },
+      },
                "require_approval_count": {
                   "title": "Require approvals",
                   "type": "number",
-                  "icon": "DefaultProperty",
+        "icon": "DefaultProperty",
                   "description": "The number of approvals required before merging a pull request"
-               }
-            },
-            "required": []
-         },
-         "mirrorProperties": {},
-         "calculationProperties": {},
-         "aggregationProperties": {},
-         "relations": {}
       }
-   ```
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
 </details>
 
 ### Create the Dependabot Alert blueprint
@@ -151,95 +153,95 @@ Create the Dependabot Alert blueprint using this schema:
 <details>
 <summary><b>Dependabot Alert Blueprint (Click to expand)</b></summary>
 
- ```json showLineNumbers
-   {
-      "identifier": "githubDependabotAlert",
-      "title": "Dependabot Alert",
-      "icon": "Github",
-      "schema": {
-         "properties": {
-            "severity": {
-               "icon": "DefaultProperty",
-               "title": "Severity",
-               "type": "string",
-               "enum": [
-                  "low",
-                  "medium",
-                  "high",
-                  "critical"
-               ],
-               "enumColors": {
-                  "low": "green",
-                  "medium": "orange",
-                  "high": "red",
-                  "critical": "red"
-               }
-            },
-            "state": {
-               "title": "State",
-               "type": "string",
-               "enum": [
-                  "auto_dismissed",
-                  "dismissed",
-                  "fixed",
-                  "open"
-               ],
-               "enumColors": {
-                  "auto_dismissed": "green",
-                  "dismissed": "green",
-                  "fixed": "green",
-                  "open": "red"
-               },
-               "icon": "DefaultProperty"
-            },
-            "packageName": {
-               "icon": "DefaultProperty",
-               "title": "Package Name",
-               "type": "string"
-            },
-            "packageEcosystem": {
-               "title": "Package Ecosystem",
-               "type": "string"
-            },
-            "manifestPath": {
-               "title": "Manifest Path",
-               "type": "string"
-            },
-            "scope": {
-               "title": "Scope",
-               "type": "string"
-            },
-            "ghsaID": {
-               "title": "GHSA ID",
-               "type": "string"
-            },
-            "cveID": {
-               "title": "CVE ID",
-               "type": "string"
-            },
-            "url": {
-               "title": "URL",
-               "type": "string",
-               "format": "url"
-            },
-            "references": {
-               "icon": "Vulnerability",
-               "title": "References",
-               "type": "array",
-               "items": {
-                  "type": "string",
-                  "format": "url"
-               }
+```json showLineNumbers
+{
+   "identifier": "githubDependabotAlert",
+   "title": "Dependabot Alert",
+   "icon": "Github",
+   "schema": {
+      "properties": {
+         "severity": {
+            "icon": "DefaultProperty",
+            "title": "Severity",
+            "type": "string",
+            "enum": [
+               "low",
+               "medium",
+               "high",
+               "critical"
+            ],
+            "enumColors": {
+               "low": "green",
+               "medium": "orange",
+               "high": "red",
+               "critical": "red"
             }
          },
-         "required": []
+         "state": {
+            "title": "State",
+            "type": "string",
+            "enum": [
+               "auto_dismissed",
+               "dismissed",
+               "fixed",
+               "open"
+            ],
+            "enumColors": {
+               "auto_dismissed": "green",
+               "dismissed": "green",
+               "fixed": "green",
+               "open": "red"
+            },
+            "icon": "DefaultProperty"
+         },
+         "packageName": {
+            "icon": "DefaultProperty",
+            "title": "Package Name",
+            "type": "string"
+         },
+         "packageEcosystem": {
+            "title": "Package Ecosystem",
+            "type": "string"
+         },
+         "manifestPath": {
+            "title": "Manifest Path",
+            "type": "string"
+         },
+         "scope": {
+            "title": "Scope",
+            "type": "string"
+         },
+         "ghsaID": {
+            "title": "GHSA ID",
+            "type": "string"
+         },
+         "cveID": {
+            "title": "CVE ID",
+            "type": "string"
+         },
+         "url": {
+            "title": "URL",
+            "type": "string",
+            "format": "url"
+         },
+         "references": {
+            "icon": "Vulnerability",
+            "title": "References",
+            "type": "array",
+            "items": {
+               "type": "string",
+               "format": "url"
+            }
+         }
       },
-      "mirrorProperties": {},
-      "calculationProperties": {},
-      "aggregationProperties": {},
+      "required": []
+   },
+   "mirrorProperties": {},
+   "calculationProperties": {},
+   "aggregationProperties": {},
       "relations": {}
-   }
-  ```
+}
+```
 </details>
 
 :::tip Mapping Dependabot Alerts to Repository Blueprint
@@ -247,7 +249,7 @@ To effectively manage your Dependabot alerts, map them to your `Repository` blue
 Follow this [resource mapping guide](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-dependabot-alerts-and-code-scan-alerts) for detailed steps on how to map Dependabot alerts.
 :::
 
-## GitHub actions implementation
+## GitHub workflow implementation
 To implement this self-service action using GitHub Actions, follow these steps to set up the required configuration:
 
 ### Add GitHub secrets
@@ -353,76 +355,76 @@ To create a self-service action follow these steps:
 3. Click on the `{...} Edit JSON` button.
 4. Copy and paste the following JSON configuration into the editor.
 
-      <details>
+<details>
       <summary><b>Create Jira Issue from Dependabot Alert (Click to expand)</b></summary>
 
       <GithubActionModificationHint/>
 
-      ```json showLineNumbers
-      {
-         "identifier": "create_jira_issue_from_dependabot",
-         "title": "Create Jira Issue from Dependabot",
-         "icon": "Jira",
-         "description": "Creates a Jira issue from dependabot.",
-         "trigger": {
-            "type": "self-service",
-            "operation": "DAY-2",
-            "userInputs": {
-               "properties": {
-                  "project": {
-                     "title": "Project",
-                     "description": "The issue will be created on this project",
-                     "icon": "Jira",
-                     "type": "string",
-                     "blueprint": "jiraProject",
-                     "format": "entity"
-                  },
-                  "type": {
-                     "title": "Type",
-                     "description": "Issue type",
-                     "icon": "Jira",
-                     "type": "string",
-                     "default": "Task",
-                     "enum": [
-                        "Task",
-                        "Story",
-                        "Bug",
-                        "Epic"
-                     ],
-                     "enumColors": {
-                        "Task": "blue",
-                        "Story": "green",
-                        "Bug": "red",
-                        "Epic": "pink"
-                     }
-                  }
-               },
-               "required": [
-                  "type",
-                  "project"
-               ]
+```json showLineNumbers
+{
+   "identifier": "create_jira_issue_from_dependabot",
+   "title": "Create Jira Issue from Dependabot",
+   "icon": "Jira",
+   "description": "Creates a Jira issue from dependabot.",
+   "trigger": {
+      "type": "self-service",
+      "operation": "DAY-2",
+      "userInputs": {
+         "properties": {
+            "project": {
+               "title": "Project",
+               "description": "The issue will be created on this project",
+               "icon": "Jira",
+               "type": "string",
+               "blueprint": "jiraProject",
+               "format": "entity"
             },
-            "blueprintIdentifier": "githubDependabotAlert"
+            "type": {
+               "title": "Type",
+               "description": "Issue type",
+               "icon": "Jira",
+               "type": "string",
+               "default": "Task",
+               "enum": [
+                  "Task",
+                  "Story",
+                  "Bug",
+                  "Epic"
+               ],
+               "enumColors": {
+                  "Task": "blue",
+                  "Story": "green",
+                  "Bug": "red",
+                  "Epic": "pink"
+               }
+            }
          },
-         "invocationMethod": {
-            "type": "GITHUB",
+         "required": [
+            "type",
+            "project"
+         ]
+      },
+      "blueprintIdentifier": "githubDependabotAlert"
+   },
+   "invocationMethod": {
+      "type": "GITHUB",
             "org": "<Enter GitHub organization>",
             "repo": "<Enter GitHub repository>",
-            "workflow": "create-jira-issue-from-dependabot.yml",
-            "workflowInputs": {
-               "type": "{{.inputs.\"type\"}}",
-               "project": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}",
-               "port_context": {
-                  "entity": "{{.entity}}",
-                  "run_id": "{{.run.id}}"
-               }
-            },
-            "reportWorkflowStatus": true
-         },
-         "requiredApproval": false
-      }
-      ```
-      </details>
+      "workflow": "create-jira-issue-from-dependabot.yml",
+      "workflowInputs": {
+         "type": "{{.inputs.\"type\"}}",
+         "project": "{{.inputs.\"project\" | if type == \"array\" then map(.identifier) else .identifier end}}",
+         "port_context": {
+            "entity": "{{.entity}}",
+            "run_id": "{{.run.id}}"
+         }
+      },
+      "reportWorkflowStatus": true
+   },
+   "requiredApproval": false
+}
+```
+</details>
 
 6. Click `Save`.
 
@@ -437,21 +439,24 @@ This method simplifies the setup by handling everything within Port.
 
 Add the following secrets to your Port account:
 
-1. Click on the `...` button next to the profile icon in the top right corner.
+1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+
 2. Click on **Credentials**.
+
 3. Click on the `Secrets` tab.
+
 4. Click on `+ Secret` and add the following secrets:
-   - `JIRA_API_TOKEN` - Your Jira API token
-   - `JIRA_USER_EMAIL` - The email of the Jira user that owns the API token
-   - `JIRA_AUTH` - Base64 encoded string of your Jira credentials. Generate this by running:
-     ```bash
-     echo -n "your-email@domain.com:your-api-token" | base64
-     ```
-     Replace `your-email@domain.com` with your Jira email and `your-api-token` with your Jira API token.
-     
-     :::info One time generation
-     The base64 encoded string only needs to be generated once and will work for all webhook calls until you change your API token.
-     :::
+    - `JIRA_API_TOKEN` - Your Jira API token
+    - `JIRA_USER_EMAIL` - The email of the Jira user that owns the API token
+    - `JIRA_AUTH` - Base64 encoded string of your Jira credentials. Generate this by running:
+      ```bash
+      echo -n "your-email@domain.com:your-api-token" | base64
+      ```
+      Replace `your-email@domain.com` with your Jira email and `your-api-token` with your Jira API token.
+
+      :::info One time generation
+      The base64 encoded string only needs to be generated once and will work for all webhook calls until you change your API token.
+      :::
 
 ### Set up self-service action
 
@@ -722,8 +727,7 @@ Follow these steps to create the self-service action:
 Now you should see the `Create Jira Issue from Dependabot (Webhook)` action in the self-service page. 🎉
 
 :::tip Configure your Jira url
-Replace `<JIRA_ORGANIZATION_URL>` in the webhook URL with your Jira organization URL (e.g., `your-org.atlassian.net`).
-
+Replace `<JIRA_ORGANIZATION_URL>` in the webhook URL with your Jira organization URL (e.g., `example.atlassian.net`).
 :::
 
 ## Let's test it!
