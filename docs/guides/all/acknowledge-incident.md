@@ -338,16 +338,17 @@ Since the webhook implementation doesn't support callbacks in Port, you have two
 
 Follow these steps to add the automation:
 
-1. Head to the [automations](https://app.getport.io/automations) page.
+1. Head to the [Builder](https://app.getport.io/settings/data-model) icon.
 
-2. Click on the `+ New Automation` button.
+2. Click on the `Automations` button.
 
-3. Click on the `{...} Edit JSON` button.
+3. Click on the `+ New Automation` button.
+
 
 4. Copy and paste the following JSON configuration into the editor.
 
     <details>
-    <summary><b>Update PagerDuty incident entity (Click to expand)</b></summary>
+    <summary><b>Update PagerDuty incident entity automation (Click to expand)</b></summary>
 
     ```json showLineNumbers
     {
