@@ -432,17 +432,91 @@ To create a self-service action follow these steps:
 
 Now you should see the `Create Incident (Webhook)` action in the self-service page. 🎉
 
+### Create an automation to upsert entity in port
+
+Since the webhook implementation doesn't support callbacks in Port, you have two options to keep your catalog updated:
+
+1. If you have installed the PagerDuty integration, you can wait for the next scheduled resync to update your catalog automatically.
+
+2. For real-time updates, you can create an automation that will upsert the incident entity in Port immediately after the webhook action completes successfully. This allows you to keep the incident data in Port synchronized with PagerDuty without waiting for the next resync.
+
+Follow these steps to add the automation:
+
+1. Head to the [Builder](https://app.getport.io/settings/data-model) icon.
+
+2. Click on the `Automations` button.
+
+3. Click on the `+ New Automation` button.
+
+4. Copy and paste the following JSON configuration into the editor.
+
+    <details>
+    <summary><b>Update PagerDuty incident in Port automation (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+        {
+          "identifier": "pagerdutyIncident_sync_status",
+          "title": "Sync PagerDuty Incident Status",
+          "description": "Update PagerDuty incident data in Port after creation",
+          "trigger": {
+            "type": "automation",
+            "event": {
+              "type": "RUN_UPDATED",
+              "actionIdentifier": "create_incident_webhook"
+            },
+            "condition": {
+              "type": "JQ",
+              "expressions": [
+                ".diff.after.status == \"SUCCESS\""
+              ],
+              "combinator": "and"
+            }
+          },
+          "invocationMethod": {
+            "type": "UPSERT_ENTITY",
+            "blueprintIdentifier": "pagerdutyIncident",
+            "mapping": {
+              "identifier": "{{.event.diff.after.response.incident.id}}",
+              "title": "{{.event.diff.after.response.incident.title}}",
+              "properties": {
+                "status": "{{.event.diff.after.response.incident.status}}",
+                "url": "{{.event.diff.after.response.incident.self}}",
+                "urgency": "{{.event.diff.after.response.incident.urgency}}",
+                "responder": "{{.event.diff.after.response.incident.assignments.0.assignee.summary}}",
+                "escalation_policy": "{{.event.diff.after.response.incident.escalation_policy.summary}}",
+                "created_at": "{{.event.diff.after.response.incident.created_at}}",
+                "updated_at": "{{.event.diff.after.response.incident.updated_at}}"
+              },
+              "relations": {
+                "pagerdutyService": ["{{.event.diff.after.response.incident.service.id}}"]
+              }
+            }
+          },
+          "publish": true
+       }
+    ```
+    </details>
+
+5. Click `Save`.
+
+Now when you execute the webhook action, the incident data in Port will be automatically updated with the latest information from PagerDuty.
+
 ## Let's test it! 
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
+
 2. Choose either the GitHub workflow or webhook implementation:
    - For GitHub workflow: Click on `Create Incident`
    - For webhook: Click on `Create Incident (Webhook)`
+
 3. Select the PagerDuty service where you want to create the incident
+
 4. Enter the required information:
    - For GitHub workflow: Enter the incident title, service, and optionally include extra details and urgency
    - For webhook: Enter the incident title and urgency, optionally include extra details
+
 5. Click on `Execute`
+
 6. Done! Wait for the incident to be created in PagerDuty
 
 Congrats 🎉 You've created a PagerDuty incident in Port 🔥
