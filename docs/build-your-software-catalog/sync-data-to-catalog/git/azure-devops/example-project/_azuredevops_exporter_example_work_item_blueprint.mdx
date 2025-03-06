@@ -13,7 +13,11 @@
         "type": "string",
         "icon": "AzureDevops",
         "description": "The type of work item (e.g., Bug, Task, User Story)",
-        "enum": ["Issue", "Epic", "Task"],
+        "enum": [
+          "Issue",
+          "Epic",
+          "Task"
+        ],
         "enumColors": {
           "Issue": "green",
           "Epic": "orange",
@@ -82,13 +86,25 @@
     },
     "required": []
   },
-  "mirrorProperties": {},
+  "mirrorProperties": {
+    "board": {
+      "title": "Board",
+      "path": "column.board.$title"
+    }
+  },
   "calculationProperties": {},
   "aggregationProperties": {},
   "relations": {
     "project": {
       "title": "Project",
       "target": "project",
+      "required": true,
+      "many": false
+    },
+    "column": {
+      "title": "Column",
+      "description": "The column the entity belongs",
+      "target": "column",
       "required": true,
       "many": false
     }

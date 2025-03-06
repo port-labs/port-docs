@@ -8,7 +8,7 @@ const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 const config = {
   title: "Port",
   tagline: "Port documentation",
-  url: "https://docs.getport.io",
+  url: "https://docs.port.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
@@ -145,7 +145,7 @@ const config = {
               },
               {
                 label: "Quickstart",
-                to: "/quickstart",
+                to: "/getting-started/overview",
               },
               {
                 label: "Build a software catalog",
@@ -382,6 +382,7 @@ const config = {
       src: "https://widget.kapa.ai/kapa-widget.bundle.js",
       "data-website-id": "1aefba51-348e-4747-9a4c-93306459542d",
       "data-project-name": "Port-documentation",
+      "data-user-analytics-fingerprint-enabled": "true",
       "data-project-color": "#FFFFFF",
       "data-project-logo": "https://raw.githubusercontent.com/port-labs/port-docs/refs/heads/main/static/img/logos/port-logo.svg",
       "data-button-hide": "true",

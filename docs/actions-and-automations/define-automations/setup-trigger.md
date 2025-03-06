@@ -34,11 +34,19 @@ The following trigger events are available for each type:
 | Trigger | Description | JSON event type identifier |
 | --- | --- | --- |
 | Action run creation | Triggered when an action run is **created**. In other words, whenever the specified action is executed. | `RUN_CREATED` |
-| Action run update | Triggered when an action run is [patched](https://docs.getport.io/api-reference/patch-an-action-run/) or [approved](https://docs.getport.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).<br/>**Note** that sending logs to the action run will **not** count as a trigger. | `RUN_UPDATED` |
+| Action run update | Triggered when an action run is [patched](https://docs.port.io/api-reference/patch-an-action-run/) or [approved](https://docs.port.io/actions-and-automations/create-self-service-experiences/set-self-service-actions-rbac/#configure-manual-approval-for-actions).<br/>**Note** that sending logs to the action run will **not** count as a trigger. | `RUN_UPDATED` |
 | Any action run change | Triggered when an action run is **created**, **patched**, or **approved**. | `ANY_RUN_CHANGE` |
 
 </TabItem>
 </Tabs>
+
+### Limitations
+
+- Regarding the `ANY_ENTITY_CHANGE` trigger:
+  - When a [mirror property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property) on the entity changes, the automation **will not** be triggered.  
+  However, if the target of the relation changes from one entity to another, the automation **will** be triggered.
+  
+  - When a [calculation property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property) based on a mirror property changes, the automation **will not** be triggered. 
 
 ## Trigger JSON structure
 

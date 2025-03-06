@@ -87,7 +87,7 @@ In addition, provide the following environment variables:
 - `CODECOV_SERVICE_PROVIDER_ACCOUNT_NAME` - Username from the Git service provider
 
 :::info Credentials
-Find your Port credentials using this [guide](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+Find your Port credentials using this [guide](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 
 Find your Codecov API token using this [guide](https://docs.codecov.com/reference/overview)
 :::

@@ -314,7 +314,7 @@ Ensure that the Bitbucket credentials you use have `PROJECT_ADMIN` permissions t
 
 
 :::info
-Find your Port credentials using this [guide](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+Find your Port credentials using this [guide](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
 :::
 
 Use the following Python script to set up webhook and ingest historical Bitbucket users, projects, repositories and pull requests into port:

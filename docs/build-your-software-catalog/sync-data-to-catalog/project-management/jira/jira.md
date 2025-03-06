@@ -1,7 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_helm_prerequisites_block.mdx"
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation_oauth.mdx"
 import AdvancedConfig from '/docs/generalTemplates/\_ocean_advanced_configuration_note.md'
 import AzurePremise from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/\_ocean_azure_premise.mdx"
 import DockerParameters from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/_jira_one_time_docker_parameters.mdx"
@@ -18,7 +18,10 @@ import JiraUserEntity from "/docs/build-your-software-catalog/sync-data-to-catal
 import JiraIssueEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_issue_example_entity.mdx"
 import JiraIssueExampleBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_example_issue_blueprint.mdx"
 import JiraIssueExampleConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_example_issue_configuration.mdx"
-
+import JiraTeamBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_exporter_example_team_blueprint.mdx"
+import JiraTeamConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/\_jira_exporter_example_team_configuration.mdx"
+import JiraTeamExampleResponse from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_response.mdx"
+import JiraTeamEntity from "/docs/build-your-software-catalog/sync-data-to-catalog/project-management/jira/examples/_jira_team_example_entity.mdx"
 
 # Jira
 
@@ -42,6 +45,7 @@ It is possible to reference any field that appears in the API responses linked b
 
 - [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
 - [`User`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-users/#api-group-users)
+- [`Team`](https://developer.atlassian.com/platform/teams/rest/v1/api-group-teams-public-api/#api-group-teams-public-api)
 - [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
 
 
@@ -54,7 +58,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation />
+<OceanSaasInstallation integration="Jira" />
 
 </TabItem>
 
@@ -116,7 +120,7 @@ Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readth
 :::
 
 <details>
-  <summary>ArgoCD Application</summary>
+  <summary>ArgoCD Application (Click to expand)</summary>
 
 ```yaml showLineNumbers
 apiVersion: argoproj.io/v1alpha1
@@ -174,11 +178,12 @@ This table summarizes the available parameters for the installation.
 
 | Parameter                                | Description                                                                                                                                                                                                                                                                                    | Example                          | Required |
 |------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
+| `port.clientId`                          | Your port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
+| `port.clientSecret`                      | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
 | `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
 | `integration.secrets.atlassianUserEmail` | The email of the user used to query Jira                                                                                                                                                                                                                                                       | user@example.com                 | ✅        |
 | `integration.secrets.atlassianUserToken` | [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) generated by the user                                                                                                                                                     |                                  | ✅        |
+| `integration.config.atlassianOrganizationId` | Your Atlassian Organization ID is required to sync teams and team members. [Follow the Atlassian documentation](https://confluence.atlassian.com/jirakb/what-it-is-the-organization-id-and-where-to-find-it-1207189876.html) on how to find your Organization ID | | ❌ |
 | `integration.config.jiraHost`            | The URL of your Jira                                                                                                                                                                                                                                                                           | https://example.atlassian.net    | ✅        |
 | `integration.config.appHost`             | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Jira                                                                                                                                                                             | https://my-ocean-integration.com | ✅        |
 | `integration.eventListener.type`         | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
@@ -207,12 +212,13 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 
 | Parameter                        | Description                                                                                                                                                                                                                                                                              | Example                       | Required |
 |----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|----------|
-| `port_client_id`                 | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |                               | ✅        |
-| `port_client_secret`             | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |                               | ✅        |
+| `port_client_id`                 | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |                               | ✅        |
+| `port_client_secret`             | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |                               | ✅        |
 | `port_base_url`                  | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |                               | ✅        |
 | `config -> jira_host`            | The URL of your Jira                                                                                                                                                                                                                                                                     | https://example.atlassian.net | ✅        |
 | `config -> atlassian_user_email` | The email of the user used to query Jira                                                                                                                                                                                                                                                 | user@example.com              | ✅        |
 | `config -> atlassian_user_token` | [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) generated by the user                                                                                                                                               |                               | ✅        |
+| `config -> atlassian_organization_id` |Your Atlassian Organization ID is required to sync teams and team members. [Follow the Atlassian documentation](https://confluence.atlassian.com/jirakb/what-it-is-the-organization-id-and-where-to-find-it-1207189876.html) on how to find your Organization ID |                         | ❌        |
 | `initialize_port_resources`      | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |                               | ❌        |
 | `send_raw_data_examples`         | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                      |                               | ❌        |
 | `identifier`                     | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |                               | ❌        |
@@ -429,7 +435,7 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
-### JQL support
+### JQL support for issues
 
 The Ocean Jira integration supports querying objects from the `issue` kind using [JQL](https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/), making it possible to specifically filter the issues that are queried from Jira and ingested to Port.
 
@@ -445,6 +451,366 @@ resources:
       jql: "status != Done" # JQL query, will only ingest issues whose status is not "Done"
     port:
 ```
+
+
+
+### Fields support for `issue` kind
+The Jira integration allows you to customize what fields are available for ingestion using the `fields` selector. The `fields` selector accepts a comma-separated string containing what fields are available. Possible values are `*all`, `*navigate`, `<field_name>` and `-<field_name>` (specifically for excluding fields).
+
+The default value is set to `*all` which makes all fields available by default.
+
+More details what values the `field` selector allows is available on [Jira's issue API documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get:~:text=string-,fields,array%3Cstring%3E,-expand).
+
+
+### Ingesting Sprint field for `issue` kind
+By default, the Jira integration does not include information on the issues' sprint. To ingest sprint information, a custom field must be added to issues to display sprints. This custom field is then included in the Jira issues mapping configuration.
+
+Follow the steps below:
+
+1. Add Sprint as a custom field to Jira issue on your Jira dashboard. Take note of the custom field ID for the sprints field. This ID can be gotten by calling the [fields API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-fields/#api-rest-api-3-field-get) to first retreive the list of fields for issues which returns a payload like so:
+
+<details>
+<summary><b>Issues field API response (Click to expand)</b></summary>
+
+```json showLineNumbers
+[
+  {
+      "id": "thumbnail",
+      "key": "thumbnail",
+      "name": "Images",
+      "custom": false,
+      "orderable": false,
+      "navigable": true,
+      "searchable": false,
+      "clauseNames": []
+  },
+  {
+      "id": "created",
+      "key": "created",
+      "name": "Created",
+      "custom": false,
+      "orderable": false,
+      "navigable": true,
+      "searchable": true,
+      "clauseNames": [
+          "created",
+          "createdDate"
+      ],
+      "schema": {
+          "type": "datetime",
+          "system": "created"
+      }
+  },
+  // highlight-start
+  {
+      "id": "customfield_11111",
+      "key": "customfield_11111",
+      "name": "Sprint",
+      "untranslatedName": "Sprint",
+      "custom": true,
+      "orderable": true,
+      "navigable": true,
+      "searchable": true,
+      "clauseNames": [
+          "cf[11111]",
+          "Sprint"
+      ],
+      "schema": {
+          "type": "array",
+          "items": "json",
+          "custom": "com.pyxis.greenhopper.jira:gh-sprint",
+          "customId": 11111
+      }
+  }
+  // highlight-end
+]
+```
+
+</details>
+
+Locate the `Sprint` field and take note of the ID - in this case, `customfield_11111`.
+
+2. Extend the default blueprint to include a field for sprint
+
+<details>
+<summary><b>Issue blueprint with `sprint` (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  "identifier": "jiraIssue",
+  "title": "Jira Issue",
+  "icon": "Jira",
+  "schema": {
+    "properties": {
+      "url": {
+        "title": "Issue URL",
+        "type": "string",
+        "format": "url",
+        "description": "URL to the issue in Jira"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "description": "The status of the issue"
+      },
+      "issueType": {
+        "title": "Type",
+        "type": "string",
+        "description": "The type of the issue"
+      },
+      "components": {
+        "title": "Components",
+        "type": "array",
+        "description": "The components related to this issue"
+      },
+      "assignee": {
+        "title": "Assignee",
+        "type": "string",
+        "format": "user",
+        "description": "The user assigned to the issue"
+      },
+      "reporter": {
+        "title": "Reporter",
+        "type": "string",
+        "description": "The user that reported to the issue",
+        "format": "user"
+      },
+      "creator": {
+        "title": "Creator",
+        "type": "string",
+        "description": "The user that created to the issue",
+        "format": "user"
+      },
+      "priority": {
+        "title": "Priority",
+        "type": "string",
+        "description": "The priority of the issue"
+      },
+      // highlight-start
+      "sprint": {
+        "title": "Sprint",
+        "type": "string",
+        "description": "The last sprint this issue belongs to"
+      },
+      // highlight-end
+      "created": {
+        "title": "Created At",
+        "type": "string",
+        "description": "The created datetime of the issue",
+        "format": "date-time"
+      },
+      "updated": {
+        "title": "Updated At",
+        "type": "string",
+        "description": "The updated datetime of the issue",
+        "format": "date-time"
+      }
+    }
+  },
+  "calculationProperties": {
+    "handlingDuration": {
+      "title": "Handling Duration (Days)",
+      "icon": "Clock",
+      "description": "The amount of time in days from issue creation to issue resolution",
+      "calculation": "if (.properties.resolutionDate != null and .properties.created != null) then ((.properties.resolutionDate[0:19] + \"Z\" | fromdateiso8601) - (.properties.created[0:19] + \"Z\" | fromdateiso8601)) / 86400 else null end",
+      "type": "number"
+    }
+  },
+  "mirrorProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "project": {
+      "target": "jiraProject",
+      "title": "Project",
+      "description": "The Jira project that contains this issue",
+      "required": false,
+      "many": false
+    },
+    "parentIssue": {
+      "target": "jiraIssue",
+      "title": "Parent Issue",
+      "required": false,
+      "many": false
+    },
+    "subtasks": {
+      "target": "jiraIssue",
+      "title": "Subtasks",
+      "required": false,
+      "many": true
+    },
+    "assignee": {
+      "target": "jiraUser",
+      "title": "Assignee",
+      "required": false,
+      "many": false
+    },
+    "reporter": {
+      "target": "jiraUser",
+      "title": "Reporter",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+:::note Sprints field in issues payload response
+On the issue response returned by calling the Jira issues API, sprints is returned as an array of sprints:
+
+<details>
+<summary><b>Sprints field in Jira API response (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+  . . .,
+  "customfield_11111": [
+      {
+          "id": 37,
+          "name": "Sprint 32",
+          "state": "closed",
+          "boardId": 1,
+          "goal": "",
+          "startDate": "2024-07-08T11:59:07.316Z",
+          "endDate": "2024-07-28T21:00:00.000Z",
+          "completeDate": "2024-07-29T14:04:34.397Z"
+      },
+      {
+          "id": 38,
+          "name": "Sprint 33",
+          "state": "closed",
+          "boardId": 1,
+          "goal": "",
+          "startDate": "2024-07-29T14:05:25.295Z",
+          "endDate": "2024-08-18T23:06:20.000Z",
+          "completeDate": "2024-08-20T09:19:48.396Z"
+      },
+      {
+          "id": 40,
+          "name": "Sprint 34",
+          "state": "closed",
+          "boardId": 1,
+          "goal": "",
+          "startDate": "2024-08-20T09:20:27.259Z",
+          "endDate": "2024-09-08T20:30:00.000Z",
+          "completeDate": "2024-09-10T13:50:01.871Z"
+      },
+      {
+          "id": 42,
+          "name": "Sprint 35",
+          "state": "active",
+          "boardId": 1,
+          "goal": "",
+          "startDate": "2024-09-10T13:51:44.000Z",
+          "endDate": "2024-10-15T01:01:00.000Z"
+      }
+  ],
+  . . .
+}
+```
+
+</details>
+
+For the purpose of this guide, we are simply retrieving the ID of the latest sprint.
+
+:::
+
+
+3. Add the mapping configuration for the `sprint` field
+
+<details>
+<summary><b>Issue with `sprint` field mapping configuration (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: issue
+    selector:
+      query: "true"
+      jql: "statusCategory != Done"
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .fields.summary
+          blueprint: '"jiraIssue"'
+          properties:
+            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
+            status: .fields.status.name
+            issueType: .fields.issuetype.name
+            components: .fields.components
+            assignee: .fields.assignee.emailAddress
+            reporter: .fields.reporter.emailAddress
+            creator: .fields.creator.emailAddress
+            priority: .fields.priority.name
+            // highlight-next-line
+            sprint: .fields.customfield_11111[-1].name // ""
+            created: .fields.created
+            updated: .fields.updated
+          relations:
+            project: .fields.project.key
+            parentIssue: .fields.parent.key
+            subtasks: .fields.subtasks | map(.key)
+```
+
+Where `customfield_11111` is your sprint field.
+
+</details>
+
+
+4. Click on "Resync" and watch sprints information being pulled alongside issues data.
+
+
+### Ingesting issues based on the current sprint
+
+Ingesting only issues from the current sprint can be done by combining the `sprint` property with selector magic:
+
+<details>
+<summary><b>Issue from current sprint (Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: issue
+    selector:
+      // highlight-next-line
+      query: .fields.customfield_11111[-1].name == "Sprint 35"  # Replace "Sprint 35" with the name of the current sprint
+      jql: "statusCategory != Done"
+    port:
+      entity:
+        mappings:
+          identifier: .key
+          title: .fields.summary
+          blueprint: '"jiraIssue"'
+          properties:
+            url: (.self | split("/") | .[:3] | join("/")) + "/browse/" + .key
+            status: .fields.status.name
+            issueType: .fields.issuetype.name
+            components: .fields.components
+            assignee: .fields.assignee.emailAddress
+            reporter: .fields.reporter.emailAddress
+            creator: .fields.creator.emailAddress
+            priority: .fields.priority.name
+            // highlight-next-line
+            sprint: .fields.customfield_11111 | sort_by(.id) | .[-1].name // ""
+            created: .fields.created
+            updated: .fields.updated
+          relations:
+            project: .fields.project.key
+            parentIssue: .fields.parent.key
+            subtasks: .fields.subtasks | map(.key)
+```
+
+</details>
+
+:::info Issues with blank Sprint values
+If the `createMissingRelatedEntities` is set to `true`, issues with blank `Sprint` values and some empty/null properties will be created in Port.  
+To avoid this, set `createMissingRelatedEntities` to `false`.
+:::
+
 
 ## Limitations
 
@@ -481,9 +847,12 @@ That's it! Now Jira API responses will include the `emailAddress` field when ret
 All of the steps outlined here are also available in [Jira's documentation](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/)
 :::
 
-<!-- ### OAuth account password change
+### OAuth account password change
 
-If the password of the account used to authenticate with Jira changes, the integration will need to be **reinstalled**. This is because the Jira API requires the use of an API token for authentication, and the token is generated using the account's password. -->
+When installing the integration [via OAuth](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/?oauth=oauth#setup):  
+
+If the password of the account used to authenticate with Jira changes, the integration will need to be **reinstalled**.  
+This is because the Jira API requires the use of an API token for authentication, and the token is generated using the account's password.
 
 ## Examples
 
@@ -494,7 +863,7 @@ Examples of blueprints and the relevant integration configurations:
 ### Project
 
 <details>
-<summary><b>Project blueprint</b></summary>
+<summary><b>Project blueprint (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -526,7 +895,12 @@ Examples of blueprints and the relevant integration configurations:
 </details>
 
 <details>
-<summary><b>Integration configuration</b></summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
+
+The `project` kind has a selector property, `expand` that specifies additional fields to be included in the response. It accepts a comma-separated string that allows you to include more fields in the response data that can be used in the mapping configuration. Possible values are `description`, `lead`, `issueTypes`, `url`, `projectKeys`, `insight`.
+
+If not specified, it defaults to `"insight"`.
+
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -535,6 +909,7 @@ resources:
   - kind: project
     selector:
       query: "true"
+      expand: "description,lead,issueTypes,url,projectKeys,insight"
     port:
       entity:
         mappings:
@@ -551,30 +926,46 @@ resources:
 ### User
 
 <details>
-<summary><b>User blueprint</b></summary>
+<summary><b>User blueprint (Click to expand)</b></summary>
 
 <JiraUserBlueprint/>
 
 </details>
 
 <details>
-<summary><b>Integration configuration</b></summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 <JiraUserConfiguration/>
+
+</details>
+
+### Team
+
+<details>
+<summary><b>Team blueprint</b></summary>
+
+<JiraTeamBlueprint/>
+
+</details>
+
+<details>
+<summary><b>Integration configuration</b></summary>
+
+<JiraTeamConfiguration/>
 
 </details>
 
 ### Issue
 
 <details>
-<summary><b>Issue blueprint</b></summary>
+<summary><b>Issue blueprint (Click to expand)</b></summary>
 
 <JiraIssueExampleBlueprint/>
 
 </details>
 
 <details>
-<summary><b>Integration configuration</b></summary>
+<summary><b>Integration configuration (Click to expand)</b></summary>
 
 <JiraIssueExampleConfiguration/>
 
@@ -590,7 +981,7 @@ This section includes a sample response data from Jira. In addition, it includes
 Here is an example of the payload structure from Jira:
 
 <details>
-<summary> Project response data</summary>
+<summary> Project response data (Click to expand)</summary>
 
 ```json showLineNumbers
 {
@@ -618,14 +1009,22 @@ Here is an example of the payload structure from Jira:
 </details>
 
 <details>
-<summary> User response data</summary>
+<summary>User response data (Click to expand)</summary>
 
 <JiraUserExampleResponse/>
 
 </details>
 
+
 <details>
-<summary> Issue response data</summary>
+<summary><b>Team response data (Click to expand)</b></summary>
+
+<JiraTeamExampleResponse/>
+
+</details>
+
+<details>
+<summary><b>Issue response data (Click to expand)</b></summary>
 
 ```json showLineNumbers
 {
@@ -813,13 +1212,13 @@ Here is an example of the payload structure from Jira:
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
 
 <details>
-<summary> Project entity in Port</summary>
+<summary> Project entity in Port (Click to expand)</summary>
 
 ```json showLineNumbers
 {
   "identifier": "PA",
   "title": "Port-AI",
-  "icon": null,
+  "icon": "Jira",
   "blueprint": "jiraProject",
   "team": [],
   "properties": {
@@ -837,14 +1236,21 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary> User entity in Port</summary>
+<summary>User entity in Port (Click to expand)</summary>
 
 <JiraUserEntity/>
 
 </details>
 
 <details>
-<summary> Issue entity in Port</summary>
+<summary>Team entity in Port</summary>
+
+<JiraTeamEntity/>
+
+</details>
+
+<details>
+<summary>Issue entity in Port (Click to expand)</summary>
 
 <JiraIssueEntity/>
 
@@ -853,7 +1259,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=Jira).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=Jira).
 
 ## Alternative installation via webhook
 
@@ -867,12 +1273,12 @@ While the Ocean integration described above is the recommended installation meth
 
 In this example you are going to create a webhook integration between [Jira](https://www.atlassian.com/software/jira) and Port, which will ingest Jira issue entities.
 
-<h2> Port configuration </h2>
+<h2>Port configuration </h2>
 
 Create the following blueprint definition:
 
 <details>
-<summary>Jira issue blueprint</summary>
+<summary>Jira issue blueprint (Click to expand)</summary>
 
 <JiraIssueBlueprint/>
 
@@ -881,7 +1287,7 @@ Create the following blueprint definition:
 Create the following webhook configuration [using Port's UI](/build-your-software-catalog/custom-integration/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
-<summary>Jira issue webhook configuration</summary>
+<summary>Jira issue webhook configuration (Click to expand)</summary>
 
 1. **Basic details** tab - fill the following details:
    1. Title : `Jira mapper`;
@@ -918,16 +1324,16 @@ In order to view the different payloads and events available in Jira webhooks, [
 
 Done! any change you make to an issue (open, close, edit, etc.) will trigger a webhook event that Jira will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
 
-<h2> Let's Test It </h2>
+<h2>Let's Test It </h2>
 
 This section includes a sample webhook event sent from Jira when an issue is created or updated. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
 
-<h3> Payload </h3>
+<h3>Payload </h3>
 
 Here is an example of the payload structure sent to the webhook URL when a Jira issue is created:
 
 <details>
-<summary> Webhook event payload</summary>
+<summary> Webhook event payload (Click to expand)</summary>
 
 ```json showLineNumbers
 {
@@ -937,6 +1343,7 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
   "user": {
     "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39959-769f-4dac-8a7a-46eb55b03723",
     "accountId": "557058%3A69f39959-769f-4dac-8a7a-46eb55b03723",
+    "emailAddress":"shadow@atlassian.com",
     "avatarUrls": {
       "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
     },
@@ -1001,6 +1408,7 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
       "assignee": {
         "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
         "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
+        "emailAddress":"shadow@atlassian.com",
         "avatarUrls": {
           "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
         },
@@ -1032,6 +1440,7 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
       "creator": {
         "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
         "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
+        "emailAddress":"shadow@atlassian.com",
         "avatarUrls": {
           "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
         },
@@ -1044,6 +1453,7 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
       "reporter": {
         "self": "https://account.atlassian.net/rest/api/2/user?accountId=557058%3A69f39947-769f-4dac-8a7a-46eb55b03705",
         "accountId": "557058:69f39947-769f-4dac-8a7a-46eb55b03705",
+        "emailAddress":"shadow@atlassian.com",
         "avatarUrls": {
           "48x48": "https://secure.gravatar.com/avatar/9df2ac1caa70b0a67ff0561f7d0363e5?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIC-1.png"
         },
@@ -1088,7 +1498,7 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
 
 </details>
 
-<h3> Mapping Result </h3>
+<h3>Mapping Result </h3>
 
 The combination of the sample payload and the webhook configuration generates the following Port entity:
 
@@ -1110,17 +1520,17 @@ The combination of the sample payload and the webhook configuration generates th
 }
 ```
 
-<h2> Import Jira Historical Issues </h2>
+<h2>Import Jira Historical Issues </h2>
 
 In this example you are going to use the provided Python script to fetch data from the Jira API and ingest it to Port.
 
-<h3> Prerequisites </h3>
+<h3>Prerequisites </h3>
 
 This example utilizes the same [blueprint and webhook](#prerequisites) definition from the previous section.
 
 In addition, it requires a Jira API token that is provided as a parameter to the Python script
 
-<h4> Create the Jira API token </h4>
+<h4>Create the Jira API token </h4>
 
 1. Log in to your [Jira account](https://id.atlassian.com/manage-profile/security/api-tokens).
 2. Click Create API token.
@@ -1130,7 +1540,7 @@ In addition, it requires a Jira API token that is provided as a parameter to the
 Use the following Python script to ingest historical Jira issues into port:
 
 <details>
-<summary>Jira Python script for historical issues</summary>
+<summary>Jira Python script for historical issues (Click to expand)</summary>
 
 <JiraIssueConfigurationPython/>
 

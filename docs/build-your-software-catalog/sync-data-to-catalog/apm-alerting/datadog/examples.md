@@ -3,8 +3,8 @@ sidebar_position: 2
 ---
 
 # Examples
-To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
 
 ## Monitor
 
@@ -30,7 +30,15 @@ To view and test the integration's mapping against examples of the third-party A
       "overallState": {
         "type": "string",
         "title": "Overall state",
-        "enum": ["Alert", "Ignored", "No Data", "OK", "Skipped", "Unknown", "Warn"],
+        "enum": [
+          "Alert",
+          "Ignored",
+          "No Data",
+          "OK",
+          "Skipped",
+          "Unknown",
+          "Warn"
+        ],
         "enumColors": {
           "Alert": "red",
           "Ignored": "darkGray",
@@ -83,7 +91,7 @@ deleteDependentEntities: true
 resources:
   - kind: monitor
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -197,7 +205,7 @@ deleteDependentEntities: true
 resources:
   - kind: service
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -314,7 +322,7 @@ deleteDependentEntities: true
 resources:
   - kind: slo
     selector:
-      query: 'true'
+      query: "true"
     port:
       entity:
         mappings:
@@ -412,6 +420,7 @@ Based on the [best practices for tagging infrastructure](https://www.datadoghq.c
 
 :::tip Configuration Options
 The SLO history selector supports two time-related configurations:
+
 - `timeframe`: How many days to look back for each SLO history data point. Must be greater than 0 (default: 7 days)
 - `periodOfTimeInMonths`: How far back in time to fetch SLO history. Must be between 1-12 months (default: 6 months)
 :::
@@ -422,7 +431,7 @@ deleteDependentEntities: true
 resources:
   - kind: sloHistory
     selector:
-      query: 'true'
+      query: "true"
       timeframe: 7
       periodOfTimeInMonths: 6
     port:
@@ -512,10 +521,10 @@ resources:
 :::tip Configuration Mapping for Flexible Metric Fetching
 The `datadogSelector` section within each `serviceMetric` resource demonstrates how to fetch multiple metrics (e.g., `system.mem.used`, `system.disk.used`) from Datadog with a variety of filters. You can control the:
 
-*   **Metric:** Specify the exact metric name (e.g., `avg:system.mem.used`)
-*   **Environment:** Filter by specific environments (e.g., `prod`, or use `*` for all)
-*   **Service:** Filter by specific services in your [datadog service catalog](https://docs.datadoghq.com/service_catalog/) (use `*` for all)
-*   **Timeframe:** Define the time range for data retrieval (in minutes)
+- **Metric:** Specify the exact metric name (e.g., `avg:system.mem.used`)
+- **Environment:** Filter by specific environments (e.g., `prod`, or use `*` for all)
+- **Service:** Filter by specific services in your [datadog service catalog](https://docs.datadoghq.com/service_catalog/) (use `*` for all)
+- **Timeframe:** Define the time range for data retrieval (in minutes)
 
 This configuration allows you to tailor your data fetching to specific needs and scenarios.
 
@@ -585,5 +594,170 @@ resources:
 :::tip Service Relation
 Based on the [best practices for tagging infrastructure](https://www.datadoghq.com/blog/tagging-best-practices/), the default JQ maps service metrics to services using tags that starts with the `service` keyword
 :::
+
+</details>
+
+## Users
+
+<details>
+<summary>User blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "datadogUser",
+  "description": "This blueprint represents a Datadog user account. Users can be assigned to teams, granted specific permissions, and can interact with various Datadog features based on their access levels.",
+  "title": "Datadog User",
+  "icon": "Datadog",
+  "schema": {
+    "properties": {
+      "email": {
+        "type": "string",
+        "format": "email",
+        "title": "Email",
+        "description": "The email address associated with the user account"
+      },
+      "handle": {
+        "type": "string",
+        "title": "Handle",
+        "description": "The unique handle identifier for the user within Datadog"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "description": "The current status of the user account (e.g., active, pending, disabled)"
+      },
+      "disabled": {
+        "type": "boolean",
+        "title": "Disabled",
+        "description": "Indicates whether the user account is currently disabled"
+      },
+      "verified": {
+        "type": "boolean",
+        "title": "Verified",
+        "description": "Indicates whether the user's email address has been verified"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Created At",
+        "description": "The timestamp when the user account was created"
+      }
+    },
+    "required": []
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+resources:
+  - kind: user
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .attributes.name
+          blueprint: '"datadogUser"'
+          properties:
+            email: .attributes.email
+            handle: .attributes.handle
+            status: .attributes.status
+            disabled: .attributes.disabled
+            verified: .attributes.verified
+            createdAt: .attributes.created_at | todate
+```
+
+</details>
+
+## Team
+
+<details>
+<summary>Team blueprint</summary>
+
+```json showLineNumbers
+{
+    "identifier": "datadogTeam",
+    "description": "This blueprint represents a Datadog team",
+    "title": "Datadog Team",
+    "icon": "Datadog",
+    "schema": {
+      "properties": {
+        "description": {
+          "type": "string",
+          "title": "Description",
+          "description": "A description of the team's purpose and responsibilities"
+        },
+        "handle": {
+          "type": "string",
+          "title": "Handle",
+          "description": "The unique handle identifier for the team within Datadog"
+        },
+        "userCount": {
+          "type": "number",
+          "title": "User Count",
+          "description": "The total number of users that are members of this team"
+        },
+        "summary": {
+          "type": "string",
+          "title": "Summary",
+          "description": "A brief summary of the team's purpose or main responsibilities"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created At",
+          "description": "The timestamp when the team was created"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {},
+    "relations": {
+      "members": {
+        "target": "datadogUser",
+        "title": "Members",
+        "description": "Users who are members of this team",
+        "many": true,
+        "required": false
+      }
+    }
+  }
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+  - kind: team
+    selector:
+      query: 'true'
+      includeMembers: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .attributes.name
+          blueprint: '"datadogTeam"'
+          properties:
+            description: .attributes.description
+            handle: .attributes.handle
+            userCount: .attributes.user_count
+            summary: .attributes.summary
+            createdAt: .attributes.created_at | todate
+          relations:
+            members: if .__members then .__members[].id else [] end
+```
 
 </details>

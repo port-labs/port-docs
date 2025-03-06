@@ -162,8 +162,8 @@ This table summarizes the available parameters for the installation.
 
 | Parameter                           | Description                                                                                                                                             | Required |
 |-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅        |
-| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅        |
+| `port.clientId`                     | Your port client id ([Get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅        |
+| `port.clientSecret`                 | Your port client secret ([Get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅        |
 | `port.baseUrl`                      | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                 | ✅        |
 | `integration.identifier`            | Change the identifier to describe your integration                                                                                                      | ✅        |
 | `integration.type`                  | The integration type                                                                                                                                    | ✅        |
@@ -1095,7 +1095,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "Spaces-1",
   "title": "Default",
-  "icon": null,
+  "icon": "Octopus",
   "blueprint": "octopusSpace",
   "team": [],
   "properties": {
@@ -1119,7 +1119,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "Projects-1",
   "title": "Sample Project",
-  "icon": null,
+  "icon": "Octopus",
   "blueprint": "octopusProject",
   "team": [],
   "properties": {
@@ -1146,7 +1146,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "Releases-44",
   "title": "Projects-41(0.0.2)",
-  "icon": null,
+  "icon": "Octopus",
   "blueprint": "octopusRelease",
   "team": [],
   "properties": {
@@ -1173,7 +1173,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "Deployments-1",
   "title": "Deploy to Development",
-  "icon": null,
+  "icon": "Octopus",
   "blueprint": "octopusDeployment",
   "team": [],
   "properties": {
@@ -1201,7 +1201,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "Machines-4",
   "title": "ECS Instance Dev",
-  "icon": null,
+  "icon": "Octopus",
   "blueprint": "octopusMachine",
   "team": [],
   "properties": {

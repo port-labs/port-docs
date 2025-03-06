@@ -4821,7 +4821,7 @@ This guide assumes that you have ingested S3 buckets into Port using the `terraf
 
 ### Ingest Services from GitHub.
 
-Follow this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) to ingest your GitHub repositories into Port. Port will create a `service` blueprint that you will be using subsequently.
+Follow this [guide](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) to ingest your GitHub repositories into Port. Port will create a `service` blueprint that you will be using subsequently.
 
 <details>
 <summary>Service Blueprint</summary>

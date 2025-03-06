@@ -32,10 +32,14 @@ This integration allows you to:
 
 The resources that can be ingested from ServiceNow into Port are listed below. 
 
-- `User` - (`<your-servicenow-url>/api/now/table/sys_user_group`)
+- `Group` - (`<your-servicenow-url>/api/now/table/sys_user_group`)
 - `Service Catalog` - (`<your-servicenow-url>/api/now/table/sc_catalog`)
 - `Incident` - (`<your-servicenow-url>/api/now/table/incident`)
 
+:::tip Ingesting extra resources
+While the section above only lists three supported resources, Port's ServiceNow integration uses the [ServiceNow Table API](https://developer.servicenow.com/dev.do#!/reference/api/xanadu/rest/c_TableAPI#table-GET) to ingest entities.  
+This means you can ingest a lot more resources from your ServiceNow instance as long as the underlying resource can be found in the Table API. All you need is to specify the `table name` as a new `kind` in the [Data sources configuration page](/build-your-software-catalog/sync-data-to-catalog/#customize-your-integrations), and the records from the table will be ingested to Port.
+:::
 
 
 
@@ -163,8 +167,8 @@ This table summarizes the available parameters for the installation.
 
 | Parameter                                | Description                                                                                                                                                                                                                                                                                    | Required |
 |------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| `port.clientId`                          | Your Port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                     | ✅        |
-| `port.clientSecret`                      | Your Port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                 | ✅        |
+| `port.clientId`                          | Your Port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                     | ✅        |
+| `port.clientSecret`                      | Your Port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                                                                                                                 | ✅        |
 | `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        | ✅        |
 | `integration.identifier`                 | Change the identifier to describe your integration                                                                                                                                                                                                                                             | ✅        |
 | `integration.config.servicenowUsername`  | The ServiceNow account username                                                                                                                                                                                                                                                                | ✅        |
@@ -457,6 +461,9 @@ resources:
   - kind: sys_user_group
     selector:
       query: "true"
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
     port:
       entity:
         mappings:
@@ -523,6 +530,9 @@ resources:
   - kind: sc_catalog
     selector:
       query: "true"
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
     port:
       entity:
         mappings:
@@ -614,6 +624,9 @@ resources:
   - kind: incident
     selector:
       query: "true"
+      apiQueryParams:
+        sysparmDisplayValue: 'true'
+        sysparmExcludeReferenceLink: 'false'
     port:
       entity:
         mappings:
@@ -634,6 +647,32 @@ resources:
 ```
 
 </details>
+
+### Filtering ServiceNow resources
+Port's ServiceNow integration provides an option to filter the data that is retrieved from the ServiceNow Table API using the following attributes:
+
+1. `sysparmDisplayValue`: Determines the type of data returned, either the actual values from the database or the display values of the fields. The default is `true`
+2. `sysparmFields`: Comma-separated list of fields to return in the response
+3. `sysparmExcludeReferenceLink`: Flag that indicates whether to exclude Table API links for reference fields. The default is `false`
+4. `sysparmQuery`: Encoded query used to filter the result set. The syntax is `<col_name><operator><value>`:
+    1. `<col_name>`: Name of the table column to filter against
+    2. `<operator>`: =, !=, ^, ^OR, LIKE, STARTSWITH, ENDSWITH, `ORDERBY<col_name>`, `ORDERBYDESC<col_name>`
+    3. `<value>`: Value to match against
+
+    Queries can be chained using ^ or ^OR for AND/OR logic. An example query could be this: `active=true^nameLIKEdev^urgency=3` which returns all active incidents with an urgency level of 3 and have a name like `dev` 
+
+The filtering attributes described above can be enabled using the `selector.apiQueryParams` path, for example:
+
+```yaml showLineNumbers
+- kind: <name of table>
+  selector:
+    query: "true"
+    apiQueryParams:
+      sysparmDisplayValue: 'true'
+      sysparmExcludeReferenceLink: 'false'
+      sysparmQuery: active=true^nameLIKEdev^urgency=3
+      sysparmFields: sys_id,priority,created_by,state,active
+```
 
 ## Let's Test It
 
@@ -857,7 +896,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "019ad92ec7230010393d265c95c260dd",
   "title": "Analytics Settings Managers",
-  "icon": null,
+  "icon": "ServiceNow",
   "blueprint": "servicenowGroup",
   "team": [],
   "properties": {
@@ -883,7 +922,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "56e48e6a9743311083e6ff0de053af56",
   "title": "Test Service Catalog",
-  "icon": null,
+  "icon": "ServiceNow",
   "blueprint": "servicenowCatalog",
   "team": [],
   "properties": {
@@ -909,7 +948,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "INC0000060",
   "title": "Unable to connect to email",
-  "icon": null,
+  "icon": "ServiceNow",
   "blueprint": "servicenowIncident",
   "team": [],
   "properties": {
@@ -936,7 +975,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=ServiceNow).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=ServiceNow).
 
 ## Alternative installation via webhook
 While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from ServiceNow. If so, use the following instructions:

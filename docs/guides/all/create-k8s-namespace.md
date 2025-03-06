@@ -19,8 +19,8 @@ Quickly create a local one using [kind](https://kind.sigs.k8s.io/docs/user/quick
 :::
 2. In the same GitLab project, [register and install the GitLab agent.](https://docs.gitlab.com/ee/user/clusters/agent/install/index.html#register-the-agent-with-gitlab)
 3. In your GitLab project, go to the `Settings` menu at the sidebar on the left, select `CI/CD` and create the following `Variables`:
-    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
     * `KUBE_CONTEXT` - This is obtained after [registering and installing the GitLab agent.](https://docs.gitlab.com/ee/user/clusters/agent/install/index.html#register-the-agent-with-gitlab)
         - **Find Your Project URL**: It will look like this:  `https://gitlab.com/your-group/your-project`
         - **Compose Your Context**: Use this format: `your-group/your-project:agent-name`
@@ -456,8 +456,8 @@ update-run-status:
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
+  
 }
 ```
 </details>

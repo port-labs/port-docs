@@ -14,7 +14,7 @@ import PagerDutyWebhookConfig from "/docs/build-your-software-catalog/custom-int
 import PagerDutyWebhookHistory from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx"
 import PagerDutyScript from "/docs/build-your-software-catalog/custom-integration/webhook/examples/resources/pagerduty/\_example_pagerduty_shell_history_config.mdx"
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
-import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
+import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation_oauth.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 
 
@@ -57,7 +57,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="PagerDuty" />
 
 </TabItem>
 
@@ -1122,7 +1122,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "PWAXLIH",
   "title": "Port Test Service - Weekly Rotation",
-  "icon": null,
+  "icon": "pagerduty",
   "blueprint": "pagerdutySchedule",
   "team": [],
   "properties": {
@@ -1142,7 +1142,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=PagerDuty).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=PagerDuty).
 
 
 ## Alternative installation via webhook
@@ -1193,7 +1193,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 3. Scroll down to **Advanced settings** and input the following details:
 
    1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Pagerduty-Signature`;
+   2. Signature Header Name : `x-pagerduty-signature`;
    3. Signature Algorithm : Select `sha256` from dropdown option;
    4. Signature Prefix : `v1=`
    5. Click **Save** at the bottom of the page.
@@ -1387,7 +1387,7 @@ Create the following webhook configuration [using Port UI](/build-your-software-
 
 3. Scroll down to **Advanced settings** and input the following details:
    1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Pagerduty-Signature`;
+   2. Signature Header Name : `x-pagerduty-signature`;
    3. Signature Algorithm : Select `sha256` from dropdown option;
    4. Signature Prefix : `v1=`
    5. Click **Save** at the bottom of the page.

@@ -43,6 +43,7 @@ A follow-up to the previous video, this one explains about self-service actions 
 <iframe width="568" height="320" src="https://www.youtube.com/embed/2Cw4i_FuSC8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
+<br/>
 
 #### Port & ArgoCD: Building a Unified Developer Experience - @[TeKanAid](https://www.youtube.com/@TeKanAid)
 
@@ -53,6 +54,7 @@ The 3rd and final video in this series. This video demonstrates how to integrate
 <iframe width="568" height="320" src="https://www.youtube.com/embed/XQ6GlcpNJ4c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
+<br/>
 
 #### Secure Secrets Management in IDPs - @[TeKanAid](https://www.youtube.com/@TeKanAid)
 
@@ -63,6 +65,7 @@ This video demonstrates how to build a simple yet effective platform to create a
 <iframe width="568" height="320" src="https://www.youtube.com/embed/QO45jaeAA2o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
+<br/>
 
 #### End-to-end Secure GitOps: Akeyless, ArgoCD, & Port - @[TeKanAid](https://www.youtube.com/@TeKanAid)
 
@@ -73,6 +76,7 @@ This video showcases a complete GitOps setup using **Port**, **GitHub Actions**,
 <iframe width="568" height="320" src="https://www.youtube.com/embed/sBTYmqyMzzg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
+<br/>
 
 #### Implementing A GUI Based Internal Developer Platform (IDP) - @[TeKanAid](https://www.youtube.com/@TeKanAid)
 
@@ -81,6 +85,15 @@ This video demonstrates how to set up a GUI-based IDP to ensure that the interna
 <center>
 
 <iframe width="568" height="320" src="https://www.youtube.com/embed/JcSvHziIKUs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
+
+</center>
+<br/>
+
+#### Integrating Kratix and Port to create a complete internal developer platform - @[Syntasso](https://www.youtube.com/@syntasso)
+
+<center>
+
+<iframe width="568" height="320" src="https://www.youtube.com/embed/7nKx4CnEvoY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen allow="fullscreen;"></iframe>
 
 </center>
 

@@ -156,8 +156,8 @@ This table summarizes the available parameters for the installation.
 
 | Parameter                          | Description                                                                                                                                                                                                                                                                                    | Example                          | Required |
 |------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
-| `port.clientId`                    | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
-| `port.clientSecret`                | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
+| `port.clientId`                    | Your port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |                                  | ✅        |
+| `port.clientSecret`                | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |                                  | ✅        |
 | `port.baseUrl`                     | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |                                  | ✅        |
 | `integration.secrets.linearApiKey` | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                                                               |                                  | ✅        |
 | `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Linear                                                                                                                                                                           | https://my-ocean-integration.com | ✅        |
@@ -188,8 +188,8 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 
 | Parameter                   | Description                                                                                                                                                                                                                                                                              | Example | Required |
 |-----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|----------|
-| `port_client_id`            | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |         | ✅        |
-| `port_client_secret`        | Your Port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |         | ✅        |
+| `port_client_id`            | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id                                                                                                                               |         | ✅        |
+| `port_client_secret`        | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret                                                                                                                           |         | ✅        |
 | `port_base_url`             | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                  |         | ✅        |
 | `config -> linear_api_key`  | Linear [API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys) used to query the Linear GraphQL API                                                                                                                                         |         | ✅        |
 | `initialize_port_resources` | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |         | ❌        |
@@ -774,7 +774,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "POR",
   "title": "Port",
-  "icon": null,
+  "icon": "Linear",
   "blueprint": "linearTeam",
   "team": [],
   "properties": {
@@ -798,7 +798,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "36f84d2c-7b7d-4a71-96f2-6ea4140004d5",
   "title": "New-sample-label",
-  "icon": null,
+  "icon": "Linear",
   "blueprint": "linearLabel",
   "team": [],
   "properties": {
@@ -824,7 +824,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 {
   "identifier": "POR-2",
   "title": "sub issue with new title",
-  "icon": null,
+  "icon": "Linear",
   "blueprint": "linearIssue",
   "team": [],
   "properties": {

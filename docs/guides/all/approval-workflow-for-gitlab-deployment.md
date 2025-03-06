@@ -406,7 +406,7 @@ This automation is triggered when a `servicenowChangeRequest` is updated to *"ap
   </details>
 
 :::tip configure webhooks in ServiceNow
-Follow our documentation to [learn how to configure webhooks in ServiceNow](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow#alternative-installation-via-webhook)
+Follow our documentation to [learn how to configure webhooks in ServiceNow](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/servicenow#alternative-installation-via-webhook)
 :::
 
 ### GitLab pipeline script

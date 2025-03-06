@@ -24,7 +24,7 @@ The steps shown in the image above are as follows:
 ## Further steps
 
 - See the [Triggering example](#Triggering-example) for Circle CI.
-- Contact us through Intercom to set up a Kafka topic for your organization.
+- Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) to set up a Kafka topic for your organization.
 - [Install the Port execution agent to trigger the Circle CI pipeline](#Installation).
 
 ## Triggering example
@@ -107,8 +107,7 @@ Create the following blueprint, action and mapping to trigger a Circle CI pipeli
       }
     }
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

@@ -133,8 +133,8 @@ This table summarizes the available parameters for the installation.
 
 | Parameter                                | Description                                                                                                                                                                                                                                                                                    | Example | Required |
 |------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|----------|
-| `port.clientId`                          | Your port [client id](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |         | ✅        |
-| `port.clientSecret`                      | Your port [client secret](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |         | ✅        |
+| `port.clientId`                          | Your port [client id](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                                  |         | ✅        |
+| `port.clientSecret`                      | Your port [client secret](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)                                                                                                                                                              |         | ✅        |
 | `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                                                                                                                        |         | ✅        |
 | `integration.secrets.clusterConfMapping` | The Mapping of Kafka cluster names to Kafka client config                                                                                                                                                                                                                                      |         | ✅        |
 | `integration.eventListener.type`         | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |         | ✅        |
@@ -556,6 +556,99 @@ resources:
           relations:
             cluster: .cluster_name
             brokers: '[.cluster_name + "_" + (.partitions[].replicas[] | tostring)] | unique'
+```
+
+</details>
+
+
+### Consumer Group
+
+<details>
+<summary>Consumer Group blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "kafkaConsumerGroup",
+  "title": "Consumer Group",
+  "icon": "Kafka",
+  "schema": {
+    "properties": {
+      "state": {
+        "title": "State",
+        "type": "string",
+        "description": "The current state of the consumer group."
+      },
+      "members": {
+        "title": "Members",
+        "type": "array",
+        "description": "List of members in the consumer group.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "coordinator": {
+        "title": "Coordinator",
+        "type": "number",
+        "description": "Broker ID of the coordinator for the consumer group."
+      },
+      "partition_assignor": {
+        "title": "Partition Assignor",
+        "type": "string",
+        "description": "Strategy used to assign partitions to consumers."
+      },
+      "is_simple_consumer_group": {
+        "title": "Is Simple Consumer Group",
+        "type": "boolean",
+        "description": "Indicates if the group is a simple consumer group."
+      },
+      "authorized_operations": {
+        "title": "Authorized Operations",
+        "type": "array",
+        "description": "List of operations authorized for the consumer group.",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "calculationProperties": {},
+  "relations": {
+    "cluster": {
+      "target": "kafkaCluster",
+      "required": true,
+      "many": false
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: false
+deleteDependentEntities: true
+resources:
+  - kind: consumer_group
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .cluster_name + "_" + .group_id
+          title: .group_id
+          blueprint: '"kafkaConsumerGroup"'
+          properties:
+            state: .state
+            members: .members | map(.client_id)
+            coordinator: .coordinator.id
+            partition_assignor: .partition_assignor
+            is_simple_consumer_group: .is_simple_consumer_group
+            authorized_operations: .authorized_operations
+          relations:
+            cluster: .cluster_name
 ```
 
 </details>

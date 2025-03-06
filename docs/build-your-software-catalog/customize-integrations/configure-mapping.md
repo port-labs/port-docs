@@ -15,7 +15,7 @@ The mapping of an integration's data source defines the ingested data and its de
 Integration mapping is configured in the [data sources page](https://app.getport.io/settings/data-sources) of your portal, under `Exporters`.  
 Each integration has its own mapping, written in `YAML`.
 
-To understand how mapping works, let's take a look at an example. After you complete the [onboarding](/quickstart) and connect your Git provider to Port, you will see an exporter entry in your [data sources page](https://app.getport.io/settings/data-sources):
+To understand how mapping works, let's take a look at an example. After you complete the [onboarding](/getting-started/overview) and connect your Git provider to Port, you will see an exporter entry in your [data sources page](https://app.getport.io/settings/data-sources):
 
 <img src='/img/software-catalog/customize-integrations/mappingExampleEntry.png' width='55%' />
 
@@ -134,11 +134,14 @@ Several more advanced options are available in the mapping configuration:
 
 - `deleteDependentEntities` - used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this parameter is set to `false`. If set to `true`, the source entity will be deleted as well.
 
+- `entityDeletionThreshold` - used to set the threshold for the number of entities to delete by an Ocean integration. Ocean integrations compare the third-party data against the data in Port and may delete entities accordingly. This parameter allows you to control this behavior and avoid unexpected interruptions. The parameter can be set from 0 to 1.0. For example, if the parameter is set to 0.5, it means that if the number of entities to delete is greater than 50% of the total number of entities, the deletion will be skipped.
+
 To use these options, add them to the root of the mapping configuration:
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
 deleteDependentEntities: true
+entityDeletionThreshold: 0.5
 resources:
   - kind: repository
     ...
@@ -381,7 +384,7 @@ The object returned from Jira for which we would apply this mapping might look l
 ## Common use-cases
 
 ### Splitting a `kind` block
-Sometimes the `CreateRelatedMissingEntities` flag is passed as `false` to prevent generation of additional entities for relations. This can lead to cases where entity ingestion will not happen because the target entity for a relation does not exist in your catalog.  
+Sometimes the `CreateMissingRelatedEntities` flag is passed as `false` to prevent generation of additional entities for relations. This can lead to cases where entity ingestion will not happen because the target entity for a relation does not exist in your catalog.  
 To handle such cases, you can split a single `kind` to multiple mappings like this:
 
 

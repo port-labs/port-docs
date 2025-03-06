@@ -16,8 +16,8 @@ This guide helps you set up a monitoring solution to track **Service Level Indic
 ## Prerequisites
 
 This guide assumes the following:
-- You have a Port account and have completed the [onboarding process](https://docs.getport.io/quickstart).
-- You have [installed and set up Port's New Relic integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic).
+- You have a Port account and have completed the [onboarding process](https://docs.port.io/getting-started/overview).
+- You have [installed and set up Port's New Relic integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic).
 
 
 

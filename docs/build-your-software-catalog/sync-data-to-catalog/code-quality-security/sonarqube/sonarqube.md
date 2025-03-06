@@ -32,7 +32,7 @@ This integration allows you to:
 The resources that can be ingested from SonarQube into Port are listed below. It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
 
-- `Project` - represents a SonarQube project. Retrieves data
+- [`Project`](https://next.sonarqube.com/sonarqube/web_api/api/projects/search) - represents a SonarQube project. Retrieves data
   from [`components`](https://next.sonarqube.com/sonarqube/web_api/api/components), [`measures`](https://next.sonarqube.com/sonarqube/web_api/api/measures),
   and [`branches`](https://next.sonarqube.com/sonarqube/web_api/api/project_branches).
 - [`Issue`](https://next.sonarqube.com/sonarqube/web_api/api/issues) -  represents a SonarQube issue
@@ -164,8 +164,8 @@ This table summarizes the available parameters for the installation.
 
 | Parameter                                | Description                                                                                                                                                                                  | Example                          | Required |
 |------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
-| `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                   |                                  | ✅        |
-| `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                               |                                  | ✅        |
+| `port.clientId`                          | Your port client id ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                                   |                                  | ✅        |
+| `port.clientSecret`                      | Your port client secret ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))                               |                                  | ✅        |
 | `port.baseUrl`                           | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                                                      |                                  | ✅        |
 | `integration.secrets.sonarApiToken`      | The [SonarQube API token](https://docs.sonarsource.com/sonarqube/9.8/user-guide/user-account/generating-and-using-tokens/#generating-a-token)                                                |                                  | ✅        |
 | `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Not required when using on-prem sonarqube instance) | myOrganization                   | ✅        |
@@ -437,12 +437,13 @@ Here is an example of the payload structure from SonarQube:
   "key": "PeyGis_Chatbot_For_Social_Media_Transaction",
   "name": "Chatbot_For_Social_Media_Transaction",
   "isFavorite": true,
-  "tags": [],
   "visibility": "public",
   "eligibilityStatus": "COMPLETED",
   "eligible": true,
   "isNew": false,
-  "analysisDateAllBranches": "2023-09-09T03:03:20+0200",
+  "lastAnalysisDate": "2017-03-02T15:21:47+0300",
+  "revision": "7be96a94ac0c95a61ee6ee0ef9c6f808d386a355",
+  "managed": false,
   "__measures": [
     {
       "metric": "bugs",
@@ -717,7 +718,9 @@ The combination of the sample payload and the Ocean configuration generates the 
     "numberOfHotSpots": 8,
     "numberOfDuplications": 2,
     "mainBranch": "master",
-    "tags": []
+    "mainBranchLastAnalysisDate": "2023-09-07T12:38:41.000Z",
+    "revision": "7be96a94ac0c95a61ee6ee0ef9c6f808d386a355",
+    "managed": true
   },
   "relations": {},
   "icon": "sonarqube"
@@ -804,6 +807,351 @@ The combination of the sample payload and the Ocean configuration generates the 
   }
 }
 ```
+
+</details>
+
+## Migration from SonarQube integration version `<=0.1.121`
+Versions prior to `v0.1.115` used SonarQube's internal API for components to retrieve projects. Since this API is internal and subject to change, it is not globally available and not recommended for new users.
+
+To remedy this, we have switched to the globally available API for projects instead for new users of the SonarQube integration. This comes with a few changes that are listed below.
+
+### Changes to the SonarQube integration
+
+- The `project` kind is deprecated in support for the `projects_ga` kind. *Deprecation effective: 2024-02-23*
+
+- Since the `tags` property is only available with the internal API, it will read `null` for existing users of the SonarQube integration.
+
+- Minor but backwards compatible changes have been made to the `sonarQubeProject` blueprint:
+
+
+<details>
+
+<summary><b>`<=v0.1.121` `sonarqubeProject` blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+    "identifier": "sonarQubeProject",
+    "title": "SonarQube Project",
+    "icon": "sonarqube",
+    "schema": {
+      "properties": {
+        "organization": {
+          "type": "string",
+          "title": "Organization",
+          "icon": "TwoUsers"
+        },
+        "link": {
+          "type": "string",
+          "format": "url",
+          "title": "Link",
+          "icon": "Link"
+        },
+        "lastAnalysisDate": {
+          "type": "string",
+          "format": "date-time",
+          "icon": "Clock",
+          "title": "Last Analysis Date"
+        },
+        "qualityGateStatus": {
+          "title": "Quality Gate Status",
+          "type": "string",
+          "enum": [
+            "OK",
+            "WARN",
+            "ERROR"
+          ],
+          "enumColors": {
+            "OK": "green",
+            "WARN": "yellow",
+            "ERROR": "red"
+          }
+        },
+        "numberOfBugs": {
+          "type": "number",
+          "title": "Number Of Bugs"
+        },
+        "numberOfCodeSmells": {
+          "type": "number",
+          "title": "Number Of CodeSmells"
+        },
+        "numberOfVulnerabilities": {
+          "type": "number",
+          "title": "Number Of Vulnerabilities"
+        },
+        "numberOfHotSpots": {
+          "type": "number",
+          "title": "Number Of HotSpots"
+        },
+        "numberOfDuplications": {
+          "type": "number",
+          "title": "Number Of Duplications"
+        },
+        "coverage": {
+          "type": "number",
+          "title": "Coverage"
+        },
+        "mainBranch": {
+          "type": "string",
+          "icon": "Git",
+          "title": "Main Branch"
+        },
+        "tags": {
+          "type": "array",
+          "title": "Tags"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {
+      "criticalOpenIssues": {
+        "title": "Number Of Open Critical Issues",
+        "type": "number",
+        "target": "sonarQubeIssue",
+        "query": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "status",
+              "operator": "in",
+              "value": ["OPEN", "REOPENED"]
+            },
+            {
+              "property": "severity",
+              "operator": "=",
+              "value": "CRITICAL"
+            }
+          ]
+        },
+        "calculationSpec": {
+          "calculationBy": "entities",
+          "func": "count"
+        }
+      },
+      "numberOfOpenIssues": {
+        "title": "Number Of Open Issues",
+        "type": "number",
+        "target": "sonarQubeIssue",
+        "query": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "status",
+              "operator": "in",
+              "value": [
+                "OPEN",
+                "REOPENED"
+              ]
+            }
+          ]
+        },
+        "calculationSpec": {
+          "calculationBy": "entities",
+          "func": "count"
+        }
+      }
+    },
+    "relations": {}
+  }
+```
+
+</details>
+
+<details>
+
+<summary><b>`>=v0.1.115` `sonarqubeProject` blueprint (Click to expand)</b></summary>
+
+```json showLineNumbers
+{
+    "identifier": "sonarQubeProject",
+    "title": "SonarQube Project",
+    "icon": "sonarqube",
+    "schema": {
+      "properties": {
+        "organization": {
+          "type": "string",
+          "title": "Organization",
+          "icon": "TwoUsers"
+        },
+        "link": {
+          "type": "string",
+          "format": "url",
+          "title": "Link",
+          "icon": "Link"
+        },
+        "lastAnalysisDate": {
+          "type": "string",
+          "format": "date-time",
+          "icon": "Clock",
+          "title": "Last Analysis Date"
+        },
+        "qualityGateStatus": {
+          "title": "Quality Gate Status",
+          "type": "string",
+          "enum": [
+            "OK",
+            "WARN",
+            "ERROR"
+          ],
+          "enumColors": {
+            "OK": "green",
+            "WARN": "yellow",
+            "ERROR": "red"
+          }
+        },
+        "numberOfBugs": {
+          "type": "number",
+          "title": "Number Of Bugs"
+        },
+        "numberOfCodeSmells": {
+          "type": "number",
+          "title": "Number Of CodeSmells"
+        },
+        "numberOfVulnerabilities": {
+          "type": "number",
+          "title": "Number Of Vulnerabilities"
+        },
+        "numberOfHotSpots": {
+          "type": "number",
+          "title": "Number Of HotSpots"
+        },
+        "numberOfDuplications": {
+          "type": "number",
+          "title": "Number Of Duplications"
+        },
+        "coverage": {
+          "type": "number",
+          "title": "Coverage"
+        },
+        "mainBranch": {
+          "type": "string",
+          "icon": "Git",
+          "title": "Main Branch"
+        },
+        "mainBranchLastAnalysisDate": {
+          "type": "string",
+          "format": "date-time",
+          "icon": "Clock",
+          "title": "Main Branch Last Analysis Date"
+        },
+        "revision": {
+          "type": "string",
+          "title": "Revision"
+        },
+        "managed": {
+          "type": "boolean",
+          "title": "Managed"
+        }
+      },
+      "required": []
+    },
+    "mirrorProperties": {},
+    "calculationProperties": {},
+    "aggregationProperties": {
+      "criticalOpenIssues": {
+        "title": "Number Of Open Critical Issues",
+        "type": "number",
+        "target": "sonarQubeIssue",
+        "query": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "status",
+              "operator": "in",
+              "value": ["OPEN", "REOPENED"]
+            },
+            {
+              "property": "severity",
+              "operator": "=",
+              "value": "CRITICAL"
+            }
+          ]
+        },
+        "calculationSpec": {
+          "calculationBy": "entities",
+          "func": "count"
+        }
+      },
+      "numberOfOpenIssues": {
+        "title": "Number Of Open Issues",
+        "type": "number",
+        "target": "sonarQubeIssue",
+        "query": {
+          "combinator": "and",
+          "rules": [
+            {
+              "property": "status",
+              "operator": "in",
+              "value": [
+                "OPEN",
+                "REOPENED"
+              ]
+            }
+          ]
+        },
+        "calculationSpec": {
+          "calculationBy": "entities",
+          "func": "count"
+        }
+      }
+    },
+    "relations": {}
+  }
+
+```
+
+</details>
+
+- If you however, choose to stick with the internal API with the `project` kind, use any of the blueprints with the following mapping:
+
+
+<details>
+
+<summary><b>Project mapping for `project` kind(Click to expand)</b></summary>
+
+```yaml showLineNumbers
+createMissingRelatedEntities: true
+deleteDependentEntities: true
+resources:
+  - kind: projects
+    selector:
+      query: 'true'
+      apiFilters:
+        filter:
+          qualifier: TRK
+      metrics:
+        - code_smells
+        - coverage
+        - bugs
+        - vulnerabilities
+        - duplicated_files
+        - security_hotspots
+        - new_violations
+        - new_coverage
+        - new_duplicated_lines_density
+    port:
+      entity:
+        mappings:
+        // highlight-next-line
+          blueprint: '"sonarQubeProject"' # or any other blueprint you decide to use
+          identifier: .key
+          title: .name
+          properties:
+            organization: .organization
+            link: .__link
+            qualityGateStatus: .__branch.status.qualityGateStatus
+            lastAnalysisDate: .__branch.analysisDate
+            numberOfBugs: .__measures[]? | select(.metric == "bugs") | .value
+            numberOfCodeSmells: .__measures[]? | select(.metric == "code_smells") | .value
+            numberOfVulnerabilities: .__measures[]? | select(.metric == "vulnerabilities") | .value
+            numberOfHotSpots: .__measures[]? | select(.metric == "security_hotspots") | .value
+            numberOfDuplications: .__measures[]? | select(.metric == "duplicated_files") | .value
+            coverage: .__measures[]? | select(.metric == "coverage") | .value
+            mainBranch: .__branch.name
+            tags: .tags
+```
+
 
 </details>
 

@@ -8,15 +8,16 @@ import Image from "@theme/IdealImage";
 
 # AWS Exporter
 
-:::warning ocean integration available
-An [Ocean](https://ocean.getport.io) integration for AWS is now available! It is easier to use and supports more configuration options. We suggest using it instead, you can find it [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/).  
-If you still prefer to use the older integration, follow the instructions on this page.
+:::warning Deprecated
+This exporter is deprecated, Port will discontinue support for organizations using it by Q2 2025.
+
+To integrate Port with AWS, use the [Ocean AWS integration](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/).
 :::
 
-Our integration with AWS provides the ability to export your AWS resources to Port, according to your configuration.
+Port's AWS integration provides the ability to export your AWS resources to Port, according to your configuration.
 You can define the integration to run both on schedule and on events.
 
-Our integration with AWS supports real-time event processing, this allows for an accurate **real-time** representation of your AWS infrastructure inside Port.
+The integration supports real-time event processing, this allows for an accurate **real-time** representation of your AWS infrastructure inside Port.
 
 :::tip
 Port's AWS exporter is open source, view the source code [**here**](https://github.com/port-labs/port-aws-exporter).

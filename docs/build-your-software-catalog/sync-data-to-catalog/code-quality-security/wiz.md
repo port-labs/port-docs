@@ -226,8 +226,8 @@ Note the parameters specific to this integration, they are last in the table.
 
 | Parameter                                        | Description                                                                                                                                             | Required |
 |--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| `port.clientId`                                  | Your port client id ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅        |
-| `port.clientSecret`                              | Your port client secret ([Get the credentials](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅        |
+| `port.clientId`                                  | Your port client id ([Get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials))     | ✅        |
+| `port.clientSecret`                              | Your port client secret ([Get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) | ✅        |
 | `port.baseUrl`                                   | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                 | ✅        |
 | `integration.identifier`                         | Change the identifier to describe your integration                                                                                                      | ✅        |
 | `integration.type`                               | The integration type                                                                                                                                    | ✅        |

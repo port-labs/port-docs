@@ -22,15 +22,15 @@ Solving incidents efficiently is a crucial part of any production-ready environm
 - **Documentation** - When there is an ongoing incident, it is important that different personas across the organization will be aware of it. Hence, it is important to document the incident in relevant places, for example as a Port entity, a GitHub issue or a Jira issue.
 - **Visibility** - While troubleshooting, it is important to provide information to all relevant personas and stakeholders in the organization. An ideal place to manage an incident would be a group chat with the relevant people.
 
-While it is important to efficiently manage an incident as it is being addressed, it is also just as important to efficiently summarize the incident and perform cleanup. In this guide, we will be using Port's [Self-Service Actions](https://docs.getport.io/actions-and-automations/create-self-service-experiences/) capabilities to efficiently resolve and cleanup the resources related to the PagerDuty incident.
+While it is important to efficiently manage an incident as it is being addressed, it is also just as important to efficiently summarize the incident and perform cleanup. In this guide, we will be using Port's [Self-Service Actions](https://docs.port.io/actions-and-automations/create-self-service-experiences/) capabilities to efficiently resolve and cleanup the resources related to the PagerDuty incident.
 
 ## Prerequisites
-- Complete the [Automating incident management](https://docs.getport.io/guides/all/create-slack-channel-for-reported-incident) guide.
+- Complete the [Automating incident management](https://docs.port.io/guides/all/create-slack-channel-for-reported-incident) guide.
 - User email of a member in your PagerDuty account.
 
 
 ## Data model setup
-For this guide, we will be using the same data model as in the [Automating incident management](https://docs.getport.io/guides/all/create-slack-channel-for-reported-incident) guide.
+For this guide, we will be using the same data model as in the [Automating incident management](https://docs.port.io/guides/all/create-slack-channel-for-reported-incident) guide.
 
 
 ### Action backend
@@ -205,7 +205,7 @@ jobs:
 </details>
 
 
-Make sure you created the following secrets in your GitHub repository (If you followed the [incident automation guide](https://docs.getport.io/guides/all/create-slack-channel-for-reported-incident) then they should all already be in place):
+Make sure you created the following secrets in your GitHub repository (If you followed the [incident automation guide](https://docs.port.io/guides/all/create-slack-channel-for-reported-incident) then they should all already be in place):
 - `PORT_CLIENT_ID` - Your Port client ID.
 - `PORT_CLIENT_SECRET` - Your Port client secret.
 - `BOT_USER_OAUTH_TOKEN` - The Slack app bot token.
@@ -262,8 +262,7 @@ Let's create the Port Self-service action:
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

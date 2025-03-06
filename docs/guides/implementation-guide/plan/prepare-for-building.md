@@ -23,11 +23,15 @@ Port offers three user roles:
 - `Moderator` of a blueprint: Can perform any operation on a specific blueprint and its entities. Users can be moderators of multiple blueprints.
 - `Member`: By default - has read-only permissions. Members can be granted access to view specific pages/dashboards, execute self-service actions, and edit specific entities.  
 
-Read more about roles and permissions [here](https://docs.getport.io/sso-rbac/rbac/).
+Read more about roles and permissions [here](https://docs.port.io/sso-rbac/rbac/).
 
 ## Configure SSO
 
 Select the relevant [SSO provider](/sso-rbac/sso-providers/) and follow the instructions to set it up.
+
+:::info Enterprise feature
+Note that SSO support is an enterprise feature. If you are using the free tier, you can skip this step.
+:::
 
 ## Next step - build
 

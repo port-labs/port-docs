@@ -12,7 +12,7 @@ import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/\_scim_oidc_limita
 Follow this step-by-step guide to configure the integration between Port and Azure Active Directory.
 
 :::info
-In order to complete the process you will need to contact us to receive the information you require, as well as the [information Port requires from you](https://docs.getport.io/sso-rbac/sso-providers/oidc/azure-ad#step-6-providing-the-application-information-to-port). Read below for more information.
+In order to complete the process you will need to contact us to receive the information you require, as well as the [information Port requires from you](https://docs.port.io/sso-rbac/sso-providers/oidc/azure-ad#step-6-providing-the-application-information-to-port). Read below for more information.
 
 :::
 
@@ -93,7 +93,7 @@ To make the **Port** app connection work, users who have access need to have a l
     ```
 
     :::note
-    We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
+    We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
     :::
 
     1.2 Add the Port logo (optional):
@@ -130,6 +130,11 @@ To make the **Port** app connection work, users who have access need to have a l
 
    - `email`, `openid`, `profile`, `User.read`.
 
+
+   :::info AzureAD groups
+   If you wish to pull in AzureAD groups into Port, you will also need to add the `Directory.Read.All` permission. See [Permissions required to pull AzureAD groups to Port](#permissions-required-to-pull-azuread-groups-to-port).
+   :::
+
    ![Azure API set permissions](/img/sso/azure-ad/AzureAppAPIPermissionsSettings.png)
 
    3.4 Click `Add permissions`.
@@ -159,10 +164,6 @@ To make the **Port** app connection work, users who have access need to have a l
 4. Your optional claims will look like this:
 
    ![Azure app permissions summary](/img/sso/azure-ad/AzureAppPermissionsFinal.png)
-
-   :::info  
-   If you wish to configure the `groups claim` to pull your AzureAD groups into Port, please follow [How to allow pulling AzureAD groups to Port](#how-to-allow-pulling-azuread-groups-to-port).
-   :::
 
 ### Step #5: Configuring application secret
 

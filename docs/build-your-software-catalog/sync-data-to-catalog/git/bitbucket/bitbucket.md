@@ -102,7 +102,7 @@ The app allows you to ingest a variety of objects resources provided by the Bitb
 
 The Bitbucket app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
 
-After installing the app, Port will automatically create a `service` blueprint in your catalog (representing a BitBucket repository), along with a default YAML configuration file that defines where the data fetched from BitBucket's API should go in the blueprint.
+After installing the app, Port will automatically create a `repository` blueprint in your catalog (representing a BitBucket repository), along with a default YAML configuration file that defines where the data fetched from BitBucket's API should go in the blueprint.
 
 
 
@@ -124,7 +124,7 @@ Refer to the [examples](./examples.md) page for practical configurations and the
 
 ## Relevant Guides
 
-For relevant guides and examples, see the [guides section](https://docs.getport.io/guides?tags=BitBucket).
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=BitBucket).
 
 ## GitOps
 

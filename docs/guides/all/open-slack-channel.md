@@ -50,8 +50,8 @@ Streamline incident response with this self-service action. It automatically cre
 
 3. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
       - `BOT_USER_OAUTH_TOKEN` - [Slack Bot User Oauth Token](https://api.slack.com/authentication/token-types#bot) generated for the slack app.
-      - `PORT_CLIENT_ID` - Your port [client id](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-      - `PORT_CLIENT_SECRET` - Your port [client secret](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+      - `PORT_CLIENT_ID` - Your port [client id](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+      - `PORT_CLIENT_SECRET` - Your port [client secret](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 4. Create a service <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
 
 <details>
@@ -664,8 +664,7 @@ Create a new self service action using the following JSON configuration.
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

@@ -1,7 +1,7 @@
 ---
 id: get-an-entity
 title: "Get an entity"
-description: "This route allows you to fetch a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities)."
+description: "This route allows you to fetch a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities)."
 sidebar_label: "Get an entity"
 hide_title: true
 hide_table_of_contents: true
@@ -41,7 +41,7 @@ import TabItem from "@theme/TabItem";
 
 
 
-This route allows you to fetch a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#entities).
+This route allows you to fetch a specific entity in your software catalog.<br/><br/>To learn more about entities, check out the [documentation](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#entities).
 
 <Heading
   id={"request"}
@@ -98,17 +98,17 @@ This route allows you to fetch a specific entity in your software catalog.<br/><
     <ul>
       <ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"exclude_calculated_properties","required":false,"description":"If `true`, [calculated properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entity.<br/>"}}
+        param={{"schema":{"type":"boolean","default":false},"in":"query","name":"exclude_calculated_properties","required":false,"description":"If `true`, [calculated properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) will be excluded from the entity.<br/>"}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"include","required":false,"description":"An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"}}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"include","required":false,"description":"An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure). Only these values will be returned in the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"}}
       >
         
       </ParamsItem><ParamsItem
         className={"paramsItem"}
-        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"exclude","required":false,"description":"An array of values from the [entity JSON](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"}}
+        param={{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"exclude","required":false,"description":"An array of values from the [entity JSON](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#json-structure) to be ommitted from the response.<br/>For example: `{ \"properties.propertyIdentifier\",\"identifier\"}`"}}
       >
         
       </ParamsItem>

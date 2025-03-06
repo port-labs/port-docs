@@ -10,7 +10,7 @@ The Jenkins backend allows you to trigger Jenkins pipelines for your self-servic
 The steps shown in the image above are as follows:
 
 1. A self-service action or automation is invoked in Port.
-2. Port signs the action payload using SHA-1 with your Port [`clientSecret`](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
+2. Port signs the action payload using SHA-1 with your Port [`clientSecret`](/build-your-software-catalog/custom-integration/api/api.md#find-your-port-credentials) value and puts it in the `x-port-signature` request header.
 
    :::info Webhook security
    Verifying the webhook request using the request headers provides the following benefits:
@@ -97,7 +97,7 @@ Here is an example of the required configuration:
   - For more information about Port's outbound calls, check out Port's [actions security](/actions-and-automations/create-self-service-experiences/security/security.md) page.
 - In the **HMAC Secret** field, choose a secret containing your `port-client-secret`.
 
-If this secret doesn't already exist, create a `secret text` type secret using [this guide](https://www.jenkins.io/doc/book/using/using-credentials/). The value of the secret should be your `Port Client Secret` which can be found by following the guide [here](https://docs.getport.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
+If this secret doesn't already exist, create a `secret text` type secret using [this guide](https://www.jenkins.io/doc/book/using/using-credentials/). The value of the secret should be your `Port Client Secret` which can be found by following the guide [here](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials).
 :::
 
 ## Configuration
@@ -109,7 +109,7 @@ Once you have set up the webhook trigger in Jenkins, use your new webhook URL in
 The [Port execution agent](/actions-and-automations/setup-backend/webhook/port-execution-agent/) provides you with a secure and convenient way to act upon webhook invocations of self-Service actions and automations.  
 The agent pulls the new invocation event from your dedicated Kafka topic, and sends it to the URL you specified.  
 
-If you prefer to send a webhook without using the agent, you can [validate the webhook signature](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/signature-verification) for increased security.
+If you prefer to send a webhook without using the agent, you can [validate the webhook signature](https://docs.port.io/create-self-service-experiences/setup-backend/webhook/signature-verification) for increased security.
 
 To use the agent, set the `agent` field to `true` in the `invocationMethod` object, or set the `Use self-hosted agent` toggle to `Yes` if using the UI.
 

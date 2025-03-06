@@ -184,16 +184,16 @@ This page contains a list of Port's available integrations, organized by the pla
 - [PagerDuty integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/pagerduty.md)
 - [Ensure production readiness](/guides/all/ensure-production-readiness.md)
 - [Self service for a new PagerDuty incident using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/pagerduty)
-- [Self-service action to escalate a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
-- [Self-service action to trigger a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
-- [Self-service action to change a PagerDuty incident owner](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
-- [Self-service action to create a PagerDuty service from Port](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)
-- [Self-service action to acknowledge a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
-- [Self-service action to change a PagerDuty oncall](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)
-- [Self-service action to resolve a PagerDuty incident](https://docs.getport.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident)
+- [Self-service action to escalate a PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
+- [Self-service action to trigger a PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
+- [Self-service action to change a PagerDuty incident owner](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
+- [Self-service action to create a PagerDuty service from Port](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)
+- [Self-service action to acknowledge a PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
+- [Self-service action to change a PagerDuty oncall](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)
+- [Self-service action to resolve a PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident)
 - PagerDuty Incident Management
-    - [Automation to handle PagerDuty incidents](https://docs.getport.io/guides/all/create-slack-channel-for-reported-incident)
-    - [Self-service action to resolve Pagerduty incidents](https://docs.getport.io/guides-and-tutorials/resolve-pagerduty-incident) - including Slack channel notification and closing GitHub issue.
+    - [Automation to handle PagerDuty incidents](https://docs.port.io/guides/all/create-slack-channel-for-reported-incident)
+    - [Self-service action to resolve Pagerduty incidents](https://docs.port.io/guides-and-tutorials/resolve-pagerduty-incident) - including Slack channel notification and closing GitHub issue.
 
 ## Jira
 
@@ -221,7 +221,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## OpsGenie
 
 - [OpsGenie integration and webhook](/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie/opsgenie.md)
-- [Self-service action to trigger an OpsGenie incident](https://docs.getport.io/guides/all/create-an-opsgenie-incident)
+- [Self-service action to trigger an OpsGenie incident](https://docs.port.io/guides/all/create-an-opsgenie-incident)
 
 ## Incident IO
 - [Sync Port Services to Incident IO](/guides/all/sync-service-entities-to-incident-io)
@@ -327,3 +327,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Swagger
 - [Ingest Swagger paths into your catalog](/guides/all/ingest-swagger-paths-into-your-catalog)
+
+## Kratix (by Syntasso)
+- [Combine Kratix and Port](https://www.syntasso.io/solutions/port-and-kratix)
+- [Combine Kratix and Port (demo video)](https://www.youtube.com/watch?v=7nKx4CnEvoY)

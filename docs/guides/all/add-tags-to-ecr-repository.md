@@ -18,8 +18,8 @@ This guide demonstrates how to add meaningful tags to your AWS ECR repository us
     - `AWS_ACCOUNT_ID` - AWS account ID from the [prerequisites step](#prerequisites)
     - `AWS_ACCESS_KEY_ID` - AWS Access Key ID
     - `AWS_SECRET_ACCESS_KEY` - AWS Secret Access Key
-    - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    - `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
 6. Optional - Ingest your `AWS ECR Repository` into Port using our [recommended python script](https://github.com/port-labs/example-ecr-images)
 
@@ -31,8 +31,8 @@ This step is not required for this example, but it will create all the blueprint
 - `AWS_ACCOUNT_ID` - AWS account ID from the [prerequisites step](#prerequisites)
 - `AWS_ACCESS_KEY_ID` - AWS Access Key
 - `AWS_SECRET_ACCESS_KEY` - AWS Secret Key, also gotten from the access key creation
-- `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+- `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+- `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
 <br />
 
@@ -186,8 +186,7 @@ This option is way easier but if you do not want this, you can simply type in re
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 

@@ -347,6 +347,8 @@ The Port GCP integration's Terraform module offers a set of configurations:
 | `integration_identifier` |  | True | The Integration's identifier in Port  |
 | `port_base_url` | 'https://api.getport.io' | False | The Port Base url.  |
 | `gcp_included_projects` | [] | False | The Projects list you want the integration to collect from. If left empty, It will collect *All* projects in the organization. `This option will be deprecated soon.`  |
+| `gcp_cloud_run_cpu` | 2 | False | The CPU limit for the Cloud Run service  |
+| `gcp_cloud_run_memory` | 1024Mi | False | The Memory limit for the Cloud Run service  |
 | `gcp_project_filter` |  | False | The filter string used to retrieve GCP projects, allowing complex filtering by combining multiple conditions with logical operators. Follows GCP's [filter expressions syntax](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/projects#filter-1). Example `parent.id:184606565139 labels.environment:production AND labels.team:devops OR labels priority:high` |
 | `gcp_excluded_projects` | [] | False | The Projects list you want the integration NOT to collect from. This will be overridden by any value in gcp_included_projects besides []. `This option will be deprecated soon.` |
 | `assets_types_for_monitoring` | ["cloudresourcemanager.googleapis.com/Organization", "cloudresourcemanager.googleapis.com/Project", "storage.googleapis.com/Bucket", "cloudfunctions.googleapis.com/Function", "pubsub.googleapis.com/Subscription", "pubsub.googleapis.com/Topic"] | False | The list of asset types the integration will digest real-time events for.  |

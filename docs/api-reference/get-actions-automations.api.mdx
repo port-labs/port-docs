@@ -1,7 +1,7 @@
 ---
 id: get-actions-automations
 title: "Get actions/automations"
-description: "This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>"
+description: "This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.port.io/actions-and-automations/).<br/>"
 sidebar_label: "Get actions/automations"
 hide_title: true
 hide_table_of_contents: true
@@ -36,7 +36,7 @@ import Heading from "@theme/Heading";
 
 
 
-This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.getport.io/actions-and-automations/).<br/>
+This route allows you to fetch one or more self-service actions and/or automations in your Port account.<br/><br/>The call will perform a logical `AND` between all query parameters below, and return all actions and automations that match the criteria.<br/><br/>To learn more about actions and automations, check out the [documentation](https://docs.port.io/actions-and-automations/).<br/>
 
 <Heading
   id={"request"}
@@ -47,7 +47,7 @@ This route allows you to fetch one or more self-service actions and/or automatio
 </Heading>
 
 <ParamsDetails
-  parameters={[{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"action_identifier","description":"The identifier/s of the action/s and/or automation/s you want to fetch.<br/>","required":false},{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"blueprint_identifier","description":"The identifier/s of the blueprint/s whose actions/automations you wish to fetch.<br/>","required":false},{"schema":{"type":"array","items":{"type":"string","enum":["CREATE","DELETE","DAY-2"]}},"in":"query","name":"operation","description":"The [operation type/s](https://docs.getport.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch. Relevant only for self-service actions.<br/>","required":false},{"schema":{"type":"boolean"},"in":"query","name":"published","description":"Only relevant for **automations**. If `true`, only published automations will be fetched.<br/>","required":false},{"schema":{"type":"string","enum":["self-service","automation"]},"in":"query","name":"trigger_type","required":false},{"schema":{"type":"array","items":{"type":"string","enum":["ENTITY_CREATED","ENTITY_UPDATED","ENTITY_DELETED","TIMER_PROPERTY_EXPIRED","ANY_ENTITY_CHANGE"]}},"in":"query","name":"trigger_event","description":"The event/s that triggered the automation/s you want to fetch. Relevant only for automations.<br/>","required":false},{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}]}
+  parameters={[{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"action_identifier","description":"The identifier/s of the action/s and/or automation/s you want to fetch.<br/>","required":false},{"schema":{"type":"array","items":{"type":"string"}},"in":"query","name":"blueprint_identifier","description":"The identifier/s of the blueprint/s whose actions/automations you wish to fetch.<br/>","required":false},{"schema":{"type":"array","items":{"type":"string","enum":["CREATE","DELETE","DAY-2"]}},"in":"query","name":"operation","description":"The [operation type/s](https://docs.port.io/create-self-service-experiences/setup-ui-for-action/#basic-details) of the action/s you want to fetch. Relevant only for self-service actions.<br/>","required":false},{"schema":{"type":"boolean"},"in":"query","name":"published","description":"Only relevant for **automations**. If `true`, only published automations will be fetched.<br/>","required":false},{"schema":{"type":"string","enum":["self-service","automation"]},"in":"query","name":"trigger_type","required":false},{"schema":{"type":"array","items":{"type":"string","enum":["ENTITY_CREATED","ENTITY_UPDATED","ENTITY_DELETED","TIMER_PROPERTY_EXPIRED","ANY_ENTITY_CHANGE"]}},"in":"query","name":"trigger_event","description":"The event/s that triggered the automation/s you want to fetch. Relevant only for automations.<br/>","required":false},{"schema":{"type":"string","enum":["v1","v2"]},"in":"query","name":"version","required":false}]}
 >
   
 </ParamsDetails>

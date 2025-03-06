@@ -26,7 +26,7 @@ In the following guide, we are going to create a self-service action in Port tha
     - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
     - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
 
-3. Optional - Install Port's Argo CD integration. [Learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/argocd)
+3. Optional - Install Port's Argo CD integration. [Learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/argocd)
 
 :::tip Argo CD Integration
 This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your Argo CD Application.
@@ -430,8 +430,7 @@ Create a new self service action using the following JSON configuration.
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -442,7 +441,7 @@ Now you should see the `Restart Application` action in the self-service page. ðŸ
 
 1. Head to the [Self Service hub](https://app.getport.io/self-serve)
 2. Click `Execute` on the `Restart Application` action
-3. Choose the Argo CD application you want to restart (In case you didn't install the [Argo CD integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/argocd), it means you don't have any Argo CD Application in Port yet, so you will need to create one manually in Port to test this action)
+3. Choose the Argo CD application you want to restart (In case you didn't install the [Argo CD integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/argocd), it means you don't have any Argo CD Application in Port yet, so you will need to create one manually in Port to test this action)
 4. Select the application you want to sync. The `application_name` field should auto-fill after this, if not, manually enter the application name.
 5. Click on `Execute`
 6. Done! wait for the applicatioin flag's status to be restarted in Argo CD.

@@ -13,7 +13,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 After [signing up](https://app.getport.io) to Port, you will be prompted to follow a short onboarding process that includes ingesting your Git repositories into your developer portal.  
 
-After completing the onboarding process, Port will create some components for you (using your real data 😎) in order to show you the potential of your portal.  
+After completing the onboarding process, Port will create some components for you (using your real data💡) in order to show you the potential of your portal.  
 
 We highly recommend completing the onboarding process in order to get a basic understanding of Port and an idea of how a good developer portal can help you and your developers.  
 
@@ -44,7 +44,7 @@ Initially, your homepage contains two widgets:
 
 **Learn more:**
 
-- [Dashboard widgets](https://docs.getport.io/customize-pages-dashboards-and-plugins/dashboards/#widget-types)
+- [Dashboard widgets](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/#widget-types)
 
 ---
 
@@ -53,12 +53,12 @@ Initially, your homepage contains two widgets:
 A blueprint is Port's basic building block, used to model any data source you would like to add to your software catalog.  
 Head over to your [builder](https://app.getport.io/settings/data-model) - this is where you create, edit and relate blueprints.  
 
-As you can see, after connecting your Git provider to Port, a new `Service` blueprint is automatically created. This blueprint represents a service in your organization, implemented in a Git repository. It comes with some predefined [properties](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/).
+As you can see, after connecting your Git provider to Port, a new `Service` blueprint is automatically created. This blueprint represents a service in your organization, implemented in a Git repository. It comes with some predefined [properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/).
 
 **Learn more:**
 
-- [Setup blueprints](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/)
-- [Relate blueprints](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
+- [Setup blueprints](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/)
+- [Relate blueprints](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/)
 
 ---
 
@@ -71,7 +71,7 @@ After connecting your Git provider to Port, a data source will be automatically 
 
 **Learn more:**
 
-- [Configure mapping](https://docs.getport.io/build-your-software-catalog/customize-integrations/configure-mapping)
+- [Configure mapping](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping)
 
 ---
 
@@ -83,7 +83,7 @@ After connecting your Git provider to Port, you will see all of your services (G
 
 **Learn more:**
 
-- [Creating entities](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/#creating-entities)
+- [Creating entities](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/#creating-entities)
 
 ---
 
@@ -101,7 +101,7 @@ The existing actions in your portal only have their frontends defined. To finish
 
 **Learn more:**
 
-- [Self-service experiences](https://docs.getport.io/actions-and-automations/create-self-service-experiences/)
+- [Self-service experiences](https://docs.port.io/actions-and-automations/create-self-service-experiences/)
 
 ---
 
@@ -114,7 +114,7 @@ Take a look at your `Service` blueprint, it has a `Production Readiness` scoreca
 
 **Learn more:**
 
-- [Promote scorecards](https://docs.getport.io/promote-scorecards/)
+- [Promote scorecards](https://docs.port.io/promote-scorecards/)
 
 ---
 
@@ -134,8 +134,8 @@ This dashboard also visualizes data about your services, but this time the focus
 
 **Learn more:**
 
-- [Dashboard page](https://docs.getport.io/customize-pages-dashboards-and-plugins/page/dashboard-page)
-- [Dashboard widgets](https://docs.getport.io/customize-pages-dashboards-and-plugins/dashboards/)
+- [Dashboard page](https://docs.port.io/customize-pages-dashboards-and-plugins/page/dashboard-page)
+- [Dashboard widgets](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/)
 
 ---
 

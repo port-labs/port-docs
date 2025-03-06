@@ -13,10 +13,10 @@ This guide shows how to quickly add tags to a SonarQube project via Port's self-
 3. In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
     * `SONARQUBE_HOST_URL` - SonarQube instance URL. `https://sonarqube.com` if using Sonarcloud.
     * `SONARQUBE_API_TOKEN` - SonarQube API token. This can be a Project Analysis token for the specific project, a Global Analysis token or a user token. Requires the following permission: 'Administer' rights on the specified project.
-    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    * `PORT_CLIENT_ID` - Port Client ID [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
+    * `PORT_CLIENT_SECRET` - Port Client Secret [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
 
-4. Optional - Install Port's SonarQube integration [learn more](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
+4. Optional - Install Port's SonarQube integration [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
 
 :::tip SonarQube integration
 
@@ -205,8 +205,7 @@ Make sure to replace `<GITHUB_ORG>` and `<GITHUB_REPO>` with your GitHub organiz
     },
     "reportWorkflowStatus": true
   },
-  "requiredApproval": false,
-  "publish": true
+  "requiredApproval": false
 }
 ```
 </details>
@@ -225,4 +224,4 @@ Congrats 🎉 You've added tags to your SonarQube project from Port!
 
 
 ## More relevant guides and examples
-- [A mini guide to connect SonarQube project to a service](https://docs.getport.io/guides/all/connect-sonar-project-to-service)
+- [A mini guide to connect SonarQube project to a service](https://docs.port.io/guides/all/connect-sonar-project-to-service)

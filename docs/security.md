@@ -183,7 +183,7 @@ When an integration is hosted by Port, it is deployed on Port's infrastructure a
 
 ### Multi-factor authentication
 
-In addition to password login and social login, multi-factor authentication (MFA) provides an added layer of security to Port. We encourage MFA as an important step towards securing data access from intruders. Port users can use time-based one-time password (TOTP) apps like Google Authenticator as additional factors. This also applies to sign-in with an SSO provider.
+In addition to password login and social login, multi-factor authentication (MFA) provides an added layer of security to Port. We encourage MFA as an important step towards securing data access from intruders. When integrating Port with your SSO provider, you automatically benefit from the policies and MFA protection provided by your SSO.
 
 ### Single sign-on (SSO)
 
