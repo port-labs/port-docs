@@ -432,7 +432,7 @@ To create a self-service action follow these steps:
 
 5. Click `Save`.
 
-Now you should see both the `Create Service` and `Create Service (Webhook)` actions in the self-service page. 🎉
+Now you should see the `Create Service (Webhook)` actions in the self-service page. 🎉
 
 ### Create an automation to upsert entity in port
 
@@ -444,13 +444,11 @@ Since the webhook implementation doesn't support callbacks in Port, you have two
 
 Follow these steps to add the automation:
 
-1. Head to the [Builder](https://app.getport.io/settings/data-model) icon.
+1. Head to the [automation](https://app.getport.io/settings/automations) page.
 
-2. Click on the `Automations` button.
+2. Click on the `+ Automation` button.
 
-3. Click on the `+ New Automation` button.
-
-4. Copy and paste the following JSON configuration into the editor.
+3. Copy and paste the following JSON configuration into the editor.
 
     <details>
     <summary><b>Update PagerDuty service in Port automation (Click to expand)</b></summary>
@@ -494,7 +492,7 @@ Follow these steps to add the automation:
     ```
     </details>
 
-5. Click `Save`.
+4. Click `Save`.
 
 Now when you execute the webhook action, the service data in Port will be automatically updated with the latest information from PagerDuty.
 

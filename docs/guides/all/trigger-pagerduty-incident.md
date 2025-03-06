@@ -248,9 +248,12 @@ Now you should see the `Trigger Incidents` action in the self-service page. 🎉
 
 ### Add Port secrets
 
-1. Navigate to Port's [self-hosted agent installation](https://app.getport.io/self-hosted-agents) page.
-2. Click on `Ports Credentials`.
+1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+
+2. Click on **Credentials**.
+
 3. Click on the `Secrets` tab.
+
 4. Click on `+ Secret` and add the following secrets:
    - `PAGERDUTY_ROUTING_KEY`: Your PagerDuty routing key for the service.
 
@@ -372,13 +375,11 @@ Since the webhook implementation doesn't support callbacks in Port, you have two
 
 Follow these steps to add the automation:
 
-1. Head to the [Builder](https://app.getport.io/settings/data-model) icon.
+1. Head to the [automation](https://app.getport.io/settings/automations) page.
 
-2. Click on the `Automations` button.
+2. Click on the `+ Automation` button.
 
-3. Click on the `+ New Automation` button.
-
-4. Copy and paste the following JSON configuration into the editor.
+3. Copy and paste the following JSON configuration into the editor.
 
     <details>
     <summary><b>Update PagerDuty incident in Port automation (Click to expand)</b></summary>
@@ -420,7 +421,7 @@ Follow these steps to add the automation:
     ```
     </details>
 
-5. Click `Save`.
+4. Click `Save`.
 
 Now when you execute the webhook action, the incident data in Port will be automatically updated with the latest information from PagerDuty.
 

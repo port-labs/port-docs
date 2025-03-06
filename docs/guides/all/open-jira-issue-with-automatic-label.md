@@ -524,13 +524,11 @@ This automation will ensure that the created Jira issue is properly labeled with
 
 Follow these steps to add the automation:
 
-1. Head to the [Builder](https://app.getport.io/settings/data-model) icon.
+1. Head to the [automation](https://app.getport.io/settings/automations) page.
 
-2. Click on the `Automations` button.
+2. Click on the `+ Automation` button.
 
-3. Click on the `+ New Automation` button.
-
-4. Copy and paste the following JSON configuration into the editor.
+3. Copy and paste the following JSON configuration into the editor.
 
     <details>
     <summary><b>Update Jira issue labels automation (Click to expand)</b></summary>
@@ -576,7 +574,7 @@ Follow these steps to add the automation:
 
     </details>
 
-5. Click `Save`.
+4. Click `Save`.
 
 :::tip Configure your Jira URL
 Replace `<JIRA_ORGANIZATION_URL>` in both webhook URLs with your Jira organization URL (e.g., `example.atlassian.net`).

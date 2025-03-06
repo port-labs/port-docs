@@ -338,13 +338,12 @@ Since the webhook implementation doesn't support callbacks in Port, you have two
 
 Follow these steps to add the automation:
 
-1. Head to the [Builder](https://app.getport.io/settings/data-model) icon.
 
-2. Click on the `Automations` button.
+1. Head to the [automation](https://app.getport.io/settings/automations) page.
 
-3. Click on the `+ New Automation` button.
+2. Click on the `+ Automation` button.
 
-4. Copy and paste the following JSON configuration into the editor.
+3. Copy and paste the following JSON configuration into the editor.
 
     <details>
     <summary><b>Update PagerDuty incident in Port automation (Click to expand)</b></summary>
@@ -393,7 +392,7 @@ Follow these steps to add the automation:
     ```
     </details>
 
-5. Click `Save`.
+4. Click `Save`.
 
 
 Now when you execute the webhook action, the incident data in Port will be automatically updated with the latest information from PagerDuty.

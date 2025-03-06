@@ -319,7 +319,7 @@ To create a self-service action follow these steps:
 
 5. Click `Save`.
 
-Now you should see both the `Add Tags to SonarQube project` and `Add Tags to SonarQube Project (Webhook)` actions in the self-service page. 🎉
+Now you should see the `Add Tags to SonarQube Project (Webhook)` actions in the self-service page. 🎉
 
 ### Create an automation to update entity in port
 
@@ -327,13 +327,11 @@ To keep your catalog updated with the latest tags, you can create an automation 
 
 Follow these steps to add the automation:
 
-1. Head to the [Builder](https://app.getport.io/settings/data-model) icon.
+1. Head to the [automation](https://app.getport.io/settings/automations) page.
 
-2. Click on the `Automations` button.
+2. Click on the `+ Automation` button.
 
-3. Click on the `+ New Automation` button.
-
-4. Copy and paste the following JSON configuration into the editor.
+3. Copy and paste the following JSON configuration into the editor.
 
     <details>
     <summary><b>Update SonarQube project tags in Port automation (Click to expand)</b></summary>
@@ -372,7 +370,7 @@ Follow these steps to add the automation:
     ```
     </details>
 
-5. Click `Save`.
+4. Click `Save`.
 
 Now when you execute the webhook action, the project tags in Port will be automatically updated with the latest information from SonarQube.
 

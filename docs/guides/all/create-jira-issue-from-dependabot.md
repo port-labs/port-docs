@@ -19,9 +19,9 @@ You can implement this action in two ways:
 
 
 ## Use cases
-* Automatically create Jira issues from Dependabot alerts.
-* Add detailed metadata to Jira issues from Dependabot alerts.
-* Link Dependabot alerts to services in your Port catalog.
+- Automatically create Jira issues from Dependabot alerts.
+- Add detailed metadata to Jira issues from Dependabot alerts.
+- Link Dependabot alerts to services in your Port catalog.
 
 ## Prerequisites
 

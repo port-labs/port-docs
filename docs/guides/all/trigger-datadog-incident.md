@@ -478,9 +478,12 @@ This method simplifies the setup by handling everything within Port.
 
 Add the following secrets to your Port account:
 
-1. Click on the `...` button next to the profile icon in the top right conner.
+1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+
 2. Click on **Credentials**.
+
 3. Click on the `Secrets` tab.
+
 4. Click on `+ Secret` and add the following secrets:
    - `DD_API_KEY`: Your Datadog API Key.
    - `DD_APPLICATION_KEY`: Your Datadog Application Key.
