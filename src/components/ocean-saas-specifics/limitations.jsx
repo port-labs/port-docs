@@ -6,7 +6,10 @@ const defaultLimitations = {
 };
 
 const limitations = {
-
+  Linear:
+    defaultLimitations.ttl + '\n\n' +
+    '- `Resync interval`: Every 2 hours.' + '\n\n' +
+    '- `Send raw data examples`: Enabled.',
 };
 
 const OceanSaasLimitations = ({ id }) => {
