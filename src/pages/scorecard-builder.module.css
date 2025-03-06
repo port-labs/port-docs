@@ -115,6 +115,59 @@
   position: relative;
 }
 
+.ruleCard {
+  cursor: move;
+  transition: all 0.2s ease;
+}
+
+.ruleCard:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ruleCard.dragging {
+  opacity: 0.5;
+}
+
+.levelCard {
+  border: 2px dashed var(--ifm-color-emphasis-300);
+  padding: 1.5rem;
+}
+
+.levelCard.dragOver {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.levelHeader {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rulesContainer {
+  min-height: 100px;
+  padding: 1rem;
+  border: 1px dashed var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.conditions {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.condition {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: start;
+}
+
 .actions {
   display: flex;
   gap: 1rem;
@@ -160,4 +213,32 @@
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+.jsonEditorContainer {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.jsonEditor {
+  width: 100%;
+  min-height: 300px;
+  font-family: monospace;
+  padding: 1rem;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  color: var(--ifm-font-color-base);
+  resize: vertical;
+  tab-size: 2;
+}
+
+.jsonEditor.jsonError {
+  border-color: var(--ifm-color-danger);
+}
+
+.jsonErrorMessage {
+  color: var(--ifm-color-danger);
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
 } 
