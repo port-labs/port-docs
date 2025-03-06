@@ -276,7 +276,7 @@ export default function ScorecardBuilder() {
         throw new Error('Failed to install scorecard');
       }
     } catch (error) {
-      showNotification(`Failed to install scorecard: ${error.message}`, true);
+      showNotification(`Failed to install scorecard: ${error instanceof Error ? error.message : 'Unknown error'}`, true);
     }
   };
 
