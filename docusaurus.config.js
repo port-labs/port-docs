@@ -111,6 +111,12 @@ const config = {
             activeBasePath: "guides",
           },
           {
+            to: "/scorecard-builder",
+            label: "Scorecard Builder",
+            position: "left",
+            className: "header-scorecard-builder-link",
+          },
+          {
             to: "https://github.com/port-labs/port-docs",
             position: "right",
             target: "_blank",
@@ -391,7 +397,8 @@ const config = {
       "data-modal-ask-ai-input-placeholder": "Ask me anything about Port...",
       "data-submit-query-button-bg-color": "#000000",
       "data-modal-example-questions": "Which SSO providers are supported?, How can I install Port's Datadog integration without using k8s?, How can I create a table that shows all services belonging to my team?",
-      "data-font-family": "DM Sans",
+      "data-modal-example-questions-title": "Example Questions",
+      "data-modal-example-questions-col-span": "12",
       "data-modal-disclaimer": "This AI assistant has full access to Port's documentation and API references.\nPlease note that answers may not be fully accurate.\n\nWe would appreciate your feedback (👍🏽/👎🏽) on answers you receive in order to improve the results 🙏🏽",
       "data-modal-example-questions-title": "Example Questions",
       "data-modal-example-questions-col-span": "12",

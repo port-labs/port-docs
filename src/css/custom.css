@@ -725,3 +725,23 @@ html[data-theme="dark"] .navbar-signup-button {
   background-color: rgba(255, 255, 255, .3);
   cursor: pointer;
 }
+
+.header-scorecard-builder-link {
+  align-items: center;
+  display: flex;
+}
+
+.header-scorecard-builder-link:hover {
+  opacity: 0.6;
+}
+
+.header-scorecard-builder-link:before {
+  align-self: center;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucyA9ICJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xNiA0aDJ2MmgtMnptMCA2aDJ2MmgtMnptMCA2aDJ2MmgtMnptLTYtOGgydjJoLTJ6bTAgNmgydjJoLTJ6bTAtNmgydjJoLTJ6Ii8+PC9zdmc+")
+    0 0 / contain;
+  content: "";
+  display: inline-flex;
+  height: 24px;
+  width: 24px;
+  color: var(--ifm-navbar-link-color);
+}
