@@ -8,125 +8,143 @@ import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedic
 
 # Toggle LaunchDarkly Feature Flag
 
-# Overview
+## Overview
+This guide will help you implement a self-service action in Port that allows you to toggle LaunchDarkly feature flags directly from Port.
+This functionality streamlines feature management by enabling users to control feature flags without leaving Port.
 
-This GitHub action allows you to quickly toggle LaunchDarkly Feature Flags via Port Actions with ease.
+You can implement this action in two ways:
+1. **GitHub workflow**: A more flexible approach that allows for complex workflows and custom logic, suitable for teams that want to maintain their automation in Git.
+2. **Synced webhooks**: A simpler approach that directly interacts with LaunchDarkly's API through Port, ideal for quick implementation and minimal setup.
 
 ## Prerequisites
 
-1. Install the Ports GitHub app from [here](https://github.com/apps/getport-io/installations/new).
-
-2. Create the following GitHub action secrets
-    - `LAUNCHDARKLY_ACCESS_TOKEN` - a token with permission to toggle a feature flag in LaunchDarkly [Learn more](https://docs.launchdarkly.com/home/account-security/api-access-tokens)
-    - `PORT_CLIENT_ID` - Port Client ID [Learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token)
-    - `PORT_CLIENT_SECRET` - Port Client Secret. [Learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 
-
-3. Optional - Install Port's LaunchDarkly integration. [Learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly)
+- Complete the [onboarding process](/getting-started/overview).
+- Access to your LaunchDarkly organization with permissions to manage feature flags.
+- A LaunchDarkly API token with permission to toggle feature flags. [Learn more](https://docs.launchdarkly.com/home/account-security/api-access-tokens)
+- Optional - Install Port's LaunchDarkly integration [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly)
 
 	:::tip LaunchDarkly Integration
 	This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your LaunchDarkly Feature Flags.
 	:::
 
-4. In Case you decided not to install the LaunchDarkly integration, you will need to create a blueprint for LaunchDarkly Feature Flag in Port.
+## Set up data model
 
-<details>
-<summary>LaunchDarkly Feature Flag Blueprint</summary>
-	
-```json showLineNumbers
+If you haven't installed the LaunchDarkly integration, you'll need to create a blueprint for LaunchDarkly feature flags.
+However, we highly recommend you install the LaunchDarkly integration to have these automatically set up for you.
 
-{
-    "identifier": "launchDarklyFeatureFlag",
-    "description": "This blueprint represents a feature flag in LaunchDarkly.",
-    "title": "LaunchDarkly Feature Flag",
-    "icon": "Launchdarkly",
-    "schema": {
-      "properties": {
-        "kind": {
-          "type": "string",
-          "title": "Flag Kind",
-          "description": "The type of the feature flag (e.g., boolean)."
+### Create the LaunchDarkly feature flag blueprint
+
+1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
+2. Click on `+ Blueprint`.
+3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+4. Add this JSON schema:
+
+    <details>
+    <summary><b>LaunchDarkly Feature Flag Blueprint (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "launchDarklyFeatureFlag",
+      "description": "This blueprint represents a feature flag in LaunchDarkly.",
+      "title": "LaunchDarkly Feature Flag",
+      "icon": "Launchdarkly",
+      "schema": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "title": "Flag Kind",
+            "description": "The type of the feature flag (e.g., boolean)."
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "description": "A description of what the flag controls."
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Creation Date",
+            "description": "The date and time when the flag was created."
+          },
+          "clientSideAvailability": {
+            "type": "object",
+            "title": "Client-Side Availability",
+            "description": "Availability of the flag for client-side applications."
+          },
+          "temporary": {
+            "type": "boolean",
+            "title": "Temporary Flag",
+            "description": "Indicates if the flag is temporary."
+          },
+          "tags": {
+            "type": "array",
+            "title": "Tags",
+            "description": "Tags associated with the feature flag."
+          },
+          "maintainer": {
+            "type": "string",
+            "title": "Maintainer",
+            "description": "Email address of the maintainer of the flag."
+          },
+          "customProperties": {
+            "type": "object",
+            "title": "Custom Properties",
+            "description": "Custom properties associated with the flag."
+          },
+          "archived": {
+            "type": "boolean",
+            "title": "Archived",
+            "description": "Indicates if the flag is archived."
+          },
+          "deprecated": {
+            "type": "boolean",
+            "title": "Deprecated",
+            "description": "Indicates if the flag is deprecated."
+          },
+          "variations": {
+            "type": "array",
+            "title": "Variations",
+            "description": "An array of possible variations for the flag"
+          }
         },
-        "description": {
-          "type": "string",
-          "title": "Description",
-          "description": "A description of what the flag controls."
-        },
-        "creationDate": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Creation Date",
-          "description": "The date and time when the flag was created."
-        },
-        "clientSideAvailability": {
-          "type": "object",
-          "title": "Client-Side Availability",
-          "description": "Availability of the flag for client-side applications."
-        },
-        "temporary": {
-          "type": "boolean",
-          "title": "Temporary Flag",
-          "description": "Indicates if the flag is temporary."
-        },
-        "tags": {
-          "type": "array",
-          "title": "Tags",
-          "description": "Tags associated with the feature flag."
-        },
-        "maintainer": {
-          "type": "string",
-          "title": "Maintainer",
-          "description": "Email address of the maintainer of the flag."
-        },
-        "customProperties": {
-          "type": "object",
-          "title": "Custom Properties",
-          "description": "Custom properties associated with the flag."
-        },
-        "archived": {
-          "type": "boolean",
-          "title": "Archived",
-          "description": "Indicates if the flag is archived."
-        },
-        "deprecated": {
-          "type": "boolean",
-          "title": "Deprecated",
-          "description": "Indicates if the flag is deprecated."
-        },
-        "variations": {
-          "type": "array",
-          "title": "Variations",
-          "description": "An array of possible variations for the flag"
-        }
+        "required": []
       },
-      "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {
-      "environments": {
-        "title": "Environments",
-        "target": "launchDarklyEnvironment",
-        "required": false,
-        "many": true
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {
+        "environments": {
+          "title": "Environments",
+          "target": "launchDarklyEnvironment",
+          "required": false,
+          "many": true
+        }
       }
     }
-  }
-  ```
-</details>
+    ```
+    </details>
 
+5. Click "Save" to create the blueprint.
 
-## GitHub Workflow
+## GitHub workflow implementation
 
-1. Create a workflow file under `.github/workflows/toggle-feature-flag.yaml` with the following content:
+### Add GitHub secrets
+
+In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+- `LAUNCHDARKLY_ACCESS_TOKEN` - A LaunchDarkly API token with permission to toggle feature flags.
+- `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+- `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+
+### Add GitHub workflow
+
+Create the file `.github/workflows/toggle-feature-flag.yaml` in the `.github/workflows` folder of your repository.
 
 <GithubDedicatedRepoHint/>
 
 <details>
-<summary>GitHub Workflow</summary>
+<summary><b>GitHub Workflow (Click to expand)</b></summary>
 
-```yaml showLineNumbers title="toggle-feature-flag.yaml"
-
+```yaml showLineNumbers
 name: Toggle LaunchDarkly Feature Flag
 
 on:
@@ -236,90 +254,283 @@ jobs:
 ```
 </details>
 
-## Port Configuration
+### Set up self-service action
 
-Create a new self service action using the following JSON configuration.
+We will create a self-service action to handle toggling LaunchDarkly feature flags.
+To create a self-service action follow these steps:
 
-<details>
-<summary><b>Toggle A Feature Flag (Click to expand)</b></summary>
+1. Head to the [self-service](https://app.getport.io/self-serve) page.
+2. Click on the `+ New Action` button.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration into the editor.
 
-<GithubActionModificationHint/>
+    <details>
+    <summary><b>Toggle LaunchDarkly Feature Flag (Click to expand)</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "launchDarklyFeatureFlag_toggle_a_feature_flag",
-  "title": "Toggle LaunchDarkly Feature Flag",
-  "icon": "Launchdarkly",
-  "description": "Toggle a Feature Flag in launchdarkly",
-  "trigger": {
-    "type": "self-service",
-    "operation": "DAY-2",
-    "userInputs": {
-      "properties": {
-        "project_key": {
-          "description": "LaunchDarkly Project Key",
-          "title": "project_key",
-          "icon": "Launchdarkly",
-          "type": "string"
+    <GithubActionModificationHint/>
+
+    ```json showLineNumbers
+    {
+      "identifier": "launchDarklyFeatureFlag_toggle_a_feature_flag",
+      "title": "Toggle LaunchDarkly Feature Flag",
+      "icon": "Launchdarkly",
+      "description": "Toggle a Feature Flag in launchdarkly",
+      "trigger": {
+        "type": "self-service",
+        "operation": "DAY-2",
+        "userInputs": {
+          "properties": {
+            "project_key": {
+              "description": "LaunchDarkly Project Key",
+              "title": "project_key",
+              "icon": "Launchdarkly",
+              "type": "string"
+            },
+            "environment_key": {
+              "description": "LaunchDarkly Environment Key where the flag exists",
+              "title": "environment_key",
+              "icon": "Launchdarkly",
+              "type": "string"
+            },
+            "flag_state": {
+              "title": "flag_state",
+              "description": "Desired state of the feature flag (true for enabled, false for disabled)",
+              "icon": "Launchdarkly",
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "required": [
+            "project_key",
+            "environment_key"
+          ],
+          "order": [
+            "project_key",
+            "environment_key",
+            "flag_state"
+          ]
         },
-        "environment_key": {
-          "description": "LaunchDarkly Environment Key where the flag exists",
-          "title": "environment_key",
-          "icon": "Launchdarkly",
-          "type": "string"
-        },
-        "flag_state": {
-          "title": "flag_state",
-          "description": "Desired state of the feature flag (true for enabled, false for disabled)",
-          "icon": "Launchdarkly",
-          "type": "boolean",
-          "default": true
-        }
+        "blueprintIdentifier": "launchDarklyFeatureFlag"
       },
-      "required": [
-        "project_key",
-        "environment_key"
-      ],
-      "order": [
-        "project_key",
-        "environment_key",
-        "flag_state"
-      ]
-    },
-    "blueprintIdentifier": "launchDarklyFeatureFlag"
-  },
-  "invocationMethod": {
-    "type": "GITHUB",
-    "org": "<GITHUB_ORG>",
-    "repo": "<GITHUB_REPO>",
-    "workflow": "toggle-feature-flag.yaml",
-    "workflowInputs": {
-      "project_key": "{{.inputs.\"project_key\"}}",
-      "environment_key": "{{.inputs.\"environment_key\"}}",
-      "flag_state": "{{.inputs.\"flag_state\"}}",
-      "port_context": {
-        "blueprint": "{{.action.blueprint}}",
-        "entity": "{{.entity.identifier}}",
-        "run_id": "{{.run.id}}",
-        "relations": "{{.entity.relations}}"
-      }
-    },
-    "reportWorkflowStatus": true
-  },
-  "requiredApproval": false
-}
-```
-</details>
+      "invocationMethod": {
+        "type": "GITHUB",
+        "org": "<GITHUB_ORG>",
+        "repo": "<GITHUB_REPO>",
+        "workflow": "toggle-feature-flag.yaml",
+        "workflowInputs": {
+          "project_key": "{{.inputs.\"project_key\"}}",
+          "environment_key": "{{.inputs.\"environment_key\"}}",
+          "flag_state": "{{.inputs.\"flag_state\"}}",
+          "port_context": {
+            "blueprint": "{{.action.blueprint}}",
+            "entity": "{{.entity.identifier}}",
+            "run_id": "{{.run.id}}",
+            "relations": "{{.entity.relations}}"
+          }
+        },
+        "reportWorkflowStatus": true
+      },
+      "requiredApproval": false
+    }
+    ```
+    </details>
+
+5. Click `Save`.
 
 Now you should see the `Toggle LaunchDarkly Feature Flag` action in the self-service page. 🎉
 
+## Synced webhook implementation
+
+### Add Port secrets
+
+Add the following secrets to your Port account:
+
+1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+
+2. Click on **Credentials**.
+
+3. Click on the `Secrets` tab.
+
+4. Click on `+ Secret` and add the following secrets:
+   - `LAUNCHDARKLY_ACCESS_TOKEN`: Your LaunchDarkly API token
+
+### Set up self-service action
+
+We will create a self-service action to handle toggling LaunchDarkly feature flags using webhooks.
+To create a self-service action follow these steps:
+
+1. Head to the [self-service](https://app.getport.io/self-serve) page.
+2. Click on the `+ New Action` button.
+3. Click on the `{...} Edit JSON` button.
+4. Copy and paste the following JSON configuration into the editor.
+
+    <details>
+    <summary><b>Toggle LaunchDarkly Feature Flag (Webhook) (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "toggle_feature_flag_webhook",
+      "title": "Toggle Feature Flag (Webhook)",
+      "icon": "Launchdarkly",
+      "description": "Toggle a LaunchDarkly feature flag using a webhook",
+      "trigger": {
+        "type": "self-service",
+        "operation": "DAY-2",
+        "userInputs": {
+          "properties": {
+            "project_key": {
+              "description": "LaunchDarkly Project Key",
+              "title": "Project Key",
+              "icon": "Launchdarkly",
+              "type": "string"
+            },
+            "environment_key": {
+              "description": "LaunchDarkly Environment Key where the flag exists",
+              "title": "Environment Key",
+              "icon": "Launchdarkly",
+              "type": "string"
+            },
+            "flag_state": {
+              "title": "Flag State",
+              "description": "Desired state of the feature flag (true for enabled, false for disabled)",
+              "icon": "Launchdarkly",
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "required": [
+            "project_key",
+            "environment_key"
+          ],
+          "order": [
+            "project_key",
+            "environment_key",
+            "flag_state"
+          ]
+        },
+        "blueprintIdentifier": "launchDarklyFeatureFlag"
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://app.launchdarkly.com/api/v2/flags/{{.inputs.project_key}}/{{.entity.identifier}}",
+        "agent": false,
+        "synchronized": true,
+        "method": "PATCH",
+        "headers": {
+          "Authorization": "{{.secrets.LAUNCHDARKLY_ACCESS_TOKEN}}",
+          "Content-Type": "application/json"
+        },
+        "body": [
+          {
+            "op": "replace",
+            "path": "/environments/{{.inputs.environment_key}}/on",
+            "value": "{{.inputs.flag_state}}"
+          }
+        ]
+      },
+      "requiredApproval": false
+    }
+    ```
+    </details>
+
+5. Click `Save`.
+
+Now you should see both the `Toggle LaunchDarkly Feature Flag` and `Toggle Feature Flag (Webhook)` actions in the self-service page. 🎉
+
+### Create an automation to update entity in port
+
+To keep your catalog updated with the latest feature flag state, you can create an automation that will update the LaunchDarkly feature flag entity in Port immediately after the webhook action completes successfully.
+
+Follow these steps to add the automation:
+
+1. Head to the [Builder](https://app.getport.io/settings/data-model) icon.
+
+2. Click on the `Automations` button.
+
+3. Click on the `+ New Automation` button.
+
+4. Copy and paste the following JSON configuration into the editor.
+
+    <details>
+    <summary><b>Update LaunchDarkly feature flag in Port automation (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "launchDarklyFeatureFlag_sync_after_toggle",
+      "title": "Sync LaunchDarkly Feature Flag After Toggle",
+      "description": "Update LaunchDarkly feature flag data in Port after toggling",
+      "trigger": {
+        "type": "automation",
+        "event": {
+          "type": "RUN_UPDATED",
+          "actionIdentifier": "toggle_feature_flag_webhook"
+        },
+        "condition": {
+          "type": "JQ",
+          "expressions": [
+            ".diff.after.status == \"SUCCESS\""
+          ],
+          "combinator": "and"
+        }
+      },
+      "invocationMethod": {
+        "type": "WEBHOOK",
+        "url": "https://app.launchdarkly.com/api/v2/flags/{{.event.diff.after.inputs.project_key}}/{{.event.diff.after.entity.identifier}}",
+        "agent": false,
+        "synchronized": true,
+        "method": "GET",
+        "headers": {
+          "Authorization": "{{.secrets.LAUNCHDARKLY_ACCESS_TOKEN}}",
+          "Content-Type": "application/json"
+        },
+        "onSuccess": {
+          "type": "UPSERT_ENTITY",
+          "blueprintIdentifier": "launchDarklyFeatureFlag",
+          "mapping": {
+            "identifier": "{{.response.key}}",
+            "title": "{{.response.name}}",
+            "properties": {
+              "kind": "{{.response.kind}}",
+              "description": "{{.response.description}}",
+              "temporary": "{{.response.temporary}}",
+              "tags": "{{.response.tags}}",
+              "archived": "{{.response.archived}}",
+              "deprecated": "{{.response.deprecated}}"
+            }
+          }
+        }
+      },
+      "publish": true
+    }
+    ```
+    </details>
+
+5. Click `Save`.
+
+Now when you execute the webhook action, the feature flag data in Port will be automatically updated with the latest information from LaunchDarkly.
+
 ## Let's test it!
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve).
-2. Click on the `Toggle LaunchDarkly Feature Flag` action.
-3. Choose the feature flag you want to toggle (In case you didn't install the [LaunchDarkly integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/feature-management/launchdarkly), it means you don't have any feature flags in Port yet, so you will need to create one manually in Port to test this action).
-4. Enter the associated `projectKey` and `environmentKey` for the flag and toggle `flagState` (ON by default).
-5. Click on `Execute`.
-6. Done! wait for the feature flag's status to be changed in LaunchDarkly.
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
 
-Congrats 🎉 You've toggled your first LaunchDarkly feature flag from Port!
+2. Choose either the GitHub workflow or webhook implementation:
+   - For GitHub workflow: Click on `Toggle LaunchDarkly Feature Flag`
+   - For webhook: Click on `Toggle Feature Flag (Webhook)`
+
+3. Select the LaunchDarkly feature flag you want to toggle
+
+4. Enter the required information:
+   - Project Key: The LaunchDarkly project key where the flag is located
+   - Environment Key: The environment where you want to toggle the flag
+   - Flag State: Set to true to enable the flag or false to disable it
+
+5. Click on `Execute`
+
+6. Done! Wait for the feature flag's status to be changed in LaunchDarkly
+
+Congrats 🎉 You've toggled your first LaunchDarkly feature flag from Port! 🔥
+
+## More relevant guides and examples
+- [Create a LaunchDarkly feature flag](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/LaunchDarkly/create-feature-flag)
+- [Archive a LaunchDarkly feature flag](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/LaunchDarkly/archive-feature-flag)
+- [Add tags to a LaunchDarkly feature flag](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/LaunchDarkly/add-tags-to-feature-flag)
