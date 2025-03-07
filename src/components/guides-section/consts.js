@@ -836,6 +836,15 @@ export const availableGuides = [
         link: "/guides/all/automatically-approve-action-using-automation"
     },
     {
+        title: "Copy ADO Pipeline Template to Target Repo",
+        description: "Create a self-service action that copies an AzureDevops pipeline template to a target repository",
+        tags: ["SDLC", "AzureDevops", "Actions"],
+        logos: ["AzureDevops"],
+        link: "/guides/all/copy-pipeline-template-to-target-repo",
+
+    },
+    {
+
         title: "Track SLOs and SLIs for services",
         description: "Track service level objectives (SLOs) and service level indicators (SLIs) for services in Port",
         tags: ["Engineering metrics", "New Relic", "Dashboards"],
@@ -883,5 +892,33 @@ export const availableGuides = [
         tags: ["Engineering metrics", "Actions", "Dashboards"],
         logos: ["Engineering metrics"],
         link: "/guides/all/create-surveys",
+    },
+    {
+        title: "Ingest Slack channels data with Airbyte, S3 & webhook",
+        description: "Send Slack channel data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
+        tags: ["Slack", "AWS", "Webhook"],
+        logos: ["Slack", "AWS", "Webhook"],
+        link: "/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook"
+    },
+    {
+        title: "Ingest HiBob data with Airbyte, S3 & webhook",
+        description: "Send Hibob data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
+        tags: ["AWS", "Webhook"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/ingest-hibob-data-via-airbyte-s3-and-webhook"
+    },
+    {
+        title: "Ingest Okta data with Airbyte, S3 & webhook",
+        description: "Send Okta data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
+        tags: ["AWS", "Webhook"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/ingest-okta-data-via-airbyte-s3-and-webhook"
+    },
+    {
+        title: "Ingest any data source with Airbyte, S3 & webhook",
+        description: "Send any data to S3 with Airbyte, then ingest it into Port via a custom webhook integration",
+        tags: ["AWS", "Webhook"],
+        logos: ["AWS", "Webhook"],
+        link: "/guides/all/ingest-any-data-via-airbyte-s3-and-webhook"
     },
 ]

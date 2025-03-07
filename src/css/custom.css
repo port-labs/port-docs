@@ -339,6 +339,10 @@ html[data-theme="dark"] details details  {
   content: url('/static/img/sidebar-icons/main-menu/resources.svg');
 }
 
+.sidebar-menu-customization .menu__link::before {
+  content: url('/static/img/sidebar-icons/main-menu/customization.svg');
+}
+
 .sidebar-property-embedded-url > div > a::before {
   content: url('/static/img/sidebar-icons/EmbeddedUrl.svg');
 }

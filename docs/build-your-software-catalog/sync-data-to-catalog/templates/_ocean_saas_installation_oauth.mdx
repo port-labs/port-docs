@@ -3,6 +3,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import OceanSaasDefaultSettings from "/src/components/ocean-saas-specifics/default-settings.jsx";
 import OceanSaasIntegrationSettings from "/src/components/ocean-saas-specifics/integration-settings.jsx";
+import OceanSaasLimitations from "/src/components/ocean-saas-specifics/limitations.jsx";
 
 Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
 
@@ -36,7 +37,7 @@ Answers to common questions about OAuth integrations can be found here:
 
 **What permissions do I need to install the integration using OAuth2?**
 
-Any level of permission will work. However, the data fetched depends on the user’s access level:
+Any level of permission will work. However, the data fetched depends on the user's access level:
     - If the user has admin-level access, Port will fetch all project data.
     - If the user has restricted access (e.g., only specific projects), Port will fetch data based on those permissions.
 
@@ -96,7 +97,6 @@ Every integration has its own tool-specific settings, under the `Integration set
 
 You can also hover over the ⓘ icon next each setting to see a description.
 
-
 <h4>Port secrets</h4>
 
 Some integration settings require sensitive pieces of data, such as tokens.  
@@ -106,6 +106,10 @@ When filling in such a setting, its value will be obscured (shown as `•••�
 For each such setting, Port will automatically create a secret in your organization.  
 
 To see all secrets in your organization, follow [these steps](/sso-rbac/port-secrets/#usage).
+
+<h3>Limitations</h3>
+
+<OceanSaasLimitations id={props.integration} />
 
 <h3>Port source IP addresses</h3>
 
