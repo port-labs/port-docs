@@ -394,13 +394,11 @@ Now you should see the `Escalate Incident (Webhook)` action in the self-service 
 
 ### Create an automation to upsert entity in port
 
-Since the webhook implementation doesn't support callbacks in Port, you have two options to keep your catalog updated:
+After each execution of the action, we would like to update the relevant entity in Port with the latest status.  
 
-1. If you have installed the PagerDuty integration, you can wait for the next scheduled resync to update your catalog automatically.
+To achieve this, we can create an automation that will be triggered when the action completes successfully.
 
-2. For real-time updates, you can create an automation that will upsert the incident entity in Port immediately after the webhook action completes successfully. This allows you to keep the incident data in Port synchronized with PagerDuty without waiting for the next resync.
-
-Follow these steps to add the automation:
+To create the automation:
 
 1. Head to the [automation](https://app.getport.io/settings/automations) page.
 
