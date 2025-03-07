@@ -914,7 +914,7 @@ values={[
             "property": "$team",
             "operator": "containsAny",
             "value": {
-              "jqQuery": "[.user.teams[].name]"
+              "jqQuery": "[.user.team]"
             }
           }
         ]
@@ -944,7 +944,7 @@ resource "port_action" myAction {
                 property = "$team",
                 operator = "containsAny",
                 value = {
-                  jq_query = "[.user.teams[].name]"
+                  jq_query = "[.user.team]"
                 }
               }
             ]
@@ -974,7 +974,7 @@ action = Action(
               "property": "$team",
               "operator": "containsAny",
               "value": {
-                "jq_query": "[.user.teams[].name]"
+                "jq_query": "[.user.team]"
               }
             }
           ]
@@ -1311,7 +1311,7 @@ values={[
                 "property": "$team",
                 "operator": "containsAny",
                 "value": {
-                  "jqQuery": "[.user.teams[].name]"
+                  "jqQuery": "[.user.team]"
                 }
               }
             ]
@@ -1385,7 +1385,7 @@ resource "port_action" "createRunningService" {
                 blueprint = "$team"
                 operator  = "containsAny"
                 value = {
-                  jq_query = "[.user.teams[].name]"
+                  jq_query = "[.user.team]"
                 }
               }
             ]
@@ -1458,7 +1458,7 @@ action = Action(
                 "blueprint": "$team",
                 "operator": "containsAny",
                 "value": {
-                  "jq_query": "[.user.teams[].name]"
+                  "jq_query": "[.user.team]"
                 }
               }
             ]
@@ -1526,7 +1526,7 @@ const entity = new Action("create-running-service", {
               "blueprint": "$team",
               "operator": "containsAny",
               "value": {
-                "jqQuery": "[.user.teams[].name]"
+                "jqQuery": "[.user.team]"
               }
             }
           ]
