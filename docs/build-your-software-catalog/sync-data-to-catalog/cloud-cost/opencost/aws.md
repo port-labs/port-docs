@@ -5,10 +5,10 @@ description: Set up AWS cloud cost tracking using OpenCost
 
 # Track AWS cloud costs using OpenCost
 This guide will help you set up AWS Cost and Usage Reports (CUR) with OpenCost to track your AWS cloud costs in Port.  
-By default, OpenCost pulls on-demand asset prices from the public AWS pricing API. The AWS Pricing API is limited in its resolution capabilities, not allowing per-resource costs analysis and deep granularity. 
+By default, OpenCost pulls on-demand asset prices from the public AWS pricing API. 
+The AWS Pricing API is limited in its resolution capabilities, not allowing per-resource costs analysis and deep granularity. 
 
-To allow for a more granular resolution of your AWS cost data, OpenCost supports ingesting pricing data from [CUR reports](https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html).
-
+To allow for a more granular resolution of your AWS cost data, OpenCost supports ingesting pricing data from [CUR reports](https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html).  
 In this guide, we will use the OpenCost price capabilities leveraging AWS CUR, and Port's [Ocean OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/opencost.md), to ingest per-resource cost entities into Port.
 
 ## Common use cases
@@ -79,75 +79,79 @@ In this guide, we will use the OpenCost price capabilities leveraging AWS CUR, a
 
 ## Set up data model
 
-After installing Port's OpenCost integration, The `OpenCost CloudCost` [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) will be created for you automatically.  
+After installing Port's OpenCost integration, The **OpenCost CloudCost** [blueprint](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/) will be created for you automatically.  
 This blueprint represents an OpenCost CloudCost entity. If the blueprint **does not** exist, 
 
 Follow these steps to add it:
 
 1. Navigate to your Port organization's [data model](https://app.getport.io/settings/data-model) page.
-2. Click the `+ Blueprint` button.
-3. Click the `Edit JSON` button.
+2. Click on the `+ Blueprint` button.
+3. Click on  `Edit JSON` button.
 4. Copy-paste the following blueprint JSON:
 
-<details>
-    <summary><b>`OpenCost CloudCost` blueprint (Cick to expand)</b></summary>
+    <details>
+        <summary><b>OpenCost CloudCost blueprint (Cick to expand)</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "openCostCloudcost",
-  "description": "This blueprint represents cloud cost allocations from your OpenCost instance",
-  "title": "OpenCost CloudCost",
-  "icon": "Opencost",
-  "schema": {
-    "properties": {
-      "startDate": {
-        "title": "Start Date",
-        "type": "string",
-        "format": "date-time"
+    ```json showLineNumbers
+    {
+      "identifier": "openCostCloudcost",
+      "description": "This blueprint represents cloud cost allocations from your OpenCost instance",
+      "title": "OpenCost CloudCost",
+      "icon": "Opencost",
+      "schema": {
+        "properties": {
+          "startDate": {
+            "title": "Start Date",
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "title": "End Date",
+            "type": "string",
+            "format": "date-time"
+          },
+          "listCost": {
+            "title": "List Cost",
+            "type": "number"
+          },
+          "netCost": {
+            "title": "Net Cost",
+            "type": "number"
+          },
+          "amortizedNetCost": {
+            "title": "Amortized Net Cost",
+            "type": "number"
+          },
+          "invoicedCost": {
+            "title": "Invoiced Cost",
+            "type": "number"
+          },
+          "amortizedCost": {
+            "title": "Amortized Cost",
+            "type": "number"
+          }
+        },
+        "required": []
       },
-      "endDate": {
-        "title": "End Date",
-        "type": "string",
-        "format": "date-time"
-      },
-      "listCost": {
-        "title": "List Cost",
-        "type": "number"
-      },
-      "netCost": {
-        "title": "Net Cost",
-        "type": "number"
-      },
-      "amortizedNetCost": {
-        "title": "Amortized Net Cost",
-        "type": "number"
-      },
-      "invoicedCost": {
-        "title": "Invoiced Cost",
-        "type": "number"
-      },
-      "amortizedCost": {
-        "title": "Amortized Cost",
-        "type": "number"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {}
-}
-```
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+    }
+    ```
 
-</details>
+    </details>
+
+5. Cick on `Save`.
 
 ## Add mapping configuration
 
-Now that we have defined our data model, let us configure the OpenCost mapping configuration to properly ingest the cost data into Port.
+Now that we have defined our data model, let us update the **OpenCost mapping configuration** to ingest the relevant cost data in Port.
+**OpenCost cloudcost** data supports a variety of time windows, aggregations and filters.   
 
-OpenCost cloudcost data supports a variety of time windows, aggregations and filters. In this guide, the data that will be ingested is the cost of all `AmazonEC2` resources in the past week.
-After installing the integration, a `cloudcost` config block is added automatically. Replace the pre-existing config for `cloudcost` with the following YAML snippet.
+In this guide, the data that will be ingested is the cost of all `AmazonEC2` resources in the past week.  
+If you installed the OpenCost integration, a `cloudcost` config block was added automatically - in this case, replace the pre-existing config.
+If you haven't installed the integration and only created the blueprint, add the following YAML snippet as your `cloudcost` configuration:
 
 Follow these steps to update the OpenCost mapping configuration:
 
@@ -156,7 +160,7 @@ Follow these steps to update the OpenCost mapping configuration:
 2. Add the following configuration to your datasource mapping:
 
     <details>
-        <summary><b>`OpenCost CloudCost` mapping configuration (Click to expand)</b></summary>
+        <summary><b>OpenCost CloudCost mapping configuration (Click to expand)</b></summary>
 
     ```yaml showLineNumbers
     - kind: cloudcost
