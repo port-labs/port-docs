@@ -1,5 +1,4 @@
 ---
-displayed_sidebar: null
 description: Set up AWS cloud cost tracking using OpenCost
 ---
 
