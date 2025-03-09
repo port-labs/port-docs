@@ -111,6 +111,11 @@ const config = {
             activeBasePath: "guides",
           },
           {
+            type: 'custom-portLogin',
+            position: 'right',
+            className: 'header-port-login',
+          },
+          {
             to: "https://github.com/port-labs/port-docs",
             position: "right",
             target: "_blank",
@@ -339,7 +344,6 @@ const config = {
       {
         createRedirects(existingPath) {
           if (!existingPath.includes("/docs") && existingPath !== "/") {
-            // Support URLs without /docs prepended and route them to /docs
             return [existingPath.replace("/", "/docs/", 1)];
           }
           return undefined;
@@ -349,12 +353,12 @@ const config = {
     [
       "docusaurus-plugin-openapi-docs",
       {
-        id: "api", // plugin id
-        docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
+        id: "api",
+        docsPluginId: "classic",
         config: {
-          port: { // the <id> referenced when running CLI commands
-            specPath: './static/apispec.yaml', // path to OpenAPI spec, URLs supported
-            outputDir: "docs/api-reference-temp", // dir of generated files, REMEMBER to move them to /api-reference when ready
+          port: {
+            specPath: './static/apispec.yaml',
+            outputDir: "docs/api-reference-temp",
             sidebarOptions: {
               groupPathsBy: "tag",
               categoryLinkSource: "tag",
@@ -368,9 +372,9 @@ const config = {
       "@docusaurus/plugin-ideal-image",
       {
         quality: 70,
-        max: 1000, // max resized image's size.
-        min: 300, // min resized image's size. if original is lower, use that size.
-        steps: 7, // the max number of images generated between min and max (inclusive)
+        max: 1000,
+        min: 300,
+        steps: 7,
         disableInDev: false,
       },
     ],
@@ -391,19 +395,12 @@ const config = {
       "data-modal-ask-ai-input-placeholder": "Ask me anything about Port...",
       "data-submit-query-button-bg-color": "#000000",
       "data-modal-example-questions": "Which SSO providers are supported?, How can I install Port's Datadog integration without using k8s?, How can I create a table that shows all services belonging to my team?",
-      "data-font-family": "DM Sans",
-      "data-modal-disclaimer": "This AI assistant has full access to Port's documentation and API references.\nPlease note that answers may not be fully accurate.\n\nWe would appreciate your feedback (👍🏽/👎🏽) on answers you receive in order to improve the results 🙏🏽",
       "data-modal-example-questions-title": "Example Questions",
       "data-modal-example-questions-col-span": "12",
-      "data-modal-disclaimer-font-size": "0.85rem", // default is 0.75rem
-      "data-example-question-button-font-size": "0.85rem", // default is not set
-      // "data-search-mode-enabled": "true",
-      // "data-modal-search-input-placeholder": "What are you looking for?",
-      // "data-modal-title-search": "Search Port's documentation",
-      // "data-search-result-secondary-text-color": "#000000",
-      // "data-search-result-primary-text-color": "#000000",
+      "data-modal-disclaimer-font-size": "0.85rem",
+      "data-example-question-button-font-size": "0.85rem",
       async: true,
-    },
+    }
   ],
 };
 
