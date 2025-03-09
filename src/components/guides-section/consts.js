@@ -142,14 +142,6 @@ export const availableGuides = [
         link: "/guides/all/resolve-pagerduty-incident",
     },
     {
-        title: "Connect GitHub repository (service) to a SonarQube project",
-        description: "Create a logical connection between your services and their corresponding SonarQube projects",
-        tags: ["Security", "SonarQube", "GitHub"],
-        logos: ["SonarQube", "GitHub"],
-        // category: "Getting started",
-        link: "/guides/all/connect-github-repository-with-sonarqube-project",
-    },
-    {
         title: "Connect GitHub pull request with Jira Issue",
         description: "Create a logical connection between your GitHub PRs and their corresponding Jira issues",
         tags: ["SDLC", "Jira", "GitHub"],
@@ -157,14 +149,7 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/connect-github-pr-with-jira-issue",
     },
-    {
-        title: "Connect Jira issue to a service",
-        description: "Create a logical connection between your Jira issues and their corresponding services",
-        tags: ["SDLC", "Jira"],
-        logos: ["Jira", "Git"],
-        // category: "Getting started",
-        link: "/guides/all/connect-jira-issue-to-service",
-    },
+    /*
     {
         title: "Connect GitHub repository (service) to a Launchdarkly project",
         description: "Create a logical connection between your services and their corresponding Launchdarkly projects",
@@ -173,6 +158,8 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/connect-github-repository-with-launchdarkly-project",
     },
+    */
+    /*
     {
         title: "Connect Launchdarkly feature flag to a service",
         description: "Create a logical connection between a feature flag and a service",
@@ -181,6 +168,7 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/connect-launchdarkly-flag-to-service",
     },
+    */
     {
         title: "Ingest cloud resources using Dynatrace",
         description: "Ingest any cloud resources from your Dynatrace environment into Port",
@@ -196,14 +184,6 @@ export const availableGuides = [
         logos: ["SonarQube", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/connect-github-pr-with-sonar-analysis",
-    },
-    {
-        title: "Connect SonarQube project to service",
-        description: "Create a logical connection between your SonarQube projects and their corresponding services",
-        tags: ["Security", "SonarQube"],
-        logos: ["SonarQube", "Git"],
-        // category: "Getting started",
-        link: "/guides/all/connect-sonar-project-to-service",
     },
     {
         title: "Humanitec Integration",
