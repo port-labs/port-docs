@@ -521,6 +521,86 @@ resources:
 
 </details>
 
+### Cloudcost
+
+<details>
+<summary>Cloudcost blueprint</summary>
+
+```json showLineNumbers
+{
+  "identifier": "openCostCloudcost",
+  "description": "This blueprint represents cloud cost allocations from your OpenCost instance",
+  "title": "OpenCost CloudCost",
+  "icon": "Opencost",
+  "schema": {
+    "properties": {
+      "startDate": {
+        "title": "Start Date",
+        "type": "string",
+        "format": "date-time"
+      },
+      "endDate": {
+        "title": "End Date",
+        "type": "string",
+        "format": "date-time"
+      },
+      "listCost": {
+        "title": "List Cost",
+        "type": "number"
+      },
+      "netCost": {
+        "title": "Net Cost",
+        "type": "number"
+      },
+      "amortizedNetCost": {
+        "title": "Amortized Net Cost",
+        "type": "number"
+      },
+      "invoicedCost": {
+        "title": "Invoiced Cost",
+        "type": "number"
+      },
+      "amortizedCost": {
+        "title": "Amortized Cost",
+        "type": "number"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
+}
+```
+
+</details>
+
+<details>
+<summary>Integration configuration</summary>
+
+```yaml showLineNumbers
+- kind: cloudcost
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .properties.provider + "-" + .window.start + "-" + .window.end
+          title: .properties.provider + "-" + .window.start + "-" + .window.end
+          blueprint: '"openCostCloudcost"'
+          properties:
+            startDate: .window.start
+            endDate: .window.end
+            listCost: .listCost.cost
+            netCost: .netCost.cost
+            amortizedNetCost: .amortizedNetCost.cost
+            invoicedCost: .invoicedCost.cost
+            amortizedCost: .amortizedCost.cost
+```
+
+</details>
+
 
 ## Let's Test It
 
@@ -528,7 +608,7 @@ This section includes a sample response data from OpenCost. In addition, it incl
 
 ### Payload
 
-Here is an example of the payload structure from OpenCost aggregated on the `namespace` level:
+Here is an example of the payload structure from OpenCost
 
 <details>
 <summary> Cost response data</summary>
@@ -611,6 +691,83 @@ Here is an example of the payload structure from OpenCost aggregated on the `nam
 
 </details>
 
+<details>
+<summary> Cloudcost response data</summary>
+
+```json showLineNumber
+{
+  "properties": {
+    "provider": "AWS",
+    "accountID": "123456789012",
+    "invoiceEntityID": "AWS-123456789012",
+    "service": "Amazon Elastic Compute Cloud",
+    "category": "Compute",
+    "region": "us-east-1",
+    "labels": {
+      "environment": "production",
+      "team": "platform"
+    }
+  },
+  "window": {
+    "start": "2024-03-01T00:00:00Z",
+    "end": "2024-03-31T23:59:59Z"
+  },
+  "listCost": {
+    "cost": 1250.75,
+    "kubernetesPercent": 0.85
+  },
+  "netCost": {
+    "cost": 1100.50,
+    "kubernetesPercent": 0.85
+  },
+  "amortizedNetCost": {
+    "cost": 1050.25,
+    "kubernetesPercent": 0.85
+  },
+  "invoicedCost": {
+    "cost": 1250.75,
+    "kubernetesPercent": 0.85
+  },
+  "amortizedCost": {
+    "cost": 1200.30,
+    "kubernetesPercent": 0.85
+  },
+  "items": [
+    {
+      "resourceId": "i-0abc123def456789",
+      "name": "eks-node-1",
+      "properties": {
+        "instanceType": "m5.xlarge",
+        "operatingSystem": "Linux"
+      },
+      "tags": {
+        "Name": "eks-node-1",
+        "kubernetes.io/cluster/my-cluster": "owned"
+      },
+      "cost": 625.37,
+      "start": "2024-03-01T00:00:00Z",
+      "end": "2024-03-31T23:59:59Z"
+    },
+    {
+      "resourceId": "i-0def456789abc1234",
+      "name": "eks-node-2",
+      "properties": {
+        "instanceType": "m5.xlarge",
+        "operatingSystem": "Linux"
+      },
+      "tags": {
+        "Name": "eks-node-2",
+        "kubernetes.io/cluster/my-cluster": "owned"
+      },
+      "cost": 625.38,
+      "start": "2024-03-01T00:00:00Z",
+      "end": "2024-03-31T23:59:59Z"
+    }
+  ]
+}
+```
+</details>
+
 ### Mapping Result
 
 The combination of the sample payload and the Ocean configuration generates the following Port entity:
@@ -650,6 +807,30 @@ The combination of the sample payload and the Ocean configuration generates the 
   "createdBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW",
   "updatedAt": "2023-10-30T11:49:20.881Z",
   "updatedBy": "hBx3VFZjqgLPEoQLp7POx5XaoB0cgsxW"
+}
+```
+
+</details>
+
+
+<details>
+<summary> Cloudcost entity in Port</summary>
+
+```json showLineNumbers
+{
+  "identifier": "aws_2024_03_01_t_00_00_00_z_2024_03_31_t_23_59_59_z",
+  "title": "AWS-2024-03-01T00:00:00Z-2024-03-31T23:59:59Z",
+  "properties": {
+    "startDate": "2024-03-01T00:00:00Z",
+    "endDate": "2024-03-31T23:59:59Z",
+    "listCost": 1250.75,
+    "netCost": 1100.5,
+    "amortizedNetCost": 1050.25,
+    "invoicedCost": 1250.75,
+    "amortizedCost": 1200.3
+  },
+  "relations": {},
+  "icon": "Opencost"
 }
 ```
 

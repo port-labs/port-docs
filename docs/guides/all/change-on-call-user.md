@@ -278,12 +278,18 @@ Now you should see the `Change On-Call User` action in the self-service page. ðŸ
 
 ## Let's test it!
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
+
 2. Click on the `Change On-Call User` action
+
 3. Choose the jira ticket you want to change the status and assignee for (In case you didn't install the [PagerDuty integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty), it means you don't have any PagerDuty incidents in Port yet, so you will need to create one manually in Port to test this action)
+
 4. Select the new incident
+
 5. Enter the required details for `Start Date`, `End Date` and `On-Call User` in their respective fields.
+
 6. Click on `Execute`
+
 7. Done! wait for the incident's status to be changed in PagerDuty
 
 Congrats ðŸŽ‰ You've changed the PagerDuty on-call user in Port.
