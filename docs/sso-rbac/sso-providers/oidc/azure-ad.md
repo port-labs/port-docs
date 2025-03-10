@@ -93,7 +93,7 @@ To make the **Port** app connection work, users who have access need to have a l
     ```
 
     :::note
-    We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+    We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
     :::
 
     1.2 Add the Port logo (optional):
