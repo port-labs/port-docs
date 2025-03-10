@@ -528,7 +528,7 @@ export const availableGuides = [
     {
         title: "Acknowledge Incident In PagerDuty",
         description: "Create a self-service action that acknowledges an incident in PagerDuty",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions"],
+        tags: ["Incident management", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/acknowledge-incident",
@@ -568,7 +568,7 @@ export const availableGuides = [
     {
         title: "Escalate incident in PagerDuty",
         description: "Create a self-service action that escalates an incident in PagerDuty",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions"],
+        tags: ["Incident management", "PagerDuty", "GitHub", "Actions", "Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/escalate-an-incident",

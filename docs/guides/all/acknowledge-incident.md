@@ -32,7 +32,7 @@ If you haven't installed the [PagerDuty integration](/build-your-software-catalo
 However, we highly recommend you install the PagerDuty integration to have these automatically set up for you.
 
 
-### Create the PagerDuty incident blueprint
+<h3>Create the PagerDuty incident blueprint</h3>
 
 <PagerDutyIncidentBlueprint/>
 
