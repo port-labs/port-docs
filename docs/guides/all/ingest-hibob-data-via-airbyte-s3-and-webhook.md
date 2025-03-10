@@ -21,7 +21,7 @@ This guide will demonstrate how to ingest HiBob data into Port using [Airbyte](h
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
 
-- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via Intercom, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
+- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via chat, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
 
 - Access to an available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart).
 
