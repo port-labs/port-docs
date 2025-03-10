@@ -480,7 +480,7 @@ export const availableGuides = [
     {
         title: "Change status and assignee of Jira ticket",
         description: "Create a self-service action that changes the status and assignee of a Jira ticket",
-        tags: ["Jira", "GitHub", "Actions"],
+        tags: ["Jira", "GitHub", "Actions", "Webhook", "Automations"],
         logos: ["Jira", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/change-status-and-assignee-of-jira-ticket",
