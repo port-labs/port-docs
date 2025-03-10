@@ -56,7 +56,7 @@ However, we highly recommend you install the PagerDuty integration to have these
     3. Click on the `Secrets` tab.
 
     4. Click on `+ Secret` and add the following secret:
-      - `PAGERDUTY_API_KEY` - Your PagerDuty API token
+        - `PAGERDUTY_API_KEY` - Your PagerDuty API token
     
     
 

@@ -552,7 +552,7 @@ export const availableGuides = [
     {
         title: "Create a PagerDuty Incident",
         description: "Create a self-service action that creates a PagerDuty incident",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions"],
+        tags: ["Incident management", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/create-pagerduty-incident",
@@ -560,7 +560,7 @@ export const availableGuides = [
     {
         title: "Create a PagerDuty Service",
         description: "Create a self-service action that creates a PagerDuty service",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions"],
+        tags: ["Incident management", "PagerDuty", "GitHub", "Actions","Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/create-pagerduty-service",

@@ -54,8 +54,8 @@ However, we highly recommend you install the PagerDuty integration to have these
     3. Click on the `Secrets` tab.
 
     4. Click on `+ Secret` and add the following secrets:
-      - `PAGERDUTY_API_TOKEN`: Your PagerDuty API token
-      - `PAGERDUTY_USER_EMAIL`: The email of the PagerDuty user that owns the API token
+        - `PAGERDUTY_API_TOKEN`: Your PagerDuty API token
+        - `PAGERDUTY_USER_EMAIL`: The email of the PagerDuty user that owns the API token
 
     <h3> Set up self-service action </h3>
 
