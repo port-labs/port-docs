@@ -584,7 +584,7 @@ export const availableGuides = [
     {
         title: "Trigger a PagerDuty Incident Action",
         description: "Create a self-service action that triggers a PagerDuty incident",
-        tags: ["Incident management", "PagerDuty", "GitHub", "Actions"],
+        tags: ["Incident management", "PagerDuty", "GitHub", "Actions", "Webhook", "Automations"],
         logos: ["PagerDuty", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/trigger-pagerduty-incident",
