@@ -232,6 +232,7 @@ However, we highly recommend you install the PagerDuty integration to have these
 
   </TabItem>
   <TabItem value="github" label="GitHub workflow">
+  
     To implement this use-case using a GitHub workflow, follow these steps:
 
     <h3> Add GitHub secrets </h3>

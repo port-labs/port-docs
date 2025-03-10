@@ -600,7 +600,7 @@ export const availableGuides = [
     {
         title: "Add tags to a SonarQube project",
         description: "Create a self-service action that adds tags to a SonarQube project",
-        tags: ["Security", "SonarQube", "GitHub", "Actions"], 
+        tags: ["Security", "SonarQube", "GitHub", "Actions","Webhook", "Automations"], 
         logos: ["SonarQube", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/add-tags-to-sonarqube-project",
