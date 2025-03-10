@@ -504,7 +504,7 @@ export const availableGuides = [
     {
         title: "Report a bug to Jira",
         description: "Create a self-service action that reports a bug to Jira",
-        tags: ["Jira", "GitHub", "Actions"],
+        tags: ["Jira", "GitHub", "Actions", "Webhook"],
         logos: ["Jira", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/report-a-bug",
