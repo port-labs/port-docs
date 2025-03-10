@@ -7,10 +7,11 @@ const defaultLiveEvents = {
     <br/>\
     Therefore, real-time events (including GitOps) will not be ingested into Port immediately.<br/>\
     Live events support for this integration is WIP and will be supported in the near future.',
+    supported: 'By enabling live events, you will receive real-time updates in Port without waiting for the next scheduled sync.',
 };
 
 const liveEvents = {
-  Jira: 'Supported event triggers for user-token based installations: \
+  Jira: '**Supported event triggers for user-token based installations:** \
     \n- created (jira:issue_created) \
     \n- updated (jira:issue_updated) \
     \n- deleted (jira:issue_deleted) \
@@ -20,14 +21,14 @@ const liveEvents = {
     \n- created (user_created) \
     \n- updated (user_updated) \
     \n- deleted (user_deleted) \
-    \n\nSupported event triggers for OAuth based installations: \
+    \n\n**Supported event triggers for OAuth based installations:** \
     \n- created (jira:issue_created) \
     \n- updated (jira:issue_updated) \
     \n- deleted (jira:issue_deleted)',
-  Snyk: 'Supported event triggers: \
+  Snyk: '**Supported event triggers:** \
     \n- Project related events \
     \n- Target related events',
-  PagerDuty: 'Supported event triggers: \
+  PagerDuty: '**Supported event triggers:** \
     \n- service.deleted \
     \n- incident.acknowledged \
     \n- incident.annotated \
@@ -48,7 +49,10 @@ const OceanSaasLiveEvents = ({ id }) => {
 
   return (
     <Markdown>
-      {liveEvents[id] || defaultLiveEvents["unsupported"]}
+      {liveEvents[id] 
+        ? `${defaultLiveEvents["supported"]}\n\n${liveEvents[id]}`
+        : defaultLiveEvents["unsupported"]
+      }
     </Markdown>
   );
 };
