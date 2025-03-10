@@ -488,7 +488,7 @@ export const availableGuides = [
     {
         title: "Create Jira Issue from Dependabot Alert",
         description: "Create a self-service action that creates a Jira issue from a Dependabot alert",
-        tags: ["Security", "Jira", "GitHub", "Actions"],
+        tags: ["Security", "Jira", "GitHub", "Actions", "Webhook"],
         logos: ["Jira", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/create-jira-issue-from-dependabot",
