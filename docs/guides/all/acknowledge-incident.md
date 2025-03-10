@@ -41,7 +41,7 @@ However, we highly recommend you install the PagerDuty integration to have these
 
 <Tabs>
 
-  <TabItem value="webhook" label="Synced Webhook" default>
+  <TabItem value="webhook" label="Synced webhook" default>
 
     You can acknowledge PagerDuty incidents by leveraging Port's **synced webhooks** and **secrets** to directly interact with the PagerDuty's API. This method simplifies the setup by handling everything within Port.
 
@@ -202,9 +202,9 @@ However, we highly recommend you install the PagerDuty integration to have these
 
   </TabItem>
 
-  <TabItem value="github" label="GitHub Workflow">
+  <TabItem value="github" label="GitHub workflow">
 
-      To implement this self-service action using GitHub Actions, follow these steps to set up the required configuration:
+      To implement this use-case using a GitHub workflow, follow these steps:
 
       <h3> Add GitHub secrets </h3>
 
