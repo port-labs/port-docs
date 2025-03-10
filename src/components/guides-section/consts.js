@@ -512,7 +512,7 @@ export const availableGuides = [
     {
         title: "Toggle LaunchDarkly Feature Flag",
         description: "Create a self-service action that toggles a LaunchDarkly feature flag",
-        tags: ["Feature flag management", "Launchdarkly", "GitHub", "Actions"],
+        tags: ["Feature flag management", "Launchdarkly", "GitHub", "Actions", "Webhook", "Automations"],
         logos: ["Launchdarkly", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/toggle-launchdarkly-feature-flag",
