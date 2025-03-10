@@ -496,7 +496,7 @@ export const availableGuides = [
     {
         title: "Create Jira issue with automatic label",
         description: "Create a self-service action that creates a Jira issue with a label that links it to a service",
-        tags: ["Jira", "GitHub", "Actions"],
+        tags: ["Jira", "GitHub", "Actions", "Webhook", "Automations"],
         logos: ["Jira", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/open-jira-issue-with-automatic-label",
