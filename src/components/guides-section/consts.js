@@ -472,7 +472,7 @@ export const availableGuides = [
     {
         title: "Trigger Datadog Incident",
         description: "Create a self-service action that triggers a Datadog incident",
-        tags: ["Incident management", "Datadog", "Actions"],
+        tags: ["Incident management", "Datadog", "Actions", "Webhook"],
         logos: ["Datadog", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/trigger-datadog-incident",
