@@ -592,7 +592,7 @@ export const availableGuides = [
     {
         title: "Trigger a ServiceNow Incident",
         description: "Create a self-service action that triggers a ServiceNow incident",
-        tags: ["Incident management", "ServiceNow", "GitHub", "Actions"],
+        tags: ["Incident management", "ServiceNow", "GitHub", "Actions", "Webhook", "Automations"],
         logos: ["ServiceNow", "GitHub"],
         // category: "Getting started",
         link: "/guides/all/trigger-servicenow-incident",
