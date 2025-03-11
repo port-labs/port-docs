@@ -91,7 +91,7 @@ If you want to use headers inside tabs, use `<h>` , for example `<h2>Header text
 
 ### Code examples
 
-- Always include `showLineNumbers` for multi-line code blocks.
+- Always include `showLineNumbers` for code blocks with more than one line.
 - Ensure code examples are complete and can be copied and used directly when possible.
 - Use syntax highlighting by specifying the language after the opening backticks.
 - For inline code references, use single backticks (e.g., `blueprint`).
