@@ -406,6 +406,10 @@ You can run this script periodically (e.g., using a cron job or CI/CD pipeline) 
 
 For example, you can create a GitHub Actions workflow that runs this script on a schedule:
 
+:::info Host accessibility
+If you're running this script using GitHub Actions or any other external CI/CD service, your Bitbucket Server host must be accessible over the internet. If your Bitbucket Server is deployed in a private network or behind a firewall, you'll need to ensure it's properly exposed or consider running the script from a machine within the same network that has access to both the Bitbucket Server and the internet.
+:::
+
 ```yaml showLineNumbers
 name: Bitbucket Server GitOps
 
