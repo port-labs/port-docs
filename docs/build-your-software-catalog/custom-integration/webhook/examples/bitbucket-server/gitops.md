@@ -40,7 +40,7 @@ This configuration turns your Bitbucket server repositories to the source-of-tru
 
 ### GitOps port.yaml file
 
-The `port.yaml` file is how you specify your Port entities that are managed using GitOps and whose data is ingested from your Git repositories.
+The `port.yaml` file defines your Port entities, which are managed via GitOps and have their data ingested from your Git repositories
 
 Here are examples for valid `port.yaml` files:
 
