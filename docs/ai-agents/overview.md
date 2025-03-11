@@ -43,7 +43,7 @@ Working with Port AI Agents involves these simple steps:
 1. **Apply for access** - Submit your application through the form above
 2. **Access the feature** - If accepted, we'll enable AI Agents in your Port instance
 3. **Build your agents** - Create custom agents using Port's blueprint system
-4. **Interact with your agents** - Engage with your agents through our [interaction guide](/ai-agents/interact-with-agents)
+4. **Interact with your agents** - Engage with your agents through our [interaction guide](/ai-agents/interact-with-the-ai-agent)
 
 ## Customization and control
 
