@@ -180,8 +180,6 @@ Now you should see the `Delete Application` action in the self-service page. �
 5. Click on `Execute`
 6. Done! wait for the application to be deleted in Humanitec
 
-Congrats 🎉 You've deleted a Humanitec application in Port 🔥
-
 ## More Self Service Humanitec Actions Examples
 - [Create Humanitec application](/guides/all/create-humanitec-application.md)
 - [Deploy Humanitec application](/guides/all/deploy-humanitec-application.md)

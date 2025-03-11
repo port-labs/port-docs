@@ -446,8 +446,6 @@ Now you should see the `Restart Application` action in the self-service page. �
 5. Click on `Execute`
 6. Done! wait for the applicatioin flag's status to be restarted in Argo CD.
 
-Congrats 🎉 You've restarted your first Argo CD Application from Port 🔥
-
 ## More Self Service Argo CD Actions Examples
 - [Rollback Argo CD Deployment](/guides/all/rollback-argocd-deployment) using Port's self-service actions.
 

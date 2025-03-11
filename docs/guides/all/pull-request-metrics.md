@@ -955,5 +955,3 @@ if __name__ == "__main__":
 ```
 </details>
 
-Congrats 🎉 You've successfully created a scheduled GitHub workflow that periodically calculates and ingests `DORA Metrics` for GitHub repository(s).
-
