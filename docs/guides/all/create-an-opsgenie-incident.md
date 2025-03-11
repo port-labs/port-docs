@@ -338,5 +338,3 @@ Create a new self service action using the following JSON configuration.
 5. Enter the required details in the input fields
 6. Click on `Execute`
 7. Done! wait for the ticket's status and assignee to be changed in Jira
-
-Congrats 🎉 You've successfully created an incident in Opsgenie from Port 🔥

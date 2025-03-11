@@ -326,8 +326,6 @@ Now you should see the `Change Incident Owner` action in the self-service page. 
 
 6. Done! wait for the incident's status to be changed in PagerDuty
 
-Congrats 🎉 You've successfully changed a pagerduty incident owner in Port 🔥
-
 ## More Self Service PagerDuty Actions Examples
 - [Acknowledge Incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
 - [Change On-Call User](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)

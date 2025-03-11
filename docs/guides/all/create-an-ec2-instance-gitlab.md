@@ -852,8 +852,6 @@ Before we continue, add some entities onto the AMI blueprint. The **identifier**
 4. Click on `Execute`
 5. Wait for the EC2 Instance to be created in AWS
 
-Congrats 🎉 You've created an EC2 Instance in Port 🔥
-
 ## Next Steps
 
 1. [Add a disk to the EC2 instance](/guides/all/add-ec2-volume)
