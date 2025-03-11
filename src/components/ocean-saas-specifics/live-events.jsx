@@ -7,7 +7,7 @@ const defaultLiveEvents = {
     <br/>\
     Therefore, real-time events (including GitOps) will not be ingested into Port immediately.<br/>\
     Live events support for this integration is WIP and will be supported in the near future.',
-    supported: 'By enabling live events, you will receive real-time updates in Port without waiting for the next scheduled sync.',
+    supported: 'This integration supports live events, allowing real-time updates to your software catalog without waiting for the next scheduled sync.',
 };
 
 const liveEvents = {
