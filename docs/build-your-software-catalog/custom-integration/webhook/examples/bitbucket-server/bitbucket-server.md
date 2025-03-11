@@ -3,12 +3,12 @@ sidebar_position: 19
 description: Ingest Bitbucket Server projects, repositories and pull requests into your catalog
 ---
 
-import BitbucketProjectBlueprint from "./resources/bitbucket-server/\_example_bitbucket_project_blueprint.mdx";
-import BitbucketUserBlueprint from "./resources/bitbucket-server/\_example_bitbucket_user_blueprint.mdx";
-import BitbucketPullrequestBlueprint from "./resources/bitbucket-server/\_example_bitbucket_pull_request_blueprint.mdx";
-import BitbucketRepositoryBlueprint from "./resources/bitbucket-server/\_example_bitbucket_repository_blueprint.mdx";
-import BitbucketWebhookConfiguration from "./resources/bitbucket-server/\_example_bitbucket_webhook_config.mdx";
-import BitbucketServerPythonScript from "./resources/bitbucket-server/\_example_bitbucket_python_script.mdx";
+import BitbucketProjectBlueprint from "../resources/bitbucket-server/\_example_bitbucket_project_blueprint.mdx";
+import BitbucketUserBlueprint from "../resources/bitbucket-server/\_example_bitbucket_user_blueprint.mdx";
+import BitbucketPullrequestBlueprint from "../resources/bitbucket-server/\_example_bitbucket_pull_request_blueprint.mdx";
+import BitbucketRepositoryBlueprint from "../resources/bitbucket-server/\_example_bitbucket_repository_blueprint.mdx";
+import BitbucketWebhookConfiguration from "../resources/bitbucket-server/\_example_bitbucket_webhook_config.mdx";
+import BitbucketServerPythonScript from "../resources/bitbucket-server/\_example_bitbucket_python_script.mdx";
 
 # Bitbucket (Self-Hosted)
 
@@ -338,3 +338,7 @@ You can pull the latest version of this code by cloning this [repository](https:
 </details>
 
 Done! you are now able to import historical users, projects, repositories and pull requests from Bitbucket into Port and any change that happens to your project, repository or pull requests in Bitbucket will trigger a webhook event to the webhook URL provided by Port. Port will parse the events and objects according to the mapping and update the catalog entities accordingly.
+
+## GitOps
+
+Port's Bitbucket (Self-Hosted) integration also provides GitOps capabilities, allowing you to manage Port entities using GitOps. For more information, see the [GitOps](./gitops.md) page. 
