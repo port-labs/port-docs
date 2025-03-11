@@ -117,7 +117,6 @@ Content goes here
 :::
 - Use admonitions sparingly to highlight important information. Overuse reduces their effectiveness.
 - Choose the appropriate admonition type based on the content:
-  - `note`: For general information
   - `tip`: For helpful suggestions
   - `info`: For additional context
   - `caution`: For potential issues
