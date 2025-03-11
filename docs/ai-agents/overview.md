@@ -1,0 +1,120 @@
+---
+sidebar_position: 1
+title: Overview
+---
+
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+
+# AI Agents overview
+
+:::caution Experimental Feature
+AI Agents is currently an experimental feature with limited availability. Access is provided on an application basis. If you'd like to apply for access, please reach out to us by filling [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
+:::
+
+## What are Port AI Agents?
+
+Port AI Agents are customizable building blocks that enhance your developer portal with intelligent assistance. These agents help your developers find information faster and complete tasks more efficiently across your development ecosystem.
+
+## What can AI Agents do?
+
+Port AI Agents serve two primary functions:
+
+1. **Answer questions** about your development environment, services, and processes using natural language. Developers can ask questions and get immediate, contextual answers.
+
+2. **Assist with actions** by helping developers complete common tasks faster. Agents can suggest and pre-fill forms, guide developers through workflows, and provide relevant context for decision-making. You can decide whether they can run the action or require human approval.
+
+### Example use cases
+
+**Questions your agents can answer:**
+- "Which services are failing security checks?"
+- "When was the last successful deployment of the payment service?"
+- "Who is the owner for this component?"
+
+**Actions your agents can help with:**
+- "Can you help me deploy service X to production?"
+- "Please notify the reviewers of PR #1234"
+
+## Getting started with AI Agents
+
+Working with Port AI Agents involves these simple steps:
+
+1. **Apply for access** - Submit your application through the form above
+2. **Access the feature** - If accepted, we'll enable AI Agents in your Port instance
+3. **Build your agents** - Create custom agents using Port's blueprint system
+4. **Interact with your agents** - Engage with your agents through our [interaction guide](/ai-agents/interact-with-agents)
+
+## Customization and control
+
+You have complete control over your AI agents:
+- Define which data sources your agents can access
+- Determine what actions your agents can assist with
+- Set permissions for who can use specific agents
+- Configure how agents integrate with your workflows
+
+## Security and data handling
+
+Port AI Agents are designed with security as a priority:
+- Agents only have access to the data you explicitly provide
+- Your data remains within Port's secure infrastructure
+- We don't share your data with external LLM providers
+- Your data is not used for model training
+
+## Start simple, expand as needed
+
+Begin with focused use cases that deliver immediate value, such as helping developers find service information or streamlining incident management. As your team builds confidence in the agents, you can expand their capabilities to cover more complex scenarios and workflows.
+
+## Frequently Asked Questions
+
+<details>
+<summary>What are the main use cases Port AI will support?</summary>
+
+Port AI supports two primary interaction types:
+
+1. **Ask Me Anything (Information Queries)**
+    - Natural language queries about your development ecosystem
+    - Examples: "Who owns service X?", "What's the deployment frequency of team Y?"
+    - Focused on surfacing information from connected data sources
+2. **Run an Action (Form Generation)**
+    - Assist with running or pre-filling self-service actions
+    - Examples: "Create a bug report", "Set up a new service"
+    - Important: you can decide whether the agent can run the action automatically
+</details>
+
+<details>
+<summary>How do users interact with Port AI?</summary>
+
+- Primary interface is through our Slack app
+- Full API availability
+</details>
+
+<details>
+<summary>Can customers customize the AI agents?</summary>
+
+Yes - you can create custom AI agents within Port. Customization includes:
+- Creating new agents using Port's blueprint system
+- Configuring agent knowledge base and access to tools
+- Adjusting prompts and agent behaviors
+- Setting permissions and usage boundaries
+
+All agents operate within Port's secure framework and governance controls.
+</details>
+
+<details>
+<summary>How is customer data handled?</summary>
+
+All data processing occurs within our cloud infrastructure, and no data is shared with external LLM providers. Additionally, no customer data is used for model training, ensuring complete logical separation between different customers' data.
+</details>
+
+<details>
+<summary>Which LLM models are you using?</summary>
+
+We aim to use the best models that will yield the best results while keeping your data safe; at the moment, we work with OpenAI's GPT models, and we can change the model used behind the scenes at any given time without prior notice.
+</details>
+
+<details>
+<summary>How can we audit and control AI usage?</summary>
+
+Each interaction of the agent is saved and can be viewed in the audit logs, ensuring transparency and accountability. You have control over who can interact with and see the agents through our granular permission controls, along with an admin dashboard for monitoring usage, export capabilities for audit logs, and available rate limiting and usage controls.
+</details> 
