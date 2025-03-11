@@ -576,5 +576,3 @@ However, we highly recommend you install the ServiceNow integration to have thes
 4. Click on `Execute`
 
 5. Done! Wait for the incident to be created in ServiceNow
-
-Congrats 🎉 You've triggered your first ServiceNow incident from Port!

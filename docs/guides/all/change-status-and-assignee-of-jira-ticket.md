@@ -686,8 +686,6 @@ However we highly recommend you install the Jira integration to have these autom
 
 6. Done! wait for the ticket to be updated in Jira
 
-Congrats 🎉 You've set up independent actions to manage your Jira tickets in Port 🔥
-
 ## More Self Service Jira Actions Examples
 - [Report a bug in Jira](https://docs.port.io/guides/all/report-a-bug/) using Port's self-service actions
 - [Open Jira issues with automatic labels](https://docs.port.io/guides/all/open-jira-issue-with-automatic-label)

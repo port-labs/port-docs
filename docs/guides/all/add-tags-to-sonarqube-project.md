@@ -408,8 +408,6 @@ However, we highly recommend you install the SonarQube integration to have these
 
 6. Done! Wait for the tags to be added to the SonarQube project
 
-Congrats 🎉 You've added tags to your SonarQube project from Port! 🔥
-
 ## More relevant guides and examples
 - [Connect SonarQube project to a service](https://docs.port.io/guides/all/connect-sonar-project-to-service)
 - [Create a SonarQube project](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/SonarQube/create-sonarqube-project)

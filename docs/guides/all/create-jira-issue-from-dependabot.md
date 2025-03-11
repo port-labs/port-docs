@@ -756,8 +756,6 @@ Follow this [resource mapping guide](https://docs.port.io/build-your-software-ca
 
 7. Done! wait for the issue to be created in Jira
 
-Congrats 🎉 You've created your first Jira issue from a Dependabot alert! 🔥
-
 ## More Self Service Jira Actions Examples
 - [Report a bug in Jira](https://docs.port.io/guides/all/report-a-bug/) using Port's self-service actions
 - [Open Jira issues with automatic labels](https://docs.port.io/guides/all/open-jira-issue-with-automatic-label)

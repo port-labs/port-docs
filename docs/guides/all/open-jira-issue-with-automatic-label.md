@@ -616,8 +616,6 @@ You should have installed the [Port's GitHub app](https://github.com/apps/getpor
 
 7. Check your Jira project to see the new issue with the service-specific label (format: `port-{repository-identifier}`)
 
-Congrats 🎉 You've created your first Jira issue with an automatic label that links to the service in Port! 🔥
-
 ## More Self Service Jira Actions Examples
 - [Report a bug in Jira](https://docs.port.io/guides/all/report-a-bug/) using Port's self-service actions
 - [Create Jira issues from Dependabot alerts](https://docs.port.io/guides/all/create-jira-issue-from-dependabot)

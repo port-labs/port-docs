@@ -499,8 +499,6 @@ However we highly recommend you install the Jira integration to have these autom
 
 5. Done! wait for the bug to be created in Jira
 
-Congrats 🎉 You've created your first bug in Jira from Port! 🔥
-
 ## More Self Service Jira Actions Examples
 - [Open Jira issues with automatic labels](https://docs.port.io/guides/all/open-jira-issue-with-automatic-label)
 - [Change status and assignee of Jira tickets](https://docs.port.io/guides/all/change-status-and-assignee-of-jira-ticket)

@@ -429,8 +429,6 @@ However, we highly recommend you install the PagerDuty integration to have these
 
 7. Verify that the entity in Port has been updated with the new status 
 
-Congrats 🎉 You've acknowledged a PagerDuty incident in Port 🔥
-
 ## More Self Service PagerDuty Actions Examples 
 - [Change On-Call User](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)
 - [Change PagerDuty incident owner](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)

@@ -679,5 +679,3 @@ Now you should see the `Open Slack Channel` action in the self-service page. �
 3. Enter your preferred details for `channel_name` and optionally add `members`. You can toggle the `is_private` flag to make the channel private.
 6. Click on `Execute`
 7. Done! wait for the channel to be created in slack.
-
-Congrats 🎉 You've successfully opened a slack channel in Port 🔥

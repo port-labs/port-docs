@@ -457,8 +457,6 @@ However, we highly recommend you install the PagerDuty integration to have these
 
 6. Done! wait for the incident's status to be changed in PagerDuty
 
-Congrats 🎉 You've triggered a PagerDuty incident in Port 🔥
-
 ## More Self Service PagerDuty Actions Examples
 - [Acknowledge Incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
 - [Change On-Call User](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)

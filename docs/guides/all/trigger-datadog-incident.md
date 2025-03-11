@@ -636,5 +636,3 @@ However we highly recommend you install the Datadog integration to have this aut
    - Webhook: The incident to be created in Datadog
 
 6. Check your Datadog incidents page to see the new incident
-
-Congrats 🎉 You've triggered your first incident in Datadog from Port! 🔥

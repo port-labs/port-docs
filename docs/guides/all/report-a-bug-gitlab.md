@@ -340,5 +340,3 @@ Trigger the action from Port's [self-service hub](https://app.getport.io/self-se
 
 <br />
 <br />
-
-Congrats 🎉 You've created your first bug in Jira from Port!

@@ -546,8 +546,6 @@ However, we highly recommend you install the LaunchDarkly integration to have th
 
 6. Done! Wait for the feature flag's status to be changed in LaunchDarkly
 
-Congrats 🎉 You've toggled your first LaunchDarkly feature flag from Port! 🔥
-
 ## More relevant guides and examples
 - [Create a LaunchDarkly feature flag](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/LaunchDarkly/create-feature-flag)
 - [Archive a LaunchDarkly feature flag](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/LaunchDarkly/archive-feature-flag)
