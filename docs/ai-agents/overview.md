@@ -7,23 +7,25 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# AI Agents overview
+# AI agents overview
 
 :::caution Experimental Feature
-AI Agents is currently an experimental feature with limited availability. Access is provided on an application basis. If you'd like to apply for access, please reach out to us by filling [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
+AI Agents are currently an experimental feature with limited availability.  
+Access is provided on an application basis. If you'd like to apply for access, please reach out to us by filling [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
 :::
 
-## What are Port AI Agents?
+## What are Port AI agents?
 
-Port AI Agents are customizable building blocks that enhance your developer portal with intelligent assistance. These agents help your developers find information faster and complete tasks more efficiently across your development ecosystem.
+Port AI agents are customizable building blocks that enhance your developer portal with intelligent assistance.  
+These agents help your developers find information faster and complete tasks more efficiently across your development ecosystem.
 
-## What can AI Agents do?
+## What can AI agents do?
 
-Port AI Agents serve two primary functions:
+AI agents serve two primary functions:
 
 1. **Answer questions** about your development environment, services, and processes using natural language. Developers can ask questions and get immediate, contextual answers.
 
-2. **Assist with actions** by helping developers complete common tasks faster. Agents can suggest and pre-fill forms, guide developers through workflows, and provide relevant context for decision-making. You can decide whether they can run the action or require human approval.
+2. **Assist with actions** by helping developers complete common tasks faster. Agents can suggest and pre-fill forms, guide developers through workflows, and provide relevant context for decision-making. You can decide whether they can run an action or require human approval.
 
 ### Example use cases
 
@@ -36,34 +38,35 @@ Port AI Agents serve two primary functions:
 - "Can you help me deploy service X to production?"
 - "Please notify the reviewers of PR #1234"
 
-## Getting started with AI Agents
+## Getting started with AI agents
 
-Working with Port AI Agents involves these simple steps:
+To start working with AI agents, follow these steps:
 
-1. **Apply for access** - Submit your application through the form above
-2. **Access the feature** - If accepted, we'll enable AI Agents in your Port instance
-3. **Build your agents** - Create custom agents using Port's blueprint system
-4. **Interact with your agents** - Engage with your agents through our [interaction guide](/ai-agents/interact-with-the-ai-agent)
+1. **Apply for access** - Submit your application via [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
+2. **Access the feature** - If accepted, we will enable AI agents in your Port organization.
+3. **Build your agents** - Create custom agents using Port's blueprint system.
+4. **Interact with your agents** - Engage with your agents by following our [interaction guide](/ai-agents/interact-with-the-ai-agent).
 
 ## Customization and control
 
-You have complete control over your AI agents:
-- Define which data sources your agents can access
-- Determine what actions your agents can assist with
-- Set permissions for who can use specific agents
-- Configure how agents integrate with your workflows
+Set boundaries and permissions for your agents:
+- Define which data sources your agents can access.
+- Determine what actions your agents can assist with.
+- Set permissions for who can use specific agents.
+- Configure how agents integrate with your workflows.
 
 ## Security and data handling
 
-Port AI Agents are designed with security as a priority:
-- Agents only have access to the data you explicitly provide
-- Your data remains within Port's secure infrastructure
-- We don't share your data with external LLM providers
-- Your data is not used for model training
+AI agents are designed with security as a priority:
+- Agents only have access to the data you explicitly provide.
+- Your data remains within Port's secure infrastructure.
+- Port does not share your data with external LLM providers.
+- Your data is not used for model training.
 
 ## Start simple, expand as needed
 
-Begin with focused use cases that deliver immediate value, such as helping developers find service information or streamlining incident management. As your team builds confidence in the agents, you can expand their capabilities to cover more complex scenarios and workflows.
+Begin with focused use cases that deliver immediate value, such as helping developers find service information or streamlining incident management.  
+As your team builds confidence in the agents, you can expand their capabilities to cover more complex scenarios and workflows.
 
 ## Frequently Asked Questions
 
