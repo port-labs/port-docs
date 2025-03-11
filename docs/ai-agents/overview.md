@@ -63,12 +63,12 @@ AI agents are designed with security as a priority:
 - Port does not share your data with external LLM providers.
 - Your data is not used for model training.
 
-## Start simple, expand as needed
+## Start simple & expand as needed
 
 Begin with focused use cases that deliver immediate value, such as helping developers find service information or streamlining incident management.  
 As your team builds confidence in the agents, you can expand their capabilities to cover more complex scenarios and workflows.
 
-## Frequently Asked Questions
+## Frequently asked questions
 
 <details>
 <summary>What are the main use cases Port AI will support?</summary>

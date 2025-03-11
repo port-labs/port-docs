@@ -1,10 +1,10 @@
 ---
 sidebar_position: 3
-title: Interact with the AI Agent
+title: Interact with the AI agent
 ---
 
-# Interact with the AI Agent
+# Interact with the AI agent
 
-This page provides instructions on how to interact with AI Agents in Port.
+This page provides instructions on how to interact with AI agents in Port.
 
 *Content placeholder - detailed instructions will be added soon.* 
