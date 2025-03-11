@@ -341,4 +341,4 @@ Done! you are now able to import historical users, projects, repositories and pu
 
 ## GitOps
 
-Port's Bitbucket (Self-Hosted) integration also provides GitOps capabilities, allowing you to manage Port entities using GitOps. For more information, see the [GitOps](./gitops.md) page. 
+Port's Bitbucket (Self-Hosted) integration also provides GitOps capabilities, refer to the [GitOps](./gitops.md) page to learn more.

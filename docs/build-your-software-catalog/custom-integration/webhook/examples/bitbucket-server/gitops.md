@@ -17,7 +17,22 @@ Port's Bitbucket (Self-Hosted) makes it possible to manage Port entities with a 
 
 ## Managing entities using GitOps
 
-To manage entities using GitOps, you will need to add a `port.yaml` file to the **default branch** (usually `main`) of your repository.
+To manage entities using GitOps, you will need to add a `port.yaml` file to the **root directory** of your repository in the **default branch** (usually `main`). The `port.yaml` file must be placed in the root directory of your repository. 
+
+Repository folder structure should look like this example:
+
+```
+root
+|
++- port.yml
+|
++-+ module1
+|   |
+|   +- README.md
+|   |
+|   +-+ src
+...
+```
 
 The `port.yaml` file can specify one or more Port entities that will be ingested to Port, and any change made to the `port.yaml` file will also be reflected inside Port.
 
