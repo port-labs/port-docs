@@ -236,7 +236,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## OpenCost
 
-- [OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost.md)
+- [OpenCost integration](/build-your-software-catalog/sync-data-to-catalog/cloud-cost/opencost/opencost.md)
 
 ## Dynatrace
 
