@@ -4,6 +4,8 @@ sidebar_position: 3
 description: Integrate JumpCloud with Port using SAML
 ---
 
+import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
+
 # How to configure JumpCloud
 
 Follow this step-by-step guide to configure the integration between Port and JumpCloud.
@@ -127,6 +129,8 @@ It is also possible to manually change the value of the `email_verified` field t
 After completing these steps, users with roles that the Port app was assigned to, will see the Port app in their Portal and upon clicking it, will be logged in to Port:
 
 ![JumpCloud Portal With Port App](/img/sso/jumpcloud/JumpcloudPortApplication.png)
+
+<DirectUrl/>
 
 ---
 
