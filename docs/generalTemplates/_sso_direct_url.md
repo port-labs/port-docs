@@ -2,7 +2,8 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 :::info Direct access via URL
-After configuring the SSO connection, you can initiate the login flow directly via URL. Use the following URL based on your account region, and make sure to to replace `{CONNECTION_NAME}` with the value provided to you by Port.
+After configuring the SSO connection, you can initiate the login flow directly via URL.  
+Use the following URL based on your account region, and make sure to to replace `{CONNECTION_NAME}` with the value provided to you by Port.
 
 <Tabs>
   <TabItem value="EU" label="EU">
