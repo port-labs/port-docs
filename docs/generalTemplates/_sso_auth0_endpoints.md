@@ -6,12 +6,12 @@ Port exposes two API instances, one for the EU region of Port, and one for the U
 
 <Tabs>
   <TabItem value="EU" label="EU">
-    ```text showLineNumbers
+    ```text
     https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
     ```
   </TabItem>
   <TabItem value="US" label="US">
-    ```text showLineNumbers
+    ```text
     https://auth.us.getport.io/authorize?response_type=token&client_id=4lHUry3Gkds317lQ3JcgABh0JPbT3rWx&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
     ```
   </TabItem>
