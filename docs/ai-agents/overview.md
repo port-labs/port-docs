@@ -6,13 +6,11 @@ title: Overview
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
+import ClosedBetaFeatureNotice from '../generalTemplates/_closed_beta_feature_notice.md'
 
 # AI agents overview
 
-:::caution Experimental Feature
-AI Agents are currently an experimental feature with limited availability.  
-Access is provided on an application basis. If you'd like to apply for access, please reach out to us by filling [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
-:::
+<ClosedBetaFeatureNotice accessRequestMethod="please reach out to us by filling <a href='https://forms.gle/krhMY7c9JM8MyJJf7'>this form</a>." />
 
 ## What are Port AI agents?
 
