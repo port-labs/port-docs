@@ -10,7 +10,11 @@ import ClosedBetaFeatureNotice from '../generalTemplates/_closed_beta_feature_no
 
 # AI agents overview
 
-<ClosedBetaFeatureNotice accessRequestMethod="please reach out to us by filling <a href='https://forms.gle/krhMY7c9JM8MyJJf7'>this form</a>." />
+<ClosedBetaFeatureNotice 
+  accessRequestMethod={
+    <span>please reach out to us by filling <a href='https://forms.gle/krhMY7c9JM8MyJJf7'>this form</a>.</span>
+  } 
+/>
 
 ## What are Port AI agents?
 

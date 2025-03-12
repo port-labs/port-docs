@@ -17,4 +17,4 @@ export const ClosedBetaFeatureNotice = ({ accessRequestMethod }) => (
   </div>
 );
 
-export default ClosedBetaFeatureNotice; 
+export default ClosedBetaFeatureNotice;
