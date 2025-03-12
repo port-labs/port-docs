@@ -8,6 +8,7 @@ title: Build an AI agent
 This page provides instructions on how to build and configure an AI agent in Port.
 
 import ClosedBetaFeatureNotice from '../generalTemplates/_closed_beta_feature_notice.md'
+import {Tabs, TabItem} from '@docusaurus/components';
 
 <ClosedBetaFeatureNotice accessRequestMethod="please reach out to us by filling <a href='https://forms.gle/krhMY7c9JM8MyJJf7'>this form</a>." />
 
