@@ -21,17 +21,7 @@ Building an AI agent in Port involves several key steps. Let's walk through the 
 
 <!-- IMAGE SUGGESTION: Add a screenshot of the AI agent creation page or dashboard here -->
 
-## Step 1: Define your agent's purpose
-
-The first step in building an AI agent is deciding on its purpose. Let's determine whether the agent will:
-
-- Answer questions about your development environment.
-- Help run actions and complete tasks.
-- Or both.
-
-We recommend starting with a simple use case that a junior assistant with access to your data could assist with. For inspiration, check our [AI agent overview](/ai-agents/overview) guide.
-
-## Step 2: Create a new AI agent
+## How to add a new AI agent
 
 You can create a new AI agent in two ways:
 
@@ -46,7 +36,22 @@ Either approach follows similar steps:
 2. Determine which actions the agent can run (if any).
 3. Build a prompt for your agent.
 
-## Step 3: Configure data access
+TBD TO ADD:
+* JSON to the action that adds an AI agent
+* Screenshots
+
+### Step 1: Define your agent's purpose
+
+The first step in building an AI agent is deciding on its purpose. Let's determine whether the agent will:
+
+- Answer questions about your development environment.
+- Help run actions and complete tasks.
+
+We recommend starting with a simple use case that a junior assistant with access to your data could assist with. 
+
+<!--  For inspiration, check our [AI agents guides](/guides). -->
+
+### Step 2: Configure data access
 
 When setting up the data your agent has access to, ask yourself what information it needs to achieve its goals effectively. Consider:
 
@@ -54,14 +59,14 @@ When setting up the data your agent has access to, ask yourself what information
 - What relationships between entities are important?
 
 For example:
-- To answer "What are my Jira tickets?", the agent needs access to users, Jira tickets, and any entities connecting them.
-- For "What are all the incidents affecting service X?", the agent needs access to teams, incidents, and services.
+- To answer "What are my Jira tickets?", the agent needs access to `users`, `Jira issue`, and any entities connecting them.
+- For "What are all the incidents affecting service X?", the agent needs access to `teams`, `incidents`, and `services`.
 
 Pay attention to relationships between entities to ensure your agent can provide comprehensive answers.
 
 <!-- IMAGE SUGGESTION: Add a screenshot of the data access configuration interface -->
 
-## Step 4: Configure actions (optional)
+### Step 3: Configure actions (optional)
 
 If your agent needs to run actions, you'll need to:
 
@@ -98,7 +103,7 @@ This approach streamlines workflows but should be used carefully, especially for
 </TabItem>
 </Tabs>
 
-## Step 5: Define the prompt
+### Step 4: Define the prompt
 
 The prompt is your main tool for influencing your agent's success. You'll likely iterate on it as you observe how the agent responds to different queries. From our experience, a good prompt includes:
 
@@ -110,7 +115,7 @@ The prompt is your main tool for influencing your agent's success. You'll likely
 
 We recommend starting with a simple prompt and refining it based on how the agent performs. Here's a basic template:
 
-```markdown showLineNumbers
+```markdown 
 You are an AI assistant for [Company Name]'s development team.
 
 Your goal is to help developers [primary purpose, e.g., "find information about our services and assist with deployment processes"].
@@ -127,24 +132,20 @@ Key terminology:
 
 <!-- IMAGE SUGGESTION: Add a screenshot of the prompt configuration interface -->
 
-## Step 6: Activate your agent
+### Step 5: Activate your agent
 
 When you feel your agent is ready:
 
 1. Set its status to "Active".
-2. Start interacting with it through the available interfaces.
-
-For guidance on how to interact with your agent, see our [interact with AI agents](/ai-agents/interact-with-the-ai-agent) guide.
+2. Start interacting with it through the [available interfaces](/ai-agents/interact-with-the-ai-agent).
 
 ## Examples
-
-<!-- NOTE: Based on the provided content, here are some examples. If more specific examples are needed, they can be added later -->
 
 ### Example 1: Service Information Agent
 
 This agent helps developers find information about services in your organization:
 
-```markdown showLineNumbers
+```markdown
 You are an AI assistant for the DevOps team.
 
 Your goal is to help developers find information about our microservices, their owners, and current status.
@@ -157,14 +158,16 @@ When answering questions:
 Key terminology:
 - Service: A microservice in our architecture that serves a specific business function
 - Owner: The team responsible for maintaining and developing a service
-- Health: The current operational status of a service
+- Health: The current operational status of a service based on its Production Readiness scorecard
 ```
+
+TBD - add a full JSON and screenshot
 
 ### Example 2: Deployment Assistant
 
 This agent helps with deployment processes:
 
-```markdown showLineNumbers
+```markdown
 You are a deployment assistant for the engineering team.
 
 Your goal is to help developers initiate and track deployments to various environments.
@@ -173,19 +176,15 @@ When helping with deployments:
 - Confirm the service name and version
 - Verify the target environment
 - Remind users of any pre-deployment checks
-
-Key terminology:
-- Deployment: The process of releasing a new version of a service
-- Environment: The target system (dev, staging, production)
-- Rollback: Reverting to a previous version if issues are detected
 ```
+TBD - add a full JSON and screenshot
 
 ## Troubleshooting & FAQ
 
 <details>
 <summary><b>I don't see an option to add an AI agent (Click to expand)</b></summary>
 
-Make sure you have access to the AI agents feature. Note that it's currently in closed beta and requires special access. If you believe you should have access, please contact your Port administrator.
+Make sure you have access to the AI agents feature. Note that it's currently in closed beta and requires special access. If you believe you should have access, please contact our support.
 </details>
 
 <details>
@@ -197,7 +196,7 @@ Start with one sentence explaining what the agent is about, and then interact wi
 <details>
 <summary><b>Are there any limitations to what the agents have access to? (Click to expand)</b></summary>
 
-<!-- I'll add this information later -->
+TBD TO ADD
 </details>
 
 <details>
@@ -209,5 +208,4 @@ When configuring your agent's actions, make sure you select the "approval" optio
 ## Security considerations
 
 AI agents in Port are designed with security and privacy as a priority.
-
 For more information on security and data handling, see our [AI agents overview](/ai-agents/overview#security-and-data-handling). 
