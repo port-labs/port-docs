@@ -4,8 +4,8 @@ sidebar_position: 1
 description: Integrate any SSO with Port using OIDC application
 ---
 
-
-
+import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
+import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 import DocCardList from '@theme/DocCardList';
 
 This documentation describes the process of integrating an OIDC application with Port, along with some examples for specific identity providers.
@@ -15,11 +15,9 @@ In order to integrate Port with an OIDC SSO application, you will need to do the
 2. Configure the application with the following details:
    - Redirect URI: `https://auth.getport.io/login/callback`
    - Login URI: 
-     ````text 
-     https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
-     ````
+     <SSOEndpoints/>
      :::note
-     We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+     We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
      :::
 3. Expose the application to your organization by either granting access to everyone or restricting it to specific roles.
 4. Share information about your SSO application:
