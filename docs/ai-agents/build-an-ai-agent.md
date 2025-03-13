@@ -145,7 +145,7 @@ When you feel your agent is ready:
 
 ### Example 1: Service Information Agent
 
-This agent helps developers find information about services in your organization:
+This agent helps developers find information about services in their organization:
 
 ```markdown
 You are an AI assistant for the DevOps team.
