@@ -69,9 +69,9 @@ Pay attention to relationships between entities to ensure your agent can provide
 
 ### Step 3: Configure actions (optional)
 
-If your agent needs to run actions, you'll need to:
+If your agent needs to run actions, you will need to:
 
-1. Get the action identifier from the self-service actions page.
+1. Get the action identifier from the [self-service](https://app.getport.io/self-serve) page.
 2. Add it to your agent's configuration.
 3. Decide whether the agent can run the action automatically or requires approval.
 
