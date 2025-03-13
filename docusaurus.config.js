@@ -390,7 +390,7 @@ const config = {
       "data-modal-title": "Port AI Assistant",
       "data-modal-ask-ai-input-placeholder": "Ask me anything about Port...",
       "data-submit-query-button-bg-color": "#000000",
-      "data-modal-example-questions": "Which SSO providers are supported?, How can I install Port's Datadog integration without using k8s?, How can I create a table that shows all services belonging to my team?, Write me a scorecard definition that ensures each repository has a readme file",
+      "data-modal-example-questions": "How can I create a table that shows all services belonging to my team?, Write me a scorecard definition that ensures each repository has a readme file, Which SSO providers are supported?, How can I install Port's Datadog integration without using k8s?",
       "data-font-family": "DM Sans",
       "data-modal-disclaimer": "This AI assistant has full access to Port's documentation and API references.\nPlease note that answers may not be fully accurate.\n\nWe would appreciate your feedback (👍🏽/👎🏽) on answers you receive in order to improve the results 🙏🏽",
       "data-modal-example-questions-title": "Example Questions",
