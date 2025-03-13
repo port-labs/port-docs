@@ -725,3 +725,28 @@ html[data-theme="dark"] .navbar-signup-button {
   background-color: rgba(255, 255, 255, .3);
   cursor: pointer;
 }
+
+/* Responsive video container */
+@media screen and (max-width: 768px) {
+  .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Desktop: video container has no effect */
+@media screen and (min-width: 769px) {
+  .video-container {
+    display: inline-block;
+  }
+}
