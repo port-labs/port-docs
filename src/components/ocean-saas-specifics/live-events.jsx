@@ -12,19 +12,19 @@ const defaultLiveEvents = {
 
 const liveEvents = {
   Jira: '**Supported event triggers for user-token based installations:** \
-    \n- created (jira:issue_created) \
-    \n- updated (jira:issue_updated) \
-    \n- deleted (jira:issue_deleted) \
-    \n- created (project_created) \
-    \n- updated (project_updated) \
-    \n- deleted (project_deleted) \
-    \n- created (user_created) \
-    \n- updated (user_updated) \
-    \n- deleted (user_deleted) \
+    \n- jira:issue_created \
+    \n- jira:issue_updated \
+    \n- jira:issue_deleted \
+    \n- project_created \
+    \n- project_updated \
+    \n- project_deleted \
+    \n- user_created \
+    \n- user_updated \
+    \n- user_deleted \
     \n\n**Supported event triggers for OAuth based installations:** \
-    \n- created (jira:issue_created) \
-    \n- updated (jira:issue_updated) \
-    \n- deleted (jira:issue_deleted)',
+    \n- jira:issue_created \
+    \n- jira:issue_updated \
+    \n- jira:issue_deleted',
   Snyk: '**Supported event triggers:** \
     \n- Project related events \
     \n- Target related events',
