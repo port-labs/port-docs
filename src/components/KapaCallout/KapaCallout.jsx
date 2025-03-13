@@ -1,5 +1,7 @@
 import React from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 export default function KapaCallout() {
   const { colorMode } = useColorMode();
@@ -14,7 +16,7 @@ export default function KapaCallout() {
       alignItems: 'center',
       gap: '20px',
       position: 'relative',
-      border: `1.5px solid ${colorMode === 'dark' ? '#FFFFFF' : '#000000'}`,
+      border: '1.5px solid var(--ifm-color-emphasis-900)',
       boxShadow: '0 4px 20px rgba(0, 0, 0, 0.25)',
     }}>
       <div style={{
@@ -26,20 +28,23 @@ export default function KapaCallout() {
         <div style={{
           position: 'absolute',
           inset: '0',
-          background: colorMode === 'dark' ? '#FFFFFF' : '#000000',
+          background: 'var(--ifm-color-emphasis-900)',
           borderRadius: '50%',
         }}/>
         <div style={{
           position: 'absolute',
           inset: '2px',
-          background: colorMode === 'dark' ? '#FFFFFF' : '#000000',
+          background: 'var(--ifm-color-emphasis-900)',
           borderRadius: '50%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-          <img 
-            src={colorMode === 'dark' ? "/img/icons/kapa-icon-dark.svg" : "/img/icons/kapa-icon.svg"}
+          <ThemedImage
+            sources={{
+              light: useBaseUrl('/img/icons/kapa-icon.svg'),
+              dark: useBaseUrl('/img/icons/kapa-icon-dark.svg'),
+            }}
             alt="Kapa Icon" 
             style={{
               width: '24px',
@@ -81,7 +86,7 @@ export default function KapaCallout() {
           }}
           style={{
             padding: '8px 20px',
-            background: colorMode === 'dark' ? '#FFFFFF' : '#000000',
+            background: 'var(--ifm-color-emphasis-900)',
             border: 'none',
             borderRadius: '20px',
             fontSize: '0.9rem',
