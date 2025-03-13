@@ -17,7 +17,8 @@ import TabItem from "@theme/TabItem"
 
 ## Getting started
 
-Building an AI agent in Port involves several key steps. Let's walk through the process of creating an agent that can assist your developers with finding information and completing tasks.
+Building an AI agent in Port involves several key steps.  
+Let's walk through the process of creating an agent that can assist your developers with finding information and completing tasks.
 
 <!-- IMAGE SUGGESTION: Add a screenshot of the AI agent creation page or dashboard here -->
 
