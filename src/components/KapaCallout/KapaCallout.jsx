@@ -14,20 +14,9 @@ export default function KapaCallout() {
       alignItems: 'center',
       gap: '20px',
       position: 'relative',
-      boxShadow: '0 4px 20px rgba(79, 70, 229, 0.25)',
+      border: `1.5px solid ${colorMode === 'dark' ? '#FFFFFF' : '#000000'}`,
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.25)',
     }}>
-      <div style={{
-        position: 'absolute',
-        inset: '-1.5px',
-        borderRadius: '16px',
-        padding: '1.5px',
-        background: 'linear-gradient(135deg, #4338CA 0%, #9333EA 100%)',
-        WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-        WebkitMaskComposite: 'xor',
-        maskImage: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-        maskComposite: 'exclude',
-        pointerEvents: 'none',
-      }}/>
       <div style={{
         position: 'relative',
         width: '48px',
@@ -37,21 +26,20 @@ export default function KapaCallout() {
         <div style={{
           position: 'absolute',
           inset: '0',
-          background: 'conic-gradient(from 180deg at 50% 50%, #4338CA 0deg, #9333EA 180deg, #4338CA 360deg)',
+          background: colorMode === 'dark' ? '#FFFFFF' : '#000000',
           borderRadius: '50%',
-          animation: 'spin 4s linear infinite',
         }}/>
         <div style={{
           position: 'absolute',
           inset: '2px',
-          background: 'linear-gradient(135deg, #4338CA 0%, #9333EA 100%)',
+          background: colorMode === 'dark' ? '#FFFFFF' : '#000000',
           borderRadius: '50%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
         }}>
           <img 
-            src="/img/icons/kapa-icon.svg"
+            src={colorMode === 'dark' ? "/img/icons/kapa-icon-dark.svg" : "/img/icons/kapa-icon.svg"}
             alt="Kapa Icon" 
             style={{
               width: '24px',
@@ -93,14 +81,14 @@ export default function KapaCallout() {
           }}
           style={{
             padding: '8px 20px',
-            background: 'linear-gradient(135deg, #4338CA 0%, #9333EA 100%)',
+            background: colorMode === 'dark' ? '#FFFFFF' : '#000000',
             border: 'none',
             borderRadius: '20px',
             fontSize: '0.9rem',
-            color: 'white',
+            color: colorMode === 'dark' ? '#000000' : '#FFFFFF',
             fontWeight: '500',
             cursor: 'pointer',
-            boxShadow: '0 4px 12px rgba(79, 70, 229, 0.35)',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.35)',
             transition: 'all 0.2s ease-in-out',
             flexShrink: 0,
             height: '36px',
@@ -110,7 +98,7 @@ export default function KapaCallout() {
             lineHeight: '1',
             ':hover': {
               transform: 'translateY(-2px)',
-              boxShadow: '0 6px 16px rgba(79, 70, 229, 0.45)',
+              boxShadow: '0 6px 16px rgba(0, 0, 0, 0.45)',
             }
           }}>
           Chat Now →
