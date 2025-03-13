@@ -16,6 +16,7 @@ import userAccessInApp from "/static/img/sso/google-workspace/userAccessInApp.pn
 import turnAccessOn from "/static/img/sso/google-workspace/turnAccessOn.png"
 import loginUsingApp from "/static/img/sso/google-workspace/loginUsingApp.png"
 import acsURLandEntityID from "/static/img/sso/google-workspace/acsURLandEntityID.png"
+import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
 # How to configure Google Workspace
 
@@ -165,3 +166,5 @@ Make sure that for any of the options you would like to enable the app for, you 
 <Image img={loginUsingApp} style={{ width: 250 }} />
 
 </center>
+
+<DirectUrl/>
