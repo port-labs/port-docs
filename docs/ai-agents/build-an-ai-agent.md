@@ -22,7 +22,7 @@ Let's walk through the process of creating an agent that can assist your develop
 
 <!-- IMAGE SUGGESTION: Add a screenshot of the AI agent creation page or dashboard here -->
 
-## How to add a new AI agent
+## Create a new AI agent
 
 You can create a new AI agent in two ways:
 
