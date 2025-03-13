@@ -7,17 +7,23 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
+import S3IntegrationDisclaimer from "/docs/generalTemplates/_s3_integrations_disclaimer.md"
 
 
 # Ingest any data source into Port via Airbyte, S3 and webhook
 
-This guide will demonstrate how to ingest any data source into Port using Airbyte, S3 and a webhook integration.
+This guide will demonstrate how to ingest any data source into Port using [Airbyte](https://airbyte.com/), [S3](https://aws.amazon.com/s3/) and a [webhook integration](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+
+<img src="/img/guides/s3integrations.png" width="95%" border="1px" />
+<br/>
+<br/>
+<S3IntegrationDisclaimer/>
 
 ## Prerequisites
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
 
-- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via Intercom, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
+- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via chat, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
 
 - Access to an available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart).
 
@@ -216,7 +222,7 @@ If any entities were created but failed to ingest, you will see an indicative er
 
 #### Data is not propagating from S3 to Port
 If you're sure the Airbyte integration is working properly, there are no records in the Audit Log, and the "Load latest event" button does not produce an event in the corresponding box, there might be an issue with the pipeline set up by Port.  
-In this case, contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io) and our support team will assist in diagnosing and solving the issue.
+In this case, contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io) and our support team will assist in diagnosing and solving the issue.
 
 ### Additional relevant guides
 - [Ingest Slack data into port](https://docs.port.io/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook)

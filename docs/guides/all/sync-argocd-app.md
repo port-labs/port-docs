@@ -281,7 +281,5 @@ Now you should see the `Sync Argo CD Application` action in the self-service pag
 5. Click on `Execute`
 6. Done! wait for the application to be synchronized.
 
-Congrats 🎉 You've successfully synchronized your Argo CD Application in Port 🔥
-
 ## More Self Service Argo CD Actions Examples
 - [Rollback Argo CD Deployment](/guides/all/rollback-argocd-deployment) using Port's self-service actions.

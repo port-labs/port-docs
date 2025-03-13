@@ -511,5 +511,3 @@ jobs:
 3. Fill the pop-up form with details of the EC2 Instance you wish to create
 5. Click on `Execute`
 6. Wait for the EC2 Instance to be created in AWS
-
-Congrats 🎉 You've created an EC2 Instance in Port 🔥
