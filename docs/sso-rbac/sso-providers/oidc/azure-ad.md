@@ -6,6 +6,7 @@ description: Integrate AzureAD with Port
 
 import ScimFunctionality from "/docs/sso-rbac/sso-providers/\_scim_functionality_list.mdx"
 import ScimLimitation from "/docs/sso-rbac/sso-providers/oidc/\_scim_oidc_limitation.mdx"
+import SSOEndpoints from "/docs/generalTemplates/_sso_auth0_endpoints.md"
 
 # How to configure AzureAD
 
@@ -88,12 +89,10 @@ To make the **Port** app connection work, users who have access need to have a l
 
     1.1 `Home page URL`: paste the following URL:
 
-    ```text showLineNumbers
-    https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
-    ```
+    <SSOEndpoints/>
 
     :::note
-    We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+    We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
     :::
 
     1.2 Add the Port logo (optional):
@@ -130,6 +129,11 @@ To make the **Port** app connection work, users who have access need to have a l
 
    - `email`, `openid`, `profile`, `User.read`.
 
+
+   :::info AzureAD groups
+   If you wish to pull in AzureAD groups into Port, you will also need to add the `Directory.Read.All` permission. See [Permissions required to pull AzureAD groups to Port](#permissions-required-to-pull-azuread-groups-to-port).
+   :::
+
    ![Azure API set permissions](/img/sso/azure-ad/AzureAppAPIPermissionsSettings.png)
 
    3.4 Click `Add permissions`.
@@ -159,10 +163,6 @@ To make the **Port** app connection work, users who have access need to have a l
 4. Your optional claims will look like this:
 
    ![Azure app permissions summary](/img/sso/azure-ad/AzureAppPermissionsFinal.png)
-
-   :::info  
-   If you wish to configure the `groups claim` to pull your AzureAD groups into Port, please follow [How to allow pulling AzureAD groups to Port](#how-to-allow-pulling-azuread-groups-to-port).
-   :::
 
 ### Step #5: Configuring application secret
 
@@ -264,7 +264,7 @@ Port needs the following information for this process:
    ![Azure application dashboard](/img/sso/azure-ad/AzureDashboardWithPort.png)
 
    :::note manual URL based login
-   Users can also manually access Port by going to the App Homepage URL: `https://auth.getport.io/authorize?response_type=token&client_id=96IeqL36Q0UIBxIfV1oqOkDWU6UslfDj&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io`
+   Users can also manually access Port by going to the App Homepage URL (The URL configured in [step 1.1](#step-2-customize-your-port-app-with-login-url-and-logo) here).
    :::
 
 :::warning Multiple Azure AD SSO connections

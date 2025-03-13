@@ -51,7 +51,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [BitBucket GitOps](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md)
 - [Sync repositories, file contents, pull-requests, monorepos and more](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/examples.md)
 - [Bitbucket scaffolder](/guides/all/scaffold-bitbucket-using-cookiecutter.md)
-- [Webhook integration between Bitbucket (self-hosted) server and Port](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server.md)
+- [Webhook integration between Bitbucket (self-hosted) server and Port](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server/bitbucket-server.md)
 
 ### Azure DevOps
 
@@ -159,7 +159,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [SonarQube/SonarCloud integration](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube/sonarqube.md)
 - [SonarCloud webhook](/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube#alternative-installation-via-webhook)
 - [Connect GitHub PR to SonarQube analysis](/guides/all/connect-github-pr-with-sonar-analysis)
-- [Connect SonarQube project to service](/guides/all/connect-sonar-project-to-service)
+<!-- - [Connect SonarQube project to service](/guides/all/connect-sonar-project-to-service) -->
 
 ## Snyk
 
@@ -202,7 +202,7 @@ This page contains a list of Port's available integrations, organized by the pla
 - [Initiate scorecards handling with Jira issues](/promote-scorecards/manage-using-3rd-party-apps/jira)
 - [Self service for a new Jira bug using GitHub workflows](https://github.com/port-labs/self-service-actions-examples/tree/main/github-workflows/jira)
 - [Jira Server](/build-your-software-catalog/custom-integration/webhook/examples/jira-server.md)
-- [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service)
+<!-- - [Connect Jira issue to a service](/guides/all/connect-jira-issue-to-service) -->
 
 ## Linear
 
@@ -327,3 +327,7 @@ This page contains a list of Port's available integrations, organized by the pla
 
 ## Swagger
 - [Ingest Swagger paths into your catalog](/guides/all/ingest-swagger-paths-into-your-catalog)
+
+## Kratix (by Syntasso)
+- [Combine Kratix and Port](https://www.syntasso.io/solutions/port-and-kratix)
+- [Combine Kratix and Port (demo video)](https://www.youtube.com/watch?v=7nKx4CnEvoY)
