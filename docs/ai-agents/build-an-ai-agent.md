@@ -24,14 +24,14 @@ Let's walk through the process of creating an agent that can assist your develop
 
 ## Create a new AI agent
 
-You can create a new AI agent in two ways:
+There are two ways to create an AI agent:
 
-1. Creating a new entity through the Port interface.
-2. Using our custom action to create a new AI agent.
+1. Create a new entity through the Port interface.
+2. Using Port's custom action.
 
 <!-- IMAGE SUGGESTION: Add a screenshot showing the two ways to create an agent (UI navigation) -->
 
-Either approach follows similar steps:
+Both approaches follow similar steps:
 
 1. Decide on the data the agent needs access to.
 2. Determine which actions the agent can run (if any).
