@@ -173,11 +173,19 @@ However, we highly recommend you install the PagerDuty integration to have these
 
     You can create PagerDuty incidents by leveraging Port's **synced webhooks** and **secrets** to directly interact with the PagerDuty's API. This method simplifies the setup by handling everything within Port.
 
-    <h3> Add Port secrets </h3>
+    <h3>Add Port secrets</h3>
 
-    Add the following secrets to your Port account:
+    :::info Existing secrets
+    If you have already installed Port's PagerDuty integration, these secrets should already exist in your portal.  
+    To view your existing secrets:
+    1. Click on the `...` button next to the profile icon in the top right corner
+    2. Click on **Credentials**
+    3. Click on the `Secrets` tab
+    :::
 
-    1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+    To add these secrets to your portal:
+
+    1. Click on the `...` button next to the profile icon in the top right corner.
 
     2. Click on **Credentials**.
 

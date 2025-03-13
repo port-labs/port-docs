@@ -215,9 +215,17 @@ You should have installed the [Port's GitHub app](https://github.com/apps/getpor
 
     <h3>Add Port secrets</h3>
 
-    Add the following secrets to your Port account:
+    :::info Existing secrets
+    If you have already installed Port's Jira integration, these secrets should already exist in your portal.  
+    To view your existing secrets:
+    1. Click on the `...` button next to the profile icon in the top right corner
+    2. Click on **Credentials**
+    3. Click on the `Secrets` tab
+    :::
 
-    1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+    To add these secrets to your portal:
+
+    1. Click on the `...` button next to the profile icon in the top right corner.
 
     2. Click on **Credentials**.
 

@@ -60,7 +60,17 @@ However, we highly recommend you install the PagerDuty integration to have these
 
     <h3>Add Port secrets</h3>
 
-    1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+    :::info Existing secrets
+    If you have already installed Port's PagerDuty integration, these secrets should already exist in your portal.  
+    To view your existing secrets:
+    1. Click on the `...` button next to the profile icon in the top right corner
+    2. Click on **Credentials**
+    3. Click on the `Secrets` tab
+    :::
+
+    To add these secrets to your portal:
+
+    1. Click on the `...` button next to the profile icon in the top right corner.
 
     2. Click on **Credentials**.
 
