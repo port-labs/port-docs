@@ -2,6 +2,8 @@ import React from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { Typography } from '@mui/material';
+import './styles.css';
 
 export default function KapaCallout() {
   const { colorMode } = useColorMode();
@@ -90,7 +92,6 @@ export default function KapaCallout() {
             border: 'none',
             borderRadius: '20px',
             fontSize: '0.9rem',
-            color: colorMode === 'dark' ? '#000000' : '#FFFFFF',
             fontWeight: '500',
             cursor: 'pointer',
             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.35)',
@@ -106,7 +107,9 @@ export default function KapaCallout() {
               boxShadow: '0 6px 16px rgba(0, 0, 0, 0.45)',
             }
           }}>
-          Chat Now →
+          <Typography className="kapa-button-text" fontFamily="var(--ifm-font-family-base)" fontWeight='500' fontSize="0.9rem">
+            Chat Now →
+          </Typography>
         </button>
       </div>
     </div>
