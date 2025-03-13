@@ -106,7 +106,8 @@ This approach streamlines workflows but should be used carefully, especially for
 
 ### Step 4: Define the prompt
 
-The prompt is your main tool for influencing your agent's success. You'll likely iterate on it as you observe how the agent responds to different queries. From our experience, a good prompt includes:
+The prompt is your main tool for influencing your agent's success. You will likely iterate on it as you observe how the agent responds to different queries.  
+In our experience, a good prompt includes:
 
 1. **Goal**: Clearly explain what the agent is designed to do in business terms without diving too deep into technical details.
 
