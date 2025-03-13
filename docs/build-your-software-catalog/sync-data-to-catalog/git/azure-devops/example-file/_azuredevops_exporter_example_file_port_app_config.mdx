@@ -5,13 +5,9 @@
 :::tip Configuration Mapping for Azure DevOps File Ingestion
 The `selector` section within a `file` resource demonstrates how to configure file ingestion from Azure DevOps repositories. You can control:
 
-- **path:** Specify glob patterns to include specific files (e.g., `**/*.yaml`, `src/**/*.json`).
+- **path:** Specify explicit file paths to ingest specific files (e.g., `src/config.yaml`, `deployment/helm/values.yaml`).
 - **repos:** Target specific repositories or leave blank to scan all repositories.
-- **max_depth:** Limit how deep the file scanner traverses directory structures. Omit to get all nested files.
 
-This configuration allows you to tailor your data fetching to specific needs and scenarios.
-
-**Note**: When repos is set to null or omitted, the integration will scan all repositories in the organization. The `path` parameter accepts both single string patterns and arrays of patterns for more flexible file selection.
 :::
 
 ```yaml showLineNumbers
@@ -20,9 +16,8 @@ resources:
     selector:
       query: 'true'
       files:
-        path: '**/*.json' # pass one path
+        path: "src/config.yaml" # Pass a single explicit file path
         repos: ["my-repo", "another-repo"]  # Optional: specific repositories to scan
-        max_depth: 1 # get only one level. increase to get nested files
     port:
       entity:
         mappings:
@@ -42,14 +37,15 @@ resources:
     selector:
       query: 'true'
       files:
-        path: # pass array of paths
-          - '**/*.yml'
-          - '**/*.yaml'
-          - '**/*.json'
+        path: # Pass an array of explicit file paths
+          - "deployment/helm/values.yaml"
+          - "config/settings.json"
+          - "docs/README.md"
+          - "package.json"
     port:
       entity:
         mappings:
-          identifier: .file.path | gsub(" "; "")
+          identifier: .repo.name + "/" + .file.objectId
           title: .file.path
           blueprint: '"file"'
           properties:
