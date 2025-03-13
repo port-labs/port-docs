@@ -43,7 +43,8 @@ TBD TO ADD:
 
 ### Step 1: Define your agent's purpose
 
-The first step in building an AI agent is deciding on its purpose. Let's determine whether the agent will:
+The first step in building an AI agent is deciding on its purpose.  
+Here we will determine whether the agent will:
 
 - Answer questions about your development environment.
 - Help run actions and complete tasks.
