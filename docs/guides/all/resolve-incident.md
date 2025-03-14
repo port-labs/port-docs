@@ -6,6 +6,7 @@ description: Learn how to resolve incidents in Port, ensuring quick and effectiv
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
 import PagerDutyIncidentBlueprint from '/docs/guides/templates/pagerduty/_pagerduty_incident_blueprint.mdx'
+import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_secrets_callout.mdx'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -47,17 +48,12 @@ However, we highly recommend you install the PagerDuty integration to have these
 
     <h3>Add Port secrets</h3>
 
-    :::info Existing secrets
-    If you have already installed Port's PagerDuty integration, these secrets should already exist in your portal.  
-    To view your existing secrets:
-    1. Click on the `...` button next to the profile icon in the top right corner
-    2. Click on **Credentials**
-    3. Click on the `Secrets` tab
-    :::
+    <ExistingSecretsCallout integration="PagerDuty" />
+
 
     To add these secrets to your portal:
 
-    1. Click on the `...` button next to the profile icon in the top right corner.
+    1. Click on the `...` button in the top right corner of your Port application.
 
     2. Click on **Credentials**.
 
@@ -66,6 +62,7 @@ However, we highly recommend you install the PagerDuty integration to have these
     4. Click on `+ Secret` and add the following secrets:
        - `PAGERDUTY_API_TOKEN`: Your PagerDuty API token
        - `PAGERDUTY_USER_EMAIL`: The email of the PagerDuty user that owns the API token
+
 
     <h3>Set up self-service action</h3>
 

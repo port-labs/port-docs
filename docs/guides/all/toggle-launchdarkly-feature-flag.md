@@ -5,6 +5,7 @@ description: Learn how to toggle LaunchDarkly feature flags in Port, enabling dy
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
+import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_secrets_callout.mdx'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -137,17 +138,11 @@ However, we highly recommend you install the LaunchDarkly integration to have th
 
     <h3>Add Port secrets</h3>
 
-    :::info Existing secrets
-    If you have already installed Port's LaunchDarkly integration, these secrets should already exist in your portal.  
-    To view your existing secrets:
-    1. Click on the `...` button next to the profile icon in the top right corner
-    2. Click on **Credentials**
-    3. Click on the `Secrets` tab
-    :::
+    <ExistingSecretsCallout integration="LaunchDarkly" />
 
     To add these secrets to your portal:
 
-    1. Click on the `...` button next to the profile icon in the top right corner.
+    1. Click on the `...` button in the top right corner of your Port application.
 
     2. Click on **Credentials**.
 
