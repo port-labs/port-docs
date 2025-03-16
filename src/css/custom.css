@@ -265,6 +265,45 @@ html[data-theme="dark"] details details  {
   border-color: var(--ifm-color-secondary-dark);
 }
 
+.menu__link--active {
+  color: var(--ifm-color-primary-contrast-foreground);
+  font-weight: 600;
+}
+
+.menu__link:hover {
+  color: var(--ifm-color-primary-contrast-foreground);
+  font-weight: 600;
+}
+
+.navbar__link--active {
+  color: var(--ifm-color-primary-contrast-foreground);
+  font-weight: 600;
+  background-color: var(--ifm-color-primary-contrast-background);
+  border-radius: 6px;
+}
+
+.navbar__link:hover {
+  color: var(--ifm-color-primary-contrast-foreground);
+  font-weight: 600;
+}
+
+.navbar__brand:hover {
+  color: var(--ifm-color-primary-contrast-foreground);
+  font-weight: 600;
+}
+
+.table-of-contents__link:hover {
+  color: var(--ifm-color-primary-contrast-foreground);
+  font-weight: 600;
+}
+
+.table-of-contents__link--active {
+  color: var(--ifm-color-primary-contrast-foreground);
+  font-weight: 600;
+}
+
+
+
 /* sidebar icons */
 
 /* sidebar icons - category items */
