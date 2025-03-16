@@ -51,7 +51,7 @@ To start working with AI agents, follow these steps:
 
 ## Customization and control
 
-Set boundaries and permissions for your agents:
+[Build and customize](/ai-agents/build-an-ai-agent) your AI agents:
 - Define which data sources your agents can access.
 - Determine what actions your agents can assist with.
 - Set permissions for who can use specific agents.

@@ -22,22 +22,13 @@ Let's walk through the process of creating an agent that can assist your develop
 
 ## Create a new AI agent
 
-There are two ways to create an AI agent:
+To create a new agent, head to the AI Agents catalog page (this page will be created for you when you activate the feature).
 
-1. Create a new entity through the Port interface.
-2. Using Port's custom action.
+Click on the "New AI Agent" button and fill the form with the agent details.
+<img src='/img/ai-agents/AIAgentsList.png' width='80%' />
+<img src='/img/ai-agents/AIAgentsAddAgentModal.png' width='80%' />
 
-<!-- IMAGE SUGGESTION: Add a screenshot showing the two ways to create an agent (UI navigation) -->
-
-Both approaches follow similar steps:
-
-1. Decide on the data the agent needs access to.
-2. Determine which actions the agent can run (if any).
-3. Build a prompt for your agent.
-
-TBD TO ADD:
-* JSON to the action that adds an AI agent
-* Screenshots
+We recommend following the steps below.
 
 ### Step 1: Define your agent's purpose
 
@@ -64,13 +55,10 @@ For example:
 
 Pay attention to relationships between entities to ensure your agent can provide comprehensive answers.
 
-
-<!-- IMAGE SUGGESTION: Add a screenshot of the data access configuration interface -->
-
 ### Step 3: Configure actions (optional)
 
 :::info Limitations
-It's important to note that an AI agent cannot both run actions and answer questions simultaneously. For instance, you can't ask, "Who is the owner of this component?" and then perform an action like, "Please notify the owner to review PR X". To achieve this, you'll need to set up a workflow that involves multiple agents. This separation allows for more flexibility and control over the interactions within your workflows.
+It's important to note that an AI agent cannot both run actions and answer questions simultaneously. For instance, asking "Who is the owner of this component?" and then perform an action like, "Please notify the owner to review PR X". To achieve this, you'll need to set up a workflow that involves multiple agents or rely on our agent router. Test these scenarios catefully.
 :::
 
 
@@ -80,8 +68,6 @@ If your agent needs to run actions, you will need to:
 2. Add it to your agent's configuration.
 3. Decide whether the agent can run the action automatically or requires approval.
 
-<!-- IMAGE SUGGESTION: Add a screenshot of the action configuration interface -->
-
 <Tabs groupId="action-approval" queryString>
 <TabItem value="manual-approval" label="Manual Approval">
 
@@ -90,7 +76,10 @@ When configured for manual approval, the agent will:
 2. Provide a link to the draft.
 3. Allow the user to review and modify properties before execution.
 
-<img src='/img/ai-agents/manual-approval-flow.png' width='80%' border='1px' />
+An example answer might look like this:
+```markdown
+I've drafted the action for you. You can access it in this link
+```
 
 This approach provides an additional safety layer, ensuring users can verify all parameters before execution.
 
@@ -102,7 +91,10 @@ When configured for automatic execution, the agent will:
 2. Execute the action immediately.
 3. Provide a link to the action run.
 
-<img src='/img/ai-agents/automatic-execution-flow.png' width='80%' border='1px' />
+An example answer might look like this:
+```markdown
+I've ran the action for you. You can view its progress in this link.
+```
 
 This approach streamlines workflows but should be used carefully, especially for actions with significant impact.
 
@@ -123,20 +115,14 @@ In our experience, a good prompt includes:
 We recommend starting with a simple prompt and refining it based on how the agent performs. Here's a basic template:
 
 ```markdown 
-You are an AI assistant for [Company Name]'s development team.
-
 Your goal is to help developers [primary purpose, e.g., "find information about our services and assist with deployment processes"].
 
 When answering questions:
 - Be concise and direct
 - Include links to relevant resources when available
-
-Key terminology:
-- Service: [your definition]
-- [Other important terms]: [definitions]
 ```
 
-<!-- IMAGE SUGGESTION: Add a screenshot of the prompt configuration interface -->
+<img src='/img/ai-agents/AIAgentPrompt.png' width='80%' />
 
 ### Step 5: Add conversation starters
 
@@ -165,14 +151,23 @@ Choose conversation starters that:
 - Use terminology specific to your organization
 - Demonstrate the depth of knowledge your agent has access to
 
-<!-- IMAGE SUGGESTION: Add a screenshot of the conversation starters configuration interface -->
-
 ### Step 6: Activate your agent
 
 When you feel your agent is ready:
 
 1. Set its status to "Active".
 2. Start interacting with it through the [available interfaces](/ai-agents/interact-with-the-ai-agent).
+
+## Evaluating your agent performance
+
+Continuous evaluation and improvement are essential for maintaining effective AI agents. We recommend implementing a regular review process to track and improve the quality of your agent's responses over time:
+
+1. **Weekly reviews**: Set aside time each week to review a sample of agent interactions through the "Invocations" tab.
+2. **Identify patterns**: Look for recurring issues or misunderstandings in how the agent interprets queries.
+3. **Analyze execution plans**: Examine how the agent processes requests by reviewing the execution plan and tool calls for specific invocations. This helps identify where improvements are needed.
+4. **Refine the prompt**: Update your agent's prompt based on your findings to address common issues.
+
+For more details on how to view execution plans and analyze agent behavior, see [Interact with the AI agent](/ai-agents/interact-with-the-ai-agent).
 
 ## Examples
 
@@ -181,38 +176,21 @@ When you feel your agent is ready:
 This agent helps developers find information about services in their organization:
 
 ```markdown
-You are an AI assistant for the DevOps team.
-
 Your goal is to help developers find information about our microservices, their owners, and current status.
 
 When answering questions:
 - Always include links to service documentation when available
 - Include the team owner for each service mentioned
 - Provide deployment status when relevant
-
-Key terminology:
-- Service: A microservice in our architecture that serves a specific business function
-- Owner: The team responsible for maintaining and developing a service
-- Health: The current operational status of a service based on its Production Readiness scorecard
 ```
-
-TBD - add a full JSON and screenshot
 
 ### Example 2: Deployment Assistant
 
 This agent helps with deployment processes:
 
 ```markdown
-You are a deployment assistant for the engineering team.
-
 Your goal is to help developers initiate and track deployments to various environments.
-
-When helping with deployments:
-- Confirm the service name and version
-- Verify the target environment
-- Remind users of any pre-deployment checks
 ```
-TBD - add a full JSON and screenshot
 
 ## Troubleshooting & FAQ
 
@@ -231,7 +209,27 @@ Start with one sentence explaining what the agent is about, and then interact wi
 <details>
 <summary><b>Are there any limitations to what the agents have access to? (Click to expand)</b></summary>
 
-TBD TO ADD
+AI agents in Port can search, group, and index entities in your Port instance. However, there are some technical limitations to be aware of:
+
+- **Search capabilities**: 
+  - Search API & Similarity search returns up to 10 entities.
+  - Similarity search indexes identifier, title, and string properties above 50 characters and below 8K tokens.
+
+- **Data processing limits**:
+  - Up to 5 iterations on the response (up to 6 LLM interactions).
+  - LLM interactions are limited to 2000 tokens.
+  - Entities grouping tool can return count by property, scorecard, or relation (no additional filters applied).
+  - Entities grouping can return up to 100 groups.
+  - Entities search returns up to 10 related entities for each entity.
+  - Entities search returns only the scorecard level (e.g., you can't ask about specific rules).
+
+- **Context requirements**:
+  - To select an entity in an entity selection field of a form, you must provide the blueprint as context.
+  - The response can only be based on relations that can be achieved from the allowed blueprints.
+
+- **Permission model**:
+  - Interaction with the AI agent is based on your user permissions.
+  - Sequential automations run as Admin.
 </details>
 
 <details>
