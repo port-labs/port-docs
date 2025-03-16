@@ -41,9 +41,10 @@ Use the agent router when having a more natural conversation, such as through Sl
 ## Interaction methods
 
 <Tabs groupId="interaction-methods" queryString>
-<TabItem value="api-integration" label="API Integration">
+<TabItem value="api-integration" label="API integration">
 
-Port is an API-first platform, allowing you to integrate AI agents into your custom workflows. The interaction process follows these steps:
+Port is an API-first platform, allowing you to integrate AI agents into your custom workflows.  
+The interaction process follows these steps:
 
 1. Invoke the agent with your request.
 2. Receive an invocation ID.
