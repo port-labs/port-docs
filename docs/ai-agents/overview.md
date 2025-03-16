@@ -45,8 +45,8 @@ AI agents serve two primary functions:
 To start working with AI agents, follow these steps:
 
 1. **Apply for access** - Submit your application via [this form](https://forms.gle/krhMY7c9JM8MyJJf7).
-2. **Access the feature** - If accepted, we will enable AI agents in your Port organization.
-3. **Build your agents** - Create custom agents using Port's blueprint system.
+2. **Access the feature** - If accepted, you will be able to activate the AI agents in your Port organization.
+3. **Build your agents** - [Create custom agents](/ai-agents/build-an-ai-agent) to meet your developers' needs.
 4. **Interact with your agents** - Engage with your agents by following our [interaction guide](/ai-agents/interact-with-the-ai-agent).
 
 ## Customization and control
@@ -72,12 +72,17 @@ As your team builds confidence in the agents, you can expand their capabilities 
 
 ## Access to the feature
 
-Currently, AI agents are in limited access, and you must get approved for the feature first. Once approved, you can call our API to enable the feature in your Port organization.
+Currently, AI agents are in closed beta access, and you must get approved for the feature first. Once approved, you can enable the feature in your Port organization by calling this API:
 
-This API will:
-* Whitelist your account for AI agents interactions
-* Create the system blueprints required for the feature to work
+```bash showLineNumbers
+curl --location --request PATCH 'https://api.getport.io/v1/organization/ai/register' \
+--header 'Authorization: Bearer <YOUR_PORT_API_TOKEN>' \
+--header 'Content-Type: application/json'
+```
 
+Your organization now has the system blueprints required for the feature to work.
+
+## Data Model
 The data model of AI agents includes two main blueprints:
 
 1. **AI agents** - The agents themselves that you can interact with. You can build new ones and customize them as you wish. Learn more in our [Build an AI agent](/ai-agents/build-an-ai-agent) guide.
@@ -87,7 +92,7 @@ The data model of AI agents includes two main blueprints:
 ## Frequently asked questions
 
 <details>
-<summary>What are the main use cases Port AI will support?</summary>
+<summary>What are the main use cases Port AI will support? (Click to expand)</summary>
 
 Port AI supports two primary interaction types:
 
@@ -102,14 +107,14 @@ Port AI supports two primary interaction types:
 </details>
 
 <details>
-<summary>How do users interact with Port AI?</summary>
+<summary>How do users interact with Port AI? (Click to expand)</summary>
 
 - Primary interface is through our Slack app
 - Full API availability
 </details>
 
 <details>
-<summary>Can customers customize the AI agents?</summary>
+<summary>Can customers customize the AI agents? (Click to expand)</summary>
 
 Yes - you can create custom AI agents within Port. Customization includes:
 - Creating new agents using Port's blueprint system
@@ -121,19 +126,19 @@ All agents operate within Port's secure framework and governance controls.
 </details>
 
 <details>
-<summary>How is customer data handled?</summary>
+<summary>How is customer data handled? (Click to expand)</summary>
 
 All data processing occurs within our cloud infrastructure, and no data is shared with external LLM providers. Additionally, no customer data is used for model training, ensuring complete logical separation between different customers' data.
 </details>
 
 <details>
-<summary>Which LLM models are you using?</summary>
+<summary>Which LLM models are you using? (Click to expand)</summary>
 
 We aim to use the best models that will yield the best results while keeping your data safe; at the moment, we work with Open AI's GPT models, but this could change in the future.
 </details>
 
 <details>
-<summary>How can we audit and control AI usage?</summary>
+<summary>How can we audit and control AI usage? (Click to expand)</summary>
 
 Each interaction of the agent is saved and can be viewed in the audit logs, ensuring transparency and accountability. You have control over who can interact with and see the agents through our granular permission controls, along with an admin dashboard for monitoring usage, export capabilities for audit logs, and available rate limiting and usage controls.
 </details> 

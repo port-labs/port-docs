@@ -19,8 +19,6 @@ import TabItem from "@theme/TabItem"
 
 Once you've built your AI agents, it's time to interact with them. Port provides several ways to communicate with your AI agents.
 
-<!-- IMAGE SUGGESTION: Add a diagram showing the different interaction methods and flow between user, router, and specific agents -->
-
 ## Interaction options
 
 You have two main approaches when interacting with AI agents in Port:
@@ -62,7 +60,7 @@ import time
 
 # Invoke the agent
 response = requests.post(
-    'https://api.getport.io/v1/ai-agents/{agentId}/invoke',
+    'https://api.getport.io/v1/agent/{agentIdentifier}/invoke',
     headers={
         'Content-Type': 'application/json',
         'Authorization': 'Bearer YOUR_API_TOKEN'
@@ -77,7 +75,7 @@ invocation_id = response.json()['invocationId']
 # Function to check status
 def check_status():
     status_response = requests.get(
-        f'https://api.getport.io/v1/ai-agents/invocations/{invocation_id}',
+        f'https://api.getport.io/v1/agent/invoke/{invocation_id}',
         headers={
             'Authorization': 'Bearer YOUR_API_TOKEN'
         }
@@ -87,9 +85,9 @@ def check_status():
 # Poll until complete
 result = None
 while True:
-    time.sleep(1)  # Wait 1 second between polls
+    time.sleep(5)
     result = check_status()
-    if result['status'] == 'COMPLETED':
+    if result['status'] == 'Completed':
         break
 
 print(result['response'])
@@ -107,7 +105,7 @@ For example, when a new incident is created in Port, you can trigger an agent th
 - Summarizes relevant information.
 - Sends a notification to Slack.
 
-<img src='/img/ai-agents/automation-flow-example.png' width='80%' border='1px' alt="Diagram showing automation flow with AI agent" />
+<img src='/img/ai-agents/AIAgentsAutomationExample.png' width='80%'/>
 
 </TabItem>
 <TabItem value="slack-integration" label="Slack Integration">
@@ -123,7 +121,7 @@ When you send a message, the app will:
 1. Open a thread.
 2. Respond with the agent's answer.
 
-<img src='/img/ai-agents/slack-interaction-example.png' width='80%' border='1px' alt="Screenshot of Slack interaction with Port AI agent" />
+<img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%'/>
 
 #### Tips for effective Slack interactions
 
@@ -144,7 +142,8 @@ Every AI agent interaction creates an entity in Port, allowing you to track and 
 
 The plan shows how the agent decided to tackle your request and the steps it intended to take. This provides insight into the agent's reasoning process.
 
-<img src='/img/ai-agents/agent-plan-example.png' width='80%' border='1px' alt="Example of an AI agent plan" />
+<img src='/img/ai-agents/AIAgentsPlan.png' width='80%'/>
+
 
 ### Tools used
 
@@ -153,6 +152,9 @@ This section displays the actual steps the agent took and the APIs it used to co
 - Used an incorrect field name.
 - Chose an inappropriate property.
 - Made other logical errors.
+
+<img src='/img/ai-agents/AIAgentsTools.png' width='80%'/>
+
 
 ### Tokens
 
