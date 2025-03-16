@@ -98,7 +98,7 @@ print(result['response'])
 </details>
 
 </TabItem>
-<TabItem value="actions-automations" label="Actions and Automations">
+<TabItem value="actions-automations" label="Actions and automations">
 
 You can trigger AI agents through Port's actions and automations, allowing you to integrate AI capabilities into your existing workflows.
 
