@@ -70,6 +70,20 @@ AI agents are designed with security as a priority:
 Begin with focused use cases that deliver immediate value, such as helping developers find service information or streamlining incident management.  
 As your team builds confidence in the agents, you can expand their capabilities to cover more complex scenarios and workflows.
 
+## Access to the feature
+
+Currently, AI agents are in limited access, and you must get approved for the feature first. Once approved, you can call our API to enable the feature in your Port organization.
+
+This API will:
+* Whitelist your account for AI agents interactions
+* Create the system blueprints required for the feature to work
+
+The data model of AI agents includes two main blueprints:
+
+1. **AI agents** - The agents themselves that you can interact with. You can build new ones and customize them as you wish. Learn more in our [Build an AI agent](/ai-agents/build-an-ai-agent) guide.
+
+2. **AI invocations** - Each interaction made with an AI agent is recorded as an invocation. This acts as a log of everything going through your AI agents so you can monitor and improve them over time. Learn more in our [Interact with the AI agent](/ai-agents/interact-with-the-ai-agent) guide.
+
 ## Frequently asked questions
 
 <details>
@@ -115,7 +129,7 @@ All data processing occurs within our cloud infrastructure, and no data is share
 <details>
 <summary>Which LLM models are you using?</summary>
 
-We aim to use the best models that will yield the best results while keeping your data safe; at the moment, we work with OpenAI's GPT models, and we can change the model used behind the scenes at any given time without prior notice.
+We aim to use the best models that will yield the best results while keeping your data safe; at the moment, we work with Open AI's GPT models, but this could change in the future.
 </details>
 
 <details>

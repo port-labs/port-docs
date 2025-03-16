@@ -20,8 +20,6 @@ import TabItem from "@theme/TabItem"
 Building an AI agent in Port involves several key steps.  
 Let's walk through the process of creating an agent that can assist your developers with finding information and completing tasks.
 
-<!-- IMAGE SUGGESTION: Add a screenshot of the AI agent creation page or dashboard here -->
-
 ## Create a new AI agent
 
 There are two ways to create an AI agent:
@@ -66,9 +64,15 @@ For example:
 
 Pay attention to relationships between entities to ensure your agent can provide comprehensive answers.
 
+
 <!-- IMAGE SUGGESTION: Add a screenshot of the data access configuration interface -->
 
 ### Step 3: Configure actions (optional)
+
+:::info Limitations
+It's important to note that an AI agent cannot both run actions and answer questions simultaneously. For instance, you can't ask, "Who is the owner of this component?" and then perform an action like, "Please notify the owner to review PR X". To achieve this, you'll need to set up a workflow that involves multiple agents. This separation allows for more flexibility and control over the interactions within your workflows.
+:::
+
 
 If your agent needs to run actions, you will need to:
 
@@ -126,7 +130,6 @@ Your goal is to help developers [primary purpose, e.g., "find information about 
 When answering questions:
 - Be concise and direct
 - Include links to relevant resources when available
-- If you're unsure about something, acknowledge it rather than guessing
 
 Key terminology:
 - Service: [your definition]
@@ -135,7 +138,36 @@ Key terminology:
 
 <!-- IMAGE SUGGESTION: Add a screenshot of the prompt configuration interface -->
 
-### Step 5: Activate your agent
+### Step 5: Add conversation starters
+
+Conversation starters are example questions you expect users to ask your agent. They serve multiple important purposes:
+
+1. **Set expectations**: They help users understand what the agent can do and what types of questions it can answer effectively.
+2. **Provide guidance**: They give users a starting point for interacting with the agent.
+3. **Test cases**: They serve as your first test cases to validate that the agent works as expected.
+
+Conversation starters are saved as strings in an array. When creating your agent, add 3-5 example questions that represent common use cases.
+
+For example, a service information agent might have these conversation starters:
+
+```json
+[
+  "Who owns the payments service?",
+  "When was the last PR merged in the purchase service?",
+  "Who is on call now for the frontend application?",
+  "What's the current health status of the authentication service?",
+  "Show me all services owned by the platform team"
+]
+```
+
+Choose conversation starters that:
+- Cover the main use cases of your agent
+- Use terminology specific to your organization
+- Demonstrate the depth of knowledge your agent has access to
+
+<!-- IMAGE SUGGESTION: Add a screenshot of the conversation starters configuration interface -->
+
+### Step 6: Activate your agent
 
 When you feel your agent is ready:
 
