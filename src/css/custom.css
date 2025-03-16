@@ -302,6 +302,20 @@ html[data-theme="dark"] details details  {
   font-weight: 600;
 }
 
+.breadcrumbs__item:hover {
+  color: var(--ifm-color-primary-contrast-foreground);
+  font-weight: 600;
+}
+
+.breadcrumbs__link:hover {
+  color: var(--ifm-color-primary-contrast-foreground);
+  font-weight: 600;
+}
+
+.breadcrumbs__item--active > .breadcrumbs__link {
+  color: var(--ifm-color-primary-contrast-foreground);
+  font-weight: 600;
+}
 
 
 /* sidebar icons */
