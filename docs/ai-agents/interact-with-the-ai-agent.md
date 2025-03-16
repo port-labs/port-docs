@@ -40,13 +40,16 @@ Use the agent router when having a more natural conversation, such as through Sl
 
 ## Interaction methods
 
-### API integration
+<Tabs groupId="interaction-methods" queryString>
+<TabItem value="api-integration" label="API Integration">
 
 Port is an API-first platform, allowing you to integrate AI agents into your custom workflows. The interaction process follows these steps:
 
 1. Invoke the agent with your request.
 2. Receive an invocation ID.
 3. Poll the entity until the generation is completed.
+
+<img src='/img/ai-agents/AIAgentTriggerFlowDiagram.png' width='70%' />
 
 <details>
 <summary><b>API example (Click to expand)</b></summary>
@@ -93,7 +96,8 @@ print(result['response'])
 
 </details>
 
-### Actions and automations
+</TabItem>
+<TabItem value="actions-automations" label="Actions and Automations">
 
 You can trigger AI agents through Port's actions and automations, allowing you to integrate AI capabilities into your existing workflows.
 
@@ -104,7 +108,8 @@ For example, when a new incident is created in Port, you can trigger an agent th
 
 <img src='/img/ai-agents/automation-flow-example.png' width='80%' border='1px' alt="Diagram showing automation flow with AI agent" />
 
-### Slack integration
+</TabItem>
+<TabItem value="slack-integration" label="Slack Integration">
 
 The Slack integration provides the most natural way to interact with Port's AI agents. This method abstracts all technical details, allowing for free-flowing conversations.
 
@@ -127,9 +132,8 @@ When you send a message, the app will:
 - Limit threads to five consecutive messages for optimal performance.
 - For best results, start new threads for new topics or questions.
 
-### Port platform UI (coming soon)
-
-Direct interaction with AI agents through the Port platform UI will be available soon, providing another convenient way to leverage your agents.
+</TabItem>
+</Tabs>
 
 ## AI interaction details
 
