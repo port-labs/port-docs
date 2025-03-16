@@ -170,10 +170,11 @@ Port applies limits to AI agent interactions to ensure fair usage across all cus
 - **Token usage limit**: 100,000 tokens per day.
 
 :::caution Usage limits
-These limits may change without prior notice. Once a limit is reached, you'll need to wait until it resets.
+Usage limits may change without prior notice. Once a limit is reached, you will need to wait until it resets.  
+If you attempt to interact with an agent after reaching a limit, you will receive an error message indicating that the limit has been exceeded.
 :::
 
-If you attempt to interact with an agent after reaching a limit, you'll receive an error message indicating that the limit has been exceeded.
+
 
 ## Troubleshooting & FAQ
 
