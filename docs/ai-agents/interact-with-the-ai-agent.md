@@ -26,12 +26,12 @@ Once you've built your AI agents, it's time to interact with them. Port provides
 You have two main approaches when interacting with AI agents in Port:
 
 <Tabs groupId="interaction-approach" queryString>
-<TabItem value="specific-agent" label="Specific Agent">
+<TabItem value="specific-agent" label="Specific agent">
 
 Choose a specific agent when you have a structured scenario, such as triggering an agent from an automation. This approach works best when you know exactly which agent has the expertise needed for your task.
 
 </TabItem>
-<TabItem value="agent-router" label="Agent Router">
+<TabItem value="agent-router" label="Agent router">
 
 Use the agent router when having a more natural conversation, such as through Slack. The router intelligently determines which agent is best suited to handle your request based on its content and context.
 
