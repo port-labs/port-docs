@@ -105,7 +105,7 @@ function FeedbackModal({ isLoading, isSuccess, message, onClose }) {
 
 // Regex patterns for Port resources
 const PATTERNS = {
-  blueprint: /{\s*"identifier":\s*"[^"]+",\s*"title":\s*"[^"]+",.*"schema":\s*{.*"properties":\s*{/s,
+  blueprint: /{\s*"(?:(?!"schema"|"trigger").)*"schema":\s*{\s*"properties":\s*{/s,
   action: /{\s*"identifier":\s*"[^"]+",.*"trigger":\s*{\s*"type":\s*"self-service"/s,
   automation: /{\s*"identifier":\s*"[^"]+",.*"trigger":\s*{\s*"type":\s*"automation"/s
 };
