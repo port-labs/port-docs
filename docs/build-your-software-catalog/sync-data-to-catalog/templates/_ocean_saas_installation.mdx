@@ -2,13 +2,15 @@ import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import OceanSaasLimitations from "/src/components/ocean-saas-specifics/limitations.jsx";
-import OceanSaasLiveEvents from "/src/components/ocean-saas-specifics/live-events.jsx";
+import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggers } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
 Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
 
 <h3>Live event support</h3>
 
-<OceanSaasLiveEvents id={props.integration} />
+<OceanSaasLiveEventsDescription id={props.integration} />
+
+<OceanSaasLiveEventsTriggers id={props.integration} />
 
 :::tip Self-hosted installation
 Alternatively, you can install the integration using the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) method to update Port in real time using webhooks.
