@@ -13,6 +13,12 @@ import GitOpsPushEvent from '../../\_git_gitops_push_events_explanation.mdx'
 
 Port's Bitbucket integration makes it possible to manage Port entities with a GitOps approach, making your code repositories into the source of truth for the various infrastructure assets you want to manage.
 
+:::info Bitbucket Server (Self-Hosted)
+This documentation covers GitOps for **Bitbucket Cloud**. 
+For information about GitOps with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server GitOps documentation](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server/gitops.md).
+:::
+
+
 ## 💡 Bitbucket GitOps common use cases
 
 - Use Bitbucket as the source-of-truth for your **microservices**, **packages**, **libraries** and other software catalog assets.

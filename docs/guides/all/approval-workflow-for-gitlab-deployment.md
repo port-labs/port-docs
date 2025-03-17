@@ -699,5 +699,3 @@ You can use this chaining mechanism to create complex workflows for many use-cas
 8. The GitLab pipeline will be retriggered and Port context variable will be passed to instruct the pipeline script to deploy the service
     <img src='/img/guides/gitlabSnowGuide/successGitlabPipelineDeployment.png' width='50%' border='1px' />
 
-
-Congrats 🎉 You've managed your GitLab service deployment in Port 🔥

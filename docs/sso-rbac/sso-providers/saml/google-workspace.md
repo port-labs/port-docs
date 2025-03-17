@@ -16,6 +16,7 @@ import userAccessInApp from "/static/img/sso/google-workspace/userAccessInApp.pn
 import turnAccessOn from "/static/img/sso/google-workspace/turnAccessOn.png"
 import loginUsingApp from "/static/img/sso/google-workspace/loginUsingApp.png"
 import acsURLandEntityID from "/static/img/sso/google-workspace/acsURLandEntityID.png"
+import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
 # How to configure Google Workspace
 
@@ -98,7 +99,7 @@ Press `Continue`.
 - `Entity ID` - `urn:auth0:port-prod:{CONNECTION_NAME}`
 
 :::note
-We will provide your `{CONNECTION_NAME}` (Contact us using Intercom/Slack/mail to [support@getport.io](mailto:support@getport.io)).
+We will provide your `{CONNECTION_NAME}` (Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io)).
 :::
 
 Press `Continue`
@@ -165,3 +166,5 @@ Make sure that for any of the options you would like to enable the app for, you 
 <Image img={loginUsingApp} style={{ width: 250 }} />
 
 </center>
+
+<DirectUrl/>

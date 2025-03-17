@@ -7,17 +7,21 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
+import S3IntegrationDisclaimer from "/docs/generalTemplates/_s3_integrations_disclaimer.md"
 
 
 # Ingest Slack channels data into Port via Airbyte, S3 and webhook
 
-This guide will demonstrate how to ingest Slack channels and channel membership data into Port using Airbyte, S3 and a webhook integration.
+This guide will demonstrate how to ingest Slack channels and channel membership data into Port using [Airbyte](https://airbyte.com/), [S3](https://aws.amazon.com/s3/) and a [webhook integration](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+
+<S3IntegrationDisclaimer/>
+
 
 ## Prerequisites
 
 - Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
 
-- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via Intercom, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
+- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via chat, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
 
 - Access to an available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart).
 
@@ -395,3 +399,5 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
   inform us so we can assist to ensure the integration will run smoothly.
 ::: 
 
+### Additional relevant guides
+- [Ingest Any data into port](https://docs.port.io/guides/all/ingest-any-data-via-airbyte-s3-and-webhook/)

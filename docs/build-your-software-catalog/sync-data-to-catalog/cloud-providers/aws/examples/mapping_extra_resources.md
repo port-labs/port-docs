@@ -70,7 +70,7 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 
 ### `useGetResourceAPI` property support
 
-- By default the integration uses the [`CloudControl:ListResources`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/list-resources.html) API to get the resources. The integration can also enrich each resource by running [`CloudControl:GetResource`](https://docs.aws.amazon.com/cli/latest/reference/cloudcontrol/get-resource.html) on each resource, you can use this by enabling `useGetResourceAPI` option.
+- By default the integration uses the [`CloudControl:ListResources`](https://docs.aws.amazon.com/cloudcontrolapi/latest/APIReference/API_ListResources.html) API to get the resources. The integration can also enrich each resource by running [`CloudControl:GetResource`](https://docs.aws.amazon.com/cloudcontrolapi/latest/APIReference/API_GetResource.html) on each resource, you can use this by enabling `useGetResourceAPI` option.
 
   The `useGetResourceAPI` option is only available for resources that support the `CloudControl:GetResource` API.
 

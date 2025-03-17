@@ -217,8 +217,5 @@ Now you should see the `Create Application` action in the self-service page. �
 
 5. Done! wait for the application to be created in Humanitec.
 
-
-Congrats 🎉 You've created a Humanitec application in Port 🔥
-
 ## More Self Service Humanitec Actions Examples
 - [Deploy Humanitec application](/guides/all/deploy-humanitec-application.md)

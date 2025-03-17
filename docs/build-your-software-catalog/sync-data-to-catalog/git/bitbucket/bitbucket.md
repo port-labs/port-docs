@@ -7,6 +7,11 @@ import BitbucketResources from './\_bitbucket_exporter_supported_resources.mdx'
 
 Port's Bitbucket integration allows you to model Bitbucket resources in your software catalog and ingest data into them.
 
+:::info Bitbucket Server (Self-Hosted)
+This documentation covers Port's integration with **Bitbucket Cloud**. 
+For information about integrating with Bitbucket Server (Self-Hosted), please refer to the [Bitbucket Server integration documentation](/build-your-software-catalog/custom-integration/webhook/examples/bitbucket-server/bitbucket-server.md).
+:::
+
 
 ## Overview
 

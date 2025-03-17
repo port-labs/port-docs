@@ -5,6 +5,7 @@ description: Integrate Azure AD with Port using SAML
 ---
 
 import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
+import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
 # How to configure Azure AD
 
@@ -48,6 +49,8 @@ Send the **PEM certificate file** along with the **Login URL** (Which can be fou
 After that, Port will provide you with a metadata XML file for your connection.
 
 At the top of the SAML configuration page, click on the `upload metadata file` button and upload the file provided to you by Port to complete the connection configuration.
+
+<DirectUrl/>
 
 ## Expose groups
 
