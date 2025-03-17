@@ -5,7 +5,6 @@ description: Learn how to create a FireHydrant incident in Port, ensuring timely
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
-import FireHydrantIncidentBlueprint from '/docs/guides/templates/pagerduty/_pagerduty_incident_blueprint.mdx'
 import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_secrets_callout.mdx'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
