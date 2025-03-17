@@ -122,6 +122,7 @@ When you send a message, the app will:
 2. Respond with the agent's answer.
 
 <img src='/img/ai-agents/AIAgentsSlackExample.png' width='80%'/>
+<br/><br/>
 
 #### Tips for effective Slack interactions
 
