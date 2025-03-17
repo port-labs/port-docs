@@ -5,15 +5,11 @@ title: Build an AI agent
 
 # Build an AI agent
 
-import ClosedBetaFeatureNotice from '../generalTemplates/_closed_beta_feature_notice.md'
+import ClosedBetaFeatureNotice from '/src/components/ClosedBetaFeatureNotice'
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-<ClosedBetaFeatureNotice 
-  accessRequestMethod={
-    <span>please reach out to us by filling <a href='https://forms.gle/BygmbCWcf1Vy4KPW9'>this form</a>.</span>
-  } 
-/>
+<ClosedBetaFeatureNotice id="aiAgents" />
 
 ## Getting started
 
