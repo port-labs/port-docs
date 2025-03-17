@@ -111,11 +111,6 @@ const config = {
             activeBasePath: "guides",
           },
           {
-            type: 'custom-portLogin',
-            position: 'right',
-            className: 'header-port-login',
-          },
-          {
             to: "https://github.com/port-labs/port-docs",
             position: "right",
             target: "_blank",
