@@ -11,7 +11,7 @@ import TabItem from "@theme/TabItem"
 
 <ClosedBetaFeatureNotice 
   accessRequestMethod={
-    <span>please reach out to us by filling <a href='https://forms.gle/krhMY7c9JM8MyJJf7'>this form</a>.</span>
+    <span>please reach out to us by filling <a href='https://forms.gle/BygmbCWcf1Vy4KPW9'>this form</a>.</span>
   } 
 />
 
