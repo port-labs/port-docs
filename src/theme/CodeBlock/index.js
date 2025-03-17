@@ -3,13 +3,55 @@ import CodeBlock from '@theme-original/CodeBlock';
 import ReactDOM from 'react-dom';
 import styles from './styles.module.css';
 
+// Function to validate token structure
+function isValidTokenStructure(token) {
+  try {
+    // Check if token exists and is a string
+    if (!token || typeof token !== 'string') return false;
+
+    // Remove 'Bearer ' prefix if it exists
+    const jwtToken = token.startsWith('Bearer ') ? token.slice(7) : token;
+
+    // Split token into parts
+    const parts = jwtToken.split('.');
+    
+    // Check if token has exactly 3 parts (header, payload, signature)
+    if (parts.length !== 3) return false;
+
+    // Check if header and payload are valid base64
+    const [header, payload] = parts;
+    if (!header || !payload) return false;
+
+    // Add padding if necessary
+    const paddedHeader = header.padEnd(header.length + ((4 - (header.length % 4)) % 4), '=');
+    const paddedPayload = payload.padEnd(payload.length + ((4 - (payload.length % 4)) % 4), '=');
+
+    // Try to decode and parse header and payload
+    JSON.parse(atob(paddedHeader));
+    JSON.parse(atob(paddedPayload));
+
+    return true;
+  } catch (e) {
+    console.error('Token structure validation failed:', e);
+    return false;
+  }
+}
+
 // Function to check if a token is expired
 function isTokenExpired(token) {
   try {
+    // Remove 'Bearer ' prefix if it exists
+    const jwtToken = token.startsWith('Bearer ') ? token.slice(7) : token;
+
     // Get the payload part of the JWT (second part)
-    const payload = token.split('.')[1];
+    const payload = jwtToken.split('.')[1];
+    
+    // Add padding if necessary
+    const paddedPayload = payload.padEnd(payload.length + ((4 - (payload.length % 4)) % 4), '=');
+    
     // Base64 decode and parse as JSON
-    const decoded = JSON.parse(atob(payload));
+    const decoded = JSON.parse(atob(paddedPayload));
+    
     // Check if token is expired
     return decoded.exp * 1000 < Date.now();
   } catch (e) {
@@ -26,6 +68,11 @@ function AuthModal({ onClose, onAuthenticated }) {
   const handleSaveToken = () => {
     if (!token) {
       setError('Please enter a token');
+      return;
+    }
+
+    if (!isValidTokenStructure(token)) {
+      setError('The token is invalid. Please enter a valid Port bearer token.');
       return;
     }
 
@@ -101,6 +148,94 @@ function FeedbackModal({ isLoading, isSuccess, message, onClose }) {
     </div>,
     document.body
   );
+}
+
+// Function to remove comments from JSON string
+function stripJsonComments(jsonString) {
+  // State to track if we're inside a string
+  let inString = false;
+  let escaped = false;
+  let result = '';
+  let i = 0;
+
+  while (i < jsonString.length) {
+    const char = jsonString[i];
+
+    // Handle string content
+    if (char === '"' && !escaped) {
+      inString = !inString;
+      result += char;
+      i++;
+      continue;
+    }
+
+    // Handle escape characters
+    if (char === '\\' && !escaped) {
+      escaped = true;
+      result += char;
+      i++;
+      continue;
+    }
+
+    // Handle single-line comments - only if preceded by whitespace or at start of line
+    if (!inString && char === '/' && jsonString[i + 1] === '/') {
+      // Look backwards to check if this is a real comment
+      let isComment = true;
+      let j = i - 1;
+      
+      // Skip whitespace
+      while (j >= 0 && /\s/.test(jsonString[j])) {
+        j--;
+      }
+      
+      // If we found a non-whitespace character that's not a comma, brace, bracket, or colon,
+      // then this is probably not a comment (e.g., it's part of a URL)
+      if (j >= 0 && !/[,{}\[\]:]/.test(jsonString[j])) {
+        isComment = false;
+      }
+
+      if (isComment) {
+        // Skip until end of line
+        while (i < jsonString.length && jsonString[i] !== '\n') {
+          i++;
+        }
+        continue;
+      }
+    }
+
+    // Handle multi-line comments - only if preceded by whitespace or at start of line
+    if (!inString && char === '/' && jsonString[i + 1] === '*') {
+      // Look backwards to check if this is a real comment
+      let isComment = true;
+      let j = i - 1;
+      
+      // Skip whitespace
+      while (j >= 0 && /\s/.test(jsonString[j])) {
+        j--;
+      }
+      
+      // If we found a non-whitespace character that's not a comma, brace, bracket, or colon,
+      // then this is probably not a comment
+      if (j >= 0 && !/[,{}\[\]:]/.test(jsonString[j])) {
+        isComment = false;
+      }
+
+      if (isComment) {
+        i += 2; // Skip /*
+        while (i < jsonString.length && !(jsonString[i] === '*' && jsonString[i + 1] === '/')) {
+          i++;
+        }
+        i += 2; // Skip */
+        continue;
+      }
+    }
+
+    escaped = false;
+    result += char;
+    i++;
+  }
+
+  return result;
 }
 
 // Regex patterns for Port resources
@@ -210,20 +345,22 @@ export default function CodeBlockWrapper(props) {
         `https://api.stg-01.getport.io/v1/${resourceType}s` : 
         'https://api.stg-01.getport.io/v1/actions';
 
+      // Clean the JSON string by removing comments
+      const cleanedJson = stripJsonComments(props.children);
+
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Authorization': `${sessionStorage.getItem('portToken')}`,
           'Content-Type': 'application/json'
         },
-        body: props.children
+        body: cleanedJson
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        const errorMessage = data.error || data.message || 'Failed to create resource';
-        throw new Error(errorMessage);
+        throw new Error(data.message || data.error || 'Failed to create resource');
       }
 
       setFeedbackState({
@@ -243,14 +380,14 @@ export default function CodeBlockWrapper(props) {
           show: true,
           loading: false,
           success: false,
-          message: 'Your authentication has expired. Please authenticate again.'
+          message: error.message
         });
       } else {
         setFeedbackState({
           show: true,
           loading: false,
           success: false,
-          message: `Failed to create ${resourceType}: ${error.message}`
+          message: error.message
         });
       }
     }

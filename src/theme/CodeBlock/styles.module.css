@@ -7,7 +7,7 @@
   top: 12px;
   right: 44px;
   padding: 6px 12px;
-  background: var(--ifm-color-primary);
+  background: black;
   color: white;
   border: none;
   border-radius: 4px;
@@ -17,8 +17,13 @@
   z-index: 2;
 }
 
+[data-theme='dark'] .createInPortButton {
+  background: white;
+  color: black;
+}
+
 .createInPortButton:hover {
-  background: var(--ifm-color-primary-dark);
+  opacity: 0.8;
 }
 
 /* Modal Styles */
@@ -62,7 +67,7 @@
 
 .confirmationContent > p {
   padding: 0 24px;
-  margin: 16px 0;
+  margin: 8px 0;
 }
 
 .confirmationDetails {
@@ -150,8 +155,8 @@
 
 .confirmButton {
   padding: 8px 16px;
-  background: var(--ifm-color-primary);
-  border: 1px solid var(--ifm-color-primary);
+  background: black;
+  border: none;
   color: white;
   border-radius: 6px;
   font-size: 14px;
@@ -160,9 +165,13 @@
   transition: all 0.2s ease;
 }
 
+[data-theme='dark'] .confirmButton {
+  background: white;
+  color: black;
+}
+
 .confirmButton:hover {
-  background: var(--ifm-color-primary-dark);
-  border-color: var(--ifm-color-primary-dark);
+  opacity: 0.8;
 }
 
 /* Auth Modal Styles */
@@ -228,13 +237,18 @@
 }
 
 .saveButton {
-  background: var(--ifm-color-primary);
-  border: 1px solid var(--ifm-color-primary);
+  background: black;
+  border: none;
   color: white;
 }
 
+[data-theme='dark'] .saveButton {
+  background: white;
+  color: black;
+}
+
 .saveButton:hover {
-  background: var(--ifm-color-primary-dark);
+  opacity: 0.8;
 }
 
 /* Feedback Modal Styles */
