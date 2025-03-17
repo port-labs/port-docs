@@ -165,8 +165,8 @@ Each interaction records both input and output tokens, helping you understand yo
 
 Port applies limits to AI agent interactions to ensure fair usage across all customers:
 
-- **Daily query limit**: 100 queries per day.
-- **Token usage limit**: 100,000 tokens per day.
+- **Daily query limit**: 20 queries per minute.
+- **Token usage limit**: 200,000 tokens per minute.
 
 :::caution Usage limits
 Usage limits may change without prior notice. Once a limit is reached, you will need to wait until it resets.  

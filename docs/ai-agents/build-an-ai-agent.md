@@ -208,19 +208,20 @@ Start with one sentence explaining what the agent is about, and then interact wi
 AI agents in Port can search, group, and index entities in your Port instance. However, there are some technical limitations to be aware of:
 
 - **Search capabilities**: 
-  - Search API & Similarity search returns up to 10 entities.
-  - Similarity search indexes identifier, title, and string properties above 50 characters and below 8K tokens.
+  - Search API returns up to 25 entities.
+  - Similarity search returns up to 10 entities.
+  - Similarity search indexes the first 8K tokens of identifier, title, and string properties above 50 characters (ignoring content beyond 8K tokens).
 
 - **Data processing limits**:
-  - Up to 5 iterations on the response (up to 6 LLM interactions).
-  - LLM interactions are limited to 2000 tokens.
-  - Entities grouping tool can return count by property, scorecard, or relation (no additional filters applied).
-  - Entities grouping can return up to 100 groups.
+  - 1 interaction for the plan, and up to 5 interactions for the execution (tools/final answer).
+  - LLM output is limited to 2000 tokens per interaction.
+  - Entities grouping tool can return count by property, scorecard, or relation (with additional filters supported like in the search tool).
+  - Entities grouping can return up to 50 groups.
   - Entities search returns up to 10 related entities for each entity.
   - Entities search returns only the scorecard level (e.g., you can't ask about specific rules).
 
 - **Context requirements**:
-  - To select an entity in an entity selection field of a form, you must provide the blueprint as context.
+  - To select an action for the agent, all the blueprints of the entity selection fields must be included in the agent's blueprints.
   - The response can only be based on relations that can be achieved from the allowed blueprints.
 
 - **Permission model**:
