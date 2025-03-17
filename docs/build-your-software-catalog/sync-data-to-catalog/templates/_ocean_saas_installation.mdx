@@ -2,7 +2,7 @@ import BetaFeatureNotice from "/docs/generalTemplates/_beta_feature_notice.md";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import OceanSaasLimitations from "/src/components/ocean-saas-specifics/limitations.jsx";
-import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggers } from "/src/components/ocean-saas-specifics/live-events.jsx";
+import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
 Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
 
@@ -10,7 +10,11 @@ Using this installation option means that the integration will be hosted by Port
 
 <OceanSaasLiveEventsDescription id={props.integration} />
 
-<OceanSaasLiveEventsTriggers id={props.integration} />
+{liveEvents[props.integration] ?
+<details><summary><b>Supported live event triggers</b></summary>
+<OceanSaasLiveEventsTriggersManual id={props.integration} isOAuth={false} />
+</details>
+: <></>}
 
 :::tip Self-hosted installation
 Alternatively, you can install the integration using the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) method to update Port in real time using webhooks.
@@ -56,6 +60,8 @@ To see all secrets in your organization, follow [these steps](/sso-rbac/port-sec
 <h3>Limitations</h3>
 
 <OceanSaasLimitations id={props.integration} />
+
+
 
 <h3>Port source IP addresses</h3>
 

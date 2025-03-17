@@ -4,13 +4,30 @@ import TabItem from "@theme/TabItem";
 import OceanSaasDefaultSettings from "/src/components/ocean-saas-specifics/default-settings.jsx";
 import OceanSaasIntegrationSettings from "/src/components/ocean-saas-specifics/integration-settings.jsx";
 import OceanSaasLimitations from "/src/components/ocean-saas-specifics/limitations.jsx";
-import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggers } from "/src/components/ocean-saas-specifics/live-events.jsx";
+import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersOAuth, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
 Using this installation option means that the integration will be hosted by Port, with a customizable resync interval to ingest data into Port.
 
 <h3>Live event support</h3>
 
 <OceanSaasLiveEventsDescription id={props.integration} />
+
+{liveEvents[props.integration + "_OAuth"] ?
+<Tabs queryString="oauth">
+<TabItem label="OAuth" value="oauth">
+<details>
+<summary><b>Supported live event OAuth triggers</b></summary>
+<OceanSaasLiveEventsTriggersOAuth id={props.integration} isOAuth={true} />
+</details>
+</TabItem>
+<TabItem label="Manual installation" value="manual">
+<details>
+<summary><b>Supported live event triggers</b></summary>
+<OceanSaasLiveEventsTriggersManual id={props.integration} isOAuth={false} />
+</details>
+</TabItem>
+</Tabs>
+: <></>}
 
 <h3>Installation</h3>
 
@@ -27,8 +44,6 @@ This integration supports **OAuth2** for quick installation with default setting
    This will prompt you to authorize Port and install the integration with the following default settings:
     <OceanSaasDefaultSettings id={props.integration} />
    See the `Application settings` section below for descriptions of these settings.
-
-<OceanSaasLiveEventsTriggers id={props.integration} isOAuth={true} />
 
 Answers to common questions about OAuth integrations can be found here:
 <details>
@@ -77,8 +92,6 @@ To manually configure the installation settings:
 1. Toggle on the `Use Custom Settings` switch.
 
 2. Configure the `integration settings` and `application settings` as you wish (see below for details).
-
-<OceanSaasLiveEventsTriggers id={props.integration} isOAuth={false} />
 
 </TabItem>
 </Tabs>
