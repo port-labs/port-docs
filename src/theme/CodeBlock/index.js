@@ -152,33 +152,29 @@ function FeedbackModal({ isLoading, isSuccess, message, onClose }) {
 
 // Function to remove comments from JSON string
 function stripJsonComments(jsonString) {
-  // State to track if we're inside a string
+  const length = jsonString.length;
+  const chunks = [];
   let inString = false;
   let escaped = false;
-  let result = '';
   let i = 0;
+  let start = 0;
 
-  while (i < jsonString.length) {
+  while (i < length) {
     const char = jsonString[i];
 
-    // Handle string content
     if (char === '"' && !escaped) {
       inString = !inString;
-      result += char;
       i++;
       continue;
     }
 
-    // Handle escape characters
     if (char === '\\' && !escaped) {
       escaped = true;
-      result += char;
       i++;
       continue;
     }
 
-    // Handle single-line comments - only if preceded by whitespace or at start of line
-    if (!inString && char === '/' && jsonString[i + 1] === '/') {
+    if (!inString && char === '/') {
       // Look backwards to check if this is a real comment
       let isComment = true;
       let j = i - 1;
@@ -195,47 +191,42 @@ function stripJsonComments(jsonString) {
       }
 
       if (isComment) {
-        // Skip until end of line
-        while (i < jsonString.length && jsonString[i] !== '\n') {
-          i++;
+        if (jsonString[i + 1] === '/') {
+          // Single-line comment
+          chunks.push(jsonString.slice(start, i));
+          i += 2;
+          while (i < length && jsonString[i] !== '\n') {
+            i++;
+          }
+          if (i < length) i++; // Skip the newline
+          start = i;
+          continue;
         }
-        continue;
-      }
-    }
 
-    // Handle multi-line comments - only if preceded by whitespace or at start of line
-    if (!inString && char === '/' && jsonString[i + 1] === '*') {
-      // Look backwards to check if this is a real comment
-      let isComment = true;
-      let j = i - 1;
-      
-      // Skip whitespace
-      while (j >= 0 && /\s/.test(jsonString[j])) {
-        j--;
-      }
-      
-      // If we found a non-whitespace character that's not a comma, brace, bracket, or colon,
-      // then this is probably not a comment
-      if (j >= 0 && !/[,{}\[\]:]/.test(jsonString[j])) {
-        isComment = false;
-      }
-
-      if (isComment) {
-        i += 2; // Skip /*
-        while (i < jsonString.length && !(jsonString[i] === '*' && jsonString[i + 1] === '/')) {
-          i++;
+        if (jsonString[i + 1] === '*') {
+          // Multi-line comment
+          chunks.push(jsonString.slice(start, i));
+          i += 2;
+          while (i < length - 1 && !(jsonString[i] === '*' && jsonString[i + 1] === '/')) {
+            i++;
+          }
+          i += 2; // Skip */
+          start = i;
+          continue;
         }
-        i += 2; // Skip */
-        continue;
       }
     }
 
     escaped = false;
-    result += char;
     i++;
   }
 
-  return result;
+  // Add the remaining chunk
+  if (start < length) {
+    chunks.push(jsonString.slice(start));
+  }
+
+  return chunks.join('');
 }
 
 // Regex patterns for Port resources
