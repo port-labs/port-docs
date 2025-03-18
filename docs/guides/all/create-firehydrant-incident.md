@@ -27,8 +27,8 @@ You can implement this action in two ways:
 
 ## Set up data model
 
-If you haven't installed the FireHydrant integration, you'll need to create blueprint for FireHydrant incidents.
-However, we highly recommend you install the FireHydrant integration to have these automatically set up for you.
+If you haven't installed the FireHydrant integration, you will need to manually create a blueprint for FireHydrant incidents.  
+We highly recommend that you install the FireHydrant integration to have such resources automatically set up for you.
 
 <h3>Create the FireHydrant incident blueprint</h3>
 
