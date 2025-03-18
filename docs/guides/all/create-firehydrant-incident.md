@@ -23,11 +23,7 @@ You can implement this action in two ways:
 
 - Complete the [onboarding process](/getting-started/overview).
 - Access to your FireHydrant organization with permissions to manage incidents.
-- Optional - Install Port's FireHydrant integration [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant)
-
-	:::tip FireHydrant Integration
-	This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your FireHydrant Incidents.
-	:::
+- Optional - Install Port's [FireHydrant integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant).
 
 ## Set up data model
 
