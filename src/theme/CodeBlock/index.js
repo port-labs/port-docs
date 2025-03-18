@@ -327,8 +327,8 @@ export default function CodeBlockWrapper(props) {
 
     try {
       const endpoint = resourceType === 'blueprint' ? 
-        `https://api.stg-01.getport.io/v1/${resourceType}s` : 
-        'https://api.stg-01.getport.io/v1/actions';
+        `https://api.getport.io/v1/${resourceType}s` : 
+        'https://api.getport.io/v1/actions';
 
       // Clean the JSON string by removing comments
       const cleanedJson = stripJsonComments(props.children);
