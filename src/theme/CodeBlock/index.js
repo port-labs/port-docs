@@ -137,7 +137,7 @@ function FeedbackModal({ isLoading, isSuccess, message, onClose }) {
               {isSuccess ? 'Success' : 'Error'}
             </div>
             <div className={styles.feedbackContent}>
-              {message}
+              <div dangerouslySetInnerHTML={{ __html: message.replace(/\n/g, '<br/>') }} />
             </div>
             <button className={styles.closeButton} onClick={onClose}>
               Close
@@ -257,21 +257,7 @@ function ConfirmationModal({ resourceType, onConfirm, onCancel, onReplaceToken }
           Create this {resourceType} in your Port application
         </div>
         <div className={styles.confirmationContent}>
-          <p>The {resourceType} defined in this code block will be created in your Port application.</p>
-          <div className={styles.confirmationDetails}>
-            <p>To view the new {resourceType} after it's created:</p>
-            <ul>
-              {resourceType === 'blueprint' && (
-                <li>Go to the <a href="https://app.getport.io/settings/data-model" target="_blank" rel="noopener noreferrer">data model</a> page of your Port application.</li>
-              )}
-              {resourceType === 'action' && (
-                <li>Go to the <a href="https://app.getport.io/self-serve" target="_blank" rel="noopener noreferrer">self-service</a> page of your Port application.</li>
-              )}
-              {resourceType === 'automation' && (
-                <li>Go to the <a href="https://app.getport.io/settings/automations" target="_blank" rel="noopener noreferrer">automations</a> page of your Port application.</li>
-              )}
-            </ul>
-          </div>
+          <p>The {resourceType} defined in this code block will be created in your portal.<p/></p>
           <div className={styles.confirmationFooter}>
             <button onClick={onReplaceToken} className={styles.replaceTokenButton}>
               Replace token
@@ -358,7 +344,7 @@ export default function CodeBlockWrapper(props) {
         show: true,
         loading: false,
         success: true,
-        message: `Successfully created ${resourceType} in Port!`
+        message: `The ${resourceType} was successfully created in your portal!\n\nView it in your <a href="${resourceType === 'blueprint' ? 'https://app.getport.io/settings/data-model' : resourceType === 'action' ? 'https://app.getport.io/self-serve' : 'https://app.getport.io/settings/automations'}" target="_blank" rel="noopener noreferrer">${resourceType === 'blueprint' ? 'data model' : resourceType === 'action' ? 'self-service' : 'automations'}</a> page.`
       });
     } catch (error) {
       console.error('Error creating resource:', error);
