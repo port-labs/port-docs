@@ -175,22 +175,30 @@ function stripJsonComments(jsonString) {
     }
 
     if (!inString && char === '/') {
-      // Look backwards to check if this is a real comment
-      let isComment = true;
+      // Check if this is part of a URL by looking at surrounding context
+      let isUrl = false;
+      
+      // Look backwards to check for URL patterns
       let j = i - 1;
+      let urlPattern = '';
       
       // Skip whitespace
       while (j >= 0 && /\s/.test(jsonString[j])) {
         j--;
       }
       
-      // If we found a non-whitespace character that's not a comma, brace, bracket, or colon,
-      // then this is probably not a comment (e.g., it's part of a URL)
-      if (j >= 0 && !/[,{}\[\]:]/.test(jsonString[j])) {
-        isComment = false;
+      // Build potential URL pattern backwards
+      while (j >= 0 && !/[\s,\{\}\[\]]/.test(jsonString[j])) {
+        urlPattern = jsonString[j] + urlPattern;
+        j--;
+      }
+      
+      // Check if we have common URL patterns
+      if (urlPattern.match(/https?:|ftp:|file:|ws:|wss:|\/\/|\.com|\.org|\.net|\.io|api\/|\/v\d/i)) {
+        isUrl = true;
       }
 
-      if (isComment) {
+      if (!isUrl) {
         if (jsonString[i + 1] === '/') {
           // Single-line comment
           chunks.push(jsonString.slice(start, i));

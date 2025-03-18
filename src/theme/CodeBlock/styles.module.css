@@ -255,7 +255,7 @@
 .feedbackModal {
   background: var(--ifm-background-surface-color);
   border-radius: 8px;
-  width: 400px;
+  width: 450px;
   max-width: 90%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   font-family: var(--ifm-font-family-base);

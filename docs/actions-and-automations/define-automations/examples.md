@@ -122,7 +122,7 @@ The following definition will cause a webhook to be triggered whenever the `ttl`
     "body": {
       "entityId": "{{ .event.context.entityIdentifier }}",
       "runId": "{{ .run.id }}"
-    },
+    }
   },
   "publish": true
 }
