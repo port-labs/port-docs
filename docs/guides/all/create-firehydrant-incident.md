@@ -547,17 +547,17 @@ We highly recommend that you install the FireHydrant integration to have such re
 
 ## Let's test it!
 
-1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal.
 
 2. Choose either the GitHub workflow or webhook implementation:
-   - For GitHub workflow: Click on `Create FireHydrant Incident`
-   - For webhook: Click on `Create FireHydrant Incident (Webhook)`
+   - For GitHub workflow: Click on `Create FireHydrant Incident`.
+   - For webhook: Click on `Create FireHydrant Incident (Webhook)`.
 
 3. Enter the required information:
-   - Incident name
-   - Description of the incident   
-   - Priority level (from P1 to P4)
+   - Incident name.
+   - Description of the incident.
+   - Priority level (from P1 to P4).
 
-5. Click on `Execute`
+5. Click on `Execute`.
 
-6. Done! Wait for the incident to be created in FireHydrant
+6. Done! Wait for the incident to be created in FireHydrant.
