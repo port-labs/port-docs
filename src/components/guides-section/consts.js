@@ -901,4 +901,11 @@ export const availableGuides = [
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-any-data-via-airbyte-s3-and-webhook"
     },
+    {
+        title: "Create a FireHydrant Incident",
+        description: "Create a self-service action that creates a FireHydrant incident",
+        tags: ["Incident management", "FireHydrant", "GitHub", "Actions","Webhook", "Automations"],
+        logos: ["FireHydrant", "GitHub"],
+        link: "/guides/all/create-firehydrant-incident",
+    },
 ]
