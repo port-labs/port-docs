@@ -16,8 +16,8 @@ This guide aims to cover how to connect a GitHub pull request with a Jira Issue 
 
 ## Prerequisites
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview).
-- Ensure you have [Jira installed and configured in your environment](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
-- Install the [Port GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
+- Install the [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
+- Install [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
 
 
 
@@ -292,7 +292,7 @@ Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, w
 This can be done by adding some mapping logic. 
 
 <Tabs>
-<TabItem value="direct" label="Direct Identifier Mapping" default>
+<TabItem value="direct_identifier_mapping" label="Direct identifier mapping" default>
 
 1. Go to your [data sources page](https://app.getport.io/settings/data-sources)
 
@@ -354,7 +354,7 @@ For the `jiraIssue` relation, we extract the Jira Issue key from the title of th
 
 </TabItem>
 
-<TabItem value="search" label="Search Relations">
+<TabItem value="search_relation" label="Search relation">
 
  You can use search relations to match PRs with Jira issues based on multiple criteria. This approach is more flexible and can handle more complex matching scenarios.
 
