@@ -725,39 +725,3 @@ html[data-theme="dark"] .navbar-signup-button {
   background-color: rgba(255, 255, 255, .3);
   cursor: pointer;
 }
-
-/* Port Login Button Styles */
-.header-port-login {
-  display: flex;
-  align-items: center;
-  padding: 8px 12px;
-  margin: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--ifm-navbar-link-color);
-  font-family: var(--ifm-font-family-base);
-  font-size: 14px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.header-port-login:hover {
-  opacity: 0.8;
-}
-
-.header-port-login::before {
-  content: "⚙️ Authenticate";
-  font-size: 14px;
-  /* margin-right: 8px; */
-}
-
-.header-port-login.has-token::before {
-  content: "🔓 Authenticated";
-  font-size: 14px;
-}
-
-/* Hide any text content in the button for cleaner look */
-.header-port-login span {
-  display: none;
-}
