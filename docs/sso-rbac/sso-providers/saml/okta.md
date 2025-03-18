@@ -5,6 +5,7 @@ description: Integrate Okta with Port using SAML
 ---
 
 import ScimFunctionality from "/docs/sso-rbac/sso-providers/_scim_functionality_list.mdx"
+import DirectUrl from "/docs/generalTemplates/_sso_direct_url.md"
 
 # How to configure Okta
 
@@ -49,6 +50,7 @@ To secure the SAML integration, you need to generate a certificate and send it t
 5. After generating the certificate, download it by clicking on the `Actions` button next to the new certificate and selecting `Download certificate`. Choose the `PEM` format.
 6. Send the **PEM certificate file** along with the **Identity Provider metadata URL** (available in the `Sign On` tab) to Port.
 
+<DirectUrl/>
 
 ## Expose Groups
 

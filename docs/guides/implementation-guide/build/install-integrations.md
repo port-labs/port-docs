@@ -39,14 +39,19 @@ For custom integrations, you will need to:
 
 ## Create logical connections between blueprints
 
-Once your software catalog is populated with data from different sources, you can create logical connections between blueprints to define the relationship between them.  
+Once your software catalog is populated with data from different sources, you can create logical connections between blueprints to define the relationship between them, using [relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/).
 
 This is one of the main strengths of a developer portal - tools in your ecosystem that were once unaware of each other are now part of a catalog that can be used to create new insights and workflows.
 
 For example:
 - Once you connect your **Jira issue** and **Service** blueprints, you can create a [dashboard widget](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/) that tracks and displays the open issues in Jira that are related to a specific service.
-- Once you connect your **PageDuty incident** and **Service** blueprints, you can define an [automation](https://docs.port.io/actions-and-automations/define-automations/) that notifies the service owner when a new incident is created for their service.
+- Once you connect your **PagerDuty incident** and **Service** blueprints, you can define an [automation](https://docs.port.io/actions-and-automations/define-automations/) that notifies the service owner when a new incident is created for their service.
 
+:::tip Default relations
+When installing pre-built integrations, some relations are automatically created between blueprints.  
+
+The relations in the two examples above will be automatically created when installing the **Jira** and **PagerDuty** integrations respectively.
+:::
 
 Use [**relations**](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/) to define the logical relationships between the blueprints in your portal.
 
