@@ -40,7 +40,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation integration="Linear"/>
 
 </TabItem>
 
