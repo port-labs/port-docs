@@ -3,9 +3,6 @@ displayed_sidebar: null
 description: Learn how to create an incident.io incident in Port, ensuring timely resolution and effective incident management.
 ---
 
-import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
-import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
-import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_secrets_callout.mdx'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
