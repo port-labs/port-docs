@@ -229,6 +229,7 @@ This page contains a list of Port's available integrations, organized by the pla
 ## FireHydrant
 
 - [FireHydrant integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/firehydrant.md)
+- [Self-service action to trigger a FireHydrant incident](https://docs.port.io/guides/all/create-firehydrant-incident)
 
 ## KubeCost
 
