@@ -3,6 +3,9 @@ displayed_sidebar: null
 description: Learn how to map Dynatrace teams to monitored entities in Port
 ---
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+
 # Assign teams to monitored entities
 
 This guide explains how to assign team ownership to Dynatrace entities, allowing you to easily identify which team is responsible for each monitored entity.
@@ -48,6 +51,8 @@ Dynatrace supports multiple methods for assigning team ownership, including Kube
 
 To set up the mapping, navigate to the Dynatrace integration in the [Data Sources page](https://app.getport.io/settings/data-sources) and add the following mapping based on your preferred method:
 
+<Tabs>
+<TabItem value="direct_mapping" label="Direct Mapping" default>
 
 <details>
 <summary><b>Dynatrace ownership configuration using Kubernetes labels and annotations</b></summary>
@@ -78,7 +83,7 @@ resources:
             type: .type
             tags: .tags[].stringRepresentation
           relations:
-            owned_by: .properties.kubernetesLabels | to_entries | map(select(.key == "dt.ower" or .key == "owner") | .value) | if length == 0 then null else . end
+            owned_by: .properties.kubernetesLabels | to_entries | map(select(.key == "dt.owner" or .key == "owner") | .value) | if length == 0 then null else . end
 ```
 :::tip ownership keys
 In this example, the `dt.owner` and `owner` keys from Kubernetes resource labels are used to define ownership. You should use the keys configured in your Dynatrace environment. For more details on setting up ownership keys, refer to the [Dynatrace documentation](https://docs.dynatrace.com/docs/deliver/ownership/assign-ownership#format)
@@ -133,6 +138,64 @@ resources:
 In this example, the `dt.owner` and `owner` keys from the tags are used to define ownership. You should use the keys configured in your Dynatrace environment. For more details on setting up ownership keys, refer to the [Dynatrace documentation](https://docs.dynatrace.com/docs/deliver/ownership/assign-ownership#format)
 :::
 </details>
+
+</TabItem>
+
+<TabItem value="search_relation" label="Search Relation">
+
+You can also use [search relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to dynamically match Dynatrace entities with teams based on specific criteria. This approach is particularly useful when you want to relate entities that have a common attribute.
+
+<details>
+<summary><b>Dynatrace ownership configuration using search relations</b></summary>
+
+```yaml showLineNumbers
+deleteDependentEntities: true
+createMissingRelatedEntities: true
+enableMergeEntity: true
+resources:
+  - kind: entity
+    selector:
+      query: 'true'
+      entityTypes:
+        - `CLOUD_APPLICATION`
+        - `KUBERNETES_SERVICE`
+        - `KUBERNETES_CLUSTER`
+        # Add more entity types
+      entityFields: firstSeenTms,lastSeenTms,tags,properties,managementZones,fromRelationships,toRelationships
+    port:
+      entity:
+        mappings:
+          identifier: .displayName | gsub(" "; "-")
+          title: .displayName
+          blueprint: '"dynatraceEntity"'
+          properties:
+            firstSeen: .firstSeenTms / 1000 | todate
+            lastSeen: .lastSeenTms / 1000 | todate
+            type: .type
+            tags: .tags[].stringRepresentation
+            managementZone: .managementZones[0].name
+          relations:
+            owned_by:
+              combinator: '"or"'
+              rules:
+                - property: '"name"'
+                  operator: '"="'
+                  value: .managementZones[0].name
+                - property: '"identifier"'
+                  operator: '"="'
+                  value: .properties.kubernetesLabels.team
+```
+:::tip Search relation matching
+This configuration shows two ways to match teams:
+1. By matching the team's name with the entity's management zone
+2. By matching the team's identifier with a Kubernetes label
+You can adjust the rules based on your team structure and naming conventions.
+:::
+
+</details>
+
+</TabItem>
+</Tabs>
 
 Next, click on the **resync** button and watch your Dynatrace `entities` being mapped to the `teams` as shown below in this example:
 
