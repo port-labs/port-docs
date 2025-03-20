@@ -256,7 +256,7 @@ You can also change the `title` of the ownership property. The default value is 
                "property": "$team",
                "operator": "containsAny",
                "value": {
-                 "jqQuery": ".user.teamsIdentifiers"
+                 "jqQuery": ".user.team" 
                }
              }
            ]
