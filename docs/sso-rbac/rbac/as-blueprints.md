@@ -176,7 +176,7 @@ These are the available options for the `ownership` property:
 
 1. **No ownership**
 
-    The blueprint has no defined ownership mechanism.  
+    The blueprint has no defined ownership.  
     The `$team` property will have no meaningful value.
 
     ```json showLineNumbers
