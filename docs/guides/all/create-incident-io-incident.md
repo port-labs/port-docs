@@ -302,6 +302,6 @@ Now when you execute the webhook action, the incident data in Port will be autom
    - Severity level.
    - Visibility.
 
-5. Click on `Execute`.
+4. Click on `Execute`.
 
-6. Done! Wait for the incident to be created in incident.io.
+5. Done! Wait for the incident to be created in incident.io.
