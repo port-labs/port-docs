@@ -124,9 +124,18 @@ Here admins can also change a user's status, and invite new users.
 
 ## Ownership
 
+In Port, ownership can be defined at two levels:
+
+1. **Entity Level** - Every entity has a `$team` meta-property that stores which teams own it
+2. **Blueprint Level** - Each blueprint can define how ownership is determined for its entities using the `ownership` property
+
+Think of it this way:
+- The `$team` meta-property is like a field that stores the actual team owners
+- The `ownership` property is like a rule that tells Port how to set those team owners
+
 ### The `team` meta-property
 
-Each entity has a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) named `team`, that is used to define the team/s that own the entity.  
+Each entity has a [meta-property](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/meta-properties.md) named `team`, that stores which teams own the entity.  
 As an `admin`, you can also set blueprint permissions according to this field.
 
 The `team` meta-property is an array of the owning teams' `identifiers`.  
@@ -160,7 +169,7 @@ For example, in a search query:
 
 ### The `ownership` property
 
-All blueprints have an `ownership` property that defines ownership for its entities.  
+All blueprints have an `ownership` property that tells Port how to set team ownership for its entities.  
 This field is not mandatory.
 
 :::info Terraform support
@@ -171,7 +180,7 @@ These are the available options for the `ownership` property:
 
 1. **No ownership**
 
-    The blueprint has no defined ownership.  
+    The blueprint has no defined ownership mechanism.  
     The `$team` property will have no meaningful value.
 
     ```json showLineNumbers
