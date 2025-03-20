@@ -1,6 +1,6 @@
 ---
 displayed_sidebar: null
-description: Learn how to create an Linear incident in Port, ensuring timely resolution and effective incident management.
+description: Learn how to create a Linear issue in Port, streamlining issue categorization and tracking.
 ---
 
 import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_secrets_callout.mdx'
