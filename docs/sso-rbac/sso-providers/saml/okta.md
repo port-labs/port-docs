@@ -88,7 +88,7 @@ Okta supports [SCIM](https://auth0.com/docs/authenticate/protocols/scim) for SAM
 <ScimFunctionality/>
 
 :::info User deprovisioning
-When using SCIM with Okta SAML, if a user is unassigned from the SSO application in Okta, they will automatically lose access to Port. This deprovisioning works at the Auth0 level - meaning the user's ability to access the system is restricted at our login provider. 
+When using SCIM with Okta SAML, if a user is unassigned from the SSO application in Okta, they will automatically lose access to Port. Deprovisioning works at the Auth0 level - meaning the user's account will be blocked by the login provider.  
 However, this change will not be reflected in the portal's "Users and teams" page.
 :::
 
