@@ -15,6 +15,11 @@ The installation method mainly depends on your infrastructure and processes.
 You can can consider defining this now, or later during the implementation phase.
 :::
 
+## Sign up & onboard
+
+Now that you have a clear plan for your portal, it's time to sign up and start creating it.
+
+Port will guide you through an [onboarding process](/getting-started/overview) to help you get started.
 ## Invite relevant initial users to Port
 
 Invite users to your Port account who will be responsible for the initial setup and configuration of the portal, and assign them the appropriate roles.  
