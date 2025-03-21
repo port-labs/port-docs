@@ -25,12 +25,12 @@ This functionality streamlines project management by enabling users to create is
 If you haven't installed the Linear integration, you will need to manually create blueprints for Linear issues, labels and teams.  
 We highly recommend that you install the Linear integration to have such resources automatically set up for you. 
 
-<h3>Create the Linear blueprints</h3>
+### Create a Linear issue blueprint
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
-3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
-4. Add the following JSON schemas separately into the editor while clicking "Save" to create the blueprint one after the other:
+3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
+4. Add the following JSON schemas separately into the editor while clicking `Save` to create the blueprint one after the other:
 
     <details>
     <summary><b>Linear Team Blueprint (Click to expand)</b></summary>
@@ -196,9 +196,9 @@ We highly recommend that you install the Linear integration to have such resourc
 
 ## Implementation
 
-You can create Linear issue by leveraging Port's **synced webhooks** and **secrets** to directly interact with Linear's GraphQL API. This method simplifies the setup by handling everything within Port.
+You can create Linear issue by leveraging Port's **synced webhooks** and **secrets** to directly interact with Linear's GraphQL API.
 
-<h3>Add Port secrets</h3>
+### Add Port secrets
 
 <ExistingSecretsCallout integration="Linear" />
 
@@ -211,13 +211,12 @@ To add these secrets to your portal:
 3. Click on the `Secrets` tab.
 
 4. Click on `+ Secret` and add the following secrets:
-    - `LINEAR_API_KEY`: Your [Linear API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys)
+    - `LINEAR_API_KEY`: Your [Linear API key](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys).
 
 
-<h3> Set up self-service action </h3>
+### Set up self-service action
 
-We will create a self-service action to handle creating Linear issues using webhooks.
-To create a self-service action follow these steps:
+Let's define a self-service action that is used to create a Linear issue:
 
 1. Head to the [self-service](https://app.getport.io/self-serve) page.
 2. Click on the `+ New Action` button.
@@ -352,7 +351,7 @@ To create a self-service action follow these steps:
 
 Now you should see the `Create Linear Issue (Webhook)` action in the self-service page. 🎉
 
-<h3> Create an automation to upsert entity in port </h3>
+### Create an automation to update your catalog
 
 After each execution of the action, we would like to update the relevant entity in Port with the latest status.  
 
