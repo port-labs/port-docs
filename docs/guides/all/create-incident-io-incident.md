@@ -111,7 +111,7 @@ You will need to manually create a blueprint for the incident.io incidents.
 
 You can create incident.io incidents by leveraging Port's **synced webhooks** and **secrets** to directly interact with incident.io's API.
 
-<h3>Add Port secrets</h3>
+### Add Port secrets
 
 To add these secrets to your portal:
 
