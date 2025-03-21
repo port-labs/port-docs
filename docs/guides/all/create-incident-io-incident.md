@@ -122,7 +122,7 @@ To add these secrets to your portal:
 3. Click on the `Secrets` tab.
 
 4. Click on `+ Secret` and add the following secrets:
-    - `INCIDENT_IO_API_KEY`: Your [incident.io API key](https://app.incident.io/settings/api-keys)
+    - `INCIDENT_IO_API_KEY`: Your [incident.io API key](https://app.incident.io/settings/api-keys).
 
 
 <h3> Set up self-service action </h3>
