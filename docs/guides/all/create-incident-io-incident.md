@@ -109,7 +109,7 @@ You will need to manually create a blueprint for the incident.io incidents.
 
 ## Implementation
 
-You can create incident.io incidents by leveraging Port's **synced webhooks** and **secrets** to directly interact with incident.io's API. This method simplifies the setup by handling everything within Port.
+You can create incident.io incidents by leveraging Port's **synced webhooks** and **secrets** to directly interact with incident.io's API.
 
 <h3>Add Port secrets</h3>
 
