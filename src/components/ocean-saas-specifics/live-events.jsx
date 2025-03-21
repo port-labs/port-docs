@@ -4,7 +4,7 @@ import TabItem from "@theme/TabItem";
 
 const defaultLiveEvents = {
   unsupported:
-    `Currently, live events are not supported for integrations hosted by Port. \
+    `Currently, live events are not supported for this integration. \
     \nResyncs will be performed **periodically** (with a configurable interval), or **manually** triggered by you via Port's UI. \
     \n\nTherefore, real-time events (including GitOps) will not be ingested into Port immediately. \
     \nLive events support for this integration is WIP and will be supported in the near future.`,
