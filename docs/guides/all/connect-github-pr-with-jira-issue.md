@@ -16,8 +16,8 @@ This guide aims to cover how to connect a GitHub pull request with a Jira Issue 
 
 ## Prerequisites
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview).
-- Install the [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/)
-- Install [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
+- Install Port's [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/).
+- Install Port's [GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup).
 
 
 
@@ -289,10 +289,17 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
     <br/><br/>
 
 Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant Jira Issue to each of our pull requests.   
-This can be done by adding some mapping logic. 
+This can be done by adding some mapping logic, using one of the following methods: 
 
 <Tabs>
 <TabItem value="direct_identifier_mapping" label="Direct identifier mapping" default>
+
+Direct mapping is when you explicitly specify the identifier of a related entity when creating a relation.   
+This is the traditional way of establishing relations between entities in Port.  
+This is very useful when you're directly referencing the identifier of the related entity
+
+Follow the steps below to map pull request entities with Jira issues using direct identifier mapping:
+
 
 1. Go to your [data sources page](https://app.getport.io/settings/data-sources)
 
@@ -356,7 +363,11 @@ For the `jiraIssue` relation, we extract the Jira Issue key from the title of th
 
 <TabItem value="search_relation" label="Search relation">
 
- You can use search relations to match PRs with Jira issues based on multiple criteria. This approach is more flexible and can handle more complex matching scenarios.
+ You can also use [search relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to match PRs with Jira issues based on multiple criteria.
+ This approach is particularly useful when you know the value of one of the entity's properties.  
+
+Follow the steps below to match PRs with Jira issues based on multiple criteria (title, description, branch name).
+You can customize these matching rules based on your team's conventions and requirements.
 
 1. Go to your [data sources page](https://app.getport.io/settings/data-sources)
 2. Click on your Github integration
@@ -393,12 +404,17 @@ For the `jiraIssue` relation, we extract the Jira Issue key from the title of th
                 jiraIssue:
                   combinator: '"or"'
                   rules:
+                    # Match Jira issue key in PR title
                     - property: '"$identifier"'
                       operator: '"="'
                       value: (.title // "") | match("^[A-Za-z]+-[0-9]+") .string
+
+                    # Match Jira issue key in PR description
                     - property: '"$identifier"'
                       operator: '"="'
                       value: (.body // "") | match("[A-Za-z]+-[0-9]+") .string
+                    
+                    # Match Jira issue key in PR branch name
                     - property: '"$identifier"'
                       operator: '"="'
                       value: (.head.ref // "") | match("[A-Za-z]+-[0-9]+") .string
@@ -407,17 +423,6 @@ For the `jiraIssue` relation, we extract the Jira Issue key from the title of th
     </details>
 
 5. Click `Save & Resync` to apply the changes
-
-:::tip Search Relation Benefits
-You can match PRs with Jira issues based on multiple properties (title, description, branch name)
-
-The example above shows three different ways to match PRs with Jira issues:
-- Looking for Jira issue keys in the PR title
-- Looking for Jira issue keys in the PR description
-- Looking for Jira issue keys in the PR branch name
-
-You can customize these rules based on your team's conventions and requirements.
-:::
 
 </TabItem>
 </Tabs>

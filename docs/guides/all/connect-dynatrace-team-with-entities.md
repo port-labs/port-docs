@@ -54,6 +54,12 @@ To set up the mapping, navigate to the Dynatrace integration in the [Data Source
 <Tabs>
 <TabItem value="direct_mapping" label="Direct Mapping" default>
 
+Direct mapping is when you explicitly specify the identifier of a related entity when creating a relation.   
+This is the traditional way of establishing relations between entities in Port.  
+This is very useful when you're directly referencing the identifier of the related entity
+
+Add the following snippet to your mapping configuration to map Dynatrace entities with teams using Kubernetes labels and annotations:
+
 <details>
 <summary><b>Dynatrace ownership configuration using Kubernetes labels and annotations</b></summary>
 
@@ -143,7 +149,11 @@ In this example, the `dt.owner` and `owner` keys from the tags are used to defin
 
 <TabItem value="search_relation" label="Search Relation">
 
-You can also use [search relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to dynamically match Dynatrace entities with teams based on specific criteria. This approach is particularly useful when you want to relate entities that have a common attribute.
+You can also use [search relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to dynamically match Dynatrace entities with teams based on specific criteria.   
+This approach is particularly useful when you know the value of one of the entity's properties.  
+
+Add the snippet below to your mapping configuration to match teams with entities by either using the entity's management zone name or a Kubernetes label.
+You can customize these matching rules according to your organization's team structure and naming conventions.
 
 <details>
 <summary><b>Dynatrace ownership configuration using search relations</b></summary>
@@ -185,12 +195,6 @@ resources:
                   operator: '"="'
                   value: .properties.kubernetesLabels.team
 ```
-:::tip Search relation matching
-This configuration shows two ways to match teams:
-1. By matching the team's name with the entity's management zone
-2. By matching the team's identifier with a Kubernetes label
-You can adjust the rules based on your team structure and naming conventions.
-:::
 
 </details>
 

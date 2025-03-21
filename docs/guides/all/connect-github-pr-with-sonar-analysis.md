@@ -16,8 +16,8 @@ This guide aims to cover how to connect a GitHub pull request with a SonarQube a
 
 ## Prerequisites
 - This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview).
-- Install the [SonarQube integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
-- Install [Port's GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
+- Install Port's [SonarQube integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/code-quality-security/sonarqube)
+- Install Port's [GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
 
 ## Set up data model
 
@@ -253,7 +253,9 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
     <br/><br/>
 
 Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant SonarQube analysis to each of our pull requests.   
-This can be done by adding some mapping logic. 
+This can be done by adding some mapping logic using [search relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries), which allow us to match PRs with SonarQube analyses based on the knowledge of the value of one of the entity's properties.
+
+The following steps demonstrate how to match PRs with SonarQube analyses using search relations.
 
 <Tabs>
 <TabItem value="title_branch_matching" label="Match by Title & Branch" default>

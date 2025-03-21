@@ -16,8 +16,9 @@ This guide will demonstrate how to ingest dependencies from a `package.json` fil
 
 ## Prerequisites
 
-- Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
-- Ensure you have [GitHub installed and configured](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) in your environment.
+- This guide assumes you have a Port account and that you have finished the [onboarding process](/getting-started/overview).
+- Install Port's [GitHub app](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/github/#setup)
+
 
 ## Set up data model
 ### Add the `Dependency` blueprint
@@ -138,6 +139,9 @@ Once the dependencies have been ingested, the next step is to establish relation
 
     <Tabs>
     <TabItem value="direct_mapping" label="Direct Mapping" default>
+    Direct mapping is when you explicitly specify the identifier of a related entity when creating a relation.   
+    This is the traditional way of establishing relations between entities in Port.  
+    This is very useful when you're directly referencing the identifier of the related entity
 
     ```yaml showLineNumbers
       - kind: file
@@ -176,7 +180,10 @@ Once the dependencies have been ingested, the next step is to establish relation
 
     <TabItem value="search_relation" label="Search Relation">
 
-    You can also use [search relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to dynamically match services with their dependencies based on package information.
+    You can also use [search relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to dynamically match services with their dependencies based on package information.  
+    This approach is particularly useful when you know the value of one of the entity's properties.  
+
+    Add the snippet below to your mapping configuration to match services with dependencies based on the first package in dependencies/devDependencies. You can adjust the rules to match your organization's needs by:
 
     ```yaml showLineNumbers
     - kind: file
@@ -203,15 +210,6 @@ Once the dependencies have been ingested, the next step is to establish relation
                       (.file.content.devDependencies // {}) | to_entries[0].key //
                       null
     ```
-
-    :::tip Customizing the search relation
-    This configuration shows one way to match services with dependencies based on the first package in dependencies/devDependencies. You can adjust the rules to match your organization's needs by:
-    - Adding more rules to match additional packages
-    - Using different package.json fields
-    - Modifying the matching logic with different operators
-    - Adding filters based on package versions or other metadata
-    :::
-
 
     </TabItem>
     </Tabs>
