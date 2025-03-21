@@ -26,7 +26,7 @@ You will need to manually create a blueprint for the incident.io incidents.
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
-3. Click on the `{...}` button in the top right corner, and choose "Edit JSON".
+3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
 4. Add this JSON schema:
 
     <details>
