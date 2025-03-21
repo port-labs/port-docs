@@ -127,8 +127,7 @@ To add these secrets to your portal:
 
 <h3> Set up self-service action </h3>
 
-We will create a self-service action to handle creating incident.io incidents using webhooks.
-To create a self-service action follow these steps:
+Let's define a self-service action that is used to create an incident.io incident:
 
 1. Head to the [self-service](https://app.getport.io/self-serve) page.
 2. Click on the `+ New Action` button.
