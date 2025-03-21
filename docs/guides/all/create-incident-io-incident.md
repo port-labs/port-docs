@@ -125,7 +125,7 @@ To add these secrets to your portal:
     - `INCIDENT_IO_API_KEY`: Your [incident.io API key](https://app.incident.io/settings/api-keys).
 
 
-<h3> Set up self-service action </h3>
+### Set up self-service action
 
 Let's define a self-service action that is used to create an incident.io incident:
 
