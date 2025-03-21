@@ -909,7 +909,7 @@ export const availableGuides = [
         link: "/guides/all/create-firehydrant-incident",
     },
     {
-        title: "Create Linea issue",
+        title: "Create a Linear issue",
         description: "Create a self-service action that creates a Linear issue",
         tags: ["Linear", "Actions", "Webhook", "Automations"],
         logos: ["Linear", "Webhook"],
