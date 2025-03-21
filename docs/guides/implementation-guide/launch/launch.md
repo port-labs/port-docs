@@ -36,3 +36,9 @@ Create feedback components in your portal:
 
 - Create a process for updating the portal with new integrations, blueprints, and features.
 - Set up automations to notify users about new features, updates, and changes to the portal.
+
+### Get inspired by Port's community
+
+Join the [Port community Slack channel](https://www.getport.io/community) to connect with other Port users, ask for support, and get inspired by implementations of other users.
+
+
