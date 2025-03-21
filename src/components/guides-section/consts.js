@@ -915,4 +915,11 @@ export const availableGuides = [
         logos: ["Linear", "Webhook"],
         link: "/guides/all/open-linear-issue",
     },
+    {
+        title: "Create an incident.io Incident",
+        description: "Create a self-service action that creates an incident.io incident",
+        tags: ["Incident management", "Actions", "Webhook", "Automations"],
+        logos: ["Webhook"],
+        link: "/guides/all/create-incident-io-incident",
+    },
 ]
