@@ -225,7 +225,7 @@ Let's define a self-service action that is used to create an incident.io inciden
 
 Now you should see the `Create incident.io Incident (Webhook)` action in the self-service page. 🎉
 
-<h3> Create an automation to upsert entity in port </h3>
+### Create an automation to update your catalog
 
 After each execution of the action, we would like to update the relevant entity in Port with the latest status.  
 
