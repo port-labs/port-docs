@@ -22,7 +22,7 @@ This functionality streamlines incident management by enabling users to create i
 
 You will need to manually create a blueprint for the incident.io incidents.  
 
-<h3>Create the incident.io incident blueprint</h3>
+### Create an incident.io incident blueprint
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
