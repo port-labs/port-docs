@@ -37,12 +37,6 @@ Port is an internal developer portal solution, giving you the tools to create co
 </center>
 <br/>
 
-Port is a flexible platform that allows you to build, configure, use and delete components of your portal using several methods:
-
-- A dedicated [Web UI](https://app.getport.io).
-- A fully featured [API](/api-reference/port-api).
-- IaC - using the [Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/latest) and [Pulumi provider](https://www.pulumi.com/registry/packages/port/).
-
 ### Product pillars
 
 <ProductPillars />
