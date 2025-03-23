@@ -30,11 +30,18 @@ import ProductPillars from '@site/src/components/ProductPillars/ProductPillars';
 
 ## What is Port?
 
-Port is an internal developer portal solution, allowing you to create compelling developer experiences according to your tech stack, personas and organization culture.
+Port is an internal developer portal solution, giving you the tools to create compelling developer experiences according to your tech stack, personas and organization culture.
 
 <center>
 <img src="/img/port-overview/port-stack.png" border='1px' style={{borderRadius:'8px'}} />
 </center>
+<br/>
+
+Port is a flexible platform that allows you to build, configure, use and delete components of your portal using several methods:
+
+- A dedicated [Web UI](https://app.getport.io).
+- A fully featured [API](/api-reference/port-api).
+- IaC - using the [Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/latest) and [Pulumi provider](https://www.pulumi.com/registry/packages/port/).
 
 ### Product pillars
 
@@ -45,11 +52,3 @@ Port is an internal developer portal solution, allowing you to create compelling
 Trying out Port for yourself is free, simply [create an account](https://app.getport.io) and follow the onboarding process.  
 
 The [Getting started](/getting-started/overview) page will walk you through the onboarding process and demonstrate the value of using Port in your organization.
-
-## Usage methods
-
-Port is a flexible platform that allows you to build, configure, use and delete components of your portal using several methods:
-
-- [Web UI](https://app.getport.io).
-- [API](/api-reference/port-api).
-- IaC - [Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/latest) and [Pulumi provider](https://www.pulumi.com/registry/packages/port/).

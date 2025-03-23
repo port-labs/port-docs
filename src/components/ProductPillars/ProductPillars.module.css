@@ -86,10 +86,10 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: #000000;
-  color: #ffffff;
+  border: 1px solid var(--ifm-color-black);
+  color: #000000;
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: 20px;
   font-weight: 500;
   font-size: 0.875rem;
   transition: all 0.3s ease;
@@ -111,8 +111,9 @@
 }
 
 [data-theme='dark'] .demoLink {
-  background: #ffffff;
-  color: #000000;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-white);
+  color: #ffffff;
   box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
