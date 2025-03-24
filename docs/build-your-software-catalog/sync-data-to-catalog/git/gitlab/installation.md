@@ -80,9 +80,10 @@ The following steps will guide you how to create a GitLab group access token.
 
    <img src='/img/integrations/gitlab/GitLabGroupAccessTokens.png' width='85%' border='1px' />
 
-  :::tip
-  While `Owner` permissions are recommended, you can use the `filterOwnedProjects: false` flag in the mapping to set lower permission levels (for more information, [refer to the Advanced configurations tab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/advanced/?parameter=filterOwnedProjects#using-advanced-configurations)). *Please note that using lower permissions may lead to unexpected behavior.*
-  :::
+    :::tip
+    While `Owner` permissions are recommended, you can use the `filterOwnedProjects: false` flag in the mapping to set lower permission levels (for more information, [refer to the Advanced configurations tab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/advanced/?parameter=filterOwnedProjects#using-advanced-configurations)).  
+    *Please note that using lower permissions may lead to unexpected behavior.*
+    :::
 
 3. Click "Create group access token".
 4. Copy the generated token and use it when deploying the integration in the following steps.
