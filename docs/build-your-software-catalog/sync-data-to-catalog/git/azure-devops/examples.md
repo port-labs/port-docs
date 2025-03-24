@@ -252,8 +252,8 @@ Common scenarios for file mapping include:
 - Monitoring documentation files (e.g., `README.md`, `CONTRIBUTING.md`)
 - Tracking infrastructure definitions (e.g., `terraform.tf`, `docker-compose.yml`)
 
-:::tip To Learn more
-- Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1&tabs=HTTP#download) for the Azure DevOps file object structure.
+:::tip Learn more
+Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1&tabs=HTTP#download) for the Azure DevOps file object structure.
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your specified files.
