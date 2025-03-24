@@ -248,7 +248,7 @@ You can use the following Port blueprint definitions and integration configurati
 Common scenarios for file mapping include:
 - Tracking configuration files (e.g., `deployment.yaml`, `config.json`)
 - Monitoring documentation files (e.g., `README.md`, `CONTRIBUTING.md`)
-- Track infrastructure definitions (e.g., `terraform.tf`, `docker-compose.yml`)
+- Tracking infrastructure definitions (e.g., `terraform.tf`, `docker-compose.yml`)
 
 :::tip Tips
 - Each file specified in the configuration will be tracked as a separate entity in Port
