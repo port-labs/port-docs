@@ -234,6 +234,8 @@ Before implementing file mapping, please note the following:
     - `../other-repo/file.txt` (parent directory reference)
     - `*.yaml` (glob pattern)
 - **Performance**: For optimal performance, we recommend limiting the number of tracked files per repository.
+- **File Tracking**: Each file specified in the configuration will be tracked as a separate entity in Port
+- **Change Detection**: Changes to tracked files will be reflected in Port during the next sync
 
 ### Configuration
 
@@ -248,12 +250,10 @@ You can use the following Port blueprint definitions and integration configurati
 Common scenarios for file mapping include:
 - Tracking configuration files (e.g., `deployment.yaml`, `config.json`)
 - Monitoring documentation files (e.g., `README.md`, `CONTRIBUTING.md`)
-- Track infrastructure definitions (e.g., `terraform.tf`, `docker-compose.yml`)
+- Tracking infrastructure definitions (e.g., `terraform.tf`, `docker-compose.yml`)
 
-:::tip Tips
-- Each file specified in the configuration will be tracked as a separate entity in Port
-- Changes to tracked files will be reflected in Port during the next sync
-- Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1&tabs=HTTP#download) for the Azure Devops file object structure.
+:::tip To Learn more
+- Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1&tabs=HTTP#download) for the Azure DevOps file object structure.
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your specified files.
