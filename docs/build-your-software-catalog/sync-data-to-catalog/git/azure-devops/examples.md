@@ -250,6 +250,7 @@ Common scenarios for file mapping include:
 :::tip Tips
 - Each file specified in the configuration will be tracked as a separate entity in Port
 - Changes to tracked files will be reflected in Port during the next sync
+- Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1&tabs=HTTP#download) for the Azure Devops file object structure.
 :::
 
 After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your specified files.
