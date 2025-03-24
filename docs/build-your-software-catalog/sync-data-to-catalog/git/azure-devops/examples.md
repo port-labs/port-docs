@@ -208,6 +208,9 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PortReleaseAppConfig/>
 
+:::tip To Learn more
+- Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/release/releases/list?view=azure-devops-rest-7.1&tabs=HTTP) for the Azure DevOps release object structure.
+:::
 
 ## Mapping files
 
