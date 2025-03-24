@@ -1,0 +1,141 @@
+---
+id: invoke-specific-agent
+title: "Invoke specific agent"
+description: "This route allows you to invoke a specific AI agent in your Port organization."
+sidebar_label: "Invoke specific agent"
+hide_title: true
+hide_table_of_contents: true
+api: true
+sidebar_class_name: "post api-method"
+info_path: api-reference/port-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Invoke specific agent"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/v1/agent/task_manager/invoke"}
+>
+</MethodEndpoint>
+
+This route allows you to invoke a specific AI agent in your Port organization.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<MimeTabs>
+<TabItem label={"application/json"} value={"application/json"}>
+<SchemaTabs>
+<TabItem label={"Schema"} value={"Schema"}>
+<details style={{}} className={"openapi-markdown__details"}>
+<summary style={{}}>
+<strong>Request Body</strong>
+</summary>
+<div style={{"textAlign":"left","marginLeft":"1rem"}}>
+<SchemaItem
+  collapsible={false}
+  name={"prompt"}
+  required={true}
+  schemaName={"string"}
+  qualifierMessage={undefined}
+  schema={{"type":"string","description":"The prompt to send to the AI agent"}}
+>
+</SchemaItem>
+</div>
+</details>
+</TabItem>
+<TabItem label={"Example"} value={"Example"}>
+<ResponseSamples
+  responseExample={`{
+  "prompt": "Who is on call for the payments service?"
+}`}
+  language={"json"}
+>
+</ResponseSamples>
+</TabItem>
+</SchemaTabs>
+</TabItem>
+</MimeTabs>
+
+<div>
+<ApiTabs>
+<TabItem label={"200"} value={"200"}>
+<div>
+
+Successfully invoked the agent.
+
+</div>
+<div>
+<MimeTabs className={"openapi-tabs__mime"}>
+<TabItem label={"application/json"} value={"application/json"}>
+<SchemaTabs className={"openapi-tabs__schema"}>
+<TabItem label={"Schema"} value={"Schema"}>
+<details style={{}} className={"openapi-markdown__details response"}>
+<summary style={{}} className={"openapi-markdown__details-summary-response"}>
+<strong>Schema</strong>
+</summary>
+<div style={{"textAlign":"left","marginLeft":"1rem"}}>
+<SchemaItem
+  collapsible={false}
+  name={"ok"}
+  required={true}
+  schemaName={"boolean"}
+  qualifierMessage={"**Possible values:** [`true`]"}
+  schema={{"type":"boolean","enum":[true]}}
+>
+</SchemaItem>
+<SchemaItem
+  collapsible={true}
+  name={"invocation"}
+  required={true}
+  schemaName={"object"}
+  qualifierMessage={undefined}
+  schema={{"type":"object","properties":{"identifier":{"type":"string","description":"The unique identifier for this invocation"}}}}
+>
+</SchemaItem>
+</div>
+</details>
+</TabItem>
+<TabItem label={"Example"} value={"Example"}>
+<ResponseSamples
+  responseExample={`{
+  "ok": true,
+  "invocation": {
+    "identifier": "742c2dfb-b96b-46a1-a3c1-215c2b492d05"
+  }
+}`}
+  language={"json"}
+>
+</ResponseSamples>
+</TabItem>
+</SchemaTabs>
+</TabItem>
+</MimeTabs>
+</div>
+</TabItem>
+</ApiTabs>
+</div> 
