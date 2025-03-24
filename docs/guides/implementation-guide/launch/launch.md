@@ -12,8 +12,6 @@ This page will help you prepare for a successful launch by organizing your porta
 - Use the homepage to communicate announcements, updates, initiatives, and other important information to your users.
   This can also be done using a [markdown widget](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/#markdown).
 - Create useful visualizations that display data [relevant for the logged-in user](https://docs.port.io/customize-pages-dashboards-and-plugins/dashboards/#dynamic-filters).
-- Create a quick-access widget for links to useful pages, like the one in Port's [live demo](https://demo.getport.io): 
-  <br/><br/><img src="/img/guides/implementation-guide/quick-access-widget.png" width="55%" border="1px" />
 
 ### Organize the software catalog
 
@@ -38,3 +36,9 @@ Create feedback components in your portal:
 
 - Create a process for updating the portal with new integrations, blueprints, and features.
 - Set up automations to notify users about new features, updates, and changes to the portal.
+
+### Get inspired by Port's community
+
+Join the [Port community Slack channel](https://www.getport.io/community) to connect with other Port users, ask for support, and get inspired by implementations of other users.
+
+

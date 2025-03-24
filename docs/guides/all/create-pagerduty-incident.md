@@ -6,6 +6,7 @@ description: Learn how to create a PagerDuty incident in Port with this guide, e
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
 import PagerDutyServiceBlueprint from '/docs/guides/templates/pagerduty/_pagerduty_incident_blueprint.mdx'
+import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_secrets_callout.mdx'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -173,11 +174,13 @@ However, we highly recommend you install the PagerDuty integration to have these
 
     You can create PagerDuty incidents by leveraging Port's **synced webhooks** and **secrets** to directly interact with the PagerDuty's API. This method simplifies the setup by handling everything within Port.
 
-    <h3> Add Port secrets </h3>
+    <h3>Add Port secrets</h3>
 
-    Add the following secrets to your Port account:
+    <ExistingSecretsCallout integration="PagerDuty" />
 
-    1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+    To add these secrets to your portal:
+
+    1. Click on the `...` button in the top right corner of your Port application.
 
     2. Click on **Credentials**.
 
