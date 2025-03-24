@@ -58,7 +58,7 @@ To start working with AI agents, follow these steps:
 AI agents are designed with security as a priority:
 - Agents only have access to the data you explicitly provide.
 - Your data remains within Port's secure infrastructure.
-- Port does not share your data with external LLM providers.
+- LLM processing happens within our cloud infrastructure. 
 - Your data is not used for model training.
 
 ## Start simple & expand as needed
@@ -72,8 +72,7 @@ Currently, AI agents are in closed beta access, and you must get approved for th
 
 ```bash showLineNumbers
 curl --location --request PATCH 'https://api.getport.io/v1/organization/ai/register' \
---header 'Authorization: Bearer <YOUR_PORT_API_TOKEN>' \
---header 'Content-Type: application/json'
+--header 'Authorization: Bearer <YOUR_PORT_API_TOKEN>'
 ```
 
 Your organization now has the system blueprints required for the feature to work.
@@ -124,7 +123,7 @@ All agents operate within Port's secure framework and governance controls.
 <details>
 <summary>How is customer data handled? (Click to expand)</summary>
 
-All data processing occurs within our cloud infrastructure, and no data is shared with external LLM providers. Additionally, no customer data is used for model training, ensuring complete logical separation between different customers' data.
+All data processing occurs within our cloud infrastructure, and no data used for model training. We ensure complete logical separation between different customers' data.
 </details>
 
 <details>
