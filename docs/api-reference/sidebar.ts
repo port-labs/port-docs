@@ -619,42 +619,6 @@ const sidebar: SidebarsConfig = {
       ],
     },
     {
-      type: "category",
-      label: "AI Agents",
-      items: [
-        {
-          type: "doc",
-          id: "api-reference/register-ai",
-          label: "Register AI",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/unregister-ai",
-          label: "Unregister AI",
-          className: "api-method patch",
-        },
-        {
-          type: "doc",
-          id: "api-reference/invoke-specific-agent",
-          label: "Invoke specific agent",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/invoke-generic-agent",
-          label: "Invoke generic agent",
-          className: "api-method post",
-        },
-        {
-          type: "doc",
-          id: "api-reference/get-ai-invocation-status",
-          label: "Get AI invocation status",
-          className: "api-method get",
-        },
-      ],
-    },
-    {
       type: "doc",
       id: "api-reference/pages",
       label: "Pages",
