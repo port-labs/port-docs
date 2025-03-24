@@ -5,11 +5,11 @@ title: Interact with the AI agent
 
 # Interact with the AI agent
 
-import ClosedBetaFeatureNotice from '/src/components/ClosedBetaFeatureNotice'
+import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md'
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-<ClosedBetaFeatureNotice id="aiAgents" />
+<ClosedBetaFeatureNotice id="ai-form" />
 
 ## Getting started
 
