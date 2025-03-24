@@ -215,6 +215,46 @@ You'll need to add a relation to your service blueprint to link it with FireHydr
 
 5. Click "Save" to update the blueprint.
 
+## Get FireHydrant Condition IDs
+
+Before implementing the action, you'll need to get the condition IDs that are specific to your FireHydrant organization. You can retrieve these IDs using the FireHydrant API:
+
+```bash
+curl -X GET "https://api.firehydrant.io/v1/severity_matrix/conditions" \
+     -H "Authorization: YOUR_FIREHYDRANT_API_KEY" \
+     -H "accept: application/json"
+```
+
+The response will include all available conditions with their IDs. For example:
+```json
+{
+  "data": [
+    {
+      "id": "b1fc9184-b3f3-4af1-a111-68abcad9bf34",
+      "name": "Unavailable",
+      "position": 0
+    },
+    {
+      "id": "465a5b4c-6f95-4707-a777-ab4bb8def27d",
+      "name": "Degraded",
+      "position": 1
+    },
+    {
+      "id": "c2bc11e8-7fcc-428d-9007-26f00700834a",
+      "name": "Bug",
+      "position": 2
+    },
+    {
+      "id": "9a2a8dbb-6b4e-4189-aca1-e2bb73b9c50b",
+      "name": "Operational",
+      "position": 3
+    }
+  ]
+}
+```
+
+You'll need these condition IDs for both implementation methods below. Make sure to replace the example IDs with the ones from your API response.
+
 ## Implementation
 
 <Tabs>
@@ -318,7 +358,7 @@ You'll need to add a relation to your service blueprint to link it with FireHydr
                 {
                   "type": "service",
                   "id": "{{ .entity.relations.fh_service }}",
-                  "condition_id": "{{ if .inputs.condition == \"Unavailable\" then \"965ca368-01f2-4dea-97c5-1dbd0fa8b550\" elif .inputs.condition == \"Degraded\" then \"1cc6ba7e-f1f5-4047-afe8-c9d682182b07\" elif .inputs.condition == \"Bug\" then \"76c02cd6-b79f-40db-abe2-1ac7c1d31ad3\" elif .inputs.condition == \"Operational\" then \"ccd51dcf-196b-4379-be85-7f7e721d4338\" else null end }}"
+                  "condition_id": "{{ if .inputs.condition == \"Unavailable\" then \"b1fc9184-b3f3-4af1-a111-68abcad9bf34\" elif .inputs.condition == \"Degraded\" then \"465a5b4c-6f95-4707-a777-ab4bb8def27d\" elif .inputs.condition == \"Bug\" then \"c2bc11e8-7fcc-428d-9007-26f00700834a\" elif .inputs.condition == \"Operational\" then \"9a2a8dbb-6b4e-4189-aca1-e2bb73b9c50b\" else null end }}"
                 }
               ],
               "name": "{{ .inputs.name }}",
@@ -334,18 +374,6 @@ You'll need to add a relation to your service blueprint to link it with FireHydr
     5. Click `Save`.
 
     Now you should see the `Trigger an incident` action in the self-service page. 🎉
-
-    <h3>Customizing Condition IDs</h3>
-
-    The condition IDs in the webhook configuration (e.g., `965ca368-01f2-4dea-97c5-1dbd0fa8b550`) are specific to your FireHydrant organization's service conditions. 
-
-    You can customize the condition IDs in the webhook configuration to match your organization's specific conditions. The current configuration uses these example conditions:
-    - Unavailable: `965ca368-01f2-4dea-97c5-1dbd0fa8b550`
-    - Degraded: `1cc6ba7e-f1f5-4047-afe8-c9d682182b07`
-    - Bug: `76c02cd6-b79f-40db-abe2-1ac7c1d31ad3`
-    - Operational: `ccd51dcf-196b-4379-be85-7f7e721d4338`
-
-    Replace these IDs with the ones from your FireHydrant organization to ensure the incidents are created with the correct conditions.
 
     <h3>Create an automation to upsert entity in port</h3>
 
@@ -475,16 +503,16 @@ You'll need to add a relation to your service blueprint to link it with FireHydr
               run: |
                 case "${{ inputs.condition }}" in
                   "Unavailable")
-                    echo "condition_id=965ca368-01f2-4dea-97c5-1dbd0fa8b550" >> $GITHUB_OUTPUT
+                    echo "condition_id=b1fc9184-b3f3-4af1-a111-68abcad9bf34" >> $GITHUB_OUTPUT
                     ;;
                   "Degraded")
-                    echo "condition_id=1cc6ba7e-f1f5-4047-afe8-c9d682182b07" >> $GITHUB_OUTPUT
+                    echo "condition_id=465a5b4c-6f95-4707-a777-ab4bb8def27d" >> $GITHUB_OUTPUT
                     ;;
                   "Bug")
-                    echo "condition_id=76c02cd6-b79f-40db-abe2-1ac7c1d31ad3" >> $GITHUB_OUTPUT
+                    echo "condition_id=c2bc11e8-7fcc-428d-9007-26f00700834a" >> $GITHUB_OUTPUT
                     ;;
                   "Operational")
-                    echo "condition_id=ccd51dcf-196b-4379-be85-7f7e721d4338" >> $GITHUB_OUTPUT
+                    echo "condition_id=9a2a8dbb-6b4e-4189-aca1-e2bb73b9c50b" >> $GITHUB_OUTPUT
                     ;;
                 esac
 
