@@ -923,7 +923,7 @@ export const availableGuides = [
         link: "/guides/all/create-incident-io-incident",
     },
     {
-        title: "Trigger FireHydrant Incident",
+        title: "Trigger a FireHydrant incident",
         description: "Create a self-service action that triggers a FireHydrant incident",
         tags: ["Incident management", "FireHydrant", "Actions", "Webhook"],
         logos: ["FireHydrant", "GitHub"],
