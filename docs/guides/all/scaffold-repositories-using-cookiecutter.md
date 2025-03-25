@@ -340,8 +340,8 @@ However, we highly recommend you install the Azure DevOps integration to have th
     :::
 
 2. Configure the pipeline in Azure DevOps:
-   - Go to Pipelines → Create Pipeline → Azure Repos Git and choose `python_scaffolder`
-   - Click Save (in the "Run" dropdown menu)
+   - Go to Pipelines → Create Pipeline → Azure Repos Git and choose `python_scaffolder`.
+   - Click Save (in the "Run" dropdown menu).
 
 3. Create the following secret variables in your pipeline:
    - `PERSONAL_ACCESS_TOKEN` - A base64-encoded Azure DevOps PAT with Code (Full) and Release (Read, write & execute) permissions.  
@@ -352,19 +352,19 @@ However, we highly recommend you install the Azure DevOps integration to have th
         B64_PAT=$(printf ":%s" "$MY_PAT" | base64)
         echo $B64_PAT
         ```
-   - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
-   - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token)
+   - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
+   - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/custom-integration/api/#get-api-token).
 
   
 
 ## Let's test it!
 
-1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
-2. Click on the `Azure Scaffolder` action
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal.
+2. Click on the `Azure Scaffolder` action.
 3. Fill in the required details:
-   - Service Name (required)
-   - Azure Organization (if different from default)
-   - Azure Project (if different from default)
-   - Description
-4. Click on `Execute`
-5. Wait for the Azure DevOps pipeline to create your new repository with the Cookiecutter template
+   - Service Name (required).
+   - Azure Organization (if different from default).
+   - Azure Project (if different from default).
+   - Description.
+4. Click on `Execute`.
+5. Wait for the Azure DevOps pipeline to create your new repository with the Cookiecutter template.
