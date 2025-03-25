@@ -232,7 +232,7 @@ Primary email addresses are not available for GitLab "Free plan" users.
 
 GitLab allows the creation of tokens (bots) for automated tasks, which can be associated with groups or projects via access tokens.
 The `includeBotMembers` parameter is used to filter out bot members from the actual gitlab members.
-By default, this selector is set to `true`, which means the integration will sync actual and bot members.
+By default, this selector is set to `false`, which means the integration will only sync actual members.
 
 ```yaml
   - kind: group-with-members
