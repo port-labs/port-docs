@@ -3,6 +3,8 @@ sidebar_position: 3
 sidebar_label: Create a custom integration
 ---
 
+import Image from "@theme/IdealImage";
+
 # Create a custom integration
 
 Port allows you to create custom integrations to ingest data from any tool or platform. You can model the data in Port any way you like, and ingest data using one of the supported methods described in this page.
@@ -17,7 +19,7 @@ Port allows you to create custom integrations to ingest data from any tool or pl
 
 Generally, integrating a platform/tool with Port consists of 3 steps:
 
-<img src='/img/software-catalog/integration-process.png' width='85%' />
+<Image img="/img/software-catalog/integration-process.png" border="1px" style={{borderRadius: "8px"}}></Image>
 
 ### 1. Define your data model
 
@@ -26,9 +28,10 @@ Generally, integrating a platform/tool with Port consists of 3 steps:
 
 ### 2. Ingest data to catalog
 
-- Use one of the supported methods to ingest data from your tool into Port:
+Use one of the supported methods to ingest data from your tool into Port:
   - [Webhooks](/build-your-software-catalog/custom-integration/webhook/)
   - [Port API](/build-your-software-catalog/custom-integration/api/)
+  - [IaC](/build-your-software-catalog/custom-integration/iac/)
 
 ### 3. Configure the integration
 
