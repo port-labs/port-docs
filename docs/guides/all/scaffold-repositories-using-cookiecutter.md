@@ -15,7 +15,7 @@ This guide will help you implement a self-service action in Port that allows you
 
 ## Set up data model
 
-If you haven't installed the [Azure DevOps integration](/build-your-software-catalog/sync-data-to-catalog/azure/azure-devops), you'll need to create a blueprint for Azure DevOps repositories.  
+If you haven't installed the [Azure DevOps integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/git/azure-devops/installation), you'll need to create a blueprint for Azure DevOps repositories.  
 However, we highly recommend you install the Azure DevOps integration to have this automatically set up for you.
 
 <h3> Create the Azure DevOps repository blueprint </h3>
