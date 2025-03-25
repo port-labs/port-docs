@@ -52,9 +52,3 @@ resources:
             relation_a: .item.relations.relation_a
             relation_b: .item.relations.relation_b
 ```
-
-This pattern enables:
-- Automatic syncing of `port.yml` files in your GitOps workflow
-- Data integrity through proper ingestion of `port.yml` files
-- Support for both single and multiple entity definitions
-- Synchronization of Port entities with your Git repository 
