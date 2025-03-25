@@ -58,7 +58,7 @@ Before implementing either approach, you will need to create a blueprint for Cir
 
 
 <Tabs>
-  <TabItem value="synced-webhook" label="Synced webhook and secrets" default>
+  <TabItem value="synced-webhook" label="Synced webhook" default>
 
 You can trigger Circle CI pipelines by leveraging Port's **synced webhooks** to directly interact with the Circle CI API and **secrets** to store your Circle CI credentials. This method simplifies the setup by handling everything within Port.
 
