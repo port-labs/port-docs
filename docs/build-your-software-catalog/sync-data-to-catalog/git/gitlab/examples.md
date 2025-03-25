@@ -232,7 +232,7 @@ Primary email addresses are not available for GitLab "Free plan" users.
 
 GitLab allows the creation of tokens (bots) for automated tasks, which can be associated with groups or projects via access tokens.
 The `includeBotMembers` parameter is used to filter out bot members from the actual gitlab members.
-By default, this parameter is set to `true`, which means the integration will sync actual and bot members.
+By default, this selector is set to `true`, which means the integration will sync actual and bot members.
 
 ```yaml
   - kind: group-with-members
@@ -252,7 +252,7 @@ By default, this parameter is set to `true`, which means the integration will sy
 :::
 
 :::tip Include Inherited and Invited Members
-You can also specify the `includeInheritedMembers` flag to control the inclusion of inherited members in the member data.
+You can also specify the `includeInheritedMembers` selector to control the inclusion of inherited members in the member data.
 By default, this parameter is set to `false`, and the integration will sync only direct members without inherited members.
 
 ```yaml
@@ -271,6 +271,28 @@ By default, this parameter is set to `false`, and the integration will sync only
       includeInheritedMembers: 'false'
 ```
 :::
+
+:::tip Include Verbose Member Object
+
+By default, the integration syncs only essential member properties (id, username, and email) to optimize memory usage. To include all member properties available in the GitLab API (like name, state, web_url, etc.), set the `includeVerboseMemberObject` selector to true. This gives you access to the complete member object but may increase memory consumption. If you must change this setting, we recommend you change the value of this selector only for the kind you intend to use for parsing members (not groups)
+
+```yaml
+  - kind: group-with-members
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeVerboseMemberObject: 'false'
+```
+
+```yaml
+  - kind: project-with-members
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeVerboseMemberObject: 'false'
+```
+:::
+
 
 ### Mapping members and groups
 
