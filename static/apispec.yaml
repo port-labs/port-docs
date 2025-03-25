@@ -5181,8 +5181,125 @@ paths:
       responses:
         '200':
           description: Successfully updated an entity
-        '201':
-          description: Successfully created an entity
+        "201":
+          description: Created successfully.
+          content:
+            application/json:
+              schema:
+                description: Created successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  entity:
+                    type: object
+                    properties:
+                      identifier:
+                        oneOf:
+                          - type:
+                              - string
+                            pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                            title: string
+                          - type: object
+                            title: search query
+                            properties:
+                              combinator:
+                                enum:
+                                  - and
+                                  - or
+                              rules:
+                                type: array
+                                items:
+                                  anyOf:
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          enum:
+                                            - =
+                                        value:
+                                          anyOf:
+                                            - type: string
+                                            - type: number
+                                            - type: "null"
+                                      additionalProperties: false
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          enum:
+                                            - in
+                                        value:
+                                          type: array
+                                          items:
+                                            type: string
+                                      additionalProperties: false
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                    - type: object
+                                      properties:
+                                        property:
+                                          type: string
+                                        operator:
+                                          enum:
+                                            - contains
+                                        value:
+                                          type: string
+                                      additionalProperties: false
+                                      required:
+                                        - property
+                                        - operator
+                                        - value
+                                    - $ref: "#/components/schemas/def-5"
+                            required:
+                              - combinator
+                              - rules
+                            additionalProperties: false
+                      title:
+                        type: string
+                      icon:
+                        type: string
+                      team:
+                        oneOf:
+                          - type: string
+                            title: string
+                          - type: array
+                            title: array
+                            items:
+                              type: string
+                          - $ref: "#/components/schemas/def-6"
+                      properties:
+                        type: object
+                        default: {}
+                      relations:
+                        type: object
+                        additionalProperties:
+                          anyOf:
+                            - type: string
+                              title: string
+                              pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                            - type: array
+                              title: array
+                              items:
+                                type: string
+                                pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                            - type: "null"
+                              title: "null"
+                            - $ref: "#/components/schemas/def-6"
+                    additionalProperties: false
+                required:
+                  - entity
+                  - ok
+                additionalProperties: false
         '400':
           description: |
             One of the following errors occurred: 
@@ -5341,8 +5458,127 @@ paths:
         - bearer:
             - 'read:entities'
       responses:
-        '200':
-          description: Success
+        "200":
+          description: Retrieved successfully.
+          content:
+            application/json:
+              schema:
+                description: Retrieved successfully.
+                type: object
+                properties:
+                  ok:
+                    enum:
+                      - true
+                  entities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        identifier:
+                          oneOf:
+                            - type:
+                                - string
+                              pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                              title: string
+                            - type: object
+                              title: search query
+                              properties:
+                                combinator:
+                                  enum:
+                                    - and
+                                    - or
+                                rules:
+                                  type: array
+                                  items:
+                                    anyOf:
+                                      - type: object
+                                        properties:
+                                          property:
+                                            type: string
+                                          operator:
+                                            enum:
+                                              - =
+                                          value:
+                                            anyOf:
+                                              - type: string
+                                              - type: number
+                                              - type: "null"
+                                        additionalProperties: false
+                                        required:
+                                          - property
+                                          - operator
+                                          - value
+                                      - type: object
+                                        properties:
+                                          property:
+                                            type: string
+                                          operator:
+                                            enum:
+                                              - in
+                                          value:
+                                            type: array
+                                            items:
+                                              type: string
+                                        additionalProperties: false
+                                        required:
+                                          - property
+                                          - operator
+                                          - value
+                                      - type: object
+                                        properties:
+                                          property:
+                                            type: string
+                                          operator:
+                                            enum:
+                                              - contains
+                                          value:
+                                            type: string
+                                        additionalProperties: false
+                                        required:
+                                          - property
+                                          - operator
+                                          - value
+                                      - $ref: "#/components/schemas/def-5"
+                              required:
+                                - combinator
+                                - rules
+                              additionalProperties: false
+                        title:
+                          type: string
+                        icon:
+                          type: string
+                        team:
+                          oneOf:
+                            - type: string
+                              title: string
+                            - type: array
+                              title: array
+                              items:
+                                type: string
+                            - $ref: "#/components/schemas/def-6"
+                        properties:
+                          type: object
+                          default: {}
+                        relations:
+                          type: object
+                          additionalProperties:
+                            anyOf:
+                              - type: string
+                                title: string
+                                pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                              - type: array
+                                title: array
+                                items:
+                                  type: string
+                                  pattern: ^[A-Za-z0-9@_.+:\\/=-]+$
+                              - type: "null"
+                                title: "null"
+                              - $ref: "#/components/schemas/def-6"
+                      additionalProperties: false
+                required:
+                  - entities
+                  - ok
+                additionalProperties: false
         '404':
           description: |
             One of the following errors occurred:
