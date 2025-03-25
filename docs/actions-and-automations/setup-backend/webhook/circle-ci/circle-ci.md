@@ -8,8 +8,8 @@ Port's Circle CI integration allows you to trigger [new pipelines](https://circl
 ## Overview
 
 You can implement this action in two ways:
-1. **Synced webhook and secrets**: A simpler approach that uses Port's secret management to store your Circle CI credentials
-2. **Execution agent**: A more complex approach that runs within your infrastructure, keeping credentials in your environment.
+1. **Synced webhook and secrets**: A simpler approach that uses Port's secret management to store your Circle CI credentials.
+2. **Execution agent**: A slightly more complex approach that runs within your infrastructure, keeping credentials in your environment.
 
 ## Prerequisites
 
