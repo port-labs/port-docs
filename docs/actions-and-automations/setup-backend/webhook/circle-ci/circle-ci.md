@@ -143,7 +143,7 @@ To create a self-service action that triggers a Circle CI pipeline, follow these
   Now you should see the `Trigger Circle CI Pipeline` action in the self-service page. 🎉
 
   </TabItem>
-  <TabItem value="agent" label="Execution Agent">
+  <TabItem value="agent" label="Execution agent">
 
 The Execution Agent approach runs an agent within your infrastructure that connects to Port via Kafka, keeping your credentials secure within your environment.
 
