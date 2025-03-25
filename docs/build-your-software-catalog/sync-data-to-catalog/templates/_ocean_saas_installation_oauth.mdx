@@ -12,7 +12,7 @@ Using this installation option means that the integration will be hosted by Port
 
 <OceanSaasLiveEventsDescription id={props.integration} />
 
-{liveEvents[props.integration + "_OAuth"] ?
+<div style={{ display: liveEvents[props.integration + "_OAuth"] ? 'block' : 'none' }}>
 <Tabs queryString="oauth">
 <TabItem label="OAuth" value="oauth">
 <details>
@@ -27,7 +27,7 @@ Using this installation option means that the integration will be hosted by Port
 </details>
 </TabItem>
 </Tabs>
-: <></>}
+</div>
 
 <h3>Installation</h3>
 
