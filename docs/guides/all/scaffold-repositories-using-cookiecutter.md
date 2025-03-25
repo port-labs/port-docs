@@ -4,7 +4,7 @@ displayed_sidebar: null
 description: Learn how to scaffold Azure DevOps repositories using Cookiecutter templates via Port Actions.
 ---
 
-# Scaffold Repositories Using Cookiecutter
+# Scaffold Azure DevOps Repositories Using Cookiecutter
 
 ## Overview
 This guide will help you implement a self-service action in Port that allows you to quickly scaffold Azure DevOps repositories using Cookiecutter templates. This streamlines project initialization and ensures consistent repository structure across your organization.  
@@ -76,7 +76,7 @@ However, we highly recommend you install the Azure DevOps integration to have th
    Use `port_trigger` for both `WebHook Name` and `Service connection name` when configuring your [Service Connection](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
    :::
 
-### Create the self-service action
+### Create a self-service action
 
 1. Head to the [self-service](https://app.getport.io/self-serve) page in Port.
 2. Click on `+ New Action`.
@@ -164,7 +164,7 @@ However, we highly recommend you install the Azure DevOps integration to have th
 
 5. Click `Save` to create the action.
 
-### Create the Azure DevOps pipeline
+### Create an Azure DevOps pipeline
 
 1. In your `python_scaffolder` repository, create a file called `azure-pipelines.yml` in the root with the following content:
 
