@@ -8,8 +8,8 @@ Port's Terraform Cloud integration allows you to trigger [Terraform Cloud runs](
 ## Overview
 
 You can implement this action in two ways:
-1. **Synced webhook and secrets**: A simpler approach that uses Port's secret management to store your Terraform Cloud credentials
-2. **Execution agent**: A more complex approach that runs within your infrastructure, keeping credentials in your environment.
+1. **Synced webhook and secrets**: A simpler approach that uses Port's secret management to store your Terraform Cloud credentials.
+2. **Execution agent**: A slightly more complex approach that runs within your infrastructure, keeping credentials in your environment.
 
 ## Prerequisites
 
@@ -25,8 +25,7 @@ You can implement this action in two ways:
 
 ## Set up data model
 
-Before implementing either approach, you'll need to create a blueprint for Terraform Cloud workspaces.  
-Follow the steps below to create the blueprint.
+Before implementing either approach, you'll need to create a blueprint for Terraform Cloud workspaces:  
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
@@ -71,7 +70,7 @@ Follow the steps below to create the blueprint.
 ## Implementation
 
 <Tabs>
-  <TabItem value="synced-webhook" label="Synced webhook and secrets" default>
+  <TabItem value="synced-webhook" label="Synced webhook" default>
 
 You can trigger Terraform Cloud runs by leveraging Port's **synced webhooks** to directly interact with the Terraform Cloud API and **secrets** to store your Terraform Cloud credentials. This method simplifies the setup by handling everything within Port.
 
@@ -174,7 +173,7 @@ To create a self-service action that triggers a Terraform Cloud run, follow thes
 Now you should see the `Trigger TF Cloud Run` action in the self-service page. ðŸŽ‰
 
   </TabItem>
-  <TabItem value="agent" label="Execution Agent">
+  <TabItem value="agent" label="Execution agent">
 
 The Execution Agent approach runs an agent within your infrastructure that connects to Port via Kafka, keeping your credentials secure within your environment.
 
@@ -263,7 +262,7 @@ Now you should see the `Trigger TF Cloud run` action in the self-service page. ð
 Create a JSON file named `invocations.json` with the following content:
 
 <details>
-<summary>Mapping - (invocations.json)</summary>
+<summary>Mapping (invocations.json)</summary>
 
 ```json
 [
