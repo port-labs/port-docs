@@ -1,4 +1,3 @@
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -26,6 +25,12 @@ The steps shown in the image above are as follows:
 - The connection credentials to Kafka are provided to you by Port;
 - If you want to trigger a Circle CI pipeline, you need to have a Circle
   CI [personal API token](https://app.circleci.com/settings/user/tokens).
+
+## Getting Started
+
+Before implementing, follow these steps:
+- Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io) to set up a Kafka topic for your organization.
+- Install the Port execution agent to trigger the Circle CI pipeline (detailed in the Implementation section).
 
 ## Implementation 
 

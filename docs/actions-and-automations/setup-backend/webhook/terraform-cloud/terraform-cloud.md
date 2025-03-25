@@ -32,8 +32,13 @@ The steps shown in the image above are as follows:
 token** or **team token**.
 :::
 
-## Implementation
+## Getting Started
 
+Before implementing, follow these steps:
+- Contact us using chat/Slack/mail to [support@getport.io](mailto:support@getport.io) to set up a Kafka topic for your organization.
+- Install the Port execution agent to trigger the Terraform Cloud Run (detailed in the Implementation section).
+
+## Implementation
 
 <Tabs>
   <TabItem value="port-secrets" label="Using Port Secrets" default>

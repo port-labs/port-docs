@@ -5,7 +5,10 @@ description: Learn how to trigger a PagerDuty incident in Port with this guide, 
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
-import PagerDutyServiceBlueprint from '/docs/guides/templates/pagerduty/_pagerduty_incident_blueprint.mdx'
+import PagerDutyIncidentBlueprint from '/docs/guides/templates/pagerduty/_pagerduty_incident_blueprint.mdx'
+import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_secrets_callout.mdx'
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Trigger a PagerDuty Incident
 
@@ -45,387 +48,407 @@ You can implement this action in two ways:
 If you haven't installed the PagerDuty integration, you'll need to create blueprints for PagerDuty incidents.
 However, we highly recommend you install the PagerDuty integration to have these automatically set up for you.
 
-<PagerDutyServiceBlueprint />
+<h3>Create the PagerDuty incident blueprint</h3>
 
-## GitHub workflow implementation
+<PagerDutyIncidentBlueprint />
 
-### Add GitHub secrets
+## Implementation
 
-In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
-- `PAGERDUTY_ROUTING_KEY` - Your PagerDuty routing key for the service.
-- `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-- `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+<Tabs>
+  <TabItem value="webhook" label="Synced webhook" default>
 
-### Add GitHub workflow
+    You can trigger PagerDuty incidents by leveraging Port's **synced webhooks** and **secrets** to directly interact with the PagerDuty's API. This method simplifies the setup by handling everything within Port.
 
-Create the file `.github/workflows/trigger-pagerduty-incident.yaml` in the `.github/workflows` folder of your repository.
+    <h3>Add Port secrets</h3>
 
-<GithubDedicatedRepoHint/>
+    <ExistingSecretsCallout integration="PagerDuty" />
 
-<details>
-<summary><b>GitHub Workflow (Click to expand)</b></summary>
 
-```yaml showLineNumbers
-name: Trigger PagerDuty Incident
+    To add these secrets to your portal:
 
-on:
-  workflow_dispatch:
-    inputs:
-      summary:
-        description: The summary of the incident to trigger
-        required: true
-        type: string
-      source:
-        description: The source of the incident
-        required: true
-        type: string
-      severity:
-        description: The severity of the incident
-        required: true
-        type: string
-        default: "critical"
-      event_action:
-        description: The event action
-        required: true
-        type: string
-        default: "trigger"
-      routing_key:
-        description: The routing key of the service
-        required: true
-        type: string
-      port_context:
-        required: true
-        description: includes blueprint, run ID, and entity identifier from Port.
-jobs: 
-  trigger:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger PagerDuty Incident
-        id: trigger
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: 'https://events.pagerduty.com/v2/enqueue'
-          method: 'POST'
-          customHeaders: '{"Content-Type": "application/json"}'
-          data: >-
-            {
-              "payload": {
-                "summary": "${{ inputs.summary }}",
-                "source": "${{ inputs.source }}",
-                "severity": "${{ inputs.severity }}"
+    1. Click on the `...` button in the top right corner of your Port application.
+
+    2. Click on **Credentials**.
+
+    3. Click on the `Secrets` tab.
+
+    4. Click on `+ Secret` and add the following secrets:
+       - `PAGERDUTY_ROUTING_KEY`: Your PagerDuty routing key for the service.
+       
+
+    <h3>Set up self-service action</h3>
+
+    We will create a self-service action to handle triggering PagerDuty incidents using webhooks.
+    To create a self-service action follow these steps:
+
+    1. Head to the [self-service](https://app.getport.io/self-serve) page.
+    2. Click on the `+ New Action` button.
+    3. Click on the `{...} Edit JSON` button.
+    4. Copy and paste the following JSON configuration into the editor.
+
+        <details>
+        <summary><b>Trigger PagerDuty Incident (Webhook) (Click to expand)</b></summary>
+
+        ```json showLineNumbers
+        {
+          "identifier": "trigger_incident_webhook",
+          "title": "Trigger Incident (Webhook)",
+          "icon": "pagerduty",
+          "description": "Trigger a new PagerDuty incident",
+          "trigger": {
+            "type": "self-service",
+            "operation": "DAY-2",
+            "userInputs": {
+              "properties": {
+                "summary": {
+                  "icon": "DefaultProperty",
+                  "title": "Summary",
+                  "type": "string"
+                },
+                "source": {
+                  "icon": "DefaultProperty",
+                  "title": "Source",
+                  "type": "string",
+                  "default": "Port"
+                },
+                "severity": {
+                  "icon": "DefaultProperty",
+                  "title": "Severity",
+                  "type": "string",
+                  "default": "critical",
+                  "enum": [
+                    "critical",
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "enumColors": {
+                    "critical": "red",
+                    "error": "red",
+                    "warning": "yellow",
+                    "info": "blue"
+                  }
+                },
+                "event_action": {
+                  "icon": "DefaultProperty",
+                  "title": "Event Action",
+                  "type": "string",
+                  "default": "trigger",
+                  "enum": [
+                    "trigger",
+                    "acknowledge",
+                    "resolve"
+                  ]
+                }
               },
-              "routing_key": "${{ inputs.routing_key }}",
-              "event_action": "${{ inputs.event_action }}"
-            }
-      
-      - name: Log Response
-        run: |
-          echo "Response status: ${{ steps.trigger.outputs.status }}"
-          echo "Response data: ${{ steps.trigger.outputs.response }}"
-```
-</details>
-
-### Set up self-service action
-
-We will create a self-service action to handle triggering PagerDuty incidents.
-To create a self-service action follow these steps:
-
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Click on the `{...} Edit JSON` button.
-4. Copy and paste the following JSON configuration into the editor.
-
-    <details>
-    <summary><b>Trigger PagerDuty Incident (Click to expand)</b></summary>
-
-    <GithubActionModificationHint/>
-
-    ```json showLineNumbers
-    {
-      "identifier": "trigger_pagerduty_incident",
-      "title": "Trigger Incident",
-      "icon": "pagerduty",
-      "description": "Trigger a new PagerDuty incident",
-      "trigger": {
-        "type": "self-service",
-        "operation": "DAY-2",
-        "userInputs": {
-          "properties": {
-            "summary": {
-              "icon": "DefaultProperty",
-              "title": "Summary",
-              "type": "string"
-            },
-            "source": {
-              "icon": "DefaultProperty",
-              "title": "Source",
-              "type": "string",
-              "default": "Port"
-            },
-            "severity": {
-              "icon": "DefaultProperty",
-              "title": "Severity",
-              "type": "string",
-              "default": "critical",
-              "enum": [
-                "critical",
-                "error",
-                "warning",
-                "info"
+              "required": [
+                "summary",
+                "source",
+                "severity",
+                "event_action"
               ],
-              "enumColors": {
-                "critical": "red",
-                "error": "red",
-                "warning": "yellow",
-                "info": "blue"
-              }
-            },
-            "event_action": {
-              "icon": "DefaultProperty",
-              "title": "Event Action",
-              "type": "string",
-              "default": "trigger",
-              "enum": [
-                "trigger",
-                "acknowledge",
-                "resolve"
+              "order": [
+                "summary",
+                "source",
+                "severity",
+                "event_action"
               ]
             },
-            "routing_key": {
-              "icon": "DefaultProperty",
-              "title": "Routing Key",
-              "type": "string",
-              "description": "The routing key of the service"
+            "blueprintIdentifier": "pagerdutyIncident"
+          },
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "https://events.pagerduty.com/v2/enqueue",
+            "agent": false,
+            "synchronized": true,
+            "method": "POST",
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "payload": {
+                "summary": "{{.inputs.summary}}",
+                "source": "{{.inputs.source}}",
+                "severity": "{{.inputs.severity}}"
+              },
+              "routing_key": "{{.secrets.PAGERDUTY_ROUTING_KEY}}",
+              "event_action": "{{.inputs.event_action}}"
             }
           },
-          "required": [
-            "summary",
-            "source",
-            "severity",
-            "event_action",
-            "routing_key"
-          ],
-          "order": [
-            "summary",
-            "source",
-            "severity",
-            "event_action",
-            "routing_key"
-          ]
-        },
-        "blueprintIdentifier": "pagerdutyIncident"
-      },
-      "invocationMethod": {
-        "type": "GITHUB",
-        "org": "<GITHUB_ORG>",
-        "repo": "<GITHUB_REPO>",
-        "workflow": "trigger-pagerduty-incident.yaml",
-        "workflowInputs": {
-          "summary": "{{.inputs.\"summary\"}}",
-          "source": "{{.inputs.\"source\"}}",
-          "severity": "{{.inputs.\"severity\"}}",
-          "event_action": "{{.inputs.\"event_action\"}}",
-          "routing_key": "{{.inputs.\"routing_key\"}}",
-          "port_context": {
-            "blueprint": "{{.action.blueprint}}",
-            "entity": "{{.entity.identifier}}",
-            "run_id": "{{.run.id}}",
-            "relations": "{{.entity.relations}}"
-          }
-        },
-        "reportWorkflowStatus": true
-      },
-      "requiredApproval": false
-    }
-    ```
-    </details>
+          "requiredApproval": false
+        }
+        ```
+        </details>
 
-5. Click `Save`.
+    5. Click `Save`.
 
-Now you should see the `Trigger Incidents` action in the self-service page. 🎉
+    Now you should see the `Trigger Incident (Webhook)` action in the self-service page. 🎉
 
-## Synced webhook implementation
+    <h3>Create an automation to upsert entity in port</h3>
 
-### Add Port secrets
+    After each execution of the action, we would like to update the relevant entity in Port with the latest status.  
 
-1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+    To achieve this, we can create an automation that will be triggered when the action completes successfully.
 
-2. Click on **Credentials**.
+    To create the automation:
 
-3. Click on the `Secrets` tab.
+    1. Head to the [automation](https://app.getport.io/settings/automations) page.
 
-4. Click on `+ Secret` and add the following secrets:
-   - `PAGERDUTY_ROUTING_KEY`: Your PagerDuty routing key for the service.
+    2. Click on the `+ Automation` button.
 
-### Set up self-service action
+    3. Copy and paste the following JSON configuration into the editor.
 
-We will create a self-service action to handle triggering PagerDuty incidents using webhooks.
-To create a self-service action follow these steps:
+        <details>
+        <summary><b>Update PagerDuty incident in Port automation (Click to expand)</b></summary>
 
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Click on the `{...} Edit JSON` button.
-4. Copy and paste the following JSON configuration into the editor.
-
-    <details>
-    <summary><b>Trigger PagerDuty Incident (Webhook) (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-      "identifier": "trigger_incident_webhook",
-      "title": "Trigger Incident (Webhook)",
-      "icon": "pagerduty",
-      "description": "Trigger a new PagerDuty incident",
-      "trigger": {
-        "type": "self-service",
-        "operation": "DAY-2",
-        "userInputs": {
-          "properties": {
-            "summary": {
-              "icon": "DefaultProperty",
-              "title": "Summary",
-              "type": "string"
+        ```json showLineNumbers
+        {
+          "identifier": "pagerdutyIncident_sync_after_trigger",
+          "title": "Sync PagerDuty Incident After Trigger",
+          "description": "Update PagerDuty incident data in Port after triggering",
+          "trigger": {
+            "type": "automation",
+            "event": {
+              "type": "RUN_UPDATED",
+              "actionIdentifier": "trigger_incident_webhook"
             },
-            "source": {
-              "icon": "DefaultProperty",
-              "title": "Source",
-              "type": "string",
-              "default": "Port"
-            },
-            "severity": {
-              "icon": "DefaultProperty",
-              "title": "Severity",
-              "type": "string",
-              "default": "critical",
-              "enum": [
-                "critical",
-                "error",
-                "warning",
-                "info"
+            "condition": {
+              "type": "JQ",
+              "expressions": [
+                ".diff.after.status == \"SUCCESS\""
               ],
-              "enumColors": {
-                "critical": "red",
-                "error": "red",
-                "warning": "yellow",
-                "info": "blue"
-              }
-            },
-            "event_action": {
-              "icon": "DefaultProperty",
-              "title": "Event Action",
-              "type": "string",
-              "default": "trigger",
-              "enum": [
-                "trigger",
-                "acknowledge",
-                "resolve"
-              ]
+              "combinator": "and"
             }
           },
-          "required": [
-            "summary",
-            "source",
-            "severity",
-            "event_action"
-          ],
-          "order": [
-            "summary",
-            "source",
-            "severity",
-            "event_action"
-          ]
-        },
-        "blueprintIdentifier": "pagerdutyIncident"
-      },
-      "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "https://events.pagerduty.com/v2/enqueue",
-        "agent": false,
-        "synchronized": true,
-        "method": "POST",
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "body": {
-          "payload": {
-            "summary": "{{.inputs.summary}}",
-            "source": "{{.inputs.source}}",
-            "severity": "{{.inputs.severity}}"
+          "invocationMethod": {
+            "type": "UPSERT_ENTITY",
+            "blueprintIdentifier": "pagerdutyIncident",
+            "mapping": {
+              "identifier": "{{.event.diff.after.response.dedup_key}}",
+              "title": "{{.event.diff.after.properties.summary}}",
+              "properties": {
+                "status": "triggered",
+                "urgency": "high",
+                "created_at": "{{.event.diff.after.createdAt}}"
+              }
+            }
           },
-          "routing_key": "{{.secrets.PAGERDUTY_ROUTING_KEY}}",
-          "event_action": "{{.inputs.event_action}}"
+          "publish": true
         }
-      },
-      "requiredApproval": false
-    }
-    ```
-    </details>
+        ```
+        </details>
 
-5. Click `Save`.
+    4. Click `Save`.
 
-Now you should see the `Trigger Incident (Webhook)` action in the self-service page. 🎉
+    Now when you execute the webhook action, the incident data in Port will be automatically updated with the latest information from PagerDuty.
 
-### Create an automation to upsert entity in port
+  </TabItem>
 
-After each execution of the action, we would like to update the relevant entity in Port with the latest status.  
+  <TabItem value="github" label="GitHub workflow">
 
-To achieve this, we can create an automation that will be triggered when the action completes successfully.
+      To implement this use-case using a GitHub workflow, follow these steps:
 
-To create the automation:
+      <h3>Add GitHub secrets</h3>
 
-1. Head to the [automation](https://app.getport.io/settings/automations) page.
+      In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+      - `PAGERDUTY_ROUTING_KEY` - Your PagerDuty routing key for the service.
+      - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+      - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
-2. Click on the `+ Automation` button.
+      <h3>Add GitHub workflow</h3>
 
-3. Copy and paste the following JSON configuration into the editor.
+      Create the file `.github/workflows/trigger-pagerduty-incident.yaml` in the `.github/workflows` folder of your repository.
 
-    <details>
-    <summary><b>Update PagerDuty incident in Port automation (Click to expand)</b></summary>
+      <GithubDedicatedRepoHint/>
 
-    ```json showLineNumbers
-    {
-      "identifier": "pagerdutyIncident_sync_after_trigger",
-      "title": "Sync PagerDuty Incident After Trigger",
-      "description": "Update PagerDuty incident data in Port after triggering",
-      "trigger": {
-        "type": "automation",
-        "event": {
-          "type": "RUN_UPDATED",
-          "actionIdentifier": "trigger_incident_webhook"
-        },
-        "condition": {
-          "type": "JQ",
-          "expressions": [
-            ".diff.after.status == \"SUCCESS\""
-          ],
-          "combinator": "and"
-        }
-      },
-      "invocationMethod": {
-        "type": "UPSERT_ENTITY",
-        "blueprintIdentifier": "pagerdutyIncident",
-        "mapping": {
-          "identifier": "{{.event.diff.after.response.dedup_key}}",
-          "title": "{{.event.diff.after.properties.summary}}",
-          "properties": {
-            "status": "triggered",
-            "urgency": "high",
-            "created_at": "{{.event.diff.after.createdAt}}"
+      <details>
+      <summary><b>GitHub Workflow (Click to expand)</b></summary>
+
+      ```yaml showLineNumbers
+      name: Trigger PagerDuty Incident
+
+      on:
+        workflow_dispatch:
+          inputs:
+            summary:
+              description: The summary of the incident to trigger
+              required: true
+              type: string
+            source:
+              description: The source of the incident
+              required: true
+              type: string
+            severity:
+              description: The severity of the incident
+              required: true
+              type: string
+              default: "critical"
+            event_action:
+              description: The event action
+              required: true
+              type: string
+              default: "trigger"
+            routing_key:
+              description: The routing key of the service
+              required: true
+              type: string
+            port_context:
+              required: true
+              description: includes blueprint, run ID, and entity identifier from Port.
+      jobs: 
+        trigger:
+          runs-on: ubuntu-latest
+          steps:
+            - name: Trigger PagerDuty Incident
+              id: trigger
+              uses: fjogeleit/http-request-action@v1
+              with:
+                url: 'https://events.pagerduty.com/v2/enqueue'
+                method: 'POST'
+                customHeaders: '{"Content-Type": "application/json"}'
+                data: >-
+                  {
+                    "payload": {
+                      "summary": "${{ inputs.summary }}",
+                      "source": "${{ inputs.source }}",
+                      "severity": "${{ inputs.severity }}"
+                    },
+                    "routing_key": "${{ inputs.routing_key }}",
+                    "event_action": "${{ inputs.event_action }}"
+                  }
+            
+            - name: Log Response
+              run: |
+                echo "Response status: ${{ steps.trigger.outputs.status }}"
+                echo "Response data: ${{ steps.trigger.outputs.response }}"
+      ```
+      </details>
+
+      <h3>Set up self-service action</h3>
+
+      We will create a self-service action to handle triggering PagerDuty incidents.
+      To create a self-service action follow these steps:
+
+      1. Head to the [self-service](https://app.getport.io/self-serve) page.
+      2. Click on the `+ New Action` button.
+      3. Click on the `{...} Edit JSON` button.
+      4. Copy and paste the following JSON configuration into the editor.
+
+          <details>
+          <summary><b>Trigger PagerDuty Incident (Click to expand)</b></summary>
+
+          <GithubActionModificationHint/>
+
+          ```json showLineNumbers
+          {
+            "identifier": "trigger_pagerduty_incident",
+            "title": "Trigger Incident",
+            "icon": "pagerduty",
+            "description": "Trigger a new PagerDuty incident",
+            "trigger": {
+              "type": "self-service",
+              "operation": "DAY-2",
+              "userInputs": {
+                "properties": {
+                  "summary": {
+                    "icon": "DefaultProperty",
+                    "title": "Summary",
+                    "type": "string"
+                  },
+                  "source": {
+                    "icon": "DefaultProperty",
+                    "title": "Source",
+                    "type": "string",
+                    "default": "Port"
+                  },
+                  "severity": {
+                    "icon": "DefaultProperty",
+                    "title": "Severity",
+                    "type": "string",
+                    "default": "critical",
+                    "enum": [
+                      "critical",
+                      "error",
+                      "warning",
+                      "info"
+                    ],
+                    "enumColors": {
+                      "critical": "red",
+                      "error": "red",
+                      "warning": "yellow",
+                      "info": "blue"
+                    }
+                  },
+                  "event_action": {
+                    "icon": "DefaultProperty",
+                    "title": "Event Action",
+                    "type": "string",
+                    "default": "trigger",
+                    "enum": [
+                      "trigger",
+                      "acknowledge",
+                      "resolve"
+                    ]
+                  },
+                  "routing_key": {
+                    "icon": "DefaultProperty",
+                    "title": "Routing Key",
+                    "type": "string",
+                    "description": "The routing key of the service"
+                  }
+                },
+                "required": [
+                  "summary",
+                  "source",
+                  "severity",
+                  "event_action",
+                  "routing_key"
+                ],
+                "order": [
+                  "summary",
+                  "source",
+                  "severity",
+                  "event_action",
+                  "routing_key"
+                ]
+              },
+              "blueprintIdentifier": "pagerdutyIncident"
+            },
+            "invocationMethod": {
+              "type": "GITHUB",
+              "org": "<GITHUB_ORG>",
+              "repo": "<GITHUB_REPO>",
+              "workflow": "trigger-pagerduty-incident.yaml",
+              "workflowInputs": {
+                "summary": "{{.inputs.\"summary\"}}",
+                "source": "{{.inputs.\"source\"}}",
+                "severity": "{{.inputs.\"severity\"}}",
+                "event_action": "{{.inputs.\"event_action\"}}",
+                "routing_key": "{{.inputs.\"routing_key\"}}",
+                "port_context": {
+                  "blueprint": "{{.action.blueprint}}",
+                  "entity": "{{.entity.identifier}}",
+                  "run_id": "{{.run.id}}",
+                  "relations": "{{.entity.relations}}"
+                }
+              },
+              "reportWorkflowStatus": true
+            },
+            "requiredApproval": false
           }
-        }
-      },
-      "publish": true
-    }
-    ```
-    </details>
+          ```
+          </details>
 
-4. Click `Save`.
+      5. Click `Save`.
 
-Now when you execute the webhook action, the incident data in Port will be automatically updated with the latest information from PagerDuty.
+      Now you should see the `Trigger Incidents` action in the self-service page. 🎉
+
+  </TabItem>
+</Tabs>
 
 ## Let's test it!
 
-1. Head to the [Self Service hub](https://app.getport.io/self-serve)
+1. Head to the [self-service page](https://app.getport.io/self-serve) of your portal
 
 2. Choose either the GitHub workflow or webhook implementation:
    - For GitHub workflow: Click on `Trigger Incident`
@@ -440,8 +463,6 @@ Now when you execute the webhook action, the incident data in Port will be autom
 5. Click on `Execute`
 
 6. Done! wait for the incident's status to be changed in PagerDuty
-
-Congrats 🎉 You've triggered a PagerDuty incident in Port 🔥
 
 ## More Self Service PagerDuty Actions Examples
 - [Acknowledge Incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)

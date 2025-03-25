@@ -292,8 +292,6 @@ Now you should see the `Change On-Call User` action in the self-service page. ðŸ
 
 7. Done! wait for the incident's status to be changed in PagerDuty
 
-Congrats ðŸŽ‰ You've changed the PagerDuty on-call user in Port.
-
 ## More Self Service PagerDuty Actions Examples
 - [Acknowledge Incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
 - [Change PagerDuty incident owner](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)

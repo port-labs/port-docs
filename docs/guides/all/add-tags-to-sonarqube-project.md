@@ -5,6 +5,9 @@ description: Learn how to add tags to your SonarQube projects in Port, improving
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
+import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_secrets_callout.mdx'
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Add Tags to SonarQube Project
 
@@ -32,7 +35,7 @@ You can implement this action in two ways:
 If you haven't installed the SonarQube integration, you'll need to create a blueprint for SonarQube projects.
 However, we highly recommend you install the SonarQube integration to have these automatically set up for you.
 
-### Create the SonarQube project blueprint
+<h3>Create the SonarQube project blueprint</h3>
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
@@ -111,272 +114,286 @@ However, we highly recommend you install the SonarQube integration to have these
 
 5. Click "Save" to create the blueprint.
 
-## GitHub workflow implementation
+## Implementation
 
-### Add GitHub secrets
+<Tabs>
+  <TabItem value="webhook" label="Synced webhook" default>
 
-In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
-- `SONARQUBE_HOST_URL` - SonarQube instance URL. `https://sonarqube.com` if using Sonarcloud.
-- `SONARQUBE_API_TOKEN` - SonarQube API token. This can be a Project Analysis token for the specific project, a Global Analysis token or a user token.
-- `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
-- `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+    You can add tags to SonarQube projects by leveraging Port's **synced webhooks** and **secrets** to directly interact with the SonarQube's API. This method simplifies the setup by handling everything within Port.
 
-### Add GitHub workflow
+    <h3>Add Port secrets</h3>
 
-Create the file `.github/workflows/add-tags-to-sonarqube-project.yml` in the `.github/workflows` folder of your repository.
+    <ExistingSecretsCallout integration="SonarQube" />
 
-<GithubDedicatedRepoHint/>
 
-<details>
-<summary><b>GitHub Workflow (Click to expand)</b></summary>
+    To add these secrets to your portal:
 
-```yaml showLineNumbers
-name: Add tags to SonarQube project
-on:
-  workflow_dispatch:
-    inputs:
-      tags:
-        type: string
-        required: true
-      port_context:
-        required: true
-        type: string
+    1. Click on the `...` button in the top right corner of your Port application.
 
-jobs:
-  create-entity-in-port-and-update-run:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Inform Port of start of request to SonarQube
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_context).run_id}}
-          logMessage: Starting request to add tags to SonarQube project
-      
-      - name: Add tags to SonarQube project
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: "${{ secrets.SONARQUBE_HOST_URL }}/api/project_tags/set?project=${{ fromJson(inputs.port_context).entity }}&tags=${{ inputs.tags }}"
-          method: "POST"
-          bearerToken: ${{ secrets.SONARQUBE_API_TOKEN }}
-          customHeaders: '{"Content-Type": "application/json"}'
+    2. Click on **Credentials**.
 
-      - name: Inform Port of completion of request to SonarQube
-        uses: port-labs/port-github-action@v1
-        with:
-          clientId: ${{ secrets.PORT_CLIENT_ID }}
-          clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
-          baseUrl: https://api.getport.io
-          operation: PATCH_RUN
-          runId: ${{ fromJson(inputs.port_context).run_id }}
-          logMessage: Finished request to add tags to SonarQube project
-```
-</details>
+    3. Click on the `Secrets` tab.
 
-### Set up self-service action
+    4. Click on `+ Secret` and add the following secrets:
+       - `SONARQUBE_HOST_URL`: Your SonarQube instance URL
+       - `SONARQUBE_API_TOKEN`: Your SonarQube API token
 
-We will create a self-service action to handle adding tags to SonarQube projects.
-To create a self-service action follow these steps:
+    <h3>Set up self-service action</h3>
 
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Click on the `{...} Edit JSON` button.
-4. Copy and paste the following JSON configuration into the editor.
+    We will create a self-service action to handle adding tags to SonarQube projects using webhooks.
+    To create a self-service action follow these steps:
 
-    <details>
-    <summary><b>Add Tags to SonarQube Project (Click to expand)</b></summary>
+    1. Head to the [self-service](https://app.getport.io/self-serve) page.
+    2. Click on the `+ New Action` button.
+    3. Click on the `{...} Edit JSON` button.
+    4. Copy and paste the following JSON configuration into the editor.
 
-    <GithubActionModificationHint/>
+        <details>
+        <summary><b>Add Tags to SonarQube Project (Webhook) (Click to expand)</b></summary>
 
-    ```json showLineNumbers
-    {
-      "identifier": "sonarQubeProject_add_tags_to_sonar_qube_project",
-      "title": "Add Tags to SonarQube project",
-      "icon": "sonarqube",
-      "description": "Adds additional tags to a project in SonarQube",
-      "trigger": {
-        "type": "self-service",
-        "operation": "DAY-2",
-        "userInputs": {
-          "properties": {
-            "tags": {
-              "title": "Tags",
-              "description": "Comma separated list of tags",
-              "icon": "DefaultProperty",
-              "type": "string"
+        ```json showLineNumbers
+        {
+          "identifier": "add_tags_to_sonarqube_project_webhook",
+          "title": "Add Tags to SonarQube Project (Webhook)",
+          "icon": "sonarqube",
+          "description": "Add tags to a SonarQube project using a webhook",
+          "trigger": {
+            "type": "self-service",
+            "operation": "DAY-2",
+            "userInputs": {
+              "properties": {
+                "tags": {
+                  "title": "Tags",
+                  "description": "Comma separated list of tags",
+                  "icon": "DefaultProperty",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "tags"
+              ],
+              "order": [
+                "tags"
+              ]
+            },
+            "blueprintIdentifier": "sonarQubeProject"
+          },
+          "invocationMethod": {
+            "type": "WEBHOOK",
+            "url": "{{.secrets.SONARQUBE_HOST_URL}}/api/project_tags/set",
+            "agent": false,
+            "synchronized": true,
+            "method": "POST",
+            "headers": {
+              "Authorization": "Bearer {{.secrets.SONARQUBE_API_TOKEN}}",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "queryParams": {
+              "project": "{{.entity.identifier}}",
+              "tags": "{{.inputs.tags}}"
             }
           },
-          "required": [
-            "tags"
-          ],
-          "order": [
-            "tags"
-          ]
-        },
-        "blueprintIdentifier": "sonarQubeProject"
-      },
-      "invocationMethod": {
-        "type": "GITHUB",
-        "org": "<GITHUB_ORG>",
-        "repo": "<GITHUB_REPO>",
-        "workflow": "add-tags-to-sonarqube-project.yml",
-        "workflowInputs": {
-          "tags": "{{.inputs.\"tags\"}}",
-          "port_context": {
-            "entity": "{{.entity.identifier}}",
-            "run_id": "{{.run.id}}"
-          }
-        },
-        "reportWorkflowStatus": true
-      },
-      "requiredApproval": false
-    }
-    ```
-    </details>
+          "requiredApproval": false
+        }
+        ```
+        </details>
 
-5. Click `Save`.
+    5. Click `Save`.
 
-Now you should see the `Add Tags to SonarQube project` action in the self-service page. 🎉
+    Now you should see the `Add Tags to SonarQube Project (Webhook)` actions in the self-service page. 🎉
 
-## Synced webhook implementation
+    <h3> Create an automation to update entity in port </h3>
 
-### Add Port secrets
+    To keep your catalog updated with the latest tags, you can create an automation that will update the SonarQube project entity in Port immediately after the webhook action completes successfully.
 
-Add the following secrets to your Port account:
+    Follow these steps to add the automation:
 
-1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+    1. Head to the [automation](https://app.getport.io/settings/automations) page.
 
-2. Click on **Credentials**.
+    2. Click on the `+ Automation` button.
 
-3. Click on the `Secrets` tab.
+    3. Copy and paste the following JSON configuration into the editor.
 
-4. Click on `+ Secret` and add the following secrets:
-   - `SONARQUBE_HOST_URL`: Your SonarQube instance URL
-   - `SONARQUBE_API_TOKEN`: Your SonarQube API token
+        <details>
+        <summary><b>Update SonarQube project tags in Port automation (Click to expand)</b></summary>
 
-### Set up self-service action
-
-We will create a self-service action to handle adding tags to SonarQube projects using webhooks.
-To create a self-service action follow these steps:
-
-1. Head to the [self-service](https://app.getport.io/self-serve) page.
-2. Click on the `+ New Action` button.
-3. Click on the `{...} Edit JSON` button.
-4. Copy and paste the following JSON configuration into the editor.
-
-    <details>
-    <summary><b>Add Tags to SonarQube Project (Webhook) (Click to expand)</b></summary>
-
-    ```json showLineNumbers
-    {
-      "identifier": "add_tags_to_sonarqube_project_webhook",
-      "title": "Add Tags to SonarQube Project (Webhook)",
-      "icon": "sonarqube",
-      "description": "Add tags to a SonarQube project using a webhook",
-      "trigger": {
-        "type": "self-service",
-        "operation": "DAY-2",
-        "userInputs": {
-          "properties": {
-            "tags": {
-              "title": "Tags",
-              "description": "Comma separated list of tags",
-              "icon": "DefaultProperty",
-              "type": "string"
+        ```json showLineNumbers
+        {
+          "identifier": "sonarQubeProject_sync_tags",
+          "title": "Sync SonarQube Project Tags",
+          "description": "Update SonarQube project tags in Port after adding tags",
+          "trigger": {
+            "type": "automation",
+            "event": {
+              "type": "RUN_UPDATED",
+              "actionIdentifier": "add_tags_to_sonarqube_project_webhook"
+            },
+            "condition": {
+              "type": "JQ",
+              "expressions": [
+                ".diff.after.status == \"SUCCESS\""
+              ],
+              "combinator": "and"
             }
           },
-          "required": [
-            "tags"
-          ],
-          "order": [
-            "tags"
-          ]
-        },
-        "blueprintIdentifier": "sonarQubeProject"
-      },
-      "invocationMethod": {
-        "type": "WEBHOOK",
-        "url": "{{.secrets.SONARQUBE_HOST_URL}}/api/project_tags/set",
-        "agent": false,
-        "synchronized": true,
-        "method": "POST",
-        "headers": {
-          "Authorization": "Bearer {{.secrets.SONARQUBE_API_TOKEN}}",
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        "queryParams": {
-          "project": "{{.entity.identifier}}",
-          "tags": "{{.inputs.tags}}"
+          "invocationMethod": {
+            "type": "UPSERT_ENTITY",
+            "blueprintIdentifier": "sonarQubeProject",
+            "mapping": {
+              "identifier": "{{.event.diff.after.entity.identifier}}",
+              "properties": {
+                "tags": "{{.event.diff.after.inputs.tags | split(\",\")}}"
+              }
+            }
+          },
+          "publish": true
         }
-      },
-      "requiredApproval": false
-    }
-    ```
-    </details>
+        ```
+        </details>
 
-5. Click `Save`.
+    4. Click `Save`.
 
-Now you should see the `Add Tags to SonarQube Project (Webhook)` actions in the self-service page. 🎉
+    Now when you execute the webhook action, the project tags in Port will be automatically updated with the latest information from SonarQube.
 
-### Create an automation to update entity in port
+    :::info API limitations
+    Due to SonarQube API's limitation, this action replaces the tags on the project with the new ones specified. If you want to add to the already existing tags, copy the existing tags and add them with the new ones you are adding.
+    :::
 
-To keep your catalog updated with the latest tags, you can create an automation that will update the SonarQube project entity in Port immediately after the webhook action completes successfully.
+  </TabItem>
+  <TabItem value="github" label="GitHub workflow">
 
-Follow these steps to add the automation:
+    To implement this use-case using a GitHub workflow, follow these steps:
 
-1. Head to the [automation](https://app.getport.io/settings/automations) page.
+    <h3> Add GitHub secrets </h3>
 
-2. Click on the `+ Automation` button.
+    In your GitHub repository, [go to **Settings > Secrets**](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) and add the following secrets:
+    - `SONARQUBE_HOST_URL` - SonarQube instance URL. `https://sonarqube.com` if using Sonarcloud.
+    - `SONARQUBE_API_TOKEN` - SonarQube API token. This can be a Project Analysis token for the specific project, a Global Analysis token or a user token.
+    - `PORT_CLIENT_ID` - Your port `client id` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+    - `PORT_CLIENT_SECRET` - Your port `client secret` [How to get the credentials](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
 
-3. Copy and paste the following JSON configuration into the editor.
+    <h3>Add GitHub workflow</h3>
+
+    Create the file `.github/workflows/add-tags-to-sonarqube-project.yml` in the `.github/workflows` folder of your repository.
+
+    <GithubDedicatedRepoHint/>
 
     <details>
-    <summary><b>Update SonarQube project tags in Port automation (Click to expand)</b></summary>
+    <summary><b>GitHub Workflow (Click to expand)</b></summary>
 
-    ```json showLineNumbers
-    {
-      "identifier": "sonarQubeProject_sync_tags",
-      "title": "Sync SonarQube Project Tags",
-      "description": "Update SonarQube project tags in Port after adding tags",
-      "trigger": {
-        "type": "automation",
-        "event": {
-          "type": "RUN_UPDATED",
-          "actionIdentifier": "add_tags_to_sonarqube_project_webhook"
-        },
-        "condition": {
-          "type": "JQ",
-          "expressions": [
-            ".diff.after.status == \"SUCCESS\""
-          ],
-          "combinator": "and"
-        }
-      },
-      "invocationMethod": {
-        "type": "UPSERT_ENTITY",
-        "blueprintIdentifier": "sonarQubeProject",
-        "mapping": {
-          "identifier": "{{.event.diff.after.entity.identifier}}",
-          "properties": {
-            "tags": "{{.event.diff.after.inputs.tags | split(\",\")}}"
-          }
-        }
-      },
-      "publish": true
-    }
+    ```yaml showLineNumbers
+    name: Add tags to SonarQube project
+    on:
+      workflow_dispatch:
+        inputs:
+          tags:
+            type: string
+            required: true
+          port_context:
+            required: true
+            type: string
+
+    jobs:
+      create-entity-in-port-and-update-run:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Inform Port of start of request to SonarQube
+            uses: port-labs/port-github-action@v1
+            with:
+              clientId: ${{ secrets.PORT_CLIENT_ID }}
+              clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+              baseUrl: https://api.getport.io
+              operation: PATCH_RUN
+              runId: ${{ fromJson(inputs.port_context).run_id}}
+              logMessage: Starting request to add tags to SonarQube project
+          
+          - name: Add tags to SonarQube project
+            uses: fjogeleit/http-request-action@v1
+            with:
+              url: "${{ secrets.SONARQUBE_HOST_URL }}/api/project_tags/set?project=${{ fromJson(inputs.port_context).entity }}&tags=${{ inputs.tags }}"
+              method: "POST"
+              bearerToken: ${{ secrets.SONARQUBE_API_TOKEN }}
+              customHeaders: '{"Content-Type": "application/json"}'
+
+          - name: Inform Port of completion of request to SonarQube
+            uses: port-labs/port-github-action@v1
+            with:
+              clientId: ${{ secrets.PORT_CLIENT_ID }}
+              clientSecret: ${{ secrets.PORT_CLIENT_SECRET }}
+              baseUrl: https://api.getport.io
+              operation: PATCH_RUN
+              runId: ${{ fromJson(inputs.port_context).run_id }}
+              logMessage: Finished request to add tags to SonarQube project
     ```
     </details>
 
-4. Click `Save`.
+    <h3>Set up self-service action</h3>
 
-Now when you execute the webhook action, the project tags in Port will be automatically updated with the latest information from SonarQube.
+    We will create a self-service action to handle adding tags to SonarQube projects.
+    To create a self-service action follow these steps:
 
-:::info API limitations
-Due to SonarQube API's limitation, this action replaces the tags on the project with the new ones specified. If you want to add to the already existing tags, copy the existing tags and add them with the new ones you are adding.
-:::
+    1. Head to the [self-service](https://app.getport.io/self-serve) page.
+    2. Click on the `+ New Action` button.
+    3. Click on the `{...} Edit JSON` button.
+    4. Copy and paste the following JSON configuration into the editor.
+
+        <details>
+        <summary><b>Add Tags to SonarQube Project (Click to expand)</b></summary>
+
+        <GithubActionModificationHint/>
+
+        ```json showLineNumbers
+        {
+          "identifier": "sonarQubeProject_add_tags_to_sonar_qube_project",
+          "title": "Add Tags to SonarQube project",
+          "icon": "sonarqube",
+          "description": "Adds additional tags to a project in SonarQube",
+          "trigger": {
+            "type": "self-service",
+            "operation": "DAY-2",
+            "userInputs": {
+              "properties": {
+                "tags": {
+                  "title": "Tags",
+                  "description": "Comma separated list of tags",
+                  "icon": "DefaultProperty",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "tags"
+              ],
+              "order": [
+                "tags"
+              ]
+            },
+            "blueprintIdentifier": "sonarQubeProject"
+          },
+          "invocationMethod": {
+            "type": "GITHUB",
+            "org": "<GITHUB_ORG>",
+            "repo": "<GITHUB_REPO>",
+            "workflow": "add-tags-to-sonarqube-project.yml",
+            "workflowInputs": {
+              "tags": "{{.inputs.\"tags\"}}",
+              "port_context": {
+                "entity": "{{.entity.identifier}}",
+                "run_id": "{{.run.id}}"
+              }
+            },
+            "reportWorkflowStatus": true
+          },
+          "requiredApproval": false
+        }
+        ```
+        </details>
+
+    5. Click `Save`.
+
+    Now you should see the `Add Tags to SonarQube project` action in the self-service page. 🎉
+
+  </TabItem>
+</Tabs>
 
 ## Let's test it!
 
@@ -394,8 +411,6 @@ Due to SonarQube API's limitation, this action replaces the tags on the project 
 5. Click on `Execute`
 
 6. Done! Wait for the tags to be added to the SonarQube project
-
-Congrats 🎉 You've added tags to your SonarQube project from Port! 🔥
 
 ## More relevant guides and examples
 - [Connect SonarQube project to a service](https://docs.port.io/guides/all/connect-sonar-project-to-service)
