@@ -20,8 +20,7 @@ You can implement this action in two ways:
 
 ## Set up data model
 
-Before implementing either approach, you'll need to create a blueprint for Circle CI projects.  
-Follow the steps below to create the blueprint.
+Before implementing either approach, you will need to create a blueprint for Circle CI projects:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
