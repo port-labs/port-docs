@@ -239,7 +239,7 @@ By default, this selector is set to `false`, which means the integration will on
     selector:
       query: 'true'
       # highlight-next-line
-      includeBotMembers: 'true'
+      includeBotMembers: 'false'
 ```
 
 ```yaml
@@ -247,7 +247,7 @@ By default, this selector is set to `false`, which means the integration will on
     selector:
       query: 'true'
       # highlight-next-line
-      includeBotMembers: 'true'
+      includeBotMembers: 'false'
 ```
 :::
 
