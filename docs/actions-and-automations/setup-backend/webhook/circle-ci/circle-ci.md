@@ -232,7 +232,7 @@ To create a self-service action that triggers a Circle CI pipeline, follow these
 Create a JSON file named `invocations.json` with the following content:
 
 <details>
-<summary>Mapping - (invocations.json)</summary>
+<summary>Mapping (invocations.json)</summary>
 
 ```json
 [
