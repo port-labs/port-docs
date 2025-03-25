@@ -2,7 +2,7 @@
 
 The `port.yml` ingestion pattern allows you to configure the {props.provider} integration to ingest `port.yml` files as part of the resync process. This approach is particularly useful when you want to maintain data integrity and ensure that your `port.yml` files are properly synchronized with Port.
 
-`port.yml` files operate in the GitOps methodology, meaning they are ingested into Port whenever a commit to the main branch of the repository is detected. By utilizing `port.yml` files for entity enrichment, they become essential for the sync process to maintain data integrity.
+`port.yml` files operate in the GitOps methodology, meaning they are ingested into Port whenever a commit to the main branch of the repository is detected.
 
 Here's how to configure the integration to parse and ingest `port.yml` files:
 
