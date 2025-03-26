@@ -35,4 +35,9 @@ Continue to the [installation](/build-your-software-catalog/sync-data-to-catalog
 
 The Azure exporter can retrieve all the resources supported by the [Azure Resource Manager REST API](https://learn.microsoft.com/en-us/rest/api/resources/resources/list), and export them to Port as entities of existing blueprints.
 
-For examples on how to map resources head to the [resource templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page.  
+For examples on how to map resources head to the [resource templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page.
+
+## Next Steps
+
+- Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.
+- Check out the [Incremental Sync](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md) guide for setting up periodic synchronization of Azure resources.
