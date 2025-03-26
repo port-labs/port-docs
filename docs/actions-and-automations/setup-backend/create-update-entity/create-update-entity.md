@@ -52,6 +52,23 @@ For example, say we want to assign the initiator of the action to a new entity w
 }
 ```
 
+For example, say we wanted the user to create a project and list tasks in that project. You would create a tasks entity selection in the action, and let the user choose multiple tasks. 
+
+Then, to create relations from the chosen entities of that entity selection (array) to the original blueprint, you can map them in relations with `jq`:
+
+```json
+{
+  "identifier": "someTaskEntity",
+  "title": "Some Project",
+  "team": ["team1"],
+  "icon": "DefaultBlueprint",
+  "properties": { "assignee": "{{ .trigger.by.user.email }}" },
+  "relations": {
+    "tasks": "{{ .inputs.tasks | map (.identifier) }}"
+  }
+}
+```
+
 :::tip Test your mapping
 You can use the `Test JQ` button in the bottom-left corner to test your mapping against the action's schema.
 :::
