@@ -1,5 +1,5 @@
 ---
-title: Ingest dependencies from package.json file to repository
+title: Ingest dependencies from package.json file to service
 displayed_sidebar: null
 ---
 
@@ -8,11 +8,11 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Ingest dependencies from a package.json file and relate them to a repository  
+# Ingest dependencies from a package.json file and relate them to a service  
 
 
 ## Overview
-This guide will demonstrate how to ingest dependencies from a `package.json` file and relate them to the corresponding repository entities in Port.
+This guide will demonstrate how to ingest dependencies from a `package.json` file and relate them to the corresponding service entities in Port.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ This guide will demonstrate how to ingest dependencies from a `package.json` fil
 
 
 ## Set up data model
-### Add the `Dependency` blueprint
+### Add a dependency blueprint
 
 1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal.
 2. **Click on "+ Blueprint"**.
@@ -65,14 +65,18 @@ This guide will demonstrate how to ingest dependencies from a `package.json` fil
           "package_name",
           "semver_requirement"
         ]
-      }
-    }
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {}
+   }
 
     ```
     </details>
 
 
-## Ingest dependencies from a `package.json` file
+## Ingest dependencies from package.json
 
 To ingest dependencies listed in `package.json` files, follow these steps:
 
@@ -94,10 +98,10 @@ To ingest dependencies listed in `package.json` files, follow these steps:
           entity:
             mappings:
               identifier: >-
-                .item.key + "_" +  (.item.value |  gsub("\\^"; "caret_") |
-                gsub("~"; "tilde_") |  gsub(">="; "gte_") |  gsub("<="; "lte_") |
-                gsub(">"; "gt_") |  gsub("<"; "lt_") |  gsub("@"; "at_") |
-                gsub("\\*"; "star") |  gsub(" "; "_"))
+                .item.key + "_" +  (.item.value |  gsub("\\^"; "caret_") | 
+                gsub("~"; "tilde_") |  gsub(">="; "gte_") |  gsub("<="; "lte_") | 
+                gsub(">"; "gt_") |  gsub("<"; "lt_") |  gsub("@"; "at_") | 
+                gsub("\\*"; "star") |  gsub(" "; "_"))              
               title: .item.key + "@" + .item.value
               blueprint: '"dependency"'
               properties:
@@ -117,13 +121,13 @@ To ingest dependencies listed in `package.json` files, follow these steps:
 
     :::
 
-## Relate the dependencies to the repository
+## Relate the dependencies to the service
 
-Once the dependencies have been ingested, the next step is to establish relationships between these `dependency` entities and the corresponding `repository` entities.
+Once the dependencies have been ingested, the next step is to establish relationships between these `dependency` entities and the corresponding `service` entities.
 
-1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal, select the `Repository` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation` to create a relation between the `repository` and `dependency` blueprints.
+1. **Go to the [Builder](https://app.getport.io/settings/data-model)** in your Port portal, select the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation` to create a relation between the `service` and `dependency` blueprints.
 
-2. Click on the `...` button in the top right corner of the `Repository` blueprint and select `Edit JSON`.
+2. Click on the `...` button in the top right corner of the `Service` blueprint and select `Edit JSON`.
 
 3. **Add this JSON to establish the relationship**:
 
@@ -153,27 +157,27 @@ Once the dependencies have been ingested, the next step is to establish relation
           entity:
             mappings:
               identifier: .repo.name
-              blueprint: '"repository"'
+              blueprint: '"service"'
               properties: {}
               relations:
                 dependencies: >-
-                  [.file.content.dependencies | to_entries | map( .key + "_" +
-                  (.value |
-                    gsub("\\^"; "caret_") |
-                    gsub("~"; "tilde_") |
-                    gsub(">="; "gte_") |
-                    gsub("<="; "lte_") |
-                    gsub(">"; "gt_") |
-                    gsub("<"; "lt_") |
-                    gsub("@"; "at_") |
-                    gsub("\\*"; "star") |
+                  [.file.content.dependencies | to_entries | map( .key + "_" + 
+                  (.value | 
+                    gsub("\\^"; "caret_") | 
+                    gsub("~"; "tilde_") | 
+                    gsub(">="; "gte_") | 
+                    gsub("<="; "lte_") | 
+                    gsub(">"; "gt_") | 
+                    gsub("<"; "lt_") | 
+                    gsub("@"; "at_") | 
+                    gsub("\\*"; "star") | 
                     gsub(" "; "_")
                   ) ) | .[]]
     ```
 
 
     :::info Mapping Details
-    This would establish a relation between the `repository` and `dependency` entities based on the dependencies listed in the `package.json` file.
+    This would establish a relation between the `service` and `dependency` entities based on the dependencies listed in the `package.json` file.
     :::
 
     </TabItem>
@@ -195,7 +199,7 @@ Once the dependencies have been ingested, the next step is to establish relation
         entity:
           mappings:
             identifier: .repo.name
-            blueprint: '"repository"'
+            blueprint: '"service"'
             properties: {}
             relations:
               dependencies:

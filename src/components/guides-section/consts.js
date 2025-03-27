@@ -714,8 +714,8 @@ export const availableGuides = [
         link: "/guides/all/create-azure-resource-ado",
     },
     {
-        title: "Ingest dependencies from package.json file to repository",
-        description: "Ingest dependencies from a package.json file and relate them to the corresponding repository entities",
+        title: "Ingest dependencies from package.json file to service",
+        description: "Ingest dependencies from a package.json file and relate them to the corresponding service entities",
         tags: ["SDLC","GitHub"],
         logos: ["GitHub"],
         // category: "Getting started",
