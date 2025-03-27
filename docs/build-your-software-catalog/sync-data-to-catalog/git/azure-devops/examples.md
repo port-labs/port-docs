@@ -208,22 +208,55 @@ You can use the following Port blueprint definitions and integration configurati
 
 <PortReleaseAppConfig/>
 
+:::tip Learn more
+Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/release/releases/list?view=azure-devops-rest-7.1&tabs=HTTP) for the Azure DevOps release object structure.
+:::
 
 ## Mapping files
 
-The example below shows how to ingest files from your repositories into Port.  
+The example below shows how to ingest specific files from your Azure DevOps repositories into Port. This integration allows you to track and monitor individual files across your repositories.
+
+### Capabilities and Limitations
+
+Before implementing file mapping, please note the following:
+
+- **Explicit Paths Only**: The integration supports explicit file paths relative to the repository root. Wildcard/glob patterns (e.g., `*.yaml` or `**/*.json`) are not yet supported.
+- **File Types**: Any plain-text or structured file (e.g., `.yaml`, `.json`, `.md`, `.py`) can be ingested.
+- **Path Structure**: Only relative paths from the repository root are currently supported. For example:
+  - ✅ Correct paths:
+    - `README.md`
+    - `docs/getting-started.md`
+    - `src/config/default.json`
+    - `deployment/k8s/production.yaml`
+  - ❌ Incorrect paths:
+    - `/README.md` (leading slash)
+    - `C:/repo/config.json` (absolute path)
+    - `../other-repo/file.txt` (parent directory reference)
+    - `*.yaml` (glob pattern)
+- **Performance**: For optimal performance, we recommend limiting the number of tracked files per repository.
+- **File Tracking**: Each file specified in the configuration will be tracked as a separate entity in Port
+- **Change Detection**: Changes to tracked files will be reflected in Port during the next sync
+
+### Configuration
+
 You can use the following Port blueprint definitions and integration configuration:
 
 <FileBlueprint/>
 
 <PortFileAppConfig/>
 
-:::tip To Learn more
-- Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/release/releases/list?view=azure-devops-rest-7.1&tabs=HTTP) for the Azure DevOps release object structure.
+### Example Use Cases
+
+Common scenarios for file mapping include:
+- Tracking configuration files (e.g., `deployment.yaml`, `config.json`)
+- Monitoring documentation files (e.g., `README.md`, `CONTRIBUTING.md`)
+- Tracking infrastructure definitions (e.g., `terraform.tf`, `docker-compose.yml`)
+
+:::tip Learn more
+Click [here](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/items/get?view=azure-devops-rest-7.1&tabs=HTTP#download) for the Azure DevOps file object structure.
 :::
 
-
-After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your releases.
+After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your specified files.
 
 ## Mapping supported resources
 
