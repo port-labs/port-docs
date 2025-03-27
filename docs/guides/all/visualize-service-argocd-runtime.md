@@ -159,6 +159,7 @@ After installation, the integration will:
 
 <br/>
 
+
 ## Set up automatic discovery
 
 After onboarding, the relationship between the **workload** blueprint and the **service** blueprint is established automatically.   
@@ -183,19 +184,10 @@ To achieve this, we need to update the ArgoCD integration's mapping configuratio
           entity:
             mappings:
               identifier: .metadata.labels.portService
-              blueprint: '"service"'
-              properties: {}
-      - kind: application
-        selector:
-          query: "true"
-        port:
-          entity:
-            mappings:
-              identifier: .metadata.uid
-              blueprint: '"argocdApplication"'
+              blueprint: '"workload"'
               properties: {}
               relations:
-                service: .metadata.labels.portService
+                service: .metadata.labels.portService       
     ```
 
     <br/>
@@ -205,7 +197,6 @@ To achieve this, we need to update the ArgoCD integration's mapping configuratio
     <img src='/img/guides/argoEntityAfterIngestion.png' width='100%' border='1px' />
 
     <br/>
-
 
 ## Visualize data from your Kubernetes environment
 
