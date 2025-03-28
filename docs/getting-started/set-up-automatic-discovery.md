@@ -10,10 +10,10 @@ import LogoImage from '/src/components/guides-section/LogoImage/LogoImage.jsx';
 
 # Set up automatic discovery
 
-As part of the onboarding process, Port provides you with a set of self-service actions to create new `services`, `workloads`, `environments`, `users`, and `teams`.  
-These actions involve manually selecting the components related to the new entity.
+As part of the onboarding process, Port allows you to create new `services`, `workloads`, `environments`, `users`, and `teams` via the UI.  
+This involves manually selecting the components related to the new <PortTooltip id="entity">entity</PortTooltip>.
 
-These are routine tasks that most organizations perform on a regular basis, which is why the manual process of using these actions is not efficient or scalable.
+These are routine actions that most organizations perform on a regular basis, which is why this manual process is not efficient or scalable.
 
 This guide will walk you through automating the process of creating and updating these entities in a way that suits your organization's standards.
 
@@ -23,12 +23,12 @@ Not sure what these entities mean? See their definitions [here](/getting-started
 
 ## Discovery methods
 
-This page describes two steps you can take to automatically discover and update entities in your catalog:
+This page describes two methods you can use to automatically discover and update entities in your catalog:
 
 1. Define one of your external tools as a "source of truth" for the resources you want to ingest.
-2. Use metadata from your external tools (e.g. labels, naming conventions) to identify and update an entity in Port.
+2. Use metadata from your external tools (e.g. labels, naming conventions) to identify and update an <PortTooltip id="entity">entity</PortTooltip> in Port.
 
-Both steps require modifying the [mapping configuration](/build-your-software-catalog/customize-integrations/configure-mapping) of the relevant integration.  
+All methods require modifying the [mapping configuration](/build-your-software-catalog/customize-integrations/configure-mapping) of the relevant integration.  
 
 <details>
 <summary>**How to modify a mapping configuration (click to expand)**</summary>
@@ -38,7 +38,7 @@ Both steps require modifying the [mapping configuration](/build-your-software-ca
 4. Click on the "Save & Resync" button to save the changes and resync the integration.
 </details>
 
-## Step 1: Define a source of truth
+## 1. Define a source of truth
 
 This approach is useful when you want to create entities of a specific type (e.g. services, environments, teams, users) based on resources from a specific external tool.  
 
@@ -46,7 +46,7 @@ This approach is useful when you want to create entities of a specific type (e.g
 
 One example that works for many organizations is to define a **Git repository** as a source of truth for `services`, and automatically create a new `service` in Port for each repository in your Git provider.  
 
-To achieve this, we need to update the mapping configuration of the Git integration to include an entry for the `service` blueprint.  
+To achieve this, we need to update the mapping configuration of the Git integration to include an entry for the `service` <PortTooltip id="blueprint">blueprint</PortTooltip>.  
 Here is an example using the `GitHub` integration:
 
 ```yaml showLineNumbers
@@ -363,6 +363,42 @@ Common examples for resources that can be used as a source of truth for `environ
 
 <TabItem value="Workloads">
 Common examples for resources that can be used as a source of truth for `workloads`:
+
+<details>
+<summary><LogoImage logo="Kubernetes" /> **Kubernetes workload (click to expand)**</summary>
+```yaml showLineNumbers
+- kind: apps/v1/deployments
+  selector:
+    query: .metadata.namespace | startswith("kube") | not
+  port:
+    entity:
+      mappings:
+        - identifier: >-
+            .metadata.name + "-Deployment-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+          title: .metadata.name
+          blueprint: '"workload"'
+          relations:
+            k8s_workload: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+```
+</details>
+
+<details>
+<summary><LogoImage logo="ArgoCD" /> **ArgoCD application (click to expand)**</summary>
+```yaml showLineNumbers
+- kind: application
+  selector:
+    query: 'true'
+  port:
+    entity:
+      mappings:
+        identifier: .metadata.uid
+        title: .metadata.name
+        blueprint: '"workload"'
+        relations:
+          argo_application: .metadata.uid
+```
+</details>
+
 <details>
 <summary><LogoImage logo="Datadog" /> **Datadog service (click to expand)**</summary>
 ```yaml showLineNumbers
@@ -416,41 +452,6 @@ Common examples for resources that can be used as a source of truth for `workloa
         blueprint: '"workload"'
         relations:
           dynatrace_entity: .entityId
-```
-</details>
-
-<details>
-<summary><LogoImage logo="Kubernetes" /> **Kubernetes workload (click to expand)**</summary>
-```yaml showLineNumbers
-- kind: apps/v1/deployments
-  selector:
-    query: .metadata.namespace | startswith("kube") | not
-  port:
-    entity:
-      mappings:
-        - identifier: >-
-            .metadata.name + "-Deployment-" + .metadata.namespace + "-" + env.CLUSTER_NAME
-          title: .metadata.name
-          blueprint: '"workload"'
-          relations:
-            k8s_workload: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + env.CLUSTER_NAME
-```
-</details>
-
-<details>
-<summary><LogoImage logo="ArgoCD" /> **ArgoCD application (click to expand)**</summary>
-```yaml showLineNumbers
-- kind: application
-  selector:
-    query: 'true'
-  port:
-    entity:
-      mappings:
-        identifier: .metadata.uid
-        title: .metadata.name
-        blueprint: '"workload"'
-        relations:
-          argo_application: .metadata.uid
 ```
 </details>
 
@@ -550,7 +551,7 @@ Common examples for resources that can be used as a source of truth for `teams`:
 
 </Tabs>
 
-## Step 2: Use predefined metadata
+## 2. Use predefined metadata
 
 In addition to defining "sources of truth", you can use data from your external tools to identify and update entities in Port.  
 This is useful when you want to update entities of a specific type (e.g. services, environments, teams, users) based on a label, naming convention, or other piece of metadata in a specific external tool.  
@@ -559,18 +560,18 @@ See below for various examples of how to implement this.
 
 ### Identifier is **known**
 
-The most straightforward way to identify and update an entity is to have its identifier somewhere in the metadata of the external tool, for instance:
+The most straightforward way to identify and update an <PortTooltip id="entity">entity</PortTooltip> is to have its identifier somewhere in the metadata of the external tool, for instance:
 - In a label/tag.
 - Using a naming convention, e.g. naming all PagerDuty services with the prefix `service-<identifier>`.
 
 Here are some examples:
 <Tabs groupId="metadata-examples" queryString>
 <TabItem value="Service">
-After installing the `PagerDuty` integration and ingesting our PagerDuty services, we may want to automatically connect them to their corresponding `service` entities.
+After installing the `PagerDuty` integration and ingesting our PagerDuty services, we may want to automatically connect them to their corresponding `service` <PortTooltip id="entity">entities</PortTooltip>.
 
-To achieve this, we need to update the mapping configuration of the PagerDuty integration to include an entry for the `service` blueprint.
+To achieve this, we need to update the mapping configuration of the PagerDuty integration to include an entry for the `service` <PortTooltip id="blueprint">blueprint</PortTooltip>.
 
-This example assumes that each PagerDuty service has a label named `portService` with the value being the identifier of the relevant `service` entity in Port.
+This example assumes that each PagerDuty service has a label named `portService` with the value being the identifier of the relevant `service` <PortTooltip id="entity">entity</PortTooltip> in Port.
 
 ```yaml showLineNumbers
 - kind: services
@@ -591,11 +592,11 @@ The meaning of this configuration is:
 </TabItem>
 
 <TabItem value="Workload">
-After installing the `Kubernetes` integration and ingesting our Kubernetes workloads, we may want to automatically connect them to their corresponding `workload` entities.
+After installing the `Kubernetes` integration and ingesting our Kubernetes workloads, we may want to automatically connect them to their corresponding `workload` <PortTooltip id="entity">entities</PortTooltip>.
 
-To achieve this, we need to update the mapping configuration of the Kubernetes integration to include an entry for the `workload` blueprint.
+To achieve this, we need to update the mapping configuration of the Kubernetes integration to include an entry for the `workload` <PortTooltip id="blueprint">blueprint</PortTooltip>.
 
-This example assumes that each Kubernetes workload has a label named `portWorkload` with the value being the identifier of the relevant `workload` entity in Port.
+This example assumes that each Kubernetes workload has a label named `portWorkload` with the value being the identifier of the relevant `workload` <PortTooltip id="entity">entity</PortTooltip> in Port.
 
 ```yaml showLineNumbers
 - kind: apps/v1/deployments
@@ -620,7 +621,7 @@ The meaning of this configuration is:
 
 ### Identifier is **unknown**
 
-If the metadata in your external tool is not an identifier, but some other property of the entity you want to update, you can use a [query rule](/search-and-query/#rules) to find the relevant entity and update it.
+If the metadata in your external tool is not an identifier, but some other property of the <PortTooltip id="entity">entity</PortTooltip> you want to update, you can use a [query rule](/search-and-query/#rules) to find the relevant entity and update it.
 
 Let's see some examples:
 
@@ -680,32 +681,56 @@ The meaning of this configuration is:
 
 </Tabs>
 
-<!-- ### Example 3 - map by relation
+## Connect workloads to their respective services
 
-In some cases, you may have a piece of metadata in your external tool that can be used to identify another entity that is related to the entity you want to update.
+The methods above demonstrate how to connect `services` and `workloads` to their respective resources.  
+To complete our service catalog, we need to connect `workloads` to their respective `services`.  
 
-For example, take the following scenario:
+This too is achieved by updating the mapping configuration of the relevant integration, and adding an entry for the `workload` <PortTooltip id="blueprint">blueprint</PortTooltip>.  
+One common way to match workloads to services is to use a label.  
 
-1. You have defined Github repositories as a source of truth for `services`, meaning that each `service` entity in your catalog has a relation to its relevant `githubRepository` entity.
-2. You use Snyk to monitor your GitHub repositories, and each Snyk target has the name of the GitHub repository it is monitoring.
-3. Now, you want to automatically relate each `service` entity to its relevant `snyk_target` entity.
-
-To achieve this, you can use a [query rule](/search-and-query/#rules) in your mapping configuration to find the relevant `service` entity and update it:
+For example, say we use ArgoCD applications to represent our workloads, and we have a label on each ArgoCD application that matches the identifier of the relevant `service` <PortTooltip id="entity">entity</PortTooltip> in Port.  
+We can then update the mapping configuration of the ArgoCD integration like this:
 
 ```yaml showLineNumbers
-- kind: target
+- kind: application
   selector:
     query: 'true'
   port:
     entity:
       mappings:
-        identifier: .attributes.name
-        blueprint: '"service"'
+        identifier: .metadata.uid
+        blueprint: '"workload"'
+        # highlight-start
         relations:
-          snyk_target:
-            combinator: '"and"'
-            rules:
-              - operator: '"="'
-                property: '"$title"'
-                value: .attributes.name
-``` -->
+          service: .metadata.labels.portService
+        # highlight-end
+```
+
+Note that you do not need a separate entry for this relation in the mapping configuration.  
+This page separates the steps for clarity, but you can add multiple relations in the same mapping configuration block.  
+
+For example, this is what the mapping configuration for Kubernetes workloads may look like if we added both the `service` and `k8s_workload` relations at once:
+
+```yaml showLineNumbers
+- kind: apps/v1/deployments
+  selector:
+    query: .metadata.namespace | startswith("kube") | not
+  port:
+    entity:
+      mappings:
+        - identifier: .metadata.labels.portWorkload
+          title: .metadata.name
+          blueprint: '"workload"'
+          relations:
+            k8s_workload: .metadata.name + "-Deployment-" + .metadata.namespace + "-" + env.CLUSTER_NAME
+            service: .metadata.labels.portService
+```
+
+
+
+
+
+
+
+
