@@ -72,6 +72,27 @@ export const liveEvents = {
     \n- incident.responder.replied \
     \n- incident.triggered \
     \n- incident.unacknowledged',
+  Datadog_OAuth: 
+    '**Monitoring Alerts:** \
+    \n- ci_pipelines_alert \
+    \n- ci_tests_alert \
+    \n- composite_monitor \
+    \n- error_tracking_alert \
+    \n- event_alert \
+    \n- event_v2_alert \
+    \n- log_alert \
+    \n- monitor_slo_alert \
+    \n- metric_slo_alert \
+    \n- outlier_monitor \
+    \n- process_alert \
+    \n- query_alert_monitor \
+    \n- rum_alert \
+    \n- service_check \
+    \n- synthetics_alert \
+    \n- trace_analytics_alert',
+    SonarQube:
+    '\n- Analysis completion events \
+     \n- Quality gate status change events',
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
