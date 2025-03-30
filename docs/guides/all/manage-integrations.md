@@ -226,7 +226,7 @@ Ensure the mappings are correctly added to handle both cases distinctly.
 
 ## Configure metrics collection
 
-:::info Version requirement
+:::info Ocean Version requirement
 Make sure you've updated the port-ocean version to use v0.22.0 or later.
 :::
 
