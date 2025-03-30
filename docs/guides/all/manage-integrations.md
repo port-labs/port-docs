@@ -17,8 +17,8 @@ By implementing this monitoring setup, you'll be able to track:
 - Object counts at various stages (raw, transformed, ingested)
 - Sync duration and performance metrics
 
-<img src='/img/software-catalog/customize-integrations/integrationsTableStats.png' width='90%' border='1px' />
-<img src='/img/software-catalog/customize-integrations/IntegrationsTableSyncKindStats.png' width='90%' border='1px' />
+<img src='/img/guides/integrationsTableStats.png' width='90%' />
+<img src='/img/guides/IntegrationsTableSyncKindStats.png' width='90%' />
 
 
 ## Prerequisites
