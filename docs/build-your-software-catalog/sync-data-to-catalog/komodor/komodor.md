@@ -37,7 +37,6 @@ It is possible to modify the default mapping to references the fields in the API
 ### Note that your api key will inherit the permissions of the user that created it. Make sure that the user that created the key has the view permissions on the resources you wish to ingest in Port.
 
 ## Installation
-### TODO: Not sure if thats how it will go once I'm merged. Didn't had the chance to test komodor installation through the catalog yet
 
 1. In Port, navigate to data sources and click `+ Data source`
 2. Choose 'komodor' from the list of available integrations, under the Kubernetes Stack category.
