@@ -38,7 +38,7 @@ export const liveEvents = {
     '**Repository:** \
     \n- repository:created \
     \n- repository:updated \
-    \n- repository:deleted \
+    \n- repository:push \
     \n\n**Pull Request:** \
     \n- pullrequest:created \
     \n- pullrequest:updated \
