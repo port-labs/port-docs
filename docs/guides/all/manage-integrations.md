@@ -251,7 +251,7 @@ Remember to repeat this step for each integration you want to monitor.
 
 Now you can set up a dashboard to visualize your integration metrics:
 
-1. Navigate to the **Catalog** in Port
+1. Navigate to your [software catalog](https://app.getport.io/organization/catalog).
 2. Click **+ New**, select **New dashboard**, and create a new dashboard.
 3. Add a **Table** widget, and select the `integration` blueprint.
 4. Add a **Line chart** widget, select the `integration` blueprint, the integration you want to monitor, and the `last resync duration` property.
