@@ -168,9 +168,10 @@ The `Integration Kind Metrics` blueprint tracks detailed metrics for specific in
 2. Click on **+ Data source**, and choose the **Webhook** type.
 2. Click on **Custom integration** and create a new webhook.
 3. Copy and store the generated webhook URL (should be in a format like `https://ingest.getport.io/abc123`).
-4. Add the following mapping below.
+4. Add the mappings below in the relevant section on the webhook configuration (see screenshot below).
 
 <img src='/img/guides/portDataSourcesWebhook.png' width='90%' />
+<img src='/img/guides/portDataSourcesWebhookMapping.png' width='90%' />
 
 
 **For Integration Kind Metrics**:
