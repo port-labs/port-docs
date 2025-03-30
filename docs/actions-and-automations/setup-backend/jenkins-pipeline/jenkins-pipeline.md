@@ -93,7 +93,7 @@ Here is an example of the required configuration:
 
 :::info Important
 
-- The IP field should be set to `3.251.12.205`, which is our hosted outbound WEBHOOK Gateway.
+- The IP field should be set to one of our hosted outbound WEBHOOK Gateway addresses: `3.251.12.205`, `34.252.219.131`, or `54.75.236.107`.
   - For more information about Port's outbound calls, check out Port's [actions security](/actions-and-automations/create-self-service-experiences/security/security.md) page.
 - In the **HMAC Secret** field, choose a secret containing your `port-client-secret`.
 
