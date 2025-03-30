@@ -255,7 +255,7 @@ Now you can set up a dashboard to visualize your integration metrics:
    - Object Count Comparison - Compares raw vs transformed vs ingested objects
 4. Configure each widget to use the data from your integration and integration_kind_metrics entities
 
-## Testing your monitoring
+## Test your monitoring
 
 After completing these steps:
 1. Trigger your integration sync
