@@ -113,7 +113,6 @@ integration:
     type: POLLING
   config:
   // highlight-next-line
-    apiUrl: BITBUCKET_CLOUD_API_URL
     bitbucketUsername: BITBUCKET_USERNAME
     bitbucketWorkspace: BITBUCKET_WORKSPACE
   secrets:
