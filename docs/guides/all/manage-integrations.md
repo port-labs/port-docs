@@ -164,7 +164,7 @@ The `Integration Kind Metrics` blueprint tracks detailed metrics for specific in
 
 ## Webhook setup
 
-1. In Port, navigate to **Data Sources**.
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 2. Click on **+ Data source**, and choose the **Webhook** type.
 3. Click on **Custom integration** and create a new webhook.
 4. Copy and store the generated webhook URL (should be in a format like `https://ingest.getport.io/abc123`).
