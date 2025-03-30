@@ -166,9 +166,9 @@ The `Integration Kind Metrics` blueprint tracks detailed metrics for specific in
 
 1. In Port, navigate to **Data Sources**.
 2. Click on **+ Data source**, and choose the **Webhook** type.
-2. Click on **Custom integration** and create a new webhook.
-3. Copy and store the generated webhook URL (should be in a format like `https://ingest.getport.io/abc123`).
-4. Add the mappings below in the relevant section on the webhook configuration (see screenshot below).
+3. Click on **Custom integration** and create a new webhook.
+4. Copy and store the generated webhook URL (should be in a format like `https://ingest.getport.io/abc123`).
+5. Add the mappings below in the relevant section on the webhook configuration (see screenshot below).
 
 <img src='/img/guides/portDataSourcesWebhook.png' width='90%' />
 <img src='/img/guides/portDataSourcesWebhookMapping.png' width='90%' />
@@ -252,13 +252,11 @@ Remember to repeat this step for each integration you want to monitor.
 
 Now you can set up a dashboard to visualize your integration metrics:
 
-1. Navigate to the **Dashboards** page in Port
-2. Click **+ Create Dashboard**
-3. Add the following widgets:
-   - Integration Status Table - Shows the current status of all integrations
-   - Sync Duration Chart - Displays sync duration trends
-   - Object Count Comparison - Compares raw vs transformed vs ingested objects
-4. Configure each widget to use the data from your integration and integration_kind_metrics entities
+1. Navigate to the **Catalog** in Port
+2. Click **+ New**, select **New dashboard**, and create a new dashboard.
+3. Add a **Table** widget, and select the `integration` blueprint.
+4. Add a **Line chart** widget, select the `integration` blueprint, the integration you want to monitor, and the `last resync duration` property.
+5. Add **Number chart** to show the `raw`, `transformed`, and `ingested` counts as either aggregated values or for a specific integration.
 
 ## Test your monitoring
 
