@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
 import styles from './GithubAppCreator.module.css';
 
-// API URL can be configured from an environment variable if needed
-// const PORT_API_BASE_URL = 'https://api.getport.io';
-// const PORT_API_BASE_URL = 'http://localhost:3000';
-const PORT_API_BASE_URL = 'https://api.stg-01.getport.io';
+// API URLs for different regions
+const API_URLS = {
+  eu: 'https://api.getport.io',
+  us: 'https://api.us.getport.io'
+};
+
+// Default to staging for development
+const STAGING_API_URL = 'https://api.stg-01.getport.io';
 
 export default function GithubAppCreator() {
   const [orgName, setOrgName] = useState('');
   const [token, setToken] = useState('');
-  const [isEnterprise, setIsEnterprise] = useState(false);
-  const [enterpriseUrl, setEnterpriseUrl] = useState('');
+  const [isSelfHostedEnterprise, setIsSelfHostedEnterprise] = useState(false);
+  const [selfHostedEnterpriseUrl, setSelfHostedEnterpriseUrl] = useState('');
+  const [region, setRegion] = useState('eu');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Get the appropriate base URL based on region
+  const getBaseUrl = () => {
+    // Use staging URL for development if needed
+    if (process.env.NODE_ENV === 'development') {
+      return STAGING_API_URL;
+    }
+    
+    return API_URLS[region];
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,17 +35,21 @@ export default function GithubAppCreator() {
     setError('');
     
     try {
+      // Get the appropriate base URL
+      const baseUrl = getBaseUrl();
+      
       // Construct API URL with parameters
-      let apiUrl = `${PORT_API_BASE_URL}/v1/integration/github-app-creation-url`;
-      apiUrl += `?isEnterprise=${isEnterprise}`;
+      let apiUrl = `${baseUrl}/v1/integration/github-app-creation-url`;
+      apiUrl += `?isSelfHostedEnterprise=${isSelfHostedEnterprise}`;
       
       if (orgName) {
         apiUrl += `&githubOrgName=${encodeURIComponent(orgName)}`;
       }
       
-      if (isEnterprise && enterpriseUrl) {
-        apiUrl += `&enterpriseUrl=${encodeURIComponent(enterpriseUrl)}`;
+      if (isSelfHostedEnterprise && selfHostedEnterpriseUrl) {
+        apiUrl += `&selfHostedEnterpriseUrl=${encodeURIComponent(selfHostedEnterpriseUrl)}`;
       }
+
       
       // Make API request
       const response = await fetch(apiUrl, {
@@ -91,29 +110,49 @@ export default function GithubAppCreator() {
           <div className={styles.checkboxContainer}>
             <input 
               type="checkbox" 
-              id="isEnterprise" 
-              checked={isEnterprise} 
-              onChange={(e) => setIsEnterprise(e.target.checked)}
+              id="isSelfHostedEnterprise" 
+              checked={isSelfHostedEnterprise} 
+              onChange={(e) => setIsSelfHostedEnterprise(e.target.checked)}
               className={styles.checkbox}
             />
-            <label htmlFor="isEnterprise" className={styles.checkboxLabel}>Enterprise GitHub</label>
+            <label htmlFor="isSelfHostedEnterprise" className={styles.checkboxLabel}>Enterprise GitHub</label>
           </div>
         </div>
         
-        {isEnterprise && (
+        {isSelfHostedEnterprise && (
           <div className={styles.formGroup}>
-            <label htmlFor="enterpriseUrl" className={styles.label}>Enterprise GitHub URL:</label>
+            <label htmlFor="selfHostedEnterpriseUrl" className={styles.label}>Enterprise GitHub URL:</label>
             <input 
               type="text" 
-              id="enterpriseUrl" 
-              value={enterpriseUrl} 
-              onChange={(e) => setEnterpriseUrl(e.target.value)}
+              id="selfHostedEnterpriseUrl" 
+              value={selfHostedEnterpriseUrl} 
+              onChange={(e) => setSelfHostedEnterpriseUrl(e.target.value)}
               className={styles.input}
               placeholder="e.g., github.company.com"
-              required={isEnterprise}
+              required={isSelfHostedEnterprise}
             />
           </div>
         )}
+        
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Port Region:</label>
+          <div className={styles.regionToggle}>
+            <button 
+              type="button"
+              className={`${styles.regionButton} ${region === 'eu' ? styles.regionButtonActive : ''}`}
+              onClick={() => setRegion('eu')}
+            >
+              EU
+            </button>
+            <button 
+              type="button"
+              className={`${styles.regionButton} ${region === 'us' ? styles.regionButtonActive : ''}`}
+              onClick={() => setRegion('us')}
+            >
+              US
+            </button>
+          </div>
+        </div>
         
         <div className={styles.formGroup}>
           <label htmlFor="token" className={styles.label}>Port Authentication Token:</label>

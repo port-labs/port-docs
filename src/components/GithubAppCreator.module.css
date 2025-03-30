@@ -55,6 +55,36 @@
   font-weight: 500;
 }
 
+/* Region toggle styles */
+.regionToggle {
+  display: flex;
+  gap: 10px;
+}
+
+.regionButton {
+  padding: 8px 16px;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 4px;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-color-primary);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+  max-width: 100px;
+  text-align: center;
+}
+
+.regionButton:hover {
+  background-color: var(--ifm-color-primary-lighter);
+  color: var(--ifm-color-primary-darkest);
+}
+
+.regionButtonActive {
+  background-color: var(--ifm-color-primary);
+  color: white;
+}
+
 .button {
   padding: 10px 16px;
   border: none;
