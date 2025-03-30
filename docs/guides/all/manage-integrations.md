@@ -86,8 +86,7 @@ The `Integration` blueprint tracks overall resync status, duration, and timing.
 
 </details>
 
-**Integration Kind Metrics**
-Tracks detailed metrics for specific integration kinds, including raw, transformed, and ingested objects.
+The `Integration Kind Metrics` blueprint tracks detailed metrics for specific integration kinds, including raw, transformed, and ingested objects.
 
 <details>
   <summary>Integration Kind Metrics Blueprint</summary>
