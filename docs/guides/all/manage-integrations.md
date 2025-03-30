@@ -38,8 +38,7 @@ Before you begin, make sure you have:
 
 Use the following two blueprints to structure your integration data in Port:
 
-**Integration**
-Tracks overall resync status, duration, and timing.
+The `Integration` blueprint tracks overall resync status, duration, and timing.
 
 <details>
   <summary>Integration Blueprint</summary>
