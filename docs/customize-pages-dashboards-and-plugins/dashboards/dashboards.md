@@ -182,7 +182,7 @@ When creating this type of line chart:
 
    - Choose one or more of the blueprint's `number` **properties** to visualize.  
 
-   - Choose an **aggregation function**, which is the operation to apply to the selected properties across all entities.  
+   - Choose an **aggregation function**, which is the operation to apply to the selected properties across all entities, for each time interval.  
      The possible values are:
      - `average`: The average value of each selected property.
      - `median`: The median value of each selected property.
