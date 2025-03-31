@@ -134,23 +134,82 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 
 Line charts display trends of `number` properties over time.  
 
-When creating a line chart, you need to choose a blueprint, then choose one of its entities, and finally choose one or more of the entity's `number` properties to visualize.  
+Port offers two types of line charts:
+1. [Properties value history](#properties-value-history) - displays the values of one or more properties of a single entity.
+2. [Aggregate properties values](#aggregate-properties-values) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
+
+#### 1. Properties value history
+
+This chart type displays the values of one or more properties of a **single entity** over time.  
+
+When creating this type of line chart:
+
+1. Choose the **blueprint** you want to visualize.
+
+2. Under the `Y axis` section
+   - Give the axis a title.
+   
+   - Choose the **entity** you want to visualize.
+   
+   - Select one or more of the entity's `number` **properties** to visualize.
+
+3. Under the `X axis` section:
+   - Give the axis a title.
+
+   - Choose a **time interval**, which is the amount of time between each data point in the chart.
+
+   - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
+     Note that the available time ranges differ according to the selected time interval.
 
 :::tip Specific entity page
 When creating a line chart in an [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets), the chosen entity will be the entity whose page you are on.
 :::
 
-Additionally, you need to specify the following properties:
-- **Time interval** - the amount of time between each data point in the chart.
-- **Time range** - how far back in time the chart will display data (limited to the last year).
-
-The chart will display the property values over the span of the selected time range, using the selected intervals.  
-The x-axis represents the time and the y-axis representing the property values.
-
 For example, here is a line chart displaying a service's resource usage over the span of a week, in daily intervals:
 <img src='/img/software-catalog/widgets/lineChartExample.png' width='100%' border='1px' />
 
-#### Line chart properties
+#### 2. Aggregate properties values
+
+This chart type displays the aggregated values of one or more properties across **all entities** of a specific blueprint.  
+Each property will be displayed as a separate line in the chart.
+
+When creating this type of line chart:
+
+1. Choose the **blueprint** you want to visualize.
+
+2. Under the `Y axis` section:
+   - Give the axis a title.
+
+   - Choose one or more of the blueprint's `number` **properties** to visualize.  
+
+   - Choose an **aggregation function**, which is the operation to apply to the selected properties across all entities.  
+     The possible values are:
+     - `average`: The average value of each selected property.
+     - `median`: The median value of each selected property.
+     - `sum`: The sum of values in each selected property.
+     - `max`: The maximum value of each selected property.
+     - `min`: The minimum value of each selected property.
+     - `last`: The last value of each selected property.
+
+   - Optionally, define [additional filters](#chart-filters) in order to include/exclude specific entities from the chart.  
+     For example, you can filter the entities by a specific property value, or by a specific time range.
+
+3. Under the `X axis` section:
+   - Give the axis a title.
+   
+   - Choose one of the blueprint's `datetime` properties by which to **measure the time** of the chart data.  
+     This can be the entity's creation time, last update time, or any other `datetime` property.  
+
+   - Choose a **time interval**, which is the amount of time between each data point in the chart.
+
+   - Choose a **time range** for the chart, which is how far back in time the chart will display data (the maximum is 1 year).  
+     Note that the available time ranges differ according to the selected time interval.
+
+For example, here is a line chart displaying the maximum cost of all services over the span of a month, in weekly intervals:
+<img src='/img/software-catalog/widgets/lineChartAggregationExample.png' width='100%' border='1px' />
+
+
+<!-- #### Line chart properties
 
 | Field           | Type     | Description                                   | Default | Required |
 | --------------- | -------- | --------------------------------------------- | ------- | -------- |
@@ -161,7 +220,7 @@ For example, here is a line chart displaying a service's resource usage over the
 | `Entity`        | `String` | The chosen entity                             | `null`  | `true`   |
 | `Properties`    | `Array`  | The chosen `number` property/ies to visualize | `null`  | `true`   |
 | `Time interval` | `String` | The time interval to display in the x-axis of the chart.<br/>Possible values: `hour`, `day`, `week`, `month` | `null` | `true` |
-| `Time range`    | `String` | The time range of the displayed data.<br/>Possible values change according to selected `time interval` - the longer the interval, the longer the available ranges | `null` | `true` |
+| `Time range`    | `String` | The time range of the displayed data.<br/>Possible values change according to selected `time interval` - the longer the interval, the longer the available ranges | `null` | `true` | -->
 
 #### Potential use cases
 
