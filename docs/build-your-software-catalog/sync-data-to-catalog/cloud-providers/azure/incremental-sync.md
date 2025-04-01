@@ -29,8 +29,6 @@ This script:
 The source code is available in the [port-labs/incremental-sync](https://github.com/port-labs/incremental-sync) repository.
 :::
 
-## Prerequisites
-
 ### Azure setup
 
 This integration requires the standard Azure [app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate%2Cexpose-a-web-api) setup described in the [installation guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/installation.md), plus some additional permissions.
@@ -326,6 +324,7 @@ To run the integration using GitHub Actions, follow these steps:
 
 <Tabs groupId="sync-type" queryString="sync-type" defaultValue="incremental">
 <TabItem value="incremental" label="Incremental Sync">
+This workflow runs automatically every 15 minutes to sync recent changes.
 
 Create `.github/workflows/azure-incremental-sync.yml`:
 
@@ -370,10 +369,15 @@ jobs:
           CHANGE_WINDOW_MINUTES: 15
 ```
 
-This workflow runs automatically every 15 minutes to sync recent changes.
 
 </TabItem>
 <TabItem value="full" label="Full Sync">
+
+This workflow can be triggered manually from the GitHub Actions UI.
+
+:::warning
+It's recommended to run the full sync manually as it may take a long time to complete, depending on the number of Azure resources, subscriptions, and resource groups.
+:::
 
 Create `.github/workflows/azure-full-sync.yml`:
 
@@ -411,12 +415,6 @@ jobs:
           PORT_WEBHOOK_INGEST_URL: ${{ secrets.PORT_WEBHOOK_INGEST_URL }}
           SYNC_MODE: full
 ```
-
-This workflow can be triggered manually from the GitHub Actions UI.
-
-:::warning
-It's recommended to run the full sync manually as it may take a long time to complete, depending on the number of Azure resources, subscriptions, and resource groups.
-:::
 
 </TabItem>
 </Tabs>
@@ -478,3 +476,7 @@ The integration follows these steps:
 2. Queries changes in Azure resources within these subscriptions.
 3. Constructs and ingests resource groups into Port.
 4. Processes resource changes (create/update/delete) according to webhook configuration.
+
+## Next Steps
+
+- Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.

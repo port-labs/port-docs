@@ -19,7 +19,23 @@ For your first deployment of the Azure exporter, we recommend starting with the 
 
 ## Installation Methods
 
-<Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="helm">
+<Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="azure-multi-subscriptions">
+<TabItem value="azure-multi-subscriptions" label="Azure Multi Subscriptions">
+
+For organizations working with multiple Azure subscriptions, we offer a dedicated sync solution with significant advantages:
+
+- **No infrastructure required** - run directly via GitHub Actions or locally
+- Synchronize resources across all your Azure subscriptions from a single deployment
+- Near real-time experience with incremental syncs (every 15 minutes)
+- Full sync capability for complete inventory refreshes
+- Flexible data mapping through Port webhooks
+
+This approach is especially valuable for large organizations seeking a near real-time experience without any complex setup requirements.
+
+For complete setup instructions, see our [Azure multi-subscription sync guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md).
+
+</TabItem>
+
 <TabItem value="helm" label="Helm (Scheduled)" >
 
 The Azure exporter is deployed using helm on kubernetes.
@@ -218,7 +234,7 @@ kubectl apply -f azure-integration.yaml
 
 </TabItem>
 
-<TabItem value="terraform" label="Terraform (Real Time)">
+<TabItem value="terraform" label="Terraform">
 
 The azure exporter is deployed using Terraform on Azure Container App.
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration
@@ -427,21 +443,6 @@ ghcr.io/port-labs/port-ocean-azure:latest
 
 </TabItem>
 
-<TabItem value="multi-subscription" label="Multi-Subscription Sync">
-
-For organizations working with multiple Azure subscriptions, we offer a dedicated sync solution specifically designed for multi-subscription environments. This solution:
-
-- Synchronizes resources across all your Azure subscriptions from a single deployment
-- Provides both incremental (every 15 minutes) and full sync capabilities
-- Offers detailed control over which resource types to include
-- Uses flexible webhook-based mapping to Port entities
-
-This deployment method uses a Python-based script that can be run via GitHub Actions for automation or locally for testing and development.
-
-For complete setup instructions, see our [Azure multi-subscription sync guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md).
-
-</TabItem>
-
 </Tabs>
 
 ## FAQ: Multiple Subscriptions Support
@@ -463,10 +464,11 @@ To configure the Azure exporter to ingest resources from other subscriptions, fo
 
 <h3> How do I set up real-time data ingestion from multiple subscriptions? </h3>
 
-For real-time data ingestion, you will need to set up an Event Grid System Topic and an Event Grid Subscription in each subscription you want to ingest resources from. The system topic should be of type `Microsoft.Resources.Subscriptions`.
+For the most efficient approach to multi-subscription data ingestion without infrastructure requirements, we recommend using our [Azure Multi Subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md) method.
 
-If you are using the terraform deployment method, refer to the [Azure Integration example](https://github.com/port-labs/terraform-ocean-integration-factory/blob/main/examples/azure_container_app_azure_integration/main.tf) for more information.
+If you prefer using the Terraform deployment method with Event Grid, you will need to set up an Event Grid System Topic and an Event Grid Subscription in each subscription you want to ingest resources from. The system topic should be of type `Microsoft.Resources.Subscriptions`. Refer to the [Azure Integration example](https://github.com/port-labs/terraform-ocean-integration-factory/blob/main/examples/azure_container_app_azure_integration/main.tf) for more information.
 
 ## Next Steps
 
 - Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.
+- Check out the [Azure Multi Subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md) guide for setting up synchronization of Azure resources.
