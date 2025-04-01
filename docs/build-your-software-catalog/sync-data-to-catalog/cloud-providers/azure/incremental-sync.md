@@ -5,6 +5,7 @@ sidebar_position: 3
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import CredentialsGuide from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
+import AzureAppRegistration from "./\_azure_app_registration_guide.mdx"
 
 # Azure multi subscriptions
 
@@ -38,33 +39,7 @@ Keep the following credentials handy after setup:
 - `AZURE_CLIENT_SECRET`: The client secret of the Azure service principal
 - `AZURE_TENANT_ID`: The tenant ID of the Azure service principal
 
-#### Additional permissions required
-
-In addition to the standard Azure App Registration setup, this integration requires:
-
-1. **Azure Resource Graph Access**:
-   In your app registration's "API permissions":
-   - Click "Add a permission"
-   - Click on "APIs my organization uses" tab
-   - Search for "Azure Resource Graph"
-   - Select "Read" permission
-   - Click "Add permissions"
-   - Click "Grant admin consent"
-
-2. **Verification Steps**:
-   Before proceeding, verify your setup can:
-   - List your subscriptions
-   - Query Azure Resource Graph
-   - Read resource information
-
-
-:::tip Troubleshooting Permissions
-Common issues and solutions:
-1. **Can't list subscriptions**: Verify Azure Service Management permission is granted
-2. **Can't query resources**: Check Azure Resource Graph permission
-3. **Access denied errors**: Ensure role assignment is correct at subscription level
-4. **Intermittent failures**: Wait a few minutes after permission changes
-:::
+<AzureAppRegistration/>
 
 ### Port setup
 
