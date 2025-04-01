@@ -32,7 +32,13 @@ For organizations working with multiple Azure subscriptions, we offer a dedicate
 
 This approach is especially valuable for large organizations seeking a near real-time experience without any complex setup requirements.
 
-For complete setup instructions, see our [Azure multi-subscription sync guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md).
+<h2> Prerequisites </h2>
+
+- [Port API credentials](/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)
+
+<AzureAppRegistration/>
+
+For complete setup instructions, see our [Azure multi subscriptions guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md).
 
 </TabItem>
 

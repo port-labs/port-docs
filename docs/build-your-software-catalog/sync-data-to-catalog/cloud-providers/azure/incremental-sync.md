@@ -6,7 +6,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import CredentialsGuide from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
 
-# Azure multi-subscription sync
+# Azure multi subscriptions
 
 The Azure incremental sync script provides a way to periodically sync Azure resources, subscriptions, and resource groups into Port. This script is particularly useful when you want more control over the sync process or need to customize the data being synced.
 
@@ -31,7 +31,7 @@ The source code is available in the [port-labs/incremental-sync](https://github.
 
 ### Azure setup
 
-This integration requires the standard Azure [app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate%2Cexpose-a-web-api) setup described in the [installation guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/installation.md), plus some additional permissions.
+This integration requires the standard Azure [app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate%2Cexpose-a-web-api) setup described in the [installation guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/installation?installation-methods=azure-multi-subscriptions), plus some additional permissions.
 
 Keep the following credentials handy after setup:
 - `AZURE_CLIENT_ID`: The client ID of the Azure service principal
