@@ -78,7 +78,7 @@ This property is empty for now in all repositories, we will fill it as part of t
            <img src='/img/guides/iacActionInputName.png' width='50%' border='1px' />
         <br/>
 
-   To create the `Name` input field:
+   To create the `Visibility` input field:
 
       - Click on `+ Input`.
       - Enter the **Title**  `Visibility`.
