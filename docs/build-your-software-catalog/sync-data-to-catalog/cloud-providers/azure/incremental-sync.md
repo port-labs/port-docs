@@ -6,7 +6,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import CredentialsGuide from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
 
-# Incremental sync
+# Azure multi-subscription sync
 
 The Azure incremental sync script provides a way to periodically sync Azure resources, subscriptions, and resource groups into Port. This script is particularly useful when you want more control over the sync process or need to customize the data being synced.
 

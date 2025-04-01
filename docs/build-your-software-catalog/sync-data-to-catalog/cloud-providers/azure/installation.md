@@ -427,6 +427,21 @@ ghcr.io/port-labs/port-ocean-azure:latest
 
 </TabItem>
 
+<TabItem value="multi-subscription" label="Multi-Subscription Sync">
+
+For organizations working with multiple Azure subscriptions, we offer a dedicated sync solution specifically designed for multi-subscription environments. This solution:
+
+- Synchronizes resources across all your Azure subscriptions from a single deployment
+- Provides both incremental (every 15 minutes) and full sync capabilities
+- Offers detailed control over which resource types to include
+- Uses flexible webhook-based mapping to Port entities
+
+This deployment method uses a Python-based script that can be run via GitHub Actions for automation or locally for testing and development.
+
+For complete setup instructions, see our [Azure multi-subscription sync guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md).
+
+</TabItem>
+
 </Tabs>
 
 ## FAQ: Multiple Subscriptions Support
