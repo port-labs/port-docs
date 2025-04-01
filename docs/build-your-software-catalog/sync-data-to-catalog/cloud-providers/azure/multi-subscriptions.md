@@ -9,11 +9,17 @@ import AzureAppRegistration from "./\_azure_app_registration_guide.mdx"
 
 # Azure multi subscriptions
 
-The Azure incremental sync script provides a way to periodically sync Azure resources, subscriptions, and resource groups into Port. This script is particularly useful when you want more control over the sync process or need to customize the data being synced.
+The Azure multi-subscription sync solution provides a way to periodically sync resources from multiple Azure subscriptions into Port with these key advantages:
+
+- **No infrastructure required** - runs directly via GitHub Actions or locally
+- **Multi-subscription support** - sync resources across all your Azure subscriptions from a single deployment
+- **Near real-time updates** - incremental syncs every 15 minutes by default
+- **Full control** - customize which resource types to include and how they're mapped
+- **Zero setup complexity** - ideal for large organizations wanting near real-time data without complex infrastructure
 
 ## Overview
 
-This script:
+This solution:
 - Is written in Python using the Azure SDK for Python
 - Runs as a GitHub workflow at configurable periodic intervals
 - Provides two sync modes:
@@ -32,7 +38,7 @@ The source code is available in the [port-labs/incremental-sync](https://github.
 
 ### Azure setup
 
-This integration requires the standard Azure [app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate%2Cexpose-a-web-api) setup described in the [installation guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/installation?installation-methods=azure-multi-subscriptions), plus some additional permissions.
+This integration requires the standard [Azure app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate%2Cexpose-a-web-api) setup.
 
 Keep the following credentials handy after setup:
 - `AZURE_CLIENT_ID`: The client ID of the Azure service principal
