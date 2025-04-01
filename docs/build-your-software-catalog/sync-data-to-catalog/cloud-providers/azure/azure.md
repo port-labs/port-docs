@@ -40,4 +40,4 @@ For examples on how to map resources head to the [resource templates](/build-you
 ## Next Steps
 
 - Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.
-- Check out the [Azure Multi Subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/incremental-sync.md) guide for setting up synchronization of Azure resources.
+- Check out the [Azure Multi Subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/multi-subscriptions.md) guide for setting up synchronization of Azure resources.
