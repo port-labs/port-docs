@@ -45,7 +45,7 @@ Keep the following credentials handy after setup:
 In addition to the standard Azure App Registration setup, this integration requires:
 
 1. **Azure Resource Graph Access**:
-   - In your app registration's "API permissions":
+   In your app registration's "API permissions":
    - Click "Add a permission"
    - Click on "APIs my organization uses" tab
    - Search for "Azure Resource Graph"
