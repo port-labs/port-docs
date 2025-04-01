@@ -79,7 +79,7 @@ The basic Port setup follows the [standard installation guide](/build-your-softw
 #### Blueprint Configuration
 
 :::tip Customizable Blueprints
-While we provide these configurations as a starting point, you can customize them based on your specific requirements and the Azure resources you want to track.
+While these configurations are provided as a starting point, you can customize them based on your specific requirements and the Azure resources you want to track.
 :::
 
 Create the following blueprints in Port before syncing:
