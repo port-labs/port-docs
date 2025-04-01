@@ -6,7 +6,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import CredentialsGuide from "/docs/build-your-software-catalog/custom-integration/api/\_template_docs/\_find_credentials.mdx";
 
-# Incremental Sync
+# Incremental sync
 
 The Azure incremental sync script provides a way to periodically sync Azure resources, subscriptions, and resource groups into Port. This script is particularly useful when you want more control over the sync process or need to customize the data being synced.
 
@@ -31,7 +31,7 @@ The source code is available in the [port-labs/incremental-sync](https://github.
 
 ## Prerequisites
 
-### Azure Setup
+### Azure setup
 
 This integration requires the standard Azure [app registration](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate%2Cexpose-a-web-api) setup described in the [installation guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/installation.md), plus some additional permissions.
 
@@ -40,7 +40,7 @@ Keep the following credentials handy after setup:
 - `AZURE_CLIENT_SECRET`: The client secret of the Azure service principal
 - `AZURE_TENANT_ID`: The tenant ID of the Azure service principal
 
-#### Additional Permissions Required
+#### Additional permissions required
 
 In addition to the standard Azure App Registration setup, this integration requires:
 
@@ -68,15 +68,15 @@ Common issues and solutions:
 4. **Intermittent failures**: Wait a few minutes after permission changes
 :::
 
-### Port Setup
+### Port setup
 
 The basic Port setup follows the [standard installation guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/installation.md#port-setup). However, this integration uses a different webhook configuration for incremental syncing:
 
-#### Port Credentials
+#### Port credentials
 
 <CredentialsGuide />
 
-#### Blueprint Configuration
+#### Blueprint configuration
 
 :::tip Customizable Blueprints
 While these configurations are provided as a starting point, you can customize them based on your specific requirements and the Azure resources you want to track.
@@ -191,20 +191,19 @@ Create the following blueprints in Port before syncing:
 ```
 </details>
 
-#### Webhook Configuration
+#### Webhook configuration
 
 ![Azure Basic Blueprints](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/create-webhook.png)
 
 To set up the webhook in Port:
 
-1. Navigate to the "Builder" page
-2. Click on "Data Sources" in the left sidebar
-3. Click "Add Data Source" and select "Webhook"
-4. Fill in the required fields and create the webhook
-5. Copy the webhook URL (you'll need this for the integration setup)
-6. Click Next to go the Mapping section.
-7. Scroll down to find the "Map the data from the external system into Port" section
-   
+1. Navigate to the [Data sources](https://app.getport.io/dev-portal/data-sources) page
+2. Click "Add Data Source" and select "Webhook"
+3. Fill in the required fields and create the webhook
+4. Copy the webhook URL (you'll need this for the integration setup)
+5. Click Next to go the Mapping section
+6. Scroll down to find the "Map the data from the external system into Port" section
+
 ![Map Data in Webhook](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/map-data.png)
 
 Add the following webhook mapping in the "Map the data from the external system into Port" field:
@@ -301,7 +300,7 @@ Add the following webhook mapping in the "Map the data from the external system 
 
 </details>
 
-## Installation Methods
+## Installation methods
 
 <Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="github">
 <TabItem value="github" label="GitHub Actions">
@@ -471,7 +470,7 @@ For development and testing purposes, you can use a smaller `CHANGE_WINDOW_MINUT
 </TabItem>
 </Tabs>
 
-## How It Works
+## How it works
 
 The integration follows these steps:
 
