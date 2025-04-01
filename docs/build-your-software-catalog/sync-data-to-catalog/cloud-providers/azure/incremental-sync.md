@@ -25,7 +25,7 @@ This script:
   - Local installation for development and testing
 
 
-:::tip Repository
+:::tip Source code
 The source code is available in the [port-labs/incremental-sync](https://github.com/port-labs/incremental-sync) repository.
 :::
 
