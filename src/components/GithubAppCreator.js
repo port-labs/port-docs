@@ -21,6 +21,7 @@ export default function GithubAppCreator() {
 
   // Get the appropriate base URL based on region
   const getBaseUrl = () => {
+    return STAGING_API_URL;
     // Use staging URL for development if needed
     if (process.env.NODE_ENV === 'development') {
       return STAGING_API_URL;
@@ -40,15 +41,16 @@ export default function GithubAppCreator() {
       
       // Construct API URL with parameters
       let apiUrl = `${baseUrl}/v1/integration/github-app-creation-url`;
-      apiUrl += `?isSelfHostedEnterprise=${isSelfHostedEnterprise}`;
+      // apiUrl += `?isSelfHostedEnterprise=${isSelfHostedEnterprise}`;
+      apiUrl += `?isEnterprise=${isSelfHostedEnterprise}`;
       
       if (orgName) {
         apiUrl += `&githubOrgName=${encodeURIComponent(orgName)}`;
       }
       
-      if (isSelfHostedEnterprise && selfHostedEnterpriseUrl) {
-        apiUrl += `&selfHostedEnterpriseUrl=${encodeURIComponent(selfHostedEnterpriseUrl)}`;
-      }
+      // if (isSelfHostedEnterprise && selfHostedEnterpriseUrl) {
+      //   apiUrl += `&selfHostedEnterpriseUrl=${encodeURIComponent(selfHostedEnterpriseUrl)}`;
+      // }
 
       
       // Make API request
