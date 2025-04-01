@@ -204,7 +204,7 @@ To set up the webhook in Port:
 5. Click Next to go the Mapping section.
 6. Scroll down to find the "Map the data from the external system into Port" section.
 
-![Map Data in Webhook](../../../../../static/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/map-data.png)
+![Map Data in Webhook](/img/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/map-data.png)
 
 Add the following webhook mapping in the "Map the data from the external system into Port" field:
 
