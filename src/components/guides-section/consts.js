@@ -930,4 +930,11 @@ export const availableGuides = [
         // category: "Getting started",
         link: "/guides/all/trigger-firehydrant-incident",
     },
+    {
+        title: "Monitor integrations",
+        description: "Monitor and manage your Port Ocean integrations",
+        tags: [],
+        logos: ["Webhook"],
+        link: "/guides/all/manage-integrations",
+    }
 ]
