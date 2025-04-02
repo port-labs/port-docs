@@ -26,7 +26,7 @@ This guide covers the Custom GitHub App approach.
 - Access to Port's API credentials.
 - Admin permissions in your GitHub organization.
 
-## Benefits of Custom GitHub Apps
+## Benefits of custom GitHub apps
 
 - **Workspace Isolation**: Each team can have their own GitHub App with specific repository access.
 - **Enhanced Security**: Better permission boundaries between different teams and projects.
