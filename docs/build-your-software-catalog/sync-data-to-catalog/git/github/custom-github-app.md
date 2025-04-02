@@ -15,9 +15,8 @@ This provides more granular control over integrations, and is especially useful 
 There are two primary ways to connect Port to your GitHub repositories:
 
 1. **Port's official GitHub app** - The simplest option for most users.
-2. **Custom GitHub App** - For advanced use cases, self-hosted GitHub installations, or to connect a GitHub organization where the GitHub app is already installed to another Port organization.
-
-This guide covers the Custom GitHub App approach.
+2. **Custom GitHub app** - For advanced use cases, self-hosted GitHub installations, or to connect a GitHub organization when the GitHub app is already installed in another Port organization.
+This guide covers the second approach.
 
 ## Prerequisites
 
@@ -152,7 +151,7 @@ Query parameters:
 
 For self-hosted GitHub Enterprise instances, additional configuration is required:
 
-1. Select "Enterprise" option in the form above.
+1. Select the "Enterprise" option in the form above.
 2. Provide your GitHub Enterprise host URL (e.g., `github.company.com`).
 3. Your GitHub Enterprise instance must be able to reach Port's self hosted github app webhook endpoints.
 
@@ -164,19 +163,19 @@ For self-hosted GitHub Enterprise instances, additional configuration is require
 
 ## Troubleshooting
 
-If you encounter issues with your Custom GitHub App:
+If you encounter issues with your custom GitHub app, try the following:
 
-1. **Webhook Connection Issues**
+- **Webhook Connection Issues**
    - Verify the webhook URL is correctly configured in the GitHub App settings.
    - Check that your GitHub instance can reach Port's webhook endpoints.
    - Review webhook delivery logs in GitHub for any failed delivery attempts.
 
-2. **Permission Problems**
+- **Permission Problems**
    - Ensure the app has been granted all the necessary permissions.
    - Check that the app is installed on the repositories you want to monitor.
    - Verify that the correct repository events are selected.
 
-3. **Authentication Errors**
+- **Authentication Errors**
    - Ensure your Port token is valid and has not expired.
    - Verify that the app has not been uninstalled or modified in GitHub.
 
