@@ -167,6 +167,13 @@ When creating a line chart in an [entity page](/customize-pages-dashboards-and-p
 
 For example, here is a line chart displaying a service's resource usage over the span of a week, in daily intervals:
 <img src='/img/software-catalog/widgets/lineChartExample.png' width='100%' border='1px' />
+<br/><br/>
+
+**Limitations**
+
+- This chart type displays data starting from the time the property was created on the blueprint.  
+  Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
+- Line chart data is limited to the last 365 days.
 
 #### 2. Aggregate properties values
 
@@ -207,7 +214,12 @@ When creating this type of line chart:
 
 For example, here is a line chart displaying the maximum cost of all services over the span of a month, in weekly intervals:
 <img src='/img/software-catalog/widgets/lineChartAggregationExample.png' width='100%' border='1px' />
+<br/><br/>
 
+**Limitations**
+
+- This chart type does not support [calculation properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/).
+- Line chart data is limited to the last 365 days.
 
 <!-- #### Line chart properties
 
@@ -231,13 +243,6 @@ Say you have a Kubernetes `cluster` blueprint, with a related `node` blueprint r
 
 We can create an aggregation property on the `cluster` blueprint, which sums the `cost` properties of all related `node` entities.  
 Then, we can create a line chart displaying the `cost` property of the `cluster` entity over time, showing the total cost of the cluster.
-
-#### Limitations
-
-- Line charts display data starting from the time the property was created on the blueprint.  
-  Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
-
-- Line chart data is limited to the last 365 days.
 
 ### Markdown
 
