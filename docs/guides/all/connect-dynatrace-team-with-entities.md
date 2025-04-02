@@ -54,8 +54,7 @@ To set up the mapping, navigate to the Dynatrace integration in the [Data Source
 <Tabs>
 <TabItem value="direct_mapping" label="Direct Mapping" default>
 
-The most straightforward way to set a relation's value is to explicitly specify the related entity's identifier:
-
+The most straightforward way to set a relation's value is to explicitly specify the related entity's identifier.  
 Add the following snippet to your mapping configuration to map Dynatrace entities with teams using Kubernetes labels and annotations:
 
 <details>
@@ -145,16 +144,16 @@ In this example, the `dt.owner` and `owner` keys from the tags are used to defin
 
 </TabItem>
 
-<TabItem value="search_relation" label="Search Relation">
+<TabItem value="search_query" label="Search query">
 
-You can also use [search relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to dynamically match Dynatrace entities with teams based on specific criteria.   
-This approach is particularly useful when you know the value of one of the entity's properties.  
+You can also use a [search query](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to dynamically match Dynatrace entities with teams based on specific criteria.   
+This approach is particularly useful when you don't know the entity's identifier, but you do know the value of one of its properties. 
 
 Add the snippet below to your mapping configuration to match teams with entities by either using the entity's management zone name or a Kubernetes label.
 You can customize these matching rules according to your organization's team structure and naming conventions.
 
 <details>
-<summary><b>Dynatrace ownership configuration using search relations</b></summary>
+<summary><b>Dynatrace ownership configuration using search query</b></summary>
 
 ```yaml showLineNumbers
 deleteDependentEntities: true

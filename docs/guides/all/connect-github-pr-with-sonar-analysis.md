@@ -253,9 +253,9 @@ First, we will need to create a [relation](/build-your-software-catalog/customiz
     <br/><br/>
 
 Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, we need to assign the relevant SonarQube analysis to each of our pull requests.   
-This can be done by adding some mapping logic using [search relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries), which allow us to match PRs with SonarQube analyses based on the knowledge of the value of one of the entity's properties.
+This can be done by adding some mapping logic using a[search query](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries), which allow us to match PRs with SonarQube analyses based on the knowledge of the value of one of the entity's properties.
 
-The following steps demonstrate how to match PRs with SonarQube analyses using search relations.
+The following steps demonstrate how to match PRs with SonarQube analyses using search queries.
 
 <Tabs>
 <TabItem value="title_branch_matching" label="Match by Title & Branch" default>
@@ -327,7 +327,7 @@ This configuration uses the `title` and `branch` properties to establish a relat
 4. Replace it with the following YAML block to map the pull request entities with SonarQube analyses using commit SHA:
 
     <details>
-    <summary><b>Search relation mapping (click to expand)</b></summary>
+    <summary><b>Search query mapping (click to expand)</b></summary>
 
     ```yaml showLineNumbers
     resources:

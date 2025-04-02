@@ -294,10 +294,7 @@ This can be done by adding some mapping logic, using one of the following method
 <Tabs>
 <TabItem value="direct_identifier_mapping" label="Direct identifier mapping" default>
 
-Direct mapping is when you explicitly specify the identifier of a related entity when creating a relation.   
-This is the traditional way of establishing relations between entities in Port.  
-This is very useful when you're directly referencing the identifier of the related entity
-
+The most straightforward way to set a relation's value is to explicitly specify the related entity's identifier.   
 Follow the steps below to map pull request entities with Jira issues using direct identifier mapping:
 
 
@@ -361,10 +358,11 @@ For the `jiraIssue` relation, we extract the Jira Issue key from the title of th
 
 </TabItem>
 
-<TabItem value="search_relation" label="Search relation">
+<TabItem value="search_query" label="Search query">
 
- You can also use [search relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to match PRs with Jira issues based on multiple criteria.
- This approach is particularly useful when you know the value of one of the entity's properties.  
+ You can also use a [search query](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to match PRs with Jira issues based on multiple criteria.
+
+ This approach is particularly useful when you don't know the entity's identifier, but you do know the value of one of its properties. 
 
 Follow the steps below to match PRs with Jira issues based on multiple criteria (title, description, branch name).
 You can customize these matching rules based on your team's conventions and requirements.
@@ -375,10 +373,10 @@ You can customize these matching rules based on your team's conventions and requ
 
     <br/><br/>
 3. Under the `resources` key, locate the Pull Request block
-4. Replace it with the following YAML block to map the pull request entities with Jira issues using search relations:
+4. Replace it with the following YAML block to map the pull request entities with Jira issues using search queries:
 
     <details>
-    <summary><b>Search relation mapping (click to expand)</b></summary>
+    <summary><b>Search query mapping (click to expand)</b></summary>
 
     ```yaml showLineNumbers
       - kind: pull-request

@@ -143,9 +143,8 @@ Once the dependencies have been ingested, the next step is to establish relation
 
     <Tabs>
     <TabItem value="direct_mapping" label="Direct Mapping" default>
-    Direct mapping is when you explicitly specify the identifier of a related entity when creating a relation.   
-    This is the traditional way of establishing relations between entities in Port.  
-    This is very useful when you're directly referencing the identifier of the related entity
+
+    The most straightforward way to set a relation's value is to explicitly specify the related entity's identifier:
 
     ```yaml showLineNumbers
       - kind: file
@@ -182,12 +181,14 @@ Once the dependencies have been ingested, the next step is to establish relation
 
     </TabItem>
 
-    <TabItem value="search_relation" label="Search Relation">
+    <TabItem value="search_query" label="Search query">
 
-    You can also use [search relations](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to dynamically match services with their dependencies based on package information.  
-    This approach is particularly useful when you know the value of one of the entity's properties.  
+    You can also use a [search query](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-mapping#mapping-relations-using-search-queries) to dynamically match services with their dependencies based on package information.  
 
-    Add the snippet below to your mapping configuration to match services with dependencies based on the first package in dependencies/devDependencies. You can adjust the rules to match your organization's needs by:
+    This approach is particularly useful when you don't know the entity's identifier, but you do know the value of one of its properties. 
+
+    Add the snippet below to your mapping configuration to match services with dependencies based on the first package in dependencies/devDependencies.   
+    You can adjust the rules to match your organization's needs by:
 
     ```yaml showLineNumbers
     - kind: file
