@@ -34,7 +34,7 @@ This guide covers the Custom GitHub App approach.
 - **Self-Hosted Support**: Works with both cloud and self-hosted GitHub Enterprise instances.
 - **Custom Configuration**: Create tailored integration setups for specific use cases.
 
-## Create a Custom GitHub App
+## Create a custom app
 
 Use the form below to create your own GitHub App and connect it to Port:
 
