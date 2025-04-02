@@ -26,18 +26,16 @@ This integration allows you to:
 
 ## BaseUrl & Webhook Configuration
 
-:::warning
-### Important Update
+:::warning Deprecated
 - **`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
-- **Webhook secret support**: Secure your webhooks using `webhookSecret`.
 :::
 
-:::tip
+- **Webhook secret support**: Secure your webhooks using [`webhookSecret`](https://docs.datadoghq.com/integrations/webhooks).
+
 The `baseUrl` parameter enables real-time updates from Datadog to Port. If not provided:
 - The integration will still function normally
 - You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
 - Manual resyncs can be triggered via Port's UI
-:::
 
 ### Supported Resources
 
