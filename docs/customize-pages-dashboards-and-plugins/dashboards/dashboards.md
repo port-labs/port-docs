@@ -234,16 +234,6 @@ For example, here is a line chart displaying the maximum cost of all services ov
 | `Time interval` | `String` | The time interval to display in the x-axis of the chart.<br/>Possible values: `hour`, `day`, `week`, `month` | `null` | `true` |
 | `Time range`    | `String` | The time range of the displayed data.<br/>Possible values change according to selected `time interval` - the longer the interval, the longer the available ranges | `null` | `true` | -->
 
-#### Potential use cases
-
-Line charts can display data for any `number` property, including [aggregation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/aggregation-property) and [calculation](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/calculation-property/) properties.  
-
-Consider the following use case:  
-Say you have a Kubernetes `cluster` blueprint, with a related `node` blueprint representing the cluster's nodes. Each `node` has a `cost` property indicating its monthly cost.  
-
-We can create an aggregation property on the `cluster` blueprint, which sums the `cost` properties of all related `node` entities.  
-Then, we can create a line chart displaying the `cost` property of the `cluster` entity over time, showing the total cost of the cluster.
-
 ### Markdown
 
 This widget allows you to display any markdown content you wish in formatted form:
