@@ -907,4 +907,5 @@ Coming soon...
 
 - The aggregation property value for all entities of a blueprint will be recalculated **every 15 minutes**.
 
-- The maximum number of entities that can be aggregated is **20,000**.
+- The maximum number of entities based on the blueprint where the aggregation property is defined is **20,000**.
+
