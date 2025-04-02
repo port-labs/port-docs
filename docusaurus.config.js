@@ -117,7 +117,7 @@ const config = {
             className: "header-github-link",
           },
           {
-            to: "https://www.getport.io/community",
+            to: "https://port.io/community",
             position: "right",
             target: "_blank",
             className: "header-slack-link",
@@ -203,7 +203,7 @@ const config = {
             items: [
               {
                 label: "Slack",
-                href: "https://www.getport.io/community",
+                href: "https://port.io/community",
               },
               {
                 label: "Twitter",
@@ -220,15 +220,15 @@ const config = {
             items: [
               {
                 label: "Release notes",
-                href: "https://roadmap.getport.io/changelog",
+                href: "https://roadmap.port.io/changelog",
               },
               {
                 label: "Blog",
-                href: "https://www.getport.io/blog",
+                href: "https://port.io/blog",
               },
               {
                 label: "Demo",
-                href: "https://demo.getport.io",
+                href: "https://demo.port.io",
               },
               {
                 label: "GitHub",
@@ -236,7 +236,11 @@ const config = {
               },
               {
                 label: "Port",
-                href: "https://getport.io",
+                href: "https://port.io",
+              },
+              {
+                label: "Status",
+                href: "https://status.port.io",
               },
             ],
           },
@@ -245,11 +249,11 @@ const config = {
             items: [
               {
                 label: "Terms of Service",
-                href: "https://getport.io/legal/terms-of-service",
+                href: "https://port.io/legal/terms-of-service",
               },
               {
                 label: "Privacy Policy",
-                href: "https://getport.io/legal/privacy-policy",
+                href: "https://port.io/legal/privacy-policy",
               },
             ],
           },
