@@ -40,7 +40,7 @@ Use the form below to create your own GitHub App and connect it to Port:
 
 <GithubAppCreator />
 
-### What happens when you create a Custom GitHub App?
+Creating an app involves the following steps:
 
 1. **Enter information**: Provide your GitHub organization name and Port authentication token.
 2. **Select region**: Choose the appropriate region for your Port organization.
