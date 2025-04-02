@@ -30,12 +30,13 @@ This integration allows you to:
 - **`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
 :::
 
-- **Webhook secret support**: Secure your webhooks using [`webhookSecret`](https://docs.datadoghq.com/integrations/webhooks).
-
 The `baseUrl` parameter enables real-time updates from Datadog to Port. If not provided:
 - The integration will still function normally
 - You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
 - Manual resyncs can be triggered via Port's UI
+
+The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided:
+  - The integration will process webhooks without validating the source of the events
 
 ### Supported Resources
 
@@ -184,7 +185,7 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.datadogApiKey`         | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)                                                                                                                                                          |                                  | ✅        |
 | `integration.secrets.datadogApplicationKey` | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)                                                                                                                                                            |                                  | ✅        |
 | `integration.config.datadogBaseUrl`         | The base Datadog host. Defaults to https://api.datadoghq.com. If in EU, use https://api.datadoghq.eu                                                                                                                                                                                           |                                  | ✅        |
-| `integration.secrets.webhookSecret`   | Webhook secret token. Learn [more](https://docs.datadoghq.com/integrations/webhooks/#setup)                                                                                                                                                                                                   |                                  | ❌        |
+| `integration.secrets.webhookSecret`   | Webhook secret token. [Learn more](https://docs.datadoghq.com/integrations/webhooks/#setup)                                                                                                                                                                                                   |                                  | ❌        |
 | `baseUrl`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
 | `integration.eventListener.type`            | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
 | `integration.type`                          | The integration to be installed                                                                                                                                                                                                                                                                |                                  | ✅        |
