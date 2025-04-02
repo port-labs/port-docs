@@ -84,7 +84,7 @@ You'll need your Port API credentials for this process:
 <details>
 <summary>Technical Details</summary>
 
-### GitHub App Manifest
+<h3> GitHub App Manifest </h3>
 
 The GitHub App manifest is a JSON configuration file that defines:
 
@@ -96,11 +96,11 @@ The GitHub App manifest is a JSON configuration file that defines:
 
 Port generates this manifest automatically based on best practices, ensuring the app has the correct permissions for integration with Port.
 
-### Required Permissions
+<h3> Required Permissions </h3>
 
 Custom GitHub Apps must be configured with the following minimum permissions:
 
-#### Repository Permissions
+<h4> Repository Permissions </h4>
 - **Actions**: Read and Write (for executing self-service action using GitHub workflow).
 - **Checks**: Read and Write (for validating `Port.yml`).
 - **Contents**: Readonly (for reading port configuration files and repository files).
@@ -110,10 +110,10 @@ Custom GitHub Apps must be configured with the following minimum permissions:
 - **Dependabot alerts**: Readonly.
 - **Administration**: Readonly (for syncing github teams).
 
-#### Organization Permissions
+<h4> Organization Permissions </h4>
 - **Members**: Readonly (for syncing github teams).
 
-#### Repository Events
+<h4> Repository Events </h4>
 - Issues.
 - Pull Request.
 - Push.
@@ -121,7 +121,7 @@ Custom GitHub Apps must be configured with the following minimum permissions:
 - Team.
 - Dependabot alerts.
 
-### Credential Storage
+<h3> Credential Storage </h3>
 
 After creating a GitHub App, Port securely stores:
 
@@ -132,7 +132,7 @@ After creating a GitHub App, Port securely stores:
 
 These credentials are stored in Port's secure credential store and are never exposed in plaintext.
 
-### API Endpoints
+<h3> API Endpoints </h3>
 
 Port provides the following API endpoints for Custom GitHub App creation:
 
