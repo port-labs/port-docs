@@ -117,13 +117,13 @@ export default function GithubAppCreator() {
               onChange={(e) => setIsSelfHostedEnterprise(e.target.checked)}
               className={styles.checkbox}
             />
-            <label htmlFor="isSelfHostedEnterprise" className={styles.checkboxLabel}>Enterprise GitHub</label>
+            <label htmlFor="isSelfHostedEnterprise" className={styles.checkboxLabel}>Self Hosted Enterprise GitHub</label>
           </div>
         </div>
         
         {isSelfHostedEnterprise && (
           <div className={styles.formGroup}>
-            <label htmlFor="selfHostedEnterpriseUrl" className={styles.label}>Enterprise GitHub URL:</label>
+            <label htmlFor="selfHostedEnterpriseUrl" className={styles.label}>Self Hosted Enterprise GitHub URL:</label>
             <input 
               type="text" 
               id="selfHostedEnterpriseUrl" 
