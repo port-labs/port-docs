@@ -17,6 +17,13 @@ import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-da
 
 Port's Datadog integration allows you to model Datadog resources in Port and ingest data into them.
 
+## Overview
+
+This integration allows you to:
+
+- Map and organize your desired Datadog resources and their metadata in Port (see supported resources below).
+- Watch for Datadog object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
+
 ## BaseUrl & Webhook Configuration
 
 :::warning
@@ -31,13 +38,6 @@ The `baseUrl` parameter enables real-time updates from Datadog to Port. If not p
 - You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
 - Manual resyncs can be triggered via Port's UI
 :::
-
-## Overview
-
-This integration allows you to:
-
-- Map and organize your desired Datadog resources and their metadata in Port (see supported resources below).
-- Watch for Datadog object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
 ### Supported Resources
 
