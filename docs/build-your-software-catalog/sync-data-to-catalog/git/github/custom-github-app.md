@@ -9,7 +9,8 @@ import GithubAppCreator from '@site/src/components/GithubAppCreator';
 
 ## Overview
 
-Port's Custom GitHub App feature allows you to create and manage your own GitHub applications. This provides more granular control over integrations, especially useful for organizations with complex GitHub setups.
+Port's Custom GitHub App feature allows you to create and manage your own GitHub applications.  
+This provides more granular control over integrations, and is especially useful for organizations with complex GitHub setups.
 
 There are two primary ways to connect Port to your GitHub repositories:
 
