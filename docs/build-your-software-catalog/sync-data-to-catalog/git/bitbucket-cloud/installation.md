@@ -55,7 +55,7 @@ If it is not provided, the integration will continue to function correctly. In s
 :::
 
 In order for the Bitbucket Cloud integration to update the data in Port on every change in the Bitbucket Cloud repository, you need to specify the `baseUrl` parameter.
-The `baseUrl` parameter should be set to the `url` of your Bitbucket Cloud integration instance.
+The `baseUrl` parameter should be set to the `url` of your Bitbucket Cloud integration instance. The `webhookSecret` parameter should also be set to a string of your choice so that the integration can verify the webhook requests.
 
 ## Deploy the integration
 
@@ -196,6 +196,7 @@ This table summarizes the available parameters for the installation.
 | `integration.config.bitbucketWorkspace`     | The workspace of the Bitbucket Cloud account             | ✅        |
 | `integration.config.bitbucketAppPassword`   | The app password of the Bitbucket Cloud account             | ✅        |
 | `integration.config.bitbucketWorkspaceToken`| The workspace token of the Bitbucket Cloud account             | ✅        |
+| `integration.config.webhookSecret`          | The secret used to verify the webhook requests             | ❌        |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                           | ❌        |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping                       | ❌        |
 | `sendRawDataExamples`            | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true | ❌        |
