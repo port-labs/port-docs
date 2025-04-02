@@ -54,9 +54,7 @@ To set up the mapping, navigate to the Dynatrace integration in the [Data Source
 <Tabs>
 <TabItem value="direct_mapping" label="Direct Mapping" default>
 
-Direct mapping is when you explicitly specify the identifier of a related entity when creating a relation.   
-This is the traditional way of establishing relations between entities in Port.  
-This is very useful when you're directly referencing the identifier of the related entity
+The most straightforward way to set a relation's value is to explicitly specify the related entity's identifier:
 
 Add the following snippet to your mapping configuration to map Dynatrace entities with teams using Kubernetes labels and annotations:
 
