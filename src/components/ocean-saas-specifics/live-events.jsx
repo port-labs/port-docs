@@ -72,6 +72,9 @@ export const liveEvents = {
     \n- incident.responder.replied \
     \n- incident.triggered \
     \n- incident.unacknowledged',
+  SonarQube:
+  '\n- Analysis completion events \
+   \n- Quality gate status change events',
   Datadog: 
     '**Monitoring Alerts:** \
     \n- ci_pipelines_alert \
