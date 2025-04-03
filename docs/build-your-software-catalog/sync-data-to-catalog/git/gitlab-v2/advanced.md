@@ -34,15 +34,6 @@ The `createMissingRelatedEntities` parameter enables automatic creation of missi
 
 </TabItem>
 
-<TabItem value="webhookSecret" label="Webhook secret">
-
-The `webhookSecret` parameter allows you to configure a secret token for webhook verification.
-
-- Default value: None
-- Use case: Adds an extra layer of security by verifying that webhook requests are coming from GitLab
-
-</TabItem>
-
 </Tabs>
 
 All of the advanced configurations listed above can be added to the mapping on the data source page.
@@ -51,11 +42,11 @@ All of the advanced configurations listed above can be added to the mapping on t
 
 Here's an example of how to use these advanced parameters in your configuration:
 
-````yaml
+```yaml
 integration:
   identifier: my-gitlab-integration
   type: gitlab
   config:
     deleteDependent: true
     createMissingRelatedEntities: false
-    webhookSecret: "your-secret-here"
+```
