@@ -46,18 +46,62 @@ The integration allows you to ingest various objects and resources provided by t
 
 ### Real-time updates
 
-The integration supports real-time updates through webhooks, allowing your software catalog to stay synchronized with your GitLab instance as changes occur.
+The integration uses GitLab's Group-level webhooks to provide real-time updates. When configured, the integration automatically sets up webhooks at the group level to track changes across all projects within that group.
+
+#### Supported webhook events
+
+The following group-level webhook events are supported:
+
+- `merge_requests_events` - Track merge request creation, updates, and state changes
+- `issues_events` - Monitor issue creation, updates, and state changes
+- `releases_events` - Get notified about new releases
+- `subgroup_events` - Track subgroup-related changes
+- `push_events` - Monitor code pushes to repositories
+- `tag_push_events` - Track tag creation and deletion
+
+#### Expected behavior
+
+When a supported event occurs:
+1. GitLab sends a webhook payload to the integration
+2. The integration processes the event and extracts relevant data
+3. Port entities are created or updated accordingly:
+   - New resources (issues, merge requests) are created as entities
+   - Existing entities are updated to reflect changes
+   - Related entities are linked automatically
+
+:::note Webhook configuration
+The integration handles webhook setup automatically when provided with the necessary group-level access. No manual webhook configuration is required.
+:::
 
 ## Permissions
 
-Port's GitLab integration requires an access token with the following scopes:
+Port's GitLab integration supports two types of access tokens:
 
-- `read_api`
-- `read_repository`
-- `read_user`
+### Personal Access Token
+
+1. Navigate to your GitLab profile settings (click your avatar → Edit profile → Access Tokens)
+2. Create a new personal access token with the following scopes:
+   - `read_api` - Read-only access to the API
+   - `read_repository` - Read-only access to repositories
+   - `read_user` - Read-only access to user information
+
+### Group Access Token
+
+For organization-wide access:
+
+1. Navigate to your group's Settings → Access Tokens
+2. Create a new group access token with:
+   - `read_api` - Read-only access to the API
+   - `read_repository` - Read-only access to repositories
 
 :::tip Service accounts
-We recommend using a dedicated service account for creating the access token, especially in large organizations where rate limits may become an issue.
+We recommend using a dedicated service account for creating access tokens, especially in large organizations where rate limits may become an issue. This provides better security and easier token management.
+:::
+
+:::note Token scope
+Choose the token type based on your needs:
+- Personal Access Token: Full access to all resources the user can access
+- Group Access Token: Access to all projects within the group
 :::
 
 ## Examples
