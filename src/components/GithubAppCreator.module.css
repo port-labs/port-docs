@@ -3,8 +3,9 @@
   margin: 20px 0;
   padding: 20px;
   border-radius: 8px;
-  background-color: var(--ifm-color-emphasis-100);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: var(--ifm-card-background-color);
+  box-shadow: 0 2px 8px var(--ifm-color-emphasis-200);
+  border: 1px solid var(--ifm-color-emphasis-200);
 }
 
 .form {
@@ -20,9 +21,9 @@
 }
 
 .label {
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 5px;
-  color: var(--ifm-font-color-base);
+  color: var(--ifm-color-content);
 }
 
 .input {
@@ -30,7 +31,7 @@
   border-radius: 4px;
   border: 1px solid var(--ifm-color-emphasis-300);
   font-size: 16px;
-  background-color: var(--ifm-background-color);
+  background-color: var(--ifm-background-surface-color);
   color: var(--ifm-font-color-base);
 }
 
@@ -38,6 +39,10 @@
   outline: none;
   border-color: var(--ifm-color-primary);
   box-shadow: 0 0 0 2px rgba(var(--ifm-color-primary-rgb), 0.25);
+}
+
+.input::placeholder {
+  color: var(--ifm-color-secondary-darkest);
 }
 
 .checkboxContainer {
@@ -56,7 +61,7 @@
 .checkboxLabel {
   cursor: pointer;
   font-weight: 500;
-  color: var(--ifm-font-color-base);
+  color: var(--ifm-color-content);
 }
 
 /* Region toggle styles */
@@ -69,8 +74,8 @@
   padding: 8px 16px;
   border: 1px solid var(--ifm-color-emphasis-500);
   border-radius: 4px;
-  background-color: var(--ifm-background-color);
-  color: var(--ifm-color-emphasis-700);
+  background-color: var(--ifm-background-surface-color);
+  color: var(--ifm-color-content-secondary);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -81,20 +86,20 @@
 
 .regionButton:hover {
   background-color: var(--ifm-color-emphasis-200);
-  color: var(--ifm-color-emphasis-900);
+  color: var(--ifm-color-content);
 }
 
 .regionButtonActive {
-  background-color: var(--ifm-color-emphasis-700);
+  background-color: var(--ifm-color-primary);
   color: var(--ifm-color-white);
-  border-color: var(--ifm-color-emphasis-700);
+  border-color: var(--ifm-color-primary);
 }
 
 .button {
   padding: 10px 16px;
   border: none;
   border-radius: 4px;
-  background-color: var(--ifm-color-emphasis-700);
+  background-color: var(--ifm-color-primary);
   color: var(--ifm-color-white);
   font-weight: 500;
   cursor: pointer;
@@ -104,13 +109,13 @@
 }
 
 .button:hover {
-  background-color: var(--ifm-color-emphasis-900);
+  background-color: var(--ifm-color-primary-darker);
 }
 
 .button:disabled {
   background-color: var(--ifm-color-emphasis-300);
   cursor: not-allowed;
-  color: var(--ifm-color-emphasis-500);
+  color: var(--ifm-color-emphasis-700);
 }
 
 .error {
@@ -126,7 +131,7 @@
   margin-top: 20px;
   padding: 15px;
   border-radius: 4px;
-  background-color: var(--ifm-color-emphasis-100);
+  background-color: var(--ifm-card-background-color);
   border: 1px solid var(--ifm-color-emphasis-300);
   display: flex;
   flex-direction: column;
@@ -136,14 +141,14 @@
 
 .manifestButton {
   font-weight: bold;
-  background-color: var(--ifm-color-emphasis-800);
+  background-color: var(--ifm-color-primary);
 }
 
 .manifestButton:hover {
-  background-color: var(--ifm-color-emphasis-900);
+  background-color: var(--ifm-color-primary-darker);
 }
 
 .successMessage {
   margin: 0;
-  color: var(--ifm-color-emphasis-700);
+  color: var(--ifm-color-content);
 } 
