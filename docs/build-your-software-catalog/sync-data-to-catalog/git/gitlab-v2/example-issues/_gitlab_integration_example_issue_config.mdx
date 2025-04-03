@@ -1,0 +1,16 @@
+```yaml
+resources:
+  - kind: issue
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .title
+          blueprint: '"gitlabIssue"'
+          properties:
+            creator: .author.name
+            status: .state
+            createdAt: .created_at
+```
