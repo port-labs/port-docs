@@ -35,8 +35,7 @@ The `baseUrl` parameter enables real-time updates from Datadog to Port. If not p
 - You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
 - Manual resyncs can be triggered via Port's UI
 
-The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided:
-  - The integration will process webhooks without validating the source of the events
+The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
 
 ### Supported Resources
 
