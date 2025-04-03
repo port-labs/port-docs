@@ -164,7 +164,7 @@ export default function GithubAppCreator() {
             value={token} 
             onChange={(e) => setToken(e.target.value)}
             className={styles.input}
-            placeholder="Bearer ey..."
+            placeholder="Paste your bearer token"
             required
           />
         </div>
