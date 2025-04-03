@@ -29,7 +29,7 @@ This integration allows you to:
 ## BaseUrl & Webhook Configuration
 
 :::warning AppHost deprecation
-- **`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
+**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
 :::
 
 
