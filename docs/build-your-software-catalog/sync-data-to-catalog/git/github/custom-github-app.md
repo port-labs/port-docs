@@ -160,6 +160,8 @@ For self-hosted GitHub Enterprise instances, additional configuration is require
 - Custom GitHub Apps must have all the required permissions to function properly.
 - You cannot modify the permissions after creation (you would need to create a new app).
 - For secure credential management, Port does not expose the raw credential values after initial creation.
+- You can't identify the Gtihub app is custom from the UI.
+- You can't delete the Github app from the UI, you need to delete it directly from your Github organization (https://github.com/organizations/{{GITHUB_ORG_NAME}}/settings/installations).
 
 ## Troubleshooting
 
