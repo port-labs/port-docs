@@ -59,16 +59,6 @@ The following group-level webhook events are supported:
 - `push_events` - Monitor code pushes to repositories
 - `tag_push_events` - Track tag creation and deletion
 
-#### Expected behavior
-
-When a supported event occurs:
-1. GitLab sends a webhook payload to the integration
-2. The integration processes the event and extracts relevant data
-3. Port entities are created or updated accordingly:
-   - New resources (issues, merge requests) are created as entities
-   - Existing entities are updated to reflect changes
-   - Related entities are linked automatically
-
 :::note Webhook configuration
 The integration handles webhook setup automatically when provided with the necessary group-level access. No manual webhook configuration is required.
 :::
