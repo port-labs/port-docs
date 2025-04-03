@@ -61,6 +61,8 @@ The following group-level webhook events are supported:
 
 :::note Webhook configuration
 The integration handles webhook setup automatically when provided with the necessary group-level access. No manual webhook configuration is required.
+
+Learn more about GitLab group webhooks in the [official documentation](https://docs.gitlab.com/user/project/integrations/webhooks/#group-webhooks).
 :::
 
 ## Permissions
