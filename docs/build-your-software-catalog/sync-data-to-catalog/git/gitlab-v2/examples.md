@@ -21,8 +21,15 @@ import MergeRequestConfig from './example-merge-requests/_gitlab_integration_exa
 
 Let's map your GitLab groups to Port entities, including details like group name and description.
 
+<details>
+<summary>Group blueprint</summary>
 <GroupBlueprint />
+</details>
+
+<details>
+<summary>Group configuration</summary>
 <GroupConfig />
+</details>
 
 :::tip GitLab group structure
 Refer to the GitLab group API for the full object structure and available fields.
@@ -34,8 +41,15 @@ Refer to the GitLab group API for the full object structure and available fields
 
 Next, we'll ingest GitLab projects into Port, capturing details like project name, description, and README.
 
+<details>
+<summary>Project blueprint</summary>
 <ProjectBlueprint />
+</details>
+
+<details>
+<summary>Project configuration</summary>
 <ProjectConfig />
+</details>
 
 :::tip GitLab project structure
 Check the GitLab project API for the full object structure and available fields.
@@ -47,8 +61,15 @@ Check the GitLab project API for the full object structure and available fields.
 
 Now, let's bring GitLab issues into Port, including details like title, state, and labels.
 
+<details>
+<summary>Issue blueprint</summary>
 <IssueBlueprint />
+</details>
+
+<details>
+<summary>Issue configuration</summary>
 <IssueConfig />
+</details>
 
 :::tip GitLab issue structure
 Explore the GitLab issue API for the full object structure and available fields.
@@ -60,8 +81,15 @@ Explore the GitLab issue API for the full object structure and available fields.
 
 Finally, we'll ingest GitLab merge requests (MRs) into Port, with details like title, state, and source branch.
 
+<details>
+<summary>Merge request blueprint</summary>
 <MergeRequestBlueprint />
+</details>
+
+<details>
+<summary>Merge request configuration</summary>
 <MergeRequestConfig />
+</details>
 
 :::tip GitLab merge request structure
 See the GitLab merge request API for the full object structure and available fields.
