@@ -26,8 +26,8 @@ This integration allows you to:
 
 ## BaseUrl & Webhook Configuration
 
-:::warning Deprecated
-- **`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
+:::warning AppHost deprecation
+**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
 :::
 
 The `baseUrl` parameter enables real-time updates from Datadog to Port. If not provided:
