@@ -33,18 +33,18 @@ This page details how to install Port's Bitbucket Cloud integration (powered by 
 
 ### Create a workspace token or app password
 
-:::tip Use of dedicated accounts
+:::tip Use of dedicated accounts and tokens
 
-While Bitbucket Cloud does not support service accounts, we recommend adopting the use of credentials from accounts dedicated to the integration, as this will provide a more secure and scalable solution.
+While Bitbucket Cloud does not support service accounts, we recommend using workspace tokens from accounts dedicated to the integration, as this will provide a more secure and scalable solution.
 
-Different credentials from the same bitbucket account shares the same rate limits which can cause issues when using the integration in a large organization.
+Different credentials from the same Bitbucket account share the same rate limits, which can cause issues when using the integration in a large organization. Using dedicated workspace tokens helps manage rate limits more effectively.
 :::
 
-The integration requires a workspace token or app password and username to authenticate with your Bitbucket Cloud account.  
-You can create one by following [these steps](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/).  
+The integration requires either a workspace token or an app password with username to authenticate with your Bitbucket Cloud account.  You can create a workspace token by following the steps [here](https://support.atlassian.com/bitbucket-cloud/docs/workspace-access-tokens/) or an app password by following [these steps](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/).  
 
-The token should have `read` permission scope, for each of the supported resources you want to ingest into Port and a `read` and `write` permission scope for the webhooks.
+The token or app password should have `read` permission scope for each of the supported resources you want to ingest into Port and a `read` and `write` permission scope for the webhooks.
 
+We recommend using workspace tokens when possible, as they provide better security and are easier to manage than app passwords.
 
 ### BaseUrl & listening to hooks
 
