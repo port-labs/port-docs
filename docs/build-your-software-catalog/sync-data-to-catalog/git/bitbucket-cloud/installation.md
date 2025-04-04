@@ -35,7 +35,7 @@ This page details how to install Port's Bitbucket Cloud integration (powered by 
 
 :::tip Use of dedicated accounts and tokens
 
-While Bitbucket Cloud does not support service accounts, we recommend using workspace tokens from accounts dedicated to the integration, as this will provide a more secure and scalable solution.
+We recommend using workspace tokens from accounts dedicated to the integration, as this will provide a more secure and scalable solution.
 
 Different credentials from the same Bitbucket account share the same rate limits, which can cause issues when using the integration in a large organization. Using dedicated workspace tokens helps manage rate limits more effectively.
 :::
