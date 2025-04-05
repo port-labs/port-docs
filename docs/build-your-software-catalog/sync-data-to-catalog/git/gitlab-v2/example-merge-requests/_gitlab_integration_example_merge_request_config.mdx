@@ -1,0 +1,15 @@
+```yaml
+resources:
+  - kind: merge-request
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .id | tostring
+          title: .title
+          blueprint: '"gitlabMergeRequest"'
+          properties:
+            creator: .author.name
+            status: .state
+```
