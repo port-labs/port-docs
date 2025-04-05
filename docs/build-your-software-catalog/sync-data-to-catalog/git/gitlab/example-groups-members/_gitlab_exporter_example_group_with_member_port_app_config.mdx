@@ -7,8 +7,7 @@ resources:
   - kind: group-with-members
     selector:
       query: 'true'
-      includeBotMembers: 'true'
-      includeInheritedMembers: true
+      includeVerboseMemberObject: 'true'
     port:
       itemsToParse: .__members
       entity:
@@ -24,7 +23,6 @@ resources:
   - kind: group-with-members
     selector:
       query: 'true'
-      includeBotMembers: 'true'
     port:
       entity:
         mappings:
