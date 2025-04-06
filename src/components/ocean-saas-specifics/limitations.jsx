@@ -2,7 +2,7 @@ import Markdown from "@theme/Markdown";
 
 const defaultLimitations = {
   ttl:
-    '- The maximum time for a full sync to run is based on the Resync interval. For very large amounts of data where a resync operation is expected to take longer, please use a longer Resync interval.',
+    '- The maximum time for a full sync to run is based on the configured resync interval. For very large amounts of data where a resync operation is expected to take longer, please use a longer interval.',
 };
 
 const limitations = {
