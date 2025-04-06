@@ -138,7 +138,7 @@ Port offers two types of line charts:
 1. [Property history (single entity)](#1-property-history-single-entity) - displays the values of one or more properties of a single entity.
 2. [Aggregate property (all entities)](#2-aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
 
-#### 1. Property history (Single Entity)
+#### 1. Property history (single entity)
 
 This chart type displays the values of one or more properties of a **single entity** over time.  
 
