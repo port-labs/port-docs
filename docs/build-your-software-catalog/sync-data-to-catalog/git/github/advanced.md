@@ -98,9 +98,9 @@ Use the `closedPullRequests` parameter to enable the fetching of closed pull req
 - Default value: `false` (do not fetch closed pull requests).
 - Use case: Useful for analyzing closed pull request history, such as DORA metrics.
 
-:::note
-Port fetches the last 100 updated closed pull requests or those from the past 60 days, whichever comes first.
-:::
+ 
+Port will fetch the last 100 updated closed pull requests or those from the past 60 days, whichever comes first.
+
 
 **Configuration example**
 
