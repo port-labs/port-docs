@@ -27,8 +27,9 @@ You can implement this action in two ways:
 
 ## Set up data model
 
-- If you haven't installed the [Jira integration](https://www.notion.so/build-your-software-catalog/sync-data-to-catalog/project-management/jira/), you'll need to create a blueprint for Jira issues. However we highly recommend you install the Jira integration to have these automatically set up for you.
-- If you haven't installed the [New Relic integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic), you'll need to create a blueprint for New Relic Alerts. However we highly recommend you install the New Relic integration to have these automatically set up for you.
+If you have installed Port's [Jira integration](https://www.notion.so/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) and [New Relic integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic), the relevant blueprints will be automatically created in your portal.
+
+If you chose not to install the integrations, you will need to create the blueprints manually:
 
 <h3>Create the jira issue blueprint</h3>
 
