@@ -1,0 +1,57 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: '.uuid | gsub("[{-}]"; "")'
+          title: ".name"
+          blueprint: '"bitbucketProject"'
+          properties:
+            private: .is_private
+            description: ".description"
+            type: .type
+            url: ".links.html.href"
+  - kind: repository
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".name" # The Entity identifier will be the repository name. After the Entity is created, the exporter will send `PATCH` requests to update this microservice within Port.
+          title: ".name"
+          blueprint: '"bitbucketRepository"'
+          properties:
+            readme: file://README.md # fetching the README.md file that is within the root folder of the repository and ingesting its contents as a markdown property
+            url: ".links.html.href"
+            defaultBranch: .main_branch
+          relations:
+            project: '.project.uuid | gsub("[{-}]"; "")'
+  - kind: pull-request
+    selector:
+      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    port:
+      entity:
+        mappings:
+          identifier: ".destination.repository.name + (.id|tostring)" # The Entity identifier will be the repository name + the pull request ID. After the Entity is created, the exporter will send `PATCH` requests to update this pull request within Port.
+          title: ".title"
+          blueprint: '"bitbucketPullRequest"'
+          properties:
+            creator: ".author.display_name"
+            assignees: "[.participants[].user.display_name]"
+            reviewers: "[.reviewers[].user.display_name]"
+            status: ".state"
+            createdAt: ".created_on"
+            updatedAt: ".updated_on"
+            link: ".links.html.href"
+          relations:
+            repository: ".destination.repository.name"
+```
+
+</details>

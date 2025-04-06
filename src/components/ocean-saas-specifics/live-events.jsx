@@ -1,6 +1,4 @@
 import Markdown from "@theme/Markdown";
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 
 const defaultLiveEvents = {
   unsupported:
@@ -34,6 +32,18 @@ export const liveEvents = {
   Snyk:
    '\n- Project related events \
     \n- Target related events',
+  BitbucketCloud:
+    '**Repository:** \
+    \n- repository:created \
+    \n- repository:updated \
+    \n- repository:push \
+    \n\n**Pull Request:** \
+    \n- pullrequest:created \
+    \n- pullrequest:updated \
+    \n- pullrequest:approved \
+    \n- pullrequest:unapproved \
+    \n- pullrequest:fulfilled \
+    \n- pullrequest:rejected',
   PagerDuty:
     '**Service:** \
     \n- service.created \
@@ -72,6 +82,45 @@ export const liveEvents = {
     \n- incident.responder.replied \
     \n- incident.triggered \
     \n- incident.unacknowledged',
+  SonarQube:
+    '\n- Analysis completion events \
+     \n- Quality gate status change events',
+  Datadog: 
+    '**Monitoring Alerts:** \
+    \n- ci_pipelines_alert \
+    \n- ci_tests_alert \
+    \n- composite_monitor \
+    \n- error_tracking_alert \
+    \n- event_alert \
+    \n- event_v2_alert \
+    \n- log_alert \
+    \n- monitor_slo_alert \
+    \n- metric_slo_alert \
+    \n- outlier_monitor \
+    \n- process_alert \
+    \n- query_alert_monitor \
+    \n- rum_alert \
+    \n- service_check \
+    \n- synthetics_alert \
+    \n- trace_analytics_alert',
+  Datadog_OAuth: 
+    '**Monitoring Alerts:** \
+    \n- ci_pipelines_alert \
+    \n- ci_tests_alert \
+    \n- composite_monitor \
+    \n- error_tracking_alert \
+    \n- event_alert \
+    \n- event_v2_alert \
+    \n- log_alert \
+    \n- monitor_slo_alert \
+    \n- metric_slo_alert \
+    \n- outlier_monitor \
+    \n- process_alert \
+    \n- query_alert_monitor \
+    \n- rum_alert \
+    \n- service_check \
+    \n- synthetics_alert \
+    \n- trace_analytics_alert',
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {

@@ -19,7 +19,15 @@ For your first deployment of the Azure exporter, we recommend starting with the 
 
 ## Installation Methods
 
-<Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="helm">
+<Tabs groupId="installation-methods" queryString="installation-methods" defaultValue="azure-multi-subscriptions">
+<TabItem value="azure-multi-subscriptions" label="Azure Multi Subscriptions">
+
+For organizations working with multiple Azure subscriptions, we offer a dedicated sync solution that provides near real-time data synchronization without infrastructure requirements.
+
+For complete setup instructions and detailed features, see our [Azure multi subscriptions guide](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/multi-subscriptions.md).
+
+</TabItem>
+
 <TabItem value="helm" label="Helm (Scheduled)" >
 
 The Azure exporter is deployed using helm on kubernetes.
@@ -218,7 +226,7 @@ kubectl apply -f azure-integration.yaml
 
 </TabItem>
 
-<TabItem value="terraform" label="Terraform (Real Time)">
+<TabItem value="terraform" label="Terraform">
 
 The azure exporter is deployed using Terraform on Azure Container App.
 It uses our Terraform [Ocean](https://ocean.getport.io) Integration
@@ -448,10 +456,11 @@ To configure the Azure exporter to ingest resources from other subscriptions, fo
 
 <h3> How do I set up real-time data ingestion from multiple subscriptions? </h3>
 
-For real-time data ingestion, you will need to set up an Event Grid System Topic and an Event Grid Subscription in each subscription you want to ingest resources from. The system topic should be of type `Microsoft.Resources.Subscriptions`.
+For the most efficient approach to multi-subscription data ingestion without infrastructure requirements, we recommend using our [Azure multi subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/multi-subscriptions.md) method.
 
-If you are using the terraform deployment method, refer to the [Azure Integration example](https://github.com/port-labs/terraform-ocean-integration-factory/blob/main/examples/azure_container_app_azure_integration/main.tf) for more information.
+If you prefer using the Terraform deployment method with Event Grid, you will need to set up an Event Grid System Topic and an Event Grid Subscription in each subscription you want to ingest resources from. The system topic should be of type `Microsoft.Resources.Subscriptions`. Refer to the [Azure Integration example](https://github.com/port-labs/terraform-ocean-integration-factory/blob/main/examples/azure_container_app_azure_integration/main.tf) for more information.
 
 ## Next Steps
 
 - Refer to the [Resource Templates](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/resource_templates/resource_templates.md) page for templates on how to map Azure resources to Port.
+- Check out the [Azure multi subscriptions](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/multi-subscriptions.md) guide for setting up synchronization of Azure resources.
