@@ -21,7 +21,6 @@ export default function GithubAppCreator() {
 
   // Get the appropriate base URL based on region
   const getBaseUrl = () => {
-    return STAGING_API_URL;
     // Use staging URL for development if needed
     if (process.env.NODE_ENV === 'development') {
       return STAGING_API_URL;
