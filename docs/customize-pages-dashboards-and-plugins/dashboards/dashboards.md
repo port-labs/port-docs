@@ -135,10 +135,10 @@ For example, if the dataset includes information spanning across 2 hours and 20 
 Line charts display trends of `number` properties over time.  
 
 Port offers two types of line charts:
-1. [Properties value history](#properties-value-history) - displays the values of one or more properties of a single entity.
-2. [Aggregate properties values](#aggregate-properties-values) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
+1. [Property history (single entity)](#1-property-history-single-entity) - displays the values of one or more properties of a single entity.
+2. [Aggregate property (all entities)](#2-aggregate-property-all-entities) - displays the aggregated values of one or more properties across all entities of a specific blueprint.
 
-#### 1. Properties value history
+#### 1. Property history (Single Entity)
 
 This chart type displays the values of one or more properties of a **single entity** over time.  
 
@@ -175,7 +175,7 @@ For example, here is a line chart displaying a service's resource usage over the
   Note that for aggregation (and calculation) properties, the data will be available from the time the aggregation property was created, and not the properties it is aggregating.
 - Line chart data is limited to the last 365 days.
 
-#### 2. Aggregate properties values
+#### 2. Aggregate property (all entities)
 
 This chart type displays the aggregated values of one or more properties across **all entities** of a specific blueprint.  
 Each property will be displayed as a separate line in the chart.
