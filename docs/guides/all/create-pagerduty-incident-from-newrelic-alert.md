@@ -10,7 +10,7 @@ import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_sec
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Create a PagerDuty incident from New Relic alert
+# Create a PagerDuty incident from a New Relic alert
 
 ## Overview
 This guide will help you implement a self-service action in Port that allows you to create PagerDuty incidents from a New Relic alert.
@@ -33,8 +33,9 @@ You can implement this action in two ways:
 
 ## Set up data model
 
--If you haven't installed the PagerDuty integration, you'll need to create blueprints for PagerDuty incidents and PagerDuty services. However, we highly recommend you install the PagerDuty integration to have these automatically set up for you.
--If you haven't installed the New Relic integration, you'll need to create blueprints for New Relic alerts. However, we highly recommend you install the PagerDuty integration to have these automatically set up for you.
+If you have installed Port's [PagerDuty integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/) and [New Relic integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic), the relevant blueprints will be automatically created in your portal.
+
+If you chose not to install the integrations, you will need to create the blueprints manually:
 
 ### Create the PagerDuty service blueprint
 
@@ -581,12 +582,3 @@ You can implement this action in two ways:
 5. Click on `Execute`
 
 6. Done! Wait for the incident to be created in PagerDuty
-
-## More Self Service PagerDuty Actions Examples
-- [Acknowledge Incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/acknowledge-incident)
-- [Change On-Call User](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-on-call-user)
-- [Change PagerDuty incident owner](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/change-pagerduty-incident-owner)
-- [Create PagerDuty service](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/create-pagerduty-service)
-- [Escalate an incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/escalate-an-incident)
-- [Resolve an incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/resolve-incident)
-- [Trigger PagerDuty incident](https://docs.port.io/actions-and-automations/setup-backend/github-workflow/examples/PagerDuty/trigger-pagerduty-incident)
