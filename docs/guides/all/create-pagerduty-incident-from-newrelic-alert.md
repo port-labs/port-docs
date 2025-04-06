@@ -440,7 +440,6 @@ You can implement this action in two ways:
     ```yaml showLineNumbers
     name: Create PagerDuty Incident
 
-    name: Create PagerDuty Incident
     
     on:
       workflow_dispatch:
