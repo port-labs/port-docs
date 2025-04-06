@@ -93,9 +93,9 @@ gitopsMetadataProperty: myGitopsMetadata # the GitOps metadata will be sent to t
 
 <TabItem value="closedPullRequests" label="Fetch closed pull requests">
 
-Use `closedPullRequests` parameter to enable the fetching of closed pull requests on re-sync.
+Use the `closedPullRequests` parameter to enable the fetching of closed pull requests on re-sync.
 
-- Default value: `false` (do not fetch pull requests)
+- Default value: `false` (do not fetch closed pull requests).
 - Use case: Useful for analyzing closed pull request history, such as DORA metrics.
 
 :::note
