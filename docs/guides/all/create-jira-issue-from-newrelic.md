@@ -9,7 +9,7 @@ import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_sec
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Report a bug from New Relic alert
+# Report a Jira bug from a New Relic alert
 
 ## Overview
 This guide will help you implement a self-service action in Port that allows you to report bugs in Jira based on New Relic alert in one click, ensuring prompt issue resolution and improving overall platform reliability.
