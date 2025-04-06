@@ -942,6 +942,6 @@ export const availableGuides = [
         description: "Create a self-service action that creates a PagerDuty incident from a New Relic alert",
         tags: ["PagerDuty","New Relic","Actions","Webhook"],
         logos: ["PagerDuty","New Relic"],
-        link: "/guides/all/create-pagerduty-incident-from-newrelic-alert.md",
+        link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
     }
 ]
