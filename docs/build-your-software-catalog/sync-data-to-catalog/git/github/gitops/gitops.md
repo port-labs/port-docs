@@ -9,6 +9,7 @@ import BasicFileProperties from '../../\_basic_file_properties_template.md'
 import RelativeFileProperties from '../../\_relative_file_properties_template.md'
 import GitOpsPushEvent from '../../\_git_gitops_push_events_explanation.mdx'
 import PortYmlNullProperties from '../../\_port_yml_null_properties.md'
+import PortYmlIngestionPattern from '../../\_port_yml_ingestion_pattern_template.md'
 
 
 # GitOps
@@ -160,6 +161,12 @@ The `selector.files.path` key also supports glob patterns, so you can ingest mul
 ## Examples
 
 Check out the [example repository](https://github.com/port-labs/github-app-setup-example) for a microservice blueprint and a matching `port.yml` file which specifies a microservice entity.
+
+## Capabilities
+
+### Port.yml ingestion pattern
+
+<PortYmlIngestionPattern provider="GitHub" />
 
 ## Advanced
 

@@ -901,4 +901,40 @@ export const availableGuides = [
         logos: ["AWS", "Webhook"],
         link: "/guides/all/ingest-any-data-via-airbyte-s3-and-webhook"
     },
+    {
+        title: "Create a FireHydrant Incident",
+        description: "Create a self-service action that creates a FireHydrant incident",
+        tags: ["Incident management", "FireHydrant", "GitHub", "Actions","Webhook", "Automations"],
+        logos: ["FireHydrant", "GitHub"],
+        link: "/guides/all/create-firehydrant-incident",
+    },
+    {
+        title: "Create a Linear issue",
+        description: "Create a self-service action that creates a Linear issue",
+        tags: ["Linear", "Actions", "Webhook", "Automations"],
+        logos: ["Linear", "Webhook"],
+        link: "/guides/all/open-linear-issue",
+    },
+    {
+        title: "Create an incident.io Incident",
+        description: "Create a self-service action that creates an incident.io incident",
+        tags: ["Incident management", "Actions", "Webhook", "Automations"],
+        logos: ["Webhook"],
+        link: "/guides/all/create-incident-io-incident",
+    },
+    {
+        title: "Trigger a FireHydrant incident",
+        description: "Create a self-service action that triggers a FireHydrant incident",
+        tags: ["Incident management", "FireHydrant", "Actions", "Webhook"],
+        logos: ["FireHydrant", "GitHub"],
+        // category: "Getting started",
+        link: "/guides/all/trigger-firehydrant-incident",
+    },
+    {
+        title: "Monitor integrations",
+        description: "Monitor and manage your Port Ocean integrations",
+        tags: [],
+        logos: ["Webhook"],
+        link: "/guides/all/manage-integrations",
+    }
 ]

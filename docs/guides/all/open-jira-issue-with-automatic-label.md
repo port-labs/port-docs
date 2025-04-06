@@ -5,6 +5,7 @@ description: Learn how to open Jira issues with automatic labels in Port, stream
 
 import GithubActionModificationHint from '/docs/guides/templates/github/_github_action_modification_required_hint.mdx'
 import GithubDedicatedRepoHint from '/docs/guides/templates/github/_github_dedicated_workflows_repository_hint.mdx'
+import ExistingSecretsCallout from '/docs/guides/templates/secrets/_existing_secrets_callout.mdx'
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -215,9 +216,12 @@ You should have installed the [Port's GitHub app](https://github.com/apps/getpor
 
     <h3>Add Port secrets</h3>
 
-    Add the following secrets to your Port account:
+    <ExistingSecretsCallout integration="Jira" />
 
-    1. In your portal, click on the `...` button next to the profile icon in the top right corner.
+
+    To add these secrets to your portal:
+
+    1. Click on the `...` button in the top right corner of your Port application.
 
     2. Click on **Credentials**.
 
