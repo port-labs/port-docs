@@ -41,16 +41,15 @@ export default function GithubAppCreator() {
       
       // Construct API URL with parameters
       let apiUrl = `${baseUrl}/v1/integration/github-app-creation-url`;
-      // apiUrl += `?isSelfHostedEnterprise=${isSelfHostedEnterprise}`;
-      apiUrl += `?isEnterprise=${isSelfHostedEnterprise}`;
+      apiUrl += `?isSelfHostedEnterprise=${isSelfHostedEnterprise}`;
       
       if (orgName) {
         apiUrl += `&githubOrgName=${encodeURIComponent(orgName)}`;
       }
       
-      // if (isSelfHostedEnterprise && selfHostedEnterpriseUrl) {
-      //   apiUrl += `&selfHostedEnterpriseUrl=${encodeURIComponent(selfHostedEnterpriseUrl)}`;
-      // }
+      if (isSelfHostedEnterprise && selfHostedEnterpriseUrl) {
+        apiUrl += `&selfHostedEnterpriseUrl=${encodeURIComponent(selfHostedEnterpriseUrl)}`;
+      }
 
       
       // Make API request
