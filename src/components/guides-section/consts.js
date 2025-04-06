@@ -936,5 +936,12 @@ export const availableGuides = [
         tags: [],
         logos: ["Webhook"],
         link: "/guides/all/manage-integrations",
+    },
+    {
+        title: "Report a Jira bug from a New Relic alert",
+        description: "Create a self-service action that reports a Jira bug from a New Relic alert",
+        tags: ["Jira","New Relic","Actions","Webhook"],
+        logos: ["Jira","New Relic"],
+        link: "/guides/all/create-jira-issue-from-newrelic",
     }
 ]
