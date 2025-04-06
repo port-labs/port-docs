@@ -1,6 +1,4 @@
 import Markdown from "@theme/Markdown";
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 
 const defaultLiveEvents = {
   unsupported:
