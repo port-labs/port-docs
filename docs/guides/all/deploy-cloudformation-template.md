@@ -399,12 +399,10 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
         "db_instance_class": {
           "title": "DB Instance Class",
           "type": "string",
-          "default": "db.t2.micro",
-          "enum": ["db.t2.micro", "db.t2.small", "db.m4.large"],
+          "default": "db.t3.micro",
+          "enum": ["db.t3.micro"],
           "enumColors": {
-            "db.t2.micro": "lightGray",
-            "db.t2.small": "lightGray",
-            "db.m4.large": "lightGray"
+            "db.t3.micro": "lightGray",
           }
         }
       },
@@ -624,11 +622,9 @@ Parameters:
   DBInstanceClass:
     Description: DB instance class for the RDS instance
     Type: String
-    Default: db.t2.micro
+    Default: db.t3.micro
     AllowedValues:
-      - db.t2.micro
-      - db.t2.small
-      - db.m4.large
+      - db.t3.micro
       # Add more instance types as needed
     ConstraintDescription: Choose a valid DB instance class.
 
