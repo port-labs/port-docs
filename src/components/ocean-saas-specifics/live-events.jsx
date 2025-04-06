@@ -1,6 +1,4 @@
 import Markdown from "@theme/Markdown";
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 
 const defaultLiveEvents = {
   unsupported:
@@ -34,6 +32,18 @@ export const liveEvents = {
   Snyk:
    '\n- Project related events \
     \n- Target related events',
+  BitbucketCloud:
+    '**Repository:** \
+    \n- repository:created \
+    \n- repository:updated \
+    \n- repository:push \
+    \n\n**Pull Request:** \
+    \n- pullrequest:created \
+    \n- pullrequest:updated \
+    \n- pullrequest:approved \
+    \n- pullrequest:unapproved \
+    \n- pullrequest:fulfilled \
+    \n- pullrequest:rejected',
   PagerDuty:
     '**Service:** \
     \n- service.created \
