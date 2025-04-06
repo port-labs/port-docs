@@ -61,10 +61,6 @@ The `baseUrl` parameter should be set to the `url` of your Bitbucket Cloud integ
 
 Choose one of the following installation methods:
 
-## Setup
-
-Choose one of the following installation methods:
-
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
