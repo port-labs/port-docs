@@ -27,7 +27,7 @@ You can implement this action in two ways:
 
 ## Set up data model
 
-If you have installed Port's [Jira integration](https://www.notion.so/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) and [New Relic integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic), the relevant blueprints will be automatically created in your portal.
+If you have installed Port's [Jira integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) and [New Relic integration](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic), the relevant blueprints will be automatically created in your portal.
 
 If you chose not to install the integrations, you will need to create the blueprints manually:
 
