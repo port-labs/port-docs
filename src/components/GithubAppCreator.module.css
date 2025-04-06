@@ -5,6 +5,7 @@
   border-radius: 8px;
   background-color: var(--ifm-color-emphasis-100);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--ifm-color-emphasis-200);
 }
 
 .form {
@@ -20,7 +21,7 @@
 }
 
 .label {
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 5px;
   color: var(--ifm-font-color-base);
 }
@@ -70,8 +71,8 @@
   border: 1px solid var(--ifm-color-emphasis-500);
   border-radius: 4px;
   background-color: var(--ifm-background-color);
-  color: var(--ifm-color-emphasis-700);
-  font-weight: 500;
+  color: var(--ifm-color-emphasis-800);
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   flex: 1;
@@ -85,32 +86,52 @@
 }
 
 .regionButtonActive {
-  background-color: var(--ifm-color-emphasis-700);
-  color: var(--ifm-color-white);
-  border-color: var(--ifm-color-emphasis-700);
+  background-color: var(--ifm-color-gray-900);
+  color: var(--ifm-color-gray-0);
+  border-color: var(--ifm-color-gray-900);
+}
+
+html[data-theme='dark'] .regionButtonActive {
+  background-color: var(--ifm-color-gray-100);
+  color: var(--ifm-color-gray-900);
+  border-color: var(--ifm-color-gray-100);
 }
 
 .button {
   padding: 10px 16px;
   border: none;
   border-radius: 4px;
-  background-color: var(--ifm-color-emphasis-700);
-  color: var(--ifm-color-white);
-  font-weight: 500;
+  background-color: var(--ifm-color-gray-900);
+  color: var(--ifm-color-gray-0);
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
   font-size: 16px;
   align-self: flex-start;
 }
 
+html[data-theme='dark'] .button {
+  background-color: var(--ifm-color-gray-100);
+  color: var(--ifm-color-gray-900);
+}
+
 .button:hover {
-  background-color: var(--ifm-color-emphasis-900);
+  background-color: var(--ifm-color-gray-800);
+}
+
+html[data-theme='dark'] .button:hover {
+  background-color: var(--ifm-color-gray-200);
 }
 
 .button:disabled {
   background-color: var(--ifm-color-emphasis-300);
   cursor: not-allowed;
-  color: var(--ifm-color-emphasis-500);
+  color: var(--ifm-color-emphasis-600);
+}
+
+html[data-theme='dark'] .button:disabled {
+  background-color: var(--ifm-color-emphasis-300);
+  color: var(--ifm-color-emphasis-800);
 }
 
 .error {
@@ -136,11 +157,21 @@
 
 .manifestButton {
   font-weight: bold;
-  background-color: var(--ifm-color-emphasis-800);
+  background-color: var(--ifm-color-gray-900);
+  color: var(--ifm-color-gray-0);
+}
+
+html[data-theme='dark'] .manifestButton {
+  background-color: var(--ifm-color-gray-100);
+  color: var(--ifm-color-gray-900);
 }
 
 .manifestButton:hover {
-  background-color: var(--ifm-color-emphasis-900);
+  background-color: var(--ifm-color-gray-800);
+}
+
+html[data-theme='dark'] .manifestButton:hover {
+  background-color: var(--ifm-color-gray-200);
 }
 
 .successMessage {

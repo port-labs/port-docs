@@ -160,8 +160,25 @@ For self-hosted GitHub Enterprise instances, additional configuration is require
 - Custom GitHub Apps must have all the required permissions to function properly.
 - You cannot modify the permissions after creation (you would need to create a new app).
 - For secure credential management, Port does not expose the raw credential values after initial creation.
-- You can't identify the Gtihub app is custom from the UI.
-- You can't delete the Github app from the UI, you need to delete it directly from your Github organization (https://github.com/organizations/{{GITHUB_ORG_NAME}}/settings/installations).
+- You can't identify the Gtihub app is custom from the UI
+- You can't delete the Github app from the UI, you need to delete it directly from your Github organization (https://github.com/organizations/{{GITHUB_ORG_NAME}}/settings/installations)
+
+## Frequently Asked Questions
+
+### What is a custom GitHub App in Port?
+
+A custom GitHub App is a GitHub integration that you own and manage, instead of using Port's official app. Port provides a manifest and handles the setup, but the app is registered under your GitHub account/organization. This gives you more control, flexibility, and scalability—especially when working with multiple Port environments or large-scale setups.
+
+### What can I use a custom GitHub App for?
+
+Use cases include:
+- **Multi-environment support**: Connect the same GitHub organization to multiple Port organizations (e.g., development/staging/production).
+- **Integration scaling**: Split data ingestion by concern (e.g., one app for services, another for workflows) to reduce load and improve performance.
+- **Self-hosted GitHub**: Use with GitHub Enterprise Server setups.
+
+### Why do I need multiple custom apps for the same GitHub organization?
+
+GitHub only allows installing a given GitHub App once per GitHub organization. To connect multiple Port organizations to the same GitHub organization, each Port organization must have its own custom GitHub App. These apps can target the same repositories but function independently—ideal for multi-environment rollouts or segmented pipelines.
 
 ## Troubleshooting
 
