@@ -24,12 +24,6 @@ You can implement this action in two ways:
 
 - Complete the [onboarding process](/getting-started/overview).
 - Access to your PagerDuty organization with permissions to manage incidents.
-- Optional - Install Port's PagerDuty integration [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty)
-- Optional - Install Port's New Relic integration [learn more](https://docs.port.io/build-your-software-catalog/sync-data-to-catalog/apm-alerting/newrelic)
-      
-	:::tip PagerDuty Integration
-	This step is not required for this example, but it will create all the blueprint boilerplate for you, and also ingest and update the catalog in real time with your PagerDuty Incidents.
-	:::
 
 ## Set up data model
 
