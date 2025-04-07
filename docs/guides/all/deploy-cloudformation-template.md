@@ -402,7 +402,7 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
           "default": "db.t3.micro",
           "enum": ["db.t3.micro"],
           "enumColors": {
-            "db.t3.micro": "lightGray",
+            "db.t3.micro": "lightGray"
           }
         }
       },
