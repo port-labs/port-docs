@@ -318,7 +318,7 @@ This section includes a sample response data from Komodor. In addition, it inclu
 Here is an example of the payload structure from Komodor, Any variable is in capital for ease of reading:
 
 <details>
-<summary>Template response data</summary>
+<summary>Service response data</summary>
 
 ```json showLineNumbers
 {
@@ -463,7 +463,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 </details>
 
 <details>
-<summary>Resource entity in Port</summary>
+<summary>Health Monitor entity in Port</summary>
 
 ```json showLineNumbers
 {
