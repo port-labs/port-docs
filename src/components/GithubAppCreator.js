@@ -7,9 +7,6 @@ const API_URLS = {
   us: 'https://api.us.getport.io'
 };
 
-// Default to staging for development
-const STAGING_API_URL = 'https://api.stg-01.getport.io';
-
 export default function GithubAppCreator() {
   const [orgName, setOrgName] = useState('');
   const [token, setToken] = useState('');
@@ -21,11 +18,6 @@ export default function GithubAppCreator() {
 
   // Get the appropriate base URL based on region
   const getBaseUrl = () => {
-    // Use staging URL for development if needed
-    if (process.env.NODE_ENV === 'development') {
-      return STAGING_API_URL;
-    }
-    
     return API_URLS[region];
   };
 
