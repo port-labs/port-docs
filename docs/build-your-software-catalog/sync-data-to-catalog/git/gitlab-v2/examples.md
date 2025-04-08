@@ -4,7 +4,9 @@ sidebar_position: 2
 
 # Examples
 
-In this section, we'll walk through examples to ingest your GitLab **groups**, **projects**, **issues**, and **merge requests** into Port. Each example includes a blueprint definition and a matching `port-app-config.yml` configuration to map GitLab objects to Port entities.
+In this section, we'll walk through examples to ingest your GitLab **groups**, **projects**, **issues**, and **merge requests** into Port. 
+
+Each example includes a blueprint definition and a matching `port-app-config.yml` configuration to map GitLab objects to Port entities.
 
 import GroupBlueprint from './example-groups/_gitlab_integration_example_group_blueprint.mdx'
 import GroupConfig from './example-groups/_gitlab_integration_example_group_config.mdx'
