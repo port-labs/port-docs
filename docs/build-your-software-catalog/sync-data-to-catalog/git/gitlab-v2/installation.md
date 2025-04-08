@@ -46,11 +46,9 @@ You can create one by following these steps:
 
 ### BaseUrl & listening to hooks
 
-:::tip
 The `baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
 
 If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
-:::
 
 For real-time updates, set the `baseUrl` parameter to your GitLab integration instance URL.
 

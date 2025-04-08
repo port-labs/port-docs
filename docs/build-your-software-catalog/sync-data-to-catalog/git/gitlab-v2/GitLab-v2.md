@@ -3,9 +3,9 @@ import TabItem from "@theme/TabItem"
 
 import GitLabResources from './_gitlab_integration_supported_resources.mdx'
 
-# GitLab-v2
+# GitLab
 
-Port's GitLab integration allows you to model GitLab resources in your software catalog and ingest data into them.
+Port's GitLab-v2 integration allows you to model GitLab resources in your software catalog and ingest data into them.
 
 ## Overview
 
@@ -34,8 +34,6 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 ## Capabilities
 
 ### Ingesting Git objects
-
-By using Port's GitLab integration, you can automatically ingest GitLab resources into Port based on real-time events.
 
 The integration allows you to ingest various objects and resources provided by the GitLab API, including:
 
@@ -90,11 +88,12 @@ For organization-wide access:
 We recommend using a dedicated service account for creating access tokens, especially in large organizations where rate limits may become an issue. This provides better security and easier token management.
 :::
 
-:::note Token scope
+### Token scope considerations
+
 Choose the token type based on your needs:
 - Personal Access Token: Full access to all resources the user can access
 - Group Access Token: Access to all projects within the group
-:::
+
 
 ## Examples
 
