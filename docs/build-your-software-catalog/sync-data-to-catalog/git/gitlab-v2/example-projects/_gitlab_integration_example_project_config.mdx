@@ -1,0 +1,16 @@
+```yaml
+resources:
+  - kind: project
+    selector:
+      query: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"gitlabProject"'
+          properties:
+            url: .web_url
+            description: .description
+            defaultBranch: .default_branch
+```
