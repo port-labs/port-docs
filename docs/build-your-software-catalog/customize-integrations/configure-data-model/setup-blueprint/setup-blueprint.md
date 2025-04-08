@@ -79,22 +79,23 @@ Port offers a variety of ways to create and edit blueprints:
 
 <h4>To edit an existing blueprint:</h4>
 
-1. Go to your [Builder page](https://app.getport.io/settings).
+1. Go to your [Builder page](https://app.port.io/settings/data-model).
+
 2. Expand your desired blueprint by double-clicking on it.
+
 3. Here you can add, remove, or edit this blueprint's [properties](/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/) and [relations](/build-your-software-catalog/customize-integrations/configure-data-model/relate-blueprints/).
+
 4. To edit the blueprint's metadata (title, icon, etc.), click on the `...` icon in the top right corner of the blueprint card, and choose `Edit blueprint`.
 
 
 <h4>To create a new blueprint:</h4>
 
 1. Go to your [Builder page](https://app.getport.io/settings).
+
 2. Click on `+ Blueprint`:
 
-<img src='/img/software-catalog/customize-integrations/newBlueprintButton.png' width='40%' border='1px' />
-
-<br/><br/>
-
 3. Choose a title, icon, and description for your blueprint, then click `Create`.
+
 4. Your blueprint has been created, the next step is to [ingest data into it](/build-your-software-catalog/sync-data-to-catalog/).
 
 </TabItem>
