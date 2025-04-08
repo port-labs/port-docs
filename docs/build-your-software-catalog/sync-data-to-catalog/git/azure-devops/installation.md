@@ -38,16 +38,22 @@ You can create one by following [these steps](https://learn.microsoft.com/en-us/
 The token should either have `admin` permissions, or `read` permissions for each of the supported resources you want to ingest into Port.
 
 
-### AppHost & listening to hooks
+## BaseUrl & Webhook Configuration
 
-:::tip
-The `appHost` parameter is used specifically to enable the real-time functionality of the integration.
-
-If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
+:::warning AppHost deprecation
+**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
 :::
 
-In order for the Azure Devops integration to update the data in Port on every change in the Azure Devops repository, you need to specify the `appHost` parameter.
-The `appHost` parameter should be set to the `url` of your Azure Devops integration instance. In addition, your Azure Devops instance (whether it is Azure Devops SaaS or a self-hosted version of Azure Devops) needs to have the option to send webhook requests to the Azure Devops integration instance, so please configure your network accordingly.
+The `baseUrl` parameter enables real-time updates from Azure DevOps to Port. If not provided:
+- The integration will still function normally
+- You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
+- Manual resyncs can be triggered via Port's UI
+
+The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
+
+
+In order for the Azure Devops integration to update the data in Port on every change in the Azure Devops repository, you need to specify the `baseUrl` parameter.
+The `baseUrl` parameter should be set to the `url` of your Azure Devops integration instance. In addition, your Azure Devops instance (whether it is Azure Devops SaaS or a self-hosted version of Azure Devops) needs to have the option to send webhook requests to the Azure Devops integration instance, so please configure your network accordingly.
 
 ## Deploy the integration
 
@@ -57,7 +63,7 @@ Choose one of the following installation methods:
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
-<OceanSaasInstallation/>
+<OceanSaasInstallation  integration="AzureDevOps"/>
 
 </TabItem>
 
@@ -175,13 +181,14 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.personalAccessToken` | The [personal access token](#create-a-personal-access-token) used to query authenticate with your Azure Devops account                                                                                                                                                                         |                                        | ✅        |
 | `integration.secrets.organizationUrl`     | The URL of your Azure DevOps organization                                                                                                                                                                                                                                                      | https://dev.azure.com/organizationName | ✅        |
 | `integration.secrets.isProjectsLimited`   | If using a project-scoped personal access token, this setting is enabled to create webhooks for individual projects. Enabled by default                                                                                                                                                        |                                        | ❌        |
-| `integration.config.appHost`              | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Azure DevOps                                                                                                                                                                     | https://my-ocean-integration.com       | ✅        |
+| `integration.config.appHost` (deprecated)              | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Azure DevOps                                                                                                                                                                     | https://my-ocean-integration.com       | ❌        |
 | `integration.eventListener.type`          | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                        | ✅        |
 | `integration.type`                        | The integration to be installed                                                                                                                                                                                                                                                                |                                        | ✅        |
 | `scheduledResyncInterval`                 | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |                                        | ❌        |
 | `initializePortResources`                 | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |                                        | ❌        |
 | `sendRawDataExamples`                     | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |                                        | ❌        |
-
+| `integration.secrets.webhookSecret`   | Webhook secret for authenticating incoming events. [Learn more](https://learn.microsoft.com/en-us/azure/devops/service-hooks/services/webhooks)                                                                                                                                                                                                   |                                  | ❌        |
+| `baseUrl`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Azure DevOps                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
 
 
 <br/>
