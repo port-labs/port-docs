@@ -952,8 +952,8 @@ export const availableGuides = [
         link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
     },
     {
-        title: "Track GitHub Deployments",
-        description: "Create a self-service action that tracks GitHub deployments",
+        title: "Fetch Historical GitHub Data for DORA Metrics",
+        description: "Create a self-service action that fetches historical GitHub data for DORA metrics",
         tags: ["Engineering metrics","GitHub","Actions"],
         logos: ["GitHub"],
         link: "/guides/all/fetch-historical-github-data-for-dora-metric",
