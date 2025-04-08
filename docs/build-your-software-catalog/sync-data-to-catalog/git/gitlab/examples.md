@@ -123,7 +123,6 @@ In the following example you will ingest your GitLab projects and their monorepo
 
 <MonoRepoAppConfig/>
 
-:::tip To Learn more
 To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
 
 ```yaml
@@ -137,11 +136,7 @@ To retrieve the root folders of your monorepo, you can use this following syntax
           - frontend-service
 ```
 
-:::
-
-:::tip
-
-You can also specify different path for each monorepo repository, for example:
+You can also specify a different path for each monorepo repository, for example:
 
 ```yaml
 - kind: folder
@@ -156,9 +151,8 @@ You can also specify different path for each monorepo repository, for example:
           - backend-services
 ```
 
-:::
 
-:::tip
+:::tip To learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -212,15 +206,14 @@ After creating the blueprints and saving the integration configuration, you will
 
 In the following example you will ingest your GitLab members to Port, you may use the following Port blueprint definitions and integration configuration:
 
-:::tip Prerequisites
+### Prerequisites
 
-<b> Offering: GiLab Self Hosted </b>
- - An admin token is required, rather than a group access token, to retrieve the `primary email addresses` of members.
+- <b> Offering: GitLab Self Hosted. </b> 
+An admin token is required, rather than a group access token, to retrieve the `primary email addresses` of members.
+- <b> Offering: GitLab Enterprise. </b>
+Enterprise accounts can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
 
-<b> Offering: GitLab Enterprise </b>
-- Enterprise accounts can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
 
-:::
 
 :::caution GitLab free plan limitation
 Primary email addresses are not available for GitLab "Free plan" users.
@@ -317,7 +310,7 @@ Real time webhook events are not supported for the `project-with-members` kind.
 <ProjectWithMemberRelationBlueprint/>
 <ProjectMemberPortAppConfig/>
 
-:::tip Learn more
+:::tip To learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -327,7 +320,7 @@ Real time webhook events are not supported for the `project-with-members` kind.
 
 ## Mapping supported resources
 
-The above examples shows a specific use cases, but Port's GitLab integration supports the ingestion of many other GitLab objects, to adapt the examples above, use the GitLab API reference to learn about the available fields for the different supported objects:
+The above examples show specific use cases, but Port's GitLab integration supports the ingestion of many other GitLab objects, to adapt the examples above, use the GitLab API reference to learn about the available fields for the different supported objects:
 
 <GitlabResources/>
 
