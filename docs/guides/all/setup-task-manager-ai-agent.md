@@ -162,6 +162,16 @@ The Slack app is smart enough to route your request to the appropriate agent bas
 </TabItem>
 </Tabs>
 
+## Example questions
+
+Here are some questions you can ask the Task Manager agent:
+
+- "Which of Jane Doe's pull requests need attention?"
+- "Who are the code owners for the billing service repository?"
+- "Which repository contains the code for the PaymentProcessor service?"
+- "How many issues were closed by the frontend team in March 2025?"
+- "What are the unresolved issues in my current sprint?"
+
 ## Best practices
 
 To get the most out of your Task Manager agent:
