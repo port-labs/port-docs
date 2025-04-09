@@ -7,6 +7,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import ClosedBetaFeatureNotice from '/docs/generalTemplates/_closed_beta_feature_notice.md'
+import AIAgentRegistration from "/src/components/AIAgentRegistration"
 
 # AI agents overview
 
@@ -68,12 +69,9 @@ As your team builds confidence in the agents, you can expand their capabilities 
 
 ## Access to the feature
 
-Currently, AI agents are in closed beta access, and you must get approved for the feature first. Once approved, you can enable the feature in your Port organization by calling this API:
+Currently, AI agents are in closed beta access, and you must get approved for the feature first. Once approved, you can enable the feature in your Port organization using the interactive tool below:
 
-```bash showLineNumbers
-curl --location --request PATCH 'https://api.getport.io/v1/organization/ai/register' \
---header 'Authorization: Bearer <YOUR_PORT_API_TOKEN>'
-```
+<AIAgentRegistration />
 
 Your organization now has the system blueprints required for the feature to work.
 
