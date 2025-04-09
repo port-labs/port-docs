@@ -5,7 +5,7 @@ import GitLabResources from './_gitlab_integration_supported_resources.mdx'
 
 # GitLab
 
-:::info
+:::info GitLab v2 documentation
 This page documents the latest GitLab integration, released in April 2025.  
 For documentation of the previous integration, check out the [GitLab (deprecated)](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/) page.  
 :::
