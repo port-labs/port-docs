@@ -72,11 +72,29 @@ You can choose one of these chart types:
 * **Count entities** - display the amount of related entities or show an average by time.  
 * **Aggregate by property** - apply an aggregation function on number properties from multiple entities. 
 
-:::note
+:::info
 You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 ::: 
 
-![Number Chart](/img/software-catalog/widgets/numberChartExample.png)
+#### Conditional formatting
+
+You can customize the appearance of the number chart widget based on specific conditions, helping users quickly understand what the value indicates.
+When configuring a condition, you’ll need to provide the following:
+- `Operator` - select an **operator** from the available ones to define the condition.
+- `Value` -  enter the reference **value** to evaluate against the widget’s data.
+- `Color` - choose the **color** the widget will display when the condition is met.
+- `Message` - provide a short **message** to display above the number when the condition is met.
+- `Description` - add a **tooltip** message that appears when clicking the label, offering additional context about the value's significance.
+
+:::tip Multiple met conditions behavior
+Suppose you define two conditions using the `<` operator:
+- `< 8` → Green widget
+- `< 6` → Yellow widget 
+If the number chart’s value is 5, both conditions (`< 8` and `< 6`) are technically true.
+However, since 5 is closer to 6 than to 8, the widget will be colored yellow - the color associated with the closest matching condition.
+:::
+
+<img src='/img/software-catalog/widgets/numberChartConditionExample.png' width='50%' border='1px' />
 
 #### Number chart properties
 
@@ -87,6 +105,7 @@ You can also filter entities so the aggregation number chart will only apply to 
 | `Description`     | `String` | Number Chart description                                                                                                                                                                                                                    | `null`     | `false`  |
 | `Chart type`    | `String` | Defines the operation type for the chart. Possible values: `Display single property`, `Count entities`, `Aggregate by property`                                                                                                                      | `null` | `true`   |
 | `Blueprint`       | `String` | The chosen blueprint from which related entities data is visualized from                                                                                                                                                                    | `null`     | `true`   |
+| `Condition`       | `Object` | Defines the condition under which the number chart widget will update its color, display a status label, and have a tooltip message                                                                                                                                                                    | `null`     | `false`   |
 
 **Chart type: display single property** 
 
@@ -124,7 +143,7 @@ You can also filter entities so the aggregation number chart will only apply to 
 
 
 
-:::note
+:::info
 When performing calculations of average time intervals, such as by hour, day, week, or month, it is important to note that any partial interval is considered as a full interval. This approach ensures consistency across different time units.
 
 For example, if the dataset includes information spanning across 2 hours and 20 minutes, but the selected average timeframe is `hour`, then the summed value will be divided by 3 hours.
