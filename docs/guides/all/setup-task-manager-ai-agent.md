@@ -11,27 +11,45 @@ import TabItem from "@theme/TabItem"
 ## Overview
 
 This guide will walk you through setting up a Task Manager AI agent in Port.
+By the end of this guide, your developers will be able to get clear overview on their tasks through our AI chat.
 
+<img src="/img/ai-agents/AIAgentTaskMangerAgentPage.png" width="100%" border="1px" />
 
 ## Common use cases
 
 - Get a quick overview of assigned tasks and their priorities
-- Track ongoing incidents and their status
 - Monitor pull requests waiting for review
-- Stay informed about on-call schedules and team responsibilities
+- Track task progress and status updates
 
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with AI agents feature enabled
+- A Port account with [AI agents feature enabled](/ai-agents/overview#access-to-the-feature)
 - Appropriate permissions to create and configure AI agents
-
 
 ## Set up data model
 
-To create a Task Manager AI agent in Port, we'll need to configure two main components:
+To create a Task Manager AI agent in Port, we'll need to configure two main components as described in our [Build an AI agent](/ai-agents/build-an-ai-agent) guide:
+-  The data sources it will use to answer questions about tasks and pull requests
 -  The agent configuration that defines its capabilities and conversation starters
--  The data sources it will use to answer questions about tasks, incidents, and pull requests
+
+
+### Configure data source access
+
+For this guide, we will be using **GitHub** and **Jira** as our data sources to provide comprehensive task management capabilities. 
+These integrations will automatically create and configure all the necessary resources needed by the Task Manager AI agent.
+
+Install the following integrations to have use these data sources:
+- [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) for pull requests and code changes
+- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) for task and issue tracking
+
+:::info Optional tools
+While this guide uses GitHub and Jira, you can choose tools that best fit your organization's needs. 
+For example:
+- GitLab or Azure DevOps instead of GitHub
+- Opsgenie instead of PagerDuty
+:::
+
 
 ### Create the agent configuration
 
@@ -52,21 +70,18 @@ To create a Task Manager AI agent in Port, we'll need to configure two main comp
        "description": "Helps developers manage their ongoing tasks",
        "status": "active",
        "allowed_blueprints": [
-         "pagerdutyService",
          "service",
          "_user",
          "jiraIssue",
-         "pagerdutyIncident",
          "githubPullRequest",
-         "_team",
-         "pagerdutyOncall"
+         "_team"
        ],
-       "prompt": "You are an expert in managing tasks and helping developers remain in flow state. You can answer questions around priorities, tasks, bugs and incidents.",
+       "prompt":"You are an expert in managing tasks and helping developers remain in a flow state. You can answer questions around priorities and ongoing tasks",
        "execution_mode": "Approval Required",
        "conversation_starters": [
          "Which tasks are assigned to me",
          "How many tasks are currently in progress",
-         "When was the last incident"
+         "Which PRs should I review?"
        ]
      }
    }
@@ -75,19 +90,11 @@ To create a Task Manager AI agent in Port, we'll need to configure two main comp
 
 5. Click on `Create` to save the agent
 
-### Configure data source access
-
-For this guide, we will be using **GitHub**, **Jira**, and **PagerDuty** as our data sources to provide comprehensive task management capabilities. These integrations will automatically create and configure all the necessary resources needed by the Task Manager AI agent.
-
-Install the following integrations to have use these data sources:
-- [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) for pull requests and code changes
-- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) for task and issue tracking
-- [PagerDuty integration](/build-your-software-catalog/sync-data-to-catalog/incident-management/pagerduty/) for incident management
 
 ## Interact with the Task Manager
 
-You can interact with the task manager AI agent in several ways.  
-But in this guide we will demonstrate two ways to interact with the agent.
+You can interact with the task manager AI agent in [several ways](/ai-agents/interact-with-the-ai-agent).  
+This guide will demonstrate the two main ways.
 
 <Tabs groupId="interaction-methods" queryString>
 <TabItem value="ui" label="Port UI">
@@ -114,11 +121,10 @@ Once the widget is set up, you can:
 - Use the conversation starter buttons to quickly check:
   - Your assigned tasks
   - Work in progress
-  - Recent incidents
+  - Pull requests needing review
 
 - Type custom questions in the chat field about:
   - Tasks and tickets
-  - Incidents
   - Pull requests
 
 - Engage in natural follow-up conversations to explore specific topics
@@ -141,17 +147,16 @@ When you send a message, the app will:
 Example queries:
 ```markdown
 @Port task-manager What tasks are assigned to me?
-@Port task-manager How many critical incidents occurred this week?
-@Port task-manager Show me all PRs waiting for my review
+@Port Show me all PRs waiting for my review
+@Port How many tasks are currently in progress?
 ```
 
-:::tip  Effective Slack interactions
-- Always include "task-manager" in your message to target this specific agent
-- Send follow-up messages in the same thread and mention the app again
-- Keep conversations focused on task-related topics
-- Limit threads to five consecutive messages for optimal performance
-- Start new threads for new topics or questions
+:::tip Including the agent name
+While including "task-manager" in your message can help when you have multiple agents, it's not mandatory.   
+The Slack app is smart enough to route your request to the appropriate agent based on the context.
 :::
+
+<img src="/img/ai-agents/AIAgentTaskManagerSlack.png" width="100%" border="1px" />
 
 
 </TabItem>
@@ -161,16 +166,14 @@ Example queries:
 
 To get the most out of your Task Manager agent:
 
-1. **Be specific in your queries**: Instead of asking "what are my tasks?", try "what are my high-priority Jira tickets?"
-2. **Use context**: Include relevant information like time periods or specific services
-3. **Follow up**: Use threaded conversations to drill down into specific details
-4. **Combine sources**: Ask questions that combine information from different systems
+1. **Try it out**: Start with simple queries and see how the agent responds
+2. **Add context**: If the response isn't what you expected, try asking again with more details
+3. **Troubleshoot**: If you're still not getting the right answers, check our [troubleshooting guide](/ai-agents/interact-with-the-ai-agent#troubleshooting--faq) for common issues and solutions
 
 ## Possible enhancements
 
 You can further enhance the Task Manager setup by:
-- **Custom metrics**: Add widgets showing task completion rates and average resolution times
-- **Team views**: Create team-specific dashboards with filtered task views
-- **Integration expansion**: Add more data sources like GitLab or Azure DevOps
-- **Automated notifications**: Configure the agent to proactively notify about important updates
-- **Custom conversation starters**: Add organization-specific queries to the conversation starters 
+- **Integration expansion**: [Add more data sources](/ai-agents/build-an-ai-agent#step-2-configure-data-access) like GitLab or Azure DevOps
+- **Automated notifications**: [Configure the agent](/ai-agents/interact-with-the-ai-agent#actions-and-automations) to proactively notify about important updates
+- **Custom conversation starters**: Add organization-specific queries to the [conversation starters](/ai-agents/build-an-ai-agent#step-5-add-conversation-starters)
+- **Monitor and improve**: [Check how your developers are interacting](/ai-agents/interact-with-the-ai-agent#ai-interaction-details) with the agent and improve it according to feedback
