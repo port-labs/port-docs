@@ -49,7 +49,7 @@ In the following example you will ingest your GitLab projects, their README.md f
 
 <PortAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -82,7 +82,7 @@ In the following example you will ingest your GitLab groups, subgroups and proje
 
 <PortGroupsAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -103,7 +103,7 @@ In the following example you will ingest your GitLab projects, their pipelines a
 
 <PortPipelineJobAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -152,7 +152,7 @@ You can also specify a different path for each monorepo repository, for example:
 ```
 
 
-:::tip To learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -171,7 +171,7 @@ In the following example you will ingest your GitLab projects and their folders 
 
 <PortFoldersAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -190,7 +190,7 @@ In the following example you will ingest your GitLab projects and their issues t
 
 <PortIssueAppConfig/>
 
-:::tip To Learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -208,10 +208,8 @@ In the following example you will ingest your GitLab members to Port, you may us
 
 ### Prerequisites
 
-- <b> Offering: GitLab Self Hosted. </b> 
-An admin token is required, rather than a group access token, to retrieve the `primary email addresses` of members.
-- <b> Offering: GitLab Enterprise. </b>
-Enterprise accounts can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
+- When using **GitLab Self Hosted**, an admin token is required, rather than a group access token, to retrieve the `primary email addresses` of members.
+- When using **GitLab Enterprise**, accounts can retrieve the `primary email addresses` of members within their groups, provided the members are part of user accounts administered by an organization with [verified domains for groups](https://docs.gitlab.com/ee/user/enterprise_user/#verified-domains-for-groups). For more information, see [limitations](https://docs.gitlab.com/ee/api/members.html#limitations).
 
 
 
@@ -310,7 +308,7 @@ Real time webhook events are not supported for the `project-with-members` kind.
 <ProjectWithMemberRelationBlueprint/>
 <ProjectMemberPortAppConfig/>
 
-:::tip To learn more
+:::tip Learn more
 
 - Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
@@ -320,7 +318,8 @@ Real time webhook events are not supported for the `project-with-members` kind.
 
 ## Mapping supported resources
 
-The above examples show specific use cases, but Port's GitLab integration supports the ingestion of many other GitLab objects, to adapt the examples above, use the GitLab API reference to learn about the available fields for the different supported objects:
+The examples above show specific use cases, but Port's GitLab integration supports the ingestion of many other GitLab objects.
+To adapt the examples above, use the GitLab API reference to learn about the available fields for the different supported objects:
 
 <GitlabResources/>
 

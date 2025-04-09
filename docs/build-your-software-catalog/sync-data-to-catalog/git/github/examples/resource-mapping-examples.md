@@ -76,7 +76,7 @@ In the following example you will ingest your GitHub repositories, their README.
 
 <PortAppConfig/>
 
-:::tip To learn more
+:::tip learn more
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
@@ -109,7 +109,7 @@ In the following example you will ingest your GitHub repositories, their workflo
 
 <PortWfWfrAppConfig/>
 
-:::tip To learn more
+:::tip learn more
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
@@ -131,7 +131,7 @@ In the following example you will ingest your GitHub repositories and their issu
 
 <PortIssueAppConfig/>
 
-:::tip To learn more
+:::tip learn more
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
@@ -165,7 +165,7 @@ To retrieve the root folders of your monorepo, you can use this following syntax
 ```
 
 
-:::tip To learn more
+:::tip learn more
 
 - Refer to the [setup](/build-your-software-catalog/sync-data-to-catalog/git/github/github.md#setup) section to learn more about the `port-app-config.yml` setup process.
 - We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities.
@@ -324,7 +324,8 @@ In the following example you will ingest your GitHub repositories, their release
 
 ## Map supported resources
 
-The above examples show a specific use cases, but Port's GitHub app supports the ingestion of many other GitHub objects, to adapt the examples above, use the GitHub API reference to learn about the available fields for the different supported objects:
+The examples above show specific use cases, but Port's GitHub app supports the ingestion of many other GitHub objects.
+To adapt the examples above, use the GitHub API reference to learn about the available fields for the different supported objects:
 
 <GitHubResources/>
 
