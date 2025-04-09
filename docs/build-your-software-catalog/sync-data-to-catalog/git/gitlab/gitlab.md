@@ -5,6 +5,12 @@ import TabItem from "@theme/TabItem"
 
 Port's GitLab integration allows you to model GitLab resources in your software catalog and ingest data into them.
 
+:::warning Deprecation Notice
+This app will be deprecated in the future and support for the app will be discontinued soon.
+
+To integrate Port with GitLab, we recommend using the [GitLab V2 integration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/).
+:::
+
 ## Overview
 
 This integration allows you to:

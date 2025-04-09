@@ -5,6 +5,10 @@ import GitLabResources from './_gitlab_integration_supported_resources.mdx'
 
 # GitLab
 
+:::info
+You’re viewing the latest GitLab integration, released in April 2025. For details on the previous version, check out the [GitLab (deprecated)](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/) documentation.  
+:::
+
 Port's GitLab-v2 integration allows you to model GitLab resources in your software catalog and ingest data into them.
 
 ## Overview
