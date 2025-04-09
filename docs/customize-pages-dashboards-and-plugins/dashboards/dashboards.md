@@ -72,18 +72,22 @@ You can choose one of these chart types:
 * **Count entities** - display the amount of related entities or show an average by time.  
 * **Aggregate by property** - apply an aggregation function on number properties from multiple entities. 
 
-:::info
+:::info Filtering entities
 You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
 ::: 
 
 #### Conditional formatting
 
-You can customize the appearance of the number chart widget based on specific conditions, helping users quickly understand what the value indicates.
-When configuring a condition, you’ll need to provide the following:
+You can customize the appearance of a number chart based on specific conditions, helping viewers to quickly understand what the value indicates.
+When configuring a condition, you will need to provide the following:
 - `Operator` - select an **operator** from the available ones to define the condition.
+
 - `Value` -  enter the reference **value** to evaluate against the widget’s data.
+
 - `Color` - choose the **color** the widget will display when the condition is met.
+
 - `Message` - provide a short **message** to display above the number when the condition is met.
+
 - `Description` - add a **tooltip** message that appears when clicking the label, offering additional context about the value's significance.
 
 :::tip Multiple met conditions behavior
@@ -143,7 +147,7 @@ However, since 5 is closer to 6 than to 8, the widget will be colored yellow - t
 
 
 
-:::info
+:::info Calculation of average time intervals
 When performing calculations of average time intervals, such as by hour, day, week, or month, it is important to note that any partial interval is considered as a full interval. This approach ensures consistency across different time units.
 
 For example, if the dataset includes information spanning across 2 hours and 20 minutes, but the selected average timeframe is `hour`, then the summed value will be divided by 3 hours.
