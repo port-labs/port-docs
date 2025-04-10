@@ -17,21 +17,21 @@ By the end of this guide, your developers will be able to get information about 
 
 ## Common use cases
 
-- Get a quick overview of assigned tasks and their priorities
-- Monitor pull requests waiting for review
-- Track task progress and status updates
+- Get a quick overview of assigned tasks and their priorities.
+- Monitor pull requests waiting for review.
+- Track task progress and status updates.
 
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with [AI agents feature enabled](/ai-agents/overview#access-to-the-feature)
-- Appropriate permissions to create and configure AI agents
+- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature).
+- Appropriate permissions to create and configure AI agents.
 
 ## Set up data model
 
 To create a Task Manager AI agent in Port, we'll need to configure two main components as described in our [Build an AI agent](/ai-agents/build-an-ai-agent) guide:
--  The data sources it will use to answer questions about tasks and pull requests
--  The agent configuration that defines its capabilities and conversation starters
+-  The data sources it will use to answer questions about tasks and pull requests.
+-  The agent configuration that defines its capabilities and conversation starters.
 
 
 ### Configure data source access
@@ -39,15 +39,15 @@ To create a Task Manager AI agent in Port, we'll need to configure two main comp
 For this guide, we will be using **GitHub** and **Jira** as our data sources to provide comprehensive task management capabilities. 
 These integrations will automatically create and configure all the necessary resources needed by the Task Manager AI agent.
 
-Install the following integrations to have use these data sources:
-- [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) for pull requests and code changes
-- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) for task and issue tracking
+Install the following integrations to have access to these data sources:
+- [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) for pull requests and code changes.
+- [Jira integration](/build-your-software-catalog/sync-data-to-catalog/project-management/jira/) for task and issue tracking.
 
 :::info Optional tools
 While this guide uses GitHub and Jira, you can choose tools that best fit your organization's needs. 
 For example:
-- GitLab or Azure DevOps instead of GitHub
-- Opsgenie instead of PagerDuty
+- GitLab or Azure DevOps instead of GitHub.
+- Opsgenie instead of PagerDuty.
 :::
 
 
@@ -119,15 +119,15 @@ Follow the step below to set it up:
 Once the widget is set up, you can:
 
 - Use the conversation starter buttons to quickly check:
-  - Your assigned tasks
-  - Work in progress
-  - Pull requests needing review
+  - Your assigned tasks.
+  - Work in progress.
+  - Pull requests needing review.
 
 - Type custom questions in the chat field about:
-  - Tasks and tickets
-  - Pull requests
+  - Tasks and tickets.
+  - Pull requests.
 
-- Engage in natural follow-up conversations to explore specific topics
+- Engage in natural follow-up conversations to explore specific topics.
 
 <img src="/img/ai-agents/AIAgentTaskManagerDashboard.png" width="100%" border="1px" />
 
@@ -137,12 +137,12 @@ Once the widget is set up, you can:
 The Slack integration provides a natural way to interact with the Task Manager agent. Before using this method, ensure you have installed and configured the **Port AI Assistant Slack App**
 
 You can interact with the Task Manager agent in two ways:
-1. **Direct message** the Port AI Assistant
-2. **Mention** the app in any channel it's invited to
+1. **Direct message** the Port AI Assistant.
+2. **Mention** the app in any channel it's invited to.
 
 When you send a message, the app will:
-1. Open a thread
-2. Respond with the agent's answer
+1. Open a thread.
+2. Respond with the agent's answer.
 
 Example queries:
 ```markdown
@@ -176,14 +176,14 @@ Here are some questions you can ask the Task Manager agent:
 
 To get the most out of your Task Manager agent:
 
-1. **Try it out**: Start with simple queries and see how the agent responds
-2. **Add context**: If the response isn't what you expected, try asking again with more details
-3. **Troubleshoot**: If you're still not getting the right answers, check our [troubleshooting guide](/ai-agents/interact-with-the-ai-agent#troubleshooting--faq) for common issues and solutions
+1. **Try it out**: Start with simple queries and see how the agent responds.
+2. **Add context**: If the response isn't what you expected, try asking again with more details.
+3. **Troubleshoot**: If you're still not getting the right answers, check our [troubleshooting guide](/ai-agents/interact-with-the-ai-agent#troubleshooting--faq) for common issues and solutions.
 
 ## Possible enhancements
 
 You can further enhance the Task Manager setup by:
-- **Integration expansion**: [Add more data sources](/ai-agents/build-an-ai-agent#step-2-configure-data-access) like GitLab or Azure DevOps
-- **Automated notifications**: [Configure the agent](/ai-agents/interact-with-the-ai-agent#actions-and-automations) to proactively notify about important updates
-- **Custom conversation starters**: Add organization-specific queries to the [conversation starters](/ai-agents/build-an-ai-agent#step-5-add-conversation-starters)
-- **Monitor and improve**: [Check how your developers are interacting](/ai-agents/interact-with-the-ai-agent#ai-interaction-details) with the agent and improve it according to feedback
+- **Integration expansion**: [Add more data sources](/ai-agents/build-an-ai-agent#step-2-configure-data-access) like GitLab or Azure DevOps.
+- **Automated notifications**: [Configure the agent](/ai-agents/interact-with-the-ai-agent#actions-and-automations) to proactively notify about important updates.
+- **Custom conversation starters**: Add organization-specific queries to the [conversation starters](/ai-agents/build-an-ai-agent#step-5-add-conversation-starters).
+- **Monitor and improve**: [Check how your developers are interacting](/ai-agents/interact-with-the-ai-agent#ai-interaction-details) with the agent and improve it according to feedback.
