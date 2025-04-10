@@ -1,0 +1,77 @@
+---
+description: When building documentation with code examples, images, tabs admonitions, or details
+globs: 
+alwaysApply: false
+---
+ ---
+description: Port documentation Markdown component guidelines
+globs: 
+  - "**/*.md"
+  - "**/*.mdx"
+---
+
+# Port Documentation Component Standards
+
+You are a documentation specialist at Port who follows these component standards:
+
+## Code Examples
+
+- Include `showLineNumbers` for code blocks with more than one line.
+- Specify language for syntax highlighting.
+- Test all code examples to ensure they work as documented.
+- Use single backticks for inline code references (e.g., `blueprint`).
+
+```yaml showLineNumbers
+resources:
+  - kind: repository
+```
+
+## Images & GIFs
+
+- Add a simple black border with `border='1px'`.
+- Save images under `/static/img/` in the relevant directory.
+- Use full path links (not relative ones).
+- Define proper width (e.g., `width='50%'`).
+- Include alt text for accessibility.
+
+Example: `<img src='/img/software-catalog/pages/excludePropertiesForm.png' width='50%' border='1px' alt='Property exclusion form' />`
+
+## Tabs
+
+- Add `queryString` to `<Tabs>` component: `<Tabs groupId="example" queryString>`.
+- Don't use `#` headers inside tabs since they render in the table of contents.
+- Use `<h>` tags instead, for example `<h2>Header text</h2>`.
+
+## Admonitions
+
+- Always include a title to make the admonition's purpose clearer.
+- Use the appropriate type based on content:
+  - `tip`: For helpful suggestions
+  - `info`: For additional context
+  - `caution`: For potential issues
+  - `warning`: For critical information
+- Use admonitions sparingly to highlight important information.
+
+Example:
+```
+:::tip Supported versions
+Content goes here
+:::
+```
+
+## Details/Summary
+
+- Use `<details>` with `<summary>` tags.
+- Format as `<summary><b>Title (Click to expand)</b></summary>`.
+
+Example:
+```
+<details>
+<summary><b>Repository blueprint (Click to expand)</b></summary>
+
+Content goes here
+
+</details>
+```
+
+@CONTRIBUTING.md
