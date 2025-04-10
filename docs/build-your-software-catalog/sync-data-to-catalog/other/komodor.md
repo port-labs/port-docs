@@ -2,6 +2,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
 import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import DockerParameters from "./_komodor-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
@@ -24,39 +25,358 @@ This integation allows you to:
 The resources that can be ingestd into Port are listed below.
 It is possible to modify the default mapping to references the fields in the API response, Dependent on your needs.
 
+### TODO: update link for Services to the Docs page
 - [Services](https://api.komodor.com/api/docs/index.html#/Services/post_api_v2_services_search)
-- [Health Monitoring](https://api.komodor.com/api/docs/index.html#/Health%20risks/getHealthRisks)
+- [Health Monitoring](https://help.komodor.com/hc/en-us/categories/22390793120274-Health-Management)
 
 ## Prerequisites
 
 ### [Generate a Komodor Api Key](https://help.komodor.com/hc/en-us/articles/22434108566674-Using-the-Komodor-API)
 
-1. Log in to Komodor:
-   - Navigate to the Komodor dashboard and log in with your account credentials.
-2. Access API Key Management:
-   - Click on your account profile or settings in the top-right corner of the dashboard.
+1. Log in to the [Komodor platfrom](https://app.komodor.com)
+2. Access API Keys management page:
+   - Click your user profile on the top-right corner of the platform.
    - Select API Keys from the dropdown menu.
-3. Create a New Key:
+3. Generate a new API key:
    - Click the Generate Key button.
-   - Provide a descriptive name for the API key to help you identify its purpose later (e.g., "CI/CD Pipeline Access").
-4. Save the Key:
-   - Once generated, the API key will be displayed.
-   - Store the API key securely in a secrets manager or an environment variable.
+   - Provide a descriptive name for the API key to help you identify its purpose later (e.g., "Port.io api key").
+4. Copy the token and save it in a secure location.
 
 :::note
- Your api key will inherit the permissions of the user that created it.
- Make sure that the user that created the key has the view permissions on the resources you wish to ingest in Port. 
+ Your api key will inherit the permissions of the user it is created by.
+ Make sure that the user that created the key has view permissions for the resources you wish to ingest in Port (ideally full access). 
 :::
 
 ## Setup
 
-Choose the only installation method:
+Choose the desired installation method:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="hosted-by-port" label="Hosted by Port" default>
 
 <OceanSaasInstallation/>
+
+</TabItem>
+
+<TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
+
+Using this installation method means that the integration will be able to update Port in real time.
+
+<h2>Prerequisites</h2>
+
+<Prerequisites />
+
+For details about the available parameters for the installation, see the table below.
+
+<Tabs groupId="deploy" queryString="deploy">
+
+<TabItem value="helm" label="Helm" default>
+
+<OceanRealtimeInstallation integration="Komodor" />
+
+<PortApiRegionTip/>
+
+</TabItem>
+
+<TabItem value="argocd" label="ArgoCD" default>
+To install the integration using ArgoCD:
+
+1. Create a `values.yaml` file in `argocd/my-ocean-komodor-integration` in your git repository with the content:
+
+:::note
+Remember to replace the placeholders for `KOMODOR_TOKEN`.
+:::
+```yaml showLineNumbers
+initializePortResources: true
+scheduledResyncInterval: 120
+integration:
+  identifier: my-ocean-komodor-integration
+  type: komodor
+  eventListener:
+    type: POLLING
+  secrets:
+  // highlight-next-line
+    komodorToken: KOMODOR_TOKEN
+```
+<br/>
+
+2. Install the `my-ocean-komodor-integration` ArgoCD Application by creating the following `my-ocean-komodor-integration.yaml` manifest:
+:::note
+Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+
+Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::
+
+<details>
+  <summary>ArgoCD Application</summary>
+
+```yaml showLineNumbers
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-ocean-komodor-integration
+  namespace: argocd
+spec:
+  destination:
+    namespace: my-ocean-komodor-integration
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - repoURL: 'https://port-labs.github.io/helm-charts/'
+    chart: port-ocean
+    targetRevision: 0.1.14
+    helm:
+      valueFiles:
+      - $values/argocd/my-ocean-komodor-integration/values.yaml
+      // highlight-start
+      parameters:
+        - name: port.clientId
+          value: YOUR_PORT_CLIENT_ID
+        - name: port.clientSecret
+          value: YOUR_PORT_CLIENT_SECRET
+        - name: port.baseUrl
+          value: https://api.getport.io
+  - repoURL: YOUR_GIT_REPO_URL
+  // highlight-end
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+<PortApiRegionTip/>
+
+</details>
+<br/>
+
+1. Apply your application manifest with `kubectl`:
+```bash
+kubectl apply -f my-ocean-komodor-integration.yaml
+```
+</TabItem>
+</Tabs>
+
+This table summarizes the available parameters for the installation.
+Note the parameters specific to this integration, they are last in the table.
+
+| Parameter                               | Description                                                                                                                                            | Required |
+|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `port.clientId`                         | Your port client id                                                                                                                                    | ✅        |
+| `port.clientSecret`                     | Your port client secret                                                                                                                                | ✅        |
+| `port.baseUrl`                          | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US                                                                | ✅        |
+| `integration.identifier`                | Change the identifier to describe your integration                                                                                                     | ✅        |
+| `integration.type`                      | The integration type                                                                                                                                   | ✅        |
+| `integration.eventListener.type`        | The event listener type                                                                                                                                | ✅        |
+| `scheduledResyncInterval`               | The number of minutes between each resync                                                                                                              | ❌        |
+| `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                          | ❌        |
+| `integration.secrets.komodorToken`      | The Komodor API [token](https://help.komodor.com/hc/en-us/articles/22434108566674-Using-the-Komodor-API).                                                           | ✅        |
+
+<br/>
+<AdvancedConfig/>
+
+<h3>Event listener</h3>
+
+The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
+
+</TabItem>
+
+<TabItem value="one-time-ci" label="Scheduled (CI)">
+
+This workflow/pipeline will run the Komodor integration once and then exit, this is useful for **scheduled** ingestion of data.
+
+:::warning Real-time updates
+If you want the integration to update Port in real time you should use the [Real-time (self-hosted)](?installation-methods=real-time-self-hosted#setup) installation option
+:::
+
+ <Tabs groupId="cicd-method" queryString="cicd-method">
+  <TabItem value="github" label="GitHub">
+
+Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+
+<DockerParameters />
+
+<br/>
+
+Here is an example for `komodor-integration.yml` workflow file:
+
+```yaml showLineNumbers
+name: Komodor Exporter Workflow
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *' # Determines the scheduled interval for this workflow. This example runs every hour.
+
+jobs:
+  run-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30 # Set a time limit for the job
+
+    steps:
+      - uses: port-labs/ocean-sail@v1
+        with:
+          type: 'komodor'
+          port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
+          port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
+          port_base_url: https://api.getport.io
+          config: |
+            komodor_token: ${{ secrets.OCEAN__INTEGRATION__CONFIG__KOMODOR_TOKEN }}
+```
+
+  </TabItem>
+  <TabItem value="jenkins" label="Jenkins">
+
+:::tip
+Your Jenkins agent should be able to run docker commands.
+:::
+
+Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+
+<DockerParameters />
+
+<br/>
+
+Here is an example for `Jenkinsfile` groovy pipeline file:
+
+```yml showLineNumbers
+pipeline {
+    agent any
+
+    stages {
+        stage('Run Komodor Integration') {
+            steps {
+                script {
+                    withCredentials([
+                        string(credentialsId: 'OCEAN__INTEGRATION__CONFIG__KOMODOR_TOKEN', variable: 'OCEAN__INTEGRATION__CONFIG__KOMODOR_TOKEN'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_ID', variable: 'OCEAN__PORT__CLIENT_ID'),
+                        string(credentialsId: 'OCEAN__PORT__CLIENT_SECRET', variable: 'OCEAN__PORT__CLIENT_SECRET'),
+                    ]) {
+                        sh('''
+                            #Set Docker image and run the container
+                            integration_type="komodor"
+                            version="latest"
+                            image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
+                            docker run -i --rm --platform=linux/amd64 \
+                                -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+                                -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+                                -e OCEAN__INTEGRATION__CONFIG__KOMODOR_TOKEN=$OCEAN__INTEGRATION__CONFIG__KOMODOR_TOKEN \
+                                -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+                                -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+                                -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
+                                $image_name
+
+                            exit $?
+                        ''')
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+  </TabItem>
+  <TabItem value="azure" label="Azure Devops">
+
+  <AzurePremise  />
+
+<DockerParameters />
+
+<br/>
+
+Here is an example for `komodor-integration.yml` pipeline file:
+
+```yaml showLineNumbers
+trigger:
+- main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: port-ocean-credentials
+
+
+steps:
+- script: |
+    # Set Docker image and run the container
+    integration_type="komodor"
+    version="latest"
+
+    image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
+
+    docker run -i --rm \
+       -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+      -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+      -e OCEAN__INTEGRATION__CONFIG__KOMODOR_TOKEN=$(OCEAN__INTEGRATION__CONFIG__KOMODOR_TOKEN) \
+      -e OCEAN__PORT__CLIENT_ID=$(OCEAN__PORT__CLIENT_ID) \
+      -e OCEAN__PORT__CLIENT_SECRET=$(OCEAN__PORT__CLIENT_SECRET) \
+      -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
+      $image_name
+
+    exit $?
+  displayName: 'Ingest Data into Port'
+
+```
+
+  </TabItem>
+  <TabItem value="gitlab" label="GitLab">
+
+
+Make sure to [configure the following GitLab variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project):
+
+<DockerParameters/>
+
+<br/>
+
+
+Here is an example for `.gitlab-ci.yml` pipeline file:
+
+```yaml showLineNumbers
+default:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  before_script:
+    - docker info
+
+variables:
+  INTEGRATION_TYPE: komodor
+  VERSION: latest
+
+stages:
+  - ingest
+
+ingest_data:
+  stage: ingest
+  variables:
+    IMAGE_NAME: ghcr.io/port-labs/port-ocean-$INTEGRATION_TYPE:$VERSION
+  script:
+    - |
+      docker run -i --rm --platform=linux/amd64 \
+        -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
+        -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
+        -e OCEAN__INTEGRATION__CONFIG__KOMODOR_TOKEN=$OCEAN__INTEGRATION__CONFIG__KOMODOR_TOKEN \
+        -e OCEAN__PORT__CLIENT_ID=$OCEAN__PORT__CLIENT_ID \
+        -e OCEAN__PORT__CLIENT_SECRET=$OCEAN__PORT__CLIENT_SECRET \
+        -e OCEAN__PORT__BASE_URL='https://api.getport.io' \
+        $IMAGE_NAME
+
+  rules: # Run only when changes are made to the main branch
+    - if: '$CI_COMMIT_BRANCH == "main"'
+```
+
+</TabItem>
+
+  </Tabs>
+<PortApiRegionTip/>
+
+<AdvancedConfig/>
 
 </TabItem>
 
