@@ -954,8 +954,8 @@ export const availableGuides = [
     {
         title: "Create a GitHub issue",
         description: "Create a self-service action that creates a GitHub issue",
-        tags: ["GitHub", "Actions", "Webhook", "Automations"],
-        logos: ["GitHub", "Webhook"],
+        tags: ["GitHub", "Actions", "Webhook"],
+        logos: ["GitHub"],
         link: "/guides/all/open-github-issue",
     },
 ]
