@@ -1,0 +1,23 @@
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        path: package.json
+        repos:
+          # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
+          - group/my-project
+    port:
+      itemsToParse: .file.content.dependencies | to_entries
+      entity:
+        mappings:
+          identifier: >-
+            .item.key + "_" + if (.item.value | startswith("^")) then
+            .item.value[1:] else .item.value end
+          title: .item.key + "@" + .item.value
+          blueprint: '"package"'
+          properties:
+            package: .item.key
+            version: .item.value
+```
