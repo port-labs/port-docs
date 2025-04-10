@@ -25,7 +25,6 @@ This integation allows you to:
 The resources that can be ingestd into Port are listed below.
 It is possible to modify the default mapping to references the fields in the API response, Dependent on your needs.
 
-### TODO: update link for Services to the Docs page
 - [Services](https://api.komodor.com/api/docs/index.html#/Services/post_api_v2_services_search)
 - [Health Monitoring](https://help.komodor.com/hc/en-us/categories/22390793120274-Health-Management)
 
