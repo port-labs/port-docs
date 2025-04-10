@@ -97,7 +97,7 @@ integration:
     type: POLLING
   secrets:
   // highlight-next-line
-    komodorToken: KOMODOR_TOKEN
+  komodorApiKey: KOMODOR_API_KEY
 ```
 <br/>
 
