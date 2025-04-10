@@ -19,9 +19,9 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 After selecting the blueprint you want to add an action to, we need to define the action's frontend - its structure and interface.
 
-This is done in the first two tabs of the action creation form in Port's UI:
+This is done in the first two tabs (**Basic Details**, **User Form**) of the action creation form in Port's UI:
 
-<img src='/img/self-service-actions/setup-frontend/action-form-frontend.png' width='60%' border='1px' />
+<img src='/img/self-service-actions/setup-frontend/actionFormFrontend.png' width='60%' border='1px' />
 <br/><br/>
 
 Click [here](/actions-and-automations/create-self-service-experiences/#action-json-structure) for a reminder of an action's JSON structure.
@@ -37,6 +37,12 @@ We will also choose the action's `operation` type:
 - **Day-2** - the action will trigger logic in your infrastructure to update or modify an existing entity in your catalog.
 
 Actions can (but do not have to) be tied to a specific `blueprint`. Selecting a blueprint will allow you to easily execute the action on entities created from that blueprint. 
+
+We can also define the execution button's text in the `Action card button text` field.
+
+:::info Button default value
+If the `Action card button text` field is left empty, the button label will default to the value of the `operation` type.
+:::
 
 #### Conditions
 
