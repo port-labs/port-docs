@@ -38,10 +38,10 @@ We will also choose the action's `operation` type:
 
 Actions can (but do not have to) be tied to a specific `blueprint`. Selecting a blueprint will allow you to easily execute the action on entities created from that blueprint. 
 
-We can also define the execution button's text in the `Action card button text` field.
+We can also define the execution button's label in the `Action card button text` field.
 
 :::info Button default value
-If the `Action card button text` field is left empty, the button label will default to the value of the `operation` type.
+If the `Action card button text` field is left empty, the button label will default to Create, Execute or Delete, according to the chosen `operation` type.
 :::
 
 #### Conditions
