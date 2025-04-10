@@ -10,8 +10,8 @@ import TabItem from "@theme/TabItem"
 
 ## Overview
 
-This guide will walk you through setting up a Task Manager AI agent in Port.
-By the end of this guide, your developers will be able to get clear overview on their tasks through our AI chat.
+This guide will walk you through setting up a "Task Manager" AI agent in Port.  
+By the end of this guide, your developers will be able to get information about their tasks via Port's AI chat.
 
 <img src="/img/ai-agents/AIAgentTaskMangerAgentPage.png" width="100%" border="1px" />
 
