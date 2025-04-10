@@ -952,8 +952,8 @@ export const availableGuides = [
         link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
     },
     {
-        title: "Set up Task Manager AI agent",
-        description: "Set up a Task Manager AI agent to help developers track and manage tasks efficiently",
+        title: "Set up a 'task manager' AI agent",
+        description: "Set up an AI agent that helps developers track and manage tasks efficiently",
         tags: ["AI","Jira","GitHub","PagerDuty","Slack"],
         logos: ["AI"],
         link: "/guides/all/setup-task-manager-ai-agent",
