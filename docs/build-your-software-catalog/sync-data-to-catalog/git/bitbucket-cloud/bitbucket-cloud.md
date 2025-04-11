@@ -20,6 +20,7 @@ This integration allows you to:
 - Map and organize your desired Bitbucket cloud resources and their metadata in Port (see supported resources below).
 - Watch for Bitbucket object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 - Map and ingest monorepo repositories.
+- Manage port entities using GitOps.
 
 ### Supported resources
 
@@ -48,6 +49,11 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 By using Port's Bitbucket integration, you can automatically ingest Bitbucket resources into Port based on real-time events.
 
 The integration allows you to ingest a variety of objects resources provided by the Bitbucket API, including repositories, pull requests and files. It also allows you to perform "extract, transform, load (ETL)" on data from the Bitbucket API into the desired software catalog data model.
+
+When you install the integration, Port will automatically create a `bitbucketProject`, `bitbucketRepository` and `bitbucketPullRequest` blueprints in your catalog (representing a BitBucket project, repository and pull request respectively). 
+
+The YAML configuration mapping will also be added to the [data sources](https://app.getport.io/settings/data-sources) page of your portal where you can manage the integration.
+
 
 
 ## Permissions

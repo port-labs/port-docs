@@ -1,0 +1,31 @@
+<details>
+
+<summary> Port port-app-config.yml </summary>
+
+```yaml showLineNumbers
+resources:
+  - kind: file
+    selector:
+      query: 'true'
+      files:
+        path: integrations/bitbucket-cloud/ #Absolute path to the file to sync from the repository; The more specific the path the better;
+        filenames: #Required; List of files to sync from the repository in the given path;
+          - README.md #Just the filename, no wildcards;
+          - port.yaml #Just the filename, no wildcards;
+        repo: #Optional; List of repositories to include files from. If not provided, all repositories will be included;
+          - port-repo-3
+        skipParsing: true #Optional; If true, the file will not be parsed by Port;
+    port:
+      entity:
+        mappings:
+          identifier: .metadata.path
+          blueprint: '"file"'
+          properties:
+            content: .content
+            path: .metadata.path
+            link: .repo.links.html.href + "/src/" + .branch + "/" + .metadata.path
+          relations:
+            repository: .repo.name
+```
+
+</details>
