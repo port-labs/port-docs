@@ -231,6 +231,13 @@ export const integrations = [
     icon: '/img/guides/icons/Backstage.svg',
     darkIcon: '/img/guides/icons/dark/Backstage.svg',
     docsUrl: '/build-your-software-catalog/sync-data-to-catalog/other/backstage',
+  },
+  {
+    name: 'Github Copilot',
+    category: 'ai-agents',
+    icon: '/img/guides/icons/GithubCopilot.svg',
+    darkIcon: '/img/guides/icons/dark/GithubCopilot.svg',
+    docsUrl: '/build-your-software-catalog/sync-data-to-catalog/ai-agents/github-copilot',
   }
 ];
 
@@ -248,5 +255,6 @@ export const categories = {
   'Cloud cost': 'cost',
   'Event processing': 'event',
   'CI/CD': 'cicd',
+  'AI agents': 'ai-agents',
   'Other': 'other',
 }; 
