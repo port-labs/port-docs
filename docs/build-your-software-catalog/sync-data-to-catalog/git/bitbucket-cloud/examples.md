@@ -85,7 +85,7 @@ The following capabilities and limitations apply to the file mapping feature in 
     - `**/*.yaml` (glob pattern)
 - **Performance and Scope**: For optimal performance, we recommend limiting the number of tracked files per repository and the scope of the files to be ingested. We highly recommend using the `repo` selector to limit the scope of the files to be ingested. When `repo` list is not provided, the integration will attempt to ingest matching files throughout the workspace.
 - **File Tracking**: Each file specified in the configuration will be tracked as a separate entity in Port
-- **Change Detection**: Changes to tracked files will be reflected in Port during the next sync. We plan add support for live file changes in the future.
+- **Change Detection**: We detect live changes to tracked files and updated them in your catalog in real-time in response to repository `push` events. The changes are also detected during resyncs as well.
 
 
 ## Mapping supported resources
