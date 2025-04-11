@@ -950,5 +950,12 @@ export const availableGuides = [
         tags: ["PagerDuty","New Relic","Actions","Webhook"],
         logos: ["PagerDuty","New Relic"],
         link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
+    },
+    {
+        title: "Ignore Snyk Vulnerability",
+        description: "Create a self-service action that ignores a Snyk vulnerability",
+        tags: ["Security","Snyk","Actions","Webhook"],
+        logos: ["Snyk"],
+        link: "/guides/all/ignore-snyk-vulnerability",
     }
 ]
