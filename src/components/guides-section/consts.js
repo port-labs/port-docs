@@ -950,26 +950,5 @@ export const availableGuides = [
         tags: ["PagerDuty","New Relic","Actions","Webhook"],
         logos: ["PagerDuty","New Relic"],
         link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
-    },
-    {
-        title: "Ingest any data source with Meltano, S3 & webhook",
-        description: "Send any data to S3 with Meltano, then ingest it into Port via a custom webhook integration",
-        tags: ["AWS", "Webhook"],
-        logos: ["AWS", "Webhook"],
-        link: "/guides/all/ingest-any-data-via-meltano-s3-and-webhook"
-    },
-    {
-        title: "Ingest Slack channels data with Meltano, S3 & webhook",
-        description: "Send Slack channel data to S3 with Meltano, then ingest it into Port via a custom webhook integration",
-        tags: ["Slack", "AWS", "Webhook"],
-        logos: ["Slack", "AWS", "Webhook"],
-        link: "/guides/all/ingest-slack-data-via-meltano-s3-and-webhook"
-    },
-    {
-        title: "Ingest athena channels data with Meltano, S3 & webhook",
-        description: "Send Athena data to S3 with Meltano, then ingest it into Port via a custom webhook integration",
-        tags: ["AWS", "Webhook"],
-        logos: ["AWS", "Webhook"],
-        link: "/guides/all/ingest-athena-data-via-meltano-s3-and-webhook"
     }
 ]
