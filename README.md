@@ -58,3 +58,5 @@ The docs will start running locally on [https://localhost:4000](https://localhos
 Port's documentation is open source because we want the documentation to be the most comprehensive resource for users to learn how to use Port. We believe that developers and DevOps professionals who use Port on a daily basis will want to contribute and help make it that comprehensive resource.
 
 In order to learn how you can contribute to Port's documentation, read our [contributing guide](./CONTRIBUTING.md)
+
+We use [Cursor rules](./docs/cursor-rules.md) to help maintain documentation quality and consistency when using the [Cursor IDE](https://cursor.sh/).
