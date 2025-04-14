@@ -15,7 +15,7 @@ import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-da
 Port's Github Copilot integration allows you to ingest your Github Copilot usage metrics into your software catalog.
 
 
-### Supported aggregation hierarchies
+## Supported aggregation hierarchies
 
 Some aggregation hierarchies of Github Copilot usage metrics can be ingested into Port, they are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
