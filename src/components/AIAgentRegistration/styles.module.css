@@ -1,0 +1,164 @@
+.aiAgentRegistration {
+  background: var(--ifm-color-emphasis-100);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.aiAgentRegistration div {
+  margin-bottom: 15px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.aiAgentRegistration label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.aiAgentRegistration input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.tokenHint {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.actionButton {
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-white);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 15px;
+  align-self: flex-start;
+}
+
+.actionButton:hover:not(:disabled) {
+  background: var(--ifm-color-primary-darker);
+}
+
+.actionButton:disabled {
+  background: var(--ifm-color-emphasis-300);
+  cursor: not-allowed;
+}
+
+.curlDetails {
+  margin-top: 20px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.curlDetails summary {
+  background: var(--ifm-color-emphasis-200);
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: 500;
+  user-select: none;
+}
+
+.curlDetails summary:hover {
+  background: var(--ifm-color-emphasis-300);
+}
+
+.detailsContent {
+  padding: 15px;
+}
+
+.commandBox {
+  position: relative;
+  margin-top: 10px;
+  background: var(--ifm-background-color);
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  font-family: var(--ifm-font-family-monospace);
+  overflow-x: auto;
+}
+
+.commandBox pre {
+  margin: 0;
+  padding-right: 60px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.copyButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-white);
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.copyButton:hover {
+  background: var(--ifm-color-primary-darker);
+}
+
+.errorContainer {
+  background: var(--ifm-color-danger-lightest);
+  border: 1px solid var(--ifm-color-danger-light);
+  border-radius: 6px;
+  padding: 12px 15px;
+  margin: 15px 0;
+}
+
+.errorText {
+  color: var(--ifm-color-danger-darkest);
+  margin: 0;
+}
+
+.successContainer {
+  background: var(--ifm-color-success-lightest);
+  border: 1px solid var(--ifm-color-success-light);
+  border-radius: 6px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.successContainer h4 {
+  color: var(--ifm-color-success-darkest);
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.successContainer p {
+  margin-bottom: 15px;
+}
+
+.responseBox {
+  background: var(--ifm-background-color);
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.responseBox pre {
+  margin: 0;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 13px;
+} 

@@ -622,7 +622,7 @@ const sidebar: SidebarsConfig = {
       type: "doc",
       id: "api-reference/pages",
       label: "Pages",
-    }
+    },
   ],
 };
 
