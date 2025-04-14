@@ -390,7 +390,8 @@ Port's Github Copilot integration requires a classic Github token with at least 
 
 ## Examples
 
-To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources). Find the integration in the list of data sources and click on it to open the playground.
+To view and test the integration's mapping against examples of the third-party API responses, use the jq playground in your [data sources page](https://app.getport.io/settings/data-sources).  
+Find the integration in the list of data sources and click on it to open the playground.
 
 Additional examples of blueprints and the relevant integration configurations:
 
