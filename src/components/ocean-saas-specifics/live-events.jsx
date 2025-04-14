@@ -125,7 +125,7 @@ export const liveEvents = {
     '**Code Events:** \
     \n- git.pullrequest.created \
     \n- git.pullrequest.updated \
-    \n- git.push'
+    \n- git.push',
     GitLab_v2:
     '**Group:** \
     \n- merge_requests_events \
