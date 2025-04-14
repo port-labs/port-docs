@@ -10,7 +10,7 @@ import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_expl
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
 
-# Github Copilot
+# GitHub Copilot
 
 Port's Github Copilot integration allows you to ingest your Github Copilot usage metrics into your software catalog.
 
