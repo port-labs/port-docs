@@ -126,6 +126,14 @@ export const liveEvents = {
     \n- git.pullrequest.created \
     \n- git.pullrequest.updated \
     \n- git.push'
+    GitLab_v2:
+    '**Group:** \
+    \n- merge_requests_events \
+    \n- issues_events \
+    \n- releases_events \
+    \n- subgroup_events \
+    \n- push_events \
+    \n- tag_push_events',
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
