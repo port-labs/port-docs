@@ -46,7 +46,7 @@ The token should either have `admin` permissions, or `read` permissions for each
 
 The `baseUrl` parameter enables real-time updates from Azure DevOps to Port. If not provided:
 - The integration will still function normally
-- You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
+- You should use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) to configure updates at a set interval.
 - Manual resyncs can be triggered via Port's UI
 
 The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
