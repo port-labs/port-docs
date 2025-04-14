@@ -1,5 +1,5 @@
 export const tagsCategoryMap = {
-    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "Security", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog", "Approval workflow"],
+    "Use-cases": ["SDLC", "K8s for devs", "Incident management", "IaC for devs", "Cloud access management", "Feature flag management", "Security", /*"Cloud cost",*/ "Dev environments", "Engineering metrics", "Dependency management", "API catalog", "Approval workflow", "AI"],
     "Port pillars": ["Actions", "Automations", "Dashboards", "Scorecards", "RBAC"],
     Technologies: [
         "GitHub",
@@ -950,5 +950,19 @@ export const availableGuides = [
         tags: ["PagerDuty","New Relic","Actions","Webhook"],
         logos: ["PagerDuty","New Relic"],
         link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
+    },
+    {
+        title: "Set up a 'task manager' AI agent",
+        description: "Set up an AI agent that helps developers track and manage tasks efficiently",
+        tags: ["AI","Jira","GitHub","Slack"],
+        logos: ["AI"],
+        link: "/guides/all/setup-task-manager-ai-agent",
+    },
+    {
+        title: "Set up a 'PR enricher' AI agent",
+        description: "Set up an AI agent that automatically comments on pull requests with additional context",
+        tags: ["AI","GitHub","Jira","PagerDuty"],
+        logos: ["AI"],
+        link: "/guides/all/setup-pr-enricher-ai-agent",
     }
 ]
