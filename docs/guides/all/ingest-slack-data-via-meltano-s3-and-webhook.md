@@ -1,29 +1,26 @@
 ---
-title: Ingest Slack channels data into Port via Airbyte, S3 and Webhook
+title: Ingest Slack channels data into Port via Meltano, S3 and Webhook
 displayed_sidebar: null
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import AirbyteS3DestinationSetup from "/docs/generalTemplates/_airbyte_s3_destination_setup.md"
+import MeltanoS3DestinationSetup from "/docs/generalTemplates/_meltano_s3_destination_setup.md"
 import S3IntegrationDisclaimer from "/docs/generalTemplates/_s3_integrations_disclaimer.md"
+import MeltanoPrerequisites from "/docs/generalTemplates/_meltano_prerequisites.md"
 
-# Ingest Slack channels data into Port via Airbyte, S3 and webhook
+# Ingest Slack channels data into Port via Meltano, S3 and webhook
 
-This guide will demonstrate how to ingest Slack channels and channel membership data into Port using [Airbyte](https://airbyte.com/), [S3](https://aws.amazon.com/s3/) and a [webhook integration](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
+This guide will demonstrate how to ingest Slack channels and channel membership data into Port using [Meltano](https://meltano.com/), [S3](https://aws.amazon.com/s3/) and a [webhook integration](https://docs.port.io/build-your-software-catalog/custom-integration/webhook/).
 
 <S3IntegrationDisclaimer/>
 
 ## Prerequisites
 
-- Ensure you have a Port account and have completed the [onboarding process](https://docs.port.io/quickstart).
+<MeltanoPrerequisites/>
 
-- This feature is part of Port's limited-access offering. To obtain the required S3 bucket, please contact our team directly via chat, [Slack](https://www.getport.io/community), or [e-mail](mailto:support@getport.io), and we will create and manage the bucket on your behalf.
-
-- Access to an available Airbyte app (can be cloud or self-hosted) - for reference, follow the [quick start guide](https://docs.airbyte.com/using-airbyte/getting-started/oss-quickstart).
-
-- Setup a Slack Airbyte exporter app - follow [Airbyte's guide for slack connector](https://docs.airbyte.com/integrations/sources/slack).
+- Setup a Slack Meltano exporter app - follow [Meltano's guide for slack connector](https://hub.meltano.com/extractors/tap-slack/).
 
   :::tip Include email data
   If you wish to include email data, in addition to the permissions listed in the guide above, you will need to include `user.email:read` in the app's permissions.
@@ -31,7 +28,7 @@ This guide will demonstrate how to ingest Slack channels and channel membership 
 
 ## Data model setup
 
-### Add Blueprints
+### Add Blueprints 
 
 Add the `Slack Channel Membership` blueprint:
 
@@ -271,7 +268,7 @@ Create a webhook integration to ingest the data into Port:
 
 4. Enter a **name** for your Integration (for example: "Slack Integration"), enter a **description** (optional), then click on `Next`.
 
-5. Copy the Webhook URL that was generated and include set up the airbyte connection (see Below).
+5. Copy the Webhook URL that was generated and include set up the Meltano connection (see Below).
 
 6. Scroll down to the section titled "Map the data from the external system into Port" and paste the following mapping:
 
@@ -360,35 +357,59 @@ Create a webhook integration to ingest the data into Port:
 
 </details>
 
-## Airbyte Setup
+## Meltano Setup
+
+:::info Recommended
+Refer to this [GitHub Repository](https://github.com/port-labs/pending-repo) to view examples and prepared code sample for this integration.
+:::
 
 ### Set up S3 Destination
 
 If you haven't already set up S3 Destination for Port S3, follow these steps:
 
-<AirbyteS3DestinationSetup/>
+<MeltanoS3DestinationSetup/>
 
 ### Set up Slack Connection
 
-1. Follow Airbyte's guide to set up a [Slack connector](https://docs.airbyte.com/integrations/sources/slack).
+1. Install and configure a Slack extractor, for more information go to: [Slack extractor](https://hub.meltano.com/extractors/tap-slack).
 
     :::tip Private Channels
-      Airbyte will not read information from private channels by default.
+      Meltano will not read information from private channels by default.
       If you wish to include private channels: tick the "include private channels" option,
       and manually add the Slack-export App to your desired private channels.
     :::
 
-2. After the Source is set up, proceed to create a "+ New Connection".
+    Add the tap-slack extractor to your project using meltano add :
 
-3. For **Source**, choose the Slack source you have set up.
+    ```shell
+    meltano add extractor tap-slack
+    ```
 
-4. For **Destination**, choose the S3 Destination you have set up.
+    Configure the tap-slack settings using meltano config :
 
-5. In the **Select Streams** step, make sure only "channel_members", "channels" and "users" are marked for synchronization.
+    ```shell
+    meltano config tap-slack set --interactive
+    ```
 
-6. In the **Configuration** step, under "Destination Namespace", choose "Custom Format" and **enter the Webhook URL you have copied when setting up the webhook"**, for example: "wSLvwtI1LFwQzXXX".
+    Test that extractor settings are valid using meltano config :
 
-7. **Click on Finish & Sync** to apply and start the Integration process!
+    ```shell
+    meltano config tap-slack test
+    ```
+
+2. Create a specific target-s3 loader for the webhook you created, and **enter the Webhook URL you have copied when setting up the webhook** as the part of the `prefix` configuration field, for example: "`data/wSLvwtI1LFwQzXXX`".
+
+    ```shell
+    meltano add loader target-s3--slackintegration --inherit-from target-s3
+    meltano config target-s3--slackintegration set prefix data/<WEBHOOK_URL>
+    meltano config target-s3--slackintegration set format format_type jsonl
+    ```
+
+3. Run the connection:
+
+    ```shell
+    meltano el tap-slack target-s3--slackintegration
+    ```
 
 :::tip Important
   If for any reason you have entered different values than the ones specified in this guide,
@@ -399,4 +420,4 @@ If you haven't already set up S3 Destination for Port S3, follow these steps:
 
 - [Ingest Any data into port via Airbyte](https://docs.port.io/guides/all/ingest-any-data-via-airbyte-s3-and-webhook/)
 - [Ingest Any data into port via Meltano](https://docs.port.io/guides/all/ingest-any-data-via-meltano-s3-and-webhook/)
-- [Ingest Slack data into port via Meltano](https://docs.port.io/guides/all/ingest-slack-data-via-meltano-s3-and-webhook)
+- [Ingest Slack data into port via Airbyte](https://docs.port.io/guides/all/ingest-slack-data-via-airbyte-s3-and-webhook)
