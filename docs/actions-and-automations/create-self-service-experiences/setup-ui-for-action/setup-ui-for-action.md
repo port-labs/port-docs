@@ -41,7 +41,7 @@ Actions can (but do not have to) be tied to a specific `blueprint`. Selecting a 
 We can also define the execution button's label in the `Action card button text` field.
 
 :::info Button default value
-If the `Action card button text` field is left empty, the button label will default to Create, Execute or Delete, according to the chosen `operation` type.
+If the `Action card button text` field is left empty, the button label will default to `Create`, `Execute` or `Delete`, according to the chosen `operation` type.
 :::
 
 #### Conditions
