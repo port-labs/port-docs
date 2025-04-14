@@ -384,8 +384,8 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 ## Permissions
 
 Port's Github Copilot integration requires a classic Github token with at least one of the following scopes to be enabled:
--  `manage_billing:copilot`;
-- `read:org`;
+-  `manage_billing:copilot`.
+- `read:org`.
 - `read:enterprise`.
 
 ## Examples
