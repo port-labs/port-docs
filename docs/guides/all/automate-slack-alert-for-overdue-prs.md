@@ -27,6 +27,26 @@ To use this automation, ensure you have:
 
 For this guide, we will be using the same data model as in the [GitHub installation](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) and the [Resource mapping examples](/build-your-software-catalog/sync-data-to-catalog/git/github/examples/resource-mapping-examples#map-repositories-and-pull-requests) guide.
 
+### Update the `Service` blueprint
+
+Add the `slackChannel` and `slackURL` properties, if they do not exist, with the schema below:
+
+```json showLineNumbers
+   "slackChannel": {
+     "icon": "Slack",
+     "type": "string",
+     "title": "Slack Channel",
+     "description": "The Slack channel name where notifications will be sent."
+   },
+   "slackURL": {
+     "icon": "Slack",
+     "type": "string",
+     "title": "Slack Webhook URL",
+     "format": "url",
+     "description": "The Slack incoming webhook URL to send messages in channel."
+   }
+```
+
 ### Update the `Pull Request` Blueprint
 
 1. Navigate to the `Pull Request` blueprint in your Port [Builder](https://app.getport.io/settings/data-model).
@@ -61,7 +81,7 @@ For this guide, we will be using the same data model as in the [GitHub installat
        },
        "serviceSlackUrl": {
          "title": "Service Slack Url",
-         "path": "service.slack"
+         "path": "service.slackURL"
        }
    }
    ```
@@ -73,21 +93,6 @@ to access the Slack channel and webhook URL from the related `Service` blueprint
 
 To read more about mirror properties and understand their usage better, visit the [Port Documentation on Mirror Properties](https://docs.port.io/build-your-software-catalog/customize-integrations/configure-data-model/setup-blueprint/properties/mirror-property).
 :::
-
-
-
-### Update the `Service` blueprint
-
-Add the `slackChannel` property. If it does not exist, with the schema below:
-
-```json showLineNumbers
-   "slackChannel": {
-     "icon": "Slack",
-     "type": "string",
-     "title": "Slack Channel",
-     "description": "The Slack channel name where notifications will be sent."
-   }
-```
 
 
 ### Ingest GitHub PR Data

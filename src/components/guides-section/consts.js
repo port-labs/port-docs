@@ -937,4 +937,26 @@ export const availableGuides = [
         logos: ["Snyk","Wiz","SonarQube"],
         link: "/guides/all/enrich-entities-using-ai",
     },
+
+        title: "Monitor integrations",
+        description: "Monitor and manage your Port Ocean integrations",
+        tags: [],
+        logos: ["Webhook"],
+        link: "/guides/all/manage-integrations",
+    },
+    {
+        title: "Report a Jira bug from a New Relic alert",
+        description: "Create a self-service action that reports a Jira bug from a New Relic alert",
+        tags: ["Jira","New Relic","Actions","Webhook"],
+        logos: ["Jira","New Relic"],
+        link: "/guides/all/create-jira-issue-from-newrelic",
+    },
+    {
+        title: "Create a PagerDuty incident from a New Relic alert",
+        description: "Create a self-service action that creates a PagerDuty incident from a New Relic alert",
+        tags: ["PagerDuty","New Relic","Actions","Webhook"],
+        logos: ["PagerDuty","New Relic"],
+        link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
+    }
 ]
+
