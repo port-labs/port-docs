@@ -38,7 +38,7 @@ If you have one of Port's security integrations installed ([Snyk](https://docs.p
     ```
 5. Click `Save`.
 
-However, if you don't have a security integration installed, follow these steps to create a new blueprint with structure below:
+However, if you don't have a security integration installed, follow these steps to create a new blueprint with the structure below:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on the `+ Blueprint` button.

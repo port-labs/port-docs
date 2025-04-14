@@ -937,7 +937,7 @@ export const availableGuides = [
         logos: ["Snyk","Wiz","SonarQube"],
         link: "/guides/all/enrich-entities-using-ai",
     },
-
+    {
         title: "Monitor integrations",
         description: "Monitor and manage your Port Ocean integrations",
         tags: [],
