@@ -17,7 +17,7 @@ Port's Github Copilot integration allows you to ingest your Github Copilot usage
 
 ### Supported aggregation hierarchies
 
-There are few aggregation hierarchies of Github Copilot usage metrics supported by Github that can be ingested into Port, those are listed below.  
+Some aggregation hierarchies of Github Copilot usage metrics can be ingested into Port, they are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
 - [copilot-team-metrics](https://docs.github.com/en/rest/copilot/copilot-metrics?apiVersion=2022-11-28#get-copilot-metrics-for-a-team)
