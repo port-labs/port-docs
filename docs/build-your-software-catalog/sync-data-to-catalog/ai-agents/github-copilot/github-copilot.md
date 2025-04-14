@@ -20,7 +20,7 @@ This integration allows you to:
 
 - Map and organize your Github Copilot usage metrics in Port (see supported aggregation hierarchies below).
 
-### Supported Aggregation Hierarchies
+### Supported aggregation hierarchies
 
 There are few aggregation hierarchies of Github Copilot usage metrics supported by Github that can be ingested into Port, those are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
