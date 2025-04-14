@@ -954,8 +954,15 @@ export const availableGuides = [
     {
         title: "Set up a 'task manager' AI agent",
         description: "Set up an AI agent that helps developers track and manage tasks efficiently",
-        tags: ["AI","Jira","GitHub","PagerDuty","Slack"],
+        tags: ["AI","Jira","GitHub","Slack"],
         logos: ["AI"],
         link: "/guides/all/setup-task-manager-ai-agent",
+    },
+    {
+        title: "Set up a 'PR enricher' AI agent",
+        description: "Set up an AI agent that automatically comments on pull requests with additional context",
+        tags: ["AI","GitHub","Jira","PagerDuty"],
+        logos: ["AI"],
+        link: "/guides/all/setup-pr-enricher-ai-agent",
     }
 ]
