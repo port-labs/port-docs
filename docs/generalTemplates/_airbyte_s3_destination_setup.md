@@ -23,6 +23,7 @@ import TabItem from "@theme/TabItem"
 
 5. Click `Test and save` and wait for Airbyte to confirm the Destination is set up correctly.
 
+
 </TabItem>
 
 <TabItem value="terraform" label="Terraform">
