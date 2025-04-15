@@ -34,7 +34,7 @@ Let's map your GitLab groups to Port entities, including details like group name
 </details>
 
 :::tip GitLab group structure
-Refer to the GitLab group API for the full object structure and available fields.
+See the [GitLab groups API](https://docs.gitlab.com/ee/api/groups.html) for the full object structure and available fields.
 :::
 
 ---
@@ -54,7 +54,7 @@ Next, we'll ingest GitLab projects into Port, capturing details like project nam
 </details>
 
 :::tip GitLab project structure
-Check the GitLab project API for the full object structure and available fields.
+See the [GitLab projects API](https://docs.gitlab.com/ee/api/projects.html) for the full object structure and available fields.
 :::
 
 ---
@@ -74,7 +74,7 @@ Now, let's bring GitLab issues into Port, including details like title, state, a
 </details>
 
 :::tip GitLab issue structure
-Explore the GitLab issue API for the full object structure and available fields.
+See the [GitLab issues API](https://docs.gitlab.com/ee/api/issues.html) for the full object structure and available fields.
 :::
 
 ---
@@ -94,5 +94,5 @@ Finally, we'll ingest GitLab merge requests (MRs) into Port, with details like t
 </details>
 
 :::tip GitLab merge request structure
-See the GitLab merge request API for the full object structure and available fields.
+See the [GitLab merge requests API](https://docs.gitlab.com/ee/api/merge_requests.html) for the full object structure and available fields.
 :::
