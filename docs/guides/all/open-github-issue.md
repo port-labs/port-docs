@@ -25,7 +25,7 @@ This functionality streamlines project management by enabling users to create is
 If you haven't installed the GitHub integration, you will need to manually create a blueprint for GitHub repository.  
 We highly recommend that you install the GitHub integration to have such resources automatically set up for you. 
 
-### Create a GitHub repository blueprint
+<h3> Create the repository blueprint </h3>
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
