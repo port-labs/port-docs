@@ -10,7 +10,8 @@ import TabItem from '@theme/TabItem';
 # Create a Github issue
 
 ## Overview
-This guide will help you implement a self-service action in Port that allows you to create GitHub issues directly from Port using **synced webhooks**.
+This guide will demonstrate how to implement a self-service action that creates GitHub issues directly from Port using **synced webhooks**.
+
 This functionality streamlines project management by enabling users to create issues without leaving Port.
 
 
