@@ -102,6 +102,14 @@ export const availableGuides = [
         link: "/guides/all/collect-developer-feedback-with-surveys",
     },
     {
+        title: "Create & track DORA metrics in your portal",
+        description: "Create & track DORA metrics in your portal to measure engineering performance",
+        tags: ["Engineering metrics", "Actions"],
+        logos: ["Actions"],
+        category: "Experiences",
+        link: "/guides/all/create-and-track-dora-metrics-in-your-portal",
+    },
+    {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["Cloud access management", "Actions", "RBAC"],
