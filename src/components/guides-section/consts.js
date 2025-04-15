@@ -94,6 +94,14 @@ export const availableGuides = [
         link: "/guides/all/setup-slack-reminders",
     },
     {
+        title: "Create & use surveys in your portal",
+        description: "Create & use surveys in your portal to collect feedback from your users",
+        tags: ["Engineering metrics", "Actions"],
+        logos: ["Actions"],
+        category: "Experiences",
+        link: "/guides/all/collect-developer-feedback-with-surveys",
+    },
+    {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["Cloud access management", "Actions", "RBAC"],
