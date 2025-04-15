@@ -966,5 +966,12 @@ export const availableGuides = [
         tags: ["PagerDuty","New Relic","Actions","Webhook"],
         logos: ["PagerDuty","New Relic"],
         link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
-    }
+    },
+    {
+        title: "Create a GitHub issue",
+        description: "Create a self-service action that creates a GitHub issue",
+        tags: ["GitHub", "Actions", "Webhook"],
+        logos: ["GitHub"],
+        link: "/guides/all/open-github-issue",
+    },
 ]
