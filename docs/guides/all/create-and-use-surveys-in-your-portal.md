@@ -91,9 +91,6 @@ Once you have set up one or more surveys, you will need:
 
 
 
-   That's it! Your survey results will appear here:
-
-<img src='/img/guides/surveySeeSurveyDashboard.png' width='80%' border='1px' />
 
 
 
