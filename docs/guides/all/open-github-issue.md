@@ -88,7 +88,7 @@ To add these secrets to your portal:
 
 ### Set up self-service action
 
-Let's define a self-service action that is used to create a GitHub issue:
+Follow these steps to create the self-service action:
 
 1. Head to the [self-service](https://app.getport.io/self-serve) page.
 2. Click on the `+ New Action` button.
