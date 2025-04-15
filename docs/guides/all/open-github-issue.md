@@ -30,7 +30,7 @@ We highly recommend that you install the GitHub integration to have such resourc
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Click on `+ Blueprint`.
 3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
-4. Add the following JSON schema into the editor while clicking `Save` to create the blueprint:
+4. Add this JSON schema:
 
     <details>
     <summary><b>GitHub Repository Blueprint (Click to expand)</b></summary>
@@ -65,6 +65,7 @@ We highly recommend that you install the GitHub integration to have such resourc
     }
     ```
     </details>
+5. Click `Save` to create the blueprint.
 
 
 ## Implementation
@@ -93,7 +94,7 @@ Follow these steps to create the self-service action:
 1. Head to the [self-service](https://app.getport.io/self-serve) page.
 2. Click on the `+ New Action` button.
 3. Click on the `{...} Edit JSON` button.
-4. Copy and paste the following JSON configuration into the editor.
+4. Copy and paste this JSON configuration into the editor.
 
     <details>
     <summary><b>Create GitHub Issue (Click to expand)</b></summary>
