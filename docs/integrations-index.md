@@ -332,3 +332,8 @@ This page contains a list of Port's available integrations, organized by the pla
 ## Kratix (by Syntasso)
 - [Combine Kratix and Port](https://www.syntasso.io/solutions/port-and-kratix)
 - [Combine Kratix and Port (demo video)](https://www.youtube.com/watch?v=7nKx4CnEvoY)
+
+## AI Agents
+
+### GitHub Copilot
+- [Ingest Copilot usage metrics into your catalog](/build-your-software-catalog/sync-data-to-catalog/ai-agents/github-copilot/github-copilot.md)
