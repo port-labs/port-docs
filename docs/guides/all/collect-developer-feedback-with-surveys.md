@@ -6,13 +6,13 @@ displayed_sidebar: null
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Collect developer feedback with surveys
+# Create & use surveys in your portal
 
 This guide will walk you through the setup and use of surveys in your portal.  
 
 We will learn how to configure a survey, collect responses, and view feedback insights from developers to drive engineering improvements.
 
-## Port surveys overview
+## Overview
 
 Surveys help you gather direct, valuable feedback from developers across your organization.  
 Port allows you to run surveys and view their results in your portal, allowing for:

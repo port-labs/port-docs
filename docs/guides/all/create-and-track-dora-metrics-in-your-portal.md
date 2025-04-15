@@ -40,6 +40,13 @@ When you install the DORA Metrics experience, Port automatically generates the f
 - `Create an incident` — an action that creates an incident.  
   By default, the dashboard page will contain multiple actions to create an incident, one for each definition of an incident.
 
+<h4> Integration mapping </h4>
+When a user executes the self-service action to define deployments or incidents, the relevant [integration mapping](/build-your-software-catalog/customize-integrations/configure-mapping) (according to the selected deployment/incident method) is updated with a new block.  
+
+This automates a manual step that would otherwise require editing the integration mapping directly.  
+
+*Note:* filters in the action use an `AND` operator. To achieve `OR` logic, run the action multiple times with different filter sets.
+
 <h4> Additional components </h4>
 
 Port also creates supporting technical mechanisms to ensure stable and reliable data ingestion:
