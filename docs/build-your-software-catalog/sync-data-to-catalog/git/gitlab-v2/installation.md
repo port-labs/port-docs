@@ -39,7 +39,7 @@ We recommend using a dedicated service account for the integration, as this prov
 The integration requires an access token to authenticate with your GitLab instance.
 You can create one by following these steps:
 
-1. Go to your GitLab user settings
+1. Go to your GitLab user settings.
 2. Navigate to Access Tokens
 3. Create a new token with the following scopes:
    - `read_api`
