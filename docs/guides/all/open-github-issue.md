@@ -71,7 +71,7 @@ We highly recommend that you install the GitHub integration to have such resourc
 
 ## Implementation
 
-You can create GitHub issue by leveraging Port's **synced webhooks** and **secrets** to directly interact with GitHub's REST API.
+You can create GitHub issues by leveraging Port's **synced webhooks** and **secrets** to directly interact with GitHub's REST API.
 
 ### Add Port secrets
 
