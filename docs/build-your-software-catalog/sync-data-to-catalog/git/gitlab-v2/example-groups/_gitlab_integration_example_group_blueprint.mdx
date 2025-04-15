@@ -1,29 +1,42 @@
 ```json
 {
   "identifier": "gitlabGroup",
-  "description": "This blueprint represents a GitLab group",
-  "title": "GitLab Group",
+  "title": "Group",
   "icon": "GitLab",
   "schema": {
     "properties": {
-      "url": {
-        "type": "string",
-        "title": "URL",
-        "description": "Link to the group in GitLab"
-      },
       "visibility": {
-        "type": "string",
+        "icon": "Lock",
         "title": "Visibility",
-        "description": "The visibility of the group",
-        "enum": ["private", "internal", "public"]
+        "type": "string",
+        "enum": [
+          "public",
+          "internal",
+          "private"
+        ],
+        "enumColors": {
+          "public": "red",
+          "internal": "yellow",
+          "private": "green"
+        }
+      },
+      "url": {
+        "title": "URL",
+        "format": "url",
+        "type": "string",
+        "icon": "Link"
       },
       "description": {
-        "type": "string",
         "title": "Description",
-        "description": "The description of the group"
+        "type": "string",
+        "icon": "BlankPage"
       }
     },
     "required": []
-  }
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {}
 }
 ```

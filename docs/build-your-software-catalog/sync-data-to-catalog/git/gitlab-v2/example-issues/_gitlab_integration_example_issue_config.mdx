@@ -1,5 +1,21 @@
-```yaml
+```yaml showLineNumbers
 resources:
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"service"'
+          properties:
+            url: .web_url
+            description: .description
+            language: .__languages | to_entries | max_by(.value) | .key
+            namespace: .namespace.name
+            fullPath: .namespace.full_path
+            defaultBranch: .default_branch
   - kind: issue
     selector:
       query: "true"
@@ -13,4 +29,11 @@ resources:
             creator: .author.name
             status: .state
             createdAt: .created_at
+            closedAt: .closed_at
+            updatedAt: .updated_at
+            description: .description
+            link: .web_url
+            labels: "[.labels[]]"
+          relations:
+            project: .references.full | gsub("#.+"; "")
 ```
