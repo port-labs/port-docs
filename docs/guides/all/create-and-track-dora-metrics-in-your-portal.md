@@ -82,7 +82,7 @@ To set up DORA metrics in your portal, you will need:
 
     <img src='/img/guides/doraChooseName.png' width='60%' border='1px' />
 
-## Configure & distribute the survey
+## Configure your deployments & incidents
 
 After installation, you need to:
 1. **Configure Deployments:**  
