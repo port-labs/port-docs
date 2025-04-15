@@ -99,7 +99,7 @@ export const availableGuides = [
         tags: ["Engineering metrics", "Actions"],
         logos: ["Actions"],
         category: "Experiences",
-        link: "/guides/all/collect-developer-feedback-with-surveys",
+        link: "/guides/all/create-and-use-surveys-in-your-portal",
     },
     {
         title: "Create & track DORA metrics in your portal",
