@@ -974,4 +974,11 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/open-github-issue",
     },
+    {
+        title: "Keep Service Catalog Data Up to Date",
+        description: "Create a self-service action that keeps service catalog data up to date",
+        tags: ["GitHub", "Actions", "Webhook", "Automations"],
+        logos: ["GitHub"],
+        link: "/guides/all/verify-service",
+    },
 ]
