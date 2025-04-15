@@ -21,7 +21,7 @@ This integration allows you to:
 
 ### Supported resources
 
-The resources that can be ingested from GitLab into Port are listed below.
+The resources that can be ingested from GitLab into Port are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
 <GitLabResources/>
