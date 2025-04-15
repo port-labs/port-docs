@@ -14,7 +14,9 @@ import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-da
 
 # Installation
 
-This page details how to install Port's GitLab integration (powered by the Ocean framework). It outlines the following steps:
+This page details how to install Port's GitLab integration (powered by the Ocean framework).
+   
+This page outlines the following steps:
 
 - How to [create](#create-an-access-token) an access token to give the integration permissions to query your GitLab instance.
 - How to [configure](#configure-the-integration) and customize the integration before deploying it.
