@@ -49,7 +49,7 @@ The integration allows you to ingest various objects and resources provided by t
 
 ### Ingest files from your repositories
 
-Port allows you to fetch `JSON` and `YAML` files from your repositories, and create entities from them in your software catalog.  
+Port allows you to fetch `JSON` and `YAML` files from your repositories, and create entities from them in your software catalog.    
 This is done using the `file` kind in your GitLab mapping configuration.
 
 For example, say you want to manage your `package.json` files in Port. One option is to create a `manifest` blueprint, with each of its entities representing a `package.json` file.
