@@ -1,0 +1,20 @@
+```yaml showLineNumbers
+resources:
+  - kind: group-with-members
+    selector:
+      query: 'true'
+      includeBotMembers: 'true'
+      includeVerboseMemberObject: 'false'
+    port:
+      entity:
+        mappings:
+          identifier: .full_path
+          title: .name
+          blueprint: '"gitlabGroupWithMember"'
+          properties:
+            url: .web_url
+            visibility: .visibility
+            description: .description
+          relations:
+            gitlabMembers: .__members | map(.username)
+```

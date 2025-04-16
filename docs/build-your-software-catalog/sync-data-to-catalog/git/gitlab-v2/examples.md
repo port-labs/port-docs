@@ -2,12 +2,6 @@
 sidebar_position: 2
 ---
 
-# Examples
-
-In this section, we'll walk through examples to ingest your GitLab **groups**, **projects**, **issues**, **merge requests**, **files**, and **folders** into Port. 
-
-Each example includes a blueprint definition and a matching `port-app-config.yml` configuration to map GitLab objects to Port entities.
-
 import GroupBlueprint from './example-groups/_gitlab_integration_example_group_blueprint.mdx'
 import GroupConfig from './example-groups/_gitlab_integration_example_group_config.mdx'
 import ProjectBlueprint from './example-projects/_gitlab_integration_example_project_blueprint.mdx'
@@ -20,6 +14,34 @@ import PackageBlueprint from './example-files/_gitlab_integration_example_packag
 import PackageConfig from './example-files/_gitlab_integration_example_package_config.mdx'
 import FolderBlueprint from './example-folders/_gitlab_integration_example_folder_blueprint.mdx'
 import FolderConfig from './example-folders/_gitlab_integration_example_folder_config.mdx'
+import MemberBlueprint from './example-members/_gitlab_integration_example_member_blueprint.mdx'
+import MemberConfig from './example-members/_gitlab_integration_example_member_config.mdx'
+import GroupMembersBlueprint from './example-groups/_gitlab_integration_example_group_members_blueprint.mdx'
+import GroupMembersConfig from './example-groups/_gitlab_integration_example_group_members_config.mdx'
+import PipelineBlueprint from './example-pipelines/_gitlab_integration_example_pipeline_blueprint.mdx'
+import JobBlueprint from './example-jobs/_gitlab_integration_example_job_blueprint.mdx'
+import PipelineJobConfig from './example-pipelines/_gitlab_integration_example_pipeline_job_config.mdx'
+
+# Examples
+
+This section includes examples for ingesting the following GitLab resources into Port:
+
+- **Groups**
+- **Projects**
+- **Issues**
+- **Merge requests**
+- **Files**
+- **Folders**
+- **Members**
+- **Pipelines**
+- **Jobs**
+
+Each example contains:
+
+- A blueprint definition  
+- A matching `port-app-config.yml` file  
+
+These examples show how to map GitLab objects to Port entities and can be used as a foundation to customize your own configuration.
 
 ---
 
@@ -160,7 +182,67 @@ resources:
 ```
 :::
 
-The example above will:
-- Map root-level folders from your repositories
-- Create folder entities with URLs and README content
-- Support different folder paths per repository
+## Mapping GitLab members
+
+Let's explore how to map GitLab members into Port, including their profile details and account information.
+
+<details>
+<summary>Member blueprint</summary>
+<MemberBlueprint />
+</details>
+
+<details>
+<summary>Member configuration</summary>
+<MemberConfig />
+</details>
+
+:::tip GitLab member structure
+See the [GitLab members API](https://docs.gitlab.com/ee/api/members.html) for the full object structure and available fields.
+:::
+
+---
+
+## Mapping GitLab groups with members
+
+Now, let's see how to map GitLab groups along with their member relationships.
+
+<details>
+<summary>Group with members blueprint</summary>
+<GroupMembersBlueprint />
+</details>
+
+<details>
+<summary>Group with members configuration</summary>
+<GroupMembersConfig />
+</details>
+
+:::tip GitLab group membership
+See the [GitLab group members API](https://docs.gitlab.com/ee/api/members.html#list-all-members-of-a-group-or-project) for details about group membership structure.
+:::
+
+---
+
+## Mapping GitLab pipelines and jobs
+
+Let's explore how to map your CI/CD pipelines and jobs into Port, including their execution details and relationships.
+
+<details>
+<summary>Pipeline blueprint</summary>
+<PipelineBlueprint />
+</details>
+
+<details>
+<summary>Job blueprint</summary>
+<JobBlueprint />
+</details>
+
+<details>
+<summary>Pipeline and job configuration</summary>
+<PipelineJobConfig />
+</details>
+
+:::tip GitLab CI/CD structure
+See the [GitLab pipelines API](https://docs.gitlab.com/ee/api/pipelines.html) and [jobs API](https://docs.gitlab.com/ee/api/jobs.html) for the full object structure and available fields.
+:::
+
+---

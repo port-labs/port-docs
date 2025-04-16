@@ -1,0 +1,20 @@
+```yaml showLineNumbers
+resources:
+  - kind: member
+    selector:
+      query: 'true'
+      includeBotMembers: 'true'
+      includeInheritedMembers: 'true'
+      includeVerboseMemberObject: 'true'
+    port:
+      entity:
+        mappings:
+          identifier: .username
+          title: .name
+          blueprint: '"gitlabMember"'
+          properties:
+            url: .web_url
+            state: .state
+            email: .email
+            created_by: .created_by.name
+```
