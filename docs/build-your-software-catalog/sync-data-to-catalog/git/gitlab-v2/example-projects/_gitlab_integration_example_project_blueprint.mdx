@@ -1,28 +1,45 @@
-```json
+```json showLineNumbers
 {
-  "identifier": "gitlabProject",
-  "description": "This blueprint represents a GitLab project",
-  "title": "GitLab Project",
-  "icon": "GitLab",
+  "identifier": "service",
+  "title": "Service",
+  "icon": "Microservice",
   "schema": {
     "properties": {
       "url": {
-        "type": "string",
         "title": "URL",
-        "description": "Link to the project in GitLab"
+        "type": "string",
+        "format": "url"
+      },
+      "readme": {
+        "title": "README",
+        "type": "string",
+        "format": "markdown"
       },
       "description": {
-        "type": "string",
         "title": "Description",
-        "description": "The description of the project"
+        "type": "string"
+      },
+      "language": {
+        "title": "Language",
+        "type": "string"
+      },
+      "namespace": {
+        "title": "Namespace",
+        "type": "string"
+      },
+      "fullPath": {
+        "title": "Full Path",
+        "type": "string"
       },
       "defaultBranch": {
-        "type": "string",
         "title": "Default Branch",
-        "description": "The default branch of the project"
+        "type": "string"
       }
     },
     "required": []
-  }
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "relations": {}
 }
 ```

@@ -13,7 +13,7 @@ Use the correct endpoint based on your account region, and make sure to to repla
   </TabItem>
   <TabItem value="US" label="US">
     ```text
-    https://auth.us.getport.io/authorize?response_type=token&client_id=4lHUry3Gkds317lQ3JcgABh0JPbT3rWx&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.getport.io
+    https://auth.us.getport.io/authorize?response_type=token&client_id=4lHUry3Gkds317lQ3JcgABh0JPbT3rWx&connection={CONNECTION_NAME}&redirect_uri=https%3A%2F%2Fapp.us.getport.io
     ```
   </TabItem>
 </Tabs>
