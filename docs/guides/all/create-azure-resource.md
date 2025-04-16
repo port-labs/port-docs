@@ -408,7 +408,7 @@ jobs:
             TF_VAR_port_client_id: ${{ secrets.PORT_CLIENT_ID }}
             TF_VAR_port_client_secret: ${{ secrets.PORT_CLIENT_SECRET }}
             TF_VAR_port_run_id: ${{fromJson(inputs.port_context).runId}}
-            TF_VAR_resource_group_name: arete-resources
+            TF_VAR_resource_group_name: ${{ secrets.AZURE_RESOURCE_GROUP }}
         run: |
           terraform plan \
             -input=false \
