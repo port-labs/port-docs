@@ -127,16 +127,22 @@ export const liveEvents = {
     \n- group_destroy \
     \n- subgroup_create \
     \n- subgroup_destroy \
-    \n- subgroup_events \
     \n\n**Projects:** \
     \n- push \
     \n\n**Issues:** \
-    \n- issues_events \
     \n- issue \
     \n\n**Merge Requests:** \
     \n- merge_request \
     \n\n**Files and Folders:** \
-    \n- push '
+    \n- push \
+    \n\n**Members:** \
+    \n- user_remove_from_group \
+    \n- user_update_for_group \
+    \n- user_add_to_group \
+    \n\n**Jobs:** \
+    \n- build \
+    \n\n**Pipelines:** \
+    \n- pipeline '
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {
