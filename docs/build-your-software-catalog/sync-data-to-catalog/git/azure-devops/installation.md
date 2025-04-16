@@ -38,7 +38,7 @@ You can create one by following [these steps](https://learn.microsoft.com/en-us/
 The token should either have `admin` permissions, or `read` permissions for each of the supported resources you want to ingest into Port.
 
 
-## BaseUrl & Webhook Configuration
+## BaseUrl & webhook configuration
 
 :::warning AppHost deprecation
 **`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
