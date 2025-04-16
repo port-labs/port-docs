@@ -23,9 +23,9 @@ Without it, the integration will not be able to receive webhook events about pus
 
 ## Common use cases
 
-- Use GitLab as the source-of-truth for your **microservices**, **projects**, **packages**, **libraries** and other software catalog assets;
-- Allow developers to keep the catalog up-to-date, by making updates to files in their Git projects;
-- Create a standardized way to document software catalog assets in your organization;
+- Use GitLab as the source-of-truth for your **microservices**, **projects**, **packages**, **libraries** and other software catalog assets.
+- Allow developers to keep the catalog up-to-date, by making updates to files in their Git projects.
+- Create a standardized way to document software catalog assets in your organization.
 
 ## Managing entities using GitOps
 
