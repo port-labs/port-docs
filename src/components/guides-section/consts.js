@@ -94,6 +94,22 @@ export const availableGuides = [
         link: "/guides/all/setup-slack-reminders",
     },
     {
+        title: "Create & use surveys in your portal",
+        description: "Create & use surveys in your portal to collect feedback from your users",
+        tags: ["Engineering metrics", "Actions"],
+        logos: ["Actions"],
+        category: "Experiences",
+        link: "/guides/all/create-and-use-surveys-in-your-portal",
+    },
+    {
+        title: "Create & track DORA metrics in your portal",
+        description: "Create & track DORA metrics in your portal to measure engineering performance",
+        tags: ["Engineering metrics", "Actions"],
+        logos: ["Actions"],
+        category: "Experiences",
+        link: "/guides/all/create-and-track-dora-metrics-in-your-portal",
+    },
+    {
         title: "IAM permission management",
         description: "Empower developers to independently enrich their services using a self-service action",
         tags: ["Cloud access management", "Actions", "RBAC"],
@@ -950,5 +966,12 @@ export const availableGuides = [
         tags: ["PagerDuty","New Relic","Actions","Webhook"],
         logos: ["PagerDuty","New Relic"],
         link: "/guides/all/create-pagerduty-incident-from-newrelic-alert",
-    }
+    },
+    {
+        title: "Create a GitHub issue",
+        description: "Create a self-service action that creates a GitHub issue",
+        tags: ["GitHub", "Actions", "Webhook"],
+        logos: ["GitHub"],
+        link: "/guides/all/open-github-issue",
+    },
 ]
