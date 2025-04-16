@@ -45,10 +45,6 @@ You can create a [Personal Access Token (PAT)](https://docs.gitlab.com/ee/user/p
 
 - The token must belong to a user with access to the relevant GitLab resources (e.g., projects, groups).
 
-:::caution Security best practices  
-Avoid using personal tokens if the integration is meant to be shared or if it is used in production environments.  
-:::
-
 #### Group access token
 
 A [Group Access Token](https://docs.gitlab.com/ee/user/group/access_tokens.html) is recommended when multiple team members manage the integration or when it's set up at the group level.
