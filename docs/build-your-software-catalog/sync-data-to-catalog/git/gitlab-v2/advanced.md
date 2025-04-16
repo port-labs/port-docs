@@ -8,11 +8,27 @@ import DeleteDependents from '../../../../generalTemplates/_delete_dependents_gi
 
 # Advanced
 
-The GitLab integration supports additional configuration parameters that allow you to customize its behavior according to your needs.
+The GitLab integration supports additional flags to provide extra configuration options, making it easier to customize its behavior to suit your needs.
+
+To use the advanced configuration and additional flags, let's add them as root keys to our integration configuration.   
+For example, here's how we can add the `createMissingRelatedEntities` flag:
+
+```yaml showLineNumbers
+# highlight-next-line
+createMissingRelatedEntities: true
+resources:
+  - kind: merge-request
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+        ... mappings configuration
+```
 
 ## Using advanced configurations
 
-The following advanced configuration parameters are available:
+Let's look at the advanced configuration parameters we can add to the [integration configuration](./GitLab-v2.md#the-integration-configuration):
 
 <Tabs groupId="config" queryString="parameter">
 
@@ -20,33 +36,27 @@ The following advanced configuration parameters are available:
 
 <DeleteDependents/>
 
-- Default: `false` (disabled)
-- Use case: Controls deletion of dependent Port entities. Must be enabled if you want to delete a target entity (and its source entities) in a required relation.
+- **Default**: `false` (disabled).  
+- **When to use**: Enable this flag if dependent entities should be deleted when the target entity is deleted.
+
+</TabItem>
+
+<TabItem label="Enable merge entity" value="enableMergeEntity">
+
+With the `enableMergeEntity` parameter, you can specify whether to use the [create/update](/build-your-software-catalog/custom-integration/api?operation=create-update#usage) or [create/override](/build-your-software-catalog/custom-integration/api?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
+
+- **Default**: `false` (uses create/override).  
+- **When to use**: Set to `true` to allow external sources to update some properties while GitLab remains the source of truth for others.
 
 </TabItem>
 
 <TabItem value="createMissingRelatedEntities" label="Create missing related entities">
 
-The `createMissingRelatedEntities` parameter enables automatic creation of missing related Port entities when the target related entity doesn't exist in the software catalog.
+When enabled, the `createMissingRelatedEntities` parameter allows automatic creation of missing related Port entities if they don't already exist in the software catalog.
 
-- Default value: `true` (allows the GitLab integration to create basic related entities if they don't exist)
-- Use case: Set to `false` to prevent automatic creation of missing related entities
+- **Default**: `false` (does not create missing related entities).  
+- **When to use**: Set to `true` if missing related entities should be created automatically.
 
 </TabItem>
 
 </Tabs>
-
-All of the advanced configurations listed above can be added to the mapping on the data source page.
-
-### Example Configuration
-
-Here's an example of how to use these advanced parameters in your configuration:
-
-```yaml
-integration:
-  identifier: my-gitlab-integration
-  type: gitlab
-  config:
-    deleteDependent: true
-    createMissingRelatedEntities: false
-```
