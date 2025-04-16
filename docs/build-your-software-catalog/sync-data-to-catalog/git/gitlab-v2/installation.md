@@ -52,6 +52,14 @@ A [Group Access Token](https://docs.gitlab.com/ee/user/group/access_tokens.html)
 - Create the token in a group that has access to the relevant projects.
 - Set an appropriate expiration date and store it securely.
 
+#### Service account token
+
+Service accounts provide a more secure and automated way to interact with GitLab on behalf of the integration.
+
+- The service account should have `api` or `read_api` and '`read_api`' permissions.
+- It should belong to a GitLab user with sufficient access to the required resources (e.g., projects, groups).
+- Create the service account via [GitLab's service account setup guide](https://docs.gitlab.com/ee/user/profile/service_accounts/).
+
 ### Configure real-time webhook events
 
 To enable real-time updates from GitLab, set the `baseUrl` parameter to the URL of your GitLab integration instance. This allows GitLab to send webhook events to the integration.
