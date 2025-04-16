@@ -2,12 +2,6 @@
 sidebar_position: 2
 ---
 
-# Examples
-
-In this section, we'll walk through examples to ingest your GitLab **groups**, **projects**, **issues**, **merge requests**,  **files**,  **folders**, **pipelines**, and **jobs** into Port. 
-
-Each example includes a blueprint definition and a matching `port-app-config.yml` configuration to map GitLab objects to Port entities.
-
 import GroupBlueprint from './example-groups/_gitlab_integration_example_group_blueprint.mdx'
 import GroupConfig from './example-groups/_gitlab_integration_example_group_config.mdx'
 import ProjectBlueprint from './example-projects/_gitlab_integration_example_project_blueprint.mdx'
@@ -27,6 +21,27 @@ import GroupMembersConfig from './example-groups/_gitlab_integration_example_gro
 import PipelineBlueprint from './example-pipelines/_gitlab_integration_example_pipeline_blueprint.mdx'
 import JobBlueprint from './example-jobs/_gitlab_integration_example_job_blueprint.mdx'
 import PipelineJobConfig from './example-pipelines/_gitlab_integration_example_pipeline_job_config.mdx'
+
+# Examples
+
+This section includes examples for ingesting the following GitLab resources into Port:
+
+- **Groups**
+- **Projects**
+- **Issues**
+- **Merge requests**
+- **Files**
+- **Folders**
+- **Members**
+- **Pipelines**
+- **Jobs**
+
+Each example contains:
+
+- A blueprint definition  
+- A matching `port-app-config.yml` file  
+
+These examples show how to map GitLab objects to Port entities and can be used as a foundation to customize your own configuration.
 
 ---
 
@@ -167,13 +182,6 @@ resources:
 ```
 :::
 
-The example above will:
-- Map root-level folders from your repositories
-- Create folder entities with URLs and README content
-- Support different folder paths per repository
-
----
-
 ## Mapping GitLab members
 
 Let's explore how to map GitLab members into Port, including their profile details and account information.
@@ -191,12 +199,6 @@ Let's explore how to map GitLab members into Port, including their profile detai
 :::tip GitLab member structure
 See the [GitLab members API](https://docs.gitlab.com/ee/api/members.html) for the full object structure and available fields.
 :::
-
-This example will:
-- Create member entities with profile details
-- Include bot and inherited members
-- Track member states and creation details
-- Map member email and profile URLs
 
 ---
 
