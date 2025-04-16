@@ -43,7 +43,7 @@ It is important that you use the generated webhook URL when setting up the Conne
 ## Meltano Setup
 
 :::info Recommended
-Refer to this [GitHub Repository](https://github.com/port-labs/pending-repo) to view examples and prepared code sample for this integration.
+Refer to this [GitHub Repository](https://github.com/port-experimental/meltano-integration-examples) to view examples and prepared code sample for this integration.
 :::
 
 ### Set up S3 Destination

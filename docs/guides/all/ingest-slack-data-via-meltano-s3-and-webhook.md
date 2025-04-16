@@ -360,7 +360,7 @@ Create a webhook integration to ingest the data into Port:
 ## Meltano Setup
 
 :::info Recommended
-Refer to this [GitHub Repository](https://github.com/port-labs/pending-repo) to view examples and prepared code sample for this integration.
+Refer to this [GitHub Repository](https://github.com/port-experimental/meltano-integration-examples) to view examples and prepared code sample for this integration.
 :::
 
 ### Set up S3 Destination

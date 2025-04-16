@@ -27,7 +27,7 @@ This guide will demonstrate how to ingest any data source into Port using [Melta
 ## Meltano setup
 
 :::info Recommended
-Refer to this [GitHub Repository](https://github.com/port-labs/pending-repo) to view examples and prepared code sample for various integrations.
+Refer to this [GitHub Repository](https://github.com/port-experimental/meltano-integration-examples) to view examples and prepared code sample for various integrations.
 :::
 
 To integrate any data source supported by Meltano into Port, you will need to:
@@ -196,6 +196,6 @@ In this case, contact us using chat/Slack/mail to [support@getport.io](mailto:su
 
 ### Additional relevant guides
 
-- [Ingest Slack data into port](https://docs.port.io/guides/all/ingest-slack-data-via-Meltano-s3-and-webhook)
-- [Ingest Athena data into port](https://docs.port.io/guides/all/ingest-athena-data-via-Meltano-s3-and-webhook)
+- [Ingest Slack data into port](https://docs.port.io/guides/all/ingest-slack-data-via-meltano-s3-and-webhook)
+- [Ingest Athena data into port](https://docs.port.io/guides/all/ingest-athena-data-via-meltano-s3-and-webhook)
 - [Ingest Any data into port via Airbyte](https://docs.port.io/guides/all/ingest-any-data-via-airbyte-s3-and-webhook)
