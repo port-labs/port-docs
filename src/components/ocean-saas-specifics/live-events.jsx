@@ -121,14 +121,22 @@ export const liveEvents = {
     \n- service_check \
     \n- synthetics_alert \
     \n- trace_analytics_alert',
-    GitLab_v2:
-    '**Group:** \
-    \n- merge_requests_events \
-    \n- issues_events \
-    \n- releases_events \
+  GitLab_v2:
+    '**Groups:** \
+    \n- group_create \
+    \n- group_destroy \
+    \n- subgroup_create \
+    \n- subgroup_destroy \
     \n- subgroup_events \
-    \n- push_events \
-    \n- tag_push_events',
+    \n\n**Projects:** \
+    \n- push \
+    \n\n**Issues:** \
+    \n- issues_events \
+    \n- issue \
+    \n\n**Merge Requests:** \
+    \n- merge_request \
+    \n\n**Files and Folders:** \
+    \n- push '
 };
 
 export const OceanSaasLiveEventsTriggersOAuth = ({ id, isOAuth = false }) => {

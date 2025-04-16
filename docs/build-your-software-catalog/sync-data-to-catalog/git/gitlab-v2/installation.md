@@ -34,54 +34,50 @@ This page outlines the following steps:
 
 To allow Port to fetch data from your GitLab instance, you need to create an access token. Port supports two types of tokens for authentication: personal access tokens and group access tokens.
 
-#### Required scopes
-
-- To enable **real-time updates using webhooks**, the token must include the `api` scope (required for managing webhooks).
-- If you're **not using webhooks**, the token only needs `read_api` and `read_repository` scopes.
-
 #### Personal access token (PAT)
 
-You can create a [Personal Access Token (PAT)](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) in your GitLab profile. This is suitable if you're the only one managing the integration and don't need frequent credential rotation.
+A Personal Access Token (PAT) is suitable if you're the only one managing the integration and don't need frequent credential rotation.  
+To create a personal access token see the GitLab [personal access token guide](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html).
 
 - The token must belong to a user with access to the relevant GitLab resources (e.g., projects, groups).
 
 #### Group access token
 
-A [Group Access Token](https://docs.gitlab.com/ee/user/group/access_tokens.html) is recommended when multiple team members manage the integration or when it's set up at the group level.
+A Group Access Token is recommended when multiple team members manage the integration or when it's set up at the group level.   
+To create a group access token, see the GitLab [group access token guide](https://docs.gitlab.com/ee/user/group/access_tokens.html).
 
 - Create the token in a group that has access to the relevant projects.
 - Set an appropriate expiration date and store it securely.
 
 #### Service account token
 
-Service accounts provide a more secure and automated way to interact with GitLab on behalf of the integration.
+A service account token is recommended for automated and secure integration with GitLab.
 
-- The service account should have `api` or `read_api` and '`read_api`' permissions.
-- It should belong to a GitLab user with sufficient access to the required resources (e.g., projects, groups).
-- Create the service account via [GitLab's service account setup guide](https://docs.gitlab.com/ee/user/profile/service_accounts/).
+To set up the account and generate a personal access token, see the GitLab [service account guide](https://docs.gitlab.com/ee/user/profile/service_accounts/).
 
-### Configure real-time webhook events
+- Add the service account to the relevant projects or groups with sufficient permissions (e.g., Developer or Maintainer).
 
-To enable real-time updates from GitLab, set the `baseUrl` parameter to the URL of your GitLab integration instance. This allows GitLab to send webhook events to the integration.
 
-With `baseUrl` configured, the integration automatically creates webhooks for each root group. It tracks events from all subgroups and projects within the root group's hierarchy.
-
-:::info Synchronization options
-If `baseUrl` is not set, you can sync data by:
-
-- Scheduling syncs using [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync)
-- Triggering manual syncs from Port’s UI
+:::info Required scopes
+The following scopes are required based on your usage.
+- To enable **real-time updates using webhooks**, the token must include the `api` scope (required for managing webhooks).
+- If you're **not using realtime updates**, the token needs `read_api` and `read_repository` scopes.
 :::
 
-#### Supported webhook events
+### Configure Realtime Webhook Events
 
-The integration listens for the following GitLab events and updates the corresponding Port entities:
+To enable real-time updates from GitLab, configure the `baseUrl` parameter with the URL of your GitLab instance.  
+This will allow GitLab to send webhook events to the integration.
 
-- **Groups**: `group_create`, `group_destroy`, `subgroup_create`, `subgroup_destroy`
-- **Projects**: `push`
-- **Members**: `user_add_to_group`, `user_remove_from_group`, `user_update_for_group`
-- **Issues**: `issue`
-- **Merge Requests**: `merge_request`
+Once the `baseUrl` is configured, the integration will automatically create webhooks for each root group. 
+It will track events from all subgroups and projects within the root group's hierarchy.
+
+:::info Synchronization Options
+If the `baseUrl` is not set, you can still sync data by:
+
+- Scheduling syncs using the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync)
+- Triggering manual syncs from the Port UI
+:::
 
 :::caution Network configuration
 Ensure that webhook traffic is allowed between GitLab and the integration instance. This is required for GitLab.com and self-managed instances.

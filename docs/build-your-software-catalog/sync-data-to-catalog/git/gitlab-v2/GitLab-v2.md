@@ -43,14 +43,10 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 Port allows you to fetch `JSON` and `YAML` files from your repositories, and create entities from them in your software catalog.  
 This is done using the `file` kind in your GitLab mapping configuration.
 
-For example, say you want to manage your `package.json` files in Port. One option is to create a `manifest` blueprint, with each of its entities representing a `package.json` file.
+For example, say you want to manage your `package.json` files in Port.  
+You will need to create a `manifest` blueprint, with each of its entities representing a `package.json` file.
 
-:::info Search Type  
-The `file` kind follows [GitLab's Advanced Search type](https://docs.gitlab.com/ee/user/search/advanced_search.html#:~:text=Advanced%20search%20is%20based%20on,Projects/), adhering to its syntax, limitations, and capabilities.
-:::
-
-The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
-
+The following configuration fetches all `package.json` files from `my-project` and `my-other-project`, and creates an entity for each of them, based on the `manifest` blueprint:
 
 ```yaml showLineNumbers
 resources:
@@ -62,15 +58,18 @@ resources:
         repos:
           # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
           - group/my-project
+          - group/my-other-project
+
 ```
 
 :::tip Test your mapping
-After adding the `file` kind to your mapping configuration, click on the `Resync` button. When you open the mapping configuration again, you will see real examples of files fetched from your GitLab organization.
+After adding the `file` kind to your mapping configuration, click on the `Resync` button.  
+When you open the mapping configuration again, you will see real examples of files fetched from your GitLab organization.
 
-This will help you see what data is available to use in your `jq` expressions.   
+This will help you see what data is available to use in your `jq` expressions.  
 Click on the `Test mapping` button to test your mapping against the example data.
 
-In any case, the structure of the available data looks like this:
+The structure of the available data is as follows:
 <details>
 <summary><b>Available data example (click to expand)</b></summary>
 
@@ -313,12 +312,13 @@ In any case, the structure of the available data looks like this:
 
 #### Create multiple entities from a single file
 
-In some cases, we would like to parse a single JSON/YAML file and create multiple entities from it.  
-For this purpose, we can use the `itemsToParse` key in our mapping configuration.
+In some cases, we want to parse a single JSON or YAML file and create multiple entities from it.  
+To do this, we can use the `itemsToParse` key in our mapping configuration.
 
-For example, say you want to track/manage a project's dependencies in Port. One option is to create a `package` blueprint, with each of its entities representing a dependency from a `package.json` file.
+For example, let's say we want to track or manage a project's dependencies in Port.  
+We’ll need to create a `package` blueprint, with each entity representing a dependency from a `package.json` file.
 
-The following configuration fetches a `package.json` file from a specific repository, and creates an entity for each of the dependencies in the file, based on the `package` blueprint:
+The following configuration fetches a `package.json` file from a specific repository and creates an entity for each dependency in the file, based on the `package` blueprint:
 
 ```yaml showLineNumbers
 resources:
@@ -346,8 +346,13 @@ resources:
           relations: {}
 ```
 
-The `itemsToParse` key is used to specify the path to the array of items you want to parse from the file. In this case, we are parsing the `dependencies` array from the `package.json` file.  
-Once the array is parsed, we can use the `item` key to refer to each item in the array.
+The `itemsToParse` key is used to specify the path to the array of items you want to parse from the file.  
+In this case, we are parsing the `dependencies` object from the `package.json` file.
+
+Once the object is parsed, we can use the `item` key to refer to each key-value pair within it — where the key is the dependency name, and the value is the version.
+
+This allows us to create an entity for each dependency dynamically.
+
 
 #### Multi-document YAML files
 
@@ -375,15 +380,13 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 
 For a list of known limitations with GitLab’s Advanced Search, see GitLab's [Advanced Search documentation](https://docs.gitlab.com/ee/user/search/advanced_search.html#known-issues).
 
-### Real-time updates
-
-The integration uses GitLab's Group-level webhooks to provide real-time updates. When configured, the integration automatically sets up webhooks at the group level to track changes across all projects within that group.
-
-Learn more about GitLab group webhooks in the [official documentation](https://docs.gitlab.com/user/project/integrations/webhooks/#group-webhooks).
-
 ## Examples
 
 Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+
+## GitOps
+
+Port's GitLab integration also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
 
 ## Relevant Guides
 
