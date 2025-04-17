@@ -242,7 +242,7 @@ In the following example you will ingest your GitLab members to Port, you may us
 </details>
 
 <details>
-<summary>Member configuration</summary>
+<summary> Integration configuration</summary>
 <MemberConfig />
 </details>
 
