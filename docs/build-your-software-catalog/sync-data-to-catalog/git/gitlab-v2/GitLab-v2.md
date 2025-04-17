@@ -63,6 +63,8 @@ resources:
 
 ```
 
+The `file` kind follows [GitLab's Advanced Search type](https://docs.gitlab.com/ee/user/search/advanced_search.html#:~:text=Advanced%20search%20is%20based%20on,Projects/), adhering to its syntax, limitations, and capabilities.
+
 :::tip Test your mapping
 After adding the `file` kind to your mapping configuration, click on the `Resync` button.  
 When you open the mapping configuration again, you will see real examples of files fetched from your GitLab organization.
