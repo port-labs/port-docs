@@ -25,9 +25,10 @@ import PipelineBlueprint from './example-pipelines/_gitlab_integration_example_p
 import JobBlueprint from './example-jobs/_gitlab_integration_example_job_blueprint.mdx'
 import PipelineJobConfig from './example-pipelines/_gitlab_integration_example_pipeline_job_config.mdx'
 
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
 
 # Examples
----
 
 ## Mapping groups
 
@@ -51,7 +52,7 @@ In the following example you will ingest your GitLab groups, subgroups and proje
 
 :::
 
----
+
 
 ## Mapping projects, README.md and merge requests
 
@@ -79,7 +80,7 @@ In the following example you will ingest your GitLab projects, their README.md f
 - Click [Here](https://docs.gitlab.com/ee/api/merge_requests.html#list-project-merge-requests) for the GitLab merge request object structure.
 :::
 
----
+
 
 ## Mapping projects and issues
 
@@ -109,7 +110,7 @@ In the following example you will ingest your GitLab projects and their issues t
 - Click [Here](https://docs.gitlab.com/ee/api/issues.html) for the GitLab issue object structure.
 :::
 
----
+
 
 ## Mapping files and file contents
 
@@ -129,7 +130,7 @@ You can use the following Port blueprint definitions and integration configurati
 The example will parse the `package.json` file in your repository and extract the dependencies into Port entities.  
 For more information about ingesting files and file contents, click [here](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/#ingest-files-from-your-repositories)
 
----
+
 
 ## Mapping projects and monorepos
 
@@ -181,7 +182,7 @@ You can also specify a different path for each monorepo repository, for example:
 
 :::
 
----
+
 
 ## Mapping projects and folders
 
@@ -231,6 +232,24 @@ resources:
 Primary email addresses are not available for GitLab "Free plan" users.
 :::
 
+<Tabs groupId="config" queryString="parameter">
+
+<TabItem label="Include Bot Members" value="includeBotMembers">
+
+GitLab allows the creation of tokens (bots) for automated tasks, which can be associated with groups or projects via access tokens.
+The `includeBotMembers` parameter is used to filter out bot members from the actual GitLab members.
+By default, this selector is set to `false`, which means the integration will only sync actual members.
+
+```yaml
+  - kind: group-with-members
+    selector:
+      query: 'true'
+      # highlight-next-line
+      includeBotMembers: false
+```
+</TabItem>
+
+</Tabs>
 
 ### Mapping members
 
@@ -246,7 +265,7 @@ In the following example you will ingest your GitLab members to Port, you may us
 <MemberConfig />
 </details>
 
----
+
 
 ### Mapping groups with members
 
@@ -269,7 +288,7 @@ In the following example you will ingest your GitLab groups and their members to
 - Click [Here](https://docs.gitlab.com/ee/api/members.html#list-all-members-of-a-group-or-project) for the GitLab project or group member object structure.
 
 :::
----
+
 
 ## Mapping projects, pipelines and jobs
 
@@ -299,4 +318,4 @@ In the following example you will ingest your GitLab projects, their pipelines a
 - Click [Here](https://docs.gitlab.com/ee/api/jobs.html#list-project-jobs) for the GitLab job object structure.
 
 :::
----
+
