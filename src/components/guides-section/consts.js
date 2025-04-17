@@ -975,6 +975,13 @@ export const availableGuides = [
         link: "/guides/all/open-github-issue",
     },
     {
+        title: "Remind service owners to update their catalog data",
+        description: "Set up a workflow that notifies service owners to ensure service catalog data is up to date",
+        tags: ["GitHub", "Actions", "Webhook", "Automations"],
+        logos: ["GitHub"],
+        link: "/guides/all/verify-service",
+    },
+    {
         title: "Ignore Snyk Vulnerability",
         description: "Create a self-service action that ignores a Snyk vulnerability",
         tags: ["Security","Snyk","Actions","Webhook"],
