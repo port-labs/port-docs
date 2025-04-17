@@ -54,7 +54,7 @@ The `baseUrl` parameter is used specifically to enable the real-time functionali
 If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
 :::
 
-In order for the Bitbucket Cloud integration to update the data in Port on every change in the Bitbucket Cloud repository, you need to specify the `baseUrl` parameter.
+In order for the Bitbucket Cloud integration to update the data in Port on every change in the Bitbucket Cloud workspace, you need to specify the `baseUrl` parameter.
 The `baseUrl` parameter should be set to the `url` of your Bitbucket Cloud integration instance. The `webhookSecret` parameter should also be set to a string of your choice so that the integration can verify the webhook requests.
 
 ## Deploy the integration
