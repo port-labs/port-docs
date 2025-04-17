@@ -37,7 +37,7 @@ Let's look at the advanced configuration parameters we can add to the [integrati
 <DeleteDependents/>
 
 - **Default**: `false` (disabled).  
-- **When to use**: Enable this flag if dependent entities should be deleted when the target entity is deleted.
+- **Use case**: Enable this flag if dependent entities should be deleted when the target entity is deleted.
 
 </TabItem>
 
