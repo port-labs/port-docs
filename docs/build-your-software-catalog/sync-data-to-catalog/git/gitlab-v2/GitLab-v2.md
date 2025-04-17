@@ -18,6 +18,7 @@ This integration allows you to:
 
 - Map and organize your GitLab resources and their metadata in Port (see supported resources below).
 - Track merge requests, issues, and project metrics.
+- Manage Port entities using GitOps.
 
 ### Supported resources
 
