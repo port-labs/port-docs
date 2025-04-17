@@ -3,9 +3,9 @@ displayed_sidebar: null
 description: Learn how to keep your service catalog data up to date with Port's automation and self-service features
 ---
 
-# Keep Service Catalog Data Up to Date
+# Remind service owners to update their catalog data
 
-This guide helps you set up a verification workflow that notifies service owners to update and verify their service details every three months, ensuring your data stays reliable and current.
+This guide helps you set up a verification workflow that notifies service owners to update and verify their service details every three months, ensuring that data stays reliable and current.
 
 ## Common use cases
 
@@ -21,94 +21,6 @@ This guide assumes the following:
 
 ## Set up data model
 
-In this setup, we will create or update the `Service` blueprint.      
-**Skip** to [update blueprint](#update-the-blueprint) if you already have the blueprint.
-
-
-### Create the blueprint
-Follow the steps below to **create** the `Service` blueprint:
-
-1. Go to the [Builder](https://app.getport.io/settings/data-model) in your Port portal.
-2. Click on "+ Blueprint".
-3. Click on the `{...}` button in the top right corner, and choose `Edit JSON`.
-4. Add this JSON schema:
-
-   <details>
-   <summary><b>Service blueprint (Click to expand)</b></summary>
-
-   ```json showLineNumbers
-    {
-    "identifier": "service",
-    "title": "Service",
-    "icon": "Github",
-    "schema": {
-        "properties": {
-        "readme": {
-            "title": "README",
-            "type": "string",
-            "format": "markdown",
-            "icon": "Book"
-        },
-        "url": {
-            "title": "URL",
-            "format": "url",
-            "type": "string",
-            "icon": "Link"
-        },
-        "language": {
-            "type": "string",
-            "title": "Language",
-            "icon": "Git"
-        },
-        "slack": {
-            "icon": "Slack",
-            "type": "string",
-            "title": "Slack",
-            "format": "url"
-        },
-        "tier": {
-            "title": "Tier",
-            "type": "string",
-            "description": "How mission-critical the service is",
-            "enum": [
-            "Mission Critical",
-            "Customer Facing",
-            "Internal Service",
-            "Other"
-            ],
-            "enumColors": {
-            "Mission Critical": "turquoise",
-            "Customer Facing": "green",
-            "Internal Service": "darkGray",
-            "Other": "yellow"
-            },
-            "icon": "DefaultProperty"
-        },
-        "is_verified": {
-            "type": "boolean",
-            "title": "Is Verified",
-            "description": "Whether the service data has been verified by the owner team"
-        },
-        "verification_ttl": {
-            "type": "string",
-            "title": "Verification TTL",
-            "format": "timer"
-        }
-        },
-        "required": []
-    },
-    "mirrorProperties": {},
-    "calculationProperties": {},
-    "aggregationProperties": {},
-    "relations": {}
-    }
-   ```
-
-   </details>
-
-5. Click "Save" to create the blueprint.
-
-### Update the blueprint
 Follow the steps below to **update** the `Service` blueprint:
 
 1. Navigate to the `Service` blueprint in your Port [Builder](https://app.getport.io/settings/data-model).
@@ -142,9 +54,9 @@ Follow the steps below to **update** the `Service` blueprint:
    ```
 
    </details>
+5. Click `Save` to update the blueprint.
 
-
-### Set up self-service action
+## Set up self-service action
 
 Follow these steps to create the self-service action that verifies the service and sets the verification timer to expire in 3 months:
 
@@ -192,14 +104,14 @@ Follow these steps to create the self-service action that verifies the service a
 
 Now you should see the `Verify Service` action in the self-service page. 🎉
 
-### Create an automation to update your catalog
+## Create an automation to update your catalog
 
 We’ll now set up two automations:
 
 - One to clear and set the verification status when the timer expires.
 - One to notify the service owner to re-verify the service.
 
-1. Automation to update service verification status
+### Automation to update service verification status
 
 When the verification timer property expires, this automation sets `is_verified` property as `false`. Follow the steps below to create this automation:
 
@@ -245,7 +157,7 @@ When the verification timer property expires, this automation sets `is_verified`
 Now when the verification timer (`Verification TTL`) of a service entity expires, the entity's `Verification Status` property in Port will be automatically updated.
 
 
-2. Automation to notify service owners
+### Automation to notify service owners
 
 When `is_verified` changes from `true` to `false`, this automation sends a Slack message to the service owners. Follow the steps below to create this automation:
 
@@ -305,7 +217,7 @@ When `is_verified` changes from `true` to `false`, this automation sends a Slack
 
 1. Observe a service entity whose verification timer has expired. The Slack message may look like this:
 
-<img src="/img/guides/serviceVerificationMessage.png" width="50%" border="1px" />
+    <img src="/img/guides/serviceVerificationMessage.png" width="50%" border="1px" />
 
 2. Follow the link in the Slack message to access the entity page.
 
