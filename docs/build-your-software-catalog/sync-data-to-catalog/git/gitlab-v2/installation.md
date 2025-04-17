@@ -51,7 +51,7 @@ To create a group access token, see the GitLab [group access token guide](https:
 
 #### Service account token
 
-A service account token is recommended for automated and secure integration with GitLab.
+A service account token is recommended where credentials must remain stable and unaffected by changes in human user membership.
 
 To set up the account and generate a personal access token, see the GitLab [service account guide](https://docs.gitlab.com/ee/user/profile/service_accounts/).
 
@@ -72,16 +72,12 @@ The `baseUrl` parameter is used specifically to enable the real-time functionali
 If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
 :::
 
-In order for the GitLab integration to update the data in Port on every change in the GitLab repository, you need to specify the `baseUrl` parameter.
-The `baseUrl` parameter should be set to the `url` of your GitLab integration instance. In addition, your GitLab instance (whether it is GitLab SaaS or a self-hosted version of GitLab) needs to have the option to send webhook requests to the GitLab integration instance, so please configure your network accordingly.
-
-
+ 
 ## Deploy the integration
 
 Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
-
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
@@ -115,7 +111,7 @@ initializePortResources: true
 scheduledResyncInterval: 120
 integration:
   identifier: my-ocean-gitlab-integration
-  type: gitlab
+  type: gitlab-v2
   eventListener:
     type: POLLING
   config:
@@ -240,7 +236,7 @@ jobs:
     steps:
       - uses: port-labs/ocean-sail@v1
         with:
-          type: 'gitlab'
+          type: 'gitlab-v2'
           port_client_id: ${{ secrets.OCEAN__PORT__CLIENT_ID }}
           port_client_secret: ${{ secrets.OCEAN__PORT__CLIENT_SECRET }}
           port_base_url: https://api.getport.io
@@ -282,7 +278,7 @@ pipeline {
                     ]) {
                         sh('''
                             #Set Docker image and run the container
-                            integration_type="gitlab"
+                            integration_type="gitlab-v2"
                             version="latest"
                             image_name="ghcr.io/port-labs/port-ocean-${integration_type}:${version}"
                             docker run -i --rm --platform=linux/amd64 \
@@ -327,7 +323,7 @@ variables:
 steps:
 - script: |
     # Set Docker image and run the container
-    integration_type="gitlab"
+    integration_type="gitlab-v2"
     version="latest"
     image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
     
@@ -365,7 +361,7 @@ default:
     - docker info
     
 variables:
-  INTEGRATION_TYPE: gitlab
+  INTEGRATION_TYPE: gitlab-v2
   VERSION: latest
 stages:
   - ingest
