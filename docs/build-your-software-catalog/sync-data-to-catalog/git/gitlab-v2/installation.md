@@ -64,7 +64,7 @@ The following scopes are required based on your usage.
 - If you're **not using realtime updates**, the token needs `read_api` and `read_repository` scopes.
 :::
 
-### Configure Realtime Webhook Events
+### Configure Realtime webhook events
 
 :::tip
 The `baseUrl` parameter is used specifically to enable the real-time functionality of the integration.

@@ -18,6 +18,7 @@ This integration allows you to:
 
 - Map and organize your GitLab resources and their metadata in Port (see supported resources below).
 - Track merge requests, issues, and project metrics.
+- Manage Port entities using GitOps.
 
 ### Supported resources
 
@@ -61,6 +62,8 @@ resources:
           - group/my-other-project
 
 ```
+
+The `file` kind follows [GitLab's Advanced Search type](https://docs.gitlab.com/ee/user/search/advanced_search.html#:~:text=Advanced%20search%20is%20based%20on,Projects/), adhering to its syntax, limitations, and capabilities.
 
 :::tip Test your mapping
 After adding the `file` kind to your mapping configuration, click on the `Resync` button.  
