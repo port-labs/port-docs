@@ -95,6 +95,8 @@ Since both of the valid `port.yml` formats follow the same structure, the follow
 
 <PortYmlStructure/>
 
+<PortYmlNullProperties/>
+
 ### Ingesting project file contents
 
 <BasicFileProperties/>

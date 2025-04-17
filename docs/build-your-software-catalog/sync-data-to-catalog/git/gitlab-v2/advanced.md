@@ -52,10 +52,17 @@ With the `enableMergeEntity` parameter, you can specify whether to use the [crea
 
 <TabItem value="createMissingRelatedEntities" label="Create missing related entities">
 
-When enabled, the `createMissingRelatedEntities` parameter allows automatic creation of missing related Port entities if they don't already exist in the software catalog.
+The `createMissingRelatedEntities` parameter enables automatic creation of placeholder entities in Port when they're referenced in relationships but don't yet exist in your software catalog.
 
-- **Default**: `false` (does not create missing related entities).  
-- **When to use**: Set to `true` if missing related entities should be created automatically.
+- **Default**: `false` (does not create missing related entities).
+- **When to use**: Enable this flag when you want the GitLab integration to automatically generate basic "skeleton" entities for any related entities referenced in your mappings that don't exist in Port yet.
+
+For example, if your merge request contains a relation to a service entity that doesn't exist in Port, enabling this setting will create a minimal service entity with just the required identifier properties. This is particularly useful when:
+
+- You're initially populating your software catalog and want to establish entity relationships quickly
+- Your GitLab resources reference entities that haven't been ingested from other sources yet
+
+Without this flag enabled, relations to non-existent entities will be ignored during the import process, potentially resulting in incomplete relationship data in your catalog.
 
 </TabItem>
 

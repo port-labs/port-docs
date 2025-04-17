@@ -1,10 +1,27 @@
 ```yaml showLineNumbers
 resources:
+  - kind: project
+    selector:
+      query: "true"
+    port:
+      entity:
+        mappings:
+          identifier: .path_with_namespace | gsub(" "; "")
+          title: .name
+          blueprint: '"service"'
+          properties:
+            url: .web_url
+            readme: file://README.md
+            description: .description
+            language: .__languages | to_entries | max_by(.value) | .key
+            namespace: .namespace.name
+            fullPath: .namespace.full_path
+            defaultBranch: .default_branch
   - kind: folder
     selector:
       query: "true"
       folders:
-        - path: "/" # Root level folders
+        - path: "/"  # Using "/" will ingest the folders from the root of each of repository as entities
           repos:
             # Replace with your repository's path_with_namespace
             - group/backend-service
@@ -20,4 +37,6 @@ resources:
               .repo.web_url + "/tree/" + .repo.default_branch + "/" +
               .folder.path
             readme: file://README.md
+          relations:
+            project: .references.full | gsub("!.+"; "")
 ```

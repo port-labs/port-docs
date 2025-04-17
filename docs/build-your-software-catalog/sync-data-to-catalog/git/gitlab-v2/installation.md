@@ -66,22 +66,15 @@ The following scopes are required based on your usage.
 
 ### Configure Realtime Webhook Events
 
-To enable real-time updates from GitLab, configure the `baseUrl` parameter with the URL of your GitLab instance.  
-This will allow GitLab to send webhook events to the integration.
+:::tip
+The `baseUrl` parameter is used specifically to enable the real-time functionality of the integration.
 
-Once the `baseUrl` is configured, the integration will automatically create webhooks for each root group. 
-It will track events from all subgroups and projects within the root group's hierarchy.
-
-:::info Synchronization Options
-If the `baseUrl` is not set, you can still sync data by:
-
-- Scheduling syncs using the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync)
-- Triggering manual syncs from the Port UI
+If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
 :::
 
-:::caution Network configuration
-Ensure that webhook traffic is allowed between GitLab and the integration instance. This is required for GitLab.com and self-managed instances.
-:::
+In order for the GitLab integration to update the data in Port on every change in the GitLab repository, you need to specify the `baseUrl` parameter.
+The `baseUrl` parameter should be set to the `url` of your GitLab integration instance. In addition, your GitLab instance (whether it is GitLab SaaS or a self-hosted version of GitLab) needs to have the option to send webhook requests to the GitLab integration instance, so please configure your network accordingly.
+
 
 ## Deploy the integration
 
