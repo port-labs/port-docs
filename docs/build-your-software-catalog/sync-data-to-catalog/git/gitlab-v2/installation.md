@@ -73,7 +73,8 @@ If it is not provided, the integration will continue to function correctly. In s
 :::
 
 In order for the GitLab integration to update the data in Port on every change in the GitLab repository, you need to specify the `baseUrl` parameter.
-The `baseUrl` parameter should be set to the `url` of your GitLab integration instance. In addition, your GitLab instance (whether it is GitLab SaaS or a self-hosted version of GitLab) needs to have the option to send webhook requests to the GitLab integration instance, so please configure your network accordingly.
+The `baseUrl` parameter should be set to the `url` of your GitLab integration instance.   
+In addition, your GitLab instance (whether it is GitLab SaaS or a self-hosted version of GitLab) needs to have the option to send webhook requests to the GitLab integration instance, so please configure your network accordingly.
 
 
 ## Deploy the integration
