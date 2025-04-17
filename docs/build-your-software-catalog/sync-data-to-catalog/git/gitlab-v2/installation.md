@@ -82,9 +82,6 @@ Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
-<TabItem value="hosted-by-port" label="Hosted by Port" default>
-<OceanSaasInstallation integration="GitLab_v2" />
-</TabItem>
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
