@@ -22,9 +22,13 @@ Once you install Port's GitHub app, the following blueprints will be created in 
 To add the CODEOWNERS blueprint:
 
 1.  Navigate to your [Port Builder](https://app.getport.io/settings/data-model) page.
+
 2. Click on the `+ Blueprint` button to create a new blueprint.
+
 3. Click on the `Edit JSON` button.
+
 4. Copy the definition below and paste it in the editor.
+
 5. Click `Save` to create the blueprint.
 
 <details>
@@ -62,17 +66,18 @@ To add the CODEOWNERS blueprint:
       "required": false,
       "many": true
     },
-    "service": {
-      "title": "Service",
-      "target": "service",
-      "required": false,
-      "many": false
-    },
     "teams": {
       "title": "Teams",
       "target": "githubTeam",
       "required": false,
       "many": true
+    },
+    "repository": {
+      "title": "Repository",
+      "description": "The repository which the CODEOWNERS file resides in",
+      "target": "githubRepository",
+      "required": true,
+      "many": false
     }
   }
 }
@@ -84,10 +89,15 @@ To add the CODEOWNERS blueprint:
 ## Set up mapping configuration
 
 1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
+
 2. Under `Exporters`, click on your desired GitHub organization.
+
 3. A window will open containing the default YAML configuration of your GitHub integration.
+
 4. Here you can modify the configuration to suit your needs, by adding/removing entries.
+
 5. Add the configuration below.
+
 6. When finished, click `Save & Resync` to apply any changes.
 
 <details>
@@ -102,12 +112,8 @@ resources:
         - path: '**/.github/CODEOWNERS'
     port:
       itemsToParse: >-
-        (. as $root
-        | .file.content
-        | split("\n")
-        | map(trim)
-        | map(select((test("^[[:space:]]*#") | not) and (length > 0)))
-        | map(
+        (. as $root | .file.content | split("\n") | map(trim) |
+        map(select((test("^[[:space:]]*#") | not) and (length > 0))) | map(
             (split(" ") | map(select(length > 0))) as $tokens
             | {
                 scope: ($tokens[0]), 
@@ -124,26 +130,31 @@ resources:
                   ),
                 teams: (
                     $tokens[1:]
-                    | map(select(contains("/"))
-                            | split("/")
-                            | .[-1]
-                          )
-                  )
-              }
+                    | map(select(test("^@[^ ]+/[^ ]+$"))
+                          | split("/")
+                          | .[-1]
+              ))
+            }
+            )
           )
-        )
       entity:
         mappings:
-          identifier: .item.identifier + "_codeowners"
+          identifier: .repo.full_name + "_" +.item.identifier + "_codeowners"
           title: .item.scope + " codeowners"
           blueprint: '"githubCodeowners"'
           properties:
             scope: .item.scope
             location: .file.path
           relations:
-            service: .repo.name
-            teams: .item.teams
+            repository: .repo.full_name
+            teams: 
+              combinator: '''and'''
+              rules:
+                - property: '"$title"'
+                  value: .item.teams
+                  operator: '"in"'
             users: .item.users
+
 ```
 
 </details>
