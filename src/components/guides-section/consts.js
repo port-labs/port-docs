@@ -981,4 +981,11 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/verify-service",
     },
+    {
+        title: "Track GitHub Branch Rules with Scorecards",
+        description: "Create a scorecard that tracks branch protection rules and enforces security policies",
+        tags: ["GitHub", "Scorecards", "Security"],
+        logos: ["GitHub"],
+        link: "/guides/all/setup-branch-protection-rules",
+    }
 ]
