@@ -982,7 +982,7 @@ export const availableGuides = [
         link: "/guides/all/verify-service",
     },
     {
-        title: "Track GitHub Branch Rules with Scorecards",
+        title: "Enforce Branch Protection Rules with Scorecards",
         description: "Create a scorecard that tracks branch protection rules and enforces security policies",
         tags: ["GitHub", "Scorecards", "Security"],
         logos: ["GitHub"],
