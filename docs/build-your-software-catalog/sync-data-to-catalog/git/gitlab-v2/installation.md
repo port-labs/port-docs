@@ -64,7 +64,7 @@ The following scopes are required based on your usage.
 - If you're **not using realtime updates**, the token needs `read_api` and `read_repository` scopes.
 :::
 
-### Configure Realtime Webhook Events
+### Configure Realtime webhook events
 
 To enable real-time updates from GitLab, configure the `baseUrl` parameter with the URL of your GitLab instance.  
 This will allow GitLab to send webhook events to the integration.
