@@ -1,0 +1,10 @@
+| Parameter | Description | Example | Required |
+| --------- | ----------- | ------- | -------- |
+| `OCEAN__INTEGRATION__CONFIG__GITLAB_TOKEN` | The GitLab access token used to authenticate with your GitLab instance | | ✅ |
+| `OCEAN__INTEGRATION__CONFIG__GITLAB_URL` | The URL of your GitLab instance (e.g., https://gitlab.com or your self-hosted URL) | | ✅ |
+| `OCEAN__BASE_URL` | The URL of your GitLab integration instance, used for real-time updates | | ❌ |
+| `OCEAN__PORT__CLIENT_ID` | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) id | | ✅ |
+| `OCEAN__PORT__CLIENT_SECRET` | Your Port client ([How to get the credentials](https://docs.port.io/build-your-software-catalog/custom-integration/api/#find-your-port-credentials)) secret | | ✅ |
+| `OCEAN__PORT__BASE_URL` | Your Port API URL - `https://api.getport.io` for EU, `https://api.us.getport.io` for US | | ✅ |
+| `OCEAN__INITIALIZE_PORT_RESOURCES` | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) | | ❌ |
+| `OCEAN__INTEGRATION__IDENTIFIER` | The identifier of the integration that will be installed | | ❌ |

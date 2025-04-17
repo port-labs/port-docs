@@ -1,0 +1,35 @@
+```json showLineNumbers
+{
+  "identifier": "gitlabFolder",
+  "title": "Folder",
+  "icon": "GitLab",
+  "schema": {
+    "properties": {
+      "url": {
+        "type": "string",
+        "title": "URL",
+        "format": "url",
+        "description": "Link to the folder in GitLab"
+      },
+      "readme": {
+        "type": "string",
+        "title": "README",
+        "format": "markdown",
+        "description": "Content of the folder's README file"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```

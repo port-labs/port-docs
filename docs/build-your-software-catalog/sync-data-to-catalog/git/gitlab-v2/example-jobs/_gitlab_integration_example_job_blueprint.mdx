@@ -1,0 +1,62 @@
+```json showLineNumbers
+{
+  "identifier": "gitlabJob",
+  "title": "GitLab Job",
+  "icon": "GitLab",
+  "schema": {
+    "properties": {
+      "creator": {
+        "type": "string",
+        "title": "Creator",
+        "description": "Name of the user who triggered the job"
+      },
+      "startedAt": {
+        "type": "string",
+        "title": "Started At",
+        "format": "date-time",
+        "description": "When the job started"
+      },
+      "updatedAt": {
+        "type": "string",
+        "title": "Updated At",
+        "format": "date-time",
+        "description": "When the job was last updated"
+      },
+      "finishedAt": {
+        "type": "string",
+        "title": "Finished At",
+        "format": "date-time",
+        "description": "When the job finished"
+      },
+      "stage": {
+        "type": "string",
+        "title": "Stage",
+        "description": "Pipeline stage this job belongs to"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "description": "Current status of the job"
+      },
+      "link": {
+        "type": "string",
+        "title": "Link",
+        "format": "url",
+        "description": "URL to the job in GitLab"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "pipeline": {
+      "title": "Pipeline",
+      "target": "gitlabPipeline",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
