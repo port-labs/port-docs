@@ -981,4 +981,11 @@ export const availableGuides = [
         logos: ["GitHub"],
         link: "/guides/all/verify-service",
     },
+    {
+        title: "Ignore Snyk Vulnerability",
+        description: "Create a self-service action that ignores a Snyk vulnerability",
+        tags: ["Security","Snyk","Actions","Webhook"],
+        logos: ["Snyk"],
+        link: "/guides/all/ignore-snyk-vulnerability",
+    }
 ]
