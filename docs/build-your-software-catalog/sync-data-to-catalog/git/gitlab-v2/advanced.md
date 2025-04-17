@@ -37,7 +37,7 @@ Let's look at the advanced configuration parameters we can add to the [integrati
 <DeleteDependents/>
 
 - **Default**: `false` (disabled).  
-- **When to use**: Enable this flag if dependent entities should be deleted when the target entity is deleted.
+- **Use case**: Enable this flag if dependent entities should be deleted when the target entity is deleted.
 
 </TabItem>
 
@@ -46,7 +46,7 @@ Let's look at the advanced configuration parameters we can add to the [integrati
 With the `enableMergeEntity` parameter, you can specify whether to use the [create/update](/build-your-software-catalog/custom-integration/api?operation=create-update#usage) or [create/override](/build-your-software-catalog/custom-integration/api?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
 
 - **Default**: `false` (uses create/override).  
-- **When to use**: Set to `true` to allow external sources to update some properties while GitLab remains the source of truth for others.
+- **Use case**: Set to `true` to allow external sources to update some properties while GitLab remains the source of truth for others.
 
 </TabItem>
 
@@ -55,14 +55,7 @@ With the `enableMergeEntity` parameter, you can specify whether to use the [crea
 The `createMissingRelatedEntities` parameter enables automatic creation of placeholder entities in Port when they're referenced in relationships but don't yet exist in your software catalog.
 
 - **Default**: `false` (does not create missing related entities).
-- **When to use**: Enable this flag when you want the GitLab integration to automatically generate basic "skeleton" entities for any related entities referenced in your mappings that don't exist in Port yet.
-
-For example, if your merge request contains a relation to a service entity that doesn't exist in Port, enabling this setting will create a minimal service entity with just the required identifier properties. This is particularly useful when:
-
-- You're initially populating your software catalog and want to establish entity relationships quickly
-- Your GitLab resources reference entities that haven't been ingested from other sources yet
-
-Without this flag enabled, relations to non-existent entities will be ignored during the import process, potentially resulting in incomplete relationship data in your catalog.
+- **Use case**: Enable this flag when you want the GitLab integration to automatically generate basic "skeleton" entities for any related entities referenced in your mappings that don't exist in Port yet.
 
 </TabItem>
 
