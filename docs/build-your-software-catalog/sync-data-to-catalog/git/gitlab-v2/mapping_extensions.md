@@ -6,7 +6,7 @@ import ProjectBlueprint from './example-projects/_gitlab_integration_example_pro
 
 # Mapping Extensions
 
-## Introduction
+## Overview
 
 The default way to map your data to Port is by using [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform your data to Port entities.
 
