@@ -63,31 +63,6 @@ In the following example you will ingest files from a specific repository. You w
 - Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-source/#api-repositories-workspace-repo-slug-src-commit-path-get) for the Bitbucket file object structure.
 :::
 
-### Capabilities and Limitations
-
-The following capabilities and limitations apply to the file mapping feature in the Bitbucket integration:
-
-- **Explicit Paths**: The integration supports explicit file paths relative to the repository root. Glob patterns (e.g., `*.yaml` or `**/*.json`) are not yet supported but the use of wildcard (`*`) in the path is supported. The wildcard character (`*`) will match any character sequence in the directory and subdirectories recursively.
-- **File Types**: Any plain-text or structured file (e.g., `.yaml`, `.json`, `.md`, `.py`) can be ingested.
-- **Filenames Structure**: Only the filename is required to be provided in the `filenames` array. The path to the file should be provided in the `path` field as described below. No wildcards or glob patterns are supported in the `filenames` array. The api strips all special characters from the filename.
-- **File Size**: Only files less than or equal to 320kb are indexed and can be ingested through the file kind feature.
-- **Path Structure**: Only relative paths from the repository root are currently supported. For example:
-  - ✅ Correct paths:
-    - `README.md`
-    - `integrations/*`
-    - `docs/getting-started.md`
-    - `src/config/default.json`
-    - `deployment/k8s/production.yaml`
-  - ❌ Incorrect paths:
-    - `/README.md` (leading slash)
-    - `C:/repo/config.json` (absolute path)
-    - `../other-repo/file.txt` (parent directory reference)
-    - `**/*.yaml` (glob pattern)
-- **Performance and Scope**: For optimal performance, we recommend limiting the number of tracked files per repository and the scope of the files to be ingested. We highly recommend using the `repo` selector to limit the scope of the files to be ingested. When `repo` list is not provided, the integration will attempt to ingest matching files throughout the workspace.
-- **File Tracking**: Each file specified in the configuration will be tracked as a separate entity in Port
-- **Change Detection**: We detect live changes to tracked files and updated them in your catalog in real-time in response to repository `push` events. The changes are also detected during resyncs as well.
-
-
 ## Mapping supported resources
 
 The above examples show specific use cases, but Port's Bitbucket integration supports other use cases as well. To adapt the examples shown above, use the Bitbucket API reference to learn about the available fields for the different supported objects:
