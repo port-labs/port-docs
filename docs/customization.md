@@ -1,15 +1,17 @@
 ---
 sidebar_position: 11
-title: Portal customization
-sidebar_label: Portal customization
+title: Customization & accessibility
+sidebar_label: Customization & accessibility
 sidebar_class_name: custom-sidebar-item sidebar-menu-customization
 ---
 
-# Portal customization
+# Customization & accessibility
 
 Port offers various customization options to help you tailor the developer portal to your organization's branding and style.
 
-## Change organization name & logo
+## Portal customization
+
+### Change organization name & logo
 
 The title and logo of the portal (in the top left corner) are set to "Port" by default.  
 
@@ -23,22 +25,50 @@ To change them:
    The previews will update automatically with your changes, one for light mode and one for dark mode.
 
    :::tip Title scope
-   This title is intended to be used for visual purposes, it will only affect the text in the top left corner of the portal.  
+   This title is intended for visual purposes, it will only affect the text in the top left corner of the portal.  
 
-   It is not related to the title & identifier of your organization (i.e. the name & id returned by the [Get ortanization details](/api-reference/get-organization-details) API endpoint).
+   It is not related to the title & identifier of your organization (i.e. the name & id returned by the [Get organization details](/api-reference/get-organization-details) API endpoint).
    :::
 
 4. Click on `Save`.
 
-### Limitations
+#### Limitations
 
 - The title is limited to 30 characters.
 - The logo URL must be a valid public link (e.g. `https://example.com/logo.png`).
 
-## Dark mode
+### Dark mode
 
 To change the theme of the portal to dark mode:
 
 1. Click on the user button in the top right corner of the portal.
 
 2. Click on `Theme` to toggle between light and dark mode.
+
+## Accessibility
+
+Port supports various hotkeys to help you navigate the portal using keyboard only.
+
+### Widget card navigation
+
+In dashboards, you can use `Shift + Alt/Option + ArrowLeft/ArrowRight` to jump between widget cards (wrapping around is supported).
+
+<img src="/img/customization/widgetNavigation.gif" border="1px" />
+
+### Table cell actions
+
+In tables, you can use `Ctrl/Cmd + C` to copy cell contents, and `Ctrl/Cmd + E` to edit or expand a cell.
+
+<img src="/img/customization/tableNavigation.gif" border="1px" />
+
+### Actions menu
+
+Some components have an actions menu that can be opened by clicking on the component and pressing `Shift + Return (Enter)`.
+
+This can also be used to drag/rearrange widgets in dashboards, or files/folders in the catalog sidebar:
+
+<img src="/img/customization/sidebarSort.gif" border="1px" />
+
+### Search
+
+Press `Ctrl/Cmd + K` to focus on the search bar.
