@@ -5,379 +5,200 @@ description: Learn how to connect GitHub Codeowners with service teams in Port, 
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Connect GitHub CODEOWNERS with Service, Team & User
 
-This guide shows you how to map CODEOWNERS file patterns in GitHub repositories (Service) to their respective Service, Team and User in port.
+This guide demostrates how to map CODEOWNERS file in GitHub repositories to their respective Service, Team and User blueprints in port.
 
 ## Prerequisites
-This guide assumes:
-- You have a Port account
-- You have installed [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) in your organisation or in repositories you are interested in.
-
-## GitHub configuration
-
-To ingest GitHub objects, use one of the following methods:
-
-<Tabs queryString="method">
-
-<TabItem label="Using Port's UI" value="port">
-
-To manage your GitHub integration configuration using Port:
-
-1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
-2. Under `Exporters`, click on your desired GitHub organization.
-3. A window will open containing the default YAML configuration of your GitHub integration.
-4. Here you can modify the configuration to suit your needs, by adding/removing entries.
-5. When finished, click `resync` to apply any changes.
-
-Using this method applies the configuration to all repositories that the GitHub app has permissions to.
-
-When configuring the integration **using Port**, the YAML configuration is global, allowing you to specify mappings for multiple Port blueprints.
-
-</TabItem>
-
-<TabItem label="Using GitHub" value="github">
-
-To manage your GitHub integration configuration using a config file in GitHub:
-
-1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
-2. Under `Exporters`, click on your desired GitHub organization.
-3. A window will open containing the default YAML configuration of your GitHub integration.
-4. Scroll all the way down, and turn on the `Manage this integration using the "port-app-config.yml" file` toggle.
-
-This will clear the configuration in Port's UI.
-
-When configuring the integration **using GitHub**, you can choose either a global or granular configuration:
-
-- **Global configuration:** create a `.github-private` repository in your organization and add the `port-app-config.yml` file to the repository.
-  - Using this method applies the configuration to all repositories that the GitHub app has permissions to (unless it is overridden by a granular `port-app-config.yml` in a repository).
-- **Granular configuration:** add the `port-app-config.yml` file to the `.github` directory of your desired repository.
-  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
-
-When using global configuration **using GitHub**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
-
-</TabItem>
-
-</Tabs>
-
-:::info Important
-When **using Port's UI**, the specified configuration will override any `port-app-config.yml` file in your GitHub repository/ies.
+- A Port account.
+- Install [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/#setup) in your organization or in repositories you are interested in.
+:::info Default Github Blueprints
+Once you install Port's GitHub app, the following blueprints will be automatically created in your data model: `Repository`, `Pull Request`, `Github User`, `Github Team`.
 :::
 
+## Set up data model
 
-## Setting up the blueprint and mapping configuration
+First, let's create the necessary <PortTooltip id="blueprint">blueprint</PortTooltip> to store the Codeowners data, then we will set up the mapping configuration.
 
-:::info Blueprints creation
-If you already have the `githubUser`, `githubTeam` and `service` blueprints created, you do not need to recreate them. Ensure to adjust the relations' targets as necessary.
-:::
+### Create the Codeowners blueprint
 
-<details>
-<summary><b>GitHub User Blueprint (Click to expand)</b></summary>
+To add the CODEOWNERS blueprint:
 
-```json showLineNumbers
-{
-  "identifier": "githubUser",
-  "title": "Github User",
-  "icon": "Microservice",
-  "schema": {
-    "properties": {},
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "user": {
-      "title": "User",
-      "target": "user",
-      "required": false,
-      "many": false
+1.  Navigate to your [data model](https://app.getport.io/settings/data-model) page of your portal.
+
+2. Click on the `+ Blueprint` button.
+
+3. Click on the `Edit JSON` button.
+
+4. Copy the following definition and paste it in the editor, then click `Save`:
+
+    <details>
+    <summary><b>CODEOWNERS blueprint (Click to expand)</b></summary>
+
+    ```json showLineNumbers
+    {
+      "identifier": "githubCodeowners",
+      "description": "This blueprint represents a CODEOWNERS file in a service",
+      "title": "Github Codeowners",
+      "icon": "Github",
+      "schema": {
+        "properties": {
+          "location": {
+            "type": "string",
+            "title": "File location",
+            "description": "File path to CODEOWNERS file"
+          },
+          "scope": {
+            "icon": "DefaultProperty",
+            "type": "string",
+            "title": "Scope",
+            "description": "The scope which the user/team owns."
+          }
+        },
+        "required": []
+      },
+      "mirrorProperties": {},
+      "calculationProperties": {},
+      "aggregationProperties": {},
+      "relations": {
+        "users": {
+          "title": "Users",
+          "target": "githubUser",
+          "required": false,
+          "many": true
+        },
+        "teams": {
+          "title": "Teams",
+          "target": "githubTeam",
+          "required": false,
+          "many": true
+        },
+        "repository": {
+          "title": "Repository",
+          "description": "The repository which the CODEOWNERS file resides in",
+          "target": "githubRepository",
+          "required": true,
+          "many": false
+        }
+      }
     }
-  }
-}
-```
+    ```
 
-</details>
-
-<details>
-<summary><b>GitHub User mapping configuration (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-resources:
-  - kind: user
-    selector:
-      query: "true"
-    port:
-      entity:
-        mappings:
-          identifier: .login
-          title: .login
-          blueprint: '"githubUser"'
-          relations:
-```
-
-</details>
-
-<details>
-<summary><b>GitHub Team Blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "githubTeam",
-  "title": "GitHub Team",
-  "icon": "Github",
-  "schema": {
-    "properties": {
-      "slug": {
-        "title": "Slug",
-        "type": "string"
-      },
-      "description": {
-        "title": "Description",
-        "type": "string"
-      },
-      "link": {
-        "title": "Link",
-        "icon": "Link",
-        "type": "string",
-        "format": "url"
-      },
-      "permission": {
-        "title": "Permission",
-        "type": "string"
-      },
-      "notification_setting": {
-        "title": "Notification Setting",
-        "type": "string"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
-```
-
-</details>
+    </details>
 
 
-<details>
-<summary><b>GitHub Team mapping configuration (Click to expand)</b></summary>
+### Set up mapping configuration
 
-```yaml showLineNumbers
-resources:
-  - kind: team
-    selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-    port:
-      entity:
-        mappings:
-          identifier: ".id | tostring"
-          title: .name
-          blueprint: '"githubTeam"'
-          properties:
-            name: .name
-            slug: .slug
-            description: .description
-            link: .html_url
-            permission: .permission
-            notification_setting: .notification_setting
-```
+1. Go to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 
-</details>
+2. Under `Exporters`, click on your desired GitHub organization.
 
+3. A window will open containing the default YAML configuration of your GitHub integration.
+
+4. In the bottom-left corner you can modify the configuration to suit your needs, by adding/removing entries.
+
+5. Copy the following configuration and paste it in the editor, then click `Save & Resync`:
+
+    <details>
+    <summary><b>CODEOWNERS mapping configuration (Click to expand)</b></summary>
+
+    ```yaml showLineNumbers
+    resources:
+      - kind: file
+        selector:
+          query: .repo.archived == false
+          files:
+            - path: '**/.github/CODEOWNERS'
+        port:
+          itemsToParse: >-
+            (. as $root | .file.content | split("\n") | map(trim) |
+            map(select((test("^[[:space:]]*#") | not) and (length > 0))) | map(
+                (split(" ") | map(select(length > 0))) as $tokens
+                | {
+                    scope: ($tokens[0]), 
+                    # Replacing ** and * characters since the identifier can't contain special characters
+                    identifier: ($tokens[0] 
+                              | gsub("\\*\\*"; "doublestar")
+                              | gsub("\\*"; "star")),
+                    # Extracting users and teams to their respective arrays
+                    users: (
+                        $tokens[1:]
+                        | map(select(contains("/") | not)
+                                | gsub("@" ; "")
+                              )
+                      ),
+                    teams: (
+                        $tokens[1:]
+                        | map(select(test("^@[^ ]+/[^ ]+$"))
+                              | split("/")
+                              | .[-1]
+                  ))
+                }
+                )
+              )
+          entity:
+            mappings:
+              identifier: .repo.full_name + "_" +.item.identifier + "_codeowners"
+              title: .item.scope + " codeowners"
+              blueprint: '"githubCodeowners"'
+              properties:
+                scope: .item.scope
+                location: .file.path
+              relations:
+                repository: .repo.full_name
+                teams: 
+                  combinator: '''and'''
+                  rules:
+                    - property: '"$title"'
+                      value: .item.teams
+                      operator: '"in"'
+                users: .item.users
+
+    ```
+
+    </details>
+  
+## Example
+
+For the following `CODEOWNERS` file example:
 
 <details>
-<summary><b>Service (GitHub Repository) Blueprint (Click to expand)</b></summary>
+<summary><b>CODEOWNERS file example (Click to expand)</b></summary>
 
-```json showLineNumbers
-{
-  "identifier": "service",
-  "title": "Service",
-  "icon": "Microservice",
-  "schema": {
-    "properties": {
-      "readme": {
-        "title": "README",
-        "type": "string",
-        "format": "markdown"
-      },
-      "url": {
-        "title": "Service URL",
-        "type": "string",
-        "format": "url"
-      },
-      "defaultBranch": {
-        "title": "Default branch",
-        "type": "string"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "relations": {}
-}
+``` showLineNumbers
+# Default owner for all files in the repo
+*                @sivanelk97 @sivan27
+
+# Backend ownership
+/backend/         @sivanelk97 @sivan-org/backend-team @sivan-org/docs-team
+
+# Frontend ownership (multiple owners)
+/frontend/        @sivanelk97
+
+# Specific file
+/README.md        @sivanelk97
+
+# JavaScript files in any folder
+**/*.js           @sivanelk97
+
+# Terraform files anywhere
+**/*.tf          @sivanelk97
+
+# CI/CD workflows
+.github/workflows/  @sivanelk97
+
+# Config files named 'config.yaml' in any folder
+**/config.yaml    @sivanelk97
+
+# Markdown documentation files
+*.md              @sivanelk97 @sivan27 @sivan-org/docs-team
 ```
 
 </details>
 
-<details>
-<summary><b>GitHub Service (Repository) mapping configuration (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-resources:
-  - kind: repository
-    selector:
-      query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-    port:
-      entity:
-        mappings:
-          identifier: ".name" # The Entity identifier will be the repository name.
-          title: ".name"
-          blueprint: '"service"'
-          properties:
-            readme: file://README.md # fetching the README.md file that is within the root folder of the repository and ingesting its contents as a markdown property
-            url: .html_url
-            defaultBranch: .default_branch
-```
-
-</details>
-
-<details>
-<summary><b>CODEOWNERS blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "githubCodeowners",
-  "description": "This blueprint represents a CODEOWNERS file in a service",
-  "title": "Github Codeowners",
-  "icon": "Github",
-  "schema": {
-    "properties": {
-      "location": {
-        "type": "string",
-        "title": "File location",
-        "description": "File path to CODEOWNERS file"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "service": {
-      "title": "Service",
-      "target": "service",
-      "required": false,
-      "many": false
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><b>CODEOWNERS Pattern mapping configuration (Click to expand)</b></summary>
-
-```yaml showLineNumbers
-resources:
-  - kind: file
-    selector:
-      query: .repo.archived == false
-      files:
-        - path: '**/.github/CODEOWNERS'
-    port:
-      itemsToParse: >-
-        [. as $root | .file.content | split("\n\n") | map( if (startswith("# ")
-        | not) then { component: $root.repo.name, patterns: [], teams: [. |
-        split(" ")[] | select(startswith("@")) | rtrimstr("\n") |
-        ltrimstr("\n")] } else split("\n") as $lines | { component: ($lines[0] |
-        ltrimstr("# ") | ltrimstr(" ")), patterns: ($lines[1:] | map(split("
-        ")[0])), teams: [($lines[1:] | map(split(" ")[1:] | join(" ")) | [.[] |
-        split(" ") | .[]] | unique)[] | select(startswith("@"))] } end
-        )[]]
-      entity:
-        mappings:
-          identifier: .item.component | gsub(" "; "_") | gsub("&"; "and") | gsub("-"; "")
-          title: .item.component
-          blueprint: '"githubCodeowners"'
-          properties:
-            codeowners_file_patterns: .item.patterns
-          relations:
-            service: .repo.name
-            owning_teams:
-              combinator: '''and'''
-              rules:
-                - property: '''github_team'''
-                  value: .item.teams
-                  operator: '"in"'
-```
-
-</details>
-
-<details>
-<summary><b>CODEOWNERS Pattern blueprint (Click to expand)</b></summary>
-
-```json showLineNumbers
-{
-  "identifier": "githubCodeownersPattern",
-  "description": "This blueprint represents a pattern in a CODEOWNERS file from a service",
-  "title": "Github Codeowners Pattern",
-  "icon": "Github",
-  "schema": {
-    "properties": {
-      "pattern": {
-        "type": "string",
-        "title": "File & Folder pattern",
-        "description": "Regex pattern depicting the folder or file the teams and users have access to"
-      }
-    },
-    "required": []
-  },
-  "mirrorProperties": {},
-  "calculationProperties": {},
-  "aggregationProperties": {},
-  "relations": {
-    "service": {
-      "title": "Service",
-      "target": "githubRepository",
-      "required": false,
-      "many": false
-    },
-    "user": {
-      "title": "Users",
-      "target": "githubUser",
-      "required": false,
-      "many": true
-    },
-    "codeownersFile": {
-      "title": "Codeowners File",
-      "target": "githubCodeowners",
-      "required": true,
-      "many": false
-    },
-    "team": {
-      "title": "Teams",
-      "target": "githubTeam",
-      "required": false,
-      "many": true
-    }
-  }
-}
-
-```
-
-</details>
-
-
-Add content to your `CODEOWNERS` file, then click on `Resync` and wait for the entities to be ingested in your Port environment.
+The [software catalog](https://app.getport.io/organization/catalog) **Codeowners page** should display the corresponding Codeowners entities:
 
 <img src='/img/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/gitHubCodeownersAfterIngestionIntoPort.png' border='1px' />
-<br />
-<img src='/img/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/gitHubCodeownersPatternAfterIngestionIntoPort.png' border='1px' />
 <br />
