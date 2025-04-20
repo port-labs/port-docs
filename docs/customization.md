@@ -53,13 +53,37 @@ Port supports various hotkeys to help you navigate the portal using keyboard onl
 
 In dashboards, you can use `Shift + Alt/Option + ArrowLeft/ArrowRight` to jump between widget cards (wrapping around is supported).
 
-<img src="/img/customization/widgetNavigation.gif" border="1px" />
+<!-- <img src="/img/customization/widgetNavigation.mp4" border="1px" /> -->
+
+<video controls autoPlay muted loop playsInline width="2560"
+  height="1440"
+  style={{
+    maxWidth: '100%',
+    height: 'auto',
+    display: 'block',
+    margin: '0 auto',
+    objectFit: 'cover',
+  }}>
+  <source src="/img/customization/widgetNavigation.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 ### Table cell actions
 
 In tables, you can use `Ctrl/Cmd + C` to copy cell contents, and `Ctrl/Cmd + E` to edit or expand a cell.
 
-<img src="/img/customization/tableNavigation.gif" border="1px" />
+<video controls autoPlay muted loop playsInline width="2560"
+  height="1440"
+  style={{
+    maxWidth: '100%',
+    height: 'auto',
+    display: 'block',
+    margin: '0 auto',
+    objectFit: 'cover',
+  }}>
+  <source src="/img/customization/tableNavigation.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 ### Actions menu
 
@@ -67,7 +91,18 @@ Some components have an actions menu that can be opened by clicking on the compo
 
 This can also be used to drag/rearrange widgets in dashboards, or files/folders in the catalog sidebar:
 
-<img src="/img/customization/sidebarSort.gif" border="1px" />
+<video controls autoPlay muted loop playsInline width="2560"
+  height="1440"
+  style={{
+    maxWidth: '100%',
+    height: 'auto',
+    display: 'block',
+    margin: '0 auto',
+    objectFit: 'cover',
+  }}>
+  <source src="/img/customization/sidebarSort.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 ### Search
 
