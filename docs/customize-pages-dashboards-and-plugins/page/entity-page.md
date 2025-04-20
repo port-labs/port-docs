@@ -74,11 +74,11 @@ The tab will display the entity's compliance status with each of its scorecards.
 
 ### Dashboard tabs
 
-You can add additional, customizable dashboard tabs to an entity page.
+You can add additional, customizable dashboard tabs to an entity page by clicking the `+` button.  
 Each dashboard tab name can be customized and edited.
 
 #### Limitations
-- You can add up to five dashboard tabs per entity page.
-- Dashboard tab names must be unique and are limited to a maximum of 30 characters.
+- You can add up to 5 dashboard tabs per entity page.
+- Dashboard tab names must be unique and are limited to 30 characters.
 
 
