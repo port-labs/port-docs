@@ -324,7 +324,8 @@ In the following example you will ingest your GitHub repositories, their release
 
 ## Map repositories and repository custom properties
 
-In the following example you will ingest your GitHub repositories and their custom properties to Port, you may use the following Port blueprint definitions `port-app-config.yml`:
+The following example shows how to ingest your GitHub repositories and their custom properties to Port.  
+You can use the following blueprint definitions and `port-app-config.yml`:
 
 <RepositoryCustomPropertiesBlueprint/>
 <RepositoryCustomPropertiesAppConfig/>
