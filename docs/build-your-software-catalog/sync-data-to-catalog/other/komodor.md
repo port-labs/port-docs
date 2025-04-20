@@ -173,7 +173,7 @@ Note the parameters specific to this integration, they are last in the table.
 | `integration.eventListener.type`        | The event listener type                                                                                                                                | ✅        |
 | `scheduledResyncInterval`               | The number of minutes between each resync                                                                                                              | ❌        |
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping                                          | ❌        |
-| `integration.secrets.komodorToken`      | The Komodor API [token](https://help.komodor.com/hc/en-us/articles/22434108566674-Using-the-Komodor-API).                                                           | ✅        |
+| `integration.secrets.komodorApiKey`     | The Komodor API key [token](https://help.komodor.com/hc/en-us/articles/22434108566674-Using-the-Komodor-API).                                          | ✅        |
 
 <br/>
 <AdvancedConfig/>
