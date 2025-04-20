@@ -6,7 +6,7 @@ description: Set up a Task Manager AI agent to help developers track and manage 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Set up a Task Manager AI agent
+# Set up the Task Manager AI agent
 
 ## Overview
 
@@ -53,9 +53,9 @@ For example:
 
 ### Create the agent configuration
 
-1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal
-2. Click on `+ AI Agent`
-3. Toggle `Json mode` on
+1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
+2. Click on `+ AI Agent`.
+3. Toggle `Json mode` on.
 4. Copy and paste the following JSON schema:
 
    <details>
@@ -67,17 +67,23 @@ For example:
      "title": "Task Manager",
      "icon": "Details",
      "properties": {
-       "description": "Helps developers manage their ongoing tasks",
+       "description": "Task Manager responsible for answering questions about Jira issues, services, and teams.",
        "status": "active",
        "allowed_blueprints": [
-         "service",
-         "_user",
          "jiraIssue",
+         "jiraProject",
+         "jiraUser",
+         "githubTeam",
          "githubPullRequest",
-         "_team"
+         "githubRepository",
+         "githubUser",
+         "_team",
+         "_user",
+         "service"
        ],
-       "prompt":"You are an expert in managing tasks and helping developers remain in a flow state. You can answer questions around priorities and ongoing tasks",
+       "prompt":"You are an agent responsible for answering questions about Jira issues, Pull Requests, and teams. ### Guidelines \n - Provide clear information about active issues (can be also reffered as open issues) \n - Identify pull requests that require attention (open pull requests)  \n - Identify connections between repositories, pull requests and issues to services",
        "execution_mode": "Approval Required",
+       "allowed_actions": [ "_createJiraIssue" ],
        "conversation_starters": [
          "Which tasks are assigned to me",
          "How many tasks are currently in progress",
@@ -88,7 +94,7 @@ For example:
    ```
    </details>
 
-5. Click on `Create` to save the agent
+5. Click on `Create` to save the agent.
 
 
 ## Interact with the Task Manager
@@ -104,17 +110,17 @@ Follow the step below to set it up:
 
 1. Go to the [homepage](https://app.getport.io/organization/home) of your portal
 
-2. Click on `+ Widget`
+2. Click on `+ Widget`.
 
-3. Choose `AI agent`
+3. Choose `AI agent`.
 
-4. Type **Task Manager** for `Title`
+4. Type **Task Manager** for `Title`.
 
-5. Select **Task Manager** from the `Agent` dropdown
+5. Select **Task Manager** from the `Agent` dropdown.
    
    <img src="/img/ai-agents/AIAgentsTaskManagerWidget.png" width="60%" border="1px" />
 
-6. Click on `Save` 
+6. Click on `Save`.
 
 Once the widget is set up, you can:
 
