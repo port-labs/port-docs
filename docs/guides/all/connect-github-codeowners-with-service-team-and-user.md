@@ -159,37 +159,46 @@ To add the CODEOWNERS blueprint:
     ```
 
     </details>
+  
+## Example
 
-
-The following is an example for `CODEOWNERS` file.
-Once you set up your codeowners file, click `Resync` to trigger the ingestion of the entities into your Port environment.
+For the following `CODEOWNERS` file example:
 
 <details>
 <summary><b>CODEOWNERS file example (Click to expand)</b></summary>
 
 ``` showLineNumbers
-# Global owners for the entire repository
-*        @org-name/global-team
+# Default owner for all files in the repo
+*                @sivanelk97 @sivan27
 
-# Documentation files
-/docs/   @org-name/docs-team @docsTeamLead
+# Backend ownership
+/backend/         @sivanelk97 @sivan-org/backend-team @sivan-org/docs-team
 
-# Frontend code ownership
-/frontend/   @org-name/frontend-team @frontendTeamLead
+# Frontend ownership (multiple owners)
+/frontend/        @sivanelk97
 
-# Backend code ownership
-/backend/   @org-name/backend-team @backendTeamLead
+# Specific file
+/README.md        @sivanelk97
 
-# Configuration files
-*.yml    @org-name/config-team
+# JavaScript files in any folder
+**/*.js           @sivanelk97
 
-# Scripts and utilities
-/scripts/ @org-name/ops-team @scriptsHandler
+# Terraform files anywhere
+**/*.tf          @sivanelk97
+
+# CI/CD workflows
+.github/workflows/  @sivanelk97
+
+# Config files named 'config.yaml' in any folder
+**/config.yaml    @sivanelk97
+
+# Markdown documentation files
+*.md              @sivanelk97 @sivan27 @sivan-org/docs-team
 ```
 
 </details>
 
-In your [software catalog](https://app.getport.io/organization/catalog), the Codeowners page will now display your Codeowners entities:
+The [software catalog](https://app.getport.io/organization/catalog) **Codeowners page** should display the corresponding Codeowners entities:
 
 <img src='/img/build-your-software-catalog/custom-integration/api/ci-cd/github-workflow/guides/gitHubCodeownersAfterIngestionIntoPort.png' border='1px' />
 <br />
