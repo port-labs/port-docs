@@ -10,45 +10,46 @@ import TabItem from "@theme/TabItem"
 
 ## Overview
 
-This guide will walk you through setting up a "Pull Request Enricher" AI agent in Port.  
-By the end of this guide, your developers will receive automated comments on their pull requests with additional context and risk assessment.
+This guide will walk you through enriching pull requests using our AI agents to boost your developers' productivity and reduce the time to review a PR. 
+By the end of this guide, developers will have summarized organizational context on their PRs, allowing faster review time.
 
 <img src="/img/ai-agents/AIAgentPREnricherPage.png" width="100%" border="1px" />
 
 ## Common use cases
 
-- Automatically comment on new pull requests with risk assessment
-- Provide additional context about related services and components
-- Alert about potential impacts on production systems
-- Suggest relevant reviewers based on code changes
+- Automatically comment on new pull requests with risk assessment.
+- Provide additional context about related services and components.
+- Alert about potential impacts on production systems.
+- Suggest relevant reviewers based on code changes.
 
 ## Prerequisites
 
 This guide assumes you have:
-- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature)
-- Appropriate permissions to create and configure AI agents
-- GitHub integration configured in your Port instance
+- A Port account with the [AI agents feature enabled](/ai-agents/overview#access-to-the-feature).
+- Appropriate permissions to create and configure AI agents.
+- [GitHub integration](/build-your-software-catalog/sync-data-to-catalog/git/github/) configured in your Port instance.
 
 ## Set up data model
 
-To create a Pull Request Enricher AI agent in Port, we'll need to configure:
-- The data sources it will use to analyze pull requests
-- The agent configuration that defines its capabilities
-- An automation to trigger the agent when new pull requests are opened
+First, we'll need to create the Pull Request Enricher AI agent in Port.
+We will need to configure:
+- The data sources it will use to analyze pull requests.
+- The agent configuration that defines its capabilities.
+- An automation to trigger the agent when new pull requests are opened.
 
 ### Configure data source access
 
 For this guide, we will be using **GitHub** as our primary data source, along with related services and components in your software catalog.
 
 Make sure you have:
-- [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) installed and configured
-- Your services and components properly mapped in Port
+- [Port's GitHub app](/build-your-software-catalog/sync-data-to-catalog/git/github/) installed and configured.
+- Your services and components properly mapped in Port.
 
 ### Create the agent configuration
 
-1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal
-2. Click on `+ AI Agent`
-3. Toggle `Json mode` on
+1. Go to the [AI Agents](https://app.getport.io/_ai_agents) page of your portal.
+2. Click on `+ AI Agent`.
+3. Toggle `Json mode` on.
 4. Copy and paste the following JSON schema:
 
    <details>
@@ -56,8 +57,8 @@ Make sure you have:
 
    ```json
    {
-     "identifier": "pr_assistant",
-     "title": "PR Assistant",
+     "identifier": "pr_assistant_ai_agent",
+     "title": "PR Review Assistant",
      "icon": "Pipeline",
      "properties": {
        "description": "Comment on open PRs with additional context to assist developers",
@@ -66,7 +67,7 @@ Make sure you have:
          "service",
          "githubPullRequest"
        ],
-       "prompt": "You are an automated bot acting as an experienced Technical Engineering Team Lead. Your primary function is to generate risk assessment. If you can, add emojis (green, yellow, red, and more for fun) 😃 Don't try to be precise, just put what you can.",
+       "prompt": "You are an experienced Technical Engineering Team Lead. Your primary function is to generate risk assessment. If you can, add emojis (green, yellow, red, and more for fun) 😃 Don't try to be precise, just put what you can.",
        "execution_mode": "Automatic"
      }
    }
@@ -79,9 +80,9 @@ Make sure you have:
 
 To automatically trigger the agent when a new pull request is opened, create a new automation:
 
-1. Go to the [Automations](https://app.getport.io/automations) page
-2. Click on `+ Automation`
-3. Toggle `Json mode` on
+1. Go to the [Automations](https://app.getport.io/automations) page.
+2. Click on `+ Automation`.
+3. Toggle `Json mode` on.
 4. Copy and paste the following JSON schema:
 
    <details>
@@ -109,7 +110,7 @@ To automatically trigger the agent when a new pull request is opened, create a n
      },
      "invocationMethod": {
        "type": "WEBHOOK",
-       "url": "https://api.getport.io/v1/agent/pr_assistant/invoke",
+       "url": "https://api.getport.io/v1/agent/pr_assistant_ai_agent/invoke",
        "synchronized": true,
        "body": {
          "prompt": "A new pull request has been opened. Please analyze it and provide a risk assessment. \n## PR Details\nTitle: {{ .event.diff.properties.title }}\nDescription: {{ .event.diff.properties.description }}\nRepository: {{ .event.diff.properties.repository }}\nAuthor: {{ .event.diff.properties.author }}",

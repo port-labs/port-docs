@@ -959,7 +959,7 @@ export const availableGuides = [
         link: "/guides/all/setup-task-manager-ai-agent",
     },
     {
-        title: "Set up a 'PR enricher' AI agent",
+        title: "Enrich pull requests using AI",
         description: "Set up an AI agent that automatically comments on pull requests with additional context",
         tags: ["AI","GitHub","Jira","PagerDuty"],
         logos: ["AI"],
