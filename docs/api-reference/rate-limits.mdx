@@ -47,8 +47,10 @@ Each API response includes headers that provide information about your current r
 ### Monitor Rate Limit Headers
 
 To prevent hitting rate limits, you should monitor the rate limit headers in your API responses.
+
 The `x-ratelimit-remaining` header shows how many requests you have left in the current window.
 When this number gets low, you should reduce your request frequency or implement a backoff strategy.
+
 The `x-ratelimit-reset` header tells you when the rate limit window will reset, which can help you plan when to resume normal request rates.
 
 ### Use Exponential Backoff
