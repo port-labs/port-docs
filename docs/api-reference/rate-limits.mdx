@@ -53,7 +53,7 @@ When this number gets low, you should reduce your request frequency or implement
 
 The `x-ratelimit-reset` header tells you when the rate limit window will reset, which can help you plan when to resume normal request rates.
 
-### Use Exponential Backoff
+### Use exponential backoff
 
 Exponential backoff is a technique used to prevent overwhelming a server with too many requests in a short period of time. It involves progressively increasing the delay between retries when encountering rate limits or server errors.
 
