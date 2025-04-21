@@ -56,8 +56,7 @@ The YAML configuration mapping will also be added to the [data sources](https://
 
 ### Ingest files from your repositories
 
-Port allows you to fetch `JSON` and `YAML` files from your repositories, and create entities from them in your software catalog.  
-This is done using the `file` kind in your Bitbucket mapping configuration.
+Port allows you to fetch `JSON` and `YAML` files from your repositories, and create entities from them in your software catalog. This is done using the `file` kind in your Bitbucket mapping configuration. Changes to the files are tracked through repository `push` events and periodic resyncs.
 
 For example, say you want to manage your `package.json` files in Port. One option is to create a `manifest` blueprint, with each of its entities representing a `package.json` file.
 
@@ -69,7 +68,7 @@ resources:
     selector:
       query: 'true'
       files:
-        # Note that glob patterns are not supported, so you can use only '*' wildcard to match multiple files
+        # Note that glob patterns are not supported, so you can use only '*' wildcard to match multiple directories and subdirectories
         path: '/*'
         filenames:
           - package.json
@@ -240,29 +239,40 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 ```
 :::
 
-#### Capabilities and Limitations
+#### Path Structure
 
-The following capabilities and limitations apply to the file mapping feature in the Bitbucket integration:
+Files are referenced using paths relative to the repository root. For example:
 
-- **Explicit Paths**: The integration supports explicit file paths relative to the repository root. Glob patterns (e.g., `*.yaml` or `**/*.json`) are not yet supported but the use of wildcard (`*`) in the path is supported. The wildcard character (`*`) will match any character sequence in the directory and subdirectories recursively.
-- **File Types**: Any plain-text or structured file (e.g., `.yaml`, `.json`, `.md`, `.py`) can be ingested.
-- **Filenames Structure**: Only the filename is required to be provided in the `filenames` array. The path to the file should be provided in the `path` field as described below. No wildcards or glob patterns are supported in the `filenames` array. The api strips all special characters from the filename.
-- **File Size**: Only files less than or equal to 320kb are indexed and can be ingested through the file kind feature.
-- **Path Structure**: Only relative paths from the repository root are currently supported. For example:
-  - ✅ Correct paths:
-    - `README.md`
-    - `integrations/*`
-    - `docs/getting-started.md`
-    - `src/config/default.json`
-    - `deployment/k8s/production.yaml`
-  - ❌ Incorrect paths:
-    - `/README.md` (leading slash)
-    - `C:/repo/config.json` (absolute path)
-    - `../other-repo/file.txt` (parent directory reference)
-    - `**/*.yaml` (glob pattern)
-- **Performance and Scope**: For optimal performance, we recommend limiting the number of tracked files per repository and the scope of the files to be ingested. We highly recommend using the `repo` selector to limit the scope of the files to be ingested. When `repo` list is not provided, the integration will attempt to ingest matching files throughout the workspace.
-- **File Tracking**: Each file specified in the configuration will be tracked as a separate entity in Port
-- **Change Detection**: We detect live changes to tracked files and updated them in your catalog in real-time in response to repository `push` events. The changes are also detected during resyncs as well.
+✅ Valid paths:
+- `/`
+- `integrations/*`
+- `docs/`
+- `src/config/`
+- `deployment/k8s/`
+
+❌ Invalid paths:
+- `/README.md` (leading slash)
+- `C:/repo/config.json` (absolute path)
+- `../other-repo/file.txt` (parent directory reference)
+- `**/*.yaml` (unsupported glob pattern)
+
+#### Best Practices
+
+For optimal performance and maintainability:
+
+- Limit the number of tracked files per repository
+- Use the `repos` selector to scope file ingestion to specific repositories
+- Use `skipParsing: true` for non-JSON/YAML files
+
+#### Limitations
+
+The following limitations apply to the file mapping feature in the Bitbucket integration:
+
+- **File Size**: Files must be 320kb or smaller to be ingested
+- **Path Patterns**: Only the `*` wildcard is supported in paths. Other glob patterns (e.g., `**/*.json`) are not supported
+- **Branch Support**: Only files from the default branch can be ingested
+- **Special Characters**: Special characters in filenames are automatically stripped by the API
+
 
 ## Permissions
 
