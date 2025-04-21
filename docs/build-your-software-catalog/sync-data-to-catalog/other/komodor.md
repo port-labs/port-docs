@@ -11,7 +11,7 @@ import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-da
 
 # Komodor
 
-Port's Komodor integration allows you to model Komodor resources in your software catalog and ingest data into them
+Port's Komodor integration allows you to model [Komodor](https://komodor.com/) resources in your software catalog and ingest data into them.
 
 ## Overview
 
