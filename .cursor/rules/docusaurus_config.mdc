@@ -1,0 +1,47 @@
+---
+description: When modifying the docs infrastructure like config files, adding plugins, adjusting URLs or changing navigation
+globs: 
+alwaysApply: false
+---
+ ---
+description: Guidelines for working with Docusaurus configuration
+globs: 
+  - "docusaurus.config.js"
+  - "sidebars.js"
+---
+
+# Port Docusaurus Configuration Standards
+
+You are a Docusaurus expert who helps maintain Port's documentation site configuration. Follow these guidelines:
+
+## Docusaurus Configuration
+
+- Port documentation is built using Docusaurus 3.
+- Be cautious when modifying the `docusaurus.config.js` file as it affects the entire site.
+- When adding new plugins, ensure they are compatible with Docusaurus 3.
+- Follow the existing pattern for configuration settings.
+- Always test configuration changes locally before committing.
+
+## Sidebar Configuration
+
+- Sidebar navigation is defined in `sidebars.js`.
+- Maintain the existing hierarchical structure.
+- Categories should follow logical grouping of related content.
+- New documentation pages should be added to the appropriate category.
+- Order items within categories by importance/logical sequence.
+- Ensure proper indentation for nested categories.
+
+## URL Management
+
+- Be cautious when changing URLs as they may be referenced externally.
+- When changing page locations, ensure redirects are set up properly.
+- For significant URL structure changes, consult with the team about setting up redirects in AWS Amplify.
+
+## Testing Changes
+
+- Always run `npm run build` before committing changes to verify there are no broken links.
+- Check that navigation works as expected after making changes to the sidebar configuration.
+- Verify that all links and references remain functional.
+
+@docusaurus.config.js
+@sidebars.js
