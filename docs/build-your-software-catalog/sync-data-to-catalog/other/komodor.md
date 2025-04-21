@@ -34,16 +34,15 @@ It is possible to modify the default mapping to references the fields in the API
 
 1. Log in to the [Komodor platfrom](https://app.komodor.com)
 2. Access API Keys management page:
-   - Click your user profile on the top-right corner of the platform.
-   - Select API Keys from the dropdown menu.
+   - Click on your user profile on the top-right corner of the platform.
+   - Select `API Keys` from the dropdown menu.
 3. Generate a new API key:
-   - Click the Generate Key button.
+   - Click the `Generate Key button`.
    - Provide a descriptive name for the API key to help you identify its purpose later (e.g., "Port.io api key").
 4. Copy the token and save it in a secure location.
 
-:::note
- Your api key will inherit the permissions of the user it is created by.
- Make sure that the user that created the key has view permissions for the resources you wish to ingest in Port (ideally full access). 
+:::info API key permissions
+Make sure the user who creates the API key has view permissions (ideally full access) for the resources you wish to ingest into Port, since the API key inherits the user's permissions. 
 :::
 
 ## Setup
