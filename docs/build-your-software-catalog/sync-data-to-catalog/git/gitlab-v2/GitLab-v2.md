@@ -3,7 +3,7 @@ import TabItem from "@theme/TabItem"
 
 import GitLabResources from './_gitlab_integration_supported_resources.mdx'
 
-# GitLab
+# GitLab v2 (beta)
 
 :::info GitLab v2 documentation
 This page documents the latest GitLab integration, released in April 2025.  
