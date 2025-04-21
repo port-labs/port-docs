@@ -857,13 +857,13 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
-## Creating relations between komodor service and Ports k8s exporter workload
+## Relating Komodor service and Port's k8s exporter workload
 
 #### Prequesites 
 
 - Have Komodor integration installed.
 - Have Port's k8s exporter integration installed on your cluster
-- Have komodor agent installed on your cluster
+- Have Komodor agent installed on your cluster
 
 1. In port, navigate to the komodor integration, and then click on it and scroll to the Mapping section
 2. Add the following mapping
