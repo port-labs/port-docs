@@ -11,6 +11,7 @@ import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configu
 import PortApiRegionTip from "/docs/generalTemplates/_port_region_parameter_explanation_template.md"
 import OceanSaasInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_saas_installation.mdx"
 import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-data-to-catalog/templates/_ocean_realtime_installation.mdx"
+import { OceanSaasLiveEventsDescription, OceanSaasLiveEventsTriggersManual, liveEvents } from "/src/components/ocean-saas-specifics/live-events.jsx";
 
 # Installation
 
@@ -81,8 +82,14 @@ Choose one of the following installation methods:
 
 <TabItem value="real-time-self-hosted" label="Real-time (self-hosted)">
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
 
+<OceanSaasLiveEventsDescription id="GitLab_v2"/>
+<div>
+<details>
+<summary><b>Supported live event triggers</b></summary>
+<OceanSaasLiveEventsTriggersManual id="GitLab_v2" isOAuth={false} />
+</details>
+</div>
 <h2>Prerequisites</h2>
 
 <Prerequisites />
@@ -92,7 +99,7 @@ For details about the available parameters for the installation, see the table b
 <Tabs groupId="deploy" queryString="deploy">
 <TabItem value="helm" label="Helm" default>
 
-<OceanRealtimeInstallation integration="GitLab" />
+<OceanRealtimeInstallation integration="GitLab_v2" />
 
 <PortApiRegionTip/>
 
