@@ -295,9 +295,10 @@ If the GitHub organization which will house your workflow is not the same as the
    First, ensure that you have a `.github/workflows` directory, then create a new file named `port-create-service.yml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` to your GitHub organization name):
 
     :::tip Using a different cookiecutter template
-    The following GitHub workflow example assumes that you will use the specified cookiecutter template.
+    The following GitHub workflow example assumes that you will use the specified cookiecutter template. (Using this [cookiecutter Github action](https://github.com/port-labs/cookiecutter-gha))
     If you would instead prefer to use a template from a private repository, replace the line in the template below with the following, ensuring to specify the GitHub org and repo name where instructed:  
     `cookiecutterTemplate: https://oauth2:$ORG_ADMIN_TOKEN@github.com/$<GITHUB-ORG-NAME>/$<TEMPLATE-REPO>.git`.  
+
     If the template GitHub repo is not within the same organization where this repo will be placed, please ensure you replace the `ORG_ADMIN_TOKEN` parameter with a token containing the same parameters used when you created the token in the previous step.
     :::
 
@@ -387,10 +388,6 @@ If the GitHub organization which will house your workflow is not the same as the
     ```
     
     </details>
-
-    :::tip Using Port's cookiecutter GitHub action
-    This workflow uses Port's [cookiecutter Github action](https://github.com/port-labs/cookiecutter-gha) to scaffold the new repository.
-    :::
 
 </TabItem> 
 
