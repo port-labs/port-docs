@@ -24,6 +24,19 @@ This integration allows you to:
 - Map and organize your desired Datadog resources and their metadata in Port (see supported resources below).
 - Watch for Datadog object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
 
+## BaseUrl & Webhook Configuration
+
+:::warning AppHost deprecation
+**`integration.config.appHost` is deprecated**: Please use `baseUrl` for webhook URL settings instead.
+:::
+
+The `baseUrl` parameter enables real-time updates from Datadog to Port. If not provided:
+- The integration will still function normally
+- You'll need to use [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) for updates
+- Manual resyncs can be triggered via Port's UI
+
+The `integration.secrets.webhookSecret` parameter secures your webhooks. If not provided, the integration will process webhooks without validating the source of the events.
+
 ### Supported Resources
 
 - [`Monitor`](https://docs.datadoghq.com/api/latest/monitors/#get-all-monitor-details)
@@ -171,15 +184,14 @@ This table summarizes the available parameters for the installation.
 | `integration.secrets.datadogApiKey`         | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)                                                                                                                                                          |                                  | ✅        |
 | `integration.secrets.datadogApplicationKey` | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)                                                                                                                                                            |                                  | ✅        |
 | `integration.config.datadogBaseUrl`         | The base Datadog host. Defaults to https://api.datadoghq.com. If in EU, use https://api.datadoghq.eu                                                                                                                                                                                           |                                  | ✅        |
-| `integration.secrets.datadogWebhookToken`   | Datadog webhook token. Learn [more](https://docs.datadoghq.com/integrations/webhooks/#setup)                                                                                                                                                                                                   |                                  | ❌        |
-| `integration.config.appHost`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                                                                                                                                                                          | https://my-ocean-integration.com | ✅        |
+| `integration.secrets.webhookSecret`   | Webhook secret for authenticating incoming events. [Learn more](https://docs.datadoghq.com/integrations/webhooks/#setup)                                                                                                                                                                                                   |                                  | ❌        |
+| `baseUrl`                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                                                                                                                                                                          | https://my-ocean-integration.com | ❌        |
+| `integration.config.appHost`(deprecated)                | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in Datadog                                                                                                                                                                          | https://my-ocean-integration.com | ❌         |
 | `integration.eventListener.type`            | The event listener type. Read more about [event listeners](https://ocean.getport.io/framework/features/event-listener)                                                                                                                                                                         |                                  | ✅        |
 | `integration.type`                          | The integration to be installed                                                                                                                                                                                                                                                                |                                  | ✅        |
 | `scheduledResyncInterval`                   | The number of minutes between each resync. When not set the integration will resync for each event listener resync event. Read more about [scheduledResyncInterval](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) |                                  | ❌        |
 | `initializePortResources`                   | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources)       |                                  | ❌        |
 | `sendRawDataExamples`                       | Enable sending raw data examples from the third party API to port for testing and managing the integration mapping. Default is true                                                                                                                                                            |                                  | ❌        |
-
-
 <br/>
 
 <AdvancedConfig/>
@@ -207,7 +219,7 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `config -> datadog_base_url`        | US: https://api.datadoghq.com EU: https://api.datadoghq.eu                                                                                                                                                                                                                               |         | ✅        |
 | `config -> datadog_api_key`         | Datadog API key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token)                                                                                                                                                    |         | ✅        |
 | `config -> datadog_application_key` | Datadog application key, docs can be found [here](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys)                                                                                                                                                      |         | ✅        |
-| `config -> datadog_webhook_token`   | Datadog webhook token. Learn [more](https://docs.datadoghq.com/integrations/webhooks/#setup)                                                                                                                                                                                             |         | ❌        |
+| `config -> webhook_secret`   | Webhook secret. Learn [more](https://docs.datadoghq.com/integrations/webhooks/#setup)                                                                                                                                                                                             |         | ❌        |
 | `initialize_port_resources`         | Default true, When set to true the integration will create default blueprints and the port App config Mapping. Read more about [initializePortResources](https://ocean.getport.io/develop-an-integration/integration-configuration/#initializeportresources---initialize-port-resources) |         | ❌        |
 | `identifier`                        | The identifier of the integration that will be installed                                                                                                                                                                                                                                 |         | ❌        |
 | `version`                           | The version of the integration that will be installed                                                                                                                                                                                                                                    | latest  | ❌        |`

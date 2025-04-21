@@ -7,8 +7,7 @@ resources:
   - kind: group-with-members # replace with `project-with-members` to retrieve members from projects
     selector:
       query: 'true'
-      includeBotMembers: 'true'
-      includeInheritedMembers: 'true'
+      includeVerboseMemberObject: 'true'
     port:
       itemsToParse: .__members
       entity:

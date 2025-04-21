@@ -404,9 +404,8 @@ on:
         type: array
         required: false
       port_context:
-        description: Details of the action and general port_context (blueprint, run ID, etc...).
+        description: Details of the action and general port_context (blueprint, run ID, entity identifier from Port, etc...).
         required: true
-        description: includes blueprint, run ID, and entity identifier from Port.
 
 jobs:
   open-slack-channel:
