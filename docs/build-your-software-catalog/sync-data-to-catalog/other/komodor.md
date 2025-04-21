@@ -11,43 +11,41 @@ import OceanRealtimeInstallation from "/docs/build-your-software-catalog/sync-da
 
 # Komodor
 
-Port's Komodor integration allows you to model Komodor resources in your software catalog and ingest data into them
+Port's Komodor integration allows you to model [Komodor](https://komodor.com/) resources in your software catalog and ingest data into them.
 
 ## Overview
 
-This integation allows you to:
-
-- Map, organize, and sync your desired Komodor resources and their metadata in Port (See supported resources below)
-- Sync your Komodor resources and their metadata to Port
+This integration allows you to map, organize, and sync your desired Komodor resources and their metadata in Port. (See supported resources below)
 
 ### Supported Resources
 
-The resources that can be ingestd into Port are listed below.
-It is possible to modify the default mapping to references the fields in the API response, Dependent on your needs.
+The resources that can be ingested from Komodor into Port are listed below:
 
-- [Services](https://api.komodor.com/api/docs/index.html#/Services/post_api_v2_services_search)
-- [Health Monitoring](https://help.komodor.com/hc/en-us/categories/22390793120274-Health-Management)
+ - [`Services`](https://api.komodor.com/api/docs/index.html#/Services/post_api_v2_services_search)
+ - [`Health Monitoring`](https://help.komodor.com/hc/en-us/categories/22390793120274-Health-Management)
 
 ## Prerequisites
 
-### [Generate a Komodor Api Key](https://help.komodor.com/hc/en-us/articles/22434108566674-Using-the-Komodor-API)
+### Generate a Komodor Api Key
 
 1. Log in to the [Komodor platfrom](https://app.komodor.com)
 2. Access API Keys management page:
    - Click on your user profile on the top-right corner of the platform.
    - Select `API Keys` from the dropdown menu.
 3. Generate a new API key:
-   - Click the `Generate Key button`.
+   - Click the `Generate Key` button.
    - Provide a descriptive name for the API key to help you identify its purpose later (e.g., "Port.io api key").
 4. Copy the token and save it in a secure location.
 
+To read more, see the [Komodor documentation](https://help.komodor.com/hc/en-us/articles/22434108566674-Using-the-Komodor-API).
+
 :::info API key permissions
-Make sure the user who creates the API key has view permissions (ideally full access) for the resources you wish to ingest into Port, since the API key inherits the user's permissions. 
+Make sure the user who creates the API key has view permissions (ideally full access) for the resources you wish to ingest into Port, since the API key inherits the user's permissions.
 :::
 
 ## Setup
 
-Choose the desired installation method:
+Choose one of the following installation methods:
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
@@ -387,7 +385,7 @@ Port integrations use a [YAML mapping block](/build-your-software-catalog/custom
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
 ## Examples
-
+Examples of blueprints and the relevant integration configurations:
 ### Services
 
 <details>
@@ -633,7 +631,7 @@ This section includes a sample response data from Komodor. In addition, it inclu
 
 ### Payload
 
-Here is an example of the payload structure from Komodor, Any variable is in capital for ease of reading:
+Here is an example of the payload structure from Komodor. All variables are written in uppercase letters for improved readability:
 
 <details>
 <summary>Service response data</summary>
