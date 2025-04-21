@@ -63,9 +63,11 @@ This can be useful if you are looking to restrict account access only to users j
 
 ### How the IP restriction works
 
-With the IP restriction feature, you can define a set of allowed IP addresses on your account. Any user attempting to log in with an IP address that does not match an address on the allowed list will receive an error and they will not have the ability to proceed.
+With the IP restriction feature, you can define a set of allowed IP addresses on your account. Any user attempting to log to Port's UI in with an IP address that does not match an address on the allowed list will receive an error and they will not have the ability to proceed.
 
-The same applies to API requests made to Port's API (either by a user, script or self-hosted integration) - requests made from an IP address that does not match an address on the allowed list will receive an error and the request will fail.
+The same applies to API requests made to Port's API - `api.getport.io` or `api.port.io` (either by a user, script or self-hosted integration) - requests made from an IP address that does not match an address on the allowed list will receive an error and the request will fail.
+
+Both when using Port's UI and when making an API request from an IP address which is not allowed, the user will receive a `403` status code and the following error message: `IP not whitelisted. Found x-forwarded-for header: <SOURCE_IP>, orgId: <ORG_ID>`
 
 ### Providing the IP restriction list
 
