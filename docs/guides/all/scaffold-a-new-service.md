@@ -1262,7 +1262,7 @@ Head back to the [Self-service page](https://app.getport.io/self-serve) of your 
     
     </Tabs>  
 
-4. Click `Execute`. On the top right corner of the page,  click on <img src="/img/guides/icons/dark/AuditLog-dark.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button to view the action's progress.
+4. Click `Execute`. On the top right corner of the page,  click on the <img src="/img/icons/auditLogButton.svg" style={{"vertical-align": "text-top"}} className="not-zoom" /> button to view the action's progress.
 
 5. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
 
