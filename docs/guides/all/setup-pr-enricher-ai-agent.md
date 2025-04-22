@@ -71,7 +71,7 @@ Make sure you have:
          "_user",
          "_team"
        ],
-       "prompt": "You are an experienced Technical Engineering Team Lead. Your primary function is to generate risk assessment. If you can, add emojis (green, yellow, red, and more for fun) 😃 Don't try to be precise, just put what you can.",
+       "prompt": "You are an experienced Technical Engineering Team Lead. Your job is to enrich pull requests with helpful context for reviewers. Based on the linked Jira issue, the author, and their team, write a short risk assessment: what’s changed, what could break, and anything worth a second look. Add fun, clear emojis (✅🟡🔴, etc.) to highlight risk levels. No need to be exact—just provide quick, useful insights to speed up review.",
        "execution_mode": "Automatic"
      }
    }
