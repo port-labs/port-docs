@@ -53,11 +53,6 @@ Pay attention to relationships between entities to ensure your agent can provide
 
 ### Step 3: Configure actions (optional)
 
-:::info Limitations
-It's important to note that an AI agent cannot both run actions and answer questions simultaneously. For instance, asking "Who is the owner of this component?" and then perform an action like, "Please notify the owner to review PR X". To achieve this, you'll need to set up a workflow that involves multiple agents or rely on our agent router. Test these scenarios catefully.
-:::
-
-
 If your agent needs to run actions, you will need to:
 
 1. Get the action identifier from the [self-service](https://app.getport.io/self-serve) page.
