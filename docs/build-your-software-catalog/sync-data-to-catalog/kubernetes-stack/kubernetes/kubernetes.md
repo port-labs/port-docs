@@ -16,7 +16,7 @@ Port's Kubernetes integration allows you to model Kubernetes resources in your s
 
 <center>
 
-<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-exporter-illustration.png" width="70%"/>
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/k8s-exporter-illustration.png" width="70%"/>
 
 </center>
 
@@ -1908,7 +1908,7 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 Port provides several pre-built templates to help you quickly get started with common Kubernetes use cases. These templates include pre-configured blueprints, mapping configurations, and setup instructions.
 
-Check out the [templates page](/build-your-software-catalog/sync-data-to-catalog/kubernetes/templates/) to find the template that best fits your needs.
+Check out the [templates page](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/templates/) to find the template that best fits your needs.
 
 ## Relevant Guides
 
