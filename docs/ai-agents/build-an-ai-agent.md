@@ -36,7 +36,7 @@ Here we will determine whether the agent will:
 
 We recommend starting with a simple use case that a junior assistant with access to your data could assist with. 
 
-<!--  For inspiration, check our [AI agents guides](/guides). -->
+For inspiration, check our [AI agents guides](/guides?tags=AI).
 
 ### Step 2: Configure data access
 
