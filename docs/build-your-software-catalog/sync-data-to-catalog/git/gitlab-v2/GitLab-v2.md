@@ -1,50 +1,39 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# GitLab
+import GitLabResources from './_gitlab_integration_supported_resources.mdx'
 
-Port's GitLab integration allows you to model GitLab resources in your software catalog and ingest data into them.
+# GitLab v2 (beta)
 
-:::warning Deprecation notice
-This integration will be deprecated in the future and support for it will be discontinued soon.
-
-To integrate Port with GitLab, we recommend using the [GitLab V2 integration](/build-your-software-catalog/sync-data-to-catalog/git/gitlab-v2/).
+:::info GitLab v2 documentation
+This page documents the latest GitLab integration, released in April 2025.  
+For documentation of the previous integration, check out the [GitLab](/build-your-software-catalog/sync-data-to-catalog/git/gitlab/) page.  
 :::
+
+Port's GitLab-v2 integration allows you to model GitLab resources in your software catalog and ingest data into them.
 
 ## Overview
 
 This integration allows you to:
 
-- Map and organize your desired GitLab resources and their metadata in Port (see supported resources below).
-- Watch for GitLab object changes (create/update/delete) in real-time, and automatically apply the changes to your software catalog.
+- Map and organize your GitLab resources and their metadata in Port (see supported resources below).
+- Track merge requests, issues, and project metrics.
 - Manage Port entities using GitOps.
 
-### Supported Resources
+### Supported resources
 
 The resources that can be ingested from GitLab into Port are listed below.  
 It is possible to reference any field that appears in the API responses linked below in the mapping configuration.
 
-- [`project`](https://docs.gitlab.com/ee/api/projects.html#get-single-project)
-- [`merge-request`](https://docs.gitlab.com/ee/api/merge_requests.html#get-single-mr)
-- [`issue`](https://docs.gitlab.com/ee/api/issues.html#get-single-issue)
-- [`pipeline`](https://docs.gitlab.com/ee/api/pipelines.html#get-a-single-pipeline)
-- [`group`](https://docs.gitlab.com/ee/api/groups.html#details-of-a-group)
-- [`file`](https://docs.gitlab.com/ee/api/repository_files.html#get-file-from-repository)
-- [`members`](https://docs.gitlab.com/ee/api/members.html#list-all-members-of-a-group-or-project)
-
+<GitLabResources/>
 
 ## Setup
 
 To install Port's GitLab integration, see the [installation](./installation.md#setup) page.
 
-:::info Permission
-Port's GitLab integration requires a group access token with the `api` scope.
-To create a group access token, follow the instructions in the [installation](./installation.md#creating-a-gitlab-group-access-token) guide
-:::
-
 ## Configuration
 
-Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party api into Port.
+Port integrations use a [YAML mapping block](/build-your-software-catalog/customize-integrations/configure-mapping#configuration-structure) to ingest data from the third-party API into Port.
 
 The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the integration API.
 
@@ -52,16 +41,13 @@ The mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/m
 
 ### Ingest files from your repositories
 
-Port allows you to fetch `JSON` and `YAML` files from your repositories, and create entities from them in your software catalog.  
+Port allows you to fetch `JSON` and `YAML` files from your repositories, and create entities from them in your software catalog.    
 This is done using the `file` kind in your GitLab mapping configuration.
 
-For example, say you want to manage your `package.json` files in Port. One option is to create a `manifest` blueprint, with each of its entities representing a `package.json` file.
+For example, say you want to manage your `package.json` files in Port.  
+You will need to create a `manifest` blueprint, with each of its entities representing a `package.json` file.
 
-:::info Search Type  
-The `file` kind follows [GitLab's Advanced Search type](https://docs.gitlab.com/ee/user/search/advanced_search.html#:~:text=Advanced%20search%20is%20based%20on,Projects/), adhering to its syntax, limitations, and capabilities.
-:::
-
-The following configuration fetches all `package.json` files from "MyRepo" and "MyOtherRepo", and creates an entity for each of them, based on the `manifest` blueprint:
+The following configuration fetches all `package.json` files from `my-project` and `my-other-project`, and creates an entity for each of them, based on the `manifest` blueprint:
 
 ```yaml showLineNumbers
 resources:
@@ -69,33 +55,24 @@ resources:
     selector:
       query: 'true'
       files:
-        # Note that glob patterns are supported, so you can use wildcards to match multiple files
         path: '**/package.json'
-        # The `repos` key can be used to filter the repositories from which the files will be fetched. 
-        # Remove the `repos` key if you want to fetch files from all repository
         repos:
-          # The repository NAME should be used here, not the URL slug, e.g. "Repo Name" not "repo-name"
-          - "MyRepoName"
-          - "MyOtherRepoName"
-    port:
-      entity:
-        mappings:
-          identifier: .file.file_path
-          title: .file.file_name
-          blueprint: '"manifest"'
-          properties:
-            project_name: .file.content.name
-            project_version: .file.content.version
-            license: .file.content.license
+          # Replace with your repository's path_with_namespace (e.g., "group/project" or "group/subgroup/project")
+          - group/my-project
+          - group/my-other-project
+
 ```
 
-:::tip Test your mapping
-After adding the `file` kind to your mapping configuration, click on the `Resync` button. When you open the mapping configuration again, you will see real examples of files fetched from your GitLab organization.
+The `file` kind follows [GitLab's Advanced Search type](https://docs.gitlab.com/ee/user/search/advanced_search.html#:~:text=Advanced%20search%20is%20based%20on,Projects/), adhering to its syntax, limitations, and capabilities.
 
-This will help you see what data is available to use in your `jq` expressions.   
+:::tip Test your mapping
+After adding the `file` kind to your mapping configuration, click on the `Resync` button.  
+When you open the mapping configuration again, you will see real examples of files fetched from your GitLab organization.
+
+This will help you see what data is available to use in your `jq` expressions.  
 Click on the `Test mapping` button to test your mapping against the example data.
 
-In any case, the structure of the available data looks like this:
+The structure of the available data is as follows:
 <details>
 <summary><b>Available data example (click to expand)</b></summary>
 
@@ -338,12 +315,13 @@ In any case, the structure of the available data looks like this:
 
 #### Create multiple entities from a single file
 
-In some cases, we would like to parse a single JSON/YAML file and create multiple entities from it.  
-For this purpose, we can use the `itemsToParse` key in our mapping configuration.
+In some cases, we want to parse a single JSON or YAML file and create multiple entities from it.  
+To do this, we can use the `itemsToParse` key in our mapping configuration.
 
-For example, say you want to track/manage a project's dependencies in Port. One option is to create a `package` blueprint, with each of its entities representing a dependency from a `package.json` file.
+For example, let's say we want to track or manage a project's dependencies in Port.  
+We’ll need to create a `package` blueprint, with each entity representing a dependency from a `package.json` file.
 
-The following configuration fetches a `package.json` file from a specific repository, and creates an entity for each of the dependencies in the file, based on the `package` blueprint:
+The following configuration fetches a `package.json` file from a specific repository and creates an entity for each dependency in the file, based on the `package` blueprint:
 
 ```yaml showLineNumbers
 resources:
@@ -354,7 +332,7 @@ resources:
         path: '**/package.json'
         # Note that in this case we are fetching from a specific repository
         repos:
-          - MyRepoName
+          - group/my-project
     port:
       itemsToParse: .file.content.dependencies | to_entries
       entity:
@@ -371,8 +349,13 @@ resources:
           relations: {}
 ```
 
-The `itemsToParse` key is used to specify the path to the array of items you want to parse from the file. In this case, we are parsing the `dependencies` array from the `package.json` file.  
-Once the array is parsed, we can use the `item` key to refer to each item in the array.
+The `itemsToParse` key is used to specify the path to the array of items you want to parse from the file.  
+In this case, we are parsing the `dependencies` object from the `package.json` file.
+
+Once the object is parsed, we can use the `item` key to refer to each key-value pair within it — where the key is the dependency name, and the value is the version.
+
+This allows us to create an entity for each dependency dynamically.
+
 
 #### Multi-document YAML files
 
@@ -396,7 +379,6 @@ itemsToParse: .file.content | if type== "object" then [.] else . end
 - Currently only files up to 1MB in size are supported.
 - Only JSON and YAML formats are automatically parsed.  
   Other file formats can be ingested as raw files, however, some special characters in the file (such as `\n`) may be processed and not preserved.
-- GLOB patterns are supported for file pattern matching, but wildcards at the end (e.g., `**/*`) are not allowed, in order to prevent matching all files indiscriminately.
 - Currently only the default branch of the repository is supported.
 
 For a list of known limitations with GitLab’s Advanced Search, see GitLab's [Advanced Search documentation](https://docs.gitlab.com/ee/user/search/advanced_search.html#known-issues).
@@ -405,14 +387,12 @@ For a list of known limitations with GitLab’s Advanced Search, see GitLab's [A
 
 Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
 
-## Relevant Guides
-
-For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=GitLab).
-
 ## GitOps
 
 Port's GitLab integration also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
 
-## Advanced
+## Relevant Guides
 
-Refer to the [advanced](./advanced.md) page for advanced use cases and examples.
+For relevant guides and examples, see the [guides section](https://docs.port.io/guides?tags=GitLab).
+
+

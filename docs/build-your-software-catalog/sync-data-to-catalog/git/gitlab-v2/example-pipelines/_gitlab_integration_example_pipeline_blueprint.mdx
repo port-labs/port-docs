@@ -1,0 +1,53 @@
+```json showLineNumbers
+{
+  "identifier": "gitlabPipeline",
+  "title": "GitLab Pipeline",
+  "icon": "GitLab",
+  "schema": {
+    "properties": {
+      "creator": {
+        "type": "string",
+        "title": "Creator",
+        "description": "Name of the user who triggered the pipeline"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "description": "Current status of the pipeline"
+      },
+      "createdAt": {
+        "type": "string",
+        "title": "Created At",
+        "format": "date-time",
+        "description": "When the pipeline was created"
+      },
+      "updatedAt": {
+        "type": "string",
+        "title": "Updated At",
+        "format": "date-time",
+        "description": "When the pipeline was last updated"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "Pipeline description"
+      },
+      "link": {
+        "type": "string",
+        "title": "Link",
+        "format": "url",
+        "description": "URL to the pipeline in GitLab"
+      }
+    },
+    "required": []
+  },
+  "relations": {
+    "project": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
