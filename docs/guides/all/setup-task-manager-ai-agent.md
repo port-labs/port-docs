@@ -177,6 +177,7 @@ Here are some questions you can ask the Task Manager agent:
 - "Which repository contains the code for the PaymentProcessor service?"
 - "How many issues were closed by the frontend team in March 2025?"
 - "What are the unresolved issues in my current sprint?"
+- "Please open a Jira task to add a new payment method"
 
 ## Best practices
 
