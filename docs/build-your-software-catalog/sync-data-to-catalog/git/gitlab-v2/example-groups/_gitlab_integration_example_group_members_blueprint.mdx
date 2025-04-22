@@ -1,0 +1,49 @@
+```json showLineNumbers
+{
+  "identifier": "gitlabGroup",
+  "title": "Group",
+  "icon": "GitLab",
+  "schema": {
+    "properties": {
+      "visibility": {
+        "icon": "Lock",
+        "title": "Visibility",
+        "type": "string",
+        "enum": [
+          "public",
+          "internal",
+          "private"
+        ],
+        "enumColors": {
+          "public": "red",
+          "internal": "yellow",
+          "private": "green"
+        }
+      },
+      "url": {
+        "title": "URL",
+        "format": "url",
+        "type": "string",
+        "icon": "Link"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string",
+        "icon": "BlankPage"
+      }
+    },
+    "required": []
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "gitlabMembers": {
+      "title": "Members",
+      "target": "gitlabMember",
+      "required": false,
+      "many": true
+    }
+  }
+}
+```
