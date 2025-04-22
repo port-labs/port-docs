@@ -34,7 +34,7 @@ In this example you will map your Openshift clusters, their workloads and the Op
 Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md)
 :::
 
-<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/k8sOpenshiftView.png" border="1px"/>
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8sOpenshiftView.png" border="1px"/>
 
 ## Prerequisites
 

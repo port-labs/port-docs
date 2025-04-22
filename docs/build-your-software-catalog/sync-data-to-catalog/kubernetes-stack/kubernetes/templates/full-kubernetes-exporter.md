@@ -20,7 +20,7 @@ Using Port's Kubernetes Exporter, you can keep track of your K8s resources and e
 Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md)
 :::
 
-<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/k8sAdvancedView.png" border="1px" />
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8sAdvancedView.png" border="1px" />
 
 ## Prerequisites
 

@@ -16,7 +16,7 @@ Port's Kubernetes integration allows you to model Kubernetes resources in your s
 
 <center>
 
-<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/k8s-exporter-illustration.png" width="70%"/>
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8s-exporter-illustration.png" width="70%"/>
 
 </center>
 

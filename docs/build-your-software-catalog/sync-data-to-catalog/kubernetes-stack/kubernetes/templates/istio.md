@@ -19,7 +19,7 @@ Port and keep track of their state.
 Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md)
 :::
 
-<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/k8sIstioView.png" border="1px"/>
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8sIstioView.png" border="1px"/>
 
 ## Prerequisites
 

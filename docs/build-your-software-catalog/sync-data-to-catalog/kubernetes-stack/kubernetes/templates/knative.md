@@ -15,7 +15,7 @@ Using Port's Kubernetes Exporter, you can keep track of the Knative resources ac
 Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md)
 :::
 
-<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/k8sKnativeView.png" border="1px"/>
+<img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8sKnativeView.png" border="1px"/>
 
 ## Prerequisites
 
