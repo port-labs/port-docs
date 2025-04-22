@@ -15,7 +15,7 @@ Port's Komodor integration allows you to model [Komodor](https://komodor.com/) r
 
 ## Overview
 
-This integration allows you to map, organize, and sync your desired Komodor resources and their metadata in Port. (See supported resources below)
+This integration allows you to map, organize, and sync your desired Komodor resources and their metadata in Port.
 
 ### Supported Resources
 
@@ -28,7 +28,7 @@ The resources that can be ingested from Komodor into Port are listed below:
 
 #### Generate a Komodor Api Key
 
-1. Log in to the [Komodor platfrom](https://app.komodor.com)
+1. Log in to the [Komodor platfrom](https://app.komodor.com).
 2. Access API Keys management page:
    - Click on your user profile in the top-right corner of the platform.
    - Select `API Keys` from the dropdown menu.
@@ -855,19 +855,23 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
-## Relating Komodor service and Port's k8s exporter workload
+## Connect Komodor services to k8s workloads
 
-### Prequesites 
+### Prerequisites 
 
 - Install Komodor integration.
 - Install Port's k8s exporter integration on your cluster.
 - Install Komodor agent on your cluster.
 
-#### Create the blueprint relation
+### Create the relation
 	
 1. Navigate to the [data model](https://app.getport.io/settings/data-model) page of your portal.
 
-2. Click on the Komodor Service blueprint, and modify it so the JSON ends up having the following relations value: 
+2. Click on the Komodor Service blueprint.
+
+3. Click on the `...` button in the top right corner, choose `Edit blueprint`, then click on the `Edit JSON` button. 
+
+4. Update the existing JSON by incorporating the following data in it.
 
     <details>
       <summary><b>Mapping configuration (Click to expand)</b></summary>
@@ -888,7 +892,7 @@ The combination of the sample payload and the Ocean configuration generates the 
       </details>
 
 
-#### Set up mapping configuration
+### Set up mapping configuration
 
 1. Navigate to the [data sources](https://app.getport.io/settings/data-sources) page of your portal.
 
