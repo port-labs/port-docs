@@ -140,7 +140,7 @@ Once the widget is set up, you can:
 </TabItem>
 <TabItem value="slack" label="Slack Integration">
 
-The Slack integration provides a natural way to interact with the Task Manager agent. Before using this method, ensure you have installed and configured the **Port AI Assistant Slack App**
+The Slack integration provides a natural way to interact with the Task Manager agent. Before using this method, ensure you have installed and configured the **[Port AI Assistant Slack App](/ai-agents/slack-app)**
 
 You can interact with the Task Manager agent in two ways:
 1. **Direct message** the Port AI Assistant.

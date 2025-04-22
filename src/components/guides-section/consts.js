@@ -975,6 +975,13 @@ export const availableGuides = [
         link: "/guides/all/setup-task-manager-ai-agent",
 	},
 	{
+        title: "Set up the Incident Manager AI agent",
+        description: "Set up an AI agent that helps developers track and manage incidents efficiently",
+        tags: ["AI","PagerDuty","Slack","Incident management"],
+        logos: ["AI"],
+        link: "/guides/all/setup-incident-manager-ai-agent",
+	},
+	{
         title: "Create a GitHub issue",
         description: "Create a self-service action that creates a GitHub issue",
         tags: ["GitHub", "Actions", "Webhook"],

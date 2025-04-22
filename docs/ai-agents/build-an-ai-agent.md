@@ -186,7 +186,7 @@ Your goal is to help developers initiate and track deployments to various enviro
 ## Formatting the agent response
 To format the agent's response, you can specify the desired format in its prompt. For optimal results when using the UI, it's recommended to request a markdown format response. 
 This allows for better presentation and readability of the information provided by the agent.
-When sending messages through Slack, our Slack app convert the markdown format into a Slack compatible formatting.
+When sending messages through Slack, our [Slack app](/ai-agents/slack-app) convert the markdown format into a Slack compatible formatting.
 
 ### Example of a Markdown Response
 ```markdown

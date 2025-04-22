@@ -110,7 +110,7 @@ The Slack integration provides the most natural way to interact with Port's AI a
 
 You can interact with agents in two ways:
 
-1. **Direct messaging** the Port Slack app.
+1. **Direct messaging** the [Port Slack app](/ai-agents/slack-app).
 2. **Mentioning** the app in any channel it's invited to.
 
 When you send a message, the app will:
@@ -228,7 +228,7 @@ Remember that AI agents are constantly learning and improving, but they're not i
 <summary><b>My agent isn't responding in Slack (Click to expand)</b></summary>
 
 Ensure that:
-- The Port Slack app is properly installed in your workspace.
+- The [Port Slack app](/ai-agents/slack-app) is properly installed in your workspace.
 - The app has been invited to the channel where you're mentioning it.
 - You're correctly mentioning the app (@Port).
 - You've completed the authentication flow with the app.
