@@ -1,0 +1,60 @@
+```json
+{
+  "identifier": "gitlabIssue",
+  "title": "Issue",
+  "icon": "GitLab",
+  "schema": {
+    "properties": {
+      "link": {
+        "title": "Link",
+        "type": "string",
+        "format": "url"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string",
+        "format": "markdown"
+      },
+      "createdAt": {
+        "title": "Created At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "closedAt": {
+        "title": "Closed At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "updatedAt": {
+        "title": "Updated At",
+        "type": "string",
+        "format": "date-time"
+      },
+      "creator": {
+        "title": "Creator",
+        "type": "string"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string",
+        "enum": ["opened", "closed"],
+        "enumColors": {
+          "opened": "green",
+          "closed": "purple"
+        }
+      }
+    }
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "project": {
+      "title": "Service",
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
+}
+```
