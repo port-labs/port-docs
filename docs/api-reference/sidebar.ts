@@ -166,6 +166,18 @@ const sidebar: SidebarsConfig = {
           label: "Search entities",
           className: "api-method post",
         },
+        {
+          type: "doc",
+          id: "api-reference/aggregate-entities",
+          label: "Aggregate entities",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api-reference/aggregate-entities-over-time",
+          label: "Aggregate entities over time",
+          className: "api-method post",
+        },
       ],
     },
     {

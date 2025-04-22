@@ -53,8 +53,6 @@ Port supports various hotkeys to help you navigate the portal using keyboard onl
 
 In dashboards, you can use `Shift + Alt/Option + ArrowLeft/ArrowRight` to jump between widget cards (wrapping around is supported).
 
-<!-- <img src="/img/customization/widgetNavigation.mp4" border="1px" /> -->
-
 <video controls autoPlay muted loop playsInline width="2560"
   height="1440"
   style={{
