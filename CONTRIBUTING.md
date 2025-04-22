@@ -138,7 +138,7 @@ Content goes here
 
 Content goes here
 
-</summary>
+</details>
 
 ### Formatting Standards
 
