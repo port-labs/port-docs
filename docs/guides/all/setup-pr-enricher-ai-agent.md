@@ -65,7 +65,11 @@ Make sure you have:
        "status": "active",
        "allowed_blueprints": [
          "service",
-         "githubPullRequest"
+         "githubPullRequest",
+         "pagerdutyIncident",
+         "jiraIssue",
+         "_user",
+         "_team"
        ],
        "prompt": "You are an experienced Technical Engineering Team Lead. Your primary function is to generate risk assessment. If you can, add emojis (green, yellow, red, and more for fun) 😃 Don't try to be precise, just put what you can.",
        "execution_mode": "Automatic"
