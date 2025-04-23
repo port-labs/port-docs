@@ -5,25 +5,19 @@ description: "This route allows you to fetch a specific blueprint in your Port a
 sidebar_label: "Get a blueprint"
 hide_title: true
 hide_table_of_contents: true
-api: eJztVD1v2zAQ/SsEpwSwraSjEARI0SIougRpOgUZKOpkEaFEhjw6dQT9995JsqUEbofOXWSKevf13jt3soSog/FoXCtz+VCbKIJLCEJZ616j2Lsk0IkKUNdCiehBm8poUdgEPpgWhWkZFMSdCyiU1i61uLkqQnY9PB6csKBCKxoXKGtByefguBK6Bv0s+BZrEI+l06mBFhV39HRWI/qYZxldx80W0FORjXFZkYwt11x3HV2FryrAWitU1m0znSK6xrzBmirANgypYqZdW5ltImBJwHXjSrBZBEx+fewnO9/IlUS1jTJ/lJ+PbcqnlfQqqAYQAn/rZKTGGyXzTuLeA3EXkaBb2a+kYSq9wppytRRDb6akmYg4CHT3kXMQ82fhqoGImV9W4FXR4SDDSC7lCfCSTIBS5hgS9NRjBJ2Cwf3QYUG0Uz0aJIAq82IxDWMDRE+8QOQZPl1c8M/7zr5ApZJFcT8hZU/DEQW1o5KS1JCrccxcZrvLbC6QdfNAveS2wu7AWwqW8AddlTcLWYm8U4AU32EWc/5gEcYJDtMe9aDI77CfJbhJ1Hgwb4Md5KRSTcxQVD+oVrkh3KBl/ODnm7tvBOXmR0ouNxessHcRG9UyfMp+C2T+WbWPKneS7IfEyf8lOyzZqBLCL8y8VaQG8Tpo302mepS7SwIufLuS+WKRyAc16cDAritUhJ/B9j1fvyQIvAN03KlgVMGCkvdKE/lM7q2UjfAXjc7up906F/++nydHPLizZWvuFKWhNzo+k1ff/U/0T8ttu/36QCCVmJilxZ8Hi08HnvFk/o/eH4vxkzfuZMgVWV/QAl0f4eOXPwZMq3ScpOUJ+v43e/k71w==
+api: eJztVDtv2zAQ/ivETQlAW0lHoSiQokVQdAnSdDI8nKiTRUQiFfLo1BH034uTbMtJ3A6du+h1R/K+l3ooKZpgO7beQQ4PtY0q+MSksGn8c1Q7nxR7VRGbWqGKHRlbWaOKJlEXrGNlnTQFdecDKzTGJ8fLj0XIPo2XB68awuBU6wMpLHzieXHUytRkHpV85ZrUqvQmteQYZaL1Rc3cxTzLSm/isvOBl9ZnRbJNuZBDF9FX/IyBFgYZG7/JTIrsW/tCC+uYNmHcJ2bGu8puUqBFiYyL1pfUZJE4dYvjMNnlEjQwbiLkK/h8nBHWGjoM2BJTkFoP0dTUIuQ98K4jyCFysG4DgwYrPHbINWhw2ErRluTYVpYC6HeEk5rLylcjCzO5Qv8zOj5qMDELGgI9JRuohJxDomGtIZJJwfJunLAgDBQESCAs8+IEjfQGip13kaJg+HB1JbfXk32hClPD6n7fCcOgoSWufQk5bIhBTzBzyLbX2XxA1s+ABpCxwvbAWwoN5HAQFTt70BQGfa6a4txwgvCH0D/NfsB5VAI7+512M/k3iWsf7MtoBNjrUxOWFEZI1lV+XG65kf7Rxjd330CDjD2Rcb28Em07H7lFJ+373W+JFc56vdW3B+Mdk+P/2RqzNUnE9IuzrkHrhNRR9X7vpRVsr0HDiV015Cf5WWuofWRp7PsCI/0MzTDI56dEQay/1rDFYLEQNVc9lDbKcwl5hU2kvwh0cb+P1KX691iehXiwphNfbrFJ8gYaHmn3+vcwrE9Ddvv1ATRgEmJO/f04+nv/IBjP7v/W+NNhcpWsnV3S91N6huHYP5X+uGIfpCMUJxCG4TcIdjiN
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"get"}
   path={"/v1/blueprints/{identifier}"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -51,51 +46,26 @@ This route allows you to fetch a specific blueprint in your Port account.<br/><b
 >
 </Heading>
 
-<details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the blueprint you want to fetch.<br/>","required":true}]}
 >
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Path Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The identifier of the blueprint you want to fetch.<br/>","required":true}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       

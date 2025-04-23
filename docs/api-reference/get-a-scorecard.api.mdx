@@ -5,25 +5,19 @@ description: "This route allows you to fetch a specific scorecard. A scorecard i
 sidebar_label: "Get a scorecard"
 hide_title: true
 hide_table_of_contents: true
-api: eJzlVE1vm0AQ/SurPSUSNXGPKIoUqVVUtYcoSU+RVa1hMKsAi3dn7bqI/94ZwEBcUqlub73AfszMzrz3ZmqZgIutrlCbUkbyKdNOWOMRhMpzs3fiYLxAI1LAOBNKuApinepYuNhYiJVNFuJ23AhyJyNAYVJhfQ5OYKZQJJDqEmgNYutVrvHABkqscw+V1SUurtc2vGk/T0bkoGwpCgoq1JqyGR9wgYgziF8En3K458TEvoASFZewusgQKxeFIR27xQawMhYX2oSVNYVBeDdGCi8XMpCoNk5Gz/JxOJerQFbKqgIQLN/V0tGbhZJRLfFQAeHkkJLekHuhyy9QbjCT0bIJpGYQK0XbQJYUgU2Pgb/phNIk8MDS7SnuIMZrxoZrG2FlFvaqxIGKDi+KY2HrtYVERmg9NMHfJTvw8efJDq5inxl3VvIEvIPYW5JHC/uaZEDvEzsWVBK5CUVsa8FVpnTguNb3V1f8e53pB0iVz1E89JayobKJ18zQk5LUIYMOgEiGu2U4lODCeg6JJpyop54jtpFcgt0dheNtTrGPmlSVnkhSMlm/Gnj3ymaCySMT21V7RGbgmDw/w2Ek8tZTkVb/aLtC9lxnhCJ5NS33qWndNeZsf0/vidv7T2TKyXfwLRdXlKSsjMNClWzeR7+jBlcjw6cKqWVsSiRM/s+J0jGC8B3DKleEPGHY8lz3YnuWuyUZjnKjTfRG601ET0azw4QkQh2HHLeu18rBV5s3DR9vPVhuJVrulNVqzVyTLBPteE1NkKrcwW/ou3joW/RSnD+jZhE5Crdk1e4UVU87Wr6QjN+Ymtww/zD1cybWGaXMEtusppPo7uMTmSvP4pi29Evb0v2CiZt96bTXu2f5y4DNulxTqwsaGDeDeXfzpkM/Oo7WXPeqaZqfRDbgig==
+api: eJzlVEtv2zAM/isCTy2gxc2OxjCgwIZi2A5F252CYFBsOhZqSy5FpcsM//eBdhxnbTJg2W67+CFRFPk92EKOISPbsPUOUngobVDkI6MyVeWfg9r6qNirAjkrlVGhwcwWNlMh84SZoXymrqcfZYMEIStfKIoVBsWlYZVjYR0qLlE9RVNZ3kqAUasqYkPW8ezdipL3/ePBqwoNOVV7QmVWPvJ0QdAqKzF7VLIq6Ra5z2KNjo20sLwomZuQJknuszBrPPHM+qQhX3vGN1Oa5HIGGtisA6QLuN+vw1JDY8jUyEiy10LISqwNpC3wtkFIITBZtwYNtXVf0K25hHTeabCCYGO4BA3O1H3omPibzdGxLSwS6Fego5q2BRhpbMJUKHg2jvc8DGCBBsKnaAlzSJkidvrvit2T8efF7o+q59KHs4pfagiYRbK87WFfoSEkYYfQ5Gk4oEhiCUPjXcAgvb69upLXr5V+wMLEitXdLhK6TkONXPocUlgjgx4ASCHZzJN9CyFpjyHRJQfqaY8R24G0QJtROJEqSGEUpGnsqEcQpl7vxjAFHKBxL5QOfY6Y7Nk1jf2M24nC68ilJ/ujNwPsWC7R5Eh9+9YVvj9uuZL4W0+srm8/gQYpewBuPruCTkPjA9fGSfgu+w2yuHts/aU2Wsi8Y3T8Hw6SgQ7G75w0lbFOAOwZbncaW8BmDnryWAAN6QnHHWhdQ3p0hiw1lD6w5G3blQn4laquk+WniCQOWmrYGLJmJUQvWshtkO8c0sJUAX/D3cXdzpmX6vzRdBSRUbVOJLsxVZQ/0PCI21PDUqzyD0s/Z1Cd0cpRYrvl4QC6+fgAGkwUcRz6+bH38+5DiDt600ujD9fKUwA7eqRth2nRdfv4Yevkid3gGKOl8WXXdT8BzHndQA==
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"get"}
   path={"/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -51,56 +46,26 @@ This route allows you to fetch a specific scorecard. A scorecard is a set of rul
 >
 </Heading>
 
-<details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"scorecard_identifier","description":"The identifier of the scorecard you want to fetch.<br/>","required":true},{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","description":"The identifier of the blueprint whose scorecard you want to fetch.<br/>","required":true}]}
 >
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Path Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string","minLength":1},"in":"path","name":"scorecard_identifier","description":"The identifier of the scorecard you want to fetch.<br/>","required":true}}
-      >
-        
-      </ParamsItem><ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","description":"The identifier of the blueprint whose scorecard you want to fetch.<br/>","required":true}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       
