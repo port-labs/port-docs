@@ -3,7 +3,7 @@ displayed_sidebar: null
 description: Learn how to drive DevOps and DevSecOps governance in your organization by enforcing branch protection rules using scorecards 
 ---
 
-# Enforce Branch Protection Rules with Scorecards
+# Enforce branch protection rules with scorecards
 
 Branch protection rules are powerful ways to ensure critical branches in your repositories like `main` or `release` follow security and governance best practices. By tracking these rules with Port's scorecards, platform and security teams can monitor organizational compliance, enforce DevSecOps policies, and ensure consistent engineering standards across all teams.
 
