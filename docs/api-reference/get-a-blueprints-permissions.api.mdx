@@ -5,25 +5,19 @@ description: "This route allows you to retrieve the permissions of a blueprint.<
 sidebar_label: "Get a blueprint's permissions"
 hide_title: true
 hide_table_of_contents: true
-api: eJzdVE1v2zAM/SsCL2sBJ252NIoCHTYUw3Youu5UBINsM7FQ23IpKmlm+L+PcuzU6ZLbTrs4+iApvvf40kKOLiPTsLE1JPBYGKfIekaly9JundpZr9gqQiaDG1RcoGqQKuOcpDhlV0qrtPTYkKl5fp1SfNN/Hq0qUVOtKktSLZWi08RIZQVmzyoch5pPuc18hTXr0MryomBuXBLHcuzma+TGEs+NjVNvynwmXdHM2RVvNeEs06xLu44d8rieUaqzGF911ZToLucQAeu1g+QJPo3NOlhG0GjSFTJSuGvBSVeVhqQF3jUojDjBXa8lvTL1d6zXXECy6CIwga5GyzaCWirI7sDCL5MLELMySHJL+OINYQ4Jk8foL8ZRvYUHOgMbh1JqW1h3zHhQZKvlaiLLHDrB4jDzZHjXI0mFfHlfABPqPEknqEMsoWukGrqA9ePVVfg57uwzrrQvWT0MkdAJbKGqsAIFRBKI9gQkEG8W8dsDcXuKiS6egIDQLG1G1j2VUmWUXDdmojh00akA745iJuh/BAn3uEYODmpK5jfcvUl26wUOmd/90MGgaiF8SVbXq7yyfbrhMsTfy3vq9v6rhIbm90Qt5lfSJDTWcaXrED5Uv0OemuODU8cUHPHdQmZrFrb+dxvulWB85bgptTAu3PX6tsM4PcFmIYGTiY0gOWOuKaEyA2IWDgXaNtUOf1LZdeH4xSMFV8hyo8noNIgpc5cbF9YyzytduvfenCpy8TC4+FL9K8eeoWKc1DqM6UZLWdnJ8lnm9sx/TLecOvPuy6OEax+onA7+cz/4wyKgP/nSe0fsnw3f4MOTKddiCCW2ujmE72/OJgwGG6MD7mXXdX8AfoVOcQ==
+api: eJzdVEFu2zAQ/AqxlyYAY8U9CkWBFC2Coj0EaXoyjGIlrS0iEqksl3ZcgX8vaFu2nNq3nnqhKHFI7szsqIeKfMmmE+Ms5PBUG6/YBSGFTePWXm1cUOIUk7ChFSmpSXXErfHeOOuVWyhURROoY2Nl8qHg7ON2eHKqIWSrWseksHBBxhu1Kmsqn1X6nM6cVa4MLVnBVMr8qhbpfJ5llSv9pHMsE+OyIpimutm4wDfeLWSNTDclCjZumXmSYX7DBZYZvWLbNeSvJ6BBcOkhn8GnoVIPcw0dMrYkxGmtB1/W1CLkPcimI8jBCxu7BA2tsd/JLqWGfBo1mKRVh1KDBottgh4k+GUqsmIWhhg0ML0Ew1RBLhxI/yU3qSM8aZmkOByl1rXzp3InO9ZoZezJBOJcg6cysJHNlklByMSJMBNWeTFinbBMvnPWk09c39/epsdpZZ9pgaER9bhHQowaWpLaVZDDkgT0ToAcstU0O16Q9eeUiNmIBKRieTWoHriBHAa/sTOD3RD1udXgj4AR7x/JvB2jgf3BR+zMN9oczboLUjs2v7e9Bns/a8KKeEvU2IXbbjfSJPyDY1F3D19BQyp7J9F0cgtRQ+e8tGgTfH/6Pck4E++8OiV/onQPpbNCVv7r9O1sEHqVrGvQ2CTc1tl+30UzWE1Bw6hRNeQXMjVWc66hdl7SAX1foKef3MSYPr8E4hSGuYYVssEiOTnroTI+zSvIF9j4t5Ec23H1uA/vtfpXQb0gxdCmNvXoCpuQ3kDDM20u/VrifBzI+y9PoAFDknLc9c/brt9PEvuzN72Nw+7aNKYEnt3S97tMxXjA75Yu7tjHa0An4vMY4x9EkUsn
 sidebar_class_name: "get api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"get"}
   path={"/v1/blueprints/{blueprint_identifier}/permissions"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -51,51 +46,26 @@ This route allows you to retrieve the permissions of a blueprint.<br/><br/>To le
 >
 </Heading>
 
-<details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint whose permissions you want to retrieve."}]}
 >
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Path Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string","minLength":1},"in":"path","name":"blueprint_identifier","required":true,"description":"The identifier of the blueprint whose permissions you want to retrieve."}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       
