@@ -982,7 +982,7 @@ export const availableGuides = [
         link: "/guides/all/verify-service",
     },
     {
-        title: "Enforce code maturity with GitLab file checks",
+        title: "Enforce code maturity with GitLab file search",
         description: "Create a scorecard that tracks GitLab code maturity based on file existence",
         tags: ["Security", "GitLab", "Scorecards"],
         logos: ["GitLab"],

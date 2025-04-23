@@ -3,7 +3,7 @@ displayed_sidebar: null
 description: Learn how to drive DevOps and DevSecOps governance in your organization by enforcing code maturity standards using scorecards with GitLab file search 
 ---
 
-# Enforce code maturity with GitLab file checks
+# Enforce code maturity with GitLab file search
 
 Code maturity standards help teams to consistently follow engineering best practices like testing, linting, documentation, and CI. By tracking these signals with Port scorecards via GitLab file search, teams can monitor compliance, guide maturity, and reduce production risk.
 
