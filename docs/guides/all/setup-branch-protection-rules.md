@@ -7,7 +7,7 @@ description: Learn how to drive DevOps and DevSecOps governance in your organiza
 
 Branch protection rules are powerful ways to ensure critical branches in your repositories like `main` or `release` follow security and governance best practices. By tracking these rules with Port's scorecards, platform and security teams can monitor organizational compliance, enforce DevSecOps policies, and ensure consistent engineering standards across all teams.
 
-This guide shows you how to track GitHub branch protection settings using Port's scorecards, providing visibility and automation around repository health and security posture.
+This guide demonstrates how to track GitHub branch protection settings using Port's scorecards, providing visibility and automation around repository health and security posture.
 
 ## Common use cases
 
