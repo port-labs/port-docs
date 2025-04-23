@@ -189,7 +189,7 @@ Follow the steps below to create the branch blueprint:
 
 ## Set up scorecard
 
-We will create a scorecard that will evaluate the health of each repo based on its protection configuration.
+Let's create a scorecard that will evaluate the health of each repo based on its protection configuration:
 
 1. Go to your [Builder](https://app.getport.io/settings/data-model) page.
 2. Search for the **Branch** blueprint and select it.
