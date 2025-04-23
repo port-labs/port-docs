@@ -5,25 +5,19 @@ description: "This route allows you to delete an integration in your Port organi
 sidebar_label: "Delete an integration"
 hide_title: true
 hide_table_of_contents: true
-api: eJzlVD1v2zAQ/SsEpwSwraSjEAQIkAxBOwSpOxkeaOlsEaFJ5Xi06wr6772TZEcO3C4du8jk8b7ee3dudAmxQFuTDV7nel7ZqDAkAmWcC/uoDiEpCqoEB2L0ynqCDRoJ4LO8o3oJSCrgxnj7q3uZ3a0wu+8+86AcGPRqG5ATrDj5OEecqKKC4k2JnSpQizIUaQueuuflVUVUxzzL2BxnG6Caa81syFbJunIq5acxrGlvEKaFIePCJosHX0xLvkwpnIzXMz3RZDZR5wv9POpALye6Nmi2jBDltdGRe9oanTeaDjUwMZHQ+o1uJ9oKT7WhirN5juGbLbldu7aAbPtMKDDayB24gbJShXUHdEyksLw3nj6o7hnkfAjvySKUOidM0HKvEYqElg5dpyvmlusypD4ut2fIxB8h1nyBKHi+3NzIz3mXj7A2yZF6HTx1y0CZjipw2SGxnvSoc53tbrNRlaz5wN9qaQ93Rx4TOg44SmhqO1KQybzkkOKZzwjvdxGlR3FEfdKHI7/C4UOSh8TN4zCNelCtAlNyVNupuA5duCUn/t0EP7w8s6s039NyO7sRxesQaWu8uA/ZHy9tw2ftG10EfvX0X+xVLwPBT8pqZ5huJq4TtxnGZqF3t50QY8Ly0eqw0hUzLZ5NszIRfqBrWzG/J0CZdj7uDFqzEsl4ukob5cwzujYuwl/4v3odtuha/ftGXsR6nEMvQ7gzLsmNj288lWf/EO1yvFuPT9+e5k/sZ5KQNJ7nt26eh4PAvVji86D39eQr63Ux5I7nXPG23J/c+5c/Bgx7cwLjBUTb/gb2ayxK
+api: eJzdVM1u2zAMfhWBpxZQ4nZHYxhQoD0U26HoulOQA2MzsVBHcikqXWb43QfaTuK22S677eI4Iiny+6FbKCkW7BpxwUMOT5WLhkMSMljX4TWafUhGgimpJj30xnmhDaMWGOc1zuYhsJjAG/TuVx+Zf15x9qV/PAVTE7I328BkcBWSTO+I1hQVFc9Gz6UisyhDkbbkpQ8vLyqRJuZZVoYizpvAMnchWyVXlzPtPYthLa/INCtQsA6bLO59MStRcCbheHg5BwuCmwj5Au4n7WFpoUHGLQmxRluIRUVbhLwF2TcEOURh5zfQWXBKUoNSgQWPWw26kry4tSMG+4FNMs5Hwboe+SpNWPcopywqxa/o5cTzQB9YYHpJjqmEXDhRt7QQqUjsZN9PuiJkYoU01OXuDTLNZ4pN8JGi4vl0daU/b6e8pTWmWszjmAldZ2FLUoUS8vFisAPqHLLddTbpkrUn/B3oeLw78Ji4hhwO+mHjDvJBZ89FUzwlTJB+VzmG+Q94j8pg477S/iTGTZIq8GhCGPWqCEviHpbz69CXO6k1vzfuzcM9WNCxB0Ku51eqdROibNFr+nj77bkleK96C0XwQl7+/3UaNBD6KVlTo/PKWi9rO7plAbvrXoUpW/lkY5YWqhBFM9t2hZF+cN11evySiNXkSws7ZIcr1WvRQumivpeQr7GO9BfyLx7H5bk0/76IZ7EeTOjVgTusk/4DC8+0f/th6JbTlbq9+3b3dAcWMClJUzM/92YeXxTu2RbvXT7006cu1tmSth1WpeuO+UPojxXj1hzReEXRdb8BLEQpAA==
 sidebar_class_name: "delete api-method"
 info_path: api-reference/port-api
 custom_edit_url: null
 ---
 
-import ApiTabs from "@theme/ApiTabs";
-import DiscriminatorTabs from "@theme/DiscriminatorTabs";
 import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-import MimeTabs from "@theme/MimeTabs";
-import ParamsItem from "@theme/ParamsItem";
-import ResponseSamples from "@theme/ResponseSamples";
-import SchemaItem from "@theme/SchemaItem";
-import SchemaTabs from "@theme/SchemaTabs";
-import Markdown from "@theme/Markdown";
-import Heading from "@theme/Heading";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
 
 <Heading
   as={"h1"}
@@ -35,6 +29,7 @@ import TabItem from "@theme/TabItem";
 <MethodEndpoint
   method={"delete"}
   path={"/v1/integration/{identifier}"}
+  context={"endpoint"}
 >
   
 </MethodEndpoint>
@@ -51,51 +46,26 @@ This route allows you to delete an integration in your Port organization.<br/><b
 >
 </Heading>
 
-<details
-  style={{"marginBottom":"1rem"}}
-  className={"openapi-markdown__details"}
-  data-collapsed={false}
-  open={true}
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The installation id of the integration you want to delete.<br/>","required":true}]}
 >
-  <summary
-    style={{}}
-  >
-    <h3
-      className={"openapi-markdown__details-summary-header-params"}
-    >
-      Path Parameters
-    </h3>
-  </summary><div>
-    <ul>
-      <ParamsItem
-        className={"paramsItem"}
-        param={{"schema":{"type":"string"},"in":"path","name":"identifier","description":"The installation id of the integration you want to delete.<br/>","required":true}}
-      >
-        
-      </ParamsItem>
-    </ul>
-  </div>
-</details><div>
-  <div>
-    <ApiTabs
-      label={undefined}
-      id={undefined}
-    >
-      <TabItem
-        label={"200"}
-        value={"200"}
-      >
-        <div>
-          
-          
-          Default Response
-          
-          
-        </div><div>
-          
-        </div>
-      </TabItem>
-    </ApiTabs>
-  </div>
-</div>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Default Response"}}}
+>
+  
+</StatusCodes>
+
+
       
