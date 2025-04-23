@@ -15,7 +15,7 @@ monitored repositories and applications to Port. You will use built in metadata 
 Port and keep track of their state.
 
 :::tip Our Kubernetes exporter basics
-Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md)
 :::
 
 <img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8sFluxView.png" border="1px"/>

@@ -9,7 +9,7 @@ import TemplatePrerequisites from "./_template_prerequisites.mdx";
 # Kubernetes (advanced)
 
 :::info
-This use-case is an extension of the [basic Kubernetes use-case](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md). If you haven't already, we recommend you to read it first.
+This use-case is an extension of the [basic Kubernetes use-case](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md). If you haven't already, we recommend you to read it first.
 :::
 
 Kubernetes has become one of the most popular ways to deploy microservice based applications. As the number of your microservices grow, and more clusters are deployed across several regions, it becomes complicated and tedious to keep track of all of your deployments, services, and jobs.
@@ -17,7 +17,7 @@ Kubernetes has become one of the most popular ways to deploy microservice based 
 Using Port's Kubernetes Exporter, you can keep track of your K8s resources and export all the data to Port. You will use K8s' built in metadata to create Entities in Port and keep track of their state.
 
 :::tip
-Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes-stack/kubernetes/kubernetes.md)
 :::
 
 <img src="/img/build-your-software-catalog/sync-data-to-catalog/kubernetes/k8sAdvancedView.png" border="1px" />
